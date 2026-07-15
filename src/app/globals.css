@@ -274,6 +274,20 @@ html {
 }
 
 /*
+ * Accordion — same p-3 house rule as cards. HeroUI bakes a p-4-level trigger
+ * (`px-4 py-4`) and body (`px-4 pt-0 pb-4`); bring both to p-3. `!important` beats the
+ * unlayered HeroUI base. Body keeps `pt-0` (the trigger already spaces the top).
+ */
+.accordion__trigger {
+    padding: calc(var(--spacing) * 3) !important;
+}
+.accordion__body-inner {
+    padding-left: calc(var(--spacing) * 3) !important;
+    padding-right: calc(var(--spacing) * 3) !important;
+    padding-bottom: calc(var(--spacing) * 3) !important;
+}
+
+/*
  * Toast (HeroUI imperative `toast.*`) — status indicator icon = size-6 (HeroUI bakes
  * `[data-slot=toast-default-icon]` at size-4); the Phosphor GLYPH itself is supplied
  * per-toast via the `indicator` option (HeroUI toast has no global icon config) — see

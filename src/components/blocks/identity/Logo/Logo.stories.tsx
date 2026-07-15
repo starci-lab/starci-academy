@@ -3,7 +3,7 @@ import { Label, Typography } from "@heroui/react"
 import { Logo } from "./index"
 
 const meta: Meta<typeof Logo> = {
-    title: "Blocks/Identity/Logo",
+    title: "Core/Identity/Logo",
     component: Logo,
 }
 export default meta

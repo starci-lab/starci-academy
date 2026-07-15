@@ -73,9 +73,8 @@ export interface FlexWrapButtonRadioProps<T extends string> extends WithClassNam
  * plain `<Button>`s. Overridden to FULL height (`!top-0 !h-full`) from HeroUI's
  * default 50%.
  *
- * `role="group"` + `aria-pressed` per button (single-select toggle group). Sibling
- * of `FlexWrapCardRadio` (a true `RadioGroup` of boxed cards). For a grid with
- * description/badge use `SelectableCardGroup`.
+ * `role="group"` + `aria-pressed` per button (single-select toggle group). For a
+ * grid with description/badge use `SelectableCardGroup`.
  *
  * @param props - {@link FlexWrapButtonRadioProps}
  */

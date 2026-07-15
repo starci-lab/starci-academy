@@ -28,7 +28,7 @@ import {
 } from "@phosphor-icons/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
+import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { ResizableRail } from "@/components/blocks/layout/ResizableRail"
 import { GradeModelDropdown, type GradeModelSelection } from "@/components/blocks/grading/GradeModelDropdown"
 import { GradeCreditCaption } from "@/components/blocks/grading/GradeCreditCaption"
@@ -339,14 +339,17 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
             >
                 {/* Mobile mode switch — desktop shows all zones. */}
                 <div className="px-6 pt-4 lg:hidden">
-                    <SegmentedControl
-                        ariaLabel={t("cv.builder.mobilePaneAria")}
-                        items={[
-                            { value: "edit", label: t("cv.builder.editPane") },
-                            { value: "preview", label: t("cv.builder.previewPane") },
-                        ]}
-                        value={mobilePane}
-                        onChange={setMobilePane}
+                    <TabsCard
+                        variant="primary"
+                        leftTabs={{
+                            selectedKey: mobilePane,
+                            ariaLabel: t("cv.builder.mobilePaneAria"),
+                            onSelectionChange: (key) => setMobilePane(String(key) as typeof mobilePane),
+                            items: [
+                                { key: "edit", label: t("cv.builder.editPane") },
+                                { key: "preview", label: t("cv.builder.previewPane") },
+                            ],
+                        }}
                     />
                 </div>
 

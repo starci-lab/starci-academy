@@ -1,33 +1,44 @@
 import React from "react"
-import { Skeleton, cn } from "@heroui/react"
+import { Skeleton, Table } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link SkeletonTable}. */
 export interface SkeletonTableProps extends WithClassNames<undefined> {
-    /** Number of body rows to render. Defaults to 5. */
+    /** Number of body rows to render. Defaults to 3. */
     rows?: number
-    /** Number of columns per row. Defaults to 4. */
+    /** Number of columns per row. Defaults to 3. */
     cols?: number
 }
 
 /**
- * Skeleton matching a HeroUI <Table/> body. Each cell uses `px-4 py-3` with
- * `text-sm` content (14/20), so a cell box is 44px tall and the glyph bar is
- * `h-[14px]` (body-sm) centered with `my-[5px]` inside the `py-3` padding.
+ * Skeleton matching a HeroUI <Table/>: renders the REAL `Table` structure
+ * (header + body rows, borders/padding baked in — rule: keep the real container
+ * in the skeleton, only cell content becomes bars) with a `body-sm` glyph bar
+ * (`h-[14px]` centered `my-[5px]`) in each header column + body cell.
  */
-export const SkeletonTable = ({ rows = 5, cols = 4, className }: SkeletonTableProps) => {
-    return (
-        <div className={cn("flex w-full flex-col", className)}>
-            {Array.from({ length: rows }).map((_, rowIndex) => (
-                <div key={rowIndex} className="flex w-full items-center gap-3 px-4 py-3">
+export const SkeletonTable = ({ rows = 3, cols = 3, className }: SkeletonTableProps) => (
+    <Table variant="primary" aria-label="Đang tải bảng" className={className}>
+        <Table.ScrollContainer>
+            <Table.Content aria-label="Đang tải bảng">
+                <Table.Header>
                     {Array.from({ length: cols }).map((_, colIndex) => (
-                        <Skeleton
-                            key={colIndex}
-                            className="my-[5px] h-[14px] flex-1 rounded"
-                        />
+                        <Table.Column key={colIndex} id={`col-${colIndex}`} isRowHeader={colIndex === 0}>
+                            <Skeleton className="my-[5px] h-[14px] w-16 rounded" />
+                        </Table.Column>
                     ))}
-                </div>
-            ))}
-        </div>
-    )
-}
+                </Table.Header>
+                <Table.Body>
+                    {Array.from({ length: rows }).map((_, rowIndex) => (
+                        <Table.Row key={rowIndex} id={`row-${rowIndex}`}>
+                            {Array.from({ length: cols }).map((_, colIndex) => (
+                                <Table.Cell key={colIndex}>
+                                    <Skeleton className="my-[5px] h-[14px] w-full rounded" />
+                                </Table.Cell>
+                            ))}
+                        </Table.Row>
+                    ))}
+                </Table.Body>
+            </Table.Content>
+        </Table.ScrollContainer>
+    </Table>
+)

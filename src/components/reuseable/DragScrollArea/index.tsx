@@ -3,6 +3,7 @@
 import React, {
     useCallback,
     useRef,
+    useState,
 } from "react"
 import {
     ScrollShadow,
@@ -28,7 +29,8 @@ export interface DragScrollAreaProps extends WithClassNames<undefined> {
  * Vertical scroll region with hidden scrollbar and Framer Motion pointer pan.
  *
  * Wheel/trackpad/touch scroll still work; `onPan` maps drag delta to `scrollTop`
- * so Windows users can scroll when the bar is hidden. Presentational only.
+ * so Windows users can scroll when the bar is hidden. Cursor is `grab` /
+ * `grabbing` while panning. Presentational only.
  * @param props - {@link DragScrollAreaProps}
  */
 export const DragScrollArea = ({
@@ -38,6 +40,7 @@ export const DragScrollArea = ({
     size = 40,
 }: DragScrollAreaProps) => {
     const scrollRef = useRef<HTMLDivElement>(null)
+    const [isPanning, setIsPanning] = useState(false)
 
     const onPan = useCallback((_event: PointerEvent, info: PanInfo) => {
         const element = scrollRef.current
@@ -55,8 +58,13 @@ export const DragScrollArea = ({
             className={cn("overflow-y-auto", className)}
         >
             <motion.div
-                className="min-h-min"
+                className={cn(
+                    "min-h-min select-none",
+                    isPanning ? "cursor-grabbing" : "cursor-grab",
+                )}
+                onPanStart={() => setIsPanning(true)}
                 onPan={onPan}
+                onPanEnd={() => setIsPanning(false)}
             >
                 {children}
             </motion.div>

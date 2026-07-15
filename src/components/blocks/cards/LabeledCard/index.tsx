@@ -37,9 +37,10 @@ export interface LabeledCardProps extends WithClassNames<undefined> {
      */
     frameless?: boolean
     /**
-     * When true, the framed card drops its content padding so an EDGE-OWNING child
-     * (Accordion / Table / full-width-divider list) sits flush to the card edges —
-     * avoids the double-padding / misaligned look. Ignored when `frameless`.
+     * When true, the framed card drops padding on BOTH the root `.card` (HeroUI
+     * bakes `p-4` there) and `CardContent`, so an EDGE-OWNING child (Accordion /
+     * Table / full-bleed divider list) sits flush to the card edges — avoids the
+     * inset-divider look. Ignored when `frameless`.
      */
     flushContent?: boolean
     /**
@@ -113,7 +114,14 @@ export const LabeledCard = ({
             {frameless ? (
                 <div className={cn(contentClassName)}>{children}</div>
             ) : (
-                <Card className={cn(bordered && "border border-default", fillHeight && "flex-1")}>
+                <Card
+                    className={cn(
+                        bordered && "border border-default",
+                        fillHeight && "flex-1",
+                        // root `.card` bakes p-4 — zero it here or flush children stay inset
+                        flushContent && "gap-0 overflow-hidden p-0",
+                    )}
+                >
                     <CardContent className={cn(flushContent && "p-0", fillHeight && "h-full", contentClassName)}>
                         {children}
                     </CardContent>

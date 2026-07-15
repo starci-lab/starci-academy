@@ -57,8 +57,8 @@ const COLUMNS_CLASS: Record<1 | 2 | 3, string> = {
  * ring and the card elevation don't stack.
  *
  * Pick this for a larger "choose one of N cards" with icon / description / badge.
- * For a compact pill switch use `SegmentedControl`; for section navigation use
- * `TabsCard`.
+ * For a compact pill switch use `TabsCard` (`variant="primary"`); for section
+ * navigation use `TabsCard` (`variant="secondary"`).
  *
  * @param props - {@link SelectableCardGroupProps}
  */

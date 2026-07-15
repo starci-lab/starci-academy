@@ -7,7 +7,7 @@ import type { UseFormSetValue } from "react-hook-form"
 import type { SubmitJobPostingFormValues } from "@/hooks/rhf/useSubmitJobPostingForm"
 import { JobApplyMethod } from "@/modules/types/enums/job-apply-method"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
+import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 
 /** Max length of a URL field. */
 const URL_MAX = 2048
@@ -41,14 +41,17 @@ export const ApplyMethodSection = ({
             label={t("jobs.post.sections.applyMethod")}
         >
             <div className="flex flex-col gap-3">
-                <SegmentedControl<JobApplyMethod>
-                    ariaLabel={t("jobs.post.applyMethod.toggleAria")}
-                    value={applyMethod}
-                    onChange={(value) => setValue("applyMethod", value)}
-                    items={[
-                        { value: JobApplyMethod.ExternalUrl, label: t("jobs.post.applyMethod.externalUrl") },
-                        { value: JobApplyMethod.Email, label: t("jobs.post.applyMethod.email") },
-                    ]}
+                <TabsCard
+                    variant="primary"
+                    leftTabs={{
+                        selectedKey: applyMethod,
+                        ariaLabel: t("jobs.post.applyMethod.toggleAria"),
+                        onSelectionChange: (key) => setValue("applyMethod", String(key) as JobApplyMethod),
+                        items: [
+                            { key: JobApplyMethod.ExternalUrl, label: t("jobs.post.applyMethod.externalUrl") },
+                            { key: JobApplyMethod.Email, label: t("jobs.post.applyMethod.email") },
+                        ],
+                    }}
                 />
 
                 {applyMethod === JobApplyMethod.ExternalUrl ? (

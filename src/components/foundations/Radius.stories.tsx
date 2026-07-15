@@ -7,7 +7,7 @@ import { Table } from "@heroui/react"
  * Chọn bậc theo VAI/ĐỘ LỒNG của phần tử — mapping component ↔ radius grounded từ source thật.
  */
 const meta: Meta = {
-    title: "Foundations/Radius",
+    title: "Core/Foundations/Radius",
 }
 export default meta
 type Story = StoryObj

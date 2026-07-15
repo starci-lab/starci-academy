@@ -6,7 +6,7 @@ import { SectionCard } from "./index"
 import { ListRow } from "@/components/blocks/lists/ListRow"
 
 const meta: Meta<typeof SectionCard> = {
-    title: "Reuseable/SectionCard",
+    title: "Core/Card/SectionCard",
     component: SectionCard,
 }
 

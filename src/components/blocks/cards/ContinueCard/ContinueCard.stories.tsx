@@ -4,7 +4,7 @@ import { ClockCounterClockwiseIcon } from "@phosphor-icons/react"
 import { ContinueCard } from "./index"
 
 const meta: Meta<typeof ContinueCard> = {
-    title: "Blocks/Card/ContinueCard",
+    title: "Block/Card/ContinueCard",
     component: ContinueCard,
 }
 export default meta

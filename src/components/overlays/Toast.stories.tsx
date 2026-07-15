@@ -10,7 +10,7 @@ import { expect, screen, userEvent, waitFor, within } from "storybook/test"
  * story tự mount nó để demo. Lỗi CẦN người xử lý bắt buộc → dùng `Callout`/inline, không toast.
  */
 const meta: Meta = {
-    title: "Overlays/Toast",
+    title: "Core/Overlays/Toast",
 }
 
 export default meta

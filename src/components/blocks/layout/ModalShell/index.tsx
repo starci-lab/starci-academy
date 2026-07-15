@@ -1,5 +1,5 @@
 import React from "react"
-import { cn, Modal } from "@heroui/react"
+import { cn, Modal, Typography } from "@heroui/react"
 import type { ReactNode } from "react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
@@ -20,21 +20,28 @@ export interface ModalShellProps extends WithClassNames<undefined> {
      */
     onOpenChange: (open: boolean) => void
     /**
-     * Simple title string/node rendered in the default header look
-     * (`text-lg font-semibold pr-8`, the space reserved for the close
-     * button). Ignored when {@link header} is provided. Omit both to render
-     * no header at all.
+     * Simple title string/node rendered as HeroUI {@link Typography}
+     * (`type="body"` `weight="bold"`). With optional {@link description}, both
+     * sit in one `pr-8` stack (room for the close button). Ignored when
+     * {@link header} is provided. Omit title/header to render no header at all.
      */
     title?: ReactNode
     /**
-     * Extra classes merged onto the default title wrapper. Only applies
-     * when {@link title} is used (not {@link header}).
+     * Explanatory copy under {@link title} (`Typography` `body-sm` muted). Part
+     * of the simple header path — keeps the body free for form/list/CTA only.
+     * Ignored when {@link header} is provided, or when {@link title} is omitted.
+     */
+    description?: ReactNode
+    /**
+     * Extra classes merged onto the default title/description wrapper. Only
+     * applies when {@link title} is used (not {@link header}).
      */
     titleClassName?: string
     /**
-     * Full custom header content — use this instead of {@link title} when the
-     * modal needs a non-standard header (a subtitle row, an inline chip, a
-     * shared `Typography` element, …). Takes precedence over {@link title}.
+     * Full custom header content — use this instead of {@link title} /
+     * {@link description} when the modal needs a non-standard header (identity
+     * subtitle row, inline chip, shared `Typography`, …). Takes precedence
+     * over {@link title} and {@link description}.
      */
     header?: ReactNode
     /**
@@ -43,12 +50,20 @@ export interface ModalShellProps extends WithClassNames<undefined> {
      */
     size?: React.ComponentProps<typeof Modal.Container>["size"]
     /**
-     * Scroll behavior of the underlying `Modal.Container` (e.g. `"inside"` for
-     * dialogs whose body scrolls independently of the page).
+     * Scroll behavior of the underlying `Modal.Container`. Use `"inside"` when
+     * the body is longer than the viewport — header stays put, body scrolls.
+     * When set, the container also gets `max-h-[85vh]` so inside-scroll has a
+     * real ceiling (override via {@link containerClassName} if needed).
+     *
+     * **List rule (surface-in-surface):** a row list inside the modal body must
+     * be `SurfaceListCard` with `bordered` — nested on the modal surface, shadow
+     * is invisible; border delineates. Do not hand-roll `border-b` rows on the
+     * bare body.
      */
     scroll?: React.ComponentProps<typeof Modal.Container>["scroll"]
     /**
      * Extra classes merged onto `Modal.Container` (e.g. a bespoke max-width).
+     * Merged after the `scroll="inside"` max-height default.
      */
     containerClassName?: string
     /**
@@ -60,14 +75,16 @@ export interface ModalShellProps extends WithClassNames<undefined> {
      */
     bodyClassName?: string
     /**
-     * Whether {@link children}'s FIRST element is a tab strip (`Tabs`/
-     * `TabsCard`/`ExtendedTabs`) rather than plain content. Governs the
-     * header→body gap (`fe/foundations/gap.md`): header→plain-content =
-     * `gap-6` (default); header→tabs = `gap-3` (tabs sit closer to the
-     * title, as part of the same "identity" cluster — the CONTENT below the
-     * tabs still gets its own `gap-6` from the tabs, which the modal's own
-     * body layout is responsible for, not this prop). No effect without
-     * {@link title}/{@link header} (no header ⇒ no header-body gap to set).
+     * Category **tabs**: whether {@link children}'s FIRST element is a tab
+     * strip (`Tabs` / `TabsCard` / `ExtendedTabs` / a dedicated TabBar) rather
+     * than plain content. Governs header→body gap only:
+     * - plain (default) → `gap-4`
+     * - leading tabs → `gap-3` (tabs sit in the title's identity cluster)
+     *
+     * Does **not** set tabs→panel spacing — caller always uses `gap-4` between
+     * the tab strip and panel content. Do not set this for a `TabsCard` pill
+     * toggle nested inside a form panel. No effect without {@link title}/{@link header}
+     * (no header ⇒ no header-body gap to set).
      */
     bodyStartsWithTabs?: boolean
     /**
@@ -94,6 +111,7 @@ export interface ModalShellProps extends WithClassNames<undefined> {
  *   isOpen={isOpen}
  *   onOpenChange={setOpen}
  *   title={t("myModal.title")}
+ *   description={t("myModal.description")}
  *   bodyClassName="gap-3"
  * >
  *   <MyModalBody />
@@ -103,6 +121,7 @@ export const ModalShell = ({
     isOpen,
     onOpenChange,
     title,
+    description,
     titleClassName,
     header,
     size,
@@ -118,26 +137,37 @@ export const ModalShell = ({
     return (
         <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
             <Modal.Backdrop>
-                <Modal.Container className={containerClassName} scroll={scroll} size={size}>
+                <Modal.Container
+                    className={cn(scroll === "inside" && "max-h-[85vh]", containerClassName)}
+                    scroll={scroll}
+                    size={size}
+                >
                     <Modal.Dialog className={cn(dialogClassName, className)}>
                         <Modal.CloseTrigger />
                         {header ? (
                             <Modal.Header>{header}</Modal.Header>
                         ) : title != null ? (
                             <Modal.Header>
-                                <div className={cn("text-lg font-semibold pr-8", titleClassName)}>
-                                    {title}
+                                <div className={cn("flex flex-col gap-1 pr-8", titleClassName)}>
+                                    <Typography type="body" weight="bold">
+                                        {title}
+                                    </Typography>
+                                    {description != null ? (
+                                        <Typography type="body-sm" color="muted">
+                                            {description}
+                                        </Typography>
+                                    ) : null}
                                 </div>
                             </Modal.Header>
                         ) : null}
                         {/* HeroUI's own `.modal__header + .modal__body { mt-2 }` (8px) is
-                            tighter than fe/foundations/gap.md's scale — override to gap-6
-                            (header→plain content) or gap-3 (header→tabs) per §header rule.
+                            tighter than the modal scale — override to gap-4
+                            (header→plain content) or gap-3 (header→tabs).
                             Only fires when a header actually precedes body (no header ⇒
                             no sibling match ⇒ this class is inert). */}
                         <Modal.Body
                             className={cn(
-                                hasHeader && (bodyStartsWithTabs ? "mt-3!" : "mt-6!"),
+                                hasHeader && (bodyStartsWithTabs ? "mt-3!" : "mt-4!"),
                                 bodyClassName,
                             )}
                         >

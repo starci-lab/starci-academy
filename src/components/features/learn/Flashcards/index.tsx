@@ -347,9 +347,9 @@ export const Flashcards = ({
                         for BOTH study and quiz (study's deck list is now in the pane too).
                         This is a page-FEATURE switch (swaps the ENTIRE pane — study vs quiz are
                         separate routes) → TabsCard variant="primary" (fe/components/tabs.md §0b),
-                        NOT SegmentedControl (that's for an in-place SETTING that doesn't change
+                        NOT a TabsCard pill-toggle (that's for an in-place SETTING that doesn't change
                         the panel — see tabs.md §0 / segmented-control.md). Correction 2026-07-09:
-                        this was on SegmentedControl before, which is what let QuizSession's OWN
+                        this was on a pill toggle before, which is what let QuizSession's OWN
                         inner setup tabs (also variant="primary") render at the exact same visual
                         weight as this outer mode switch — see tabs.md §0d for the fix. */}
                     <div className="hidden lg:block">

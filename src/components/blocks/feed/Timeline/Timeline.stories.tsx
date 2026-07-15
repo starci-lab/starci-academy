@@ -7,7 +7,7 @@ import { FeedItem } from "../FeedItem"
 import { ActivityAvatar } from "../ActivityAvatar"
 
 const meta: Meta<typeof Timeline> = {
-    title: "Blocks/Feed/Timeline",
+    title: "Core/Feed/Timeline",
     component: Timeline,
 }
 export default meta

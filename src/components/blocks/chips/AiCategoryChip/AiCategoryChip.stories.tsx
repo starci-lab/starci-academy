@@ -4,7 +4,7 @@ import { AiCategoryChip } from "./index"
 import { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
 
 const meta: Meta<typeof AiCategoryChip> = {
-    title: "Blocks/Chip/AiCategoryChip",
+    title: "Core/Chip/AiCategoryChip",
     component: AiCategoryChip,
 }
 export default meta
@@ -15,7 +15,7 @@ export const AllCategories: Story = {
     parameters: { usage: "Bảng tra hạng model → màu chấm, xếp theo đúng thang `CATEGORY_ORDER` (rẻ → mạnh) mà `GradeModelDropdown` dùng để so \"dưới sàn\". Tra khi thiết kế bảng chọn model: hạng nào cần mở khoá, hạng nào ai cũng chọn được. Hạng là THANG BẬC, không phải trạng thái — màu lấy từ palette Tailwind (`AI_CATEGORY_COLOR`), không mượn accent/success/warning/danger: 5 hạng cần 5 màu phân biệt, còn 4 token semantic sẽ ép 2 hạng trùng màu." },
     render: () => (
         <div className="flex flex-col gap-6">
-            <div className="flex flex-col items-start gap-3">
+            <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-2">
                     <Label>Free</Label>
                     <Typography type="body-sm" color="muted">
@@ -24,7 +24,7 @@ export const AllCategories: Story = {
                 </div>
                 <AiCategoryChip category={AiModelCategory.Free} />
             </div>
-            <div className="flex flex-col items-start gap-3">
+            <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-2">
                     <Label>Economy</Label>
                     <Typography type="body-sm" color="muted">
@@ -33,7 +33,7 @@ export const AllCategories: Story = {
                 </div>
                 <AiCategoryChip category={AiModelCategory.Economy} />
             </div>
-            <div className="flex flex-col items-start gap-3">
+            <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-2">
                     <Label>Balanced</Label>
                     <Typography type="body-sm" color="muted">
@@ -42,7 +42,7 @@ export const AllCategories: Story = {
                 </div>
                 <AiCategoryChip category={AiModelCategory.Balanced} />
             </div>
-            <div className="flex flex-col items-start gap-3">
+            <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-2">
                     <Label>Premium</Label>
                     <Typography type="body-sm" color="muted">
@@ -51,7 +51,7 @@ export const AllCategories: Story = {
                 </div>
                 <AiCategoryChip category={AiModelCategory.Premium} />
             </div>
-            <div className="flex flex-col items-start gap-3">
+            <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-2">
                     <Label>Frontier</Label>
                     <Typography type="body-sm" color="muted">

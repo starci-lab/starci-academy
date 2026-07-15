@@ -29,7 +29,7 @@ export const FlashcardMobileNav = ({ className }: FlashcardMobileNavProps) => {
     return (
         <div className={cn("flex flex-col gap-3 lg:hidden", className)}>
             {/* page-FEATURE switch (mirrors the desktop rail's own mode control, see
-                Flashcards/index.tsx) → TabsCard variant="primary", NOT SegmentedControl
+                Flashcards/index.tsx) → TabsCard variant="primary"
                 (fe/components/tabs.md §0b, corrected 2026-07-09). */}
             <TabsCard
                 variant="primary"

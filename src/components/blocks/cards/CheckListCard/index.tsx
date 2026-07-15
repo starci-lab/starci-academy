@@ -8,21 +8,38 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 export interface CheckListCardProps extends WithClassNames<undefined> {
     /** The list rows — typically {@link CheckListItem} elements. */
     children: ReactNode
+    /**
+     * Renders `border border-default` **instead of** `shadow-surface` — when this
+     * list sits NESTED inside another surface (modal / drawer / panel body).
+     * Shadow is invisible on `bg-surface` (surface-in-surface); use border to
+     * delineate. Same rule as `SurfaceListCard bordered`. Default `false` keeps
+     * the top-level shadow look.
+     */
+    bordered?: boolean
 }
 
 /**
  * Static "list card" surface (see `elements/card.md` §3b): one bounded `bg-surface`
- * card whose rows are separated by inset dividers (the `Accordion variant="surface"`
- * look, but static — no expand, no click). Pair it with a `LabeledCard frameless`
- * for the section label so the label sits outside the card (no card-in-card).
+ * card whose rows are separated by full-bleed dividers (the `Accordion
+ * variant="surface"` look, but static — no expand, no click). Pair it with a
+ * `LabeledCard frameless` for the section label (label outside — no card-in-card).
  *
- * For clickable rows (navigation / selection) use `SurfaceListCard` instead — this
- * one is for read-only brief lists (value props, expected outputs, prerequisites…).
+ * **Surface-in-surface:** inside a modal/drawer, pass `bordered` (viền, không
+ * shadow). Top-level on the page → omit `bordered` (shadow).
+ *
+ * For clickable rows use `SurfaceListCard` instead — this one is for read-only
+ * brief lists (value props, expected outputs, prerequisites…).
  *
  * @param props - See {@link CheckListCardProps}.
  */
-export const CheckListCard = ({ children, className }: CheckListCardProps) => (
-    <ul className={cn("overflow-hidden rounded-3xl bg-surface shadow-surface", className)}>
+export const CheckListCard = ({ children, bordered = false, className }: CheckListCardProps) => (
+    <ul
+        className={cn(
+            "overflow-hidden rounded-3xl bg-surface",
+            bordered ? "border border-default" : "shadow-surface",
+            className,
+        )}
+    >
         {children}
     </ul>
 )
@@ -41,7 +58,8 @@ export interface CheckListItemProps {
 
 /**
  * One row of a {@link CheckListCard}: an optional leading success check followed by a
- * free body. Rows are divided by an inset separator (the last row hides it).
+ * free body. Rows are divided by a full-bleed separator (the last row hides it) —
+ * surface-in-surface also keeps separators edge-to-edge.
  *
  * @param props - See {@link CheckListItemProps}.
  */

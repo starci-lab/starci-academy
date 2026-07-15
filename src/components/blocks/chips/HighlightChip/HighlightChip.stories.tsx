@@ -3,7 +3,7 @@ import { Label, Typography } from "@heroui/react"
 import { HighlightChip } from "./index"
 
 const meta: Meta<typeof HighlightChip> = {
-    title: "Blocks/Chip/HighlightChip",
+    title: "Core/Chip/HighlightChip",
     component: HighlightChip,
 }
 export default meta

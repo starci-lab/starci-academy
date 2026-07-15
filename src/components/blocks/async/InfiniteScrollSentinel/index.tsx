@@ -23,7 +23,7 @@ export interface InfiniteScrollSentinelProps extends WithClassNames<undefined> {
  * nothing below it. A list in the page's main column (footer underneath) must
  * use a "load more" button instead — auto-loading steals the scroll and the
  * footer becomes unreachable. A finite list the user browses to pick from wants
- * a pager (`PaginatedList`).
+ * a pager instead (compose `AsyncContent` with a pagination control).
  *
  * Pair with `useSWRInfinite` — `onReach={() => setSize((s) => s + 1)}`,
  * `disabled={!hasMore || isLoadingMore}` where

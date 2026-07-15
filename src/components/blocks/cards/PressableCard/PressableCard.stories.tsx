@@ -5,7 +5,7 @@ import { IconTile } from "@/components/blocks/identity/IconTile"
 import { PressableCard } from "./index"
 
 const meta: Meta<typeof PressableCard> = {
-    title: "Blocks/Card/PressableCard",
+    title: "Core/Card/PressableCard",
     component: PressableCard,
 }
 
@@ -41,6 +41,30 @@ const OptionCardContent = ({ label, price }: { label: string; price: string }) =
     </div>
 )
 
+/**
+ * PROTOTYPE của biến thể "link-card" sắp thêm vào PressableCard (dựng tay tại story để
+ * chốt HÌNH trước, chưa bake prop `title`/`subtitle`/`hover="underline"` vào component
+ * thật). Cả card là MỘT đích điều hướng — `router.push` sang trang khác; hover cả card
+ * thì GẠCH CHÂN label (bản chất là một liên kết) và KHÔNG tô nền; không có CTA
+ * "Đọc→/Ôn→" trailing. Giữ `shadow-surface` lúc nghỉ để vẫn đọc là card.
+ */
+const LinkCardPrototype = ({ title, subtitle }: { title: string; subtitle: string }) => (
+    <button
+        type="button"
+        onClick={() => {}}
+        className="group block w-full cursor-pointer rounded-3xl bg-surface px-4 py-3 text-left shadow-surface outline-none focus-visible:ring-2 focus-visible:ring-accent"
+    >
+        <div className="flex flex-col gap-0">
+            <Typography type="body-sm" className="group-hover:underline">
+                {title}
+            </Typography>
+            <Typography type="body-xs" color="muted">
+                {subtitle}
+            </Typography>
+        </div>
+    </button>
+)
+
 /** Dùng cho ô điều hướng bấm được (vào lộ trình, mở khóa học) — bấm là chuyển màn ngay, không phải chọn lựa. */
 export const Default: Story = {
     parameters: {
@@ -59,6 +83,27 @@ export const Default: Story = {
                 </Typography>
             </div>
             <PressableCard {...args} />
+        </div>
+    ),
+}
+
+/** PROTOTYPE link-card (chờ chốt hình rồi mới bake vào PressableCard): cả card = đích `router.push`, hover gạch chân label, không tô nền, không CTA trailing. */
+export const LinkCard: Story = {
+    parameters: {
+        usage: "PROTOTYPE link-card (chưa bake vào component) — cả card là MỘT đích điều hướng, bấm là router.push sang trang khác; di chuột vào card thì gạch chân tiêu đề (bản chất nó là một liên kết), KHÔNG tô nền, KHÔNG có CTA Đọc/Ôn trailing. Chốt hình xong sẽ thêm prop title/subtitle/hover=\"underline\" vào PressableCard.",
+    },
+    render: () => (
+        <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-2">
+                <Label>Link card (hover gạch chân)</Label>
+                <Typography type="body-sm" color="muted">
+                    Dùng khi cả card chỉ để điều hướng sang một trang khác (bài đọc, lộ trình) — di chuột vào card thì gạch chân tiêu đề để lộ rõ nó là liên kết, không cần nút CTA riêng.
+                </Typography>
+            </div>
+            <div className="flex max-w-md flex-col gap-3">
+                <LinkCardPrototype title="Vì sao học viên bỏ dở khoá học?" subtitle="12.4k lượt đọc" />
+                <LinkCardPrototype title="Lộ trình trở thành Senior Backend" subtitle="9.1k lượt đọc" />
+            </div>
         </div>
     ),
 }

@@ -15,7 +15,7 @@ A tier-3 presentational block that renders a page or section header with an opti
 |------|------|---------|-------------|
 | `title` | `React.ReactNode` | — | **Required.** Primary heading rendered `text-xl font-medium text-foreground`. |
 | `description` | `React.ReactNode` | `undefined` | Supporting copy below the title, rendered `text-sm text-muted`. |
-| `breadcrumb` | `React.ReactNode` | `undefined` | Small row rendered above the title row; pass a HeroUI `<Breadcrumbs>` or plain anchor chain. |
+| `breadcrumb` | `React.ReactNode` | `undefined` | Small row above the title; pass `ResponsiveBreadcrumb` (desktop trail; mobile / trail ≥4 → "Trở lại") or a plain `BackLink`. |
 | `actions` | `React.ReactNode` | `undefined` | Right-aligned slot for `<Button>` elements or any control group. |
 | `className` | `string` | `undefined` | Extra Tailwind classes forwarded to the outer wrapper `<div>`. |
 

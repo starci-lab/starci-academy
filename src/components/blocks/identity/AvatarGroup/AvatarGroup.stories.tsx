@@ -3,7 +3,7 @@ import { Label, Typography } from "@heroui/react"
 import { AvatarGroup } from "./index"
 
 const meta: Meta<typeof AvatarGroup> = {
-    title: "Blocks/Identity/AvatarGroup",
+    title: "Block/Identity/AvatarGroup",
     component: AvatarGroup,
 }
 export default meta

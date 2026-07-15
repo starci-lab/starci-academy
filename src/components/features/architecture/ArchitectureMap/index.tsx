@@ -4,7 +4,7 @@ import React, { useMemo } from "react"
 import dynamic from "next/dynamic"
 import { Chip, Skeleton, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
+import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import type { HealthByName } from "../hooks/useSystemHealthPoll"
 import { ARCHITECTURE_MODULE_MAP } from "../modules"
 import { buildLiveScene } from "./scene"
@@ -106,15 +106,18 @@ export const ArchitectureMap = ({ healthByName, selectedId, onSelectNode, classN
         <div className={cn("flex flex-col gap-3", className)}>
             {/* era switch (present ⇄ future) — no pod/layout toggle anymore */}
             <div className="flex flex-wrap items-center justify-between gap-3">
-                <SegmentedControl
-                    ariaLabel={t("view.eraAria")}
-                    value={era}
-                    onChange={setEra}
-                    items={[
-                        { value: "present", label: t("view.present") },
-                        { value: "future", label: t("view.future") },
-                    ]}
+                <TabsCard
+                    variant="primary"
                     className="w-full max-w-xs"
+                    leftTabs={{
+                        selectedKey: era,
+                        ariaLabel: t("view.eraAria"),
+                        onSelectionChange: (key) => setEra(String(key) as typeof era),
+                        items: [
+                            { key: "present", label: t("view.present") },
+                            { key: "future", label: t("view.future") },
+                        ],
+                    }}
                 />
                 {era === "future" ? (
                     <Chip size="sm" className="bg-accent-soft text-accent-soft-foreground">

@@ -5,7 +5,7 @@ import { AmbientBackground } from "./index"
 import { BackgroundEffect } from "@/modules/types/enums/background-effect"
 
 const meta: Meta<typeof AmbientBackground> = {
-    title: "Blocks/Layout/AmbientBackground",
+    title: "Core/Layout/AmbientBackground",
     component: AmbientBackground,
 }
 export default meta

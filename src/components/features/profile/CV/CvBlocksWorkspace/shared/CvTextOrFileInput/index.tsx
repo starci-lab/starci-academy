@@ -49,7 +49,7 @@ export interface CvTextOrFileInputProps extends WithClassNames<undefined> {
 /**
  * A shared "paste text OR upload a file" input — the two ways to feed the same
  * text payload into `splitCvFromText` (a CV) or `tailorCvBlocks` (a job
- * description). A `SegmentedControl` switches modes: paste = a plain textarea;
+ * description). A `TabsCard` (primary) switches modes: paste = a plain textarea;
  * upload = a `Dropzone` (PDF / DOCX / TXT, 10MB) that presigns → PUTs the file
  * to storage → calls `extractDocumentText` server-side → writes the extracted
  * text back into `value` AND flips to paste mode so the user reviews/edits it

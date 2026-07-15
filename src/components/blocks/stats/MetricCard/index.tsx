@@ -6,39 +6,40 @@ import { SectionCard } from "@/components/reuseable/SectionCard"
 /**
  * Props for the {@link MetricCard} block.
  *
- * A standalone metric card that presents a single data point with an optional
- * leading icon, a large value, a descriptive label, and an optional hint note.
- * Tier-3 presentational — all content arrives via props; no store, no fetch.
+ * A standalone metric card that presents a single data point — a large value, a
+ * descriptive label, and an optional hint note. Tier-3 presentational — all
+ * content arrives via props; no store, no fetch.
  */
 export interface MetricCardProps extends WithClassNames<undefined> {
     /**
-     * Optional leading icon rendered above the value row.
-     * Pass an inline SVG or icon component sized to fit (e.g. 20–24 px).
-     */
-    icon?: React.ReactNode
-    /**
      * The primary metric value to highlight (e.g. "1,204", "98%", a ReactNode
-     * counter). Rendered at `text-2xl font-medium text-foreground`.
+     * counter). Rendered large and emphasized.
      */
     value: React.ReactNode
     /**
      * Short description of what the value measures (e.g. "Total Enrollments",
-     * "Completion Rate"). Rendered at `text-xs text-muted` beneath the value.
+     * "Completion Rate"). The PROMINENT line: rendered `body-sm` in the default
+     * foreground tone, right below the value.
      */
     label: React.ReactNode
     /**
-     * Optional supplementary note rendered below the label in the same muted
-     * tone — useful for context such as "vs. last week" or "updated daily".
+     * Optional supplementary note below the label. The QUIET footnote: rendered
+     * SMALL and MUTED (`body-xs`) — deliberately less prominent than the label so
+     * the two lines never read as the same thing (thầy 2026-07-16).
      */
     hint?: React.ReactNode
 }
 
 /**
  * MetricCard is a standalone, framed metric display block built on
- * {@link SectionCard}. It wraps a single data point — icon, value, label, and
- * an optional hint — in a vertical flex layout. Unlike {@link StatPair}, which
- * is frameless and intended for stat ribbons, MetricCard supplies its own card
+ * {@link SectionCard}. It wraps a single data point — value, label, and an
+ * optional hint — in a vertical flex layout. Unlike {@link StatPair}, which is
+ * frameless and intended for stat ribbons, MetricCard supplies its own card
  * frame and is suitable for dashboards, profile sidebars, or KPI grids.
+ *
+ * The label is `body-sm` foreground (prominent); the hint is `body-xs` muted (a
+ * quiet footnote), so the two lines are never confused for each other (no leading
+ * icon — removed 2026-07-16).
  *
  * Tier-3 presentational block: props-only, no store, no SWR, no side-effects.
  *
@@ -46,14 +47,12 @@ export interface MetricCardProps extends WithClassNames<undefined> {
  *
  * @example
  * <MetricCard
- *   icon={<ChartLine />}
  *   value="1,204"
  *   label="Total Enrollments"
  *   hint="Updated daily"
  * />
  */
 export const MetricCard = ({
-    icon,
     value,
     label,
     hint,
@@ -63,24 +62,17 @@ export const MetricCard = ({
         // SectionCard provides the framed card shell (border + bg + radius)
         <SectionCard className={cn(className)}>
             <div className="flex flex-col gap-2">
-                {/* Optional leading icon row — only rendered when icon is provided */}
-                {icon ? (
-                    <div>
-                        {icon}
-                    </div>
-                ) : null}
-
                 {/* Primary metric value — large and visually prominent */}
                 <Typography type="h4" weight="semibold">
                     {value}
                 </Typography>
 
-                {/* Descriptive label beneath the value */}
-                <Typography type="body-xs" color="muted">
+                {/* Descriptive label — body-sm foreground, the prominent line */}
+                <Typography type="body-sm">
                     {label}
                 </Typography>
 
-                {/* Optional supplementary hint — smaller, same muted tone */}
+                {/* Optional hint — small + muted footnote, DISTINCT from the label */}
                 {hint ? (
                     <Typography type="body-xs" color="muted">
                         {hint}

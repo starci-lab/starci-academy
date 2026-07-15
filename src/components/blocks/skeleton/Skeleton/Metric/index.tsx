@@ -1,29 +1,27 @@
 import React from "react"
-import { Skeleton, cn } from "@heroui/react"
+import { Card, CardContent, Skeleton } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
-/**
- * Props for {@link SkeletonMetric}.
- *
- * No part-specific props: a fixed value + label stack matching a single metric.
- */
-export interface SkeletonMetricProps extends WithClassNames<undefined> {
-    // No part-specific props.
-}
+/** Props for {@link SkeletonMetric} (no part-specific props). */
+export type SkeletonMetricProps = WithClassNames<undefined>
 
 /**
- * Skeleton matching a single metric (value + label), e.g. the inner content of
- * a {@link import("@/components/blocks").MetricCard}. Stacks a prominent value
- * bar over a muted label bar with `gap-2`.
- *
- * - Value bar: `h-7 w-16` (large headline value).
- * - Label bar: `h-3 w-24` (body-xs glyph height for the descriptor).
+ * Skeleton matching a {@link import("@/components/blocks").MetricCard} — which is a
+ * FRAMED card (SectionCard) around value + label + hint. So this renders its own
+ * `Card` + `CardContent` frame with a value bar (h4), a label bar (body-sm) and a
+ * hint bar (body-xs), so `<Skeleton.Metric/>` shares MetricCard's exact box.
  */
-export const SkeletonMetric = ({ className }: SkeletonMetricProps) => {
-    return (
-        <div className={cn("flex flex-col gap-2", className)}>
-            <Skeleton className="h-7 w-16 rounded" />
-            <Skeleton className="my-1 h-3 w-24 rounded" />
-        </div>
-    )
-}
+export const SkeletonMetric = ({ className }: SkeletonMetricProps) => (
+    <Card className={className}>
+        <CardContent>
+            <div className="flex flex-col gap-2">
+                {/* Value (h4) */}
+                <Skeleton className="h-6 w-16 rounded" />
+                {/* Label (body-sm) */}
+                <Skeleton className="my-[5px] h-[14px] w-2/3 rounded" />
+                {/* Hint (body-xs) */}
+                <Skeleton className="h-3 w-24 rounded" />
+            </div>
+        </CardContent>
+    </Card>
+)

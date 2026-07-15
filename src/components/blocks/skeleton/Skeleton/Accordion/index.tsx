@@ -9,16 +9,18 @@ export interface SkeletonAccordionProps extends WithClassNames<undefined> {
 }
 
 /**
- * Skeleton matching a HeroUI <Accordion/>: each item is a trigger row
- * (px-4 py-4 + text-sm/leading-6 -> h-14 box) followed by a 1px separator
- * (the last item has no separator, matching :last-child::after { none }).
+ * Skeleton matching a HeroUI <Accordion variant="surface"/>: KEEPS the surface
+ * shell (rounded-3xl bg-surface — rule: surface blocks like Card/Accordion keep
+ * their surface in the skeleton, only inner content becomes bars). Each item is a
+ * trigger row (px-4 py-4 + text-sm/leading-6 -> h-14 box) followed by a 1px
+ * separator (the last item has no separator, matching :last-child::after { none }).
  */
 export const SkeletonAccordion = ({
     className,
     items = 3,
 }: SkeletonAccordionProps) => {
     return (
-        <div className={cn("w-full", className)}>
+        <div className={cn("w-full overflow-hidden rounded-3xl bg-surface", className)}>
             {Array.from({ length: items }).map((_, index) => (
                 <div key={index} className="relative">
                     {/* Trigger row (h-14): label bar + indicator */}

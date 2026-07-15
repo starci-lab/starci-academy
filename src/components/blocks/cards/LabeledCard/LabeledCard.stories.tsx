@@ -9,7 +9,7 @@ import { LabeledCard } from "./index"
  * while `Card` holds only content. See `src/components/blocks/cards/LabeledCard/index.tsx`.
  */
 const meta: Meta<typeof LabeledCard> = {
-    title: "Blocks/Card/LabeledCard",
+    title: "Block/Card/LabeledCard",
     component: LabeledCard,
 }
 export default meta

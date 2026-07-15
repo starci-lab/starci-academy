@@ -5,36 +5,23 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 /** Props for {@link SkeletonTextArea}. */
 export interface SkeletonTextAreaProps extends WithClassNames<undefined> {
     /**
-     * Number of text rows the textarea renders.
-     * Defaults to 3 (real <TextArea/> min-height is 38px ~ 1 row, but the
-     * common authored size is multi-row).
+     * Number of text rows the textarea renders. Defaults to 3. Drives the block
+     * height (~1.25rem per row + the px-3 py-2 field padding).
      */
     rows?: number
 }
 
 /**
- * Skeleton matching a HeroUI <TextArea/> field box (multi-row).
- * Real textarea: px-3 py-2, text-base/sm:text-sm, min-height 38px, rounded-field.
- * Approximate body glyph rows (h-4) stacked with line spacing inside the field box,
- * wrapped in a rounded-field container to preserve the box footprint.
+ * Skeleton matching a HeroUI <TextArea/> field box (multi-row). A real EMPTY
+ * textarea is just an empty rounded field box, so this is ONE shimmer block sized
+ * to the field footprint (rounded-field = rounded-xl), height derived from `rows`
+ * — not stacked text bars (that would read as pre-filled content).
  */
-export const SkeletonTextArea = ({ rows = 3, className }: SkeletonTextAreaProps) => {
-    return (
-        <div
-            className={cn(
-                "flex flex-col gap-2 rounded-xl px-3 py-2",
-                className,
-            )}
-        >
-            {Array.from({ length: rows }).map((_, index) => (
-                <Skeleton
-                    key={index}
-                    className={cn(
-                        "h-4 rounded",
-                        index === rows - 1 ? "w-2/3" : "w-full",
-                    )}
-                />
-            ))}
-        </div>
-    )
-}
+export const SkeletonTextArea = ({ rows = 3, className }: SkeletonTextAreaProps) => (
+    <div
+        className={cn("w-full", className)}
+        style={{ height: `${rows * 20 + 16}px` }}
+    >
+        <Skeleton className="h-full w-full rounded-xl" />
+    </div>
+)

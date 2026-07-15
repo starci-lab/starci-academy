@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
+import { Label, Typography } from "@heroui/react"
 import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react"
 
 import { StatusChip } from "./index"
 import type { StatusChipProps } from "./index"
 
 const meta: Meta<typeof StatusChip> = {
-    title: "Blocks/Chip/StatusChip",
+    title: "Block/Chip/StatusChip",
     component: StatusChip,
     args: {
         children: "Đang hoạt động",
@@ -30,11 +31,36 @@ export const Default: Story = {
     },
 }
 
-const TONES: { tone: NonNullable<StatusChipProps["tone"]>; label: string }[] = [
-    { tone: "success", label: "Đã hoàn thành" },
-    { tone: "warning", label: "Sắp hết hạn" },
-    { tone: "danger", label: "Đã huỷ" },
-    { tone: "accent", label: "Nổi bật" },
+const TONES: {
+    tone: NonNullable<StatusChipProps["tone"]>
+    name: string
+    label: string
+    desc: string
+}[] = [
+    {
+        tone: "success",
+        name: "Success",
+        label: "Đã hoàn thành",
+        desc: "Trạng thái đã xong, thành công — item đã hoàn tất hoặc đã xác minh, kết quả tích cực.",
+    },
+    {
+        tone: "warning",
+        name: "Warning",
+        label: "Sắp hết hạn",
+        desc: "Trạng thái cần chú ý, sắp hết hạn — nhắc người dùng xử lý trước khi trễ, chưa phải lỗi.",
+    },
+    {
+        tone: "danger",
+        name: "Danger",
+        label: "Đã huỷ",
+        desc: "Trạng thái đã huỷ hoặc lỗi — kết quả tiêu cực, không thể tiếp tục.",
+    },
+    {
+        tone: "accent",
+        name: "Accent",
+        label: "Nổi bật",
+        desc: "Trạng thái nổi bật hoặc mới — muốn kéo chú ý mà không mang nghĩa cảnh báo hay thành công.",
+    },
 ]
 
 /**
@@ -46,11 +72,17 @@ export const Tones: Story = {
             "Chọn tone theo Ý NGHĨA trạng thái thật trong app: success = đã xong, warning = sắp hết hạn/cần chú ý, danger = đã huỷ/lỗi, accent = nổi bật/mới — không chọn theo thẩm mỹ.",
     },
     render: () => (
-        <div className="flex flex-col gap-4">
-            {TONES.map(({ tone, label }) => (
-                <StatusChip key={tone} tone={tone}>
-                    {label}
-                </StatusChip>
+        <div className="flex flex-col gap-6">
+            {TONES.map(({ tone, name, label, desc }) => (
+                <div key={tone} className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-2">
+                        <Label>{name}</Label>
+                        <Typography type="body-sm" color="muted">
+                            {desc}
+                        </Typography>
+                    </div>
+                    <StatusChip tone={tone}>{label}</StatusChip>
+                </div>
             ))}
         </div>
     ),
@@ -69,13 +101,29 @@ export const WithIcon: Story = {
             "Chip có icon chỉ cho 2 status dứt khoát: thành công = `CheckCircleIcon` (circle-check, tone success), lỗi = `XCircleIcon` (circle-x, tone danger). Icon leading, tĩnh. Tone khác không icon.",
     },
     render: () => (
-        <div className="flex flex-col items-start gap-3">
-            <StatusChip tone="success" icon={<CheckCircleIcon />}>
-                Đã xác minh
-            </StatusChip>
-            <StatusChip tone="danger" icon={<XCircleIcon />}>
-                Lỗi xử lý
-            </StatusChip>
+        <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Thành công</Label>
+                    <Typography type="body-sm" color="muted">
+                        Kết quả thành công hoặc đã xác minh — dùng CheckCircleIcon với tone success, icon leading tĩnh.
+                    </Typography>
+                </div>
+                <StatusChip tone="success" icon={<CheckCircleIcon />}>
+                    Đã xác minh
+                </StatusChip>
+            </div>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Lỗi</Label>
+                    <Typography type="body-sm" color="muted">
+                        Kết quả lỗi hoặc thất bại — dùng XCircleIcon với tone danger, icon leading tĩnh.
+                    </Typography>
+                </div>
+                <StatusChip tone="danger" icon={<XCircleIcon />}>
+                    Lỗi xử lý
+                </StatusChip>
+            </div>
         </div>
     ),
 }

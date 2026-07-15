@@ -31,7 +31,7 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import { SearchInput } from "@/components/reuseable/SearchInput"
-import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
+import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { useQueryCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursesSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { CourseCardSkeleton } from "@/components/blocks/cards/CourseCardSkeleton"
@@ -215,32 +215,35 @@ export const CourseCatalog = ({ className }: CourseCatalogProps) => {
                                 {t("courses.count", { count })}
                             </Typography>
                         ) : null}
-                        <SegmentedControl<CatalogView>
-                            ariaLabel={t("courses.viewAria")}
-                            value={view}
-                            onChange={onChangeView}
-                            items={[
-                                {
-                                    value: "grid",
-                                    label: (
-                                        <SquaresFourIcon
-                                            className="size-5"
-                                            aria-label={t("courses.viewGrid")}
-                                            focusable="false"
-                                        />
-                                    ),
-                                },
-                                {
-                                    value: "line",
-                                    label: (
-                                        <ListIcon
-                                            className="size-5"
-                                            aria-label={t("courses.viewLine")}
-                                            focusable="false"
-                                        />
-                                    ),
-                                },
-                            ]}
+                        <TabsCard
+                            variant="primary"
+                            leftTabs={{
+                                selectedKey: view,
+                                ariaLabel: t("courses.viewAria"),
+                                onSelectionChange: (key) => onChangeView(String(key) as CatalogView),
+                                items: [
+                                    {
+                                        key: "grid",
+                                        label: (
+                                            <SquaresFourIcon
+                                                className="size-5"
+                                                aria-label={t("courses.viewGrid")}
+                                                focusable="false"
+                                            />
+                                        ),
+                                    },
+                                    {
+                                        key: "line",
+                                        label: (
+                                            <ListIcon
+                                                className="size-5"
+                                                aria-label={t("courses.viewLine")}
+                                                focusable="false"
+                                            />
+                                        ),
+                                    },
+                                ],
+                            }}
                         />
                     </div>
                 </div>

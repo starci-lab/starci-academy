@@ -25,7 +25,7 @@ import { useAvatarUploadOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useEditProfileForm } from "@/hooks/rhf/useEditProfileForm"
 import { AvatarUploadButton } from "@/components/blocks/identity/AvatarUploadButton"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
-import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
+import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { WorkMode } from "@/modules/types/enums/work-mode"
 
 /** Max length of the display name (mirrors the `display_name` column). */
@@ -190,22 +190,23 @@ export const EditProfile = () => {
                 {/* preferred work mode — a setting with a small fixed choice → segmented, not dropdown */}
                 <div className="flex flex-col gap-3">
                     <Label htmlFor="profile-work-mode">{t("profileEdit.workMode")}</Label>
-                    <SegmentedControl
-                        items={[
-                            { value: WORK_MODE_NONE, label: t("profileEdit.workModeNone") },
-                            ...WORK_MODE_OPTIONS.map((option) => ({
-                                value: option.value as string,
-                                label: t(option.labelKey),
-                            })),
-                        ]}
-                        value={workMode === "" ? WORK_MODE_NONE : workMode}
-                        onChange={(value) =>
-                            setValue(
-                                "workMode",
-                                value === WORK_MODE_NONE ? "" : (value as WorkMode),
-                            )
-                        }
-                        ariaLabel={t("profileEdit.workMode")}
+                    <TabsCard
+                        variant="primary"
+                        leftTabs={{
+                            selectedKey: workMode === "" ? WORK_MODE_NONE : workMode,
+                            ariaLabel: t("profileEdit.workMode"),
+                            onSelectionChange: (key) => {
+                                const value = String(key)
+                                setValue("workMode", value === WORK_MODE_NONE ? "" : (value as WorkMode))
+                            },
+                            items: [
+                                { key: WORK_MODE_NONE, label: t("profileEdit.workModeNone") },
+                                ...WORK_MODE_OPTIONS.map((option) => ({
+                                    key: option.value as string,
+                                    label: t(option.labelKey),
+                                })),
+                            ],
+                        }}
                     />
                 </div>
 

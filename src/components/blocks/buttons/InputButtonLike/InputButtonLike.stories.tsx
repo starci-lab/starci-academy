@@ -5,7 +5,7 @@ import { MagnifyingGlassIcon } from "@phosphor-icons/react"
 import { InputButtonLike } from "./index"
 
 const meta: Meta<typeof InputButtonLike> = {
-    title: "Blocks/Button/InputButtonLike",
+    title: "Core/Button/InputButtonLike",
     component: InputButtonLike,
 }
 export default meta

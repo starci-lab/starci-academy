@@ -2,9 +2,12 @@
 
 import React from "react"
 import type { ReactNode } from "react"
-import { Breadcrumbs, Link, cn } from "@heroui/react"
-import { CaretLeftIcon } from "@phosphor-icons/react"
+import { Breadcrumbs, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { BackLink } from "@/components/blocks/navigation/BackLink"
+
+/** Collapse the full trail into a single "Trở lại" once the path is this deep. */
+const LONG_TRAIL_MIN = 4
 
 /** One crumb in a {@link ResponsiveBreadcrumb} trail. */
 export interface ResponsiveBreadcrumbItem {
@@ -23,12 +26,13 @@ export interface ResponsiveBreadcrumbProps extends WithClassNames<undefined> {
 }
 
 /**
- * Breadcrumb that adapts to screen width: the full `Home › … › Current` trail on
- * `sm`+ (desktop wayfinding), collapsed to a single back-link `‹ <parent>` on mobile
- * (the iOS / Polaris pattern — a long trail wraps + eats vertical space on a phone,
- * and the leftmost crumbs are already reachable from the top nav). The mobile target
- * is the deepest clickable ancestor (the last item with an `onPress`). Pure CSS
- * responsive — no JS. Drop into a `PageHeader` `breadcrumb` slot.
+ * Breadcrumb for a `PageHeader` `breadcrumb` slot. Shows the full
+ * `Home › … › Current` trail on desktop when short; collapses to a single
+ * {@link BackLink} ("Trở lại") on mobile, or whenever the trail is long
+ * (`>= {@link LONG_TRAIL_MIN}` crumbs) — a long trail wraps and eats vertical
+ * space, and deep ancestors are already reachable from top nav. The back
+ * target is the deepest clickable ancestor (last item with `onPress`). Pure
+ * CSS for the mobile breakpoint; length check is render-time.
  *
  * @param props - {@link ResponsiveBreadcrumbProps}
  */
@@ -36,13 +40,19 @@ export const ResponsiveBreadcrumb = ({
     items,
     className,
 }: ResponsiveBreadcrumbProps) => {
-    // mobile back target = the deepest ancestor we can navigate to (skips the current crumb)
+    // back target = deepest ancestor we can navigate to (skips the current crumb)
     const parent = [...items].reverse().find((item) => item.onPress)
+    const isLongTrail = items.length >= LONG_TRAIL_MIN
 
     return (
         <>
-            {/* desktop: the full trail */}
-            <Breadcrumbs className={cn("hidden sm:flex", className)}>
+            {/* desktop + short trail: the full path */}
+            <Breadcrumbs
+                className={cn(
+                    isLongTrail ? "hidden" : "hidden sm:flex",
+                    className,
+                )}
+            >
                 {items.map((item) => (
                     <Breadcrumbs.Item key={item.key} onPress={item.onPress}>
                         {item.label}
@@ -50,15 +60,15 @@ export const ResponsiveBreadcrumb = ({
                 ))}
             </Breadcrumbs>
 
-            {/* mobile: a single back-link to the parent (omitted when nothing to go back to) */}
-            {parent ? (
-                <Link
+            {/* mobile, or long trail on any width: single "Trở lại" */}
+            {parent?.onPress ? (
+                <BackLink
                     onPress={parent.onPress}
-                    className={cn("flex w-fit items-center gap-1 text-sm text-muted sm:hidden", className)}
-                >
-                    <CaretLeftIcon aria-hidden focusable="false" className="size-5 shrink-0" />
-                    <span className="truncate">{parent.label}</span>
-                </Link>
+                    className={cn(
+                        isLongTrail ? undefined : "sm:hidden",
+                        className,
+                    )}
+                />
             ) : null}
         </>
     )

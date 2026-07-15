@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Pagination } from "./index"
 
 const meta: Meta<typeof Pagination> = {
-    title: "Reuseable/Pagination",
+    title: "Core/Navigation/Pagination",
     component: Pagination,
 }
 

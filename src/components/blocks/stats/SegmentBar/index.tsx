@@ -62,25 +62,37 @@ export const SegmentBar = ({
         ...segment,
         color: segment.color ?? PALETTE[index % PALETTE.length],
     }))
+    const filled = colored.filter((segment) => segment.value > 0)
+    const filledSum = filled.reduce((acc, segment) => acc + segment.value, 0)
+    const remainder = Math.max(0, total - filledSum)
 
     return (
         <div className={cn("flex flex-col gap-2", className)}>
             <div
                 role="img"
                 aria-label={ariaLabel}
-                className="flex h-2 w-full overflow-hidden rounded-full bg-default"
+                className="flex h-2 w-full gap-px overflow-hidden rounded-full bg-default"
             >
-                {colored
-                    .filter((segment) => segment.value > 0)
-                    .map((segment) => (
-                        <div
-                            key={segment.key}
-                            style={{
-                                width: `${(segment.value / total) * 100}%`,
-                                backgroundColor: segment.color,
-                            }}
-                        />
-                    ))}
+                {filled.map((segment) => (
+                    <div
+                        key={segment.key}
+                        className="h-full min-w-0"
+                        style={{
+                            // flex-grow (not %) keeps every slice the same height — %
+                            // widths land on fractional pixels and look "uneven" at seams.
+                            flexGrow: segment.value,
+                            flexBasis: 0,
+                            backgroundColor: segment.color,
+                        }}
+                    />
+                ))}
+                {remainder > 0 ? (
+                    <div
+                        aria-hidden
+                        className="h-full min-w-0"
+                        style={{ flexGrow: remainder, flexBasis: 0 }}
+                    />
+                ) : null}
             </div>
             {!hideLegend ? (
                 <div className="flex flex-wrap gap-x-3 gap-y-2">

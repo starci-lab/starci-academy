@@ -4,7 +4,7 @@ import { Label, Typography } from "@heroui/react"
 import { ErrorContent } from "./index"
 
 const meta: Meta<typeof ErrorContent> = {
-    title: "Blocks/Async/ErrorContent",
+    title: "Core/Async/ErrorContent",
     component: ErrorContent,
 }
 export default meta

@@ -19,7 +19,7 @@ A tier-3 presentational block that renders a single pricing plan card with a tie
 | `period` | `React.ReactNode` | `undefined` | Muted billing period label (e.g. "/month"). Omit if not applicable. |
 | `features` | `React.ReactNode` | — | Feature list — typically a `<ul>` element. Caller controls markup. |
 | `cta` | `React.ReactNode` | — | Call-to-action button — pass a fully configured HeroUI `<Button>`. |
-| `badge` | `React.ReactNode` | `undefined` | Optional badge label (e.g. "Most popular"). Only shown when `highlighted` is also true. |
+| `badge` | `React.ReactNode` | `undefined` | Optional badge (e.g. "Phổ biến") shown beside the tier name. Only when `highlighted`. Chip is `w-fit` — never full-width. |
 | `highlighted` | `boolean` | `false` | Enables accent border/background (SectionCard `accent` variant) and reveals the badge. |
 | `className` | `string` | `undefined` | Extra Tailwind classes merged onto the outer SectionCard. |
 

@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
+import { Card, CardContent, Label, Typography } from "@heroui/react"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { CheckListCard, CheckListItem } from "./index"
 
 const meta: Meta<typeof CheckListCard> = {
-    title: "Blocks/Card/CheckListCard",
+    title: "Core/Card/CheckListCard",
     component: CheckListCard,
 }
 export default meta
@@ -77,6 +78,37 @@ export const LongText: Story = {
                 </CheckListItem>
                 <CheckListItem>Viết unit test đạt độ phủ trên 80%</CheckListItem>
             </CheckListCard>
+        </div>
+    ),
+}
+
+/**
+ * Surface-in-surface: list lồng trong surface cha (thân modal/panel) → `bordered`
+ * (viền XOR shadow). Pair `LabeledCard frameless` — label ngoài, không card-in-card.
+ */
+export const SurfaceInSurface: Story = {
+    parameters: {
+        usage: "Khi CheckListCard nằm trong surface CHA nhìn thấy được (thân modal/drawer/panel): `LabeledCard frameless` + `CheckListCard bordered`. `bordered` = VIỀN thay shadow (shadow vô hình trên bg-surface). Đứng top-level trên page → bỏ `bordered`. Không hack `shadow-none` / `border` qua className.",
+    },
+    render: () => (
+        <div className="flex max-w-sm flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Lồng trong surface cha</Label>
+                <Typography type="body-sm" color="muted">
+                    Card ngoài = thân modal. Inner checklist dùng bordered.
+                </Typography>
+            </div>
+            <Card>
+                <CardContent>
+                    <LabeledCard label="Bao gồm" frameless>
+                        <CheckListCard bordered>
+                            <CheckListItem>Toàn bộ lộ trình</CheckListItem>
+                            <CheckListItem>Chấm bài AI</CheckListItem>
+                            <CheckListItem>Cộng đồng khoá</CheckListItem>
+                        </CheckListCard>
+                    </LabeledCard>
+                </CardContent>
+            </Card>
         </div>
     ),
 }

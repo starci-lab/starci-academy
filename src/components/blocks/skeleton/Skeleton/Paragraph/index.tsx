@@ -9,9 +9,10 @@ export interface SkeletonParagraphProps extends WithClassNames<undefined> {
 }
 
 /**
- * Skeleton matching a HeroUI prose paragraph (text-base leading-7, 16/28).
- * Each bar is the glyph height (h-4) vertically centered (my-2) inside the
- * real line box; the last line is shortened (w-2/3) to mimic a paragraph end.
+ * Skeleton matching a HeroUI prose paragraph (text-base leading-7, 16/28). Each
+ * bar is the glyph height (h-4 = 16px) centered `my-[6px]` (6+6=12) so the line
+ * box is exactly 28px (leading-7) — lines sit TIGHT like real prose, not loose.
+ * The last line is shortened (w-2/3) to mimic a paragraph end.
  */
 export const SkeletonParagraph = ({ lines = 3, className }: SkeletonParagraphProps) => {
     const count = Math.max(1, lines)
@@ -21,7 +22,7 @@ export const SkeletonParagraph = ({ lines = 3, className }: SkeletonParagraphPro
                 <Skeleton
                     key={index}
                     className={cn(
-                        "h-4 my-2 rounded",
+                        "h-4 my-[6px] rounded",
                         index === count - 1 ? "w-2/3" : "w-full",
                     )}
                 />

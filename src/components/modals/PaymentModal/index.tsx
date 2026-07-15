@@ -31,7 +31,7 @@ import { IconTile } from "@/components/blocks/identity/IconTile"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 import { PriceTag } from "@/components/blocks/commerce/PriceTag"
-import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
+import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import type { PriceCurrency } from "@/components/blocks/commerce/PriceTag"
 
 /** GraphQL extension code the BE raises when the viewer already has an enrollment (`CourseAlreadyEnrolledError`). */
@@ -635,30 +635,33 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                                                     <Label>{t("payment.installment.title")}</Label>
                                                     {/* 1 SETTING gọn TẠI CHỖ — chọn xong chỉ toggle field state
                                                     (hiện/ẩn 1 info row bên dưới), KHÔNG đổi cả panel/route →
-                                                    SegmentedControl, không phải nested Tabs (test đúng theo
+                                                    TabsCard primary (pill), không phải nested Tabs (test đúng theo
                                                     segmented-control.md §Gotcha: "bấm xong có văng sang panel
-                                                    khác hẳn không? Không → SegmentedControl"). size="sm" vì
+                                                    khác hẳn không? Không → TabsCard primary size sm"). size="sm" vì
                                                     đây là lựa chọn PHỤ trong panel "Thanh toán" — không chiếm
                                                     hết bề ngang như 1 tính-năng-cấp-trang. */}
-                                                    <SegmentedControl<"full" | "installment">
+                                                    <TabsCard
+                                                        variant="primary"
                                                         size="sm"
-                                                        ariaLabel={t("payment.installment.title")}
-                                                        value={installmentActive ? "installment" : "full"}
-                                                        onChange={(value) => setInstallmentMonths(
-                                                        // default straight to the 3-month term (shortest — least
-                                                        // markup) so switching to "Trả góp" doesn't force another
-                                                        // decision before showing a number; falls back to whatever
-                                                        // the BE offered first if 3-month isn't available.
-                                                            value === "installment"
-                                                                ? installmentOptions.find((option) => option.months === 3)?.months
-                                                                ?? installmentOptions[0]?.months
-                                                                ?? null
-                                                                : null,
-                                                        )}
-                                                        items={[
-                                                            { value: "full", label: t("payment.installment.payFull") },
-                                                            { value: "installment", label: t("payment.installment.payInstallment") },
-                                                        ]}
+                                                        leftTabs={{
+                                                            selectedKey: installmentActive ? "installment" : "full",
+                                                            ariaLabel: t("payment.installment.title"),
+                                                            onSelectionChange: (key) => setInstallmentMonths(
+                                                            // default straight to the 3-month term (shortest — least
+                                                            // markup) so switching to "Trả góp" doesn't force another
+                                                            // decision before showing a number; falls back to whatever
+                                                            // the BE offered first if 3-month isn't available.
+                                                                String(key) === "installment"
+                                                                    ? installmentOptions.find((option) => option.months === 3)?.months
+                                                                    ?? installmentOptions[0]?.months
+                                                                    ?? null
+                                                                    : null,
+                                                            ),
+                                                            items: [
+                                                                { key: "full", label: t("payment.installment.payFull") },
+                                                                { key: "installment", label: t("payment.installment.payInstallment") },
+                                                            ],
+                                                        }}
                                                     />
                                                     {/* single fixed term (3 tháng, thầy: "không cho extend thời
                                                     gian") — nothing to CHOOSE among, so a static info row
@@ -687,14 +690,17 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                                             {/* currency / region toggle — drives the summary price + gateway list.
                                     Only shown when the order HAS a USD price (a real choice exists). */}
                                             {hasUsd ? (
-                                                <SegmentedControl<PriceCurrency>
-                                                    ariaLabel={t("payment.title")}
-                                                    value={activeCurrency}
-                                                    onChange={setCurrency}
-                                                    items={[
-                                                        { value: "VND", label: t("payment.currency.vnd") },
-                                                        { value: "USD", label: t("payment.currency.usd") },
-                                                    ]}
+                                                <TabsCard
+                                                    variant="primary"
+                                                    leftTabs={{
+                                                        selectedKey: activeCurrency,
+                                                        ariaLabel: t("payment.title"),
+                                                        onSelectionChange: (key) => setCurrency(String(key) as PriceCurrency),
+                                                        items: [
+                                                            { key: "VND", label: t("payment.currency.vnd") },
+                                                            { key: "USD", label: t("payment.currency.usd") },
+                                                        ],
+                                                    }}
                                                 />
                                             ) : null}
 

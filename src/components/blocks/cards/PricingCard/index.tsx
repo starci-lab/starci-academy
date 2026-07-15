@@ -35,8 +35,9 @@ export interface PricingCardProps extends WithClassNames<undefined> {
      */
     cta: React.ReactNode
     /**
-     * Optional badge label shown above the tier name to call out a popular or
-     * recommended tier (e.g. "Phổ biến", "Best value"). Omit to hide the badge row.
+     * Optional badge label shown beside the tier name to call out a popular or
+     * recommended tier (e.g. "Phổ biến", "Best value"). Omit to hide the badge.
+     * Rendered as a shrink-to-content Chip (`w-fit`) — never full-width.
      */
     badge?: React.ReactNode
     /**
@@ -89,19 +90,16 @@ export const PricingCard = ({
             className={cn("flex flex-col", className)}
             contentClassName="flex flex-col gap-6 h-full"
         >
-            {/* Badge + name header */}
-            <div className="flex flex-col gap-2">
-                {/* Only render the badge slot when the card is highlighted and a badge is provided */}
+            {/* Name (+ optional popular chip inline — chip is w-fit, never full-width) */}
+            <div className="flex flex-wrap items-center gap-2">
+                <Typography type="body" weight="semibold">
+                    {name}
+                </Typography>
                 {highlighted && badge ? (
-                    <Chip size="sm" variant="soft" color="accent">
+                    <Chip size="sm" variant="soft" color="accent" className="w-fit shrink-0">
                         <Chip.Label>{badge}</Chip.Label>
                     </Chip>
                 ) : null}
-
-                {/* Tier name — heading level 3 suits a plan name semantically */}
-                <Typography.Heading level={3}>
-                    {name}
-                </Typography.Heading>
             </div>
 
             {/* Price row: big price + optional struck original + muted period */}

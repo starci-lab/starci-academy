@@ -5,7 +5,7 @@ import { RatingBar } from "@/components/blocks/buttons/RatingBar"
 import { GroupPressableCard } from "./index"
 
 const meta: Meta<typeof GroupPressableCard> = {
-    title: "Blocks/Card/GroupPressableCard",
+    title: "Block/Card/GroupPressableCard",
     component: GroupPressableCard,
 }
 export default meta

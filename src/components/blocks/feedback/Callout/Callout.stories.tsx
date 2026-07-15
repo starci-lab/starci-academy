@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CheckCircleIcon, RocketLaunchIcon } from "@phosphor-icons/react"
-import { Button } from "@heroui/react"
+import { Button, Label, Typography } from "@heroui/react"
 import { Callout, type CalloutStatus, STATUS_ACTION_CLASS } from "./index"
 
 /**
@@ -8,7 +8,7 @@ import { Callout, type CalloutStatus, STATUS_ACTION_CLASS } from "./index"
  * `CloseButton` with a status-driven soft tint so it doesn't read as a card-in-card.
  */
 const meta = {
-    title: "Blocks/Feedback/Callout",
+    title: "Block/Feedback/Callout",
     component: Callout,
     args: {
         title: "Bài học đã được lưu",
@@ -29,24 +29,34 @@ export const Default: Story = {
     },
 }
 
-const TONE_CONTENT: Record<CalloutStatus, { title: string; description: string }> = {
+const TONE_CONTENT: Record<CalloutStatus, { label: string; when: string; title: string; description: string }> = {
     default: {
+        label: "Default",
+        when: "Thông báo trung tính, không mang sắc thái thành công hay cảnh báo — ghi chú hệ thống, đã lưu nháp.",
         title: "Đã lưu bản nháp",
         description: "Tiến độ của bạn được đồng bộ tự động sau mỗi lần hoàn thành.",
     },
     accent: {
+        label: "Accent",
+        when: "Thông tin đáng chú ý nhưng không phải cảnh báo — có bản cập nhật hoặc tính năng mới người dùng nên biết.",
         title: "Có bản cập nhật mới cho khoá học",
         description: "3 bài học mới vừa được thêm vào lộ trình Fullstack Mastery.",
     },
     success: {
+        label: "Success",
+        when: "Xác nhận một hành động vừa hoàn tất tốt đẹp — nộp bài được ghi nhận, thao tác thành công.",
         title: "Nộp bài thành công",
         description: "Bài nộp của bạn đã được ghi nhận và đang chờ chấm điểm.",
     },
     warning: {
+        label: "Warning",
+        when: "Nhắc việc cần chú ý trước khi quá muộn — sắp hết hạn, còn việc chưa xong; không dùng cho lỗi đã xảy ra.",
         title: "Sắp hết hạn nộp bài",
         description: "Milestone \"API Gateway\" sẽ đóng sau 2 ngày nữa.",
     },
     danger: {
+        label: "Danger",
+        when: "Báo một thao tác vừa thất bại và cần người dùng xử lý hoặc thử lại — lỗi kết nối, nộp bài hỏng.",
         title: "Nộp bài thất bại",
         description: "Không thể kết nối tới GitHub repo. Vui lòng thử lại.",
     },
@@ -55,9 +65,19 @@ const TONE_CONTENT: Record<CalloutStatus, { title: string; description: string }
 /** Dùng báo trạng thái mềm TRONG card (nộp bài OK / sắp hết hạn / lỗi kết nối / có bản cập nhật…) — không tạo card-trong-card. */
 export const Tones: Story = {
     render: () => (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-6">
             {(Object.keys(TONE_CONTENT) as CalloutStatus[]).map((status) => (
-                <Callout key={status} status={status} {...TONE_CONTENT[status]} />
+                <div key={status} className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-2">
+                        <Label>{TONE_CONTENT[status].label}</Label>
+                        <Typography type="body-sm" color="muted">{TONE_CONTENT[status].when}</Typography>
+                    </div>
+                    <Callout
+                        status={status}
+                        title={TONE_CONTENT[status].title}
+                        description={TONE_CONTENT[status].description}
+                    />
+                </div>
             ))}
         </div>
     ),
@@ -69,6 +89,8 @@ export const Tones: Story = {
 /** Action button per example — the callout's own tone/icon/copy + its CTA label. */
 const ACTION_EXAMPLES: Array<{
     status: CalloutStatus
+    label: string
+    when: string
     title: string
     description: string
     icon: React.ReactNode
@@ -76,6 +98,8 @@ const ACTION_EXAMPLES: Array<{
 }> = [
     {
         status: "accent",
+        label: "Accent",
+        when: "Mời người dùng thử ngay một tính năng mới thay vì chỉ đọc rồi bỏ qua.",
         title: "Thử tính năng mới",
         description: "Luyện phỏng vấn AI vừa ra mắt, thử ngay hôm nay.",
         icon: <RocketLaunchIcon />,
@@ -83,6 +107,8 @@ const ACTION_EXAMPLES: Array<{
     },
     {
         status: "success",
+        label: "Success",
+        when: "Dẫn người dùng xem chi tiết kết quả tốt vừa đạt được ngay tại callout.",
         title: "Chấm điểm xong",
         description: "Bài nộp của bạn đạt 92/100 — xem chi tiết nhận xét.",
         icon: <CheckCircleIcon />,
@@ -90,6 +116,8 @@ const ACTION_EXAMPLES: Array<{
     },
     {
         status: "warning",
+        label: "Warning",
+        when: "Thúc người dùng xử lý một việc sắp trễ hạn ngay khi đọc thông báo.",
         title: "Còn 1 bài tập chưa nộp",
         description: "Milestone \"API Gateway\" đóng sau 2 ngày nữa.",
         icon: <RocketLaunchIcon />,
@@ -107,20 +135,25 @@ const ACTION_EXAMPLES: Array<{
  */
 export const WithAction: Story = {
     render: () => (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-6">
             {ACTION_EXAMPLES.map((example) => (
-                <Callout
-                    key={example.status}
-                    status={example.status}
-                    title={example.title}
-                    description={example.description}
-                    icon={example.icon}
-                    action={(
-                        <Button size="sm" variant="secondary" className={STATUS_ACTION_CLASS[example.status]}>
-                            {example.actionLabel}
-                        </Button>
-                    )}
-                />
+                <div key={example.status} className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-2">
+                        <Label>{example.label}</Label>
+                        <Typography type="body-sm" color="muted">{example.when}</Typography>
+                    </div>
+                    <Callout
+                        status={example.status}
+                        title={example.title}
+                        description={example.description}
+                        icon={example.icon}
+                        action={(
+                            <Button size="sm" variant="secondary" className={STATUS_ACTION_CLASS[example.status]}>
+                                {example.actionLabel}
+                            </Button>
+                        )}
+                    />
+                </div>
             ))}
         </div>
     ),

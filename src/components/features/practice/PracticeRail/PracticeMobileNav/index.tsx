@@ -12,7 +12,7 @@ import {
 } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { CODING_DOMAIN_ORDER } from "@/modules/api/graphql/queries/types/coding"
-import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
+import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { usePracticeView } from "../../hooks/usePracticeView"
 import { usePracticeFilters } from "../../hooks/usePracticeFilters"
 import type { PracticeView } from "../../hooks/usePracticeView"
@@ -41,31 +41,34 @@ export const PracticeMobileNav = ({ className }: PracticeMobileNavProps) => {
 
     return (
         <div className={cn("flex flex-col gap-3 lg:hidden", className)}>
-            {/* mode switch — mirrors the desktop rail's SegmentedControl (see PracticeRail) */}
-            <SegmentedControl<PracticeView>
-                ariaLabel={t("practice.rail.modeAria")}
-                value={view}
-                onChange={setView}
-                items={[
-                    {
-                        value: "problems",
-                        label: (
-                            <span className="flex items-center gap-2">
-                                <ListChecksIcon className="size-4 shrink-0" aria-hidden focusable="false" />
-                                {t("practice.tabs.problems")}
-                            </span>
-                        ),
-                    },
-                    {
-                        value: "leaderboard",
-                        label: (
-                            <span className="flex items-center gap-2">
-                                <TrophyIcon className="size-4 shrink-0" aria-hidden focusable="false" />
-                                {t("practice.tabs.leaderboard")}
-                            </span>
-                        ),
-                    },
-                ]}
+            {/* mode switch — mirrors the desktop rail's TabsCard (see PracticeRail) */}
+            <TabsCard
+                variant="primary"
+                leftTabs={{
+                    selectedKey: view,
+                    ariaLabel: t("practice.rail.modeAria"),
+                    onSelectionChange: (key) => setView(String(key) as PracticeView),
+                    items: [
+                        {
+                            key: "problems",
+                            label: (
+                                <span className="flex items-center gap-2">
+                                    <ListChecksIcon className="size-4 shrink-0" aria-hidden focusable="false" />
+                                    {t("practice.tabs.problems")}
+                                </span>
+                            ),
+                        },
+                        {
+                            key: "leaderboard",
+                            label: (
+                                <span className="flex items-center gap-2">
+                                    <TrophyIcon className="size-4 shrink-0" aria-hidden focusable="false" />
+                                    {t("practice.tabs.leaderboard")}
+                                </span>
+                            ),
+                        },
+                    ],
+                }}
             />
 
             {/* topic chips — problems mode only */}

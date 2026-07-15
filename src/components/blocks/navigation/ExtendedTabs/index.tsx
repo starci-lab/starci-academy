@@ -63,6 +63,10 @@ export const ExtendedTabs = ({
             selectedKey={selectedKey}
             onSelectionChange={(key) => onSelectionChange(String(key))}
             className={cn(
+                // tab labels must never wrap to a 2nd line — white-space inherits down to
+                // every Tabs.Tab, so a squeezed segment truncates (w-full) or sizes to the
+                // one-line label (w-fit) instead of stacking words.
+                "whitespace-nowrap",
                 variant === "secondary" ? "extended-tabs" : size === "sm" ? "w-fit" : "w-full",
                 className,
             )}

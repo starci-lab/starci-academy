@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 
 const meta: Meta<typeof AsyncContent> = {
-    title: "Blocks/Async/AsyncContent",
+    title: "Core/Async/AsyncContent",
     component: AsyncContent,
 }
 

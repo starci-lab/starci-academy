@@ -10,9 +10,10 @@ export interface PageContainerProps extends WithClassNames<undefined> {
 }
 
 /**
- * Standard page shell — centers content at a max width with the responsive
- * horizontal gutter + vertical rhythm. Owns the page padding so features (which
- * must not use `p-*`) compose inside it. Override spacing via `className`.
+ * Standard page shell — full width of the parent with a right gutter + vertical
+ * rhythm. No `mx-auto` centering and no left padding (flush start). Owns page
+ * spacing so features (which must not use `p-*`) compose inside it. Override
+ * via `className`.
  *
  * @param props - {@link PageContainerProps}
  */
@@ -20,7 +21,7 @@ export const PageContainer = ({ children, className }: PageContainerProps) => {
     return (
         <div
             className={cn(
-                "mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8",
+                "w-full py-16 pr-4 sm:pr-6 lg:pr-8",
                 className,
             )}
         >

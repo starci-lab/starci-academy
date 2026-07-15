@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import type { ReactNode } from "react"
+import { Label, Typography } from "@heroui/react"
 import { HouseIcon } from "@phosphor-icons/react"
 
 /**
@@ -8,27 +8,10 @@ import { HouseIcon } from "@phosphor-icons/react"
  * Token semantic ONLY (CẤM hex / slate-* / cyan-500). Giữ demo màu/tầng THẬT — không ép thành bảng chữ.
  */
 const meta: Meta = {
-    title: "Foundations/Surfaces & Fills",
+    title: "Core/Foundations/Surfaces & Fills",
 }
 export default meta
 type Story = StoryObj
-
-/** 1 hàng demo — token · ví dụ THẬT · ghi chú. Divider nhẹ (đồng bộ style bảng, bỏ box viền phèn). */
-const DemoRow = ({ token, note, children }: { token: string; note: ReactNode; children: ReactNode }) => (
-    <div className="flex flex-col gap-3 border-b border-default/50 py-4 first:pt-0 last:border-b-0">
-        <code className="w-fit text-xs font-semibold text-foreground">{token}</code>
-        <div>{children}</div>
-        <p className="text-sm text-muted">{note}</p>
-    </div>
-)
-
-/** Nhãn nên/đừng — nghĩa nằm ở CHỮ (accessible, không chỉ dựa màu), màu chỉ tô đậm thêm. */
-const Do = ({ children }: { children: ReactNode }) => (
-    <span className="font-medium text-success-soft-foreground">Nên: {children}</span>
-)
-const Dont = ({ children }: { children: ReactNode }) => (
-    <span className="font-medium text-danger-soft-foreground">Đừng: {children}</span>
-)
 
 /** Nền theo TẦNG — bàn (background) → giấy (surface) → lồng thì border, không shadow. */
 export const Elevation: Story = {
@@ -51,34 +34,43 @@ export const Elevation: Story = {
 /** ACCENT SOLID vs TINT — 2 vai khác nhau, đừng lẫn. */
 export const AccentSolidVsTint: Story = {
     render: () => (
-        <div className="max-w-2xl">
-            <DemoRow
-                token="bg-accent (SOLID)"
-                note={<>CTA CHÍNH — 1 primary/màn. Chữ &amp; icon TRẮNG (<code className="rounded bg-default px-1 text-foreground">--accent-foreground</code>). <Do>Tiếp tục học · Đăng ký · Thanh toán</Do></>}
-            >
+        <div className="flex max-w-2xl flex-col gap-6">
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Accent solid</Label>
+                    <Typography type="body-sm" color="muted">
+                        CTA chính, tối đa một mỗi màn; chữ và icon trắng theo accent-foreground. Dùng cho Tiếp tục học, Đăng ký, Thanh toán.
+                    </Typography>
+                </div>
                 <button type="button" className="inline-flex items-center gap-2 rounded-field bg-accent px-4 py-2 text-sm font-medium text-accent-foreground">
                     <HouseIcon aria-hidden focusable="false" className="size-4" />
                     Tiếp tục học
                 </button>
-            </DemoRow>
-            <DemoRow
-                token="bg-accent-soft (TINT / tonal)"
-                note={<>ĐANG CHỌN — nav/tab/sidebar/chip/radio-card đang mở. Nền tint + label &amp; icon CÙNG <code className="rounded bg-default px-1 text-foreground">accent</code>. <Do>chỉ cho khối bounded NHỎ</Do></>}
-            >
+            </div>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Accent soft (tint)</Label>
+                    <Typography type="body-sm" color="muted">
+                        Đánh dấu mục đang chọn ở nav, tab, sidebar, chip hay radio-card; nền tint với label và icon cùng màu accent, chỉ cho khối bounded nhỏ.
+                    </Typography>
+                </div>
                 <div className="inline-flex items-center gap-2 rounded-xl bg-accent-soft px-4 py-2 text-sm font-medium text-accent-soft-foreground">
                     <HouseIcon aria-hidden focusable="false" className="size-4" />
                     Trang chủ (đang chọn)
                 </div>
-            </DemoRow>
-            <DemoRow
-                token={"\"của tôi\" trong list"}
-                note={<>Card/row của tôi = <code className="rounded bg-default px-1 text-foreground">ring-accent</code>/<code className="rounded bg-default px-1 text-foreground">border-accent</code> + 1 chi tiết accent · nền vẫn <code className="rounded bg-default px-1 text-foreground">bg-surface</code>. KHÔNG tô nền cả khối.</>}
-            >
+            </div>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Của tôi trong list</Label>
+                    <Typography type="body-sm" color="muted">
+                        Làm nổi card hay hàng của người dùng bằng ring hoặc border accent cộng một chi tiết accent; nền vẫn giữ bg-surface, không tô nền cả khối.
+                    </Typography>
+                </div>
                 <div className="inline-flex items-center gap-3 rounded-2xl border-2 border-accent bg-surface px-4 py-3 shadow-surface">
                     <span className="text-sm text-foreground">Hạng của tôi</span>
                     <span className="text-sm font-semibold text-accent-soft-foreground">#12</span>
                 </div>
-            </DemoRow>
+            </div>
         </div>
     ),
     parameters: {
@@ -89,11 +81,14 @@ export const AccentSolidVsTint: Story = {
 /** Anti-pattern — accent là GIA VỊ, vài điểm/màn. Đừng tô mảng nền lớn. */
 export const AccentAntiPatterns: Story = {
     render: () => (
-        <div className="max-w-2xl">
-            <DemoRow
-                token="ACCENT-FLOOD (CẤM)"
-                note={<><Dont>Tô <code className="rounded bg-default px-1 text-foreground">bg-accent/5..15</code> lên card/section/thumbnail LỚN</Dont> — nền khối phải <code className="rounded bg-default px-1 text-foreground">bg-surface</code>/<code className="rounded bg-default px-1 text-foreground">bg-default</code>. Accent là chi tiết nhỏ.</>}
-            >
+        <div className="flex max-w-2xl flex-col gap-6">
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Accent-flood (cấm)</Label>
+                    <Typography type="body-sm" color="muted">
+                        Đừng tô bg-accent-soft lên card, section hay thumbnail lớn; nền khối phải là bg-surface hoặc bg-default, accent chỉ là chi tiết nhỏ.
+                    </Typography>
+                </div>
                 <div className="flex gap-3">
                     <div className="flex h-20 w-40 items-center justify-center rounded-2xl bg-accent-soft text-xs text-accent-soft-foreground line-through opacity-70">
                         cả card bg-accent-soft
@@ -102,16 +97,19 @@ export const AccentAntiPatterns: Story = {
                         đúng: bg-surface + accent ở chi tiết
                     </div>
                 </div>
-            </DemoRow>
-            <DemoRow
-                token="STATUS-TINT (CẤM)"
-                note={<><Dont>Tô <code className="rounded bg-default px-1 text-foreground">bg-accent-soft</code> lên row TRẠNG THÁI (current/in-progress)</Dont> — nó giả dạng 'selected'. Status = ICON gánh màu, text foreground, nền trong suốt.</>}
-            >
+            </div>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Status-tint (cấm)</Label>
+                    <Typography type="body-sm" color="muted">
+                        Đừng tô bg-accent-soft lên hàng trạng thái đang học vì nó trông như đang chọn; để icon gánh màu, chữ giữ foreground, nền trong suốt.
+                    </Typography>
+                </div>
                 <div className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-foreground">
                     <HouseIcon aria-hidden focusable="false" className="size-4 text-accent-soft-foreground" weight="fill" />
                     Bài đang học (đúng: chỉ icon accent, không tint)
                 </div>
-            </DemoRow>
+            </div>
         </div>
     ),
     parameters: {

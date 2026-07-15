@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
+import { Label, Typography } from "@heroui/react"
 import { ErrorState } from "./index"
 
 const meta: Meta<typeof ErrorState> = {
-    title: "Blocks/Feedback/ErrorState",
+    title: "Core/Feedback/ErrorState",
     component: ErrorState,
 }
 export default meta
@@ -25,13 +26,19 @@ export const Default: Story = {
 export const WithoutRetry: Story = {
     parameters: { usage: "Dùng khi lỗi không kèm hành động khắc phục: so sánh biến thể chỉ có tiêu đề và biến thể có thêm mô tả, đều không hiện nút thử lại." },
     render: () => (
-        <div className="flex flex-col gap-6 sm:flex-row">
-            <div className="flex flex-1 flex-col items-center gap-2">
-                <span className="text-xs text-default-500">Chỉ tiêu đề</span>
+        <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Chỉ tiêu đề</Label>
+                    <Typography type="body-sm" color="muted">Dùng khi lỗi đã tự rõ nghĩa và không có gì để giải thích thêm, chỉ truyền title.</Typography>
+                </div>
                 <ErrorState title="Đã xảy ra lỗi" />
             </div>
-            <div className="flex flex-1 flex-col items-center gap-2">
-                <span className="text-xs text-default-500">Tiêu đề và mô tả</span>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Tiêu đề và mô tả</Label>
+                    <Typography type="body-sm" color="muted">Dùng khi cần nói rõ nguyên nhân lỗi, truyền thêm description nhưng vẫn không có hành động khắc phục.</Typography>
+                </div>
                 <ErrorState
                     title="Không tìm thấy khóa học"
                     description="Khóa học này có thể đã bị gỡ hoặc đường dẫn không còn hợp lệ."

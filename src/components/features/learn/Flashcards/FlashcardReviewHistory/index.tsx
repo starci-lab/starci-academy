@@ -11,7 +11,7 @@ import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
-import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
+import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { SkeletonListRow } from "@/components/blocks/skeleton/Skeleton/ListRow"
 import { queryMyFlashcardReviewHistory } from "@/modules/api/graphql/queries/query-my-flashcard-review-history"
 import type { QueryFlashcardReviewHistoryItem } from "@/modules/api/graphql/queries/types/my-flashcard-review-history"
@@ -43,7 +43,7 @@ const STRONG_COMPLETION_RATIO = 0.8
  * "Học thẻ" run history — the study overview's "Lịch sử" tab. A search + grouping
  * toolbar over the run log (thầy 2026-07-13 relayout: "không có thanh search gì hết
  * à" — history's job is finding + revisiting a past run). Search filters by deck
- * title; a `SegmentedControl` toggles grouping by deck (accordion) vs by time
+ * title; a `TabsCard` (primary) toggles grouping by deck (accordion) vs by time
  * bucket (today / past-7d / past-30d / older). Each run row carries a `ProgressMeter`
  * of `reviewedCount/cardCount` so "how well that run went" is scannable. Offset-
  * paginated ("load more"); each row deep-links back into that deck's reviewer.
@@ -225,34 +225,37 @@ export const FlashcardReviewHistory = ({ courseId, onStartReview, className }: F
                                 {t("flashcard.review.historyDeckRunCount", { count: searchedItems.length })}
                             </Typography>
                             {/* icon-only toggle (thầy 2026-07-13: "render dạng icon") —
-                                mirrors `FlashcardDeckList`'s grid/line `SegmentedControl`:
+                                mirrors `FlashcardDeckList`'s grid/line `TabsCard` (primary):
                                 icon carries the accessible name via `aria-label`. */}
-                            <SegmentedControl<GroupMode>
-                                ariaLabel={t("flashcard.review.historyGroupByDeck")}
-                                value={groupMode}
-                                onChange={setGroupMode}
-                                items={[
-                                    {
-                                        value: "deck",
-                                        label: (
-                                            <CardsThreeIcon
-                                                className="size-5"
-                                                aria-label={t("flashcard.review.historyGroupByDeck")}
-                                                focusable="false"
-                                            />
-                                        ),
-                                    },
-                                    {
-                                        value: "time",
-                                        label: (
-                                            <ClockIcon
-                                                className="size-5"
-                                                aria-label={t("flashcard.review.historyGroupByTime")}
-                                                focusable="false"
-                                            />
-                                        ),
-                                    },
-                                ]}
+                            <TabsCard
+                                variant="primary"
+                                leftTabs={{
+                                    selectedKey: groupMode,
+                                    ariaLabel: t("flashcard.review.historyGroupByDeck"),
+                                    onSelectionChange: (key) => setGroupMode(String(key) as GroupMode),
+                                    items: [
+                                        {
+                                            key: "deck",
+                                            label: (
+                                                <CardsThreeIcon
+                                                    className="size-5"
+                                                    aria-label={t("flashcard.review.historyGroupByDeck")}
+                                                    focusable="false"
+                                                />
+                                            ),
+                                        },
+                                        {
+                                            key: "time",
+                                            label: (
+                                                <ClockIcon
+                                                    className="size-5"
+                                                    aria-label={t("flashcard.review.historyGroupByTime")}
+                                                    focusable="false"
+                                                />
+                                            ),
+                                        },
+                                    ],
+                                }}
                             />
                         </div>
                     </div>

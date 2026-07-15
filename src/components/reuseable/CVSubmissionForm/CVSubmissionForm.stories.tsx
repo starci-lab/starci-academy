@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CVSubmissionForm } from "./index"
 
 const meta: Meta<typeof CVSubmissionForm> = {
-    title: "Reuseable/CVSubmissionForm",
+    title: "Core/Form/CVSubmissionForm",
     component: CVSubmissionForm,
 }
 

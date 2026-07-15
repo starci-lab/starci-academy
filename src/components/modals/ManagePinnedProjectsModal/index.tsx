@@ -81,9 +81,8 @@ export const ManagePinnedProjectsModal = ({
                         </Tabs.Tab>
                     </Tabs.List>
                 </Tabs.ListContainer>
-
-                {/* manage: reorder + remove the existing pins */}
-                <Tabs.Panel id="manage" className="pt-3">
+                {/* tabs→panel = gap-4; list/form internals stay gap-3 */}
+                <Tabs.Panel id="manage" className="pt-4">
                     <AsyncContent
                         isLoading={isLoading && pins.length === 0}
                         skeleton={(
@@ -121,14 +120,12 @@ export const ManagePinnedProjectsModal = ({
                         </div>
                     </AsyncContent>
                 </Tabs.Panel>
-
                 {/* external: free-form add form (switches back to manage on success) */}
-                <Tabs.Panel id="external" className="pt-3">
+                <Tabs.Panel id="external" className="pt-4">
                     <ExternalProjectForm onSuccess={() => setTab("manage")} />
                 </Tabs.Panel>
-
                 {/* course: capstone pin (switches back to manage on success) */}
-                <Tabs.Panel id="course" className="pt-3">
+                <Tabs.Panel id="course" className="pt-4">
                     <CourseProjectForm onSuccess={() => setTab("manage")} />
                 </Tabs.Panel>
             </Tabs>

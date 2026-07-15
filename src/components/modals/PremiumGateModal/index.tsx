@@ -66,22 +66,17 @@ export const PremiumGateModal = ({ className }: WithClassNames<undefined>) => {
             isOpen={isOpen}
             onOpenChange={setOpen}
             className={className}
-            header={(
-                <Typography type="body" weight="semibold" className="pr-8">
-                    {course?.title
-                        ? t("course.paywall.titleNamed", { course: course.title })
-                        : t("course.paywall.title")}
-                </Typography>
-            )}
+            title={
+                course?.title
+                    ? t("course.paywall.titleNamed", { course: course.title })
+                    : t("course.paywall.title")
+            }
+            description={t("course.paywall.description")}
         >
-            {/* info cluster (desc + unlocks + price) gap-3; the CTA is a separate
-                action area → gap-6 from it (layouts/gap.md). */}
+            {/* unlocks + price cluster gap-3; the CTA is a separate action area
+                → gap-6 from it (layouts/gap.md). */}
             <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-3">
-                    <Typography type="body-sm" color="muted">
-                        {t("course.paywall.description")}
-                    </Typography>
-
                     {/* what the purchase unlocks — value before price */}
                     <ul className="flex flex-col gap-2">
                         {unlocks.map((item) => (

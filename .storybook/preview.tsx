@@ -65,7 +65,7 @@ const preview: Preview = {
     decorators: [
         (Story, context) => {
             const theme = context.globals.theme || "dark"
-            // Show the story's "cách dùng" (its JSDoc) as a caption ON the canvas —
+            // Show the story's "cách dùng" as an Alert caption ON the canvas —
             // not just in the Docs tab. Only on the canvas (viewMode "story") so it
             // doesn't duplicate the description Docs already renders.
             const usage = context.parameters?.usage || context.parameters?.docs?.description?.story
@@ -75,14 +75,9 @@ const preview: Preview = {
                     <HeroUIProvider>
                         <div className={`${theme} bg-background text-foreground min-h-screen w-full p-8`}>
                             {showUsage ? (
-                                // standalone on the page canvas (not nested in another
-                                // surface) → raw `Alert`, default surface+shadow is
-                                // correct here (alert.md §3 — Callout's tint/no-shadow
-                                // is only for surface-in-surface).
+                                // standalone on the page canvas → raw `Alert` (surface +
+                                // shadow). Callout tint is only for surface-in-surface.
                                 <Alert status="accent" className="mb-6">
-                                    {/* same Phosphor-icon + size-6 rule as `Callout` (fe review
-                                        2026-07-14) — never HeroUI's own internal icon-family
-                                        fallback (`Alert`'s bare `getDefaultIcon()`). */}
                                     <Alert.Indicator className="[&_svg]:size-6!">
                                         <InfoIcon />
                                     </Alert.Indicator>

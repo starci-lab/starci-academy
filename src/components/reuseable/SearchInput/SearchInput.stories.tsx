@@ -4,7 +4,7 @@ import { useState } from "react"
 import { SearchInput } from "./index"
 
 const meta: Meta<typeof SearchInput> = {
-    title: "Reuseable/SearchInput",
+    title: "Core/Form/SearchInput",
     component: SearchInput,
 }
 

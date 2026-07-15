@@ -9,7 +9,7 @@ import {
 import { IconTile } from "./index"
 
 const meta: Meta<typeof IconTile> = {
-    title: "Blocks/Identity/IconTile",
+    title: "Core/Identity/IconTile",
     component: IconTile,
 }
 export default meta

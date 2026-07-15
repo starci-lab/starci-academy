@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React, { useState } from "react"
 import { DotsThreeVerticalIcon, TrashIcon } from "@phosphor-icons/react"
-import { Button } from "@heroui/react"
+import { Button, Label, Typography } from "@heroui/react"
 import { FlexWrapButtonRadio, type FlexWrapButtonRadioItem } from "./index"
 
 /** Difficulty-picker items — mirrors a real config-row caller (plain text content). */
@@ -52,7 +52,7 @@ const Controlled = <T extends string>(props: {
 }
 
 const meta: Meta<typeof FlexWrapButtonRadio> = {
-    title: "Blocks/Navigation/FlexWrapButtonRadio",
+    title: "Core/Navigation/FlexWrapButtonRadio",
     component: FlexWrapButtonRadio,
     parameters: {
         docs: {
@@ -68,30 +68,34 @@ export default meta
 type Story = StoryObj<typeof FlexWrapButtonRadio>
 
 /**
- * Chọn 1-trong-N khi option ngắn, gọn và cần wrap xuống hàng — mỗi option là một `<Button>` THẬT. Dùng bản này
- * THAY VÌ `FlexWrapCardRadio` khi option cần chiều cao ĐỒNG NHẤT (Button bake sẵn height theo size, box card tự
- * cao theo content), hoặc khi mỗi option cần nút phụ đi kèm cùng hàng (`itemAction`: xoá, menu "⋮"): nhét
- * `<Button>` vào trong label của `Radio` sẽ vỡ nested-interactive, nên bản này bỏ `RadioGroup` mà dùng
- * `role="group"` + `aria-pressed` từng nút. Đổi lại mất arrow-key roving của radio thật — cụm chọn thuần, không
- * nút phụ, chiều cao không quan trọng thì `FlexWrapCardRadio` vẫn đúng hơn. Nếu card TO có icon + mô tả + badge
- * và cần lưới cột cố định → dùng `SelectableCardGroup`. Nếu vài option luôn nằm gọn 1 hàng và không bao giờ wrap
- * → dùng `SegmentedControl`. Mặc định là cụm NGOÀI card (filter/toolbar rời): option chưa chọn là `ghost` hollow,
- * lấy nền trang hoặc card cha làm surface — không dựng viền/nền riêng cho mỗi lựa chọn.
+ * Chọn 1-trong-N khi option ngắn, gọn và cần wrap xuống hàng — mỗi option là một `<Button>` THẬT: chiều cao
+ * ĐỒNG NHẤT (Button bake sẵn height theo size) và mỗi option có thể kèm nút phụ cùng hàng (`itemAction`: xoá,
+ * menu "⋮"). Vì nhét `<Button>` vào trong label của `Radio` sẽ vỡ nested-interactive, bản này bỏ `RadioGroup`
+ * mà dùng `role="group"` + `aria-pressed` từng nút (đổi lại mất arrow-key roving của radio thật). Nếu card TO
+ * có icon + mô tả + badge và cần lưới cột cố định → dùng `SelectableCardGroup`. Nếu vài option luôn nằm gọn 1
+ * hàng và không bao giờ wrap → dùng `TabsCard` (`variant="primary"`). Mặc định là cụm NGOÀI card (filter/toolbar rời): option
+ * chưa chọn là `ghost` hollow, lấy nền trang hoặc card cha làm surface — không dựng viền/nền riêng cho mỗi lựa chọn.
  */
 export const Default: Story = {
     render: () => (
-        <Controlled items={DIFFICULTY_ITEMS} initialValue="medium" ariaLabel="Chọn độ khó" />
+        <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Cụm nút chọn</Label>
+                <Typography type="body-sm" color="muted">
+                    Chọn 1-trong-N khi option ngắn gọn và cần wrap xuống hàng — mỗi option là một Button thật, không dựng surface riêng.
+                </Typography>
+            </div>
+            <Controlled items={DIFFICULTY_ITEMS} initialValue="medium" ariaLabel="Chọn độ khó" />
+        </div>
     ),
     parameters: {
-        usage: "Chọn 1-trong-N khi option ngắn, gọn và cần wrap xuống hàng — mỗi option là một `<Button>` THẬT. "
-            + "Dùng bản này THAY VÌ `FlexWrapCardRadio` khi option cần chiều cao ĐỒNG NHẤT (Button bake sẵn height "
-            + "theo size, box card tự cao theo content), hoặc khi mỗi option cần nút phụ đi kèm cùng hàng "
-            + "(`itemAction`: xoá, menu \"⋮\"): nhét `<Button>` vào trong label của `Radio` sẽ vỡ nested-interactive, "
-            + "nên bản này bỏ `RadioGroup` mà dùng `role=\"group\"` + `aria-pressed` từng nút. Đổi lại mất arrow-key "
-            + "roving của radio thật — cụm chọn thuần, không nút phụ, chiều cao không quan trọng thì "
-            + "`FlexWrapCardRadio` vẫn đúng hơn. Nếu card TO có icon + mô tả + badge và cần lưới cột cố định → dùng "
+        usage: "Chọn 1-trong-N khi option ngắn, gọn và cần wrap xuống hàng — mỗi option là một `<Button>` THẬT: "
+            + "chiều cao ĐỒNG NHẤT (Button bake sẵn height theo size) và mỗi option có thể kèm nút phụ cùng hàng "
+            + "(`itemAction`: xoá, menu \"⋮\"). Vì nhét `<Button>` vào trong label của `Radio` sẽ vỡ nested-interactive, "
+            + "bản này bỏ `RadioGroup` mà dùng `role=\"group\"` + `aria-pressed` từng nút (đổi lại mất arrow-key "
+            + "roving của radio thật). Nếu card TO có icon + mô tả + badge và cần lưới cột cố định → dùng "
             + "`SelectableCardGroup`. Nếu vài option luôn nằm gọn 1 hàng và không bao giờ wrap → dùng "
-            + "`SegmentedControl`. Mặc định là cụm NGOÀI card (filter/toolbar rời): option chưa chọn là `ghost` "
+            + "`TabsCard` (`variant=\"primary\"`). Mặc định là cụm NGOÀI card (filter/toolbar rời): option chưa chọn là `ghost` "
             + "hollow, lấy nền trang hoặc card cha làm surface — không dựng viền/nền riêng cho mỗi lựa chọn.",
     },
 }
@@ -99,7 +103,15 @@ export const Default: Story = {
 /** Dùng khi trong nhóm có 1 lựa chọn CHƯA MỞ (gói/tier khoá) — item đó vẫn hiện nhưng không bấm được, không ẩn khỏi danh sách. */
 export const WithDisabledItem: Story = {
     render: () => (
-        <Controlled items={TIER_ITEMS} initialValue="economy" ariaLabel="Chọn gói" />
+        <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Có mục khoá</Label>
+                <Typography type="body-sm" color="muted">
+                    Khi trong nhóm có lựa chọn chưa mở (gói / tier khoá) — item vẫn hiện nhưng không bấm được, không ẩn khỏi danh sách.
+                </Typography>
+            </div>
+            <Controlled items={TIER_ITEMS} initialValue="economy" ariaLabel="Chọn gói" />
+        </div>
     ),
     parameters: {
         usage: "Dùng khi trong nhóm có 1 lựa chọn CHƯA MỞ (gói/tier khoá) — item đó vẫn hiện nhưng không bấm được, không ẩn khỏi danh sách.",
@@ -109,16 +121,24 @@ export const WithDisabledItem: Story = {
 /** Dùng `trailing` khi cần gắn thêm 1 nút phụ CÙNG HÀNG với các lựa chọn (vd nút "+N" mở rộng overflow), không phải một lựa chọn thật. */
 export const WithTrailing: Story = {
     render: () => (
-        <Controlled
-            items={DIFFICULTY_ITEMS.slice(0, 3)}
-            initialValue="easy"
-            ariaLabel="Chọn độ khó"
-            trailing={
-                <Button size="sm" variant="ghost">
-                    +2
-                </Button>
-            }
-        />
+        <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Có nút phụ cuối hàng</Label>
+                <Typography type="body-sm" color="muted">
+                    Dùng trailing khi cần gắn thêm một nút phụ cùng hàng với các lựa chọn (vd +N mở rộng overflow), không phải một lựa chọn thật.
+                </Typography>
+            </div>
+            <Controlled
+                items={DIFFICULTY_ITEMS.slice(0, 3)}
+                initialValue="easy"
+                ariaLabel="Chọn độ khó"
+                trailing={
+                    <Button size="sm" variant="ghost">
+                        +2
+                    </Button>
+                }
+            />
+        </div>
     ),
     parameters: {
         usage: "Dùng `trailing` khi cần gắn thêm 1 nút phụ CÙNG HÀNG với các lựa chọn (vd nút \"+N\" mở rộng overflow), không phải một lựa chọn thật.",
@@ -128,19 +148,27 @@ export const WithTrailing: Story = {
 /** Dùng `itemAction` khi mỗi lựa chọn cần hành động RIÊNG đi kèm (vd nút xoá + menu "⋮") — cả cụm nối liền thành 1 button group, hành động không làm đổi lựa chọn đang chọn. */
 export const WithItemAction: Story = {
     render: () => (
-        <Controlled
-            items={ATTEMPT_ITEMS}
-            initialValue="attempt-1"
-            ariaLabel="Chọn lần làm bài"
-            itemAction={(item) => [
-                <Button key="delete" size="sm" variant="tertiary" isIconOnly aria-label={`Xoá ${item.value}`}>
-                    <TrashIcon className="size-4" />
-                </Button>,
-                <Button key="more" size="sm" variant="tertiary" isIconOnly aria-label={`Thêm tùy chọn cho ${item.value}`}>
-                    <DotsThreeVerticalIcon className="size-4" />
-                </Button>,
-            ]}
-        />
+        <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Mỗi item có hành động riêng</Label>
+                <Typography type="body-sm" color="muted">
+                    Dùng itemAction khi mỗi lựa chọn cần hành động riêng đi kèm (xoá, menu) — cả cụm nối liền thành một button group.
+                </Typography>
+            </div>
+            <Controlled
+                items={ATTEMPT_ITEMS}
+                initialValue="attempt-1"
+                ariaLabel="Chọn lần làm bài"
+                itemAction={(item) => [
+                    <Button key="delete" size="sm" variant="tertiary" isIconOnly aria-label={`Xoá ${item.value}`}>
+                        <TrashIcon className="size-4" />
+                    </Button>,
+                    <Button key="more" size="sm" variant="tertiary" isIconOnly aria-label={`Thêm tùy chọn cho ${item.value}`}>
+                        <DotsThreeVerticalIcon className="size-4" />
+                    </Button>,
+                ]}
+            />
+        </div>
     ),
     parameters: {
         usage: "Dùng `itemAction` khi mỗi lựa chọn cần hành động RIÊNG đi kèm (vd nút xoá + menu \"⋮\") — cả cụm nối liền thành 1 button group, hành động không làm đổi lựa chọn đang chọn.",

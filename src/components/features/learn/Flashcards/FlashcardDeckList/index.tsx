@@ -16,7 +16,7 @@ import { ListIcon, SquaresFourIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { FlashcardDeckListSkeleton } from "./FlashcardDeckListSkeleton"
-import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
+import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { queryFlashcardDecksByCourse } from "@/modules/api/graphql/queries/query-flashcard-decks-by-course"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
@@ -247,32 +247,35 @@ export const FlashcardDeckList = ({
                                 {t("flashcard.deck.found", { count: filteredDecks.length })}
                             </Typography>
                             {/* grid ⇆ line layout toggle (icon-only; persisted) */}
-                            <SegmentedControl<DeckView>
-                                ariaLabel={t("flashcard.deck.viewAria")}
-                                value={view}
-                                onChange={onChangeView}
-                                items={[
-                                    {
-                                        value: "grid",
-                                        label: (
-                                            <SquaresFourIcon
-                                                className="size-5"
-                                                aria-label={t("flashcard.deck.viewGrid")}
-                                                focusable="false"
-                                            />
-                                        ),
-                                    },
-                                    {
-                                        value: "line",
-                                        label: (
-                                            <ListIcon
-                                                className="size-5"
-                                                aria-label={t("flashcard.deck.viewLine")}
-                                                focusable="false"
-                                            />
-                                        ),
-                                    },
-                                ]}
+                            <TabsCard
+                                variant="primary"
+                                leftTabs={{
+                                    selectedKey: view,
+                                    ariaLabel: t("flashcard.deck.viewAria"),
+                                    onSelectionChange: (key) => onChangeView(String(key) as DeckView),
+                                    items: [
+                                        {
+                                            key: "grid",
+                                            label: (
+                                                <SquaresFourIcon
+                                                    className="size-5"
+                                                    aria-label={t("flashcard.deck.viewGrid")}
+                                                    focusable="false"
+                                                />
+                                            ),
+                                        },
+                                        {
+                                            key: "line",
+                                            label: (
+                                                <ListIcon
+                                                    className="size-5"
+                                                    aria-label={t("flashcard.deck.viewLine")}
+                                                    focusable="false"
+                                                />
+                                            ),
+                                        },
+                                    ],
+                                }}
                             />
                         </div>
                     </div>

@@ -8,20 +8,24 @@ export interface SkeletonListBoxProps extends WithClassNames<undefined> {
     items?: number
 }
 
+/** Text-width per option so bars read as LABELS, not full-width solid blocks. */
+const OPTION_WIDTHS = ["w-3/5", "w-2/5", "w-4/5", "w-1/2", "w-2/3"]
+
 /**
- * Skeleton matching a HeroUI <ListBox/>. The list-box has `p-1` and stacks
- * children with `mt-1` (gap-1). Each option row carries `body-sm` (14/24)
- * single-line text, so the glyph bar is `h-[14px]` centered with `my-[5px]`
- * and rounded to match an option's `rounded-lg` shape.
+ * Skeleton matching a HeroUI <ListBox/>: `p-1` container, each option a
+ * `rounded-xl px-3 py-2` row (matches an option's padding) with a `body-sm`
+ * glyph bar sized to the LABEL width (varying, not `w-full`) so it reads as a
+ * text option rather than a solid block.
  */
 export const SkeletonListBox = ({ items = 4, className }: SkeletonListBoxProps) => {
     return (
         <div className={cn("flex w-full flex-col gap-1 p-1", className)}>
             {Array.from({ length: items }).map((_, index) => (
-                <Skeleton
-                    key={index}
-                    className="my-[5px] h-[14px] w-full rounded-lg"
-                />
+                <div key={index} className="rounded-xl px-3 py-2">
+                    <Skeleton
+                        className={cn("h-[14px] rounded", OPTION_WIDTHS[index % OPTION_WIDTHS.length])}
+                    />
+                </div>
             ))}
         </div>
     )

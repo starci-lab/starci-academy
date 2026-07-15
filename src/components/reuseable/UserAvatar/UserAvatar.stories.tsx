@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { UserAvatar } from "./index"
 
 const meta: Meta<typeof UserAvatar> = {
-    title: "Reuseable/UserAvatar",
+    title: "Core/Identity/UserAvatar",
     component: UserAvatar,
 }
 

@@ -4,7 +4,7 @@ import { Label, Typography } from "@heroui/react"
 import { TopLoader } from "./index"
 
 const meta: Meta<typeof TopLoader> = {
-    title: "Blocks/Layout/TopLoader",
+    title: "Core/Layout/TopLoader",
     component: TopLoader,
 }
 export default meta

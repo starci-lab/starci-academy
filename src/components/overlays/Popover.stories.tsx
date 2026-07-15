@@ -9,7 +9,7 @@ import { expect, screen, userEvent, waitFor, within } from "storybook/test"
  * cần quyết/nhập (→ Modal). Trigger phải là 1 phần tử focus được (`Button`/`<button>`).
  */
 const meta: Meta<typeof Popover> = {
-    title: "Overlays/Popover",
+    title: "Core/Overlays/Popover",
     component: Popover,
 }
 

@@ -3,11 +3,11 @@ import { Button, Label, Typography } from "@heroui/react"
 
 /**
  * Bảng tra HeroUI `Button` — primitive nền của mọi nút trong app (các block trong họ
- * `Blocks/Button` đều dựng trên nó). Ở đây để tra "variant nào trông thế nào" cạnh
+ * `Core/Button` đều dựng trên nó). Ở đây để tra "variant nào trông thế nào" cạnh
  * các block anh em, thay vì tách ra một nhánh riêng.
  */
 const meta: Meta<typeof Button> = {
-    title: "Blocks/Button/Button",
+    title: "Core/Button/Button",
     component: Button,
 }
 export default meta
@@ -25,53 +25,67 @@ export const AllVariants: Story = {
     },
     render: () => (
         <div className="flex flex-col gap-6">
-            <div className="flex flex-col items-start gap-2">
-                <Label>Primary</Label>
-                <Typography type="body-sm" color="muted">
-                    CTA chính. Tối đa MỘT mỗi bề mặt — hai primary là mất thứ bậc, mắt không biết đi đâu.
-                </Typography>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Primary</Label>
+                    <Typography type="body-sm" color="muted">
+                        CTA chính. Tối đa một mỗi bề mặt — hai primary là mất thứ bậc, mắt không biết đi đâu.
+                    </Typography>
+                </div>
                 <Button variant="primary">Đăng ký học</Button>
             </div>
-            <div className="flex flex-col items-start gap-2">
-                <Label>Secondary</Label>
-                <Typography type="body-sm" color="muted">
-                    Nút phụ đi CẶP với một primary — hai nút đứng cạnh nhau.
-                </Typography>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Secondary</Label>
+                    <Typography type="body-sm" color="muted">
+                        Nút phụ đi cặp với một primary — hai nút đứng cạnh nhau.
+                    </Typography>
+                </div>
                 <Button variant="secondary">Xem thử</Button>
             </div>
-            <div className="flex flex-col items-start gap-2">
-                <Label>Tertiary</Label>
-                <Typography type="body-sm" color="muted">
-                    Nút phụ đứng MỘT MÌNH, không có primary bên cạnh (quiet).
-                </Typography>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Tertiary</Label>
+                    <Typography type="body-sm" color="muted">
+                        Nút phụ đứng một mình, không có primary bên cạnh (quiet).
+                    </Typography>
+                </div>
                 <Button variant="tertiary">Bỏ qua</Button>
             </div>
-            <div className="flex flex-col items-start gap-2">
-                <Label>Ghost</Label>
-                <Typography type="body-sm" color="muted">
-                    Trong suốt, không nền không viền — hành động mờ nhất trên bề mặt.
-                </Typography>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Ghost</Label>
+                    <Typography type="body-sm" color="muted">
+                        Trong suốt, không nền không viền — hành động mờ nhất trên bề mặt.
+                    </Typography>
+                </div>
                 <Button variant="ghost">Huỷ</Button>
             </div>
-            <div className="flex flex-col items-start gap-2">
-                <Label>Outline</Label>
-                <Typography type="body-sm" color="muted">
-                    Viền, nền trong suốt. Áp đầu ở nút cần đọc như một ô nhập (SearchButton, InputButtonLike) và CTA phụ full-width.
-                </Typography>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Outline</Label>
+                    <Typography type="body-sm" color="muted">
+                        Viền, nền trong suốt. Áp ở nút cần đọc như một ô nhập (SearchButton, InputButtonLike) và CTA phụ full-width.
+                    </Typography>
+                </div>
                 <Button variant="outline">Chi tiết</Button>
             </div>
-            <div className="flex flex-col items-start gap-2">
-                <Label>Danger</Label>
-                <Typography type="body-sm" color="muted">
-                    Hành động phá huỷ ĐỨNG LẺ, cần nổi bật (xoá tài khoản).
-                </Typography>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Danger</Label>
+                    <Typography type="body-sm" color="muted">
+                        Hành động phá huỷ đứng lẻ, cần nổi bật (xoá tài khoản).
+                    </Typography>
+                </div>
                 <Button variant="danger">Xoá tài khoản</Button>
             </div>
-            <div className="flex flex-col items-start gap-2">
-                <Label>Danger soft</Label>
-                <Typography type="body-sm" color="muted">
-                    Nút xoá LẶP trong từng item — danger đặc lặp lại nhiều dòng thì chói cả trang.
-                </Typography>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Danger soft</Label>
+                    <Typography type="body-sm" color="muted">
+                        Nút xoá lặp trong từng item — danger đặc lặp lại nhiều dòng thì chói cả trang.
+                    </Typography>
+                </div>
                 <Button variant="danger-soft">Xoá</Button>
             </div>
         </div>
@@ -88,32 +102,40 @@ export const SizesAndStates: Story = {
     },
     render: () => (
         <div className="flex flex-col gap-6">
-            <div className="flex flex-col items-start gap-2">
-                <Label>Small</Label>
-                <Typography type="body-sm" color="muted">
-                    Control lặp trong từng item của một danh sách.
-                </Typography>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Small</Label>
+                    <Typography type="body-sm" color="muted">
+                        Control lặp trong từng item của một danh sách.
+                    </Typography>
+                </div>
                 <Button variant="primary" size="sm">Nộp bài</Button>
             </div>
-            <div className="flex flex-col items-start gap-2">
-                <Label>Medium</Label>
-                <Typography type="body-sm" color="muted">
-                    Mặc định cho nút phụ / sub-CTA (không icon).
-                </Typography>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Medium</Label>
+                    <Typography type="body-sm" color="muted">
+                        Mặc định cho nút phụ / sub-CTA (không icon).
+                    </Typography>
+                </div>
                 <Button variant="primary" size="md">Nộp bài</Button>
             </div>
-            <div className="flex flex-col items-start gap-2">
-                <Label>Large</Label>
-                <Typography type="body-sm" color="muted">
-                    CTA chính — ở call-site thật đi kèm ArrowRightIcon trailing.
-                </Typography>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Large</Label>
+                    <Typography type="body-sm" color="muted">
+                        CTA chính — ở call-site thật đi kèm ArrowRightIcon trailing.
+                    </Typography>
+                </div>
                 <Button variant="primary" size="lg">Nộp bài</Button>
             </div>
-            <div className="flex flex-col items-start gap-2">
-                <Label>Disabled</Label>
-                <Typography type="body-sm" color="muted">
-                    Không bấm được vì điều kiện chưa đủ. Đang chờ mạng thì dùng prop isPending, đừng tự chế isDisabled + ternary.
-                </Typography>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Disabled</Label>
+                    <Typography type="body-sm" color="muted">
+                        Không bấm được vì điều kiện chưa đủ. Đang chờ mạng thì dùng prop isPending, đừng tự chế isDisabled + ternary.
+                    </Typography>
+                </div>
                 <Button variant="primary" isDisabled>Nộp bài</Button>
             </div>
         </div>

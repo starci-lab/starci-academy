@@ -3,7 +3,7 @@ import { Label, Typography } from "@heroui/react"
 import { AvatarUploadButton } from "./index"
 
 const meta: Meta<typeof AvatarUploadButton> = {
-    title: "Blocks/Identity/AvatarUploadButton",
+    title: "Block/Identity/AvatarUploadButton",
     component: AvatarUploadButton,
 }
 export default meta

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Button } from "@heroui/react"
+import { Button, Label, Typography } from "@heroui/react"
 import { MagnifyingGlassIcon, TrayIcon, WarningCircleIcon } from "@phosphor-icons/react"
 
 import { EmptyState } from "./index"
@@ -10,7 +10,7 @@ import { EmptyState } from "./index"
  * hook itself, so every story below uses static Vietnamese copy.
  */
 const meta = {
-    title: "Blocks/Feedback/EmptyState",
+    title: "Core/Feedback/EmptyState",
     component: EmptyState,
     // default title satisfies the required prop for render-only stories (they render their own).
     args: {
@@ -42,22 +42,40 @@ export const Compositions: Story = {
         usage: "Chọn mức đầy đủ theo tình huống thật: danh sách khoá học rỗng (chỉ icon), tìm kiếm không ra kết quả (icon+mô tả gợi ý), hoặc trang danh sách trống có nút hành động để tạo mục mới.",
     },
     render: () => (
-        <div className="flex flex-col gap-4">
-            <EmptyState
-                icon={<TrayIcon weight="duotone" />}
-                title="Chưa có khoá học nào"
-            />
-            <EmptyState
-                icon={<MagnifyingGlassIcon weight="duotone" />}
-                title="Không tìm thấy kết quả"
-                description="Thử điều chỉnh bộ lọc hoặc từ khoá tìm kiếm để xem thêm kết quả."
-            />
-            <EmptyState
-                icon={<TrayIcon weight="duotone" />}
-                title="Danh sách trống"
-                description="Bạn chưa lưu mục nào vào danh sách này."
-                action={<Button variant="primary">Thêm mục mới</Button>}
-            />
+        <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Chỉ icon và tiêu đề</Label>
+                    <Typography type="body-sm" color="muted">Dùng khi danh sách rỗng bình thường, chỉ cần báo trống mà không cần hướng dẫn hay hành động tiếp theo.</Typography>
+                </div>
+                <EmptyState
+                    icon={<TrayIcon weight="duotone" />}
+                    title="Chưa có khoá học nào"
+                />
+            </div>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Thêm mô tả</Label>
+                    <Typography type="body-sm" color="muted">Dùng khi cần gợi ý người dùng làm gì tiếp, ví dụ tìm kiếm không ra kết quả nên khuyên đổi bộ lọc hoặc từ khoá.</Typography>
+                </div>
+                <EmptyState
+                    icon={<MagnifyingGlassIcon weight="duotone" />}
+                    title="Không tìm thấy kết quả"
+                    description="Thử điều chỉnh bộ lọc hoặc từ khoá tìm kiếm để xem thêm kết quả."
+                />
+            </div>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Kèm hành động</Label>
+                    <Typography type="body-sm" color="muted">Dùng khi có thao tác tạo mục mới rõ ràng để người dùng thoát khỏi trạng thái rỗng ngay tại chỗ.</Typography>
+                </div>
+                <EmptyState
+                    icon={<TrayIcon weight="duotone" />}
+                    title="Danh sách trống"
+                    description="Bạn chưa lưu mục nào vào danh sách này."
+                    action={<Button variant="primary">Thêm mục mới</Button>}
+                />
+            </div>
         </div>
     ),
 }

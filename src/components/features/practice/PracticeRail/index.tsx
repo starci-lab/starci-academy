@@ -19,7 +19,7 @@ import {
 } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { CODING_DOMAIN_ORDER } from "@/modules/api/graphql/queries/types/coding"
-import { SegmentedControl } from "@/components/blocks/navigation/SegmentedControl"
+import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { usePracticeView } from "../hooks/usePracticeView"
 import { usePracticeFilters } from "../hooks/usePracticeFilters"
 import type { PracticeView } from "../hooks/usePracticeView"
@@ -67,30 +67,33 @@ export const PracticeRail = ({ className }: PracticeRailProps) => {
         <div className={cn("relative flex min-h-0 min-w-0 flex-col gap-3 p-6", className)}>
             {/* pinned header: mode switch + topic search */}
             <div className="flex flex-col gap-3">
-                <SegmentedControl<PracticeView>
-                    ariaLabel={t("practice.rail.modeAria")}
-                    value={view}
-                    onChange={setView}
-                    items={[
-                        {
-                            value: "problems",
-                            label: (
-                                <span className="flex items-center gap-2">
-                                    <ListChecksIcon className="size-4 shrink-0" aria-hidden focusable="false" />
-                                    {t("practice.tabs.problems")}
-                                </span>
-                            ),
-                        },
-                        {
-                            value: "leaderboard",
-                            label: (
-                                <span className="flex items-center gap-2">
-                                    <TrophyIcon className="size-4 shrink-0" aria-hidden focusable="false" />
-                                    {t("practice.tabs.leaderboard")}
-                                </span>
-                            ),
-                        },
-                    ]}
+                <TabsCard
+                    variant="primary"
+                    leftTabs={{
+                        selectedKey: view,
+                        ariaLabel: t("practice.rail.modeAria"),
+                        onSelectionChange: (key) => setView(String(key) as PracticeView),
+                        items: [
+                            {
+                                key: "problems",
+                                label: (
+                                    <span className="flex items-center gap-2">
+                                        <ListChecksIcon className="size-4 shrink-0" aria-hidden focusable="false" />
+                                        {t("practice.tabs.problems")}
+                                    </span>
+                                ),
+                            },
+                            {
+                                key: "leaderboard",
+                                label: (
+                                    <span className="flex items-center gap-2">
+                                        <TrophyIcon className="size-4 shrink-0" aria-hidden focusable="false" />
+                                        {t("practice.tabs.leaderboard")}
+                                    </span>
+                                ),
+                            },
+                        ],
+                    }}
                 />
 
                 {/* topic search — problems mode only (the leaderboard is topic-agnostic) */}
@@ -140,9 +143,9 @@ export const PracticeRail = ({ className }: PracticeRailProps) => {
                                     key={domain}
                                     id={domain}
                                     textValue={topicLabel(domain)}
-                                    className="cursor-pointer rounded-2xl px-3 py-2 data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft"
+                                    className="cursor-pointer rounded-2xl px-3 py-2 text-foreground data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft data-[selected=true]:text-accent-soft-foreground"
                                 >
-                                    <Typography type="body-sm" className="min-w-0 flex-1 truncate">
+                                    <Typography type="body-sm" className="min-w-0 flex-1 truncate text-inherit">
                                         {topicLabel(domain)}
                                     </Typography>
                                 </ListBox.Item>

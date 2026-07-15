@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Label, Typography } from "@heroui/react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 
 import { SelectableCardGroup } from "./index"
@@ -110,7 +111,7 @@ const ControlledGroup = <T extends string>({
 }
 
 const meta: Meta<typeof SelectableCardGroup> = {
-    title: "Blocks/Navigation/SelectableCardGroup",
+    title: "Core/Navigation/SelectableCardGroup",
 }
 
 export default meta
@@ -121,8 +122,8 @@ type Story = StoryObj<typeof meta>
  * Dùng khi chọn 1-trong-N mà mỗi phương án GIÀU (icon + mô tả + badge) và lựa chọn phải Ở LẠI,
  * đọc được là "cái tôi đã chọn" — đây là radio thật (chu kỳ thanh toán, gói dịch vụ). Nếu bấm
  * xong KHÔNG có gì ở lại, thẻ chỉ chạy một hành động rồi thôi (mở trang, chấm điểm) →
- * GroupPressableCard. Nếu mỗi lựa chọn chỉ là nhãn ngắn 1 dòng → SegmentedControl. Nếu lựa chọn
- * nhỏ, nhiều, cần wrap xuống hàng → FlexWrapCardRadio.
+ * GroupPressableCard. Nếu mỗi lựa chọn chỉ là nhãn ngắn 1 dòng → TabsCard (primary pill). Nếu lựa chọn
+ * nhỏ, nhiều, cần wrap xuống hàng → FlexWrapButtonRadio.
  */
 export const Default: Story = {
     parameters: {
@@ -130,16 +131,24 @@ export const Default: Story = {
             "Dùng khi chọn 1-trong-N mà mỗi phương án GIÀU (icon + mô tả + badge) và lựa chọn phải Ở LẠI, đọc được " +
             "là \"cái tôi đã chọn\" — đây là radio thật (chu kỳ thanh toán, gói dịch vụ). Nếu bấm xong KHÔNG có gì ở " +
             "lại, thẻ chỉ chạy một hành động rồi thôi (mở trang, chấm điểm) → GroupPressableCard. Nếu mỗi lựa chọn " +
-            "chỉ là nhãn ngắn 1 dòng → SegmentedControl. Nếu lựa chọn nhỏ, nhiều, cần wrap xuống hàng → " +
-            "FlexWrapCardRadio.",
+            "chỉ là nhãn ngắn 1 dòng → TabsCard (primary pill). Nếu lựa chọn nhỏ, nhiều, cần wrap xuống hàng → " +
+            "FlexWrapButtonRadio.",
     },
     render: () => (
-        <ControlledGroup
-            items={PLAN_ITEMS}
-            initialValue="monthly"
-            ariaLabel="Chọn chu kỳ thanh toán"
-            columns={2}
-        />
+        <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Chọn phương án giàu</Label>
+                <Typography type="body-sm" color="muted">
+                    Chọn 1-trong-N khi mỗi phương án giàu (icon + mô tả + badge) và lựa chọn phải ở lại đọc được — radio thật.
+                </Typography>
+            </div>
+            <ControlledGroup
+                items={PLAN_ITEMS}
+                initialValue="monthly"
+                ariaLabel="Chọn chu kỳ thanh toán"
+                columns={2}
+            />
+        </div>
     ),
 }
 
@@ -153,9 +162,14 @@ export const Columns: Story = {
         usage: "Chọn số cột theo bối cảnh: 1 cột cho khối hẹp/sidebar, 3 cột khi liệt kê nhiều lựa chọn ngang hàng (ví dụ chọn ngôn ngữ lập trình).",
     },
     render: () => (
-        <div className="flex flex-col gap-4">
-            <div>
-                <p className="mb-2 text-xs text-default-500">columns = 1</p>
+        <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>1 cột</Label>
+                    <Typography type="body-sm" color="muted">
+                        Dùng cho khối hẹp hoặc sidebar, khi các lựa chọn phải xếp dọc một cột.
+                    </Typography>
+                </div>
                 <ControlledGroup
                     items={PLAN_ITEMS}
                     initialValue="quarterly"
@@ -163,8 +177,13 @@ export const Columns: Story = {
                     columns={1}
                 />
             </div>
-            <div>
-                <p className="mb-2 text-xs text-default-500">columns = 3</p>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>3 cột</Label>
+                    <Typography type="body-sm" color="muted">
+                        Dùng khi liệt kê nhiều lựa chọn ngang hàng trên khối rộng, ví dụ chọn ngôn ngữ lập trình.
+                    </Typography>
+                </div>
                 <ControlledGroup
                     items={LANGUAGE_ITEMS}
                     initialValue="ts"
@@ -186,11 +205,19 @@ export const WithIconAndDisabled: Story = {
         usage: "Dùng khi lựa chọn cần icon nhận diện (ngôn ngữ, công nghệ) và có phương án chưa khả dụng — card disabled vẫn hiển thị để báo \"sắp ra mắt\", không ẩn đi.",
     },
     render: () => (
-        <ControlledGroup
-            items={LANGUAGE_ITEMS}
-            initialValue="java"
-            ariaLabel="Chọn ngôn ngữ"
-            columns={2}
-        />
+        <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Có icon + mục khoá</Label>
+                <Typography type="body-sm" color="muted">
+                    Khi lựa chọn cần icon nhận diện (ngôn ngữ, công nghệ) và có phương án chưa khả dụng — card disabled vẫn hiện để báo sắp ra mắt.
+                </Typography>
+            </div>
+            <ControlledGroup
+                items={LANGUAGE_ITEMS}
+                initialValue="java"
+                ariaLabel="Chọn ngôn ngữ"
+                columns={2}
+            />
+        </div>
     ),
 }

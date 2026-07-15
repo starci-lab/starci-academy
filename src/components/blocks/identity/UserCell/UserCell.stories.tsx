@@ -3,7 +3,7 @@ import { Chip, Label, Typography } from "@heroui/react"
 import { UserCell } from "./index"
 
 const meta: Meta<typeof UserCell> = {
-    title: "Blocks/Identity/UserCell",
+    title: "Block/Identity/UserCell",
     component: UserCell,
     args: {
         username: "levan.dev",

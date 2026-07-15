@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Typography } from "@heroui/react"
+import { Label, Typography } from "@heroui/react"
 import { expect, screen, userEvent, waitFor, within } from "storybook/test"
 import { InfoTooltip } from "./index"
 
@@ -9,7 +9,7 @@ import { InfoTooltip } from "./index"
  * affordance bấm-để-mở panel (→ `Popover`) — hover không vào được trên touch.
  */
 const meta: Meta<typeof InfoTooltip> = {
-    title: "Overlays/InfoTooltip",
+    title: "Core/Overlays/InfoTooltip",
     component: InfoTooltip,
 }
 
@@ -80,17 +80,67 @@ export const Placements: Story = {
         usage: "4 hướng neo (top/bottom/left/right) — chọn theo chỗ trống quanh trigger để tooltip không tràn mép.",
     },
     render: () => (
-        <div className="flex gap-10">
-            {(["top", "bottom", "left", "right"] as const).map((placement) => (
+        <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Top</Label>
+                    <Typography type="body-sm" color="muted">
+                        Mặc định — trigger nằm gần mép dưới màn hình, còn khoảng trống phía trên.
+                    </Typography>
+                </div>
                 <InfoTooltip
-                    key={placement}
-                    placement={placement}
-                    title={placement}
-                    description={`Tooltip neo hướng ${placement}.`}
+                    placement="top"
+                    title="Top"
+                    description="Tooltip neo hướng top."
                 >
-                    <span className="cursor-help underline decoration-dotted">{placement}</span>
+                    <span className="cursor-help underline decoration-dotted">Top</span>
                 </InfoTooltip>
-            ))}
+            </div>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Bottom</Label>
+                    <Typography type="body-sm" color="muted">
+                        Trigger nằm sát mép trên (header/đầu trang), còn khoảng trống phía dưới.
+                    </Typography>
+                </div>
+                <InfoTooltip
+                    placement="bottom"
+                    title="Bottom"
+                    description="Tooltip neo hướng bottom."
+                >
+                    <span className="cursor-help underline decoration-dotted">Bottom</span>
+                </InfoTooltip>
+            </div>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Left</Label>
+                    <Typography type="body-sm" color="muted">
+                        Trigger nằm sát mép phải, còn khoảng trống bên trái.
+                    </Typography>
+                </div>
+                <InfoTooltip
+                    placement="left"
+                    title="Left"
+                    description="Tooltip neo hướng left."
+                >
+                    <span className="cursor-help underline decoration-dotted">Left</span>
+                </InfoTooltip>
+            </div>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Right</Label>
+                    <Typography type="body-sm" color="muted">
+                        Trigger nằm sát mép trái, còn khoảng trống bên phải.
+                    </Typography>
+                </div>
+                <InfoTooltip
+                    placement="right"
+                    title="Right"
+                    description="Tooltip neo hướng right."
+                >
+                    <span className="cursor-help underline decoration-dotted">Right</span>
+                </InfoTooltip>
+            </div>
         </div>
     ),
 }

@@ -3,7 +3,7 @@ import { Label, Typography } from "@heroui/react"
 import { ImageDropzone } from "./index"
 
 const meta: Meta<typeof ImageDropzone> = {
-    title: "Blocks/Identity/ImageDropzone",
+    title: "Core/Identity/ImageDropzone",
     component: ImageDropzone,
 }
 export default meta

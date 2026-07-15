@@ -9,7 +9,7 @@ import { Table } from "@heroui/react"
  * Atlassian, Carbon, Polaris): mỗi token 1 hàng gồm tên · px · dòng "khi nào dùng".
  */
 const meta: Meta = {
-    title: "Foundations/Spacing",
+    title: "Core/Foundations/Spacing",
 }
 export default meta
 type Story = StoryObj

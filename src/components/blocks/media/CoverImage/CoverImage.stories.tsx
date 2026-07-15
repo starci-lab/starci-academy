@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
+import { Label, Typography } from "@heroui/react"
 import { CoverImage } from "./index"
 
 const meta: Meta<typeof CoverImage> = {
-    title: "Blocks/Media/CoverImage",
+    title: "Core/Media/CoverImage",
     component: CoverImage,
 }
 export default meta
@@ -12,8 +13,16 @@ type Story = StoryObj<typeof CoverImage>
 export const Default: Story = {
     parameters: { usage: "Dùng cho ảnh bìa/thumbnail 16:9 của khoá học, bài blog hay changelog — ảnh tự cắt object-cover cho vừa khung bo góc." },
     render: () => (
-        <div className="w-96">
-            <CoverImage src="https://picsum.photos/seed/coverimage/800/450" alt="Ảnh bìa khoá học" />
+        <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Có ảnh</Label>
+                <Typography type="body-sm" color="muted">
+                    Dùng cho ảnh bìa / thumbnail 16:9 (khoá học, blog, changelog) — ảnh tự cắt object-cover cho vừa khung bo góc.
+                </Typography>
+            </div>
+            <div className="w-96">
+                <CoverImage src="https://picsum.photos/seed/coverimage/800/450" alt="Ảnh bìa khoá học" />
+            </div>
         </div>
     ),
 }
@@ -22,8 +31,16 @@ export const Default: Story = {
 export const Empty: Story = {
     parameters: { usage: "Dùng khi chưa có ảnh (src null) — khung vẫn giữ đúng tỉ lệ 16:9 với nền surface, tránh nhảy layout khi ảnh tải về sau." },
     render: () => (
-        <div className="w-96">
-            <CoverImage src={null} alt="Chưa có ảnh bìa" />
+        <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Chưa có ảnh</Label>
+                <Typography type="body-sm" color="muted">
+                    Dùng khi src null — khung vẫn giữ tỉ lệ 16:9 với nền surface, tránh nhảy layout khi ảnh tải về sau.
+                </Typography>
+            </div>
+            <div className="w-96">
+                <CoverImage src={null} alt="Chưa có ảnh bìa" />
+            </div>
         </div>
     ),
 }

@@ -1,28 +1,28 @@
 "use client"
 
 import React, { useEffect, useRef, useState } from "react"
-import { cn } from "@heroui/react"
-import { ArrowsClockwiseIcon, CheckCircleIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
+import { ArrowsClockwiseIcon } from "@phosphor-icons/react"
 import { useAnySocketDown } from "@/hooks/socketio/connectionStore"
+import { toast } from "@/modules/toast/toast"
 
-/** Grace period before a drop is surfaced — a sub-2s blip never flashes the pill. */
+/** Grace period before a drop is surfaced — a sub-2s blip never flashes a toast. */
 const DOWN_DELAY_MS = 2000
-/** How long the "reconnected" confirmation lingers before the pill hides. */
+/** How long the "reconnected" confirmation lingers before the toast hides. */
 const RECOVERED_MS = 1500
 
-/** Debounced display phase of the status pill. */
+/** Debounced display phase of the status toast. */
 type Phase = "hidden" | "down" | "recovered"
 
 /**
  * SocketConnectionStatus — a global, non-blocking "connection lost / reconnecting"
- * pill (Google Docs style). It floats, centered, just below the navbar and appears
- * only when a realtime socket drops for longer than {@link DOWN_DELAY_MS}, then auto
- * confirms "reconnected" and hides on recovery.
+ * toast (same timing as the old Google Docs-style pill). Appears only when a
+ * realtime socket drops for longer than {@link DOWN_DELAY_MS}, stays open while
+ * down (`timeout: 0`), then auto-confirms "reconnected" and dismisses on recovery.
  *
- * The app keeps working over HTTP, so this is purely informational — `pointer-events-none`
- * on the wrapper means it never blocks interaction. Mounted once in
- * {@link import("@/app/InnerLayout").InnerLayout}, right after the navbar.
+ * The app keeps working over HTTP, so this is purely informational. Mounted once
+ * in {@link import("@/app/InnerLayout").InnerLayout}; renders nothing itself —
+ * status is pushed through the shared {@link toast} queue (`ToastProvider`).
  */
 export const SocketConnectionStatus = () => {
     const t = useTranslations()
@@ -34,6 +34,8 @@ export const SocketConnectionStatus = () => {
     /** Latest phase, read inside async timers without re-subscribing them. */
     const phaseRef = useRef<Phase>("hidden")
     phaseRef.current = phase
+    /** Key of the persistent "down" toast — closed when we leave that phase. */
+    const downToastKey = useRef<string | null>(null)
 
     // React to the socket up/down signal: arm a grace timer on drop, confirm on recovery.
     useEffect(() => {
@@ -42,7 +44,7 @@ export const SocketConnectionStatus = () => {
                 clearTimeout(recoveredTimer.current)
                 recoveredTimer.current = null
             }
-            // wait out the grace period — a brief blip should never show the pill
+            // wait out the grace period — a brief blip should never show the toast
             if (!downTimer.current) {
                 downTimer.current = setTimeout(() => {
                     downTimer.current = null
@@ -64,7 +66,7 @@ export const SocketConnectionStatus = () => {
         }
     }, [anyDown])
 
-    // After the "reconnected" confirmation lingers, hide the pill.
+    // After the "reconnected" confirmation lingers, hide.
     useEffect(() => {
         if (phase !== "recovered") {
             return
@@ -81,6 +83,37 @@ export const SocketConnectionStatus = () => {
         }
     }, [phase])
 
+    // Drive the toast queue from phase — down is persistent; recovered auto-dismisses.
+    useEffect(() => {
+        if (phase === "down") {
+            const key = toast.warning(t("socketStatus.reconnecting"), {
+                timeout: 0,
+                indicator: (
+                    <ArrowsClockwiseIcon
+                        aria-hidden
+                        focusable="false"
+                        className="size-6 animate-spin text-warning-soft-foreground"
+                    />
+                ),
+            })
+            downToastKey.current = typeof key === "string" ? key : null
+            return () => {
+                if (downToastKey.current) {
+                    toast.close(downToastKey.current)
+                    downToastKey.current = null
+                }
+            }
+        }
+
+        if (phase === "recovered") {
+            toast.success(t("socketStatus.reconnected"), {
+                timeout: RECOVERED_MS,
+            })
+        }
+
+        return undefined
+    }, [phase, t])
+
     // Tidy timers on unmount.
     useEffect(
         () => () => {
@@ -90,31 +123,13 @@ export const SocketConnectionStatus = () => {
             if (recoveredTimer.current) {
                 clearTimeout(recoveredTimer.current)
             }
+            if (downToastKey.current) {
+                toast.close(downToastKey.current)
+                downToastKey.current = null
+            }
         },
         [],
     )
 
-    if (phase === "hidden") {
-        return null
-    }
-
-    const recovered = phase === "recovered"
-
-    return (
-        <div className="pointer-events-none fixed inset-x-0 top-[4.5rem] z-40 flex justify-center">
-            <div
-                className={cn(
-                    "pointer-events-auto flex items-center gap-2 rounded-full px-3 py-2 text-xs shadow-md",
-                    recovered ? "bg-success-soft text-success-soft-foreground" : "bg-warning-soft text-warning-soft-foreground",
-                )}
-            >
-                {recovered ? (
-                    <CheckCircleIcon aria-hidden focusable="false" className="size-4" />
-                ) : (
-                    <ArrowsClockwiseIcon aria-hidden focusable="false" className="size-4 animate-spin" />
-                )}
-                {recovered ? t("socketStatus.reconnected") : t("socketStatus.reconnecting")}
-            </div>
-        </div>
-    )
+    return null
 }

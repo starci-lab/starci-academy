@@ -1,5 +1,5 @@
 import React from "react"
-import { Skeleton, cn } from "@heroui/react"
+import { Card, CardContent, Skeleton, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link SkeletonCard}. */
@@ -9,32 +9,22 @@ export interface SkeletonCardProps extends WithClassNames<undefined> {
 }
 
 /**
- * Skeleton matching a HeroUI <Card/> box: bordered container (p-4, gap-3,
- * rounded-[32px]) with a title bar (text-sm/leading-6 -> h-[14px] my-[5px])
- * over a body block of placeholder lines.
+ * Skeleton matching a HeroUI <Card/>: renders the REAL `Card` + `CardContent`
+ * frame (border/radius/padding baked in) wrapping a title bar (body-sm 14px) over
+ * body lines (body-xs 12px), so the loading box shares the card's exact footprint.
  */
-export const SkeletonCard = ({ className, lines = 3 }: SkeletonCardProps) => {
-    return (
-        <div
-            className={cn(
-                "flex flex-col gap-3 rounded-[32px] bg-surface p-4 shadow-surface",
-                className,
-            )}
-        >
-            {/* Card title (text-sm/leading-6) */}
+export const SkeletonCard = ({ className, lines = 3 }: SkeletonCardProps) => (
+    <Card className={className}>
+        <CardContent className="flex flex-col gap-2">
+            {/* Title (body-sm) */}
             <Skeleton className="my-[5px] h-[14px] w-1/2 rounded" />
-            {/* Card content lines (body) */}
-            <div className="flex flex-1 flex-col gap-2">
-                {Array.from({ length: lines }).map((_, index) => (
-                    <Skeleton
-                        key={index}
-                        className={cn(
-                            "my-2 h-4 rounded",
-                            index === lines - 1 ? "w-2/3" : "w-full",
-                        )}
-                    />
-                ))}
-            </div>
-        </div>
-    )
-}
+            {/* Body lines (body-xs) */}
+            {Array.from({ length: lines }).map((_, index) => (
+                <Skeleton
+                    key={index}
+                    className={cn("h-3 rounded", index === lines - 1 ? "w-2/3" : "w-full")}
+                />
+            ))}
+        </CardContent>
+    </Card>
+)

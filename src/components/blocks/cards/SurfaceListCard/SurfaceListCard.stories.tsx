@@ -8,7 +8,7 @@ import {
 import { SurfaceListCard, SurfaceListCardItem, SurfaceListCardRow } from "./index"
 
 const meta: Meta<typeof SurfaceListCard> = {
-    title: "Blocks/Card/SurfaceListCard",
+    title: "Core/Card/SurfaceListCard",
     component: SurfaceListCard,
 }
 

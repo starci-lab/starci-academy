@@ -4,7 +4,7 @@ import { Label, Typography } from "@heroui/react"
 import { EmptyContent } from "./index"
 
 const meta: Meta<typeof EmptyContent> = {
-    title: "Blocks/Async/EmptyContent",
+    title: "Core/Async/EmptyContent",
     component: EmptyContent,
 }
 export default meta

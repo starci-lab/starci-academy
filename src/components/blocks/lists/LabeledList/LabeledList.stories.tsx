@@ -38,9 +38,27 @@ const rows = (
     </>
 )
 
-/** Label + icon header trên một stack `gap-2` các hàng — KHÔNG khung card. Cho rail/panel dạng "nhãn + danh sách ngắn" mà card đầy đủ là quá nặng. */
+/**
+ * Ngoại lệ hẹp của `LabeledCard`, không phải mặc định: chỉ dùng khi khối nằm trong RAIL hoặc PANEL
+ * và list chỉ vài hàng — nhãn và list ngăn nhau bằng whitespace, không khung card, không divider,
+ * không đếm số thừa. Mọi khối-có-tiêu-đề khác vẫn là `LabeledCard`: khối đứng ở cột chính của trang,
+ * hoặc cần một mặt phẳng bao lấy nội dung để tách khỏi nền, thì dùng `LabeledCard` chứ đừng dùng cái
+ * này (bỏ khung giữa trang thì khối trôi, mắt không thấy biên đâu mà gom). Nếu là nhiều item đơn giản
+ * cần gộp chung một card có separator giữa các hàng thì dùng `SurfaceListCard` — `LabeledList` không
+ * vẽ separator, đông hàng sẽ dính lại thành một mảng chữ. Một hành động đi kèm thì truyền qua prop
+ * `action` để nó neo dưới list, đừng nhét button vào `children`.
+ */
 export const Default: Story = {
-    parameters: { usage: "Nhãn + icon trên một stack hàng, không khung card — cho rail/panel dạng \"nhãn + danh sách ngắn\"." },
+    parameters: {
+        usage: "Ngoại lệ hẹp của LabeledCard, không phải mặc định: chỉ dùng khi khối nằm trong RAIL hoặc PANEL "
+            + "và list chỉ vài hàng — nhãn và list ngăn nhau bằng whitespace, không khung card, không divider, "
+            + "không đếm số thừa. Mọi khối-có-tiêu-đề khác vẫn là LabeledCard: khối đứng ở cột chính của trang, "
+            + "hoặc cần một mặt phẳng bao lấy nội dung để tách khỏi nền, thì dùng LabeledCard chứ đừng dùng cái "
+            + "này (bỏ khung giữa trang thì khối trôi, mắt không thấy biên đâu mà gom). Nếu là nhiều item đơn giản "
+            + "cần gộp chung một card có separator giữa các hàng thì dùng SurfaceListCard — LabeledList không "
+            + "vẽ separator, đông hàng sẽ dính lại thành một mảng chữ. Một hành động đi kèm thì truyền qua prop "
+            + "action để nó neo dưới list, đừng nhét button vào children.",
+    },
     render: () => (
         <div className="max-w-sm">
             <LabeledList label="Ôn tập & luyện" icon={<LightningIcon className="size-4 text-muted" aria-hidden focusable="false" />}>

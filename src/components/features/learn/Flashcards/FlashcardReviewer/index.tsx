@@ -636,6 +636,7 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                                     <RatingBar
                                         options={ratingOptions}
                                         onRate={(grade) => void onRate(grade)}
+                                        ariaLabel={t("flashcard.review.rateAria")}
                                         isPending={reviewing}
                                     />
                                 </div>

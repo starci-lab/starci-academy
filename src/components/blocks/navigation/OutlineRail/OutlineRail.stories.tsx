@@ -6,7 +6,6 @@ import type { OutlineRailGroup, OutlineRailProps } from "./index"
 const meta: Meta<typeof OutlineRail> = {
     title: "Blocks/Navigation/OutlineRail",
     component: OutlineRail,
-    parameters: { layout: "centered" },
 }
 export default meta
 type Story = StoryObj<typeof OutlineRail>

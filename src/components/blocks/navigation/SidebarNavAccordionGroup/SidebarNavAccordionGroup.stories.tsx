@@ -7,7 +7,6 @@ import { SidebarCollapsedContext } from "../CollapsibleSidebar/context"
 const meta: Meta<typeof SidebarNavAccordionGroup> = {
     title: "Blocks/Navigation/SidebarNavAccordionGroup",
     component: SidebarNavAccordionGroup,
-    parameters: { layout: "centered" },
 }
 export default meta
 type Story = StoryObj<typeof SidebarNavAccordionGroup>

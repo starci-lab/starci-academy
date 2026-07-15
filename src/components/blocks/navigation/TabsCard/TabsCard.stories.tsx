@@ -8,7 +8,6 @@ import { TabsCard } from "./index"
 const meta: Meta<typeof TabsCard> = {
     title: "Blocks/Navigation/TabsCard",
     component: TabsCard,
-    parameters: { layout: "centered" },
 }
 export default meta
 type Story = StoryObj<typeof TabsCard>
@@ -24,9 +23,20 @@ const LANGUAGE_TABS = [
     { key: "en", label: "English", icon: <GlobeIcon size={16} /> },
 ]
 
-/** Dùng khi một trang chỉ cần một dải tab nội dung đơn giản, không có nhóm phụ bên phải. */
+/**
+ * Dùng khi bấm tab làm ĐỔI CẢ PANEL bên dưới, hoặc văng sang route khác — đó là điều hướng, nên
+ * nó là dải underline. Nếu chỉ đổi MỘT setting gọn tại chỗ mà nội dung lớn bên dưới giữ nguyên
+ * (VND ⇆ USD, Lưới ⇆ Danh sách) → dùng SegmentedControl (pill). Số lượng lựa chọn KHÔNG quyết
+ * định: 2 tab vẫn là TabsCard nếu nó đổi panel. Story này là dải tab trơn, không nhóm phụ.
+ */
 export const Default: Story = {
-    parameters: { usage: "Dùng khi một trang chỉ cần một dải tab nội dung đơn giản, không có nhóm phụ bên phải." },
+    parameters: {
+        usage:
+            "Dùng khi bấm tab làm ĐỔI CẢ PANEL bên dưới, hoặc văng sang route khác — đó là điều hướng, nên nó là " +
+            "dải underline. Nếu chỉ đổi MỘT setting gọn tại chỗ mà nội dung lớn bên dưới giữ nguyên (VND ⇆ USD, " +
+            "Lưới ⇆ Danh sách) → dùng SegmentedControl (pill). Số lượng lựa chọn KHÔNG quyết định: 2 tab vẫn là " +
+            "TabsCard nếu nó đổi panel — THỨ nó điều khiển mới quyết định. Story này là dải tab trơn, không nhóm phụ.",
+    },
     render: () => {
         const [selectedKey, setSelectedKey] = useState("overview")
         return (

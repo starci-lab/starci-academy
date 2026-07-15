@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Button, Typography } from "@heroui/react"
+import { Button, Label, Typography } from "@heroui/react"
 import { ArrowClockwiseIcon, CaretRightIcon, TrayIcon, WarningIcon } from "@phosphor-icons/react"
 
 import { PaginatedList } from "./index"
@@ -58,9 +58,29 @@ const pagination = (
     </div>
 )
 
-/** Nhánh DATA: children + pagination. Đây là orchestrator 4 nhánh — ưu tiên error → loading → empty → data; nhánh nào cũng do caller truyền slot. */
+/**
+ * Chỉ dùng khi list HỮU HẠN và người dùng cần TÌM hoặc QUAY LẠI đúng một item — "trang 3" có nghĩa,
+ * địa chỉ được, đóng tab mở lại vẫn về chỗ cũ (danh mục khóa học · danh sách việc làm · bộ thẻ). Nếu
+ * người dùng chỉ LƯỚT một dòng chảy vô tận và list nằm trong container scroll RIÊNG (modal · panel ·
+ * rail, dưới nó không còn gì) → dùng InfiniteScrollSentinel, pager ở đó là ma sát thừa. Nếu dòng chảy
+ * đó nằm ở CỘT CHÍNH của trang mà dưới còn footer → dùng NÚT "Tải thêm" (auto-scroll sẽ cướp scroll,
+ * người dùng không bao giờ chạm tới footer). Block là orchestrator 4 nhánh thuần trình bày: chọn đúng
+ * 1 nhánh theo cờ (error → loading → empty → data), nhánh nào cũng do caller truyền slot; pagination
+ * chỉ render ở nhánh data — chỉ có 1 trang thì bỏ hẳn slot đó, đừng hiện pager chết.
+ */
 export const Default: Story = {
-    parameters: { usage: "Nhánh data: children + pagination. Orchestrator chọn đúng 1 nhánh theo cờ (error → loading → empty → data)." },
+    parameters: {
+        usage:
+            "Chỉ dùng khi list HỮU HẠN và người dùng cần TÌM hoặc QUAY LẠI đúng một item — \"trang 3\" có nghĩa, " +
+            "địa chỉ được, đóng tab mở lại vẫn về chỗ cũ (danh mục khóa học · danh sách việc làm · bộ thẻ). " +
+            "Nếu người dùng chỉ LƯỚT một dòng chảy vô tận và list nằm trong container scroll RIÊNG (modal · panel · " +
+            "rail, dưới nó không còn gì) → dùng InfiniteScrollSentinel, pager ở đó là ma sát thừa. Nếu dòng chảy đó " +
+            "nằm ở CỘT CHÍNH của trang mà dưới còn footer → dùng NÚT \"Tải thêm\" (auto-scroll sẽ cướp scroll, " +
+            "người dùng không bao giờ chạm tới footer). " +
+            "Block là orchestrator 4 nhánh thuần trình bày: chọn đúng 1 nhánh theo cờ (error → loading → empty → " +
+            "data), nhánh nào cũng do caller truyền slot; pagination chỉ render ở nhánh data — chỉ có 1 trang thì " +
+            "bỏ hẳn slot đó, đừng hiện pager chết.",
+    },
     render: () => (
         <div className="max-w-md">
             <PaginatedList pagination={pagination}>{rows}</PaginatedList>
@@ -72,21 +92,21 @@ export const Default: Story = {
 export const AllBranches: Story = {
     parameters: { usage: "Xem cả 4 nhánh cạnh nhau (error → loading → empty → data) để đối chiếu thứ tự ưu tiên và layout từng slot; dùng khi cần soi orchestrator chọn nhánh nào." },
     render: () => (
-        <div className="grid max-w-4xl grid-cols-1 gap-6 sm:grid-cols-2">
-            <div className="flex flex-col gap-2">
-                <Typography type="body-xs" color="muted">Nhánh error (ưu tiên cao nhất)</Typography>
+        <div className="flex max-w-4xl flex-col gap-6">
+            <div className="flex flex-col gap-3">
+                <Label>Error (ưu tiên cao nhất)</Label>
                 <PaginatedList error errorState={errorState}>{rows}</PaginatedList>
             </div>
-            <div className="flex flex-col gap-2">
-                <Typography type="body-xs" color="muted">Nhánh loading</Typography>
+            <div className="flex flex-col gap-3">
+                <Label>Loading</Label>
                 <PaginatedList isLoading skeleton={skeleton}>{rows}</PaginatedList>
             </div>
-            <div className="flex flex-col gap-2">
-                <Typography type="body-xs" color="muted">Nhánh empty</Typography>
+            <div className="flex flex-col gap-3">
+                <Label>Empty</Label>
                 <PaginatedList isEmpty emptyState={emptyState}>{rows}</PaginatedList>
             </div>
-            <div className="flex flex-col gap-2">
-                <Typography type="body-xs" color="muted">Nhánh data</Typography>
+            <div className="flex flex-col gap-3">
+                <Label>Data</Label>
                 <PaginatedList pagination={pagination}>{rows}</PaginatedList>
             </div>
         </div>

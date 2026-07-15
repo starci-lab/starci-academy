@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ClockIcon } from "@phosphor-icons/react"
+import { Label, Typography } from "@heroui/react"
 import { HighlightChip } from "./index"
 
 const meta: Meta<typeof HighlightChip> = {
@@ -9,39 +9,56 @@ const meta: Meta<typeof HighlightChip> = {
 export default meta
 type Story = StoryObj<typeof HighlightChip>
 
-/** Dùng ở hàng meta của PageHeader để nêu bật một con số/figure trung tính của khóa học, ví dụ tổng số module. */
-export const Default: Story = {
-    parameters: { usage: "Dùng ở hàng meta của PageHeader để nêu bật một con số/figure trung tính của khóa học, ví dụ tổng số module." },
-    render: () => <HighlightChip value={24} label="Module" />,
-}
-
-/** So sánh cả bốn tông ngữ nghĩa cạnh nhau để chọn đúng màu cho từng loại chỉ số: accent nhấn khái niệm, success cho thành tích, warning khi cần chú ý, danger khi cần xử lý ngay. */
+/** So sánh cả năm tông cạnh nhau để chọn màu theo Ý NGHĨA của con số, không theo cảm giác đẹp — mỗi tông ứng một loại chỉ số khác nhau. */
 export const AllTones: Story = {
-    parameters: { usage: "So sánh cả bốn tông ngữ nghĩa cạnh nhau để chọn đúng màu cho từng loại chỉ số: accent nhấn khái niệm, success cho thành tích, warning khi cần chú ý, danger khi cần xử lý ngay." },
+    parameters: { usage: "So sánh cả năm tông cạnh nhau để chọn màu theo Ý NGHĨA của con số chứ không theo cảm giác. Dùng ở hàng meta của `PageHeader`; một cụm meta chỉ nên có MỘT chip mang một trục phân loại (axis-1 §Chip), phần còn lại để text thuần + icon." },
     render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-3">
-                <span className="w-24 text-sm text-default-500">accent</span>
+        <div className="flex flex-col gap-6">
+            <div className="flex flex-col items-start gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Neutral</Label>
+                    <Typography type="body-sm" color="muted">
+                        Mặc định khi bỏ trống prop tone. Dùng cho figure thuần mô tả, không khen cũng không cảnh báo.
+                    </Typography>
+                </div>
+                <HighlightChip value={24} label="Module" />
+            </div>
+            <div className="flex flex-col items-start gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Accent</Label>
+                    <Typography type="body-sm" color="muted">
+                        Khi con số là khái niệm cần nhấn, chưa phải thành tích cũng chưa phải việc phải xử lý.
+                    </Typography>
+                </div>
                 <HighlightChip tone="accent" value="42h" label="Giờ học" />
             </div>
-            <div className="flex items-center gap-3">
-                <span className="w-24 text-sm text-default-500">success</span>
+            <div className="flex flex-col items-start gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Success</Label>
+                    <Typography type="body-sm" color="muted">
+                        Khi con số là thành tích đã đạt. Không dùng cho số đang chờ hay số trung tính.
+                    </Typography>
+                </div>
                 <HighlightChip tone="success" value={276} label="Bài đã hoàn thành" />
             </div>
-            <div className="flex items-center gap-3">
-                <span className="w-24 text-sm text-default-500">warning</span>
+            <div className="flex flex-col items-start gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Warning</Label>
+                    <Typography type="body-sm" color="muted">
+                        Khi cần chú ý nhưng CHƯA trễ — còn kịp xử lý.
+                    </Typography>
+                </div>
                 <HighlightChip tone="warning" value={3} label="Bài sắp hết hạn" />
             </div>
-            <div className="flex items-center gap-3">
-                <span className="w-24 text-sm text-default-500">danger</span>
+            <div className="flex flex-col items-start gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Danger</Label>
+                    <Typography type="body-sm" color="muted">
+                        Khi đã quá hạn hoặc hỏng, cần xử lý ngay. Đừng mượn danger chỉ để cho nổi.
+                    </Typography>
+                </div>
                 <HighlightChip tone="danger" value={5} label="Bài quá hạn" />
             </div>
         </div>
     ),
-}
-
-/** Truyền icon dẫn đầu khi con số gắn với một khái niệm cụ thể (thời lượng, tốc độ...) để người dùng nhận diện nhanh hơn qua hình ảnh trước khi đọc số. */
-export const WithIcon: Story = {
-    parameters: { usage: "Truyền icon dẫn đầu khi con số gắn với một khái niệm cụ thể (thời lượng, tốc độ...) để người dùng nhận diện nhanh hơn qua hình ảnh trước khi đọc số." },
-    render: () => <HighlightChip tone="accent" icon={<ClockIcon />} value="42h" label="Giờ học" />,
 }

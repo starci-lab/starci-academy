@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Button } from "@heroui/react"
+import { Button, Label, Typography } from "@heroui/react"
 import { RocketLaunchIcon } from "@phosphor-icons/react"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { PressableCard } from "./index"
@@ -33,7 +33,7 @@ const NavTileContent = () => (
     </div>
 )
 
-/** Generic option-card content — used for "pick a card" (lift) demos. */
+/** Generic option-card content — used for "pick a card" demos. */
 const OptionCardContent = ({ label, price }: { label: string; price: string }) => (
     <div className="flex flex-col gap-1">
         <span className="text-sm font-semibold text-foreground">{label}</span>
@@ -47,26 +47,18 @@ export const Default: Story = {
         usage: "Dùng cho ô điều hướng bấm được (vào lộ trình, mở khóa học) — bấm là chuyển màn ngay, không phải chọn lựa.",
     },
     args: {
-        hoverVariant: "fill",
         onPress: () => {},
         children: <NavTileContent />,
     },
-}
-
-/** So sánh 2 kiểu hover: `fill` cho tile điều hướng (đi đâu đó), `lift` cho card lựa chọn (chọn 1 trong nhiều gói) — chọn theo Ý ĐỊNH của cú bấm, không theo gu thẩm mỹ. */
-export const HoverVariants: Story = {
-    name: "Hover variants — fill vs lift",
-    parameters: {
-        usage: "So sánh 2 kiểu hover: `fill` cho tile điều hướng (đi đâu đó), `lift` cho card lựa chọn (chọn 1 trong nhiều gói) — chọn theo Ý ĐỊNH của cú bấm, không theo gu thẩm mỹ.",
-    },
-    render: () => (
-        <div className="flex flex-col gap-4">
-            <PressableCard hoverVariant="fill" onPress={() => {}}>
-                <NavTileContent />
-            </PressableCard>
-            <PressableCard hoverVariant="lift" onPress={() => {}}>
-                <OptionCardContent label="Gói 6 tháng" price="1.990.000đ" />
-            </PressableCard>
+    render: (args) => (
+        <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Mặc định</Label>
+                <Typography type="body-sm" color="muted">
+                    Cả card chỉ có MỘT đích bấm duy nhất, không nút con nào bên trong. Chữ trong children chính là tên đọc được của card nên không cần truyền label — chỉ truyền khi card không có chữ nào (tile chỉ icon).
+                </Typography>
+            </div>
+            <PressableCard {...args} />
         </div>
     ),
 }
@@ -86,7 +78,13 @@ export const WithActions: Story = {
         usage: "Card bấm-được có nút riêng bên trong (card tiến độ: bấm card mở khóa, nút Tiếp tục vào bài dở). Dùng `actions` + `label` → stretched-link: overlay phủ cả card + nút đè lên (z-10), bấm độc lập, KHÔNG lồng interactive, không bị cao.",
     },
     render: () => (
-        <div className="w-full">
+        <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Có nút riêng</Label>
+                <Typography type="body-sm" color="muted">
+                    Chọn state này khi card cần đích bấm THỨ HAI hành động độc lập với cú bấm cả-card — nút Tiếp tục nhảy thẳng vào bài đang dở, còn bấm card thì mở trang khóa. Nút chỉ lặp lại đúng đích của card thì bỏ đi, để card làm.
+                </Typography>
+            </div>
             <PressableCard
                 onPress={() => {}}
                 label="Mở lộ trình Fullstack Mastery"
@@ -113,9 +111,19 @@ export const Disabled: Story = {
         usage: "Dùng khi lựa chọn đó tạm thời không khả dụng (gói hết slot) — vẫn hiện để user biết nó tồn tại, nhưng chặn bấm + tắt hover.",
     },
     args: {
-        hoverVariant: "lift",
         isDisabled: true,
         onPress: () => {},
         children: <OptionCardContent label="Gói 12 tháng (đã hết slot)" price="3.490.000đ" />,
     },
+    render: (args) => (
+        <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Không khả dụng</Label>
+                <Typography type="body-sm" color="muted">
+                    State này chỉ dành cho card hành động có onPress; card điều hướng bằng href không tắt được bằng isDisabled mà phải gỡ href. Card vẫn đọc được đầy đủ, chỉ mờ đi, nên lý do không bấm được phải nằm trong chữ của children (ở đây là "đã hết slot"), đừng để mắt tự đoán qua độ mờ.
+                </Typography>
+            </div>
+            <PressableCard {...args} />
+        </div>
+    ),
 }

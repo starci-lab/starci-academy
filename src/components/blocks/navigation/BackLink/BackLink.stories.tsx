@@ -4,7 +4,6 @@ import { BackLink } from "./index"
 const meta: Meta<typeof BackLink> = {
     title: "Blocks/Navigation/BackLink",
     component: BackLink,
-    parameters: { layout: "centered" },
 }
 export default meta
 type Story = StoryObj<typeof BackLink>

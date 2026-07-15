@@ -4,7 +4,6 @@ import { SectionHeading } from "./index"
 const meta: Meta<typeof SectionHeading> = {
     title: "Blocks/Marketing/SectionHeading",
     component: SectionHeading,
-    parameters: { layout: "centered" },
 }
 export default meta
 type Story = StoryObj<typeof SectionHeading>

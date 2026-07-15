@@ -14,7 +14,6 @@ import { SidebarCollapsedContext } from "../CollapsibleSidebar/context"
 const meta: Meta<typeof SidebarNavGroup> = {
     title: "Blocks/Navigation/SidebarNavGroup",
     component: SidebarNavGroup,
-    parameters: { layout: "centered" },
 }
 export default meta
 type Story = StoryObj<typeof SidebarNavGroup>

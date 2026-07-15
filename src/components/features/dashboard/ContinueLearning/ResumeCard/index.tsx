@@ -90,11 +90,10 @@ export const ResumeCard = ({
     return (
         <ContinueCard
             className={className}
-            badgeIcon={<ChipIcon weight="fill" />}
+            variant="item"
+            icon={<ChipIcon weight="fill" />}
             title={item.label}
             subtitle={t(`dashboard.continueKind.${item.kind}`)}
-            value={0}
-            hideProgress
             ctaLabel={t("dashboard.continue")}
             onPress={onPress}
         />

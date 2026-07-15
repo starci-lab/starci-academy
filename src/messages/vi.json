@@ -165,6 +165,7 @@
     },
     "collapseMenu": "Thu gọn menu",
     "expandMenu": "Mở rộng menu",
+    "itemsAria": "Các trang cài đặt",
     "groups": {
       "account": "Tài khoản",
       "learning": "Học tập",
@@ -1453,6 +1454,7 @@
     "position": "Nội dung {position}/{total}",
     "prevLesson": "Nội dung trước",
     "nextLesson": "Nội dung tiếp",
+    "pagerAria": "Chuyển nội dung trước hoặc tiếp",
     "challengeCount": "{count} thử thách",
     "outcomes": "Bạn sẽ nắm được",
     "codeLessonCount": "{count} mục code",
@@ -1943,6 +1945,7 @@
       "good": "Được",
       "easy": "Dễ",
       "rateHint": "Bạn nhớ được tới đâu?",
+      "rateAria": "Chọn mức độ nhớ thẻ này",
       "error": "Không lưu được lượt ôn. Vui lòng thử lại.",
       "sessionDoneTitle": "Hoàn thành phiên ôn",
       "sessionDoneDescription": "Bạn đã ôn {count} thẻ. Quay lại khi có thêm thẻ đến hạn.",
@@ -4706,6 +4709,7 @@
     "title": "Sàn tuyển dụng",
     "description": "Chọn một lộ trình, rồi duyệt các ứng viên sẵn sàng nhận việc — xếp hạng theo độ sâu riêng của lộ trình đó.",
     "trackFilterAria": "Lọc ứng viên theo lộ trình",
+    "candidatesAria": "Danh sách ứng viên theo lộ trình đang chọn",
     "qualified": "Đạt chuẩn",
     "empty": "Chưa có ứng viên cho lộ trình này.",
     "emptyHint": "Chưa có ai sẵn sàng nhận việc xây dựng đủ độ sâu ở lộ trình này. Thử lộ trình khác."

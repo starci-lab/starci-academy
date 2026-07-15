@@ -1,19 +1,36 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
+import { Label, Typography } from "@heroui/react"
 import { CheckListCard, CheckListItem } from "./index"
 
 const meta: Meta<typeof CheckListCard> = {
     title: "Blocks/Card/CheckListCard",
     component: CheckListCard,
-    parameters: { layout: "centered" },
 }
 export default meta
 type Story = StoryObj<typeof CheckListCard>
 
-/** Dùng cho danh sách giá trị đạt được — mỗi dòng có dấu tick thành công mặc định. */
+/**
+ * Dùng cho danh sách "brief có/không tick" — giá trị đạt được, đầu ra, mục tiêu học. Icon ở đây
+ * CỐ ĐỊNH là tick thành công: đó vừa là điểm mạnh (không phải nghĩ) vừa là giới hạn. Cần icon
+ * khác nhau từng dòng, hoặc icon mang màu theo trạng thái → dùng SurfaceListCardItem (free-form).
+ * Danh sách mà mỗi hàng bấm được để đi đâu đó → SurfaceListCard.
+ */
 export const Default: Story = {
-    parameters: { usage: "Dùng cho danh sách giá trị đạt được — mỗi dòng có dấu tick thành công mặc định." },
+    parameters: {
+        usage:
+            "Dùng cho danh sách \"brief có/không tick\" — giá trị đạt được, đầu ra, mục tiêu học. Icon ở đây CỐ " +
+            "ĐỊNH là tick thành công: đó vừa là điểm mạnh (không phải nghĩ) vừa là giới hạn. Cần icon khác nhau " +
+            "từng dòng, hoặc icon mang màu theo trạng thái → dùng SurfaceListCardItem (free-form). Danh sách mà " +
+            "mỗi hàng bấm được để đi đâu đó → SurfaceListCard.",
+    },
     render: () => (
-        <div className="w-80">
+        <div className="flex w-80 flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Có tick</Label>
+                <Typography type="body-sm" color="muted">
+                    Mỗi dòng là một thứ người học ĐẠT ĐƯỢC — tick khẳng định nó đã thành. Đây là mặc định của block.
+                </Typography>
+            </div>
             <CheckListCard>
                 <CheckListItem>Xây dựng được API RESTful hoàn chỉnh</CheckListItem>
                 <CheckListItem>Triển khai xác thực JWT an toàn</CheckListItem>
@@ -23,11 +40,17 @@ export const Default: Story = {
     ),
 }
 
-/** Dùng cho danh sách điều kiện tiên quyết — đây là yêu cầu chứ không phải thành tích nên không có tick. */
+/** Vẫn là danh sách brief, nhưng mỗi dòng là ĐIỀU KIỆN chứ không phải thành tích — tắt tick vì tick đọc ra là "đã xong", mà điều kiện tiên quyết thì chưa ai xác nhận người học có hay không. */
 export const WithoutCheck: Story = {
-    parameters: { usage: "Dùng cho danh sách điều kiện tiên quyết — đây là yêu cầu chứ không phải thành tích nên không có tick." },
+    parameters: { usage: "Vẫn là danh sách brief, nhưng mỗi dòng là ĐIỀU KIỆN chứ không phải thành tích — tắt tick vì tick đọc ra là \"đã xong\", mà điều kiện tiên quyết thì chưa ai xác nhận người học có hay không." },
     render: () => (
-        <div className="w-80">
+        <div className="flex w-80 flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Không tick</Label>
+                <Typography type="body-sm" color="muted">
+                    Tắt showCheck khi mỗi dòng là YÊU CẦU đầu vào, chưa ai xác nhận người học đạt hay chưa — để tick ở đây là khẳng định thay họ.
+                </Typography>
+            </div>
             <CheckListCard>
                 <CheckListItem showCheck={false}>Đã hoàn thành khóa lập trình cơ bản</CheckListItem>
                 <CheckListItem showCheck={false}>Có máy tính cài sẵn Node.js 20+</CheckListItem>
@@ -37,11 +60,17 @@ export const WithoutCheck: Story = {
     ),
 }
 
-/** Dùng khi nội dung dòng dài, cần kiểm tra việc xuống dòng và căn lề với icon tick. */
+/** Dòng dài KHÔNG bị cắt — nó xuống hàng, và tick giữ nguyên ở đầu dòng đầu chứ không trôi xuống giữa khối chữ. Nên đừng tự cắt ngắn nội dung ở call-site để "cho vừa": block chịu được, và một đầu ra bị cắt cụt thì mất nghĩa. */
 export const LongText: Story = {
-    parameters: { usage: "Dùng khi nội dung dòng dài, cần kiểm tra việc xuống dòng và căn lề với icon tick." },
+    parameters: { usage: "Dòng dài KHÔNG bị cắt — nó xuống hàng, và tick giữ nguyên ở đầu dòng đầu chứ không trôi xuống giữa khối chữ. Nên đừng tự cắt ngắn nội dung ở call-site để \"cho vừa\": block chịu được, và một đầu ra bị cắt cụt thì mất nghĩa." },
     render: () => (
-        <div className="w-80">
+        <div className="flex w-80 flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Chữ dài</Label>
+                <Typography type="body-sm" color="muted">
+                    Khung hẹp và dòng dài hơn một hàng — kiểm tick có neo đúng đầu dòng đầu và lề chữ có thẳng khi wrap.
+                </Typography>
+            </div>
             <CheckListCard>
                 <CheckListItem>
                     Thiết kế và triển khai hệ thống microservices có khả năng mở rộng cao, xử lý hàng triệu request mỗi ngày với độ trễ thấp

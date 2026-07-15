@@ -17,9 +17,19 @@ export interface InfiniteScrollSentinelProps extends WithClassNames<undefined> {
 /**
  * Invisible end-of-list marker for infinite scroll: an `IntersectionObserver`
  * fires {@link InfiniteScrollSentinelProps.onReach} when it becomes visible, so
- * the list grows on scroll instead of via a "load more" button. Pair with a
- * `useSWRInfinite` hook — `onReach={() => setSize((s) => s + 1)}`,
- * `disabled={!hasMore || isValidating}` (see `starci-async.md`).
+ * the list grows on scroll instead of via a "load more" button.
+ *
+ * Only for a list inside its OWN scroll container (modal / panel / rail) with
+ * nothing below it. A list in the page's main column (footer underneath) must
+ * use a "load more" button instead — auto-loading steals the scroll and the
+ * footer becomes unreachable. A finite list the user browses to pick from wants
+ * a pager (`PaginatedList`).
+ *
+ * Pair with `useSWRInfinite` — `onReach={() => setSize((s) => s + 1)}`,
+ * `disabled={!hasMore || isLoadingMore}` where
+ * `isLoadingMore = isValidating && (pages?.length ?? 0) < size`. While a page is
+ * in flight, render skeletons mirroring 1-2 real items right here at the
+ * sentinel, never a bare "loading" line.
  */
 export const InfiniteScrollSentinel = ({
     onReach,

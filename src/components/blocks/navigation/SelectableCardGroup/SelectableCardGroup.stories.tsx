@@ -118,12 +118,20 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 /**
- * Dùng cho chọn 1-trong-N phương án có mô tả kèm theo (chu kỳ thanh toán,
- * gói dịch vụ…) — không phải danh sách điều hướng thuần.
+ * Dùng khi chọn 1-trong-N mà mỗi phương án GIÀU (icon + mô tả + badge) và lựa chọn phải Ở LẠI,
+ * đọc được là "cái tôi đã chọn" — đây là radio thật (chu kỳ thanh toán, gói dịch vụ). Nếu bấm
+ * xong KHÔNG có gì ở lại, thẻ chỉ chạy một hành động rồi thôi (mở trang, chấm điểm) →
+ * GroupPressableCard. Nếu mỗi lựa chọn chỉ là nhãn ngắn 1 dòng → SegmentedControl. Nếu lựa chọn
+ * nhỏ, nhiều, cần wrap xuống hàng → FlexWrapCardRadio.
  */
 export const Default: Story = {
     parameters: {
-        usage: "Dùng cho chọn 1-trong-N phương án có mô tả kèm theo (chu kỳ thanh toán, gói dịch vụ…) — không phải danh sách điều hướng thuần.",
+        usage:
+            "Dùng khi chọn 1-trong-N mà mỗi phương án GIÀU (icon + mô tả + badge) và lựa chọn phải Ở LẠI, đọc được " +
+            "là \"cái tôi đã chọn\" — đây là radio thật (chu kỳ thanh toán, gói dịch vụ). Nếu bấm xong KHÔNG có gì ở " +
+            "lại, thẻ chỉ chạy một hành động rồi thôi (mở trang, chấm điểm) → GroupPressableCard. Nếu mỗi lựa chọn " +
+            "chỉ là nhãn ngắn 1 dòng → SegmentedControl. Nếu lựa chọn nhỏ, nhiều, cần wrap xuống hàng → " +
+            "FlexWrapCardRadio.",
     },
     render: () => (
         <ControlledGroup

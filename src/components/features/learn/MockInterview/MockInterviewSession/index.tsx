@@ -1392,11 +1392,10 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                             minutes: resumeRemainingMinutes,
                         })}
                     urgent={resumeUrgent}
+                    variant="hero"
                     value={resumeValue}
                     max={resumeMax}
                     ctaLabel={resumeExpired ? t("mockInterview.resumeCtaExpired") : t("mockInterview.resumeCta")}
-                    ctaVariant="chip"
-                    accented
                     onPress={() => router.push(pathConfig()
                         .locale(locale)
                         .course(courseDisplayId)

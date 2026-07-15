@@ -1,25 +1,33 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
+import { Label, Typography } from "@heroui/react"
 import { PageContainer } from "./index"
 
 const meta: Meta<typeof PageContainer> = {
     title: "Blocks/Layout/PageContainer",
     component: PageContainer,
-    parameters: { layout: "centered" },
 }
 export default meta
 type Story = StoryObj<typeof PageContainer>
 
-/** Dùng làm khung chuẩn cho một trang, canh giữa nội dung và tự chừa gutter/padding responsive. */
+/** Dùng làm lớp ngoài cùng của MỘT trang — block giữ độc quyền padding và bề rộng tối đa, nhờ vậy feature bên trong không cần (và không được) tự đặt `p-*`, và mọi trang có cùng một lề. Khối nằm bên trong một trang vốn đã có container thì đừng bọc thêm lần nữa: hai lớp gutter chồng nhau sẽ bóp nội dung vào giữa. */
 export const Default: Story = {
-    parameters: { usage: "Dùng làm khung chuẩn cho một trang, canh giữa nội dung và tự chừa gutter/padding responsive." },
+    parameters: { usage: "Dùng làm lớp ngoài cùng của MỘT trang — block giữ độc quyền padding và bề rộng tối đa, nhờ vậy feature bên trong không cần (và không được) tự đặt `p-*`, và mọi trang có cùng một lề. Khối nằm bên trong một trang vốn đã có container thì đừng bọc thêm lần nữa: hai lớp gutter chồng nhau sẽ bóp nội dung vào giữa." },
     render: () => (
-        <PageContainer>
-            <div className="rounded-lg border border-default-200 p-6">
-                <h1 className="text-2xl font-semibold">Khóa học của tôi</h1>
-                <p className="mt-2 text-default-500">
-                    Danh sách các khóa học bạn đã đăng ký, cùng tiến độ học tập gần nhất.
-                </p>
+        <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Khung trang chuẩn</Label>
+                <Typography type="body-sm" color="muted">
+                    nội dung bị canh giữa ở bề rộng tối đa và gutter tự giãn theo màn hình — thẻ có viền bên dưới chỉ để thấy mép nội dung nằm đâu, block không tự vẽ viền nào.
+                </Typography>
             </div>
-        </PageContainer>
+            <PageContainer>
+                <div className="rounded-2xl border border-default p-6">
+                    <Typography type="h3">Khóa học của tôi</Typography>
+                    <Typography type="body-sm" color="muted" className="mt-2">
+                        Danh sách các khóa học bạn đã đăng ký, cùng tiến độ học tập gần nhất.
+                    </Typography>
+                </div>
+            </PageContainer>
+        </div>
     ),
 }

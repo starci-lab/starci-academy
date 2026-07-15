@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
+import { Label } from "@heroui/react"
 import { useState } from "react"
 import { FlexWrapCardRadio } from "./index"
 import type { FlexWrapCardRadioColor, FlexWrapCardRadioItem } from "./index"
@@ -6,7 +7,6 @@ import type { FlexWrapCardRadioColor, FlexWrapCardRadioItem } from "./index"
 const meta: Meta<typeof FlexWrapCardRadio> = {
     title: "Blocks/Navigation/FlexWrapCardRadio",
     component: FlexWrapCardRadio,
-    parameters: { layout: "centered" },
 }
 export default meta
 type Story = StoryObj<typeof FlexWrapCardRadio>
@@ -18,10 +18,10 @@ const colorItems: Array<FlexWrapCardRadioItem<string>> = [
 ]
 
 const colorVariants: Array<{ color: FlexWrapCardRadioColor; label: string }> = [
-    { color: "accent", label: "accent — trung tính, lựa chọn mặc định" },
-    { color: "success", label: "success — trạng thái tích cực (đã duyệt)" },
-    { color: "danger", label: "danger — trạng thái tiêu cực (từ chối)" },
-    { color: "warning", label: "warning — cần chú ý (chờ xử lý)" },
+    { color: "accent", label: "Accent — trung tính, lựa chọn mặc định" },
+    { color: "success", label: "Success — trạng thái tích cực (đã duyệt)" },
+    { color: "danger", label: "Danger — trạng thái tiêu cực (từ chối)" },
+    { color: "warning", label: "Warning — cần chú ý (chờ xử lý)" },
 ]
 
 const levelItems: Array<FlexWrapCardRadioItem<string>> = [
@@ -64,14 +64,33 @@ const Controlled = ({
     )
 }
 
-/** So sánh cả bốn token màu selected-state (accent/success/danger/warning) cạnh nhau để chọn màu khớp ý nghĩa nghiệp vụ của nhóm lựa chọn. */
+/**
+ * Chọn 1-trong-N khi option ngắn, gọn và cần wrap xuống hàng — mỗi option là một box card nhỏ có viền và nền
+ * riêng, nên hợp khi cụm chọn đứng trên nền trang trần (thẻ tự dựng surface cho chính nó). Đây là `RadioGroup`
+ * thật: arrow-key roving, single-select, focus ring. Nếu option cần chiều cao ĐỒNG NHẤT, hoặc mỗi option cần nút
+ * phụ riêng cùng hàng (xoá, menu "⋮") → dùng `FlexWrapButtonRadio` (nhét `<Button>` vào trong label của `Radio`
+ * sẽ vỡ nested-interactive, nên bản button bỏ `RadioGroup` mà dùng `role="group"` + `aria-pressed`). Nếu card TO
+ * có icon + mô tả + badge và cần lưới cột cố định → dùng `SelectableCardGroup`. Nếu vài option luôn nằm gọn 1
+ * hàng và không bao giờ wrap → dùng `SegmentedControl`. Bốn token màu selected-state: `accent` cho lựa chọn
+ * trung tính mặc định; `success`/`danger`/`warning` chỉ khi bản thân lựa chọn mang nghĩa trạng thái.
+ */
 export const AllColors: Story = {
-    parameters: { usage: "Dùng khi cần đối chiếu bốn token màu selected-state cạnh nhau để chọn màu phản ánh đúng ý nghĩa nghiệp vụ: accent trung tính cho lựa chọn mặc định, còn success/danger/warning khi bản thân lựa chọn mang ý nghĩa trạng thái." },
+    parameters: {
+        usage: "Chọn 1-trong-N khi option ngắn, gọn và cần wrap xuống hàng — mỗi option là một box card nhỏ có "
+            + "viền và nền riêng, nên hợp khi cụm chọn đứng trên nền trang trần (thẻ tự dựng surface cho chính nó). "
+            + "Đây là `RadioGroup` thật: arrow-key roving, single-select, focus ring. Nếu option cần chiều cao ĐỒNG "
+            + "NHẤT, hoặc mỗi option cần nút phụ riêng cùng hàng (xoá, menu \"⋮\") → dùng `FlexWrapButtonRadio` "
+            + "(nhét `<Button>` vào trong label của `Radio` sẽ vỡ nested-interactive, nên bản button bỏ `RadioGroup` "
+            + "mà dùng `role=\"group\"` + `aria-pressed`). Nếu card TO có icon + mô tả + badge và cần lưới cột cố "
+            + "định → dùng `SelectableCardGroup`. Nếu vài option luôn nằm gọn 1 hàng và không bao giờ wrap → dùng "
+            + "`SegmentedControl`. Bốn token màu selected-state: `accent` cho lựa chọn trung tính mặc định; "
+            + "`success`/`danger`/`warning` chỉ khi bản thân lựa chọn mang nghĩa trạng thái.",
+    },
     render: () => (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-6">
             {colorVariants.map(({ color, label }) => (
-                <div key={color} className="flex flex-col gap-1">
-                    <span className="text-xs text-muted">{label}</span>
+                <div key={color} className="flex flex-col gap-3">
+                    <Label>{label}</Label>
                     <Controlled
                         items={colorItems}
                         initialValue="quarterly"

@@ -1,8 +1,8 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Card, CardContent, Label, Link, cn } from "@heroui/react"
-import { CaretRightIcon } from "@phosphor-icons/react"
+import { Card, CardContent, Label, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { SeeMoreLink } from "@/components/blocks/navigation/SeeMoreLink"
 
 /** Props for the {@link LabeledCard} block. */
 export interface LabeledCardProps extends WithClassNames<undefined> {
@@ -15,8 +15,8 @@ export interface LabeledCardProps extends WithClassNames<undefined> {
      */
     labelEnd?: ReactNode
     /**
-     * When provided, renders a "see more" link on the right of the label
-     * (label text + a caret that slides right on hover).
+     * When provided, renders a shared {@link SeeMoreLink} on the right of the
+     * label (semibold accent text + a caret that slides right on hover).
      */
     onSeeMore?: () => void
     /** Text for the see-more link. Defaults to "Xem thêm" — pass `t(...)` to localise. */
@@ -102,20 +102,9 @@ export const LabeledCard = ({
                     )}
                 </div>
                 {action ?? (onSeeMore ? (
-                    <Link
-                        onPress={onSeeMore}
-                        className={cn(
-                            "group inline-flex shrink-0 cursor-pointer items-center gap-1 text-accent-soft-foreground no-underline transition-opacity hover:opacity-60",
-                            subtleLabel ? "text-xs" : "text-sm",
-                        )}
-                    >
+                    <SeeMoreLink onPress={onSeeMore} size={subtleLabel ? "xs" : "sm"}>
                         {seeMoreLabel}
-                        <CaretRightIcon
-                            aria-hidden
-                            focusable="false"
-                            className="size-4 transition-transform group-hover:translate-x-1"
-                        />
-                    </Link>
+                    </SeeMoreLink>
                 ) : labelEnd != null ? (
                     <span className={cn("shrink-0 text-muted", subtleLabel ? "text-xs" : "text-sm")}>{labelEnd}</span>
                 ) : null)}

@@ -14,7 +14,6 @@ import { SidebarNavItem } from "../SidebarNavItem"
 const meta: Meta<typeof CollapsibleSidebar> = {
     title: "Blocks/Navigation/CollapsibleSidebar",
     component: CollapsibleSidebar,
-    parameters: { layout: "centered" },
 }
 export default meta
 type Story = StoryObj<typeof CollapsibleSidebar>

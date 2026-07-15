@@ -66,7 +66,7 @@ export const EntityResultRow = ({
             type="button"
             onClick={() => onSelect(item)}
             className={cn(
-                "group relative flex w-full cursor-pointer items-center justify-between gap-3 px-4 py-3 text-left after:absolute after:bottom-0 after:left-[3%] after:h-px after:w-[94%] after:bg-surface-foreground/6 after:content-[''] last:after:hidden",
+                "group relative flex w-full cursor-pointer items-center justify-between gap-3 px-4 py-3 text-left after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-[''] last:after:hidden",
                 className,
             )}
         >

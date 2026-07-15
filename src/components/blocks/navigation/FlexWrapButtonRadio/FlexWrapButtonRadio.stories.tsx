@@ -67,13 +67,32 @@ const meta: Meta<typeof FlexWrapButtonRadio> = {
 export default meta
 type Story = StoryObj<typeof FlexWrapButtonRadio>
 
-/** Dùng mặc định NGOÀI card (filter/toolbar rời) — không cần viền/nền riêng cho mỗi lựa chọn. */
+/**
+ * Chọn 1-trong-N khi option ngắn, gọn và cần wrap xuống hàng — mỗi option là một `<Button>` THẬT. Dùng bản này
+ * THAY VÌ `FlexWrapCardRadio` khi option cần chiều cao ĐỒNG NHẤT (Button bake sẵn height theo size, box card tự
+ * cao theo content), hoặc khi mỗi option cần nút phụ đi kèm cùng hàng (`itemAction`: xoá, menu "⋮"): nhét
+ * `<Button>` vào trong label của `Radio` sẽ vỡ nested-interactive, nên bản này bỏ `RadioGroup` mà dùng
+ * `role="group"` + `aria-pressed` từng nút. Đổi lại mất arrow-key roving của radio thật — cụm chọn thuần, không
+ * nút phụ, chiều cao không quan trọng thì `FlexWrapCardRadio` vẫn đúng hơn. Nếu card TO có icon + mô tả + badge
+ * và cần lưới cột cố định → dùng `SelectableCardGroup`. Nếu vài option luôn nằm gọn 1 hàng và không bao giờ wrap
+ * → dùng `SegmentedControl`. Mặc định là cụm NGOÀI card (filter/toolbar rời): option chưa chọn là `ghost` hollow,
+ * lấy nền trang hoặc card cha làm surface — không dựng viền/nền riêng cho mỗi lựa chọn.
+ */
 export const Default: Story = {
     render: () => (
         <Controlled items={DIFFICULTY_ITEMS} initialValue="medium" ariaLabel="Chọn độ khó" />
     ),
     parameters: {
-        usage: "Dùng mặc định NGOÀI card (filter/toolbar rời) — không cần viền/nền riêng cho mỗi lựa chọn.",
+        usage: "Chọn 1-trong-N khi option ngắn, gọn và cần wrap xuống hàng — mỗi option là một `<Button>` THẬT. "
+            + "Dùng bản này THAY VÌ `FlexWrapCardRadio` khi option cần chiều cao ĐỒNG NHẤT (Button bake sẵn height "
+            + "theo size, box card tự cao theo content), hoặc khi mỗi option cần nút phụ đi kèm cùng hàng "
+            + "(`itemAction`: xoá, menu \"⋮\"): nhét `<Button>` vào trong label của `Radio` sẽ vỡ nested-interactive, "
+            + "nên bản này bỏ `RadioGroup` mà dùng `role=\"group\"` + `aria-pressed` từng nút. Đổi lại mất arrow-key "
+            + "roving của radio thật — cụm chọn thuần, không nút phụ, chiều cao không quan trọng thì "
+            + "`FlexWrapCardRadio` vẫn đúng hơn. Nếu card TO có icon + mô tả + badge và cần lưới cột cố định → dùng "
+            + "`SelectableCardGroup`. Nếu vài option luôn nằm gọn 1 hàng và không bao giờ wrap → dùng "
+            + "`SegmentedControl`. Mặc định là cụm NGOÀI card (filter/toolbar rời): option chưa chọn là `ghost` "
+            + "hollow, lấy nền trang hoặc card cha làm surface — không dựng viền/nền riêng cho mỗi lựa chọn.",
     },
 }
 

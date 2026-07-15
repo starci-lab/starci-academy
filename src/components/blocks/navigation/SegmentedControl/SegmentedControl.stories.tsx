@@ -6,7 +6,6 @@ import type { SegmentedControlItem, SegmentedControlSize } from "./index"
 const meta: Meta<typeof SegmentedControl> = {
     title: "Blocks/Navigation/SegmentedControl",
     component: SegmentedControl,
-    parameters: { layout: "centered" },
 }
 export default meta
 type Story = StoryObj<typeof SegmentedControl>
@@ -50,9 +49,20 @@ const Controlled = <T extends string>({
     )
 }
 
-/** Dùng khi cần một lựa chọn cục bộ, loại-trừ-lẫn-nhau đơn giản như chuyển đổi đơn vị tiền tệ, không phải điều hướng cả panel. */
+/**
+ * Dùng khi lựa chọn chỉ đổi MỘT setting gọn TẠI CHỖ, nội dung lớn bên dưới giữ nguyên (VND ⇆ USD,
+ * Lưới ⇆ Danh sách). Trước khi chọn, tự hỏi: bấm xong có văng sang route/panel khác hẳn không? —
+ * CÓ thì đó là TabsCard (underline), dù chỉ 2 lựa chọn; số lượng KHÔNG quyết định, THỨ nó điều
+ * khiển mới quyết định. Lựa chọn giàu (icon + mô tả + badge) cần card to → SelectableCardGroup.
+ */
 export const Default: Story = {
-    parameters: { usage: "Dùng khi cần một lựa chọn cục bộ, loại-trừ-lẫn-nhau đơn giản như chuyển đổi đơn vị tiền tệ, không phải điều hướng cả panel." },
+    parameters: {
+        usage:
+            "Dùng khi lựa chọn chỉ đổi MỘT setting gọn TẠI CHỖ, nội dung lớn bên dưới giữ nguyên (VND ⇆ USD, " +
+            "Lưới ⇆ Danh sách). Trước khi chọn, tự hỏi: bấm xong có văng sang route/panel khác hẳn không? — CÓ thì " +
+            "đó là TabsCard (underline), dù chỉ 2 lựa chọn; số lượng KHÔNG quyết định, THỨ nó điều khiển mới quyết " +
+            "định. Lựa chọn giàu (icon + mô tả + badge) cần card to → SelectableCardGroup.",
+    },
     render: () => (
         <Controlled items={currencyItems} initialValue="vnd" ariaLabel="Đơn vị tiền tệ" />
     ),

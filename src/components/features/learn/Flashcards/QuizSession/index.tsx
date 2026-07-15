@@ -844,14 +844,9 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                         minutes: resumeRemainingMinutes,
                                     })}
                                     urgent={resumeRemainingMinutes <= 15}
-                                    value={resumeData.currentIndex}
-                                    max={resumeData.cardIds.length}
-                                    hideProgress
+                                    variant="hero"
                                     ctaLabel={t("flashcard.quiz.resumeCta")}
-                                    ctaVariant="chip"
-                                    ctaBelow
-                                    accented
-                                    watermarkIcon={<ClockCounterClockwiseIcon weight="fill" />}
+                                    icon={<ClockCounterClockwiseIcon weight="fill" />}
                                     onPress={() => router.push(learnPath.flashcards().quiz(resumeData.sessionId).build())}
                                 />
                             )
@@ -1131,6 +1126,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                 <RatingBar
                                     options={ratingOptions}
                                     onRate={(grade) => void commitCard(grade, null)}
+                                    ariaLabel={t("flashcard.review.rateAria")}
                                     isPending={rating}
                                 />
                             </div>
@@ -1399,6 +1395,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                         <RatingBar
                                             options={ratingOptions}
                                             onRate={(grade) => void commitCard(grade, coverageRatio)}
+                                            ariaLabel={t("flashcard.review.rateAria")}
                                             isPending={rating}
                                         />
                                     </div>

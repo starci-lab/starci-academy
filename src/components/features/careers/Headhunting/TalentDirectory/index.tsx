@@ -12,7 +12,7 @@ import { useQueryTalentCandidatesSwr } from "@/hooks/swr/api/graphql/queries/use
 import { pathConfig } from "@/resources/path"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
-import { PressableCard } from "@/components/blocks/cards/PressableCard"
+import { GroupPressableCard } from "@/components/blocks/cards/GroupPressableCard"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 
 /** Number of placeholder cards shown while the candidate list loads. */
@@ -83,10 +83,16 @@ export const TalentDirectory = ({ className }: TalentDirectoryProps) => {
                 <AsyncContent
                     isLoading={(coursesLoading || isLoading || !selectedCourseId) && candidates.length === 0}
                     skeleton={(
-                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                            {Array.from({ length: SKELETON_COUNT }).map((_, index) => (
-                                <Skeleton key={index} className="h-36 w-full rounded-3xl" />
-                            ))}
+                        // mirrors the resolved grid below, which reflows on its
+                        // CONTAINER — so the same steps (`@xl`/`@4xl`), not viewport
+                        // ones, or the placeholder count per row won't match what
+                        // replaces it
+                        <div className="@container">
+                            <div className="grid grid-cols-1 gap-3 @xl:grid-cols-2 @4xl:grid-cols-3">
+                                {Array.from({ length: SKELETON_COUNT }).map((_, index) => (
+                                    <Skeleton key={index} className="h-36 w-full rounded-3xl" />
+                                ))}
+                            </div>
                         </div>
                     )}
                     isEmpty={candidates.length === 0}
@@ -96,12 +102,17 @@ export const TalentDirectory = ({ className }: TalentDirectoryProps) => {
                         icon: <TrendUpIcon aria-hidden focusable="false" className="size-8 text-muted" />,
                     }}
                 >
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                        {candidates.map(({ user, track }) => (
-                            <PressableCard
-                                key={user.id}
-                                href={pathConfig().locale(locale).profile(user.username ?? "").build()}
-                            >
+                    <GroupPressableCard
+                        ariaLabel={t("talentDirectory.candidatesAria")}
+                        // container steps, not viewport. A candidate card carries a
+                        // 48px avatar + name + chips, so it needs real width: two-up
+                        // from 576px (≈284px each), three-up only from 896px (≈293px
+                        // each) — roughly what the max-w-5xl column gave before.
+                        columns={{ base: 1, xl: 2, xl4: 3 }}
+                        items={candidates.map(({ user, track }) => ({
+                            key: user.id,
+                            href: pathConfig().locale(locale).profile(user.username ?? "").build(),
+                            content: (
                                 <div className="flex flex-col gap-3">
                                     <div className="flex items-center gap-3">
                                         <UserAvatar
@@ -139,9 +150,9 @@ export const TalentDirectory = ({ className }: TalentDirectoryProps) => {
                                         </Typography>
                                     ) : null}
                                 </div>
-                            </PressableCard>
-                        ))}
-                    </div>
+                            ),
+                        }))}
+                    />
                 </AsyncContent>
             </div>
         </div>

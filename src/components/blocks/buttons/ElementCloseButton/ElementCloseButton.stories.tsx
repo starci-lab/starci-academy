@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
+import { Label, Typography } from "@heroui/react"
+
 import { ElementCloseButton } from "./index"
 
 const meta: Meta<typeof ElementCloseButton> = {
@@ -8,36 +10,45 @@ const meta: Meta<typeof ElementCloseButton> = {
 export default meta
 type Story = StoryObj<typeof ElementCloseButton>
 
-/** Nút X trung tính, dùng để đóng một banner hoặc panel không mang màu sắc ngữ nghĩa riêng. */
-export const Default: Story = {
-    parameters: { usage: "Nút X trung tính, dùng để đóng một banner hoặc panel không mang màu sắc ngữ nghĩa riêng." },
-    render: () => <ElementCloseButton label="Đóng" onPress={() => {}} />,
-}
-
 /** Dải năm tông màu đặt cạnh nhau để so sánh nhanh: chọn tông khớp với màu ngữ nghĩa của bề mặt đang đóng. */
 export const AllTones: Story = {
     parameters: { usage: "Dải năm tông màu (neutral, accent, success, warning, danger) đặt cạnh nhau để so sánh nhanh; chọn tông khớp với màu ngữ nghĩa của bề mặt đang đóng." },
     render: () => (
-        <div className="flex items-start gap-6">
-            <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-2">
+                <Label>Neutral</Label>
+                <Typography type="body-sm" color="muted">
+                    Mặc định — chủ là banner/panel không mang màu ngữ nghĩa nào.
+                </Typography>
                 <ElementCloseButton label="Đóng banner" onPress={() => {}} tone="neutral" />
-                <span className="text-xs text-muted">neutral</span>
             </div>
-            <div className="flex flex-col items-center gap-2">
+            <div className="flex flex-col gap-2">
+                <Label>Accent</Label>
+                <Typography type="body-sm" color="muted">
+                    Chủ là khối/chip accent — X ăn theo tông của chủ, không tự chọn màu.
+                </Typography>
                 <ElementCloseButton label="Đóng thẻ" onPress={() => {}} tone="accent" />
-                <span className="text-xs text-muted">accent</span>
             </div>
-            <div className="flex flex-col items-center gap-2">
+            <div className="flex flex-col gap-2">
+                <Label>Success</Label>
+                <Typography type="body-sm" color="muted">
+                    Chủ là callout success (đã xong, đã lưu).
+                </Typography>
                 <ElementCloseButton label="Đóng thông báo" onPress={() => {}} tone="success" />
-                <span className="text-xs text-muted">success</span>
             </div>
-            <div className="flex flex-col items-center gap-2">
+            <div className="flex flex-col gap-2">
+                <Label>Warning</Label>
+                <Typography type="body-sm" color="muted">
+                    Chủ là callout warning (cần chú ý, sắp hết hạn).
+                </Typography>
                 <ElementCloseButton label="Đóng cảnh báo" onPress={() => {}} tone="warning" />
-                <span className="text-xs text-muted">warning</span>
             </div>
-            <div className="flex flex-col items-center gap-2">
+            <div className="flex flex-col gap-2">
+                <Label>Danger</Label>
+                <Typography type="body-sm" color="muted">
+                    Chủ là callout danger (lỗi, hỏng).
+                </Typography>
                 <ElementCloseButton label="Đóng lỗi" onPress={() => {}} tone="danger" />
-                <span className="text-xs text-muted">danger</span>
             </div>
         </div>
     ),

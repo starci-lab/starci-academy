@@ -17,7 +17,8 @@ import type {
 import {
     useLessonNavigation,
 } from "../hooks/useLessonNavigation"
-import { PressableCard } from "@/components/blocks/cards/PressableCard"
+import { GroupPressableCard } from "@/components/blocks/cards/GroupPressableCard"
+import type { GroupPressableCardItem } from "@/components/blocks/cards/GroupPressableCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Props for {@link LessonPager}. */
@@ -42,20 +43,30 @@ export const LessonPager = ({ className }: LessonPagerProps) => {
     if (isLoading) {
         return (
             <div className={className}>
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                    <div className="flex items-center gap-2 rounded-3xl bg-surface px-4 py-3">
-                        <Skeleton className="size-5 shrink-0 rounded" />
-                        <div className="flex min-w-0 flex-1 flex-col gap-1">
-                            <Skeleton.Typography type="body-xs" width="1/3" />
-                            <Skeleton.Typography type="body-sm" width="3/4" />
+                {/*
+                  Mirrors the resolved pager below, which reflows on its CONTAINER
+                  (`GroupPressableCard columns={{base:1, sm:2}}`). The skeleton must
+                  split on the SAME axis at the SAME step — a viewport `sm:` here
+                  would show one column while the real pair renders two (or vice
+                  versa in a narrow slot), i.e. a jump at exactly the moment the
+                  skeleton is supposed to prevent one.
+                */}
+                <div className="@container">
+                    <div className="grid grid-cols-1 gap-3 @sm:grid-cols-2">
+                        <div className="flex items-center gap-2 rounded-3xl bg-surface px-4 py-3">
+                            <Skeleton className="size-5 shrink-0 rounded" />
+                            <div className="flex min-w-0 flex-1 flex-col gap-1">
+                                <Skeleton.Typography type="body-xs" width="1/3" />
+                                <Skeleton.Typography type="body-sm" width="3/4" />
+                            </div>
                         </div>
-                    </div>
-                    <div className="flex items-center justify-end gap-2 rounded-3xl bg-surface px-4 py-3">
-                        <div className="flex min-w-0 flex-1 flex-col items-end gap-1">
-                            <Skeleton.Typography type="body-xs" width="1/3" />
-                            <Skeleton.Typography type="body-sm" width="3/4" />
+                        <div className="flex items-center justify-end gap-2 rounded-3xl bg-surface px-4 py-3">
+                            <div className="flex min-w-0 flex-1 flex-col items-end gap-1">
+                                <Skeleton.Typography type="body-xs" width="1/3" />
+                                <Skeleton.Typography type="body-sm" width="3/4" />
+                            </div>
+                            <Skeleton className="size-5 shrink-0 rounded" />
                         </div>
-                        <Skeleton className="size-5 shrink-0 rounded" />
                     </div>
                 </div>
             </div>
@@ -66,45 +77,61 @@ export const LessonPager = ({ className }: LessonPagerProps) => {
         return null
     }
 
+    const items: Array<GroupPressableCardItem> = []
+    if (previous) {
+        items.push({
+            key: "previous",
+            href: previous.href,
+            content: (
+                <div className="flex items-center gap-2">
+                    <CaretLeftIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
+                    <div className="flex min-w-0 flex-col gap-0">
+                        <Typography type="body-xs" color="muted">
+                            {t("content.prevLesson")}
+                        </Typography>
+                        <Typography type="body-sm" weight="medium" className="line-clamp-2">
+                            {previous.title}
+                        </Typography>
+                    </div>
+                </div>
+            ),
+        })
+    }
+    if (next) {
+        items.push({
+            key: "next",
+            href: next.href,
+            // Pin right exactly where the grid actually HAS two columns, so this
+            // must be scoped on the SAME axis the group splits on — a CONTAINER
+            // query (`@sm`), not the viewport (`sm`). Unqualified `col-start-2`
+            // would also apply at the 1-column step, forcing an implicit second
+            // column that content-sizes down to ~30px and drags this card up beside
+            // the previous one; viewport-scoped `sm:` would miss in both directions
+            // (narrow slot in a wide window still splits, and vice versa).
+            className: "@sm:col-start-2",
+            content: (
+                <div className="flex items-center justify-end gap-2">
+                    <div className="flex min-w-0 flex-col gap-0">
+                        <Typography type="body-xs" color="muted" align="end">
+                            {t("content.nextLesson")}
+                        </Typography>
+                        <Typography type="body-sm" weight="medium" align="end" className="line-clamp-2">
+                            {next.title}
+                        </Typography>
+                    </div>
+                    <CaretRightIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
+                </div>
+            ),
+        })
+    }
+
     return (
         <div className={className}>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                {/* previous — left aligned; empty cell keeps next pinned right */}
-                {previous ? (
-                    <PressableCard href={previous.href}>
-                        <div className="flex items-center gap-2">
-                            <CaretLeftIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
-                            <div className="flex min-w-0 flex-col gap-0">
-                                <Typography type="body-xs" color="muted">
-                                    {t("content.prevLesson")}
-                                </Typography>
-                                <Typography type="body-sm" weight="medium" className="line-clamp-2">
-                                    {previous.title}
-                                </Typography>
-                            </div>
-                        </div>
-                    </PressableCard>
-                ) : (
-                    <div />
-                )}
-
-                {/* next — right aligned */}
-                {next ? (
-                    <PressableCard href={next.href} className="col-start-2">
-                        <div className="flex items-center justify-end gap-2">
-                            <div className="flex min-w-0 flex-col gap-0">
-                                <Typography type="body-xs" color="muted" align="end">
-                                    {t("content.nextLesson")}
-                                </Typography>
-                                <Typography type="body-sm" weight="medium" align="end" className="line-clamp-2">
-                                    {next.title}
-                                </Typography>
-                            </div>
-                            <CaretRightIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
-                        </div>
-                    </PressableCard>
-                ) : null}
-            </div>
+            <GroupPressableCard
+                ariaLabel={t("content.pagerAria")}
+                columns={{ base: 1, sm: 2 }}
+                items={items}
+            />
         </div>
     )
 }

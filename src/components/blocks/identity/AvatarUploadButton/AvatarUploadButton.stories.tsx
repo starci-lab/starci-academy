@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
+import { Label, Typography } from "@heroui/react"
 import { AvatarUploadButton } from "./index"
 
 const meta: Meta<typeof AvatarUploadButton> = {
@@ -8,26 +9,43 @@ const meta: Meta<typeof AvatarUploadButton> = {
 export default meta
 type Story = StoryObj<typeof AvatarUploadButton>
 
-/** Dùng khi người dùng đã có ảnh đại diện đã lưu và cần nút để đổi ảnh mới. */
+/** Dùng khi chính cái avatar là nút để đổi ảnh — thay vì `UserAvatar` (chỉ hiển thị, không sửa được) hoặc `ImageDropzone` (khu kéo thả riêng, cho ảnh bất kỳ chứ không neo vào danh tính một người). Đặt ở form hồ sơ, nơi người dùng đang sửa chính mình. */
 export const Default: Story = {
-    parameters: { usage: "Dùng khi người dùng đã có ảnh đại diện đã lưu và cần nút để đổi ảnh mới." },
+    parameters: { usage: "Dùng khi chính cái avatar là nút để đổi ảnh — thay vì `UserAvatar` (chỉ hiển thị, không sửa được) hoặc `ImageDropzone` (khu kéo thả riêng, cho ảnh bất kỳ chứ không neo vào danh tính một người). Đặt ở form hồ sơ, nơi người dùng đang sửa chính mình." },
     render: () => (
-        <AvatarUploadButton
-            avatar="https://i.pravatar.cc/150?img=12"
-            displayName="Nguyễn Văn An"
-            seed="an.nguyen@example.com"
-            label="Đổi ảnh đại diện"
-            onPress={() => {}}
-        />
+        <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Đã có ảnh</Label>
+                <Typography type="body-sm" color="muted">
+                    Trạng thái khi hồ sơ đã lưu được ảnh: nhãn nói việc sẽ xảy ra khi bấm, nên viết là đổi
+                    chứ không phải tải lên.
+                </Typography>
+            </div>
+            <AvatarUploadButton
+                avatar="https://i.pravatar.cc/150?img=12"
+                displayName="Nguyễn Văn An"
+                seed="an.nguyen@example.com"
+                label="Đổi ảnh đại diện"
+                onPress={() => {}}
+            />
+        </div>
     ),
 }
 
-/** Dùng khi người dùng chưa có ảnh đại diện: so sánh cạnh nhau lúc còn danh tính (tên + seed → chữ cái đầu) và lúc trống hoàn toàn (đều rơi về khuôn mặt mặc định). */
+/** Hai mức rơi về khi chưa có ảnh tải lên, tuỳ còn hay mất danh tính để sinh avatar. */
 export const NoAvatar: Story = {
-    parameters: { usage: "Dùng khi người dùng chưa có ảnh đại diện: so sánh cạnh nhau lúc còn danh tính (tên + seed cho ra chữ cái đầu) và lúc trống hoàn toàn — cả hai đều rơi về khuôn mặt mặc định." },
+    parameters: { usage: "Hai mức rơi về khi chưa có ảnh tải lên, tuỳ còn hay mất danh tính để sinh avatar." },
     render: () => (
-        <div className="flex items-start gap-8">
-            <div className="flex flex-col items-center gap-2">
+        <div className="flex max-w-2xl flex-col gap-6">
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Có tên và seed</Label>
+                    <Typography type="body-sm" color="muted">
+                        Mức rơi về thường gặp: chưa tải ảnh nhưng đã đăng ký nên còn tên và email để sinh
+                        avatar ổn định. Luôn truyền seed cùng displayName, thiếu seed thì mỗi lần render ra
+                        một mặt khác.
+                    </Typography>
+                </div>
                 <AvatarUploadButton
                     avatar={null}
                     displayName="Trần Thị Bình"
@@ -35,9 +53,15 @@ export const NoAvatar: Story = {
                     label="Tải ảnh đại diện"
                     onPress={() => {}}
                 />
-                <span className="text-xs text-default-500">Có tên và seed</span>
             </div>
-            <div className="flex flex-col items-center gap-2">
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Danh tính trống</Label>
+                    <Typography type="body-sm" color="muted">
+                        Mức cuối: không ảnh, không tên, không seed thì rơi về khuôn mặt mặc định. Gặp khi hồ
+                        sơ vừa tạo còn trống — nhãn nên là thêm, vì chưa từng có gì để đổi.
+                    </Typography>
+                </div>
                 <AvatarUploadButton
                     avatar={null}
                     displayName={null}
@@ -45,7 +69,6 @@ export const NoAvatar: Story = {
                     label="Thêm ảnh đại diện"
                     onPress={() => {}}
                 />
-                <span className="text-xs text-default-500">Danh tính trống</span>
             </div>
         </div>
     ),

@@ -617,6 +617,7 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
                                     <RatingBar
                                         options={ratingOptions}
                                         onRate={(grade) => void onRate(grade)}
+                                        ariaLabel={t("flashcard.review.rateAria")}
                                         isPending={reviewing}
                                     />
                                 </div>

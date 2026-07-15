@@ -1,111 +1,94 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { FireIcon, ClockIcon } from "@phosphor-icons/react"
+import { Label, Typography } from "@heroui/react"
+import { ClockCounterClockwiseIcon } from "@phosphor-icons/react"
 import { ContinueCard } from "./index"
 
 const meta: Meta<typeof ContinueCard> = {
     title: "Blocks/Card/ContinueCard",
     component: ContinueCard,
-    parameters: { layout: "centered" },
 }
 export default meta
 type Story = StoryObj<typeof ContinueCard>
 
-/** Dùng cho thẻ "học tiếp" mặc định: cả thẻ là một liên kết duy nhất, kèm thanh tiến độ và nhãn CTA dạng chữ. */
-export const Default: Story = {
-    parameters: { usage: "Dùng cho thẻ \"học tiếp\" mặc định: cả thẻ là một liên kết duy nhất, kèm thanh tiến độ và nhãn CTA dạng chữ." },
+/** Dùng khi thẻ là MỘT trong N thứ đáng học tiếp, xếp thành lưới — thay vì variant="hero" (chỉ khi nó là thứ duy nhất đang dở trên bề mặt). CTA là SeeMoreLink thật ("Tiếp tục →"): hover + click chỉ trên link, không bọc cả thẻ — cùng công thức với LabeledCard "Xem thêm". Không viền accent vì N thẻ cùng accent thì không thẻ nào nổi. */
+export const Item: Story = {
+    parameters: { usage: "Dùng khi thẻ là MỘT trong N thứ đáng học tiếp, xếp thành lưới — thay vì variant=\"hero\" (chỉ khi nó là thứ duy nhất đang dở trên bề mặt). CTA là SeeMoreLink thật (\"Tiếp tục →\"): hover + click chỉ trên link, không bọc cả thẻ — cùng công thức với LabeledCard \"Xem thêm\". Không viền accent vì N thẻ cùng accent thì không thẻ nào nổi. Không truyền value nên không có thanh tiến độ — đúng cho thứ chưa từng bắt đầu." },
     render: () => (
-        <div className="w-96">
-            <ContinueCard
-                cover={
-                    <img
-                        src="https://placehold.co/56x56/png"
-                        alt=""
-                        className="size-14 rounded-lg object-cover"
-                    />
-                }
-                title="Xây dựng API RESTful với NestJS"
-                subtitle="Module 3 · Bài 5"
-                value={62}
-                max={100}
-                ctaLabel="Tiếp tục"
-                href="/courses/nestjs-api/lessons/5"
-            />
+        <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Mặc định</Label>
+                <Typography type="body-sm" color="muted">
+                    Phụ đề gánh loại nội dung (bài đọc, thử thách) để phân biệt các thẻ đứng cạnh nhau trong cùng lưới. Điều hướng bằng href trên CTA khi thẻ chỉ dẫn tới một địa chỉ có sẵn.
+                </Typography>
+            </div>
+            <div className="grid w-[42rem] gap-3 sm:grid-cols-2">
+                <ContinueCard
+                    variant="item"
+                    title="Xây dựng API RESTful với NestJS"
+                    subtitle="Bài đọc"
+                    ctaLabel="Tiếp tục"
+                    href="/courses/nestjs-api/lessons/5"
+                />
+                <ContinueCard
+                    variant="item"
+                    title="Thiết kế hệ thống: Rate Limiter phân tán"
+                    subtitle="Thử thách"
+                    ctaLabel="Tiếp tục"
+                    href="/courses/system-design/challenges/rate-limiter"
+                />
+            </div>
         </div>
     ),
 }
 
-/** Dùng khi muốn CTA nổi bật thành nút bấm thật (variant="chip") thay vì chỉ là chữ có màu, ví dụ khi thẻ nằm trong danh sách cần điểm nhấn hành động rõ ràng. */
-export const ChipCta: Story = {
-    parameters: { usage: "Dùng khi muốn CTA nổi bật thành nút bấm thật (variant=\"chip\") thay vì chỉ là chữ có màu, ví dụ khi thẻ nằm trong danh sách cần điểm nhấn hành động rõ ràng." },
+/** Dùng khi thẻ là THỨ DUY NHẤT đang dở trên bề mặt, cần kéo người học quay lại — thay vì variant="item" (khi có N thứ để chọn). CTA thành nút chip xuống hàng riêng để đủ sức nặng, icon chìm xuống nền, viền accent vì nó là thứ được nhấn. */
+export const Hero: Story = {
+    parameters: { usage: "Dùng khi thẻ là THỨ DUY NHẤT đang dở trên bề mặt, cần kéo người học quay lại — thay vì variant=\"item\" (khi có N thứ để chọn). CTA thành nút chip xuống hàng riêng để đủ sức nặng, icon chìm xuống nền làm watermark, viền accent vì nó là thứ được nhấn." },
     render: () => (
-        <div className="w-96">
-            <ContinueCard
-                title="Thiết kế hệ thống: Rate Limiter phân tán"
-                subtitle="Module 7 · Bài 2"
-                value={30}
-                max={100}
-                ctaLabel="Học tiếp"
-                ctaVariant="chip"
-                onPress={() => {}}
-            />
+        <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Không gấp</Label>
+                <Typography type="body-sm" color="muted">
+                    Trạng thái nền của hero: phụ đề giữ tông chìm vì nó chỉ nói vị trí trong phiên, không có mốc thời gian nào để cảnh báo. Dùng onPress khi CTA mở lại phiên tại chỗ chứ không đi tới một địa chỉ cố định.
+                </Typography>
+            </div>
+            <div className="w-96">
+                <ContinueCard
+                    variant="hero"
+                    icon={<ClockCounterClockwiseIcon weight="fill" />}
+                    title="Ôn thẻ đến hạn"
+                    subtitle="Thẻ 3 / 20"
+                    ctaLabel="Ôn ngay"
+                    onPress={() => {}}
+                />
+            </div>
         </div>
     ),
 }
 
-/** Dùng khi phụ đề mang một mốc thời gian có thật do hệ thống áp đặt (ví dụ hạn nộp bài), cần tô màu cảnh báo thay vì màu muted mặc định — không dùng cho đếm ngược giả. */
-export const UrgentDeadline: Story = {
-    parameters: { usage: "Dùng khi phụ đề mang một mốc thời gian có thật do hệ thống áp đặt (ví dụ hạn nộp bài), cần tô màu cảnh báo thay vì màu muted mặc định — không dùng cho đếm ngược giả." },
+/** Dùng khi phiên dở có mốc thời gian THẬT do máy chủ áp đặt và có tiến độ đo được: truyền value để hiện thanh tiến độ (bỏ trống nếu không có dữ liệu thật, đừng truyền 0 cho đủ prop), bật urgent để phụ đề chuyển tông cảnh báo. Không dùng urgent cho đếm ngược bịa ra. */
+export const HeroUrgent: Story = {
+    parameters: { usage: "Dùng khi phiên dở có mốc thời gian THẬT do máy chủ áp đặt và có tiến độ đo được: truyền value để hiện thanh tiến độ (bỏ trống nếu không có dữ liệu thật, đừng truyền 0 cho đủ prop), bật urgent để phụ đề chuyển tông cảnh báo. Không dùng urgent cho đếm ngược bịa ra." },
     render: () => (
-        <div className="w-96">
-            <ContinueCard
-                badgeIcon={<ClockIcon aria-hidden focusable="false" />}
-                title="Bài kiểm tra: Thiết kế cơ sở dữ liệu"
-                subtitle="Còn 12 phút để nộp bài"
-                value={80}
-                max={100}
-                ctaLabel="Tiếp tục làm bài"
-                urgent
-                href="/courses/db-design/exams/final"
-            />
-        </div>
-    ),
-}
-
-/** Dùng cho thẻ luyện tập theo chuỗi ngày (streak) không cần thanh tiến độ vì bản chất không có phần trăm hoàn thành — CTA được đưa xuống hàng riêng để nhường chỗ cho biểu tượng nền. */
-export const StreakNoProgress: Story = {
-    parameters: { usage: "Dùng cho thẻ luyện tập theo chuỗi ngày (streak) không cần thanh tiến độ vì bản chất không có phần trăm hoàn thành — CTA được đưa xuống hàng riêng để nhường chỗ cho biểu tượng nền." },
-    render: () => (
-        <div className="w-96">
-            <ContinueCard
-                badgeIcon={<FireIcon aria-hidden focusable="false" />}
-                watermarkIcon={<FireIcon aria-hidden focusable="false" />}
-                title="Chuỗi ôn flashcard hằng ngày"
-                subtitle="7 ngày liên tiếp"
-                value={0}
-                hideProgress
-                ctaLabel="Ôn ngay"
-                ctaBelow
-                ctaVariant="chip"
-                onPress={() => {}}
-            />
-        </div>
-    ),
-}
-
-/** Dùng khi cần đánh dấu đây là mục "của tôi" nổi bật hơn các thẻ khác trong danh sách — viền accent thay vì tô nền tràn màu. */
-export const Accented: Story = {
-    parameters: { usage: "Dùng khi cần đánh dấu đây là mục \"của tôi\" nổi bật hơn các thẻ khác trong danh sách — viền accent thay vì tô nền tràn màu." },
-    render: () => (
-        <div className="w-96">
-            <ContinueCard
-                title="Dự án cá nhân: Xây dựng blog full-stack"
-                subtitle="Milestone 2 · Đang thực hiện"
-                value={45}
-                max={100}
-                ctaLabel="Tiếp tục"
-                accented
-                href="/milestones/personal-blog"
-            />
+        <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Gấp, có tiến độ</Label>
+                <Typography type="body-sm" color="muted">
+                    Bật urgent khi phụ đề chứa một mốc thời gian thật do máy chủ áp đặt, phụ đề chuyển tông cảnh báo. Truyền value cùng max khi có tiến độ đo được để hiện thanh; bỏ trống nếu chưa có dữ liệu thật.
+                </Typography>
+            </div>
+            <div className="w-96">
+                <ContinueCard
+                    variant="hero"
+                    title="Phỏng vấn thử: Thiết kế Rate Limiter"
+                    subtitle="Câu 5 / 8 · Middle · còn 12 phút"
+                    urgent
+                    value={5}
+                    max={8}
+                    ctaLabel="Tiếp tục"
+                    onPress={() => {}}
+                />
+            </div>
         </div>
     ),
 }

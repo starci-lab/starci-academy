@@ -27,7 +27,7 @@ import type {
 } from "@/modules/types/base/class-name"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
-import { PressableCard } from "@/components/blocks/cards/PressableCard"
+import { GroupPressableCard } from "@/components/blocks/cards/GroupPressableCard"
 import { GithubIcon } from "@/components/svg/GithubIcon"
 import { GoogleIcon } from "@/components/svg/GoogleIcon"
 import { useAppSelector } from "@/redux/hooks"
@@ -82,20 +82,26 @@ export const SettingsHome = ({
                     </Chip>
                 </div>
             ) : null}
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                {items.map((item) => (
-                    <PressableCard
-                        key={item.key}
-                        onPress={() => router.push(item.href)}
-                        className="flex items-center gap-3"
-                    >
-                        <IconTile icon={item.icon} tone="accent" size="sm" />
-                        <Typography type="body-sm" weight="medium" truncate>
-                            {t(`profileSettings.items.${item.key}`)}
-                        </Typography>
-                    </PressableCard>
-                ))}
-            </div>
+            <GroupPressableCard
+                ariaLabel={t("profileSettings.itemsAria")}
+                // container steps, not viewport: two-up only once the settings column
+                // is 512px wide (≈252px per card — enough for the icon tile plus a
+                // label that would otherwise truncate)
+                columns={{ base: 1, lg: 2 }}
+                items={items.map((item) => ({
+                    key: item.key,
+                    onPress: () => router.push(item.href),
+                    className: "flex items-center gap-3",
+                    content: (
+                        <>
+                            <IconTile icon={item.icon} tone="accent" size="sm" />
+                            <Typography type="body-sm" weight="medium" truncate>
+                                {t(`profileSettings.items.${item.key}`)}
+                            </Typography>
+                        </>
+                    ),
+                }))}
+            />
         </div>
     )
 }

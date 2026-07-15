@@ -8,7 +8,6 @@ import type { ExtendedTabsProps } from "./index"
 const meta: Meta<typeof ExtendedTabs> = {
     title: "Blocks/Navigation/ExtendedTabs",
     component: ExtendedTabs,
-    parameters: { layout: "centered" },
 }
 export default meta
 type Story = StoryObj<typeof ExtendedTabs>

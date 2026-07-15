@@ -6,7 +6,6 @@ import { SidebarNavItem } from "./index"
 const meta: Meta<typeof SidebarNavItem> = {
     title: "Blocks/Navigation/SidebarNavItem",
     component: SidebarNavItem,
-    parameters: { layout: "centered" },
 }
 export default meta
 type Story = StoryObj<typeof SidebarNavItem>

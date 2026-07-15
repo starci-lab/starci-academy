@@ -87,14 +87,9 @@ export const DueReviewHero = ({ className }: DueReviewHeroProps) => {
                         current: resumeData.currentIndex + 1,
                         total: resumeData.cardIds.length,
                     })}
-                    value={resumeData.currentIndex}
-                    max={resumeData.cardIds.length}
-                    hideProgress
+                    variant="hero"
                     ctaLabel={t("flashcard.due.resumeCta")}
-                    ctaVariant="chip"
-                    ctaBelow
-                    accented
-                    watermarkIcon={<ClockCounterClockwiseIcon weight="fill" />}
+                    icon={<ClockCounterClockwiseIcon weight="fill" />}
                     onPress={() => router.push(
                         pathConfig().locale(locale).course(displayId).learn().flashcards().due(resumeData.sessionId).build(),
                     )}

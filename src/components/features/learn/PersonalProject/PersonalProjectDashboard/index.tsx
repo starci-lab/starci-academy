@@ -1,13 +1,12 @@
 "use client"
 
 import React, { useCallback, useMemo } from "react"
-import { Button, Chip, Typography, cn } from "@heroui/react"
+import { Chip, Typography, cn } from "@heroui/react"
 import {
     CheckCircleIcon,
     CircleIcon,
     GithubLogoIcon,
     LockIcon,
-    ArrowRightIcon,
     PlayIcon,
 } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
@@ -25,7 +24,8 @@ import { useQueryMilestonesSwr } from "@/hooks/swr/api/graphql/queries/useQueryM
 import { useQueryMilestoneTaskProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestoneTaskProgressSwr"
 import { pathConfig } from "@/resources/path"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { ListRow } from "@/components/blocks/lists/ListRow"
+import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import type { MilestoneEntity } from "@/modules/types/entities/milestone"
@@ -48,12 +48,13 @@ const toRepoLabel = (url: string): string =>
  *
  * Mirrors the course-content home (`CourseContents`) layout so the two learn home
  * surfaces read consistently: TIER-1 breadcrumb → TIER-2 header (project title +
- * description + a GitHub status chip) → TIER-3 a FLAT continue + progress block (the
- * next task with the single primary action + an honest completion meter + a stat
- * line) above the "keep going" path = the current milestone's tasks (highlighting
- * the next one). The milestone LIST for the whole project lives in the left rail —
- * the body only surfaces "where you are + what's next". Every value is grounded in
- * real BE fields (`milestoneTaskProgress`, enrollment github).
+ * description + a GitHub status chip) → TIER-3 a {@link ContinueCard} `hero` for
+ * the next task (chip "Tiếp tục") + progress meter, above the keep-going path =
+ * current milestone tasks as {@link ContinueCard} `item` cards (with per-card
+ * "Tiếp tục >" CTA) in a frameless {@link LabeledCard} grid. The milestone LIST
+ * for the whole project lives in the left rail — the body only surfaces "where
+ * you are + what's next". Every value is grounded in real BE fields
+ * (`milestoneTaskProgress`, enrollment github).
  *
  * @param props - {@link PersonalProjectDashboardProps}
  */
@@ -208,38 +209,23 @@ export const PersonalProjectDashboard = ({
                 emptyContent={{ title: t("finalProject.dashboard.empty") }}
             >
                 <div className="flex flex-col gap-6">
-                    {/* continue + progress — flat (no card frame), the honest unified meter */}
+                    {/* next task as ContinueCard hero (chip CTA — not the faint
+                        LabeledCard see-more link), then the honest progress meter. */}
                     <div className="flex flex-col gap-3">
-                        <div className="flex items-start justify-between gap-3">
-                            <div className="flex min-w-0 flex-col gap-0">
-                                <Typography type="body-xs" color="muted">
-                                    {currentTask
-                                        ? t("finalProject.dashboard.nextTask")
-                                        : t("finalProject.dashboard.allDone")}
-                                </Typography>
-                                {currentTask ? (
-                                    <Typography
-                                        type="body"
-                                        weight="semibold"
-                                        truncate
-                                        title={currentTask.title}
-                                    >
-                                        {currentTask.sortIndex}. {currentTask.title}
-                                    </Typography>
-                                ) : null}
-                            </div>
-                            {currentTask ? (
-                                <Button
-                                    variant="primary"
-                                    size="lg"
-                                    className="shrink-0"
-                                    onPress={onContinue}
-                                >
-                                    {t("finalProject.dashboard.continue")}
-                                    <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
-                                </Button>
-                            ) : null}
-                        </div>
+                        {currentTask ? (
+                            <ContinueCard
+                                variant="hero"
+                                icon={<PlayIcon weight="fill" />}
+                                title={`${currentTask.sortIndex}. ${currentTask.title}`}
+                                subtitle={t("finalProject.dashboard.nextTask")}
+                                ctaLabel={t("finalProject.dashboard.continue")}
+                                onPress={onContinue}
+                            />
+                        ) : (
+                            <Typography type="body" weight="semibold">
+                                {t("finalProject.dashboard.allDone")}
+                            </Typography>
+                        )}
                         <ProgressMeter
                             value={stats.done}
                             max={stats.total || 1}
@@ -256,59 +242,51 @@ export const PersonalProjectDashboard = ({
                         </Typography>
                     </div>
 
-                    {/* keep-going path: the current milestone's tasks. The whole-project
-                        milestone → task tree lives in the left rail, so the body never
-                        re-draws it; here we only surface "where you are + what's next". */}
+                    {/* keep-going: ContinueCard item grid — "Tiếp tục >" lives on each
+                        card (Storybook Item), not as a soft see-more beside the label. */}
                     {currentMilestone ? (
-                        <div className="flex flex-col gap-3">
-                            <Typography type="body-sm" weight="semibold" color="muted">
-                                {t("finalProject.dashboard.keepGoing")} · {currentMilestone.title}
-                            </Typography>
-                            <div className="flex flex-col gap-2">
-                                {(currentMilestone.tasks ?? []).map((task) => {
-                                    const isCompleted = progressMap.get(task.id)?.completed ?? false
-                                    const isActive = task.id === currentTaskId
-                                    const isLocked = !isPersonalProjectTaskActionUnlocked(
-                                        task.id,
-                                        progressMap,
-                                        currentTaskId,
-                                    )
-                                    return (
-                                        <ListRow
-                                            key={task.id}
-                                            className="px-3"
-                                            leading={isActive ? (
-                                                <PlayIcon
-                                                    aria-hidden
-                                                    focusable="false"
-                                                    className="size-5 text-accent-soft-foreground"
-                                                />
-                                            ) : isCompleted ? (
-                                                <CheckCircleIcon
-                                                    aria-label={t("finalProject.dashboard.taskDone")}
-                                                    focusable="false"
-                                                    className="size-5 text-success-soft-foreground"
-                                                />
-                                            ) : isLocked ? (
-                                                <LockIcon
-                                                    aria-label={t("finalProject.dashboard.statLocked")}
-                                                    focusable="false"
-                                                    className="size-5 text-muted"
-                                                />
-                                            ) : (
-                                                <CircleIcon
-                                                    aria-label={t("finalProject.dashboard.taskTodo")}
-                                                    focusable="false"
-                                                    className="size-5 text-muted"
-                                                />
-                                            )}
-                                            title={`${task.sortIndex}. ${task.title}`}
-                                            onPress={() => onSelectTask(task.id)}
-                                        />
-                                    )
-                                })}
-                            </div>
-                        </div>
+                        <LabeledCard
+                            label={`${t("finalProject.dashboard.keepGoing")} · ${currentMilestone.title}`}
+                            frameless
+                            contentClassName="grid gap-3 sm:grid-cols-2"
+                        >
+                            {(currentMilestone.tasks ?? []).map((task) => {
+                                const isCompleted = progressMap.get(task.id)?.completed ?? false
+                                const isActive = task.id === currentTaskId
+                                const isLocked = !isPersonalProjectTaskActionUnlocked(
+                                    task.id,
+                                    progressMap,
+                                    currentTaskId,
+                                )
+                                const subtitle = isActive
+                                    ? t("finalProject.dashboard.nextTask")
+                                    : isCompleted
+                                        ? t("finalProject.dashboard.taskDone")
+                                        : isLocked
+                                            ? t("finalProject.dashboard.statLocked")
+                                            : t("finalProject.dashboard.taskTodo")
+                                const icon = isActive ? (
+                                    <PlayIcon weight="fill" />
+                                ) : isCompleted ? (
+                                    <CheckCircleIcon weight="fill" />
+                                ) : isLocked ? (
+                                    <LockIcon weight="fill" />
+                                ) : (
+                                    <CircleIcon weight="fill" />
+                                )
+                                return (
+                                    <ContinueCard
+                                        key={task.id}
+                                        variant="item"
+                                        icon={icon}
+                                        title={`${task.sortIndex}. ${task.title}`}
+                                        subtitle={subtitle}
+                                        ctaLabel={t("finalProject.dashboard.continue")}
+                                        onPress={() => onSelectTask(task.id)}
+                                    />
+                                )
+                            })}
+                        </LabeledCard>
                     ) : null}
                 </div>
             </AsyncContent>

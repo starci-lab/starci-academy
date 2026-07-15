@@ -11,12 +11,16 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 
+/** Placeholder when {@link MediaCardProps.cover} is omitted — 16:9. */
+const FALLBACK_COVER_SRC = "https://placehold.co/640x360"
+
 /** Props for {@link MediaCard}. */
 export interface MediaCardProps extends WithClassNames<undefined> {
     /**
-     * Optional media node rendered flush at the very top of the card, outside
-     * the padded body (e.g. an `<img className="aspect-video w-full object-cover" />`
-     * cover, a thumbnail, or a gradient banner).
+     * Optional media node rendered flush at the very top of the card, edge-to-
+     * edge under the card radius (e.g. an
+     * `<img className="aspect-video w-full object-cover" />`). When omitted, a
+     * 16:9 placeholder fills the same full-bleed slot.
      */
     cover?: React.ReactNode
     /**
@@ -57,9 +61,11 @@ export interface MediaCardProps extends WithClassNames<undefined> {
  * Consolidated, presentational content card — one shape for course / lesson /
  * challenge / blog grids. Built on the HeroUI {@link Card}/{@link CardContent}
  * system (globals supply the 3xl radius, border, and no-shadow flat look), so it
- * never hand-writes rounded / border / background. The optional {@link cover}
- * sits flush at the top (outside padding); the padded body stacks title, meta,
- * description, and footer with a uniform `gap-3`.
+ * never hand-writes rounded / border / background. The cover sits full-bleed at
+ * the top in 16:9 (Card is `p-0` + `overflow-hidden` so media kisses the card
+ * edges); when {@link cover} is omitted a 16:9 placeholder fills that slot. The
+ * padded body (`p-4`) stacks title, meta, description, and footer with a uniform
+ * `gap-3`.
  *
  * Pass `href` for navigation or `onPress` for a custom handler — either one makes
  * the entire card pressable and keyboard-accessible.
@@ -79,10 +85,22 @@ export const MediaCard = ({
     // HeroUI v3 Card is not pressable itself — wrap it in a real anchor/button
     // when interactive so the whole card is one accessible target.
     const interactive = Boolean(onPress || href)
+    const coverNode = cover ?? (
+        <img
+            src={FALLBACK_COVER_SRC}
+            alt=""
+            className="aspect-video w-full object-cover"
+        />
+    )
     const card = (
-        <Card className={cn("overflow-hidden", !interactive && className)}>
-            {cover ?? null}
-            <CardContent className="flex flex-col gap-3">
+        // `p-0`: Card's default padding would inset the cover; body padding lives
+        // on CardContent only so the media can kiss the top/side edges under the
+        // card radius (`overflow-hidden` clips the cover to that radius).
+        <Card className={cn("gap-0 overflow-hidden p-0", !interactive && className)}>
+            <div className="aspect-video w-full shrink-0 overflow-hidden [&_img]:block [&_img]:size-full [&_img]:object-cover">
+                {coverNode}
+            </div>
+            <CardContent className="flex flex-col gap-3 px-4 pb-4 pt-3">
                 <Typography weight="medium">{title}</Typography>
                 {meta ? (
                     <div className="flex flex-wrap items-center gap-2">{meta}</div>

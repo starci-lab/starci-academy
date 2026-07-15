@@ -4,7 +4,6 @@ import { ResponsiveBreadcrumb } from "./index"
 const meta: Meta<typeof ResponsiveBreadcrumb> = {
     title: "Blocks/Navigation/ResponsiveBreadcrumb",
     component: ResponsiveBreadcrumb,
-    parameters: { layout: "centered" },
 }
 export default meta
 type Story = StoryObj<typeof ResponsiveBreadcrumb>

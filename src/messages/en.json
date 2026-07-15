@@ -165,6 +165,7 @@
     },
     "collapseMenu": "Collapse menu",
     "expandMenu": "Expand menu",
+    "itemsAria": "Settings pages",
     "groups": {
       "account": "Account",
       "learning": "Learning",
@@ -1444,6 +1445,7 @@
     "position": "Content {position}/{total}",
     "prevLesson": "Previous",
     "nextLesson": "Next",
+    "pagerAria": "Go to the previous or next content",
     "challengeCount": "{count} challenges",
     "outcomes": "What you'll learn",
     "codeLessonCount": "{count} code sections",
@@ -1934,6 +1936,7 @@
       "good": "Good",
       "easy": "Easy",
       "rateHint": "How well did you recall it?",
+      "rateAria": "Rate how well you recalled this card",
       "error": "Could not save your review. Please try again.",
       "sessionDoneTitle": "Session complete",
       "sessionDoneDescription": "You reviewed {count} cards. Come back when more are due.",
@@ -4706,6 +4709,7 @@
     "title": "Recruiter marketplace",
     "description": "Pick a track, then browse open-to-work candidates ranked by their depth in that track alone.",
     "trackFilterAria": "Filter candidates by track",
+    "candidatesAria": "Candidates for the selected track",
     "qualified": "Qualified",
     "empty": "No candidates for this track yet.",
     "emptyHint": "No one open to work has built depth in this track. Try another track."

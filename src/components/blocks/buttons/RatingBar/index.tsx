@@ -1,10 +1,11 @@
 "use client"
 
-import React, { useEffect } from "react"
+import React from "react"
 import { Chip, Typography, cn } from "@heroui/react"
 import type { ReactNode } from "react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { PressableCard } from "@/components/blocks/cards/PressableCard"
+import { GroupPressableCard } from "@/components/blocks/cards/GroupPressableCard"
+import { DIFFICULTY_COLOR } from "@/components/blocks/chips/DifficultyChip"
 
 /** One selectable recall grade in a {@link RatingBar}. */
 export interface RatingOption {
@@ -22,81 +23,77 @@ export interface RatingBarProps extends WithClassNames<undefined> {
     options: Array<RatingOption>
     /** Called with the chosen grade. */
     onRate: (grade: number) => void
+    /**
+     * Accessible name for the grade group, localized by the caller (blocks carry
+     * no i18n) — e.g. "Chọn mức độ nhớ". Without it a screen reader hears four
+     * loose buttons with nothing tying them together.
+     */
+    ariaLabel: string
     /** Disables every button while a review is in flight. */
     isPending?: boolean
 }
 
 /**
- * Semantic dot per recall grade — the weakest→strongest ramp (danger → warning →
- * success → accent) survives as a small COLOR DOT beside the label, not a full
- * pastel-fill tile. Keeps the 4-step scanability without the toy/gamified look a
- * solid rainbow tile carries (a spaced-repetition grader is a tool, not a sticker
- * — see `learning-surface-grounded-in-pedagogy-not-superficial-gamify`).
+ * Recall-grade ramp, reusing `DifficultyChip`'s `DIFFICULTY_COLOR` SSOT instead
+ * of the semantic `danger`/`warning`/`success`/`accent` tokens — a grade is a
+ * TIER (like a difficulty level), not a status/alert, and those 5 semantic
+ * tokens would collide (only 4 tiers, one token doubles up) or wrongly imply
+ * "this failed" for the weakest grade. `DIFFICULTY_COLOR` runs easy→hard
+ * (`beginner`→`insane`); this ramp runs weakest→strongest RECALL, the inverse
+ * axis — so grade 0 (Quên, hardest to recall) maps to `insane` and grade 3
+ * (Dễ, easiest) maps to `beginner`, not the same index.
  */
-const GRADE_DOT: Record<number, string> = {
-    0: "bg-danger",
-    1: "bg-warning",
-    2: "bg-success",
-    3: "bg-accent",
+const GRADE_STRIPE: Record<number, string> = {
+    0: DIFFICULTY_COLOR.insane,
+    1: DIFFICULTY_COLOR.advanced,
+    2: DIFFICULTY_COLOR.intermediate,
+    3: DIFFICULTY_COLOR.beginner,
 }
 
 /**
  * The SM-2 recall-rating bar: a row of FOUR equal-width grade TILES (Again / Hard
  * / Good / Easy) the learner taps — or presses `1`–`4` — after revealing a
- * flashcard's answer. Each tile is a neutral surface card carrying a small
- * semantic dot (weakest→strongest ramp — the strongest grade's dot alone
- * carries the accent, no extra border), a keyboard-key hint (a neutral `Chip`
- * — canon `elements/chip.md` §1, no hand-rolled `<kbd>` pill), and an optional
- * next-interval preview. Each tile is a shared `PressableCard`
- * (`hoverVariant="lift"` — default Card shadow at rest, unchanged on hover,
- * only the tile lifts; pick-and-stay, not a fill/go-there row) instead of a
- * hand-rolled `<button>`, per the no-style-in-features rule. Restrained
- * "pro reviewer" look (Anki/RemNote),
- * NOT a rainbow of emoji buttons. Labels/hints arrive localized from the caller.
+ * flashcard's answer. Each tile carries a tier-colored edge stripe (the shared
+ * `DIFFICULTY_COLOR` ramp — see {@link GRADE_STRIPE}), a keyboard-key hint (a
+ * neutral `Chip` — canon `elements/chip.md` §1, no hand-rolled `<kbd>` pill),
+ * and an optional next-interval preview.
+ *
+ * The tiles + their grid + the 1–4 shortcut are a `GroupPressableCard`, so
+ * this block only owns the tile ANATOMY. Grading is an ACTION — nothing stays
+ * selected, no ring, no outline — which is why this is not a
+ * `SelectableCardGroup` (that block's accent outline is reserved for a REAL
+ * persisted choice; nothing here persists). Restrained "pro reviewer" look
+ * (Anki/RemNote), NOT a rainbow of emoji buttons. Labels/hints arrive
+ * localized from the caller.
  *
  * @param props - {@link RatingBarProps}
  */
-export const RatingBar = ({ options, onRate, isPending = false, className }: RatingBarProps) => {
-    // press 1–4 to grade without reaching for the mouse — a power-user affordance
-    // the toy version lacked. Ignored while a review is in flight or focus is in a
-    // text field (defensive — this surface has none today).
-    useEffect(() => {
-        const onKeyDown = (event: KeyboardEvent) => {
-            if (isPending) {
-                return
-            }
-            const target = event.target as HTMLElement | null
-            if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)) {
-                return
-            }
-            const position = Number(event.key) - 1
-            if (Number.isInteger(position) && position >= 0 && position < options.length) {
-                event.preventDefault()
-                onRate(options[position].grade)
-            }
-        }
-        window.addEventListener("keydown", onKeyDown)
-        return () => window.removeEventListener("keydown", onKeyDown)
-    }, [options, onRate, isPending])
-
-    return (
-        <div className={cn("grid grid-cols-2 gap-2 sm:grid-cols-4", className)}>
-            {options.map((option, position) => (
-                <PressableCard
-                    key={option.grade}
-                    onPress={() => onRate(option.grade)}
-                    isDisabled={isPending}
-                    hoverVariant="lift"
-                    className="flex flex-col gap-2 rounded-xl px-3 py-2"
-                >
+export const RatingBar = ({ options, onRate, ariaLabel, isPending = false, className }: RatingBarProps) => (
+    <GroupPressableCard
+        ariaLabel={ariaLabel}
+        // measured: below a 384px container the hint line wraps and the tiles grow
+        // to 104px tall; at 384px (4 × 90px) it settles. So four-across only from
+        // `@sm`, two-up below — never the 4 × 58px sliver a viewport breakpoint
+        // produced when this sat in a narrow slot on a wide screen.
+        columns={{ base: 2, sm: 4 }}
+        gap={3}
+        keyboardShortcut
+        className={className}
+        items={options.map((option, position) => ({
+            key: String(option.grade),
+            onPress: () => onRate(option.grade),
+            isDisabled: isPending,
+            // `relative overflow-hidden`: the edge stripe below is a flush, square
+            // rectangle (`rounded-none`) positioned to the tile's full height — it
+            // needs the tile as its positioning root, and `overflow-hidden` clips
+            // its top/bottom corners to follow the tile's own `rounded-2xl`
+            // instead of poking past it. `pl-4` (not the `pr-3` match) leaves a
+            // clear gap between the 8px stripe and the label.
+            className: "relative flex flex-col gap-2 overflow-hidden py-2 pr-3 pl-4",
+            content: (
+                <>
                     <span className="flex items-center justify-between gap-2">
-                        <span className="flex items-center gap-2">
-                            <span
-                                aria-hidden
-                                className={cn("size-2 shrink-0 rounded-full", GRADE_DOT[option.grade] ?? "bg-default")}
-                            />
-                            <span className="text-sm font-medium text-foreground">{option.label}</span>
-                        </span>
+                        <span className="text-sm font-medium text-foreground">{option.label}</span>
                         <Chip size="sm" variant="soft" color="default">
                             <Chip.Label>{position + 1}</Chip.Label>
                         </Chip>
@@ -106,8 +103,15 @@ export const RatingBar = ({ options, onRate, isPending = false, className }: Rat
                             {option.hint}
                         </Typography>
                     ) : null}
-                </PressableCard>
-            ))}
-        </div>
-    )
-}
+                    {/* Edge stripe — the grade's ONLY color signal now (the dot was
+                        dropped as a redundant duplicate) — a full-height flush bar
+                        on the tile's LEADING edge so the grade reads at a glance. */}
+                    <span
+                        aria-hidden
+                        className={cn("absolute inset-y-0 left-0 w-2 rounded-none", GRADE_STRIPE[option.grade] ?? "bg-default")}
+                    />
+                </>
+            ),
+        }))}
+    />
+)

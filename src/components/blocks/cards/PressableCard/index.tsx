@@ -23,22 +23,6 @@ export interface PressableCardProps extends WithClassNames<undefined> {
     /** Disables interaction and dims the card (action cards only). */
     isDisabled?: boolean
     /**
-     * Hover affordance — BOTH variants carry `shadow-surface` AT REST (a
-     * `PressableCard` is a top-level bounded card per `card.md` §0's elevation
-     * convention; it must read as a card even before the pointer arrives, not
-     * only on hover — thầy: "render dạng card"). They only differ in what
-     * happens ON HOVER: `"fill"` (default) tints `bg-surface-secondary` for
-     * navigation tiles/rows that GO somewhere; `"lift"` leaves the shadow
-     * unchanged and only translates the card up, for cards picked TO STAY on
-     * this screen (rating tiles, option cards) — the surface itself doesn't
-     * change ownership/route, so a fill read as "selected" would be
-     * misleading; lifting reads as "about to press" instead. Ref
-     * [[hover-style-matches-clickable-nature]] mode 4 (pick-a-card — a
-     * standalone shadowed tile, not a bordered nested card and not an
-     * accordion-skin row).
-     */
-    hoverVariant?: "fill" | "lift"
-    /**
      * Secondary interactive controls (buttons / menus) that live INSIDE the card
      * but act INDEPENDENTLY of the whole-card press — e.g. a "Continue" button +
      * an overflow menu on a course-progress card.
@@ -60,8 +44,10 @@ export interface PressableCardProps extends WithClassNames<undefined> {
      * Accessible name for the whole-card press target. REQUIRED when
      * {@link PressableCardProps.actions} is set (the stretched overlay covers the
      * card but has no visible text of its own, so it must carry an `aria-label`).
-     * Keep it descriptive of the destination/action ("Mở lộ trình Fullstack
-     * Mastery"), never generic ("bấm vào đây").
+     * Optional otherwise — without `actions` the children ARE the card's
+     * accessible name, so pass this only when they carry no readable text (an
+     * icon-only tile). Keep it descriptive of the destination/action ("Mở lộ
+     * trình Fullstack Mastery"), never generic ("bấm vào đây").
      */
     label?: string
 }
@@ -90,25 +76,18 @@ export const PressableCard = ({
     onPress,
     href,
     isDisabled = false,
-    hoverVariant = "fill",
     actions,
     label,
     className,
 }: PressableCardProps) => {
-    // Shared card surface (fill / lift + disabled dim). Kept identical across
-    // both render paths so a card reads the same with or without actions.
-    // `shadow-surface` is UNCONDITIONAL (both variants) — a PressableCard is a
-    // top-level bounded card (card.md §0 elevation convention) and must read
-    // as one at rest, not only once the pointer arrives (thầy: "render dạng
-    // card"). The two variants only ever differed in the HOVER treatment.
+    // Shared card surface + disabled dim, identical across both render paths so
+    // a card reads the same with or without actions. `shadow-surface` is a
+    // top-level bounded card (card.md §0 elevation convention) — it must read as
+    // one at rest, not only once the pointer arrives (thầy: "render dạng card").
+    // One hover treatment only (tint) — no lift variant, no press-scale.
     const surface = cn(
-        "rounded-3xl bg-surface px-4 py-3 text-left shadow-surface",
-        hoverVariant === "lift"
-            // shadow unchanged on hover — only the card itself lifts, per
-            // hover-style-matches-clickable-nature mode 4
-            ? "transition-transform hover:-translate-y-0.5"
-            : "transition-colors hover:bg-surface-secondary",
-        isDisabled && "cursor-not-allowed opacity-60 hover:translate-y-0",
+        "rounded-3xl bg-surface px-4 py-3 text-left shadow-surface transition-colors hover:bg-surface-secondary",
+        isDisabled && "cursor-not-allowed opacity-60",
         className,
     )
 
@@ -121,7 +100,7 @@ export const PressableCard = ({
         )
         if (href && !isDisabled) {
             return (
-                <a href={href} className={base}>
+                <a href={href} aria-label={label} className={base}>
                     {children}
                 </a>
             )
@@ -131,6 +110,7 @@ export const PressableCard = ({
                 type="button"
                 onClick={onPress}
                 disabled={isDisabled}
+                aria-label={label}
                 className={cn(base, !isDisabled && "cursor-pointer")}
             >
                 {children}

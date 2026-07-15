@@ -34,6 +34,11 @@ const preview: Preview = {
     parameters: {
         a11y: { test: "error" },
         controls: { expanded: true },
+        // App Router everywhere → let @storybook/nextjs build the `next/navigation`
+        // router mocks. Without this the framework wires the PAGES router instead and
+        // any block calling `useRouter()` (CourseCard, BackLink, EntityLink…) throws
+        // NextjsRouterMocksNotAvailable on render.
+        nextjs: { appDirectory: true },
         // full-bleed canvas for EVERY story — the decorator below fills it
         // (`min-h-screen w-full p-8`) and content flows from the top-left. No
         // per-story `layout` overrides: one uniform canvas across the whole book

@@ -1,0 +1,18 @@
+# Audit: FE code-style — Loading & Skeleton
+
+Rubric: `D:\Repositories\starci-claude-canon\patterns\fe\loading-and-skeleton.md`
+Scope scanned: `D:\Repositories\starci-academy\src` (grep-sampled, not exhaustive — ~143 files touch `AsyncContent`, ~20 pass bare `isLoading={isLoading}`; below are confirmed real violations, not every grep hit)
+
+| file:line | rule vi phạm | trích | fix |
+|---|---|---|---|
+| `src/components/features/learn/Playground/PlaygroundSession/index.tsx:175-207` | §1 — tự dựng chuỗi if/else error→loading→empty thay vì `AsyncContent`; loading còn không có skeleton (chỉ text "Loading") | `if (isLoading) return <Typography>{t("common.loading")}</Typography>` … `if (error) return <ErrorContent …/>` … `if (!playground) return <EmptyContent …/>` | Gộp 3 nhánh vào 1 `<AsyncContent isLoading={…} skeleton={…} error={error} errorContent={{title:…, onRetry, retryLabel}} isEmpty={!playground} emptyContent={{title:…}}>`; cần dựng skeleton mirror layout (hiện chưa có skeleton nào) |
+| `src/components/features/learn/LessonReader/LessonPager/index.tsx:43-64` (approx, full skeleton block) | §1 — tự viết `if (isLoading) return <div>…</div>` thay vì đi qua `AsyncContent`, dù skeleton bên trong đã mirror đúng (§3 OK) | `if (isLoading) { return (<div className={className}>…Skeleton mirror…</div>) }` | Đổi thành `<AsyncContent isLoading={isLoading} skeleton={<cùng JSX skeleton này>}>{…pager thật…}</AsyncContent>` — giữ nguyên skeleton JSX, chỉ đổi cách wire |
+| `src/components/features/dashboard/StreakFreezeCard/index.tsx:90` | §2 — `isLoading` trần trong khi chính component tự gọi `mutate()` sau khi mua freeze (dòng 72) → không phải one-shot, không nằm trong whitelist (chỉ `quota.isLoading` được rule cho phép) | `isLoading={isLoading}` (từ `useQueryMyWeeklyStatsSwr()`, cùng key tự `mutate()` ở `onBuy`) | `isLoading={isLoading && !data}` |
+| `src/components/drawers/MiniCartDrawer/index.tsx:154` | §2 — `isLoading` trần trên `useCart()`, mà docstring chính file ghi rõ "revalidates on mount (e.g. on return from a gateway)" → chắc chắn có revalidate nền | `isLoading={isLoading}` (từ `const { items, isLoading, … } = useCart()`) | `isLoading={isLoading && items.length === 0}` |
+| `src/components/features/dashboard/ContinueLearning/index.tsx:64` + `useResumeItems.ts:60-62` | §2 — `isLoading` là OR của 3 raw `.isLoading` (`courses`, `inProgressChallenges`, `learnedLessons`) không kèm `!data`/`length===0`; các query này bị mutate ở nơi khác (đánh dấu đã đọc lesson, hoàn thành challenge) nên sẽ revalidate nền | `const isLoading = courses.isLoading \|\| inProgressChallenges.isLoading \|\| learnedLessons.isLoading` | Đổi công thức: `isLoading={isLoading && resumeItems.length === 0}` ở call site, hoặc tính `hasAnyData` trong hook và OR đúng theo §2 |
+
+**Không phải vi phạm (loại ra khỏi bảng, có lý do rõ):**
+- `AiQuotaCard/index.tsx:70` — `isLoading={isLoading}` trần nhưng CHÍNH LÀ ví dụ ✅ được rule whitelist ("vd quota.isLoading").
+- `WeeklyChallengeCard/index.tsx:106+114-118` — empty state dựng tay `{!data ? <EmptyContent…> : …}` thay vì prop `isEmpty`/`emptyContent`, nhưng có comment tại chỗ giải thích chủ đích (giữ `LabeledCard` mounted, không tự ẩn cả section) — không coi là drift, là design exception có ghi chú.
+
+**Tổng:** 5 vi phạm xác nhận (2 ca §1 — bỏ qua `AsyncContent` hoàn toàn; 3 ca §2 — `isLoading` trần trên query có revalidate nền), mức trung bình (không crash, nhưng đúng đúng loại bug rule mô tả: skeleton/loading-text nháy đè content khi mutate nền). Còn ~15 hit `isLoading={isLoading}` khác trong repo chưa được xác nhận từng ca (cần audit tiếp nếu muốn full-scan).

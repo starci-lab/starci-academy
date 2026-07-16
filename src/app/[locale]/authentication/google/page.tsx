@@ -1,6 +1,6 @@
 import React from "react"
-import { OauthRedirect } from "@/components/layouts/auth/OauthRedirect"
-import { OauthAction } from "@/components/layouts/auth/OauthRedirect/enums/oauth-action"
+import { OauthRedirect } from "@/components/features/auth/OauthRedirect"
+import { OauthAction } from "@/components/features/auth/OauthRedirect/enums/oauth-action"
 
 /**
  * Route `/[locale]/authentication/google` — generic Google OAuth redirect landing

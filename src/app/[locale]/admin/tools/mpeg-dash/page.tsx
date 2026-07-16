@@ -1,6 +1,6 @@
 "use client"
 import React from "react"
-import { AdminMpegDashTest } from "@/components/layouts/admin/AdminMpegDashTest"
+import { AdminMpegDashTest } from "@/components/features/admin/AdminMpegDashTest"
 
 const Page = () => {
     return (

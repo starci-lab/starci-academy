@@ -1,7 +1,7 @@
 import React from "react"
 import { cn, Typography } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { SectionCard } from "@/components/reuseable/SectionCard"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
 
 /**
  * Props for the {@link MetricCard} block.

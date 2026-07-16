@@ -10,7 +10,7 @@ import {
 } from "@heroui/react"
 import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
-import { SectionCard } from "@/components/reuseable/SectionCard"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /**

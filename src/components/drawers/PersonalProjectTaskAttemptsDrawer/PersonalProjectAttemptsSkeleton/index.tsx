@@ -3,7 +3,7 @@
 import React from "react"
 import { Skeleton } from "@heroui/react"
 import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
-import { SkeletonText } from "@/components/reuseable/SkeletonText"
+import { SkeletonText } from "@/components/blocks/skeleton/SkeletonText"
 
 /** Number of placeholder attempt rows shown while the list loads. */
 const SKELETON_ROW_COUNT = 5

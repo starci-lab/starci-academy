@@ -23,7 +23,7 @@ import {
 } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { ChatBubble } from "@/components/blocks/feed/ChatBubble"
 import { Callout, STATUS_ACTION_CLASS } from "@/components/blocks/feedback/Callout"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"

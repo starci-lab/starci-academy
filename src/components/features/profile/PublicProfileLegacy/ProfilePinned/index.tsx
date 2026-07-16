@@ -20,7 +20,7 @@ import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQuery
 import { useAppSelector } from "@/redux/hooks"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { ErrorState } from "@/components/blocks/feedback/ErrorState"
-import { SectionCard } from "@/components/reuseable/SectionCard"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
 
 /** Props for {@link ProfilePinned}. */
 export type ProfilePinnedProps = WithClassNames<undefined>

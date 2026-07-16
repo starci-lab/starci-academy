@@ -53,7 +53,7 @@ import { WorkMode } from "@/modules/types/enums/work-mode"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
 import { pathConfig } from "@/resources/path"
-import { FollowButton } from "@/components/reuseable/FollowButton"
+import { FollowButton } from "@/components/features/community/FollowButton"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
 

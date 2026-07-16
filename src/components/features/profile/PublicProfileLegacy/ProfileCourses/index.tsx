@@ -19,7 +19,7 @@ import type {
 } from "@/modules/types/base/class-name"
 import { useQueryUserCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCoursesSwr"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
-import { SectionCard } from "@/components/reuseable/SectionCard"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { ErrorState } from "@/components/blocks/feedback/ErrorState"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"

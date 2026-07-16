@@ -3,10 +3,10 @@
 import React, { useMemo, useState } from "react"
 import { Accordion } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { useAppSelector } from "@/redux/hooks"
-import { ProgrammingLanguageTabs } from "@/components/reuseable/ProgrammingLanguageTabs"
-import { ProgrammingLanguageTabsVariant } from "@/components/reuseable/ProgrammingLanguageTabs/enums/programming-language-tabs-variant"
+import { ProgrammingLanguageTabs } from "@/components/blocks/navigation/ProgrammingLanguageTabs"
+import { ProgrammingLanguageTabsVariant } from "@/components/blocks/navigation/ProgrammingLanguageTabs/enums/programming-language-tabs-variant"
 
 /** One captured E2E flow (shape mirrors the seeded content.e2eFlows jsonb). */
 interface E2eFlow {

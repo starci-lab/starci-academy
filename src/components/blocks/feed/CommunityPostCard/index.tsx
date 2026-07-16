@@ -17,8 +17,8 @@ import { ReactionBar } from "../ReactionBar"
 import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 import type { QueryCommunityFeedItemData } from "@/modules/api/graphql/queries/types/community-feed"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { UserAvatar } from "@/components/reuseable/UserAvatar"
-import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
+import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 
 /** Props for the {@link CommunityPostCard} block. */
 export interface CommunityPostCardProps extends WithClassNames<undefined> {

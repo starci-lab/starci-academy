@@ -12,7 +12,7 @@ import { useLivestreamCalendarOverlayState } from "@/hooks/zustand/overlay/hooks
 import type { LivestreamSessionEntity } from "@/modules/types/entities/livestream-session"
 import { DayOfWeek } from "@/modules/types/enums/day-of-week"
 import { useAppSelector } from "@/redux/hooks"
-import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { EmptyContent } from "@/components/blocks/async/EmptyContent"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { ModalShell } from "@/components/blocks/layout/ModalShell"

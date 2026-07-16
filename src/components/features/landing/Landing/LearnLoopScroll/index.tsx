@@ -22,7 +22,7 @@ import {
     TrophyIcon,
     WarningCircleIcon,
 } from "@phosphor-icons/react"
-import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LANDING_LOOP_STEPS } from "../constants"

@@ -27,7 +27,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { RichText } from "@/components/reuseable/RichText"
+import { RichText } from "@/components/blocks/rendering/RichText"
 import { useQueryMilestoneTaskSwr } from "@/hooks/swr/api/graphql/queries/useQueryMilestoneTaskSwr"
 import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
 

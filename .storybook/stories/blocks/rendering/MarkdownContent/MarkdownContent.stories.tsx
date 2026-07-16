@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Label, Typography } from "@heroui/react"
 
-import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { sample, inlineSample } from "./components"
 
 const meta: Meta<typeof MarkdownContent> = {

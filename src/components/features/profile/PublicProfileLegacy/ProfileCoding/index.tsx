@@ -18,7 +18,7 @@ import type {
 import { useQueryUserCodingHistorySwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingHistorySwr"
 import { useQueryUserCodingProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingProgressSwr"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
-import { SectionCard } from "@/components/reuseable/SectionCard"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { DifficultyChip, type Difficulty } from "@/components/blocks/chips/DifficultyChip"
 import { ListRow } from "@/components/blocks/lists/ListRow"
 import { MetricCard } from "@/components/blocks/stats/MetricCard"

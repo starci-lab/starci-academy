@@ -26,7 +26,7 @@ import { AuthenticationModalTab, setAuthenticationModalTab } from "@/redux/slice
 import { resetSignUpState } from "@/redux/slices/state"
 import { useSignUpForm } from "@/hooks/zustand/signUp/useSignUpForm"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { Turnstile } from "@/components/reuseable/Turnstile"
+import { Turnstile } from "@/components/features/auth/Turnstile"
 import { publicEnv } from "@/resources/env/public"
 
 /** Props for {@link RegistrationState}. */

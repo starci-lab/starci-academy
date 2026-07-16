@@ -32,7 +32,7 @@ import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButt
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SubmissionResultHistoryDrawer } from "@/components/drawers/SubmissionResultHistoryDrawer"
-import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
 import { useQuerySubmissionResultAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQuerySubmissionResultAttemptsSwr"
 import { useQuerySubmissionResultFeedbacksSwr } from "@/hooks/swr/api/graphql/queries/useQuerySubmissionResultFeedbacksSwr"

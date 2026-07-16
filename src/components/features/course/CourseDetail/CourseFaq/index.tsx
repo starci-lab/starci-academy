@@ -21,7 +21,7 @@ import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { useQueryCourseSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseSwr"
 import { useAppSelector } from "@/redux/hooks"
 

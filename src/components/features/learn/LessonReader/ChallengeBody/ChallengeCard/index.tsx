@@ -24,7 +24,7 @@ import { type WithClassNames } from "@/modules/types/base/class-name"
 import type { ChallengeProgressStatus } from "@/modules/api/graphql/queries/types/challenge-submission-progress"
 import { difficultyPalette } from "@/components/pallettes/difficulty"
 import { useAppSelector } from "@/redux/hooks"
-import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 
 /** i18n key for each difficulty tier label (covers all 5 BE tiers). */
 const DIFFICULTY_LABEL_KEY: Record<ChallengeDifficulty, string> = {

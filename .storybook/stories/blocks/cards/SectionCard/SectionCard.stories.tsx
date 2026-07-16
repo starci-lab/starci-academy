@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button } from "@heroui/react"
 import { LightningIcon } from "@phosphor-icons/react"
 
-import { SectionCard } from "@/components/reuseable/SectionCard"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { body } from "./components"
 
 const meta: Meta<typeof SectionCard> = {

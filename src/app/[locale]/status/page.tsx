@@ -1,6 +1,6 @@
 import React from "react"
 import type { Metadata } from "next"
-import { SystemStatus } from "@/components/layouts/status/SystemStatus"
+import { SystemStatus } from "@/components/features/status/SystemStatus"
 import { buildPageMetadata } from "@/modules/seo/buildMetadata"
 
 /** Route params for `/[locale]/status`. */

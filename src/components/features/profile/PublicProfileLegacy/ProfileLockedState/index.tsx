@@ -30,8 +30,8 @@ import {
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
-import { FollowButton } from "@/components/reuseable/FollowButton"
-import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import { FollowButton } from "@/components/features/community/FollowButton"
+import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 import { pathConfig } from "@/resources/path"
 
 /** Props for {@link ProfileLockedState}. */

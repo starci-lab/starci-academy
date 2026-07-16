@@ -18,7 +18,7 @@ import type {
 } from "@/modules/types/base/class-name"
 import { useQueryUserAchievementsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserAchievementsSwr"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
-import { MascotBadge } from "@/components/reuseable/MascotBadge"
+import { MascotBadge } from "@/components/features/profile/MascotBadge"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { getRank } from "@/modules/utils/rank"
 

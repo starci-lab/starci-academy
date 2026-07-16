@@ -2,7 +2,7 @@
 
 import React, { useMemo } from "react"
 import { useTheme } from "next-themes"
-import { SandpackPanel } from "@/components/reuseable/SandpackPanel"
+import { SandpackPanel } from "@/components/features/practice/SandpackPanel"
 import { CodeBodySkeleton } from "../CodeBodySkeleton"
 import type { SandpackFiles } from "@codesandbox/sandpack-react"
 import { useAppSelector } from "@/redux/hooks"

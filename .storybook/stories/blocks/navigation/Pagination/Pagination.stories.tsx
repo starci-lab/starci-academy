@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 
-import { Pagination } from "@/components/reuseable/Pagination"
+import { Pagination } from "@/components/blocks/navigation/Pagination"
 import { Demo } from "./components"
 
 const meta: Meta<typeof Pagination> = {

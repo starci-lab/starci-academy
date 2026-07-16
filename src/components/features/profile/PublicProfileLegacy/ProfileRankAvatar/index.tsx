@@ -15,8 +15,8 @@ import type {
 } from "@/modules/types/base/class-name"
 import { useQueryUserAchievementsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserAchievementsSwr"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
-import { RankBadge } from "@/components/reuseable/RankBadge"
-import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import { RankBadge } from "@/components/features/profile/RankBadge"
+import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 import { rankInfo, resolveSeniorityRank } from "@/modules/utils/rank"
 
 /** Props for {@link ProfileRankAvatar}. */

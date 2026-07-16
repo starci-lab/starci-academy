@@ -6,8 +6,8 @@ import React, {
 import {
     useTranslations,
 } from "next-intl"
-import { AccordionSkeleton } from "@/components/reuseable/AccordionSkeleton"
-import { SkeletonText } from "@/components/reuseable/SkeletonText"
+import { AccordionSkeleton } from "@/components/blocks/skeleton/AccordionSkeleton"
+import { SkeletonText } from "@/components/blocks/skeleton/SkeletonText"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link MilestoneOutlineSkeleton}. */

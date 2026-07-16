@@ -18,7 +18,7 @@ import {
 } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { DUE_REVIEW_LIMIT, SM2_GRADES } from "../constants"
 import { queryMyDueFlashcards } from "@/modules/api/graphql/queries/query-my-due-flashcards"
 import { buildCloze, extractMarkerTerms, type ClozeQuestion } from "./build-cloze"

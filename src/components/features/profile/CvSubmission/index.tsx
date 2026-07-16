@@ -19,7 +19,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 import { mutateGetCVPresignedUrl } from "@/modules/api/graphql/mutations/mutation-get-cv-presigned-url"
 import { mutateProcessCV } from "@/modules/api/graphql/mutations/mutation-process-cv"
 import { useAppSelector } from "@/redux/hooks"
-import { CVSubmissionForm } from "@/components/reuseable/CVSubmissionForm"
+import { CVSubmissionForm } from "@/components/features/careers/CVSubmissionForm"
 import { useRestWithToast } from "@/modules/toast/hooks"
 
 /** Fraction of progress shown after each upload step (UI feedback only). */

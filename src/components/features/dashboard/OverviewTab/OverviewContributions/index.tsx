@@ -11,7 +11,7 @@ import {
 } from "next-intl"
 import {
     ContributionCalendarView,
-} from "@/components/reuseable/ContributionCalendarView"
+} from "@/components/features/profile/ContributionCalendarView"
 import {
     OverviewContributionsSkeleton,
 } from "./OverviewContributionsSkeleton"

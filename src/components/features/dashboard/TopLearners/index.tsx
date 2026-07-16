@@ -20,7 +20,7 @@ import {
 } from "next/navigation"
 import {
     FollowButton,
-} from "@/components/reuseable/FollowButton"
+} from "@/components/features/community/FollowButton"
 import {
     pathConfig,
 } from "@/resources/path"

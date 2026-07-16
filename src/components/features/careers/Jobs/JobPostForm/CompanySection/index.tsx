@@ -8,7 +8,7 @@ import type { UseFormSetValue } from "react-hook-form"
 import { useQueryHeadhuntingCompanySuggestionsSwr } from "@/hooks/swr/api/graphql/queries/useQueryHeadhuntingCompanySuggestionsSwr"
 import type { SubmitJobPostingFormValues } from "@/hooks/rhf/useSubmitJobPostingForm"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { SearchInput } from "@/components/reuseable/SearchInput"
+import { SearchInput } from "@/components/blocks/form/SearchInput"
 
 /** Debounce window (ms) before a typed search hits the suggestions backend. */
 const SEARCH_DEBOUNCE_MS = 350

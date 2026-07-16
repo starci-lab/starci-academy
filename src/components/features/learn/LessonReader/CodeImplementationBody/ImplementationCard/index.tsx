@@ -3,7 +3,7 @@
 import React from "react"
 import { Chip, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import type { CodeImplementationEntity } from "@/modules/types/entities/code-implementation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 

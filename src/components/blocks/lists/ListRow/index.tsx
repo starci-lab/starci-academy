@@ -51,7 +51,7 @@ export interface ListRowProps extends WithClassNames<undefined> {
 
 /**
  * Generic GitHub-style list row designed to live inside a
- * {@link import("@/components/reuseable").SectionCard}. Lays out an optional
+ * {@link import("@/components/blocks/cards/SectionCard").SectionCard}. Lays out an optional
  * leading icon/avatar, a title + optional subtitle text column, and a
  * right-aligned meta + trailing cluster. Purely presentational: text and
  * handlers arrive via props so the row stays store-free and reusable.

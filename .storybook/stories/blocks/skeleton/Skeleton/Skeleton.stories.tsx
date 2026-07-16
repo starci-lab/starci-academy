@@ -32,7 +32,7 @@ import { ListRow } from "@/components/blocks/lists/ListRow"
 import { MetricCard } from "@/components/blocks/stats/MetricCard"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
-import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 import { SkeletonGroup, SkeletonRow, TYPE_ROWS } from "./components"
 
 const meta: Meta<typeof Skeleton> = {

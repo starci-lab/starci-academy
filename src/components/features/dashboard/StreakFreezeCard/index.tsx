@@ -20,7 +20,7 @@ import type {
 import { useMutateRedeemRewardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateRedeemRewardSwr"
 import { useQueryMyWeeklyStatsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyWeeklyStatsSwr"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
-import { SectionCard } from "@/components/reuseable/SectionCard"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 
 /** Maximum number of streak freezes a user may own. */

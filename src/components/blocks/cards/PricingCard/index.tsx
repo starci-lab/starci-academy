@@ -3,7 +3,7 @@
 import React from "react"
 import { cn, Typography, Chip } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { SectionCard } from "@/components/reuseable/SectionCard"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
 
 /** Props for {@link PricingCard}. */
 export interface PricingCardProps extends WithClassNames<undefined> {

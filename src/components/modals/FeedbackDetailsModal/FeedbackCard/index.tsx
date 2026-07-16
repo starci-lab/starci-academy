@@ -4,7 +4,7 @@ import { CheckCircleIcon, LightbulbIcon, MapPinIcon, WarningCircleIcon } from "@
 import { Chip, cn, Link } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import React, { useMemo } from "react"
-import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import type { SubmissionFeedbackEntity } from "@/modules/types/entities/submission-feedback"
 import { SubmissionFeedbackSeverity } from "@/modules/types/enums/submission-feedback-severity"
 import { buildGithubFileUrl } from "@/modules/utils/github-file-url"

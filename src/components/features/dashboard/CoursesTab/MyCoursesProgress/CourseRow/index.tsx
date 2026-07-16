@@ -12,7 +12,7 @@ import {
 } from "next-intl"
 import {
     CourseTrialChip,
-} from "@/components/reuseable/CourseTrialChip"
+} from "@/components/features/course/CourseTrialChip"
 import {
     useResolveRouteNavigation,
 } from "../../../EntityToken/useResolveRouteNavigation"

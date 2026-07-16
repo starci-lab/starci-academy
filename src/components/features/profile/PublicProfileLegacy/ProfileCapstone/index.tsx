@@ -26,7 +26,7 @@ import type {
 import { useQueryUserCapstoneProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCapstoneProgressSwr"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
 import { useQueryUserSolvedChallengesSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserSolvedChallengesSwr"
-import { SectionCard } from "@/components/reuseable/SectionCard"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { ErrorState } from "@/components/blocks/feedback/ErrorState"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"

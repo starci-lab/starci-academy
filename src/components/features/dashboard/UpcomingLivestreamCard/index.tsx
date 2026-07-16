@@ -17,7 +17,7 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import { useQueryMyUpcomingLivestreamsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyUpcomingLivestreamsSwr"
-import { SectionCard } from "@/components/reuseable/SectionCard"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"

@@ -14,7 +14,7 @@ import {
 import Link from "next/link"
 import {
     FollowButton,
-} from "@/components/reuseable/FollowButton"
+} from "@/components/features/community/FollowButton"
 import {
     WhoToFollowSkeleton,
 } from "./WhoToFollowSkeleton"
@@ -27,7 +27,7 @@ import type {
 import { useMutateSetFollowSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetFollowSwr"
 import { useQuerySuggestedUsersSwr } from "@/hooks/swr/api/graphql/queries/useQuerySuggestedUsersSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
-import { SectionCard } from "@/components/reuseable/SectionCard"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { UserCell } from "@/components/blocks/identity/UserCell"
 
 /** Props for {@link WhoToFollow}. */

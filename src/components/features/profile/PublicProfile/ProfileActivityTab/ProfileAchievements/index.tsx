@@ -17,7 +17,7 @@ import type {
 } from "@/modules/types/base/class-name"
 import { useQueryUserAchievementsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserAchievementsSwr"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
-import { MascotBadge } from "@/components/reuseable/MascotBadge"
+import { MascotBadge } from "@/components/features/profile/MascotBadge"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"

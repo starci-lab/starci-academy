@@ -6,8 +6,8 @@ import {
     cn,
 } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { SkeletonParagraph } from "@/components/reuseable/SkeletonParagraph"
-import { SkeletonText } from "@/components/reuseable/SkeletonText"
+import { SkeletonParagraph } from "@/components/blocks/skeleton/SkeletonParagraph"
+import { SkeletonText } from "@/components/blocks/skeleton/SkeletonText"
 
 /** Layout variant mirrored from {@link ContentBody} (V2 vs legacy). */
 export type ContentBodySkeletonVariant = "v2" | "legacy"

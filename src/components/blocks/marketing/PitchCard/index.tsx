@@ -3,7 +3,7 @@ import { cn, Typography } from "@heroui/react"
 import { IconTile } from "../../identity/IconTile"
 import type { IconTileTone } from "../../identity/IconTile"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { SectionCard } from "@/components/reuseable/SectionCard"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
 
 /** Props for the {@link PitchCard} block. */
 export interface PitchCardProps extends WithClassNames<undefined> {

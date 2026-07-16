@@ -39,7 +39,7 @@ import { type SessionStorageOauthIdpHint } from "@/modules/storage/session/types
 import { type SessionStoragePostLoginRedirect } from "@/modules/storage/session/types/post-login-redirect"
 import { useSearchParams } from "next/navigation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { Turnstile } from "@/components/reuseable/Turnstile"
+import { Turnstile } from "@/components/features/auth/Turnstile"
 import { publicEnv } from "@/resources/env/public"
 
 /** Props for {@link CredentialsState}. */

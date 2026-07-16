@@ -11,7 +11,7 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { SectionCard } from "@/components/reuseable/SectionCard"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
 
 /** Number of placeholder suggestion rows shown while suggestions load. */
 const SKELETON_ROW_COUNT = 4

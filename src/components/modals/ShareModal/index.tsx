@@ -8,8 +8,8 @@ import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useShareOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useAppSelector } from "@/redux/hooks"
-import { QRCode } from "@/components/reuseable/QRCode"
-import { SnippetIcon } from "@/components/reuseable/SnippetIcon"
+import { QRCode } from "@/components/blocks/media/QRCode"
+import { SnippetIcon } from "@/components/blocks/identity/SnippetIcon"
 import { ModalShell } from "@/components/blocks/layout/ModalShell"
 
 export const ShareModal = ({ className }: WithClassNames<undefined>) => {

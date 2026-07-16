@@ -16,7 +16,7 @@ import {
 import {
     useAutoMarkContentRead,
 } from "../useAutoMarkContentRead"
-import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { useAppSelector } from "@/redux/hooks"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { listContentBodyLangs, pickContentBodyByLang, resolveContentBody } from "@/modules/types/entities/content-body"

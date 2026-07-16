@@ -18,7 +18,7 @@ import { useQueryHeadhunterCompaniesSwr } from "@/hooks/swr/api/graphql/queries/
 import { useQueryHeadhuntersSwr } from "@/hooks/swr/api/graphql/queries/useQueryHeadhuntersSwr"
 import { useQueryHeadhuntingCompanySuggestionsSwr } from "@/hooks/swr/api/graphql/queries/useQueryHeadhuntingCompanySuggestionsSwr"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
-import { SearchInput } from "@/components/reuseable/SearchInput"
+import { SearchInput } from "@/components/blocks/form/SearchInput"
 
 /** Debounce window (ms) before a typed search hits the suggestions backend. */
 const SEARCH_DEBOUNCE_MS = 350

@@ -5,7 +5,7 @@ import {
     Skeleton,
     cn,
 } from "@heroui/react"
-import { SkeletonText } from "@/components/reuseable/SkeletonText"
+import { SkeletonText } from "@/components/blocks/skeleton/SkeletonText"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link CodeBodySkeleton}. */

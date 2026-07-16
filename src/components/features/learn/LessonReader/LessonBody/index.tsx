@@ -9,7 +9,7 @@ import { useAppSelector } from "@/redux/hooks"
 import { WithClassNames } from "@/modules/types/base/class-name"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { useQueryLessonVideosSwr } from "@/hooks/swr/api/graphql/queries/useQueryLessonVideosSwr"
-import { SearchBar } from "@/components/reuseable/SearchBar"
+import { SearchBar } from "@/components/blocks/form/SearchBar"
 
 export type LessonBodyProps = WithClassNames<undefined>
 

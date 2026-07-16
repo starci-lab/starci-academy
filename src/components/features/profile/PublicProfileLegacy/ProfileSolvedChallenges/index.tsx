@@ -20,7 +20,7 @@ import type {
 } from "@/modules/types/base/class-name"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
 import { useQueryUserSolvedChallengesSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserSolvedChallengesSwr"
-import { SectionCard } from "@/components/reuseable/SectionCard"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { ListRow } from "@/components/blocks/lists/ListRow"
 import { StatPair } from "@/components/blocks/stats/StatPair"
 

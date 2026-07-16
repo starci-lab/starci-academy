@@ -16,7 +16,7 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
-import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { CourseContentTier } from "@/modules/types/enums/course-content-tier"
 import { type ModuleEntity } from "@/modules/types/entities/module"
 

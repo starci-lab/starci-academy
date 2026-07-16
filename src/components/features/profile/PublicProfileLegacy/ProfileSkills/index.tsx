@@ -21,7 +21,7 @@ import type {
 import { useQueryUserCodingSkillsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingSkillsSwr"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
 import type { QueryUserCodingSkillCount } from "@/modules/api/graphql/queries/types/user-coding-skills"
-import { SectionCard } from "@/components/reuseable/SectionCard"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { DifficultyChip, type Difficulty } from "@/components/blocks/chips/DifficultyChip"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"

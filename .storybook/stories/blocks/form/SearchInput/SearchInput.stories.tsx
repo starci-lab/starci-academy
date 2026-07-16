@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { useState } from "react"
 
-import { SearchInput } from "@/components/reuseable/SearchInput"
+import { SearchInput } from "@/components/blocks/form/SearchInput"
 import { SUGGESTIONS } from "./components"
 
 const meta: Meta<typeof SearchInput> = {

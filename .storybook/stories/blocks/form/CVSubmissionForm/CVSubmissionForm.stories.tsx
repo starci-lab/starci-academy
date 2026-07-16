@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 
-import { CVSubmissionForm } from "@/components/reuseable/CVSubmissionForm"
+import { CVSubmissionForm } from "@/components/features/careers/CVSubmissionForm"
 import { handlers } from "./components"
 
 const meta: Meta<typeof CVSubmissionForm> = {

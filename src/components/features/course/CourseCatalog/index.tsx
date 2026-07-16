@@ -30,7 +30,7 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
-import { SearchInput } from "@/components/reuseable/SearchInput"
+import { SearchInput } from "@/components/blocks/form/SearchInput"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { useQueryCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryCoursesSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"

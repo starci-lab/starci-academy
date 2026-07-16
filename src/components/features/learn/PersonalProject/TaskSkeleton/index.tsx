@@ -6,8 +6,8 @@ import {
     cn,
 } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { SkeletonText } from "@/components/reuseable/SkeletonText"
-import { SkeletonParagraph } from "@/components/reuseable/SkeletonParagraph"
+import { SkeletonText } from "@/components/blocks/skeleton/SkeletonText"
+import { SkeletonParagraph } from "@/components/blocks/skeleton/SkeletonParagraph"
 
 /** Props for {@link TaskSkeleton}. */
 export type TaskSkeletonProps = WithClassNames<undefined>

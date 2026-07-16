@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react"
 import { Button, Spinner, TextArea, TextField, cn } from "@heroui/react"
 import { PaperPlaneRightIcon } from "@phosphor-icons/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 
 /**
  * Props for the {@link Composer} block.

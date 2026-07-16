@@ -17,7 +17,7 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
-import { AIProcessingText } from "@/components/reuseable/AIProcessingText"
+import { AIProcessingText } from "@/components/features/learn/AIProcessingText"
 import { JobCategory } from "@/modules/types/enums/job-category"
 import { JobStatus } from "@/modules/types/enums/job-status"
 import { usePersonalProjectGithubForm } from "@/hooks/zustand/personalProjectGithub/usePersonalProjectGithubForm"

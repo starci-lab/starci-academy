@@ -31,8 +31,8 @@ import {
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
 import { pathConfig } from "@/resources/path"
-import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
-import { SectionCard } from "@/components/reuseable/SectionCard"
+import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
 
 /** Props for {@link ProfileOverviewTab}. */
 export type ProfileOverviewTabProps = WithClassNames<undefined>

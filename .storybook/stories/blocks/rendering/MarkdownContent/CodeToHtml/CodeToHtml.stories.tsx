@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Label, Typography } from "@heroui/react"
 
-import { CodeToHtml } from "@/components/reuseable/MarkdownContent/CodeToHtml"
+import { CodeToHtml } from "@/components/blocks/rendering/MarkdownContent/CodeToHtml"
 import { TS_SAMPLE, JS_SAMPLE, BASH_SAMPLE } from "./components"
 
 const meta: Meta<typeof CodeToHtml> = {

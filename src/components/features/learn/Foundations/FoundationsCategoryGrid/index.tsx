@@ -34,10 +34,10 @@ import { useAppSelector } from "@/redux/hooks"
 import { useQueryFoundationCategoriesSwr } from "@/hooks/swr/api/graphql/queries/useQueryFoundationCategoriesSwr"
 import { useQueryFoundationCategorySuggestionsSwr } from "@/hooks/swr/api/graphql/queries/useQueryFoundationCategorySuggestionsSwr"
 import type { FoundationCategorySuggestionItem } from "@/modules/api/graphql/queries/types/foundation-category-suggestions"
-import { Pagination } from "@/components/reuseable/Pagination"
-import { PaginationSkeleton } from "@/components/reuseable/PaginationSkeleton"
-import { SearchInput } from "@/components/reuseable/SearchInput"
-import { SkeletonText } from "@/components/reuseable/SkeletonText"
+import { Pagination } from "@/components/blocks/navigation/Pagination"
+import { PaginationSkeleton } from "@/components/blocks/skeleton/PaginationSkeleton"
+import { SearchInput } from "@/components/blocks/form/SearchInput"
+import { SkeletonText } from "@/components/blocks/skeleton/SkeletonText"
 
 /** Max category cards shown per page. */
 const PAGE_SIZE = 10

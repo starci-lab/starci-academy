@@ -15,7 +15,7 @@ import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { IconTile } from "@/components/blocks/identity/IconTile"
-import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 
 /** i18n key per {@link WorkMode} (reuses the existing profile labels). */
 const WORK_MODE_LABEL_KEY: Record<WorkMode, string> = {

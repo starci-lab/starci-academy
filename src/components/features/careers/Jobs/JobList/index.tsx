@@ -20,7 +20,7 @@ import { WorkMode } from "@/modules/types/enums/work-mode"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
-import { SearchInput } from "@/components/reuseable/SearchInput"
+import { SearchInput } from "@/components/blocks/form/SearchInput"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
 

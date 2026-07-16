@@ -20,7 +20,7 @@ const YEAR_BUTTONS = 3
 
 /**
  * Loading placeholder for {@link import("../").OverviewContributions}: mirrors the
- * {@link import("@/components/reuseable/ContributionCalendarView").ContributionCalendarView}
+ * {@link import("@/components/features/profile/ContributionCalendarView").ContributionCalendarView}
  * heatmap — header (count + year switcher), the 7×N cell grid, and the Less→More
  * legend — at the same cell size / gaps so the box does not jump when data resolves.
  *

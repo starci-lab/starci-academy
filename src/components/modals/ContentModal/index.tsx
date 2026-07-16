@@ -2,7 +2,7 @@
 
 import React from "react"
 import { ScrollShadow } from "@heroui/react"
-import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { useContentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useAppSelector } from "@/redux/hooks"
 import { WithClassNames } from "@/modules/types/base/class-name"

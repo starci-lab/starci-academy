@@ -1,5 +1,5 @@
 import React from "react"
-import { Kpi } from "@/components/layouts/kpi/Kpi"
+import { Kpi } from "@/components/features/dashboard/kpi/Kpi"
 
 /** The weekly-KPI editor page (set per-metric targets) behind the dashboard summary. */
 const Page = () => {

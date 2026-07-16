@@ -20,7 +20,7 @@ import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQuery
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { InfoTooltip } from "@/components/blocks/feedback/InfoTooltip"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { MascotBadge } from "@/components/reuseable/MascotBadge"
+import { MascotBadge } from "@/components/features/profile/MascotBadge"
 import { getRank } from "@/modules/utils/rank"
 
 /** How many medals to show before the "+N" overflow. */

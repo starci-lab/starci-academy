@@ -13,7 +13,7 @@ import {
 } from "next-intl"
 import {
     UserAvatar,
-} from "@/components/reuseable/UserAvatar"
+} from "@/components/blocks/identity/UserAvatar"
 import {
     EntityToken,
 } from "../EntityToken"

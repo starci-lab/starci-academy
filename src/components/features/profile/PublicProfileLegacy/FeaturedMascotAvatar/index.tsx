@@ -25,8 +25,8 @@ import { useAppSelector } from "@/redux/hooks"
 import { useMutateUpdateProfileSwr } from "@/hooks/swr/api/graphql/mutations/useMutateUpdateProfileSwr"
 import { useQueryUserAchievementsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserAchievementsSwr"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
-import { MascotBadge } from "@/components/reuseable/MascotBadge"
-import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import { MascotBadge } from "@/components/features/profile/MascotBadge"
+import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 import { getRank } from "@/modules/utils/rank"
 
 /** Props for {@link FeaturedMascotAvatar}. */

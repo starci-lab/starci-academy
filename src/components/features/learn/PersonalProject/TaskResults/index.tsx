@@ -8,8 +8,8 @@ import {
     TaskResultsSkeleton,
 } from "../TaskResultsSkeleton"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { Score } from "@/components/reuseable/Score"
-import { StarCiAIBadge } from "@/components/reuseable/StarCiAIBadge"
+import { Score } from "@/components/blocks/stats/Score"
+import { StarCiAIBadge } from "@/components/features/learn/StarCiAIBadge"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { useQueryUserPersonalTaskAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserPersonalTaskAttemptsSwr"

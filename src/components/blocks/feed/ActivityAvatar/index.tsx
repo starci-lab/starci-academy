@@ -1,7 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
-import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for the {@link ActivityAvatar} block. */

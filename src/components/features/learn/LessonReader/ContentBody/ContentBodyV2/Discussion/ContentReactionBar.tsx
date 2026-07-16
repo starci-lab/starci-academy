@@ -3,7 +3,7 @@
 import React, { useCallback } from "react"
 import useSWR from "swr"
 import { useAppSelector } from "@/redux/hooks"
-import { InteractionBar } from "@/components/reuseable/Discussion/InteractionBar"
+import { InteractionBar } from "@/components/features/community/Discussion/InteractionBar"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { GraphQLHeadersKey, type GraphQLHeaders } from "@/modules/api/graphql/types"
 import { mutateReactToContent } from "@/modules/api/graphql/mutations/mutation-react-to-content"

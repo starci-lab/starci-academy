@@ -8,7 +8,7 @@ import { WithClassNames } from "@/modules/types/base/class-name"
 import { ModalShell } from "@/components/blocks/layout/ModalShell"
 
 const PDFView = dynamic(
-    () => import("@/components/reuseable/PDFView").then((module) => module.PDFView),
+    () => import("@/components/blocks/rendering/PDFView").then((module) => module.PDFView),
     { ssr: false },
 )
 

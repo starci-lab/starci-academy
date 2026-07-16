@@ -22,7 +22,7 @@ import { LANDING_SAMPLE_CANDIDATE } from "../constants"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { SectionHeading } from "@/components/blocks/marketing/SectionHeading"
 import { ShowcaseMockup, SHOWCASE_THEMES } from "@/components/blocks/marketing/ShowcaseMockup"
-import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 
 /** Props for {@link TalentMarketplace}. */
 export type TalentMarketplaceProps = WithClassNames<undefined>

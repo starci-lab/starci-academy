@@ -17,7 +17,7 @@ import {
 } from "../useProfileUsername"
 import {
     ContributionCalendarView,
-} from "@/components/reuseable/ContributionCalendarView"
+} from "@/components/features/profile/ContributionCalendarView"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"

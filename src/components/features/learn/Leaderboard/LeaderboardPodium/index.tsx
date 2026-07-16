@@ -5,7 +5,7 @@ import { Link, Typography, cn } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { CrownIcon } from "@phosphor-icons/react"
 import { categoryEntryXp, type LeaderboardCategoryKey, type RankedLeaderboardEntry } from "../categories"
-import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 import { pathConfig } from "@/resources/path"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 

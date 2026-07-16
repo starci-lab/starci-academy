@@ -30,7 +30,7 @@ import { useMutateSetupTwoFactorSwr } from "@/hooks/swr/api/graphql/mutations/us
 import { useMutateConfirmTwoFactorSwr } from "@/hooks/swr/api/graphql/mutations/useMutateConfirmTwoFactorSwr"
 import { useMutateDisableTwoFactorSwr } from "@/hooks/swr/api/graphql/mutations/useMutateDisableTwoFactorSwr"
 import type { SetupTwoFactorData } from "@/modules/api/graphql/mutations/types/two-factor"
-import { QRCode } from "@/components/reuseable/QRCode"
+import { QRCode } from "@/components/blocks/media/QRCode"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Callout } from "@/components/blocks/feedback/Callout"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"

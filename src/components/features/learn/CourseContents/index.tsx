@@ -29,7 +29,7 @@ import {
     UsersIcon,
 } from "@phosphor-icons/react"
 import { LearnBreadcrumb } from "../shared/LearnBreadcrumb"
-import { GithubTeamGate } from "@/components/layouts/auth/GithubTeamGate"
+import { GithubTeamGate } from "@/components/features/auth/GithubTeamGate"
 import { useCourseTotals } from "../../course/CourseDetail/hooks/useCourseTotals"
 import {
     pathConfig,

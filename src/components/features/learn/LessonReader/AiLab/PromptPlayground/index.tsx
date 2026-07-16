@@ -42,7 +42,7 @@ import { useQueryMyAiQuotaSwr } from "@/hooks/swr/api/graphql/queries/useQueryMy
 import { useQueryMyAiSettingsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiSettingsSwr"
 import { useQueryMyAiLabRunsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiLabRunsSwr"
 import { AiLabRunStatus } from "@/hooks/socketio/types/ai-lab"
-import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /** Props for {@link PromptPlayground}. */

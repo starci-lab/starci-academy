@@ -9,8 +9,8 @@ import { ReactionBar } from "../ReactionBar"
 import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 import type { QueryCommunityCommentNode } from "@/modules/api/graphql/queries/types/community-comments"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
-import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
+import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 
 /** Props for the {@link CommunityCommentRow} block. */
 export interface CommunityCommentRowProps extends WithClassNames<undefined> {

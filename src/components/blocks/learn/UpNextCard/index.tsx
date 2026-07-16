@@ -4,7 +4,7 @@ import React from "react"
 import { Button, Typography, cn } from "@heroui/react"
 import { ArrowRightIcon, CheckCircleIcon } from "@phosphor-icons/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { SectionCard } from "@/components/reuseable/SectionCard"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
 
 /**
  * Props for the {@link UpNextCard} block.

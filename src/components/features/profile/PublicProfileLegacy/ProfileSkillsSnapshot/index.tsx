@@ -15,7 +15,7 @@ import type {
 import { useQueryUserCodingSkillsSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCodingSkillsSwr"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
 import { useProfileTabStore } from "@/hooks/zustand/profileTab/store"
-import { SectionCard } from "@/components/reuseable/SectionCard"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { StatPair } from "@/components/blocks/stats/StatPair"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
 

@@ -1,6 +1,6 @@
 "use client"
 import React from "react"
-import { AdminLogin } from "@/components/layouts/admin/AdminLogin"
+import { AdminLogin } from "@/components/features/admin/AdminLogin"
 
 const Page = () => {
     return (

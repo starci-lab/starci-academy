@@ -14,7 +14,7 @@ import {
 import {
     LeagueTier,
     LeagueTierBadge,
-} from "@/components/reuseable/LeagueTierBadge"
+} from "@/components/features/dashboard/LeagueTierBadge"
 import {
     pathConfig,
 } from "@/resources/path"
@@ -22,7 +22,7 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
-import { LeagueRow } from "@/components/reuseable/LeagueRow"
+import { LeagueRow } from "@/components/features/dashboard/LeagueRow"
 import { InfoTooltip } from "@/components/blocks/feedback/InfoTooltip"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import type { QueryMyLeagueData } from "@/modules/api/graphql/queries/types/league"

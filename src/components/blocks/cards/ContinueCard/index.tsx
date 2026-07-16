@@ -4,7 +4,7 @@ import React from "react"
 import { Button, Link, Typography, cn } from "@heroui/react"
 import { ArrowRightIcon } from "@phosphor-icons/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { SectionCard } from "@/components/reuseable/SectionCard"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { SeeMoreLink } from "@/components/blocks/navigation/SeeMoreLink"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 

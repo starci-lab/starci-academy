@@ -33,8 +33,8 @@ import {
     LastAttemptResult,
 } from "./LastAttemptResult"
 import { JobCategory } from "@/modules/types/enums/job-category"
-import { AIProcessingText } from "@/components/reuseable/AIProcessingText"
-import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { AIProcessingText } from "@/components/features/learn/AIProcessingText"
+import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import type { AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 

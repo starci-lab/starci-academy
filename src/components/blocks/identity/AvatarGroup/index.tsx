@@ -1,7 +1,7 @@
 import React from "react"
 import { Avatar, cn } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { UserAvatar } from "@/components/reuseable/UserAvatar"
+import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 
 /** One avatar in the group. */
 export interface AvatarGroupUser {

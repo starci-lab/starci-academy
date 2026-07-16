@@ -11,7 +11,7 @@ import {
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { Dropzone } from "@/components/reuseable/Dropzone"
+import { Dropzone } from "@/components/blocks/form/Dropzone"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { sleep } from "@/modules/utils/misc"
 import { useMutateGenerateSubmitCvPresignUrlSwr } from "@/hooks/swr/api/graphql/mutations/useMutateGenerateSubmitCvPresignUrlSwr"

@@ -12,7 +12,7 @@ import {
 import _ from "lodash"
 import { ListChecksIcon } from "@phosphor-icons/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
-import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { useAppSelector } from "@/redux/hooks"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 

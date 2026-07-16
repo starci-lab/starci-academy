@@ -2,8 +2,8 @@
 
 import React from "react"
 import { ScrollShadow } from "@heroui/react"
-import { VideoRenderer } from "@/components/reuseable/VideoRenderer"
-import { MarkdownContent } from "@/components/reuseable/MarkdownContent"
+import { VideoRenderer } from "@/components/blocks/media/VideoRenderer"
+import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { resolveFoundationMountFileUrl } from "@/components/features/learn/Foundations/utils/resolveFoundationUrls"
 import { useFoundationOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { FoundationKind } from "@/modules/types/enums/foundation-kind"

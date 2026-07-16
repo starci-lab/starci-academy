@@ -8,8 +8,8 @@ import {
 import {
     cn,
 } from "@heroui/react"
-import { SkeletonParagraph } from "@/components/reuseable/SkeletonParagraph"
-import { SkeletonText } from "@/components/reuseable/SkeletonText"
+import { SkeletonParagraph } from "@/components/blocks/skeleton/SkeletonParagraph"
+import { SkeletonText } from "@/components/blocks/skeleton/SkeletonText"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 export type TierCardSkeletonProps = WithClassNames<undefined>

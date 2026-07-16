@@ -19,7 +19,11 @@ const query1 = gql`
           key
           current
           target
+          coinReward
+          claimed
+          canClaim
         }
+        resetAt
       }
     }
   }

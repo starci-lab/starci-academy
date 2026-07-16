@@ -24,6 +24,10 @@ export interface QueryWeeklyChallengeData {
     passedCount: number
     /** Top finishers (already capped server-side), newest passers ordered first. */
     leaderboard: Array<QueryWeeklyChallengeLeaderboardEntryData>
+    /** Whether the viewer already claimed the reward this week. */
+    claimed: boolean
+    /** Coin reward for claiming; null when the viewer hasn't passed yet. */
+    coinReward: number | null
 }
 
 /** Apollo response shape for the `weeklyChallenge` query. */

@@ -11,17 +11,18 @@ import {
     useSearchParams,
 } from "next/navigation"
 import {
-    PublicProfile,
-} from "@/components/features/profile/PublicProfile"
+    ProfileLoadingState,
+} from "@/components/features/profile/PublicProfile/ProfileLoadingState"
 import { useAppSelector } from "@/redux/hooks"
 import { pathConfig } from "@/resources/path"
 
 /**
  * Route `/[locale]/profile` — the signed-in user's own profile. Canonicalizes the
- * URL to `/[locale]/profile/<username>` (GitHub-style) once the viewer is known,
- * preserving the query (e.g. `?tab=overview`), so the bare route never lingers in
- * the address bar. {@link PublicProfile} renders immediately meanwhile (it resolves
- * the viewer's username on the bare route), so the redirect causes no blank flash.
+ * URL to `/[locale]/profile/<username>` (GitHub-style, now nested-route-driven —
+ * `?tab=` is retired) once the viewer is known, preserving the query, so the bare
+ * route never lingers in the address bar. This page never mounts the profile
+ * shell itself (that lives in `[username]/layout.tsx`) — it only ever redirects,
+ * showing {@link ProfileLoadingState} meanwhile so there is no blank flash.
  * Settings live under `/profile/*` sub-pages reached from the account menu.
  */
 const Page = () => {
@@ -39,7 +40,7 @@ const Page = () => {
         router.replace(query ? `${target}?${query}` : target)
     }, [username, locale, searchParams, router])
 
-    return <PublicProfile />
+    return <ProfileLoadingState />
 }
 
 export default Page

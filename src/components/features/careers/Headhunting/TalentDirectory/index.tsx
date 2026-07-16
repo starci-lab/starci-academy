@@ -2,7 +2,7 @@
 
 import React from "react"
 import { Chip, Skeleton, Typography } from "@heroui/react"
-import { RocketLaunchIcon, TrendUpIcon } from "@phosphor-icons/react"
+import { RocketLaunchIcon, ChartLineUpIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -99,7 +99,7 @@ export const TalentDirectory = ({ className }: TalentDirectoryProps) => {
                     emptyContent={{
                         title: t("talentDirectory.empty"),
                         description: t("talentDirectory.emptyHint"),
-                        icon: <TrendUpIcon aria-hidden focusable="false" className="size-8 text-muted" />,
+                        icon: <ChartLineUpIcon aria-hidden focusable="false" className="size-8 text-muted" />,
                     }}
                 >
                     <GroupPressableCard

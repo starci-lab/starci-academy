@@ -1,12 +1,21 @@
 "use client"
 
-import React from "react"
+import React, {
+    useCallback,
+} from "react"
 import {
     cn,
 } from "@heroui/react"
 import {
+    useLocale,
     useTranslations,
 } from "next-intl"
+import {
+    useRouter,
+} from "next/navigation"
+import {
+    pathConfig,
+} from "@/resources/path"
 import {
     ContinueLearning,
 } from "../ContinueLearning"
@@ -51,6 +60,15 @@ export const OverviewTab = ({
     className,
 }: OverviewTabProps) => {
     const t = useTranslations()
+    const locale = useLocale()
+    const router = useRouter()
+
+    /** Open the weekly-KPI editor page. */
+    const onSeeMoreGoals = useCallback(
+        () => router.push(pathConfig().locale(locale).kpi().build()),
+        [router, locale],
+    )
+
     return (
         <div className={cn("flex flex-col gap-6", className)}>
             {/* frameless: resume items are themselves cards → no card-in-card */}
@@ -69,6 +87,8 @@ export const OverviewTab = ({
             </LabeledCard>
             <LabeledCard
                 label={t("dashboard.sections.goals")}
+                onSeeMore={onSeeMoreGoals}
+                seeMoreLabel={t("dashboard.kpi.edit")}
             >
                 <WeeklyGoals />
             </LabeledCard>

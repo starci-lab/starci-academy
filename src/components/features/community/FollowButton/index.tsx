@@ -22,6 +22,13 @@ export interface FollowButtonProps extends WithClassNames<undefined> {
     onToggle?: () => void
     /** True while the parent's toggle request is in flight. */
     isPending?: boolean
+    /**
+     * Quiet mode for dense surfaces (leaderboards) where MANY follow buttons sit
+     * next to a single primary CTA: drops the solid-accent look so the page keeps
+     * exactly one primary (`accent-system` — 1 primary/màn). Default off (a lone
+     * follow, e.g. a profile hero, stays primary).
+     */
+    quiet?: boolean
 }
 
 /**
@@ -38,14 +45,20 @@ export const FollowButton = ({
     following,
     onToggle,
     isPending = false,
+    quiet = false,
     className,
 }: FollowButtonProps) => {
     const t = useTranslations()
 
+    // loud (default): primary → secondary. quiet (dense boards): secondary → tertiary,
+    // so a page of follow rows never competes with its one primary CTA.
+    const variant = quiet
+        ? (following ? "tertiary" : "secondary")
+        : (following ? "secondary" : "primary")
+
     return (
         <Button
-            // "following" reads as a softer, already-engaged state
-            variant={following ? "secondary" : "primary"}
+            variant={variant}
             size="sm"
             isDisabled={isPending}
             onPress={onToggle}

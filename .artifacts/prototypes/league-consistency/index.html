@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>league-consistency — unify badge + tame color</title>
+<style>
+  :root{
+    --bg:#faf7f8;--surface:#fff;--surface-2:#f4eef1;--border:#ece7ea;--fg:#1c1a1b;--muted:#8a8386;
+    --accent:#d6006e;--accent-soft:#fbe6f1;--accent-soft-fg:#b8005e;
+    --success:#16a34a;--success-soft:#e9f7ee;--danger:#dc2626;--danger-soft:#fdecec;--warning:#d97706;
+    --gold:#eab308;--silver:#9ca3af;--bronze:#b45309;--r3:24px;--r2:16px;
+    --primary-soft:#eaf0ff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--fg);font:15px/1.45 system-ui,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:640px;margin:0 auto;padding:16px 12px 80px}
+  /* top control bar */
+  .bar{position:sticky;top:0;z-index:10;background:rgba(250,247,248,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--border);padding:10px 12px;margin:-16px -12px 18px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .bar b{font-size:13px;margin-right:4px}
+  .tab{border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer;color:var(--fg)}
+  .tab.on{background:var(--fg);color:#fff;border-color:var(--fg)}
+  .toggle{margin-left:auto;display:flex;gap:6px;align-items:center;font-size:12px;color:var(--muted)}
+  .toggle button{border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:5px 10px;font-size:12px;cursor:pointer;color:var(--fg)}
+  .toggle button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .screen{display:none}.screen.on{display:block}
+  .crumb{color:var(--muted);font-size:13px;margin-bottom:4px}
+  .crumb b{color:var(--fg)}
+  h1{font-size:26px;font-weight:800;margin-bottom:18px}
+  .pilltabs{display:flex;background:var(--surface-2);border-radius:999px;padding:4px;margin-bottom:22px}
+  .pilltabs div{flex:1;text-align:center;padding:9px;border-radius:999px;font-weight:600;font-size:14px;color:var(--muted)}
+  .pilltabs div.on{background:var(--surface);color:var(--fg);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+  /* hero */
+  .hero{background:var(--surface);border-radius:var(--r3);padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.06);display:flex;flex-direction:column;gap:16px;margin-bottom:24px}
+  .hero .top{display:flex;align-items:center;gap:14px}
+  .badge-bare{font-size:40px;line-height:1;filter:drop-shadow(0 1px 1px rgba(0,0,0,.15))}
+  .badge-tile{width:48px;height:48px;border-radius:14px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;font-size:26px}
+  .hero .rank{font-size:19px;font-weight:800}
+  .hero .meta{font-size:14px;color:var(--muted);margin-top:2px}
+  .meter-l{font-size:12px;color:var(--muted);margin-bottom:6px}
+  .meter{height:8px;border-radius:999px;background:var(--surface-2);overflow:hidden}
+  .meter i{display:block;height:100%;background:var(--accent);border-radius:999px}
+  .cta{align-self:flex-start;background:var(--accent);color:#fff;border:none;border-radius:12px;padding:11px 18px;font-weight:700;font-size:14px;display:inline-flex;gap:8px;align-items:center;cursor:pointer}
+  /* legend */
+  .legend{display:flex;gap:14px;font-size:12px;color:var(--muted);margin-bottom:12px}
+  .legend span{display:flex;gap:6px;align-items:center}
+  .dot{width:8px;height:8px;border-radius:999px}
+  /* zone label */
+  .zlabel{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin:14px 2px 6px}
+  .zlabel.up{color:var(--success)}.zlabel.down{color:var(--danger)}
+  /* rows */
+  .rows{display:flex;flex-direction:column;gap:8px}
+  .row{display:flex;align-items:center;gap:10px;background:var(--surface);border-radius:var(--r3);padding:10px 12px;border:1px solid transparent}
+  .row .rk{width:20px;text-align:right;font-size:12px;color:var(--muted);flex:none}
+  .row .av{width:32px;height:32px;border-radius:999px;background:var(--surface-2);flex:none;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .row .nm{flex:1;min-width:0;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .row .pt{font-size:14px;color:var(--muted);flex:none}
+  .row .car{width:26px;text-align:right;font-size:12px;flex:none;color:var(--success)}
+  .row.edge-up{border-left:3px solid var(--success)}
+  .row.edge-down{border-left:3px solid var(--danger)}
+  .row.mine{box-shadow:0 0 0 2px var(--accent);border-color:transparent}
+  .row.mine .rk,.row.mine .pt{color:var(--accent-soft-fg);font-weight:700}
+  /* BEFORE (chaos) variants */
+  .before .row.z{background:var(--danger-soft);border-color:transparent}
+  .before .row.mine{background:var(--primary-soft);box-shadow:none}
+  .before .row.mine .rk,.before .row.mine .pt{color:var(--muted);font-weight:400}
+  /* podium */
+  .podium{display:flex;align-items:flex-end;justify-content:center;gap:12px;margin:6px 0 24px}
+  .col{display:flex;flex-direction:column;align-items:center;gap:6px}
+  .col .av{width:48px;height:48px;font-size:22px}
+  .col.champ .av{width:56px;height:56px;font-size:26px}
+  .col .cn{font-size:13px;font-weight:600;max-width:72px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .col .cp{font-size:11px;color:var(--muted)}
+  .step{width:76px;border-radius:14px 14px 0 0;background:var(--surface-2);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--fg)}
+  .col.champ .step{height:64px}
+  .col:not(.champ) .step{height:40px}
+  /* AFTER: champ = ring + accent number, NO fill. BEFORE: accent-soft fill */
+  .col.champ.after .step{box-shadow:inset 0 0 0 2px var(--accent);color:var(--accent-soft-fg);background:var(--surface)}
+  .col.champ.before .step{background:var(--accent-soft);color:var(--accent-soft-fg)}
+  /* labeled card (dashboard) */
+  .lcard{margin-bottom:22px}
+  .lcard .lh{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .lcard .lt{font-size:13px;font-weight:700;color:var(--muted)}
+  .lcard .sm{font-size:13px;color:var(--accent);cursor:pointer;display:flex;gap:4px;align-items:center}
+  .listcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden}
+  .listcard .row{border-radius:0;border-left:none;border-bottom:1px solid var(--border);background:transparent}
+  .listcard .row:last-child{border-bottom:none}
+  .headline{font-size:14px;font-weight:700;margin:2px 2px 12px;display:flex;gap:8px;align-items:center}
+  .headline .em{font-size:20px}
+  .fbtn{border:1px solid var(--border);background:var(--surface);color:var(--fg);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;flex:none;cursor:pointer;display:flex;gap:4px;align-items:center}
+  .note{background:var(--surface);border:1px dashed var(--border);border-radius:14px;padding:12px 14px;font-size:12.5px;color:var(--muted);margin-bottom:20px}
+  .note b{color:var(--fg)}
+  .tag{display:inline-block;font-size:10px;font-weight:700;background:var(--surface-2);color:var(--muted);border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:middle;letter-spacing:.03em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <b>League ·</b>
+    <button class="tab on" data-s="weekly">Weekly (đủ)</button>
+    <button class="tab" data-s="tiny">Weekly (cohort nhỏ)</button>
+    <button class="tab" data-s="global">Global</button>
+    <button class="tab" data-s="dash">Dashboard</button>
+    <span class="toggle">chế độ:
+      <button id="bAfter" class="on">After ✦</button>
+      <button id="bBefore">Before</button>
+    </span>
+  </div>
+
+  <!-- ============ WEEKLY (healthy cohort) ============ -->
+  <section class="screen on" data-screen="weekly">
+    <div class="note"><b>Weekly · cohort đủ lớn.</b> Badge = <b>art fluent-emoji bare</b> (medal theo tier), KHÔNG tile màu. Zone: <b>nhãn nhóm + viền trái mảnh</b> (success/danger) — KHÔNG tô nền cả hàng. "Của tôi" = <b>ring accent</b> + rank/điểm accent, nền surface (accent-system §3).</div>
+    <div class="crumb"><b>Trang chủ</b> › Bảng xếp hạng</div>
+    <h1>Bảng xếp hạng</h1>
+    <div class="pilltabs"><div class="on">Tuần này</div><div>Toàn cầu</div></div>
+
+    <div class="hero">
+      <div class="top">
+        <span class="badgeSlot"></span>
+        <div><div class="rank">Hạng #6 · top 50%</div><div class="meta">120 điểm · Reset sau 1 ngày 21 giờ</div></div>
+      </div>
+      <div><div class="meter-l">Còn 40 điểm nữa để vào top thăng hạng</div><div class="meter"><i style="width:62%"></i></div></div>
+      <button class="cta">Làm challenge để leo hạng →</button>
+    </div>
+
+    <div class="legend"><span><i class="dot" style="background:var(--success)"></i>Top 3 thăng hạng</span><span><i class="dot" style="background:var(--danger)"></i>3 cuối rớt hạng</span></div>
+
+    <div class="zlabel up">▲ Khu thăng hạng</div>
+    <div class="rows" data-zone="up">
+      <div class="row zoneable edge-up"><span class="rk">1</span><span class="av">🦊</span><span class="nm">minh_dev</span><span class="pt">340 điểm</span><span class="car">—</span></div>
+      <div class="row zoneable edge-up"><span class="rk">2</span><span class="av">🐤</span><span class="nm">huyen_codes</span><span class="pt">220 điểm</span><span class="car">—</span></div>
+      <div class="row zoneable edge-up"><span class="rk">3</span><span class="av">🐼</span><span class="nm">pakoohacha588</span><span class="pt">150 điểm</span><span class="car">—</span></div>
+    </div>
+    <div class="rows" style="margin-top:8px">
+      <div class="row"><span class="rk">4</span><span class="av">😺</span><span class="nm">linh_fe</span><span class="pt">80 điểm</span><span class="car">▲2</span></div>
+      <div class="row"><span class="rk">5</span><span class="av">🐧</span><span class="nm">duc_data</span><span class="pt">60 điểm</span><span class="car">▼1</span></div>
+      <div class="row mine"><span class="rk">6</span><span class="av">🐨</span><span class="nm">cuongnvtse160875 · Bạn</span><span class="pt">120 điểm</span><span class="car" style="color:var(--muted)">—</span></div>
+      <div class="row"><span class="rk">7</span><span class="av">🐰</span><span class="nm">mai_qa</span><span class="pt">30 điểm</span><span class="car" style="color:var(--danger)">▼2</span></div>
+    </div>
+    <div class="zlabel down">▼ Khu rớt hạng</div>
+    <div class="rows" data-zone="down">
+      <div class="row zoneable edge-down"><span class="rk">8</span><span class="av">🐹</span><span class="nm">levan020305</span><span class="pt">10 điểm</span><span class="car" style="color:var(--danger)">▼1</span></div>
+      <div class="row zoneable edge-down"><span class="rk">9</span><span class="av">🐟</span><span class="nm">ai_eval_runner</span><span class="pt">0 điểm</span><span class="car" style="color:var(--muted)">—</span></div>
+      <div class="row zoneable edge-down"><span class="rk">10</span><span class="av">🦉</span><span class="nm">thanh_be</span><span class="pt">0 điểm</span><span class="car" style="color:var(--muted)">—</span></div>
+    </div>
+  </section>
+
+  <!-- ============ WEEKLY (tiny cohort — the bug) ============ -->
+  <section class="screen" data-screen="tiny">
+    <div class="note"><b>Weekly · cohort nhỏ (5) = ca lỗi thầy thấy.</b> promoteCount=10 &amp; demoteCount=5 &gt; số người → zone <b>suy biến</b> (ai cũng vừa promote vừa demote). FIX: khi <code>promoteCount+demoteCount ≥ total</code> → <b>KHÔNG vẽ zone marker</b>, list phẳng, chỉ giữ legend nhắc luật. Hết "cam hỗn độn".</div>
+    <div class="crumb"><b>Trang chủ</b> › Bảng xếp hạng</div>
+    <h1>Bảng xếp hạng</h1>
+    <div class="pilltabs"><div class="on">Tuần này</div><div>Toàn cầu</div></div>
+    <div class="hero">
+      <div class="top"><span class="badgeSlot"></span><div><div class="rank">Hạng #5 · top 100%</div><div class="meta">0 điểm · Reset sau 1 ngày 21 giờ</div></div></div>
+      <button class="cta">Làm challenge để leo hạng →</button>
+    </div>
+    <div class="legend"><span><i class="dot" style="background:var(--success)"></i>Top 10 thăng hạng</span><span><i class="dot" style="background:var(--danger)"></i>5 cuối rớt hạng</span></div>
+    <div class="rows">
+      <div class="row zoneable"><span class="rk">1</span><span class="av">🦊</span><span class="nm">minh_dev</span><span class="pt">340 điểm</span><span class="car">—</span></div>
+      <div class="row zoneable"><span class="rk">2</span><span class="av">🐤</span><span class="nm">huyen_codes</span><span class="pt">220 điểm</span><span class="car">—</span></div>
+      <div class="row zoneable"><span class="rk">3</span><span class="av">🐼</span><span class="nm">pakoohacha588</span><span class="pt">150 điểm</span><span class="car">—</span></div>
+      <div class="row zoneable"><span class="rk">4</span><span class="av">😺</span><span class="nm">linh_fe</span><span class="pt">80 điểm</span><span class="car">▲2</span></div>
+      <div class="row mine"><span class="rk">5</span><span class="av">🐨</span><span class="nm">cuongnvtse160875 · Bạn</span><span class="pt">0 điểm</span><span class="car" style="color:var(--muted)">—</span></div>
+    </div>
+  </section>
+
+  <!-- ============ GLOBAL ============ -->
+  <section class="screen" data-screen="global">
+    <div class="note"><b>Global.</b> Badge hero = <b>🏆 art bare cùng họ fluent-emoji</b> (KHÔNG phải phosphor trophy trong tile cam). Podium champ = <b>ring accent + số accent, KHÔNG tô nền</b> (accent-system §5 · ruling LeaderboardPodium). Follow = nút <b>quiet (outline)</b> để không đấu màu với CTA hero.</div>
+    <div class="crumb"><b>Trang chủ</b> › Bảng xếp hạng</div>
+    <h1>Bảng xếp hạng</h1>
+    <div class="pilltabs"><div>Tuần này</div><div class="on">Toàn cầu</div></div>
+    <div class="hero">
+      <div class="top"><span class="badge-bare gBadge">🏆</span><div><div class="rank">Hạng #9 toàn nền tảng</div><div class="meta">20 điểm</div></div></div>
+      <div><div class="meter-l">Còn 121 điểm nữa để lên hạng #8</div><div class="meter"><i style="width:14%"></i></div></div>
+      <button class="cta">Làm challenge để leo hạng →</button>
+    </div>
+    <div class="podium">
+      <div class="col after"><span class="av">🐤</span><span class="cn">huyen_codes</span><span class="cp">1180 điểm</span><div class="step">2</div></div>
+      <div class="col champ after"><span class="av">🦊</span><span class="cn">minh_dev</span><span class="cp">1420 điểm</span><div class="step">1</div></div>
+      <div class="col after"><span class="av">🐼</span><span class="cn">pakoohac…</span><span class="cp">980 điểm</span><div class="step">3</div></div>
+    </div>
+    <div class="lcard">
+      <div class="lh"><span class="lt">Xếp theo tổng điểm thưởng</span></div>
+      <div class="listcard">
+        <div class="row"><span class="rk">4</span><span class="av">🐔</span><span class="nm">thanh_be</span><span class="pt">760 điểm</span><button class="fbtn">＋ Theo dõi</button></div>
+        <div class="row"><span class="rk">5</span><span class="av">😺</span><span class="nm">linh_fe</span><span class="pt">540 điểm</span><button class="fbtn">＋ Theo dõi</button></div>
+        <div class="row"><span class="rk">6</span><span class="av">🐧</span><span class="nm">duc_data</span><span class="pt">410 điểm</span><button class="fbtn">＋ Theo dõi</button></div>
+        <div class="row mine"><span class="rk">9</span><span class="av">🐨</span><span class="nm">cuongnvtse160875 · Bạn</span><span class="pt">20 điểm</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DASHBOARD (both preview cards) ============ -->
+  <section class="screen" data-screen="dash">
+    <div class="note"><b>Dashboard · tab Cộng đồng.</b> 2 card preview (weekly + global) DÙNG CHUNG ngôn ngữ với trang đầy đủ: badge bare, "của tôi" ring accent, list = <b>SurfaceListCard bordered</b> (full-bleed divider), see-more ở header. Không flood cam.</div>
+    <div class="lcard">
+      <div class="lh"><span class="lt">League tuần</span><span class="sm">Xem bảng xếp hạng ›</span></div>
+      <div class="headline"><span class="em">🥉</span>Hạng #5 · top 100% · Reset sau 1 ngày 21 giờ</div>
+      <div class="listcard">
+        <div class="row"><span class="rk">1</span><span class="av">🦊</span><span class="nm">minh_dev</span><span class="pt">340 điểm</span><span class="car">—</span></div>
+        <div class="row"><span class="rk">2</span><span class="av">🐤</span><span class="nm">huyen_codes</span><span class="pt">220 điểm</span><span class="car">—</span></div>
+        <div class="row"><span class="rk">3</span><span class="av">🐼</span><span class="nm">pakoohacha588</span><span class="pt">150 điểm</span><span class="car">—</span></div>
+        <div class="row"><span class="rk">4</span><span class="av">😺</span><span class="nm">linh_fe</span><span class="pt">80 điểm</span><span class="car">▲2</span></div>
+      </div>
+      <div style="margin-top:10px" class="lt">Hạng của bạn</div>
+      <div class="listcard" style="margin-top:6px"><div class="row mine"><span class="rk">5</span><span class="av">🐨</span><span class="nm">cuongnvtse160875</span><span class="pt">0 điểm</span></div></div>
+    </div>
+    <div class="lcard">
+      <div class="lh"><span class="lt">Top học viên tuần</span><span class="sm">Xem bảng xếp hạng ›</span></div>
+      <div class="headline"><span class="em">🏆</span>Hạng #9 toàn nền tảng · 20 XP</div>
+      <div class="listcard">
+        <div class="row"><span class="rk">1</span><span class="av">🦊</span><span class="nm">minh_dev</span><span class="pt">1420 XP</span><button class="fbtn">＋ Theo dõi</button></div>
+        <div class="row"><span class="rk">2</span><span class="av">🐤</span><span class="nm">huyen_codes</span><span class="pt">1180 XP</span><button class="fbtn">＋ Theo dõi</button></div>
+        <div class="row"><span class="rk">3</span><span class="av">🐼</span><span class="nm">pakoohacha588</span><span class="pt">980 XP</span><button class="fbtn">＋ Theo dõi</button></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  var screens=document.querySelectorAll('.screen');
+  var tabs=document.querySelectorAll('.tab');
+  tabs.forEach(function(t){t.onclick=function(){
+    tabs.forEach(function(x){x.classList.remove('on')});t.classList.add('on');
+    screens.forEach(function(s){s.classList.toggle('on',s.dataset.screen===t.dataset.s)});
+  }})
+  // weekly badge = medal, tiny too; both bare
+  document.querySelectorAll('.badgeSlot').forEach(function(b){b.className='badge-bare';b.textContent='🥉'})
+
+  var after=document.getElementById('bAfter'),before=document.getElementById('bBefore');
+  function apply(mode){
+    var isBefore=mode==='before';
+    after.classList.toggle('on',!isBefore);before.classList.toggle('on',isBefore);
+    document.querySelectorAll('.wrap').forEach(function(w){w.classList.toggle('before',isBefore)});
+    // zone rows: BEFORE flood-fill every zoneable row; AFTER edge-only (class already on)
+    document.querySelectorAll('.zoneable').forEach(function(r){r.classList.toggle('z',isBefore)});
+    // podium champ fill
+    document.querySelectorAll('.col.champ').forEach(function(c){c.classList.toggle('before',isBefore);c.classList.toggle('after',!isBefore)});
+    // global badge: BEFORE = accent tile trophy, AFTER = bare emoji
+    document.querySelectorAll('.gBadge').forEach(function(g){
+      if(isBefore){g.className='badge-tile gBadge';g.textContent='🏆';}
+      else{g.className='badge-bare gBadge';g.textContent='🏆';}
+    });
+    // follow buttons: BEFORE = solid accent (loud), AFTER = outline quiet
+    document.querySelectorAll('.fbtn').forEach(function(f){
+      if(isBefore){f.style.background='var(--accent)';f.style.color='#fff';f.style.borderColor='var(--accent)';}
+      else{f.style.background='var(--surface)';f.style.color='var(--fg)';f.style.borderColor='var(--border)';}
+    });
+  }
+  after.onclick=function(){apply('after')};before.onclick=function(){apply('before')};
+  apply('after');
+</script>
+</body>
+</html>

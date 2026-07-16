@@ -18,7 +18,7 @@ import {
     CardsIcon,
     CodeIcon,
     TrophyIcon,
-    BookmarkIcon,
+    BookmarkSimpleIcon,
     GiftIcon,
     ArticleIcon,
     BriefcaseIcon,
@@ -84,7 +84,7 @@ export const QuickActions = ({
             },
             {
                 key: "bookmarks",
-                Icon: BookmarkIcon,
+                Icon: BookmarkSimpleIcon,
                 // bookmarks live under the viewer's own profile
                 href: username
                     ? pathConfig().locale(locale).profile(username).bookmarks().build()

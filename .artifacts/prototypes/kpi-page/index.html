@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Prototype — KPI page (See more + gộp 1 surface)</title>
+<title>Prototype — KPI page (See more + gộp 1 surface + reset countdown + coin reward)</title>
 <style>
   :root {
     --bg: #f7f7f8; --surface: #ffffff; --border: #e4e4e7;
@@ -39,8 +39,21 @@
   .muted { color: var(--muted); font-size: 12px; }
 
   /* /kpi page — GỘP 6 hàng vào 1 surface (SurfaceListCardItem), thay 6 box rời */
-  .page-header { margin-bottom: 20px; }
+  .page-header { margin-bottom: 20px; display: flex; flex-direction: column; gap: 12px; }
   .page-header h1 { font-size: 22px; font-weight: 700; }
+  .crumb { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
+  .crumb a { color: var(--muted); cursor: pointer; }
+  .crumb a:hover { color: var(--text); }
+  .crumb .sep { opacity: .5; }
+  .crumb.mobile { display: none; }
+  @media (max-width: 640px) {
+    .crumb.desktop { display: none; }
+    .crumb.mobile { display: flex; }
+  }
+  /* click-toggle mobile giả lập (khỏi phải resize browser thật) */
+  body.force-mobile .crumb.desktop { display: none; }
+  body.force-mobile .crumb.mobile { display: flex; }
+  body.force-mobile .surface { max-width: 375px; }
   .kpi-row { padding: var(--gap); border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 10px; }
   .kpi-row:last-child { border-bottom: none; }
   .kpi-row-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
@@ -48,6 +61,10 @@
   .pill { padding: 4px 12px; border-radius: 999px; border: 1px solid var(--border); font-size: 12px; background: var(--surface); }
   .pill.active { background: var(--accent); border-color: var(--accent); color: #fff; }
   .pill.clear { color: var(--muted); }
+  .claim-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 4px; }
+  .coin-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: #a16207; }
+  .claim-btn { padding: 5px 14px; border-radius: 999px; border: none; background: var(--accent); color: #fff; font-size: 12px; font-weight: 600; cursor: pointer; }
+  .claim-btn.done { background: var(--bg); color: var(--muted); border: 1px solid var(--border); }
 
   .btn { display: inline-block; padding: 8px 16px; border-radius: 10px; border: 1px solid var(--border);
          background: transparent; color: var(--text); cursor: pointer; font: inherit; }
@@ -71,7 +88,7 @@
   <span class="annot">LabeledCard onSeeMore + SeeMoreLink — giống GlobalStanding/TopLearners/LeagueCard</span>
 
   <div class="card" style="margin-top:10px">
-    <div class="muted" style="padding:12px 12px 0">47% tuần này · đạt 0/6 mục tiêu</div>
+    <div class="muted" style="padding:12px 12px 0">47% tuần này · đạt 0/6 mục tiêu · Reset sau 2 ngày 14 giờ <span class="annot" style="margin-left:2px">MỚI</span></div>
     <div class="stat-grid" style="margin-top:8px">
       <div class="stat-cell br bb"><div class="stat-head"><span class="l"><span class="icon"></span>Nội dung</span><span class="muted">2/5</span></div><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div></div>
       <div class="stat-cell bb"><div class="stat-head"><span class="l"><span class="icon"></span>Ngày học</span><span class="muted">4/5</span></div><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div></div>
@@ -82,6 +99,8 @@
     </div>
   </div>
   <p class="caption">Body 2×3 grid GIỮ NGUYÊN (StatGridCard vừa dựng, đã đúng) — chỉ header đổi. Click "Sửa ›" → surface 2.</p>
+  <p class="caption"><b>MỚI (reset countdown):</b> BE đổi 6 subquery "rolling 7 ngày" → cửa sổ TUẦN LỊCH thật (Thứ 2 8h GMT+7 → Thứ 2 8h tuần sau, timezone Asia/Ho_Chi_Minh — khớp `league-reset.service.ts` đang dùng cho league). FE tính countdown y hệt `WeeklyBoard` (`Math.max(0, new Date(resetAt) - Date.now())` → ngày/giờ), dùng lại i18n pattern `resetIn` ("Reset sau {days} ngày {hours} giờ").</p>
+  <p class="caption"><b>MỚI (coin reward — thầy chốt 2026-07-17):</b> đạt target = claim được coin, thưởng CÀNG CAO khi target đặt CÀNG CAO. Claim <b>từng KPI riêng</b> (không gộp 1 nút). Chống lách: thưởng tính theo target THẤP NHẤT từng có hiệu lực trong tuần (không phải target lúc claim) — set thấp rồi nâng sau khi đã đạt sẵn KHÔNG ăn được thưởng cao. Mirror hạ tầng `DailyQuestService.claimReward` (idempotent + `writeXpHistory` points-only) — xem proposal cho bảng số/công thức đề xuất (cần thầy tune).</p>
 </section>
 
 <!-- ===== SURFACE 2: /kpi page — GỘP 6 box rời thành 1 surface ===== -->
@@ -89,20 +108,25 @@
   <p class="muted" style="margin-bottom:16px">Shell: centered-form-setup (max-w-2xl, ĐÃ ĐÚNG, không đổi) · Job: chỉnh target từng KPI · Đổi: 6 <b>box bordered rời</b> (vi phạm concepts/card.md "không 2 card viền dính liền") → GỘP thành 1 <code>SurfaceListCard</code>, mỗi KPI = 1 <code>SurfaceListCardItem</code> (p-3, divider full-bleed, hàng cuối tự ẩn divider)</p>
 
   <div class="page-header">
+    <span class="annot" style="margin-left:0">PageHeader + ResponsiveBreadcrumb (giống RewardsPage) — MỚI, trang thật hiện KHÔNG có</span>
+    <nav class="crumb desktop"><a onclick="go('s1')">Trang chủ</a><span class="sep">›</span><span>KPI tuần</span></nav>
+    <nav class="crumb mobile"><a onclick="go('s1')">‹ Trang chủ</a></nav>
     <h1>KPI tuần</h1>
-    <p class="muted">47% tuần này · đạt 0/6 mục tiêu</p>
+    <p class="muted">47% tuần này · đạt 0/6 mục tiêu · Reset sau 2 ngày 14 giờ <span class="annot" style="margin-left:2px">MỚI</span></p>
   </div>
 
   <div class="card">
     <div class="kpi-row">
       <div class="kpi-row-head"><span><span class="icon" style="display:inline-block;vertical-align:middle;margin-right:8px"></span>Nội dung</span><span class="muted">2/5</span></div>
       <div class="bar-track"><div class="bar-fill" style="width:40%"></div></div>
-      <div class="presets"><span class="pill">3</span><span class="pill active">5</span><span class="pill">10</span><span class="pill clear">Xóa</span></div>
+      <div class="presets"><span class="pill">3</span><span class="pill active">5</span><span class="pill">10</span></div>
+      <div class="claim-row"><span class="coin-badge">🪙 +10 coin khi đạt 5</span><span class="muted" style="font-size:11px">chưa đạt</span></div>
     </div>
     <div class="kpi-row">
-      <div class="kpi-row-head"><span><span class="icon" style="display:inline-block;vertical-align:middle;margin-right:8px"></span>Ngày học</span><span class="muted">4/5</span></div>
-      <div class="bar-track"><div class="bar-fill" style="width:80%"></div></div>
-      <div class="presets"><span class="pill">3</span><span class="pill active">5</span><span class="pill">7</span><span class="pill clear">Xóa</span></div>
+      <div class="kpi-row-head"><span><span class="icon" style="display:inline-block;vertical-align:middle;margin-right:8px"></span>Ngày học</span><span class="muted">5/5</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+      <div class="presets"><span class="pill">3</span><span class="pill active">5</span><span class="pill">7</span></div>
+      <div class="claim-row"><span class="coin-badge">🪙 +20 coin</span><button class="claim-btn">Nhận thưởng <span class="annot" style="margin-left:4px">MỚI</span></button></div>
     </div>
     <div class="kpi-row">
       <div class="kpi-row-head"><span><span class="icon" style="display:inline-block;vertical-align:middle;margin-right:8px"></span>Challenge</span><span class="muted">0</span></div>
@@ -129,6 +153,7 @@
   <button class="btn" onclick="step(-1)">← Prev</button>
   <span class="muted" id="proto-pos"></span>
   <button class="btn" onclick="step(1)">Next →</button>
+  <button class="btn" onclick="document.body.classList.toggle('force-mobile')">📱 Toggle mobile</button>
 </nav>
 
 <script>

@@ -10,7 +10,7 @@ import {
 import {
     FileTextIcon,
     ClockIcon,
-    FireIcon,
+    FlameIcon,
 } from "@phosphor-icons/react"
 import {
     useRouter,
@@ -91,7 +91,7 @@ export const BookmarkCard = ({
                     </span>
                     {challengeCount > 0 ? (
                         <span className="flex items-center gap-1 text-muted">
-                            <FireIcon aria-hidden className="size-4" />
+                            <FlameIcon aria-hidden className="size-4" />
                             <Typography type="body-xs" color="muted">
                                 {challengeCount}
                             </Typography>

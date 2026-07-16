@@ -4,6 +4,8 @@ import type { QueryUserSolvedChallengeItemData } from "@/modules/api/graphql/que
 export interface ChallengeCourseGroup {
     /** Course title, or null when the row carries no course (V1-legacy). */
     courseTitle: string | null
+    /** Opaque global id of the course, or null when unresolved (V1-legacy) — routes the glance row to the per-course manage page. */
+    courseGlobalId: string | null
     /** Solved-challenge rows belonging to this course, in source order. */
     items: Array<QueryUserSolvedChallengeItemData>
 }
@@ -27,7 +29,11 @@ export const groupByCourse = (
         const title = item.courseTitle ?? ""
         if (!byTitle.has(title)) {
             order.push(title)
-            byTitle.set(title, { courseTitle: item.courseTitle ?? null, items: [] })
+            byTitle.set(title, {
+                courseTitle: item.courseTitle ?? null,
+                courseGlobalId: item.courseGlobalId ?? null,
+                items: [],
+            })
         }
         byTitle.get(title)?.items.push(item)
     }

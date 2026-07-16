@@ -10,6 +10,8 @@ export interface QueryUserCodingHistoryRequest {
 export interface QueryUserCodingHistoryItemData {
     /** Coding-problem title. */
     problemTitle: string
+    /** Stable URL slug of the problem (drives `/profile/<username>/skills/<slug>`). */
+    slug: string
     /** Difficulty value (easy/medium/hard). */
     difficulty: string
     /** Topic domain value (arrays/strings/trees/dp/graph…), or null when not tagged. */

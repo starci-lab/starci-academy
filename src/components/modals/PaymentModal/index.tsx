@@ -5,7 +5,7 @@ import { Button, Label, Modal, Spinner, Tabs, Typography, cn } from "@heroui/rea
 import { toast } from "@/modules/toast/toast"
 import useSWR from "swr"
 import { CombinedGraphQLErrors } from "@apollo/client"
-import { ArrowRightIcon, FlameIcon, GraduationCapIcon, LockSimpleIcon } from "@phosphor-icons/react"
+import { ArrowRightIcon, FlameIcon, GraduationCapIcon, LockIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -723,7 +723,7 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                                             {/* trust line — secure-payment reassurance next to the action (Baymard) */}
                                             <div className="flex flex-col items-center gap-2">
                                                 <div className="flex items-center justify-center gap-2">
-                                                    <LockSimpleIcon aria-hidden focusable="false" className="size-3 text-muted" />
+                                                    <LockIcon aria-hidden focusable="false" className="size-3 text-muted" />
                                                     <Typography type="body-xs" color="muted">{t("payment.secure")}</Typography>
                                                 </div>
                                                 <Typography type="body-xs" color="muted">{t("payment.noCardStored")}</Typography>

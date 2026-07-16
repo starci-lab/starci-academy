@@ -12,19 +12,34 @@ import {
     cn,
 } from "@heroui/react"
 import {
+    useLocale,
     useTranslations,
 } from "next-intl"
 import {
+    useRouter,
+} from "next/navigation"
+import {
+    pathConfig,
+} from "@/resources/path"
+import {
     KPI_META,
 } from "../kpiMeta"
+import {
+    DEFAULT_KPI_TARGETS,
+} from "../../WeeklyGoals/map"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import { useQueryMyKpisSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyKpisSwr"
 import { useMutateSetKpiTargetSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetKpiTargetSwr"
+import { useMutateClaimKpiRewardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateClaimKpiRewardSwr"
 import type { KpiKey, QueryKpiItemData } from "@/modules/api/graphql/queries/types/my-kpis"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { InfoTooltip } from "@/components/blocks/feedback/InfoTooltip"
+import { PageHeader } from "@/components/blocks/layout/PageHeader"
+import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 
 /** Props for {@link Kpi}. */
 export type KpiProps = WithClassNames<undefined>
@@ -41,11 +56,22 @@ export const Kpi = ({
     className,
 }: KpiProps) => {
     const t = useTranslations()
+    const locale = useLocale()
+    const router = useRouter()
     const { data, mutate } = useQueryMyKpisSwr()
     const { trigger: triggerSetTarget } = useMutateSetKpiTargetSwr()
+    const { trigger: triggerClaimReward } = useMutateClaimKpiRewardSwr()
     const runGraphQL = useGraphQLWithToast()
     // the `${key}:${preset}` currently being saved, or null when idle
     const [savingKey, setSavingKey] = useState<string | null>(null)
+    // the KPI key currently being claimed, or null when idle
+    const [claimingKey, setClaimingKey] = useState<KpiKey | null>(null)
+
+    /** Navigate to the dashboard (breadcrumb root). */
+    const onNavigateHome = useCallback(
+        () => router.push(pathConfig().locale(locale).build()),
+        [router, locale],
+    )
 
     /** Index the KPI items by key for O(1) lookup while rendering meta order. */
     const itemByKey = useMemo(
@@ -92,10 +118,40 @@ export const Kpi = ({
         ],
     )
 
+    /** Claim one KPI's coin reward, then revalidate. */
+    const onClaim = useCallback(
+        async (key: KpiKey) => {
+            setClaimingKey(key)
+            try {
+                const ok = await runGraphQL(async () => {
+                    const result = await triggerClaimReward({
+                        key,
+                    })
+                    const env = result?.data?.claimKpiReward
+                    if (!env) {
+                        throw new Error(t("dashboard.kpi.error"))
+                    }
+                    return env
+                })
+                if (ok) {
+                    await mutate()
+                }
+            } finally {
+                setClaimingKey(null)
+            }
+        },
+        [
+            triggerClaimReward,
+            mutate,
+            runGraphQL,
+            t,
+        ],
+    )
+
     // first load — placeholder rows so the page never jumps
     if (!data) {
         return (
-            <div className={cn("mx-auto flex w-full max-w-2xl flex-col gap-6 p-3", className)}>
+            <div className={cn("mx-auto flex w-full max-w-2xl flex-col gap-10 p-6", className)}>
                 <Skeleton className="h-8 w-40 rounded-medium" />
                 {Array.from({
                     length: 6,
@@ -110,103 +166,128 @@ export const Kpi = ({
     }
 
     const { percent, completed, total } = data.composite
+    // days/hours left until the weekly reset — mirrors WeeklyBoard/WeeklyGoals
+    const remaining = Math.max(0, new Date(data.resetAt).getTime() - Date.now())
+    const countdown = {
+        days: Math.floor(remaining / 86_400_000),
+        hours: Math.floor((remaining % 86_400_000) / 3_600_000),
+    }
 
     return (
-        <div className={cn("mx-auto flex w-full max-w-2xl flex-col gap-6 p-3", className)}>
-            {/* title + composite score */}
-            <div className="flex flex-col gap-2">
-                <h1 className="text-2xl font-bold text-foreground">
+        <div className={cn("mx-auto flex w-full max-w-2xl flex-col gap-10 p-6", className)}>
+            <PageHeader
+                breadcrumb={(
+                    <ResponsiveBreadcrumb
+                        items={[
+                            {
+                                key: "home",
+                                label: t("nav.home"),
+                                onPress: onNavigateHome,
+                            },
+                            {
+                                key: "kpi",
+                                label: t("dashboard.kpi.title"),
+                            },
+                        ]}
+                    />
+                )}
+                title={(
                     <InfoTooltip
                         title={t("dashboard.kpi.title")}
                         description={t("dashboard.kpi.help")}
                     >
                         {t("dashboard.kpi.title")}
                     </InfoTooltip>
-                </h1>
-                <span className="text-sm text-muted">
-                    {total > 0
-                        ? t("dashboard.kpi.summary", {
-                            percent,
-                            completed,
-                            total,
-                        })
-                        : t("dashboard.kpi.subtitle")}
-                </span>
-            </div>
+                )}
+                description={(total > 0
+                    ? t("dashboard.kpi.summary", {
+                        percent,
+                        completed,
+                        total,
+                    })
+                    : t("dashboard.kpi.subtitle")) + ` · ${t("dashboard.kpi.resetIn", {
+                    days: countdown.days,
+                    hours: countdown.hours,
+                })}`}
+            />
 
-            {/* one editable row per KPI */}
-            <div className="flex flex-col gap-3">
+            {/* one editable row per KPI — a single joined surface, not N separate boxes */}
+            <SurfaceListCard>
                 {KPI_META.map(({ key, Icon, labelKey, presets }) => {
                     const item = itemByKey.get(key)
                     const current = item?.current ?? 0
-                    const target = item?.target ?? null
+                    // effective target = the learner's custom goal, or a sensible default
+                    // (mirrors the dashboard card — meter always runs, never rỗng chờ config)
+                    const target = item?.target ?? DEFAULT_KPI_TARGETS[key]
                     return (
-                        <div
-                            key={key}
-                            className="flex flex-col gap-3 rounded-3xl border border-divider p-3"
-                        >
+                        <SurfaceListCardItem key={key} className="flex flex-col gap-3">
                             <div className="flex items-center justify-between gap-3">
                                 <div className="flex items-center gap-2">
-                                    <Icon className="size-5 shrink-0 text-accent-soft-foreground" />
+                                    {/* icon leading cùng màu với label cạnh nó (icon.md §6) */}
+                                    <Icon className="size-5 shrink-0 text-foreground" />
                                     <span className="text-sm font-medium text-foreground">
                                         {t(`dashboard.kpi.labels.${labelKey}`)}
                                     </span>
                                 </div>
                                 <span className="shrink-0 text-sm text-muted">
-                                    {current}
-                                    {target !== null ? `/${target}` : null}
+                                    {current}/{target}
                                 </span>
                             </div>
 
-                            {/* progress toward the target (only when a target is set) */}
-                            {target !== null ? (
-                                <ProgressBar
-                                    aria-label={t(`dashboard.kpi.labels.${labelKey}`)}
-                                    value={current}
-                                    maxValue={target || 1}
-                                    color="accent"
-                                    size="sm"
-                                >
-                                    <ProgressBar.Track>
-                                        <ProgressBar.Fill />
-                                    </ProgressBar.Track>
-                                </ProgressBar>
-                            ) : null}
+                            <ProgressBar
+                                aria-label={t(`dashboard.kpi.labels.${labelKey}`)}
+                                value={current}
+                                maxValue={target || 1}
+                                color="accent"
+                                size="sm"
+                            >
+                                <ProgressBar.Track>
+                                    <ProgressBar.Fill />
+                                </ProgressBar.Track>
+                            </ProgressBar>
 
-                            {/* preset target buttons (primary = the active target) */}
-                            <div className="flex flex-wrap items-center gap-2">
-                                {presets.map((preset) => (
-                                    <Button
-                                        key={preset}
-                                        variant={preset === target ? "primary" : "tertiary"}
-                                        size="sm"
-                                        // spinner on the exact button being saved; the rest of the
-                                        // row stays disabled to block a concurrent second submit
-                                        isPending={savingKey === `${key}:${preset}`}
-                                        isDisabled={savingKey !== null && savingKey !== `${key}:${preset}`}
-                                        onPress={() => void onChoose(key, preset)}
+                            {/* preset target — single-select radio (always exactly 1 chosen, no clear) */}
+                            <FlexWrapButtonRadio
+                                ariaLabel={t(`dashboard.kpi.labels.${labelKey}`)}
+                                value={String(target)}
+                                onChange={(value) => void onChoose(key, Number(value))}
+                                items={presets.map((preset) => ({
+                                    value: String(preset),
+                                    content: preset,
+                                    isDisabled: savingKey !== null && savingKey !== `${key}:${preset}`,
+                                }))}
+                            />
+
+                            {/* coin reward — only once a REAL target is set server-side */}
+                            {item?.coinReward != null ? (
+                                <div className="flex items-center justify-between gap-2">
+                                    <span
+                                        className={cn(
+                                            "text-xs",
+                                            item.canClaim ? "text-accent-soft-foreground" : "text-muted",
+                                        )}
                                     >
-                                        {preset}
-                                    </Button>
-                                ))}
-                                {/* clear the target (set to 0) */}
-                                <Button
-                                    variant="tertiary"
-                                    size="sm"
-                                    isPending={savingKey === `${key}:0`}
-                                    isDisabled={
-                                        target === null
-                                        || (savingKey !== null && savingKey !== `${key}:0`)
-                                    }
-                                    onPress={() => void onChoose(key, 0)}
-                                >
-                                    {t("dashboard.kpi.clear")}
-                                </Button>
-                            </div>
-                        </div>
+                                        {t("dashboard.kpi.coinReward", { count: item.coinReward })}
+                                    </span>
+                                    {item.claimed ? (
+                                        <span className="text-xs text-muted">{t("dashboard.kpi.claimed")}</span>
+                                    ) : item.canClaim ? (
+                                        <Button
+                                            variant="primary"
+                                            size="sm"
+                                            isPending={claimingKey === key}
+                                            isDisabled={claimingKey !== null && claimingKey !== key}
+                                            onPress={() => void onClaim(key)}
+                                        >
+                                            {t("dashboard.kpi.claimReward")}
+                                        </Button>
+                                    ) : null}
+                                </div>
+                            ) : null}
+                        </SurfaceListCardItem>
                     )
                 })}
-            </div>
+            </SurfaceListCard>
         </div>
     )
 }

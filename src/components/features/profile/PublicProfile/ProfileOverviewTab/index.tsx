@@ -2,15 +2,17 @@
 
 import React from "react"
 import { cn } from "@heroui/react"
-import { useTranslations } from "next-intl"
+import { useTranslations, useLocale } from "next-intl"
+import { useRouter } from "next/navigation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { ProfileJobReadiness } from "./ProfileJobReadiness"
 import { OverviewCourses } from "./OverviewCourses"
 import { OverviewContributions } from "./OverviewContributions"
 import { OverviewChallengeSkills } from "./OverviewChallengeSkills"
 import { OverviewCodeSkills } from "./OverviewCodeSkills"
-import { useProfileTabStore } from "@/hooks/zustand/profileTab/store"
+import { useProfileUsername } from "../hooks/useProfileUsername"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { pathConfig } from "@/resources/path"
 
 /** Props for {@link ProfileOverviewTab}. */
 export type ProfileOverviewTabProps = WithClassNames<undefined>
@@ -34,7 +36,24 @@ export const ProfileOverviewTab = ({
     className,
 }: ProfileOverviewTabProps) => {
     const t = useTranslations()
-    const setTab = useProfileTabStore((state) => state.setTab)
+    const router = useRouter()
+    const locale = useLocale()
+    const username = useProfileUsername()
+    // "see all" jumps: now real nested-route navigation (`/profile/<username>/
+    // <tab>`) instead of a shared store — username is always resolved here (this
+    // tab only ever mounts under the already-resolved `[username]` route).
+    const goToTab = (tab: "activity" | "challenges" | "skills") => {
+        if (!username) {
+            return
+        }
+        const profile = pathConfig().locale(locale).profile(username)
+        const target = tab === "activity"
+            ? profile.activity().build()
+            : tab === "challenges"
+                ? profile.challenges().build()
+                : profile.skills().build()
+        router.push(target)
+    }
 
     return (
         <div className={cn("flex min-w-0 flex-1 flex-col gap-6", className)}>
@@ -48,7 +67,7 @@ export const ProfileOverviewTab = ({
 
             <OverviewCourses
                 label={t("publicProfile.overview.courses")}
-                onSeeMore={() => setTab("activity")}
+                onSeeMore={() => goToTab("activity")}
                 seeMoreLabel={t("publicProfile.overview.seeMore")}
             />
 
@@ -62,14 +81,14 @@ export const ProfileOverviewTab = ({
             <div className="grid gap-6 md:grid-cols-2">
                 <OverviewChallengeSkills
                     label={t("publicProfile.overview.challengeSkills")}
-                    onSeeMore={() => setTab("challenges")}
+                    onSeeMore={() => goToTab("challenges")}
                     seeMoreLabel={t("publicProfile.overview.seeMore")}
                     fillHeight
                 />
 
                 <OverviewCodeSkills
                     label={t("publicProfile.overview.codeSkills")}
-                    onSeeMore={() => setTab("skills")}
+                    onSeeMore={() => goToTab("skills")}
                     seeMoreLabel={t("publicProfile.overview.seeMore")}
                     fillHeight
                 />

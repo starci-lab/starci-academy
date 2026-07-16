@@ -14,14 +14,14 @@ import {
     ArrowLeftIcon,
     ArrowRightIcon,
     BookOpenIcon,
-    CardsThreeIcon,
+    CardsIcon,
     CaretDownIcon,
     ChatsCircleIcon,
-    CodeIcon,
     FlagIcon,
     GearIcon,
     PaperPlaneTiltIcon,
     PlusIcon,
+    PuzzlePieceIcon,
     QuotesIcon,
     TrashIcon,
 } from "@phosphor-icons/react"
@@ -101,10 +101,10 @@ const detectContentIntent = (text: string): ContentIntentKind | null => {
 }
 
 /** Per-kind header presentation for the in-chat tool-result widget. */
-const TOOL_RESULT_META: Record<ContentIntentKind, { labelKey: string, Icon: typeof CardsThreeIcon }> = {
-    flashcard: { labelKey: "entityResult.kindFlashcard", Icon: CardsThreeIcon },
+const TOOL_RESULT_META: Record<ContentIntentKind, { labelKey: string, Icon: typeof CardsIcon }> = {
+    flashcard: { labelKey: "entityResult.kindFlashcard", Icon: CardsIcon },
     content: { labelKey: "entityResult.kindContent", Icon: BookOpenIcon },
-    challenge: { labelKey: "entityResult.kindChallenge", Icon: CodeIcon },
+    challenge: { labelKey: "entityResult.kindChallenge", Icon: PuzzlePieceIcon },
     milestone: { labelKey: "entityResult.kindMilestone", Icon: FlagIcon },
 }
 

@@ -11,6 +11,7 @@ const query1 = gql`
       error
       data {
         problemTitle
+        slug
         difficulty
         domain
         languages

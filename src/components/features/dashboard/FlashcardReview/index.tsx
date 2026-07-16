@@ -13,7 +13,7 @@ import {
     useRouter,
 } from "next/navigation"
 import {
-    StackIcon as LayersIcon,
+    CardsIcon as LayersIcon,
 } from "@phosphor-icons/react"
 import {
     pathConfig,

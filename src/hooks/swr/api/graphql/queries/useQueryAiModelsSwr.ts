@@ -8,8 +8,8 @@ import { setAiModels } from "@/redux/slices/ai-models"
  * SWR query core for the AI models query. Returns the viewer's tier-scoped model
  * list, so it only runs once the viewer is authenticated. Only fetches under `/learn`,
  * the standalone `/profile/cv` route, or the public profile's `?tab=cv` mode (the CV
- * workspace also renders there — see {@link ProfileCvTab} — since the
- * "unify edit into ?tab=cv&edit=true mode" change; the CV picker lives on a query
+ * workspace — the CvGallery and its generation picker — can also render there, since
+ * the "unify edit into ?tab=cv&edit=true mode" change; the CV picker lives on a query
  * param there, not a path segment, so `pathname` alone can't detect it) —
  * (consumers: StarciAi + ChallengeModal submission panel + the CV generation model
  * picker) — avoids fetching on every other page.

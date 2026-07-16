@@ -2,7 +2,7 @@
 
 import React, { useCallback } from "react"
 import { Button, Typography } from "@heroui/react"
-import { ArrowRightIcon, LockKeyIcon } from "@phosphor-icons/react"
+import { ArrowRightIcon, LockIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
@@ -40,7 +40,7 @@ export const EnrollGate = ({ title, description, className }: EnrollGateProps) =
         <div className={className}>
             <div className="mx-auto flex max-w-md flex-col items-center gap-3 rounded-3xl border border-default bg-default px-6 py-10 text-center">
                 <div className="flex size-12 items-center justify-center rounded-full bg-warning-soft">
-                    <LockKeyIcon aria-hidden focusable="false" className="size-6 text-warning-soft-foreground" />
+                    <LockIcon aria-hidden focusable="false" className="size-6 text-warning-soft-foreground" />
                 </div>
                 <Typography type="h4" weight="semibold">{title}</Typography>
                 <Typography type="body-sm" color="muted">{description}</Typography>

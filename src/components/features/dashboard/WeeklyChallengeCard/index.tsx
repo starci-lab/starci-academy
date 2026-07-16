@@ -2,8 +2,10 @@
 
 import React, {
     useMemo,
+    useState,
 } from "react"
 import {
+    Button,
     Chip,
     Typography,
 } from "@heroui/react"
@@ -24,6 +26,8 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import { useQueryWeeklyChallengeSwr } from "@/hooks/swr/api/graphql/queries/useQueryWeeklyChallengeSwr"
+import { useMutateClaimWeeklyChallengeRewardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateClaimWeeklyChallengeRewardSwr"
+import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { EmptyContent } from "@/components/blocks/async/EmptyContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
@@ -51,7 +55,30 @@ export const WeeklyChallengeCard = ({
 }: WeeklyChallengeCardProps) => {
     const t = useTranslations()
     const locale = useLocale()
-    const { data, isLoading } = useQueryWeeklyChallengeSwr()
+    const { data, isLoading, mutate } = useQueryWeeklyChallengeSwr()
+    const { trigger: triggerClaimReward } = useMutateClaimWeeklyChallengeRewardSwr()
+    const runGraphQL = useGraphQLWithToast()
+    const [isClaiming, setIsClaiming] = useState(false)
+
+    /** Claim the weekly-challenge coin reward, then revalidate. */
+    const onClaim = async () => {
+        setIsClaiming(true)
+        try {
+            const ok = await runGraphQL(async () => {
+                const result = await triggerClaimReward()
+                const env = result?.data?.claimWeeklyChallengeReward
+                if (!env) {
+                    throw new Error(t("weeklyChallenge.claimError"))
+                }
+                return env
+            })
+            if (ok) {
+                await mutate()
+            }
+        } finally {
+            setIsClaiming(false)
+        }
+    }
 
     /** Days/hours left until the event closes (computed from `weekEndAt`). */
     const countdown = useMemo(
@@ -135,11 +162,24 @@ export const WeeklyChallengeCard = ({
                                 </Typography>
                             ) : <span />}
                             {data.viewerPassed ? (
-                                <Chip color="success" size="sm" variant="soft">
-                                    <Chip.Label>
-                                        {t("weeklyChallenge.passed")}
-                                    </Chip.Label>
-                                </Chip>
+                                data.claimed ? (
+                                    <Chip color="success" size="sm" variant="soft">
+                                        <Chip.Label>
+                                            {t("weeklyChallenge.passed")}
+                                        </Chip.Label>
+                                    </Chip>
+                                ) : (
+                                    <Button
+                                        variant="primary"
+                                        size="sm"
+                                        isPending={isClaiming}
+                                        onPress={() => void onClaim()}
+                                    >
+                                        {t("weeklyChallenge.claimReward", {
+                                            count: data.coinReward ?? 0,
+                                        })}
+                                    </Button>
+                                )
                             ) : (
                                 <EntityToken
                                     globalId={data.challengeGlobalId}

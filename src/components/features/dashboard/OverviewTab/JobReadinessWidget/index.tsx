@@ -2,7 +2,7 @@
 
 import React from "react"
 import { Button, Chip, Typography, cn } from "@heroui/react"
-import { ArrowRightIcon, BriefcaseIcon, TrendUpIcon } from "@phosphor-icons/react"
+import { ArrowRightIcon, BriefcaseIcon, ChartLineUpIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import type { UserJobReadinessBand, UserJobReadinessTrack } from "@/modules/api/graphql/queries/types/user-job-readiness"
@@ -109,7 +109,7 @@ export const JobReadinessWidget = ({ className }: JobReadinessWidgetProps) => {
             emptyContent={{
                 title: t("jobReadiness.myEmpty"),
                 description: t("jobReadiness.emptyHint"),
-                icon: <TrendUpIcon aria-hidden focusable="false" className="size-8 text-muted" />,
+                icon: <ChartLineUpIcon aria-hidden focusable="false" className="size-8 text-muted" />,
             }}
             error={tracks.length === 0 ? error : undefined}
             errorContent={{

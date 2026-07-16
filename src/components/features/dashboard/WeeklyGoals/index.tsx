@@ -4,21 +4,13 @@ import React, {
     useMemo,
 } from "react"
 import {
-    Button,
     ProgressBar,
     Typography,
     cn,
 } from "@heroui/react"
 import {
-    useLocale,
     useTranslations,
 } from "next-intl"
-import {
-    useRouter,
-} from "next/navigation"
-import {
-    pathConfig,
-} from "@/resources/path"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -48,8 +40,6 @@ export const WeeklyGoals = ({
     className,
 }: WeeklyGoalsProps) => {
     const t = useTranslations()
-    const locale = useLocale()
-    const router = useRouter()
     const {
         data: kpis,
         isLoading,
@@ -69,6 +59,21 @@ export const WeeklyGoals = ({
         [
             kpis,
         ],
+    )
+
+    /** Days/hours left until the weekly reset (computed from `resetAt`). Mirrors WeeklyBoard. */
+    const countdown = useMemo(
+        () => {
+            if (!kpis) {
+                return null
+            }
+            const remaining = Math.max(0, new Date(kpis.resetAt).getTime() - Date.now())
+            return {
+                days: Math.floor(remaining / 86_400_000),
+                hours: Math.floor((remaining % 86_400_000) / 3_600_000),
+            }
+        },
+        [kpis],
     )
 
     // composite over EFFECTIVE targets (custom OR default) so the summary + bars
@@ -133,6 +138,12 @@ export const WeeklyGoals = ({
                         completed: composite.completed,
                         total: composite.total,
                     })}
+                    {countdown
+                        ? ` · ${t("dashboard.kpi.resetIn", {
+                            days: countdown.days,
+                            hours: countdown.hours,
+                        })}`
+                        : ""}
                 </Typography>
                 <StatGridCard
                     items={KPI_ORDER.map((key) => {
@@ -168,19 +179,23 @@ export const WeeklyGoals = ({
                                             <ProgressBar.Fill />
                                         </ProgressBar.Track>
                                     </ProgressBar>
+                                    {/* coin reward hint — only once a REAL target is set server-side
+                                        (the client-only default above doesn't persist a floor/reward) */}
+                                    {item?.coinReward != null ? (
+                                        <span
+                                            className={cn(
+                                                "text-xs",
+                                                item.canClaim ? "text-accent-soft-foreground" : "text-muted",
+                                            )}
+                                        >
+                                            {t("dashboard.kpi.coinReward", { count: item.coinReward })}
+                                        </span>
+                                    ) : null}
                                 </>
                             ),
                         }
                     })}
                 />
-                <Button
-                    variant="tertiary"
-                    size="sm"
-                    className="self-start"
-                    onPress={() => router.push(pathConfig().locale(locale).kpi().build())}
-                >
-                    {t("dashboard.kpi.edit")}
-                </Button>
             </div>
         </AsyncContent>
     )

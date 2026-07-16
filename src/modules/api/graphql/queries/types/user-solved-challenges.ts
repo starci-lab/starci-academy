@@ -8,6 +8,8 @@ export interface QueryUserSolvedChallengesRequest {
 
 /** One passed challenge submission with its submitted link + language. */
 export interface QueryUserSolvedChallengeItemData {
+    /** Stable id for this submission (`user_challenge_submissions.id`) — pass as `submissionId` to `userSolvedChallengeDetail`. Null only for a not-yet-recomputed cache row. */
+    id: string | null
     /** Challenge / submission-requirement title. */
     title: string
     /** The submitted link (GitHub repo or Google Docs URL). */
@@ -24,6 +26,8 @@ export interface QueryUserSolvedChallengeItemData {
     score: number | null
     /** Title of the course the challenge belongs to, or null when not resolvable. */
     courseTitle: string | null
+    /** Opaque global id of the course this challenge belongs to — pass to `.challenges().course(courseGlobalId)`. Null when unresolved. */
+    courseGlobalId: string | null
 }
 
 /** Apollo response shape for the `userSolvedChallenges` query. */

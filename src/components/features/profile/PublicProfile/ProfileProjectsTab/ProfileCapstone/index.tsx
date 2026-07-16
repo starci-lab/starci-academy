@@ -5,6 +5,7 @@ import {
     cn,
 } from "@heroui/react"
 import {
+    useLocale,
     useTranslations,
 } from "next-intl"
 import {
@@ -16,6 +17,7 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { pathConfig } from "@/resources/path"
 import { useQueryUserCapstoneProgressSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCapstoneProgressSwr"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
@@ -40,6 +42,7 @@ export const ProfileCapstone = ({
     className,
 }: ProfileCapstoneProps) => {
     const t = useTranslations()
+    const locale = useLocale()
     const username = useProfileUsername()
     const { data: user } = useQueryUserProfileSwr(username)
     const userId = user?.id ?? null
@@ -90,8 +93,6 @@ export const ProfileCapstone = ({
                                             <Skeleton.Typography type="body-xs" width="2/3" />
                                         </div>
                                     </div>
-                                    {/* "Xem milestone & task" disclosure Link */}
-                                    <Skeleton.Typography type="body-sm" width="1/3" />
                                 </div>
                             </SurfaceListCardItem>
                         ))}
@@ -110,7 +111,13 @@ export const ProfileCapstone = ({
             >
                 <SurfaceListCard>
                     {projects.map((project) => (
-                        <SurfaceListCardItem key={project.courseGlobalId}>
+                        <SurfaceListCardItem
+                            key={project.courseGlobalId}
+                            hover="underline"
+                            href={username
+                                ? pathConfig().locale(locale).profile(username).projects().course(project.courseGlobalId).build()
+                                : undefined}
+                        >
                             <ProjectCard project={project} />
                         </SurfaceListCardItem>
                     ))}

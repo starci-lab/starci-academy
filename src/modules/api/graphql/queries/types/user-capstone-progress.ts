@@ -8,6 +8,8 @@ export interface QueryUserCapstoneProgressRequest {
 
 /** One passed/attempted task within a capstone milestone. */
 export interface QueryUserCapstoneTaskItem {
+    /** Opaque global id of the task — pass to resolveRoute / anchor within the roadmap. */
+    taskGlobalId: string
     /** Milestone-task title. */
     title: string
     /** Whether the task has been passed. */
@@ -20,6 +22,8 @@ export interface QueryUserCapstoneTaskItem {
 
 /** Progress for a single capstone milestone (a roadmap node). */
 export interface QueryUserCapstoneMilestoneProgress {
+    /** Opaque global id of the milestone — pass to resolveRoute / anchor within the roadmap. */
+    milestoneGlobalId: string
     /** Milestone title. */
     title: string
     /** Ordering position (roadmap order). */

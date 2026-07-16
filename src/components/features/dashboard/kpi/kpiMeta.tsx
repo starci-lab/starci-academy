@@ -1,11 +1,11 @@
 import React from "react"
 import {
     BookOpenIcon as LessonIcon,
-    FireIcon as DaysIcon,
-    QuestionIcon as ChallengeIcon,
+    FlameIcon as DaysIcon,
+    PuzzlePieceIcon as ChallengeIcon,
     CodeIcon as CodingIcon,
-    StackIcon as FlashcardIcon,
-    FlagCheckeredIcon as MilestoneIcon,
+    CardsIcon as FlashcardIcon,
+    FlagIcon as MilestoneIcon,
 } from "@phosphor-icons/react"
 import type { KpiKey } from "@/modules/api/graphql/queries/types/my-kpis"
 

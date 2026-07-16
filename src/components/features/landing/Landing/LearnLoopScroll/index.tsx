@@ -15,13 +15,13 @@ import {
     ArrowUpIcon,
     BookOpenIcon,
     CheckCircleIcon,
-    GithubLogoIcon,
     PlayCircleIcon,
     RobotIcon,
     RocketLaunchIcon,
     TrophyIcon,
     WarningCircleIcon,
 } from "@phosphor-icons/react"
+import { GithubIcon } from "@/components/svg/GithubIcon"
 import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -269,7 +269,7 @@ const StepVisual = ({ stepKey }: { stepKey: string }) => {
                 <motion.div variants={childVariants} className="flex items-center justify-between">
                     <span className="font-mono text-sm font-medium">the-shop</span>
                     <span className="flex items-center gap-2 text-xs text-muted">
-                        <GithubLogoIcon aria-hidden focusable="false" className="size-3.5" />
+                        <GithubIcon className="size-3.5" />
                         main
                     </span>
                 </motion.div>

@@ -20,6 +20,8 @@ const query1 = gql`
           avatar
           passedAt
         }
+        claimed
+        coinReward
       }
     }
   }

@@ -29,7 +29,7 @@ import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQuery
 import { useQueryUserSolvedChallengesSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserSolvedChallengesSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { MetricCard } from "@/components/blocks/stats/MetricCard"
+import { StatRibbon } from "@/components/blocks/stats/StatRibbon"
 import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
@@ -106,11 +106,10 @@ export const ProfileChallenges = ({
             isLoading={(isLoading || !userId) && challenges.length === 0}
             skeleton={(
                 <div className={cn("flex flex-col gap-6", className)}>
-                    {/* headline metric row (passed · XP · top · rank) */}
-                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                        {[0, 1, 2, 3].map((index) => (
-                            <Skeleton key={index} className="h-24 w-full rounded-2xl" />
-                        ))}
+                    {/* headline stat ribbon — label + one card (StatPair cells) */}
+                    <div className="flex flex-col gap-3">
+                        <Skeleton.Typography type="body-sm" width="1/4" />
+                        <Skeleton className="h-20 w-full rounded-2xl" />
                     </div>
                     {/* distribution card: difficulty + language as surface list items */}
                     <div className="flex flex-col gap-3">
@@ -161,16 +160,16 @@ export const ProfileChallenges = ({
             }}
         >
             <div className={cn("flex flex-col gap-6", className)}>
-                {/* headline metric row (passed · beats X% · rank), Coding-tab style */}
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                    {metricStats.map((stat) => (
-                        <MetricCard
-                            key={stat.key}
-                            value={stat.value}
-                            label={t(`publicProfile.challengesTab.metric.${stat.key}`)}
-                        />
-                    ))}
-                </div>
+                {/* headline stat ribbon (passed · XP · top · rank) — labeled section, StatPair row in ONE card */}
+                <LabeledCard label={t("publicProfile.challengesTab.metricsHeading")} frameless>
+                    <StatRibbon
+                        items={metricStats.map((stat) => ({
+                            key: stat.key,
+                            value: stat.value,
+                            label: t(`publicProfile.challengesTab.metric.${stat.key}`),
+                        }))}
+                    />
+                </LabeledCard>
 
                 {/* distribution card — by difficulty + by language */}
                 <LabeledCard
@@ -218,15 +217,16 @@ export const ProfileChallenges = ({
                 >
                     <SurfaceListCard>
                         {groups.map((group, groupIndex) => (
-                            <SurfaceListCardItem key={group.courseTitle ?? `__ungrouped-${groupIndex}`}>
-                                <ChallengeCourseRow
-                                    courseTitle={group.courseTitle}
-                                    items={group.items}
-                                    totalChallenges={group.courseTitle
-                                        ? totalChallengesByCourse.get(group.courseTitle)
-                                        : undefined}
-                                />
-                            </SurfaceListCardItem>
+                            <ChallengeCourseRow
+                                key={group.courseTitle ?? `__ungrouped-${groupIndex}`}
+                                username={username}
+                                courseTitle={group.courseTitle}
+                                courseGlobalId={group.courseGlobalId}
+                                items={group.items}
+                                totalChallenges={group.courseTitle
+                                    ? totalChallengesByCourse.get(group.courseTitle)
+                                    : undefined}
+                            />
                         ))}
                     </SurfaceListCard>
                 </LabeledCard>

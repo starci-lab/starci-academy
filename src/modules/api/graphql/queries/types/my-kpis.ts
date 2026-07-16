@@ -9,14 +9,20 @@ export type KpiKey =
     | "flashcards"
     | "milestones"
 
-/** One weekly KPI: current rolling-7-day value vs the user's target. */
+/** One weekly KPI: current-week value vs the user's target, plus its coin reward + claim state. */
 export interface QueryKpiItemData {
     /** Which KPI this row is. */
     key: KpiKey
-    /** The rolling-7-day current value. */
+    /** The current-week (resets Monday 8am GMT+7) value. */
     current: number
     /** The user's weekly target; null when none set. */
     target: number | null
+    /** Coin reward for claiming this KPI this week; null when no target is set. */
+    coinReward: number | null
+    /** Whether this KPI's reward was already claimed this week. */
+    claimed: boolean
+    /** Whether this KPI's reward can be claimed right now (met + not yet claimed). */
+    canClaim: boolean
 }
 
 /** Composite weekly KPI score across the KPIs that have a target. */
@@ -35,6 +41,8 @@ export interface QueryMyKpisData {
     items: Array<QueryKpiItemData>
     /** Composite score over the KPIs that have a target. */
     composite: QueryKpiCompositeData
+    /** ISO timestamp of the next weekly KPI reset (Monday 8am Asia/Ho_Chi_Minh). */
+    resetAt: string
 }
 
 /** Apollo response shape for the `myKpis` query. */

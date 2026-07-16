@@ -27,8 +27,8 @@ export interface UseSelectedCourseResult {
  * single place that reads / writes the `course` query. A `fromUrl` ref keeps the
  * setter idempotent against the param it would echo (no redundant navigation).
  *
- * Mirrors the `useProfileTabUrlSync` URL-state pattern, but kept self-contained
- * (no shared store): the URL is the source of truth and the only state.
+ * URL-driven, self-contained (no shared store): the URL is the source of truth
+ * and the only state.
  */
 export const useSelectedCourse = (): UseSelectedCourseResult => {
     const router = useRouter()

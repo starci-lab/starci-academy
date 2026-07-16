@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Prototype — Profile nested routes (list + detail)</title>
+<style>
+  :root {
+    --bg:#0b0f17; --surface:#131a26; --surface2:#0f1521; --border:#263042;
+    --text:#e6ecf5; --muted:#8b98ab; --accent:#e11d78; --accent-soft:#3a1526; --accent-fg:#ff8bc0;
+    --success:#22c55e; --warning:#f59e0b; --danger:#ef4444;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--bg);color:var(--text);font:14px/1.5 system-ui,sans-serif}
+  .surface{display:none;max-width:920px;margin:0 auto;padding:16px 16px 110px}
+  .surface.active{display:block}
+  h1{font-size:20px;margin:2px 0}
+  h2{font-size:15px;margin:0}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px}
+  .muted{color:var(--muted);font-size:12px}
+  .row{display:flex;align-items:center;gap:12px}
+  .col{display:flex;flex-direction:column}
+  .gap2>*+*{margin-top:8px}.gap3>*+*{margin-top:12px}.gap6>*+*{margin-top:24px}
+  .spread{justify-content:space-between}
+  .chip{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid var(--border);color:var(--muted)}
+  .chip.s{background:rgba(34,197,94,.12);color:#7ee2a8;border-color:transparent}
+  .chip.w{background:rgba(245,158,11,.14);color:#f7c469;border-color:transparent}
+  .chip.d{background:rgba(239,68,68,.14);color:#f39;border-color:transparent}
+  .blocktag{display:inline-block;font:10px/1.4 ui-monospace,monospace;color:#7aa2ff;background:#101a2e;border:1px solid #223052;border-radius:6px;padding:0 5px;margin-left:6px;vertical-align:middle}
+  .lens{display:inline-block;font:10px/1.4 ui-monospace,monospace;border-radius:6px;padding:0 5px;margin-left:4px}
+  .lens.cta{background:#3a1526;color:#ff8bc0}.lens.link{background:#0e2233;color:#79c0ff}.lens.state{background:#20222b;color:#c9b}
+  .p2{display:inline-block;font:10px/1.4 ui-monospace,monospace;color:#f7c469;background:#2a2110;border:1px solid #4a3a12;border-radius:6px;padding:0 5px;margin-left:6px}
+  .link{color:var(--accent-fg);cursor:pointer;text-decoration:none}
+  .link:hover{text-decoration:underline}
+  .btn{display:inline-block;padding:8px 14px;border-radius:12px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer;font:inherit}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .clickable{cursor:pointer}.clickable:hover{background:var(--surface2)}
+  .divideY>*{border-bottom:1px solid rgba(255,255,255,.06);padding:12px}.divideY>*:last-child{border-bottom:0}
+  .ribbon{display:flex;align-items:stretch}
+  .ribbon>div{flex:1;padding:0 20px;border-left:1px solid var(--border)}
+  .ribbon>div:first-child{border-left:0;padding-left:0}
+  .big{font-size:22px;font-weight:700}
+  .bar{height:8px;border-radius:99px;background:#1c2636;overflow:hidden}
+  .bar>i{display:block;height:100%;background:var(--success)}
+  .tabbar{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--border);display:flex;gap:2px;padding:8px 0;overflow:auto;z-index:5}
+  .tabbar a{padding:6px 12px;border-radius:10px;color:var(--muted);white-space:nowrap;font-size:13px}
+  .tabbar a.on{color:var(--text);box-shadow:inset 0 -2px 0 var(--accent)}
+  .crumb{font-size:12px;color:var(--muted)}
+  .avatar{width:36px;height:36px;border-radius:99px;background:#1b3a4a;flex:none}
+  .tile{width:44px;height:44px;border-radius:12px;background:var(--accent-soft);flex:none;display:grid;place-items:center;color:var(--accent-fg)}
+  .sev{width:6px;align-self:stretch;border-radius:3px}.sev.w{background:var(--warning)}.sev.d{background:var(--danger)}.sev.s{background:var(--success)}
+  .proto-nav{position:fixed;inset:auto 0 0 0;display:flex;gap:8px;justify-content:center;padding:10px;background:rgba(11,15,23,.92);border-top:1px solid var(--border)}
+  .proto-nav .muted{align-self:center}
+  .note{font-size:11px;color:#f7c469;background:#211a0c;border:1px solid #4a3a12;border-radius:8px;padding:6px 10px}
+</style>
+</head>
+<body>
+
+<!-- reusable tabbar rendered per screen via JS clone; here as template -->
+<template id="tabs">
+  <nav class="tabbar">
+    <a data-tab="overview">Tổng quan</a>
+    <a data-tab="projects">Dự án</a>
+    <a data-tab="challenges">Thử thách</a>
+    <a data-tab="skills">Kỹ năng</a>
+    <a data-tab="activity">Hoạt động</a>
+  </nav>
+</template>
+
+<!-- ========== S1 · /profile/[username]  (OVERVIEW, bare route) ========== -->
+<section class="surface active" id="overview">
+  <div class="tabslot"></div>
+  <div class="gap6" style="margin-top:14px">
+    <div class="row"><div class="avatar"></div><div class="col"><h1>cuongnvtse160875</h1><span class="muted">Tập sự · /profile/cuongnvtse160875 <span class="blocktag">layout.tsx = shell (ProfileHero + TabsBar)</span></span></div></div>
+    <p class="muted">Shell: profile hub · Job: dashboard tóm tắt · bare route = tab overview. TabsBar giờ = <b>&lt;Link&gt;</b> active theo segment, KHÔNG store <span class="blocktag">ProfileTabsBar → usePathname</span></p>
+    <div class="card gap3">
+      <div class="row spread"><h2>Sẵn sàng đi làm</h2><span class="link" onclick="go('challenges')">Xem thử thách → <span class="lens link">link</span></span></div>
+      <div class="muted">Các "Xem thêm" giờ router.push sang route tab thật (KHÔNG setTab)</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== S2 · /profile/[username]/challenges  (LIST) ========== -->
+<section class="surface" id="challenges">
+  <div class="tabslot"></div>
+  <div class="gap6" style="margin-top:14px">
+    <div>
+      <span class="muted">Chỉ số <span class="blocktag">LabeledCard frameless</span></span>
+      <div class="card ribbon" style="margin-top:6px"><span class="blocktag" style="position:absolute">StatRibbon</span>
+        <div><div class="big">1</div><div class="muted">Đã đạt</div></div>
+        <div><div class="big">600</div><div class="muted">XP</div></div>
+        <div><div class="big">0%</div><div class="muted">Top</div></div>
+        <div><div class="big">#3</div><div class="muted">Hạng</div></div>
+      </div>
+    </div>
+    <div>
+      <span class="muted">Bài nộp <span class="blocktag">LabeledCard frameless → SurfaceListCard</span></span>
+      <div class="card gap3" style="margin-top:6px;padding:0">
+        <div class="row clickable" style="padding:12px" onclick="go('challengeManage')">
+          <div class="tile">◧</div>
+          <div class="col" style="flex:1"><div class="row spread"><b>System Design Mastery</b><span class="chip s">Beginner</span></div><div class="bar" style="margin:6px 0"><i style="width:20%"></i></div><span class="muted">1/325 đã đạt</span></div>
+          <span class="link">Quản lý bài nộp →</span>
+        </div>
+      </div>
+      <p class="note" style="margin-top:8px">❌ BỎ disclosure expand-inline. Course row → <b>trang quản lý</b> (search/filter/sort) → click 1 bài → detail. 3 tầng: list → quản lý → chi tiết. <span class="lens link">link</span> thay <span class="lens state">state expand</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== S · /profile/[username]/challenges/[courseId]  (MANAGE — search/filter/sort) ========== -->
+<section class="surface" id="challengeManage">
+  <div class="tabslot"></div>
+  <div class="gap6" style="margin-top:14px">
+    <div class="crumb"><span class="link" onclick="go('challenges')">‹ Thử thách</span> / System Design Mastery <span class="blocktag">BackLink</span></div>
+    <div class="col"><h1>Bài nộp · System Design Mastery</h1><span class="muted">Tìm & lọc bài nộp đã chấm của khóa này</span></div>
+    <div class="card gap3"><span class="blocktag" style="position:absolute">Toolbar</span>
+      <div class="row gap2"><input placeholder="🔍 Tìm theo tiêu đề…" style="flex:1;padding:9px 12px;border-radius:12px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font:inherit"><span class="blocktag">SearchInput</span></div>
+      <div class="row gap2" style="flex-wrap:wrap"><span class="chip">Độ khó ▾</span><span class="chip">Ngôn ngữ ▾</span><span class="chip">Điểm ▾</span><span style="flex:1"></span><span class="chip">Sắp xếp: Mới nhất ▾</span><span class="blocktag">FilterChipRow + SortSelect</span></div>
+    </div>
+    <span class="muted">6 bài nộp <span class="blocktag">SurfaceListCard (paginate)</span></span>
+    <div class="card divideY" style="padding:0">
+      <div class="row spread clickable" style="padding:12px" onclick="go('challengeDetail')">
+        <div class="col"><b>Build a scaling-service cluster behind Nginx…</b><div class="row gap2" style="margin-top:4px"><span class="chip s">Beginner</span><span class="chip">TypeScript</span><span class="muted">28/06</span></div></div>
+        <div class="row gap2"><span class="chip d">100đ</span><a class="link">🔗 repo</a><span class="link">→</span></div>
+      </div>
+      <div class="row spread clickable" style="padding:12px" onclick="go('challengeDetail')">
+        <div class="col"><b>Idempotent payment webhook handler</b><div class="row gap2" style="margin-top:4px"><span class="chip w">Intermediate</span><span class="chip">TypeScript</span><span class="muted">24/06</span></div></div>
+        <div class="row gap2"><span class="chip w">82đ</span><a class="link">🔗 repo</a><span class="link">→</span></div>
+      </div>
+      <div class="row spread clickable" style="padding:12px" onclick="go('challengeDetail')">
+        <div class="col"><b>Rate limiter · sliding window</b><div class="row gap2" style="margin-top:4px"><span class="chip s">Beginner</span><span class="chip">Go</span><span class="muted">20/06</span></div></div>
+        <div class="row gap2"><span class="chip s">95đ</span><a class="link">🔗 repo</a><span class="link">→</span></div>
+      </div>
+    </div>
+    <p class="note">✅ List + search/filter/sort/paginate = data đủ (client trên `userSolvedChallenges`, hoặc thêm search param BE nếu nhiều). Click 1 bài → detail <span class="p2">detail+feedback Phase-2 cần BE</span>. Pattern y hệt cho Kỹ năng (coding) & Dự án.</p>
+  </div>
+</section>
+
+<!-- ========== S3 · /profile/[username]/challenges/[courseId]/[id]  (DETAIL — Phase 2) ========== -->
+<section class="surface" id="challengeDetail">
+  <div class="tabslot"></div>
+  <div class="gap6" style="margin-top:14px">
+    <div class="crumb"><span class="link" onclick="go('challengeManage')">‹ Bài nộp · System Design Mastery</span> <span class="blocktag">BackLink</span></div>
+    <div class="card gap3">
+      <div class="row spread"><h1>Build a scaling-service cluster behind Nginx…</h1><span class="chip d" style="align-self:start">100 điểm</span></div>
+      <div class="row gap2"><span class="chip s">Beginner</span><span class="chip">TypeScript</span><span class="muted">03:52 · 28/06/2026</span></div>
+      <div class="row"><a class="link">🔗 Mở repo submission</a> <span class="blocktag">Link external</span></div>
+    </div>
+    <div>
+      <span class="muted">Nhận xét AI <span class="p2">Phase-2 · cần BE</span></span>
+      <div class="card gap3 divideY" style="margin-top:6px;padding:0">
+        <div class="row"><span class="sev s"></span><div class="col"><b>Kiến trúc round-robin đúng</b><span class="muted">outcome · Nginx upstream cân tải đều 3 node</span></div></div>
+        <div class="row"><span class="sev w"></span><div class="col"><b>Thiếu health-check</b><span class="muted">approach · gợi ý: thêm `max_fails`/`fail_timeout` để loại node chết</span></div></div>
+        <div class="row"><span class="sev d"></span><div class="col"><b>Không có graceful drain</b><span class="muted">outcome · rolling update rớt request đang xử lý</span></div></div>
+      </div>
+      <p class="note" style="margin-top:8px">🛑 Data feedback (attempts + rubric severity/location/suggestion) CÓ model nhưng query `challengeSubmission` owner-only → cần query public profile-scoped mới + expose id trên `userSolvedChallenges`.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== S4 · /profile/[username]/projects  (LIST) ========== -->
+<section class="surface" id="projects">
+  <div class="tabslot"></div>
+  <div class="gap6" style="margin-top:14px">
+    <span class="muted">Capstone <span class="blocktag">LabeledCard frameless → SurfaceListCard</span></span>
+    <div class="card" style="padding:0">
+      <div class="row clickable" style="padding:12px" onclick="go('projectDetail')">
+        <div class="tile">🚀</div>
+        <div class="col" style="flex:1"><b>Fullstack Web Mastery</b><div class="bar" style="margin:6px 0"><i style="width:45%"></i></div><span class="muted">4/9 milestone · 18/40 task</span></div>
+        <span class="link">Xem roadmap →</span>
+      </div>
+    </div>
+    <p class="note">✅ Phase-1 làm được: capstone list-item CÓ <code>courseGlobalId</code> → route detail thật ngay.</p>
+  </div>
+</section>
+
+<!-- ========== S5 · /profile/[username]/projects/[courseGlobalId]  (DETAIL — Phase 1 OK) ========== -->
+<section class="surface" id="projectDetail">
+  <div class="tabslot"></div>
+  <div class="gap6" style="margin-top:14px">
+    <div class="crumb"><span class="link" onclick="go('projects')">‹ Dự án</span></div>
+    <div class="card gap3">
+      <h1>Fullstack Web Mastery — Roadmap</h1>
+      <div class="row gap2"><span class="blocktag">CourseProgressBar (N lane)</span></div>
+      <div class="bar"><i style="width:45%"></i></div>
+      <span class="muted">4/9 milestone hoàn thành</span>
+    </div>
+    <div class="card divideY" style="padding:0"><span class="blocktag" style="position:absolute">SurfaceListCard → milestone rows</span>
+      <div class="col gap2"><div class="row spread"><b>M3 · State & data</b><span class="chip s">2/5 task</span></div><div class="bar"><i style="width:40%"></i></div>
+        <div class="muted">• useState & useEffect <span class="chip s">100</span> · • Custom hooks <span class="chip s">92</span> <span class="blocktag">ListRow task</span></div></div>
+      <div class="col gap2"><div class="row spread"><b>M4 · Backend API</b><span class="chip w">0/6 task</span></div><div class="bar"><i style="width:0%"></i></div></div>
+    </div>
+    <p class="note">✅ Data đủ (`userCapstoneProgress`): title/position/pass-state/score. ⚠️ Feedback/criteria per-task cần BE (Phase-2).</p>
+  </div>
+</section>
+
+<!-- ========== S6 · /profile/[username]/skills  (LIST) ========== -->
+<section class="surface" id="skills">
+  <div class="tabslot"></div>
+  <div class="gap6" style="margin-top:14px">
+    <div><span class="muted">Chỉ số <span class="blocktag">LabeledCard→StatRibbon</span></span>
+      <div class="card ribbon" style="margin-top:6px">
+        <div><div class="big">12</div><div class="muted">Đã giải</div></div>
+        <div><div class="big">175</div><div class="muted">XP</div></div>
+        <div><div class="big">12%</div><div class="muted">Top</div></div>
+        <div><div class="big">#7</div><div class="muted">Hạng</div></div>
+      </div></div>
+    <span class="muted">Lịch sử giải <span class="blocktag">SurfaceListCard (full, bỏ cap 6)</span></span>
+    <div class="card" style="padding:0">
+      <div class="row clickable divideY" style="padding:12px" onclick="go('codingDetail')">
+        <div class="col" style="flex:1"><b>Two Sum</b><span class="muted">28/06/2026</span></div>
+        <span class="chip s">easy</span><span class="chip">Arrays</span><span class="chip">TypeScript</span><span class="link">→</span>
+      </div>
+    </div>
+    <p class="note">List phẳng — detail là điểm yếu nhất (không id/slug, submission owner-only).</p>
+  </div>
+</section>
+
+<!-- ========== S7 · /profile/[username]/coding/[slug]  (DETAIL — Phase 2) ========== -->
+<section class="surface" id="codingDetail">
+  <div class="tabslot"></div>
+  <div class="gap6" style="margin-top:14px">
+    <div class="crumb"><span class="link" onclick="go('skills')">‹ Kỹ năng</span></div>
+    <div class="card gap3"><div class="row spread"><h1>Two Sum</h1><span class="chip s">easy</span></div>
+      <span class="muted">Arrays · Hashing</span>
+      <p class="muted">Đề bài (markdown) từ <code>codingProblem(slug)</code> <span class="p2">Phase-2 · cần BE</span></p></div>
+    <div>
+      <span class="muted">Bài nộp của user <span class="p2">Phase-2 · cần BE</span></span>
+      <div class="card gap2" style="margin-top:6px"><div class="row gap2"><span class="chip s">accepted</span><span class="chip">TypeScript</span><span class="muted">10/10 testcase</span></div>
+        <div class="muted">source code / per-case results</div></div>
+      <p class="note" style="margin-top:8px">🛑 slug KHÔNG expose trên `userCodingHistory`; `myCodingSubmissions` hard-lock caller → cần expose slug + query submission public theo target-user.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== S8 · /profile/[username]/activity  (LIST) ========== -->
+<section class="surface" id="activity">
+  <div class="tabslot"></div>
+  <div class="gap6" style="margin-top:14px">
+    <span class="muted">4 tháng 7, 2026 <span class="blocktag">categorized-list: LabeledCard subtleLabel → SurfaceListCard/ngày</span></span>
+    <div class="card divideY" style="padding:0">
+      <div class="row"><div class="avatar"></div><div class="col"><span>ai-eval-runner đã vượt qua challenge…</span><span class="muted">12 ngày trước</span></div></div>
+      <div class="row"><div class="avatar"></div><div class="col"><span>ai-eval-runner đã vượt qua challenge…</span><span class="muted">12 ngày trước</span></div></div>
+    </div>
+    <p class="note">✅ Feed đã paginate; item tự navigate qua onResolve. Không detail tab-owned.</p>
+  </div>
+</section>
+
+<nav class="proto-nav">
+  <button class="btn" onclick="step(-1)">← Prev</button>
+  <span class="muted" id="proto-pos"></span>
+  <button class="btn" onclick="step(1)">Next →</button>
+  <span class="muted">| click tab / row để đi flow</span>
+</nav>
+
+<script>
+  const surfaces=[...document.querySelectorAll('.surface')];
+  // which tab is "active" for each screen
+  const tabOf={overview:'overview',challenges:'challenges',challengeManage:'challenges',challengeDetail:'challenges',projects:'projects',projectDetail:'projects',skills:'skills',codingDetail:'skills',activity:'activity'};
+  let idx=0;
+  function paintTabs(id){
+    document.querySelectorAll('.tabslot').forEach(slot=>{
+      slot.innerHTML='';
+      const nav=document.getElementById('tabs').content.cloneNode(true);
+      nav.querySelectorAll('a').forEach(a=>{
+        if(a.dataset.tab===tabOf[id])a.classList.add('on');
+        a.onclick=()=>go(a.dataset.tab);
+      });
+      slot.appendChild(nav);
+    });
+  }
+  function render(){surfaces.forEach((s,i)=>s.classList.toggle('active',i===idx));const id=surfaces[idx].id;paintTabs(id);document.getElementById('proto-pos').textContent=(idx+1)+' / '+surfaces.length+'  ·  '+surfaces[idx].id;window.scrollTo(0,0);}
+  function go(id){const i=surfaces.findIndex(s=>s.id===id);if(i>=0){idx=i;render();}}
+  function step(d){idx=Math.min(surfaces.length-1,Math.max(0,idx+d));render();}
+  render();
+</script>
+</body>
+</html>

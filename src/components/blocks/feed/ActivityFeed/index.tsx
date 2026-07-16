@@ -18,7 +18,7 @@ import {
     FlagIcon,
     GraduationCapIcon,
     PulseIcon,
-    SealCheckIcon,
+    PuzzlePieceIcon,
     SparkleIcon,
     UserPlusIcon,
 } from "@phosphor-icons/react"
@@ -52,7 +52,7 @@ import type { ReactionType } from "@/modules/api/graphql/queries/types/discussio
 const TYPE_ICON: Record<ActivityType, typeof BookOpenIcon> = {
     [ActivityType.LessonRead]: BookOpenIcon,
     [ActivityType.LessonBookmarked]: BookmarkSimpleIcon,
-    [ActivityType.ChallengePassed]: SealCheckIcon,
+    [ActivityType.ChallengePassed]: PuzzlePieceIcon,
     [ActivityType.CodingSolved]: CodeIcon,
     [ActivityType.MilestonePassed]: FlagIcon,
     [ActivityType.AiLabPassed]: SparkleIcon,

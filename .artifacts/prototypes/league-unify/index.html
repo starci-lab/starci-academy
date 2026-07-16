@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>league-unify — podium cả 2 · IconTile rank-driven · các case viewer</title>
+<style>
+  :root{
+    --bg:#faf7f8;--surface:#fff;--surface-2:#f4eef1;--border:#ece7ea;--fg:#1c1a1b;--muted:#8a8386;
+    --accent:#d6006e;--accent-soft:#fbe6f1;--accent-soft-fg:#b8005e;
+    --success:#16a34a;--danger:#dc2626;--default:#eef0f2;--r3:24px;--r2:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--fg);font:15px/1.45 system-ui,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:640px;margin:0 auto;padding:16px 12px 90px}
+  .bar{position:sticky;top:0;z-index:10;background:rgba(250,247,248,.93);backdrop-filter:blur(6px);border-bottom:1px solid var(--border);padding:10px 12px;margin:-16px -12px 18px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .bar b{font-size:13px;margin-right:4px}
+  .tab{border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer;color:var(--fg)}
+  .tab.on{background:var(--fg);color:#fff;border-color:var(--fg)}
+  .screen{display:none}.screen.on{display:block}
+  .crumb{color:var(--muted);font-size:13px;margin-bottom:4px}.crumb b{color:var(--fg)}
+  h1{font-size:26px;font-weight:800;margin-bottom:18px}
+  .pilltabs{display:flex;background:var(--surface-2);border-radius:999px;padding:4px;margin-bottom:22px}
+  .pilltabs div{flex:1;text-align:center;padding:9px;border-radius:999px;font-weight:600;font-size:14px;color:var(--muted)}
+  .pilltabs div.on{background:var(--surface);color:var(--fg);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+  /* IconTile — bg-default (neutral) + fluent-emoji art rank-driven */
+  .icontile{width:48px;height:48px;border-radius:14px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--default);font-size:26px;line-height:1}
+  .hero{background:var(--surface);border-radius:var(--r3);padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.06);display:flex;flex-direction:column;gap:16px;margin-bottom:22px}
+  .hero .top{display:flex;align-items:center;gap:14px}
+  .hero .rank{font-size:19px;font-weight:800}.hero .meta{font-size:14px;color:var(--muted);margin-top:2px}
+  .meter-l{font-size:12px;color:var(--muted);margin-bottom:6px}
+  .meter{height:8px;border-radius:999px;background:var(--surface-2);overflow:hidden}.meter i{display:block;height:100%;background:var(--accent);border-radius:999px}
+  .cta{align-self:flex-start;background:var(--accent);color:#fff;border:none;border-radius:12px;padding:11px 18px;font-weight:700;font-size:14px;display:inline-flex;gap:8px;align-items:center;cursor:pointer}
+  /* Podium */
+  .podium{display:flex;align-items:flex-end;justify-content:center;gap:14px;margin:2px 0 22px}
+  .col{display:flex;flex-direction:column;align-items:center;gap:6px}
+  .col .av{width:48px;height:48px;border-radius:999px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;font-size:22px}
+  .col.ch .av{width:58px;height:58px;font-size:27px}
+  .col .cn{font-size:13px;font-weight:600;max-width:78px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .col .cp{font-size:11px;color:var(--muted)}
+  .step{width:78px;border-radius:14px 14px 0 0;background:var(--surface-2);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--fg)}
+  .col.ch .step{height:64px}.col:not(.ch) .step{height:40px}
+  /* viewer IN podium → ring accent + name accent + "Bạn" (accent-system §3, no fill) */
+  .col.me .av{box-shadow:0 0 0 2px var(--accent)}
+  .col.me .cn{color:var(--accent-soft-fg)}
+  .col.me .cn::after{content:" · Bạn"}
+  /* SurfaceListCard */
+  .listcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden}
+  .row{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--border)}
+  .row:last-child{border-bottom:none}
+  .row .rk{width:22px;text-align:right;font-size:13px;color:var(--muted);flex:none}
+  .row .av{width:32px;height:32px;border-radius:999px;background:var(--surface-2);flex:none;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .row .nm{flex:1;min-width:0;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .row .pt{font-size:14px;color:var(--muted);flex:none}
+  .row .car{width:30px;text-align:right;font-size:12px;flex:none;color:var(--success)}
+  .row.zup{border-left:3px solid var(--success)}.row.zdown{border-left:3px solid var(--danger)}
+  .row.mine .rk,.row.mine .pt{color:var(--accent-soft-fg);font-weight:700}
+  .fbtn{border:1px solid var(--border);background:var(--surface);color:var(--fg);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;flex:none;cursor:pointer}
+  .ellipsis{display:flex;align-items:center;justify-content:center;gap:8px;padding:9px 14px;color:var(--muted);font-size:12px;border-bottom:1px solid var(--border);background:var(--surface-2)}
+  .ellipsis .dots{letter-spacing:3px;font-size:15px;line-height:1}
+  .legend{display:flex;gap:14px;font-size:12px;color:var(--muted);margin-bottom:12px}
+  .legend span{display:flex;gap:6px;align-items:center}.dot{width:8px;height:8px;border-radius:999px}
+  .note{background:var(--surface);border:1px dashed var(--border);border-radius:14px;padding:12px 14px;font-size:12.5px;color:var(--muted);margin-bottom:18px}
+  .note b{color:var(--fg)}.note code{background:var(--surface-2);padding:1px 5px;border-radius:5px;font-size:11px}
+  .tagrow{margin:0 0 8px;display:flex;gap:6px;flex-wrap:wrap}
+  .blocktag{display:inline-block;font-size:10px;font-weight:700;background:var(--surface-2);color:var(--muted);border-radius:6px;padding:1px 6px;letter-spacing:.02em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <b>Case viewer ·</b>
+    <button class="tab on" data-s="inlist">Trong list (r6)</button>
+    <button class="tab" data-s="inpodium">Trong podium (r2) ★</button>
+    <button class="tab" data-s="outtop">Ngoài top (r47)</button>
+    <button class="tab" data-s="global">Global (r9)</button>
+  </div>
+
+  <!-- shared bits rendered by JS to keep 4 screens in sync -->
+
+  <!-- ============ CASE 1: viewer rank 6 — trong list (weekly) ============ -->
+  <section class="screen on" data-screen="inlist">
+    <div class="note"><b>Chung khung cả 2 tab:</b> Hero (IconTile <b>bg-default</b> + art fluent-emoji theo HẠNG: 🥇🥈🥉 top-3 · 🏆 hạng 4+) → <b>Podium top-3</b> (giữ, cả weekly &amp; global) → <b>SurfaceListCard</b> rank 4+. Đây: viewer hạng 6 → badge 🏆, nằm TRONG list (accent value), podium là 3 người khác.</div>
+    <div class="crumb"><b>Trang chủ</b> › Bảng xếp hạng</div>
+    <h1>Bảng xếp hạng</h1>
+    <div class="pilltabs"><div class="on">Tuần này</div><div>Toàn cầu</div></div>
+    <div class="hero"><div class="top"><span class="icontile">🏆</span><div><div class="rank">Hạng #6 · top 50%</div><div class="meta">120 điểm · Reset sau 1 ngày 20 giờ</div></div></div>
+      <div><div class="meter-l">Còn 40 điểm nữa để vào top thăng hạng</div><div class="meter"><i style="width:62%"></i></div></div>
+      <button class="cta">Làm challenge để leo hạng →</button></div>
+    <div data-podium="none"></div>
+    <div class="legend"><span><i class="dot" style="background:var(--success)"></i>Top 3 thăng hạng (trên bục)</span><span><i class="dot" style="background:var(--danger)"></i>2 cuối rớt hạng</span></div>
+    <div class="tagrow"><span class="blocktag">SurfaceListCard · rank 4+</span></div>
+    <div class="listcard" data-list="weekly-r6"></div>
+  </section>
+
+  <!-- ============ CASE 2: viewer rank 2 — trong podium ============ -->
+  <section class="screen" data-screen="inpodium">
+    <div class="note"><b>★ Case viewer TRONG podium (hạng 1/2/3).</b> Viewer = hạng 2 → badge hero 🥈. Trên podium, cột của viewer đánh dấu <b>avatar ring accent + tên accent + "· Bạn"</b> (accent-system §3, KHÔNG tô bệ). Viewer <b>KHÔNG lặp trong list</b> (đã lên bục); list bắt đầu rank 4.</div>
+    <div class="crumb"><b>Trang chủ</b> › Bảng xếp hạng</div>
+    <h1>Bảng xếp hạng</h1>
+    <div class="pilltabs"><div class="on">Tuần này</div><div>Toàn cầu</div></div>
+    <div class="hero"><div class="top"><span class="icontile">🥈</span><div><div class="rank">Hạng #2 · top 20%</div><div class="meta">1180 điểm · Reset sau 1 ngày 20 giờ</div></div></div>
+      <div><div class="meter-l">Còn 240 điểm nữa để lên hạng #1</div><div class="meter"><i style="width:83%"></i></div></div>
+      <button class="cta">Làm challenge để leo hạng →</button></div>
+    <div data-podium="me2"></div>
+    <div class="legend"><span><i class="dot" style="background:var(--success)"></i>Top 3 thăng hạng (trên bục)</span><span><i class="dot" style="background:var(--danger)"></i>2 cuối rớt hạng</span></div>
+    <div class="tagrow"><span class="blocktag">SurfaceListCard · rank 4+ (viewer không lặp)</span></div>
+    <div class="listcard" data-list="weekly-r4plus"></div>
+  </section>
+
+  <!-- ============ CASE 3: viewer rank 47 — ngoài top (global) ============ -->
+  <section class="screen" data-screen="outtop">
+    <div class="note"><b>Case viewer NGOÀI top (global).</b> Global tải top-N; hạng 47 &gt; N → không trong list. Hero standing (🏆) + <b>ghim 1 self-row đáy</b>, ngăn bằng dải <code>⋯ còn N người</code>. Data <code>myRank/myPoints</code> BE trả sẵn. Podium vẫn top-3.</div>
+    <div class="crumb"><b>Trang chủ</b> › Bảng xếp hạng</div>
+    <h1>Bảng xếp hạng</h1>
+    <div class="pilltabs"><div>Tuần này</div><div class="on">Toàn cầu</div></div>
+    <div class="hero"><div class="top"><span class="icontile">🏆</span><div><div class="rank">Hạng #47 toàn nền tảng</div><div class="meta">20 điểm</div></div></div>
+      <div><div class="meter-l">Còn 15 điểm nữa để lên hạng #46</div><div class="meter"><i style="width:8%"></i></div></div>
+      <button class="cta">Làm challenge để leo hạng →</button></div>
+    <div data-podium="global"></div>
+    <div class="tagrow"><span class="blocktag">SurfaceListCard · rank 4+ · self-row ghim</span></div>
+    <div class="listcard" data-list="global-outtop"></div>
+  </section>
+
+  <!-- ============ CASE 4: viewer rank 9 — global, trong list ============ -->
+  <section class="screen" data-screen="global">
+    <div class="note"><b>Global, viewer hạng 9</b> — khung y hệt weekly: hero 🏆 + podium top-3 + SurfaceListCard rank 4+ (trailing = Theo dõi quiet). Viewer nằm trong list (accent value).</div>
+    <div class="crumb"><b>Trang chủ</b> › Bảng xếp hạng</div>
+    <h1>Bảng xếp hạng</h1>
+    <div class="pilltabs"><div>Tuần này</div><div class="on">Toàn cầu</div></div>
+    <div class="hero"><div class="top"><span class="icontile">🏆</span><div><div class="rank">Hạng #9 toàn nền tảng</div><div class="meta">20 điểm</div></div></div>
+      <div><div class="meter-l">Còn 121 điểm nữa để lên hạng #8</div><div class="meter"><i style="width:14%"></i></div></div>
+      <button class="cta">Làm challenge để leo hạng →</button></div>
+    <div data-podium="global"></div>
+    <div class="tagrow"><span class="blocktag">SurfaceListCard · rank 4+ · Theo dõi</span></div>
+    <div class="listcard" data-list="global-r9"></div>
+  </section>
+</div>
+
+<script>
+  // ---- podium variants ----
+  function podium(cfg){
+    // cfg: [ {rank,name,pts,emoji,me?}, ... ] order 2·1·3
+    var order=[cfg[1],cfg[0],cfg[2]];
+    return '<div class="podium">'+order.map(function(c){
+      return '<div class="col'+(c.rank===1?' ch':'')+(c.me?' me':'')+'">'
+        +'<span class="av">'+c.emoji+'</span>'
+        +'<span class="cn">'+c.name+'</span><span class="cp">'+c.pts+'</span>'
+        +'<div class="step">'+c.rank+'</div></div>';
+    }).join('')+'</div>';
+  }
+  var PODIUM={
+    none:[{rank:1,name:'minh_dev',pts:'340đ',emoji:'🦊'},{rank:2,name:'huyen_codes',pts:'220đ',emoji:'🐤'},{rank:3,name:'pakoohacha588',pts:'150đ',emoji:'🐼'}],
+    me2:[{rank:1,name:'minh_dev',pts:'1420đ',emoji:'🦊'},{rank:2,name:'cuongnvtse160875',pts:'1180đ',emoji:'🐨',me:true},{rank:3,name:'pakoohacha588',pts:'980đ',emoji:'🐼'}],
+    global:[{rank:1,name:'minh_dev',pts:'1420đ',emoji:'🦊'},{rank:2,name:'huyen_codes',pts:'1180đ',emoji:'🐤'},{rank:3,name:'pakoohacha588',pts:'980đ',emoji:'🐼'}]
+  };
+  document.querySelectorAll('[data-podium]').forEach(function(el){
+    var k=el.dataset.podium; if(k!=='none'&&PODIUM[k]) el.outerHTML=podium(PODIUM[k]);
+    else el.remove();
+  });
+
+  // ---- list variants ----
+  function row(r){
+    var cls='row'+(r.zone?(' '+r.zone):'')+(r.me?' mine':'');
+    var trail = r.follow ? '<button class="fbtn">＋ Theo dõi</button>'
+      : '<span class="car"'+(r.dir==='down'?' style="color:var(--danger)"':(r.dir==='flat'?' style="color:var(--muted)"':''))+'">'+(r.delta||'—')+'</span>';
+    return '<div class="'+cls+'"><span class="rk">'+r.rank+'</span><span class="av">'+r.emoji+'</span>'
+      +'<span class="nm">'+r.name+'</span><span class="pt">'+r.pts+'</span>'+trail+'</div>';
+  }
+  var LISTS={
+    'weekly-r6':[
+      {rank:4,emoji:'😺',name:'linh_fe',pts:'80đ',delta:'▲2'},
+      {rank:5,emoji:'🐧',name:'duc_data',pts:'60đ',delta:'▼3',dir:'down'},
+      {rank:6,emoji:'🐨',name:'cuongnvtse160875 · Bạn',pts:'120đ',delta:'▲1',me:true},
+      {rank:7,emoji:'🐹',name:'mai_qa',pts:'30đ',delta:'▼2',dir:'down',zone:'zdown'},
+      {rank:8,emoji:'🐟',name:'levan020305',pts:'10đ',delta:'▲4',zone:'zdown'}
+    ],
+    'weekly-r4plus':[
+      {rank:4,emoji:'😺',name:'linh_fe',pts:'80đ',delta:'▲2'},
+      {rank:5,emoji:'🐧',name:'duc_data',pts:'60đ',delta:'▼1',dir:'down'},
+      {rank:6,emoji:'🐹',name:'mai_qa',pts:'40đ',delta:'—',dir:'flat'},
+      {rank:7,emoji:'🐟',name:'levan020305',pts:'30đ',delta:'▼2',dir:'down',zone:'zdown'},
+      {rank:8,emoji:'🦉',name:'thanh_be',pts:'10đ',delta:'▲1',zone:'zdown'}
+    ],
+    'global-r9':[
+      {rank:4,emoji:'🐔',name:'thanh_be',pts:'760đ',follow:true},
+      {rank:5,emoji:'😺',name:'linh_fe',pts:'540đ',follow:true},
+      {rank:6,emoji:'🐧',name:'duc_data',pts:'410đ',follow:true},
+      {rank:7,emoji:'🐰',name:'mai_qa',pts:'250đ',follow:true},
+      {rank:8,emoji:'🐟',name:'ai-eval-runner',pts:'140đ',follow:true},
+      {rank:9,emoji:'🐨',name:'cuongnvtse160875 · Bạn',pts:'20đ',me:true}
+    ],
+    'global-outtop':[
+      {rank:4,emoji:'🐔',name:'thanh_be',pts:'760đ',follow:true},
+      {rank:5,emoji:'😺',name:'linh_fe',pts:'540đ',follow:true},
+      {rank:6,emoji:'🐧',name:'duc_data',pts:'410đ',follow:true},
+      {rank:7,emoji:'🐰',name:'mai_qa',pts:'250đ',follow:true},
+      {rank:8,emoji:'🐟',name:'ai-eval-runner',pts:'140đ',follow:true},
+      {ellipsis:'còn 41 người'},
+      {rank:47,emoji:'🐨',name:'cuongnvtse160875 · Bạn',pts:'20đ',me:true}
+    ]
+  };
+  document.querySelectorAll('[data-list]').forEach(function(el){
+    var rows=LISTS[el.dataset.list]||[];
+    el.innerHTML=rows.map(function(r){
+      if(r.ellipsis) return '<div class="ellipsis"><span class="dots">⋯</span><span>'+r.ellipsis+'</span></div>';
+      return row(r);
+    }).join('');
+  });
+
+  // ---- tabs ----
+  var screens=document.querySelectorAll('.screen'),tabs=document.querySelectorAll('.tab');
+  tabs.forEach(function(t){t.onclick=function(){
+    tabs.forEach(function(x){x.classList.remove('on')});t.classList.add('on');
+    screens.forEach(function(s){s.classList.toggle('on',s.dataset.screen===t.dataset.s)});
+  }});
+</script>
+</body>
+</html>

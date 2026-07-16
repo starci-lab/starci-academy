@@ -2,7 +2,7 @@
 
 import React from "react"
 import { Chip, Typography } from "@heroui/react"
-import { RocketLaunchIcon, TrendUpIcon } from "@phosphor-icons/react"
+import { RocketLaunchIcon, ChartLineUpIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { UserJobReadinessBand, UserJobReadinessTrack } from "@/modules/api/graphql/queries/types/user-job-readiness"
@@ -142,7 +142,7 @@ export const ProfileJobReadiness = ({ className, label }: ProfileJobReadinessPro
                 emptyContent={{
                     title: t("jobReadiness.empty"),
                     description: t("jobReadiness.emptyHint"),
-                    icon: <TrendUpIcon aria-hidden focusable="false" className="size-8 text-muted" />,
+                    icon: <ChartLineUpIcon aria-hidden focusable="false" className="size-8 text-muted" />,
                 }}
                 error={tracks.length === 0 ? error : undefined}
                 errorContent={{

@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowRightIcon, LockKeyIcon } from "@phosphor-icons/react"
+import { ArrowRightIcon, LockIcon } from "@phosphor-icons/react"
 import React, {
     useCallback,
 } from "react"
@@ -49,7 +49,7 @@ export const PremiumPaywall = () => {
         // no card-in-card), right under the faded teaser, as one continuous surface.
         <div className="flex flex-col items-center gap-3 pt-6 text-center">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warning-soft">
-                <LockKeyIcon className="h-6 w-6 text-warning-soft-foreground" />
+                <LockIcon className="h-6 w-6 text-warning-soft-foreground" />
             </div>
             <div className="text-xl font-semibold text-foreground">
                 {t("course.paywall.title")}

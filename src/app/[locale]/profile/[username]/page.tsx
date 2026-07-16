@@ -2,8 +2,8 @@ import React, { cache } from "react"
 import type { Metadata } from "next"
 import { SEO_CONFIG } from "@/config/seo"
 import {
-    PublicProfile,
-} from "@/components/features/profile/PublicProfile"
+    ProfileOverviewTab,
+} from "@/components/features/profile/PublicProfile/ProfileOverviewTab"
 import { publicEnv } from "@/resources/env/public"
 import { JsonLd, personSchema } from "@/modules/seo/jsonLd"
 
@@ -104,14 +104,16 @@ export const generateMetadata = async ({
 }
 
 /**
- * Route `/[locale]/profile/[username]` — any user's public, GitHub-style profile
- * (viewable by anyone), addressed by username like `github.com/<username>`. This
- * is a server component (for `generateMetadata` + Person JSON-LD); it renders the
- * client `PublicProfile`, which reads the username from the route itself.
+ * Route `/[locale]/profile/[username]` — the bare profile URL, which is the
+ * "overview" tab (the GitHub-style front page). Any user's public profile is
+ * viewable by anyone, addressed by username like `github.com/<username>`. This
+ * is a server component (for `generateMetadata` + Person JSON-LD); the shared
+ * shell (hero, tabs bar, loading/not-found/locked handling) lives one level up
+ * in `layout.tsx`, so this page only renders the overview panel itself.
  *
- * Static `/profile/*` children (edit, bookmarks, sessions, …) take precedence
- * over this dynamic segment in Next routing, so the viewer's own profile hub and
- * its sub-pages are unaffected.
+ * Static `/profile/*` children (edit, bookmarks, sessions, cv, …) take
+ * precedence over this dynamic segment in Next routing, so the viewer's own
+ * profile hub and its sub-pages are unaffected.
  *
  * @param props.params - the awaited route params.
  */
@@ -137,7 +139,14 @@ const Page = async ({
                     })}
                 />
             ) : null}
-            <PublicProfile />
+            <div
+                id="profile-panel-overview"
+                role="tabpanel"
+                aria-labelledby="overview"
+                className="flex flex-col gap-6"
+            >
+                <ProfileOverviewTab />
+            </div>
         </>
     )
 }

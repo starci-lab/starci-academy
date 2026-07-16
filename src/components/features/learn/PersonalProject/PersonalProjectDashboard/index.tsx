@@ -3,9 +3,9 @@
 import React, { useCallback, useMemo } from "react"
 import { Chip, Typography, cn } from "@heroui/react"
 import {
-    GithubLogoIcon,
     PlayIcon,
 } from "@phosphor-icons/react"
+import { GithubIcon } from "@/components/svg/GithubIcon"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import {
@@ -188,7 +188,7 @@ export const PersonalProjectDashboard = ({
                             color={isConnected ? "success" : "default"}
                             className={isConnected ? "bg-success-soft text-success-soft-foreground" : undefined}
                         >
-                            <GithubLogoIcon className="size-5" />
+                            <GithubIcon className="size-5" />
                             <Chip.Label>
                                 {isConnected
                                     ? `${toRepoLabel(githubUrl)} · ${githubBranch || "main"}`

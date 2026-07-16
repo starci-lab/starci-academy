@@ -1,6 +1,7 @@
 "use client"
 
 import React, {
+    useMemo,
     useState,
 } from "react"
 import {
@@ -15,6 +16,11 @@ import {
 import {
     useProfileUsername,
 } from "../../hooks/useProfileUsername"
+import {
+    CODING_DIFFICULTY_CHIP,
+    domainLabel,
+} from "../codingDifficultyMeta"
+import { pathConfig } from "@/resources/path"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -27,8 +33,10 @@ import { useQueryUserXpSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserX
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { LanguageChip } from "@/components/blocks/chips/LanguageChip"
-import { MetricCard } from "@/components/blocks/stats/MetricCard"
+import { StatRibbon } from "@/components/blocks/stats/StatRibbon"
 import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
+import { SearchInput } from "@/components/blocks/form/SearchInput"
+import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
@@ -52,24 +60,10 @@ const CODING_DIFFICULTY: ReadonlyArray<{ key: string; labelKey: string; color: s
     { key: "hard", labelKey: "publicProfile.skillsSnapshot.diffHard", color: "var(--danger)" },
 ]
 
-/**
- * CODING difficulty chip meta for the history rows (easy/medium/hard): label key
- * + soft-chip tone (easy green / medium yellow / hard red).
- */
-const CODING_DIFFICULTY_CHIP: Record<string, { labelKey: string; tone: "success" | "warning" | "danger" }> = {
-    easy: { labelKey: "publicProfile.skillsSnapshot.diffEasy", tone: "success" },
-    medium: { labelKey: "publicProfile.skillsSnapshot.diffMedium", tone: "warning" },
-    hard: { labelKey: "publicProfile.skillsSnapshot.diffHard", tone: "danger" },
-}
-
-/**
- * Title-case a domain key for the topic legend, splitting camelCase into words
- * (e.g. `binarySearch` → "Binary Search").
- */
-const domainLabel = (key: string): string => {
-    const spaced = key.replace(/([a-z0-9])([A-Z])/g, "$1 $2")
-    return spaced.charAt(0).toUpperCase() + spaced.slice(1)
-}
+/** Single-select difficulty filter value — `"all"` clears the filter. */
+type DifficultyFilterValue = "all" | string
+/** Single-select language filter value — `"all"` clears the filter. */
+type LanguageFilterValue = "all" | string
 
 /**
  * Coding tab ("Kỹ năng & Lập trình") — the profile owner's coding-practice proof
@@ -145,10 +139,41 @@ export const ProfileCoding = ({
     const hasStats = difficultySegments.length > 0 || orderedDomain.length > 0 || byLanguage.length > 0
 
     const solvedHistory = history ?? []
+
+    // search/filter toolbar (the "manage" layer) — client-side, the list is
+    // already small per-user; no server-side pagination needed here.
+    const [search, setSearch] = useState("")
+    const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilterValue>("all")
+    const [languageFilter, setLanguageFilter] = useState<LanguageFilterValue>("all")
+    // filter option pools — only difficulties/languages actually present in the history
+    const difficultyOptions = useMemo(
+        () => Array.from(new Set(solvedHistory.map((item) => item.difficulty).filter(Boolean))),
+        [solvedHistory],
+    )
+    const languageOptions = useMemo(
+        () => Array.from(new Set(solvedHistory.flatMap((item) => item.languages).filter(Boolean))),
+        [solvedHistory],
+    )
+    const filteredHistory = useMemo(() => {
+        const query = search.trim().toLowerCase()
+        return solvedHistory.filter((item) => {
+            if (query && !item.problemTitle.toLowerCase().includes(query)) {
+                return false
+            }
+            if (difficultyFilter !== "all" && item.difficulty !== difficultyFilter) {
+                return false
+            }
+            if (languageFilter !== "all" && !item.languages.includes(languageFilter)) {
+                return false
+            }
+            return true
+        })
+    }, [solvedHistory, search, difficultyFilter, languageFilter])
+
     // cap the history; the rest hides behind a "see more" link
     const [showAllHistory, setShowAllHistory] = useState(false)
-    const visibleHistory = showAllHistory ? solvedHistory : solvedHistory.slice(0, INITIAL_HISTORY)
-    const hiddenHistory = solvedHistory.length - INITIAL_HISTORY
+    const visibleHistory = showAllHistory ? filteredHistory : filteredHistory.slice(0, INITIAL_HISTORY)
+    const hiddenHistory = filteredHistory.length - INITIAL_HISTORY
     // 2026-07-12: history/skills/standing/xp fire alongside `progress` but were
     // not part of this gate — once `progress` resolved, the tab's sub-sections
     // (metric row's rank/percentile, the stats card, solve history) popped in
@@ -165,11 +190,10 @@ export const ProfileCoding = ({
             isLoading={isFirstLoad}
             skeleton={(
                 <div className={cn("flex flex-col gap-6", className)}>
-                    {/* metric row — solved · points · rank · top */}
-                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                        {[0, 1, 2, 3].map((index) => (
-                            <Skeleton key={index} className="h-24 w-full rounded-2xl" />
-                        ))}
+                    {/* headline stat ribbon — label + one card (StatPair cells) */}
+                    <div className="flex flex-col gap-3">
+                        <Skeleton.Typography type="body-sm" width="1/4" />
+                        <Skeleton className="h-20 w-full rounded-2xl" />
                     </div>
                     {/* stats card: difficulty / topic / language as surface list items */}
                     <div className="flex flex-col gap-3">
@@ -223,16 +247,16 @@ export const ProfileCoding = ({
             }}
         >
             <div className={cn("flex flex-col gap-6", className)}>
-                {/* headline metric row (solved · points · acceptance · rank · top) */}
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                    {stats.map((stat) => (
-                        <MetricCard
-                            key={stat.key}
-                            value={stat.value}
-                            label={t(`publicProfile.coding.metric.${stat.key}`)}
-                        />
-                    ))}
-                </div>
+                {/* headline stat ribbon (solved · XP · top · rank) — labeled section, StatPair row in ONE card */}
+                <LabeledCard label={t("publicProfile.coding.metricsHeading")} frameless>
+                    <StatRibbon
+                        items={stats.map((stat) => ({
+                            key: stat.key,
+                            value: stat.value,
+                            label: t(`publicProfile.coding.metric.${stat.key}`),
+                        }))}
+                    />
+                </LabeledCard>
 
                 {/* gathered stats card — by difficulty + by topic + by language */}
                 {hasStats ? (
@@ -289,62 +313,120 @@ export const ProfileCoding = ({
                     </LabeledCard>
                 ) : null}
 
-                {/* solve history — surface list card (item rows + inset separators) */}
+                {/* solve history — search/filter toolbar (the "manage" layer) + surface list card */}
                 {solvedHistory.length > 0 ? (
                     <LabeledCard
                         label={t("publicProfile.coding.history")}
                         frameless
                     >
-                        <SurfaceListCard>
-                            {visibleHistory.map((item, index) => {
-                                const difficulty = CODING_DIFFICULTY_CHIP[item.difficulty]
-                                const solvedAt = item.firstSolvedAt
-                                    ? new Date(item.firstSolvedAt).toLocaleDateString(locale)
-                                    : undefined
-                                return (
-                                    <SurfaceListCardItem key={`${item.problemTitle}-${index}`}>
-                                        <div className="flex items-center gap-3">
-                                            {/* title + date */}
-                                            <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                                <Typography type="body-sm" weight="medium" truncate>
-                                                    {item.problemTitle}
-                                                </Typography>
-                                                {solvedAt ? (
-                                                    <Typography type="body-xs" color="muted">
-                                                        {solvedAt}
+                        <div className="flex flex-col gap-3">
+                            <div className="flex flex-wrap items-center justify-between gap-3">
+                                <SearchInput
+                                    value={search}
+                                    onValueChange={setSearch}
+                                    placeholder={t("publicProfile.coding.manage.searchPlaceholder")}
+                                />
+                                <Typography type="body-sm" color="muted" className="shrink-0">
+                                    {t("publicProfile.coding.manage.found", { count: filteredHistory.length })}
+                                </Typography>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                {difficultyOptions.length > 0 ? (
+                                    <FlexWrapButtonRadio<DifficultyFilterValue>
+                                        ariaLabel={t("publicProfile.coding.manage.difficultyFilterAria")}
+                                        value={difficultyFilter}
+                                        onChange={setDifficultyFilter}
+                                        items={[
+                                            { value: "all", content: t("publicProfile.coding.manage.allDifficulties") },
+                                            ...difficultyOptions.map((raw) => {
+                                                const meta = CODING_DIFFICULTY_CHIP[raw]
+                                                return {
+                                                    value: raw,
+                                                    content: meta ? <StatusChip tone={meta.tone}>{t(meta.labelKey)}</StatusChip> : raw,
+                                                }
+                                            }),
+                                        ]}
+                                    />
+                                ) : null}
+                                {languageOptions.length > 0 ? (
+                                    <FlexWrapButtonRadio<LanguageFilterValue>
+                                        ariaLabel={t("publicProfile.coding.manage.languageFilterAria")}
+                                        value={languageFilter}
+                                        onChange={setLanguageFilter}
+                                        items={[
+                                            { value: "all", content: t("publicProfile.coding.manage.allLanguages") },
+                                            ...languageOptions.map((lang) => ({
+                                                value: lang,
+                                                content: <LanguageChip language={lang} />,
+                                            })),
+                                        ]}
+                                    />
+                                ) : null}
+                            </div>
+                        </div>
+
+                        {filteredHistory.length === 0 ? (
+                            <Typography type="body-sm" color="muted" className="mt-3">
+                                {t("publicProfile.coding.manage.emptyFiltered")}
+                            </Typography>
+                        ) : (
+                            <SurfaceListCard className="mt-3">
+                                {visibleHistory.map((item, index) => {
+                                    const difficulty = CODING_DIFFICULTY_CHIP[item.difficulty]
+                                    const solvedAt = item.firstSolvedAt
+                                        ? new Date(item.firstSolvedAt).toLocaleDateString(locale)
+                                        : undefined
+                                    return (
+                                        <SurfaceListCardItem
+                                            key={`${item.slug}-${index}`}
+                                            hover="underline"
+                                            href={username
+                                                ? pathConfig().locale(locale).profile(username).skills().problem(item.slug).build()
+                                                : undefined}
+                                        >
+                                            <div className="flex items-center gap-3">
+                                                {/* title + date */}
+                                                <div className="flex min-w-0 flex-1 flex-col gap-2">
+                                                    <Typography type="body-sm" weight="medium" truncate className="underline-offset-2 group-hover:underline">
+                                                        {item.problemTitle}
                                                     </Typography>
-                                                ) : null}
+                                                    {solvedAt ? (
+                                                        <Typography type="body-xs" color="muted">
+                                                            {solvedAt}
+                                                        </Typography>
+                                                    ) : null}
+                                                </div>
+                                                {/* difficulty · topic · languages — pushed right */}
+                                                <div className="flex shrink-0 flex-wrap items-center justify-end gap-2">
+                                                    {difficulty ? (
+                                                        <StatusChip tone={difficulty.tone}>
+                                                            {t(difficulty.labelKey)}
+                                                        </StatusChip>
+                                                    ) : null}
+                                                    {item.domain ? (
+                                                        <StatusChip tone="neutral">
+                                                            {domainLabel(item.domain)}
+                                                        </StatusChip>
+                                                    ) : null}
+                                                    {item.languages.map((language) => (
+                                                        <LanguageChip key={language} language={language} />
+                                                    ))}
+                                                </div>
                                             </div>
-                                            {/* difficulty · topic · languages — pushed right */}
-                                            <div className="flex shrink-0 flex-wrap items-center justify-end gap-2">
-                                                {difficulty ? (
-                                                    <StatusChip tone={difficulty.tone}>
-                                                        {t(difficulty.labelKey)}
-                                                    </StatusChip>
-                                                ) : null}
-                                                {item.domain ? (
-                                                    <StatusChip tone="neutral">
-                                                        {domainLabel(item.domain)}
-                                                    </StatusChip>
-                                                ) : null}
-                                                {item.languages.map((language) => (
-                                                    <LanguageChip key={language} language={language} />
-                                                ))}
-                                            </div>
-                                        </div>
+                                        </SurfaceListCardItem>
+                                    )
+                                })}
+                                {hiddenHistory > 0 ? (
+                                    <SurfaceListCardItem onPress={() => setShowAllHistory((open) => !open)}>
+                                        <span className="inline-flex items-center gap-2 text-muted">
+                                            {showAllHistory
+                                                ? t("publicProfile.coding.showLess")
+                                                : t("publicProfile.coding.showMore", { count: hiddenHistory })}
+                                        </span>
                                     </SurfaceListCardItem>
-                                )
-                            })}
-                            {hiddenHistory > 0 ? (
-                                <SurfaceListCardItem onPress={() => setShowAllHistory((open) => !open)}>
-                                    <span className="inline-flex items-center gap-2 text-muted">
-                                        {showAllHistory
-                                            ? t("publicProfile.coding.showLess")
-                                            : t("publicProfile.coding.showMore", { count: hiddenHistory })}
-                                    </span>
-                                </SurfaceListCardItem>
-                            ) : null}
-                        </SurfaceListCard>
+                                ) : null}
+                            </SurfaceListCard>
+                        )}
                     </LabeledCard>
                 ) : null}
             </div>

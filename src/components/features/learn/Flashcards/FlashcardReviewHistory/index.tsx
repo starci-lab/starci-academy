@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react"
 import useSWR from "swr"
 import { Accordion, Button, Card, CardContent, Chip, Input, TextField, Typography, cn } from "@heroui/react"
-import { CardsThreeIcon, ClockCounterClockwiseIcon, ClockIcon } from "@phosphor-icons/react"
+import { CardsIcon, ClockCounterClockwiseIcon, ClockIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
@@ -237,7 +237,7 @@ export const FlashcardReviewHistory = ({ courseId, onStartReview, className }: F
                                         {
                                             key: "deck",
                                             label: (
-                                                <CardsThreeIcon
+                                                <CardsIcon
                                                     className="size-5"
                                                     aria-label={t("flashcard.review.historyGroupByDeck")}
                                                     focusable="false"

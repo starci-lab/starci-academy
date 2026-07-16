@@ -17,11 +17,13 @@ const query1 = gql`
         totalTasks
         completedTasks
         milestones {
+          milestoneGlobalId
           title
           position
           totalTasks
           passedTasks
           tasks {
+            taskGlobalId
             title
             passed
             score

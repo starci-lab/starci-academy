@@ -202,6 +202,88 @@ export const pathConfig = () => {
                     build,
                 }
             }
+            // public-profile top-level tabs (`/profile/<username>/<tab>`), nested
+            // routes replacing the old `?tab=` query param + Zustand store. Bare
+            // `overview` has no extra segment — it IS `profilePath` itself. Leaves
+            // room for deeper nesting later (e.g. `.challenges().course(id)`).
+            const overview = () => {
+                const build = () => {
+                    return profilePath
+                }
+                return {
+                    build,
+                }
+            }
+            const projects = () => {
+                const projectsPath = `${profilePath}/projects`
+                const build = () => {
+                    return projectsPath
+                }
+                // `/profile/<u>/projects/<courseGlobalId>` — the full capstone
+                // roadmap (milestones + tasks) of ONE course.
+                const course = (courseGlobalId: string) => {
+                    const coursePath = `${projectsPath}/${courseGlobalId}`
+                    return {
+                        build: () => coursePath,
+                    }
+                }
+                return {
+                    build,
+                    course,
+                }
+            }
+            const challenges = () => {
+                const challengesPath = `${profilePath}/challenges`
+                const build = () => {
+                    return challengesPath
+                }
+                // `/profile/<u>/challenges/<courseId>` = MANAGE page (search /
+                // filter / sort a course's submissions); `.submission(id)` =
+                // `/challenges/<courseId>/<submissionId>` DETAIL (+ AI feedback).
+                const course = (courseId: string) => {
+                    const coursePath = `${challengesPath}/${courseId}`
+                    const submission = (submissionId: string) => {
+                        return {
+                            build: () => `${coursePath}/${submissionId}`,
+                        }
+                    }
+                    return {
+                        build: () => coursePath,
+                        submission,
+                    }
+                }
+                return {
+                    build,
+                    course,
+                }
+            }
+            const skills = () => {
+                const skillsPath = `${profilePath}/skills`
+                const build = () => {
+                    return skillsPath
+                }
+                // `/profile/<u>/skills/<slug>` — a solved coding problem's detail
+                // (statement + the owner's accepted-submission summary).
+                const problem = (slug: string) => {
+                    const problemPath = `${skillsPath}/${slug}`
+                    return {
+                        build: () => problemPath,
+                    }
+                }
+                return {
+                    build,
+                    problem,
+                }
+            }
+            const activity = () => {
+                const activityPath = `${profilePath}/activity`
+                const build = () => {
+                    return activityPath
+                }
+                return {
+                    build,
+                }
+            }
             return {
                 build,
                 bookmarks,
@@ -220,6 +302,11 @@ export const pathConfig = () => {
                 feedback,
                 cv,
                 appearance,
+                overview,
+                projects,
+                challenges,
+                skills,
+                activity,
             }
         }
         const authentication = () => {

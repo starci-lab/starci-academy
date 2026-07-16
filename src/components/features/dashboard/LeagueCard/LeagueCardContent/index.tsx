@@ -87,7 +87,6 @@ export const LeagueCardContent = ({
     )
 
     const total = data.entries.length
-    const demoteFrom = total - data.demoteCount
 
     // the viewer's own standing (best-effort username match — no raw id on entries)
     const myEntry = me?.username
@@ -107,12 +106,13 @@ export const LeagueCardContent = ({
     const hiddenCount = Math.max(0, total - topRows.length - (myEntry ? 1 : 0))
 
     /** Render one full-width cohort row (rank · avatar · name · points · caret). */
+    // capped preview (top-4) → no zone markers: the demote cut line isn't visible in
+    // a top slice, so a zone edge here would signal nothing. Full zones live on the
+    // /league page. Viewer's own row is excluded here (pulled into the card below).
     const renderRow = (entry: typeof data.entries[number]) => (
         <LeagueRow
             key={entry.userGlobalId}
             entry={entry}
-            isPromote={entry.rank <= data.promoteCount}
-            isDemote={entry.rank > demoteFrom}
             isMe={Boolean(me?.username) && entry.username === me?.username}
         />
     )
@@ -186,12 +186,12 @@ export const LeagueCardContent = ({
             {myEntry ? (
                 <LabeledCard label={t("dashboard.league.yourRank")} frameless>
                     <SurfaceListCard bordered>
+                        {/* ring suppressed (ring-0): the "Hạng của bạn" label + bordered
+                            card already frame this as mine; accent rank/points remain */}
                         <LeagueRow
                             entry={myEntry}
-                            isPromote={myEntry.rank <= data.promoteCount}
-                            isDemote={myEntry.rank > demoteFrom}
                             isMe
-                            className="rounded-none"
+                            className="rounded-none ring-0"
                         />
                     </SurfaceListCard>
                 </LabeledCard>

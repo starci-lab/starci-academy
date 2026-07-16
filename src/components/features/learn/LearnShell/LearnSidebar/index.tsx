@@ -9,7 +9,7 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    LockSimpleIcon,
+    LockIcon,
 } from "@phosphor-icons/react"
 import {
     useRouter,
@@ -127,7 +127,7 @@ export const LearnSidebar = ({ className }: LearnSidebarProps) => {
                                     label={item.label}
                                     isActive={selectedTab === item.tab}
                                     endContent={item.locked ? (
-                                        <LockSimpleIcon
+                                        <LockIcon
                                             aria-label={t("enrollGate.locked")}
                                             focusable="false"
                                             className="size-4 text-muted"

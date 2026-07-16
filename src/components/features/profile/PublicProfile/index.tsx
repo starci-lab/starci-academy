@@ -25,9 +25,6 @@ import {
     useProfileUsername,
 } from "./hooks/useProfileUsername"
 import {
-    useProfileTabUrlSync,
-} from "./hooks/useProfileTabUrlSync"
-import {
     ProfileHero,
 } from "./ProfileHero"
 import {
@@ -42,48 +39,36 @@ import {
 import {
     ProfileLockedState,
 } from "./ProfileLockedState"
-import {
-    ProfileOverviewTab,
-} from "./ProfileOverviewTab"
-import {
-    ProfileChallengesTab,
-} from "./ProfileChallengesTab"
-import {
-    ProfileProjectsTab,
-} from "./ProfileProjectsTab"
-import {
-    ProfileSkillsTab,
-} from "./ProfileSkillsTab"
-import {
-    ProfileActivityTab,
-} from "./ProfileActivityTab"
-import {
-    ProfileCvTab,
-} from "./ProfileCvTab"
 import { useAppSelector } from "@/redux/hooks"
-import { useProfileTabStore } from "@/hooks/zustand/profileTab/store"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
 import { useRegisterNavbarBottomLayer } from "@/hooks/zustand/navbarBottomLayer/store"
 
 /** Props for {@link PublicProfile}. */
-export type PublicProfileProps = WithClassNames<undefined>
+export interface PublicProfileProps extends WithClassNames<undefined> {
+    /** The active tab's panel — rendered by that tab's own route `page.tsx`. */
+    children: React.ReactNode
+}
 
 /**
- * Public profile of any user — viewable by anyone, signed in or not. Editorial
- * layout: a full-width tab strip pinned under the app navbar, then the identity
- * hero and a single centered content column. Each tab is its own self-fetching
- * container, so a tab only queries when first opened.
+ * Shared shell of the public profile — viewable by anyone, signed in or not.
+ * Editorial layout: a full-width tab strip pinned under the app navbar, then the
+ * identity hero and a single centered content column. This is the ONLY place that
+ * owns the loading / not-found / locked / main branch decision, the hero, and the
+ * tabs-bar registration; each tab is a real nested route
+ * (`/profile/<username>/<tab>`, bare = overview) whose own `page.tsx` renders
+ * `children` — so a tab only queries when its route is actually open.
  *
- * A thin orchestrator: it owns only the loading / not-found / locked / main
- * branch decision; the hero, the tabs bar, each state view, and every tab
- * self-fetch the viewed user (SWR-deduped) so they take no data props, and the
- * open tab lives in a shared store. Mounted by `/profile/[username]`; the target
- * username is read from the route (or the signed-in user on the bare `/profile`).
+ * Mounted by the `/profile/[username]` route layout (`app/[locale]/profile/
+ * [username]/layout.tsx`); the target username is read from the route. The bare
+ * `/profile` route (viewer's own profile) does NOT mount this shell — it only
+ * ever redirects to `/profile/<username>` once the viewer hydrates, so it renders
+ * a plain {@link ProfileLoadingState} meanwhile instead.
  *
  * @param props - {@link PublicProfileProps}
  */
 export const PublicProfile = ({
     className,
+    children,
 }: PublicProfileProps) => {
     const username = useProfileUsername()
     const viewer = useAppSelector((state) => state.user.user)
@@ -93,9 +78,6 @@ export const PublicProfile = ({
         isLoading,
         error,
     } = useQueryUserProfileSwr(username)
-    const { tab } = useProfileTabStore()
-    // keep the open tab in the URL query (`?tab=`) — shareable + back/forward
-    useProfileTabUrlSync()
 
     // canonicalize the URL to `/profile/<username>` — a legacy/email-addressed
     // link (e.g. `/profile/<email>`) still resolves on the backend, but once the
@@ -121,7 +103,10 @@ export const PublicProfile = ({
     // the profile tab strip renders as the global Navbar's bottom layer, but only
     // when the main profile actually shows (not on loading / not-found / locked).
     const showTabs = !isLoading && !(authenticated && !username) && Boolean(user) && !error && !isLocked
-    const tabsNode = useMemo(() => <ProfileTabsBar isSelf={isSelf} />, [isSelf])
+    const tabsNode = useMemo(
+        () => (user ? <ProfileTabsBar username={user.username} isSelf={isSelf} /> : null),
+        [user, isSelf],
+    )
     useRegisterNavbarBottomLayer(showTabs ? tabsNode : null)
 
     // first load → skeleton so the column never jumps. On the bare `/profile` the
@@ -151,68 +136,9 @@ export const PublicProfile = ({
                     <ProfileHero />
                 </aside>
 
-                {/* right: selected tab content (only the open tab mounts → lazy fetch) */}
+                {/* right: the active tab's panel, rendered by its own route */}
                 <main className="flex min-w-0 flex-1 flex-col gap-6">
-                    {tab === "overview" ? (
-                        <div
-                            id="profile-panel-overview"
-                            role="tabpanel"
-                            aria-labelledby="overview"
-                            className="flex flex-col gap-6"
-                        >
-                            <ProfileOverviewTab />
-                        </div>
-                    ) : null}
-                    {tab === "challenges" ? (
-                        <div
-                            id="profile-panel-challenges"
-                            role="tabpanel"
-                            aria-labelledby="challenges"
-                            className="flex flex-col gap-6"
-                        >
-                            <ProfileChallengesTab />
-                        </div>
-                    ) : null}
-                    {tab === "projects" ? (
-                        <div
-                            id="profile-panel-projects"
-                            role="tabpanel"
-                            aria-labelledby="projects"
-                            className="flex flex-col gap-6"
-                        >
-                            <ProfileProjectsTab />
-                        </div>
-                    ) : null}
-                    {tab === "skills" ? (
-                        <div
-                            id="profile-panel-skills"
-                            role="tabpanel"
-                            aria-labelledby="skills"
-                            className="flex flex-col gap-6"
-                        >
-                            <ProfileSkillsTab />
-                        </div>
-                    ) : null}
-                    {tab === "cv" && isSelf ? (
-                        <div
-                            id="profile-panel-cv"
-                            role="tabpanel"
-                            aria-labelledby="cv"
-                            className="flex flex-col gap-6"
-                        >
-                            <ProfileCvTab />
-                        </div>
-                    ) : null}
-                    {tab === "activity" ? (
-                        <div
-                            id="profile-panel-activity"
-                            role="tabpanel"
-                            aria-labelledby="activity"
-                            className="flex flex-col gap-6"
-                        >
-                            <ProfileActivityTab />
-                        </div>
-                    ) : null}
+                    {children}
                 </main>
             </div>
         </div>

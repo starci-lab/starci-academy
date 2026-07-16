@@ -9,7 +9,7 @@ import {
 } from "next-intl"
 import {
     ArrowRightIcon,
-    BookOpenIcon,
+    GraduationCapIcon,
 } from "@phosphor-icons/react"
 import {
     usePricingRows,
@@ -68,7 +68,7 @@ export const CourseMobileEnrollBar = ({ className }: CourseMobileEnrollBarProps)
                 ) : null}
                 {isEnrolled ? (
                     <Button variant="primary" onPress={onContinueLearning}>
-                        <BookOpenIcon className="size-5" />
+                        <GraduationCapIcon className="size-5" />
                         {t("course.continueLearning")}
                     </Button>
                 ) : (

@@ -23,12 +23,12 @@ import {
     ArrowRightIcon,
     CodeIcon,
     FileArrowUpIcon,
-    GithubLogoIcon,
     GraduationCapIcon,
     PaperPlaneTiltIcon,
     SparkleIcon,
     StackIcon,
 } from "@phosphor-icons/react"
+import { GithubIcon } from "@/components/svg/GithubIcon"
 import { HeroBanner } from "@/components/blocks/marketing/HeroBanner"
 import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
@@ -125,7 +125,7 @@ export const RagPlayground = ({ className }: RagPlaygroundProps) => {
             {
                 key: RagPlaygroundSourceKind.Github,
                 label: t("ragPlayground.import.tabs.github"),
-                icon: <GithubLogoIcon aria-hidden focusable="false" className="size-4" />,
+                icon: <GithubIcon className="size-4" />,
             },
         ],
         [t],

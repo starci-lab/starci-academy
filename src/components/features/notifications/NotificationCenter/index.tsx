@@ -12,7 +12,7 @@ import {
     ChecksIcon as CheckDoubleIcon,
     CircleIcon,
     CodeIcon,
-    FireIcon,
+    FlameIcon,
     FlagIcon,
     MegaphoneIcon,
     PuzzlePieceIcon,
@@ -83,7 +83,7 @@ const TYPE_ICONS: Record<NotificationType, ReactNode> = {
     [NotificationType.CommentReply]: <ChatCircleIcon aria-hidden focusable="false" />,
     [NotificationType.SubscriptionGranted]: <SparkleIcon aria-hidden focusable="false" />,
     [NotificationType.Announcement]: <MegaphoneIcon aria-hidden focusable="false" />,
-    [NotificationType.StreakMilestone]: <FireIcon aria-hidden focusable="false" />,
+    [NotificationType.StreakMilestone]: <FlameIcon aria-hidden focusable="false" />,
 }
 
 /**
@@ -266,7 +266,7 @@ export const NotificationCenter = ({ className }: NotificationCenterProps) => {
                             {
                                 key: NotificationType.StreakMilestone,
                                 label: t("notifications.tabs.streakMilestone"),
-                                icon: <FireIcon className="size-4" aria-hidden focusable="false" />,
+                                icon: <FlameIcon className="size-4" aria-hidden focusable="false" />,
                             },
                             {
                                 key: NotificationType.Announcement,

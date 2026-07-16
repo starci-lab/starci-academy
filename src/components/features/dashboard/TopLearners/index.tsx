@@ -49,9 +49,13 @@ export type TopLearnersProps = WithClassNames<undefined>
 
 /**
  * Dashboard "Community" tab — the platform's top learners this period (avatar · name
- * · XP) with an inline follow on each stranger row. Self-fetches the global
- * leaderboard; renders a standard empty-state when there are no entries, and a
- * "see more" link to the full leaderboard when it overflows {@link TOP_N}.
+ * · XP) with an inline follow on each stranger row, PLUS the viewer's own global
+ * standing as a header line (rank · total XP). Both read the SAME global-leaderboard
+ * query, so they're one card (thầy 2026-07-17: "vị thế toàn cục gom với top học viên,
+ * danh sách học viên render trong surface-in-surface như League tuần") — a framed
+ * `LabeledCard` (standing line on top) over a `bordered` `SurfaceListCard`
+ * (surface-in-surface). Self-fetches; renders a standard empty-state when there are no
+ * entries; the header "see more" opens the full leaderboard.
  * @param props - optional root class name (placement only)
  */
 export const TopLearners = ({
@@ -108,8 +112,6 @@ export const TopLearners = ({
 
     // empty (after load) when the board has no entries
     const isEmpty = !data || data.entries.length === 0
-    // more leaders exist beyond the visible top slice → "see more" affordance
-    const hasOverflow = Boolean(data) && data!.entries.length > TOP_N
 
     /** Open the full leaderboard page. */
     const onSeeMore = useCallback(
@@ -130,13 +132,26 @@ export const TopLearners = ({
         >
             {!isEmpty && data ? (
                 <LabeledCard
-                    frameless
                     label={t("dashboard.community.topLearners.title")}
-                    onSeeMore={hasOverflow ? onSeeMore : undefined}
+                    onSeeMore={onSeeMore}
                     seeMoreLabel={t("dashboard.community.topLearners.seeMore")}
                     className={className}
+                    contentClassName="flex flex-col gap-3"
                 >
-                    <SurfaceListCard>
+                    {/* the viewer's own platform-wide standing — a header line above the
+                        list (the merged "Vị thế toàn cục"); only when the viewer has a rank */}
+                    {data.myRank !== null && data.myRank !== undefined ? (
+                        <Typography type="body-sm">
+                            {t("dashboard.community.globalStanding.line", {
+                                rank: data.myRank,
+                                points: data.myPoints,
+                            })}
+                        </Typography>
+                    ) : null}
+
+                    {/* the top-N learners — nested surface-in-surface (bordered) like the
+                        League tuần "Hạng của bạn" card */}
+                    <SurfaceListCard bordered>
                         {data.entries.slice(0, TOP_N).map((entry) => {
                             const isMe = Boolean(me?.username) && entry.username === me?.username
                             return (
@@ -163,6 +178,7 @@ export const TopLearners = ({
                                         {!isMe ? (
                                             <FollowButton
                                                 className="shrink-0"
+                                                quiet
                                                 following={followed.has(entry.userGlobalId)}
                                                 isPending={pending.has(entry.userGlobalId)}
                                                 onToggle={() => void onToggleFollow(entry.userGlobalId)}

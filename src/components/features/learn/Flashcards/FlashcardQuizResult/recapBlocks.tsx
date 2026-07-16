@@ -2,7 +2,7 @@
 
 import React, { useCallback } from "react"
 import { Button, cn, ScrollShadow, Typography } from "@heroui/react"
-import { ArrowRightIcon, FlameIcon, LockKeyIcon, MicrophoneStageIcon } from "@phosphor-icons/react"
+import { ArrowRightIcon, FlameIcon, LockIcon, MicrophoneStageIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { type QuizSessionReadinessData, type QuizSessionWeakTagData } from "@/modules/api/graphql/mutations/types/complete-flashcard-quiz-session"
@@ -222,7 +222,7 @@ export const RecapReadinessCallout = ({ readiness, mockInterviewHref }: RecapRea
         return (
             <Callout
                 status="default"
-                icon={<LockKeyIcon className="size-5" aria-hidden focusable="false" />}
+                icon={<LockIcon className="size-5" aria-hidden focusable="false" />}
                 title={t("flashcard.quiz.readinessLockedTitle")}
                 description={t("flashcard.quiz.readinessLockedDescription", {
                     currentAvg: readiness.currentAvg,

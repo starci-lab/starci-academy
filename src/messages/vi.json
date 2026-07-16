@@ -2918,6 +2918,7 @@
       "showLess": "Thu gọn",
       "showMore": "Xem thêm {count}",
       "statsHeading": "Thống kê",
+      "metricsHeading": "Chỉ số",
       "empty": "Chưa giải bài luyện code nào",
       "emptyHint": "Giải các bài luyện code được chấm điểm để thể hiện kỹ năng lập trình của bạn ở đây.",
       "metric": {
@@ -2925,6 +2926,23 @@
         "xp": "XP",
         "percentile": "Top",
         "rank": "Hạng"
+      },
+      "manage": {
+        "searchPlaceholder": "Tìm theo tên bài",
+        "found": "Tìm thấy {count}",
+        "allDifficulties": "Mọi độ khó",
+        "allLanguages": "Mọi ngôn ngữ",
+        "difficultyFilterAria": "Lọc theo độ khó",
+        "languageFilterAria": "Lọc theo ngôn ngữ",
+        "emptyFiltered": "Không có bài nào khớp bộ lọc"
+      },
+      "detail": {
+        "title": "Chi tiết bài tập",
+        "statementHeading": "Đề bài",
+        "submissionHeading": "Bài nộp đã đạt",
+        "notSolved": "Chưa giải bài này",
+        "notFound": "Không tìm thấy bài tập này",
+        "passedOf": "Đạt {passed}/{total} testcase"
       }
     },
     "capstone": {
@@ -2941,7 +2959,15 @@
       "roadmapSummary": "{completedMilestones}/{totalMilestones} milestone · {completedTasks}/{totalTasks} task",
       "showLess": "Thu gọn",
       "showMore": "Xem thêm {count}",
-      "viewTasks": "Xem milestone & task"
+      "viewTasks": "Xem milestone & task",
+      "seeRoadmap": "Xem lộ trình",
+      "roadmapTitle": "Lộ trình dự án",
+      "roadmapBackToProjects": "Dự án",
+      "roadmapMilestoneProgress": "{completed}/{total} task",
+      "roadmapTaskCount": "{count} task",
+      "roadmapNotFound": "Không tìm thấy dự án này",
+      "roadmapNotFoundHint": "Capstone của khóa học này không thuộc hồ sơ đang xem.",
+      "roadmapEmpty": "Capstone này chưa có milestone nào"
     },
     "skills": {
       "byLanguage": "Theo ngôn ngữ",
@@ -3008,6 +3034,7 @@
       "showLess": "Thu gọn",
       "showMore": "Xem thêm {count}",
       "statsHeading": "Thống kê",
+      "metricsHeading": "Chỉ số",
       "submissionCount": "{count} đã đạt",
       "submissionProgress": "{passed}/{total} đã đạt",
       "ungrouped": "Khác",
@@ -3017,6 +3044,26 @@
         "xp": "XP",
         "percentile": "Top",
         "rank": "Hạng"
+      },
+      "manage": {
+        "title": "Bài nộp",
+        "description": "Tìm, lọc và sắp xếp các bài nộp đã vượt qua của khóa học này.",
+        "searchPlaceholder": "Tìm theo tên thử thách",
+        "found": "Tìm thấy {count}",
+        "allDifficulties": "Mọi độ khó",
+        "allLanguages": "Mọi ngôn ngữ",
+        "difficultyFilterAria": "Lọc theo độ khó",
+        "languageFilterAria": "Lọc theo ngôn ngữ",
+        "sortAria": "Sắp xếp bài nộp",
+        "sortNewest": "Mới nhất",
+        "sortScore": "Điểm cao nhất",
+        "emptyFiltered": "Không có bài nộp nào khớp bộ lọc"
+      },
+      "detail": {
+        "title": "Chi tiết bài nộp",
+        "notFound": "Không tìm thấy bài nộp này",
+        "feedbackHeading": "Nhận xét từ AI",
+        "feedbackEmpty": "Chưa có nhận xét"
       }
     },
     "achievementGroups": {
@@ -3503,12 +3550,20 @@
       "resetIn": "Reset sau {days} ngày {hours} giờ",
       "promote": "Top {count} thăng hạng",
       "demote": "{count} cuối rớt hạng",
+      "promoteZone": "Khu thăng hạng",
+      "demoteZone": "Khu rớt hạng",
+      "you": "Bạn",
+      "othersCount": "còn {count} người",
       "points": "{count} điểm",
       "globalSubtitle": "Xếp theo tổng điểm thưởng",
+      "globalRankLine": "Hạng #{rank} toàn nền tảng",
       "help": "Mỗi tuần bạn thi đua cùng một nhóm người học. Kiếm điểm để thăng hạng và tránh bị rớt hạng.",
       "others": "+{count} người khác",
       "pageTitle": "Bảng xếp hạng",
       "seeMore": "Xem bảng xếp hạng",
+      "climbCta": "Vào khóa học kiếm điểm",
+      "pointsToNext": "Còn {points} điểm nữa để lên hạng #{rank}",
+      "pointsToPromote": "Còn {points} điểm nữa để vào top thăng hạng",
       "tabGlobal": "Toàn cầu",
       "tabWeekly": "Tuần này",
       "tierHelp": "Hạng league hiện tại của bạn. Lọt top mỗi tuần để thăng hạng.",
@@ -3652,11 +3707,14 @@
       "nudge": "Học một nội dung hôm nay để giữ chuỗi của bạn"
     },
     "kpi": {
-      "clear": "Xóa",
+      "claimReward": "Nhận thưởng",
+      "claimed": "Đã nhận",
+      "coinReward": "+{count} coin",
       "edit": "Sửa",
       "error": "Không lưu được mục tiêu. Vui lòng thử lại.",
       "help": "Đặt mục tiêu tuần cho từng chỉ số và theo dõi tiến độ của bạn trong tuần.",
       "prompt": "Đặt mục tiêu tuần để theo dõi tiến độ",
+      "resetIn": "Reset sau {days} ngày {hours} giờ",
       "subtitle": "Chọn mục tiêu tuần cho từng chỉ số để giữ đúng nhịp.",
       "summary": "{percent}% tuần này · đạt {completed}/{total} mục tiêu",
       "title": "KPI tuần",
@@ -4343,6 +4401,8 @@
     "title": "Băng bảo vệ chuỗi"
   },
   "weeklyChallenge": {
+    "claimError": "Không nhận được thưởng. Vui lòng thử lại.",
+    "claimReward": "Nhận +{count} coin",
     "endsIn": "Còn {days} ngày {hours} giờ",
     "passed": "Đã vượt qua",
     "passedCount": "{count, plural, other {# người đã vượt qua}}",

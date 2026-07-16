@@ -2,7 +2,7 @@
 
 import React, { useCallback } from "react"
 import { Button, Link, Typography } from "@heroui/react"
-import { BookOpenIcon, TrashIcon } from "@phosphor-icons/react"
+import { GraduationCapIcon, TrashIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
@@ -61,7 +61,7 @@ export const CartLine = ({ item, previewLine, onRemove, isMutating }: CartLinePr
                 <IconTile
                     size="sm"
                     tone="accent"
-                    icon={<BookOpenIcon />}
+                    icon={<GraduationCapIcon />}
                     src={item.course.coverImageUrl}
                     alt={item.course.title}
                 />

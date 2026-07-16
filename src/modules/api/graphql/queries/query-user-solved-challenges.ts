@@ -10,6 +10,7 @@ const query1 = gql`
       message
       error
       data {
+        id
         title
         submissionUrl
         submissionType
@@ -18,6 +19,7 @@ const query1 = gql`
         difficulty
         score
         courseTitle
+        courseGlobalId
       }
     }
   }

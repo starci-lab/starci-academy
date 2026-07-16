@@ -27,7 +27,7 @@ export const Default: Story = {
             "chữ \"Đang tải...\", không để im lặng. Hết trang thì không hiện gì cả.",
     },
     render: () => (
-        <div className="w-64 border border-dashed border-default-300 p-4">
+        <div className="w-64 border border-dashed border-default-300 p-3">
             <p className="mb-2 text-sm text-default-500">Danh sách khóa học...</p>
             <InfiniteScrollSentinel onReach={() => {}} />
         </div>

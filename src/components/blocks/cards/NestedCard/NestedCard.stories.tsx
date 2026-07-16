@@ -50,7 +50,7 @@ export const SurfaceInSurface: Story = {
                 </Typography>
             </div>
             <div className="flex flex-col overflow-hidden rounded-2xl border border-default bg-surface">
-                <div className="flex flex-col gap-2 p-4">
+                <div className="flex flex-col gap-2 p-3">
                     <div className="max-w-[85%] rounded-2xl bg-surface-secondary px-3 py-2">
                         <Typography type="body-sm">
                             Thường là khi bạn thấy dữ liệu bị lặp lại nhiều dòng hoặc một cột phụ thuộc vào cột không phải khoá chính.

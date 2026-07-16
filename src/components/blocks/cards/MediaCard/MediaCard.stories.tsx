@@ -14,7 +14,7 @@ export const Default: Story = {
     parameters: {
         usage:
             "Thẻ nội dung MỘT hình dạng dùng chung cho mọi lưới entity (khóa học, bài học, thử thách, blog): " +
-            "cover 16:9 full-bleed trên cùng (sát mép card, Card p-0) rồi tiêu đề, meta, tóm tắt, CTA trong body p-4. " +
+            "cover 16:9 full-bleed trên cùng (sát mép card, Card p-0) rồi tiêu đề, meta, tóm tắt, CTA trong body p-3. " +
             "Không truyền cover → fallback placeholder 16:9. Slot chữ nào không có dữ liệu thì bỏ trống. " +
             "Thẻ KHÔNG tự nhận press: cần bấm cả thẻ thì truyền `href`/`onPress`, còn không thì footer phải tự mang nút. " +
             "Mô tả cắt còn 2 dòng (line-clamp) nên chiều cao thẻ không phình theo dữ liệu.",
@@ -25,7 +25,7 @@ export const Default: Story = {
                 <Label>Thẻ nội dung</Label>
                 <Typography type="body-sm" color="muted">
                     Chọn khi entity có ảnh bìa và cần đọc thành một khối trong lưới. Ảnh 16:9 full card trên cùng, phần chữ
-                    xếp dưới theo một nhịp cố định (p-4).
+                    xếp dưới theo một nhịp cố định (p-3).
                 </Typography>
             </div>
             <MediaCard

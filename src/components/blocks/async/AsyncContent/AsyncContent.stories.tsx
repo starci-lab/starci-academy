@@ -35,7 +35,7 @@ const content = (
 
 /**
  * A layout-mirroring skeleton so the box never collapses / jumps on resolve —
- * `SurfaceListCardItem` carries the same `px-4 py-4` + full-bleed separator as the
+ * `SurfaceListCardItem` carries the same `p-3` + full-bleed separator as the
  * real row, so the divider is already there while loading.
  */
 const skeleton = (

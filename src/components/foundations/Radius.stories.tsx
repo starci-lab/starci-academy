@@ -121,6 +121,6 @@ export const Concentric: Story = {
         )
     },
     parameters: {
-        usage: "Concentric ĐÚNG NGHĨA: `radius trong = radius ngoài − padding` (Cloud Four / BetterCorners). Padding lớn hơn → bo trong nhỏ hơn NHIỀU (card `rounded-3xl` 24px + `p-4` 16px → trong = 8px `rounded-lg`, KHÔNG phải 2xl 16px); ra ≤0 → góc VUÔNG. Demo trên `p-2` (8px) nên chuỗi = 24→16→8. Chip/avatar/switch luôn `rounded-full`. CẤM thêm `rounded-*` qua className lên component HeroUI đã bake radius (`.card`/`.modal`…) — utility thua CSS bake, câm lặng vô dụng.",
+        usage: "Concentric ĐÚNG NGHĨA: `radius trong = radius ngoài − padding` (Cloud Four / BetterCorners). Padding lớn hơn → bo trong nhỏ hơn NHIỀU (card `rounded-3xl` 24px + `p-3` 12px → trong = 12px `rounded-xl`, KHÔNG phải 3xl 24px); ra ≤0 → góc VUÔNG. Demo trên `p-2` (8px) nên chuỗi = 24→16→8. Chip/avatar/switch luôn `rounded-full`. CẤM thêm `rounded-*` qua className lên component HeroUI đã bake radius (`.card`/`.modal`…) — utility thua CSS bake, câm lặng vô dụng.",
     },
 }

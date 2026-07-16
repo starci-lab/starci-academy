@@ -18,9 +18,9 @@ export const Elevation: Story = {
     render: () => (
         <div className="max-w-2xl rounded-3xl bg-background p-6">
             <p className="mb-3 text-xs text-muted"><code className="rounded bg-default px-1 text-foreground">bg-background</code> — nền TRANG (cái bàn)</p>
-            <div className="rounded-3xl bg-surface p-5 shadow-surface">
+            <div className="rounded-3xl bg-surface p-3 shadow-surface">
                 <p className="mb-3 text-sm text-foreground"><code className="rounded bg-default px-1">bg-surface</code> + <code className="rounded bg-default px-1">shadow-surface</code> — card top-level (tờ giấy nghỉ trên bàn)</p>
-                <div className="rounded-2xl border border-default bg-transparent p-4">
+                <div className="rounded-2xl border border-default bg-transparent p-3">
                     <p className="text-sm text-muted">Block LỒNG trong card → <code className="rounded bg-default px-1 text-foreground">border border-default</code> + <code className="rounded bg-default px-1 text-foreground">bg-transparent</code> — KHÔNG shadow, KHÔNG fill chồng fill (shadow chết ở dark mode).</p>
                 </div>
             </div>
@@ -66,7 +66,7 @@ export const AccentSolidVsTint: Story = {
                         Làm nổi card hay hàng của người dùng bằng ring hoặc border accent cộng một chi tiết accent; nền vẫn giữ bg-surface, không tô nền cả khối.
                     </Typography>
                 </div>
-                <div className="inline-flex items-center gap-3 rounded-2xl border-2 border-accent bg-surface px-4 py-3 shadow-surface">
+                <div className="inline-flex items-center gap-3 rounded-2xl border-2 border-accent bg-surface p-3 shadow-surface">
                     <span className="text-sm text-foreground">Hạng của tôi</span>
                     <span className="text-sm font-semibold text-accent-soft-foreground">#12</span>
                 </div>

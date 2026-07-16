@@ -95,7 +95,7 @@ interface PadItem {
 export const Padding: Story = {
     render: () => {
         const rows: Array<PadItem> = [
-            { token: "px-4 py-3", note: "Card / LabeledCard — padding card mặc định (block sở hữu)." },
+            { token: "p-3", note: "Card / LabeledCard — padding card mặc định (block sở hữu). List-có-divider = card flush + mỗi row p-3." },
             { token: "p-6", note: "Panel / thân modal — vùng lớn thở đều 4 phía." },
             { token: "p-3", note: "Ô nhỏ — thumbnail, icon-tile, row compact." },
         ]
@@ -125,6 +125,6 @@ export const Padding: Story = {
         )
     },
     parameters: {
-        usage: "Padding cũng theo thang `0/2/3/6/8`. Card mặc định `px-4 py-3` (block sở hữu padding — feature không tự set). Panel/modal body `p-6`. Ô nhỏ `p-3`. Đừng rải gap-6 đều mọi nơi (thưa) hay ép tất cả gap-3 (mất ranh giới vùng).",
+        usage: "Padding cũng theo thang `0/2/3/6/8`. Card mặc định `p-3` (block sở hữu padding — feature không tự set; list-có-divider = card flush + mỗi row p-3). Panel/modal body `p-6`. Đừng rải gap-6 đều mọi nơi (thưa) hay ép tất cả gap-3 (mất ranh giới vùng).",
     },
 }

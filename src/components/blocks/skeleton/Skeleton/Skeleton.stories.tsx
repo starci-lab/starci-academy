@@ -591,7 +591,7 @@ export const ComposedExample: Story = {
                     Cách ghép đúng chuẩn: mirror cây layout thật (avatar + 2 dòng chữ + nút), giữ nguyên cấu trúc và chỉ thay node nội dung bằng Skeleton.
                 </Typography>
             </div>
-            <div className="flex w-80 items-center gap-3 rounded-2xl border border-default p-4">
+            <div className="flex w-80 items-center gap-3 rounded-2xl border border-default p-3">
                 <Skeleton.Avatar size="md" />
                 <div className="flex min-w-0 flex-1 flex-col gap-2">
                     <Skeleton.Typography type="body-sm" />

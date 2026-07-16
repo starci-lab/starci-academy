@@ -1,5 +1,5 @@
 {
-  "lastAuditCommit": "5dc1fc02b7a0a5b3d2a903a2c7ddd27598342081",
+  "lastAuditCommit": "1de58097de5331f38b0898532d3f3a8d4b0db3e3",
   "generatedAt": "2026-07-17T00:00:00Z",
   "rubric": ".claude/fe (DESIGN rules — CHỈ phần cơ học kiểm được bằng scan: màu icon-text, cấm-2-icon, token/gap/border…). Song sinh với patterns-audit-fe.json (rubric code-style .claude/patterns/fe). Cùng máy incremental: git diff <lastAuditCommit> HEAD → chỉ soi file ĐỔI + re-check openViolations; file sạch chưa đụng = bỏ qua.",
   "note": "Ledger design-rule, seed từ sweep icon §6/§7 (2026-07-16/17). Baseline quét src/components/{blocks,features,modals,drawers} (~76 file có circle-icon) tìm lệch icon-text-color + 2-icon-liên-tiếp. FIXED 20 (Nhóm A/B/C: DailyQuest, IdentityStats + 16 batch + ChallengeChips §7) — không còn trong openViolations. openViolations = Nhóm D thầy để nguyên (borderline/won't-fix) — GIỮ để sweep sau KHỎI re-flag như mới. Fix áp ở working tree (chưa commit lúc seed) → khi commit, lastAuditCommit cần cập nhật lên sha mới.",

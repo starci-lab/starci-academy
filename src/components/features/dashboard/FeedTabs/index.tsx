@@ -7,8 +7,6 @@ import React, {
 } from "react"
 import {
     Button,
-    Card,
-    CardContent,
     cn,
 } from "@heroui/react"
 import {
@@ -161,67 +159,65 @@ export const FeedTabs = ({
                         onSelectionChange: (key) => setCategory(key as MyFeedCategory),
                     }}
                 />
-                <Card>
-                    <CardContent>
-                        <AsyncContent
-                            isLoading={isLoading && items.length === 0}
-                            skeleton={<FeedTabsSkeleton />}
-                            isEmpty={items.length === 0}
-                            emptyContent={
-                                category !== MyFeedCategory.All
-                                    ? {
-                                        // filtered-empty: this filter chip matched nothing — offer to reset it
-                                        title: t("dashboard.feedEmptyFiltered.title"),
-                                        retryLabel: t("dashboard.feedEmptyFiltered.cta"),
-                                        onRetry: () => setCategory(MyFeedCategory.All),
-                                    }
-                                    : {
-                                        // platform-empty: nothing to show at all (feed/following empty) — invite to courses
-                                        title: t("dashboard.feedEmptyPlatform.title"),
-                                        description: t("dashboard.feedEmptyPlatform.description"),
-                                        retryLabel: t("dashboard.feedEmptyPlatform.cta"),
-                                        onRetry: () => router.push(`/${locale}/courses`),
-                                    }
+                {/* feed sống TRỰC TIẾP trong zone — KHÔNG bọc Card ngoài (mỗi ngày đã là
+                    labeled-list-card; Card ngoài → card lồng card trong zone lớn) */}
+                <AsyncContent
+                    isLoading={isLoading && items.length === 0}
+                    skeleton={<FeedTabsSkeleton />}
+                    isEmpty={items.length === 0}
+                    emptyContent={
+                        category !== MyFeedCategory.All
+                            ? {
+                                // filtered-empty: this filter chip matched nothing — offer to reset it
+                                title: t("dashboard.feedEmptyFiltered.title"),
+                                retryLabel: t("dashboard.feedEmptyFiltered.cta"),
+                                onRetry: () => setCategory(MyFeedCategory.All),
                             }
-                            error={items.length === 0 ? error : undefined}
-                            errorContent={{
-                                title: t("dashboard.feedError"),
-                                onRetry: () => { void mutate() },
-                                retryLabel: t("dashboard.feedRetry"),
-                            }}
-                        >
-                            <div className="flex flex-col gap-6">
-                                <ActivityFeed items={items} onResolve={onResolve} onReact={onReact} />
-                                {hasMore ? (
-                                    <div className="flex flex-col items-center gap-2">
+                            : {
+                                // platform-empty: nothing to show at all (feed/following empty) — invite to courses
+                                title: t("dashboard.feedEmptyPlatform.title"),
+                                description: t("dashboard.feedEmptyPlatform.description"),
+                                retryLabel: t("dashboard.feedEmptyPlatform.cta"),
+                                onRetry: () => router.push(`/${locale}/courses`),
+                            }
+                    }
+                    error={items.length === 0 ? error : undefined}
+                    errorContent={{
+                        title: t("dashboard.feedError"),
+                        onRetry: () => { void mutate() },
+                        retryLabel: t("dashboard.feedRetry"),
+                    }}
+                >
+                    <div className="flex flex-col gap-6">
+                        <ActivityFeed items={items} onResolve={onResolve} onReact={onReact} />
+                        {hasMore ? (
+                            <div className="flex flex-col items-center gap-2">
+                                <Button
+                                    variant="secondary"
+                                    size="sm"
+                                    isPending={isLoadingMore}
+                                    onPress={() => setSize(size + 1)}
+                                >
+                                    {t("dashboard.loadMore")}
+                                </Button>
+                                {/* load-more failure (page 2+) doesn't clear existing items — surface an
+                                    inline retry instead of the full errorContent block. */}
+                                {error && items.length > 0 && !isLoadingMore ? (
+                                    <div className="flex items-center gap-2 text-xs text-danger-soft-foreground">
+                                        <span>{t("dashboard.feedError")}</span>
                                         <Button
-                                            variant="secondary"
+                                            variant="tertiary"
                                             size="sm"
-                                            isPending={isLoadingMore}
-                                            onPress={() => setSize(size + 1)}
+                                            onPress={() => { void mutate() }}
                                         >
-                                            {t("dashboard.loadMore")}
+                                            {t("dashboard.feedRetry")}
                                         </Button>
-                                        {/* load-more failure (page 2+) doesn't clear existing items — surface an
-                                            inline retry instead of the full errorContent block. */}
-                                        {error && items.length > 0 && !isLoadingMore ? (
-                                            <div className="flex items-center gap-2 text-xs text-danger-soft-foreground">
-                                                <span>{t("dashboard.feedError")}</span>
-                                                <Button
-                                                    variant="tertiary"
-                                                    size="sm"
-                                                    onPress={() => { void mutate() }}
-                                                >
-                                                    {t("dashboard.feedRetry")}
-                                                </Button>
-                                            </div>
-                                        ) : null}
                                     </div>
                                 ) : null}
                             </div>
-                        </AsyncContent>
-                    </CardContent>
-                </Card>
+                        ) : null}
+                    </div>
+                </AsyncContent>
             </div>
         </div>
     )

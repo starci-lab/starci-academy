@@ -12,7 +12,7 @@ import { Controlled } from "./components"
  *    the primary tabs when the system has two tab tiers.
  */
 const meta: Meta<typeof ExtendedTabs> = {
-    title: "Core/Navigation/ExtendedTabs",
+    title: "Primitives/Navigation/ExtendedTabs",
     component: ExtendedTabs,
 }
 export default meta

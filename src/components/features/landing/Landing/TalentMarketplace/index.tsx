@@ -119,7 +119,7 @@ const SampleCandidateCard = () => {
                     </Chip>
                 ))}
                 <span className="ml-auto inline-flex items-center gap-2 text-sm text-muted">
-                    <LightningIcon aria-hidden focusable="false" className="size-4 text-accent-soft-foreground" />
+                    <LightningIcon aria-hidden focusable="false" className="size-4 text-muted" />
                     {t("landing.outcome.card.xp", { xp: c.xp.toLocaleString(locale) })}
                 </span>
             </div>
@@ -172,11 +172,11 @@ export const TalentMarketplace = ({ className }: TalentMarketplaceProps) => {
                         </Button>
                         <Button variant="secondary" size="md" onPress={onBrowseTalents}>
                             {t("landing.outcome.items.enterprise.cta")}
-                            <CaretRightIcon aria-hidden focusable="false" className="size-4" />
+                            <CaretRightIcon aria-hidden focusable="false" weight="bold" className="size-4" />
                         </Button>
                         <Button variant="tertiary" onPress={onBrowseJobs}>
                             {t("landing.outcome.items.engineer.jobsCta")}
-                            <CaretRightIcon aria-hidden focusable="false" className="size-4" />
+                            <CaretRightIcon aria-hidden focusable="false" weight="bold" className="size-4" />
                         </Button>
                     </div>
                 </div>

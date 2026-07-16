@@ -3,7 +3,7 @@ import { Label, Typography } from "@heroui/react"
 import { LanguageChip } from "@/components/blocks/chips/LanguageChip"
 
 const meta: Meta<typeof LanguageChip> = {
-    title: "Core/Chip/LanguageChip",
+    title: "Features/Chips/LanguageChip",
     component: LanguageChip,
 }
 export default meta

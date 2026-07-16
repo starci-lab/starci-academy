@@ -5,7 +5,7 @@ import { SearchInput } from "@/components/blocks/form/SearchInput"
 import { SUGGESTIONS } from "./components"
 
 const meta: Meta<typeof SearchInput> = {
-    title: "Core/Form/SearchInput",
+    title: "Blocks/Form/SearchInput",
     component: SearchInput,
 }
 

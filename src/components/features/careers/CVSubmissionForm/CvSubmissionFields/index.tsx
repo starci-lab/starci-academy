@@ -1,5 +1,8 @@
 "use client"
 
+import type {
+    BaseSyntheticEvent,
+} from "react"
 import {
     Button,
     ProgressBar,
@@ -7,17 +10,7 @@ import {
     Typography,
     cn,
 } from "@heroui/react"
-import {
-    Form,
-} from "formik"
-import type {
-    FormikErrors,
-    FormikTouched,
-} from "formik"
 import { useTranslations } from "next-intl"
-import type {
-    CvSubmissionFormValues,
-} from "@/types"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { Dropzone } from "@/components/blocks/form/Dropzone"
 
@@ -26,16 +19,16 @@ const MAX_CV_BYTES = 10 * 1024 * 1024
 
 /** Props for {@link CvSubmissionFields}. */
 export interface CvSubmissionFieldsProps extends WithClassNames<undefined> {
-    /** Current form values from Formik. */
-    values: CvSubmissionFormValues
-    /** Validation errors from Formik. */
-    errors: FormikErrors<CvSubmissionFormValues>
-    /** Touched-field map from Formik. */
-    touched: FormikTouched<CvSubmissionFormValues>
-    /** Whether the wrapped Formik form is currently submitting. */
+    /** Currently selected CV file, or `null`. */
+    cv: File | null
+    /** Validation error message for the `cv` field, if any. */
+    cvError?: string
+    /** Whether the wrapped react-hook-form form is currently submitting. */
     isSubmitting: boolean
-    /** Sets the `cv` field value on the Formik form. */
-    setFieldValue: (field: string, value: File) => void
+    /** Sets the `cv` field value on the react-hook-form form. */
+    onCvChange: (file: File | null) => void
+    /** Fired on form submit — react-hook-form's wrapped `handleSubmit`. */
+    onSubmit: (event?: BaseSyntheticEvent) => Promise<void>
     /** Whether the S3 upload step is in progress. */
     isUploading: boolean
     /** Whether the backend processing step is in progress. */
@@ -53,16 +46,16 @@ export interface CvSubmissionFieldsProps extends WithClassNames<undefined> {
 /**
  * Inner field layout for the CV submission form: canonical {@link Dropzone}
  * (real drag-drop + token styling + inline error), progress bar, and the
- * upload/process buttons. Presentational — renders Formik render-prop values +
+ * upload/process buttons. Presentational — renders react-hook-form field state +
  * upload state, no business logic. All copy via the `cv.submission.*` namespace.
  * @param props - {@link CvSubmissionFieldsProps}
  */
 export const CvSubmissionFields = ({
-    values,
-    errors,
-    touched,
+    cv,
+    cvError,
     isSubmitting,
-    setFieldValue,
+    onCvChange,
+    onSubmit,
     isUploading,
     isProcessing,
     uploadProgress,
@@ -74,20 +67,16 @@ export const CvSubmissionFields = ({
     const t = useTranslations("cv.submission")
 
     return (
-        <Form className={cn("flex flex-col gap-3", className)}>
+        <form onSubmit={onSubmit} className={cn("flex flex-col gap-3", className)}>
             <div className="flex flex-col gap-2">
                 <Typography type="body-sm" weight="medium">{t("uploadLabel")}</Typography>
                 <Dropzone
                     acceptedMimeTypes={["application/pdf"]}
                     maxSizeInBytes={MAX_CV_BYTES}
-                    file={(values.cv as File | null) ?? null}
+                    file={cv}
                     hint={t("dropHint")}
-                    errorMessage={touched.cv && errors.cv ? String(errors.cv) : undefined}
-                    onChange={(file) => {
-                        if (file) {
-                            setFieldValue("cv", file)
-                        }
-                    }}
+                    errorMessage={cvError}
+                    onChange={onCvChange}
                 />
                 {uploadedFileName && uploadedS3Key ? (
                     <Typography type="body-sm" className="text-success-soft-foreground">
@@ -152,6 +141,6 @@ export const CvSubmissionFields = ({
                     t("processCta")
                 )}
             </Button>
-        </Form>
+        </form>
     )
 }

@@ -4,7 +4,7 @@ import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { CheckListCard, CheckListItem } from "@/components/blocks/cards/CheckListCard"
 
 const meta: Meta<typeof CheckListCard> = {
-    title: "Core/Card/CheckListCard",
+    title: "Blocks/Cards/CheckListCard",
     component: CheckListCard,
 }
 export default meta

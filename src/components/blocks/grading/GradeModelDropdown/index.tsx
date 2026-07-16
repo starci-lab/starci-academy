@@ -375,7 +375,7 @@ export const GradeModelDropdown = ({
                             <SparkleIcon className="size-4 shrink-0" />
                             <span className="truncate">{triggerLabel}</span>
                         </span>
-                        <CaretDownIcon className="size-4 shrink-0" />
+                        <CaretDownIcon weight="bold" className="size-4 shrink-0" />
                     </div>
                 </DropdownTrigger>
             )}

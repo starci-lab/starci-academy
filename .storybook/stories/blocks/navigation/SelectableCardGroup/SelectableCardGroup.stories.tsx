@@ -5,7 +5,7 @@ import { SelectableCardGroup } from "@/components/blocks/navigation/SelectableCa
 import { ControlledGroup, LANGUAGE_ITEMS, PLAN_ITEMS } from "./components"
 
 const meta: Meta<typeof SelectableCardGroup> = {
-    title: "Core/Navigation/SelectableCardGroup",
+    title: "Blocks/Navigation/SelectableCardGroup",
 }
 
 export default meta

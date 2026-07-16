@@ -4,6 +4,7 @@ import React, { useMemo, useState } from "react"
 import { Accordion } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
+import { StatusChip } from "@/components/blocks/chips/StatusChip"
 import { useAppSelector } from "@/redux/hooks"
 import { ProgrammingLanguageTabs } from "@/components/blocks/navigation/ProgrammingLanguageTabs"
 import { ProgrammingLanguageTabsVariant } from "@/components/blocks/navigation/ProgrammingLanguageTabs/enums/programming-language-tabs-variant"
@@ -81,14 +82,9 @@ export const E2eBody = (): React.JSX.Element => {
                             <Accordion.Heading>
                                 <Accordion.Trigger>
                                     <span className="flex items-center gap-2 text-start">
-                                        <span
-                                            className={[
-                                                "inline-flex h-5 shrink-0 items-center rounded-full px-2 text-[11px] font-semibold capitalize",
-                                                ok ? "bg-success/15 text-success-soft-foreground" : "bg-danger/15 text-danger-soft-foreground",
-                                            ].join(" ")}
-                                        >
+                                        <StatusChip tone={ok ? "success" : "danger"}>
                                             {ok ? t("content.e2e.statusPass") : t("content.e2e.statusFail")}
-                                        </span>
+                                        </StatusChip>
                                         <span className="text-sm font-medium">{flow.title}</span>
                                     </span>
                                 </Accordion.Trigger>

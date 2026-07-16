@@ -13,7 +13,7 @@ import { SidebarNavItem } from "@/components/blocks/navigation/SidebarNavItem"
 import { SidebarCollapsedContext } from "@/components/blocks/navigation/CollapsibleSidebar/context"
 
 const meta: Meta<typeof SidebarNavGroup> = {
-    title: "Core/Navigation/SidebarNavGroup",
+    title: "Blocks/Navigation/SidebarNavGroup",
     component: SidebarNavGroup,
 }
 export default meta

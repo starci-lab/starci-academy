@@ -11,7 +11,7 @@ import { OPTIONS } from "./components"
  * (2–5) → RadioGroup; many → Select. Always set a default.
  */
 const meta: Meta<typeof RadioGroup> = {
-    title: "Core/Form/RadioGroup",
+    title: "Primitives/Form/RadioGroup",
     component: RadioGroup,
 }
 export default meta

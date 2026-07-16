@@ -1,7 +1,7 @@
 {
-  "lastSyncCommit": "9db6f337d60925d1a843fd6b265824b95e34154b",
+  "lastSyncCommit": "5dc1fc02b7a0a5b3d2a903a2c7ddd27598342081",
   "branch": "mtp",
-  "generatedAt": "2026-07-16T07:21:02.949Z",
+  "generatedAt": "2026-07-16T18:10:00.000Z",
   "source": ".artifacts/states/_sync/{components,stories,git}.md",
   "components": [
     {
@@ -110,6 +110,16 @@
       "group": "blocks"
     },
     {
+      "path": "src/components/blocks/cards/SectionCard/index.tsx",
+      "name": "SectionCard",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/cards/SummaryCard/index.tsx",
+      "name": "SummaryCard",
+      "group": "blocks"
+    },
+    {
       "path": "src/components/blocks/cards/SurfaceListCard/index.tsx",
       "name": "SurfaceListCard",
       "group": "blocks"
@@ -135,6 +145,11 @@
       "group": "blocks"
     },
     {
+      "path": "src/components/blocks/chips/HostPlatformChip/index.tsx",
+      "name": "HostPlatformChip",
+      "group": "blocks"
+    },
+    {
       "path": "src/components/blocks/chips/LanguageChip/index.tsx",
       "name": "LanguageChip",
       "group": "blocks"
@@ -142,6 +157,11 @@
     {
       "path": "src/components/blocks/chips/StatusChip/index.tsx",
       "name": "StatusChip",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/chips/TagChips/index.tsx",
+      "name": "TagChips",
       "group": "blocks"
     },
     {
@@ -250,6 +270,11 @@
       "group": "blocks"
     },
     {
+      "path": "src/components/blocks/form/Dropzone/index.tsx",
+      "name": "Dropzone",
+      "group": "blocks"
+    },
+    {
       "path": "src/components/blocks/form/OtpInput/index.tsx",
       "name": "OtpInput",
       "group": "blocks"
@@ -262,6 +287,16 @@
     {
       "path": "src/components/blocks/form/SearchAutocomplete/index.tsx",
       "name": "SearchAutocomplete",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/form/SearchBar/index.tsx",
+      "name": "SearchBar",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/form/SearchInput/index.tsx",
+      "name": "SearchInput",
       "group": "blocks"
     },
     {
@@ -300,6 +335,11 @@
       "group": "blocks"
     },
     {
+      "path": "src/components/blocks/identity/BadgeImage/index.tsx",
+      "name": "BadgeImage",
+      "group": "blocks"
+    },
+    {
       "path": "src/components/blocks/identity/BrandLockup/index.tsx",
       "name": "BrandLockup",
       "group": "blocks"
@@ -325,6 +365,16 @@
       "group": "blocks"
     },
     {
+      "path": "src/components/blocks/identity/SnippetIcon/index.tsx",
+      "name": "SnippetIcon",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/identity/UserAvatar/index.tsx",
+      "name": "UserAvatar",
+      "group": "blocks"
+    },
+    {
       "path": "src/components/blocks/identity/UserCell/index.tsx",
       "name": "UserCell",
       "group": "blocks"
@@ -337,6 +387,11 @@
     {
       "path": "src/components/blocks/layout/AppSplash/index.tsx",
       "name": "AppSplash",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/layout/DragScrollArea/index.tsx",
+      "name": "DragScrollArea",
       "group": "blocks"
     },
     {
@@ -365,13 +420,93 @@
       "group": "blocks"
     },
     {
+      "path": "src/components/blocks/layout/Spacer/index.tsx",
+      "name": "Spacer",
+      "group": "blocks"
+    },
+    {
       "path": "src/components/blocks/layout/StickyBottomBar/index.tsx",
       "name": "StickyBottomBar",
       "group": "blocks"
     },
     {
+      "path": "src/components/blocks/layout/SubPageHeader/index.tsx",
+      "name": "SubPageHeader",
+      "group": "blocks"
+    },
+    {
       "path": "src/components/blocks/layout/TopLoader/index.tsx",
       "name": "TopLoader",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+      "name": "AccountTrigger",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AppearanceRow/index.tsx",
+      "name": "AppearanceRow",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AuthActions/index.tsx",
+      "name": "AuthActions",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/DarkLightMode/index.tsx",
+      "name": "DarkLightMode",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/LogoutMenu/index.tsx",
+      "name": "LogoutMenu",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/index.tsx",
+      "name": "MenuList",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/index.tsx",
+      "name": "UserSummary",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/index.tsx",
+      "name": "AccountMenuDropdown",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/Logo/index.tsx",
+      "name": "Logo",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/MobileNavbar/index.tsx",
+      "name": "MobileNavbar",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/NavLinks/index.tsx",
+      "name": "NavLinks",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/NotificationBell/index.tsx",
+      "name": "NotificationBell",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/SearchButton/index.tsx",
+      "name": "SearchButton",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/layout/shell/Navbar/index.tsx",
+      "name": "Navbar",
       "group": "blocks"
     },
     {
@@ -475,6 +610,66 @@
       "group": "blocks"
     },
     {
+      "path": "src/components/blocks/media/QRCode/index.tsx",
+      "name": "QRCode",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/MpegDash/index.tsx",
+      "name": "MpegDash",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/Standard/index.tsx",
+      "name": "Standard",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/VideoControls/FullscreenButton/index.tsx",
+      "name": "FullscreenButton",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/VideoControls/PlayPauseButton/index.tsx",
+      "name": "PlayPauseButton",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/VideoControls/QualitySelector/index.tsx",
+      "name": "QualitySelector",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/VideoControls/SeekBar/index.tsx",
+      "name": "SeekBar",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/VideoControls/TimeDisplay/index.tsx",
+      "name": "TimeDisplay",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/VideoControls/VolumeControl/index.tsx",
+      "name": "VolumeControl",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/VideoControls/index.tsx",
+      "name": "VideoControls",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/Youtube/index.tsx",
+      "name": "Youtube",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/media/VideoRenderer/index.tsx",
+      "name": "VideoRenderer",
+      "group": "blocks"
+    },
+    {
       "path": "src/components/blocks/navigation/BackLink/index.tsx",
       "name": "BackLink",
       "group": "blocks"
@@ -502,6 +697,16 @@
     {
       "path": "src/components/blocks/navigation/OutlineRail/index.tsx",
       "name": "OutlineRail",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/navigation/Pagination/index.tsx",
+      "name": "Pagination",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/navigation/ProgrammingLanguageTabs/index.tsx",
+      "name": "ProgrammingLanguageTabs",
       "group": "blocks"
     },
     {
@@ -567,6 +772,66 @@
     {
       "path": "src/components/blocks/rendering/FlowDiagram/index.tsx",
       "name": "FlowDiagram",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/CodePreviewTabs/index.tsx",
+      "name": "CodePreviewTabs",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+      "name": "CodeToHtml",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/LayoutWidget/index.tsx",
+      "name": "LayoutWidget",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/index.tsx",
+      "name": "MermaidDiagram",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/RenderReactComponent/index.tsx",
+      "name": "RenderReactComponent",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/TabsBlock/index.tsx",
+      "name": "TabsBlock",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/rendering/MarkdownContent/index.tsx",
+      "name": "MarkdownContent",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/rendering/PDFView/PdfViewportPage/index.tsx",
+      "name": "PdfViewportPage",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/rendering/PDFView/index.tsx",
+      "name": "PDFView",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/rendering/RichText/index.tsx",
+      "name": "RichText",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/skeleton/AccordionSkeleton/index.tsx",
+      "name": "AccordionSkeleton",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/skeleton/PaginationSkeleton/index.tsx",
+      "name": "PaginationSkeleton",
       "group": "blocks"
     },
     {
@@ -720,6 +985,16 @@
       "group": "blocks"
     },
     {
+      "path": "src/components/blocks/skeleton/SkeletonParagraph/index.tsx",
+      "name": "SkeletonParagraph",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/skeleton/SkeletonText/index.tsx",
+      "name": "SkeletonText",
+      "group": "blocks"
+    },
+    {
       "path": "src/components/blocks/stats/CourseProgressBar/index.tsx",
       "name": "CourseProgressBar",
       "group": "blocks"
@@ -755,6 +1030,11 @@
       "group": "blocks"
     },
     {
+      "path": "src/components/blocks/stats/Score/index.tsx",
+      "name": "Score",
+      "group": "blocks"
+    },
+    {
       "path": "src/components/blocks/stats/SegmentBar/index.tsx",
       "name": "SegmentBar",
       "group": "blocks"
@@ -762,6 +1042,11 @@
     {
       "path": "src/components/blocks/stats/StatPair/index.tsx",
       "name": "StatPair",
+      "group": "blocks"
+    },
+    {
+      "path": "src/components/blocks/stats/StatRibbon/index.tsx",
+      "name": "StatRibbon",
       "group": "blocks"
     },
     {
@@ -835,6 +1120,116 @@
       "group": "drawers"
     },
     {
+      "path": "src/components/features/admin/AdminAiBalancer/AdminAiBalancerSkeleton/index.tsx",
+      "name": "AdminAiBalancerSkeleton",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/admin/AdminAiBalancer/ProviderSection/KeyRow/index.tsx",
+      "name": "KeyRow",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/admin/AdminAiBalancer/ProviderSection/index.tsx",
+      "name": "ProviderSection",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/admin/AdminAiBalancer/TopBar/index.tsx",
+      "name": "TopBar",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/admin/AdminAiBalancer/index.tsx",
+      "name": "AdminAiBalancer",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/admin/AdminLogin/index.tsx",
+      "name": "AdminLogin",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/admin/AdminMpegDashTest/ConfigCard/RendererTypeButton/index.tsx",
+      "name": "RendererTypeButton",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/admin/AdminMpegDashTest/ConfigCard/index.tsx",
+      "name": "ConfigCard",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/admin/AdminMpegDashTest/Header/index.tsx",
+      "name": "Header",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/admin/AdminMpegDashTest/PreviewCard/index.tsx",
+      "name": "PreviewCard",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/admin/AdminMpegDashTest/QuickTestUrls/QuickTestUrlButton/index.tsx",
+      "name": "QuickTestUrlButton",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/admin/AdminMpegDashTest/QuickTestUrls/index.tsx",
+      "name": "QuickTestUrls",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/admin/AdminMpegDashTest/index.tsx",
+      "name": "AdminMpegDashTest",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/admin/AdminUploadVideo/FileSelectionCard/DropZone/index.tsx",
+      "name": "DropZone",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/admin/AdminUploadVideo/FileSelectionCard/ProcessResultBanner/index.tsx",
+      "name": "ProcessResultBanner",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/admin/AdminUploadVideo/FileSelectionCard/index.tsx",
+      "name": "FileSelectionCard",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/admin/AdminUploadVideo/Header/index.tsx",
+      "name": "Header",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/admin/AdminUploadVideo/LoadingScreen/index.tsx",
+      "name": "LoadingScreen",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/admin/AdminUploadVideo/TopBar/index.tsx",
+      "name": "TopBar",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/admin/AdminUploadVideo/UploadProgressCard/ProviderUploadRow/index.tsx",
+      "name": "ProviderUploadRow",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/admin/AdminUploadVideo/UploadProgressCard/index.tsx",
+      "name": "UploadProgressCard",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/admin/AdminUploadVideo/index.tsx",
+      "name": "AdminUploadVideo",
+      "group": "features"
+    },
+    {
       "path": "src/components/features/architecture/ArchitectureMap/index.tsx",
       "name": "ArchitectureMap",
       "group": "features"
@@ -870,8 +1265,98 @@
       "group": "features"
     },
     {
+      "path": "src/components/features/auth/GithubLinkGate/index.tsx",
+      "name": "GithubLinkGate",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/auth/GithubTeamGate/index.tsx",
+      "name": "GithubTeamGate",
+      "group": "features"
+    },
+    {
       "path": "src/components/features/auth/LoginPage/index.tsx",
       "name": "LoginPage",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/auth/OauthRedirect/index.tsx",
+      "name": "OauthRedirect",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/auth/Turnstile/index.tsx",
+      "name": "Turnstile",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/blog/BlogList/BlogListSkeleton/index.tsx",
+      "name": "BlogListSkeleton",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/blog/BlogList/CategoryFilter/index.tsx",
+      "name": "CategoryFilter",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/blog/BlogList/FeaturedPost/index.tsx",
+      "name": "FeaturedPost",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/blog/BlogList/Masthead/index.tsx",
+      "name": "Masthead",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/blog/BlogList/StartHereAnchor/index.tsx",
+      "name": "StartHereAnchor",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/blog/BlogList/TopicsStrip/index.tsx",
+      "name": "TopicsStrip",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/blog/BlogList/index.tsx",
+      "name": "BlogList",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/blog/BlogPost/BlogPostSkeleton/index.tsx",
+      "name": "BlogPostSkeleton",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/blog/BlogPost/ReadingProgress/index.tsx",
+      "name": "ReadingProgress",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/blog/BlogPost/RelatedPosts/index.tsx",
+      "name": "RelatedPosts",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/blog/BlogPost/index.tsx",
+      "name": "BlogPost",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/blog/shared/PostRow/index.tsx",
+      "name": "PostRow",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "name": "CvSubmissionFields",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/careers/CVSubmissionForm/index.tsx",
+      "name": "CVSubmissionForm",
       "group": "features"
     },
     {
@@ -995,6 +1480,31 @@
       "group": "features"
     },
     {
+      "path": "src/components/features/checkout/SepayCheckout/DetailRow/index.tsx",
+      "name": "DetailRow",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/checkout/SepayCheckout/EnrolledSuccess/index.tsx",
+      "name": "EnrolledSuccess",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/checkout/SepayCheckout/OrderSummary/index.tsx",
+      "name": "OrderSummary",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/checkout/SepayCheckout/QrPanel/index.tsx",
+      "name": "QrPanel",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/checkout/SepayCheckout/index.tsx",
+      "name": "SepayCheckout",
+      "group": "features"
+    },
+    {
       "path": "src/components/features/community/CommunityChat/ChatPane/index.tsx",
       "name": "ChatPane",
       "group": "features"
@@ -1035,6 +1545,16 @@
       "group": "features"
     },
     {
+      "path": "src/components/features/community/Discussion/index.tsx",
+      "name": "Discussion",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/community/FollowButton/index.tsx",
+      "name": "FollowButton",
+      "group": "features"
+    },
+    {
       "path": "src/components/features/contact/Contact/ContactChannels/FounderCard/index.tsx",
       "name": "FounderCard",
       "group": "features"
@@ -1060,8 +1580,18 @@
       "group": "features"
     },
     {
+      "path": "src/components/features/content/LessonVideoKindChip/index.tsx",
+      "name": "LessonVideoKindChip",
+      "group": "features"
+    },
+    {
       "path": "src/components/features/content/PublicArticle/index.tsx",
       "name": "PublicArticle",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/content/ReferenceLinks/index.tsx",
+      "name": "ReferenceLinks",
       "group": "features"
     },
     {
@@ -1142,6 +1672,11 @@
     {
       "path": "src/components/features/course/CourseDetail/index.tsx",
       "name": "CourseDetail",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/course/CourseTrialChip/index.tsx",
+      "name": "CourseTrialChip",
       "group": "features"
     },
     {
@@ -1275,6 +1810,16 @@
       "group": "features"
     },
     {
+      "path": "src/components/features/dashboard/LeagueRow/index.tsx",
+      "name": "LeagueRow",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/dashboard/LeagueTierBadge/index.tsx",
+      "name": "LeagueTierBadge",
+      "group": "features"
+    },
+    {
       "path": "src/components/features/dashboard/OverviewTab/JobReadinessWidget/index.tsx",
       "name": "JobReadinessWidget",
       "group": "features"
@@ -1375,6 +1920,26 @@
       "group": "features"
     },
     {
+      "path": "src/components/features/dashboard/kpi/Kpi/index.tsx",
+      "name": "Kpi",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/dashboard/league/League/GlobalBoard/index.tsx",
+      "name": "GlobalBoard",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/dashboard/league/League/WeeklyBoard/index.tsx",
+      "name": "WeeklyBoard",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/dashboard/league/League/index.tsx",
+      "name": "League",
+      "group": "features"
+    },
+    {
       "path": "src/components/features/footer/Footer/FooterNavColumn/index.tsx",
       "name": "FooterNavColumn",
       "group": "features"
@@ -1407,6 +1972,16 @@
     {
       "path": "src/components/features/landing/Landing/index.tsx",
       "name": "Landing",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/learn/AIProcessingText/index.tsx",
+      "name": "AIProcessingText",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/learn/AiBalancer/KeyStatusChip/index.tsx",
+      "name": "KeyStatusChip",
       "group": "features"
     },
     {
@@ -2180,6 +2755,11 @@
       "group": "features"
     },
     {
+      "path": "src/components/features/learn/StarCiAIBadge/index.tsx",
+      "name": "StarCiAIBadge",
+      "group": "features"
+    },
+    {
       "path": "src/components/features/learn/shared/EnrollGate/index.tsx",
       "name": "EnrollGate",
       "group": "features"
@@ -2317,6 +2897,16 @@
     {
       "path": "src/components/features/practice/ProgressCockpit/index.tsx",
       "name": "ProgressCockpit",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/practice/SandpackPanel/index.tsx",
+      "name": "SandpackPanel",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/practice/flashcard-review/FlashcardReviewPage/index.tsx",
+      "name": "FlashcardReviewPage",
       "group": "features"
     },
     {
@@ -2515,6 +3105,11 @@
       "group": "features"
     },
     {
+      "path": "src/components/features/profile/ContributionCalendarView/index.tsx",
+      "name": "ContributionCalendarView",
+      "group": "features"
+    },
+    {
       "path": "src/components/features/profile/CvSubmission/index.tsx",
       "name": "CvSubmission",
       "group": "features"
@@ -2532,6 +3127,11 @@
     {
       "path": "src/components/features/profile/InstallmentPlans/index.tsx",
       "name": "InstallmentPlans",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/profile/MascotBadge/index.tsx",
+      "name": "MascotBadge",
       "group": "features"
     },
     {
@@ -2805,6 +3405,16 @@
       "group": "features"
     },
     {
+      "path": "src/components/features/profile/RankBadge/index.tsx",
+      "name": "RankBadge",
+      "group": "features"
+    },
+    {
+      "path": "src/components/features/profile/RankDeltaCaret/index.tsx",
+      "name": "RankDeltaCaret",
+      "group": "features"
+    },
+    {
       "path": "src/components/features/profile/Security/index.tsx",
       "name": "Security",
       "group": "features"
@@ -2880,349 +3490,44 @@
       "group": "features"
     },
     {
-      "path": "src/components/layouts/admin/AdminAiBalancer/AdminAiBalancerSkeleton/index.tsx",
-      "name": "AdminAiBalancerSkeleton",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/admin/AdminAiBalancer/ProviderSection/KeyRow/index.tsx",
-      "name": "KeyRow",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/admin/AdminAiBalancer/ProviderSection/index.tsx",
-      "name": "ProviderSection",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/admin/AdminAiBalancer/TopBar/index.tsx",
-      "name": "TopBar",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/admin/AdminAiBalancer/index.tsx",
-      "name": "AdminAiBalancer",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/admin/AdminLogin/index.tsx",
-      "name": "AdminLogin",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/admin/AdminMpegDashTest/ConfigCard/RendererTypeButton/index.tsx",
-      "name": "RendererTypeButton",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/admin/AdminMpegDashTest/ConfigCard/index.tsx",
-      "name": "ConfigCard",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/admin/AdminMpegDashTest/Header/index.tsx",
-      "name": "Header",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/admin/AdminMpegDashTest/PreviewCard/index.tsx",
-      "name": "PreviewCard",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/admin/AdminMpegDashTest/QuickTestUrls/QuickTestUrlButton/index.tsx",
-      "name": "QuickTestUrlButton",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/admin/AdminMpegDashTest/QuickTestUrls/index.tsx",
-      "name": "QuickTestUrls",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/admin/AdminMpegDashTest/index.tsx",
-      "name": "AdminMpegDashTest",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/admin/AdminUploadVideo/FileSelectionCard/DropZone/index.tsx",
-      "name": "DropZone",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/admin/AdminUploadVideo/FileSelectionCard/ProcessResultBanner/index.tsx",
-      "name": "ProcessResultBanner",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/admin/AdminUploadVideo/FileSelectionCard/index.tsx",
-      "name": "FileSelectionCard",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/admin/AdminUploadVideo/Header/index.tsx",
-      "name": "Header",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/admin/AdminUploadVideo/LoadingScreen/index.tsx",
-      "name": "LoadingScreen",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/admin/AdminUploadVideo/TopBar/index.tsx",
-      "name": "TopBar",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/admin/AdminUploadVideo/UploadProgressCard/ProviderUploadRow/index.tsx",
-      "name": "ProviderUploadRow",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/admin/AdminUploadVideo/UploadProgressCard/index.tsx",
-      "name": "UploadProgressCard",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/admin/AdminUploadVideo/index.tsx",
-      "name": "AdminUploadVideo",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/auth/GithubLinkGate/index.tsx",
-      "name": "GithubLinkGate",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/auth/GithubTeamGate/index.tsx",
-      "name": "GithubTeamGate",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/auth/OauthRedirect/index.tsx",
-      "name": "OauthRedirect",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/blog/BlogList/BlogListSkeleton/index.tsx",
-      "name": "BlogListSkeleton",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/blog/BlogList/CategoryFilter/index.tsx",
-      "name": "CategoryFilter",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/blog/BlogList/FeaturedPost/index.tsx",
-      "name": "FeaturedPost",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/blog/BlogList/Masthead/index.tsx",
-      "name": "Masthead",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/blog/BlogList/StartHereAnchor/index.tsx",
-      "name": "StartHereAnchor",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/blog/BlogList/TopicsStrip/index.tsx",
-      "name": "TopicsStrip",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/blog/BlogList/index.tsx",
-      "name": "BlogList",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/blog/BlogPost/BlogPostSkeleton/index.tsx",
-      "name": "BlogPostSkeleton",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/blog/BlogPost/ReadingProgress/index.tsx",
-      "name": "ReadingProgress",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/blog/BlogPost/RelatedPosts/index.tsx",
-      "name": "RelatedPosts",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/blog/BlogPost/index.tsx",
-      "name": "BlogPost",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/blog/shared/PostRow/index.tsx",
-      "name": "PostRow",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/checkout/SepayCheckout/DetailRow/index.tsx",
-      "name": "DetailRow",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/checkout/SepayCheckout/EnrolledSuccess/index.tsx",
-      "name": "EnrolledSuccess",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/checkout/SepayCheckout/OrderSummary/index.tsx",
-      "name": "OrderSummary",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/checkout/SepayCheckout/QrPanel/index.tsx",
-      "name": "QrPanel",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/checkout/SepayCheckout/index.tsx",
-      "name": "SepayCheckout",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/flashcard-review/FlashcardReviewPage/index.tsx",
-      "name": "FlashcardReviewPage",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/kpi/Kpi/index.tsx",
-      "name": "Kpi",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/league/League/GlobalBoard/index.tsx",
-      "name": "GlobalBoard",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/league/League/WeeklyBoard/index.tsx",
-      "name": "WeeklyBoard",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/league/League/index.tsx",
-      "name": "League",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/rewards/RewardsPage/MyVouchers/index.tsx",
+      "path": "src/components/features/rewards/RewardsPage/MyVouchers/index.tsx",
       "name": "MyVouchers",
-      "group": "layouts"
+      "group": "features"
     },
     {
-      "path": "src/components/layouts/rewards/RewardsPage/RewardCatalog/index.tsx",
+      "path": "src/components/features/rewards/RewardsPage/RewardCatalog/index.tsx",
       "name": "RewardCatalog",
-      "group": "layouts"
+      "group": "features"
     },
     {
-      "path": "src/components/layouts/rewards/RewardsPage/index.tsx",
+      "path": "src/components/features/rewards/RewardsPage/index.tsx",
       "name": "RewardsPage",
-      "group": "layouts"
+      "group": "features"
     },
     {
-      "path": "src/components/layouts/shell/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
-      "name": "AccountTrigger",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/shell/Navbar/AccountMenuDropdown/AppearanceRow/index.tsx",
-      "name": "AppearanceRow",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/shell/Navbar/AccountMenuDropdown/AuthActions/index.tsx",
-      "name": "AuthActions",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/shell/Navbar/AccountMenuDropdown/DarkLightMode/index.tsx",
-      "name": "DarkLightMode",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/shell/Navbar/AccountMenuDropdown/LogoutMenu/index.tsx",
-      "name": "LogoutMenu",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/shell/Navbar/AccountMenuDropdown/MenuList/index.tsx",
-      "name": "MenuList",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/shell/Navbar/AccountMenuDropdown/UserSummary/index.tsx",
-      "name": "UserSummary",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/shell/Navbar/AccountMenuDropdown/index.tsx",
-      "name": "AccountMenuDropdown",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/shell/Navbar/Logo/index.tsx",
-      "name": "Logo",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/shell/Navbar/MobileNavbar/index.tsx",
-      "name": "MobileNavbar",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/shell/Navbar/NavLinks/index.tsx",
-      "name": "NavLinks",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/shell/Navbar/NotificationBell/index.tsx",
-      "name": "NotificationBell",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/shell/Navbar/SearchButton/index.tsx",
-      "name": "SearchButton",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/shell/Navbar/index.tsx",
-      "name": "Navbar",
-      "group": "layouts"
-    },
-    {
-      "path": "src/components/layouts/status/SystemStatus/AiKeyGroup/index.tsx",
+      "path": "src/components/features/status/SystemStatus/AiKeyGroup/index.tsx",
       "name": "AiKeyGroup",
-      "group": "layouts"
+      "group": "features"
     },
     {
-      "path": "src/components/layouts/status/SystemStatus/ComponentCard/index.tsx",
+      "path": "src/components/features/status/SystemStatus/ComponentCard/index.tsx",
       "name": "ComponentCard",
-      "group": "layouts"
+      "group": "features"
     },
     {
-      "path": "src/components/layouts/status/SystemStatus/OverallBanner/index.tsx",
+      "path": "src/components/features/status/SystemStatus/OverallBanner/index.tsx",
       "name": "OverallBanner",
-      "group": "layouts"
+      "group": "features"
     },
     {
-      "path": "src/components/layouts/status/SystemStatus/SystemStatusSkeleton/index.tsx",
+      "path": "src/components/features/status/SystemStatus/SystemStatusSkeleton/index.tsx",
       "name": "SystemStatusSkeleton",
-      "group": "layouts"
+      "group": "features"
     },
     {
-      "path": "src/components/layouts/status/SystemStatus/index.tsx",
+      "path": "src/components/features/status/SystemStatus/index.tsx",
       "name": "SystemStatus",
-      "group": "layouts"
+      "group": "features"
     },
     {
       "path": "src/components/modals/AdModal/index.tsx",
@@ -3490,316 +3795,6 @@
       "group": "modals"
     },
     {
-      "path": "src/components/reuseable/AIProcessingText/index.tsx",
-      "name": "AIProcessingText",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/AccordionSkeleton/index.tsx",
-      "name": "AccordionSkeleton",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/AiBalancer/KeyStatusChip/index.tsx",
-      "name": "KeyStatusChip",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/BadgeImage/index.tsx",
-      "name": "BadgeImage",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/CVSubmissionForm/CvSubmissionFields/index.tsx",
-      "name": "CvSubmissionFields",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/CVSubmissionForm/index.tsx",
-      "name": "CVSubmissionForm",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/ContributionCalendarView/index.tsx",
-      "name": "ContributionCalendarView",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/CourseTrialChip/index.tsx",
-      "name": "CourseTrialChip",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/Discussion/index.tsx",
-      "name": "Discussion",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/DragScrollArea/index.tsx",
-      "name": "DragScrollArea",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/Dropzone/index.tsx",
-      "name": "Dropzone",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/FollowButton/index.tsx",
-      "name": "FollowButton",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/HostPlatformChip/index.tsx",
-      "name": "HostPlatformChip",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/LeagueRow/index.tsx",
-      "name": "LeagueRow",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/LeagueTierBadge/index.tsx",
-      "name": "LeagueTierBadge",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/LessonVideoKindChip/index.tsx",
-      "name": "LessonVideoKindChip",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/MarkdownContent/CodePreviewTabs/index.tsx",
-      "name": "CodePreviewTabs",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/MarkdownContent/CodeToHtml/index.tsx",
-      "name": "CodeToHtml",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/MarkdownContent/LayoutWidget/index.tsx",
-      "name": "LayoutWidget",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/MarkdownContent/MermaidDiagram/index.tsx",
-      "name": "MermaidDiagram",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/MarkdownContent/RenderReactComponent/index.tsx",
-      "name": "RenderReactComponent",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/MarkdownContent/TabsBlock/index.tsx",
-      "name": "TabsBlock",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/MarkdownContent/index.tsx",
-      "name": "MarkdownContent",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/MascotBadge/index.tsx",
-      "name": "MascotBadge",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/PDFView/PdfViewportPage/index.tsx",
-      "name": "PdfViewportPage",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/PDFView/index.tsx",
-      "name": "PDFView",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/Pagination/index.tsx",
-      "name": "Pagination",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/PaginationSkeleton/index.tsx",
-      "name": "PaginationSkeleton",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/PressableCard/index.tsx",
-      "name": "PressableCard",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/ProgrammingLanguageTabs/index.tsx",
-      "name": "ProgrammingLanguageTabs",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/QRCode/index.tsx",
-      "name": "QRCode",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/RankBadge/index.tsx",
-      "name": "RankBadge",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/RankDeltaCaret/index.tsx",
-      "name": "RankDeltaCaret",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/ReferenceLinks/index.tsx",
-      "name": "ReferenceLinks",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/RichText/index.tsx",
-      "name": "RichText",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/SandpackPanel/index.tsx",
-      "name": "SandpackPanel",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/Score/index.tsx",
-      "name": "Score",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/SearchBar/index.tsx",
-      "name": "SearchBar",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/SearchInput/index.tsx",
-      "name": "SearchInput",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/SectionCard/index.tsx",
-      "name": "SectionCard",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/SkeletonParagraph/index.tsx",
-      "name": "SkeletonParagraph",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/SkeletonText/index.tsx",
-      "name": "SkeletonText",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/SnippetIcon/index.tsx",
-      "name": "SnippetIcon",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/Spacer/index.tsx",
-      "name": "Spacer",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/StarCiAIBadge/index.tsx",
-      "name": "StarCiAIBadge",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/StatRibbon/index.tsx",
-      "name": "StatRibbon",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/SubPageHeader/index.tsx",
-      "name": "SubPageHeader",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/SummaryCard/index.tsx",
-      "name": "SummaryCard",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/TagChips/index.tsx",
-      "name": "TagChips",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/Turnstile/index.tsx",
-      "name": "Turnstile",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/UserAvatar/index.tsx",
-      "name": "UserAvatar",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/VideoRenderer/MpegDash/index.tsx",
-      "name": "MpegDash",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/VideoRenderer/Standard/index.tsx",
-      "name": "Standard",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/VideoRenderer/VideoControls/FullscreenButton/index.tsx",
-      "name": "FullscreenButton",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/VideoRenderer/VideoControls/PlayPauseButton/index.tsx",
-      "name": "PlayPauseButton",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/VideoRenderer/VideoControls/QualitySelector/index.tsx",
-      "name": "QualitySelector",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/VideoRenderer/VideoControls/SeekBar/index.tsx",
-      "name": "SeekBar",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/VideoRenderer/VideoControls/TimeDisplay/index.tsx",
-      "name": "TimeDisplay",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/VideoRenderer/VideoControls/VolumeControl/index.tsx",
-      "name": "VolumeControl",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/VideoRenderer/VideoControls/index.tsx",
-      "name": "VideoControls",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/VideoRenderer/Youtube/index.tsx",
-      "name": "Youtube",
-      "group": "reuseable"
-    },
-    {
-      "path": "src/components/reuseable/VideoRenderer/index.tsx",
-      "name": "VideoRenderer",
-      "group": "reuseable"
-    },
-    {
       "path": "src/components/svg/GithubIcon/index.tsx",
       "name": "GithubIcon",
       "group": "svg"
@@ -3823,174 +3818,152 @@
       "path": "src/components/svg/TierLevelIcon/index.tsx",
       "name": "TierLevelIcon",
       "group": "svg"
-    },
-    {
-      "path": "src/components/drawers/DrawerContainer.tsx",
-      "name": "DrawerContainer",
-      "group": "drawers"
-    },
-    {
-      "path": "src/components/modals/ModalContainer.tsx",
-      "name": "ModalContainer",
-      "group": "modals"
-    },
-    {
-      "path": "src/components/providers/HeroUIProvider.tsx",
-      "name": "HeroUIProvider",
-      "group": "providers"
-    },
-    {
-      "path": "src/components/providers/NextThemesProvider.tsx",
-      "name": "NextThemesProvider",
-      "group": "providers"
-    },
-    {
-      "path": "src/components/providers/SwrProvider.tsx",
-      "name": "SwrProvider",
-      "group": "providers"
     }
   ],
   "stories": [
     {
       "path": "blocks/async/AsyncContent/AsyncContent.stories.tsx",
       "component": "AsyncContent",
+      "componentPath": "src/components/blocks/async/AsyncContent/index.tsx",
+      "kind": "component",
+      "title": "Core/Async/AsyncContent",
       "states": [
         "Branches"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/async/AsyncContent/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/async/EmptyContent/EmptyContent.stories.tsx",
       "component": "EmptyContent",
+      "componentPath": "src/components/blocks/async/EmptyContent/index.tsx",
+      "kind": "component",
+      "title": "Core/Async/EmptyContent",
       "states": [
         "Default",
         "WithRetry",
         "WithCustomIcon"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/async/EmptyContent/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/async/ErrorContent/ErrorContent.stories.tsx",
       "component": "ErrorContent",
+      "componentPath": "src/components/blocks/async/ErrorContent/index.tsx",
+      "kind": "component",
+      "title": "Core/Async/ErrorContent",
       "states": [
         "Default",
         "WithoutRetry",
         "CustomIcon"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/async/ErrorContent/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/async/InfiniteScrollSentinel/InfiniteScrollSentinel.stories.tsx",
       "component": "InfiniteScrollSentinel",
+      "componentPath": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
+      "kind": "component",
+      "title": "Core/Async/InfiniteScrollSentinel",
       "states": [
         "Default"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/async/InfiniteScrollSentinel/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/buttons/Button/Button.stories.tsx",
       "component": "Button",
+      "componentPath": "src/components/blocks/skeleton/Skeleton/Button/index.tsx",
+      "kind": "component",
+      "title": "Core/Button/Button",
       "states": [
         "AllVariants",
         "SizesAndStates"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/skeleton/Skeleton/Button/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/buttons/ElementCloseButton/ElementCloseButton.stories.tsx",
       "component": "ElementCloseButton",
+      "componentPath": "src/components/blocks/buttons/ElementCloseButton/index.tsx",
+      "kind": "component",
+      "title": "Core/Button/ElementCloseButton",
       "states": [
         "AllTones"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/buttons/ElementCloseButton/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/buttons/FloatingActionButton/FloatingActionButton.stories.tsx",
       "component": "FloatingActionButton",
+      "componentPath": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
+      "kind": "component",
+      "title": "Core/Button/FloatingActionButton",
       "states": [
         "Default"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/buttons/FloatingActionButton/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/buttons/InputButtonLike/InputButtonLike.stories.tsx",
       "component": "InputButtonLike",
+      "componentPath": "src/components/blocks/buttons/InputButtonLike/index.tsx",
+      "kind": "component",
+      "title": "Core/Button/InputButtonLike",
       "states": [
         "Default",
         "WithIcon",
         "WithShortcutSuffix",
         "LongPlaceholderTruncates"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/buttons/InputButtonLike/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/cards/CheckListCard/CheckListCard.stories.tsx",
       "component": "CheckListCard",
+      "componentPath": "src/components/blocks/cards/CheckListCard/index.tsx",
+      "kind": "component",
+      "title": "Core/Card/CheckListCard",
       "states": [
         "Default",
         "WithoutCheck",
         "LongText",
         "SurfaceInSurface"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/cards/CheckListCard/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/cards/ContinueCard/ContinueCard.stories.tsx",
       "component": "ContinueCard",
+      "componentPath": "src/components/blocks/cards/ContinueCard/index.tsx",
+      "kind": "component",
+      "title": "Block/Card/ContinueCard",
       "states": [
         "Item",
         "Hero",
         "HeroUrgent"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/cards/ContinueCard/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/cards/CrossListCard/CrossListCard.stories.tsx",
       "component": "CrossListCard",
+      "componentPath": "src/components/blocks/cards/CrossListCard/index.tsx",
+      "kind": "component",
+      "title": "Core/Card/CrossListCard",
       "states": [
         "Default",
         "SurfaceInSurface"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/cards/CrossListCard/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/cards/GroupPressableCard/GroupPressableCard.stories.tsx",
       "component": "GroupPressableCard",
+      "componentPath": "src/components/blocks/cards/GroupPressableCard/index.tsx",
+      "kind": "component",
+      "title": "Block/Card/GroupPressableCard",
       "states": [
         "Default",
         "ActionTilesWithShortcut",
         "AllDisabled",
         "LonePagerCardPinnedRight"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/cards/GroupPressableCard/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/cards/LabeledCard/LabeledCard.stories.tsx",
       "component": "LabeledCard",
+      "componentPath": "src/components/blocks/cards/LabeledCard/index.tsx",
+      "kind": "component",
+      "title": "Block/Card/LabeledCard",
       "states": [
         "Default",
         "WithLabelEnd",
@@ -3998,491 +3971,491 @@
         "WithAction",
         "SurfaceInSurface",
         "CategorizedList"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/cards/LabeledCard/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/cards/MediaCard/MediaCard.stories.tsx",
       "component": "MediaCard",
+      "componentPath": "src/components/blocks/cards/MediaCard/index.tsx",
+      "kind": "component",
+      "title": "Core/Card/MediaCard",
       "states": [
         "Default",
         "FallbackCover"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/cards/MediaCard/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/cards/NestedCard/NestedCard.stories.tsx",
       "component": "NestedCard",
+      "componentPath": "src/components/blocks/cards/NestedCard/index.tsx",
+      "kind": "component",
+      "title": "Core/Card/NestedCard",
       "states": [
         "SurfaceInSurface",
         "OnBackground"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/cards/NestedCard/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/cards/PressableCard/PressableCard.stories.tsx",
       "component": "PressableCard",
+      "componentPath": "src/components/blocks/cards/PressableCard/index.tsx",
+      "kind": "component",
+      "title": "Core/Card/PressableCard",
       "states": [
         "Default",
         "LinkCard",
         "WithActions",
         "Disabled"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/cards/PressableCard/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/cards/SectionCard/SectionCard.stories.tsx",
       "component": "SectionCard",
+      "componentPath": "src/components/blocks/cards/SectionCard/index.tsx",
+      "kind": "component",
+      "title": "Core/Card/SectionCard",
       "states": [
         "Default",
         "Accent",
         "Plain"
-      ],
-      "news": false,
-      "matchedPath": "src/components/reuseable/SectionCard/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/cards/SurfaceListCard/SurfaceListCard.stories.tsx",
       "component": "SurfaceListCard",
+      "componentPath": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "kind": "component",
+      "title": "Core/Card/SurfaceListCard",
       "states": [
         "Default",
         "RowVariants",
         "WithLeadingAndMeta",
         "FreeFormItems"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/cards/SurfaceListCard/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/chips/AiCategoryChip/AiCategoryChip.stories.tsx",
       "component": "AiCategoryChip",
+      "componentPath": "src/components/blocks/chips/AiCategoryChip/index.tsx",
+      "kind": "component",
+      "title": "Core/Chip/AiCategoryChip",
       "states": [
         "AllCategories"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/chips/AiCategoryChip/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/chips/Chip/Chip.stories.tsx",
       "component": "Chip",
+      "componentPath": "src/components/blocks/skeleton/Skeleton/Chip/index.tsx",
+      "kind": "component",
+      "title": "Core/Chip/Chip",
       "states": [
         "AllColors"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/skeleton/Skeleton/Chip/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/chips/DifficultyChip/DifficultyChip.stories.tsx",
       "component": "DifficultyChip",
+      "componentPath": "src/components/blocks/chips/DifficultyChip/index.tsx",
+      "kind": "component",
+      "title": "Core/Chip/DifficultyChip",
       "states": [
         "AllDifficulties"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/chips/DifficultyChip/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/chips/HighlightChip/HighlightChip.stories.tsx",
       "component": "HighlightChip",
+      "componentPath": "src/components/blocks/chips/HighlightChip/index.tsx",
+      "kind": "component",
+      "title": "Core/Chip/HighlightChip",
       "states": [
         "AllTones"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/chips/HighlightChip/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/chips/LanguageChip/LanguageChip.stories.tsx",
       "component": "LanguageChip",
+      "componentPath": "src/components/blocks/chips/LanguageChip/index.tsx",
+      "kind": "component",
+      "title": "Core/Chip/LanguageChip",
       "states": [
         "AllLanguages"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/chips/LanguageChip/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/chips/StatusChip/StatusChip.stories.tsx",
       "component": "StatusChip",
+      "componentPath": "src/components/blocks/chips/StatusChip/index.tsx",
+      "kind": "component",
+      "title": "Block/Chip/StatusChip",
       "states": [
         "Default",
         "Tones",
         "WithIcon",
         "Removable"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/chips/StatusChip/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/commerce/PriceTag/PriceTag.stories.tsx",
       "component": "PriceTag",
+      "componentPath": "src/components/blocks/commerce/PriceTag/index.tsx",
+      "kind": "component",
+      "title": "Block/Commerce/PriceTag",
       "states": [
         "Default",
         "WithDiscount",
         "Sizes",
         "CurrencyUsd",
         "BreakdownOpen"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/commerce/PriceTag/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/commerce/PricingTable/PricingTable.stories.tsx",
       "component": "PricingTable",
+      "componentPath": "src/components/blocks/commerce/PricingTable/index.tsx",
+      "kind": "component",
+      "title": "Block/Commerce/PricingTable",
       "states": [
         "Default",
         "TwoTiersNoHighlight"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/commerce/PricingTable/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/feed/ChatPanel/ChatPanel.stories.tsx",
       "component": "ChatPanel",
+      "componentPath": "src/components/blocks/feed/ChatPanel/index.tsx",
+      "kind": "component",
+      "title": "Block/Feed/ChatPanel",
       "states": [
         "Conversation",
         "Empty",
         "Typing"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/feed/ChatPanel/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/feed/CommentThread/CommentThread.stories.tsx",
       "component": "CommentThread",
+      "componentPath": "src/components/blocks/feed/CommentThread/index.tsx",
+      "kind": "component",
+      "title": "Block/Feed/CommentThread",
       "states": [
         "Thread",
         "Empty"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/feed/CommentThread/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/feed/Composer/Composer.stories.tsx",
       "component": "Composer",
+      "componentPath": "src/components/blocks/feed/Composer/index.tsx",
+      "kind": "component",
+      "title": "Block/Feed/Composer",
       "states": [
         "Empty",
         "Typing",
         "Submitting"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/feed/Composer/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/feed/FeedItem/FeedItem.stories.tsx",
       "component": "FeedItem",
+      "componentPath": "src/components/blocks/feed/FeedItem/index.tsx",
+      "kind": "component",
+      "title": "Core/Feed/FeedItem",
       "states": [
         "Default",
         "WithReactionBar",
         "WithoutLeading",
         "LongActivityText"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/feed/FeedItem/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/feed/ReactionBar/ReactionBar.stories.tsx",
       "component": "ReactionBar",
+      "componentPath": "src/components/blocks/feed/ReactionBar/index.tsx",
+      "kind": "component",
+      "title": "Core/Feed/ReactionBar",
       "states": [
         "Default",
         "MyReactionSelected",
         "ReadOnly",
         "ReadOnlyEmpty",
         "PickerGroup"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/feed/ReactionBar/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/feed/Timeline/Timeline.stories.tsx",
       "component": "Timeline",
+      "componentPath": "src/components/blocks/feed/Timeline/index.tsx",
+      "kind": "component",
+      "title": "Core/Feed/Timeline",
       "states": [
         "Default"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/feed/Timeline/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/feedback/Callout/Callout.stories.tsx",
       "component": "Callout",
+      "componentPath": "src/components/blocks/feedback/Callout/index.tsx",
+      "kind": "component",
+      "title": "Block/Feedback/Callout",
       "states": [
         "Default",
         "Tones",
         "WithAction",
         "Closable",
         "TitleOnly"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/feedback/Callout/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/feedback/ConfirmDialog/ConfirmDialog.stories.tsx",
       "component": "ConfirmDialog",
+      "componentPath": "src/components/blocks/feedback/ConfirmDialog/index.tsx",
+      "kind": "component",
+      "title": "Core/Feedback/ConfirmDialog",
       "states": [
         "DefaultConfirm",
         "DestructiveDelete"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/feedback/ConfirmDialog/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/feedback/EmptyState/EmptyState.stories.tsx",
       "component": "EmptyState",
+      "componentPath": "src/components/blocks/feedback/EmptyState/index.tsx",
+      "kind": "component",
+      "title": "Core/Feedback/EmptyState",
       "states": [
         "Default",
         "Compositions",
         "ErrorTone"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/feedback/EmptyState/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/feedback/ErrorState/ErrorState.stories.tsx",
       "component": "ErrorState",
+      "componentPath": "src/components/blocks/feedback/ErrorState/index.tsx",
+      "kind": "component",
+      "title": "Core/Feedback/ErrorState",
       "states": [
         "Default",
         "WithoutRetry",
         "LongDescription"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/feedback/ErrorState/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/feedback/InfoTooltip/InfoTooltip.stories.tsx",
       "component": "InfoTooltip",
+      "componentPath": "src/components/blocks/feedback/InfoTooltip/index.tsx",
+      "kind": "component",
+      "title": "Core/Overlays/InfoTooltip",
       "states": [
         "Default",
         "DescriptionOnly",
         "Composed",
         "Placements"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/feedback/InfoTooltip/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/feedback/SimpleEmptyState/SimpleEmptyState.stories.tsx",
       "component": "SimpleEmptyState",
+      "componentPath": "src/components/blocks/feedback/SimpleEmptyState/index.tsx",
+      "kind": "component",
+      "title": "Core/Feedback/SimpleEmptyState",
       "states": [
         "Default",
         "LongMessageWrapping"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/feedback/SimpleEmptyState/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/form/CVSubmissionForm/CVSubmissionForm.stories.tsx",
       "component": "CVSubmissionForm",
+      "componentPath": "src/components/features/careers/CVSubmissionForm/index.tsx",
+      "kind": "component",
+      "title": "Core/Form/CVSubmissionForm",
       "states": [
         "Default",
         "Uploading",
         "Uploaded",
         "Processing"
-      ],
-      "news": false,
-      "matchedPath": "src/components/reuseable/CVSubmissionForm/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/form/Input/Input.stories.tsx",
       "component": "Input",
+      "componentPath": "src/components/blocks/skeleton/Skeleton/Input/index.tsx",
+      "kind": "component",
+      "title": "Core/Form/Input",
       "states": [
         "Variants",
         "States"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/skeleton/Skeleton/Input/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/form/OtpInput/OtpInput.stories.tsx",
       "component": "OtpInput",
+      "componentPath": "src/components/blocks/form/OtpInput/index.tsx",
+      "kind": "component",
+      "title": "Core/Form/OtpInput",
       "states": [
         "Default"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/form/OtpInput/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/form/RadioGroup/RadioGroup.stories.tsx",
       "component": "RadioGroup",
+      "componentPath": "src/components/blocks/skeleton/Skeleton/RadioGroup/index.tsx",
+      "kind": "component",
+      "title": "Core/Form/RadioGroup",
       "states": [
         "Vertical",
         "WithDisabledOption"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/skeleton/Skeleton/RadioGroup/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/form/SchedulePicker/SchedulePicker.stories.tsx",
       "component": "SchedulePicker",
+      "componentPath": "src/components/blocks/form/SchedulePicker/index.tsx",
+      "kind": "component",
+      "title": "Core/Form/SchedulePicker",
       "states": [
         "Default"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/form/SchedulePicker/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/form/SearchAutocomplete/SearchAutocomplete.stories.tsx",
       "component": "SearchAutocomplete",
+      "componentPath": "src/components/blocks/form/SearchAutocomplete/index.tsx",
+      "kind": "component",
+      "title": "Core/Form/SearchAutocomplete",
       "states": [
         "Default",
         "Loading",
         "Empty"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/form/SearchAutocomplete/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/form/SearchInput/SearchInput.stories.tsx",
       "component": "SearchInput",
+      "componentPath": "src/components/blocks/form/SearchInput/index.tsx",
+      "kind": "component",
+      "title": "Core/Form/SearchInput",
       "states": [
         "Default",
         "WithSuggestions",
         "Secondary"
-      ],
-      "news": false,
-      "matchedPath": "src/components/reuseable/SearchInput/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/form/Switch/Switch.stories.tsx",
       "component": "Switch",
+      "componentPath": "src/components/blocks/skeleton/Skeleton/Switch/index.tsx",
+      "kind": "component",
+      "title": "Core/Form/Switch",
       "states": [
         "OnOff",
         "Disabled"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/skeleton/Skeleton/Switch/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/form/TextField/TextField.stories.tsx",
       "component": "TextField",
+      "componentPath": null,
+      "kind": "primitive",
+      "title": "Core/Form/TextField",
       "states": [
         "Default",
         "Required",
         "Invalid",
         "Disabled",
         "Multiline"
-      ],
-      "news": false,
-      "matchedPath": null,
-      "primitive": true
+      ]
     },
     {
       "path": "blocks/grading/DiffViewer/DiffViewer.stories.tsx",
       "component": "DiffViewer",
+      "componentPath": "src/components/blocks/grading/DiffViewer/index.tsx",
+      "kind": "component",
+      "title": "Core/Rendering/CodeDiff",
       "states": [
         "Unified",
         "Split"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/grading/DiffViewer/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/identity/AvatarGroup/AvatarGroup.stories.tsx",
       "component": "AvatarGroup",
+      "componentPath": "src/components/blocks/identity/AvatarGroup/index.tsx",
+      "kind": "component",
+      "title": "Block/Identity/AvatarGroup",
       "states": [
         "Default",
         "OverflowChip",
         "Empty"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/identity/AvatarGroup/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/identity/AvatarUploadButton/AvatarUploadButton.stories.tsx",
       "component": "AvatarUploadButton",
+      "componentPath": "src/components/blocks/identity/AvatarUploadButton/index.tsx",
+      "kind": "component",
+      "title": "Block/Identity/AvatarUploadButton",
       "states": [
         "Default",
         "NoAvatar"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/identity/AvatarUploadButton/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/identity/IconTile/IconTile.stories.tsx",
       "component": "IconTile",
+      "componentPath": "src/components/blocks/identity/IconTile/index.tsx",
+      "kind": "component",
+      "title": "Core/Identity/IconTile",
       "states": [
         "Default",
         "Tones",
         "Sizes",
         "CoverImage"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/identity/IconTile/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/identity/ImageDropzone/ImageDropzone.stories.tsx",
       "component": "ImageDropzone",
+      "componentPath": "src/components/blocks/identity/ImageDropzone/index.tsx",
+      "kind": "component",
+      "title": "Core/Identity/ImageDropzone",
       "states": [
         "Default",
         "WithoutHint"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/identity/ImageDropzone/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/identity/Logo/Logo.stories.tsx",
       "component": "Logo",
+      "componentPath": "src/components/blocks/identity/Logo/index.tsx",
+      "kind": "component",
+      "title": "Core/Identity/Logo",
       "states": [
         "Sizes",
         "OnDarkSurface"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/identity/Logo/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/identity/UserAvatar/UserAvatar.stories.tsx",
       "component": "UserAvatar",
+      "componentPath": "src/components/blocks/identity/UserAvatar/index.tsx",
+      "kind": "component",
+      "title": "Core/Identity/UserAvatar",
       "states": [
         "Default",
         "Sizes"
-      ],
-      "news": false,
-      "matchedPath": "src/components/reuseable/UserAvatar/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/identity/UserCell/UserCell.stories.tsx",
       "component": "UserCell",
+      "componentPath": "src/components/blocks/identity/UserCell/index.tsx",
+      "kind": "component",
+      "title": "Block/Identity/UserCell",
       "states": [
         "Default",
         "Sizes",
@@ -4490,622 +4463,623 @@
         "WithUploadedAvatar",
         "WithTrailing",
         "LongNameTruncation"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/identity/UserCell/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/layout/AmbientBackground/AmbientBackground.stories.tsx",
       "component": "AmbientBackground",
+      "componentPath": "src/components/blocks/layout/AmbientBackground/index.tsx",
+      "kind": "component",
+      "title": "Core/Layout/AmbientBackground",
       "states": [
         "AllEffects",
         "None"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/layout/AmbientBackground/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/layout/AppSplash/AppSplash.stories.tsx",
       "component": "AppSplash",
+      "componentPath": "src/components/blocks/layout/AppSplash/index.tsx",
+      "kind": "component",
+      "title": "Block/Layout/AppSplash",
       "states": [
         "Default"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/layout/AppSplash/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/layout/ModalShell/ModalShell.stories.tsx",
       "component": "ModalShell",
+      "componentPath": "src/components/blocks/layout/ModalShell/index.tsx",
+      "kind": "component",
+      "title": "Core/Layout/ModalShell",
       "states": [
         "Default",
         "CustomHeader",
         "ScrollableBody",
         "WithLeadingTabs",
         "PlainFormClusters"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/layout/ModalShell/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/layout/PageContainer/PageContainer.stories.tsx",
       "component": "PageContainer",
+      "componentPath": "src/components/blocks/layout/PageContainer/index.tsx",
+      "kind": "component",
+      "title": "Core/Layout/PageContainer",
       "states": [
         "Default"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/layout/PageContainer/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/layout/PageHeader/PageHeader.stories.tsx",
       "component": "PageHeader",
+      "componentPath": "src/components/blocks/layout/PageHeader/index.tsx",
+      "kind": "component",
+      "title": "Core/Layout/PageHeader",
       "states": [
         "Default",
         "Full",
         "LongDescriptionClamped"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/layout/PageHeader/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/layout/ResizableRail/ResizableRail.stories.tsx",
       "component": "ResizableRail",
+      "componentPath": "src/components/blocks/layout/ResizableRail/index.tsx",
+      "kind": "component",
+      "title": "Core/Layout/ResizableRail",
       "states": [
         "Default",
         "ScrollableContent"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/layout/ResizableRail/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/layout/ScrollShadow/ScrollShadow.stories.tsx",
       "component": "ScrollShadow",
+      "componentPath": null,
+      "kind": "primitive",
+      "title": "Core/Layout/ScrollShadow",
       "states": [
         "Vertical",
         "Horizontal"
-      ],
-      "news": false,
-      "matchedPath": null,
-      "primitive": true
+      ]
     },
     {
       "path": "blocks/layout/SocketConnectionStatus/SocketConnectionStatus.stories.tsx",
       "component": "SocketConnectionStatus",
+      "componentPath": "src/components/blocks/layout/SocketConnectionStatus/index.tsx",
+      "kind": "component",
+      "title": "Core/Layout/SocketConnectionStatus",
       "states": [
         "Default",
         "Down",
         "Recovered"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/layout/SocketConnectionStatus/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/layout/StickyBottomBar/StickyBottomBar.stories.tsx",
       "component": "StickyBottomBar",
+      "componentPath": "src/components/blocks/layout/StickyBottomBar/index.tsx",
+      "kind": "component",
+      "title": "Core/Layout/StickyBottomBar",
       "states": [
         "Default",
         "SingleAction",
         "WithSecondaryAction"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/layout/StickyBottomBar/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/layout/TopLoader/TopLoader.stories.tsx",
       "component": "TopLoader",
+      "componentPath": "src/components/blocks/layout/TopLoader/index.tsx",
+      "kind": "component",
+      "title": "Core/Layout/TopLoader",
       "states": [
         "Default",
         "Navigating",
         "ReducedMotion"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/layout/TopLoader/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/learn/QuizCard/QuizCard.stories.tsx",
       "component": "QuizCard",
+      "componentPath": "src/components/blocks/learn/QuizCard/index.tsx",
+      "kind": "component",
+      "title": "Block/Learn/QuizCard",
       "states": [
         "SingleChoice",
         "SingleChoiceSubmitted",
         "MultipleChoice"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/learn/QuizCard/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/lists/ListBox/ListBox.stories.tsx",
       "component": "ListBox",
+      "componentPath": "src/components/blocks/skeleton/Skeleton/ListBox/index.tsx",
+      "kind": "component",
+      "title": "Core/List/ListBox",
       "states": [
         "SingleSelect",
         "WithDisabledItem"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/skeleton/Skeleton/ListBox/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/lists/SurfaceListCard/SurfaceListCard.stories.tsx",
       "component": "SurfaceListCard",
+      "componentPath": "src/components/blocks/cards/SurfaceListCard/index.tsx",
+      "kind": "component",
+      "title": "Core/List/SurfaceListCard",
       "states": [
         "Default",
         "RowVariants",
         "WithLeadingAndMeta",
         "FreeFormItems"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/cards/SurfaceListCard/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/marketing/ArchitectureScene/ArchitectureScene.stories.tsx",
       "component": "ArchitectureScene",
+      "componentPath": "src/components/blocks/marketing/ArchitectureScene/index.tsx",
+      "kind": "component",
+      "title": "Core/Rendering/3D",
       "states": [
         "Default",
         "CustomScene"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/marketing/ArchitectureScene/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/marketing/SectionHeading/SectionHeading.stories.tsx",
       "component": "SectionHeading",
+      "componentPath": "src/components/blocks/marketing/SectionHeading/index.tsx",
+      "kind": "component",
+      "title": "Core/Marketing/SectionHeading",
       "states": [
         "Default",
         "AlignedStart",
         "WithAnchorLink",
         "TitleOnly"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/marketing/SectionHeading/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/media/CoverImage/CoverImage.stories.tsx",
       "component": "CoverImage",
+      "componentPath": "src/components/blocks/media/CoverImage/index.tsx",
+      "kind": "component",
+      "title": "Core/Media/CoverImage",
       "states": [
         "Default",
         "Empty"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/media/CoverImage/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/navigation/BackLink/BackLink.stories.tsx",
       "component": "BackLink",
+      "componentPath": "src/components/blocks/navigation/BackLink/index.tsx",
+      "kind": "component",
+      "title": "Core/Navigation/BackLink",
       "states": [
         "Default"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/navigation/BackLink/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.stories.tsx",
       "component": "CollapsibleSidebar",
+      "componentPath": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
+      "kind": "component",
+      "title": "Core/Navigation/CollapsibleSidebar",
       "states": [
         "Default",
         "WithTopSlot",
         "LongTitle"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/navigation/CollapsibleSidebar/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/navigation/ExtendedTabs/ExtendedTabs.stories.tsx",
       "component": "ExtendedTabs",
+      "componentPath": "src/components/blocks/navigation/ExtendedTabs/index.tsx",
+      "kind": "component",
+      "title": "Core/Navigation/ExtendedTabs",
       "states": [
         "TabsAsInput",
         "PagePrimary",
         "SecondaryFilter"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/navigation/ExtendedTabs/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/navigation/FlexWrapButtonRadio/FlexWrapButtonRadio.stories.tsx",
       "component": "FlexWrapButtonRadio",
+      "componentPath": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
+      "kind": "component",
+      "title": "Core/Navigation/FlexWrapButtonRadio",
       "states": [
         "Default",
         "WithDisabledItem",
         "WithTrailing",
         "WithItemAction"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/navigation/FlexWrapButtonRadio/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/navigation/OutlineRail/OutlineRail.stories.tsx",
       "component": "OutlineRail",
+      "componentPath": "src/components/blocks/navigation/OutlineRail/index.tsx",
+      "kind": "component",
+      "title": "Block/Navigation/OutlineRail",
       "states": [
         "Default",
         "Loading",
         "Empty",
         "NoMatch",
         "ErrorState"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/navigation/OutlineRail/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/navigation/Pagination/Pagination.stories.tsx",
       "component": "Pagination",
+      "componentPath": "src/components/blocks/navigation/Pagination/index.tsx",
+      "kind": "component",
+      "title": "Core/Navigation/Pagination",
       "states": [
         "Default",
         "Few"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/skeleton/Skeleton/Pagination/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/navigation/ResponsiveBreadcrumb/ResponsiveBreadcrumb.stories.tsx",
       "component": "ResponsiveBreadcrumb",
+      "componentPath": "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
+      "kind": "component",
+      "title": "Block/Navigation/ResponsiveBreadcrumb",
       "states": [
         "Default",
         "Collapsed",
         "RootOnly"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/navigation/ResponsiveBreadcrumb/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/navigation/SelectableCardGroup/SelectableCardGroup.stories.tsx",
       "component": null,
+      "componentPath": null,
+      "kind": "foundation",
+      "title": "Core/Navigation/SelectableCardGroup",
       "states": [
         "Default",
         "Columns",
         "WithIconAndDisabled"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/navigation/SelectableCardGroup/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/navigation/SidebarNavAccordionGroup/SidebarNavAccordionGroup.stories.tsx",
       "component": "SidebarNavAccordionGroup",
+      "componentPath": "src/components/blocks/navigation/SidebarNavAccordionGroup/index.tsx",
+      "kind": "component",
+      "title": "Core/Navigation/SidebarNavAccordionGroup",
       "states": [
         "Default",
         "WithActiveChild",
         "Collapsed",
         "LongChildLabel"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/navigation/SidebarNavAccordionGroup/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/navigation/SidebarNavGroup/SidebarNavGroup.stories.tsx",
       "component": "SidebarNavGroup",
+      "componentPath": "src/components/blocks/navigation/SidebarNavGroup/index.tsx",
+      "kind": "component",
+      "title": "Core/Navigation/SidebarNavGroup",
       "states": [
         "Default",
         "WithDivider",
         "Collapsed"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/navigation/SidebarNavGroup/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/navigation/SidebarNavItem/SidebarNavItem.stories.tsx",
       "component": "SidebarNavItem",
+      "componentPath": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
+      "kind": "component",
+      "title": "Core/Navigation/SidebarNavItem",
       "states": [
         "Default",
         "Active",
         "WithEndContent",
         "LongLabelTruncation"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/navigation/SidebarNavItem/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/navigation/Stepper/Stepper.stories.tsx",
       "component": "Stepper",
+      "componentPath": "src/components/blocks/navigation/Stepper/index.tsx",
+      "kind": "component",
+      "title": "Core/Navigation/Stepper",
       "states": [
         "HorizontalMidFlow",
         "Vertical",
         "AllDone"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/navigation/Stepper/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/navigation/TabsCard/TabsCard.stories.tsx",
       "component": "TabsCard",
+      "componentPath": "src/components/blocks/navigation/TabsCard/index.tsx",
+      "kind": "component",
+      "title": "Core/Card/TabsCard",
       "states": [
         "TabCard",
         "DoubleTabsCard",
         "WithLeftEndAction",
         "PrimaryVariant"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/navigation/TabsCard/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/notifications/NotificationBell/NotificationBell.stories.tsx",
       "component": "NotificationBell",
+      "componentPath": "src/components/blocks/notifications/NotificationBell/index.tsx",
+      "kind": "component",
+      "title": "Block/Notifications/NotificationBell",
       "states": [
         "WithUnreadCount"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/notifications/NotificationBell/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/notifications/NotificationItem/NotificationItem.stories.tsx",
       "component": "NotificationItem",
+      "componentPath": "src/components/blocks/notifications/NotificationItem/index.tsx",
+      "kind": "component",
+      "title": "Core/Notifications/NotificationItem",
       "states": [
         "States"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/notifications/NotificationItem/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/notifications/NotificationList/NotificationList.stories.tsx",
       "component": "NotificationList",
+      "componentPath": "src/components/blocks/notifications/NotificationList/index.tsx",
+      "kind": "component",
+      "title": "Block/Notifications/NotificationList",
       "states": [
         "Grouped",
         "Empty"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/notifications/NotificationList/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/rendering/FlowDiagram/FlowDiagram.stories.tsx",
       "component": "FlowDiagram",
+      "componentPath": "src/components/blocks/rendering/FlowDiagram/index.tsx",
+      "kind": "component",
+      "title": "Core/Rendering/XYFlow",
       "states": [
         "Default",
         "LinearFlow"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/rendering/FlowDiagram/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/rendering/MarkdownContent/CodeToHtml/CodeToHtml.stories.tsx",
       "component": "CodeToHtml",
+      "componentPath": "src/components/blocks/rendering/MarkdownContent/CodeToHtml/index.tsx",
+      "kind": "component",
+      "title": "Core/Rendering/Code",
       "states": [
         "TypeScript",
         "JavaScriptDark",
         "Bash"
-      ],
-      "news": false,
-      "matchedPath": "src/components/reuseable/MarkdownContent/CodeToHtml/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/rendering/MarkdownContent/MarkdownContent.stories.tsx",
       "component": "MarkdownContent",
+      "componentPath": "src/components/blocks/rendering/MarkdownContent/index.tsx",
+      "kind": "component",
+      "title": "Core/Rendering/Markdown",
       "states": [
         "Default",
         "Reading",
         "Inline"
-      ],
-      "news": false,
-      "matchedPath": "src/components/reuseable/MarkdownContent/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/skeleton/Skeleton/Skeleton.stories.tsx",
       "component": "Skeleton",
+      "componentPath": "src/components/blocks/skeleton/Skeleton/index.tsx",
+      "kind": "component",
+      "title": "Core/Skeleton/Skeleton",
       "states": [
         "Bar",
         "TypographySizes",
         "AllKinds",
         "ComposedExample"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/skeleton/Skeleton/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/stats/CourseProgressBar/CourseProgressBar.stories.tsx",
       "component": "CourseProgressBar",
+      "componentPath": "src/components/blocks/stats/CourseProgressBar/index.tsx",
+      "kind": "component",
+      "title": "Core/Stat/CourseProgressBar",
       "states": [
         "Default",
         "HiddenLegend",
         "DimensionNotApplicable"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/stats/CourseProgressBar/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/stats/LanguageDonut/LanguageDonut.stories.tsx",
       "component": "LanguageDonut",
+      "componentPath": "src/components/blocks/stats/LanguageDonut/index.tsx",
+      "kind": "component",
+      "title": "Core/Stat/LanguageDonut",
       "states": [
         "Default",
         "Compact"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/stats/LanguageDonut/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/stats/Legend/Legend.stories.tsx",
       "component": "Legend",
+      "componentPath": "src/components/blocks/stats/Legend/index.tsx",
+      "kind": "component",
+      "title": "Core/Stat/Legend",
       "states": [
         "Default",
         "ManyItems",
         "LongLabel"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/stats/Legend/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/stats/MetricCard/MetricCard.stories.tsx",
       "component": "MetricCard",
+      "componentPath": "src/components/blocks/stats/MetricCard/index.tsx",
+      "kind": "component",
+      "title": "Block/Stat/MetricCard",
       "states": [
         "Default",
         "OptionalSlots",
         "LongLabelAndHint"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/stats/MetricCard/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/stats/MilestoneRoadmap/MilestoneRoadmap.stories.tsx",
       "component": "MilestoneRoadmap",
+      "componentPath": "src/components/blocks/stats/MilestoneRoadmap/index.tsx",
+      "kind": "component",
+      "title": "Core/Stat/MilestoneRoadmap",
       "states": [
         "Default",
         "LongRoadmap"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/stats/MilestoneRoadmap/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/stats/ProgressMeter/ProgressMeter.stories.tsx",
       "component": "ProgressMeter",
+      "componentPath": "src/components/blocks/stats/ProgressMeter/index.tsx",
+      "kind": "component",
+      "title": "Core/Stat/ProgressMeter",
       "states": [
         "Default",
         "LabelAndValueVariants",
         "Tones",
         "CustomMax"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/stats/ProgressMeter/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/stats/ProgressRing/ProgressRing.stories.tsx",
       "component": "ProgressRing",
+      "componentPath": "src/components/blocks/stats/ProgressRing/index.tsx",
+      "kind": "component",
+      "title": "Core/Stat/ProgressRing",
       "states": [
         "Sizes",
         "Tones",
         "WithCaption"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/stats/ProgressRing/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/stats/SegmentBar/SegmentBar.stories.tsx",
       "component": "SegmentBar",
+      "componentPath": "src/components/blocks/stats/SegmentBar/index.tsx",
+      "kind": "component",
+      "title": "Core/Stat/SegmentBar",
       "states": [
         "Default",
         "ProgressToTotal",
         "HiddenLegend",
         "ManyGroups",
         "NoData"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/stats/SegmentBar/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/stats/StatPair/StatPair.stories.tsx",
       "component": "StatPair",
+      "componentPath": "src/components/blocks/stats/StatPair/index.tsx",
+      "kind": "component",
+      "title": "Core/Stat/StatPair",
       "states": [
         "Default",
         "Row",
         "Grid"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/stats/StatPair/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "blocks/stats/TopicMasteryGrid/TopicMasteryGrid.stories.tsx",
       "component": "TopicMasteryGrid",
+      "componentPath": "src/components/blocks/stats/TopicMasteryGrid/index.tsx",
+      "kind": "component",
+      "title": "Core/Stat/TopicMasteryGrid",
       "states": [
         "Default"
-      ],
-      "news": false,
-      "matchedPath": "src/components/blocks/stats/TopicMasteryGrid/index.tsx",
-      "primitive": false
+      ]
     },
     {
       "path": "foundations/Radius/Radius.stories.tsx",
       "component": null,
+      "componentPath": null,
+      "kind": "foundation",
+      "title": "Core/Foundations/Radius",
       "states": [
         "Scale",
         "Concentric"
-      ],
-      "news": false,
-      "matchedPath": null,
-      "primitive": true
+      ]
     },
     {
       "path": "foundations/Spacing/Spacing.stories.tsx",
       "component": null,
+      "componentPath": null,
+      "kind": "foundation",
+      "title": "Core/Foundations/Spacing",
       "states": [
         "GapScale",
         "NamedExceptions",
         "Padding"
-      ],
-      "news": false,
-      "matchedPath": null,
-      "primitive": true
+      ]
     },
     {
       "path": "foundations/SurfacesAndFills/SurfacesAndFills.stories.tsx",
       "component": null,
+      "componentPath": null,
+      "kind": "foundation",
+      "title": "Core/Foundations/Surfaces & Fills",
       "states": [
         "Elevation",
         "AccentSolidVsTint",
         "AccentAntiPatterns"
-      ],
-      "news": false,
-      "matchedPath": null,
-      "primitive": true
+      ]
     },
     {
       "path": "overlays/Popover/Popover.stories.tsx",
       "component": "Popover",
+      "componentPath": null,
+      "kind": "primitive",
+      "title": "Core/Overlays/Popover",
       "states": [
         "Default",
         "RichContent"
-      ],
-      "news": false,
-      "matchedPath": null,
-      "primitive": true
+      ]
     },
     {
       "path": "overlays/Toast/Toast.stories.tsx",
       "component": null,
+      "componentPath": null,
+      "kind": "foundation",
+      "title": "Core/Overlays/Toast",
       "states": [
         "Default"
-      ],
-      "news": false,
-      "matchedPath": null,
-      "primitive": true
+      ]
     }
   ],
   "coverage": {
-    "total": 769,
-    "storied": 98,
-    "holesCount": 671,
+    "total": 763,
+    "storied": 97,
+    "holesCount": 666,
     "holes": [
       "src/components/blocks/buttons/RatingBar/index.tsx",
       "src/components/blocks/cards/CourseCard/index.tsx",
+      "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
       "src/components/blocks/cards/FlipCard/index.tsx",
       "src/components/blocks/cards/PlaygroundCard/index.tsx",
       "src/components/blocks/cards/PricingCard/index.tsx",
+      "src/components/blocks/cards/SummaryCard/index.tsx",
       "src/components/blocks/chips/EnumChip/index.tsx",
+      "src/components/blocks/chips/HostPlatformChip/index.tsx",
+      "src/components/blocks/chips/TagChips/index.tsx",
       "src/components/blocks/commerce/PhaseScarcityNote/index.tsx",
       "src/components/blocks/feed/ActivityAvatar/index.tsx",
       "src/components/blocks/feed/ActivityFeed/index.tsx",
@@ -5113,12 +5087,33 @@
       "src/components/blocks/feed/CommunityCommentRow/index.tsx",
       "src/components/blocks/feed/CommunityPostCard/index.tsx",
       "src/components/blocks/feed/EntityLink/index.tsx",
+      "src/components/blocks/form/Dropzone/index.tsx",
+      "src/components/blocks/form/SearchBar/index.tsx",
       "src/components/blocks/grading/GradeCreditCaption/index.tsx",
       "src/components/blocks/grading/GradeModelDropdown/index.tsx",
       "src/components/blocks/grading/GradingByline/index.tsx",
       "src/components/blocks/grading/SelfHostGpuMark/index.tsx",
+      "src/components/blocks/identity/BadgeImage/index.tsx",
       "src/components/blocks/identity/BrandLockup/index.tsx",
       "src/components/blocks/identity/BrandLogo/index.tsx",
+      "src/components/blocks/identity/SnippetIcon/index.tsx",
+      "src/components/blocks/layout/DragScrollArea/index.tsx",
+      "src/components/blocks/layout/Spacer/index.tsx",
+      "src/components/blocks/layout/SubPageHeader/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AppearanceRow/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/AuthActions/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/DarkLightMode/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/LogoutMenu/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/MenuList/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/UserSummary/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/AccountMenuDropdown/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/Logo/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/MobileNavbar/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/NavLinks/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/NotificationBell/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/SearchButton/index.tsx",
+      "src/components/blocks/layout/shell/Navbar/index.tsx",
       "src/components/blocks/learn/ChatToolResult/index.tsx",
       "src/components/blocks/learn/EntityResultRow/index.tsx",
       "src/components/blocks/learn/RelatedContentList/index.tsx",
@@ -5135,106 +5130,588 @@
       "src/components/blocks/marketing/TopicLane/index.tsx",
       "src/components/blocks/marketing/TrackCard/index.tsx",
       "src/components/blocks/marketing/TruthList/index.tsx",
+      "src/components/blocks/media/QRCode/index.tsx",
+      "src/components/blocks/media/VideoRenderer/MpegDash/index.tsx",
+      "src/components/blocks/media/VideoRenderer/Standard/index.tsx",
+      "src/components/blocks/media/VideoRenderer/VideoControls/FullscreenButton/index.tsx",
+      "src/components/blocks/media/VideoRenderer/VideoControls/PlayPauseButton/index.tsx",
+      "src/components/blocks/media/VideoRenderer/VideoControls/QualitySelector/index.tsx",
+      "src/components/blocks/media/VideoRenderer/VideoControls/SeekBar/index.tsx",
+      "src/components/blocks/media/VideoRenderer/VideoControls/TimeDisplay/index.tsx",
+      "src/components/blocks/media/VideoRenderer/VideoControls/VolumeControl/index.tsx",
+      "src/components/blocks/media/VideoRenderer/VideoControls/index.tsx",
+      "src/components/blocks/media/VideoRenderer/Youtube/index.tsx",
+      "src/components/blocks/media/VideoRenderer/index.tsx",
       "src/components/blocks/navigation/ContentMapRow/index.tsx",
+      "src/components/blocks/navigation/ProgrammingLanguageTabs/index.tsx",
       "src/components/blocks/navigation/SeeMoreLink/index.tsx",
+      "src/components/blocks/navigation/SelectableCardGroup/index.tsx",
       "src/components/blocks/navigation/WorkSessionHeader/index.tsx",
-      "src/components/reuseable/AiBalancer/KeyStatusChip/index.tsx",
-      "src/components/reuseable/AIProcessingText/index.tsx",
-      "src/components/reuseable/BadgeImage/index.tsx",
-      "src/components/reuseable/ContributionCalendarView/index.tsx",
-      "src/components/reuseable/CourseTrialChip/index.tsx",
-      "src/components/reuseable/CVSubmissionForm/CvSubmissionFields/index.tsx",
-      "src/components/reuseable/Discussion/index.tsx",
-      "src/components/reuseable/DragScrollArea/index.tsx",
-      "src/components/reuseable/Dropzone/index.tsx",
-      "src/components/reuseable/FollowButton/index.tsx",
-      "src/components/reuseable/HostPlatformChip/index.tsx",
-      "src/components/reuseable/LeagueRow/index.tsx",
-      "src/components/reuseable/LeagueTierBadge/index.tsx",
-      "src/components/reuseable/LessonVideoKindChip/index.tsx",
-      "src/components/reuseable/MarkdownContent/CodePreviewTabs/index.tsx",
-      "src/components/reuseable/MarkdownContent/LayoutWidget/index.tsx",
-      "src/components/reuseable/MarkdownContent/MermaidDiagram/index.tsx",
-      "src/components/reuseable/MarkdownContent/RenderReactComponent/index.tsx",
-      "src/components/reuseable/MarkdownContent/TabsBlock/index.tsx",
-      "src/components/reuseable/MascotBadge/index.tsx",
-      "src/components/reuseable/Pagination/index.tsx",
-      "src/components/reuseable/PDFView/index.tsx",
-      "src/components/reuseable/PDFView/PdfViewportPage/index.tsx",
-      "src/components/reuseable/PressableCard/index.tsx",
-      "src/components/reuseable/ProgrammingLanguageTabs/index.tsx",
-      "src/components/reuseable/QRCode/index.tsx",
-      "src/components/reuseable/RankBadge/index.tsx",
-      "src/components/reuseable/RankDeltaCaret/index.tsx",
-      "src/components/reuseable/ReferenceLinks/index.tsx",
-      "src/components/reuseable/RichText/index.tsx",
-      "src/components/reuseable/SandpackPanel/index.tsx",
-      "src/components/reuseable/Score/index.tsx",
-      "src/components/reuseable/SearchBar/index.tsx",
-      "src/components/reuseable/SnippetIcon/index.tsx",
-      "src/components/reuseable/Spacer/index.tsx",
-      "src/components/reuseable/StarCiAIBadge/index.tsx",
-      "src/components/reuseable/StatRibbon/index.tsx",
-      "src/components/reuseable/SubPageHeader/index.tsx",
-      "src/components/reuseable/SummaryCard/index.tsx",
-      "src/components/reuseable/TagChips/index.tsx",
-      "src/components/reuseable/Turnstile/index.tsx",
-      "src/components/reuseable/VideoRenderer/index.tsx",
-      "src/components/reuseable/VideoRenderer/MpegDash/index.tsx",
-      "src/components/reuseable/VideoRenderer/Standard/index.tsx",
-      "src/components/reuseable/VideoRenderer/VideoControls/FullscreenButton/index.tsx",
-      "src/components/reuseable/VideoRenderer/VideoControls/index.tsx",
-      "src/components/reuseable/VideoRenderer/VideoControls/PlayPauseButton/index.tsx",
-      "src/components/reuseable/VideoRenderer/VideoControls/QualitySelector/index.tsx",
-      "src/components/reuseable/VideoRenderer/VideoControls/SeekBar/index.tsx",
-      "src/components/reuseable/VideoRenderer/VideoControls/TimeDisplay/index.tsx",
-      "src/components/reuseable/VideoRenderer/VideoControls/VolumeControl/index.tsx",
-      "src/components/reuseable/VideoRenderer/Youtube/index.tsx",
+      "src/components/blocks/rendering/MarkdownContent/CodePreviewTabs/index.tsx",
+      "src/components/blocks/rendering/MarkdownContent/LayoutWidget/index.tsx",
+      "src/components/blocks/rendering/MarkdownContent/MermaidDiagram/index.tsx",
+      "src/components/blocks/rendering/MarkdownContent/RenderReactComponent/index.tsx",
+      "src/components/blocks/rendering/MarkdownContent/TabsBlock/index.tsx",
+      "src/components/blocks/rendering/PDFView/PdfViewportPage/index.tsx",
+      "src/components/blocks/rendering/PDFView/index.tsx",
+      "src/components/blocks/rendering/RichText/index.tsx",
+      "src/components/blocks/skeleton/AccordionSkeleton/index.tsx",
+      "src/components/blocks/skeleton/PaginationSkeleton/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/Accordion/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/Avatar/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/Badge/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/Breadcrumbs/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/Card/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/Checkbox/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/Disclosure/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/Kbd/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/ListRow/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/Menu/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/Meter/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/Metric/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/Pagination/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/Paragraph/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/ProgressBar/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/SegmentBar/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/Select/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/Slider/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/Table/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/Tabs/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/TextArea/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/Typography/index.tsx",
+      "src/components/blocks/skeleton/Skeleton/UserCell/index.tsx",
+      "src/components/blocks/skeleton/SkeletonParagraph/index.tsx",
+      "src/components/blocks/skeleton/SkeletonText/index.tsx",
+      "src/components/blocks/stats/Score/index.tsx",
+      "src/components/blocks/stats/StatRibbon/index.tsx",
       "src/components/drawers/ContentAiChatDrawer/index.tsx",
-      "src/components/drawers/DrawerContainer.tsx",
       "src/components/drawers/E2eResultDrawer/index.tsx",
       "src/components/drawers/InterviewSessionDetailDrawer/index.tsx",
       "src/components/drawers/MiniCartDrawer/index.tsx",
-      "src/components/drawers/PersonalProjectTaskAttemptsDrawer/index.tsx",
       "src/components/drawers/PersonalProjectTaskAttemptsDrawer/PersonalProjectAttemptCard/index.tsx",
+      "src/components/drawers/PersonalProjectTaskAttemptsDrawer/PersonalProjectAttemptsSkeleton/index.tsx",
+      "src/components/drawers/PersonalProjectTaskAttemptsDrawer/index.tsx",
       "src/components/drawers/PersonalProjectTaskResultHistoryDrawer/index.tsx",
       "src/components/drawers/SubmissionAttemptsDrawer/Empty/index.tsx",
-      "src/components/drawers/SubmissionAttemptsDrawer/index.tsx",
+      "src/components/drawers/SubmissionAttemptsDrawer/SubmissionAttempCardSkeleton/index.tsx",
       "src/components/drawers/SubmissionAttemptsDrawer/SubmissionAttemptCard/index.tsx",
+      "src/components/drawers/SubmissionAttemptsDrawer/index.tsx",
       "src/components/drawers/SubmissionResultHistoryDrawer/index.tsx",
+      "src/components/features/admin/AdminAiBalancer/AdminAiBalancerSkeleton/index.tsx",
+      "src/components/features/admin/AdminAiBalancer/ProviderSection/KeyRow/index.tsx",
+      "src/components/features/admin/AdminAiBalancer/ProviderSection/index.tsx",
+      "src/components/features/admin/AdminAiBalancer/TopBar/index.tsx",
+      "src/components/features/admin/AdminAiBalancer/index.tsx",
+      "src/components/features/admin/AdminLogin/index.tsx",
+      "src/components/features/admin/AdminMpegDashTest/ConfigCard/RendererTypeButton/index.tsx",
+      "src/components/features/admin/AdminMpegDashTest/ConfigCard/index.tsx",
+      "src/components/features/admin/AdminMpegDashTest/Header/index.tsx",
+      "src/components/features/admin/AdminMpegDashTest/PreviewCard/index.tsx",
+      "src/components/features/admin/AdminMpegDashTest/QuickTestUrls/QuickTestUrlButton/index.tsx",
+      "src/components/features/admin/AdminMpegDashTest/QuickTestUrls/index.tsx",
+      "src/components/features/admin/AdminMpegDashTest/index.tsx",
+      "src/components/features/admin/AdminUploadVideo/FileSelectionCard/DropZone/index.tsx",
+      "src/components/features/admin/AdminUploadVideo/FileSelectionCard/ProcessResultBanner/index.tsx",
+      "src/components/features/admin/AdminUploadVideo/FileSelectionCard/index.tsx",
+      "src/components/features/admin/AdminUploadVideo/Header/index.tsx",
+      "src/components/features/admin/AdminUploadVideo/LoadingScreen/index.tsx",
+      "src/components/features/admin/AdminUploadVideo/TopBar/index.tsx",
+      "src/components/features/admin/AdminUploadVideo/UploadProgressCard/ProviderUploadRow/index.tsx",
+      "src/components/features/admin/AdminUploadVideo/UploadProgressCard/index.tsx",
+      "src/components/features/admin/AdminUploadVideo/index.tsx",
+      "src/components/features/architecture/ArchitectureMap/index.tsx",
+      "src/components/features/architecture/ArchitectureRail/ArchitectureMobileNav/index.tsx",
+      "src/components/features/architecture/ArchitectureRail/index.tsx",
+      "src/components/features/architecture/CurlTester/index.tsx",
+      "src/components/features/architecture/MetricsInline/index.tsx",
+      "src/components/features/architecture/NodeDissectionPanel/index.tsx",
+      "src/components/features/architecture/index.tsx",
+      "src/components/features/auth/GithubLinkGate/index.tsx",
+      "src/components/features/auth/GithubTeamGate/index.tsx",
+      "src/components/features/auth/LoginPage/index.tsx",
+      "src/components/features/auth/OauthRedirect/index.tsx",
+      "src/components/features/auth/Turnstile/index.tsx",
+      "src/components/features/blog/BlogList/BlogListSkeleton/index.tsx",
+      "src/components/features/blog/BlogList/CategoryFilter/index.tsx",
+      "src/components/features/blog/BlogList/FeaturedPost/index.tsx",
+      "src/components/features/blog/BlogList/Masthead/index.tsx",
+      "src/components/features/blog/BlogList/StartHereAnchor/index.tsx",
+      "src/components/features/blog/BlogList/TopicsStrip/index.tsx",
+      "src/components/features/blog/BlogList/index.tsx",
+      "src/components/features/blog/BlogPost/BlogPostSkeleton/index.tsx",
+      "src/components/features/blog/BlogPost/ReadingProgress/index.tsx",
+      "src/components/features/blog/BlogPost/RelatedPosts/index.tsx",
+      "src/components/features/blog/BlogPost/index.tsx",
+      "src/components/features/blog/shared/PostRow/index.tsx",
+      "src/components/features/careers/CVSubmissionForm/CvSubmissionFields/index.tsx",
+      "src/components/features/careers/Headhunting/HeadhuntingCompany/HeadhuntingCompanyBreadcrumbs/index.tsx",
+      "src/components/features/careers/Headhunting/HeadhuntingCompany/HeadhuntingCompanyConsultants/index.tsx",
+      "src/components/features/careers/Headhunting/HeadhuntingCompany/HeadhuntingCompanyLoadingState/index.tsx",
+      "src/components/features/careers/Headhunting/HeadhuntingCompany/HeadhuntingCompanyProfile/index.tsx",
+      "src/components/features/careers/Headhunting/HeadhuntingCompany/index.tsx",
+      "src/components/features/careers/Headhunting/Headhuntings/ConsultantAvatar/index.tsx",
+      "src/components/features/careers/Headhunting/Headhuntings/ConsultantCard/index.tsx",
+      "src/components/features/careers/Headhunting/Headhuntings/ConsultantCardSkeleton/index.tsx",
+      "src/components/features/careers/Headhunting/Headhuntings/ConsultantGrid/index.tsx",
+      "src/components/features/careers/Headhunting/Headhuntings/HeadhuntingsBreadcrumbs/index.tsx",
+      "src/components/features/careers/Headhunting/Headhuntings/index.tsx",
+      "src/components/features/careers/Headhunting/TalentDirectory/index.tsx",
+      "src/components/features/careers/Jobs/JobDetail/index.tsx",
+      "src/components/features/careers/Jobs/JobList/JobListRow/index.tsx",
+      "src/components/features/careers/Jobs/JobList/JobListRowSkeleton/index.tsx",
+      "src/components/features/careers/Jobs/JobList/index.tsx",
+      "src/components/features/careers/Jobs/JobPostForm/ApplyMethodSection/index.tsx",
+      "src/components/features/careers/Jobs/JobPostForm/CompanySection/index.tsx",
+      "src/components/features/careers/Jobs/JobPostForm/PositionSection/index.tsx",
+      "src/components/features/careers/Jobs/JobPostForm/SubmitSuccess/index.tsx",
+      "src/components/features/careers/Jobs/JobPostForm/index.tsx",
+      "src/components/features/cart/AddToCartButton/index.tsx",
+      "src/components/features/cart/CartView/CartLine/index.tsx",
+      "src/components/features/cart/CartView/index.tsx",
+      "src/components/features/checkout/SepayCheckout/DetailRow/index.tsx",
+      "src/components/features/checkout/SepayCheckout/EnrolledSuccess/index.tsx",
+      "src/components/features/checkout/SepayCheckout/OrderSummary/index.tsx",
+      "src/components/features/checkout/SepayCheckout/QrPanel/index.tsx",
+      "src/components/features/checkout/SepayCheckout/index.tsx",
+      "src/components/features/community/CommunityChat/ChatPane/index.tsx",
+      "src/components/features/community/CommunityChat/index.tsx",
+      "src/components/features/community/CommunityCommentItem/index.tsx",
+      "src/components/features/community/CommunityCommentThread/index.tsx",
+      "src/components/features/community/CommunityFeed/CommunityComposer/index.tsx",
+      "src/components/features/community/CommunityFeed/CommunityFeedSkeleton/index.tsx",
+      "src/components/features/community/CommunityFeed/index.tsx",
+      "src/components/features/community/CommunityPost/index.tsx",
+      "src/components/features/community/Discussion/index.tsx",
+      "src/components/features/community/FollowButton/index.tsx",
+      "src/components/features/contact/Contact/ContactChannels/FounderCard/index.tsx",
+      "src/components/features/contact/Contact/ContactChannels/index.tsx",
+      "src/components/features/contact/Contact/ContactFaq/index.tsx",
+      "src/components/features/contact/Contact/ContactForm/index.tsx",
+      "src/components/features/contact/Contact/index.tsx",
+      "src/components/features/content/LessonVideoKindChip/index.tsx",
+      "src/components/features/content/PublicArticle/index.tsx",
+      "src/components/features/content/ReferenceLinks/index.tsx",
+      "src/components/features/cookie-consent/AnalyticsGate/index.tsx",
+      "src/components/features/cookie-consent/CookieConsentBanner/index.tsx",
+      "src/components/features/course/CourseCatalog/CatalogCourseCard/index.tsx",
+      "src/components/features/course/CourseCatalog/index.tsx",
+      "src/components/features/course/CourseDetail/CourseCtaButtons/index.tsx",
+      "src/components/features/course/CourseDetail/CourseCurriculum/ModuleAccordionItem/index.tsx",
+      "src/components/features/course/CourseDetail/CourseCurriculum/index.tsx",
+      "src/components/features/course/CourseDetail/CourseFaq/index.tsx",
+      "src/components/features/course/CourseDetail/CourseHero/index.tsx",
+      "src/components/features/course/CourseDetail/CourseMobileEnrollBar/index.tsx",
+      "src/components/features/course/CourseDetail/CoursePrerequisites/index.tsx",
+      "src/components/features/course/CourseDetail/CoursePricingRail/PhaseRow/index.tsx",
+      "src/components/features/course/CourseDetail/CoursePricingRail/index.tsx",
+      "src/components/features/course/CourseDetail/CourseTrustStats/index.tsx",
+      "src/components/features/course/CourseDetail/CourseValueProps/index.tsx",
+      "src/components/features/course/CourseDetail/index.tsx",
+      "src/components/features/course/CourseTrialChip/index.tsx",
+      "src/components/features/dashboard/AdBanner/index.tsx",
+      "src/components/features/dashboard/AiQuotaCard/index.tsx",
+      "src/components/features/dashboard/ChangelogList/ChangelogListSkeleton/index.tsx",
+      "src/components/features/dashboard/ChangelogList/index.tsx",
+      "src/components/features/dashboard/CommunityTab/index.tsx",
+      "src/components/features/dashboard/ContinueLearning/ContinueLearningSkeleton/index.tsx",
+      "src/components/features/dashboard/ContinueLearning/ResumeCard/index.tsx",
+      "src/components/features/dashboard/ContinueLearning/index.tsx",
+      "src/components/features/dashboard/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
+      "src/components/features/dashboard/CoursesTab/MyCoursesProgress/index.tsx",
+      "src/components/features/dashboard/CoursesTab/index.tsx",
+      "src/components/features/dashboard/DailyQuest/index.tsx",
+      "src/components/features/dashboard/DashboardIdentity/IdentityStats/index.tsx",
+      "src/components/features/dashboard/DashboardIdentity/ProfileMenuCard/index.tsx",
+      "src/components/features/dashboard/DashboardIdentity/index.tsx",
+      "src/components/features/dashboard/DashboardTabsBar/index.tsx",
+      "src/components/features/dashboard/EntityToken/index.tsx",
+      "src/components/features/dashboard/ExploreTab/index.tsx",
+      "src/components/features/dashboard/FeedTabs/FeedTabsSkeleton/index.tsx",
+      "src/components/features/dashboard/FeedTabs/index.tsx",
+      "src/components/features/dashboard/FlashcardReview/index.tsx",
+      "src/components/features/dashboard/GlobalStanding/GlobalStandingSkeleton/index.tsx",
+      "src/components/features/dashboard/GlobalStanding/index.tsx",
+      "src/components/features/dashboard/LeagueCard/LeagueCardContent/index.tsx",
+      "src/components/features/dashboard/LeagueCard/LeagueCardSkeleton/index.tsx",
+      "src/components/features/dashboard/LeagueCard/index.tsx",
+      "src/components/features/dashboard/LeagueRow/index.tsx",
+      "src/components/features/dashboard/LeagueTierBadge/index.tsx",
+      "src/components/features/dashboard/OverviewTab/JobReadinessWidget/index.tsx",
+      "src/components/features/dashboard/OverviewTab/OverviewContributions/OverviewContributionsSkeleton/index.tsx",
+      "src/components/features/dashboard/OverviewTab/OverviewContributions/index.tsx",
+      "src/components/features/dashboard/OverviewTab/index.tsx",
+      "src/components/features/dashboard/QuickActions/index.tsx",
+      "src/components/features/dashboard/RecommendedCourses/index.tsx",
+      "src/components/features/dashboard/StreakFreezeCard/index.tsx",
+      "src/components/features/dashboard/StreakStrip/index.tsx",
+      "src/components/features/dashboard/TopLearners/TopLearnersSkeleton/index.tsx",
+      "src/components/features/dashboard/TopLearners/index.tsx",
+      "src/components/features/dashboard/TrendingContents/TrendingContentsSkeleton/index.tsx",
+      "src/components/features/dashboard/TrendingContents/TrendingRow/index.tsx",
+      "src/components/features/dashboard/TrendingContents/index.tsx",
+      "src/components/features/dashboard/UpcomingLivestreamCard/index.tsx",
+      "src/components/features/dashboard/WeeklyChallengeCard/WeeklyChallengeCardSkeleton/index.tsx",
+      "src/components/features/dashboard/WeeklyChallengeCard/index.tsx",
+      "src/components/features/dashboard/WeeklyGoals/index.tsx",
+      "src/components/features/dashboard/WhoToFollow/WhoToFollowSkeleton/index.tsx",
+      "src/components/features/dashboard/WhoToFollow/index.tsx",
+      "src/components/features/dashboard/index.tsx",
+      "src/components/features/dashboard/kpi/Kpi/index.tsx",
+      "src/components/features/dashboard/league/League/GlobalBoard/index.tsx",
+      "src/components/features/dashboard/league/League/WeeklyBoard/index.tsx",
+      "src/components/features/dashboard/league/League/index.tsx",
+      "src/components/features/footer/Footer/FooterNavColumn/index.tsx",
+      "src/components/features/footer/Footer/index.tsx",
+      "src/components/features/landing/Landing/KnowledgeGraph/index.tsx",
+      "src/components/features/landing/Landing/LearnLoopScroll/index.tsx",
+      "src/components/features/landing/Landing/StatStrip/index.tsx",
+      "src/components/features/landing/Landing/TalentMarketplace/index.tsx",
+      "src/components/features/landing/Landing/index.tsx",
+      "src/components/features/learn/AIProcessingText/index.tsx",
+      "src/components/features/learn/AiBalancer/KeyStatusChip/index.tsx",
+      "src/components/features/learn/Challenge/ChallengePage/index.tsx",
+      "src/components/features/learn/Challenge/ChallengeSubmissionPanel/SubmissionRow/LastAttemptResult/index.tsx",
+      "src/components/features/learn/Challenge/ChallengeSubmissionPanel/SubmissionRow/index.tsx",
+      "src/components/features/learn/Challenge/ChallengeSubmissionPanel/index.tsx",
+      "src/components/features/learn/Challenge/ChallengeView/ChallengeViewSkeleton/index.tsx",
+      "src/components/features/learn/Challenge/ChallengeView/index.tsx",
+      "src/components/features/learn/Challenge/SubmissionResult/index.tsx",
+      "src/components/features/learn/ContentAiChat/index.tsx",
+      "src/components/features/learn/ContentAiFab/index.tsx",
+      "src/components/features/learn/ContentAiSelectionAsk/index.tsx",
+      "src/components/features/learn/ContentMap/ContentMapSkeleton/index.tsx",
+      "src/components/features/learn/ContentMap/index.tsx",
+      "src/components/features/learn/CourseContents/CourseContentsSkeleton/index.tsx",
+      "src/components/features/learn/CourseContents/LearnNudges/index.tsx",
+      "src/components/features/learn/CourseContents/TrialConversionStrip/index.tsx",
+      "src/components/features/learn/CourseContents/index.tsx",
+      "src/components/features/learn/CourseQa/QuestionRow/index.tsx",
+      "src/components/features/learn/CourseQa/index.tsx",
+      "src/components/features/learn/Flashcards/DueReview/DueReviewSkeleton/index.tsx",
+      "src/components/features/learn/Flashcards/DueReview/index.tsx",
+      "src/components/features/learn/Flashcards/DueReviewHero/index.tsx",
+      "src/components/features/learn/Flashcards/FlashcardDeckList/FlashcardDeckListSkeleton/index.tsx",
+      "src/components/features/learn/Flashcards/FlashcardDeckList/index.tsx",
+      "src/components/features/learn/Flashcards/FlashcardMobileNav/index.tsx",
+      "src/components/features/learn/Flashcards/FlashcardQuizResult/index.tsx",
+      "src/components/features/learn/Flashcards/FlashcardReviewHistory/index.tsx",
+      "src/components/features/learn/Flashcards/FlashcardReviewModeModal/index.tsx",
+      "src/components/features/learn/Flashcards/FlashcardReviewStats/index.tsx",
+      "src/components/features/learn/Flashcards/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
+      "src/components/features/learn/Flashcards/FlashcardReviewer/index.tsx",
+      "src/components/features/learn/Flashcards/FlashcardSessionStats/index.tsx",
+      "src/components/features/learn/Flashcards/FlashcardStatsStrip/index.tsx",
+      "src/components/features/learn/Flashcards/FlashcardStudyRail/index.tsx",
+      "src/components/features/learn/Flashcards/QuizSession/FlashcardQuizHistory/index.tsx",
+      "src/components/features/learn/Flashcards/QuizSession/FlashcardQuizStats/index.tsx",
+      "src/components/features/learn/Flashcards/QuizSession/QuizSessionSkeleton/index.tsx",
+      "src/components/features/learn/Flashcards/QuizSession/index.tsx",
+      "src/components/features/learn/Flashcards/index.tsx",
+      "src/components/features/learn/Foundations/FoundationCard/index.tsx",
+      "src/components/features/learn/Foundations/FoundationCardSkeleton/index.tsx",
+      "src/components/features/learn/Foundations/FoundationCategoryCard/FoundationCategoryCardSkeleton/index.tsx",
+      "src/components/features/learn/Foundations/FoundationCategoryCard/index.tsx",
+      "src/components/features/learn/Foundations/FoundationCategoryThumbnail/index.tsx",
+      "src/components/features/learn/Foundations/FoundationItemThumbnail/index.tsx",
+      "src/components/features/learn/Foundations/FoundationResourceBody/index.tsx",
+      "src/components/features/learn/Foundations/FoundationResourceLayout/index.tsx",
+      "src/components/features/learn/Foundations/FoundationsCategoryGrid/FoundationsCategoryGridBody/index.tsx",
+      "src/components/features/learn/Foundations/FoundationsCategoryGrid/FoundationsCategoryGridHeader/index.tsx",
+      "src/components/features/learn/Foundations/FoundationsCategoryGrid/index.tsx",
+      "src/components/features/learn/Foundations/FoundationsLearnHeader/index.tsx",
+      "src/components/features/learn/Foundations/FoundationsList/index.tsx",
+      "src/components/features/learn/Foundations/index.tsx",
+      "src/components/features/learn/Foundations/shared/FoundationMeta/index.tsx",
+      "src/components/features/learn/Foundations/shared/FoundationsBreadcrumbs/index.tsx",
+      "src/components/features/learn/Leaderboard/LeaderboardCategoryRail/index.tsx",
+      "src/components/features/learn/Leaderboard/LeaderboardChampion/index.tsx",
+      "src/components/features/learn/Leaderboard/LeaderboardPodium/index.tsx",
+      "src/components/features/learn/Leaderboard/LeaderboardTable/index.tsx",
+      "src/components/features/learn/Leaderboard/index.tsx",
+      "src/components/features/learn/LearnShell/LearnMobileBar/index.tsx",
+      "src/components/features/learn/LearnShell/LearnMobileTabBar/index.tsx",
+      "src/components/features/learn/LearnShell/LearnPanelToggles/index.tsx",
+      "src/components/features/learn/LearnShell/LearnSidebar/index.tsx",
+      "src/components/features/learn/LearnShell/ResumeRail/index.tsx",
+      "src/components/features/learn/LearnShell/index.tsx",
+      "src/components/features/learn/LessonReader/AiLab/EvalChallengePanel/CaseResultRow/index.tsx",
+      "src/components/features/learn/LessonReader/AiLab/EvalChallengePanel/index.tsx",
+      "src/components/features/learn/LessonReader/AiLab/LaneModelPicker/index.tsx",
+      "src/components/features/learn/LessonReader/AiLab/ParamControls/index.tsx",
+      "src/components/features/learn/LessonReader/AiLab/PromptPlayground/index.tsx",
+      "src/components/features/learn/LessonReader/AiLab/index.tsx",
+      "src/components/features/learn/LessonReader/ChallengeBody/ChallengeCard/index.tsx",
+      "src/components/features/learn/LessonReader/ChallengeBody/ChallengeCardSkeleton/index.tsx",
+      "src/components/features/learn/LessonReader/ChallengeBody/index.tsx",
+      "src/components/features/learn/LessonReader/CodeBodySkeleton/index.tsx",
+      "src/components/features/learn/LessonReader/CodeExplainingBody/Empty/index.tsx",
+      "src/components/features/learn/LessonReader/CodeExplainingBody/ExplainingCard/index.tsx",
+      "src/components/features/learn/LessonReader/CodeExplainingBody/index.tsx",
+      "src/components/features/learn/LessonReader/CodeImplementationBody/Empty/index.tsx",
+      "src/components/features/learn/LessonReader/CodeImplementationBody/ImplementationCard/index.tsx",
+      "src/components/features/learn/LessonReader/CodeImplementationBody/index.tsx",
+      "src/components/features/learn/LessonReader/ContentBody/ActionToolbar/index.tsx",
+      "src/components/features/learn/LessonReader/ContentBody/ContentBodyV2/Discussion/index.tsx",
+      "src/components/features/learn/LessonReader/ContentBody/ContentBodyV2/index.tsx",
+      "src/components/features/learn/LessonReader/ContentBody/index.tsx",
+      "src/components/features/learn/LessonReader/ContentBodySkeleton/index.tsx",
+      "src/components/features/learn/LessonReader/ContentHeader/index.tsx",
+      "src/components/features/learn/LessonReader/ContentHeaderSkeleton/index.tsx",
+      "src/components/features/learn/LessonReader/ContentTabBar/TabTrigger/index.tsx",
+      "src/components/features/learn/LessonReader/ContentTabBar/index.tsx",
+      "src/components/features/learn/LessonReader/E2eBody/index.tsx",
+      "src/components/features/learn/LessonReader/E2eResultButton/index.tsx",
+      "src/components/features/learn/LessonReader/LessonBody/Empty/index.tsx",
+      "src/components/features/learn/LessonReader/LessonBody/LessonCard/index.tsx",
+      "src/components/features/learn/LessonReader/LessonBody/LessonCardSkeleton/index.tsx",
+      "src/components/features/learn/LessonReader/LessonBody/index.tsx",
+      "src/components/features/learn/LessonReader/LessonPager/index.tsx",
+      "src/components/features/learn/LessonReader/PremiumPaywall/index.tsx",
+      "src/components/features/learn/LessonReader/ReadBadge/index.tsx",
+      "src/components/features/learn/LessonReader/SandboxBody/index.tsx",
+      "src/components/features/learn/LessonReader/index.tsx",
+      "src/components/features/learn/MilestoneOutline/MilestoneIndexStrip/index.tsx",
+      "src/components/features/learn/MilestoneOutline/MilestoneOutlineSkeleton/index.tsx",
+      "src/components/features/learn/MilestoneOutline/index.tsx",
+      "src/components/features/learn/MindMap/Canvas/index.tsx",
+      "src/components/features/learn/MindMap/MindMapBackButton/index.tsx",
+      "src/components/features/learn/MindMap/MindMapCanvas/index.tsx",
+      "src/components/features/learn/MindMap/MindMapContinueButton/index.tsx",
+      "src/components/features/learn/MindMap/MindMapFullscreenButton/index.tsx",
+      "src/components/features/learn/MindMap/MindMapLegend/index.tsx",
+      "src/components/features/learn/MindMap/ModuleNode/index.tsx",
+      "src/components/features/learn/MindMap/ModuleSlotNode/index.tsx",
+      "src/components/features/learn/MindMap/RootNode/index.tsx",
+      "src/components/features/learn/MindMap/StandaloneMindMap/index.tsx",
+      "src/components/features/learn/MindMap/index.tsx",
+      "src/components/features/learn/MockInterview/InterviewerPresence/index.tsx",
+      "src/components/features/learn/MockInterview/MockInterviewDiagram/index.tsx",
+      "src/components/features/learn/MockInterview/MockInterviewHistory/index.tsx",
+      "src/components/features/learn/MockInterview/MockInterviewResult/index.tsx",
+      "src/components/features/learn/MockInterview/MockInterviewScorecard/index.tsx",
+      "src/components/features/learn/MockInterview/MockInterviewSession/index.tsx",
+      "src/components/features/learn/MockInterview/MockInterviewSessionSkeleton/index.tsx",
+      "src/components/features/learn/MockInterview/MockInterviewSetupSkeleton/index.tsx",
+      "src/components/features/learn/MockInterview/MockInterviewStats/index.tsx",
+      "src/components/features/learn/MockInterview/MockInterviewTrackSnapshot/index.tsx",
+      "src/components/features/learn/MockInterview/MockInterviewWorkspace/index.tsx",
+      "src/components/features/learn/MockInterview/VoiceHero/index.tsx",
+      "src/components/features/learn/MockInterview/VoiceUnavailableModal/index.tsx",
+      "src/components/features/learn/MockInterview/index.tsx",
+      "src/components/features/learn/ModulePage/ModulePageSkeleton/index.tsx",
+      "src/components/features/learn/ModulePage/index.tsx",
+      "src/components/features/learn/OnThisPage/ContentActions/index.tsx",
+      "src/components/features/learn/OnThisPage/LessonChallenges/index.tsx",
+      "src/components/features/learn/OnThisPage/LessonFlashcards/index.tsx",
+      "src/components/features/learn/OnThisPage/index.tsx",
+      "src/components/features/learn/PersonalProject/GithubGradingSettings/index.tsx",
+      "src/components/features/learn/PersonalProject/PersonalProjectDashboard/PersonalProjectDashboardSkeleton/index.tsx",
+      "src/components/features/learn/PersonalProject/PersonalProjectDashboard/index.tsx",
+      "src/components/features/learn/PersonalProject/PersonalProjectSubmission/index.tsx",
+      "src/components/features/learn/PersonalProject/PersonalProjectWorkspace/index.tsx",
+      "src/components/features/learn/PersonalProject/TaskActions/index.tsx",
+      "src/components/features/learn/PersonalProject/TaskBreadcrumb/index.tsx",
+      "src/components/features/learn/PersonalProject/TaskBrief/index.tsx",
+      "src/components/features/learn/PersonalProject/TaskCodeImplementations/index.tsx",
+      "src/components/features/learn/PersonalProject/TaskCriteriaList/index.tsx",
+      "src/components/features/learn/PersonalProject/TaskLockedAlert/index.tsx",
+      "src/components/features/learn/PersonalProject/TaskResult/index.tsx",
+      "src/components/features/learn/PersonalProject/TaskResults/index.tsx",
+      "src/components/features/learn/PersonalProject/TaskResultsSkeleton/index.tsx",
+      "src/components/features/learn/PersonalProject/TaskSkeleton/index.tsx",
+      "src/components/features/learn/PersonalProject/TaskSubmissionPanel/index.tsx",
+      "src/components/features/learn/PersonalProject/index.tsx",
+      "src/components/features/learn/Playground/PlaygroundHub/index.tsx",
+      "src/components/features/learn/Playground/PlaygroundSession/index.tsx",
+      "src/components/features/learn/StarCiAIBadge/index.tsx",
+      "src/components/features/learn/shared/EnrollGate/index.tsx",
+      "src/components/features/learn/shared/LearnBreadcrumb/index.tsx",
+      "src/components/features/learn/shared/TrialEnrollHook/index.tsx",
+      "src/components/features/legal/LegalPage/index.tsx",
+      "src/components/features/navbar/Navbar/AccountMenuDropdown/AccountMenuAuthed/index.tsx",
+      "src/components/features/navbar/Navbar/AccountMenuDropdown/AccountMenuGuest/index.tsx",
+      "src/components/features/navbar/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
+      "src/components/features/navbar/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
+      "src/components/features/navbar/Navbar/AccountMenuDropdown/GuestHeader/index.tsx",
+      "src/components/features/navbar/Navbar/AccountMenuDropdown/UserSummary/index.tsx",
+      "src/components/features/navbar/Navbar/AccountMenuDropdown/index.tsx",
+      "src/components/features/navbar/Navbar/CartButton/index.tsx",
+      "src/components/features/navbar/Navbar/LanguageDropdown/index.tsx",
+      "src/components/features/navbar/Navbar/Logo/index.tsx",
+      "src/components/features/navbar/Navbar/NavLinks/index.tsx",
+      "src/components/features/navbar/Navbar/NotificationBell/index.tsx",
+      "src/components/features/navbar/Navbar/SearchButton/index.tsx",
+      "src/components/features/navbar/Navbar/index.tsx",
+      "src/components/features/notifications/NotificationCenter/index.tsx",
+      "src/components/features/practice/CodingLeaderboard/index.tsx",
+      "src/components/features/practice/PracticeFilters/index.tsx",
+      "src/components/features/practice/PracticeProblem/PracticeProblemSkeleton/index.tsx",
+      "src/components/features/practice/PracticeProblem/index.tsx",
+      "src/components/features/practice/PracticeRail/PracticeMobileNav/index.tsx",
+      "src/components/features/practice/PracticeRail/index.tsx",
+      "src/components/features/practice/ProblemCatalog/ProblemRow/index.tsx",
+      "src/components/features/practice/ProblemCatalog/index.tsx",
+      "src/components/features/practice/ProgressCockpit/index.tsx",
+      "src/components/features/practice/SandpackPanel/index.tsx",
+      "src/components/features/practice/flashcard-review/FlashcardReviewPage/index.tsx",
+      "src/components/features/practice/index.tsx",
+      "src/components/features/profile/AiSettings/index.tsx",
+      "src/components/features/profile/AiSubscription/AiSubscriptionSkeleton/index.tsx",
+      "src/components/features/profile/AiSubscription/FreeTierCard/index.tsx",
+      "src/components/features/profile/AiSubscription/FreeTierCardSkeleton/index.tsx",
+      "src/components/features/profile/AiSubscription/TierCardBase/index.tsx",
+      "src/components/features/profile/AiSubscription/TierGrid/TierCard/index.tsx",
+      "src/components/features/profile/AiSubscription/TierGrid/TierCardSkeleton/index.tsx",
+      "src/components/features/profile/AiSubscription/TierGrid/index.tsx",
+      "src/components/features/profile/AiSubscription/index.tsx",
+      "src/components/features/profile/AiUsage/AiUsageHistory/index.tsx",
+      "src/components/features/profile/AiUsage/index.tsx",
+      "src/components/features/profile/Appearance/index.tsx",
+      "src/components/features/profile/Bookmarks/BookmarkCard/index.tsx",
+      "src/components/features/profile/Bookmarks/index.tsx",
+      "src/components/features/profile/CV/BlockRegistry/index.tsx",
+      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/AchievementBlockEditor/index.tsx",
+      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
+      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/CertificationBlockEditor/index.tsx",
+      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/EducationBlockEditor/index.tsx",
+      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
+      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/InterestBlockEditor/index.tsx",
+      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/LanguageBlockEditor/index.tsx",
+      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/PersonalBlockEditor/index.tsx",
+      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
+      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/SkillsBlockEditor/index.tsx",
+      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
+      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/index.tsx",
+      "src/components/features/profile/CV/CvBlocksWorkspace/CvHtmlDocument/index.tsx",
+      "src/components/features/profile/CV/CvBlocksWorkspace/CvHtmlPreview/index.tsx",
+      "src/components/features/profile/CV/CvBlocksWorkspace/CvSplitFromTextModal/index.tsx",
+      "src/components/features/profile/CV/CvBlocksWorkspace/CvTailorToJobModal/index.tsx",
+      "src/components/features/profile/CV/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
+      "src/components/features/profile/CV/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
+      "src/components/features/profile/CV/CvBlocksWorkspace/shared/CvTextOrFileInput/index.tsx",
+      "src/components/features/profile/CV/CvEditor/CvEditorToolbarBar/index.tsx",
+      "src/components/features/profile/CV/CvEditor/index.tsx",
+      "src/components/features/profile/CV/CvGallery/index.tsx",
+      "src/components/features/profile/CV/index.tsx",
+      "src/components/features/profile/ContributionCalendarView/index.tsx",
+      "src/components/features/profile/CvSubmission/index.tsx",
+      "src/components/features/profile/EditProfile/AvatarUploadModal/index.tsx",
+      "src/components/features/profile/EditProfile/index.tsx",
+      "src/components/features/profile/InstallmentPlans/index.tsx",
+      "src/components/features/profile/MascotBadge/index.tsx",
+      "src/components/features/profile/Membership/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileActivityTab/ProfileAchievements/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileActivityTab/ProfileActivity/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileActivityTab/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileChallengesTab/ProfileChallenges/ChallengeCourseRow/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileChallengesTab/ProfileChallenges/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileChallengesTab/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileCvTab/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileHero/ProfileBadges/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileHero/ProfileFollowers/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileHero/ProfileHeroSkeleton/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileHero/ProfileRankAvatar/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileHero/ShareProfileButton/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileHero/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileLoadingState/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileLockedState/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileNotFoundState/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileOverviewTab/OverviewChallengeSkills/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileOverviewTab/OverviewCodeSkills/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileOverviewTab/OverviewContributions/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileOverviewTab/OverviewCourses/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileOverviewTab/ProfileJobReadiness/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileOverviewTab/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileProjectsTab/ProfileCapstone/ProjectCard/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileProjectsTab/ProfileCapstone/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileProjectsTab/ProfilePinned/PinnedProjectCard/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileProjectsTab/ProfilePinned/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileProjectsTab/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileSkillsTab/ProfileCoding/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileSkillsTab/index.tsx",
+      "src/components/features/profile/PublicProfile/ProfileTabsBar/index.tsx",
+      "src/components/features/profile/PublicProfile/index.tsx",
+      "src/components/features/profile/PublicProfileLegacy/FeaturedMascotAvatar/index.tsx",
+      "src/components/features/profile/PublicProfileLegacy/ProfileAchievements/index.tsx",
+      "src/components/features/profile/PublicProfileLegacy/ProfileActivity/index.tsx",
+      "src/components/features/profile/PublicProfileLegacy/ProfileCapstone/index.tsx",
+      "src/components/features/profile/PublicProfileLegacy/ProfileCoding/index.tsx",
+      "src/components/features/profile/PublicProfileLegacy/ProfileContributions/index.tsx",
+      "src/components/features/profile/PublicProfileLegacy/ProfileCourses/index.tsx",
+      "src/components/features/profile/PublicProfileLegacy/ProfileFeaturedProjects/index.tsx",
+      "src/components/features/profile/PublicProfileLegacy/ProfileIdentityCard/index.tsx",
+      "src/components/features/profile/PublicProfileLegacy/ProfileLoadingState/index.tsx",
+      "src/components/features/profile/PublicProfileLegacy/ProfileLockedState/index.tsx",
+      "src/components/features/profile/PublicProfileLegacy/ProfileNotFoundState/index.tsx",
+      "src/components/features/profile/PublicProfileLegacy/ProfileOverviewTab/index.tsx",
+      "src/components/features/profile/PublicProfileLegacy/ProfilePinned/PinnedProjectCard/index.tsx",
+      "src/components/features/profile/PublicProfileLegacy/ProfilePinned/index.tsx",
+      "src/components/features/profile/PublicProfileLegacy/ProfileRankAvatar/index.tsx",
+      "src/components/features/profile/PublicProfileLegacy/ProfileSkills/LanguageDonut/index.tsx",
+      "src/components/features/profile/PublicProfileLegacy/ProfileSkills/index.tsx",
+      "src/components/features/profile/PublicProfileLegacy/ProfileSkillsSnapshot/index.tsx",
+      "src/components/features/profile/PublicProfileLegacy/ProfileSolvedChallenges/index.tsx",
+      "src/components/features/profile/PublicProfileLegacy/ShareProfileButton/index.tsx",
+      "src/components/features/profile/PublicProfileLegacy/index.tsx",
+      "src/components/features/profile/RankBadge/index.tsx",
+      "src/components/features/profile/RankDeltaCaret/index.tsx",
+      "src/components/features/profile/Security/index.tsx",
+      "src/components/features/profile/Sessions/index.tsx",
+      "src/components/features/profile/Settings/LearningHistory/CourseDetail/CourseDayTimeline/index.tsx",
+      "src/components/features/profile/Settings/LearningHistory/CourseDetail/index.tsx",
+      "src/components/features/profile/Settings/LearningHistory/CourseMilestoneOutline/index.tsx",
+      "src/components/features/profile/Settings/LearningHistory/CourseOutline/index.tsx",
+      "src/components/features/profile/Settings/LearningHistory/index.tsx",
+      "src/components/features/profile/Settings/MyAttempts/index.tsx",
+      "src/components/features/profile/Settings/MyFeedback/index.tsx",
+      "src/components/features/profile/Settings/MySubmissions/index.tsx",
+      "src/components/features/profile/Settings/SettingsBreadcrumb/index.tsx",
+      "src/components/features/profile/Settings/SettingsHome/index.tsx",
+      "src/components/features/profile/Settings/SettingsLayout/index.tsx",
+      "src/components/features/profile/UserStreak/index.tsx",
+      "src/components/features/rag-playground/RagPlayground/index.tsx",
+      "src/components/features/rewards/RewardsPage/MyVouchers/index.tsx",
+      "src/components/features/rewards/RewardsPage/RewardCatalog/index.tsx",
+      "src/components/features/rewards/RewardsPage/index.tsx",
+      "src/components/features/status/SystemStatus/AiKeyGroup/index.tsx",
+      "src/components/features/status/SystemStatus/ComponentCard/index.tsx",
+      "src/components/features/status/SystemStatus/OverallBanner/index.tsx",
+      "src/components/features/status/SystemStatus/SystemStatusSkeleton/index.tsx",
+      "src/components/features/status/SystemStatus/index.tsx",
       "src/components/modals/AdModal/index.tsx",
       "src/components/modals/AiQuotaModal/AutoTab/index.tsx",
       "src/components/modals/AiQuotaModal/Body/index.tsx",
       "src/components/modals/AiQuotaModal/FullConfigLink/index.tsx",
       "src/components/modals/AiQuotaModal/Header/index.tsx",
       "src/components/modals/AiQuotaModal/HistoryTab/index.tsx",
-      "src/components/modals/AiQuotaModal/index.tsx",
       "src/components/modals/AiQuotaModal/QuotaBar/index.tsx",
       "src/components/modals/AiQuotaModal/QuotaLane/index.tsx",
       "src/components/modals/AiQuotaModal/SubscriptionTab/index.tsx",
       "src/components/modals/AiQuotaModal/TabBar/index.tsx",
-      "src/components/modals/AuthenticationModal/index.tsx",
+      "src/components/modals/AiQuotaModal/index.tsx",
       "src/components/modals/AuthenticationModal/SignInSection/CredentialsState/EmailField/index.tsx",
-      "src/components/modals/AuthenticationModal/SignInSection/CredentialsState/index.tsx",
       "src/components/modals/AuthenticationModal/SignInSection/CredentialsState/OauthButtons/index.tsx",
       "src/components/modals/AuthenticationModal/SignInSection/CredentialsState/PasswordField/index.tsx",
       "src/components/modals/AuthenticationModal/SignInSection/CredentialsState/RememberMeRow/index.tsx",
       "src/components/modals/AuthenticationModal/SignInSection/CredentialsState/SignUpPrompt/index.tsx",
-      "src/components/modals/AuthenticationModal/SignInSection/index.tsx",
+      "src/components/modals/AuthenticationModal/SignInSection/CredentialsState/index.tsx",
       "src/components/modals/AuthenticationModal/SignInSection/OtpState/index.tsx",
-      "src/components/modals/AuthenticationModal/SignUpSection/index.tsx",
+      "src/components/modals/AuthenticationModal/SignInSection/index.tsx",
       "src/components/modals/AuthenticationModal/SignUpSection/OtpState/index.tsx",
       "src/components/modals/AuthenticationModal/SignUpSection/RegistrationState/AgreeToTermsRow/index.tsx",
       "src/components/modals/AuthenticationModal/SignUpSection/RegistrationState/EmailField/index.tsx",
-      "src/components/modals/AuthenticationModal/SignUpSection/RegistrationState/index.tsx",
       "src/components/modals/AuthenticationModal/SignUpSection/RegistrationState/PasswordField/index.tsx",
       "src/components/modals/AuthenticationModal/SignUpSection/RegistrationState/SignInPrompt/index.tsx",
+      "src/components/modals/AuthenticationModal/SignUpSection/RegistrationState/index.tsx",
+      "src/components/modals/AuthenticationModal/SignUpSection/index.tsx",
+      "src/components/modals/AuthenticationModal/index.tsx",
       "src/components/modals/ContentModal/index.tsx",
       "src/components/modals/CookieConsentModal/index.tsx",
       "src/components/modals/CvPreviewModal/index.tsx",
       "src/components/modals/CvReviewLevelDetailsModal/index.tsx",
       "src/components/modals/FeedbackDetailsModal/Empty/index.tsx",
       "src/components/modals/FeedbackDetailsModal/FeedbackCard/index.tsx",
+      "src/components/modals/FeedbackDetailsModal/FeedbackCardSkeleton/index.tsx",
       "src/components/modals/FeedbackDetailsModal/index.tsx",
       "src/components/modals/FollowListModal/index.tsx",
       "src/components/modals/FoundationModal/index.tsx",
@@ -5251,526 +5728,14 @@
       "src/components/modals/ManagePinnedProjectsModal/CourseProjectForm/index.tsx",
       "src/components/modals/ManagePinnedProjectsModal/ExternalProjectForm/index.tsx",
       "src/components/modals/ManagePinnedProjectsModal/index.tsx",
-      "src/components/modals/ModalContainer.tsx",
       "src/components/modals/PaymentModal/index.tsx",
       "src/components/modals/PremiumGateModal/index.tsx",
       "src/components/modals/ShareModal/index.tsx",
-      "src/components/layouts/admin/AdminAiBalancer/index.tsx",
-      "src/components/layouts/admin/AdminAiBalancer/ProviderSection/index.tsx",
-      "src/components/layouts/admin/AdminAiBalancer/ProviderSection/KeyRow/index.tsx",
-      "src/components/layouts/admin/AdminAiBalancer/TopBar/index.tsx",
-      "src/components/layouts/admin/AdminLogin/index.tsx",
-      "src/components/layouts/admin/AdminMpegDashTest/ConfigCard/index.tsx",
-      "src/components/layouts/admin/AdminMpegDashTest/ConfigCard/RendererTypeButton/index.tsx",
-      "src/components/layouts/admin/AdminMpegDashTest/Header/index.tsx",
-      "src/components/layouts/admin/AdminMpegDashTest/index.tsx",
-      "src/components/layouts/admin/AdminMpegDashTest/PreviewCard/index.tsx",
-      "src/components/layouts/admin/AdminMpegDashTest/QuickTestUrls/index.tsx",
-      "src/components/layouts/admin/AdminMpegDashTest/QuickTestUrls/QuickTestUrlButton/index.tsx",
-      "src/components/layouts/admin/AdminUploadVideo/FileSelectionCard/DropZone/index.tsx",
-      "src/components/layouts/admin/AdminUploadVideo/FileSelectionCard/index.tsx",
-      "src/components/layouts/admin/AdminUploadVideo/FileSelectionCard/ProcessResultBanner/index.tsx",
-      "src/components/layouts/admin/AdminUploadVideo/Header/index.tsx",
-      "src/components/layouts/admin/AdminUploadVideo/index.tsx",
-      "src/components/layouts/admin/AdminUploadVideo/LoadingScreen/index.tsx",
-      "src/components/layouts/admin/AdminUploadVideo/TopBar/index.tsx",
-      "src/components/layouts/admin/AdminUploadVideo/UploadProgressCard/index.tsx",
-      "src/components/layouts/admin/AdminUploadVideo/UploadProgressCard/ProviderUploadRow/index.tsx",
-      "src/components/layouts/auth/GithubLinkGate/index.tsx",
-      "src/components/layouts/auth/GithubTeamGate/index.tsx",
-      "src/components/layouts/auth/OauthRedirect/index.tsx",
-      "src/components/layouts/blog/BlogList/CategoryFilter/index.tsx",
-      "src/components/layouts/blog/BlogList/FeaturedPost/index.tsx",
-      "src/components/layouts/blog/BlogList/index.tsx",
-      "src/components/layouts/blog/BlogList/Masthead/index.tsx",
-      "src/components/layouts/blog/BlogList/StartHereAnchor/index.tsx",
-      "src/components/layouts/blog/BlogList/TopicsStrip/index.tsx",
-      "src/components/layouts/blog/BlogPost/index.tsx",
-      "src/components/layouts/blog/BlogPost/ReadingProgress/index.tsx",
-      "src/components/layouts/blog/BlogPost/RelatedPosts/index.tsx",
-      "src/components/layouts/blog/shared/PostRow/index.tsx",
-      "src/components/layouts/checkout/SepayCheckout/DetailRow/index.tsx",
-      "src/components/layouts/checkout/SepayCheckout/EnrolledSuccess/index.tsx",
-      "src/components/layouts/checkout/SepayCheckout/index.tsx",
-      "src/components/layouts/checkout/SepayCheckout/OrderSummary/index.tsx",
-      "src/components/layouts/checkout/SepayCheckout/QrPanel/index.tsx",
-      "src/components/layouts/flashcard-review/FlashcardReviewPage/index.tsx",
-      "src/components/layouts/kpi/Kpi/index.tsx",
-      "src/components/layouts/league/League/GlobalBoard/index.tsx",
-      "src/components/layouts/league/League/index.tsx",
-      "src/components/layouts/league/League/WeeklyBoard/index.tsx",
-      "src/components/layouts/rewards/RewardsPage/index.tsx",
-      "src/components/layouts/rewards/RewardsPage/MyVouchers/index.tsx",
-      "src/components/layouts/rewards/RewardsPage/RewardCatalog/index.tsx",
-      "src/components/layouts/shell/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
-      "src/components/layouts/shell/Navbar/AccountMenuDropdown/AppearanceRow/index.tsx",
-      "src/components/layouts/shell/Navbar/AccountMenuDropdown/AuthActions/index.tsx",
-      "src/components/layouts/shell/Navbar/AccountMenuDropdown/DarkLightMode/index.tsx",
-      "src/components/layouts/shell/Navbar/AccountMenuDropdown/index.tsx",
-      "src/components/layouts/shell/Navbar/AccountMenuDropdown/LogoutMenu/index.tsx",
-      "src/components/layouts/shell/Navbar/AccountMenuDropdown/MenuList/index.tsx",
-      "src/components/layouts/shell/Navbar/AccountMenuDropdown/UserSummary/index.tsx",
-      "src/components/layouts/shell/Navbar/index.tsx",
-      "src/components/layouts/shell/Navbar/Logo/index.tsx",
-      "src/components/layouts/shell/Navbar/MobileNavbar/index.tsx",
-      "src/components/layouts/shell/Navbar/NavLinks/index.tsx",
-      "src/components/layouts/shell/Navbar/NotificationBell/index.tsx",
-      "src/components/layouts/shell/Navbar/SearchButton/index.tsx",
-      "src/components/layouts/status/SystemStatus/AiKeyGroup/index.tsx",
-      "src/components/layouts/status/SystemStatus/ComponentCard/index.tsx",
-      "src/components/layouts/status/SystemStatus/index.tsx",
-      "src/components/layouts/status/SystemStatus/OverallBanner/index.tsx",
-      "src/components/features/architecture/ArchitectureMap/index.tsx",
-      "src/components/features/architecture/ArchitectureRail/ArchitectureMobileNav/index.tsx",
-      "src/components/features/architecture/ArchitectureRail/index.tsx",
-      "src/components/features/architecture/CurlTester/index.tsx",
-      "src/components/features/architecture/index.tsx",
-      "src/components/features/architecture/MetricsInline/index.tsx",
-      "src/components/features/architecture/NodeDissectionPanel/index.tsx",
-      "src/components/features/auth/LoginPage/index.tsx",
-      "src/components/features/careers/Headhunting/HeadhuntingCompany/HeadhuntingCompanyBreadcrumbs/index.tsx",
-      "src/components/features/careers/Headhunting/HeadhuntingCompany/HeadhuntingCompanyConsultants/index.tsx",
-      "src/components/features/careers/Headhunting/HeadhuntingCompany/HeadhuntingCompanyLoadingState/index.tsx",
-      "src/components/features/careers/Headhunting/HeadhuntingCompany/HeadhuntingCompanyProfile/index.tsx",
-      "src/components/features/careers/Headhunting/HeadhuntingCompany/index.tsx",
-      "src/components/features/careers/Headhunting/Headhuntings/ConsultantAvatar/index.tsx",
-      "src/components/features/careers/Headhunting/Headhuntings/ConsultantCard/index.tsx",
-      "src/components/features/careers/Headhunting/Headhuntings/ConsultantGrid/index.tsx",
-      "src/components/features/careers/Headhunting/Headhuntings/HeadhuntingsBreadcrumbs/index.tsx",
-      "src/components/features/careers/Headhunting/Headhuntings/index.tsx",
-      "src/components/features/careers/Headhunting/TalentDirectory/index.tsx",
-      "src/components/features/careers/Jobs/JobDetail/index.tsx",
-      "src/components/features/careers/Jobs/JobList/index.tsx",
-      "src/components/features/careers/Jobs/JobList/JobListRow/index.tsx",
-      "src/components/features/careers/Jobs/JobPostForm/ApplyMethodSection/index.tsx",
-      "src/components/features/careers/Jobs/JobPostForm/CompanySection/index.tsx",
-      "src/components/features/careers/Jobs/JobPostForm/index.tsx",
-      "src/components/features/careers/Jobs/JobPostForm/PositionSection/index.tsx",
-      "src/components/features/careers/Jobs/JobPostForm/SubmitSuccess/index.tsx",
-      "src/components/features/cart/AddToCartButton/index.tsx",
-      "src/components/features/cart/CartView/CartLine/index.tsx",
-      "src/components/features/cart/CartView/index.tsx",
-      "src/components/features/community/CommunityChat/ChatPane/index.tsx",
-      "src/components/features/community/CommunityChat/index.tsx",
-      "src/components/features/community/CommunityCommentItem/index.tsx",
-      "src/components/features/community/CommunityCommentThread/index.tsx",
-      "src/components/features/community/CommunityFeed/CommunityComposer/index.tsx",
-      "src/components/features/community/CommunityFeed/index.tsx",
-      "src/components/features/community/CommunityPost/index.tsx",
-      "src/components/features/contact/Contact/ContactChannels/FounderCard/index.tsx",
-      "src/components/features/contact/Contact/ContactChannels/index.tsx",
-      "src/components/features/contact/Contact/ContactFaq/index.tsx",
-      "src/components/features/contact/Contact/ContactForm/index.tsx",
-      "src/components/features/contact/Contact/index.tsx",
-      "src/components/features/content/PublicArticle/index.tsx",
-      "src/components/features/cookie-consent/AnalyticsGate/index.tsx",
-      "src/components/features/cookie-consent/CookieConsentBanner/index.tsx",
-      "src/components/features/course/CourseCatalog/CatalogCourseCard/index.tsx",
-      "src/components/features/course/CourseCatalog/index.tsx",
-      "src/components/features/course/CourseDetail/CourseCtaButtons/index.tsx",
-      "src/components/features/course/CourseDetail/CourseCurriculum/index.tsx",
-      "src/components/features/course/CourseDetail/CourseCurriculum/ModuleAccordionItem/index.tsx",
-      "src/components/features/course/CourseDetail/CourseFaq/index.tsx",
-      "src/components/features/course/CourseDetail/CourseHero/index.tsx",
-      "src/components/features/course/CourseDetail/CourseMobileEnrollBar/index.tsx",
-      "src/components/features/course/CourseDetail/CoursePrerequisites/index.tsx",
-      "src/components/features/course/CourseDetail/CoursePricingRail/index.tsx",
-      "src/components/features/course/CourseDetail/CoursePricingRail/PhaseRow/index.tsx",
-      "src/components/features/course/CourseDetail/CourseTrustStats/index.tsx",
-      "src/components/features/course/CourseDetail/CourseValueProps/index.tsx",
-      "src/components/features/course/CourseDetail/index.tsx",
-      "src/components/features/dashboard/AdBanner/index.tsx",
-      "src/components/features/dashboard/AiQuotaCard/index.tsx",
-      "src/components/features/dashboard/ChangelogList/index.tsx",
-      "src/components/features/dashboard/CommunityTab/index.tsx",
-      "src/components/features/dashboard/ContinueLearning/index.tsx",
-      "src/components/features/dashboard/ContinueLearning/ResumeCard/index.tsx",
-      "src/components/features/dashboard/CoursesTab/index.tsx",
-      "src/components/features/dashboard/CoursesTab/MyCoursesProgress/CourseRow/index.tsx",
-      "src/components/features/dashboard/CoursesTab/MyCoursesProgress/index.tsx",
-      "src/components/features/dashboard/DailyQuest/index.tsx",
-      "src/components/features/dashboard/DashboardIdentity/IdentityStats/index.tsx",
-      "src/components/features/dashboard/DashboardIdentity/index.tsx",
-      "src/components/features/dashboard/DashboardIdentity/ProfileMenuCard/index.tsx",
-      "src/components/features/dashboard/DashboardTabsBar/index.tsx",
-      "src/components/features/dashboard/EntityToken/index.tsx",
-      "src/components/features/dashboard/ExploreTab/index.tsx",
-      "src/components/features/dashboard/FeedTabs/index.tsx",
-      "src/components/features/dashboard/FlashcardReview/index.tsx",
-      "src/components/features/dashboard/GlobalStanding/index.tsx",
-      "src/components/features/dashboard/index.tsx",
-      "src/components/features/dashboard/LeagueCard/index.tsx",
-      "src/components/features/dashboard/LeagueCard/LeagueCardContent/index.tsx",
-      "src/components/features/dashboard/OverviewTab/index.tsx",
-      "src/components/features/dashboard/OverviewTab/JobReadinessWidget/index.tsx",
-      "src/components/features/dashboard/OverviewTab/OverviewContributions/index.tsx",
-      "src/components/features/dashboard/QuickActions/index.tsx",
-      "src/components/features/dashboard/RecommendedCourses/index.tsx",
-      "src/components/features/dashboard/StreakFreezeCard/index.tsx",
-      "src/components/features/dashboard/StreakStrip/index.tsx",
-      "src/components/features/dashboard/TopLearners/index.tsx",
-      "src/components/features/dashboard/TrendingContents/index.tsx",
-      "src/components/features/dashboard/TrendingContents/TrendingRow/index.tsx",
-      "src/components/features/dashboard/UpcomingLivestreamCard/index.tsx",
-      "src/components/features/dashboard/WeeklyChallengeCard/index.tsx",
-      "src/components/features/dashboard/WeeklyGoals/index.tsx",
-      "src/components/features/dashboard/WhoToFollow/index.tsx",
-      "src/components/features/footer/Footer/FooterNavColumn/index.tsx",
-      "src/components/features/footer/Footer/index.tsx",
-      "src/components/features/landing/Landing/index.tsx",
-      "src/components/features/landing/Landing/KnowledgeGraph/index.tsx",
-      "src/components/features/landing/Landing/LearnLoopScroll/index.tsx",
-      "src/components/features/landing/Landing/StatStrip/index.tsx",
-      "src/components/features/landing/Landing/TalentMarketplace/index.tsx",
-      "src/components/features/learn/Challenge/ChallengePage/index.tsx",
-      "src/components/features/learn/Challenge/ChallengeSubmissionPanel/index.tsx",
-      "src/components/features/learn/Challenge/ChallengeSubmissionPanel/SubmissionRow/index.tsx",
-      "src/components/features/learn/Challenge/ChallengeSubmissionPanel/SubmissionRow/LastAttemptResult/index.tsx",
-      "src/components/features/learn/Challenge/ChallengeView/index.tsx",
-      "src/components/features/learn/Challenge/SubmissionResult/index.tsx",
-      "src/components/features/learn/ContentAiChat/index.tsx",
-      "src/components/features/learn/ContentAiFab/index.tsx",
-      "src/components/features/learn/ContentAiSelectionAsk/index.tsx",
-      "src/components/features/learn/ContentMap/index.tsx",
-      "src/components/features/learn/CourseContents/index.tsx",
-      "src/components/features/learn/CourseContents/LearnNudges/index.tsx",
-      "src/components/features/learn/CourseContents/TrialConversionStrip/index.tsx",
-      "src/components/features/learn/CourseQa/index.tsx",
-      "src/components/features/learn/CourseQa/QuestionRow/index.tsx",
-      "src/components/features/learn/Flashcards/DueReview/index.tsx",
-      "src/components/features/learn/Flashcards/DueReviewHero/index.tsx",
-      "src/components/features/learn/Flashcards/FlashcardDeckList/index.tsx",
-      "src/components/features/learn/Flashcards/FlashcardMobileNav/index.tsx",
-      "src/components/features/learn/Flashcards/FlashcardQuizResult/index.tsx",
-      "src/components/features/learn/Flashcards/FlashcardReviewer/index.tsx",
-      "src/components/features/learn/Flashcards/FlashcardReviewHistory/index.tsx",
-      "src/components/features/learn/Flashcards/FlashcardReviewModeModal/index.tsx",
-      "src/components/features/learn/Flashcards/FlashcardReviewStats/index.tsx",
-      "src/components/features/learn/Flashcards/FlashcardSessionStats/index.tsx",
-      "src/components/features/learn/Flashcards/FlashcardStatsStrip/index.tsx",
-      "src/components/features/learn/Flashcards/FlashcardStudyRail/index.tsx",
-      "src/components/features/learn/Flashcards/index.tsx",
-      "src/components/features/learn/Flashcards/QuizSession/FlashcardQuizHistory/index.tsx",
-      "src/components/features/learn/Flashcards/QuizSession/FlashcardQuizStats/index.tsx",
-      "src/components/features/learn/Flashcards/QuizSession/index.tsx",
-      "src/components/features/learn/Foundations/FoundationCard/index.tsx",
-      "src/components/features/learn/Foundations/FoundationCategoryCard/index.tsx",
-      "src/components/features/learn/Foundations/FoundationCategoryThumbnail/index.tsx",
-      "src/components/features/learn/Foundations/FoundationItemThumbnail/index.tsx",
-      "src/components/features/learn/Foundations/FoundationResourceBody/index.tsx",
-      "src/components/features/learn/Foundations/FoundationResourceLayout/index.tsx",
-      "src/components/features/learn/Foundations/FoundationsCategoryGrid/FoundationsCategoryGridBody/index.tsx",
-      "src/components/features/learn/Foundations/FoundationsCategoryGrid/FoundationsCategoryGridHeader/index.tsx",
-      "src/components/features/learn/Foundations/FoundationsCategoryGrid/index.tsx",
-      "src/components/features/learn/Foundations/FoundationsLearnHeader/index.tsx",
-      "src/components/features/learn/Foundations/FoundationsList/index.tsx",
-      "src/components/features/learn/Foundations/index.tsx",
-      "src/components/features/learn/Foundations/shared/FoundationMeta/index.tsx",
-      "src/components/features/learn/Foundations/shared/FoundationsBreadcrumbs/index.tsx",
-      "src/components/features/learn/Leaderboard/index.tsx",
-      "src/components/features/learn/Leaderboard/LeaderboardCategoryRail/index.tsx",
-      "src/components/features/learn/Leaderboard/LeaderboardChampion/index.tsx",
-      "src/components/features/learn/Leaderboard/LeaderboardPodium/index.tsx",
-      "src/components/features/learn/Leaderboard/LeaderboardTable/index.tsx",
-      "src/components/features/learn/LearnShell/index.tsx",
-      "src/components/features/learn/LearnShell/LearnMobileBar/index.tsx",
-      "src/components/features/learn/LearnShell/LearnMobileTabBar/index.tsx",
-      "src/components/features/learn/LearnShell/LearnPanelToggles/index.tsx",
-      "src/components/features/learn/LearnShell/LearnSidebar/index.tsx",
-      "src/components/features/learn/LearnShell/ResumeRail/index.tsx",
-      "src/components/features/learn/LessonReader/AiLab/EvalChallengePanel/CaseResultRow/index.tsx",
-      "src/components/features/learn/LessonReader/AiLab/EvalChallengePanel/index.tsx",
-      "src/components/features/learn/LessonReader/AiLab/index.tsx",
-      "src/components/features/learn/LessonReader/AiLab/LaneModelPicker/index.tsx",
-      "src/components/features/learn/LessonReader/AiLab/ParamControls/index.tsx",
-      "src/components/features/learn/LessonReader/AiLab/PromptPlayground/index.tsx",
-      "src/components/features/learn/LessonReader/ChallengeBody/ChallengeCard/index.tsx",
-      "src/components/features/learn/LessonReader/ChallengeBody/index.tsx",
-      "src/components/features/learn/LessonReader/CodeExplainingBody/Empty/index.tsx",
-      "src/components/features/learn/LessonReader/CodeExplainingBody/ExplainingCard/index.tsx",
-      "src/components/features/learn/LessonReader/CodeExplainingBody/index.tsx",
-      "src/components/features/learn/LessonReader/CodeImplementationBody/Empty/index.tsx",
-      "src/components/features/learn/LessonReader/CodeImplementationBody/ImplementationCard/index.tsx",
-      "src/components/features/learn/LessonReader/CodeImplementationBody/index.tsx",
-      "src/components/features/learn/LessonReader/ContentBody/ActionToolbar/index.tsx",
-      "src/components/features/learn/LessonReader/ContentBody/ContentBodyV2/Discussion/index.tsx",
-      "src/components/features/learn/LessonReader/ContentBody/ContentBodyV2/index.tsx",
-      "src/components/features/learn/LessonReader/ContentBody/index.tsx",
-      "src/components/features/learn/LessonReader/ContentHeader/index.tsx",
-      "src/components/features/learn/LessonReader/ContentTabBar/index.tsx",
-      "src/components/features/learn/LessonReader/ContentTabBar/TabTrigger/index.tsx",
-      "src/components/features/learn/LessonReader/E2eBody/index.tsx",
-      "src/components/features/learn/LessonReader/E2eResultButton/index.tsx",
-      "src/components/features/learn/LessonReader/index.tsx",
-      "src/components/features/learn/LessonReader/LessonBody/Empty/index.tsx",
-      "src/components/features/learn/LessonReader/LessonBody/index.tsx",
-      "src/components/features/learn/LessonReader/LessonBody/LessonCard/index.tsx",
-      "src/components/features/learn/LessonReader/LessonPager/index.tsx",
-      "src/components/features/learn/LessonReader/PremiumPaywall/index.tsx",
-      "src/components/features/learn/LessonReader/ReadBadge/index.tsx",
-      "src/components/features/learn/LessonReader/SandboxBody/index.tsx",
-      "src/components/features/learn/MilestoneOutline/index.tsx",
-      "src/components/features/learn/MilestoneOutline/MilestoneIndexStrip/index.tsx",
-      "src/components/features/learn/MindMap/Canvas/index.tsx",
-      "src/components/features/learn/MindMap/index.tsx",
-      "src/components/features/learn/MindMap/MindMapBackButton/index.tsx",
-      "src/components/features/learn/MindMap/MindMapCanvas/index.tsx",
-      "src/components/features/learn/MindMap/MindMapContinueButton/index.tsx",
-      "src/components/features/learn/MindMap/MindMapFullscreenButton/index.tsx",
-      "src/components/features/learn/MindMap/MindMapLegend/index.tsx",
-      "src/components/features/learn/MindMap/ModuleNode/index.tsx",
-      "src/components/features/learn/MindMap/ModuleSlotNode/index.tsx",
-      "src/components/features/learn/MindMap/RootNode/index.tsx",
-      "src/components/features/learn/MindMap/StandaloneMindMap/index.tsx",
-      "src/components/features/learn/MockInterview/index.tsx",
-      "src/components/features/learn/MockInterview/InterviewerPresence/index.tsx",
-      "src/components/features/learn/MockInterview/MockInterviewDiagram/index.tsx",
-      "src/components/features/learn/MockInterview/MockInterviewHistory/index.tsx",
-      "src/components/features/learn/MockInterview/MockInterviewResult/index.tsx",
-      "src/components/features/learn/MockInterview/MockInterviewScorecard/index.tsx",
-      "src/components/features/learn/MockInterview/MockInterviewSession/index.tsx",
-      "src/components/features/learn/MockInterview/MockInterviewStats/index.tsx",
-      "src/components/features/learn/MockInterview/MockInterviewTrackSnapshot/index.tsx",
-      "src/components/features/learn/MockInterview/MockInterviewWorkspace/index.tsx",
-      "src/components/features/learn/MockInterview/VoiceHero/index.tsx",
-      "src/components/features/learn/MockInterview/VoiceUnavailableModal/index.tsx",
-      "src/components/features/learn/ModulePage/index.tsx",
-      "src/components/features/learn/OnThisPage/ContentActions/index.tsx",
-      "src/components/features/learn/OnThisPage/index.tsx",
-      "src/components/features/learn/OnThisPage/LessonChallenges/index.tsx",
-      "src/components/features/learn/OnThisPage/LessonFlashcards/index.tsx",
-      "src/components/features/learn/PersonalProject/GithubGradingSettings/index.tsx",
-      "src/components/features/learn/PersonalProject/index.tsx",
-      "src/components/features/learn/PersonalProject/PersonalProjectDashboard/index.tsx",
-      "src/components/features/learn/PersonalProject/PersonalProjectSubmission/index.tsx",
-      "src/components/features/learn/PersonalProject/PersonalProjectWorkspace/index.tsx",
-      "src/components/features/learn/PersonalProject/TaskActions/index.tsx",
-      "src/components/features/learn/PersonalProject/TaskBreadcrumb/index.tsx",
-      "src/components/features/learn/PersonalProject/TaskBrief/index.tsx",
-      "src/components/features/learn/PersonalProject/TaskCodeImplementations/index.tsx",
-      "src/components/features/learn/PersonalProject/TaskCriteriaList/index.tsx",
-      "src/components/features/learn/PersonalProject/TaskLockedAlert/index.tsx",
-      "src/components/features/learn/PersonalProject/TaskResult/index.tsx",
-      "src/components/features/learn/PersonalProject/TaskResults/index.tsx",
-      "src/components/features/learn/PersonalProject/TaskSubmissionPanel/index.tsx",
-      "src/components/features/learn/Playground/PlaygroundHub/index.tsx",
-      "src/components/features/learn/Playground/PlaygroundSession/index.tsx",
-      "src/components/features/learn/shared/EnrollGate/index.tsx",
-      "src/components/features/learn/shared/LearnBreadcrumb/index.tsx",
-      "src/components/features/learn/shared/TrialEnrollHook/index.tsx",
-      "src/components/features/legal/LegalPage/index.tsx",
-      "src/components/features/navbar/Navbar/AccountMenuDropdown/AccountMenuAuthed/index.tsx",
-      "src/components/features/navbar/Navbar/AccountMenuDropdown/AccountMenuGuest/index.tsx",
-      "src/components/features/navbar/Navbar/AccountMenuDropdown/AccountTrigger/index.tsx",
-      "src/components/features/navbar/Navbar/AccountMenuDropdown/DarkLightModeSwitch/index.tsx",
-      "src/components/features/navbar/Navbar/AccountMenuDropdown/GuestHeader/index.tsx",
-      "src/components/features/navbar/Navbar/AccountMenuDropdown/index.tsx",
-      "src/components/features/navbar/Navbar/AccountMenuDropdown/UserSummary/index.tsx",
-      "src/components/features/navbar/Navbar/CartButton/index.tsx",
-      "src/components/features/navbar/Navbar/index.tsx",
-      "src/components/features/navbar/Navbar/LanguageDropdown/index.tsx",
-      "src/components/features/navbar/Navbar/Logo/index.tsx",
-      "src/components/features/navbar/Navbar/NavLinks/index.tsx",
-      "src/components/features/navbar/Navbar/NotificationBell/index.tsx",
-      "src/components/features/navbar/Navbar/SearchButton/index.tsx",
-      "src/components/features/notifications/NotificationCenter/index.tsx",
-      "src/components/features/practice/CodingLeaderboard/index.tsx",
-      "src/components/features/practice/index.tsx",
-      "src/components/features/practice/PracticeFilters/index.tsx",
-      "src/components/features/practice/PracticeProblem/index.tsx",
-      "src/components/features/practice/PracticeRail/index.tsx",
-      "src/components/features/practice/PracticeRail/PracticeMobileNav/index.tsx",
-      "src/components/features/practice/ProblemCatalog/index.tsx",
-      "src/components/features/practice/ProblemCatalog/ProblemRow/index.tsx",
-      "src/components/features/practice/ProgressCockpit/index.tsx",
-      "src/components/features/profile/AiSettings/index.tsx",
-      "src/components/features/profile/AiSubscription/FreeTierCard/index.tsx",
-      "src/components/features/profile/AiSubscription/index.tsx",
-      "src/components/features/profile/AiSubscription/TierCardBase/index.tsx",
-      "src/components/features/profile/AiSubscription/TierGrid/index.tsx",
-      "src/components/features/profile/AiSubscription/TierGrid/TierCard/index.tsx",
-      "src/components/features/profile/AiUsage/AiUsageHistory/index.tsx",
-      "src/components/features/profile/AiUsage/index.tsx",
-      "src/components/features/profile/Appearance/index.tsx",
-      "src/components/features/profile/Bookmarks/BookmarkCard/index.tsx",
-      "src/components/features/profile/Bookmarks/index.tsx",
-      "src/components/features/profile/CV/BlockRegistry/index.tsx",
-      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/AchievementBlockEditor/index.tsx",
-      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/ActivityBlockEditor/index.tsx",
-      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/CertificationBlockEditor/index.tsx",
-      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/EducationBlockEditor/index.tsx",
-      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/ExperienceBlockEditor/index.tsx",
-      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/index.tsx",
-      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/InterestBlockEditor/index.tsx",
-      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/LanguageBlockEditor/index.tsx",
-      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/PersonalBlockEditor/index.tsx",
-      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/ProjectBlockEditor/index.tsx",
-      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/SkillsBlockEditor/index.tsx",
-      "src/components/features/profile/CV/CvBlocksWorkspace/CvBlockStack/SummaryBlockEditor/index.tsx",
-      "src/components/features/profile/CV/CvBlocksWorkspace/CvHtmlDocument/index.tsx",
-      "src/components/features/profile/CV/CvBlocksWorkspace/CvHtmlPreview/index.tsx",
-      "src/components/features/profile/CV/CvBlocksWorkspace/CvSplitFromTextModal/index.tsx",
-      "src/components/features/profile/CV/CvBlocksWorkspace/CvTailorToJobModal/index.tsx",
-      "src/components/features/profile/CV/CvBlocksWorkspace/CvTemplateGalleryModal/index.tsx",
-      "src/components/features/profile/CV/CvBlocksWorkspace/shared/CvTextOrFileInput/index.tsx",
-      "src/components/features/profile/CV/CvEditor/CvEditorToolbarBar/index.tsx",
-      "src/components/features/profile/CV/CvEditor/index.tsx",
-      "src/components/features/profile/CV/CvGallery/index.tsx",
-      "src/components/features/profile/CV/index.tsx",
-      "src/components/features/profile/CvSubmission/index.tsx",
-      "src/components/features/profile/EditProfile/AvatarUploadModal/index.tsx",
-      "src/components/features/profile/EditProfile/index.tsx",
-      "src/components/features/profile/InstallmentPlans/index.tsx",
-      "src/components/features/profile/Membership/index.tsx",
-      "src/components/features/profile/PublicProfile/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileActivityTab/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileActivityTab/ProfileAchievements/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileActivityTab/ProfileActivity/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileChallengesTab/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileChallengesTab/ProfileChallenges/ChallengeCourseRow/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileChallengesTab/ProfileChallenges/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileCvTab/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileHero/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileHero/ProfileBadges/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileHero/ProfileFollowers/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileHero/ProfileRankAvatar/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileHero/ShareProfileButton/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileLoadingState/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileLockedState/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileNotFoundState/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileOverviewTab/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileOverviewTab/OverviewChallengeSkills/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileOverviewTab/OverviewCodeSkills/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileOverviewTab/OverviewContributions/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileOverviewTab/OverviewCourses/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileOverviewTab/ProfileJobReadiness/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileProjectsTab/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileProjectsTab/ProfileCapstone/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileProjectsTab/ProfileCapstone/ProjectCard/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileProjectsTab/ProfilePinned/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileProjectsTab/ProfilePinned/PinnedProjectCard/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileSkillsTab/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileSkillsTab/ProfileCoding/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileTabsBar/index.tsx",
-      "src/components/features/profile/PublicProfileLegacy/FeaturedMascotAvatar/index.tsx",
-      "src/components/features/profile/PublicProfileLegacy/index.tsx",
-      "src/components/features/profile/PublicProfileLegacy/ProfileAchievements/index.tsx",
-      "src/components/features/profile/PublicProfileLegacy/ProfileActivity/index.tsx",
-      "src/components/features/profile/PublicProfileLegacy/ProfileCapstone/index.tsx",
-      "src/components/features/profile/PublicProfileLegacy/ProfileCoding/index.tsx",
-      "src/components/features/profile/PublicProfileLegacy/ProfileContributions/index.tsx",
-      "src/components/features/profile/PublicProfileLegacy/ProfileCourses/index.tsx",
-      "src/components/features/profile/PublicProfileLegacy/ProfileFeaturedProjects/index.tsx",
-      "src/components/features/profile/PublicProfileLegacy/ProfileIdentityCard/index.tsx",
-      "src/components/features/profile/PublicProfileLegacy/ProfileLoadingState/index.tsx",
-      "src/components/features/profile/PublicProfileLegacy/ProfileLockedState/index.tsx",
-      "src/components/features/profile/PublicProfileLegacy/ProfileNotFoundState/index.tsx",
-      "src/components/features/profile/PublicProfileLegacy/ProfileOverviewTab/index.tsx",
-      "src/components/features/profile/PublicProfileLegacy/ProfilePinned/index.tsx",
-      "src/components/features/profile/PublicProfileLegacy/ProfilePinned/PinnedProjectCard/index.tsx",
-      "src/components/features/profile/PublicProfileLegacy/ProfileRankAvatar/index.tsx",
-      "src/components/features/profile/PublicProfileLegacy/ProfileSkills/index.tsx",
-      "src/components/features/profile/PublicProfileLegacy/ProfileSkills/LanguageDonut/index.tsx",
-      "src/components/features/profile/PublicProfileLegacy/ProfileSkillsSnapshot/index.tsx",
-      "src/components/features/profile/PublicProfileLegacy/ProfileSolvedChallenges/index.tsx",
-      "src/components/features/profile/PublicProfileLegacy/ShareProfileButton/index.tsx",
-      "src/components/features/profile/Security/index.tsx",
-      "src/components/features/profile/Sessions/index.tsx",
-      "src/components/features/profile/Settings/LearningHistory/CourseDetail/CourseDayTimeline/index.tsx",
-      "src/components/features/profile/Settings/LearningHistory/CourseDetail/index.tsx",
-      "src/components/features/profile/Settings/LearningHistory/CourseMilestoneOutline/index.tsx",
-      "src/components/features/profile/Settings/LearningHistory/CourseOutline/index.tsx",
-      "src/components/features/profile/Settings/LearningHistory/index.tsx",
-      "src/components/features/profile/Settings/MyAttempts/index.tsx",
-      "src/components/features/profile/Settings/MyFeedback/index.tsx",
-      "src/components/features/profile/Settings/MySubmissions/index.tsx",
-      "src/components/features/profile/Settings/SettingsBreadcrumb/index.tsx",
-      "src/components/features/profile/Settings/SettingsHome/index.tsx",
-      "src/components/features/profile/Settings/SettingsLayout/index.tsx",
-      "src/components/features/profile/UserStreak/index.tsx",
-      "src/components/features/rag-playground/RagPlayground/index.tsx",
-      "src/components/blocks/cards/CourseCardSkeleton/index.tsx",
-      "src/components/blocks/skeleton/Skeleton/Accordion/index.tsx",
-      "src/components/blocks/skeleton/Skeleton/Avatar/index.tsx",
-      "src/components/blocks/skeleton/Skeleton/Badge/index.tsx",
-      "src/components/blocks/skeleton/Skeleton/Breadcrumbs/index.tsx",
-      "src/components/blocks/skeleton/Skeleton/Card/index.tsx",
-      "src/components/blocks/skeleton/Skeleton/Checkbox/index.tsx",
-      "src/components/blocks/skeleton/Skeleton/Disclosure/index.tsx",
-      "src/components/blocks/skeleton/Skeleton/Kbd/index.tsx",
-      "src/components/blocks/skeleton/Skeleton/ListRow/index.tsx",
-      "src/components/blocks/skeleton/Skeleton/Menu/index.tsx",
-      "src/components/blocks/skeleton/Skeleton/Meter/index.tsx",
-      "src/components/blocks/skeleton/Skeleton/Metric/index.tsx",
-      "src/components/blocks/skeleton/Skeleton/Paragraph/index.tsx",
-      "src/components/blocks/skeleton/Skeleton/ProgressBar/index.tsx",
-      "src/components/blocks/skeleton/Skeleton/SegmentBar/index.tsx",
-      "src/components/blocks/skeleton/Skeleton/Select/index.tsx",
-      "src/components/blocks/skeleton/Skeleton/Slider/index.tsx",
-      "src/components/blocks/skeleton/Skeleton/Table/index.tsx",
-      "src/components/blocks/skeleton/Skeleton/Tabs/index.tsx",
-      "src/components/blocks/skeleton/Skeleton/TextArea/index.tsx",
-      "src/components/blocks/skeleton/Skeleton/Typography/index.tsx",
-      "src/components/blocks/skeleton/Skeleton/UserCell/index.tsx",
-      "src/components/reuseable/AccordionSkeleton/index.tsx",
-      "src/components/reuseable/PaginationSkeleton/index.tsx",
-      "src/components/reuseable/SkeletonParagraph/index.tsx",
-      "src/components/reuseable/SkeletonText/index.tsx",
-      "src/components/drawers/PersonalProjectTaskAttemptsDrawer/PersonalProjectAttemptsSkeleton/index.tsx",
-      "src/components/drawers/SubmissionAttemptsDrawer/SubmissionAttempCardSkeleton/index.tsx",
-      "src/components/modals/FeedbackDetailsModal/FeedbackCardSkeleton/index.tsx",
-      "src/components/layouts/admin/AdminAiBalancer/AdminAiBalancerSkeleton/index.tsx",
-      "src/components/layouts/blog/BlogList/BlogListSkeleton/index.tsx",
-      "src/components/layouts/blog/BlogPost/BlogPostSkeleton/index.tsx",
-      "src/components/layouts/status/SystemStatus/SystemStatusSkeleton/index.tsx",
-      "src/components/features/careers/Headhunting/Headhuntings/ConsultantCardSkeleton/index.tsx",
-      "src/components/features/careers/Jobs/JobList/JobListRowSkeleton/index.tsx",
-      "src/components/features/community/CommunityFeed/CommunityFeedSkeleton/index.tsx",
-      "src/components/features/dashboard/ChangelogList/ChangelogListSkeleton/index.tsx",
-      "src/components/features/dashboard/ContinueLearning/ContinueLearningSkeleton/index.tsx",
-      "src/components/features/dashboard/FeedTabs/FeedTabsSkeleton/index.tsx",
-      "src/components/features/dashboard/GlobalStanding/GlobalStandingSkeleton/index.tsx",
-      "src/components/features/dashboard/LeagueCard/LeagueCardSkeleton/index.tsx",
-      "src/components/features/dashboard/OverviewTab/OverviewContributions/OverviewContributionsSkeleton/index.tsx",
-      "src/components/features/dashboard/TopLearners/TopLearnersSkeleton/index.tsx",
-      "src/components/features/dashboard/TrendingContents/TrendingContentsSkeleton/index.tsx",
-      "src/components/features/dashboard/WeeklyChallengeCard/WeeklyChallengeCardSkeleton/index.tsx",
-      "src/components/features/dashboard/WhoToFollow/WhoToFollowSkeleton/index.tsx",
-      "src/components/features/learn/Challenge/ChallengeView/ChallengeViewSkeleton/index.tsx",
-      "src/components/features/learn/ContentMap/ContentMapSkeleton/index.tsx",
-      "src/components/features/learn/CourseContents/CourseContentsSkeleton/index.tsx",
-      "src/components/features/learn/Flashcards/DueReview/DueReviewSkeleton/index.tsx",
-      "src/components/features/learn/Flashcards/FlashcardDeckList/FlashcardDeckListSkeleton/index.tsx",
-      "src/components/features/learn/Flashcards/FlashcardReviewer/FlashcardReviewerSkeleton/index.tsx",
-      "src/components/features/learn/Flashcards/QuizSession/QuizSessionSkeleton/index.tsx",
-      "src/components/features/learn/Foundations/FoundationCardSkeleton/index.tsx",
-      "src/components/features/learn/Foundations/FoundationCategoryCard/FoundationCategoryCardSkeleton/index.tsx",
-      "src/components/features/learn/LessonReader/ChallengeBody/ChallengeCardSkeleton/index.tsx",
-      "src/components/features/learn/LessonReader/CodeBodySkeleton/index.tsx",
-      "src/components/features/learn/LessonReader/ContentBodySkeleton/index.tsx",
-      "src/components/features/learn/LessonReader/ContentHeaderSkeleton/index.tsx",
-      "src/components/features/learn/LessonReader/LessonBody/LessonCardSkeleton/index.tsx",
-      "src/components/features/learn/MilestoneOutline/MilestoneOutlineSkeleton/index.tsx",
-      "src/components/features/learn/MockInterview/MockInterviewSessionSkeleton/index.tsx",
-      "src/components/features/learn/MockInterview/MockInterviewSetupSkeleton/index.tsx",
-      "src/components/features/learn/ModulePage/ModulePageSkeleton/index.tsx",
-      "src/components/features/learn/PersonalProject/PersonalProjectDashboard/PersonalProjectDashboardSkeleton/index.tsx",
-      "src/components/features/learn/PersonalProject/TaskResultsSkeleton/index.tsx",
-      "src/components/features/learn/PersonalProject/TaskSkeleton/index.tsx",
-      "src/components/features/practice/PracticeProblem/PracticeProblemSkeleton/index.tsx",
-      "src/components/features/profile/AiSubscription/AiSubscriptionSkeleton/index.tsx",
-      "src/components/features/profile/AiSubscription/FreeTierCardSkeleton/index.tsx",
-      "src/components/features/profile/AiSubscription/TierGrid/TierCardSkeleton/index.tsx",
-      "src/components/features/profile/CV/CvBlocksWorkspace/CvWorkspaceSkeleton/index.tsx",
-      "src/components/features/profile/PublicProfile/ProfileHero/ProfileHeroSkeleton/index.tsx",
       "src/components/svg/GithubIcon/index.tsx",
       "src/components/svg/GoogleIcon/index.tsx",
       "src/components/svg/Logo/index.tsx",
       "src/components/svg/LogoMark/index.tsx",
-      "src/components/svg/TierLevelIcon/index.tsx",
-      "src/components/providers/HeroUIProvider.tsx",
-      "src/components/providers/NextThemesProvider.tsx",
-      "src/components/providers/SwrProvider.tsx"
+      "src/components/svg/TierLevelIcon/index.tsx"
     ]
   }
 }

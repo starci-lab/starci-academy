@@ -154,7 +154,7 @@ export const FlashcardReviewPage = ({
             {/* progress header: deck context + position in the queue */}
             <div className="flex items-center justify-between gap-3">
                 <span className="flex min-w-0 items-center gap-2">
-                    <StackIcon className="size-5 shrink-0 text-accent-soft-foreground" />
+                    <StackIcon className="size-5 shrink-0 text-foreground" />
                     <span className="truncate text-sm font-medium text-foreground">
                         {current.deckTitle}
                     </span>

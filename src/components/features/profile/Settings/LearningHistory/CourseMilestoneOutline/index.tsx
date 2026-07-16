@@ -222,9 +222,15 @@ export const CourseMilestoneOutline = ({
                                                         ) : attempted ? (
                                                             <CircleHalfIcon aria-hidden focusable="false" className="size-5 text-warning-soft-foreground" />
                                                         ) : (
-                                                            <CircleIcon aria-hidden focusable="false" className="size-5 text-muted" />
+                                                            <CircleIcon aria-hidden focusable="false" className="size-5 text-foreground" />
                                                         )}
-                                                        title={task.title}
+                                                        title={task.completed ? (
+                                                            <span className="text-success-soft-foreground">{task.title}</span>
+                                                        ) : attempted ? (
+                                                            <span className="text-warning-soft-foreground">{task.title}</span>
+                                                        ) : (
+                                                            task.title
+                                                        )}
                                                         meta={(
                                                             <>
                                                                 {task.type ? (

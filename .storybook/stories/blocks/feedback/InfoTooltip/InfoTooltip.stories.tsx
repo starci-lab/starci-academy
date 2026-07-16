@@ -9,7 +9,7 @@ import { InfoTooltip } from "@/components/blocks/feedback/InfoTooltip"
  * for a click-to-open-panel affordance (→ `Popover`) — hover isn't reachable on touch.
  */
 const meta: Meta<typeof InfoTooltip> = {
-    title: "Core/Overlays/InfoTooltip",
+    title: "Overlays/InfoTooltip",
     component: InfoTooltip,
 }
 

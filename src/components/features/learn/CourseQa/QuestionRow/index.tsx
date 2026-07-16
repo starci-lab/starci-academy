@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback, useState } from "react"
+import React, { useState } from "react"
 import { Card, Chip, Link, Spinner, Typography } from "@heroui/react"
 import {
     ChatCircleIcon,
@@ -10,17 +10,12 @@ import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { getTimeAgoLabel, getTimeAgoMessage } from "@/modules/dayjs"
 import type { CourseQuestionNode } from "@/modules/api/graphql/queries/types/course-questions"
-import type { CommentNode, ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { UserCell } from "@/components/blocks/identity/UserCell"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { CommentComposer } from "@/components/features/community/Discussion/CommentComposer"
 import { CommentItem } from "@/components/features/community/Discussion/CommentItem"
-import { queryContentComments } from "@/modules/api/graphql/queries/query-content-comments"
-import { mutateCreateComment } from "@/modules/api/graphql/mutations/mutation-create-comment"
-import { mutateUpdateComment } from "@/modules/api/graphql/mutations/mutation-update-comment"
-import { mutateDeleteComment } from "@/modules/api/graphql/mutations/mutation-delete-comment"
-import { mutateReactToComment } from "@/modules/api/graphql/mutations/mutation-react-to-comment"
+import { useQuestionAnswers } from "./hooks/useQuestionAnswers"
 import { pathConfig } from "@/resources/path"
 import { useAppSelector } from "@/redux/hooks"
 
@@ -59,65 +54,24 @@ export const QuestionRow = ({ question, currentUserId, currentUser, onAnswered, 
 
     const displayName = question.author.displayName || question.author.username
 
-    // answer-thread state (lazily loaded on first expand)
+    // answer-thread toggle; the answers themselves are gated on `expanded` inside
+    // the facade hook, so opening the thread the first time is what triggers the fetch
     const [expanded, setExpanded] = useState(false)
-    const [isLoadingAnswers, setIsLoadingAnswers] = useState(false)
-    const [answers, setAnswers] = useState<Array<CommentNode>>([])
-    const [answerRepliesByParent, setAnswerRepliesByParent] = useState<Record<string, Array<CommentNode>>>({})
+    const {
+        answers,
+        isLoadingAnswers,
+        answerRepliesByParent,
+        onReply,
+        onEdit,
+        onDelete,
+        onReactComment,
+        onLoadReplies,
+    } = useQuestionAnswers(question.id, expanded, onAnswered)
 
-    /** Fetch the direct replies of `parentId` (the question itself, or a nested reply). */
-    const loadReplies = useCallback(async (parentId: string) => {
-        const response = await queryContentComments({
-            request: {
-                parentCommentId: parentId,
-                limit: 50,
-            },
-        })
-        const loaded = response.data?.contentComments.data?.comments ?? []
-        if (parentId === question.id) {
-            setAnswers(loaded)
-        } else {
-            setAnswerRepliesByParent((prev) => ({ ...prev, [parentId]: loaded }))
-        }
-    }, [question.id])
-
-    /** Toggle the answer thread, loading the top-level answers on first expand. */
+    /** Toggle the answer thread. */
     const toggleExpanded = () => {
-        const next = !expanded
-        setExpanded(next)
-        if (next && answers.length === 0) {
-            setIsLoadingAnswers(true)
-            void loadReplies(question.id).finally(() => setIsLoadingAnswers(false))
-        }
+        setExpanded((prev) => !prev)
     }
-
-    // --- answer-thread persistence callbacks (mutate, then reload the affected node) ---
-
-    const onReply = useCallback(async (parentId: string, body: string) => {
-        await mutateCreateComment({ request: { parentCommentId: parentId, body } })
-        await loadReplies(parentId)
-        onAnswered?.()
-    }, [loadReplies, onAnswered])
-
-    const onEdit = useCallback(async (commentId: string, body: string) => {
-        await mutateUpdateComment({ request: { commentId, body } })
-        await loadReplies(question.id)
-    }, [loadReplies, question.id])
-
-    const onDelete = useCallback(async (commentId: string) => {
-        await mutateDeleteComment({ request: { commentId } })
-        await loadReplies(question.id)
-        onAnswered?.()
-    }, [loadReplies, onAnswered, question.id])
-
-    const onReactComment = useCallback(async (commentId: string, type: ReactionType | null) => {
-        await mutateReactToComment({ request: { commentId, type } })
-        await loadReplies(question.id)
-    }, [loadReplies, question.id])
-
-    const onLoadReplies = useCallback((parentId: string) => {
-        void loadReplies(parentId)
-    }, [loadReplies])
 
     /**
      * Route to the source lesson — the funnel back into the course content. A no-op

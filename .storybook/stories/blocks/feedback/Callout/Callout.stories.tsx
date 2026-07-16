@@ -8,7 +8,7 @@ import { TONE_CONTENT, ACTION_EXAMPLES } from "./components"
  * `CloseButton` with a status-driven soft tint so it doesn't read as a card-in-card.
  */
 const meta = {
-    title: "Block/Feedback/Callout",
+    title: "Primitives/Feedback/Callout",
     component: Callout,
     args: {
         title: "Lesson saved",

@@ -258,3 +258,24 @@
 ## Story 'news' (chờ thầy duyệt)
 
 _Chưa có story nào gắn `tags: ['news']`._
+
+---
+
+## Sync 2026-07-16 18:10 — `9db6f337` → `5dc1fc02` (hấp thụ refactor flatten + vá snapshot nửa-chừng)
+
+**Bối cảnh:** phát hiện snapshot bị bỏ dở ~3.8h trước (mtime 14:21) — trạng thái MÂU THUẪN: `_sync/components.md` quét tree post-flatten nhưng `snapshot.json`/`git.md` còn neo `9db6f337` (pre-flatten), map lẫn 136 path stale (`reuseable/*`,`layouts/*`) + thiếu 130 path mới (`blocks/*`,`features/*`). Không có phiên live (newest write 3.8h). → **regen snapshot TRỰC TIẾP từ `git ls-files @ HEAD`** thay vì tin _sync cũ.
+
+**Thay đổi component (git `9db6f337..5dc1fc02`):**
+- **192 RENAME (flatten):** `src/components/reuseable/*` → `blocks/<cat>/*`, `src/components/layouts/*` → `blocks/layout/*` \| `features/<feat>/*`. Nội dung ≈ y hệt (chỉ dời + sửa import path). Đây là lý do 130 path mới cần vào map + 136 path cũ phải rời.
+- **135 MODIFIED:** đa số = import-churn (`@/components/reuseable`→`blocks`); 26 file đổi nội dung thật (đã chấm ở `patterns-audit-fe` cùng ngày).
+- **1 DELETED.**
+
+**Story (đi kèm component đổi → GHI):** 8 story `M` khớp component vừa đổi/dời —
+`blocks/cards/SectionCard` · `blocks/form/CVSubmissionForm` · `blocks/form/SearchInput` · `blocks/identity/UserAvatar` · `blocks/navigation/Pagination` · `blocks/rendering/MarkdownContent` (+`/CodeToHtml`) · `blocks/skeleton/Skeleton`. Không story nào gắn `tags:['news']` → **không có gì chờ duyệt**.
+
+**Snapshot sau regen (neo `5dc1fc02`):**
+- components: **763** (index.tsx dưới `src/components/**`)
+- stories: **106** — 98 map component thật, 3 heroui-primitive (TextField/ScrollShadow/Popover), 5 foundation-token (Radius/Spacing/SurfacesAndFills/…)
+- storied: **97** · **holes: 666** (giữ nguyên bản chất: features 409 + modals/drawers/layout-composition không kỳ vọng story — xem `coverage.holes` rank P1→P4 ở block baseline trên).
+
+**Drift:** không phát hiện story tham chiếu prop đã biến mất (8 story M đều đi cùng component M, chưa soi sâu drift — để `starci-fe-audit`/`starci-fe-story` nếu cần).

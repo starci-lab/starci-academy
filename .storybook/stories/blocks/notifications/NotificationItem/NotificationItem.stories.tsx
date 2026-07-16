@@ -8,7 +8,7 @@ import {
 import { NotificationItem } from "@/components/blocks/notifications/NotificationItem"
 
 const meta: Meta<typeof NotificationItem> = {
-    title: "Core/Notifications/NotificationItem",
+    title: "Blocks/Notifications/NotificationItem",
     component: NotificationItem,
 }
 export default meta

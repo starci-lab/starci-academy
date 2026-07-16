@@ -1,26 +1,201 @@
 {
-  "lastAuditCommit": "9db6f337d60925d1a843fd6b265824b95e34154b",
-  "generatedAt": "2026-07-16T07:19:39Z",
+  "lastAuditCommit": "5dc1fc02b7a0a5b3d2a903a2c7ddd27598342081",
+  "generatedAt": "2026-07-16T00:00:00Z",
+  "note": "Lần audit FE đầu tiên. Baseline diff a03213a2..HEAD ra 337 file, nhưng 191 = rename thuần (refactor flatten reuseable+layouts→blocks/features) + 140 = import-path churn (@/components/reuseable→blocks). Chỉ 26 file đổi nội dung >6 dòng được chấm thật (fan-out 5 shard). 52 vi phạm; ~30 cơ học đẩy sang lint (xem mechanizableDelegated), openViolations = nợ THẬT cần tay. | Bản này SỐNG ở FE repo ($FE_SOURCE/.artifacts) — home đúng (đối xứng BE-audit-ở-backend, fe-sync-ở-FE). Hợp nhất bản backend đặt nhầm + carry full-scan pre-flatten cũ.",
+  "verdict": "minor-debt",
   "openViolations": [
-    { "rule": "async-data §1 (WRITE nuốt lỗi im lặng)", "file": "src/components/features/practice/PracticeProblem/index.tsx", "line": 220, "note": "onToggleSolution: mutateRevealCodingSolution trong try/catch{} rỗng → lỗi mạng/auth im lặng. Bọc runGraphQL (toast) hoặc SWR-mutation hook. BUG UX." },
-    { "rule": "async-data §3+§1+§5", "file": "src/components/features/learn/CourseQa/QuestionRow/index.tsx", "line": 19, "note": "Cả file không SWR: import queryContentComments + mutateCreateComment không runGraphQL/toast, state tự useState. Dựng SWR-hook tier content-comments + facade." },
-    { "rule": "async-data §1+§3+§5", "file": "src/components/features/practice/PracticeProblem/index.tsx", "line": 228, "note": "onSubmit gọi thẳng mutateSubmitCodingSolution, tự useState submitting, không runGraphQL. Chuyển useSWRMutation facade + runGraphQL + isMutating." },
-    { "rule": "type-safety §2 (discriminated union mất correlation)", "file": "src/hooks/zustand/signIn/store.ts", "line": 33, "note": "setValue(field, value: string|boolean|undefined) → setValue('rememberMe','abc') PASS type-check dù sai. Dùng generic <K extends Field>(field:K, value:State[K]). Cùng lỗi signUp/store.ts:59." },
-    { "rule": "async-data §3 (gọi thẳng module tier, bỏ qua SWR-hook)", "file": "src/components/features/learn/Flashcards/DueReview/index.tsx", "line": 106, "note": "useSWR inline queryMyDueFlashcards + mutateReviewFlashcard (:392) lệch chuẩn ngay trong file vốn dùng đúng SWR-hook cho action khác. Đại diện cho sweep ~90 call-site/~55 file." },
-    { "rule": "async-data §3 (SWR-mutation hook thay import fetcher thẳng)", "file": "src/components/features/navbar/Navbar/NotificationBell/index.tsx", "line": 32, "note": "import mutateMarkNotificationAsRead thẳng module (rule 1/2/6 ở đây ĐÚNG). Bọc useMutateMarkNotificationAsReadSwr." },
-    { "rule": "type-safety §4 (as X ép mù payload GraphQL không validate)", "file": "src/app/[locale]/courses/[courseId]/page.tsx", "line": 46, "note": "payload?.data?.course?.data as CourseMeta không validate. Systemic 5 call-site: blog/[slug]/page.tsx:48, profile/[username]/page.tsx:52, sitemap.ts:59,70. Gộp 1 helper parseGraphqlPayload<T>() + type-guard/zod." },
-    { "rule": "type-safety §4 (as X không comment lý do)", "file": "src/hooks/rhf/useEditSubmissionForm.ts", "line": 93, "note": "spread-override rồi as ChallengeSubmissionEntity không comment. Thêm lý do hoặc kiểu userSubmission chặt hơn." },
-    { "rule": "props-and-types §1 (className? tự khai thay WithClassNames)", "file": "src/components/blocks/marketing/TrackCard/index.tsx", "line": 18, "note": "extends WithClassNames<undefined>, bỏ className?: string. Cùng lỗi: ShowcaseMockup:35 (2 slot → WithClassNames<{content:string}>), feedback/Callout:55, grading/GradingByline:16 (inline type)." },
-    { "rule": "props-and-types §1 (tự khai lại className dù đã extends — thừa)", "file": "src/components/reuseable/ProgrammingLanguageTabs/index.tsx", "line": 44, "note": "đã extends WithClassNames (d34) nhưng còn className?: string. Cùng: PressableCard:9, SearchBar:31, Score:38, PaginationSkeleton:8." },
-    { "rule": "props-and-types §2 (type XxxProps thay interface extends)", "file": "src/components/drawers/SubmissionResultHistoryDrawer/index.tsx", "line": 17, "note": "type = {...} → interface extends WithClassNames<undefined>. Cùng: PersonalProjectTaskResultHistoryDrawer:17." },
-    { "rule": "props-and-types §4 (T[] thay Array<T>)", "file": "src/components/blocks/learn/QuizCard/index.tsx", "line": 57, "note": "15 chỗ/8 file: SegmentBar:21, QuizCard:57,67,72, PricingTable:36,54, notifications/NotificationList:22,32 + NotificationBell:22, grading/DiffViewer:27,44, legal/content/types.ts:20,22,30, profile/AiSubscription/TierCardBase:28." },
-    { "rule": "structure-and-naming §5 (Props interface không export)", "file": "src/components/reuseable/Spacer/index.tsx", "line": 30, "note": "6 file: Spacer:30, AiBalancer/KeyStatusChip:17, AdminAiBalancer/ProviderSection:20 + KeyRow:16, FeedbackDetailsModal/FeedbackCard:16, GlobalSearchModal/Content/Block:25. Thêm export." },
-    { "rule": "structure-and-naming §2 (sub-component phẳng thay folder-lồng)", "file": "src/components/reuseable/Discussion/CommentItem.tsx", "line": 51, "note": "phẳng cạnh index.tsx. Cùng cụm: Discussion/{ReactionBar,ReactionEmoji,...}, blocks/layout/AmbientBackground/effects/* (9), Flashcards/*Skeleton.tsx, profile/CV/.../shared/{AiRewriteButton,RepeatableItemCard}, PublicProfileLegacy/ProfileCapstone/{ChallengeChips,ProjectCard}." },
-    { "rule": "structure-and-naming §4 (hook rải phẳng thay hooks/ barrel)", "file": "src/components/features/learn/Flashcards/useFlashcardNav.ts", "line": 1, "note": "3 hook (useFlashcardNav, useStartFlashcardDueReviewSession, useStartFlashcardReviewSession) phẳng cạnh index.tsx. + PublicProfileLegacy/{useProfileFollow,useProfileUsername}.ts. Gom hooks/ + barrel." },
-    { "rule": "loading-and-skeleton §2 (isLoading trần trên query có revalidate nền)", "file": "src/components/features/dashboard/StreakFreezeCard/index.tsx", "line": 90, "note": "component tự mutate() sau mua freeze → skeleton nháy đè content. isLoading && !data. Cùng: MiniCartDrawer:154 (&& items.length===0), ContinueLearning:64 + useResumeItems.ts:60." },
-    { "rule": "loading-and-skeleton §1 (bỏ qua AsyncContent, tự if/else)", "file": "src/components/features/learn/Playground/PlaygroundSession/index.tsx", "line": 175, "note": "if(isLoading) return text (không cả skeleton) / if(error) / if(!playground). Gộp 1 AsyncContent + dựng skeleton mirror. Cùng: LessonReader/LessonPager:43 (skeleton đã đúng, chỉ đổi wire)." },
-    { "rule": "comments §1/§2 (WHAT-thuần / lặp tên đã rõ)", "file": "src/components/modals/ManagePinnedProjectsModal/CourseProjectForm/index.tsx", "line": 60, "note": "6 comment thừa (d60,65,70,72,78,93) → xoá. + Challenge/ChallengeSubmissionPanel:307." },
-    { "rule": "i18n §3 (hardcode string user-facing — ternary locale)", "file": "src/app/[locale]/contact/page.tsx", "line": 22, "note": "title: locale==='vi'?...:... → messages/{vi,en}.json + getTranslations. Cùng: status/page.tsx:22, architecture/page.tsx:22." },
-    { "rule": "styling-tailwind §3 (arbitrary px có step chuẩn thay thế)", "file": "src/components/reuseable/AIProcessingText/index.tsx", "line": 136, "note": "p-[2px] → p-0.5. Cùng: MockInterview/InterviewerPresence:76 gap-[2px] → gap-0.5. (skeleton pixel-match + contribution-graph gutter là design-exception, đề xuất mở rộng rubric.)" }
+    {
+      "rule": "structure-and-naming/flat-subcomponent",
+      "file": "src/components/features/community/Discussion/CommentItem.tsx",
+      "line": 0,
+      "severity": "low",
+      "note": "sub-component phẳng phải là folder/index.tsx: CommentItem, CommentComposer (+ sibling ReactionBar/InteractionBar ngoài scope). Cơ học hoá được → lint 'component-file-must-be-index'."
+    },
+    {
+      "rule": "structure-and-naming/export-name-mismatch",
+      "file": "src/components/features/learn/Foundations/index.tsx",
+      "line": 0,
+      "severity": "low",
+      "note": "main export phải trùng tên folder: Foundations export FoundationsLearnLayout, FoundationsCategoryGrid export ...GridLayout. Lint 'export-name-matches-folder'."
+    }
+  ],
+  "quickFixes": [
+    "CvSubmissionFields/index.tsx:83 — xoá cast thừa (values.cv as File|null); type đã khai File|null.",
+    "CVSubmissionForm/index.tsx:66 + AdminMpegDashTest/PreviewCard/index.tsx:33 — bỏ p-6 override trên <Card> (house-rule p-3).",
+    "PreviewCard + AdminAiBalancer/KeyRow — raw color scale → token semantic (bg-surface/border-separator/text-foreground/text-muted).",
+    "E2eBody/index.tsx:84 — pill pass/fail hand-roll → StatusChip canon, bỏ text-[11px] arbitrary.",
+    "KeyRow/index.tsx:34 — bỏ useCallback quanh statusLabel (gọi inline 1 chỗ) → hàm thường."
+  ],
+  "mechanizableDelegated": {
+    "target": "starci-fe-enforce (eslint-plugin-starci-fe)",
+    "note": "~30/52 vi phạm cơ học — audit tay 1 LẦN NÀY là đủ, đừng soi lại; đẩy thành lint rule để giữ mãi.",
+    "rules": [
+      "import/order (react-first, next liền sau, external→@→relative, WithClassNames cuối) — ~13 call-site, eslint --fix tự sửa",
+      "collapse-short-named-imports (inline named-import 1-2 tên) — ~9 file, prettier printWidth hoặc custom rule",
+      "no-raw-color-scale (chặn palette Tailwind trần, ép token semantic) — song song no-arbitrary-token",
+      "no-card-padding-override (chặn p-6 tay lên Card, house-rule p-3)",
+      "component-file-must-be-index (sub-component phẳng → folder/index)",
+      "export-name-matches-folder (main export trùng tên folder)",
+      "no-restricted-imports formik (guard sau khi migrate CV)",
+      "no-restricted-imports zone: src/components/** không import thẳng @/modules/api/graphql/** (ép qua SWR hook) — guard BlogPost/QuestionRow sau refactor"
+    ]
+  },
+  "priorFullScan": {
+    "commit": "9db6f337d609",
+    "note": "Full-scan 8 trục pre-flatten (14:20 phiên trước). Path là PRE-flatten (reuseable/*, layouts/*) — đã bị flatten 5dc1fc02 dời; cần starci-fe-audit full-scan để re-map + xác nhận còn/hết. Giữ để không mất, KHÔNG trùng với openViolations (khác commit/khác file-set).",
+    "count": 20,
+    "violations": [
+      {
+        "rule": "async-data §1 (WRITE nuốt lỗi im lặng)",
+        "file": "src/components/features/practice/PracticeProblem/index.tsx",
+        "line": 220,
+        "note": "onToggleSolution: mutateRevealCodingSolution trong try/catch{} rỗng → lỗi mạng/auth im lặng. Bọc runGraphQL (toast) hoặc SWR-mutation hook. BUG UX."
+      },
+      {
+        "rule": "async-data §3+§1+§5",
+        "file": "src/components/features/learn/CourseQa/QuestionRow/index.tsx",
+        "line": 19,
+        "note": "Cả file không SWR: import queryContentComments + mutateCreateComment không runGraphQL/toast, state tự useState. Dựng SWR-hook tier content-comments + facade."
+      },
+      {
+        "rule": "async-data §1+§3+§5",
+        "file": "src/components/features/practice/PracticeProblem/index.tsx",
+        "line": 228,
+        "note": "onSubmit gọi thẳng mutateSubmitCodingSolution, tự useState submitting, không runGraphQL. Chuyển useSWRMutation facade + runGraphQL + isMutating."
+      },
+      {
+        "rule": "type-safety §2 (discriminated union mất correlation)",
+        "file": "src/hooks/zustand/signIn/store.ts",
+        "line": 33,
+        "note": "setValue(field, value: string|boolean|undefined) → setValue('rememberMe','abc') PASS type-check dù sai. Dùng generic <K extends Field>(field:K, value:State[K]). Cùng lỗi signUp/store.ts:59."
+      },
+      {
+        "rule": "async-data §3 (gọi thẳng module tier, bỏ qua SWR-hook)",
+        "file": "src/components/features/learn/Flashcards/DueReview/index.tsx",
+        "line": 106,
+        "note": "useSWR inline queryMyDueFlashcards + mutateReviewFlashcard (:392) lệch chuẩn ngay trong file vốn dùng đúng SWR-hook cho action khác. Đại diện cho sweep ~90 call-site/~55 file."
+      },
+      {
+        "rule": "async-data §3 (SWR-mutation hook thay import fetcher thẳng)",
+        "file": "src/components/features/navbar/Navbar/NotificationBell/index.tsx",
+        "line": 32,
+        "note": "import mutateMarkNotificationAsRead thẳng module (rule 1/2/6 ở đây ĐÚNG). Bọc useMutateMarkNotificationAsReadSwr."
+      },
+      {
+        "rule": "type-safety §4 (as X ép mù payload GraphQL không validate)",
+        "file": "src/app/[locale]/courses/[courseId]/page.tsx",
+        "line": 46,
+        "note": "payload?.data?.course?.data as CourseMeta không validate. Systemic 5 call-site: blog/[slug]/page.tsx:48, profile/[username]/page.tsx:52, sitemap.ts:59,70. Gộp 1 helper parseGraphqlPayload<T>() + type-guard/zod."
+      },
+      {
+        "rule": "type-safety §4 (as X không comment lý do)",
+        "file": "src/hooks/rhf/useEditSubmissionForm.ts",
+        "line": 93,
+        "note": "spread-override rồi as ChallengeSubmissionEntity không comment. Thêm lý do hoặc kiểu userSubmission chặt hơn."
+      },
+      {
+        "rule": "props-and-types §1 (className? tự khai thay WithClassNames)",
+        "file": "src/components/blocks/marketing/TrackCard/index.tsx",
+        "line": 18,
+        "note": "extends WithClassNames<undefined>, bỏ className?: string. Cùng lỗi: ShowcaseMockup:35 (2 slot → WithClassNames<{content:string}>), feedback/Callout:55, grading/GradingByline:16 (inline type)."
+      },
+      {
+        "rule": "props-and-types §1 (tự khai lại className dù đã extends — thừa)",
+        "file": "src/components/reuseable/ProgrammingLanguageTabs/index.tsx",
+        "line": 44,
+        "note": "đã extends WithClassNames (d34) nhưng còn className?: string. Cùng: PressableCard:9, SearchBar:31, Score:38, PaginationSkeleton:8."
+      },
+      {
+        "rule": "props-and-types §2 (type XxxProps thay interface extends)",
+        "file": "src/components/drawers/SubmissionResultHistoryDrawer/index.tsx",
+        "line": 17,
+        "note": "type = {...} → interface extends WithClassNames<undefined>. Cùng: PersonalProjectTaskResultHistoryDrawer:17."
+      },
+      {
+        "rule": "props-and-types §4 (T[] thay Array<T>)",
+        "file": "src/components/blocks/learn/QuizCard/index.tsx",
+        "line": 57,
+        "note": "15 chỗ/8 file: SegmentBar:21, QuizCard:57,67,72, PricingTable:36,54, notifications/NotificationList:22,32 + NotificationBell:22, grading/DiffViewer:27,44, legal/content/types.ts:20,22,30, profile/AiSubscription/TierCardBase:28."
+      },
+      {
+        "rule": "structure-and-naming §5 (Props interface không export)",
+        "file": "src/components/reuseable/Spacer/index.tsx",
+        "line": 30,
+        "note": "6 file: Spacer:30, AiBalancer/KeyStatusChip:17, AdminAiBalancer/ProviderSection:20 + KeyRow:16, FeedbackDetailsModal/FeedbackCard:16, GlobalSearchModal/Content/Block:25. Thêm export."
+      },
+      {
+        "rule": "structure-and-naming §2 (sub-component phẳng thay folder-lồng)",
+        "file": "src/components/reuseable/Discussion/CommentItem.tsx",
+        "line": 51,
+        "note": "phẳng cạnh index.tsx. Cùng cụm: Discussion/{ReactionBar,ReactionEmoji,...}, blocks/layout/AmbientBackground/effects/* (9), Flashcards/*Skeleton.tsx, profile/CV/.../shared/{AiRewriteButton,RepeatableItemCard}, PublicProfileLegacy/ProfileCapstone/{ChallengeChips,ProjectCard}."
+      },
+      {
+        "rule": "structure-and-naming §4 (hook rải phẳng thay hooks/ barrel)",
+        "file": "src/components/features/learn/Flashcards/useFlashcardNav.ts",
+        "line": 1,
+        "note": "3 hook (useFlashcardNav, useStartFlashcardDueReviewSession, useStartFlashcardReviewSession) phẳng cạnh index.tsx. + PublicProfileLegacy/{useProfileFollow,useProfileUsername}.ts. Gom hooks/ + barrel."
+      },
+      {
+        "rule": "loading-and-skeleton §2 (isLoading trần trên query có revalidate nền)",
+        "file": "src/components/features/dashboard/StreakFreezeCard/index.tsx",
+        "line": 90,
+        "note": "component tự mutate() sau mua freeze → skeleton nháy đè content. isLoading && !data. Cùng: MiniCartDrawer:154 (&& items.length===0), ContinueLearning:64 + useResumeItems.ts:60."
+      },
+      {
+        "rule": "loading-and-skeleton §1 (bỏ qua AsyncContent, tự if/else)",
+        "file": "src/components/features/learn/Playground/PlaygroundSession/index.tsx",
+        "line": 175,
+        "note": "if(isLoading) return text (không cả skeleton) / if(error) / if(!playground). Gộp 1 AsyncContent + dựng skeleton mirror. Cùng: LessonReader/LessonPager:43 (skeleton đã đúng, chỉ đổi wire)."
+      },
+      {
+        "rule": "comments §1/§2 (WHAT-thuần / lặp tên đã rõ)",
+        "file": "src/components/modals/ManagePinnedProjectsModal/CourseProjectForm/index.tsx",
+        "line": 60,
+        "note": "6 comment thừa (d60,65,70,72,78,93) → xoá. + Challenge/ChallengeSubmissionPanel:307."
+      },
+      {
+        "rule": "i18n §3 (hardcode string user-facing — ternary locale)",
+        "file": "src/app/[locale]/contact/page.tsx",
+        "line": 22,
+        "note": "title: locale==='vi'?...:... → messages/{vi,en}.json + getTranslations. Cùng: status/page.tsx:22, architecture/page.tsx:22."
+      },
+      {
+        "rule": "styling-tailwind §3 (arbitrary px có step chuẩn thay thế)",
+        "file": "src/components/reuseable/AIProcessingText/index.tsx",
+        "line": 136,
+        "note": "p-[2px] → p-0.5. Cùng: MockInterview/InterviewerPresence:76 gap-[2px] → gap-0.5. (skeleton pixel-match + contribution-graph gutter là design-exception, đề xuất mở rộng rubric.)"
+      }
+    ]
+  },
+  "resolvedThisSession": {
+    "fixedAt": "2026-07-16T18:20:00Z (uncommitted — chờ commit + runtime verify)",
+    "note": "5 finding + 5 quick-fix sửa bởi fe-audit-fix workflow (4 lane). tsc sạch, eslint sạch file đụng. CHƯA verify runtime (xem needsRuntimeCheck).",
+    "findings": [
+      "async-data/direct-module-write @ src/components/features/learn/CourseQa/QuestionRow/index.tsx",
+      "forms/formik-forbidden @ src/components/features/careers/CVSubmissionForm/index.tsx",
+      "async-data/three-tier-bypass @ src/components/features/blog/BlogPost/index.tsx",
+      "loading-and-skeleton/no-asynccontent @ src/components/features/dashboard/league/League/WeeklyBoard/index.tsx",
+      "react-idioms/effect-no-cleanup @ src/components/features/auth/OauthRedirect/index.tsx"
+    ],
+    "needsRuntimeCheck": [
+      "CV form /careers: Formik→RHF, reset giờ prop-driven useEffect — upload PDF → success+auto-reset+re-upload reset lại",
+      "QuestionRow Q&A: write giờ TOAST khi fail (trước nuốt lỗi); answers SWR-gated — verify post/edit/delete/react + fail→toast + open/close không refetch thừa",
+      "BlogPost /blog/[slug]: SWR key đổi global — verify load + đổi slug + error retry",
+      "League Weekly/GlobalBoard: skeleton mới mirror LeagueRow — verify shimmer khớp + không conditional-hook warning",
+      "OauthRedirect: clearTimeout cancel — verify nav nhanh không stray push",
+      "E2eBody: pill→StatusChip — verify layout accordion-trigger"
+    ]
+  },
+  "newlyDiscovered": [
+    {
+      "rule": "forms/formik-forbidden",
+      "file": "src/components/features/learn/Challenge/ChallengeSubmissionPanel",
+      "note": "pre-existing import 'formik' còn sót — KHÔNG nằm trong 26 file đổi (file không thay đổi kể từ baseline) nên incremental không bắt; là Formik debt riêng, cần migrate RHF sau."
+    },
+    {
+      "rule": "eslint/no-empty-object-type",
+      "file": "src/components/blocks/skeleton/Skeleton/*",
+      "note": "10 lỗi eslint pre-existing (Badge/Chip/Disclosure/Input/Kbd/Meter/ProgressBar/Select/Slider/Switch), baseline commit 4f99d9a4, không do fix này. Empty interface extends → đổi type alias hoặc thêm field. Cơ học → lint-fix."
+    }
   ]
 }

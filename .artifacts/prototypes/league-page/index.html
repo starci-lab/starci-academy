@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Prototype — League page /vi/league (business-standard leaderboard)</title>
+<style>
+  :root{
+    --bg:#faf7f8;--surface:#fff;--surface-2:#f4eef1;--border:#ece7ea;--fg:#1c1a1b;--muted:#8a8386;
+    --accent:#d6006e;--accent-soft:#fbe6f1;--accent-soft-fg:#b8005e;
+    --success:#16a34a;--success-soft:#e9f7ee;--danger:#dc2626;--danger-soft:#fdecec;--warning:#d97706;
+    --gold:#eab308;--silver:#9ca3af;--bronze:#b45309;--r3:24px;--r2:16px;
+  }
+  *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 "Segoe UI",system-ui,sans-serif}
+  .wrap{max-width:640px;margin:0 auto;padding:24px 16px 80px}
+  h1{font-size:24px;font-weight:800;margin:0 0 18px}
+  .muted{color:var(--muted)}.xs{font-size:12px}.sm{font-size:14px}
+  /* tabs */
+  .tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:20px}
+  .tab{flex:1;text-align:center;padding:10px;cursor:pointer;color:var(--muted);font-weight:600;border-bottom:2px solid transparent;margin-bottom:-1px}
+  .tab.active{color:var(--accent-soft-fg);border-bottom-color:var(--accent)}
+  /* controls */
+  .ctrl{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+  .ctrl button{font-size:12px;border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:5px 12px;cursor:pointer;color:var(--muted)}
+  .ctrl button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-soft-fg)}
+  /* card */
+  .card{background:var(--surface);border-radius:var(--r3);box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.04);padding:16px}
+  .stack{display:flex;flex-direction:column;gap:16px}
+  .blocktag{display:inline-block;font-size:10px;font-weight:700;color:var(--accent-soft-fg);background:var(--accent-soft);padding:1px 6px;border-radius:5px;margin-bottom:6px;letter-spacing:.02em}
+  .zone{display:inline-block;font-size:10px;font-weight:700;color:#fff;padding:2px 7px;border-radius:5px}
+  .zone.cta{background:var(--accent)}.zone.psy{background:var(--warning)}.zone.state{background:#475569}.zone.link{background:#0ea5e9}
+  /* HERO my-standing */
+  .hero{background:linear-gradient(135deg,var(--accent-soft),#fff);border:1px solid var(--border);border-radius:var(--r3);padding:18px;display:flex;flex-direction:column;gap:12px}
+  .hero__top{display:flex;align-items:center;gap:14px}
+  .tierbadge{width:52px;height:52px;border-radius:16px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;font-size:26px;flex:0 0 auto}
+  .hero__rank{font-size:22px;font-weight:800;line-height:1.1}
+  .hero__meta{color:var(--muted);font-size:13px}
+  .meter{height:8px;background:var(--surface-2);border-radius:999px;overflow:hidden}
+  .meter>i{display:block;height:100%;background:var(--accent);border-radius:999px}
+  .btn{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#fff;border:none;border-radius:14px;padding:9px 16px;font-size:14px;font-weight:600;cursor:pointer;width:fit-content}
+  .btn.sec{background:var(--surface);color:var(--fg);border:1px solid var(--border)}
+  /* rows */
+  .rows{display:flex;flex-direction:column;gap:6px}
+  .row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px}
+  .row .rk{width:22px;text-align:right;color:var(--muted);font-size:13px;font-weight:600}
+  .row .av{width:32px;height:32px;border-radius:999px;background:#cbd5e1;flex:0 0 auto}
+  .row .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .row .pt{font-size:13px;font-weight:600}
+  .row .delta{font-size:11px;width:34px;text-align:right}.up{color:var(--success)}.down{color:var(--danger)}
+  .row.promote{background:var(--success-soft)}.row.demote{background:var(--danger-soft)}
+  .followbtn{font-size:12px;border:1px solid var(--accent);color:var(--accent-soft-fg);background:var(--accent-soft);border-radius:999px;padding:3px 11px;cursor:pointer;font-weight:600}
+  .zonelabel{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;color:var(--muted);margin:8px 2px 2px;text-transform:uppercase;letter-spacing:.03em}
+  .zonelabel .dot{width:8px;height:8px;border-radius:999px}
+  /* podium */
+  .podium{display:flex;align-items:flex-end;justify-content:center;gap:12px;padding:8px 0}
+  .pod{display:flex;flex-direction:column;align-items:center;gap:6px}
+  .pod .pav{width:54px;height:54px;border-radius:999px;background:#cbd5e1;border:3px solid var(--gold)}
+  .pod.s2 .pav{border-color:var(--silver);width:46px;height:46px}.pod.s3 .pav{border-color:var(--bronze);width:46px;height:46px}
+  .pod .base{background:var(--surface-2);border-radius:12px 12px 0 0;width:78px;text-align:center;padding:8px 4px;font-weight:700}
+  .pod.p1 .base{height:64px;background:linear-gradient(var(--accent-soft),var(--surface-2))}.pod.s2 .base{height:44px}.pod.s3 .base{height:34px}
+  .pod .pn{font-size:12px;font-weight:600;max-width:78px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .pod .pp{font-size:11px;color:var(--muted)}
+  /* self card (surface-in-surface) */
+  .selfwrap{display:flex;flex-direction:column;gap:8px}
+  .selflabel{font-size:12px;color:var(--muted)}
+  .listcard{border:1px solid var(--border);border-radius:var(--r2);overflow:hidden}
+  .listcard .row{border-radius:0;padding:12px 10px;background:var(--accent-soft)}
+  /* empty */
+  .empty{text-align:center;padding:32px 16px;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .empty .ic{font-size:34px}
+  .note{background:#fff8e6;border:1px solid #f0e2b6;border-radius:12px;padding:14px 16px;font-size:13px;margin-top:26px}
+  code{background:var(--surface-2);padding:1px 5px;border-radius:5px;font-size:12px}
+  .hidden{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Bảng xếp hạng</h1>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="weekly" onclick="setTab('weekly')">Tuần này</div>
+    <div class="tab" data-tab="global" onclick="setTab('global')">Toàn cầu</div>
+  </div>
+
+  <div class="ctrl">
+    <span class="muted xs" style="align-self:center">State:</span>
+    <button class="on" data-state="data" onclick="setState('data')">có data</button>
+    <button data-state="empty" onclick="setState('empty')">chưa xếp hạng (empty)</button>
+  </div>
+
+  <!-- ============ WEEKLY ============ -->
+  <section id="weekly">
+    <div id="weekly-data" class="stack">
+      <!-- HERO: vị thế của mình -->
+      <div class="hero">
+        <span class="blocktag">block: StandingHeroCard (mới) — LabeledCard? / bespoke</span>
+        <div class="hero__top">
+          <div class="tierbadge">🥉</div>
+          <div style="flex:1;min-width:0">
+            <div class="hero__rank">Hạng #1 <span class="muted" style="font-size:14px;font-weight:600">/ 12 · Bronze</span></div>
+            <div class="hero__meta">0 điểm tuần này · <span class="up">▲ mới</span> · Reset sau 1 ngày 22 giờ</div>
+          </div>
+        </div>
+        <!-- goal-gradient: điểm tới ngưỡng thăng hạng -->
+        <div>
+          <div class="xs muted" style="margin-bottom:4px"><span class="zone psy">psych</span> Còn <b>40 điểm</b> nữa để vào top 10 thăng hạng</div>
+          <div class="meter"><i style="width:22%"></i></div>
+        </div>
+        <!-- CTA phễu về khóa (north-star) -->
+        <button class="btn"><span class="zone cta" style="color:#fff;background:transparent;padding:0">›</span> Làm challenge để leo hạng →</button>
+      </div>
+
+      <!-- board: promote zone → middle → demote zone -->
+      <div class="card">
+        <span class="blocktag">block: LeagueRow ×N (reuse) trong zone bands</span>
+        <div class="zonelabel"><span class="dot" style="background:var(--success)"></span>Top 10 thăng hạng</div>
+        <div class="rows">
+          <div class="row promote"><span class="rk">1</span><span class="av"></span><span class="nm">cuongnvtse160875 <b class="xs" style="color:var(--accent-soft-fg)">· bạn</b></span><span class="pt">0đ</span><span class="delta up">▲</span></div>
+          <div class="row promote"><span class="rk">2</span><span class="av"></span><span class="nm">minh_dev</span><span class="pt">1420đ</span><span class="delta up">▲2</span></div>
+          <div class="row promote"><span class="rk">3</span><span class="av"></span><span class="nm">huyen_codes</span><span class="pt">1180đ</span><span class="delta down">▼1</span></div>
+        </div>
+        <div class="zonelabel"><span class="dot" style="background:var(--danger)"></span>5 cuối rớt hạng</div>
+        <div class="rows">
+          <div class="row demote"><span class="rk">11</span><span class="av"></span><span class="nm">levan020305</span><span class="pt">0đ</span><span class="delta">—</span></div>
+          <div class="row demote"><span class="rk">12</span><span class="av"></span><span class="nm">an_qa</span><span class="pt">0đ</span><span class="delta down">▼2</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="weekly-empty" class="card hidden">
+      <div class="empty">
+        <div class="ic">🏆</div>
+        <b>Chưa vào bảng xếp hạng tuần này</b>
+        <div class="muted sm">Hoàn thành thêm bài học để được xếp vào một nhóm và bắt đầu leo hạng.</div>
+        <button class="btn">Vào khóa học →</button>
+        <span class="zone state">state: empty → phễu khóa</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GLOBAL ============ -->
+  <section id="global" class="hidden">
+    <div id="global-data" class="stack">
+      <!-- HERO -->
+      <div class="hero">
+        <span class="blocktag">block: StandingHeroCard (mới)</span>
+        <div class="hero__top">
+          <div class="tierbadge">🌍</div>
+          <div style="flex:1;min-width:0">
+            <div class="hero__rank">Hạng #9 <span class="muted" style="font-size:14px;font-weight:600">toàn nền tảng</span></div>
+            <div class="hero__meta">20 XP · Xếp theo tổng điểm thưởng</div>
+          </div>
+        </div>
+        <div>
+          <div class="xs muted" style="margin-bottom:4px"><span class="zone psy">psych</span> Còn <b>120 XP</b> nữa để lên hạng #8</div>
+          <div class="meter"><i style="width:14%"></i></div>
+        </div>
+        <button class="btn">Kiếm XP — vào khóa học →</button>
+      </div>
+
+      <!-- podium top-3 -->
+      <div class="card">
+        <span class="blocktag">block: Podium (mới) — top 3</span>
+        <div class="podium">
+          <div class="pod s2"><div class="pav"></div><div class="pn">huyen_codes</div><div class="pp">1180đ</div><div class="base">2</div></div>
+          <div class="pod p1"><div class="pav"></div><div class="pn">minh_dev</div><div class="pp">1420đ</div><div class="base">🥇 1</div></div>
+          <div class="pod s3"><div class="pav"></div><div class="pn">pakoohacha588</div><div class="pp">980đ</div><div class="base">3</div></div>
+        </div>
+      </div>
+
+      <!-- list rank 4+ với Follow -->
+      <div class="card">
+        <span class="blocktag">block: SurfaceListCard + row (reuse) + FollowButton</span>
+        <div class="rows">
+          <div class="row"><span class="rk">4</span><span class="av"></span><span class="nm">thanh_be</span><span class="pt">760đ</span><button class="followbtn">Theo dõi</button></div>
+          <div class="row"><span class="rk">5</span><span class="av"></span><span class="nm">linh_fe</span><span class="pt">540đ</span><button class="followbtn">Theo dõi</button></div>
+          <div class="row"><span class="rk">6</span><span class="av"></span><span class="nm">duc_data</span><span class="pt">410đ</span><button class="followbtn">Theo dõi</button></div>
+        </div>
+      </div>
+
+      <!-- self card surface-in-surface (nhất quán với dashboard vừa build) -->
+      <div class="selfwrap">
+        <span class="blocktag">block: LabeledCard subtleLabel frameless → SurfaceListCard bordered (như dashboard)</span>
+        <span class="selflabel">Hạng của bạn</span>
+        <div class="listcard">
+          <div class="row"><span class="rk">9</span><span class="av"></span><span class="nm">cuongnvtse160875 <b class="xs" style="color:var(--accent-soft-fg)">· bạn</b></span><span class="pt">20đ</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="global-empty" class="card hidden">
+      <div class="empty">
+        <div class="ic">🌍</div>
+        <b>Chưa có ai trên bảng xếp hạng</b>
+        <div class="muted sm">Giải một bài để chiếm vị trí đầu tiên!</div>
+        <button class="btn">Vào khóa học →</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="note">
+    <b>Ý đồ "chuẩn business" (JOB = xem vị thế cạnh tranh + động lực leo hạng):</b><br>
+    1. <b>StandingHeroCard</b> (mới) — hero "vị thế của MÌNH" đứng đầu: tier/rank/điểm/movement + <b>goal-gradient meter</b> ("còn X điểm nữa để thăng/lên hạng") + <b>CTA phễu về khóa</b> ("Làm challenge/kiếm XP →"). Đây là hook cảm xúc + conversion, thay dòng text mảnh hiện tại.<br>
+    2. <b>Weekly:</b> board chia <b>zone band</b> promote(xanh)/demote(đỏ) có nhãn rõ, dùng lại <code>LeagueRow</code>.<br>
+    3. <b>Global:</b> <b>Podium top-3</b> (flourish chuẩn leaderboard) + list rank 4+ với <code>FollowButton</code> (phễu social) + <b>card "Hạng của bạn"</b> surface-in-surface (nhất quán dashboard vừa build).<br>
+    4. <b>State-matrix:</b> empty (chưa xếp hạng) → phễu khóa; loading → skeleton mirror.<br>
+    <b>Cần thầy chốt:</b> (a) Podium chỉ ở Global hay cả Weekly? (b) StandingHeroCard tách block mới tái dùng cả 2 tab — ok? (c) "còn X điểm nữa để lên hạng" compute từ entry liền kề (data có sẵn) — ok? (d) Follow ở Global list — giữ hay bỏ (dashboard TopLearners đã có follow)?
+  </div>
+</div>
+<script>
+  let tab='weekly',state='data';
+  function render(){
+    document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));
+    document.getElementById('weekly').classList.toggle('hidden',tab!=='weekly');
+    document.getElementById('global').classList.toggle('hidden',tab!=='global');
+    document.getElementById('weekly-data').classList.toggle('hidden',!(tab==='weekly'&&state==='data'));
+    document.getElementById('weekly-empty').classList.toggle('hidden',!(tab==='weekly'&&state==='empty'));
+    document.getElementById('global-data').classList.toggle('hidden',!(tab==='global'&&state==='data'));
+    document.getElementById('global-empty').classList.toggle('hidden',!(tab==='global'&&state==='empty'));
+    document.querySelectorAll('.ctrl button').forEach(b=>b.classList.toggle('on',b.dataset.state===state));
+  }
+  function setTab(t){tab=t;render()}
+  function setState(s){state=s;render()}
+  render();
+</script>
+</body>
+</html>

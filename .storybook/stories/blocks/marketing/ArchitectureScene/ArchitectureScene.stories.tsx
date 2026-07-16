@@ -5,7 +5,7 @@ import { ArchitectureScene } from "@/components/blocks/marketing/ArchitectureSce
 import { SMALL_DATA } from "./components"
 
 const meta: Meta<typeof ArchitectureScene> = {
-    title: "Core/Rendering/3D",
+    title: "Features/Marketing/ArchitectureScene",
     component: ArchitectureScene,
 }
 

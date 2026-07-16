@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Prototype — LeagueCard (see-more header + my-row surface-in-surface)</title>
+<style>
+  :root{
+    --bg:#faf7f8; --surface:#fff; --surface-2:#f4eef1; --border:#ece7ea;
+    --fg:#1c1a1b; --muted:#8a8386; --accent:#d6006e; --accent-soft-fg:#b8005e;
+    --success:#16a34a; --success-soft:#e9f7ee; --danger:#dc2626; --danger-soft:#fdecec;
+    --primary-10:#fbe6f1; --radius:24px; --radius-2:16px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 "Segoe UI",system-ui,sans-serif;padding:32px}
+  h1{font-size:18px;margin:0 0 4px} .sub{color:var(--muted);margin:0 0 24px;font-size:13px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;max-width:920px}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}}
+  .col > h2{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+  /* LabeledCard */
+  .lc{display:flex;flex-direction:column;gap:12px}
+  .lc__head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .lc__label{font-weight:600;font-size:15px}
+  .lc__see{display:inline-flex;align-items:center;gap:4px;color:var(--accent-soft-fg);font-size:13px;font-weight:500;cursor:pointer;text-decoration:none}
+  .lc__see:hover{opacity:.65}
+  .card{background:var(--surface);border-radius:var(--radius);box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.04);padding:16px;display:flex;flex-direction:column;gap:12px}
+  .muted{color:var(--muted)} .xs{font-size:12px} .sm{font-size:14px}
+  .badge{display:inline-flex;align-items:center;gap:6px;background:var(--surface-2);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:600}
+  .legend{display:flex;gap:14px;color:var(--muted);font-size:11px}
+  .dot{width:8px;height:8px;border-radius:999px;display:inline-block;margin-right:6px;vertical-align:middle}
+  .rows{display:flex;flex-direction:column;gap:8px}
+  .row{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:12px}
+  .row .rk{width:20px;text-align:right;color:var(--muted);font-size:12px}
+  .row .av{width:28px;height:28px;border-radius:999px;background:#cbd5e1;flex:0 0 auto}
+  .row .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .row .pt{font-size:12px;font-weight:600}
+  .row.promote{background:var(--success-soft)} .row.demote{background:var(--danger-soft)}
+  .row.me{background:var(--primary-10)}
+  /* surface-in-surface labeled list card (the NEW bit) */
+  .sis{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+  .sis__label{font-size:12px;color:var(--muted)}
+  .listcard{border:1px solid var(--border);border-radius:var(--radius-2);background:var(--surface);overflow:hidden}
+  .listcard .row{border-radius:0;padding:12px}
+  .foot{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
+  .foot a{color:var(--accent-soft-fg);font-weight:500;text-decoration:none}
+  .anno{border:2px solid var(--danger);border-radius:8px}
+  .anno-g{border:2px solid var(--success);border-radius:8px}
+  .tag{display:inline-block;font-size:11px;font-weight:700;color:#fff;padding:2px 6px;border-radius:5px;margin-bottom:6px}
+  .tag.r{background:var(--danger)} .tag.g{background:var(--success)}
+  .note{background:#fff8e6;border:1px solid #f0e2b6;border-radius:10px;padding:12px 14px;font-size:13px;max-width:900px;margin:28px 0 0}
+  code{background:var(--surface-2);padding:1px 5px;border-radius:5px;font-size:12px}
+</style>
+</head>
+<body>
+  <h1>LeagueCard — 2 thay đổi thầy chỉ (tab Cộng đồng)</h1>
+  <p class="sub">Trái = HIỆN TẠI · Phải = ĐỀ XUẤT. Block thật: <code>LeagueCardContent</code> (framed) = <code>LabeledCard</code> + <code>LeagueRow</code>.</p>
+
+  <div class="grid">
+    <!-- BEFORE -->
+    <div class="col">
+      <h2>Hiện tại</h2>
+      <div class="lc">
+        <div class="lc__head"><span class="lc__label">League tuần ⓘ</span></div>
+        <div class="card">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:8px"><span class="badge">🥉 Đồng</span><span class="sm">Hạng #1 · top 100%</span></div>
+            <span class="xs muted">Reset sau 1 ngày 22 giờ</span>
+          </div>
+          <div class="legend"><span><span class="dot" style="background:var(--success)"></span>Top 10 thăng hạng</span><span><span class="dot" style="background:var(--danger)"></span>5 cuối rớt hạng</span></div>
+          <div class="rows">
+            <div class="row me"><span class="rk">1</span><span class="av"></span><span class="nm">cuongnvtse160875</span><span class="pt">0 điểm</span></div>
+          </div>
+          <!-- change 1: link Ở ĐÁY (đỏ) -->
+          <div class="foot anno"><span class="tag r">❶ đang ở ĐÁY</span><br><a href="#">Xem bảng đầy đủ</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AFTER -->
+    <div class="col">
+      <h2>Đề xuất</h2>
+      <div class="lc">
+        <!-- change 1: see-more DỜI LÊN header (onSeeMore của LabeledCard) -->
+        <div class="lc__head anno">
+          <span class="lc__label">League tuần ⓘ</span>
+          <a class="lc__see" href="#">Xem bảng đầy đủ <span aria-hidden="true">›</span></a>
+        </div>
+        <div class="card">
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:8px"><span class="badge">🥉 Đồng</span><span class="sm">Hạng #1 · top 100%</span></div>
+            <span class="xs muted">Reset sau 1 ngày 22 giờ</span>
+          </div>
+          <div class="legend"><span><span class="dot" style="background:var(--success)"></span>Top 10 thăng hạng</span><span><span class="dot" style="background:var(--danger)"></span>5 cuối rớt hạng</span></div>
+
+          <!-- top cohort rows (nếu có nhiều) -->
+          <div class="rows">
+            <div class="row promote"><span class="rk">1</span><span class="av"></span><span class="nm">minh_dev</span><span class="pt">1420đ</span></div>
+            <div class="row"><span class="rk">2</span><span class="av"></span><span class="nm">huyen_codes</span><span class="pt">1180đ</span></div>
+            <div class="row"><span class="rk">3</span><span class="av"></span><span class="nm">pakoohacha588</span><span class="pt">980đ</span></div>
+          </div>
+
+          <!-- change 2: hàng CỦA MÌNH = surface-in-surface labeled list card (xanh) -->
+          <div class="sis anno-g">
+            <span class="tag g">❷ surface-in-surface labeled list card</span>
+            <span class="sis__label">Vị trí của bạn</span>
+            <div class="listcard">
+              <div class="row me"><span class="rk">1</span><span class="av"></span><span class="nm">cuongnvtse160875</span><span class="pt">0 điểm</span></div>
+            </div>
+          </div>
+
+          <div class="foot"><span class="muted">+ 12 người khác</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>Diễn giải canon:</b><br>
+    ❶ <b>See-more → header:</b> dùng prop <code>onSeeMore</code> + <code>seeMoreLabel</code> của <code>LabeledCard</code> (đã có, story <i>WithSeeMore</i>) → link "Xem bảng đầy đủ ›" ở góc phải hàng label; bỏ link ở đáy. Giữ dòng "+N người khác" ở đáy.<br>
+    ❷ <b>Hàng của mình → surface-in-surface labeled list card:</b> tách hàng <code>myEntry</code> ra khỏi list phẳng, bọc trong <code>LabeledCard subtleLabel frameless</code> (sub-label "Vị trí của bạn") → <code>SurfaceListCard bordered</code> (nested trong surface cha nên dùng VIỀN thay shadow) chứa 1 <code>LeagueRow</code>. Đây là "surface trong surface" thật (khác list card đứng riêng).<br>
+    <b>Điểm cần thầy chốt:</b> (a) sub-label ghi "Vị trí của bạn" ok chưa? (b) khi <code>myEntry</code> nằm TRONG top-5 (không bị ẩn) thì có TÁCH ra list-card riêng nữa không, hay chỉ tách khi rank &gt; 5 (ngoài top)? (c) i18n key mới cho sub-label.
+  </div>
+</body>
+</html>

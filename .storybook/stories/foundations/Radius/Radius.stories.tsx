@@ -10,7 +10,7 @@ import type { RadiusItem, ConcentricItem } from "./components"
  * Pick the step by the ROLE/NESTING DEPTH of the element — the component ↔ radius mapping is grounded in real source.
  */
 const meta: Meta = {
-    title: "Core/Foundations/Radius",
+    title: "Foundations/Radius",
 }
 export default meta
 type Story = StoryObj

@@ -1,19 +1,14 @@
 "use client"
 
 import React from "react"
-import { Typography } from "@heroui/react"
-import { BookOpenIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
-import { EntityToken } from "@/components/features/dashboard/EntityToken"
-import { CourseTrialChip } from "@/components/features/course/CourseTrialChip"
+import { CourseRow } from "./CourseRow"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useProfileUsername } from "../../hooks/useProfileUsername"
 import { useQueryUserCoursesSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserCoursesSwr"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { IconTile } from "@/components/blocks/identity/IconTile"
-import { CourseProgressBar } from "@/components/blocks/stats/CourseProgressBar"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { useAppSelector } from "@/redux/hooks"
@@ -96,44 +91,9 @@ export const OverviewCourses = ({ className, label, onSeeMore, seeMoreLabel }: O
                 }}
             >
                 <SurfaceListCard>
-                    {courses.map((item) => {
-                        const dims = [
-                            { key: "content", completed: item.contentCompleted, total: item.contentTotal },
-                            { key: "challenge", completed: item.challengeCompleted, total: item.challengeTotal },
-                            { key: "milestone", completed: item.completed, total: item.total },
-                        ]
-                        const totalTasks = dims.reduce((acc, d) => acc + d.total, 0)
-                        const doneTasks = dims.reduce((acc, d) => acc + d.completed, 0)
-                        const percent = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0
-                        return (
-                            <SurfaceListCardItem key={item.globalId}>
-                                <div className="flex items-center gap-3">
-                                    <IconTile size="sm" src={item.thumbnailUrl} icon={<BookOpenIcon aria-hidden focusable="false" />} />
-                                    <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                        <div className="flex items-center justify-between gap-2">
-                                            {/* course title is a link into the course */}
-                                            <EntityToken
-                                                globalId={item.globalId}
-                                                label={item.label}
-                                                className="min-w-0 flex-1 truncate"
-                                            />
-                                            {isOwnProfile ? <CourseTrialChip isEnrolled={item.isEnrolled} /> : null}
-                                            <Typography type="body-xs" color="muted">
-                                                {percent}%
-                                            </Typography>
-                                        </div>
-                                        <CourseProgressBar
-                                            ariaLabel={`${item.label} · ${percent}%`}
-                                            dims={dims.map((d) => ({
-                                                ...d,
-                                                label: t(`dashboard.courseProgress.${d.key}`),
-                                            }))}
-                                        />
-                                    </div>
-                                </div>
-                            </SurfaceListCardItem>
-                        )
-                    })}
+                    {courses.map((item) => (
+                        <CourseRow key={item.globalId} item={item} isOwnProfile={isOwnProfile} />
+                    ))}
                 </SurfaceListCard>
             </AsyncContent>
         </LabeledCard>

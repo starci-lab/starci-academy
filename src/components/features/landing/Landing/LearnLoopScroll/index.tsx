@@ -389,7 +389,7 @@ const LoopStepList = ({ active, onSelect }: { active: number; onSelect: (index: 
                                     STEP_ICONS[key]
                                 )}
                             </span>
-                            <Typography type="body" className="text-foreground">
+                            <Typography type="body" className={stepColor}>
                                 {t(`landing.learnLoop.items.${key}.title`)}
                             </Typography>
                         </div>

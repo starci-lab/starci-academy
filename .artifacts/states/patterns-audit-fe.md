@@ -46,3 +46,63 @@ Tổng hợp 8 brief Sonnet (`_audit/fe-*.md`), ground thật (grep + đọc xá
 15. i18n §3 · ternary locale hardcode metadata title: `app/[locale]/{contact:22, status:22, architecture:22}/page.tsx` → đẩy `messages/{vi,en}.json` + `getTranslations`.
 16. styling §3 (đáng patch thật, còn lại là design-exception): `reuseable/AIProcessingText:136` `p-[2px]`→`p-0.5`; `learn/MockInterview/InterviewerPresence:76` `gap-[2px]`→`gap-0.5`.
 17. styling §1 hex-ma (khả năng MỞ RỘNG rubric hơn là sửa): `modals/ShareModal:30,35,40,45` (brand-icon), `landing/Landing/constants:53-56` (lang-badge).
+Rubric = `.claude/patterns/fe/`. App = `D:\Repositories\starci-academy` (branch `mtp`). Incremental theo git; `openViolations` = nợ tay chưa xử, `mechanizableDelegated` = đẩy lint.
+
+---
+
+## 2026-07-16 — Audit đầu (baseline `5dc1fc02`)
+
+**Scope thật:** baseline cũ `a03213a2` diff ra 337 file, nhưng lọc còn **26 file đổi nội dung >6 dòng** đáng chấm:
+- 191 file = **rename thuần** (refactor flatten `5dc1fc02`: `reuseable/`+`layouts/` → `blocks/`+`features/`) — nội dung y hệt, bỏ.
+- 140 file = **import-path churn** (`@/components/reuseable/*` → `@/components/blocks/*`) — cơ học, bỏ.
+- Fan-out 5 shard (sonnet) chấm 26 file → opus synthesize.
+
+**Kết quả: 52 vi phạm, verdict = `minor-debt`.** Codebase khá sạch — ~30/52 là nhiễu cơ học (thứ tự import, inline/multiline named-import, JSDoc/@default, tên handler) → **đẩy lint, không audit tay lặp**. Nợ THẬT hẹp + gom cụm ở vài feature.
+
+### Nợ THẬT (openViolations — cần tay)
+
+1. **[HIGH/async-data] `CourseQa/QuestionRow/index.tsx:19` — NGHIÊM TRỌNG NHẤT.** Component gọi THẲNG tầng module cho cả WRITE (`mutateCreateComment/Update/Delete/ReactToComment`) không qua `runGraphQL`/`useGraphQLWithToast` (§1 write phải qua runGraphQL, §3). **Hệ quả thật:** mutate fail = im lặng, không toast, không rollback UI. Thêm `:63` tự dựng `useState isLoadingAnswers/answers` song song thay vì SWR (§5). → proposal: bọc write `runGraphQL`+toast, đọc loading/data từ hook.
+
+2. **[HIGH/forms] `CVSubmissionForm/index.tsx:9` — còn Formik.** `<Formik>` + `CvSubmissionFields:11` import `Form/FormikErrors/FormikTouched`. `forms.md §1` STRICT cấm formik, stack cố định RHF+zod+zodResolver. → proposal migrate: logic vào `hooks/rhf/useCvSubmissionForm.ts` (§2), thay `<Formik>`/`<Form>` bằng RHF, giữ upload File. 1 feature, 2 file — contained nhưng phải tay + verify runtime.
+
+3. **[HIGH/async-data] `blog/BlogPost/index.tsx:31` — bypass 3-tầng.** `useSWR` + import `queryBlogPost` tầng module thẳng trong component (§3). → tách `useQueryBlogPostSwr` (hooks/swr), component chỉ đọc `{data,isLoading,error,mutate}`. Nhỏ, làm cùng QuestionRow.
+
+4. **[HIGH/loading-and-skeleton] 4 vùng data tự `if/else` thay `<AsyncContent>`** (§1 STRICT) + skeleton generic không mirror row thật (§3): `WeeklyBoard:63`, `GlobalBoard/index.tsx:44` (high), `FoundationsCategoryGrid:171`, `Foundations/index.tsx:189` (medium). → 1 proposal: bọc AsyncContent + skeleton mô phỏng LeagueRow/card thật. Contained ở league + foundations.
+
+5. **[MED/react-idioms] `auth/OauthRedirect/index.tsx:61` — BUG TIỀM ẨN.** `useEffect` gọi `sleep(1000).then(router.push)` KHÔNG cleanup; `sleep()` (modules/utils/misc) không expose handle để clear → unmount trong 1s vẫn `router.push` sau unmount. → `setTimeout` có ref + clear trong cleanup, hoặc cancel-token cho `sleep`.
+
+6. **[LOW/structure] sub-component phẳng → folder/index** (CommentItem, CommentComposer) + **export trùng tên folder** (Foundations→FoundationsLearnLayout, FoundationsCategoryGrid→...GridLayout). Cơ học → lint.
+
+### Quick fixes (nhỏ/an toàn, làm được same-session khi thầy OK)
+- `CvSubmissionFields:83` xoá cast thừa `(values.cv as File|null)`.
+- `CVSubmissionForm:66` + `PreviewCard:33` bỏ `p-6` override trên `<Card>` (house-rule p-3).
+- `PreviewCard` + `KeyRow` raw color → token semantic.
+- `E2eBody:84` pill hand-roll → `StatusChip` canon, bỏ `text-[11px]`.
+- `KeyRow:34` bỏ `useCallback` quanh `statusLabel` (gọi inline 1 chỗ).
+
+### Đẩy sang `starci-fe-enforce` (lint giữ mãi — KHÔNG audit tay lặp)
+`import/order` (~13 chỗ, --fix) · `collapse-short-named-imports` (~9 file) · `no-raw-color-scale` · `no-card-padding-override` · `component-file-must-be-index` · `export-name-matches-folder` · `no-restricted-imports formik` (guard) · zone-rule cấm `src/components/**` import thẳng `@/modules/api/graphql/**` (guard sau khi refactor QuestionRow/BlogPost).
+
+**Khuyến nghị:** #1 (QuestionRow silent-write) là thứ đáng sửa nhất — không chỉ style mà là correctness/UX thật (mutate fail nuốt lỗi). #2–#4 gom 1 proposal refactor async/forms cho cụm learn+careers+league. Phần cơ học chờ lint rule land rồi `eslint --fix` 1 lượt, đừng sửa tay lẻ tẻ.
+
+---
+
+## 2026-07-16 18:20 — FIX (fe-audit-fix workflow, 4 lane song song)
+
+Sửa **5 finding + 5 quick-fix** từ block audit trên. `tsc` SẠCH · eslint sạch mọi file đụng. Opus-verify tự vá 3 lỗi tsc do lane gây (CV container FormikHelpers signature; 2 SWR hook destructure tuple-key → dùng pattern repo `useQueryCourseQuestionsSwr`).
+
+**Đã fix:**
+- #1 `QuestionRow` — write route qua facade `useQuestionAnswers` (runGraphQL + SWR trigger, **toast khi fail**, revalidate chỉ khi success); answers đọc `useQueryContentCommentsSwr` (gated by expanded), bỏ useState list tay. 0 gọi thẳng module cho write.
+- #2 `CVSubmissionForm`+`CvSubmissionFields` — **Formik→RHF+zod** (logic vào `hooks/rhf/useCvSubmissionForm.ts`), xoá dead `constants/validation.ts`+`index.ts`; 0 'formik'/'yup' trong careers.
+- #3 `BlogPost` — dùng `useQueryBlogPostSwr(slug)` (3 tầng), bỏ useSWR+queryBlogPost thẳng.
+- #4 4 vùng bọc `<AsyncContent>` + skeleton mirror LeagueRow/card thật (WeeklyBoard/GlobalBoard/Foundations/FoundationsCategoryGrid).
+- #5 `OauthRedirect` — `setTimeout`+`clearTimeout` cleanup, bỏ `sleep().then()`+useCallback.
+- quick: PreviewCard+KeyRow raw palette→token semantic + Card p-6→p-3; KeyRow useCallback→plain fn; E2eBody pill→StatusChip(success/danger); CVSubmissionForm Card p-6 bỏ.
+
+**CHƯA verify runtime** (6 mục — xem `resolvedThisSession.needsRuntimeCheck` trong json; nhất là CV form + QuestionRow). Uncommitted, chờ thầy soi + commit.
+
+**Mới phát hiện (ngoài scope changed-file, chưa fix):**
+- `learn/Challenge/ChallengeSubmissionPanel` còn `import 'formik'` — file không đổi kể từ baseline nên incremental không bắt; Formik debt riêng.
+- `skeleton/Skeleton/*` 10 lỗi eslint `no-empty-object-type` (baseline `4f99d9a4`, pre-existing) → lint-fix.
+
+**Còn để LINT (không fix tay):** structure `component-file-must-be-index` (CommentItem/CommentComposer) + `export-name-matches-folder` (Foundations) — đẩy `starci-fe-enforce`.

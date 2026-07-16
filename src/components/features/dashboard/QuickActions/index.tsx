@@ -1,16 +1,18 @@
 "use client"
 
 import React, {
+    useCallback,
     useMemo,
 } from "react"
 import {
     Chip,
+    ListBox,
 } from "@heroui/react"
 import {
     useLocale,
     useTranslations,
 } from "next-intl"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
 import {
     GraduationCapIcon,
     CardsIcon,
@@ -49,6 +51,7 @@ export const QuickActions = ({
 }: QuickActionsProps) => {
     const t = useTranslations()
     const locale = useLocale()
+    const router = useRouter()
     const username = useAppSelector((state) => state.user.user?.username)
     // spendable reward balance — surfaced as a chip on the rewards shortcut
     const { data: wallet } = useQueryMyRewardWalletSwr()
@@ -114,38 +117,64 @@ export const QuickActions = ({
         ],
     )
 
+    // nav-on-activate: ListBox with no selection → onAction fires the item id; we
+    // route to its href (Next client nav). Using the NATIVE HeroUI ListBox chrome
+    // (react-aria) instead of hand-rolling a Link + hover class — the row highlight
+    // (`data-[hovered=true]:bg-default`) is the component's own hover fill.
+    const onAction = useCallback(
+        (key: React.Key) => {
+            const action = actions.find((item) => item.key === key)
+            if (action) {
+                router.push(action.href)
+            }
+        },
+        [actions, router],
+    )
+
     return (
         <LabeledList className={className} label={t("dashboard.quickActions")}>
-            {actions.map(({
-                key,
-                Icon,
-                href,
-            }) => (
-                <Link
-                    key={key}
-                    href={href}
-                    className="group flex w-full items-center gap-3 py-2 text-left"
-                >
-                    <Icon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
-                    <span className="truncate text-sm transition-colors group-hover:text-foreground group-hover:underline">
-                        {t(`dashboard.actions.${key}`)}
-                    </span>
-                    {key === "rewards" && wallet ? (
-                        <Chip className="ml-auto" size="sm" variant="soft" color="warning">
-                            <Chip.Label>
-                                {t("dashboard.rewardBalance", { count: wallet.balance })}
-                            </Chip.Label>
-                        </Chip>
-                    ) : null}
-                    {key === "review" && dueCount > 0 ? (
-                        <Chip className="ml-auto" size="sm" variant="soft" color="accent">
-                            <Chip.Label>
-                                {t("dashboard.dueCount", { count: dueCount })}
-                            </Chip.Label>
-                        </Chip>
-                    ) : null}
-                </Link>
-            ))}
+            <ListBox
+                aria-label={t("dashboard.quickActions")}
+                selectionMode="none"
+                onAction={onAction}
+                className="gap-1 p-0"
+            >
+                {actions.map(({
+                    key,
+                    Icon,
+                }) => (
+                    <ListBox.Item
+                        key={key}
+                        id={key}
+                        textValue={t(`dashboard.actions.${key}`)}
+                        // icon + label share the row's `text-foreground` (icon.md §leading:
+                        // leading icon same colour as its title, not a stray `text-muted`);
+                        // hover fill is native ListBox chrome, no hand-rolled hover class.
+                        className="flex cursor-pointer items-center gap-3 rounded-large px-2 py-2 text-foreground outline-none data-[focus-visible=true]:ring-2 data-[focus-visible=true]:ring-accent data-[hovered=true]:bg-default"
+                    >
+                        <Icon aria-hidden focusable="false" className="size-5 shrink-0" />
+                        <span className="min-w-0 flex-1 truncate text-sm">
+                            {t(`dashboard.actions.${key}`)}
+                        </span>
+                        {key === "rewards" && wallet ? (
+                            <Chip className="shrink-0" size="sm" variant="soft" color="warning">
+                                <Chip.Label>
+                                    {t("dashboard.rewardBalance", { count: wallet.balance })}
+                                </Chip.Label>
+                            </Chip>
+                        ) : null}
+                        {key === "review" && dueCount > 0 ? (
+                            // "đến hạn" = nudge tồn đọng → warning (amber), KHÔNG accent
+                            // (accent dành cho brand/CTA). Khớp convention DeckList/StudyRail/QuizSession.
+                            <Chip className="shrink-0" size="sm" variant="soft" color="warning">
+                                <Chip.Label>
+                                    {t("dashboard.dueCount", { count: dueCount })}
+                                </Chip.Label>
+                            </Chip>
+                        ) : null}
+                    </ListBox.Item>
+                ))}
+            </ListBox>
         </LabeledList>
     )
 }

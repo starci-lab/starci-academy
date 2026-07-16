@@ -4,7 +4,7 @@ import { AiCategoryChip } from "@/components/blocks/chips/AiCategoryChip"
 import { AiModelCategory } from "@/modules/api/graphql/queries/query-ai-models"
 
 const meta: Meta<typeof AiCategoryChip> = {
-    title: "Core/Chip/AiCategoryChip",
+    title: "Features/Chips/AiCategoryChip",
     component: AiCategoryChip,
 }
 export default meta

@@ -3,7 +3,7 @@ import { Label, Typography } from "@heroui/react"
 import { DifficultyChip } from "@/components/blocks/chips/DifficultyChip"
 
 const meta: Meta<typeof DifficultyChip> = {
-    title: "Core/Chip/DifficultyChip",
+    title: "Features/Chips/DifficultyChip",
     component: DifficultyChip,
 }
 export default meta

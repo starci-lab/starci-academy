@@ -5,4 +5,4 @@
 
 | Proposal | Status | Tóm tắt | Ngày |
 |---|---|---|---|
-| _(trống — brainstorm thêm dòng khi chốt proposal)_ | | | |
+| league-card-community-tweaks | ✅ DONE | See-more→header + hàng-của-mình=surface-in-surface labeled list card + đồng nhất see-more="Xem bảng xếp hạng" (tab Cộng đồng) | 2026-07-17 |

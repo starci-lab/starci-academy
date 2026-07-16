@@ -3,7 +3,7 @@ import { Label, Typography } from "@heroui/react"
 import { PageContainer } from "@/components/blocks/layout/PageContainer"
 
 const meta: Meta<typeof PageContainer> = {
-    title: "Core/Layout/PageContainer",
+    title: "Layout/PageContainer",
     component: PageContainer,
 }
 export default meta

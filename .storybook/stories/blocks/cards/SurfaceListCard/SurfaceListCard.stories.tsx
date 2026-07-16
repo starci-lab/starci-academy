@@ -2,13 +2,16 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Label, Typography } from "@heroui/react"
 import {
     CaretRightIcon,
+    CheckCircleIcon,
+    CircleIcon,
     CreditCardIcon,
     WalletIcon,
+    XCircleIcon,
 } from "@phosphor-icons/react"
 import { SurfaceListCard, SurfaceListCardItem, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 
 const meta: Meta<typeof SurfaceListCard> = {
-    title: "Core/Card/SurfaceListCard",
+    title: "Blocks/Cards/SurfaceListCard",
     component: SurfaceListCard,
 }
 
@@ -231,6 +234,50 @@ export const FreeFormItems: Story = {
                         <span className="shrink-0 text-xs text-muted">20%</span>
                     </div>
                 </SurfaceListCardItem>
+            </SurfaceListCard>
+        </div>
+    ),
+}
+
+/**
+ * Leading STATE-MARKER palette (icon.md §6): a checklist row whose leading icon signals progress. Icon AND
+ * title carry the SAME color per state ("buộc cùng màu") — `todo` = `CircleIcon` + title both `text-foreground`;
+ * `done` = `CheckCircleIcon` + title both `text-success-soft-foreground`; `fail` = `XCircleIcon` + title both
+ * `text-muted` (soft/expired) or `text-danger` (needs attention). Recolor the title via a NODE (`<span>`), NOT
+ * `titleClassName` (banned by lint `no-modal-title-classname`) — safe here because the row has no
+ * underline-on-hover. Only ONE leading icon per row (icon.md §7 — never a state-marker + a type-icon together).
+ */
+export const StateMarkers: Story = {
+    parameters: {
+        usage:
+            "Leading state-marker palette (icon.md §6): icon AND title share the same color per state — todo = " +
+            "CircleIcon + foreground, done = CheckCircleIcon + success, fail = XCircleIcon + muted or danger. Recolor " +
+            "the title via a <span> node, not titleClassName (lint-banned). One leading icon per row only (§7).",
+    },
+    render: () => (
+        <div className="flex max-w-md flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>State markers</Label>
+                <Typography type="body-sm" color="muted">
+                    Use for a checklist whose rows track progress (daily quests, a lesson&apos;s tasks). The leading icon is a STATE signal, not a type icon — pick exactly one per row and let the title take its color, so the eye reads state from both at once.
+                </Typography>
+            </div>
+            <SurfaceListCard>
+                <SurfaceListCardRow
+                    leading={<CircleIcon className="size-5 shrink-0 text-foreground" aria-hidden focusable="false" />}
+                    title="Đọc nội dung bài học"
+                    meta={<Typography type="body-xs" color="muted">0/1</Typography>}
+                />
+                <SurfaceListCardRow
+                    leading={<CheckCircleIcon className="size-5 shrink-0 text-success-soft-foreground" aria-hidden focusable="false" />}
+                    title={<span className="text-success-soft-foreground">Ôn 5 flashcard</span>}
+                    meta={<Typography type="body-xs" color="muted">5/5</Typography>}
+                />
+                <SurfaceListCardRow
+                    leading={<XCircleIcon className="size-5 shrink-0 text-danger" aria-hidden focusable="false" />}
+                    title={<span className="text-danger">Hoàn thành 1 phiên Phỏng vấn thử</span>}
+                    meta={<Typography type="body-xs" color="muted">Hết hạn</Typography>}
+                />
             </SurfaceListCard>
         </div>
     ),

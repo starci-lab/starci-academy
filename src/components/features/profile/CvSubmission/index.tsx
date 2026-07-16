@@ -4,9 +4,6 @@ import React, {
     useCallback,
     useState,
 } from "react"
-import type {
-    FormikHelpers,
-} from "formik"
 import {
     cn,
 } from "@heroui/react"
@@ -66,7 +63,6 @@ export const CvSubmission = ({
     const onSubmit = useCallback(
         async (
             values: CvSubmissionFormValues,
-            { resetForm }: FormikHelpers<CvSubmissionFormValues>,
         ) => {
             if (!token) {
                 console.error("Authentication token not found")
@@ -133,7 +129,7 @@ export const CvSubmission = ({
                 setUploadProgress(UPLOAD_PROGRESS.done)
                 setUploadedFileName(values.cv.name)
                 setUploadedS3Key(s3Key)
-                resetForm()
+                // the form resets itself via a useEffect once these two props are set
             } catch (error) {
                 console.error("CV upload error:", error)
                 toast.danger(t("uploadError"))

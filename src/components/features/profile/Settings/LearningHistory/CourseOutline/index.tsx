@@ -256,7 +256,7 @@ export const CourseOutline = ({
                                                                 <ListRow
                                                                     key={challenge.id}
                                                                     leading={(
-                                                                        <PuzzlePieceIcon aria-hidden focusable="false" className="size-5 text-muted" />
+                                                                        <PuzzlePieceIcon aria-hidden focusable="false" className="size-5 text-foreground" />
                                                                     )}
                                                                     title={challenge.title}
                                                                     meta={(

@@ -14,7 +14,7 @@ import { SidebarNavItem } from "@/components/blocks/navigation/SidebarNavItem"
 import { ContinueTopSlot } from "./components"
 
 const meta: Meta<typeof CollapsibleSidebar> = {
-    title: "Core/Navigation/CollapsibleSidebar",
+    title: "Layout/CollapsibleSidebar",
     component: CollapsibleSidebar,
 }
 export default meta

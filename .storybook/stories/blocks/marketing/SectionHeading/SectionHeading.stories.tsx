@@ -3,7 +3,7 @@ import { Label, Typography } from "@heroui/react"
 import { SectionHeading } from "@/components/blocks/marketing/SectionHeading"
 
 const meta: Meta<typeof SectionHeading> = {
-    title: "Core/Marketing/SectionHeading",
+    title: "Blocks/Media/SectionHeading",
     component: SectionHeading,
 }
 export default meta

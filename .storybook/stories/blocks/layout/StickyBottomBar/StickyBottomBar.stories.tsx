@@ -5,7 +5,7 @@ import { PriceTag } from "@/components/blocks/commerce/PriceTag"
 import { IN_BOX, Screen } from "./components"
 
 const meta: Meta<typeof StickyBottomBar> = {
-    title: "Core/Layout/StickyBottomBar",
+    title: "Layout/StickyBottomBar",
     component: StickyBottomBar,
 }
 export default meta

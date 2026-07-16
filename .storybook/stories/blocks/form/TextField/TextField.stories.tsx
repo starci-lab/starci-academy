@@ -12,7 +12,7 @@ import { Input, Label, TextArea, TextField, Typography } from "@heroui/react"
  * it to the field via aria). Fields in a form: the same cluster uses `gap-3`.
  */
 const meta: Meta<typeof TextField> = {
-    title: "Core/Form/TextField",
+    title: "Primitives/Form/TextField",
     component: TextField,
 }
 export default meta

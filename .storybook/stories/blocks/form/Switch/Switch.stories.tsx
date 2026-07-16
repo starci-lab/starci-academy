@@ -9,7 +9,7 @@ import { Label, Switch, Typography } from "@heroui/react"
  * label on the left, Switch aligned right.
  */
 const meta: Meta<typeof Switch> = {
-    title: "Core/Form/Switch",
+    title: "Primitives/Form/Switch",
     component: Switch,
 }
 export default meta

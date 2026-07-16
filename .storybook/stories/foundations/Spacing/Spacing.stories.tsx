@@ -12,7 +12,7 @@ import type { PadItem } from "./components"
  * Atlassian, Carbon, Polaris): each token is one row with name · px · a "when to use" line.
  */
 const meta: Meta = {
-    title: "Core/Foundations/Spacing",
+    title: "Foundations/Spacing",
 }
 export default meta
 type Story = StoryObj

@@ -43,7 +43,7 @@ export const BackLink = ({ label, target, onPress, className }: BackLinkProps) =
                 focusable="false"
                 className="size-4 transition-transform group-hover:-translate-x-1"
             />
-            <span className="group-hover:underline">{text}</span>
+            <span className="underline-offset-2 group-hover:underline">{text}</span>
         </Link>
     )
 }

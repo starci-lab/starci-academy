@@ -3,7 +3,7 @@ import { Label, Typography } from "@heroui/react"
 import { MetricCard } from "@/components/blocks/stats/MetricCard"
 
 const meta: Meta<typeof MetricCard> = {
-    title: "Block/Stat/MetricCard",
+    title: "Blocks/Stats/MetricCard",
     component: MetricCard,
 }
 export default meta

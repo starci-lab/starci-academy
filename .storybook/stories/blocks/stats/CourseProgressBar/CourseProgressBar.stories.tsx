@@ -3,7 +3,7 @@ import { Label, Typography } from "@heroui/react"
 import { CourseProgressBar } from "@/components/blocks/stats/CourseProgressBar"
 
 const meta: Meta<typeof CourseProgressBar> = {
-    title: "Core/Stat/CourseProgressBar",
+    title: "Blocks/Stats/CourseProgressBar",
     component: CourseProgressBar,
 }
 export default meta

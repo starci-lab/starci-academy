@@ -36,7 +36,7 @@ import { UserAvatar } from "@/components/blocks/identity/UserAvatar"
 import { SkeletonGroup, SkeletonRow, TYPE_ROWS } from "./components"
 
 const meta: Meta<typeof Skeleton> = {
-    title: "Core/Skeleton/Skeleton",
+    title: "Blocks/Feedback/Skeleton",
     component: Skeleton,
 }
 export default meta

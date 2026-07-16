@@ -7,6 +7,7 @@ export type KpiKey =
     | "challenges"
     | "coding"
     | "flashcards"
+    | "milestones"
 
 /** One weekly KPI: current rolling-7-day value vs the user's target. */
 export interface QueryKpiItemData {

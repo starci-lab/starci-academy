@@ -9,7 +9,7 @@ import { expect, screen, userEvent, waitFor, within } from "storybook/test"
  * that requires a decision/input (→ Modal). The trigger must be a focusable element (`Button`/`<button>`).
  */
 const meta: Meta<typeof Popover> = {
-    title: "Core/Overlays/Popover",
+    title: "Overlays/Popover",
     component: Popover,
 }
 

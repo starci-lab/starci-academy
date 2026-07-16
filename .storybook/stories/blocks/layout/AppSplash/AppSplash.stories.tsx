@@ -3,7 +3,7 @@ import { Label, Typography } from "@heroui/react"
 import { AppSplash } from "@/components/blocks/layout/AppSplash"
 
 const meta: Meta<typeof AppSplash> = {
-    title: "Block/Layout/AppSplash",
+    title: "Layout/AppSplash",
     component: AppSplash,
 }
 export default meta

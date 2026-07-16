@@ -2533,6 +2533,7 @@
   },
   "jobReadiness": {
     "title": "Sẵn sàng đi làm",
+    "myTitle": "Sẵn sàng đi làm của bạn",
     "subtitle": "Điểm tổng hợp từ CV, độ mạnh giải thử thách, và năng lực theo từng khóa — mọi chỉ số do AI chấm.",
     "aiVerified": "Mọi chỉ số do AI chấm trên bài nộp thật",
     "error": "Không tải được điểm sẵn sàng đi làm.",
@@ -3507,7 +3508,7 @@
       "help": "Mỗi tuần bạn thi đua cùng một nhóm người học. Kiếm điểm để thăng hạng và tránh bị rớt hạng.",
       "others": "+{count} người khác",
       "pageTitle": "Bảng xếp hạng",
-      "seeMore": "Xem bảng đầy đủ",
+      "seeMore": "Xem bảng xếp hạng",
       "tabGlobal": "Toàn cầu",
       "tabWeekly": "Tuần này",
       "tierHelp": "Hạng league hiện tại của bạn. Lọt top mỗi tuần để thăng hạng.",
@@ -3527,7 +3528,7 @@
         "xp": "{points} XP",
         "noLeadersTitle": "Chưa có ai trên bảng xếp hạng",
         "noLeadersDescription": "Học thêm bài để lọt top học viên tuần này.",
-        "seeMore": "Xem toàn bộ bảng xếp hạng"
+        "seeMore": "Xem bảng xếp hạng"
       }
     },
     "sponsored": "Quảng cáo",
@@ -3664,7 +3665,8 @@
         "studyDays": "Ngày học",
         "challenges": "Challenge",
         "coding": "Coding",
-        "flashcards": "Flashcard"
+        "flashcards": "Flashcard",
+        "milestones": "Dự án cá nhân"
       }
     },
     "myProfile": {

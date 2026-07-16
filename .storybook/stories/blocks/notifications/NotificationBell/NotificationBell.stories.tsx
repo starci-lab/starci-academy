@@ -5,7 +5,7 @@ import { NotificationBell } from "@/components/blocks/notifications/Notification
 import { SAMPLE_GROUPS } from "./components"
 
 const meta: Meta<typeof NotificationBell> = {
-    title: "Block/Notifications/NotificationBell",
+    title: "Blocks/Notifications/NotificationBell",
     component: NotificationBell,
 }
 export default meta

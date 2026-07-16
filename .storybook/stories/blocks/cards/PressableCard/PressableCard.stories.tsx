@@ -4,7 +4,7 @@ import { PressableCard } from "@/components/blocks/cards/PressableCard"
 import { NavTileContent, OptionCardContent, LinkCardPrototype } from "./components"
 
 const meta: Meta<typeof PressableCard> = {
-    title: "Core/Card/PressableCard",
+    title: "Blocks/Cards/PressableCard",
     component: PressableCard,
 }
 

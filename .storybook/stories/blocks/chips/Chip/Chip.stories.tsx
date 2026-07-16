@@ -7,7 +7,7 @@ import { Chip, Label, Typography } from "@heroui/react"
  * like" next to the sibling blocks, rather than splitting it into a separate branch.
  */
 const meta: Meta<typeof Chip> = {
-    title: "Core/Chip/Chip",
+    title: "Primitives/DataDisplay/Chip",
     component: Chip,
 }
 export default meta

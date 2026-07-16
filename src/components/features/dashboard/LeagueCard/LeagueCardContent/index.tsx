@@ -1,16 +1,19 @@
 "use client"
 
 import React, {
+    useCallback,
     useMemo,
 } from "react"
 import {
-    Link,
     cn,
 } from "@heroui/react"
 import {
     useLocale,
     useTranslations,
 } from "next-intl"
+import {
+    useRouter,
+} from "next/navigation"
 import {
     LeagueTier,
     LeagueTierBadge,
@@ -25,6 +28,7 @@ import { useAppSelector } from "@/redux/hooks"
 import { LeagueRow } from "@/components/features/dashboard/LeagueRow"
 import { InfoTooltip } from "@/components/blocks/feedback/InfoTooltip"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
 import type { QueryMyLeagueData } from "@/modules/api/graphql/queries/types/league"
 
 /** How many top-of-cohort rows to show before truncating (no inner scroll). */
@@ -56,7 +60,14 @@ export const LeagueCardContent = ({
 }: LeagueCardContentProps) => {
     const t = useTranslations()
     const locale = useLocale()
+    const router = useRouter()
     const me = useAppSelector((state) => state.user.user)
+
+    /** Open the full leaderboard/league page (see-more link in the card header). */
+    const onSeeMore = useCallback(
+        () => router.push(pathConfig().locale(locale).league().build()),
+        [router, locale],
+    )
 
     /** Hours/days left until the weekly reset (computed from `weekEndAt`). */
     const countdown = useMemo(
@@ -86,11 +97,14 @@ export const LeagueCardContent = ({
         ? Math.max(1, Math.ceil((myEntry.rank / total) * 100))
         : null
 
-    // top rows, then the viewer's own row if it falls outside the visible top
-    const topRows = data.entries.slice(0, TOP_ROWS)
-    const showMyRow = Boolean(myEntry) && (myEntry?.rank ?? 0) > TOP_ROWS
-    // people not represented by a visible row (top rows + the appended self row)
-    const hiddenCount = Math.max(0, total - TOP_ROWS - (showMyRow ? 1 : 0))
+    // top cohort rows shown flat — always EXCLUDING the viewer (their own row is
+    // pulled into the "Hạng của bạn" surface-in-surface card below, thầy chốt
+    // 2026-07-17), so the flat list and the self card never duplicate.
+    const topRows = data.entries
+        .filter((entry) => entry.userGlobalId !== myEntry?.userGlobalId)
+        .slice(0, TOP_ROWS)
+    // people not represented by a visible row (flat top rows + the viewer's own card)
+    const hiddenCount = Math.max(0, total - topRows.length - (myEntry ? 1 : 0))
 
     /** Render one full-width cohort row (rank · avatar · name · points · caret). */
     const renderRow = (entry: typeof data.entries[number]) => (
@@ -159,35 +173,49 @@ export const LeagueCardContent = ({
                 </span>
             </div>
 
-            {/* capped cohort — no inner scroll; viewer's row appended if outside top */}
+            {/* capped cohort — the viewer's own row is pulled into its own card below */}
             <div className="flex w-full flex-col gap-2">
                 {topRows.map(renderRow)}
-                {showMyRow && myEntry ? renderRow(myEntry) : null}
             </div>
 
-            {/* "+N others" + full-board link, inline on one line */}
-            <div className="flex items-center gap-2 text-xs">
-                {hiddenCount > 0 ? (
-                    <span className="text-muted">
-                        {t("dashboard.league.others", {
-                            count: hiddenCount,
-                        })}
-                    </span>
-                ) : null}
-                <Link
-                    href={pathConfig().locale(locale).league().build()}
-                    className="inline-flex items-center text-xs font-medium text-accent-soft-foreground hover:underline"
-                >
-                    {t("dashboard.league.seeMore")}
-                </Link>
-            </div>
+            {/* the viewer's own standing — a surface-in-surface labeled list card
+                (sub-label "Hạng của bạn" + bordered nested list), read distinctly from
+                the cohort. ALWAYS shown when the viewer is in a cohort (thầy chốt
+                2026-07-17 — không chỉ khi rớt ngoài top). Nested → SurfaceListCard
+                `bordered`; LeagueRow `rounded-none` để fill flush trong card. */}
+            {myEntry ? (
+                <LabeledCard label={t("dashboard.league.yourRank")} subtleLabel frameless>
+                    <SurfaceListCard bordered>
+                        <LeagueRow
+                            entry={myEntry}
+                            isPromote={myEntry.rank <= data.promoteCount}
+                            isDemote={myEntry.rank > demoteFrom}
+                            isMe
+                            className="rounded-none"
+                        />
+                    </SurfaceListCard>
+                </LabeledCard>
+            ) : null}
+
+            {/* "+N others" — the full-board link now lives in the card header (onSeeMore) */}
+            {hiddenCount > 0 ? (
+                <span className="text-xs text-muted">
+                    {t("dashboard.league.others", { count: hiddenCount })}
+                </span>
+            ) : null}
         </>
     )
 
     // dashboard Community tab: framed in a LabeledCard (label OUTSIDE) to match siblings
     if (framed) {
         return (
-            <LabeledCard label={titleNode} className={className} contentClassName="flex flex-col gap-3">
+            <LabeledCard
+                label={titleNode}
+                onSeeMore={onSeeMore}
+                seeMoreLabel={t("dashboard.league.seeMore")}
+                className={className}
+                contentClassName="flex flex-col gap-3"
+            >
                 {body}
             </LabeledCard>
         )

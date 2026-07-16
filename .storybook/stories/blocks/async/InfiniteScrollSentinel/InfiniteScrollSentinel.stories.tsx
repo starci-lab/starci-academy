@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { InfiniteScrollSentinel } from "@/components/blocks/async/InfiniteScrollSentinel"
 
 const meta: Meta<typeof InfiniteScrollSentinel> = {
-    title: "Core/Async/InfiniteScrollSentinel",
+    title: "Blocks/Async/InfiniteScrollSentinel",
     component: InfiniteScrollSentinel,
 }
 export default meta

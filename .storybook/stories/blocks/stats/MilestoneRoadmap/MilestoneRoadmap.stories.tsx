@@ -3,7 +3,7 @@ import { Label, Typography } from "@heroui/react"
 import { MilestoneRoadmap } from "@/components/blocks/stats/MilestoneRoadmap"
 
 const meta: Meta<typeof MilestoneRoadmap> = {
-    title: "Core/Stat/MilestoneRoadmap",
+    title: "Features/Progress/MilestoneRoadmap",
     component: MilestoneRoadmap,
 }
 export default meta

@@ -5,7 +5,7 @@ import { CommentThread } from "@/components/blocks/feed/CommentThread"
 import { baseComments, Controlled } from "./components"
 
 const meta: Meta<typeof CommentThread> = {
-    title: "Block/Feed/CommentThread",
+    title: "Features/Social/CommentThread",
     component: CommentThread,
 }
 export default meta

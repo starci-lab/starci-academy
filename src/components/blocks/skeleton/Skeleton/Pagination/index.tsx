@@ -25,7 +25,7 @@ export const SkeletonPagination = ({
     return (
         <div className={cn("flex items-center gap-1", className)}>
             <div className={ARROW_SLOT}>
-                <CaretLeftIcon className="size-4 text-muted" aria-hidden focusable="false" />
+                <CaretLeftIcon weight="bold" className="size-4 text-muted" aria-hidden focusable="false" />
             </div>
             {Array.from({ length: count }).map((_, index) => (
                 <Skeleton
@@ -34,7 +34,7 @@ export const SkeletonPagination = ({
                 />
             ))}
             <div className={ARROW_SLOT}>
-                <CaretRightIcon className="size-4 text-muted" aria-hidden focusable="false" />
+                <CaretRightIcon weight="bold" className="size-4 text-muted" aria-hidden focusable="false" />
             </div>
         </div>
     )

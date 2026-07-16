@@ -6,7 +6,7 @@ import { SchedulePicker } from "@/components/blocks/form/SchedulePicker"
 import { INITIAL_DATE, MIN_DATE, SLOTS } from "./components"
 
 const meta: Meta<typeof SchedulePicker> = {
-    title: "Core/Form/SchedulePicker",
+    title: "Blocks/Form/SchedulePicker",
     component: SchedulePicker,
 }
 export default meta

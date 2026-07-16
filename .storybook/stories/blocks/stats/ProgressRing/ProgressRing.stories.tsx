@@ -3,7 +3,7 @@ import { Label, Typography } from "@heroui/react"
 import { ProgressRing } from "@/components/blocks/stats/ProgressRing"
 
 const meta: Meta<typeof ProgressRing> = {
-    title: "Core/Stat/ProgressRing",
+    title: "Primitives/DataDisplay/ProgressRing",
     component: ProgressRing,
 }
 export default meta

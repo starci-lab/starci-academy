@@ -3,7 +3,7 @@ import { Label, Typography } from "@heroui/react"
 import { Legend } from "@/components/blocks/stats/Legend"
 
 const meta: Meta<typeof Legend> = {
-    title: "Core/Stat/Legend",
+    title: "Blocks/Stats/Legend",
     component: Legend,
 }
 export default meta

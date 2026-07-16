@@ -8,7 +8,7 @@ import { ModalShell } from "@/components/blocks/layout/ModalShell"
 import { ControlledModal, LeadingTabsDemo } from "./components"
 
 const meta: Meta<typeof ModalShell> = {
-    title: "Core/Layout/ModalShell",
+    title: "Overlays/ModalShell",
     component: ModalShell,
 }
 export default meta

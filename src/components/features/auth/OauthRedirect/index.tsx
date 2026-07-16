@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useCallback, useEffect } from "react"
+import React, { useEffect } from "react"
 import { cn, Spinner } from "@heroui/react"
 import { useRouter } from "next/navigation"
 import { useLocale, useTranslations } from "next-intl"
@@ -10,7 +10,6 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 import { OauthAction } from "./enums"
 import { OAUTH_ACTION_MESSAGE_KEY_MAP } from "./map"
 import { Spacer } from "@/components/blocks/layout/Spacer"
-import { sleep } from "@/modules/utils/misc"
 import { SessionStorage } from "@/modules/storage/session/storage"
 import { SessionStorageId } from "@/modules/storage/session/enums/id"
 import { type SessionStoragePostLoginRedirect } from "@/modules/storage/session/types/post-login-redirect"
@@ -42,25 +41,23 @@ export const OauthRedirect = ({ action, className }: OauthRedirectProps) => {
     // Hold the user briefly so the Keycloak session settles, then continue on: a sign-in
     // started from the `/login` guard stashed where the visitor was headed (query params
     // don't survive the IdP round-trip); anything else (logout, generic authenticate) goes home.
-    const onRedirect = useCallback(() => {
-        sleep(1000).then(
-            () => {
-                let target: string | undefined
-                if (action === OauthAction.Login) {
-                    const stashed = SessionStorage.getItem<SessionStoragePostLoginRedirect>(
-                        SessionStorageId.PostLoginRedirect,
-                    )
-                    target = stashed?.target
-                    SessionStorage.removeItem(SessionStorageId.PostLoginRedirect)
-                }
-                router.push(target ?? pathConfig().locale(locale).build())
-            }
-        )
-    }, [action, locale, router])
-
+    // setTimeout (not `sleep().then()`) so the pending redirect is cancelled via cleanup if
+    // this page unmounts within the delay — `sleep()`'s promise can't be cancelled.
     useEffect(() => {
-        onRedirect()
-    }, [onRedirect])
+        const handle = setTimeout(() => {
+            let target: string | undefined
+            if (action === OauthAction.Login) {
+                const stashed = SessionStorage.getItem<SessionStoragePostLoginRedirect>(
+                    SessionStorageId.PostLoginRedirect,
+                )
+                target = stashed?.target
+                SessionStorage.removeItem(SessionStorageId.PostLoginRedirect)
+            }
+            router.push(target ?? pathConfig().locale(locale).build())
+        }, 1000)
+
+        return () => clearTimeout(handle)
+    }, [action, locale, router])
 
     return (
         <div className={cn("flex min-h-[60vh] flex-col items-center justify-center", className)}>

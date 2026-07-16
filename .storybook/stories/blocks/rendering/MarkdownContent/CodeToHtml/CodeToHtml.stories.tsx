@@ -5,7 +5,7 @@ import { CodeToHtml } from "@/components/blocks/rendering/MarkdownContent/CodeTo
 import { TS_SAMPLE, JS_SAMPLE, BASH_SAMPLE } from "./components"
 
 const meta: Meta<typeof CodeToHtml> = {
-    title: "Core/Rendering/Code",
+    title: "Primitives/Rendering/CodeToHtml",
     component: CodeToHtml,
 }
 

@@ -98,7 +98,9 @@ export const LeagueRow = ({
                 {entry.rank}
             </span>
             {identity}
-            <span className="shrink-0 text-xs font-medium text-foreground">
+            {/* trailing value (meta) → muted + same size as the name on this row
+                (text-sm); left=primary foreground, right=muted meta. Thầy 2026-07-17. */}
+            <span className="shrink-0 text-sm text-muted">
                 {t("dashboard.league.points", {
                     count: entry.weekPoints,
                 })}

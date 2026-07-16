@@ -5,6 +5,7 @@ import {
     QuestionIcon as ChallengeIcon,
     CodeIcon as CodingIcon,
     StackIcon as FlashcardIcon,
+    FlagCheckeredIcon as MilestoneIcon,
 } from "@phosphor-icons/react"
 import type { KpiKey } from "@/modules/api/graphql/queries/types/my-kpis"
 
@@ -21,9 +22,9 @@ export interface KpiMeta {
 }
 
 /**
- * The six weekly KPIs in display order, each with its icon + preset targets.
- * Shared by the dashboard summary card and the `/kpi` editor page so both stay
- * in sync.
+ * The six weekly KPIs in display order, each with its icon + preset targets
+ * (lessons/studyDays/challenges/coding/flashcards/milestones). Shared by the
+ * dashboard summary card and the `/kpi` editor page so both stay in sync.
  */
 export const KPI_META: Array<KpiMeta> = [
     {
@@ -74,6 +75,16 @@ export const KPI_META: Array<KpiMeta> = [
             50,
             150,
             300,
+        ],
+    },
+    {
+        key: "milestones",
+        Icon: MilestoneIcon,
+        labelKey: "milestones",
+        presets: [
+            1,
+            2,
+            5,
         ],
     },
 ]

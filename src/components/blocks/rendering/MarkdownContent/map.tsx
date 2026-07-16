@@ -181,7 +181,7 @@ const ArcSection = ({ index, children }: { index?: number, children?: React.Reac
             className="mr-2 mt-2 inline-flex items-center gap-1 rounded-full bg-default px-2 py-1 text-xs text-muted transition-colors hover:bg-default/80"
         >
             {getNodeText(label)}
-            <CaretDownIcon size={12} />
+            <CaretDownIcon weight="bold" className="size-4" />
         </button>
     )
 }

@@ -3,7 +3,7 @@ import { Label, Typography } from "@heroui/react"
 import { SegmentBar } from "@/components/blocks/stats/SegmentBar"
 
 const meta: Meta<typeof SegmentBar> = {
-    title: "Core/Stat/SegmentBar",
+    title: "Blocks/Stats/SegmentBar",
     component: SegmentBar,
 }
 export default meta

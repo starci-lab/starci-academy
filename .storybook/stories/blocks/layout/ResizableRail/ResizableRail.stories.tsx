@@ -5,7 +5,7 @@ import { ResizableRail } from "@/components/blocks/layout/ResizableRail"
 import { PracticeShellDemo } from "./components"
 
 const meta: Meta<typeof ResizableRail> = {
-    title: "Core/Layout/ResizableRail",
+    title: "Layout/ResizableRail",
     component: ResizableRail,
 }
 export default meta

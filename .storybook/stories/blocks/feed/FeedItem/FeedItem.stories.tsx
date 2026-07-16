@@ -8,7 +8,7 @@ import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 import { usage } from "./components"
 
 const meta: Meta<typeof FeedItem> = {
-    title: "Core/Feed/FeedItem",
+    title: "Blocks/Feed/FeedItem",
     component: FeedItem,
 }
 export default meta

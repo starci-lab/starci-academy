@@ -3,10 +3,7 @@
 import React, { useCallback, useMemo } from "react"
 import { Chip, Typography, cn } from "@heroui/react"
 import {
-    CheckCircleIcon,
-    CircleIcon,
     GithubLogoIcon,
-    LockIcon,
     PlayIcon,
 } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
@@ -265,20 +262,10 @@ export const PersonalProjectDashboard = ({
                                         : isLocked
                                             ? t("finalProject.dashboard.statLocked")
                                             : t("finalProject.dashboard.taskTodo")
-                                const icon = isActive ? (
-                                    <PlayIcon weight="fill" />
-                                ) : isCompleted ? (
-                                    <CheckCircleIcon weight="fill" />
-                                ) : isLocked ? (
-                                    <LockIcon weight="fill" />
-                                ) : (
-                                    <CircleIcon weight="fill" />
-                                )
                                 return (
                                     <ContinueCard
                                         key={task.id}
                                         variant="item"
-                                        icon={icon}
                                         title={`${task.sortIndex}. ${task.title}`}
                                         subtitle={subtitle}
                                         ctaLabel={t("finalProject.dashboard.continue")}

@@ -2524,6 +2524,7 @@
   },
   "jobReadiness": {
     "title": "Job readiness",
+    "myTitle": "Your job readiness",
     "subtitle": "A composite of your CV, challenge strength, and per-course competency — every metric AI-graded.",
     "aiVerified": "Every metric AI-graded on real submissions",
     "error": "Couldn't load your job-readiness score.",
@@ -3498,7 +3499,7 @@
       "help": "Each week you compete with a cohort of learners. Earn points to climb and avoid demotion.",
       "others": "+{count} others",
       "pageTitle": "Leaderboard",
-      "seeMore": "See full board",
+      "seeMore": "View leaderboard",
       "tabGlobal": "Global",
       "tabWeekly": "This week",
       "tierHelp": "Your current league tier. Climb by finishing in the top each week.",
@@ -3518,7 +3519,7 @@
         "xp": "{points} XP",
         "noLeadersTitle": "No one on the leaderboard yet",
         "noLeadersDescription": "Finish more lessons to make this week's top learners.",
-        "seeMore": "View full leaderboard"
+        "seeMore": "View leaderboard"
       }
     },
     "sponsored": "Sponsored",
@@ -3655,7 +3656,8 @@
         "studyDays": "Study days",
         "challenges": "Challenges",
         "coding": "Coding",
-        "flashcards": "Flashcards"
+        "flashcards": "Flashcards",
+        "milestones": "Personal project"
       }
     },
     "myProfile": {

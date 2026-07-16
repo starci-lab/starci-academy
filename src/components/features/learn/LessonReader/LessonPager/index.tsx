@@ -84,7 +84,7 @@ export const LessonPager = ({ className }: LessonPagerProps) => {
             href: previous.href,
             content: (
                 <div className="flex items-center gap-2">
-                    <CaretLeftIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
+                    <CaretLeftIcon aria-hidden focusable="false" weight="bold" className="size-4 shrink-0 text-muted" />
                     <div className="flex min-w-0 flex-col gap-0">
                         <Typography type="body-xs" color="muted">
                             {t("content.prevLesson")}
@@ -119,7 +119,7 @@ export const LessonPager = ({ className }: LessonPagerProps) => {
                             {next.title}
                         </Typography>
                     </div>
-                    <CaretRightIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
+                    <CaretRightIcon aria-hidden focusable="false" weight="bold" className="size-4 shrink-0 text-muted" />
                 </div>
             ),
         })

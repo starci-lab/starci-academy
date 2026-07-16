@@ -5,7 +5,7 @@ import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { sample, inlineSample } from "./components"
 
 const meta: Meta<typeof MarkdownContent> = {
-    title: "Core/Rendering/Markdown",
+    title: "Blocks/Rendering/MarkdownContent",
     component: MarkdownContent,
 }
 

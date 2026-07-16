@@ -5,7 +5,7 @@ import { Composer } from "@/components/blocks/feed/Composer"
 import { Controlled } from "./components"
 
 const meta: Meta<typeof Composer> = {
-    title: "Block/Feed/Composer",
+    title: "Blocks/Feed/Composer",
     component: Composer,
 }
 export default meta

@@ -13,7 +13,7 @@ import { Controlled } from "./components"
  * (async keeps the dialog open via `isConfirming`).
  */
 const meta: Meta<typeof ConfirmDialog> = {
-    title: "Core/Feedback/ConfirmDialog",
+    title: "Overlays/ConfirmDialog",
     component: ConfirmDialog,
 }
 export default meta

@@ -10,7 +10,7 @@ import { ARCHITECTURE_EDGES, ARCHITECTURE_NODES } from "./components"
  * standard xyflow `nodes`/`edges`.
  */
 const meta = {
-    title: "Core/Rendering/XYFlow",
+    title: "Primitives/Rendering/FlowDiagram",
     component: FlowDiagram,
 } satisfies Meta<typeof FlowDiagram>
 

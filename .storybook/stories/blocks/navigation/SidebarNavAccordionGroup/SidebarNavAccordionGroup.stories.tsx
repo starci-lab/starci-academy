@@ -6,7 +6,7 @@ import { SidebarNavAccordionGroup } from "@/components/blocks/navigation/Sidebar
 import { SidebarCollapsedContext } from "@/components/blocks/navigation/CollapsibleSidebar/context"
 
 const meta: Meta<typeof SidebarNavAccordionGroup> = {
-    title: "Core/Navigation/SidebarNavAccordionGroup",
+    title: "Blocks/Navigation/SidebarNavAccordionGroup",
     component: SidebarNavAccordionGroup,
 }
 export default meta

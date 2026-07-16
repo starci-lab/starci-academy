@@ -171,6 +171,7 @@ export const FlashcardQuizHistory = ({ courseId, onStartQuiz, className }: Flash
                         ) : null}
                         <CaretDownIcon
                             className={cn("size-4 text-muted transition-transform", expanded && "rotate-180")}
+                            weight="bold"
                             aria-hidden
                             focusable="false"
                         />
@@ -193,7 +194,7 @@ export const FlashcardQuizHistory = ({ courseId, onStartQuiz, className }: Flash
                                     }}
                                     className="group flex items-center justify-between gap-3 rounded-xl border border-default bg-default px-3 py-2 text-left"
                                 >
-                                    <Typography type="body-xs" weight="medium" className="truncate group-hover:underline">
+                                    <Typography type="body-xs" weight="medium" className="truncate underline-offset-2 group-hover:underline">
                                         {tag.tag}
                                     </Typography>
                                     <Typography type="body-xs" color="muted" className="shrink-0">

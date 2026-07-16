@@ -5,7 +5,7 @@ import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
 
 const meta: Meta<typeof PageHeader> = {
-    title: "Core/Layout/PageHeader",
+    title: "Layout/PageHeader",
     component: PageHeader,
 }
 

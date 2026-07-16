@@ -60,11 +60,8 @@ export const OverviewTab = ({
             >
                 <ContinueLearning />
             </LabeledCard>
-            <LabeledCard
-                label={t("dashboard.dailyQuest.title")}
-            >
-                <DailyQuest />
-            </LabeledCard>
+            {/* DailyQuest self-frames (LabeledCard label + flush list + claim prompt as description) */}
+            <DailyQuest />
             <LabeledCard
                 label={t("dashboard.sections.streak")}
             >

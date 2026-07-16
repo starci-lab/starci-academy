@@ -120,6 +120,7 @@ export const FoundationCard = ({
                 <CaretRightIcon
                     aria-hidden
                     focusable="false"
+                    weight="bold"
                     className="size-4 text-muted"
                 />
             )}

@@ -38,6 +38,7 @@ import { Pagination } from "@/components/blocks/navigation/Pagination"
 import { PaginationSkeleton } from "@/components/blocks/skeleton/PaginationSkeleton"
 import { SearchInput } from "@/components/blocks/form/SearchInput"
 import { SkeletonText } from "@/components/blocks/skeleton/SkeletonText"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 
 /** Max category cards shown per page. */
 const PAGE_SIZE = 10
@@ -168,13 +169,14 @@ export const FoundationsCategoryGridLayout = () => {
                         suggestions={suggestions}
                         onSelectSuggestion={onSelectSuggestion}
                     />
-                    {categories === undefined ? (
-                        <SkeletonText size="sm" width="w-[90px]" />
-                    ) : (
+                    <AsyncContent
+                        isLoading={categories === undefined}
+                        skeleton={<SkeletonText size="sm" width="w-[90px]" />}
+                    >
                         <Typography type="body-sm" color="muted" className="shrink-0">
-                            {t("foundations.categoryCount", { count: categories.length })}
+                            {t("foundations.categoryCount", { count: categories?.length ?? 0 })}
                         </Typography>
-                    )}
+                    </AsyncContent>
                 </div>
                 {hasNoMatches ? (
                     <Typography type="body-sm" color="muted">

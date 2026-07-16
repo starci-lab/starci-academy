@@ -3,7 +3,7 @@ import { Label, Typography } from "@heroui/react"
 import { TopicMasteryGrid } from "@/components/blocks/stats/TopicMasteryGrid"
 
 const meta: Meta<typeof TopicMasteryGrid> = {
-    title: "Core/Stat/TopicMasteryGrid",
+    title: "Features/Progress/TopicMasteryGrid",
     component: TopicMasteryGrid,
 }
 export default meta

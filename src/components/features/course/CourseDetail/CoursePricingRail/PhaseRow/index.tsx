@@ -48,7 +48,7 @@ export const PhaseRow = ({ row, className }: PhaseRowProps) => {
                 ) : row.isActive ? (
                     <CircleIcon aria-hidden focusable="false" weight="fill" className="size-4 shrink-0 text-accent-soft-foreground" />
                 ) : (
-                    <CircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />
+                    <CircleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-foreground" />
                 )}
                 <Typography
                     type="body-sm"

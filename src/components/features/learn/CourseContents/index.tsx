@@ -347,7 +347,7 @@ export const CourseContents = ({ className }: CourseContentsProps) => {
                                                     <CircleIcon
                                                         aria-label={t("courseContents.unread")}
                                                         focusable="false"
-                                                        className="size-5 text-muted"
+                                                        className="size-5 text-foreground"
                                                     />
                                                 )}
                                                 title={lesson.title}

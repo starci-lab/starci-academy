@@ -1,8 +1,6 @@
 "use client"
 
-import React, {
-    useCallback,
-} from "react"
+import React from "react"
 import {
     useLocale,
     useTranslations,
@@ -32,27 +30,22 @@ export const KeyRow = ({
     const t = useTranslations("admin.aiBalancer")
 
     /** Maps a status enum value to its translated label. */
-    const statusLabel = useCallback(
-        (status: string) => {
-            if (status === AiBalancerKeyStatus.Active) {
-                return t("status.active")
-            }
-            if (status === AiBalancerKeyStatus.Disabled) {
-                return t("status.disabled")
-            }
-            if (status === AiBalancerKeyStatus.Probing) {
-                return t("status.probing")
-            }
-            return status
-        },
-        [
-            t,
-        ],
-    )
+    const statusLabel = (status: string) => {
+        if (status === AiBalancerKeyStatus.Active) {
+            return t("status.active")
+        }
+        if (status === AiBalancerKeyStatus.Disabled) {
+            return t("status.disabled")
+        }
+        if (status === AiBalancerKeyStatus.Probing) {
+            return t("status.probing")
+        }
+        return status
+    }
 
     return (
-        <tr className="border-t border-white/5 text-sm text-slate-300">
-            <td className="px-4 py-2 font-mono text-slate-200">
+        <tr className="border-t border-separator text-sm text-foreground">
+            <td className="px-4 py-2 font-mono text-foreground">
                 …{keyHealth.keySuffix}
             </td>
             <td className="px-4 py-2">
@@ -64,10 +57,10 @@ export const KeyRow = ({
             <td className="px-4 py-2 text-center tabular-nums">
                 {keyHealth.failCount}
             </td>
-            <td className="px-4 py-2 text-slate-400">
+            <td className="px-4 py-2 text-muted">
                 {formatBalancerTimestamp(keyHealth.lastHealthCheckAt, locale)}
             </td>
-            <td className="px-4 py-2 text-slate-400">
+            <td className="px-4 py-2 text-muted">
                 {formatBalancerTimestamp(keyHealth.lastUsedAt, locale)}
             </td>
         </tr>

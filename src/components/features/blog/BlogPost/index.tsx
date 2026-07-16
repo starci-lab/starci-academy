@@ -1,18 +1,17 @@
 "use client"
 
 import React from "react"
-import useSWR from "swr"
 import { Button, Card, CardContent, Chip } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useParams } from "next/navigation"
 import { Link } from "@/i18n/navigation"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { useQueryBlogPostSwr } from "@/hooks/swr/api/graphql/queries/useQueryBlogPostSwr"
 import { CATEGORY_COLOR } from "../shared/category"
 import { ReadingProgress } from "./ReadingProgress"
 import { RelatedPosts } from "./RelatedPosts"
 import { BlogPostSkeleton } from "./BlogPostSkeleton"
-import { queryBlogPost } from "@/modules/api/graphql/queries/query-blog-post"
 
 /**
  * Public `/blog/[slug]` article. Reads the slug from the route, fetches the
@@ -28,13 +27,7 @@ export const BlogPost = () => {
     const slug = String(params.slug ?? "")
 
     // fetch the article; re-keys when the slug changes
-    const { data, isLoading, error, mutate } = useSWR(
-        ["blog-post", slug],
-        async () => {
-            const response = await queryBlogPost({ request: { slug } })
-            return response.data?.blogPost.data ?? null
-        },
-    )
+    const { data, isLoading, error, mutate } = useQueryBlogPostSwr(slug)
 
     // localized publish-date formatter (long, article style)
     const publishedAt = data

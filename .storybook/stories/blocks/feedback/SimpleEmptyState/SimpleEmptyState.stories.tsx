@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { SimpleEmptyState } from "@/components/blocks/feedback/SimpleEmptyState"
 
 const meta: Meta<typeof SimpleEmptyState> = {
-    title: "Core/Feedback/SimpleEmptyState",
+    title: "Blocks/Feedback/SimpleEmptyState",
     component: SimpleEmptyState,
 }
 export default meta

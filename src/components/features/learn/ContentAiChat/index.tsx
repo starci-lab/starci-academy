@@ -605,7 +605,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                     onClick={() => setView("chat")}
                 >
                     <ArrowLeftIcon className="size-4" />
-                    <span className="group-hover:underline">{t("contentAi.conversations")}</span>
+                    <span className="underline-offset-2 group-hover:underline">{t("contentAi.conversations")}</span>
                 </button>
                 {/* search + add (add sits right next to search) */}
                 <div className="flex items-center gap-2">
@@ -708,7 +708,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                     onClick={() => setView("chat")}
                 >
                     <ArrowLeftIcon className="size-4" />
-                    <span className="group-hover:underline">{t("contentAi.searchContent")}</span>
+                    <span className="underline-offset-2 group-hover:underline">{t("contentAi.searchContent")}</span>
                 </button>
                 <SearchInput
                     value={contentSearchQuery}
@@ -768,7 +768,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                     onClick={() => setView("chat")}
                 >
                     <ArrowLeftIcon className="size-4" />
-                    <span className="group-hover:underline">{t("contentAi.settings")}</span>
+                    <span className="underline-offset-2 group-hover:underline">{t("contentAi.settings")}</span>
                 </button>
                 <div className="flex flex-col gap-2">
                     <Label>{t("contentAi.modelLabel")}</Label>
@@ -788,13 +788,13 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             <div className="flex items-center gap-2">
                 <Link
                     onPress={() => setView("conversations")}
-                    className="flex min-w-0 flex-1 cursor-pointer items-center gap-2 text-sm font-medium text-foreground hover:underline"
+                    className="flex min-w-0 flex-1 cursor-pointer items-center gap-2 text-sm font-medium text-foreground underline-offset-2 hover:underline"
                 >
                     <ChatsCircleIcon className="size-5 shrink-0" />
                     <span className="min-w-0 flex-1 truncate text-left">
                         {t("contentAi.chatHistory")}
                     </span>
-                    <CaretDownIcon className="size-4 shrink-0" />
+                    <CaretDownIcon weight="bold" className="size-4 shrink-0" />
                 </Link>
             </div>
 

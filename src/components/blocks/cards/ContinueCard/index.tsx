@@ -14,9 +14,10 @@ import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
  *
  * - `"item"` — one of N resume cards in a grid/list. The card is a static frame;
  *   the CTA is a real {@link SeeMoreLink} ("Tiếp tục →") on its own row — hover
- *   and click live on that link only (same as LabeledCard "Xem thêm"), `icon`
- *   leads the info row as a small round badge, and the card carries no accent
- *   ring (N accented cards means none of them stands out).
+ *   and click live on that link only (same as LabeledCard "Xem thêm"). It carries
+ *   NO leading icon (a compact CTA tile reads off its title + "Tiếp tục →"; a
+ *   decorative badge is just clutter) and no accent ring (N accented cards means
+ *   none of them stands out).
  * - `"hero"` — the single standout "you left this in progress" card on a
  *   surface. The CTA is a real chip button on its own row, `icon` sinks behind
  *   the content as a watermark, and the card gets an accent ring.
@@ -66,10 +67,11 @@ export interface ContinueCardProps extends WithClassNames<undefined> {
     ctaLabel?: React.ReactNode
     /**
      * Optional semantic momentum cue (e.g. `FireIcon` for a daily streak,
-     * `ClockCounterClockwiseIcon` for a session left mid-flight). Placement
-     * follows {@link variant}. Decorative for a11y — {@link title} carries the
-     * accessible name. Omit when the item has no such concept; never add one for
-     * visual symmetry alone.
+     * `ClockCounterClockwiseIcon` for a session left mid-flight). Rendered ONLY
+     * for `variant="hero"`, where it sinks behind the content as a watermark;
+     * `variant="item"` shows no leading icon, so passing one there is a no-op.
+     * Decorative for a11y — {@link title} carries the accessible name. Omit when
+     * the item has no such concept; never add one for visual symmetry alone.
      */
     icon?: React.ReactNode
     /**
@@ -157,15 +159,6 @@ export const ContinueCard = ({
             ) : null}
 
             <div className="relative flex items-center gap-3">
-                {!isHero && icon ? (
-                    <div
-                        aria-hidden
-                        className="flex size-9 shrink-0 items-center justify-center rounded-full bg-accent-soft text-accent-soft-foreground [&_svg]:size-5"
-                    >
-                        {icon}
-                    </div>
-                ) : null}
-
                 <div className="flex min-w-0 flex-1 flex-col gap-2">
                     <Typography weight="medium" truncate>
                         {title}

@@ -4,7 +4,7 @@ import { QuizCard } from "@/components/blocks/learn/QuizCard"
 import { ControlledQuizCard, SINGLE_OPTIONS, MULTIPLE_OPTIONS } from "./components"
 
 const meta: Meta<typeof QuizCard> = {
-    title: "Block/Learn/QuizCard",
+    title: "Features/Learn/QuizCard",
     component: QuizCard,
 }
 export default meta

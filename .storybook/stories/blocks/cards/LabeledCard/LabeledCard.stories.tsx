@@ -10,7 +10,7 @@ import { SampleBody } from "./components"
  * while `Card` holds only content. See `src/components/blocks/cards/LabeledCard/index.tsx`.
  */
 const meta: Meta<typeof LabeledCard> = {
-    title: "Block/Card/LabeledCard",
+    title: "Blocks/Cards/LabeledCard",
     component: LabeledCard,
 }
 export default meta
@@ -127,6 +127,49 @@ export const WithAction: Story = {
         </div>
     ),
     parameters: { usage: "Use when the block needs a management action alongside the label (add/edit/manage) rather than a link to another page like \"see more\". `action` is always a Link, hover = opacity (no underline), optional icon before/after the text." },
+}
+
+/**
+ * Use `description` for a caption/prompt/status that belongs to the section but sits BELOW the card (`gap-2`),
+ * never inside the surface — e.g. a "complete all 3 to claim" prompt or a claim button under a task list. Keeps
+ * it out of the card so it never becomes surface-in-surface. The caller owns the node's alignment. Real pattern:
+ * `DailyQuest` ("Nhiệm vụ hôm nay") — the task list is the card, the claim prompt/button is the description.
+ */
+export const WithDescription: Story = {
+    render: () => (
+        <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>With a description below the card</Label>
+                <Typography type="body-sm" color="muted">
+                    The DailyQuest shape: `frameless` LabeledCard → `SurfaceListCard` (the ONE surface) → rows, with
+                    the claim prompt as `description` BELOW the card at `gap-2` — kept OUTSIDE the surface so it never
+                    becomes surface-in-surface. The label→card gap stays `gap-3`; only card→description is `gap-2`.
+                </Typography>
+            </div>
+            <LabeledCard
+                label="Today's tasks"
+                frameless
+                description={(
+                    <Typography type="body-xs" color="muted">
+                        Complete all 3 to claim 20 points.
+                    </Typography>
+                )}
+            >
+                <SurfaceListCard>
+                    <SurfaceListCardItem>
+                        <span className="text-sm">Read a lesson</span>
+                    </SurfaceListCardItem>
+                    <SurfaceListCardItem>
+                        <span className="text-sm">Pass a challenge</span>
+                    </SurfaceListCardItem>
+                    <SurfaceListCardItem>
+                        <span className="text-sm">Review flashcards</span>
+                    </SurfaceListCardItem>
+                </SurfaceListCard>
+            </LabeledCard>
+        </div>
+    ),
+    parameters: { usage: "The DailyQuest shape: `frameless` LabeledCard + `SurfaceListCard` list + a claim prompt as `description` below the card (gap-2), outside the surface so it never becomes surface-in-surface. Use `description` for any caption/prompt/button tied to the section but that must stay out of the card." },
 }
 
 /**

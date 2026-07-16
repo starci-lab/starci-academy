@@ -349,7 +349,7 @@ export const Landing = ({ className }: LandingProps) => {
                     </div>
                     <Button variant="primary" size="lg" onPress={onSeeCourses}>
                         {t("landing.closing.cta")}
-                        <CaretRightIcon aria-hidden focusable="false" className="size-5" />
+                        <CaretRightIcon aria-hidden focusable="false" weight="bold" className="size-4" />
                     </Button>
                 </section>
             </div>

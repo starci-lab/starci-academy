@@ -4,7 +4,7 @@ import { DiffViewer } from "@/components/blocks/grading/DiffViewer"
 import { sampleHunks } from "./components"
 
 const meta: Meta<typeof DiffViewer> = {
-    title: "Core/Rendering/CodeDiff",
+    title: "Features/Grading/DiffViewer",
     component: DiffViewer,
 }
 export default meta

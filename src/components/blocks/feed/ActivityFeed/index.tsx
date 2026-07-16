@@ -4,7 +4,6 @@ import React, {
     useMemo,
 } from "react"
 import {
-    Typography,
     cn,
 } from "@heroui/react"
 import {
@@ -40,6 +39,8 @@ import {
 import {
     ReactionBar,
 } from "../ReactionBar"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -98,6 +99,13 @@ export interface ActivityFeedProps extends WithClassNames<undefined> {
      * the activity is the viewer's own (`isMine`) — you can't react to yourself.
      */
     onReact?: (activityId: string, type: ReactionType | null) => void
+    /**
+     * Renders each day's {@link SurfaceListCard} with a border instead of a
+     * shadow — pass `true` when the feed sits NESTED inside another surface
+     * (both current callers wrap it in a `<Card>`), where `--surface-shadow`
+     * is invisible against the parent surface in dark mode. Defaults to `false`.
+     */
+    bordered?: boolean
 }
 
 /**
@@ -116,6 +124,7 @@ export const ActivityFeed = ({
     items,
     onResolve,
     onReact,
+    bordered = false,
     className,
 }: ActivityFeedProps) => {
     const t = useTranslations()
@@ -179,7 +188,7 @@ export const ActivityFeed = ({
     )
 
     /** Render one feed row as a FeedItem (avatar+badge · sentence · relative time). */
-    const renderRow = (row: FeedRow, index: number) => {
+    const renderRow = (row: FeedRow) => {
         const { head, count } = row
         const Icon = TYPE_ICON[head.type] ?? PulseIcon
         // a "followed someone" row leads with the FOLLOWED user's avatar (the
@@ -201,7 +210,6 @@ export const ActivityFeed = ({
         const relative = getTimeAgoLabel(getTimeAgoMessage(head.at), t)
         return (
             <FeedItem
-                key={`${head.actorGlobalId}-${head.at}-${index}`}
                 leading={(
                     <ActivityAvatar
                         username={avatarUsername}
@@ -240,17 +248,22 @@ export const ActivityFeed = ({
         )
     }
 
+    // categorized-list: each day is its own labeled surface card (label = day
+    // header outside the card, rows joined edge-to-edge with inset separators) —
+    // NOT a hand-rolled `<div>` header over floating rows (component-rules
+    // §group-by / §labeled-list-card).
     return (
         <div className={cn("flex flex-col gap-6", className)}>
             {dayGroups.map((group) => (
-                <div key={group.key} className="flex flex-col gap-3">
-                    <Typography type="body-xs" color="muted" weight="medium">
-                        {group.label}
-                    </Typography>
-                    <div className="flex flex-col gap-3">
-                        {group.rows.map(renderRow)}
-                    </div>
-                </div>
+                <LabeledCard key={group.key} label={group.label} frameless subtleLabel>
+                    <SurfaceListCard bordered={bordered}>
+                        {group.rows.map((row, index) => (
+                            <SurfaceListCardItem key={`${row.head.actorGlobalId}-${row.head.at}-${index}`}>
+                                {renderRow(row)}
+                            </SurfaceListCardItem>
+                        ))}
+                    </SurfaceListCard>
+                </LabeledCard>
             ))}
         </div>
     )

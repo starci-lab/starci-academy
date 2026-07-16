@@ -95,7 +95,7 @@ export const PinnedProjectCard = ({
                 aria-label={t("pinnedProjects.moveUp")}
                 onPress={() => onMoveUp?.(pin.id)}
             >
-                <CaretUpIcon className="size-5" aria-hidden="true" focusable="false" />
+                <CaretUpIcon weight="bold" className="size-4" aria-hidden="true" focusable="false" />
             </Button>
             <Button
                 size="sm"
@@ -105,7 +105,7 @@ export const PinnedProjectCard = ({
                 aria-label={t("pinnedProjects.moveDown")}
                 onPress={() => onMoveDown?.(pin.id)}
             >
-                <CaretDownIcon className="size-5" aria-hidden="true" focusable="false" />
+                <CaretDownIcon weight="bold" className="size-4" aria-hidden="true" focusable="false" />
             </Button>
             {pin.url ? (
                 <Button

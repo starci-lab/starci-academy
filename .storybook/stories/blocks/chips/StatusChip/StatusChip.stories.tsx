@@ -6,7 +6,7 @@ import { StatusChip } from "@/components/blocks/chips/StatusChip"
 import { TONES } from "./components"
 
 const meta: Meta<typeof StatusChip> = {
-    title: "Block/Chip/StatusChip",
+    title: "Blocks/Chips/StatusChip",
     component: StatusChip,
     args: {
         children: "Active",

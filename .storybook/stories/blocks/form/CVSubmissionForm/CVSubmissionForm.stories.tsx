@@ -4,7 +4,7 @@ import { CVSubmissionForm } from "@/components/features/careers/CVSubmissionForm
 import { handlers } from "./components"
 
 const meta: Meta<typeof CVSubmissionForm> = {
-    title: "Core/Form/CVSubmissionForm",
+    title: "Features/Careers/CVSubmissionForm",
     component: CVSubmissionForm,
 }
 

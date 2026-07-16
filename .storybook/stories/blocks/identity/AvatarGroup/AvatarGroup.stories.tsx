@@ -4,7 +4,7 @@ import { AvatarGroup } from "@/components/blocks/identity/AvatarGroup"
 import { users } from "./components"
 
 const meta: Meta<typeof AvatarGroup> = {
-    title: "Block/Identity/AvatarGroup",
+    title: "Blocks/Identity/AvatarGroup",
     component: AvatarGroup,
 }
 export default meta

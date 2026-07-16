@@ -4,7 +4,7 @@ import { SocketConnectionStatus } from "@/components/blocks/layout/SocketConnect
 import { SocketScenario } from "./components"
 
 const meta: Meta<typeof SocketConnectionStatus> = {
-    title: "Core/Layout/SocketConnectionStatus",
+    title: "Features/Realtime/SocketConnectionStatus",
     component: SocketConnectionStatus,
 }
 export default meta

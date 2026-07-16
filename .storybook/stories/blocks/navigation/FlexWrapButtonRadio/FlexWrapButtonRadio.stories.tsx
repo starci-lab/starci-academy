@@ -5,7 +5,7 @@ import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButt
 import { ATTEMPT_ITEMS, Controlled, DIFFICULTY_ITEMS, TIER_ITEMS } from "./components"
 
 const meta: Meta<typeof FlexWrapButtonRadio> = {
-    title: "Core/Navigation/FlexWrapButtonRadio",
+    title: "Blocks/Navigation/FlexWrapButtonRadio",
     component: FlexWrapButtonRadio,
     parameters: {
         docs: {

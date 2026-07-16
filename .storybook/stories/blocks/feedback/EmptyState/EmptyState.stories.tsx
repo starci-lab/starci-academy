@@ -10,7 +10,7 @@ import { EmptyState } from "@/components/blocks/feedback/EmptyState"
  * hook itself, so every story below uses static copy.
  */
 const meta = {
-    title: "Core/Feedback/EmptyState",
+    title: "Blocks/Feedback/EmptyState",
     component: EmptyState,
     // default title satisfies the required prop for render-only stories (they render their own).
     args: {

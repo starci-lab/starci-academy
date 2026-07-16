@@ -7,7 +7,7 @@ import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { CONTENT_TABS, LANGUAGE_TABS, TabPanel } from "./components"
 
 const meta: Meta<typeof TabsCard> = {
-    title: "Core/Card/TabsCard",
+    title: "Blocks/Navigation/TabsCard",
     component: TabsCard,
 }
 export default meta

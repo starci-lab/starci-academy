@@ -33,7 +33,8 @@ export type ProfileMenuCardProps = WithClassNames<undefined>
  * The dashboard rail's identity row: a rank-ringed avatar + display name +
  * @handle on the left, with a trailing caret. The whole row is a link to the
  * public profile. No level, no XP number — the only status surfaced is the
- * seniority rank encoded by the avatar ring colour.
+ * seniority rank encoded by the thin (2px) avatar ring colour; beginner/unranked
+ * uses the neutral `--border` token rather than the flat grey rank hue.
  *
  * Self-contained container: reads the viewer from redux and derives the
  * seniority rank from the earned-achievement wall via SWR (deduped with the
@@ -48,10 +49,6 @@ export const ProfileMenuCard = ({
     const user = useAppSelector((state) => state.user.user)
     const achievementsSwr = useQueryUserAchievementsSwr(user?.id ?? null)
     const achievements = achievementsSwr.data
-    // 2026-07-12: no loading state here meant the avatar rendered bare, then the
-    // seniority ring popped on once achievements resolved — reserve the same
-    // padding with a pulsing neutral fill instead (mirrors ProfileRankAvatar).
-    const ringPending = achievementsSwr.isLoading && !achievements
 
     /**
      * Readable name next to the avatar: the chosen display name, else the handle
@@ -84,6 +81,10 @@ export const ProfileMenuCard = ({
         ],
     )
 
+    // Ring colour: real seniority hue (junior=đồng · middle=bạc · senior=vàng). beginner/unranked reads as a
+    // neutral grey (#8C95A1) → use the `--border` token so it's theme-clean, not a hardcoded xám.
+    const ringColor = info.ring && info.rank !== "beginner" ? info.ring : "var(--border)"
+
     if (!user) {
         return null
     }
@@ -92,19 +93,16 @@ export const ProfileMenuCard = ({
         <Link
             href={pathConfig().locale(locale).profile(user.username).build()}
             className={cn(
-                "flex cursor-pointer items-center justify-between gap-3 no-underline transition-opacity hover:opacity-60",
+                "group flex cursor-pointer items-center justify-between gap-3 no-underline transition-opacity hover:opacity-80",
                 className,
             )}
         >
+            {/* avatar + name = left cluster; caret pinned right by justify-between */}
             <div className="flex min-w-0 items-center gap-3">
-                {/* avatar framed by the seniority rank colour (when ranked) */}
+                {/* avatar with a thin 2px seniority ring — beginner/unranked → neutral `--border` token */}
                 <div
-                    className={cn(
-                        "shrink-0 rounded-full",
-                        (ringPending || info.ring) && "p-2",
-                        ringPending && "animate-pulse bg-default",
-                    )}
-                    style={!ringPending && info.ring ? { backgroundColor: info.ring } : undefined}
+                    className="shrink-0 rounded-full ring-2"
+                    style={{ "--tw-ring-color": ringColor } as React.CSSProperties}
                 >
                     <UserAvatar
                         className="size-10"
@@ -122,8 +120,8 @@ export const ProfileMenuCard = ({
                     </span>
                 </div>
             </div>
-            {/* trailing caret (plain icon) */}
-            <CaretRightIcon className="size-5 shrink-0 text-muted" />
+            {/* trailing caret at the right edge; weight bold + slides on hover (mirrors "Tiếp tục →") */}
+            <CaretRightIcon weight="bold" className="size-4 shrink-0 text-muted transition-transform group-hover:translate-x-1" />
         </Link>
     )
 }

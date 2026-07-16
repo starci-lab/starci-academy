@@ -6,7 +6,7 @@ import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 import { usage, Controlled } from "./components"
 
 const meta: Meta<typeof ReactionBar> = {
-    title: "Core/Feed/ReactionBar",
+    title: "Features/Social/ReactionBar",
     component: ReactionBar,
 }
 export default meta

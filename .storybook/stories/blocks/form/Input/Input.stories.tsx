@@ -13,7 +13,7 @@ import { Card, CardContent, Input, Label, Typography } from "@heroui/react"
  * bare `Input` only when the field needs no label/grouping (inline search, quick-edit cell).
  */
 const meta: Meta<typeof Input> = {
-    title: "Core/Form/Input",
+    title: "Primitives/Form/Input",
     component: Input,
 }
 export default meta

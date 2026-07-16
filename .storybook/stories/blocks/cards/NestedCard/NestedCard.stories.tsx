@@ -5,7 +5,7 @@ import { NestedCard } from "@/components/blocks/cards/NestedCard"
 import { relatedSections } from "./components"
 
 const meta: Meta<typeof NestedCard> = {
-    title: "Core/Card/NestedCard",
+    title: "Blocks/Cards/NestedCard",
     component: NestedCard,
     args: {
         title: "Related lessons",

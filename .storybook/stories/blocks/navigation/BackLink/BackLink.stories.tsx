@@ -3,7 +3,7 @@ import { Label, Typography } from "@heroui/react"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
 
 const meta: Meta<typeof BackLink> = {
-    title: "Core/Navigation/BackLink",
+    title: "Blocks/Navigation/BackLink",
     component: BackLink,
 }
 export default meta

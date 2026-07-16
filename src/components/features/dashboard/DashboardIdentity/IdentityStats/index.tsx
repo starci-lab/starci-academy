@@ -54,18 +54,18 @@ export const IdentityStats = ({
     const { data: wallet } = walletSwr
 
     return (
-        <div className={cn("flex flex-col gap-2", className)}>
+        <div className={cn("flex flex-col gap-1", className)}>
             <AsyncContent
                 isLoading={weeklySwr.isLoading && !weekly}
                 skeleton={<SkeletonStatRow />}
                 isEmpty={!weekly}
             >
-                <div className="flex items-center gap-2">
-                    <FlameIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent-soft-foreground" />
-                    <Typography type="body-sm" color="muted" className="flex-1 truncate">
+                <div className="flex items-center gap-3 px-2 py-2">
+                    <FlameIcon aria-hidden focusable="false" className="size-5 shrink-0 text-foreground" />
+                    <Typography type="body-sm" className="flex-1 truncate">
                         {t("dashboard.identityStats.streak")}
                     </Typography>
-                    <Typography type="body-sm" weight="medium">
+                    <Typography type="body-sm" color="muted">
                         {t("dashboard.identityStats.streakValue", { count: weekly?.streak ?? 0 })}
                     </Typography>
                 </div>
@@ -75,12 +75,12 @@ export const IdentityStats = ({
                 skeleton={<SkeletonStatRow />}
                 isEmpty={!quota}
             >
-                <div className="flex items-center gap-2">
-                    <LightningIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent-soft-foreground" />
-                    <Typography type="body-sm" color="muted" className="flex-1 truncate">
+                <div className="flex items-center gap-3 px-2 py-2">
+                    <LightningIcon aria-hidden focusable="false" className="size-5 shrink-0 text-foreground" />
+                    <Typography type="body-sm" className="flex-1 truncate">
                         {t("dashboard.identityStats.credit")}
                     </Typography>
-                    <Typography type="body-sm" weight="medium">
+                    <Typography type="body-sm" color="muted">
                         {quota?.credit.remainingWeek}/{quota?.credit.limitWeek}
                     </Typography>
                 </div>
@@ -90,12 +90,12 @@ export const IdentityStats = ({
                 skeleton={<SkeletonStatRow />}
                 isEmpty={!wallet}
             >
-                <div className="flex items-center gap-2">
-                    <GiftIcon aria-hidden focusable="false" className="size-5 shrink-0 text-accent-soft-foreground" />
-                    <Typography type="body-sm" color="muted" className="flex-1 truncate">
+                <div className="flex items-center gap-3 px-2 py-2">
+                    <GiftIcon aria-hidden focusable="false" className="size-5 shrink-0 text-foreground" />
+                    <Typography type="body-sm" className="flex-1 truncate">
                         {t("dashboard.identityStats.reward")}
                     </Typography>
-                    <Typography type="body-sm" weight="medium">
+                    <Typography type="body-sm" color="muted">
                         {t("dashboard.rewardBalance", { count: wallet?.balance ?? 0 })}
                     </Typography>
                 </div>

@@ -30,6 +30,7 @@ import {
 import { useQueryMyKpisSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyKpisSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { StatGridCard } from "@/components/blocks/stats/StatGridCard"
 import type { KpiKey, QueryKpiItemData } from "@/modules/api/graphql/queries/types/my-kpis"
 
 /** Props for {@link WeeklyGoals}. */
@@ -105,20 +106,23 @@ export const WeeklyGoals = ({
             skeleton={(
                 <div className="flex flex-col gap-3">
                     <Skeleton.Typography type="body-sm" width="2/3" />
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-3">
-                        {KPI_ORDER.map((key) => (
-                            <div key={key} className="flex flex-col gap-3">
-                                <div className="flex items-center justify-between gap-2">
-                                    <span className="flex items-center gap-2">
-                                        <Skeleton className="size-5 shrink-0 rounded-full" />
-                                        <Skeleton.Typography type="body-xs" width="1/2" />
-                                    </span>
-                                    <Skeleton.Typography type="body-xs" width="1/4" />
-                                </div>
-                                <Skeleton.Meter />
-                            </div>
-                        ))}
-                    </div>
+                    <StatGridCard
+                        items={KPI_ORDER.map((key) => ({
+                            key,
+                            content: (
+                                <>
+                                    <div className="flex items-center justify-between gap-2">
+                                        <span className="flex items-center gap-2">
+                                            <Skeleton className="size-5 shrink-0 rounded-full" />
+                                            <Skeleton.Typography type="body-sm" width="1/2" />
+                                        </span>
+                                        <Skeleton.Typography type="body-xs" width="1/4" />
+                                    </div>
+                                    <Skeleton.Meter />
+                                </>
+                            ),
+                        }))}
+                    />
                 </div>
             )}
         >
@@ -130,42 +134,45 @@ export const WeeklyGoals = ({
                         total: composite.total,
                     })}
                 </Typography>
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-3">
-                    {KPI_ORDER.map((key) => {
+                <StatGridCard
+                    items={KPI_ORDER.map((key) => {
                         const item = itemByKey.get(key)
                         const current = item?.current ?? 0
                         // effective target = the learner's custom goal, or a sensible default
                         // (so the meter tracks this week's activity out of the box)
                         const target = item?.target ?? DEFAULT_KPI_TARGETS[key]
-                        return (
-                            <div key={key} className="flex flex-col gap-3">
-                                <div className="flex items-center justify-between gap-2">
-                                    <span className="flex items-center gap-2">
-                                        {KPI_ICON_MAP[key]}
+                        return {
+                            key,
+                            content: (
+                                <>
+                                    <div className="flex items-center justify-between gap-2">
+                                        <span className="flex items-center gap-2">
+                                            {KPI_ICON_MAP[key]}
+                                            <Typography type="body-sm">
+                                                {t(`dashboard.kpi.labels.${key}`)}
+                                            </Typography>
+                                        </span>
                                         <Typography type="body-xs" color="muted">
-                                            {t(`dashboard.kpi.labels.${key}`)}
+                                            {current}/{target}
                                         </Typography>
-                                    </span>
-                                    <Typography type="body-xs" color="muted">
-                                        {current}/{target}
-                                    </Typography>
-                                </div>
-                                {/* progress line — current toward the (custom or default) target */}
-                                <ProgressBar
-                                    aria-label={t(`dashboard.kpi.labels.${key}`)}
-                                    value={current}
-                                    maxValue={target > 0 ? target : 1}
-                                    color="accent"
-                                    size="sm"
-                                >
-                                    <ProgressBar.Track>
-                                        <ProgressBar.Fill />
-                                    </ProgressBar.Track>
-                                </ProgressBar>
-                            </div>
-                        )
+                                    </div>
+                                    {/* progress line — current toward the (custom or default) target */}
+                                    <ProgressBar
+                                        aria-label={t(`dashboard.kpi.labels.${key}`)}
+                                        value={current}
+                                        maxValue={target > 0 ? target : 1}
+                                        color="accent"
+                                        size="sm"
+                                    >
+                                        <ProgressBar.Track>
+                                            <ProgressBar.Fill />
+                                        </ProgressBar.Track>
+                                    </ProgressBar>
+                                </>
+                            ),
+                        }
                     })}
-                </div>
+                />
                 <Button
                     variant="tertiary"
                     size="sm"

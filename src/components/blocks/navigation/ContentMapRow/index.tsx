@@ -47,12 +47,12 @@ const resolveStatus = ({ isRead, isLocked, isPremium }: Pick<ContentMapRowProps,
         return { Icon: CheckCircleIcon, tone: "text-success-soft-foreground" }
     }
     if (isLocked) {
-        return { Icon: LockIcon, tone: "text-muted" }
+        return { Icon: LockIcon, tone: "text-foreground" }
     }
     if (isPremium) {
-        return { Icon: StarIcon, tone: "text-muted" }
+        return { Icon: StarIcon, tone: "text-foreground" }
     }
-    return { Icon: CircleIcon, tone: "text-muted" }
+    return { Icon: CircleIcon, tone: "text-foreground" }
 }
 
 /**

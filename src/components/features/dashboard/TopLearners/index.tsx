@@ -157,7 +157,7 @@ export const TopLearners = ({
                                                 avatar={entry.avatar ?? undefined}
                                             />
                                         </Link>
-                                        <Typography type="body-xs" color="muted" className="shrink-0">
+                                        <Typography type="body-sm" color="muted" className="shrink-0">
                                             {t("dashboard.community.topLearners.xp", { points: entry.points })}
                                         </Typography>
                                         {!isMe ? (

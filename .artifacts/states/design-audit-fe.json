@@ -1,0 +1,57 @@
+{
+  "lastAuditCommit": "5dc1fc02b7a0a5b3d2a903a2c7ddd27598342081",
+  "generatedAt": "2026-07-17T00:00:00Z",
+  "rubric": ".claude/fe (DESIGN rules — CHỈ phần cơ học kiểm được bằng scan: màu icon-text, cấm-2-icon, token/gap/border…). Song sinh với patterns-audit-fe.json (rubric code-style .claude/patterns/fe). Cùng máy incremental: git diff <lastAuditCommit> HEAD → chỉ soi file ĐỔI + re-check openViolations; file sạch chưa đụng = bỏ qua.",
+  "note": "Ledger design-rule, seed từ sweep icon §6/§7 (2026-07-16/17). Baseline quét src/components/{blocks,features,modals,drawers} (~76 file có circle-icon) tìm lệch icon-text-color + 2-icon-liên-tiếp. FIXED 20 (Nhóm A/B/C: DailyQuest, IdentityStats + 16 batch + ChallengeChips §7) — không còn trong openViolations. openViolations = Nhóm D thầy để nguyên (borderline/won't-fix) — GIỮ để sweep sau KHỎI re-flag như mới. Fix áp ở working tree (chưa commit lúc seed) → khi commit, lastAuditCommit cần cập nhật lên sha mới.",
+  "rulesCovered": [
+    "icon.md §6 — icon leading cùng màu chữ kề nó; state-marker todo=foreground/done=success/fail=muted|danger buộc icon+title cùng màu",
+    "icon.md §7 — cấm 2 icon leading liên tiếp trong 1 row",
+    "icon.md §3 (Đính chính 2026-07-17) — caret = size-4 + weight=\"bold\", LUÔN trailing (sau text); mọi icon leading (trước text) = size-5. Sweep: leading size-4 cũ → size-5, caret thiếu weight bold (vd SeeMoreLink) → thêm",
+    "hover-style §mode-1 (CHỐT 2026-07-17) — nav-title hover-underline PHẢI kèm underline-offset-2 (đồng nhất HeroUI Link). Sweep: group-hover:underline thiếu underline-offset-2 (21/26 chỗ) → thêm offset-2"
+  ],
+  "verdict": "minor-debt",
+  "openViolations": [
+    {
+      "rule": "icon.md §6 (unread-pip vs title)",
+      "file": "src/components/features/navbar/Navbar/NotificationBell/index.tsx",
+      "line": 213,
+      "severity": "low",
+      "note": "unread pip CircleIcon fill text-accent-soft-foreground + title foreground — pattern 'chấm unread' KHÁC state-marker done/todo. Thầy để NGUYÊN 2026-07-16 (recolor title theo unread = quyết định thiết kế, chưa chốt). Đồng bộ với NotificationCenter."
+    },
+    {
+      "rule": "icon.md §6 (unread-pip vs title)",
+      "file": "src/components/features/notifications/NotificationCenter/index.tsx",
+      "line": 362,
+      "severity": "low",
+      "note": "cùng pattern unread pip accent + title foreground. Để nguyên chờ chốt cùng NotificationBell."
+    },
+    {
+      "rule": "icon.md §6 (block-own-icon-law)",
+      "file": "src/components/blocks/cards/CrossListCard/index.tsx",
+      "line": 63,
+      "severity": "low",
+      "note": "XCircleIcon text-muted = mark tự định-nghĩa của block (mirror âm CheckListCard). Won't-fix — luật-riêng-block, giống CheckListCard thầy đã miễn."
+    },
+    {
+      "rule": "icon.md §6 (accent brand marker)",
+      "file": "src/components/blocks/grading/GradingByline/index.tsx",
+      "line": 48,
+      "severity": "low",
+      "note": "ModelByline SparkleIcon text-accent-soft-foreground = AI-brand marker cố ý trên byline. Borderline, để nguyên."
+    },
+    {
+      "rule": "icon.md §6 (section-header muted-icon)",
+      "file": "src/components/features/community/Discussion/index.tsx",
+      "line": 103,
+      "severity": "low",
+      "note": "ChatsCircleIcon text-muted + Label foreground ở SECTION HEADER (không phải list-row). Muted-icon header là quy ước phổ biến — borderline, để nguyên."
+    },
+    {
+      "rule": "icon.md §6 (intentional motif)",
+      "file": "src/components/features/profile/UserStreak/index.tsx",
+      "line": 71,
+      "severity": "low",
+      "note": "FireIcon text-accent-soft-foreground cạnh value foreground trong stat-tile; label muted ở dòng TRÊN (không kề icon). Motif streak cố ý accent — để nguyên."
+    }
+  ]
+}

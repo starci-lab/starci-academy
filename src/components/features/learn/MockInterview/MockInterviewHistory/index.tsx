@@ -160,7 +160,7 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
                                             <Chip.Label>{attempt.overallScore}</Chip.Label>
                                         </Chip>
                                     )}
-                                    trailing={<CaretRightIcon className="size-4 text-muted" aria-hidden focusable="false" />}
+                                    trailing={<CaretRightIcon weight="bold" className="size-4 text-muted" aria-hidden focusable="false" />}
                                     onPress={() => router.push(
                                         pathConfig()
                                             .locale(locale)

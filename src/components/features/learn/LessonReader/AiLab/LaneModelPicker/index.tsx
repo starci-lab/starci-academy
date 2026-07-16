@@ -76,7 +76,7 @@ export const LaneModelPicker = ({
                 <div className="flex items-center gap-2">
                     <SparkleIcon className="size-5" />
                     <span className="max-w-40 truncate">{triggerLabel}</span>
-                    <CaretDownIcon className="size-5" />
+                    <CaretDownIcon weight="bold" className="size-4" />
                 </div>
             </DropdownTrigger>
             <DropdownPopover

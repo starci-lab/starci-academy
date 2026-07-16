@@ -7,7 +7,6 @@ import {
     Button,
     Chip,
     Typography,
-    cn,
 } from "@heroui/react"
 import {
     CheckCircleIcon,
@@ -22,14 +21,12 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
-import {
-    DAILY_QUEST_ICON_MAP,
-} from "./map"
 import { useQueryMyDailyQuestSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyDailyQuestSwr"
 import { useMutateClaimDailyQuestRewardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateClaimDailyQuestRewardSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 
 /** Props for {@link DailyQuest}. */
@@ -78,45 +75,75 @@ export const DailyQuest = ({
         ],
     )
 
+    // claim state (only meaningful once loaded) → the LabeledCard's `description`,
+    // rendered BELOW the card (gap-2), never inside the surface.
+    const claimState = data ? (
+        data.claimed ? (
+            <Chip color="success" variant="soft" size="sm" className="self-start">
+                <Chip.Label>{t("dashboard.dailyQuest.claimed")}</Chip.Label>
+            </Chip>
+        ) : data.allDone ? (
+            <Button
+                variant="primary"
+                size="sm"
+                className="self-start"
+                isPending={isMutating}
+                onPress={onClaim}
+            >
+                {t("dashboard.dailyQuest.claim", { count: data.reward })}
+            </Button>
+        ) : (
+            <Typography type="body-xs" color="muted">
+                {t("dashboard.dailyQuest.completePrompt", { count: data.reward })}
+            </Typography>
+        )
+    ) : undefined
+
     return (
-        <AsyncContent
-            isLoading={data === null || data === undefined || isLoading}
-            skeleton={(
-                <div className="flex flex-col gap-3">
-                    <SurfaceListCard bordered>
+        <LabeledCard
+            label={t("dashboard.dailyQuest.title")}
+            className={className}
+            frameless
+            description={claimState}
+        >
+            <AsyncContent
+                isLoading={data === null || data === undefined || isLoading}
+                skeleton={(
+                    <SurfaceListCard>
                         {[0, 1, 2, 3, 4].map((row) => (
-                            <Skeleton.ListRow key={row} withSubtitle={false} withTrailing className="px-4" />
+                            <Skeleton.ListRow key={row} withSubtitle={false} withTrailing className="px-3" />
                         ))}
                     </SurfaceListCard>
-                </div>
-            )}
-            isEmpty={!data}
-            error={!data ? error : undefined}
-            errorContent={{
-                title: t("dashboard.loadError"),
-                onRetry: () => { void mutate() },
-                retryLabel: t("dashboard.retry"),
-            }}
-        >
-            {data ? (
-                <div className={cn("flex flex-col gap-3", className)}>
-                    <SurfaceListCard bordered>
+                )}
+                isEmpty={!data}
+                error={!data ? error : undefined}
+                errorContent={{
+                    title: t("dashboard.loadError"),
+                    onRetry: () => { void mutate() },
+                    retryLabel: t("dashboard.retry"),
+                }}
+            >
+                {/* canonical labeled-list-card: frameless LabeledCard → SurfaceListCard → rows (one surface) */}
+                {data ? (
+                    <SurfaceListCard>
                         {data.tasks.map((task) => {
                             const done = task.current >= task.target
                             return (
                                 <SurfaceListCardRow
                                     key={task.key}
-                                    leading={(
-                                        <div className="flex items-center gap-2">
-                                            {done ? (
-                                                <CheckCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-success-soft-foreground" />
-                                            ) : (
-                                                <CircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
-                                            )}
-                                            {DAILY_QUEST_ICON_MAP[task.key]}
-                                        </div>
+                                    leading={done ? (
+                                        <CheckCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-success-soft-foreground" />
+                                    ) : (
+                                        <CircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-foreground" />
                                     )}
-                                    title={t(`dashboard.dailyQuest.tasks.${task.key}`)}
+                                    // buộc icon+title cùng màu theo state (icon.md §6): done = success, todo = foreground (mặc định).
+                                    // Tô màu qua title NODE (span), KHÔNG `titleClassName` — lint `no-modal-title-classname` cấm prop đó
+                                    // toàn cục; row này không underline nên span-con an toàn (§6 carve-out).
+                                    title={done ? (
+                                        <span className="text-success-soft-foreground">{t(`dashboard.dailyQuest.tasks.${task.key}`)}</span>
+                                    ) : (
+                                        t(`dashboard.dailyQuest.tasks.${task.key}`)
+                                    )}
                                     meta={(
                                         <Typography type="body-xs" color="muted">
                                             {task.current}/{task.target}
@@ -126,29 +153,8 @@ export const DailyQuest = ({
                             )
                         })}
                     </SurfaceListCard>
-
-                    {/* claim state: already claimed · ready to claim · still in progress */}
-                    {data.claimed ? (
-                        <Chip color="success" variant="soft" size="sm" className="self-start">
-                            <Chip.Label>{t("dashboard.dailyQuest.claimed")}</Chip.Label>
-                        </Chip>
-                    ) : data.allDone ? (
-                        <Button
-                            variant="primary"
-                            size="sm"
-                            className="self-start"
-                            isPending={isMutating}
-                            onPress={onClaim}
-                        >
-                            {t("dashboard.dailyQuest.claim", { count: data.reward })}
-                        </Button>
-                    ) : (
-                        <Typography type="body-xs" color="muted">
-                            {t("dashboard.dailyQuest.completePrompt", { count: data.reward })}
-                        </Typography>
-                    )}
-                </div>
-            ) : null}
-        </AsyncContent>
+                ) : null}
+            </AsyncContent>
+        </LabeledCard>
     )
 }

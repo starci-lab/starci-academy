@@ -8,7 +8,7 @@ import { HouseIcon } from "@phosphor-icons/react"
  * Semantic tokens ONLY (NO hex / slate-* / cyan-500). Keep the demo of REAL colors/elevation — don't flatten it into a text table.
  */
 const meta: Meta = {
-    title: "Core/Foundations/Surfaces & Fills",
+    title: "Foundations/Surfaces & Fills",
 }
 export default meta
 type Story = StoryObj

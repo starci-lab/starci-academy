@@ -11,7 +11,7 @@ import { fire } from "./components"
  * the story mounts it itself for the demo. An error that REQUIRES the user to act → use `Callout`/inline, not a toast.
  */
 const meta: Meta = {
-    title: "Core/Overlays/Toast",
+    title: "Overlays/Toast",
 }
 
 export default meta

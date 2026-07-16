@@ -135,7 +135,7 @@ export const GlobalSearchContentBlock = (props: GlobalSearchContentBlockProps) =
                         onAction={() => onItemPress(item)}
                     >
                         <div className="flex items-start gap-2 py-1">
-                            <Icon aria-hidden focusable="false" className="mt-0 size-4 shrink-0 text-muted" />
+                            <Icon aria-hidden focusable="false" className="mt-0 size-4 shrink-0 text-foreground" />
                             <div className="min-w-0 flex-1">
                                 <div className="flex items-center gap-2">
                                     <Typography
@@ -168,6 +168,7 @@ export const GlobalSearchContentBlock = (props: GlobalSearchContentBlockProps) =
                                             <CaretRightIcon
                                                 aria-hidden
                                                 focusable="false"
+                                                weight="bold"
                                                 className="size-4 transition-transform group-hover:translate-x-1"
                                             />
                                         </span>

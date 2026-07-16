@@ -12,9 +12,6 @@ import {
     useTranslations,
 } from "next-intl"
 import {
-    EntityToken,
-} from "@/components/features/dashboard/EntityToken"
-import {
     pathConfig,
 } from "@/resources/path"
 import type {
@@ -90,7 +87,11 @@ export const RecommendedCourses = ({
                     {items.map((course) => {
                         const discounted = course.discountPercent > 0
                         return (
-                            <SurfaceListCardItem key={course.displayId}>
+                            <SurfaceListCardItem
+                                key={course.displayId}
+                                href={pathConfig().locale(locale).course(course.displayId).build()}
+                                hover="underline"
+                            >
                                 <div className="flex items-center gap-3">
                                     <IconTile
                                         size="sm"
@@ -99,12 +100,17 @@ export const RecommendedCourses = ({
                                         icon={<BookOpenIcon aria-hidden focusable="false" />}
                                     />
                                     <div className="flex min-w-0 flex-1 flex-col gap-1">
-                                        {/* course title is a link into the course */}
-                                        <EntityToken
-                                            href={pathConfig().locale(locale).course(course.displayId).build()}
-                                            label={course.title}
-                                            className="min-w-0 flex-1 truncate"
-                                        />
+                                        {/* whole-row link → title underlines on CARD hover, decoration = text colour
+                                            (foreground). NOT a nested EntityToken/<Link> (that hovers only on the label
+                                            + draws an accent-coloured underline). Matches "my courses" CourseRow. */}
+                                        <Typography
+                                            type="body-sm"
+                                            weight="medium"
+                                            truncate
+                                            className="min-w-0 flex-1 underline-offset-2 group-hover:underline"
+                                        >
+                                            {course.title}
+                                        </Typography>
                                         {course.description ? (
                                             <Typography type="body-xs" color="muted" truncate>
                                                 {course.description}

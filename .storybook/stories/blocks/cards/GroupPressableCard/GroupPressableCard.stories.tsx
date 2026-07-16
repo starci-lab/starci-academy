@@ -6,7 +6,7 @@ import { GroupPressableCard } from "@/components/blocks/cards/GroupPressableCard
 import { settingsItems, ratingOptions } from "./components"
 
 const meta: Meta<typeof GroupPressableCard> = {
-    title: "Block/Card/GroupPressableCard",
+    title: "Blocks/Cards/GroupPressableCard",
     component: GroupPressableCard,
 }
 export default meta

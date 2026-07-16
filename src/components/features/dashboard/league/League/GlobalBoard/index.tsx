@@ -3,7 +3,6 @@
 import React from "react"
 import {
     Link,
-    Skeleton,
     cn,
 } from "@heroui/react"
 import {
@@ -16,12 +15,16 @@ import {
 import {
     UserAvatar,
 } from "@/components/blocks/identity/UserAvatar"
+import {
+    GlobalBoardSkeleton,
+} from "./GlobalBoardSkeleton"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import { useQueryGlobalLeaderboardSwr } from "@/hooks/swr/api/graphql/queries/useQueryGlobalLeaderboardSwr"
 import { useAppSelector } from "@/redux/hooks"
 import type { QueryGlobalLeaderboardEntryData } from "@/modules/api/graphql/queries/types/league"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 
 /** Props for {@link GlobalBoard}. */
 export type GlobalBoardProps = WithClassNames<undefined>
@@ -39,26 +42,6 @@ export const GlobalBoard = ({
     const locale = useLocale()
     const { data, isLoading } = useQueryGlobalLeaderboardSwr()
     const me = useAppSelector((state) => state.user.user)
-
-    // first load — placeholder rows
-    if (isLoading && !data) {
-        return (
-            <div className={cn("flex flex-col gap-2", className)}>
-                {Array.from({
-                    length: 8,
-                }).map((_, index) => (
-                    <Skeleton
-                        key={index}
-                        className="h-10 w-full rounded-3xl"
-                    />
-                ))}
-            </div>
-        )
-    }
-
-    if (!data) {
-        return null
-    }
 
     /** Render one full-width leaderboard row (rank · avatar · name · points). */
     const renderRow = (entry: QueryGlobalLeaderboardEntryData) => {
@@ -114,21 +97,29 @@ export const GlobalBoard = ({
     }
 
     return (
-        <div className={cn("flex flex-col gap-3", className)}>
-            {/* subtitle + the viewer's own standing */}
-            <div className="flex items-center justify-between gap-3">
-                <span className="text-xs text-muted">
-                    {t("dashboard.league.globalSubtitle")}
-                </span>
-                <span className="text-sm font-semibold text-accent-soft-foreground">
-                    {t("dashboard.league.yourRank")} · {data.myRank}
-                </span>
-            </div>
+        <AsyncContent
+            isLoading={isLoading && !data}
+            skeleton={<GlobalBoardSkeleton className={className} />}
+            isEmpty={!data}
+        >
+            {data ? (
+                <div className={cn("flex flex-col gap-3", className)}>
+                    {/* subtitle + the viewer's own standing */}
+                    <div className="flex items-center justify-between gap-3">
+                        <span className="text-xs text-muted">
+                            {t("dashboard.league.globalSubtitle")}
+                        </span>
+                        <span className="text-sm font-semibold text-accent-soft-foreground">
+                            {t("dashboard.league.yourRank")} · {data.myRank}
+                        </span>
+                    </div>
 
-            {/* the global top N */}
-            <div className="flex flex-col gap-2">
-                {data.entries.map(renderRow)}
-            </div>
-        </div>
+                    {/* the global top N */}
+                    <div className="flex flex-col gap-2">
+                        {data.entries.map(renderRow)}
+                    </div>
+                </div>
+            ) : null}
+        </AsyncContent>
     )
 }

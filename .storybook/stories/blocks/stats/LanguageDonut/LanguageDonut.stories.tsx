@@ -3,7 +3,7 @@ import { Label, Typography } from "@heroui/react"
 import { LanguageDonut } from "@/components/blocks/stats/LanguageDonut"
 
 const meta: Meta<typeof LanguageDonut> = {
-    title: "Core/Stat/LanguageDonut",
+    title: "Features/Progress/LanguageDonut",
     component: LanguageDonut,
 }
 export default meta

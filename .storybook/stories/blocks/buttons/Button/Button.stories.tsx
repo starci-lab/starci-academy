@@ -8,7 +8,7 @@ import { Button, Label, Typography } from "@heroui/react"
  * separate branch.
  */
 const meta: Meta<typeof Button> = {
-    title: "Core/Button/Button",
+    title: "Primitives/Actions/Button",
     component: Button,
 }
 export default meta

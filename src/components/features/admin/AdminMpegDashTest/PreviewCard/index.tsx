@@ -29,11 +29,11 @@ export const PreviewCard = ({ url, activeType, className }: PreviewCardProps) =>
     const hasUrl = url.trim().length > 0
 
     return (
-        <Card className={cn("border-slate-700/50 bg-slate-800/50 backdrop-blur-xl", className)}>
-            <CardContent className="space-y-3 p-6">
-                <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+        <Card className={cn("border-separator bg-surface backdrop-blur-xl", className)}>
+            <CardContent className="space-y-3 p-3">
+                <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
                     Preview
-                    <span className="text-xs font-normal text-slate-400">
+                    <span className="text-xs font-normal text-muted">
                         ({activeLabel})
                     </span>
                 </h2>
@@ -45,7 +45,7 @@ export const PreviewCard = ({ url, activeType, className }: PreviewCardProps) =>
                         title="Test video"
                     />
                 ) : (
-                    <div className="flex aspect-video items-center justify-center rounded-large border border-dashed border-slate-600 text-sm text-slate-500">
+                    <div className="flex aspect-video items-center justify-center rounded-large border border-dashed border-separator text-sm text-muted">
                         Enter a URL above to preview
                     </div>
                 )}

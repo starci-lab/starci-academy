@@ -4,7 +4,7 @@ import { Stepper } from "@/components/blocks/navigation/Stepper"
 import { CHECKOUT_STEPS } from "./components"
 
 const meta: Meta<typeof Stepper> = {
-    title: "Core/Navigation/Stepper",
+    title: "Blocks/Navigation/Stepper",
     component: Stepper,
 }
 export default meta

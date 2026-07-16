@@ -156,6 +156,7 @@ export const ProjectCard = ({
                     <CaretDownIcon
                         aria-hidden
                         focusable="false"
+                        weight="bold"
                         className="size-4 transition-transform data-[open=true]:rotate-180"
                         data-open={expanded}
                     />
@@ -182,7 +183,7 @@ export const ProjectCard = ({
                                         leading={task.passed ? (
                                             <CheckCircleIcon aria-hidden focusable="false" className="size-5 text-success-soft-foreground" />
                                         ) : undefined}
-                                        title={task.title}
+                                        title={task.passed ? <span className="text-success-soft-foreground">{task.title}</span> : task.title}
                                         meta={task.passed ? (
                                             <div className="flex items-center gap-2">
                                                 {/* score coloured by band so the eye catches weak grades */}

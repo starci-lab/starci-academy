@@ -4,7 +4,7 @@ import { PricingTable } from "@/components/blocks/commerce/PricingTable"
 import { threeTiers } from "./components"
 
 const meta: Meta<typeof PricingTable> = {
-    title: "Block/Commerce/PricingTable",
+    title: "Features/Commerce/PricingTable",
     component: PricingTable,
 }
 export default meta

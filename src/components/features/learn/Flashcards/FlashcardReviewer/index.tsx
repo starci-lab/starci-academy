@@ -661,7 +661,7 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                                         aria-label={t("flashcard.previous")}
                                         onPress={goPrev}
                                     >
-                                        <CaretLeftIcon className="size-4" aria-hidden focusable="false" />
+                                        <CaretLeftIcon weight="bold" className="size-4" aria-hidden focusable="false" />
                                     </Button>
                                     <Button
                                         size="sm"
@@ -671,7 +671,7 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                                         aria-label={t("flashcard.next")}
                                         onPress={goNext}
                                     >
-                                        <CaretRightIcon className="size-4" aria-hidden focusable="false" />
+                                        <CaretRightIcon weight="bold" className="size-4" aria-hidden focusable="false" />
                                     </Button>
                                 </div>
                             )}

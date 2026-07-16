@@ -5,7 +5,7 @@ import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { content, skeleton } from "./components"
 
 const meta: Meta<typeof AsyncContent> = {
-    title: "Core/Async/AsyncContent",
+    title: "Blocks/Async/AsyncContent",
     component: AsyncContent,
 }
 

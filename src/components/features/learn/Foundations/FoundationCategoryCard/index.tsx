@@ -83,6 +83,7 @@ export const FoundationCategoryCard = ({
                 <CaretRightIcon
                     aria-hidden
                     focusable="false"
+                    weight="bold"
                     className="size-4 text-muted"
                 />
             )}

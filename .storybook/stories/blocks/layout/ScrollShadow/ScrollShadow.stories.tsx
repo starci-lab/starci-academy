@@ -14,7 +14,7 @@ import { HorizontalDragDemo } from "./components"
  * area (e.g. Modal `scroll="inside"`) — two overlapping scrollers produce two scrollbars.
  */
 const meta: Meta<typeof ScrollShadow> = {
-    title: "Core/Layout/ScrollShadow",
+    title: "Primitives/Utility/ScrollShadow",
     component: ScrollShadow,
 }
 export default meta

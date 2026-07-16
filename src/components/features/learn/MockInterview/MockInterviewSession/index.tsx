@@ -1518,6 +1518,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                             >
                                 <CaretDownIcon
                                     className={cn("size-4 transition-transform", configOpen && "rotate-180")}
+                                    weight="bold"
                                     aria-hidden
                                     focusable="false"
                                 />

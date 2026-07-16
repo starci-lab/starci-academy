@@ -5,6 +5,7 @@ import {
     PuzzlePieceIcon,
     CodeIcon,
     CardsIcon,
+    FlagCheckeredIcon,
 } from "@phosphor-icons/react"
 import type { KpiKey } from "@/modules/api/graphql/queries/types/my-kpis"
 
@@ -18,6 +19,7 @@ export const KPI_ICON_MAP: Record<KpiKey, React.ReactNode> = {
     challenges: <PuzzlePieceIcon aria-hidden focusable="false" className="size-5 shrink-0" />,
     coding: <CodeIcon aria-hidden focusable="false" className="size-5 shrink-0" />,
     flashcards: <CardsIcon aria-hidden focusable="false" className="size-5 shrink-0" />,
+    milestones: <FlagCheckeredIcon aria-hidden focusable="false" className="size-5 shrink-0" />,
 }
 
 /** Weekly-KPI display order (label key === KPI key). */
@@ -27,6 +29,7 @@ export const KPI_ORDER: Array<KpiKey> = [
     "challenges",
     "coding",
     "flashcards",
+    "milestones",
 ]
 
 /**
@@ -40,4 +43,5 @@ export const DEFAULT_KPI_TARGETS: Record<KpiKey, number> = {
     challenges: 3,
     coding: 3,
     flashcards: 20,
+    milestones: 2,
 }

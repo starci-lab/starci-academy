@@ -62,6 +62,7 @@ export const SeeMoreLink = ({
         <CaretRightIcon
             aria-hidden
             focusable="false"
+            weight="bold"
             className="size-4 shrink-0 transition-transform group-hover:translate-x-1"
         />
     )

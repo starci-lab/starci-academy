@@ -3,7 +3,7 @@ import { Label, Typography } from "@heroui/react"
 import { ErrorState } from "@/components/blocks/feedback/ErrorState"
 
 const meta: Meta<typeof ErrorState> = {
-    title: "Core/Feedback/ErrorState",
+    title: "Blocks/Feedback/ErrorState",
     component: ErrorState,
 }
 export default meta

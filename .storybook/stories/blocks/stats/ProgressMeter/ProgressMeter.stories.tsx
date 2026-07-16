@@ -4,7 +4,7 @@ import { Label, Typography } from "@heroui/react"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 
 const meta: Meta<typeof ProgressMeter> = {
-    title: "Core/Stat/ProgressMeter",
+    title: "Primitives/DataDisplay/ProgressMeter",
     component: ProgressMeter,
 }
 

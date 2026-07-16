@@ -37,6 +37,7 @@ import { useQueryFoundationsSwr } from "@/hooks/swr/api/graphql/queries/useQuery
 import { Pagination } from "@/components/blocks/navigation/Pagination"
 import { SearchInput } from "@/components/blocks/form/SearchInput"
 import { SkeletonText } from "@/components/blocks/skeleton/SkeletonText"
+import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 
 export { FoundationsCategoryGridLayout } from "./FoundationsCategoryGrid"
 export { FoundationResourceLayout } from "./FoundationResourceLayout"
@@ -186,13 +187,14 @@ export const FoundationsLearnLayout = () => {
                         suggestions={resourceSuggestions}
                         onSelectSuggestion={onSelectResourceSuggestion}
                     />
-                    {(isFoundationsLoading && !foundationsData) || foundations === undefined ? (
-                        <SkeletonText size="sm" width="w-[110px]" />
-                    ) : (
+                    <AsyncContent
+                        isLoading={(isFoundationsLoading && !foundationsData) || foundations === undefined}
+                        skeleton={<SkeletonText size="sm" width="w-[110px]" />}
+                    >
                         <Typography type="body-sm" color="muted" className="shrink-0">
                             {t("foundations.count", { count: count ?? 0 })}
                         </Typography>
-                    )}
+                    </AsyncContent>
                 </div>
                 {hasNoMatches ? (
                     <Typography type="body-sm" color="muted">

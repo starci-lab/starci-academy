@@ -10,7 +10,7 @@ import { ControlledListBox } from "./components"
  * an `id` + `textValue` for keyboard and selection to work.
  */
 const meta: Meta<typeof ListBox> = {
-    title: "Core/List/ListBox",
+    title: "Primitives/Form/ListBox",
     component: ListBox,
 }
 export default meta

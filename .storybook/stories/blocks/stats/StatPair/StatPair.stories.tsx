@@ -5,7 +5,7 @@ import { StatPair } from "@/components/blocks/stats/StatPair"
 import { STATS } from "./components"
 
 const meta: Meta<typeof StatPair> = {
-    title: "Core/Stat/StatPair",
+    title: "Primitives/DataDisplay/StatPair",
     component: StatPair,
     args: {
         value: "1,204",

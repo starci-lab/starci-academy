@@ -3,7 +3,7 @@ import { Label, Typography } from "@heroui/react"
 import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
 
 const meta: Meta<typeof ResponsiveBreadcrumb> = {
-    title: "Block/Navigation/ResponsiveBreadcrumb",
+    title: "Blocks/Navigation/ResponsiveBreadcrumb",
     component: ResponsiveBreadcrumb,
 }
 export default meta

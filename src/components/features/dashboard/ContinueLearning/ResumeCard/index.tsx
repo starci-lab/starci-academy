@@ -11,17 +11,13 @@ import {
 import {
     useRouter,
 } from "next/navigation"
-import {
-    PuzzlePieceIcon,
-    BookOpenIcon,
-} from "@phosphor-icons/react"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 import { queryResolveRoute } from "@/modules/api/graphql/queries/query-resolve-route"
 import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
 
-/** Kind of resume target — drives the chip icon + label. */
+/** Kind of resume target — drives the subtitle label. */
 export type ResumeKind = "challenge" | "lesson"
 
 /** One "pick up where you left off" card item. */
@@ -85,13 +81,10 @@ export const ResumeCard = ({
         ],
     )
 
-    const ChipIcon = item.kind === "challenge" ? PuzzlePieceIcon : BookOpenIcon
-
     return (
         <ContinueCard
             className={className}
             variant="item"
-            icon={<ChipIcon weight="fill" />}
             title={item.label}
             subtitle={t(`dashboard.continueKind.${item.kind}`)}
             ctaLabel={t("dashboard.continue")}

@@ -4,7 +4,7 @@ import { Label, Typography } from "@heroui/react"
 import { ElementCloseButton } from "@/components/blocks/buttons/ElementCloseButton"
 
 const meta: Meta<typeof ElementCloseButton> = {
-    title: "Core/Button/ElementCloseButton",
+    title: "Primitives/Actions/ElementCloseButton",
     component: ElementCloseButton,
 }
 export default meta

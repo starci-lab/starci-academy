@@ -10,7 +10,7 @@ import { Controlled } from "./components"
  * `isInvalid`. Tier-3, purely presentational — no store, no fetch.
  */
 const meta: Meta<typeof OtpInput> = {
-    title: "Core/Form/OtpInput",
+    title: "Primitives/Form/OtpInput",
     component: OtpInput,
 }
 export default meta

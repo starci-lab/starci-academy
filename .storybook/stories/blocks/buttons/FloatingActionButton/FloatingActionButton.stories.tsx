@@ -4,7 +4,7 @@ import { PlusIcon } from "@phosphor-icons/react"
 import { FloatingActionButton } from "@/components/blocks/buttons/FloatingActionButton"
 
 const meta: Meta<typeof FloatingActionButton> = {
-    title: "Core/Button/FloatingActionButton",
+    title: "Primitives/Actions/FloatingActionButton",
     component: FloatingActionButton,
 }
 export default meta

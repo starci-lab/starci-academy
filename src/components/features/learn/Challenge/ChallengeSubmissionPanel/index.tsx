@@ -418,7 +418,7 @@ export const ChallengeSubmissionPanel = (props: ChallengeSubmissionPanelProps) =
                                             ) : status === "failed" ? (
                                                 <XCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-danger-soft-foreground" />
                                             ) : (
-                                                <CircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
+                                                <CircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-foreground" />
                                             )}
                                             <span className="truncate text-base font-semibold">
                                                 {row.submission.sortIndex + 1}. {row.submission.title}

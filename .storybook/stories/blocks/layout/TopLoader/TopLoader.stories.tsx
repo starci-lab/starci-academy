@@ -4,7 +4,7 @@ import { TopLoader } from "@/components/blocks/layout/TopLoader"
 import { TriggerNavigation, TriggerReducedMotion } from "./components"
 
 const meta: Meta<typeof TopLoader> = {
-    title: "Core/Layout/TopLoader",
+    title: "Layout/TopLoader",
     component: TopLoader,
 }
 export default meta

@@ -6,7 +6,7 @@ import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { body } from "./components"
 
 const meta: Meta<typeof SectionCard> = {
-    title: "Core/Card/SectionCard",
+    title: "Blocks/Cards/SectionCard",
     component: SectionCard,
 }
 

@@ -5,7 +5,7 @@ import { ChatPanel } from "@/components/blocks/feed/ChatPanel"
 import { baseMessages, Controlled } from "./components"
 
 const meta: Meta<typeof ChatPanel> = {
-    title: "Block/Feed/ChatPanel",
+    title: "Features/Social/ChatPanel",
     component: ChatPanel,
 }
 export default meta

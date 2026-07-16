@@ -4,7 +4,7 @@ import { Chip, Label, Typography } from "@heroui/react"
 import { SidebarNavItem } from "@/components/blocks/navigation/SidebarNavItem"
 
 const meta: Meta<typeof SidebarNavItem> = {
-    title: "Core/Navigation/SidebarNavItem",
+    title: "Blocks/Navigation/SidebarNavItem",
     component: SidebarNavItem,
 }
 export default meta

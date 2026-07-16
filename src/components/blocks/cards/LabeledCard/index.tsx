@@ -28,6 +28,13 @@ export interface LabeledCardProps extends WithClassNames<undefined> {
     action?: ReactNode
     /** Card body content. */
     children: ReactNode
+    /**
+     * Optional secondary text/node rendered OUTSIDE (below) the card, `gap-2` from
+     * it — a caption/prompt/status that belongs to the section but not inside the
+     * surface (e.g. a "complete all 3 to claim" prompt, a claim button). Kept below
+     * the card so it never becomes surface-in-surface. Caller owns its alignment.
+     */
+    description?: ReactNode
     /** Extra classes merged onto the card content wrapper. */
     contentClassName?: string
     /**
@@ -85,6 +92,7 @@ export const LabeledCard = ({
     seeMoreLabel = "Xem thêm",
     action,
     children,
+    description,
     className,
     contentClassName,
     frameless = false,
@@ -111,23 +119,32 @@ export const LabeledCard = ({
                     <span className={cn("shrink-0 text-muted", subtleLabel ? "text-xs" : "text-sm")}>{labelEnd}</span>
                 ) : null)}
             </div>
-            {/* frameless = content is itself card(s) → no inner Card (avoid nesting) */}
-            {frameless ? (
-                <div className={cn(contentClassName)}>{children}</div>
-            ) : (
-                <Card
-                    className={cn(
-                        bordered && "border border-default",
-                        fillHeight && "flex-1",
-                        // root `.card` bakes p-4 — zero it here or flush children stay inset
-                        flushContent && "gap-0 overflow-hidden p-0",
-                    )}
-                >
-                    <CardContent className={cn(flushContent && "p-0", fillHeight && "h-full", contentClassName)}>
-                        {children}
-                    </CardContent>
-                </Card>
-            )}
+            {/* card body: frameless = content is itself card(s) → no inner Card (avoid nesting) */}
+            {(() => {
+                const body = frameless ? (
+                    <div className={cn(contentClassName)}>{children}</div>
+                ) : (
+                    <Card
+                        className={cn(
+                            bordered && "border border-default",
+                            fillHeight && "flex-1",
+                            // root `.card` bakes p-4 — zero it here or flush children stay inset
+                            flushContent && "gap-0 overflow-hidden p-0",
+                        )}
+                    >
+                        <CardContent className={cn(flushContent && "p-0", fillHeight && "h-full", contentClassName)}>
+                            {children}
+                        </CardContent>
+                    </Card>
+                )
+                // description sits OUTSIDE (below) the card, gap-2 — never surface-in-surface
+                return description != null ? (
+                    <div className="flex flex-col gap-2">
+                        {body}
+                        {description}
+                    </div>
+                ) : body
+            })()}
         </section>
     )
 }

@@ -5,7 +5,7 @@ import { SearchAutocomplete } from "@/components/blocks/form/SearchAutocomplete"
 import { CATALOG } from "./components"
 
 const meta: Meta<typeof SearchAutocomplete> = {
-    title: "Core/Form/SearchAutocomplete",
+    title: "Blocks/Form/SearchAutocomplete",
     component: SearchAutocomplete,
 }
 export default meta

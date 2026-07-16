@@ -3,7 +3,7 @@ import { Label, Typography } from "@heroui/react"
 import { CoverImage } from "@/components/blocks/media/CoverImage"
 
 const meta: Meta<typeof CoverImage> = {
-    title: "Core/Media/CoverImage",
+    title: "Blocks/Media/CoverImage",
     component: CoverImage,
 }
 export default meta

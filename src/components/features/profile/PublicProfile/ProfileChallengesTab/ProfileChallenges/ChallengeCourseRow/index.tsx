@@ -127,6 +127,7 @@ export const ChallengeCourseRow = ({
                 <CaretDownIcon
                     aria-hidden
                     focusable="false"
+                    weight="bold"
                     className="size-4 transition-transform data-[open=true]:rotate-180"
                     data-open={expanded}
                 />

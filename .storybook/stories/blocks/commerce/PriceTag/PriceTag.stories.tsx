@@ -10,7 +10,7 @@ import { PriceTag } from "@/components/blocks/commerce/PriceTag"
  * click/tap, so it works on touch too (not hover).
  */
 const meta: Meta<typeof PriceTag> = {
-    title: "Block/Commerce/PriceTag",
+    title: "Features/Commerce/PriceTag",
     component: PriceTag,
     parameters: { layout: "centered" },
 }

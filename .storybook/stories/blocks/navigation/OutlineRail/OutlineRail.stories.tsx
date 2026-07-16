@@ -4,7 +4,7 @@ import { OutlineRail } from "@/components/blocks/navigation/OutlineRail"
 import { Controlled, mockGroups } from "./components"
 
 const meta: Meta<typeof OutlineRail> = {
-    title: "Block/Navigation/OutlineRail",
+    title: "Features/Learn/OutlineRail",
     component: OutlineRail,
 }
 export default meta

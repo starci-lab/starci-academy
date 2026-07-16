@@ -3,7 +3,7 @@ import { Button, Chip, Label, Typography } from "@heroui/react"
 import { MediaCard } from "@/components/blocks/cards/MediaCard"
 
 const meta: Meta<typeof MediaCard> = {
-    title: "Core/Card/MediaCard",
+    title: "Blocks/Cards/MediaCard",
     component: MediaCard,
 }
 export default meta

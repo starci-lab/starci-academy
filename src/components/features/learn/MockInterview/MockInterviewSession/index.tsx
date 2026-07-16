@@ -4,7 +4,6 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import {
     Button,
     Card,
-    Chip,
     Label,
     Spinner,
     Typography,
@@ -16,7 +15,6 @@ import {
     CheckCircleIcon,
     CircleIcon,
     ClockIcon,
-    CodeIcon,
     DoorOpenIcon,
     MicrophoneIcon,
     PenNibIcon,
@@ -214,15 +212,22 @@ const questionHasWorkspaceTool = (isDesignMode: boolean, givenCodes: Array<{ lan
     isDesignMode || Boolean(givenCodes && givenCodes.length > 0)
 
 /**
- * Coerce an authored `givenLang` string to one of the workspace editor's four
- * supported languages (its values ARE Monaco language ids), defaulting to
- * TypeScript for an unset/unknown language — so a debug question's given code
- * always seeds into a syntax-highlighted editor.
+ * Normalize an authored `givenLang` string for the workspace editor's code state.
+ * Given code is NOT restricted to the 4 `ProgrammingLanguage` implementation tracks —
+ * a debug/review/optimize question can ship any content language authored in `.mount`
+ * (`dockerfile`, `yaml`, `bash`, `nginx`, …), so this only lowercases/trims and
+ * defaults to TypeScript when truly unset. It used to COERCE anything outside the
+ * 4-enum list down to TypeScript (2026-07-17 fix — that silently mislabeled every
+ * non-{ts,java,csharp,go} given code both in the language picker AND in the grading
+ * transcript's `[Code lang=...]` tag, e.g. a Dockerfile question graded as if it
+ * were TypeScript). `MockInterviewWorkspace`'s `languageExtensionFor` resolves
+ * whatever string comes out of here to its own CodeMirror language extension,
+ * falling back to plain text (no wrong-language highlighting) for anything it
+ * doesn't recognize.
  */
-const mapGivenLangToProgrammingLanguage = (lang: string | null | undefined): ProgrammingLanguage => {
+const resolveGivenCodeLang = (lang: string | null | undefined): string => {
     const normalized = (lang ?? "").trim().toLowerCase()
-    return DEFAULT_PROGRAMMING_LANGUAGES.find((candidate) => candidate === normalized)
-        ?? ProgrammingLanguage.TypeScript
+    return normalized.length > 0 ? normalized : ProgrammingLanguage.TypeScript
 }
 
 /**
@@ -712,7 +717,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     ): void => {
         const openingGivenCode = resolveOpeningGivenCode(topic?.givenCodes ?? [])
         if (openingGivenCode) {
-            setCodeState({ lang: mapGivenLangToProgrammingLanguage(openingGivenCode.lang), code: openingGivenCode.code })
+            setCodeState({ lang: resolveGivenCodeLang(openingGivenCode.lang), code: openingGivenCode.code })
             setWorkspaceTool("code")
         } else {
             setCodeState(MOCK_INTERVIEW_CODE_STATE_DEFAULT)
@@ -942,7 +947,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         const currentTopic = nextMode === "qna" && isStaticBankPrompt(drawn) ? drawn.seedTopics[data.questionIndex] : undefined
         const currentGivenCode = resolveOpeningGivenCode(currentTopic?.givenCodes ?? [])
         if (currentGivenCode) {
-            setCodeState({ lang: mapGivenLangToProgrammingLanguage(currentGivenCode.lang), code: currentGivenCode.code })
+            setCodeState({ lang: resolveGivenCodeLang(currentGivenCode.lang), code: currentGivenCode.code })
             setWorkspaceTool("code")
         }
         setWorkspaceOpen(questionHasWorkspaceTool(nextMode === "design", currentTopic?.givenCodes))
@@ -1852,8 +1857,13 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                     separates them, back to [[whitespace-over-dividers]]'s default now that
                     neither pane has a card frame to clash against. */}
                 <div className="grid min-h-0 flex-1 gap-6 overflow-y-auto px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-                    {/* LEFT — the conversation */}
-                    <div className="flex min-w-0 flex-col gap-6">
+                    {/* LEFT — the conversation. `justify-center` vertically centers this
+                        (naturally short) column within the full-viewport-tall grid row instead
+                        of pinning it to the top with a growing gap below (2026-07-17, thầy:
+                        "bố cục chưa gọn/cân đối" — the workspace pane now fills the row's full
+                        height, see below, so the conversation column reads as a floating
+                        top-pinned island unless it's centered to match). */}
+                    <div className="flex min-w-0 flex-col justify-center gap-6">
                         {errorCallout}
 
                         {/* interviewer presence — StarCi face + name + "đang nói" pulse + TTS
@@ -1877,16 +1887,13 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                     <Spinner size="sm" />
                                 )
                             ) : currentQuestionTurn ? (
-                                <div className="flex flex-col gap-2">
-                                    <div className="text-sm font-medium text-foreground">
-                                        <MarkdownContent markdown={currentQuestionTurn.content} />
-                                    </div>
-                                    {currentQuestionTurn.artifactHint === "code" ? (
-                                        <Chip size="sm" className="w-fit bg-accent-soft text-accent-soft-foreground">
-                                            <CodeIcon className="size-4" aria-hidden focusable="false" />
-                                            <Chip.Label>{t("mockInterview.workspace.codeLoadedHint")}</Chip.Label>
-                                        </Chip>
-                                    ) : null}
+                                // "Code loaded into the Code tab" hint chip REMOVED (2026-07-17, thầy:
+                                // aesthetic pass) — stale copy from when the workspace was a tabbed,
+                                // hide-by-default pane (2026-07-09 removed the tabs; 2026-07-13 made the
+                                // workspace pane ALWAYS visible); the given code already sits right next
+                                // to this bubble, so announcing its presence was redundant clutter.
+                                <div className="text-sm font-medium text-foreground">
+                                    <MarkdownContent markdown={currentQuestionTurn.content} />
                                 </div>
                             ) : (
                                 <Typography type="body-sm" color="muted">
@@ -1937,8 +1944,11 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                         pane never just vanishes. Tool stays MOUNTED once shown so an in-progress
                         sketch/code buffer survives a question switch. No card frame, no divider —
                         just the grid's own `gap-6` separates it from the conversation pane. On
-                        mobile the grid stacks this under the conversation. */}
-                    <div className="min-w-0">
+                        mobile the grid stacks this under the conversation. `h-full` lets
+                        {@link MockInterviewWorkspace}'s own `h-full` fill the ENTIRE row height
+                        (2026-07-17 fix — the editor/whiteboard used to be a small fixed-height box
+                        floating inside this already-viewport-tall cell, reading "chưa gọn"). */}
+                    <div className="h-full min-w-0">
                         {workspaceOpen ? (
                             <MockInterviewWorkspace
                                 tool={workspaceTool}
@@ -1966,8 +1976,12 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
     // Same work-surface header band as Q&A; the 5-phase system-design flow is always
     // 2-pane (the whiteboard is used throughout), with the phase stepper as a status
     // list in the left pane.
+    // `h-[calc(100dvh-4rem)]` + the grid's `flex-1 min-h-0 overflow-y-auto` mirror the
+    // `qna` branch above (2026-07-17 — this branch never got the viewport-lock fix noted
+    // in [[full-bleed-work-surface]]'s "CHƯA áp cho nhánh design"; now required so the
+    // whiteboard's `h-full` below has a definite height to fill instead of collapsing).
     return (
-        <div className={cn("flex w-full flex-col", className)}>
+        <div className={cn("flex h-[calc(100dvh-4rem)] w-full flex-col", className)}>
             <VoiceUnavailableModal
                 isOpen={voiceModalOpen}
                 onOpenChange={closeVoiceModal}
@@ -1988,8 +2002,11 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
             })}
 
             {/* body — 2-pane: conversation (presence + phase stepper + thread + composer) | workspace */}
-            <div className="flex flex-col gap-6 px-4 py-6 sm:px-6 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-6">
-                {/* LEFT — the conversation: presence + phase stepper + thread + voice composer */}
+            <div className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto px-4 py-6 sm:px-6 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-6">
+                {/* LEFT — the conversation: presence + phase stepper + thread + voice composer.
+                    Unlike qna's sparse single-question column, this thread GROWS over the
+                    5 phases — stays top-anchored (no `justify-center`) so it doesn't jump
+                    around as turns are appended. */}
                 <div className="flex min-w-0 flex-col gap-3">
                     <InterviewerPresence
                         persona={persona}

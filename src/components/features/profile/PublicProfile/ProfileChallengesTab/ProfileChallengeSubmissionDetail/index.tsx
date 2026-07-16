@@ -35,10 +35,9 @@ import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
-import { SubmissionFeedbackSeverity } from "@/modules/types/enums/submission-feedback-severity"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
-/** Score → attention colour band, shared with the manage list row. */
+/** Score → attention colour band (also used per-attempt in the attempts record). */
 const scoreToneClass = (score: number): string => {
     if (score >= 90) {
         return "text-success-soft-foreground"
@@ -49,22 +48,16 @@ const scoreToneClass = (score: number): string => {
     return "text-danger-soft-foreground"
 }
 
-/** Severity → left accent border colour for a feedback row. */
-const SEVERITY_ACCENT: Record<SubmissionFeedbackSeverity, string> = {
-    [SubmissionFeedbackSeverity.Low]: "border-l-4 border-l-success",
-    [SubmissionFeedbackSeverity.Medium]: "border-l-4 border-l-warning",
-    [SubmissionFeedbackSeverity.High]: "border-l-4 border-l-danger",
-}
-
 /** Props for {@link ProfileChallengeSubmissionDetail}. */
 export type ProfileChallengeSubmissionDetailProps = WithClassNames<undefined>
 
 /**
- * `/profile/<u>/challenges/<courseGlobalId>/<submissionId>` — the DETAIL tier of
+ * `/profile/<u>/challenges/<courseSlug>/<submissionId>` — the DETAIL tier of
  * the 3-tier challenges flow: one passed submission's header (title, score,
- * difficulty, language, passed date), its submitted repo/docs link, and the
- * structured AI feedback rubric from the passing attempt — one row per feedback
- * item, accented by severity.
+ * difficulty, language, passed date), its submitted repo/docs link (the URL
+ * itself, not a generic label), the attempts record (every graded try, newest
+ * first), and the structured AI feedback rubric from the passing attempt — one
+ * row per feedback item, accented by severity.
  *
  * @param props - optional className for the root element.
  */
@@ -76,7 +69,7 @@ export const ProfileChallengeSubmissionDetail = ({
     const router = useRouter()
     const username = useProfileUsername()
     const params = useParams<{ courseId: string; submissionId: string }>()
-    const courseGlobalId = params?.courseId ? String(params.courseId) : null
+    const courseSlug = params?.courseId ? String(params.courseId) : null
     const submissionId = params?.submissionId ? String(params.submissionId) : null
 
     const { data: user } = useQueryUserProfileSwr(username)
@@ -92,7 +85,7 @@ export const ProfileChallengeSubmissionDetail = ({
     const passedAt = detail?.passedAt
         ? dayjs(detail.passedAt).locale(locale).format("hh:mm MMMM DD, YYYY")
         : undefined
-    const feedbacks = detail?.feedbacks ?? []
+    const attempts = detail?.attempts ?? []
 
     return (
         <div className={cn("mx-auto flex max-w-4xl flex-col gap-6", className)}>
@@ -101,8 +94,8 @@ export const ProfileChallengeSubmissionDetail = ({
                     <BackLink
                         target={t("publicProfile.challengesTab.repoHeading")}
                         onPress={() => router.push(
-                            username && courseGlobalId
-                                ? pathConfig().locale(locale).profile(username).challenges().course(courseGlobalId).build()
+                            username && courseSlug
+                                ? pathConfig().locale(locale).profile(username).challenges().course(courseSlug).build()
                                 : pathConfig().locale(locale).profile(username ?? undefined).challenges().build(),
                         )}
                     />
@@ -153,48 +146,83 @@ export const ProfileChallengeSubmissionDetail = ({
             >
                 {detail ? (
                     <div className="flex flex-col gap-6">
-                        <Link
-                            href={detail.submissionUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex w-fit items-center gap-2 text-accent-soft-foreground underline"
-                            aria-label={t("publicProfile.openRepo", { title: detail.title })}
-                        >
-                            <LinkIcon aria-hidden focusable="false" className="size-5" />
-                            <Typography type="body-sm" className="text-accent-soft-foreground">
-                                {t("publicProfile.repoLink")}
+                        {/* repo/docs link — the URL itself is the link text (the
+                            dev's "flex"), not a generic "view repo" label */}
+                        <div className="flex flex-col gap-1">
+                            <Typography type="body-xs" color="muted">
+                                {t("publicProfile.challengesTab.detail.repoLabel")}
                             </Typography>
-                        </Link>
+                            <Link
+                                href={detail.submissionUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex w-fit min-w-0 max-w-full items-center gap-2 text-accent-soft-foreground underline underline-offset-2"
+                                aria-label={t("publicProfile.openRepo", { title: detail.title })}
+                            >
+                                <LinkIcon aria-hidden focusable="false" className="size-5 shrink-0" />
+                                <Typography type="body-sm" truncate className="text-accent-soft-foreground">
+                                    {detail.submissionUrl}
+                                </Typography>
+                            </Link>
+                        </div>
 
                         <LabeledCard
-                            label={t("publicProfile.challengesTab.detail.feedbackHeading")}
+                            label={t("publicProfile.challengesTab.detail.attemptsHeading")}
                             frameless
                         >
-                            {feedbacks.length > 0 ? (
+                            {attempts.length > 0 ? (
                                 <SurfaceListCard>
-                                    {feedbacks.map((feedback, index) => (
-                                        <SurfaceListCardItem key={index}>
-                                            <div className={cn("flex flex-col gap-1 pl-3", SEVERITY_ACCENT[feedback.severity])}>
-                                                <Typography type="body-sm" weight="medium">
-                                                    {feedback.message}
-                                                </Typography>
-                                                {feedback.detail ? (
-                                                    <Typography type="body-xs" color="muted">
-                                                        {feedback.detail}
-                                                    </Typography>
-                                                ) : null}
-                                                {feedback.suggestion ? (
-                                                    <Typography type="body-xs" color="muted" className="italic">
-                                                        {feedback.suggestion}
-                                                    </Typography>
-                                                ) : null}
-                                            </div>
-                                        </SurfaceListCardItem>
-                                    ))}
+                                    {attempts.map((attempt) => {
+                                        const attemptProcessedAt = attempt.processedAt
+                                            ? dayjs(attempt.processedAt).locale(locale).format("hh:mm MMMM DD, YYYY")
+                                            : undefined
+                                        return (
+                                            <SurfaceListCardItem key={attempt.attemptNumber}>
+                                                <div className="flex flex-col gap-2">
+                                                    <div className="flex flex-wrap items-center justify-between gap-3">
+                                                        <Typography type="body-sm" weight="medium">
+                                                            {t("publicProfile.challengesTab.detail.attemptLabel", { number: attempt.attemptNumber })}
+                                                        </Typography>
+                                                        {typeof attempt.score === "number" ? (
+                                                            <Typography
+                                                                type="body-xs"
+                                                                weight="medium"
+                                                                className={cn("shrink-0", scoreToneClass(attempt.score))}
+                                                            >
+                                                                {t("publicProfile.challengesTab.score", { score: attempt.score })}
+                                                            </Typography>
+                                                        ) : null}
+                                                    </div>
+                                                    {attemptProcessedAt ? (
+                                                        <Typography type="body-xs" color="muted">
+                                                            {attemptProcessedAt}
+                                                        </Typography>
+                                                    ) : null}
+                                                    <Link
+                                                        href={attempt.submissionUrl}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="flex w-fit min-w-0 max-w-full items-center gap-2 text-accent-soft-foreground underline underline-offset-2"
+                                                        aria-label={t("publicProfile.openRepo", { title: detail.title })}
+                                                    >
+                                                        <LinkIcon aria-hidden focusable="false" className="size-4 shrink-0" />
+                                                        <Typography type="body-xs" truncate className="text-accent-soft-foreground">
+                                                            {attempt.submissionUrl}
+                                                        </Typography>
+                                                    </Link>
+                                                    {attempt.shortFeedback ? (
+                                                        <Typography type="body-xs" color="muted">
+                                                            {attempt.shortFeedback}
+                                                        </Typography>
+                                                    ) : null}
+                                                </div>
+                                            </SurfaceListCardItem>
+                                        )
+                                    })}
                                 </SurfaceListCard>
                             ) : (
                                 <Typography type="body-sm" color="muted">
-                                    {t("publicProfile.challengesTab.detail.feedbackEmpty")}
+                                    {t("publicProfile.challengesTab.detail.noAttempts")}
                                 </Typography>
                             )}
                         </LabeledCard>

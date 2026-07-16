@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mock Interview — Interview surface, workspace fill-height (element-aware)</title>
+<style>
+  :root{--bg:#f4f4f6;--fg:#1a1a1e;--mut:#6b6b76;--line:#e2e2e8;--card:#fff;--acc:#c0407a;--warn:#b06a1f;--ok:#3b7d4f;--radius:14px}
+  @media (prefers-color-scheme:dark){:root{--bg:#161619;--fg:#eaeaef;--mut:#9a9aa6;--line:#2a2a30;--card:#1d1d21}}
+  :root[data-theme="light"]{--bg:#f4f4f6;--fg:#1a1a1e;--mut:#6b6b76;--line:#e2e2e8;--card:#fff}
+  :root[data-theme="dark"]{--bg:#161619;--fg:#eaeaef;--mut:#9a9aa6;--line:#2a2a30;--card:#1d1d21}
+  *{box-sizing:border-box}
+  body{margin:0;font:14px/1.45 ui-sans-serif,system-ui,-apple-system,sans-serif;color:var(--fg);background:var(--bg)}
+  .top{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+  .top b{font-size:15px}.top .sub{color:var(--mut);font-size:12px}
+  .toggles{display:flex;flex-wrap:wrap;gap:8px;margin-left:auto}
+  .grp{border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex}
+  .grp button{border:0;background:var(--card);padding:5px 10px;cursor:pointer;font:inherit;font-size:11.5px;color:var(--mut);white-space:nowrap}
+  .grp button.on{background:var(--acc);color:#fff}
+  .grp .lbl{padding:5px 8px;font-size:10px;color:var(--mut);background:var(--bg);border-right:1px solid var(--line);font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+
+  .stagewrap{padding:20px 16px 40px;display:flex;justify-content:center}
+  .stage{width:100%;transition:max-width .2s}
+  .stage.desktop{max-width:980px}.stage.mobile{max-width:400px}
+
+  .note{font:11px ui-monospace,Menlo,monospace;color:var(--warn);text-align:center;margin-bottom:10px}
+  .blocktag{font:9px ui-monospace,Menlo,monospace;color:var(--mut);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:0 4px;margin-left:6px;vertical-align:middle;white-space:nowrap}
+  .tag{font-size:9px;font-weight:800;padding:1px 5px;border-radius:5px;vertical-align:middle;margin-left:5px}
+  .tag.bad{color:#b03030;background:rgba(176,48,48,.12)}
+  .tag.good{color:var(--ok);background:rgba(59,125,79,.14)}
+
+  /* ── simulated work-surface viewport: sticky header band + 2-pane grid below ── */
+  .viewport{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card);height:560px;display:flex;flex-direction:column}
+  .wsheader{flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);font-size:12px;color:var(--mut)}
+  .wsheader b{color:var(--fg)}
+  .wsheader .sp{margin-left:auto;display:flex;gap:8px;align-items:center}
+  .pill{border:1px solid var(--line);border-radius:20px;padding:2px 9px;font-size:11px}
+
+  .work{flex:1;min-height:0;display:grid;gap:14px;padding:16px;overflow-y:auto}
+  .work.r11{grid-template-columns:1fr 1fr}
+  .work.r23{grid-template-columns:2fr 3fr}
+  .stage.mobile .work{grid-template-columns:1fr !important;overflow-y:auto}
+
+  .pane{min-width:0;display:flex;flex-direction:column;gap:10px}
+  .pane.center{justify-content:center}
+  .paneh{font-size:10px;font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.03em;display:flex;align-items:center}
+
+  .bubble{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:13px;max-width:32rem}
+  .mic{border:2px solid var(--acc);color:var(--acc);border-radius:999px;width:64px;height:64px;display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto}
+  .miccap{text-align:center;font-size:12px;color:var(--mut)}
+  .btnrow{text-align:center}
+  .btn{border:0;border-radius:10px;padding:9px 16px;font:inherit;font-weight:600;cursor:pointer;display:inline-flex;gap:6px;align-items:center;background:var(--acc);color:#fff}
+
+  /* right pane tool container */
+  .toolwrap{border:1px solid var(--line);border-radius:12px;background:var(--bg);display:flex;flex-direction:column;overflow:hidden;transition:height .2s}
+  .toolwrap.fixed-code{height:180px}
+  .toolwrap.fill-code{flex:1;min-height:0}
+  .toolwrap.fixed-wb{height:200px}
+  .toolwrap.fill-wb{flex:1;min-height:0}
+  .langbar{flex:0 0 auto;padding:6px 8px;border-bottom:1px solid var(--line);font-size:11px;color:var(--mut);display:flex;align-items:center;gap:6px}
+  .langbar .sel{border:1px solid var(--line);border-radius:6px;padding:2px 8px;background:var(--card)}
+  .editor{flex:1;min-height:0;background:#1e1e1e;color:#d4d4d4;font:11.5px/1.6 ui-monospace,Menlo,monospace;padding:10px;overflow:hidden}
+  .editor .ln{color:#6a6a6a;display:inline-block;width:22px}
+  .wbcanvas{flex:1;min-height:0;background:repeating-linear-gradient(0deg,transparent,transparent 15px,color-mix(in oklab,var(--mut) 12%,transparent) 16px),repeating-linear-gradient(90deg,transparent,transparent 15px,color-mix(in oklab,var(--mut) 12%,transparent) 16px);display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:12px}
+  .empty{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;color:var(--mut);font-size:12px;text-align:center;padding:10px}
+
+  .wastebox{position:relative}
+  .wastebox::after{content:'khoảng trống thừa';position:absolute;left:0;right:0;bottom:6px;text-align:center;font:10px ui-monospace,monospace;color:var(--warn);border-top:1px dashed var(--warn);padding-top:4px}
+
+  .legendbar{max-width:980px;margin:0 auto 4px;font-size:11.5px;color:var(--mut);display:flex;flex-wrap:wrap;gap:10px;padding:0 4px}
+  .refs{max-width:980px;margin:14px auto 0;font-size:11.5px;color:var(--mut);padding:0 4px}
+  .refs b{color:var(--fg)}
+</style>
+</head>
+<body>
+<div class="top">
+  <b>Mock Interview — Interview surface</b><span class="sub">2-pane work surface · fix workspace fill-height</span>
+  <div class="toggles">
+    <div class="grp"><span class="lbl">Bản</span>
+      <button id="vCur" class="on" onclick="setVersion('current')">Hiện tại</button>
+      <button id="vProp" onclick="setVersion('proposed')">Đề xuất</button>
+    </div>
+    <div class="grp"><span class="lbl">Công cụ</span>
+      <button id="tEmpty" onclick="setTool('empty')">Không cần</button>
+      <button id="tCode" class="on" onclick="setTool('code')">Code (debug)</button>
+      <button id="tWb" onclick="setTool('wb')">Whiteboard (design)</button>
+    </div>
+    <div class="grp"><span class="lbl">Tỉ lệ</span>
+      <button id="rEq" class="on" onclick="setRatio('r11')">1 : 1</button>
+      <button id="rSkew" onclick="setRatio('r23')">2 : 3</button>
+    </div>
+    <div class="grp"><span class="lbl">Máy</span>
+      <button id="dDesk" class="on" onclick="setDevice('desktop')">Desktop</button>
+      <button id="dMob" onclick="setDevice('mobile')">Mobile</button>
+    </div>
+  </div>
+</div>
+
+<div class="legendbar" style="margin-top:14px">
+  <span><span class="tag bad">bug</span> hiện tại: Editor (<code>h-72</code>) &amp; Whiteboard (<code>h-64/h-80</code>) là hộp CAO CỐ ĐỊNH bên trong 1 cell đã khoá full-viewport (<code>h-[calc(100dvh-4rem)]</code>) → thừa khoảng trắng dưới, đọc "chưa gọn/cân đối"</span>
+</div>
+<div class="legendbar">
+  <span><span class="tag good">đề xuất</span> workspace <b>fill-height</b> (flex-1 thay h-72/h-80) + cột trái <b>center theo chiều dọc</b> — chọn thêm tỉ lệ 2:3 khi câu CÓ tool (Code/Whiteboard cần rộng hơn hội thoại)</span>
+</div>
+
+<div class="stagewrap"><div class="stage desktop" id="stage">
+  <div class="note" id="fbNote">shell: full-bleed 2-pane · route bật fullBleed khi phase===interview</div>
+
+  <div class="viewport">
+    <div class="wsheader">
+      <span>← Thoát</span>
+      <b>Câu 2/5 · Sửa lỗi</b>
+      <span class="sp"><span class="pill">⏱ 54:36</span><span class="pill" style="border-color:var(--acc);color:var(--acc)">Kết thúc sớm</span></span>
+    </div>
+
+    <div class="work r11" id="work">
+      <!-- LEFT — conversation -->
+      <div class="pane" id="leftPane">
+        <div class="paneh">hội thoại <span class="blocktag">InterviewerPresence</span></div>
+        <div class="bubble">Sau khi thêm <code>USER 1001</code> vào stage runner, app crash khi khởi động với <code>EACCES: permission denied, mkdir '/app/logs'</code>. Trước đó chạy root thì ổn. Chẩn đoán: thứ tự <code>COPY --from=builder</code> và <code>USER 1001</code>, khi nào ownership được gán, và sửa dòng nào?</div>
+        <div class="mic">🎙</div>
+        <div class="miccap">Nhấn để trả lời · gõ thay <span class="blocktag" style="border-color:var(--acc);color:var(--acc)">VoiceHero</span></div>
+        <div class="btnrow"><button class="btn">Trả lời &amp; câu tiếp theo →</button></div>
+      </div>
+
+      <!-- RIGHT — workspace -->
+      <div class="pane" id="rightPane">
+        <div class="paneh">workspace <span class="blocktag">MockInterviewWorkspace</span></div>
+        <div class="toolwrap fixed-code" id="toolWrap">
+          <div class="langbar" id="langbar"><span class="sel">TypeScript ⌄</span></div>
+          <div class="editor" id="editorBody"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<div class="refs">
+  <b>Nguồn:</b> <code>src/components/features/learn/MockInterview/MockInterviewSession/index.tsx:1854</code> (grid 2-pane) ·
+  <code>MockInterviewWorkspace/index.tsx:144</code> (<code>h-72</code> editor) ·
+  <code>MockInterviewDiagram/index.tsx:116</code> (<code>h-64 sm:h-80</code> whiteboard) ·
+  canon <code>.claude/fe/layouts/full-bleed-work-surface.md</code> (lịch sử quyết định 2-pane · gap-6 · khoá viewport-height 2026-07-13).
+</div>
+
+<script>
+  var version='current', tool='code', ratio='r11', device='desktop';
+
+  var CODE_LINES = [
+    '11  FROM gcr.io/distroless/nodejs20-debian12 AS runner',
+    '12  WORKDIR /app',
+    '13  ENV NODE_ENV=production',
+    "14  COPY --from=deps    /app/node_modules ./node_modules",
+    "15  COPY --from=builder /app/dist         ./dist",
+    "16  COPY --from=builder /app/package.json ./",
+    '17  USER 1001',
+    '18  EXPOSE 3000',
+    '19  CMD ["dist/main.js"]'
+  ];
+  var CODE_LINES_FILL = CODE_LINES.concat([
+    '20',
+    '21  # runner has no /app/logs yet — app self-mkdirs it at boot,',
+    '22  # but USER 1001 now owns none of /app',
+  ]);
+
+  function renderEditor(){
+    var el = document.getElementById('editorBody');
+    var lines = (version==='proposed') ? CODE_LINES_FILL : CODE_LINES;
+    el.innerHTML = lines.map(function(l){
+      var m = l.match(/^(\d+)\s*(.*)$/);
+      return '<div><span class="ln">'+ (m?m[1]:'') +'</span>'+ (m?m[2]:l) +'</div>';
+    }).join('');
+  }
+
+  function renderRightPane(){
+    var wrap = document.getElementById('rightPane');
+    var fillClass = version==='proposed' ? 'fill' : 'fixed';
+    if(tool==='empty'){
+      wrap.innerHTML = '<div class="paneh">workspace <span class="blocktag">EmptyState</span></div>'
+        + '<div class="empty' + (version==='current'?' wastebox':'') + '">Câu này không cần công cụ — trả lời bằng lời/gõ là đủ.</div>';
+      return;
+    }
+    if(tool==='code'){
+      wrap.innerHTML = '<div class="paneh">workspace <span class="blocktag">MockInterviewWorkspace</span> · Monaco <span class="blocktag">@monaco-editor/react</span></div>'
+        + '<div class="toolwrap ' + fillClass + '-code' + (version==='current'?' wastebox':'') + '" id="toolWrap">'
+        + '  <div class="langbar"><span class="sel">TypeScript ⌄</span></div>'
+        + '  <div class="editor" id="editorBody"></div>'
+        + '</div>';
+      renderEditor();
+      return;
+    }
+    // whiteboard
+    wrap.innerHTML = '<div class="paneh">workspace <span class="blocktag">MockInterviewDiagram</span> · <span class="blocktag">ReactFlow</span></div>'
+      + '<div class="toolwrap ' + fillClass + '-wb' + (version==='current'?' wastebox':'') + '">'
+      + '  <div class="langbar"><span>Bảng vẽ kiến trúc</span><span style="margin-left:auto" class="sel">+ Thêm ô</span></div>'
+      + '  <div class="wbcanvas">canvas xyflow — kéo-thả node/edge</div>'
+      + '</div>';
+  }
+
+  function renderLeftPane(){
+    var pane = document.getElementById('leftPane');
+    pane.classList.toggle('center', version==='proposed');
+  }
+
+  function renderWork(){
+    var work = document.getElementById('work');
+    var useRatio = (tool==='empty') ? 'r11' : ratio;
+    work.className = 'work ' + useRatio;
+    document.getElementById('rEq').disabled = tool==='empty';
+    document.getElementById('rSkew').disabled = tool==='empty';
+  }
+
+  function setVersion(v){ version=v; document.getElementById('vCur').classList.toggle('on', v==='current'); document.getElementById('vProp').classList.toggle('on', v==='proposed'); renderLeftPane(); renderRightPane(); }
+  function setTool(t){ tool=t; document.getElementById('tEmpty').classList.toggle('on', t==='empty'); document.getElementById('tCode').classList.toggle('on', t==='code'); document.getElementById('tWb').classList.toggle('on', t==='wb'); renderWork(); renderRightPane(); }
+  function setRatio(r){ ratio=r; document.getElementById('rEq').classList.toggle('on', r==='r11'); document.getElementById('rSkew').classList.toggle('on', r==='r23'); renderWork(); }
+  function setDevice(d){ device=d; document.getElementById('stage').className='stage '+d; document.getElementById('dDesk').classList.toggle('on', d==='desktop'); document.getElementById('dMob').classList.toggle('on', d==='mobile'); }
+
+  renderLeftPane(); renderRightPane(); renderWork();
+</script>
+</body>
+</html>

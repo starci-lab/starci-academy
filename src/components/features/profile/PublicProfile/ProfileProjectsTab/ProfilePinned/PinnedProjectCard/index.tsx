@@ -75,7 +75,7 @@ export const PinnedProjectCard = ({ pin, className }: PinnedProjectCardProps) =>
                 <Typography
                     type="body-sm"
                     weight="medium"
-                    className="line-clamp-2 underline-offset-2 group-hover:underline"
+                    className="line-clamp-2 text-accent-soft-foreground underline-offset-2 group-hover:underline"
                 >
                     {title}
                 </Typography>

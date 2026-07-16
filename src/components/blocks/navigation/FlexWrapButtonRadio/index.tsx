@@ -49,9 +49,10 @@ export interface FlexWrapButtonRadioProps<T extends string> extends WithClassNam
 
 /**
  * A single-select toggle-button group laid out as a flex-wrap row (buttons wrap
- * to the next line, never scroll). Every option is a real HeroUI `<Button>`,
- * native `secondary`/`ghost` variants — clean, no own surface (the parent card,
- * or the bare page, is the surface). NEVER `primary` here — a config row commonly
+ * to the next line, never scroll). Every option is a real HeroUI `<Button>`:
+ * standalone, selected = filled `tertiary` (NEUTRAL, not accent — a facet/config
+ * toggle isn't a CTA), unselected = hollow `ghost` — clean, no own surface (the
+ * parent card, or the bare page, is the surface). NEVER `primary` here — a config row commonly
  * sits on the SAME surface as the page's one accent CTA, and a solid-primary
  * selected pill would compete with it (1 accent-solid / surface, Von Restorff —
  * `accent-system`).
@@ -93,13 +94,14 @@ export const FlexWrapButtonRadio = <T extends string>({
             {items.map((item) => {
                 const selected = item.value === value
                 if (!itemAction) {
-                    // standalone: unselected is a hollow `ghost` (no surface of its
-                    // own — the page/card is the surface).
+                    // standalone: selected = filled `tertiary` (neutral, NOT accent —
+                    // a facet toggle isn't a CTA), unselected = hollow `ghost` (no
+                    // surface of its own — the page/card is the surface).
                     return (
                         <Button
                             key={item.value}
                             size="sm"
-                            variant={selected ? "secondary" : "ghost"}
+                            variant={selected ? "tertiary" : "ghost"}
                             isDisabled={item.isDisabled}
                             aria-pressed={selected}
                             onPress={() => onChange(item.value)}

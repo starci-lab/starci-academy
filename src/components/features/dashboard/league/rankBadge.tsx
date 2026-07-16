@@ -25,3 +25,15 @@ export const rankBadgeIconId = (rank: number): string =>
 export const rankBadgeIcon = (rank: number): React.ReactNode => (
     <Icon icon={rankBadgeIconId(rank)} aria-hidden />
 )
+
+/**
+ * The small place-medal art for a leaderboard ROW's rank cell — `🥇🥈🥉` for rank
+ * 1–3, `null` for rank 4+ (the caller shows the plain number). Compact `size-5`
+ * for an inline rank column. Used on the dashboard cards' "1,2,3" list (the /league
+ * page shows top-3 on the podium instead).
+ */
+export const placeMedalIcon = (rank: number): React.ReactNode | null => (
+    rank <= 3
+        ? <Icon icon={rankBadgeIconId(rank)} aria-hidden className="size-5" />
+        : null
+)

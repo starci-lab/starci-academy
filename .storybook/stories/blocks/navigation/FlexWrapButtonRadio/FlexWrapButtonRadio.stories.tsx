@@ -11,7 +11,7 @@ const meta: Meta<typeof FlexWrapButtonRadio> = {
         docs: {
             description: {
                 component:
-                    "Single-select toggle-button group laid out as a flex-wrap row of independent HeroUI Buttons (secondary/ghost) with no own surface. With `itemAction`, each item becomes one connected ButtonGroup (`[select | 🗑 | ⋮]`) with full-height dividers.",
+                    "Single-select toggle-button group laid out as a flex-wrap row of independent HeroUI Buttons. Standalone: selected = filled `tertiary` (neutral, not accent — a facet/config toggle isn't a CTA), unselected = hollow `ghost`. With `itemAction`, each item becomes one connected ButtonGroup (`[select | 🗑 | ⋮]`) with full-height dividers.",
             },
         },
     },

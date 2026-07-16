@@ -51,7 +51,7 @@ export const UserAvatar = ({ username, avatar, seed, size, className }: UserAvat
     const src = candidates[index]
 
     return (
-        <Avatar size={size} className={cn(className)}>
+        <Avatar size={size} className={cn("rounded-full", className)}>
             {/*
               Radix only mounts the <img> once it has loaded, so a broken src never
               fires onError on the element — it reports failure via onLoadingStatusChange.

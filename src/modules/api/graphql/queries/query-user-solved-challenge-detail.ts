@@ -26,6 +26,13 @@ const query1 = gql`
           location
           suggestion
         }
+        attempts {
+          attemptNumber
+          score
+          submissionUrl
+          shortFeedback
+          processedAt
+        }
       }
     }
   }

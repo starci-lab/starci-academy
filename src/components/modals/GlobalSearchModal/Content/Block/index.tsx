@@ -93,7 +93,7 @@ export const GlobalSearchContentBlock = (props: GlobalSearchContentBlockProps) =
                     if (part.startsWith("<em>") && part.endsWith("</em>")) {
                         const content = part.replace(/<\/?em>/g, "")
                         return (
-                            <span key={index} className="font-semibold text-accent-soft-foreground underline decoration-accent/60">
+                            <span key={index} className="font-semibold text-accent-soft-foreground underline underline-offset-2 decoration-accent/60">
                                 {content}
                             </span>
                         )
@@ -141,7 +141,7 @@ export const GlobalSearchContentBlock = (props: GlobalSearchContentBlockProps) =
                                     <Typography
                                         type="body-sm"
                                         truncate
-                                        className="min-w-0 flex-1 underline-offset-2 group-hover:underline"
+                                        className="min-w-0 flex-1 text-accent-soft-foreground underline-offset-2 group-hover:underline"
                                     >
                                         {titleLine}
                                     </Typography>

@@ -87,10 +87,17 @@ export const ProfileTabsBar = ({ username, isSelf, className }: ProfileTabsBarPr
         [isSelf],
     )
 
-    // active tab = the one whose href matches the current pathname; falls back to
-    // "overview" (bare `/profile/<username>`, no extra segment).
+    // active tab = the tab whose path is a PREFIX of the current pathname (so a
+    // nested sub-route like `/challenges/<courseId>/<id>` still lights up its tab).
+    // "overview" is the bare `/profile/<username>` path — a prefix of everything —
+    // so it's only the FALLBACK when no deeper tab matches.
     const activeTab = useMemo<ProfileTab>(() => {
-        const match = visibleTabs.find((tabId) => pathname === tabHref(locale, username, tabId))
+        const match = visibleTabs
+            .filter((tabId) => tabId !== "overview")
+            .find((tabId) => {
+                const href = tabHref(locale, username, tabId)
+                return pathname === href || pathname.startsWith(`${href}/`)
+            })
         return match ?? "overview"
     }, [visibleTabs, pathname, locale, username])
 

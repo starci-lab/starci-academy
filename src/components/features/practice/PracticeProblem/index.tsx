@@ -409,6 +409,7 @@ export const PracticeProblem = () => {
                             setTouchedLanguages((prev) => new Set(prev).add(language))
                         }}
                         onMount={(editor) => {
+                            editor.getDomNode()?.querySelector("textarea")?.setAttribute("spellcheck", "false")
                             editor.onDidPaste((e) => {
                                 const model = editor.getModel()
                                 const pastedText = model ? model.getValueInRange(e.range) : ""
@@ -431,6 +432,9 @@ export const PracticeProblem = () => {
                             fontSize: 14,
                             scrollBeyondLastLine: false,
                             padding: { top: 12, bottom: 12 },
+                            bracketPairColorization: { enabled: true },
+                            cursorBlinking: "smooth",
+                            smoothScrolling: true,
                         }}
                     />
                 </div>

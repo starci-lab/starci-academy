@@ -23,6 +23,20 @@ export interface QueryUserSolvedChallengeDetailFeedbackData {
     suggestion: string | null
 }
 
+/** One recorded attempt against a solved challenge submission, newest first. */
+export interface QueryUserSolvedChallengeDetailAttemptData {
+    /** The sequence number of this attempt for this submission. */
+    attemptNumber: number
+    /** Score achieved in this attempt, or null when not graded. */
+    score: number | null
+    /** The link (GitHub repo or Google Docs URL) submitted in this attempt. */
+    submissionUrl: string
+    /** Short feedback summary for this attempt, or null. */
+    shortFeedback: string | null
+    /** When this attempt finished processing (ISO), or null. */
+    processedAt: string | null
+}
+
 /** Detail of one passed challenge submission, including AI feedback from the passing attempt. */
 export interface QueryUserSolvedChallengeDetailData {
     /** Submission id (`user_challenge_submissions.id`). */
@@ -45,6 +59,8 @@ export interface QueryUserSolvedChallengeDetailData {
     passedAt: string | null
     /** Structured AI feedback items from the passing attempt, ordered by orderIndex. */
     feedbacks: Array<QueryUserSolvedChallengeDetailFeedbackData>
+    /** This submission's attempts record, newest first. */
+    attempts: Array<QueryUserSolvedChallengeDetailAttemptData>
 }
 
 /** Apollo response shape for the `userSolvedChallengeDetail` query. */

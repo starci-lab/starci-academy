@@ -108,7 +108,7 @@ const FindingAccordionItem = ({
                             <div className="flex items-center gap-2 text-xs text-muted">
                                 <MapPinIcon aria-hidden focusable="false" className="size-4 shrink-0" />
                                 {locationHref ? (
-                                    <Link href={locationHref} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                                    <Link href={locationHref} target="_blank" rel="noopener noreferrer" className="hover:underline underline-offset-2">
                                         {feedback.location}
                                     </Link>
                                 ) : (
@@ -341,7 +341,7 @@ export const SubmissionResult = ({
                                         href={selectedAttempt.submissionUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex shrink-0 items-center gap-2 text-sm text-accent-soft-foreground hover:underline"
+                                        className="flex shrink-0 items-center gap-2 text-sm text-accent-soft-foreground hover:underline underline-offset-2"
                                     >
                                         {t("submissionAttempts.viewSubmission")}
                                         <ArrowSquareOutIcon aria-hidden focusable="false" className="size-5" />

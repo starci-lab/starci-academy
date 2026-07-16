@@ -71,7 +71,7 @@ export const JobListRow = ({ job }: JobListRowProps) => {
                     size="sm"
                 />
                 <div className="flex min-w-0 flex-1 flex-col gap-1">
-                    <Typography type="body-sm" weight="medium" className="underline-offset-2 group-hover:underline">
+                    <Typography type="body-sm" weight="medium" className="text-accent-soft-foreground underline-offset-2 group-hover:underline">
                         {job.title}
                     </Typography>
                     <Typography type="body-xs" color="muted" truncate>

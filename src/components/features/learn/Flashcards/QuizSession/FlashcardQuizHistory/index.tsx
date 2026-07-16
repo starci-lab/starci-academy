@@ -33,6 +33,10 @@ export interface FlashcardQuizHistoryProps extends WithClassNames<undefined> {
 /** History items fetched per "load more" page. */
 const PAGE_SIZE = 10
 
+/** Score (correctCount/cardCount) → color, mirrors FlashcardQuizStats' coverageColorOf. */
+const scoreColorOf = (ratio: number): "success" | "warning" | "danger" =>
+    ratio >= 0.8 ? "success" : ratio >= 0.6 ? "warning" : "danger"
+
 /**
  * "Hỏi nhanh" run history — the setup screen's "Lịch sử" tab. Offset-paginated
  * ("load more"), each row expandable inline to reveal that run's weakest tags
@@ -137,6 +141,7 @@ export const FlashcardQuizHistory = ({ courseId, onStartQuiz, className }: Flash
     const renderRow = (item: QueryFlashcardQuizHistoryItem) => {
         const expanded = expandedId === item.id
         const coveragePercent = item.coverage !== null ? Math.round(item.coverage * 100) : null
+        const scoreRatio = item.cardCount > 0 ? item.correctCount / item.cardCount : 0
         return (
             <SurfaceListCardItem
                 key={item.id}
@@ -169,6 +174,9 @@ export const FlashcardQuizHistory = ({ courseId, onStartQuiz, className }: Flash
                                 {t("flashcard.quiz.xpToast", { xp: item.xpEarned })}
                             </Chip>
                         ) : null}
+                        <Chip size="sm" variant="soft" color={scoreColorOf(scoreRatio)}>
+                            {`${item.correctCount}/${item.cardCount}`}
+                        </Chip>
                         <CaretDownIcon
                             className={cn("size-4 text-muted transition-transform", expanded && "rotate-180")}
                             weight="bold"
@@ -194,7 +202,7 @@ export const FlashcardQuizHistory = ({ courseId, onStartQuiz, className }: Flash
                                     }}
                                     className="group flex items-center justify-between gap-3 rounded-xl border border-default bg-default px-3 py-2 text-left"
                                 >
-                                    <Typography type="body-xs" weight="medium" className="truncate underline-offset-2 group-hover:underline">
+                                    <Typography type="body-xs" weight="medium" className="truncate text-accent-soft-foreground underline-offset-2 group-hover:underline">
                                         {tag.tag}
                                     </Typography>
                                     <Typography type="body-xs" color="muted" className="shrink-0">

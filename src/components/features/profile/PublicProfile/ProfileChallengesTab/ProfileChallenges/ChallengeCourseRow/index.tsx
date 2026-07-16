@@ -25,12 +25,12 @@ import type { QueryUserSolvedChallengeItemData } from "@/modules/api/graphql/que
 
 /** Props for {@link ChallengeCourseRow}. */
 export interface ChallengeCourseRowProps extends WithClassNames<undefined> {
-    /** Profile owner's username — routes the row to `.challenges().course(courseGlobalId)`. */
+    /** Profile owner's username — routes the row to `.challenges().course(courseSlug)`. */
     username: string | null
     /** Course title for this group, or null for ungrouped (V1-legacy) rows. */
     courseTitle: string | null
-    /** Opaque global id of the course, or null when unresolved (V1-legacy) — the row is non-interactive without it. */
-    courseGlobalId: string | null
+    /** SEO-friendly slug of the course, or null when unresolved (V1-legacy) — the row is non-interactive without it. */
+    courseSlug: string | null
     /** Solved-challenge rows under this course, in source order (list-item data). */
     items: Array<QueryUserSolvedChallengeItemData>
     /**
@@ -44,7 +44,7 @@ export interface ChallengeCourseRowProps extends WithClassNames<undefined> {
  * One course group on the Challenges tab: a framed puzzle {@link IconTile}, the
  * course title, a 4-tone difficulty {@link SegmentBar} and a passed-count summary.
  * The WHOLE glance row is a nav link (row-as-link, hover underlines the title) to
- * the per-course MANAGE page (`.challenges().course(courseGlobalId)`) — search /
+ * the per-course MANAGE page (`.challenges().course(courseSlug)`) — search /
  * filter / sort of that course's submissions lives there, not inline here.
  *
  * @param props - {@link ChallengeCourseRowProps}
@@ -52,7 +52,7 @@ export interface ChallengeCourseRowProps extends WithClassNames<undefined> {
 export const ChallengeCourseRow = ({
     username,
     courseTitle,
-    courseGlobalId,
+    courseSlug,
     items,
     totalChallenges,
     className,
@@ -61,8 +61,8 @@ export const ChallengeCourseRow = ({
     const locale = useLocale()
 
     const segments = buildDifficultySegments(items)
-    const href = username && courseGlobalId
-        ? pathConfig().locale(locale).profile(username).challenges().course(courseGlobalId).build()
+    const href = username && courseSlug
+        ? pathConfig().locale(locale).profile(username).challenges().course(courseSlug).build()
         : undefined
 
     return (
@@ -81,7 +81,7 @@ export const ChallengeCourseRow = ({
                         type="body-sm"
                         weight="medium"
                         truncate
-                        className={href ? "underline-offset-2 group-hover:underline" : undefined}
+                        className={href ? "text-accent-soft-foreground underline-offset-2 group-hover:underline" : undefined}
                     >
                         {courseTitle ?? t("publicProfile.challengesTab.ungrouped")}
                     </Typography>

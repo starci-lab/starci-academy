@@ -59,7 +59,7 @@ export const EntityToken = ({
                 type="button"
                 disabled={!routable || pending}
                 onClick={onPress}
-                className={cn("truncate py-1 text-left text-sm text-muted transition-colors hover:text-foreground hover:underline disabled:opacity-60", className)}
+                className={cn("truncate py-1 text-left text-sm text-muted transition-colors hover:text-foreground hover:underline underline-offset-2 disabled:opacity-60", className)}
             >
                 {label}
             </button>
@@ -77,7 +77,7 @@ export const EntityToken = ({
         <Link
             onPress={onPress}
             isDisabled={pending}
-            className={cn("font-semibold text-foreground hover:underline disabled:opacity-60 text-sm", className)}
+            className={cn("font-semibold text-foreground hover:underline underline-offset-2 disabled:opacity-60 text-sm", className)}
         >
             {label}
         </Link>

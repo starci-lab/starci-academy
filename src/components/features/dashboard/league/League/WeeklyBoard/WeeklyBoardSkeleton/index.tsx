@@ -17,8 +17,7 @@ export type WeeklyBoardSkeletonProps = WithClassNames<undefined>
 
 /**
  * Loading placeholder for {@link import("../").WeeklyBoard}: mirrors the tier
- * badge + reset countdown row, the promote/demote legend, and N rows shaped
- * like {@link import("@/components/features/dashboard/LeagueRow").LeagueRow}
+ * badge + reset countdown row, the promote/demote legend, and N ranked rows
  * [rank · avatar · name · points · caret] — so the board does not jump when
  * the cohort resolves.
  *

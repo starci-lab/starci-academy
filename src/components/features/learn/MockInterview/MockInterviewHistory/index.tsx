@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Button, Chip, cn } from "@heroui/react"
 import { CaretRightIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
@@ -74,8 +74,20 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
          
     }, [attemptsSwr.data, offset])
 
-    // course/filter changed → start the accumulator over
+    // course/filter changed → start the accumulator over. MUST skip the initial
+    // mount: the setup tab strip conditionally renders this component (unmount on
+    // tab away, remount on return), so on remount `attemptsSwr.data` is already
+    // SWR-cached — the accumulate effect above sets `items` from it, then a
+    // mount-time reset here would clobber it back to `[]` with no dep left to
+    // re-fire the accumulate → the history reads as EMPTY after switching tabs and
+    // back (thầy 2026-07-17: "chuyển tab xong về mất lịch sử"). Only clear on a
+    // GENUINE course/filter change AFTER mount.
+    const didMountRef = useRef(false)
     useEffect(() => {
+        if (!didMountRef.current) {
+            didMountRef.current = true
+            return
+        }
         setOffset(0)
         setItems([])
     }, [courseId, modeFilter])

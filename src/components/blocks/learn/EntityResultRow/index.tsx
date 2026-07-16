@@ -86,7 +86,7 @@ export const EntityResultRow = ({
                     type="body-sm"
                     weight="medium"
                     truncate
-                    className="underline-offset-2 group-hover:underline"
+                    className="text-accent-soft-foreground underline-offset-2 group-hover:underline"
                 >
                     {item.title}
                 </Typography>

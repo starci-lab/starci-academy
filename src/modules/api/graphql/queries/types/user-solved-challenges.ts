@@ -26,8 +26,10 @@ export interface QueryUserSolvedChallengeItemData {
     score: number | null
     /** Title of the course the challenge belongs to, or null when not resolvable. */
     courseTitle: string | null
-    /** Opaque global id of the course this challenge belongs to — pass to `.challenges().course(courseGlobalId)`. Null when unresolved. */
+    /** Opaque global id of the course this challenge belongs to. Null when unresolved. */
     courseGlobalId: string | null
+    /** SEO-friendly slug of the course this challenge belongs to — pass to `.challenges().course(courseSlug)` to route to the per-course manage page. Null when the parent course is unresolved or has no slug. */
+    courseSlug: string | null
 }
 
 /** Apollo response shape for the `userSolvedChallenges` query. */

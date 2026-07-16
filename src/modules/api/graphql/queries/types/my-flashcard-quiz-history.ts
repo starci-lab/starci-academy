@@ -24,6 +24,8 @@ export interface QueryFlashcardQuizHistoryItem {
     level: string | null
     /** Number of cards drawn for this session. */
     cardCount: number
+    /** How many cards the learner got fully correct (all cloze blanks) — the discrete score (correctCount/cardCount). */
+    correctCount: number
     /** Overall coverage ratio achieved this session (0..1), null when nothing was answered. */
     coverage: number | null
     /** XP awarded for this session. */

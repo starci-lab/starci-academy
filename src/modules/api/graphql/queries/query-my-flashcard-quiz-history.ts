@@ -17,6 +17,7 @@ const query1 = gql`
           mode
           level
           cardCount
+          correctCount
           coverage
           xpEarned
           weakTags {

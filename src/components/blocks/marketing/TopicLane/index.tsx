@@ -48,7 +48,7 @@ export const TopicLane = ({ icon, title, items, className }: TopicLaneProps) => 
                         onClick={item.onPress}
                         className="group flex w-full cursor-pointer items-center justify-between gap-3 rounded-xl border border-default bg-surface px-3 py-2 text-left outline-none transition-colors focus-visible:ring-2 focus-visible:ring-accent"
                     >
-                        <Typography type="body-sm" className="min-w-0 truncate underline-offset-2 group-hover:underline">
+                        <Typography type="body-sm" className="min-w-0 truncate text-accent-soft-foreground underline-offset-2 group-hover:underline">
                             {item.label}
                         </Typography>
                         <Typography type="code" className="shrink-0 text-[10px] text-muted">

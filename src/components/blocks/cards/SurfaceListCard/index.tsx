@@ -131,7 +131,7 @@ export const SurfaceListCardRow = ({
                 <Typography
                     type="body-sm"
                     truncate
-                    className={cn(underlineHover && "underline-offset-2 group-hover:underline", titleClassName)}
+                    className={cn(underlineHover && "text-accent-soft-foreground underline-offset-2 group-hover:underline", titleClassName)}
                 >
                     {title}
                 </Typography>

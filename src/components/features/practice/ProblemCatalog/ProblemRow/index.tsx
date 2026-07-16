@@ -89,7 +89,7 @@ export const ProblemRow = ({
                         type="body-sm"
                         weight="medium"
                         truncate
-                        className="w-fit underline-offset-2 group-hover:underline"
+                        className="w-fit text-accent-soft-foreground underline-offset-2 group-hover:underline"
                     >
                         {problem.title}
                     </Typography>

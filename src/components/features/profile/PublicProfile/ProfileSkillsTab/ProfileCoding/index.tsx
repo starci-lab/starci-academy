@@ -387,7 +387,7 @@ export const ProfileCoding = ({
                                             <div className="flex items-center gap-3">
                                                 {/* title + date */}
                                                 <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                                    <Typography type="body-sm" weight="medium" truncate className="underline-offset-2 group-hover:underline">
+                                                    <Typography type="body-sm" weight="medium" truncate className="text-accent-soft-foreground underline-offset-2 group-hover:underline">
                                                         {item.problemTitle}
                                                     </Typography>
                                                     {solvedAt ? (

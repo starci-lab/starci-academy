@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dashboard-league-compact — 1,2,3 medal-in-list (no podium)</title>
+<style>
+  :root{
+    --bg:#faf7f8;--surface:#fff;--surface-2:#f4eef1;--border:#ece7ea;--fg:#1c1a1b;--muted:#8a8386;
+    --accent:#d6006e;--accent-soft:#fbe6f1;--accent-soft-fg:#b8005e;
+    --success:#16a34a;--danger:#dc2626;--default:#eef0f2;--r3:24px;--r2:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--fg);font:15px/1.45 system-ui,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:720px;margin:0 auto;padding:16px 12px 90px}
+  .bar{position:sticky;top:0;z-index:10;background:rgba(250,247,248,.93);backdrop-filter:blur(6px);border-bottom:1px solid var(--border);padding:10px 12px;margin:-16px -12px 18px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .bar b{font-size:13px;margin-right:4px}
+  .tab{border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer;color:var(--fg)}
+  .tab.on{background:var(--fg);color:#fff;border-color:var(--fg)}
+  .toggle{margin-left:auto;display:flex;gap:6px;align-items:center;font-size:12px;color:var(--muted)}
+  .toggle button{border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:5px 10px;font-size:12px;cursor:pointer;color:var(--fg)}
+  .toggle button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .screen{display:none}.screen.on{display:block}
+  .note{background:var(--surface);border:1px dashed var(--border);border-radius:14px;padding:12px 14px;font-size:12.5px;color:var(--muted);margin-bottom:18px}
+  .note b{color:var(--fg)}.note code{background:var(--surface-2);padding:1px 5px;border-radius:5px;font-size:11px}
+  /* LabeledCard */
+  .lcard{margin-bottom:22px}
+  .lh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .lt{font-size:14px;font-weight:700}
+  .sm{font-size:13px;color:var(--accent);cursor:pointer}
+  /* standing line */
+  .standing{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .tierbadge{width:34px;height:34px;border-radius:10px;background:var(--default);display:flex;align-items:center;justify-content:center;font-size:19px;flex:none}
+  .standing .s-main{font-size:14px;font-weight:600}
+  .standing .s-sub{font-size:12px;color:var(--muted)}
+  .legend{display:flex;gap:14px;font-size:11px;color:var(--muted);margin-bottom:10px}
+  .legend span{display:flex;gap:6px;align-items:center}.dot{width:8px;height:8px;border-radius:999px}
+  /* SurfaceListCard */
+  .listcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden}
+  .row{display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid var(--border)}
+  .row:last-child{border-bottom:none}
+  .row .rk{width:26px;text-align:center;font-size:13px;color:var(--muted);flex:none;font-weight:600}
+  .row .rk.medal{font-size:20px;line-height:1}
+  .row .av{width:30px;height:30px;border-radius:9999px;background:var(--surface-2);flex:none;display:flex;align-items:center;justify-content:center;font-size:15px;overflow:hidden}
+  .row .nm{flex:1;min-width:0;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .row .pt{font-size:14px;color:var(--muted);flex:none}
+  .row .car{width:26px;text-align:right;font-size:12px;flex:none;color:var(--success)}
+  .row.mine{background:var(--accent-soft)}
+  .row.mine .rk,.row.mine .pt{color:var(--accent-soft-fg);font-weight:700}
+  .fbtn{border:1px solid var(--border);background:var(--surface);color:var(--fg);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;flex:none;cursor:pointer}
+  .ellipsis{display:flex;align-items:center;justify-content:center;gap:8px;padding:8px 14px;color:var(--muted);font-size:12px;border-bottom:1px solid var(--border);background:var(--surface-2)}
+  .selfcard{margin-top:12px}
+  .sublabel{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:6px}
+  .blocktag{display:inline-block;font-size:10px;font-weight:700;background:var(--surface-2);color:var(--muted);border-radius:6px;padding:1px 6px;margin-bottom:8px}
+  .hide{display:none!important}
+  .cut{color:var(--danger);font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <b>Dashboard · Cộng đồng</b>
+    <button class="tab on" data-s="league">League tuần</button>
+    <button class="tab" data-s="top">Top học viên</button>
+    <button class="tab" data-s="outtop">Ngoài top</button>
+    <span class="toggle">chế độ:
+      <button id="bAfter" class="on">After ✦</button>
+      <button id="bBefore">Before</button>
+    </span>
+  </div>
+  <div class="note" id="note"></div>
+
+  <!-- ============ LEAGUE TUẦN ============ -->
+  <section class="screen on" data-screen="league">
+    <!-- BEFORE -->
+    <div class="lcard beforeOnly hide">
+      <div class="lh"><span class="lt">League tuần</span><span class="sm">Xem bảng xếp hạng ›</span></div>
+      <div class="standing"><span class="tierbadge">🎖️</span><div><div class="s-main">Hạng #1 · top 20%</div><div class="s-sub">Reset sau 1 ngày 18 giờ</div></div></div>
+      <div class="legend"><span><i class="dot" style="background:var(--success)"></i>Top 10 thăng hạng</span><span><i class="dot" style="background:var(--danger)"></i>5 cuối rớt hạng</span></div>
+      <span class="blocktag cut">list BẮT ĐẦU TỪ #2 (thiếu champion #1)</span>
+      <div class="listcard">
+        <div class="row"><span class="rk">2</span><span class="av">🦊</span><span class="nm">minh_dev</span><span class="pt">340 điểm</span><span class="car" style="color:var(--danger)">▾1</span></div>
+        <div class="row"><span class="rk">3</span><span class="av">🐤</span><span class="nm">huyen_codes</span><span class="pt">220 điểm</span><span class="car" style="color:var(--danger)">▾1</span></div>
+        <div class="row"><span class="rk">4</span><span class="av">🐼</span><span class="nm">pakoohacha588</span><span class="pt">150 điểm</span><span class="car" style="color:var(--danger)">▾1</span></div>
+        <div class="row"><span class="rk">5</span><span class="av">😺</span><span class="nm">linh_fe</span><span class="pt">80 điểm</span><span class="car">▴1</span></div>
+      </div>
+      <div class="selfcard"><div class="sublabel">Hạng của bạn</div>
+        <div class="listcard"><div class="row mine"><span class="rk">1</span><span class="av">🐨</span><span class="nm">cuongnvtse160875</span><span class="pt">640 điểm</span></div></div>
+      </div>
+    </div>
+    <!-- AFTER -->
+    <div class="lcard afterOnly">
+      <div class="lh"><span class="lt">League tuần</span><span class="sm">Xem bảng xếp hạng ›</span></div>
+      <div class="standing"><span class="tierbadge">🎖️</span><div><div class="s-main">Hạng #1 · top 20%</div><div class="s-sub">640 điểm · Reset sau 1 ngày 18 giờ</div></div></div>
+      <div class="legend"><span><i class="dot" style="background:var(--success)"></i>Top 10 thăng hạng</span><span><i class="dot" style="background:var(--danger)"></i>5 cuối rớt hạng</span></div>
+      <span class="blocktag">top-3 = 🥇🥈🥉 · viewer IN-PLACE · 1 list liền mạch</span>
+      <div class="listcard">
+        <div class="row mine"><span class="rk medal">🥇</span><span class="av">🐨</span><span class="nm">cuongnvtse160875 · Bạn</span><span class="pt">640 điểm</span><span class="car" style="color:var(--muted)">—</span></div>
+        <div class="row"><span class="rk medal">🥈</span><span class="av">🦊</span><span class="nm">minh_dev</span><span class="pt">340 điểm</span><span class="car" style="color:var(--danger)">▾1</span></div>
+        <div class="row"><span class="rk medal">🥉</span><span class="av">🐤</span><span class="nm">huyen_codes</span><span class="pt">220 điểm</span><span class="car" style="color:var(--danger)">▾1</span></div>
+        <div class="row"><span class="rk">4</span><span class="av">🐼</span><span class="nm">pakoohacha588</span><span class="pt">150 điểm</span><span class="car" style="color:var(--danger)">▾1</span></div>
+        <div class="row"><span class="rk">5</span><span class="av">😺</span><span class="nm">linh_fe</span><span class="pt">80 điểm</span><span class="car">▴1</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TOP HỌC VIÊN ============ -->
+  <section class="screen" data-screen="top">
+    <div class="lcard beforeOnly hide">
+      <div class="lh"><span class="lt">Top học viên tuần</span><span class="sm">Xem bảng xếp hạng ›</span></div>
+      <div class="standing"><div><div class="s-main">Hạng #9 toàn nền tảng · 20 XP</div></div></div>
+      <span class="blocktag cut">rank 1..5 số trơn, top-3 không nổi</span>
+      <div class="listcard">
+        <div class="row"><span class="rk">1</span><span class="av">🦊</span><span class="nm">minh_dev</span><span class="pt">1420 XP</span><button class="fbtn">＋ Theo dõi</button></div>
+        <div class="row"><span class="rk">2</span><span class="av">🐤</span><span class="nm">huyen_codes</span><span class="pt">1180 XP</span><button class="fbtn">＋ Theo dõi</button></div>
+        <div class="row"><span class="rk">3</span><span class="av">🐼</span><span class="nm">pakoohacha588</span><span class="pt">980 XP</span><button class="fbtn">＋ Theo dõi</button></div>
+        <div class="row"><span class="rk">4</span><span class="av">🐔</span><span class="nm">thanh_be</span><span class="pt">760 XP</span><button class="fbtn">＋ Theo dõi</button></div>
+        <div class="row"><span class="rk">5</span><span class="av">😺</span><span class="nm">linh_fe</span><span class="pt">540 XP</span><button class="fbtn">＋ Theo dõi</button></div>
+      </div>
+    </div>
+    <div class="lcard afterOnly">
+      <div class="lh"><span class="lt">Top học viên tuần</span><span class="sm">Xem bảng xếp hạng ›</span></div>
+      <div class="standing"><div><div class="s-main">Hạng #9 toàn nền tảng</div><div class="s-sub">20 XP</div></div></div>
+      <span class="blocktag">top-3 = 🥇🥈🥉 · follow trên mỗi hàng · cùng "1,2,3" với League tuần</span>
+      <div class="listcard">
+        <div class="row"><span class="rk medal">🥇</span><span class="av">🦊</span><span class="nm">minh_dev</span><span class="pt">1420 XP</span><button class="fbtn">＋ Theo dõi</button></div>
+        <div class="row"><span class="rk medal">🥈</span><span class="av">🐤</span><span class="nm">huyen_codes</span><span class="pt">1180 XP</span><button class="fbtn">＋ Theo dõi</button></div>
+        <div class="row"><span class="rk medal">🥉</span><span class="av">🐼</span><span class="nm">pakoohacha588</span><span class="pt">980 XP</span><button class="fbtn">＋ Theo dõi</button></div>
+        <div class="row"><span class="rk">4</span><span class="av">🐔</span><span class="nm">thanh_be</span><span class="pt">760 XP</span><button class="fbtn">＋ Theo dõi</button></div>
+        <div class="row"><span class="rk">5</span><span class="av">😺</span><span class="nm">linh_fe</span><span class="pt">540 XP</span><button class="fbtn">＋ Theo dõi</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OUT-TOP ============ -->
+  <section class="screen" data-screen="outtop">
+    <div class="lcard afterOnly">
+      <div class="lh"><span class="lt">Top học viên tuần</span><span class="sm">Xem bảng xếp hạng ›</span></div>
+      <div class="standing"><div><div class="s-main">Hạng #47 toàn nền tảng</div><div class="s-sub">20 XP</div></div></div>
+      <span class="blocktag">viewer ngoài top-5 → self-row ghim + dải ⋯ (giống trang /league)</span>
+      <div class="listcard">
+        <div class="row"><span class="rk medal">🥇</span><span class="av">🦊</span><span class="nm">minh_dev</span><span class="pt">1420 XP</span><button class="fbtn">＋ Theo dõi</button></div>
+        <div class="row"><span class="rk medal">🥈</span><span class="av">🐤</span><span class="nm">huyen_codes</span><span class="pt">1180 XP</span><button class="fbtn">＋ Theo dõi</button></div>
+        <div class="row"><span class="rk medal">🥉</span><span class="av">🐼</span><span class="nm">pakoohacha588</span><span class="pt">980 XP</span><button class="fbtn">＋ Theo dõi</button></div>
+        <div class="row"><span class="rk">4</span><span class="av">🐔</span><span class="nm">thanh_be</span><span class="pt">760 XP</span><button class="fbtn">＋ Theo dõi</button></div>
+        <div class="row"><span class="rk">5</span><span class="av">😺</span><span class="nm">linh_fe</span><span class="pt">540 XP</span><button class="fbtn">＋ Theo dõi</button></div>
+        <div class="ellipsis"><span style="font-size:15px">⋯</span><span>còn 41 người</span></div>
+        <div class="row mine"><span class="rk">47</span><span class="av">🐨</span><span class="nm">cuongnvtse160875 · Bạn</span><span class="pt">20 XP</span></div>
+      </div>
+    </div>
+    <div class="beforeOnly hide"><div class="note"><b>Before không có khái niệm ngoài-top gọn</b> — bật After để xem self-row ghim.</div></div>
+  </section>
+</div>
+
+<script>
+  var screens=document.querySelectorAll('.screen'),tabs=document.querySelectorAll('.tab');
+  tabs.forEach(function(t){t.onclick=function(){
+    tabs.forEach(function(x){x.classList.remove('on')});t.classList.add('on');
+    screens.forEach(function(s){s.classList.toggle('on',s.dataset.screen===t.dataset.s)});
+  }});
+  var NOTE={
+    after:'<b>After — "1,2,3" MEDAL-IN-LIST (KHÔNG podium — podium để riêng cho trang /league).</b> Top-3 thay số bằng <b>🥇🥈🥉</b> (cùng bộ rank-badge art với hero trang /league) → đồng bộ NGÔN NGỮ, khác SHAPE (dashboard = list gọn, trang = podium dais). Viewer hiện <b>ĐÚNG CHỖ trong list</b> (accent + "Bạn"), bỏ card "Hạng của bạn" tách rời → list liền mạch, champion #1 không bị giấu. Ngoài top-5 → self-row ghim + ⋯.',
+    before:'<b>Before.</b> League tuần: viewer #1 bị kéo ra card "Hạng của bạn" riêng → list bắt đầu từ #2, mất champion ở đầu. Top học viên: rank 1..5 số trơn, top-3 không nổi. 2 card không có "1,2,3" nhận biết nhanh.'
+  };
+  var after=document.getElementById('bAfter'),before=document.getElementById('bBefore'),note=document.getElementById('note');
+  function apply(m){
+    var isB=m==='before';
+    after.classList.toggle('on',!isB);before.classList.toggle('on',isB);
+    document.querySelectorAll('.afterOnly').forEach(function(e){e.classList.toggle('hide',isB)});
+    document.querySelectorAll('.beforeOnly').forEach(function(e){e.classList.toggle('hide',!isB)});
+    note.innerHTML=isB?NOTE.before:NOTE.after;
+  }
+  after.onclick=function(){apply('after')};before.onclick=function(){apply('before')};
+  apply('after');
+</script>
+</body>
+</html>

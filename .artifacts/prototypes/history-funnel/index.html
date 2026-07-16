@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototype — Lịch sử (quiz + mock) + filter phễu</title>
+<style>
+  /* TOKENS mirror fe/foundations/color */
+  :root{--bg:#f4f4f6;--fg:#1a1a1e;--mut:#6b6b76;--line:#e2e2e8;--card:#fff;--acc:#c0407a;--ok:#3b7d4f;--warn:#b06a1f;--danger:#c0392b;--radius:14px;--surface-sh:0 1px 2px rgba(0,0,0,.05),0 1px 3px rgba(0,0,0,.04)}
+  @media (prefers-color-scheme:dark){:root{--bg:#161619;--fg:#eaeaef;--mut:#9a9aa6;--line:#2a2a30;--card:#1d1d21;--surface-sh:0 0 0 1px rgba(255,255,255,.04)}}
+  *{box-sizing:border-box}
+  body{margin:0;font:14px/1.5 ui-sans-serif,system-ui,-apple-system,sans-serif;color:var(--fg);background:var(--bg)}
+  .top{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+  .top b{font-size:15px}.top .sub{color:var(--mut);font-size:12px}
+  .wrap{max-width:760px;margin:0 auto;padding:28px 16px 80px}
+  .col2{display:grid;grid-template-columns:1fr;gap:40px}
+  @media(min-width:900px){.wrap{max-width:1180px}.col2{grid-template-columns:1fr 1fr;gap:32px}}
+  .surfcap{font:11px ui-monospace,Menlo,monospace;color:var(--mut);text-align:center;margin-bottom:14px}
+  h2{font-size:16px;margin:0 0 2px}
+  .desc{color:var(--mut);font-size:13px;margin:0 0 16px}
+  /* toolbar */
+  .toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+  .toolleft{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+  .search{flex:1;min-width:0;display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px;color:var(--mut);font-size:13px}
+  .funnel{position:relative;flex-shrink:0}
+  .funnel .fbtn{width:38px;height:38px;border-radius:10px;border:1px solid transparent;background:transparent;color:var(--fg);cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative}
+  .funnel .fbtn:hover{background:color-mix(in oklab,var(--fg) 6%,transparent)}
+  .fbadge{position:absolute;top:-3px;left:-3px;min-width:16px;height:16px;border-radius:8px;background:var(--acc);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px}
+  .pop{position:absolute;top:44px;right:0;width:270px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.18);padding:12px;display:none;flex-direction:column;gap:12px;z-index:10}
+  .pop.open{display:flex}
+  .grp{display:flex;flex-direction:column;gap:8px}
+  .grph{font-size:11px;color:var(--mut)}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{border:1px solid var(--line);background:var(--card);border-radius:9px;padding:5px 10px;font-size:12px;cursor:pointer;color:var(--fg)}
+  .chip.on{border-color:var(--acc);background:color-mix(in oklab,var(--acc) 9%,transparent);color:var(--acc);font-weight:600}
+  .clear{align-self:flex-start;border:0;border-radius:9px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;background:color-mix(in oklab,var(--danger) 12%,transparent);color:var(--danger)}
+  .count{color:var(--mut);font-size:13px;flex-shrink:0}
+  /* time bucket = LabeledCard frameless subtleLabel */
+  .bucket{margin-bottom:22px}
+  .bhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+  .blabel{font-size:12px;color:var(--mut)}
+  .bcount{font-size:11px;color:var(--mut)}
+  /* SurfaceListCard */
+  .slc{background:var(--card);border-radius:18px;box-shadow:var(--surface-sh);overflow:hidden}
+  .row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid color-mix(in oklab,var(--fg) 6%,transparent);cursor:pointer}
+  .row:last-child{border-bottom:0}
+  .row:hover{background:color-mix(in oklab,var(--fg) 4%,transparent)}
+  .rmain{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px}
+  .rt{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rs{font-size:12px;color:var(--mut)}
+  .rmeta{display:flex;align-items:center;gap:8px;flex-shrink:0}
+  .badge{border-radius:8px;padding:3px 8px;font-size:11px;font-weight:600}
+  /* score = quiz's coverage promoted to the prominent "điểm" slot (colored by value, like mock's AI score) */
+  .score{border-radius:9px;padding:4px 10px;font-size:13px;font-weight:700;min-width:44px;text-align:center}
+  .b-ok{background:color-mix(in oklab,var(--ok) 14%,transparent);color:var(--ok)}
+  .b-warn{background:color-mix(in oklab,var(--warn) 16%,transparent);color:var(--warn)}
+  .b-danger{background:color-mix(in oklab,var(--danger) 14%,transparent);color:var(--danger)}
+  .b-mut{background:color-mix(in oklab,var(--fg) 8%,transparent);color:var(--mut)}
+  .b-lvl{background:color-mix(in oklab,var(--acc) 12%,transparent);color:var(--acc)}
+  .caret{color:var(--mut);font-size:13px}
+  .meter{height:5px;border-radius:3px;background:color-mix(in oklab,var(--fg) 10%,transparent);margin-top:6px;max-width:220px;overflow:hidden}
+  .meter i{display:block;height:100%;background:var(--ok);border-radius:3px}
+  .loadmore{display:flex;justify-content:center;margin-top:6px}
+  .loadmore button{border:1px solid var(--line);background:color-mix(in oklab,var(--acc) 8%,transparent);color:var(--acc);border-radius:11px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer}
+  .blocktag{font:9px ui-monospace,Menlo,monospace;color:var(--mut);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:0 4px;margin-left:6px;vertical-align:middle}
+  .note{font-size:12px;color:var(--warn);background:color-mix(in oklab,var(--warn) 8%,transparent);border-radius:10px;padding:8px 12px;margin-bottom:20px}
+</style>
+</head>
+<body>
+<div class="top"><b>Prototype · Lịch sử + filter phễu</b><span class="sub">quiz "Hỏi nhanh" + mock-interview đổi theo chuẩn review · filter dời vào phễu (như profile challenges)</span></div>
+<div class="wrap">
+  <div class="note">So với hiện tại: <b>quiz</b> bỏ 2 hàng chip lọc inline · <b>mock</b> bỏ TabsCard all/qna/design + đổi list phẳng → nhóm theo thời gian + thêm search theo tên đề + load-more button. Cả 2 dùng chung toolbar phễu. Bấm nút phễu để xem facet.</div>
+  <div class="col2">
+
+    <!-- ============ MOCK INTERVIEW ============ -->
+    <section>
+      <div class="surfcap">/learn/mock-interview?tab=history</div>
+      <h2>Phỏng vấn thử · Lịch sử</h2>
+      <p class="desc">Toolbar: search theo tên đề + phễu (Loại) + count · nhóm theo thời gian · row → scorecard</p>
+      <div class="toolbar">
+        <div class="toolleft">
+          <div class="search"><span>🔍</span><span>Tìm theo tên đề…</span></div>
+          <div class="funnel">
+            <button class="fbtn" onclick="tog('mk')">⛃<span class="fbadge" id="mk-bdg" style="display:none">1</span></button>
+            <div class="pop" id="mk-pop">
+              <div class="grp"><div class="grph">Loại</div><div class="chips" data-single>
+                <span class="chip on" onclick="pick(this,'mk')">Tất cả</span>
+                <span class="chip" onclick="pick(this,'mk')">Q&amp;A</span>
+                <span class="chip" onclick="pick(this,'mk')">Thiết kế</span>
+              </div></div>
+            </div>
+          </div>
+        </div>
+        <span class="count">8 lượt</span>
+      </div>
+
+      <div class="bucket">
+        <div class="bhead"><span class="blabel">Hôm nay</span><span class="bcount">2 lượt</span></div>
+        <div class="slc">
+          <div class="row"><div class="rmain"><span class="rt">Thiết kế hệ thống rút gọn URL quy mô lớn</span><span class="rs">13 thg 7, 2026</span></div><div class="rmeta"><span class="badge b-ok">74</span><span class="caret">›</span></div></div>
+          <div class="row"><div class="rmain"><span class="rt">5 câu · Ngẫu nhiên</span><span class="rs">13 thg 7, 2026</span></div><div class="rmeta"><span class="badge b-mut">10</span><span class="caret">›</span></div></div>
+        </div>
+      </div>
+      <div class="bucket">
+        <div class="bhead"><span class="blabel">7 ngày qua</span><span class="bcount">3 lượt</span></div>
+        <div class="slc">
+          <div class="row"><div class="rmain"><span class="rt">5 câu · Ngẫu nhiên</span><span class="rs">9 thg 7, 2026</span></div><div class="rmeta"><span class="badge b-warn">18</span><span class="caret">›</span></div></div>
+          <div class="row"><div class="rmain"><span class="rt">5 câu · Ngẫu nhiên</span><span class="rs">9 thg 7, 2026</span></div><div class="rmeta"><span class="badge b-warn">18</span><span class="caret">›</span></div></div>
+          <div class="row"><div class="rmain"><span class="rt">Thiết kế feed mạng xã hội</span><span class="rs">8 thg 7, 2026</span></div><div class="rmeta"><span class="badge b-ok">74</span><span class="caret">›</span></div></div>
+        </div>
+      </div>
+      <div class="loadmore"><button>Xem thêm</button></div>
+    </section>
+
+    <!-- ============ QUIZ HỎI NHANH ============ -->
+    <section>
+      <div class="surfcap">/learn/flashcards/quiz?tab=history</div>
+      <h2>Hỏi nhanh · Lịch sử</h2>
+      <p class="desc">Toolbar: phễu (Chế độ + Cấp) + count · KHÔNG search (run không có tên) · nhóm theo thời gian · row expand weak-tags</p>
+      <div class="toolbar">
+        <div class="toolleft">
+          <div class="funnel">
+            <button class="fbtn" onclick="tog('qz')">⛃<span class="fbadge" id="qz-bdg">1</span></button>
+            <div class="pop" id="qz-pop">
+              <div class="grp"><div class="grph">Chế độ</div><div class="chips" data-single>
+                <span class="chip on" onclick="pick(this,'qz')">Tất cả</span>
+                <span class="chip" onclick="pick(this,'qz')">Nhanh · 5 câu</span>
+                <span class="chip" onclick="pick(this,'qz')">Sâu · 10 câu</span>
+              </div></div>
+              <div class="grp"><div class="grph">Cấp</div><div class="chips" data-single>
+                <span class="chip on" onclick="pick(this,'qz2')">Tất cả</span>
+                <span class="chip" onclick="pick(this,'qz2')">Junior</span>
+                <span class="chip" onclick="pick(this,'qz2')">Middle</span>
+                <span class="chip" onclick="pick(this,'qz2')">Senior</span>
+              </div></div>
+              <button class="clear" onclick="clr('qz')">Xóa lọc</button>
+            </div>
+          </div>
+          <div style="flex:1"></div>
+        </div>
+        <span class="count">10 lượt</span>
+      </div>
+
+      <div class="bucket">
+        <div class="bhead"><span class="blabel">Hôm nay</span><span class="bcount">3 lượt</span></div>
+        <div class="slc">
+          <div class="row"><div class="rmain"><span class="rt">13 thg 7, 2026</span><span class="rs">Nhanh · 5 câu · 6 thẻ</span></div><div class="rmeta"><span class="badge b-lvl">Junior</span><span class="badge b-mut">+30 XP</span><span class="score b-ok">5/5</span><span class="caret">⌄</span></div></div>
+          <div class="row"><div class="rmain"><span class="rt">13 thg 7, 2026</span><span class="rs">Sâu · 10 câu · 6 thẻ</span></div><div class="rmeta"><span class="badge b-mut">+29 XP</span><span class="score b-warn">7/10</span><span class="caret">⌄</span></div></div>
+          <div class="row"><div class="rmain"><span class="rt">13 thg 7, 2026</span><span class="rs">Nhanh · 5 câu · 6 thẻ</span></div><div class="rmeta"><span class="badge b-lvl">Senior</span><span class="badge b-mut">+28 XP</span><span class="score b-ok">4/5</span><span class="caret">⌄</span></div></div>
+        </div>
+      </div>
+      <div class="bucket">
+        <div class="bhead"><span class="blabel">7 ngày qua</span><span class="bcount">2 lượt</span></div>
+        <div class="slc">
+          <div class="row"><div class="rmain"><span class="rt">12 thg 7, 2026</span><span class="rs">Sâu · 10 câu · 6 thẻ</span></div><div class="rmeta"><span class="badge b-lvl">Middle</span><span class="badge b-mut">+27 XP</span><span class="score b-danger">5/10</span><span class="caret">⌄</span></div></div>
+          <div class="row"><div class="rmain"><span class="rt">12 thg 7, 2026</span><span class="rs">Nhanh · 5 câu · 6 thẻ</span></div><div class="rmeta"><span class="badge b-lvl">Junior</span><span class="badge b-mut">+26 XP</span><span class="score b-ok">4/5</span><span class="caret">⌄</span></div></div>
+        </div>
+      </div>
+      <div class="loadmore"><button>Xem thêm</button></div>
+    </section>
+
+  </div>
+</div>
+<script>
+  function tog(id){var p=document.getElementById(id+'-pop');p.classList.toggle('open')}
+  function pick(el,grp){var box=el.parentElement;box.querySelectorAll('.chip').forEach(function(c){c.classList.remove('on')});el.classList.add('on');updBadge()}
+  function clr(id){var pop=document.getElementById(id+'-pop');pop.querySelectorAll('.chips').forEach(function(box){var chips=box.querySelectorAll('.chip');chips.forEach(function(c){c.classList.remove('on')});chips[0].classList.add('on')});updBadge()}
+  function updBadge(){['mk','qz'].forEach(function(id){var pop=document.getElementById(id+'-pop');if(!pop)return;var n=0;pop.querySelectorAll('.chips').forEach(function(box){var on=box.querySelector('.chip.on');if(on&&on.textContent.trim()!=='Tất cả')n++});var b=document.getElementById(id+'-bdg');b.textContent=n;b.style.display=n>0?'flex':'none'})}
+  document.addEventListener('click',function(e){if(!e.target.closest('.funnel'))document.querySelectorAll('.pop').forEach(function(p){p.classList.remove('open')})});
+  updBadge();
+</script>
+</body>
+</html>

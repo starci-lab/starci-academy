@@ -132,7 +132,7 @@ export const RowVariants: Story = {
                 <div className="flex flex-col gap-2">
                     <Label>Hover underline</Label>
                     <Typography type="body-sm" color="muted">
-                        Switch to underline when the row leads TO an article — underline on hover because it is fundamentally a link. A row that runs an action in place, or opens an item within the app, keeps the default (background fill).
+                        Switch to underline when the row leads TO an article — the title renders as an accent LINK (`text-accent-soft-foreground` + underline-offset-2, underline on hover) because it is fundamentally a link. A row that runs an action in place, or opens an item within the app, keeps the default (background fill).
                     </Typography>
                 </div>
                 <SurfaceListCard>

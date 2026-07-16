@@ -221,7 +221,7 @@ export const ProfileChallenges = ({
                                 key={group.courseTitle ?? `__ungrouped-${groupIndex}`}
                                 username={username}
                                 courseTitle={group.courseTitle}
-                                courseGlobalId={group.courseGlobalId}
+                                courseSlug={group.courseSlug}
                                 items={group.items}
                                 totalChallenges={group.courseTitle
                                     ? totalChallengesByCourse.get(group.courseTitle)

@@ -111,7 +111,7 @@ export const HeadhunterModal = (props: HeadhunterModalProps) => {
                                     href={headhunter.linkedinUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 text-sm text-accent-soft-foreground hover:underline"
+                                    className="inline-flex items-center gap-2 text-sm text-accent-soft-foreground hover:underline underline-offset-2"
                                 >
                                     <LinkedinLogoIcon className="size-4" aria-hidden />
                                     {t("headhuntings.linkedin")}
@@ -120,7 +120,7 @@ export const HeadhunterModal = (props: HeadhunterModalProps) => {
                             {headhunter.phoneNumber ? (
                                 <Link
                                     href={`tel:${headhunter.phoneNumber.replace(/\D/g, "")}`}
-                                    className="inline-flex items-center gap-2 text-sm text-accent-soft-foreground hover:underline"
+                                    className="inline-flex items-center gap-2 text-sm text-accent-soft-foreground hover:underline underline-offset-2"
                                 >
                                     <PhoneIcon className="size-4" aria-hidden />
                                     {t("headhuntings.phone")}: {headhunter.phoneNumber}
@@ -131,7 +131,7 @@ export const HeadhunterModal = (props: HeadhunterModalProps) => {
                                     href={`https://zalo.me/${headhunter.zaloNumber.replace(/\D/g, "")}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 text-sm text-accent-soft-foreground hover:underline"
+                                    className="inline-flex items-center gap-2 text-sm text-accent-soft-foreground hover:underline underline-offset-2"
                                 >
                                     <ChatCircleIcon className="size-4" aria-hidden />
                                     {t("headhuntings.zalo")}: {headhunter.zaloNumber}
@@ -140,7 +140,7 @@ export const HeadhunterModal = (props: HeadhunterModalProps) => {
                             {headhunter.email ? (
                                 <Link
                                     href={`mailto:${headhunter.email}`}
-                                    className="inline-flex items-center gap-2 text-sm text-accent-soft-foreground hover:underline"
+                                    className="inline-flex items-center gap-2 text-sm text-accent-soft-foreground hover:underline underline-offset-2"
                                 >
                                     <EnvelopeIcon className="size-4" aria-hidden />
                                     {t("headhuntings.email")}: {headhunter.email}

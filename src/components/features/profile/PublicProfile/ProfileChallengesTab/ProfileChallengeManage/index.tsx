@@ -5,9 +5,15 @@ import React, {
     useState,
 } from "react"
 import {
+    Badge,
+    Button,
+    Popover,
     Typography,
     cn,
 } from "@heroui/react"
+import {
+    FunnelIcon,
+} from "@phosphor-icons/react"
 import {
     useParams,
     useRouter,
@@ -63,12 +69,14 @@ const scoreToneClass = (score: number): string => {
 export type ProfileChallengeManageProps = WithClassNames<undefined>
 
 /**
- * `/profile/<u>/challenges/<courseGlobalId>` — the MANAGE tier of the 3-tier
- * challenges flow: search / filter (difficulty, language) / sort ONE course's
- * passed-challenge submissions. Reads the course id from the route, filters the
- * profile owner's full solved-challenges list down to it client-side (the list is
- * already small per-user; no server-side pagination needed here), then renders
- * each match as a nav row to the submission DETAIL page.
+ * `/profile/<u>/challenges/<courseSlug>` — the MANAGE tier of the 3-tier
+ * challenges flow: search ONE course's passed-challenge submissions, with sort
+ * (newest / highest score) and the difficulty/language facets tucked behind a
+ * single FUNNEL popover next to the search box (keeps the toolbar one clean line).
+ * Reads the course SLUG from the route, filters the profile owner's full
+ * solved-challenges list down to it client-side (the list is already small
+ * per-user; no server-side pagination needed here), then renders each match as
+ * a nav row to the submission DETAIL page.
  *
  * @param props - optional className for the root element.
  */
@@ -80,7 +88,7 @@ export const ProfileChallengeManage = ({
     const router = useRouter()
     const username = useProfileUsername()
     const params = useParams<{ courseId: string }>()
-    const courseGlobalId = params?.courseId ? String(params.courseId) : null
+    const courseSlug = params?.courseId ? String(params.courseId) : null
 
     const { data: user } = useQueryUserProfileSwr(username)
     const userId = user?.id ?? null
@@ -92,6 +100,7 @@ export const ProfileChallengeManage = ({
     } = useQueryUserSolvedChallengesSwr(userId)
 
     const [search, setSearch] = useState("")
+    const [filterOpen, setFilterOpen] = useState(false)
     const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilterValue>("all")
     const [languageFilter, setLanguageFilter] = useState<LanguageFilterValue>("all")
     const [sort, setSort] = useState<SortValue>("newest")
@@ -99,10 +108,16 @@ export const ProfileChallengeManage = ({
     const allChallenges = data ?? []
     // scope down to THIS course only — the manage page's whole reason to exist
     const courseChallenges = useMemo(
-        () => allChallenges.filter((challenge) => challenge.courseGlobalId === courseGlobalId),
-        [allChallenges, courseGlobalId],
+        () => allChallenges.filter((challenge) => challenge.courseSlug === courseSlug),
+        [allChallenges, courseSlug],
     )
     const courseTitle = courseChallenges[0]?.courseTitle ?? null
+    // how many of the two facet filters are narrowing right now (drives the funnel badge)
+    const activeFacetCount = (difficultyFilter !== "all" ? 1 : 0) + (languageFilter !== "all" ? 1 : 0)
+    const clearFacets = () => {
+        setDifficultyFilter("all")
+        setLanguageFilter("all")
+    }
 
     // filter option pools — only difficulties/languages actually present in this course
     const difficultyOptions = useMemo(
@@ -156,57 +171,93 @@ export const ProfileChallengeManage = ({
                 description={t("publicProfile.challengesTab.manage.description")}
             />
 
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-wrap items-center justify-between gap-3">
+            {/* search + a FUNNEL popover (difficulty/language facets) + sort, one row.
+                Facets live behind the funnel so the toolbar stays a single clean line
+                regardless of how many facet values exist. */}
+            <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex min-w-0 flex-1 items-center gap-3">
                     <SearchInput
+                        className="min-w-0 flex-1"
                         value={search}
                         onValueChange={setSearch}
                         placeholder={t("publicProfile.challengesTab.manage.searchPlaceholder")}
                     />
-                    <Typography type="body-sm" color="muted" className="shrink-0">
-                        {t("publicProfile.challengesTab.manage.found", { count: filtered.length })}
-                    </Typography>
+                    <Popover isOpen={filterOpen} onOpenChange={setFilterOpen}>
+                        <Button
+                            isIconOnly
+                            variant="ghost"
+                            aria-label={t("publicProfile.challengesTab.manage.filterButton")}
+                            className="shrink-0"
+                        >
+                            {activeFacetCount > 0 ? (
+                                <Badge.Anchor>
+                                    <FunnelIcon className="size-5" />
+                                    <Badge size="sm" color="accent" placement="top-left">{activeFacetCount}</Badge>
+                                </Badge.Anchor>
+                            ) : (
+                                <FunnelIcon className="size-5" />
+                            )}
+                        </Button>
+                        <Popover.Content className="w-72">
+                            <div className="flex flex-col gap-3 p-3">
+                                <div className="flex flex-col gap-2">
+                                    <Typography type="body-xs" color="muted">{t("publicProfile.challengesTab.manage.sortHeading")}</Typography>
+                                    <FlexWrapButtonRadio<SortValue>
+                                        ariaLabel={t("publicProfile.challengesTab.manage.sortAria")}
+                                        value={sort}
+                                        onChange={setSort}
+                                        items={[
+                                            { value: "newest", content: t("publicProfile.challengesTab.manage.sortNewest") },
+                                            { value: "score", content: t("publicProfile.challengesTab.manage.sortScore") },
+                                        ]}
+                                    />
+                                </div>
+                                {difficultyOptions.length > 0 ? (
+                                    <div className="flex flex-col gap-2">
+                                        <Typography type="body-xs" color="muted">{t("publicProfile.challengesTab.manage.difficultyHeading")}</Typography>
+                                        <FlexWrapButtonRadio<DifficultyFilterValue>
+                                            ariaLabel={t("publicProfile.challengesTab.manage.difficultyFilterAria")}
+                                            value={difficultyFilter}
+                                            onChange={setDifficultyFilter}
+                                            items={[
+                                                { value: "all", content: t("publicProfile.challengesTab.manage.allDifficulties") },
+                                                ...difficultyOptions.map((raw) => ({
+                                                    value: raw,
+                                                    content: <DifficultyChip difficulty={difficultyLevel(raw) ?? "beginner"} />,
+                                                })),
+                                            ]}
+                                        />
+                                    </div>
+                                ) : null}
+                                {languageOptions.length > 0 ? (
+                                    <div className="flex flex-col gap-2">
+                                        <Typography type="body-xs" color="muted">{t("publicProfile.challengesTab.manage.languageHeading")}</Typography>
+                                        <FlexWrapButtonRadio<LanguageFilterValue>
+                                            ariaLabel={t("publicProfile.challengesTab.manage.languageFilterAria")}
+                                            value={languageFilter}
+                                            onChange={setLanguageFilter}
+                                            items={[
+                                                { value: "all", content: t("publicProfile.challengesTab.manage.allLanguages") },
+                                                ...languageOptions.map((lang) => ({
+                                                    value: lang,
+                                                    content: <LanguageChip language={lang} />,
+                                                })),
+                                            ]}
+                                        />
+                                    </div>
+                                ) : null}
+                                {activeFacetCount > 0 ? (
+                                    <Button variant="danger-soft" size="sm" className="self-start" onPress={clearFacets}>
+                                        {t("publicProfile.challengesTab.manage.clearFilters")}
+                                    </Button>
+                                ) : null}
+                            </div>
+                        </Popover.Content>
+                    </Popover>
                 </div>
-
-                <div className="flex flex-col gap-2">
-                    {difficultyOptions.length > 0 ? (
-                        <FlexWrapButtonRadio<DifficultyFilterValue>
-                            ariaLabel={t("publicProfile.challengesTab.manage.difficultyFilterAria")}
-                            value={difficultyFilter}
-                            onChange={setDifficultyFilter}
-                            items={[
-                                { value: "all", content: t("publicProfile.challengesTab.manage.allDifficulties") },
-                                ...difficultyOptions.map((raw) => ({
-                                    value: raw,
-                                    content: <DifficultyChip difficulty={difficultyLevel(raw) ?? "beginner"} />,
-                                })),
-                            ]}
-                        />
-                    ) : null}
-                    {languageOptions.length > 0 ? (
-                        <FlexWrapButtonRadio<LanguageFilterValue>
-                            ariaLabel={t("publicProfile.challengesTab.manage.languageFilterAria")}
-                            value={languageFilter}
-                            onChange={setLanguageFilter}
-                            items={[
-                                { value: "all", content: t("publicProfile.challengesTab.manage.allLanguages") },
-                                ...languageOptions.map((lang) => ({
-                                    value: lang,
-                                    content: <LanguageChip language={lang} />,
-                                })),
-                            ]}
-                        />
-                    ) : null}
-                    <FlexWrapButtonRadio<SortValue>
-                        ariaLabel={t("publicProfile.challengesTab.manage.sortAria")}
-                        value={sort}
-                        onChange={setSort}
-                        items={[
-                            { value: "newest", content: t("publicProfile.challengesTab.manage.sortNewest") },
-                            { value: "score", content: t("publicProfile.challengesTab.manage.sortScore") },
-                        ]}
-                    />
-                </div>
+                <Typography type="body-sm" color="muted" className="shrink-0">
+                    {t("publicProfile.challengesTab.manage.found", { count: filtered.length })}
+                </Typography>
             </div>
 
             <AsyncContent
@@ -257,12 +308,12 @@ export const ProfileChallengeManage = ({
                                 hover="underline"
                                 href={username && challenge.id
                                     ? pathConfig().locale(locale).profile(username).challenges()
-                                        .course(courseGlobalId ?? "").submission(challenge.id).build()
+                                        .course(courseSlug ?? "").submission(challenge.id).build()
                                     : undefined}
                             >
                                 <div className="flex items-center justify-between gap-6">
                                     <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                        <Typography type="body-sm" weight="medium" truncate className="underline-offset-2 group-hover:underline">
+                                        <Typography type="body-sm" weight="medium" truncate className="text-accent-soft-foreground underline-offset-2 group-hover:underline">
                                             {challenge.title}
                                         </Typography>
                                         <div className="flex flex-wrap items-center gap-2 sm:grid sm:grid-cols-[6rem_5.5rem_1fr]">

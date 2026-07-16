@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Prototype — TÊN FLOW</title>
+<style>
+  /* Mô phỏng token — KHÔNG cần pixel-perfect, đúng cấu trúc là được */
+  :root {
+    --bg: #0b0f17; --surface: #131a26; --border: #263042;
+    --text: #e6ecf5; --muted: #8b98ab;
+    --primary: #6366f1; --primary-fg: #ffffff;
+    --radius: 12px; --gap: 12px; /* card padding chuẩn = 12px (p-3) */
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--bg); color: var(--text); font: 14px/1.5 system-ui, sans-serif; }
+
+  /* Mỗi surface = 1 <section class="surface">; JS bật/tắt như slide */
+  .surface { display: none; max-width: 960px; margin: 0 auto; padding: 24px 16px 96px; }
+  .surface.active { display: block; }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--gap); }
+  .muted { color: var(--muted); font-size: 12px; }
+  .btn { display: inline-block; padding: 8px 16px; border-radius: 10px; border: 1px solid var(--border);
+         background: transparent; color: var(--text); cursor: pointer; font: inherit; }
+  .btn.primary { background: var(--primary); border-color: var(--primary); color: var(--primary-fg); }
+
+  /* Thanh điều khiển prototype (không thuộc UI thật) */
+  .proto-nav { position: fixed; inset: auto 0 0 0; display: flex; gap: 8px; justify-content: center;
+               padding: 10px; background: rgba(11,15,23,.9); border-top: 1px solid var(--border); }
+  .proto-nav .muted { align-self: center; }
+</style>
+</head>
+<body>
+
+<!-- ===== SURFACE 1: <tên surface — job của nó> ===== -->
+<section class="surface active" id="s1">
+  <h1>Surface 1</h1>
+  <p class="muted">Shell: … · Job: … · Primary CTA: …</p>
+  <div class="card">
+    <p>Khung nội dung surface 1.</p>
+    <button class="btn primary" onclick="go('s2')">CTA chính → surface 2</button>
+  </div>
+</section>
+
+<!-- ===== SURFACE 2 ===== -->
+<section class="surface" id="s2">
+  <h1>Surface 2</h1>
+  <div class="card">
+    <p>Khung nội dung surface 2.</p>
+    <button class="btn" onclick="go('s1')">← Quay lại</button>
+  </div>
+</section>
+
+<!-- Thanh điều khiển prototype -->
+<nav class="proto-nav">
+  <button class="btn" onclick="step(-1)">← Prev</button>
+  <span class="muted" id="proto-pos"></span>
+  <button class="btn" onclick="step(1)">Next →</button>
+</nav>
+
+<script>
+  const surfaces = [...document.querySelectorAll('.surface')];
+  let idx = 0;
+  function render() {
+    surfaces.forEach((s, i) => s.classList.toggle('active', i === idx));
+    document.getElementById('proto-pos').textContent = (idx + 1) + ' / ' + surfaces.length;
+  }
+  function go(id) { idx = surfaces.findIndex(s => s.id === id); render(); }
+  function step(d) { idx = Math.min(surfaces.length - 1, Math.max(0, idx + d)); render(); }
+  render();
+</script>
+</body>
+</html>

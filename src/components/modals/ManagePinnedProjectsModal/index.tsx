@@ -9,8 +9,8 @@ import { useTranslations } from "next-intl"
 import {
     MAX_PINNED_PROJECTS,
     usePinnedProjectsManager,
-} from "@/components/features/profile/PublicProfileLegacy/ProfilePinned/hooks/usePinnedProjectsManager"
-import { PinnedProjectCard } from "@/components/features/profile/PublicProfileLegacy/ProfilePinned/PinnedProjectCard"
+} from "./hooks/usePinnedProjectsManager"
+import { PinnedProjectCard } from "./PinnedProjectCard"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { ExternalProjectForm } from "./ExternalProjectForm"
 import { CourseProjectForm } from "./CourseProjectForm"

@@ -14,10 +14,15 @@
   .wrap{max-width:640px;margin:0 auto;padding:24px 16px 80px}
   h1{font-size:24px;font-weight:800;margin:0 0 18px}
   .muted{color:var(--muted)}.xs{font-size:12px}.sm{font-size:14px}
-  /* tabs */
-  .tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:20px}
-  .tab{flex:1;text-align:center;padding:10px;cursor:pointer;color:var(--muted);font-weight:600;border-bottom:2px solid transparent;margin-bottom:-1px}
-  .tab.active{color:var(--accent-soft-fg);border-bottom-color:var(--accent)}
+  /* PageHeader block (breadcrumb + title, gap-10 to content) */
+  .pageheader{display:flex;flex-direction:column;gap:12px;margin-bottom:40px}
+  .crumbs{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+  .crumbs a{color:var(--muted);text-decoration:none}.crumbs a:hover{color:var(--accent-soft-fg)}
+  .crumbs b{color:var(--fg);font-weight:600}.crumbs span{color:var(--border)}
+  /* tabs — TabsCard variant=primary = segmented PILL, full-width */
+  .tabs.pill{display:flex;gap:4px;background:var(--surface-2);border-radius:14px;padding:4px;margin-bottom:20px}
+  .tabs.pill .tab{flex:1;text-align:center;padding:8px 10px;cursor:pointer;color:var(--muted);font-weight:600;border-radius:10px}
+  .tabs.pill .tab.active{background:var(--surface);color:var(--fg);box-shadow:0 1px 2px rgba(0,0,0,.08)}
   /* controls */
   .ctrl{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
   .ctrl button{font-size:12px;border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:5px 12px;cursor:pointer;color:var(--muted)}
@@ -74,9 +79,14 @@
 </head>
 <body>
 <div class="wrap">
-  <h1>Bảng xếp hạng</h1>
+  <!-- block: PageHeader (breadcrumb responsive + title) — trang chính KHÔNG dùng h1 trơ (header.md) -->
+  <div class="pageheader">
+    <nav class="crumbs"><a href="#">Trang chủ</a> <span>›</span> <b>Bảng xếp hạng</b></nav>
+    <h1 style="margin:0">Bảng xếp hạng</h1>
+  </div>
 
-  <div class="tabs">
+  <!-- block: TabsCard variant="primary" — tab đổi CẢ panel của trang = pill primary (tabs.md §0b), KHÔNG secondary -->
+  <div class="tabs pill">
     <div class="tab active" data-tab="weekly" onclick="setTab('weekly')">Tuần này</div>
     <div class="tab" data-tab="global" onclick="setTab('global')">Toàn cầu</div>
   </div>

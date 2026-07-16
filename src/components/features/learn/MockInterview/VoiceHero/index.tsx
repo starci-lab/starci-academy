@@ -92,7 +92,7 @@ export const VoiceHero = ({
                         {/* plain span (not Typography, which bakes its own text-foreground and would
                             never read muted at rest) — inherits the button's text-muted/hover:text-foreground
                             so the icon and label stay the same color at every state. */}
-                        <span className="text-xs font-medium group-hover:underline">{labels.useVoice}</span>
+                        <span className="text-xs font-medium">{labels.useVoice}</span>
                     </button>
                 ) : null}
             </div>
@@ -124,7 +124,7 @@ export const VoiceHero = ({
                         <button
                             type="button"
                             onClick={() => setShowText(true)}
-                            className="cursor-pointer text-accent-soft-foreground hover:underline"
+                            className="cursor-pointer text-accent-soft-foreground hover:opacity-80"
                         >
                             {labels.typeInstead}
                         </button>

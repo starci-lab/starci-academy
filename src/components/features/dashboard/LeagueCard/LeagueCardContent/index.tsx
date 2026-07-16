@@ -184,7 +184,7 @@ export const LeagueCardContent = ({
                 2026-07-17 — không chỉ khi rớt ngoài top). Nested → SurfaceListCard
                 `bordered`; LeagueRow `rounded-none` để fill flush trong card. */}
             {myEntry ? (
-                <LabeledCard label={t("dashboard.league.yourRank")} subtleLabel frameless>
+                <LabeledCard label={t("dashboard.league.yourRank")} frameless>
                     <SurfaceListCard bordered>
                         <LeagueRow
                             entry={myEntry}

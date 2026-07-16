@@ -1525,7 +1525,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                 {/* plain span (not Typography, which bakes its own text-foreground and would
                             never read muted at rest) — inherits the button's text-muted/hover:text-foreground
                             so the icon and label stay the same color at every state. */}
-                                <span className="text-sm group-hover:underline">
+                                <span className="text-sm">
                                     {t("mockInterview.customizeSession")}
                                 </span>
                             </button>

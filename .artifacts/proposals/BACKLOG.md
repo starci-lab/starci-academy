@@ -6,3 +6,4 @@
 | Proposal | Status | Tóm tắt | Ngày |
 |---|---|---|---|
 | league-card-community-tweaks | ✅ DONE | See-more→header + hàng-của-mình=surface-in-surface labeled list card + đồng nhất see-more="Xem bảng xếp hạng" (tab Cộng đồng) | 2026-07-17 |
+| kpi-page | ⏳ PENDING | See-more dời header (WeeklyGoals→OverviewTab) + gộp 6 box rời `/kpi` thành 1 SurfaceListCard (fix vi phạm card.md §1) | 2026-07-17 |

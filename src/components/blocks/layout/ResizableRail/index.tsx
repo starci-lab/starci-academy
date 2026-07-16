@@ -40,6 +40,7 @@ export interface ResizableRailProps extends WithClassNames<undefined> {
  * caller establishes (the sticky rail itself).
  *
  * @param props - {@link ResizableRailProps}
+ * @see Story: .storybook/stories/blocks/layout/ResizableRail/ResizableRail.stories
  */
 export const ResizableRail = ({
     children,

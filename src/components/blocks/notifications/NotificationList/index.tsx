@@ -80,6 +80,7 @@ const DefaultEmptyState = (
  *   onMarkAllRead={() => {}}
  *   groups={[{ label: "Hôm nay", items: [...] }]}
  * />
+ * @see Story: .storybook/stories/blocks/notifications/NotificationList/NotificationList.stories
  */
 export const NotificationList = ({
     groups,

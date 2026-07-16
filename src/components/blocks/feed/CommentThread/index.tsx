@@ -165,6 +165,7 @@ const CommentThreadItem = ({
  *   onReply={(parentId, text) => post(parentId, text)}
  *   onReact={(id, type) => react(id, type)}
  * />
+ * @see Story: .storybook/stories/blocks/feed/CommentThread/CommentThread.stories
  */
 export const CommentThread = ({
     comments,

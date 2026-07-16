@@ -430,6 +430,9 @@ export interface MarkdownContentProps extends WithClassNames<undefined> {
 const stripClozeMarkers = (markdown: string): string =>
     markdown.replace(/\{\{c\d+::([\s\S]*?)(?:::[\s\S]*?)?\}\}/g, "$1")
 
+/**
+ * @see Story: .storybook/stories/reuseable/MarkdownContent/MarkdownContent.stories
+ */
 export const MarkdownContent = ({ markdown, reading = false, arcSections = false, className }: MarkdownContentProps) => {
     const theme = useTheme()
     const t = useTranslations()

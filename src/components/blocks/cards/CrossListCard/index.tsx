@@ -26,6 +26,7 @@ export interface CrossListCardProps extends WithClassNames<undefined> {
  * rows use `SurfaceListCard`.
  *
  * @param props - See {@link CrossListCardProps}.
+ * @see Story: .storybook/stories/blocks/cards/CrossListCard/CrossListCard.stories
  */
 export const CrossListCard = ({ children, bordered = false, className }: CrossListCardProps) => (
     <ul

@@ -23,6 +23,7 @@ export interface PaginationProps extends WithClassNames<undefined> {
  * (client-side or server-driven), so this stays reusable across any list.
  *
  * @param props - {@link PaginationProps}
+ * @see Story: .storybook/stories/reuseable/Pagination/Pagination.stories
  */
 export const Pagination = ({
     currentPage,

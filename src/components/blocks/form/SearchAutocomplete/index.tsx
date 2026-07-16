@@ -80,6 +80,8 @@ export interface SearchAutocompleteProps extends WithClassNames<undefined> {
  *   onSelect={(id) => router.push(`/courses/${id}`)}
  *   isLoading={isFetching}
  * />
+ *
+ * @see Story: .storybook/stories/blocks/form/SearchAutocomplete/SearchAutocomplete.stories
  */
 export const SearchAutocomplete = ({
     items,

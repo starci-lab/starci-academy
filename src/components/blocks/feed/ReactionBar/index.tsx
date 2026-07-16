@@ -86,6 +86,7 @@ export interface ReactionBarProps extends WithClassNames<undefined> {
  * supplies data + the react handler.
  *
  * @param props - {@link ReactionBarProps}
+ * @see Story: .storybook/stories/blocks/feed/ReactionBar/ReactionBar.stories
  */
 export const ReactionBar = ({
     count,

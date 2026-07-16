@@ -19,6 +19,7 @@ export interface StickyBottomBarProps extends WithClassNames<undefined> {
  * enroll/checkout bar.
  *
  * @param props - {@link StickyBottomBarProps}
+ * @see Story: .storybook/stories/blocks/layout/StickyBottomBar/StickyBottomBar.stories
  */
 export const StickyBottomBar = ({
     children,

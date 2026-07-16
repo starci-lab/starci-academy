@@ -1,12 +1,12 @@
 import type { StorybookConfig } from "@storybook/nextjs"
 
 /**
- * Storybook cho StarCi FE — tầng VISUAL của enforcement (.claude/fe/methodology/enforcement.md).
- * Mỗi block canonical có story đủ state → axe (a11y) fail-on-error + (sau) Chromatic/Playwright
- * snapshot bắt regression giao diện mà LINT không thấy (contrast, fill-on-fill, dark-mode).
+ * Storybook for StarCi FE — the VISUAL tier of enforcement (.claude/fe/methodology/enforcement.md).
+ * Every canonical block has stories covering its states → axe (a11y) fail-on-error + (later)
+ * Chromatic/Playwright snapshots catch UI regressions lint can't see (contrast, fill-on-fill, dark mode).
  */
 const config: StorybookConfig = {
-    stories: ["../src/**/*.stories.@(ts|tsx)"],
+    stories: ["./stories/**/*.stories.@(ts|tsx)"],
     addons: ["@storybook/addon-a11y"],
     framework: { name: "@storybook/nextjs", options: {} },
     staticDirs: ["../public"],

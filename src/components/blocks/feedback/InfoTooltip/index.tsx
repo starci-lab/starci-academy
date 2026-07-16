@@ -38,6 +38,7 @@ export interface InfoTooltipProps extends WithClassNames<undefined> {
  * The trigger keeps a `cursor-help` affordance so it reads as "hover for more".
  *
  * @param props - {@link InfoTooltipProps}
+ * @see Story: .storybook/stories/blocks/feedback/InfoTooltip/InfoTooltip.stories
  */
 export const InfoTooltip = ({
     children,

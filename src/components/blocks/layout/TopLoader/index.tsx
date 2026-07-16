@@ -39,6 +39,7 @@ type TimeoutRef = React.MutableRefObject<ReturnType<typeof setTimeout> | null>
  * Mounted once in {@link InnerLayout}, above the navbar (`z-[60]` > navbar's
  * `z-50`). Honours `prefers-reduced-motion` (no trickle — a static segment that
  * just appears, then clears). Owns all of its style; takes no props.
+ * @see Story: .storybook/stories/blocks/layout/TopLoader/TopLoader.stories
  */
 export const TopLoader = () => {
     const pathname = usePathname()

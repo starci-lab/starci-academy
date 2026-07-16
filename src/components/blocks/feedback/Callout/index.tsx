@@ -80,6 +80,7 @@ export interface CalloutProps {
  * the tint/flat treatment and the status-coloured close button. For a standalone
  * alert on the page canvas, use the raw `Alert` (its default surface look is
  * correct there). See `elements/alert.md`.
+ * @see Story: .storybook/stories/blocks/feedback/Callout/Callout.stories
  */
 export const Callout = ({
     status = "default",

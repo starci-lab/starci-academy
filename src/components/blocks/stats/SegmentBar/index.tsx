@@ -49,6 +49,7 @@ const PALETTE = [
  * (difficulty depth, language breadth…). Pure/props-only; owns its look.
  *
  * @param props - {@link SegmentBarProps}
+ * @see Story: .storybook/stories/blocks/stats/SegmentBar/SegmentBar.stories
  */
 export const SegmentBar = ({
     segments,
@@ -71,15 +72,16 @@ export const SegmentBar = ({
             <div
                 role="img"
                 aria-label={ariaLabel}
-                className="flex h-2 w-full gap-px overflow-hidden rounded-full bg-default"
+                className="flex h-1 w-full overflow-hidden rounded-full bg-default"
             >
                 {filled.map((segment) => (
                     <div
                         key={segment.key}
                         className="h-full min-w-0"
                         style={{
-                            // flex-grow (not %) keeps every slice the same height — %
-                            // widths land on fractional pixels and look "uneven" at seams.
+                            // slices touch flush (no gap) so the bar reads as ONE line —
+                            // a gap would reveal the track at fractional-pixel seams and
+                            // make the slices look misaligned. flex-grow = true proportions.
                             flexGrow: segment.value,
                             flexBasis: 0,
                             backgroundColor: segment.color,

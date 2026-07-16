@@ -70,6 +70,8 @@ export interface OtpInputProps extends WithClassNames<undefined> {
  *   isInvalid={hasError}
  *   errorMessage="Mã không đúng, kiểm tra lại email của bạn."
  * />
+ *
+ * @see Story: .storybook/stories/blocks/form/OtpInput/OtpInput.stories
  */
 export const OtpInput = ({
     length = 6,

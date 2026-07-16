@@ -50,6 +50,7 @@ export interface SidebarNavAccordionGroupProps extends WithClassNames<undefined>
  * closed by default.
  *
  * @param props - {@link SidebarNavAccordionGroupProps}
+ * @see Story: .storybook/stories/blocks/navigation/SidebarNavAccordionGroup/SidebarNavAccordionGroup.stories
  */
 export const SidebarNavAccordionGroup = ({
     icon: Icon,

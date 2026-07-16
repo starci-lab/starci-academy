@@ -31,6 +31,7 @@ export interface CheckListCardProps extends WithClassNames<undefined> {
  * brief lists (value props, expected outputs, prerequisites…).
  *
  * @param props - See {@link CheckListCardProps}.
+ * @see Story: .storybook/stories/blocks/cards/CheckListCard/CheckListCard.stories
  */
 export const CheckListCard = ({ children, bordered = false, className }: CheckListCardProps) => (
     <ul

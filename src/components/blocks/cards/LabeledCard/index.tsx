@@ -76,6 +76,7 @@ export interface LabeledCardProps extends WithClassNames<undefined> {
  * the whole look so features just pass label / see-more / children.
  *
  * @param props - {@link LabeledCardProps}
+ * @see Story: .storybook/stories/blocks/cards/LabeledCard/LabeledCard.stories
  */
 export const LabeledCard = ({
     label,

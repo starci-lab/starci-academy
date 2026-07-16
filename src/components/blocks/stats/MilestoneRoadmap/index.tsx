@@ -25,6 +25,7 @@ export interface MilestoneRoadmapProps extends WithClassNames<undefined> {
  * not-started = muted). Scrolls horizontally so a long roadmap never crams.
  * Pure + props-only; the block owns all the dot/connector styling so feature
  * code stays style-free.
+ * @see Story: .storybook/stories/blocks/stats/MilestoneRoadmap/MilestoneRoadmap.stories
  */
 export const MilestoneRoadmap = ({ milestones, className }: MilestoneRoadmapProps) => {
     return (

@@ -26,6 +26,7 @@ export interface CodeToHtmlProps extends WithClassNames<undefined> {
  * (IntersectionObserver). A long article with 20+ blocks won't highlight all at once on load
  * (Shiki/WASM is heavy); off-screen blocks show raw code (`<pre>`) until scrolled into view.
  * @param props - {@link CodeToHtmlProps}
+ * @see Story: .storybook/stories/reuseable/MarkdownContent/CodeToHtml/CodeToHtml.stories
  */
 export const CodeToHtml = ({ code, language, theme, className }: CodeToHtmlProps) => {
     const containerRef = useRef<HTMLDivElement>(null)

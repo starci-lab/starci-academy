@@ -23,6 +23,7 @@ type Phase = "hidden" | "down" | "recovered"
  * The app keeps working over HTTP, so this is purely informational. Mounted once
  * in {@link import("@/app/InnerLayout").InnerLayout}; renders nothing itself —
  * status is pushed through the shared {@link toast} queue (`ToastProvider`).
+ * @see Story: .storybook/stories/blocks/layout/SocketConnectionStatus/SocketConnectionStatus.stories
  */
 export const SocketConnectionStatus = () => {
     const t = useTranslations()

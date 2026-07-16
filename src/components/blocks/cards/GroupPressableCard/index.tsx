@@ -138,6 +138,7 @@ const GAP_CLASS: Record<2 | 3, string> = {
  * `selected` prop here — that boundary is the whole point of two blocks.
  *
  * @param props - {@link GroupPressableCardProps}
+ * @see Story: .storybook/stories/blocks/cards/GroupPressableCard/GroupPressableCard.stories
  */
 export const GroupPressableCard = ({
     items,

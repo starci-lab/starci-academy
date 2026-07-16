@@ -32,6 +32,7 @@ export interface SidebarNavGroupProps extends WithClassNames<undefined> {
  * Owns the divider + caption styling + intra-group spacing.
  *
  * @param props - {@link SidebarNavGroupProps}
+ * @see Story: .storybook/stories/blocks/navigation/SidebarNavGroup/SidebarNavGroup.stories
  */
 export const SidebarNavGroup = ({
     label,

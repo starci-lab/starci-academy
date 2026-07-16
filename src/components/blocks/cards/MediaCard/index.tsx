@@ -71,6 +71,7 @@ export interface MediaCardProps extends WithClassNames<undefined> {
  * the entire card pressable and keyboard-accessible.
  *
  * @param props - {@link MediaCardProps}
+ * @see Story: .storybook/stories/blocks/cards/MediaCard/MediaCard.stories
  */
 export const MediaCard = ({
     cover,

@@ -70,6 +70,7 @@ export interface NotificationBellProps extends WithClassNames<undefined> {
  *   groups={[{ label: "Hôm nay", items: [...] }]}
  *   onMarkAllRead={() => {}}
  * />
+ * @see Story: .storybook/stories/blocks/notifications/NotificationBell/NotificationBell.stories
  */
 export const NotificationBell = ({
     unreadCount,

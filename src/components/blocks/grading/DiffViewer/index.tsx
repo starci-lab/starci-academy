@@ -121,6 +121,7 @@ const SplitCell = ({ line, side }: { line: DiffLine | null; side: "old" | "new" 
  *         { type: "add", content: "  return verify(token)", newNumber: 2 },
  *     ] }]}
  * />
+ * @see Story: .storybook/stories/blocks/grading/DiffViewer/DiffViewer.stories
  */
 export const DiffViewer = ({
     filename,

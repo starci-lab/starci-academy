@@ -29,6 +29,7 @@ export interface NestedCardProps extends WithClassNames<undefined> {
  * → `bg-surface shadow-surface`.
  *
  * @param props - See {@link NestedCardProps}.
+ * @see Story: .storybook/stories/blocks/cards/NestedCard/NestedCard.stories
  */
 export const NestedCard = ({ title, icon, children, bordered = false, className }: NestedCardProps) => (
     <div

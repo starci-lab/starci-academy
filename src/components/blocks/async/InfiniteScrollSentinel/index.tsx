@@ -30,6 +30,8 @@ export interface InfiniteScrollSentinelProps extends WithClassNames<undefined> {
  * `isLoadingMore = isValidating && (pages?.length ?? 0) < size`. While a page is
  * in flight, render skeletons mirroring 1-2 real items right here at the
  * sentinel, never a bare "loading" line.
+ *
+ * @see Story: .storybook/stories/blocks/async/InfiniteScrollSentinel/InfiniteScrollSentinel.stories
  */
 export const InfiniteScrollSentinel = ({
     onReach,

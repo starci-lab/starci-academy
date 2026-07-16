@@ -51,6 +51,7 @@ export interface ElementCloseButtonProps extends WithClassNames<undefined> {
  * dismiss, a removable chip's cancel-X, a dismissible banner, etc.
  *
  * @param props - {@link ElementCloseButtonProps}
+ * @see Story: .storybook/stories/blocks/buttons/ElementCloseButton/ElementCloseButton.stories
  */
 export const ElementCloseButton = ({ label, onPress, tone = "neutral", className }: ElementCloseButtonProps) => {
     return (

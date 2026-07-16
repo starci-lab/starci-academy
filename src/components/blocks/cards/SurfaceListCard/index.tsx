@@ -32,6 +32,7 @@ export interface SurfaceListCardProps extends WithClassNames<undefined> {
  * here (block); features only feed rows. Ref `elements/card.md` §3c.
  *
  * @param props - {@link SurfaceListCardProps}
+ * @see Story: .storybook/stories/blocks/cards/SurfaceListCard/SurfaceListCard.stories
  */
 export const SurfaceListCard = ({ children, bordered = false, className }: SurfaceListCardProps) => (
     <div

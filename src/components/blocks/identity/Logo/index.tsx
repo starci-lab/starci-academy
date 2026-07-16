@@ -17,6 +17,8 @@ export type LogoProps = WithClassNames<undefined>
  * stretches width regardless of ratio — such callers add `self-start` themselves.
  *
  * @param props.className - sizing / placement utilities for the root svg.
+ *
+ * @see Story: .storybook/stories/blocks/identity/Logo/Logo.stories
  */
 export const Logo = ({ className }: LogoProps) => {
     return (

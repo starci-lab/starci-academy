@@ -52,6 +52,8 @@ const SIZE: Record<IconTileSize, string> = {
  * inherits the tone colour; pass it bare. Pure/props-only; owns its look.
  *
  * @param props - {@link IconTileProps}
+ *
+ * @see Story: .storybook/stories/blocks/identity/IconTile/IconTile.stories
  */
 export const IconTile = ({
     icon,

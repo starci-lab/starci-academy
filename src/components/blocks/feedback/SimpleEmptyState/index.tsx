@@ -24,6 +24,7 @@ export interface SimpleEmptyStateProps extends WithClassNames<undefined> {
  *
  * @param props - See {@link SimpleEmptyStateProps}.
  * @returns The rendered empty-state element.
+ * @see Story: .storybook/stories/blocks/feedback/SimpleEmptyState/SimpleEmptyState.stories
  */
 export const SimpleEmptyState = ({ children, className }: SimpleEmptyStateProps) => {
     return (

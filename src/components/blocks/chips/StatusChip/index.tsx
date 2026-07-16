@@ -60,6 +60,7 @@ const toneToColor: Record<StatusChipTone, "default" | "success" | "warning" | "d
  * HeroUI Chip that maps a semantic tone to a chip color and optionally renders
  * a leading icon before the label. Presentational: the only callback it takes is
  * {@link StatusChipProps.onCancel} for a removable/filter chip (a trailing cancel-X).
+ * @see Story: .storybook/stories/blocks/chips/StatusChip/StatusChip.stories
  */
 export const StatusChip = ({ tone = "neutral", icon, children, onCancel, cancelLabel, className }: StatusChipProps) => {
     return (

@@ -66,6 +66,7 @@ export interface ProgressRingProps extends WithClassNames<undefined> {
  *
  * @example
  * <ProgressRing value={92} tone="success" size="lg" label="9/10" caption="Điểm bài kiểm tra" />
+ * @see Story: .storybook/stories/blocks/stats/ProgressRing/ProgressRing.stories
  */
 export const ProgressRing = ({
     value,

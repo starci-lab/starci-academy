@@ -26,6 +26,8 @@ export interface ErrorContentProps extends WithClassNames<undefined> {
  * description, and a "try again" button, centered. The standard `errorContent`
  * for {@link import("../AsyncContent").AsyncContent}. Pure/props-only; the block
  * owns its look, text arrives translated from the caller.
+ *
+ * @see Story: .storybook/stories/blocks/async/ErrorContent/ErrorContent.stories
  */
 export const ErrorContent = ({
     title,

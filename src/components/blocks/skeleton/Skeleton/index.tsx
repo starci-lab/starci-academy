@@ -52,6 +52,8 @@ const SkeletonBar = ({ className }: SkeletonBarProps) => {
  *
  *   <Skeleton.Typography type="body-sm" /> · <Skeleton.Paragraph lines={3} />
  *   <Skeleton.Input /> · <Skeleton.Avatar size="md" /> · <Skeleton.Accordion items={3} />
+ *
+ * @see Story: .storybook/stories/blocks/skeleton/Skeleton/Skeleton.stories
  */
 export const Skeleton = Object.assign(SkeletonBar, {
     Typography: SkeletonTypography,

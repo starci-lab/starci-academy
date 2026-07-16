@@ -716,6 +716,7 @@ export interface ArchitectureSceneProps extends WithClassNames<undefined> {
  * the danger node runs hot with an ember aura). Honours `prefers-reduced-motion`.
  *
  * @param props - {@link ArchitectureSceneProps}
+ * @see Story: .storybook/stories/blocks/marketing/ArchitectureScene/ArchitectureScene.stories
  */
 export const ArchitectureScene = ({ data = DEFAULT_DATA, caption, className, selectedId, onSelectNode }: ArchitectureSceneProps) => {
     const reduce = Boolean(useReducedMotion())

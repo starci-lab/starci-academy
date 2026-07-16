@@ -55,6 +55,7 @@ export interface SearchInputProps extends WithClassNames<undefined> {
  * it behaves as a typeahead — a HeroUI-grade animated listbox with full keyboard
  * navigation (↑/↓ to move, Enter to choose, Esc to dismiss). Without them it is a
  * plain search field. Debouncing is the caller's concern, keeping this reusable.
+ * @see Story: .storybook/stories/reuseable/SearchInput/SearchInput.stories
  */
 export const SearchInput = ({
     value,

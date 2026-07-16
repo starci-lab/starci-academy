@@ -26,6 +26,7 @@ export interface SectionHeadingProps extends WithClassNames<undefined> {
  * (no i18n inside the block).
  *
  * @param props - {@link SectionHeadingProps}
+ * @see Story: .storybook/stories/blocks/marketing/SectionHeading/SectionHeading.stories
  */
 export const SectionHeading = ({
     eyebrow,

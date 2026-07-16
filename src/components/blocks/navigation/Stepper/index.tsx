@@ -81,6 +81,7 @@ const StepIndicator = ({ state, index }: { state: StepState; index: number }) =>
  *   ]}
  *   currentIndex={1}
  * />
+ * @see Story: .storybook/stories/blocks/navigation/Stepper/Stepper.stories
  */
 export const Stepper = ({
     steps,

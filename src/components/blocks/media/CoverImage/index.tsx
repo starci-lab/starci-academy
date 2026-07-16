@@ -21,6 +21,7 @@ export interface CoverImageProps extends WithClassNames<undefined> {
  * blog / changelog covers.
  *
  * @param props - {@link CoverImageProps}
+ * @see Story: .storybook/stories/blocks/media/CoverImage/CoverImage.stories
  */
 export const CoverImage = ({
     src,

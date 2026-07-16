@@ -49,6 +49,7 @@ const toneToColor: Record<HighlightChipTone, "default" | "success" | "warning" |
  * optional leading icon, a bold `value`, then a `label` — e.g. "24 Module",
  * "276 Bài thực hành". Pure and props-only (tone drives the color). Used in the
  * `PageHeader` meta row to show a course's figures.
+ * @see Story: .storybook/stories/blocks/chips/HighlightChip/HighlightChip.stories
  */
 export const HighlightChip = ({ tone = "neutral", icon, value, label, className }: HighlightChipProps) => {
     return (

@@ -25,6 +25,7 @@ export interface TimelineProps extends WithClassNames<undefined> {
  * `children`.
  *
  * @param props - {@link TimelineProps}
+ * @see Story: .storybook/stories/blocks/feed/Timeline/Timeline.stories
  */
 export const Timeline = ({ children, className }: TimelineProps) => {
     return (

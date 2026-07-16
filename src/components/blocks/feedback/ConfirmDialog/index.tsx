@@ -86,6 +86,7 @@ export interface ConfirmDialogProps extends WithClassNames<undefined> {
  *   confirmLabel="Xoá bài nộp"
  *   onConfirm={handleDelete}
  * />
+ * @see Story: .storybook/stories/blocks/feedback/ConfirmDialog/ConfirmDialog.stories
  */
 export const ConfirmDialog = ({
     isOpen,

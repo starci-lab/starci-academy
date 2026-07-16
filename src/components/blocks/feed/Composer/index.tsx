@@ -68,6 +68,7 @@ export interface ComposerProps extends WithClassNames<undefined> {
  *   avatarSrc={me.avatar}
  *   placeholder="Nhắn gì đó..."
  * />
+ * @see Story: .storybook/stories/blocks/feed/Composer/Composer.stories
  */
 export const Composer = ({
     value,

@@ -26,6 +26,8 @@ export interface EmptyContentProps extends WithClassNames<undefined> {
  * an optional "try again" button, centered. The standard `emptyContent` for
  * {@link import("../AsyncContent").AsyncContent}. Pure/props-only; the block owns
  * its look, text arrives translated from the caller.
+ *
+ * @see Story: .storybook/stories/blocks/async/EmptyContent/EmptyContent.stories
  */
 export const EmptyContent = ({
     title,

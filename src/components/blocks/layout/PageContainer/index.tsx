@@ -16,6 +16,7 @@ export interface PageContainerProps extends WithClassNames<undefined> {
  * via `className`.
  *
  * @param props - {@link PageContainerProps}
+ * @see Story: .storybook/stories/blocks/layout/PageContainer/PageContainer.stories
  */
 export const PageContainer = ({ children, className }: PageContainerProps) => {
     return (

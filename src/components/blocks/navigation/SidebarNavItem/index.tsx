@@ -38,6 +38,7 @@ export interface SidebarNavItemProps extends WithClassNames<undefined> {
  * {@link import("../SidebarNavGroup").SidebarNavGroup}.
  *
  * @param props - {@link SidebarNavItemProps}
+ * @see Story: .storybook/stories/blocks/navigation/SidebarNavItem/SidebarNavItem.stories
  */
 export const SidebarNavItem = ({
     icon,

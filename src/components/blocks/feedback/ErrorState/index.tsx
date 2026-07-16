@@ -42,6 +42,7 @@ export interface ErrorStateProps extends WithClassNames<undefined> {
  * caller so it stays self-contained and reusable across features.
  *
  * @param props - {@link ErrorStateProps}
+ * @see Story: .storybook/stories/blocks/feedback/ErrorState/ErrorState.stories
  */
 export const ErrorState = ({
     title,

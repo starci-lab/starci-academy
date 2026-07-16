@@ -47,7 +47,8 @@ export default defineConfig([
         // ── StarCi FE canon — tầng ENFORCEMENT trục-1 cơ học (.claude/fe/enforcement) ──
         // Rule máy giết dần lint-candidates L1–L4/L6. Rollout: 'warn' cho luật còn nhiều
         // vi phạm cũ (gravity 60 file) → nâng 'error' khi codebase xanh; 'error' cho luật hiếm.
-        files: ["src/**/*.{ts,tsx}"],
+        // `.storybook/**` phủ story tree (chuyển khỏi src/ 2026-07-16) — story vẫn theo canon.
+        files: ["src/**/*.{ts,tsx}", ".storybook/**/*.{ts,tsx}"],
         plugins: { "starci-fe": starciFe },
         // ROLLOUT: tất cả 'warn' repo-wide (nợ cũ 216+116 hiển thị, burn dần qua ui-patch).
         // ENFORCEMENT thật ở pre-commit: lint-staged chạy `eslint --max-warnings=0` trên file
@@ -65,7 +66,7 @@ export default defineConfig([
     {
         // ── A11Y tier (L9) — eslint-plugin-jsx-a11y, tầng LINT thay Storybook-axe (nhẹ, 0 friction) ──
         // Curated rule cao-giá-trị, 'warn' rollout (nợ a11y cũ burn dần; gate pre-commit chặn code mới).
-        files: ["src/**/*.{ts,tsx}"],
+        files: ["src/**/*.{ts,tsx}", ".storybook/**/*.{ts,tsx}"],
         plugins: { "jsx-a11y": jsxA11y },
         rules: {
             "jsx-a11y/alt-text": "warn",

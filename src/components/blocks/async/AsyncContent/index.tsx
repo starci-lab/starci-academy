@@ -58,6 +58,8 @@ export interface AsyncContentProps {
  * The empty/error states are configured by passing their PROPS (not nodes):
  * `emptyContent={{ title, onRetry, retryLabel }}`. The `skeleton` is a tree of
  * `Skeleton.*` that mirrors the real layout.
+ *
+ * @see Story: .storybook/stories/blocks/async/AsyncContent/AsyncContent.stories
  */
 export const AsyncContent = ({
     isLoading,

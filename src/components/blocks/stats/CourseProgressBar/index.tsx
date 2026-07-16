@@ -43,6 +43,7 @@ const PALETTE = ["var(--accent)", "var(--success)", "var(--warning)", "var(--dan
  * inflated relative to the dimension's own total).
  *
  * @param props - {@link CourseProgressBarProps}
+ * @see Story: .storybook/stories/blocks/stats/CourseProgressBar/CourseProgressBar.stories
  */
 export const CourseProgressBar = ({
     dims,
@@ -63,7 +64,7 @@ export const CourseProgressBar = ({
             <div
                 role="img"
                 aria-label={ariaLabel}
-                className="flex h-2 w-full overflow-hidden rounded-full bg-default"
+                className="flex h-1 w-full overflow-hidden rounded-full bg-default"
             >
                 {lanes.map((lane, index) => (
                     <div

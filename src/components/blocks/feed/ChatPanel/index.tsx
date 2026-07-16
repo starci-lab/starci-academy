@@ -63,6 +63,7 @@ export interface ChatPanelProps extends WithClassNames<undefined> {
  *   composer={{ value: draft, onChange: setDraft, onSubmit: send }}
  *   isTyping={isThinking}
  * />
+ * @see Story: .storybook/stories/blocks/feed/ChatPanel/ChatPanel.stories
  */
 export const ChatPanel = ({
     messages,

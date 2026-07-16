@@ -38,6 +38,8 @@ export interface InputButtonLikeProps extends WithClassNames<undefined> {
  * dividers, so it can trigger an overlay/command palette instead of accepting
  * typed input. Pure and props-only: the block owns the entire look; consumers
  * pass only content + a press handler (and placement via className).
+ *
+ * @see Story: .storybook/stories/blocks/buttons/InputButtonLike/InputButtonLike.stories
  */
 export const InputButtonLike = ({
     placeholder,

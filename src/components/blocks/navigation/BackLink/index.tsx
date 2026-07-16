@@ -24,6 +24,7 @@ export interface BackLinkProps extends WithClassNames<undefined> {
  * block owns the look so every back link reads the same.
  *
  * @param props - {@link BackLinkProps}
+ * @see Story: .storybook/stories/blocks/navigation/BackLink/BackLink.stories
  */
 export const BackLink = ({ label, target, onPress, className }: BackLinkProps) => {
     const t = useTranslations()

@@ -32,6 +32,7 @@ export interface AiCategoryChipProps extends WithClassNames<undefined> {
  * carries the colour. Colour comes from the shared {@link AI_CATEGORY_COLOR} scale.
  *
  * @param props - {@link AiCategoryChipProps}
+ * @see Story: .storybook/stories/blocks/chips/AiCategoryChip/AiCategoryChip.stories
  */
 export const AiCategoryChip = ({ category, className }: AiCategoryChipProps) => {
     const t = useTranslations()

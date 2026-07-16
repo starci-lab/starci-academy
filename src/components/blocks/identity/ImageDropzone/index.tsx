@@ -38,6 +38,8 @@ export interface ImageDropzoneProps extends WithClassNames<undefined> {
  * state). Pure/props-only — owns its look; the feature handles the file.
  *
  * @param props - {@link ImageDropzoneProps}
+ *
+ * @see Story: .storybook/stories/blocks/identity/ImageDropzone/ImageDropzone.stories
  */
 export const ImageDropzone = ({ onFile, label, hint, icon, className }: ImageDropzoneProps) => {
     const { getRootProps, getInputProps, isDragActive } = useDropzone({

@@ -33,6 +33,7 @@ const FADE_MS = 350
  * `<Suspense fallback>` so it inherits the theme class and never re-shows on
  * client navigation — that's the {@link TopLoader} bar's job.) Honours
  * `prefers-reduced-motion` (static bar, no trickle). Owns all of its style.
+ * @see Story: .storybook/stories/blocks/layout/AppSplash/AppSplash.stories
  */
 export const AppSplash = () => {
     const t = useTranslations("common")

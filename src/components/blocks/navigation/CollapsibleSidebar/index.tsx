@@ -66,6 +66,7 @@ export interface CollapsibleSidebarProps extends WithClassNames<undefined> {
  * on mount (SSR-safe — starts expanded, then syncs).
  *
  * @param props - {@link CollapsibleSidebarProps}
+ * @see Story: .storybook/stories/blocks/navigation/CollapsibleSidebar/CollapsibleSidebar.stories
  */
 export const CollapsibleSidebar = ({
     title,

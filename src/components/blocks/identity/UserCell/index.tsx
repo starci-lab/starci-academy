@@ -29,6 +29,8 @@ export interface UserCellProps extends WithClassNames<undefined> {
  * containers (`min-w-0`).
  *
  * @param props - {@link UserCellProps}
+ *
+ * @see Story: .storybook/stories/blocks/identity/UserCell/UserCell.stories
  */
 export const UserCell = ({
     username,

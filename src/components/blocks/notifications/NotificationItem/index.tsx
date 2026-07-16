@@ -96,6 +96,7 @@ const TONE_TILE: Record<NotificationTone, string> = {
  *   isUnread
  *   onPress={() => {}}
  * />
+ * @see Story: .storybook/stories/blocks/notifications/NotificationItem/NotificationItem.stories
  */
 export const NotificationItem = ({
     title,

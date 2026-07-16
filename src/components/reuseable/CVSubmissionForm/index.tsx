@@ -50,6 +50,7 @@ export interface CVSubmissionFormProps extends WithClassNames<undefined> {
  * parent container supplies the upload/process handlers and progress state via
  * props. `"use client"` — uses Formik and interactive controls.
  * @param props - {@link CVSubmissionFormProps}
+ * @see Story: .storybook/stories/reuseable/CVSubmissionForm/CVSubmissionForm.stories
  */
 export const CVSubmissionForm = ({
     isUploading,

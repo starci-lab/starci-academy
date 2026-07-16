@@ -116,6 +116,7 @@ export interface ModalShellProps extends WithClassNames<undefined> {
  * >
  *   <MyModalBody />
  * </ModalShell>
+ * @see Story: .storybook/stories/blocks/layout/ModalShell/ModalShell.stories
  */
 export const ModalShell = ({
     isOpen,

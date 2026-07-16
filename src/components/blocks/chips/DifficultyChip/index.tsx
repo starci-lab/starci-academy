@@ -39,6 +39,7 @@ const capitalize = (value: Difficulty): string => value.charAt(0).toUpperCase() 
  * {@link DIFFICULTY_COLOR} scale.
  *
  * @param props - {@link DifficultyChipProps}
+ * @see Story: .storybook/stories/blocks/chips/DifficultyChip/DifficultyChip.stories
  */
 export const DifficultyChip = ({ difficulty, label, className }: DifficultyChipProps) => {
     return (

@@ -28,6 +28,8 @@ export interface AvatarGroupProps extends WithClassNames<undefined> {
  * avatars with an optional "+N" overflow counter. Pure + props-only; the block
  * owns the overlap + ring styling so feature code stays style-free. Reuses
  * {@link UserAvatar} so the seeded fallback matches the rest of the app.
+ *
+ * @see Story: .storybook/stories/blocks/identity/AvatarGroup/AvatarGroup.stories
  */
 export const AvatarGroup = ({
     users,

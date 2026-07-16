@@ -59,6 +59,7 @@ export interface AmbientBackgroundProps extends WithClassNames<undefined> {
  * mismatch and no `Math.random` at render.
  *
  * @param props - optional className (placement) + which `effect` to render.
+ * @see Story: .storybook/stories/blocks/layout/AmbientBackground/AmbientBackground.stories
  */
 export const AmbientBackground = ({
     className,

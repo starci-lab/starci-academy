@@ -48,6 +48,7 @@ export interface ExtendedTabsProps extends WithClassNames<undefined> {
  * compound parts. Use this instead of styling `Tabs` per-feature.
  *
  * @param props - {@link ExtendedTabsProps}
+ * @see Story: .storybook/stories/blocks/navigation/ExtendedTabs/ExtendedTabs.stories
  */
 export const ExtendedTabs = ({
     selectedKey,

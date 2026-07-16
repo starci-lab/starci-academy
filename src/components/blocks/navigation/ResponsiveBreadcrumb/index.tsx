@@ -35,6 +35,7 @@ export interface ResponsiveBreadcrumbProps extends WithClassNames<undefined> {
  * CSS for the mobile breakpoint; length check is render-time.
  *
  * @param props - {@link ResponsiveBreadcrumbProps}
+ * @see Story: .storybook/stories/blocks/navigation/ResponsiveBreadcrumb/ResponsiveBreadcrumb.stories
  */
 export const ResponsiveBreadcrumb = ({
     items,

@@ -26,6 +26,7 @@ export interface LegendProps extends WithClassNames<undefined> {
  * difficulty tones across course rows) with a single legend. Pure/props-only.
  *
  * @param props - {@link LegendProps}
+ * @see Story: .storybook/stories/blocks/stats/Legend/Legend.stories
  */
 export const Legend = ({ items, className }: LegendProps) => {
     return (

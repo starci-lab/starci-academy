@@ -139,6 +139,7 @@ export interface OutlineRailProps extends WithClassNames<undefined> {
  * `className`, so the same rail serves the desktop rail and the mobile drawer.
  *
  * @param props - {@link OutlineRailProps}
+ * @see Story: .storybook/stories/blocks/navigation/OutlineRail/OutlineRail.stories
  */
 export const OutlineRail = ({
     header,

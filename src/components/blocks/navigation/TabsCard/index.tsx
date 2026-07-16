@@ -123,6 +123,7 @@ const TAB_CLASS_NEUTRAL =
  * as data (items + selectedKey + onSelectionChange); the block owns all styling.
  *
  * @param props - {@link TabsCardProps}
+ * @see Story: .storybook/stories/blocks/navigation/TabsCard/TabsCard.stories
  */
 export const TabsCard = ({
     leftTabs,

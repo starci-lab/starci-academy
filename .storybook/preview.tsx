@@ -13,7 +13,7 @@ import "../src/app/globals.css"
  * a11y addon runs axe on every story (fail-on-error surfaces contrast/aria bugs lint can't see).
  */
 /**
- * Render inline markdown in the "Cách dùng" caption — backtick `code` spans become
+ * Render inline markdown in the "Usage" caption — backtick `code` spans become
  * styled `<code>` (the usage strings are written in markdown). Lightweight on
  * purpose: only inline code, no block parsing / heavy markdown pipeline needed.
  */
@@ -29,7 +29,7 @@ const renderUsage = (text: string): React.ReactNode =>
     )
 
 const preview: Preview = {
-    // autodocs: render each story's JSDoc as its "cách dùng" description in the Docs tab.
+    // autodocs: render each story's JSDoc as its "usage" description in the Docs tab.
     tags: ["autodocs"],
     parameters: {
         a11y: { test: "error" },
@@ -42,7 +42,7 @@ const preview: Preview = {
         // full-bleed canvas for EVERY story — the decorator below fills it
         // (`min-h-screen w-full p-8`) and content flows from the top-left. No
         // per-story `layout` overrides: one uniform canvas across the whole book
-        // (thầy 2026-07-15: "full canvas trên trái"). `fullscreen` (not the SB
+        // (full-bleed canvas, content anchored top-left). `fullscreen` (not the SB
         // default "padded"/"centered") is what lets the decorator's height reach
         // the real iframe — "centered" shrink-wraps it and strands `h-full`.
         layout: "fullscreen",
@@ -65,7 +65,7 @@ const preview: Preview = {
     decorators: [
         (Story, context) => {
             const theme = context.globals.theme || "dark"
-            // Show the story's "cách dùng" as an Alert caption ON the canvas —
+            // Show the story's "usage" text as an Alert caption ON the canvas —
             // not just in the Docs tab. Only on the canvas (viewMode "story") so it
             // doesn't duplicate the description Docs already renders.
             const usage = context.parameters?.usage || context.parameters?.docs?.description?.story
@@ -82,7 +82,7 @@ const preview: Preview = {
                                         <InfoIcon />
                                     </Alert.Indicator>
                                     <Alert.Content>
-                                        <Alert.Title>Cách dùng</Alert.Title>
+                                        <Alert.Title>Usage</Alert.Title>
                                         <Alert.Description>{renderUsage(usage)}</Alert.Description>
                                     </Alert.Content>
                                 </Alert>

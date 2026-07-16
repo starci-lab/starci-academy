@@ -24,6 +24,7 @@ export interface FloatingActionButtonProps extends WithClassNames<undefined> {
  * native svg sizing). Pure + props-only; owns its look + fixed placement.
  *
  * @param props - {@link FloatingActionButtonProps}
+ * @see Story: .storybook/stories/blocks/buttons/FloatingActionButton/FloatingActionButton.stories
  */
 export const FloatingActionButton = ({
     onPress,

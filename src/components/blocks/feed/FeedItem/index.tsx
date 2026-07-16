@@ -39,6 +39,7 @@ export interface FeedItemProps extends WithClassNames<undefined> {
  * `children` content and passes a pre-formatted `timestamp`.
  *
  * @param props - {@link FeedItemProps}
+ * @see Story: .storybook/stories/blocks/feed/FeedItem/FeedItem.stories
  */
 export const FeedItem = ({ leading, children, timestamp, footer, className }: FeedItemProps) => {
     return (

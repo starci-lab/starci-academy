@@ -96,6 +96,7 @@ export interface ContinueCardProps extends WithClassNames<undefined> {
  * {@link ContinueCardProps.value} is provided.
  *
  * @param props - {@link ContinueCardProps}
+ * @see Story: .storybook/stories/blocks/cards/ContinueCard/ContinueCard.stories
  */
 export const ContinueCard = ({
     variant,

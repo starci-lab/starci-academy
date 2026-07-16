@@ -30,6 +30,8 @@ export interface AvatarUploadButtonProps extends WithClassNames<undefined> {
  * Props-only — no store or data access; the caller supplies the avatar + identity.
  *
  * @param props - {@link AvatarUploadButtonProps}
+ *
+ * @see Story: .storybook/stories/blocks/identity/AvatarUploadButton/AvatarUploadButton.stories
  */
 export const AvatarUploadButton = ({
     avatar,

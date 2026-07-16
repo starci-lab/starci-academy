@@ -90,6 +90,8 @@ export interface SchedulePickerProps extends WithClassNames<undefined> {
  *   selectedSlotId={slotId}
  *   onSlotChange={setSlotId}
  * />
+ *
+ * @see Story: .storybook/stories/blocks/form/SchedulePicker/SchedulePicker.stories
  */
 export const SchedulePicker = ({
     dateValue,

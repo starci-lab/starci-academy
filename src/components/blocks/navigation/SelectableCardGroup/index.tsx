@@ -61,6 +61,7 @@ const COLUMNS_CLASS: Record<1 | 2 | 3, string> = {
  * navigation use `TabsCard` (`variant="secondary"`).
  *
  * @param props - {@link SelectableCardGroupProps}
+ * @see Story: .storybook/stories/blocks/navigation/SelectableCardGroup/SelectableCardGroup.stories
  */
 export const SelectableCardGroup = <T extends string>({
     items,

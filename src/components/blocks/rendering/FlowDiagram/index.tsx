@@ -81,6 +81,8 @@ export interface FlowDiagramProps extends WithClassNames<undefined> {
  * the page (mirrors {@link MockInterviewDiagram}'s provider wrapping).
  *
  * @param props - See {@link FlowDiagramProps}.
+ *
+ * @see Story: .storybook/stories/blocks/rendering/FlowDiagram/FlowDiagram.stories
  */
 export const FlowDiagram = ({ nodes, edges, className }: FlowDiagramProps) => {
     const nodeTypes = useMemo(() => NODE_TYPES, [])

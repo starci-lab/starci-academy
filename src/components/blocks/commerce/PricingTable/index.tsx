@@ -85,6 +85,7 @@ export interface PricingTableProps extends WithClassNames<undefined> {
  *     ]}
  *     onSelectTier={(id) => console.log(id)}
  * />
+ * @see Story: .storybook/stories/blocks/commerce/PricingTable/PricingTable.stories
  */
 export const PricingTable = ({
     tiers,

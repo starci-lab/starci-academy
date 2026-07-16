@@ -48,6 +48,7 @@ export interface LanguageDonutProps extends WithClassNames<undefined> {
  * names use the shared display map (`csharp`→C#, `cpp`→C++).
  *
  * @param props - {@link LanguageDonutProps}
+ * @see Story: .storybook/stories/blocks/stats/LanguageDonut/LanguageDonut.stories
  */
 export const LanguageDonut = ({
     items,

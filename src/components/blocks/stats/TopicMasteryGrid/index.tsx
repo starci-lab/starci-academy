@@ -29,6 +29,7 @@ export interface TopicMasteryGridProps extends WithClassNames<undefined> {
  * topics, real counts) and compact. Pure/props-only; owns its look.
  *
  * @param props - {@link TopicMasteryGridProps}
+ * @see Story: .storybook/stories/blocks/stats/TopicMasteryGrid/TopicMasteryGrid.stories
  */
 export const TopicMasteryGrid = ({ topics, ariaLabel, className }: TopicMasteryGridProps) => {
     const max = topics.reduce((peak, topic) => Math.max(peak, topic.solved), 0) || 1

@@ -51,6 +51,7 @@ export interface MetricCardProps extends WithClassNames<undefined> {
  *   label="Total Enrollments"
  *   hint="Updated daily"
  * />
+ * @see Story: .storybook/stories/blocks/stats/MetricCard/MetricCard.stories
  */
 export const MetricCard = ({
     value,

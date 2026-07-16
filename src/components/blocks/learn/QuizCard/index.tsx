@@ -199,6 +199,7 @@ const ROW_BASE = "rounded-2xl px-4 py-3 transition-colors"
  *   onSelectionChange={setSelectedIds}
  *   onSubmit={handleSubmit}
  * />
+ * @see Story: .storybook/stories/blocks/learn/QuizCard/QuizCard.stories
  */
 export const QuizCard = ({
     question,

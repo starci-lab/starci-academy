@@ -28,6 +28,7 @@ export interface StatPairProps extends WithClassNames<undefined> {
  * its own — the surrounding card supplies the surface and any dividers.
  *
  * @param props - {@link StatPairProps}
+ * @see Story: .storybook/stories/blocks/stats/StatPair/StatPair.stories
  */
 export const StatPair = ({
     value,

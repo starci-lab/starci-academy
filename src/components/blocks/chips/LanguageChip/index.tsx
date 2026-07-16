@@ -16,6 +16,7 @@ export interface LanguageChipProps extends WithClassNames<undefined> {
  * colour + label come from the shared {@link getLanguageColor}/{@link getLanguageLabel}.
  *
  * @param props - {@link LanguageChipProps}
+ * @see Story: .storybook/stories/blocks/chips/LanguageChip/LanguageChip.stories
  */
 export const LanguageChip = ({ language, className }: LanguageChipProps) => {
     return (

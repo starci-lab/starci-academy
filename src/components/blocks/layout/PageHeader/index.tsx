@@ -59,6 +59,7 @@ export interface PageHeaderProps extends WithClassNames<undefined> {
  *   description="View and edit all registered learners."
  *   actions={<Button>Invite</Button>}
  * />
+ * @see Story: .storybook/stories/blocks/layout/PageHeader/PageHeader.stories
  */
 export const PageHeader = ({
     title,

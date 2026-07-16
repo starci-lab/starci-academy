@@ -31,6 +31,7 @@ export interface UserAvatarProps extends WithClassNames<undefined> {
  * initials. Same seed → same face everywhere the user is shown.
  *
  * @param props - {@link UserAvatarProps}
+ * @see Story: .storybook/stories/reuseable/UserAvatar/UserAvatar.stories
  */
 export const UserAvatar = ({ username, avatar, seed, size, className }: UserAvatarProps) => {
     // last-resort fallback if even the generated image fails to load

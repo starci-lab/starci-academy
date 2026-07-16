@@ -51,6 +51,7 @@ export interface ProgressMeterProps extends WithClassNames<undefined> {
  *
  * @param props - See {@link ProgressMeterProps}.
  * @returns The rendered progress meter.
+ * @see Story: .storybook/stories/blocks/stats/ProgressMeter/ProgressMeter.stories
  */
 export const ProgressMeter = ({
     value,
@@ -81,7 +82,7 @@ export const ProgressMeter = ({
                 color={color}
                 size="sm"
             >
-                <ProgressBar.Track>
+                <ProgressBar.Track className="h-1">
                     <ProgressBar.Fill />
                 </ProgressBar.Track>
             </ProgressBar>

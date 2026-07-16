@@ -42,6 +42,7 @@ export interface EmptyStateProps extends WithClassNames<undefined> {
  *
  * @param props - See {@link EmptyStateProps}.
  * @returns The rendered empty-state element.
+ * @see Story: .storybook/stories/blocks/feedback/EmptyState/EmptyState.stories
  */
 export const EmptyState = ({
     icon,

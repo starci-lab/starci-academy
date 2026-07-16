@@ -34,6 +34,7 @@ export interface SectionCardProps extends WithClassNames<undefined> {
  * identical. Use `accent` for the viewer's own / highlighted cards.
  *
  * @param props - {@link SectionCardProps}
+ * @see Story: .storybook/stories/reuseable/SectionCard/SectionCard.stories
  */
 export const SectionCard = ({
     children,

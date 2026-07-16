@@ -70,6 +70,7 @@ export interface PressableCardProps extends WithClassNames<undefined> {
  * — see the `actions` prop docs.
  *
  * @param props - {@link PressableCardProps}
+ * @see Story: .storybook/stories/blocks/cards/PressableCard/PressableCard.stories
  */
 export const PressableCard = ({
     children,

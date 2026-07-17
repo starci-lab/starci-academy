@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { Button, Spinner, Typography, cn } from "@heroui/react"
+import { Button, Spinner, Typography } from "@heroui/react"
 import { ArrowRightIcon, CardsIcon, ClockCountdownIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -35,19 +35,21 @@ export interface FlashcardReviewModeModalProps extends WithClassNames<undefined>
  * and actually starts (spinner there until the session persists). "Ôn tất cả"
  * runs the whole deck; "Chỉ thẻ cần ôn" runs only the cards past due / never
  * learned (the deck's `dueCount`), and dims + auto-resets the picker back to
- * "full" when nothing is due. Row hover still underlines the title
- * ([[hover-style-matches-clickable-nature]]) even though rows no longer
- * navigate on press — thầy's explicit call for this list. `SurfaceListCard
- * bordered` — this list is NESTED inside the modal surface, so it needs a real
- * border rather than the (invisible-in-dark) `shadow-surface` top-level default
- * (`components/card.md` §"surface-in-surface / nested").
+ * "full" when nothing is due. These are SELECT rows (they pick a mode, they do
+ * not navigate), so hover PREVIEWS the pick with the same `bg-accent-soft` the
+ * selected row wears — not the neutral `bg-default` fill nor the earlier title
+ * underline (thầy 2026-07-17). `SurfaceListCard bordered` — this list is NESTED
+ * inside the modal surface, so it needs a real border rather than the
+ * (invisible-in-dark) `shadow-surface` top-level default (`components/card.md`
+ * §"surface-in-surface / nested").
  * Selected-row signal (thầy 2026-07-13 lượt 4, dropped the `CheckCircleIcon`
  * tried in lượt 3): the row itself tints `bg-accent-soft` via `SurfaceListCardRow`'s
  * `selected` prop (no `titleClassName` escape hatch — header/title styling stays
- * on the block's own default, per `no-modal-title-classname`), and the leading
- * icon turns `text-accent-soft-foreground`, no trailing checkmark. Leading icon otherwise
- * matches the title's own colour (`text-foreground`, not the previous
- * `text-muted`) — `components/icon.md` "icon cùng màu chữ cạnh nó".
+ * on the block's own default, per `no-modal-title-classname`). The leading icon
+ * always matches the title's colour — `text-foreground`, since the row's own tint
+ * (not an icon recolour) carries the selection signal — per `components/icon.md`
+ * §6 "icon cùng màu chữ cạnh nó" (thầy 2026-07-17 fixed the earlier
+ * icon-accent-soft-foreground / title-foreground mismatch).
  * @param props - {@link FlashcardReviewModeModalProps}
  */
 export const FlashcardReviewModeModal = ({
@@ -86,8 +88,12 @@ export const FlashcardReviewModeModal = ({
 
                 <SurfaceListCard bordered>
                     <SurfaceListCardRow
-                        hover="underline"
-                        leading={<CardsIcon className={cn("size-6", mode === "full" ? "text-accent-soft-foreground" : "text-foreground")} aria-hidden focusable="false" />}
+                        // select-mode rows: hover PREVIEWS the pick with the same accent-soft the
+                        // selected row wears (not the neutral bg-default fill) — thầy 2026-07-17.
+                        className="hover:bg-accent-soft"
+                        // leading icon matches the title's colour (always text-foreground; the row
+                        // signals selection via its bg tint, not the icon) — icon.md §6.
+                        leading={<CardsIcon className="size-6 text-foreground" aria-hidden focusable="false" />}
                         title={t("flashcard.mode.fullLabel")}
                         subtitle={t("flashcard.mode.fullDescription")}
                         selected={mode === "full"}
@@ -100,8 +106,8 @@ export const FlashcardReviewModeModal = ({
                         )}
                     />
                     <SurfaceListCardRow
-                        hover="underline"
-                        leading={<ClockCountdownIcon className={cn("size-6", mode === "due" ? "text-accent-soft-foreground" : "text-foreground")} aria-hidden focusable="false" />}
+                        className="hover:bg-accent-soft"
+                        leading={<ClockCountdownIcon className="size-6 text-foreground" aria-hidden focusable="false" />}
                         title={t("flashcard.mode.dueLabel")}
                         subtitle={t("flashcard.mode.dueDescription")}
                         selected={mode === "due"}

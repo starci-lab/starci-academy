@@ -38,6 +38,12 @@ export interface MyInProgressMockInterviewSessionData {
     promptId: string
     /** The drawn prompt's title. */
     promptTitle: string
+    /**
+     * Learner-chosen name for this session, or null/omitted when left blank at
+     * setup — the resume card's title falls back to a time-based display name
+     * derived from `updatedAt` (see `sessionDisplayName`) when this is absent.
+     */
+    name?: string | null
     /** Seniority level the session was drawn for, or null. */
     level?: string | null
     /** Difficulty tier of the drawn prompt. */

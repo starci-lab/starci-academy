@@ -14,6 +14,7 @@ const query1 = gql`
         items {
           id
           updatedAt
+          name
           mode
           level
           cardCount

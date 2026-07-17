@@ -3,7 +3,6 @@
 import React from "react"
 import useSWR from "swr"
 import { Button, Spinner, Typography } from "@heroui/react"
-import { ClockCounterClockwiseIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { DUE_REVIEW_LIMIT } from "../constants"
@@ -63,10 +62,9 @@ export const DueReviewHero = ({ className }: DueReviewHeroProps) => {
     }
 
     // resumable cross-deck "Đến hạn hôm nay" run — mirrors QuizSession's own
-    // "Zone 0" resume card (thầy: "phiên dở dang cũng hiện cho phần học thẻ").
-    // `ClockCounterClockwiseIcon` sunk as a background watermark reads this as
-    // "pick back up a session in progress" (thầy 2026-07-11: "đồng hồ đi", picked
-    // over the streak-toned FireIcon) — see `ContinueCard`'s `watermarkIcon` prop.
+    // "Zone 0" resume card. Renders like the mock-interview resume card (thầy
+    // 2026-07-17 "render y như Phỏng vấn thử"): a progress meter (`value`), NO
+    // clock watermark — the `card {current}/{total}` progress carries "in progress".
     const resumeSwr = useQueryMyInProgressFlashcardDueReviewSessionSwr(courseId)
     const resumeData = resumeSwr.data
 
@@ -88,8 +86,9 @@ export const DueReviewHero = ({ className }: DueReviewHeroProps) => {
                         total: resumeData.cardIds.length,
                     })}
                     variant="hero"
+                    value={resumeData.currentIndex + 1}
+                    max={resumeData.cardIds.length}
                     ctaLabel={t("flashcard.due.resumeCta")}
-                    icon={<ClockCounterClockwiseIcon weight="fill" />}
                     onPress={() => router.push(
                         pathConfig().locale(locale).course(displayId).learn().flashcards().due(resumeData.sessionId).build(),
                     )}

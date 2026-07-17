@@ -42,6 +42,14 @@ export interface MockInterviewStatsWeakest {
     matchedContentId: string | null
 }
 
+/** One normalized-and-tallied recurring gap across the viewer's scanned attempts, most-frequent first. */
+export interface MockInterviewStatsRecurringGap {
+    /** Display text for this recurring gap (most-recently-seen original casing). */
+    text: string
+    /** How many scanned attempts recorded this (normalized) gap. */
+    count: number
+}
+
 /** Mode split across the viewer's scanned mock-interview attempts. */
 export interface MockInterviewStatsModeSplit {
     /** Completed mode="qna" attempts in the scanned window. */
@@ -74,6 +82,12 @@ export interface QueryMyMockInterviewStatsResponseData {
     byKind: Array<MockInterviewStatsBreakdownItem>
     /** Per-attribute aggregate (communication/structuredThinking/tradeoffAwareness), across every attempt regardless of mode. */
     byAttribute: Array<MockInterviewStatsBreakdownItem>
+    /** Per-seniority-level aggregate (junior/middle/senior), across every attempt regardless of mode. */
+    byLevel: Array<MockInterviewStatsBreakdownItem>
+    /** Per-drawn-language aggregate — mode="qna" code questions only, grouped by the language the question was drawn in; low-sample languages are dropped. */
+    byLanguage: Array<MockInterviewStatsBreakdownItem>
+    /** Top recurring gaps across every scanned attempt's gaps[], most-frequent first; only gaps seen at least twice qualify. */
+    recurringGaps: Array<MockInterviewStatsRecurringGap>
     /** The single weakest phase/kind/attribute across all three axes, when it qualifies; null otherwise. */
     weakest: MockInterviewStatsWeakest | null
     /** Tally of the viewer's scanned attempts by coarse verdict band. */

@@ -3,13 +3,12 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import useSWR from "swr"
 import { LayoutGroup, motion, useReducedMotion } from "framer-motion"
-import { Button, Chip, Label, Spinner, Typography, cn } from "@heroui/react"
+import { Button, Chip, Input, Label, Spinner, TextField, Typography, cn } from "@heroui/react"
 import {
     ArrowRightIcon,
     CardsIcon,
     CheckCircleIcon,
     ClockCountdownIcon,
-    ClockCounterClockwiseIcon,
     ClockIcon,
     FlameIcon,
     LightningIcon,
@@ -46,6 +45,7 @@ import { useQueryMyInProgressFlashcardQuizSessionSwr } from "@/hooks/swr/api/gra
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { useAppSelector } from "@/redux/hooks"
 import { pathConfig } from "@/resources/path"
+import { sessionDisplayName } from "@/modules/utils/session-display-name"
 import { ContinueCard } from "@/components/blocks/cards/ContinueCard"
 import { WorkSessionHeader } from "@/components/blocks/navigation/WorkSessionHeader"
 import { QuizSessionSkeleton } from "./QuizSessionSkeleton"
@@ -249,6 +249,10 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     })
     const [mode, setMode] = useState<QuizMode>("quick")
     const [level, setLevel] = useState<string | null>(null)
+    // learner-chosen name for this run, set at setup ("Cấu hình luyện") — optional;
+    // blank falls back to a TIME-BASED display name derived from `updatedAt` once
+    // the session exists (see `sessionDisplayName`), never random-generated.
+    const [sessionName, setSessionName] = useState("")
     // "Ôn tất cả" (draw from the whole pool) vs "Chỉ thẻ cần ôn" (draw only from
     // today's due queue) — same 2 options + wording as `FlashcardReviewModeModal`
     // (thầy 2026-07-13: "cấu hình luyện thêm ôn tất cả và chỉ thẻ cần ôn").
@@ -397,7 +401,13 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
             // graphql-types/request.ts) — omitting them fails GraphQL input
             // validation before the resolver even runs (fixed 2026-07-09).
             const started = await runStart.trigger({
-                request: { courseId, cardIds: drawn.map((card) => card.id), mode, level },
+                request: {
+                    courseId,
+                    cardIds: drawn.map((card) => card.id),
+                    mode,
+                    level,
+                    name: sessionName.trim() || undefined,
+                },
                 headers: courseHeaders,
             }).catch(() => null)
             const startedId = started?.data?.startFlashcardQuizSession.data?.sessionId
@@ -422,7 +432,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
             setStartError(t("flashcard.quiz.sessionLoadErrorTitle"))
             setStarting(false)
         }
-    }, [decks, starting, level, scope, dueCardIds, sessionLength, t, courseHeaders, courseId, mode, runStart, inProgressSessionSwr, displayId, locale, router])
+    }, [decks, starting, level, scope, dueCardIds, sessionLength, t, courseHeaders, courseId, mode, sessionName, runStart, inProgressSessionSwr, displayId, locale, router])
 
     // "Thoát" — leaves the active run for the setup screen. No confirm modal (unlike
     // Mock Interview's leave, which is destructive/abandon-ungraded): a quiz run is
@@ -835,9 +845,13 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                 0,
                                 Math.ceil((new Date(resumeData.deadlineAt).getTime() - Date.now()) / 60_000),
                             )
+                            // session name — resume's own timestamp is `updatedAt` (no
+                            // `createdAt` in this query shape), the closest available server
+                            // timestamp for the time-based fallback (see `sessionDisplayName`).
+                            const resumeName = sessionDisplayName(resumeData.name, resumeData.updatedAt, t, locale)
                             return (
                                 <ContinueCard
-                                    title={t("flashcard.quiz.resumeTitle")}
+                                    title={resumeName}
                                     subtitle={t("flashcard.quiz.resumeSubtitle", {
                                         current: resumeData.currentIndex + 1,
                                         total: resumeData.cardIds.length,
@@ -845,8 +859,9 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                     })}
                                     urgent={resumeRemainingMinutes <= 15}
                                     variant="hero"
+                                    value={resumeData.currentIndex + 1}
+                                    max={resumeData.cardIds.length}
                                     ctaLabel={t("flashcard.quiz.resumeCta")}
-                                    icon={<ClockCounterClockwiseIcon weight="fill" />}
                                     onPress={() => router.push(learnPath.flashcards().quiz(resumeData.sessionId).build())}
                                 />
                             )
@@ -865,13 +880,29 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
 
                         {/* Zone 2 — config: mode + level, its own labeled card so it reads as a
                     distinct block from the progress zone above (was one dense card before). */}
-                        <LabeledCard label={t("flashcard.quiz.configLabel")} contentClassName="flex flex-col gap-6">
+                        <LabeledCard label={t("flashcard.quiz.configLabel")} contentClassName="flex flex-col gap-3">
+                            {/* session name — optional, time-based fallback (see `sessionDisplayName`);
+                                lets a learner tell runs apart in "Lịch sử"/resume without forcing a name. */}
+                            <div className="flex flex-col gap-2">
+                                <Label>{t("common.sessionNameLabel")}</Label>
+                                <TextField variant="secondary" className="w-full">
+                                    <Input
+                                        className="w-full"
+                                        placeholder={t("common.sessionNamePlaceholder")}
+                                        name="sessionName"
+                                        value={sessionName}
+                                        onChange={(event) => setSessionName(event.target.value)}
+                                        maxLength={80}
+                                    />
+                                </TextField>
+                            </div>
+
                             {/* Scope — same 2 options/wording as `FlashcardReviewModeModal`
                                 ("Ôn tất cả" / "Chỉ thẻ cần ôn"), reused verbatim rather than
                                 duplicated copy (thầy 2026-07-13: "cấu hình luyện thêm ôn tất
                                 cả và chỉ thẻ cần ôn"). Disabled + auto-reset to "all" when
                                 nothing is due, same guard as the modal's `dueDisabled`. */}
-                            <div className="flex flex-col gap-3">
+                            <div className="flex flex-col gap-2">
                                 <Label>{t("flashcard.quiz.scopeLabel")}</Label>
                                 <FlexWrapButtonRadio
                                     ariaLabel={t("flashcard.quiz.scopeLabel")}
@@ -901,7 +932,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                 />
                             </div>
 
-                            <div className="flex flex-col gap-3">
+                            <div className="flex flex-col gap-2">
                                 <Label>{t("flashcard.quiz.modeLabel")}</Label>
                                 <FlexWrapButtonRadio
                                     ariaLabel={t("flashcard.quiz.modeLabel")}
@@ -930,7 +961,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                 />
                             </div>
 
-                            <div className="flex flex-col gap-3">
+                            <div className="flex flex-col gap-2">
                                 <Label>{t("flashcard.quiz.levelLabel")}</Label>
                                 <FlexWrapButtonRadio
                                     ariaLabel={t("flashcard.quiz.levelLabel")}

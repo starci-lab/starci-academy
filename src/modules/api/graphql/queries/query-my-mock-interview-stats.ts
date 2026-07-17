@@ -42,6 +42,24 @@ const query1 = gql`
           weakCount
           attemptCount
         }
+        byLevel {
+          key
+          avgScore
+          avgMax
+          weakCount
+          attemptCount
+        }
+        byLanguage {
+          key
+          avgScore
+          avgMax
+          weakCount
+          attemptCount
+        }
+        recurringGaps {
+          text
+          count
+        }
         weakest {
           key
           axis

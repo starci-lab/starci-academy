@@ -30,6 +30,15 @@ export interface SegmentBarProps extends WithClassNames<undefined> {
     max?: number
     /** Hide the legend row under the bar. */
     hideLegend?: boolean
+    /**
+     * Render a thick "ladder" strip with each slice's label + share (%) printed
+     * inline instead of a thin proportion sliver, for breakdowns where every
+     * band needs to read on its own (e.g. maturity buckets). The legend below
+     * then drops its count suffix since the % is already visible on the strip.
+     */
+    inlineLabels?: boolean
+    /** Optional muted takeaway sentence rendered below the legend (e.g. "only 8% is retained long-term"). */
+    caption?: ReactNode
 }
 
 /** Default slice colours (semantic tokens) when a segment has no explicit `color`. */
@@ -46,7 +55,9 @@ const PALETTE = [
  * sized by each segment's share of the total, with a legend of colour-dot +
  * label + real count below. Honest (widths are true proportions, never
  * relative-to-max) and compact — a single element that flexes a distribution
- * (difficulty depth, language breadth…). Pure/props-only; owns its look.
+ * (difficulty depth, language breadth…). Set `inlineLabels` for a thicker
+ * "ladder" reading (each band prints its own label + % instead of the legend
+ * carrying all the meaning). Pure/props-only; owns its look.
  *
  * @param props - {@link SegmentBarProps}
  * @see Story: .storybook/stories/blocks/stats/SegmentBar/SegmentBar.stories
@@ -56,6 +67,8 @@ export const SegmentBar = ({
     ariaLabel,
     max,
     hideLegend,
+    inlineLabels,
+    caption,
     className,
 }: SegmentBarProps) => {
     const total = max ?? (segments.reduce((acc, segment) => acc + segment.value, 0) || 1)
@@ -72,12 +85,18 @@ export const SegmentBar = ({
             <div
                 role="img"
                 aria-label={ariaLabel}
-                className="flex h-1 w-full overflow-hidden rounded-full bg-default"
+                className={cn(
+                    "flex w-full overflow-hidden bg-default",
+                    inlineLabels ? "h-7 rounded-lg" : "h-1 rounded-full",
+                )}
             >
                 {filled.map((segment) => (
                     <div
                         key={segment.key}
-                        className="h-full min-w-0"
+                        className={cn(
+                            "h-full min-w-0",
+                            inlineLabels && "flex items-center justify-center overflow-hidden px-1.5",
+                        )}
                         style={{
                             // slices touch flush (no gap) so the bar reads as ONE line —
                             // a gap would reveal the track at fractional-pixel seams and
@@ -86,7 +105,13 @@ export const SegmentBar = ({
                             flexBasis: 0,
                             backgroundColor: segment.color,
                         }}
-                    />
+                    >
+                        {inlineLabels ? (
+                            <span className="truncate text-[10px] font-bold text-white">
+                                {segment.label}&nbsp;{Math.round((segment.value / total) * 100)}%
+                            </span>
+                        ) : null}
+                    </div>
                 ))}
                 {remainder > 0 ? (
                     <div
@@ -106,11 +131,17 @@ export const SegmentBar = ({
                                 className="size-2.5 shrink-0 rounded-full"
                             />
                             <Typography type="body-xs" color="muted">
-                                {segment.label}&nbsp;·&nbsp;{segment.value}
+                                {segment.label}
+                                {!inlineLabels ? <>&nbsp;·&nbsp;{segment.value}</> : null}
                             </Typography>
                         </div>
                     ))}
                 </div>
+            ) : null}
+            {caption ? (
+                <Typography type="body-xs" color="muted">
+                    {caption}
+                </Typography>
             ) : null}
         </div>
     )

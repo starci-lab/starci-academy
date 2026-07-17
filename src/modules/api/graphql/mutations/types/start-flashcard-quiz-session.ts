@@ -16,6 +16,13 @@ export interface StartFlashcardQuizSessionRequest {
     /** Seniority level filter chosen at setup, or null for "all levels" — REQUIRED
      *  (nullable) on the backend; persisted so history/stats can show it. */
     level: string | null
+    /**
+     * Learner-chosen name for this session, set at setup ("Cấu hình luyện").
+     * Optional — omitted/blank falls back to a TIME-BASED display name derived
+     * from the session's `createdAt` (see `sessionDisplayName`), never
+     * random-generated.
+     */
+    name?: string
 }
 
 /** Payload inside `startFlashcardQuizSession.data` after the standard API wrapper. */

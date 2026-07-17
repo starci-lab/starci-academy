@@ -111,6 +111,34 @@ export const ManyGroups: Story = {
     ),
 }
 
+/** Use for a "ladder"-style breakdown where every band needs to read on its own — each slice prints its own label + share (%) on a thicker strip, with a takeaway caption underneath. */
+export const InlineLadder: Story = {
+    tags: ["news"],
+    parameters: { usage: "Chờ duyệt — use for a ladder-style breakdown where every band needs to read on its own — each slice prints its own label + share (%) on a thicker strip, with a takeaway caption underneath." },
+    render: () => (
+        <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Maturity ladder</Label>
+                <Typography type="body-sm" color="muted">
+                    Ladder-style breakdown — each band prints its own label + % inline, and the legend explains the bucket instead of repeating a count.
+                </Typography>
+            </div>
+            <div className="w-80">
+                <SegmentBar
+                    inlineLabels
+                    ariaLabel="Card maturity breakdown"
+                    caption="Only 8% of cards have matured (retained over a long gap) — that's the real progress, not the raw card count seen."
+                    segments={[
+                        { key: "non", label: "Non", value: 52, color: "var(--default)" },
+                        { key: "maturing", label: "Maturing", value: 40, color: "var(--warning)" },
+                        { key: "mature", label: "Mature", value: 8, color: "var(--success)" },
+                    ]}
+                />
+            </div>
+        </div>
+    ),
+}
+
 /** Use when there's no real data yet (all groups are 0), to confirm the bar doesn't break the layout and shows an empty track instead of a divide-by-zero error. */
 export const NoData: Story = {
     parameters: { usage: "Use when there's no real data yet (all groups are 0), to confirm the bar doesn't break the layout and shows an empty track instead of a divide-by-zero error." },

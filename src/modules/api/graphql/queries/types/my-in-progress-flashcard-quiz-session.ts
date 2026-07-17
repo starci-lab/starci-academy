@@ -21,6 +21,12 @@ export interface MyInProgressFlashcardQuizSessionData {
     sessionId: string
     /** The cards drawn for this run, in play order. */
     cardIds: Array<string>
+    /**
+     * Learner-chosen name for this session, or null/omitted when left blank at
+     * setup — the resume card's title falls back to a time-based display name
+     * derived from `updatedAt` (see `sessionDisplayName`) when this is absent.
+     */
+    name?: string | null
     /** Zero-based index of the card the learner was on when last synced. */
     currentIndex: number
     /** Per-card outcomes recorded so far. */

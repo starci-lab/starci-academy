@@ -46,6 +46,13 @@ export interface StartMockInterviewSessionRequest {
      * server always forces `true` for `mode="design"` regardless of what's sent.
      */
     countsToReadiness?: boolean
+    /**
+     * Learner-chosen name for this session, set at setup ("Tùy chỉnh phiên").
+     * Optional — omitted/blank falls back to a TIME-BASED display name derived
+     * from the session's `createdAt` (see `sessionDisplayName`), never
+     * random-generated.
+     */
+    name?: string
 }
 
 /**

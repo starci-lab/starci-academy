@@ -18,6 +18,13 @@ export interface QueryFlashcardQuizHistoryItem {
     id: string
     /** ISO timestamp of the session's last update (completion time). */
     updatedAt: string
+    /**
+     * Learner-chosen name for this session, or null when left blank at setup —
+     * mirrors {@link correctCount} in shape (a plain optional-at-runtime field);
+     * the history row's primary label falls back to a time-based display name
+     * derived from `updatedAt` (see `sessionDisplayName`) when this is null.
+     */
+    name: string | null
     /** The quiz mode this session was drawn under. */
     mode: string
     /** The difficulty level this session was drawn under, when applicable. */

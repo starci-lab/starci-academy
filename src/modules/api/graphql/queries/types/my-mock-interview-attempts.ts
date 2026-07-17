@@ -56,6 +56,12 @@ export interface MockInterviewAttemptItem {
     promptId: string
     /** Snapshot of the prompt's title at grade time. */
     promptTitle: string
+    /**
+     * Learner-chosen name for this session, or null when left blank at setup —
+     * the history row's primary label falls back to a time-based display name
+     * derived from `createdAt` (see `sessionDisplayName`) when this is null.
+     */
+    name: string | null
     /** Seniority level the session was graded against, or null (any level). */
     level: string | null
     /** The top-level flow this session ran ("qna" | "design"), or null for an attempt graded before the "mode split" (treated as "design"). */

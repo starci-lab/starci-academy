@@ -4,8 +4,10 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import {
     Button,
     Card,
+    Input,
     Label,
     Spinner,
+    TextField,
     Typography,
     cn,
 } from "@heroui/react"
@@ -55,6 +57,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 import { ProgrammingLanguage } from "@/modules/types/enums/programming-language"
 import { DEFAULT_PROGRAMMING_LANGUAGES, resolveActiveProgrammingLang } from "@/modules/types/utils/programming-language"
 import { getLanguageLabel } from "@/modules/utils/language"
+import { sessionDisplayName } from "@/modules/utils/session-display-name"
 import {
     MOCK_INTERVIEW_CODE_STATE_DEFAULT,
     MockInterviewWorkspace,
@@ -359,6 +362,10 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         return initial === "history" || initial === "stats" ? initial : "begin"
     })
     const [tier, setTier] = useState<MockInterviewTier>("trung")
+    // learner-chosen name for this run, set at setup ("Tùy chỉnh phiên") — optional;
+    // blank falls back to a TIME-BASED display name derived from `createdAt` once
+    // the session exists (see `sessionDisplayName`), never random-generated.
+    const [sessionName, setSessionName] = useState("")
     // programming languages selected at setup (MULTI-select, 2026-07-17) — each
     // code question authored across the 4 tracks is drawn in a RANDOM one of these;
     // a code question authored in none of them is skipped by the server and a
@@ -811,6 +818,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                 questionCount: isConfigurable ? Number(questionCount) : undefined,
                 kinds: isConfigurable && selectedKinds.length > 0 ? selectedKinds : undefined,
                 countsToReadiness: !isConfigurable,
+                name: sessionName.trim() || undefined,
             })
             const payload = response.data?.startMockInterviewSession
             if (!payload?.success || !payload.data) {
@@ -878,7 +886,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         // above navigates to `/interview/[id]`, unmounting this setup instance, so the
         // spinner naturally disappears with it (resetting here would flash the icon back
         // for a frame before the route swaps).
-    }, [courseId, courseDisplayId, currentLevel, mode, configMode, interviewLangs, questionCount, selectedKinds, startSessionSwr, inProgressSessionSwr, router, locale, t])
+    }, [courseId, courseDisplayId, currentLevel, mode, configMode, interviewLangs, questionCount, selectedKinds, sessionName, startSessionSwr, inProgressSessionSwr, router, locale, t])
 
     // resume, on mount, when reached via the dedicated `/interview/[sessionId]` route —
     // waits for `inProgressSessionSwr` to settle, then either rehydrates straight into
@@ -1402,10 +1410,15 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
             const resumeRemainingMinutes = Math.max(0, Math.ceil((new Date(resumeSession.deadlineAt).getTime() - Date.now()) / 60_000))
             const resumeExpired = resumeRemainingMinutes <= 0
             const resumeUrgent = resumeExpired || resumeRemainingMinutes <= 15
+            // session name — resume's own timestamp is `updatedAt` (no `createdAt` in
+            // this query shape), the closest available server timestamp for the
+            // time-based fallback (see `sessionDisplayName`). The former prompt-title
+            // title moves into the subtitle so the drawn prompt is still visible.
+            const resumeName = sessionDisplayName(resumeSession.name, resumeSession.updatedAt, t, locale)
             return (
                 <ContinueCard
-                    title={resumeSession.promptTitle}
-                    subtitle={resumeExpired
+                    title={resumeName}
+                    subtitle={`${resumeSession.promptTitle} · ${resumeExpired
                         ? t("mockInterview.resumeSubtitleExpired", {
                             progress: progressLabel,
                             tier: t(`mockInterview.tier.${resumeTier}`),
@@ -1414,7 +1427,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                             progress: progressLabel,
                             tier: t(`mockInterview.tier.${resumeTier}`),
                             minutes: resumeRemainingMinutes,
-                        })}
+                        })}`}
                     urgent={resumeUrgent}
                     variant="hero"
                     value={resumeValue}
@@ -1564,9 +1577,25 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                 <LabeledCard
                                     label={t("mockInterview.configTitle")}
                                     labelEnd={configMode === "auto" ? t("mockInterview.autoCaption") : undefined}
-                                    contentClassName="flex flex-col gap-6"
+                                    contentClassName="flex flex-col gap-3"
                                 >
-                                    <div className="flex flex-col gap-3">
+                                    {/* session name — optional, time-based fallback (see `sessionDisplayName`);
+                                lets a learner tell runs apart in "Lịch sử"/resume without forcing a name. */}
+                                    <div className="flex flex-col gap-2">
+                                        <Label>{t("common.sessionNameLabel")}</Label>
+                                        <TextField variant="secondary" className="w-full">
+                                            <Input
+                                                className="w-full"
+                                                placeholder={t("common.sessionNamePlaceholder")}
+                                                name="sessionName"
+                                                value={sessionName}
+                                                onChange={(event) => setSessionName(event.target.value)}
+                                                maxLength={80}
+                                            />
+                                        </TextField>
+                                    </div>
+
+                                    <div className="flex flex-col gap-2">
                                         <Label>{t("mockInterview.modeToggleLabel")}</Label>
                                         <FlexWrapButtonRadio
                                             ariaLabel={t("mockInterview.modeToggleLabel")}
@@ -1581,7 +1610,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
 
                                     {configMode === "configurable" ? (
                                         <>
-                                            <div className="flex flex-col gap-3">
+                                            <div className="flex flex-col gap-2">
                                                 <Label>{t("mockInterview.questionCountLabel")}</Label>
                                                 <FlexWrapButtonRadio
                                                     ariaLabel={t("mockInterview.questionCountLabel")}
@@ -1594,7 +1623,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                                 />
                                             </div>
 
-                                            <div className="flex flex-col gap-3">
+                                            <div className="flex flex-col gap-2">
                                                 <Label>{t("mockInterview.kindPickerLabel")}</Label>
                                                 <div role="group" aria-label={t("mockInterview.kindPickerLabel")} className="flex flex-wrap items-center gap-2">
                                                     <button
@@ -1634,7 +1663,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                                 </div>
                                             </div>
 
-                                            <div className="flex flex-col gap-3">
+                                            <div className="flex flex-col gap-2">
                                                 <Label>{t("mockInterview.answerModeLabel")}</Label>
                                                 <FlexWrapButtonRadio
                                                     ariaLabel={t("mockInterview.answerModeLabel")}
@@ -1649,7 +1678,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                         </>
                                     ) : null}
 
-                                    <div className="flex flex-col gap-3">
+                                    <div className="flex flex-col gap-2">
                                         <Label>{t("mockInterview.tierLabel")}</Label>
                                         <FlexWrapButtonRadio
                                             ariaLabel={t("mockInterview.tierLabel")}
@@ -1671,7 +1700,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                         the server returns that language's own prompt + given code and grades
                         against its own ideal answer. Non-track (e.g. dockerfile) + no-code
                         questions ignore this. At least one language stays selected. */}
-                                    <div className="flex flex-col gap-3">
+                                    <div className="flex flex-col gap-2">
                                         <Label>{t("mockInterview.langLabel")}</Label>
                                         <FlexWrapButtonRadio
                                             multiple
@@ -1694,7 +1723,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                         reserved for surfaces mirroring a REAL adjacent Select (e.g. the CV
                         editor's language field) — this card has none. The Auto lane ALWAYS
                         carries its weekly credit beside it (unified-pool concept). */}
-                                    <div className="flex flex-col gap-3">
+                                    <div className="flex flex-col gap-2">
                                         <Label>{t("mockInterview.modelLabel")}</Label>
                                         <div className="flex flex-wrap items-center gap-3">
                                             <GradeModelDropdown

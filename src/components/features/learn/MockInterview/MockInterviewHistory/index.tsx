@@ -14,6 +14,7 @@ import { SearchInput } from "@/components/blocks/form/SearchInput"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import { useQueryMyMockInterviewAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyMockInterviewAttemptsSwr"
 import { groupByTimeBucket } from "../../Flashcards/historyBuckets"
+import { sessionDisplayName } from "@/modules/utils/session-display-name"
 import { pathConfig } from "@/resources/path"
 import type { MockInterviewAttemptItem } from "@/modules/api/graphql/queries/types/my-mock-interview-attempts"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -117,12 +118,15 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
     const shownCount = search.trim() || activeFacetCount > 0 ? filteredItems.length : totalCount
     const hasMore = items.length < totalCount
 
-    /** One attempt row → opens the read-only scorecard result. */
+    /** One attempt row → opens the read-only scorecard result. Primary line is the
+     *  learner's own session name (or its time-based fallback, see
+     *  `sessionDisplayName`); the drawn prompt + date move to the subtitle so
+     *  neither is lost. */
     const renderRow = (attempt: MockInterviewAttemptItem) => (
         <SurfaceListCardRow
             key={attempt.id}
-            title={attempt.promptTitle}
-            subtitle={formatDate(attempt.createdAt)}
+            title={sessionDisplayName(attempt.name, attempt.createdAt, t, locale)}
+            subtitle={`${attempt.promptTitle} · ${formatDate(attempt.createdAt)}`}
             meta={(
                 <Chip size="sm" variant="soft" color={verdictColorOf(attempt.verdict)}>
                     <Chip.Label>{attempt.overallScore}</Chip.Label>

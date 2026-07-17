@@ -17,6 +17,7 @@ import { queryMyFlashcardQuizHistory } from "@/modules/api/graphql/queries/query
 import type { QueryFlashcardQuizHistoryItem, QueryFlashcardQuizWeakTag } from "@/modules/api/graphql/queries/types/my-flashcard-quiz-history"
 import { groupByTimeBucket } from "../../historyBuckets"
 import { LEVEL_COLOR } from "../../constants"
+import { sessionDisplayName } from "@/modules/utils/session-display-name"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 import { pathConfig } from "@/resources/path"
@@ -107,9 +108,6 @@ export const FlashcardQuizHistory = ({ courseId, onStartQuiz, className }: Flash
         setItems([])
     }, [courseId])
 
-    const formatDate = (iso: string) =>
-        new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(new Date(iso))
-
     // only offer a facet for a mode/level that actually appears in the loaded
     // history — no dead filters for values this course never produced.
     const presentModes = useMemo(
@@ -168,8 +166,11 @@ export const FlashcardQuizHistory = ({ courseId, onStartQuiz, className }: Flash
             >
                 <div className="flex items-center gap-3">
                     <div className="flex min-w-0 flex-1 flex-col gap-0">
+                        {/* primary line is the learner's own session name (or its
+                            time-based fallback, see `sessionDisplayName`) — was the
+                            raw completion date, which the fallback still encodes. */}
                         <Typography type="body-sm" weight="medium" truncate>
-                            {formatDate(item.updatedAt)}
+                            {sessionDisplayName(item.name, item.updatedAt, t, locale)}
                         </Typography>
                         <Typography type="body-xs" color="muted" truncate>
                             {t(item.mode === "deep" ? "flashcard.quiz.modeDeep" : "flashcard.quiz.modeQuick")}

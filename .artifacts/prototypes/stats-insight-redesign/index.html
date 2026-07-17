@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stats Insight Redesign — Ôn tập · Phỏng vấn · Hỏi nhanh (verdict→evidence→action)</title>
+<style>
+  :root{--bg:#f4f4f6;--fg:#1a1a1e;--mut:#6b6b76;--line:#e2e2e8;--card:#fff;--acc:#c0407a;
+        --ok:#2f8f57;--okbg:#e3f4ea;--warn:#b0721f;--warnbg:#f7ecda;--bad:#c0392b;--badbg:#f7e2df;
+        --radius:14px}
+  @media (prefers-color-scheme:dark){:root{--bg:#161619;--fg:#eaeaef;--mut:#9a9aa6;--line:#2a2a30;--card:#1d1d21;
+        --okbg:#16281d;--warnbg:#2a2013;--badbg:#2b1917}}
+  :root[data-theme="light"]{--bg:#f4f4f6;--fg:#1a1a1e;--card:#fff}
+  :root[data-theme="dark"]{--bg:#161619;--fg:#eaeaef;--card:#1d1d21}
+  *{box-sizing:border-box}
+  body{margin:0;font:14px/1.5 ui-sans-serif,system-ui,-apple-system,sans-serif;color:var(--fg);background:var(--bg)}
+  .top{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+  .top b{font-size:15px}.top .sub{color:var(--mut);font-size:12px}
+  .grp{border:1px solid var(--line);border-radius:9px;overflow:hidden;display:flex;flex-wrap:wrap}
+  .grp button{border:0;background:var(--card);padding:6px 11px;cursor:pointer;font:inherit;font-size:12px;color:var(--mut);white-space:nowrap}
+  .grp button.on{background:var(--acc);color:#fff}
+  .grp .lbl{padding:6px 8px;font-size:10px;color:var(--mut);background:var(--bg);border-right:1px solid var(--line);font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+  .toolbar{margin-left:auto;display:flex;flex-wrap:wrap;gap:8px}
+
+  .legendbar{max-width:760px;margin:12px auto 0;padding:0 16px;display:flex;flex-wrap:wrap;gap:14px;font-size:11.5px;color:var(--mut)}
+  .legendbar b{color:var(--fg)}
+  .pat{font-weight:800;padding:0 5px;border-radius:5px;font-size:10px}
+  .pat.tg{color:var(--acc);background:color-mix(in oklab,var(--acc) 13%,transparent)}
+  .pat.fu{color:#2f6bd4;background:#2f6bd41f}
+  .pat.bd{color:var(--warn);background:var(--warnbg)}
+  .pat.ac{color:var(--ok);background:var(--okbg)}
+  .src{display:inline-flex;align-items:center;gap:4px}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+  .dot.a{background:#2f8f57}.dot.b{background:#d9a520}.dot.c{background:#d5711f}
+
+  .stagewrap{padding:20px 16px 90px;display:flex;justify-content:center}
+  .stage{width:100%;max-width:560px;transition:max-width .2s}
+  .stage.wide{max-width:760px}
+  .screen{display:none}.screen.active{display:block}
+  .pagehead{margin-bottom:6px}
+  .pagehead h1{font-size:20px;margin:0}
+  .pagehead p{color:var(--mut);font-size:13px;margin:2px 0 0}
+  .tabstrip{display:flex;gap:4px;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:4px;margin:14px 0}
+  .tabstrip button{flex:1;border:0;background:transparent;padding:8px;border-radius:9px;cursor:pointer;font:inherit;font-size:12.5px;color:var(--mut)}
+  .tabstrip button.on{background:var(--card);color:var(--fg);font-weight:700;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+
+  .lc{margin-bottom:18px}
+  .lc>.lab{font-size:11px;font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.03em;margin:0 2px 7px;display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px}
+  .blocktag{font:9px ui-monospace,Menlo,monospace;color:var(--mut);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:0 4px;white-space:nowrap;font-weight:400}
+
+  /* hero verdict */
+  .verdict{border-left:3px solid var(--acc);padding-left:12px}
+  .verdict.bad{border-color:var(--bad)}.verdict.warn{border-color:var(--warn)}.verdict.ok{border-color:var(--ok)}
+  .bignum{font-size:34px;font-weight:800;line-height:1}
+  .bignum.bad{color:var(--bad)}.bignum.warn{color:var(--warn)}.bignum.ok{color:var(--ok)}
+  .vsent{margin-top:8px;font-size:13.5px;font-weight:600}
+  .vsub{margin-top:3px;font-size:12px;color:var(--mut)}
+  .meter{height:8px;border-radius:5px;background:var(--line);overflow:hidden;margin-top:10px;position:relative}
+  .meter>i{display:block;height:100%}
+  .meter .target{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--fg);opacity:.55}
+  .meter .target::after{content:attr(data-t);position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--mut);white-space:nowrap}
+  .split{display:flex;gap:10px;margin-top:12px}
+  .split>div{flex:1;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 10px}
+  .split .k{font-size:11px;color:var(--mut)}
+  .split .v{font-size:19px;font-weight:800}
+
+  .row{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line)}
+  .row:first-child{border-top:0}
+  .row .name{flex:1;min-width:0}
+  .row .name b{font-size:13px}
+  .row .name span{display:block;font-size:11px;color:var(--mut)}
+  .chip{font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap}
+  .chip.ok{color:var(--ok);background:var(--okbg)}.chip.warn{color:var(--warn);background:var(--warnbg)}.chip.bad{color:var(--bad);background:var(--badbg)}
+  .minibar{flex:1;height:7px;border-radius:5px;background:var(--line);overflow:hidden}
+  .minibar>i{display:block;height:100%}
+
+  .btn{border:0;border-radius:10px;padding:9px 15px;font:inherit;font-weight:700;cursor:pointer;display:inline-flex;gap:6px;align-items:center;font-size:13px}
+  .btn.primary{background:var(--acc);color:#fff}
+  .btn.soft{background:var(--bg);border:1px solid var(--line);color:var(--fg);font-weight:600}
+  .actionline{margin-top:11px}
+
+  .deadline{display:flex;align-items:center;gap:10px;background:var(--warnbg);border:1px solid color-mix(in oklab,var(--warn) 30%,transparent);border-radius:11px;padding:11px 12px}
+  .deadline .n{font-size:26px;font-weight:800;color:var(--warn);line-height:1}
+  .forecast{display:flex;align-items:flex-end;gap:5px;height:56px;margin-top:12px}
+  .forecast .b{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;justify-content:flex-end}
+  .forecast .b i{width:100%;background:color-mix(in oklab,var(--acc) 55%,transparent);border-radius:4px 4px 0 0}
+  .forecast .b.spike i{background:var(--bad)}
+  .forecast .b small{font-size:9px;color:var(--mut)}
+
+  .ladder{display:flex;height:26px;border-radius:8px;overflow:hidden;margin-top:4px}
+  .ladder>i{display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:700}
+  .ladderleg{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;font-size:11px;color:var(--mut)}
+  .ladderleg span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+
+  .habit{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;background:var(--bg);border:1px solid var(--line);color:var(--mut)}
+  .heat{display:grid;grid-template-columns:repeat(18,1fr);gap:3px;margin-top:10px}
+  .heat i{aspect-ratio:1;border-radius:2px;background:var(--line)}
+
+  .old .card{opacity:.96}
+  .oldnum{font-size:30px;font-weight:800;color:var(--acc)}
+  .segbar{display:flex;height:12px;border-radius:6px;overflow:hidden;margin-top:6px}
+  .seglegend{display:flex;flex-wrap:wrap;gap:10px;margin-top:7px;font-size:11px;color:var(--mut)}
+  .seglegend span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px}
+  .xàmnote{font-size:11px;color:var(--bad);font-style:italic;margin-top:6px}
+  .empty{text-align:center;color:var(--mut);padding:22px 10px;font-size:12.5px}
+
+  .nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);padding:9px 16px;display:flex;justify-content:center;gap:8px;z-index:20}
+  .note{max-width:760px;margin:0 auto;font-size:11px;color:var(--mut);text-align:center}
+</style>
+</head>
+<body>
+<div class="top">
+  <b>Stats Insight Redesign</b><span class="sub">verdict → evidence → action</span>
+  <div class="toolbar">
+    <div class="grp"><span class="lbl">Màn</span>
+      <button id="sReview" class="on" onclick="setScreen('review')">Ôn tập</button>
+      <button id="sInterview" onclick="setScreen('interview')">Phỏng vấn</button>
+      <button id="sQuiz" onclick="setScreen('quiz')">Hỏi nhanh</button>
+    </div>
+    <div class="grp" id="verGrp"><span class="lbl">Bản</span>
+      <button id="vNew" class="on" onclick="setVer('new')">Insight (mới)</button>
+      <button id="vOld" onclick="setVer('old')">Xàm (hiện tại)</button>
+    </div>
+    <div class="grp"><span class="lbl">Máy</span>
+      <button id="dDesk" class="on" onclick="setDev('desk')">Desktop</button>
+      <button id="dMob" onclick="setDev('mob')">Mobile</button>
+    </div>
+  </div>
+</div>
+
+<div class="legendbar">
+  <span><b>Khung insight:</b></span>
+  <span><span class="pat tg">◎ vs mục tiêu</span></span>
+  <span><span class="pat fu">⏰ tương lai+hạn chót</span></span>
+  <span><span class="pat bd">▽ bổ nhỏ→điểm yếu</span></span>
+  <span><span class="pat ac">→ hành động</span></span>
+</div>
+<div class="legendbar" style="margin-top:6px">
+  <span><b>Nguồn dữ liệu:</b></span>
+  <span class="src"><i class="dot a"></i> đã vẽ được / gần free</span>
+  <span class="src"><i class="dot b"></i> đã lưu, CHƯA vẽ</span>
+  <span class="src"><i class="dot c"></i> cần aggregate BE mới</span>
+</div>
+
+<div class="stagewrap"><div class="stage" id="stage">
+
+<!-- ============ REVIEW ============ -->
+<section class="screen active" data-screen="review">
+  <div class="pagehead"><h1>Ôn tập</h1><p>Khắc sâu kiến thức bằng lặp lại ngắt quãng.</p></div>
+  <div class="tabstrip"><button>Ôn tập</button><button>Lịch sử</button><button class="on">Thống kê</button></div>
+
+  <!-- NEW -->
+  <div id="reviewNew">
+    <!-- ZONE 1: HERO VERDICT -->
+    <div class="lc">
+      <div class="lab">Sức khoẻ trí nhớ <span class="pat tg">◎</span> <span class="blocktag">VerdictHeroCard (mới)</span> <span class="dot c" title="cần aggregate: mature retention"></span></div>
+      <div class="card verdict bad">
+        <div class="bignum bad">39%</div>
+        <div class="vsent">Bạn đang <b>quá tải</b> — nạp thẻ mới nhanh hơn tốc độ ghi nhớ.</div>
+        <div class="vsub">Tỷ lệ nhớ 39% (mốc lành mạnh ~85%). Vấn đề KHÔNG phải quên cái đã học — mà là nạp quá nhanh.</div>
+        <div class="meter"><i style="width:39%;background:var(--bad)"></i><span class="target" data-t="mục tiêu 85%" style="left:85%"></span></div>
+        <div class="split">
+          <div><div class="k">Thẻ đã học kỹ (chín)</div><div class="v ok">72%</div><div class="k">bạn NHỚ được</div></div>
+          <div><div class="k">Thẻ mới (non)</div><div class="v bad">31%</div><div class="k">đang tuột</div></div>
+        </div>
+        <div class="actionline"><button class="btn primary">Giảm thẻ mới · ôn kỹ thẻ cũ trước →</button></div>
+      </div>
+    </div>
+
+    <!-- ZONE 2: WEAK-TOPIC MAP -->
+    <div class="lc">
+      <div class="lab">Điểm yếu theo chủ đề <span class="pat bd">▽</span> <span class="pat ac">→</span> <span class="blocktag">SurfaceListCard</span> <span class="dot b" title="query GROUP BY tag đã có, chỉ bỏ LIMIT 1"></span></div>
+      <div class="card" style="padding:6px 14px">
+        <div class="row"><div class="name"><b>React Hooks</b><span>18 thẻ · dependency array, stale closure</span></div><div class="minibar"><i style="width:52%;background:var(--bad)"></i></div><span class="chip bad">52%</span></div>
+        <div class="row"><div class="name"><b>Closures &amp; scope</b><span>11 thẻ</span></div><div class="minibar"><i style="width:61%;background:var(--warn)"></i></div><span class="chip warn">61%</span></div>
+        <div class="row"><div class="name"><b>Event loop</b><span>9 thẻ</span></div><div class="minibar"><i style="width:70%;background:var(--warn)"></i></div><span class="chip warn">70%</span></div>
+        <div class="row"><div class="name"><b>TypeScript generics</b><span>14 thẻ</span></div><div class="minibar"><i style="width:88%;background:var(--ok)"></i></div><span class="chip ok">88%</span></div>
+      </div>
+      <div class="actionline"><button class="btn soft">Ôn "React Hooks" (yếu nhất) →</button></div>
+      <div class="vsub" style="margin:6px 2px 0">Trung bình chung 71% <b>giấu</b> chủ đề React Hooks chỉ 52%. Bấm để cày đúng chỗ.</div>
+    </div>
+
+    <!-- ZONE 3: SẮP QUÊN -->
+    <div class="lc">
+      <div class="lab">Sắp quên <span class="pat fu">⏰</span> <span class="pat ac">→</span> <span class="blocktag">DeadlineCallout (mới)</span> <span class="dot c" title="đường suy giảm: interval + lastReviewed"></span></div>
+      <div class="card" style="display:flex;flex-direction:column;gap:12px">
+        <div class="deadline"><div class="n">12</div><div><b>thẻ sẽ tuột khỏi trí nhớ trước Thứ 5</b><div class="vsub" style="margin-top:2px">Ôn ngay hôm nay để giữ — để qua ngưỡng là phải học lại từ đầu.</div></div></div>
+        <div>
+          <div class="vsub" style="margin:0 0 2px">Khối lượng 7 ngày tới (đừng để dồn cục):</div>
+          <div class="forecast">
+            <div class="b"><i style="height:30%"></i><small>T4</small></div>
+            <div class="b"><i style="height:45%"></i><small>T5</small></div>
+            <div class="b spike"><i style="height:100%"></i><small>T6 ⚠</small></div>
+            <div class="b"><i style="height:38%"></i><small>T7</small></div>
+            <div class="b"><i style="height:22%"></i><small>CN</small></div>
+            <div class="b"><i style="height:30%"></i><small>T2</small></div>
+            <div class="b"><i style="height:18%"></i><small>T3</small></div>
+          </div>
+        </div>
+        <div class="vsub">Thứ 6 dồn 34 thẻ — làm bớt 15 hôm nay để san phẳng.</div>
+      </div>
+    </div>
+
+    <!-- ZONE 4: ĐỘ CHÍN -->
+    <div class="lc">
+      <div class="lab">Độ chín (tiến độ THẬT) <span class="pat tg">◎</span> <span class="blocktag">MaturityLadder (mới)</span> <span class="dot c" title="bucket theo intervalDays"></span></div>
+      <div class="card">
+        <div class="ladder">
+          <i style="width:52%;background:var(--line);color:var(--mut)">non 52%</i>
+          <i style="width:40%;background:var(--warn)">đang chín 40%</i>
+          <i style="width:8%;background:var(--ok)">chín 8%</i>
+        </div>
+        <div class="ladderleg">
+          <span style="--c:var(--line)"><span style="background:var(--line)"></span>Non (&lt;1 ngày)</span>
+          <span><span style="background:var(--warn)"></span>Đang chín (1–21 ngày)</span>
+          <span><span style="background:var(--ok)"></span>Chín (&gt;21 ngày)</span>
+        </div>
+        <div class="vsub" style="margin-top:9px">Chỉ <b>8%</b> thẻ đã "chín" (nhớ qua khoảng cách dài) — đây mới là kiến thức bạn thật sự SỞ HỮU. Tiến độ thật, không phải "số thẻ đã xem".</div>
+      </div>
+    </div>
+
+    <!-- ZONE 5: LEECH TẬP TRUNG -->
+    <div class="lc">
+      <div class="lab">Leech — nỗi đau tập trung <span class="pat bd">▽</span> <span class="pat ac">→</span> <span class="blocktag">SurfaceListCard</span> <span class="dot c" title="lapse sau khi đã học + stuck-Hard"></span></div>
+      <div class="card" style="padding:6px 14px">
+        <div class="row"><div class="name"><b>useEffect chạy mấy lần khi deps đổi?</b><span>React Hooks</span></div><span class="chip bad">Quên 6×</span></div>
+        <div class="row"><div class="name"><b>`this` trong arrow function trỏ đâu?</b><span>Closures</span></div><span class="chip bad">Quên 5×</span></div>
+        <div class="row"><div class="name"><b>Microtask vs macrotask thứ tự?</b><span>Event loop</span></div><span class="chip warn">Kẹt Khó 4×</span></div>
+      </div>
+      <div class="vsub" style="margin:6px 2px 0">9 thẻ này ăn <b>30%</b> tổng số lần Quên của bạn — nên viết lại / tách nhỏ thay vì cày mãi.</div>
+    </div>
+
+    <!-- ZONE 6: THÓI QUEN (demoted) -->
+    <div class="lc">
+      <div class="lab">Thói quen <span class="blocktag">HabitCard</span> <span class="dot c" title="time-of-day từ reviewedAt"></span></div>
+      <div class="card" style="display:flex;flex-direction:column;gap:10px">
+        <div class="habit">
+          <span class="badge">🔥 Chuỗi 3 ngày</span>
+          <span class="badge">🏆 Kỷ lục 12 ngày</span>
+          <span class="badge" style="color:var(--ok);border-color:color-mix(in oklab,var(--ok) 40%,transparent)">☀️ Nhớ tốt nhất lúc SÁNG (82%) vs tối (61%)</span>
+        </div>
+        <div class="heat" id="heatN"></div>
+        <div class="vsub">Học 5/7 ngày tuần này — lịch buổi sáng để tận dụng lúc não khoẻ.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OLD (xàm) -->
+  <div id="reviewOld" class="old" style="display:none">
+    <div class="lc"><div class="lab">Tỷ lệ nhớ</div><div class="card"><div class="oldnum">39%</div><div class="meter"><i style="width:39%;background:var(--acc)"></i></div><div class="xàmnote">↑ số trơ, không có mục tiêu, không diễn giải, không hành động = vanity</div></div></div>
+    <div class="lc"><div class="lab">Phân bố kết quả ôn</div><div class="card"><div class="segbar"><i style="width:11%;background:var(--bad)"></i><i style="width:50%;background:var(--warn)"></i><i style="width:32%;background:color-mix(in oklch,var(--ok) 65%,transparent)"></i><i style="width:7%;background:var(--ok)"></i></div><div class="seglegend"><span style="--x:1"><span style="background:var(--bad)"></span>Quên 7</span><span><span style="background:var(--warn)"></span>Khó 31</span><span><span style="background:color-mix(in oklch,var(--ok) 65%,transparent)"></span>Được 20</span><span><span style="background:var(--ok)"></span>Dễ 4</span></div><div class="xàmnote">↑ process artifact — chỉ thành insight khi biến thành leech list / độ chín</div></div></div>
+    <div class="lc"><div class="lab">Khối lượng</div><div class="card"><div class="oldnum" style="color:var(--fg)">23</div><div class="vsub">Thẻ đến hạn hôm nay · 3 quá hạn + 20 mới</div><div class="xàmnote">↑ to-do, không phải insight — thiếu "sẽ quên khi nào / dồn cục ngày nào"</div></div></div>
+    <div class="lc"><div class="lab">Dự báo 7 ngày tới</div><div class="card"><div class="empty">Không có thẻ nào lên lịch trong 7 ngày tới.</div><div class="xàmnote">↑ empty placeholder đọc như tab HỎNG — tệ hơn không có</div></div></div>
+    <div class="lc"><div class="lab">Thói quen ôn tập</div><div class="card"><span class="badge">🔥 Kỷ lục 3 ngày</span><div class="xàmnote">↑ streak = giá trị chẩn đoán ~0, gắn với cảm giác tội lỗi chứ không phải học</div></div></div>
+  </div>
+</section>
+
+<!-- ============ INTERVIEW ============ -->
+<section class="screen" data-screen="interview">
+  <div class="pagehead"><h1>Phỏng vấn thử</h1><p>Trả lời câu hỏi kỹ thuật ngẫu nhiên, AI chấm chi tiết.</p></div>
+  <div class="tabstrip"><button>Bắt đầu</button><button>Lịch sử</button><button class="on">Thống kê</button></div>
+
+  <div class="lc">
+    <div class="lab">Độ sẵn sàng phỏng vấn <span class="pat tg">◎</span> <span class="pat fu">⏰</span> <span class="blocktag">VerdictHeroCard (mới)</span> <span class="dot c" title="readiness curve + pass-bar"></span></div>
+    <div class="card verdict warn">
+      <div class="bignum warn">64<span style="font-size:16px;color:var(--mut)">/100</span></div>
+      <div class="vsent">Gần chạm mốc "đạt" — <b>còn ~1 phiên mạnh nữa.</b></div>
+      <div class="vsub">Pass-bar 70. 3 phiên gần nhất: 58 → 61 → 64 (đang tăng đều).</div>
+      <div class="meter"><i style="width:64%;background:var(--warn)"></i><span class="target" data-t="pass-bar 70" style="left:70%"></span></div>
+      <div class="actionline"><button class="btn primary">Luyện 1 phiên nữa →</button></div>
+    </div>
+  </div>
+
+  <div class="lc">
+    <div class="lab">Chiều nào kéo bạn xuống nhất <span class="pat bd">▽</span> <span class="pat ac">→</span> <span class="blocktag">SurfaceListCard + ProgressMeter</span> <span class="dot a" title="byAttribute đã có; thêm 'lever' framing"></span></div>
+    <div class="card" style="padding:6px 14px">
+      <div class="row"><div class="name"><b>Tư duy giải quyết</b><span>điểm nghẽn · nâng chiều này giúp "đạt" nhiều nhất</span></div><div class="minibar"><i style="width:52%;background:var(--bad)"></i></div><span class="chip bad">2.6/4</span></div>
+      <div class="row"><div class="name"><b>Kỹ thuật</b><span>vs TB người dùng 2.85</span></div><div class="minibar"><i style="width:70%;background:var(--warn)"></i></div><span class="chip warn">2.8/4</span></div>
+      <div class="row"><div class="name"><b>Giao tiếp</b><span>đã tốt — đừng dồn sức ở đây</span></div><div class="minibar"><i style="width:82%;background:var(--ok)"></i></div><span class="chip ok">3.3/4</span></div>
+    </div>
+    <div class="vsub" style="margin:6px 2px 0">Ưu tiên nâng <b>tư duy giải quyết</b> trước — đòn bẩy mạnh hơn giao tiếp (data interviewing.io).</div>
+  </div>
+
+  <div class="lc">
+    <div class="lab">Theo NGÔN NGỮ <span class="pat bd">▽</span> <span class="pat ac">→</span> <span class="blocktag">SurfaceListCard</span> <span class="dot c" title="nối seedQuestions[].givenCodes[].lang (multi-lang vừa làm)"></span></div>
+    <div class="card" style="padding:6px 14px">
+      <div class="row"><div class="name"><b>TypeScript</b><span>8 câu debug</span></div><div class="minibar"><i style="width:78%;background:var(--ok)"></i></div><span class="chip ok">78</span></div>
+      <div class="row"><div class="name"><b>Go</b><span>4 câu</span></div><div class="minibar"><i style="width:45%;background:var(--bad)"></i></div><span class="chip bad">45</span></div>
+    </div>
+    <div class="vsub" style="margin:6px 2px 0">Bạn debug TS tốt nhưng Go yếu hẳn — luyện thêm Go trước khi phỏng vấn vị trí Go.</div>
+  </div>
+
+  <div class="lc">
+    <div class="lab">Điểm yếu LẶP LẠI <span class="pat bd">▽</span> <span class="blocktag">Callout</span> <span class="dot b" title="gaps[] jsonb mỗi attempt, gộp tần suất"></span></div>
+    <div class="card">
+      <div class="vsent">3/5 phiên gần đây đều bị nhắc:</div>
+      <div class="row" style="border:0;padding:6px 0"><span class="chip bad">×3</span><div class="name"><b>Thiếu bàn về trade-off / đánh đổi</b></div></div>
+      <div class="row" style="border-top:1px solid var(--line);padding:6px 0"><span class="chip warn">×2</span><div class="name"><b>Không nhắc test/verify sau khi sửa</b></div></div>
+      <div class="vsub" style="margin-top:6px">Không phải lỗi ngẫu nhiên — đây là thói quen cần sửa.</div>
+    </div>
+  </div>
+
+  <div class="lc">
+    <div class="lab">Điểm qua thời gian <span class="blocktag">TrendChart</span> <span class="dot a"></span></div>
+    <div class="card"><div class="forecast" style="height:64px">
+      <div class="b"><i style="height:58%;background:var(--warn)"></i><small>58</small></div>
+      <div class="b"><i style="height:52%;background:var(--warn)"></i><small>52</small></div>
+      <div class="b"><i style="height:61%;background:var(--warn)"></i><small>61</small></div>
+      <div class="b"><i style="height:64%;background:var(--warn)"></i><small>64</small></div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="screen" data-screen="quiz">
+  <div class="pagehead"><h1>Hỏi nhanh</h1><p>Điền nhanh, phủ rộng kiến thức.</p></div>
+  <div class="tabstrip"><button>Bắt đầu</button><button>Lịch sử</button><button class="on">Thống kê</button></div>
+
+  <div class="lc">
+    <div class="lab">Độ phủ vs mục tiêu <span class="pat tg">◎</span> <span class="blocktag">VerdictHeroCard (mới)</span> <span class="dot a" title="coverage đã có; thêm target"></span></div>
+    <div class="card verdict warn">
+      <div class="bignum warn">61%</div>
+      <div class="vsent">Phủ được 61% khái niệm — <b>còn 6/17 chủ đề chưa đụng tới.</b></div>
+      <div class="vsub">Mục tiêu 80% để coi như nắm chắc module.</div>
+      <div class="meter"><i style="width:61%;background:var(--warn)"></i><span class="target" data-t="80%" style="left:80%"></span></div>
+      <div class="actionline"><button class="btn primary">Hỏi nhanh 6 chủ đề còn trống →</button></div>
+    </div>
+  </div>
+
+  <div class="lc">
+    <div class="lab">Chủ đề yếu <span class="pat bd">▽</span> <span class="pat ac">→</span> <span class="blocktag">SurfaceListCard</span> <span class="dot a" title="byTag đã có sẵn ở quiz stats"></span></div>
+    <div class="card" style="padding:6px 14px">
+      <div class="row"><div class="name"><b>Indexing</b><span>3 lần · hay điền sai</span></div><div class="minibar"><i style="width:40%;background:var(--bad)"></i></div><span class="chip bad">40%</span></div>
+      <div class="row"><div class="name"><b>Transaction isolation</b><span>2 lần</span></div><div class="minibar"><i style="width:55%;background:var(--warn)"></i></div><span class="chip warn">55%</span></div>
+      <div class="row"><div class="name"><b>Normalization</b><span>chưa làm bao giờ</span></div><div class="minibar"><i style="width:0%"></i></div><span class="chip" style="background:var(--line);color:var(--mut)">trống</span></div>
+    </div>
+  </div>
+
+  <div class="lc">
+    <div class="lab">Độ khó bạn đang làm <span class="pat bd">▽</span> <span class="blocktag">SegmentBar</span> <span class="dot b" title="level mỗi quiz session đã lưu"></span></div>
+    <div class="card">
+      <div class="segbar" style="height:14px"><i style="width:78%;background:color-mix(in oklch,var(--ok) 50%,transparent)"></i><i style="width:18%;background:var(--warn)"></i><i style="width:4%;background:var(--bad)"></i></div>
+      <div class="seglegend"><span><span style="background:color-mix(in oklch,var(--ok) 50%,transparent)"></span>Dễ 78%</span><span><span style="background:var(--warn)"></span>Trung 18%</span><span><span style="background:var(--bad)"></span>Cao 4%</span></div>
+      <div class="vsub" style="margin-top:8px">78% câu bạn làm ở mức DỄ — phỏng vấn hỏi mức Trung/Cao. Nâng độ khó lên.</div>
+    </div>
+  </div>
+</section>
+
+</div></div>
+
+<div class="nav"><span class="note">Prototype bấm-được · toggle Màn (Ôn tập/Phỏng vấn/Hỏi nhanh) · Bản (Insight mới ↔ Xàm hiện tại) · Máy. Mỗi zone gắn khung-insight (◎⏰▽→) + nguồn dữ liệu (🟢🟡🟠) + tên block thật.</span></div>
+
+<script>
+  var screen='review', ver='new', dev='desk';
+  function render(){
+    document.querySelectorAll('.screen').forEach(function(s){s.classList.toggle('active',s.dataset.screen===screen)});
+    document.getElementById('sReview').classList.toggle('on',screen==='review');
+    document.getElementById('sInterview').classList.toggle('on',screen==='interview');
+    document.getElementById('sQuiz').classList.toggle('on',screen==='quiz');
+    document.getElementById('verGrp').style.display = screen==='review' ? '' : 'none';
+    document.getElementById('reviewNew').style.display = (screen==='review'&&ver==='new')?'':'none';
+    document.getElementById('reviewOld').style.display = (screen==='review'&&ver==='old')?'':'none';
+    var st=document.getElementById('stage');
+    st.className='stage'+((screen!=='review')?' wide':'')+(dev==='mob'?'':'');
+    st.style.maxWidth = dev==='mob' ? '400px' : (screen==='review'?'560px':'760px');
+  }
+  function setScreen(s){screen=s;render()}
+  function setVer(v){ver=v;document.getElementById('vNew').classList.toggle('on',v==='new');document.getElementById('vOld').classList.toggle('on',v==='old');render()}
+  function setDev(d){dev=d;document.getElementById('dDesk').classList.toggle('on',d==='desk');document.getElementById('dMob').classList.toggle('on',d==='mob');render()}
+  (function(){var h=document.getElementById('heatN');if(h){for(var i=0;i<54;i++){var c=document.createElement('i');var v=Math.random();if(v>0.55)c.style.background='color-mix(in oklab,var(--acc) '+Math.round(v*90)+'%, var(--line))';h.appendChild(c)}}})();
+  render();
+</script>
+</body>
+</html>

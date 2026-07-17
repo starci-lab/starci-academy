@@ -12,6 +12,7 @@ const query1 = gql`
       data {
         sessionId
         cardIds
+        name
         currentIndex
         results {
           cardId

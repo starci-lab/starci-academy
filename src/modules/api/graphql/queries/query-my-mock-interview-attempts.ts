@@ -16,6 +16,7 @@ const query1 = gql`
           sessionId
           promptId
           promptTitle
+          name
           level
           mode
           overallScore

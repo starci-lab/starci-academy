@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { Button, Spinner, Typography } from "@heroui/react"
+import { Button, Spinner, Typography, cn } from "@heroui/react"
 import { ArrowRightIcon, CardsIcon, ClockCountdownIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -44,12 +44,11 @@ export interface FlashcardReviewModeModalProps extends WithClassNames<undefined>
  * §"surface-in-surface / nested").
  * Selected-row signal (thầy 2026-07-13 lượt 4, dropped the `CheckCircleIcon`
  * tried in lượt 3): the row itself tints `bg-accent-soft` via `SurfaceListCardRow`'s
- * `selected` prop (no `titleClassName` escape hatch — header/title styling stays
- * on the block's own default, per `no-modal-title-classname`). The leading icon
- * always matches the title's colour — `text-foreground`, since the row's own tint
- * (not an icon recolour) carries the selection signal — per `components/icon.md`
- * §6 "icon cùng màu chữ cạnh nó" (thầy 2026-07-17 fixed the earlier
- * icon-accent-soft-foreground / title-foreground mismatch).
+ * `selected` prop, and — thầy 2026-07-17 — BOTH the leading icon and the title
+ * turn `text-accent-soft-foreground` when selected (they stay the SAME colour,
+ * `components/icon.md` §6 "icon cùng màu chữ cạnh nó"). The title colour rides a
+ * `<span>` node rather than `titleClassName` (that escape hatch is lint-forbidden,
+ * `no-modal-title-classname`); un-selected rows keep `text-foreground`.
  * @param props - {@link FlashcardReviewModeModalProps}
  */
 export const FlashcardReviewModeModal = ({
@@ -91,10 +90,11 @@ export const FlashcardReviewModeModal = ({
                         // select-mode rows: hover PREVIEWS the pick with the same accent-soft the
                         // selected row wears (not the neutral bg-default fill) — thầy 2026-07-17.
                         className="hover:bg-accent-soft"
-                        // leading icon matches the title's colour (always text-foreground; the row
-                        // signals selection via its bg tint, not the icon) — icon.md §6.
-                        leading={<CardsIcon className="size-6 text-foreground" aria-hidden focusable="false" />}
-                        title={t("flashcard.mode.fullLabel")}
+                        // selected → BOTH icon and title turn accent-soft-foreground (they stay the
+                        // same colour, icon.md §6); title via a span-node since `titleClassName` is
+                        // lint-forbidden. Row bg-accent-soft + accent text = the selection signal.
+                        leading={<CardsIcon className={cn("size-6", mode === "full" ? "text-accent-soft-foreground" : "text-foreground")} aria-hidden focusable="false" />}
+                        title={<span className={mode === "full" ? "text-accent-soft-foreground" : undefined}>{t("flashcard.mode.fullLabel")}</span>}
                         subtitle={t("flashcard.mode.fullDescription")}
                         selected={mode === "full"}
                         isDisabled={isPending}
@@ -107,8 +107,8 @@ export const FlashcardReviewModeModal = ({
                     />
                     <SurfaceListCardRow
                         className="hover:bg-accent-soft"
-                        leading={<ClockCountdownIcon className="size-6 text-foreground" aria-hidden focusable="false" />}
-                        title={t("flashcard.mode.dueLabel")}
+                        leading={<ClockCountdownIcon className={cn("size-6", mode === "due" ? "text-accent-soft-foreground" : "text-foreground")} aria-hidden focusable="false" />}
+                        title={<span className={mode === "due" ? "text-accent-soft-foreground" : undefined}>{t("flashcard.mode.dueLabel")}</span>}
                         subtitle={t("flashcard.mode.dueDescription")}
                         selected={mode === "due"}
                         isDisabled={isPending || dueDisabled}

@@ -3,7 +3,7 @@
 import React from "react"
 import { Skeleton, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { JourneyMap } from "./JourneyMap"
+import { ConceptMap } from "./ConceptMap"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryCourseSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseSwr"
@@ -16,8 +16,8 @@ export type MindMapProps = WithClassNames<undefined>
  * Course mind-map feature container for the authenticated learn shell.
  *
  * Triggers the course fetch for hard refreshes, then mounts the full-bleed
- * {@link JourneyMap} (the serpentine learning/capstone journey). No breadcrumb /
- * page chrome — the canvas owns the whole viewport. Mounted by the
+ * {@link ConceptMap} (the authored keyword map). No breadcrumb / page chrome —
+ * the canvas owns the whole viewport. Mounted by the
  * `/[locale]/courses/[courseId]/learn/mind-map` route.
  *
  * Client component: relies on redux selectors.
@@ -45,7 +45,7 @@ export const MindMap = ({
                     retryLabel: t("courseLanding.retry"),
                 }}
             >
-                <JourneyMap />
+                <ConceptMap />
             </AsyncContent>
         </div>
     )

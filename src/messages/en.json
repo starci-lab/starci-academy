@@ -704,6 +704,14 @@
   },
   "mindMap": {
     "title": "Mind map",
+    "links": {
+      "lesson": "Learn it in this lesson",
+      "challenge": "Try the challenge",
+      "milestone": "Build it in the project",
+      "flashcard": "Drill it with flashcards",
+      "interview": "Get tested in a mock interview",
+      "close": "Close"
+    },
     "journey": {
       "learn": "Learning path",
       "capstone": "Capstone",
@@ -1973,8 +1981,8 @@
       "historyGroupByTime": "By time",
       "historyFilterEmpty": "No runs match your search.",
       "statsError": "Could not load study stats.",
-      "statsEmptyTitle": "Not enough data yet",
-      "statsEmptyDescription": "Review a few more sessions to see detailed stats.",
+      "statsEmptyTitle": "No review data in this course yet",
+      "statsEmptyDescription": "These stats only count reviews from this course. Review a few sessions to see your memory health, weak topics and cards you're about to forget.",
       "statsTrendLabel": "Cards reviewed per day (last 14 days)",
       "statsTrendTooltip": "{count} cards",
       "statsByDeckLabel": "By deck",
@@ -2007,6 +2015,11 @@
       "memoryHealthLabel": "Memory health",
       "verdictOverloadSentence": "You're <b>overloaded</b> — adding new cards faster than you can retain them.",
       "verdictOverloadCaption": "Retention is {retention}% (healthy target ~{target}%). The problem isn't forgetting what you learned — it's piling on too fast.",
+      "verdictLeakingSentence": "Memory is <b>not yet stable</b> — a few topics are slipping, review more evenly.",
+      "verdictLeakingCaption": "Retention is {retention}% (target ~{target}%). You're approaching the healthy range — keep a steady review rhythm to clear it.",
+      "verdictHealthySentence": "Memory is <b>healthy</b> — you're holding on to most of what you've learned.",
+      "verdictHealthyCaption": "Retention is {retention}% — at/above the healthy {target}% target. You can add new cards without losing ground.",
+      "reviewWeakestCta": "Review your weakest deck →",
       "retentionTargetCaption": "target {target}%",
       "matureSplitLabel": "Well-learned cards (mature)",
       "matureSplitCaption": "you REMEMBER these",

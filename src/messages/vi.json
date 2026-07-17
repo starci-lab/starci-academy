@@ -713,6 +713,14 @@
   },
   "mindMap": {
     "title": "Sơ đồ tư duy",
+    "links": {
+      "lesson": "Học ở bài này",
+      "challenge": "Làm thử thách",
+      "milestone": "Làm trong dự án",
+      "flashcard": "Ôn bằng flashcard",
+      "interview": "Thi phỏng vấn thử",
+      "close": "Đóng"
+    },
     "journey": {
       "learn": "Lộ trình học",
       "capstone": "Dự án",
@@ -1982,8 +1990,8 @@
       "historyGroupByTime": "Theo thời gian",
       "historyFilterEmpty": "Không có lượt nào khớp tìm kiếm.",
       "statsError": "Không tải được thống kê Học thẻ.",
-      "statsEmptyTitle": "Chưa đủ dữ liệu",
-      "statsEmptyDescription": "Ôn thêm vài lượt để xem thống kê chi tiết.",
+      "statsEmptyTitle": "Chưa có dữ liệu ôn trong khoá này",
+      "statsEmptyDescription": "Thống kê ở đây chỉ tính lượt ôn của khoá này. Ôn vài lượt để xem sức khoẻ trí nhớ, điểm yếu theo chủ đề và thẻ sắp quên.",
       "statsTrendLabel": "Số thẻ ôn mỗi ngày (14 ngày qua)",
       "statsTrendTooltip": "{count} thẻ",
       "statsByDeckLabel": "Theo bộ thẻ",
@@ -2016,6 +2024,11 @@
       "memoryHealthLabel": "Sức khoẻ trí nhớ",
       "verdictOverloadSentence": "Bạn đang <b>quá tải</b> — nạp thẻ mới nhanh hơn tốc độ ghi nhớ.",
       "verdictOverloadCaption": "Tỷ lệ nhớ {retention}% (mốc lành mạnh ~{target}%). Vấn đề KHÔNG phải quên cái đã học — mà là nạp quá nhanh.",
+      "verdictLeakingSentence": "Trí nhớ <b>chưa ổn định</b> — vài chủ đề đang tuột, cần ôn đều hơn.",
+      "verdictLeakingCaption": "Tỷ lệ nhớ {retention}% (mục tiêu ~{target}%). Đang tiến tới ngưỡng lành mạnh — giữ nhịp ôn đều để vượt qua.",
+      "verdictHealthySentence": "Trí nhớ <b>khỏe</b> — bạn đang giữ được phần lớn kiến thức đã học.",
+      "verdictHealthyCaption": "Tỷ lệ nhớ {retention}% — đạt/vượt mốc lành mạnh {target}%. Có thể nạp thêm thẻ mới mà không sợ tuột.",
+      "reviewWeakestCta": "Ôn bộ thẻ yếu nhất →",
       "retentionTargetCaption": "mục tiêu {target}%",
       "matureSplitLabel": "Thẻ đã học kỹ (chín)",
       "matureSplitCaption": "bạn NHỚ được",

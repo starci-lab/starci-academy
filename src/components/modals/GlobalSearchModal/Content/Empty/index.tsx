@@ -68,7 +68,7 @@ export const GlobalSearchEmpty = ({ hasQuery, className }: GlobalSearchEmptyProp
                             <Typography
                                 type="body-sm"
                                 truncate
-                                className="flex-1 underline-offset-2 group-hover:underline"
+                                className="flex-1 underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline"
                             >
                                 {course.title}
                             </Typography>

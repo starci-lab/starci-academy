@@ -382,7 +382,7 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
                         >
                             <span className="flex items-center gap-2 text-sm">
                                 <GearSixIcon className="size-4 shrink-0" />
-                                <span className="underline-offset-2 group-hover:underline">{t("challenge.gradingSettings")}</span>
+                                <span className="underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">{t("challenge.gradingSettings")}</span>
                             </span>
                             <span className="flex min-w-0 items-center gap-2 text-xs text-muted">
                                 <span className="truncate">{langLabelMap[activeLang] ?? activeLang}</span>

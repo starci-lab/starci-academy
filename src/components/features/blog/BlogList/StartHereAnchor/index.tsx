@@ -26,7 +26,7 @@ export const StartHereAnchor = ({ post }: StartHereAnchorProps) => {
             <MapPinIcon className="size-5 shrink-0 text-accent-soft-foreground" aria-hidden />
             <div className="flex flex-col">
                 <span className="text-xs font-medium text-accent-soft-foreground">{t("startHere")}</span>
-                <span className="text-sm font-semibold text-foreground underline-offset-2 group-hover:underline">
+                <span className="text-sm font-semibold text-foreground underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
                     {post.title}
                 </span>
             </div>

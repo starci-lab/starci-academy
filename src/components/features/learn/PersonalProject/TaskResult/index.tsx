@@ -112,7 +112,7 @@ const FindingAccordionItem = ({
                             <div className="flex items-center gap-2 text-xs text-muted">
                                 <MapPinIcon aria-hidden focusable="false" className="size-4 shrink-0" />
                                 {locationHref ? (
-                                    <Link href={locationHref} target="_blank" rel="noopener noreferrer" className="hover:underline underline-offset-2">
+                                    <Link href={locationHref} target="_blank" rel="noopener noreferrer" className="hover:underline underline-offset-4 decoration-[var(--separator-tertiary)]">
                                         {feedback.location}
                                     </Link>
                                 ) : (
@@ -333,7 +333,7 @@ export const PersonalProjectTaskResult = ({
                                         href={githubUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex shrink-0 items-center gap-2 text-sm text-accent-soft-foreground hover:underline underline-offset-2"
+                                        className="flex shrink-0 items-center gap-2 text-sm text-accent-soft-foreground hover:underline underline-offset-4 decoration-[var(--separator-tertiary)]"
                                     >
                                         {t("personalProjectResult.viewRepo")}
                                         <ArrowSquareOutIcon aria-hidden focusable="false" className="size-5" />

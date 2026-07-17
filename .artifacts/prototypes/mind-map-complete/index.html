@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mind-map-complete — bản đồ học tập hoàn chỉnh (data-ceiling honest)</title>
+<style>
+  :root{
+    --bg:#faf7f8;--surface:#fff;--surface-2:#f4eef1;--border:#ece7ea;--fg:#1c1a1b;--muted:#8a8386;
+    --accent:#d6006e;--accent-soft:#fbe6f1;--accent-soft-fg:#b8005e;
+    --success:#16a34a;--success-soft:#e9f7ee;--warning:#d97706;--warning-soft:#fdf0e0;
+    --danger:#dc2626;--default:#eef0f2;--locked:#c9c4c7;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--fg);font:14px/1.4 system-ui,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+  .bar{position:sticky;top:0;z-index:10;background:rgba(250,247,248,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .bar b{font-size:14px}
+  .bar .sp{margin-left:auto}
+  .tgl{border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:12px;cursor:pointer;color:var(--fg)}
+  .tgl.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .note{max-width:1180px;margin:14px auto 0;padding:0 16px;font-size:12.5px;color:var(--muted)}
+  .note b{color:var(--fg)}.note code{background:var(--surface-2);padding:1px 5px;border-radius:5px;font-size:11px}
+  /* canvas */
+  .canvas{position:relative;width:1180px;height:660px;margin:14px auto;background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden;background-image:radial-gradient(var(--border) 1px,transparent 1px);background-size:22px 22px}
+  svg.edges{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+  .node{position:absolute;border-radius:14px;padding:8px 12px;background:var(--surface);border:1.5px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.05);cursor:pointer;transition:opacity .2s}
+  .node .t{font-weight:700;font-size:13px;line-height:1.25}
+  .node .s{font-size:11px;color:var(--muted);margin-top:2px}
+  .node .ic{position:absolute;top:-9px;left:10px;font-size:14px;background:var(--surface);border-radius:6px;padding:0 3px;line-height:1.3}
+  .badge{position:absolute;top:-9px;right:8px;font-size:9px;font-weight:700;border-radius:6px;padding:1px 5px}
+  .b-ok{background:var(--success-soft);color:var(--success)}
+  .b-be{background:var(--warning-soft);color:var(--warning)}
+  /* status tints */
+  .st-done{border-color:var(--success);background:var(--success-soft)}
+  .st-cur{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+  .st-prog{border-color:var(--warning);background:var(--warning-soft)}
+  .st-todo{border-color:var(--border)}
+  .st-lock{border-color:var(--locked);background:var(--surface-2);opacity:.7}
+  .root{background:var(--fg);color:#fff;border-color:var(--fg)}
+  .root .t{font-size:15px}.root .s{color:#e8c7d8}
+  .chip{position:absolute;border-radius:999px;padding:5px 10px;font-size:11px;font-weight:600;background:var(--surface);border:1.5px solid var(--border);cursor:pointer}
+  .chip .dot{display:inline-block;width:7px;height:7px;border-radius:99px;margin-right:5px;vertical-align:middle}
+  .dim{opacity:.28!important;filter:grayscale(.5)}
+  /* legend */
+  .legend{max-width:1180px;margin:0 auto 40px;padding:0 16px;display:flex;flex-wrap:wrap;gap:18px;font-size:12px;color:var(--muted)}
+  .legend .grp{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .legend .k{display:flex;gap:5px;align-items:center}
+  .sw{width:12px;height:12px;border-radius:4px;border:1.5px solid}
+  .cta{position:absolute;top:14px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;border:none;border-radius:12px;padding:9px 16px;font-weight:700;font-size:13px;cursor:pointer;z-index:5;box-shadow:0 2px 8px rgba(214,0,110,.3)}
+</style>
+</head>
+<body>
+  <div class="bar">
+    <b>Sơ đồ tư duy HOÀN CHỈNH</b> <span style="color:var(--muted);font-size:12px">— module là xương sống, nở ra lesson→challenge + nhánh vệ tinh cả khóa</span>
+    <span class="sp"></span>
+    <button class="tgl on" id="tAll">Toàn bộ</button>
+    <button class="tgl" id="tReady">Chỉ phần 0-BE (ship ngay)</button>
+  </div>
+
+  <div class="note" id="note"></div>
+
+  <div class="canvas" id="canvas">
+    <button class="cta">Tiếp tục học →</button>
+    <svg class="edges" id="edges" viewBox="0 0 1180 660" preserveAspectRatio="none"></svg>
+    <!-- nodes injected by JS -->
+  </div>
+
+  <div class="legend">
+    <div class="grp"><b style="color:var(--fg)">Loại node:</b>
+      <span class="k">🎓 Khóa</span><span class="k">📦 Module</span><span class="k">📄 Lesson</span>
+      <span class="k">⚔️ Challenge</span><span class="k">🏗️ Dự án/Capstone</span><span class="k">🃏 Ôn tập</span>
+      <span class="k">🧪 Lab</span><span class="k">🎤 Phỏng vấn</span>
+    </div>
+    <div class="grp"><b style="color:var(--fg)">Trạng thái:</b>
+      <span class="k"><span class="sw" style="border-color:var(--accent);background:var(--accent-soft)"></span>Đang ở đây</span>
+      <span class="k"><span class="sw" style="border-color:var(--success);background:var(--success-soft)"></span>Đã xong</span>
+      <span class="k"><span class="sw" style="border-color:var(--warning);background:var(--warning-soft)"></span>Đang học</span>
+      <span class="k"><span class="sw" style="border-color:var(--border)"></span>Chưa bắt đầu</span>
+      <span class="k"><span class="sw" style="border-color:var(--locked);background:var(--surface-2)"></span>Khóa (premium)</span>
+    </div>
+    <div class="grp"><b style="color:var(--fg)">Data:</b>
+      <span class="k"><span class="badge b-ok" style="position:static">0-BE</span> render-là-xong (đã có trong <code>myCourseOutline</code>)</span>
+      <span class="k"><span class="badge b-be" style="position:static">BE</span> cần ref/aggregate mới</span>
+    </div>
+  </div>
+
+<script>
+  // node model: {id,x,y,w,cls,ic,badge,t,s, from:[parentIds], group:'core'|'sat'}
+  var N = [
+    {id:'root',x:24,y:300,w:150,cls:'root',ic:'🎓',t:'Fullstack Mastery',s:'42% hoàn thành',from:[]},
+
+    // module spine (core, 0-BE)
+    {id:'m1',x:280,y:40,w:200,cls:'st-done',ic:'📦',t:'1. Nền tảng backend',s:'5/5 bài · ✓',from:['root']},
+    {id:'m2',x:280,y:150,w:200,cls:'st-cur',ic:'📦',t:'2. Tích hợp DB & Caching',s:'2/4 bài · Đang ở đây',from:['root']},
+    {id:'m3',x:280,y:470,w:200,cls:'st-prog',ic:'📦',t:'3. REST API',s:'1/4 bài',from:['root']},
+    {id:'m4',x:280,y:560,w:200,cls:'st-todo',ic:'📦',t:'4. Xác thực & Phân quyền',s:'0/4 bài',from:['root']},
+
+    // m2 expanded lessons (core, 0-BE)
+    {id:'l1',x:560,y:120,w:180,cls:'st-done',ic:'📄',t:'2.1 Kết nối DB',s:'Đã đọc ✓',from:['m2']},
+    {id:'l2',x:560,y:200,w:180,cls:'st-prog',ic:'📄',t:'2.2 Migrations',s:'Đang học',from:['m2']},
+    {id:'l3',x:560,y:280,w:180,cls:'st-todo',ic:'📄',t:'2.3 Caching layer',s:'Chưa bắt đầu',from:['m2']},
+    {id:'l4',x:560,y:360,w:180,cls:'st-lock',ic:'📄',t:'2.4 Query optimization',s:'🔒 Premium',from:['m2']},
+
+    // challenges under lessons (core, 0-BE) — the NEW nodes data already has
+    {id:'c1',x:800,y:118,w:170,cls:'st-done',ic:'⚔️',t:'Viết repository',s:'8/10 · ✓',from:['l1']},
+    {id:'c2',x:800,y:198,w:170,cls:'st-prog',ic:'⚔️',t:'Schema migration',s:'Đang làm',from:['l2']},
+    {id:'c3',x:800,y:278,w:170,cls:'st-todo',ic:'⚔️',t:'Redis cache',s:'Chưa nộp',from:['l3']},
+
+    // satellites off root — course-level parts
+    {id:'cap',x:24,y:60,w:190,cls:'st-prog',ic:'🏗️',t:'Dự án cá nhân',s:'3 chặng · 3/8 task',from:['root'],badge:'ok',group:'sat'},
+    {id:'fc',x:24,y:150,w:190,cls:'st-todo',ic:'🃏',t:'Ôn tập (Flashcards)',s:'15 bộ · 40 thẻ tới hạn',from:['root'],badge:'be',group:'sat',beNote:1},
+    {id:'lab',x:24,y:470,w:190,cls:'st-todo',ic:'🧪',t:'Playground (Lab)',s:'Docker · K8s · RAG',from:['root'],badge:'be',group:'sat',beNote:1},
+    {id:'iv',x:24,y:560,w:190,cls:'st-todo',ic:'🎤',t:'Phỏng vấn thử',s:'technical có moduleId',from:['root'],badge:'be',group:'sat',beNote:1},
+  ];
+  // capstone tasks (0-BE, from myCourseOutline.milestones)
+  N.push({id:'t1',x:800,y:60,w:150,cls:'st-done',ic:'▪',t:'Task: Schema design',s:'✓ 9/10',from:['cap']});
+  N.push({id:'t2',x:800,y:360,w:150,cls:'st-prog',ic:'▪',t:'Task: API layer',s:'Đang làm',from:['cap']});
+
+  var byId={}; N.forEach(function(n){byId[n.id]=n});
+  var H={root:70,m1:56,m2:56,m3:56,m4:56,l1:44,l2:44,l3:44,l4:44,c1:40,c2:40,c3:40,cap:52,fc:52,lab:52,iv:52,t1:40,t2:40};
+
+  var canvas=document.getElementById('canvas'), svg=document.getElementById('edges');
+  function render(){
+    // nodes
+    N.forEach(function(n){
+      var h=H[n.id]||48;
+      var el=document.createElement('div');
+      el.className='node '+n.cls+(n.group==='sat'?' sat':'');
+      el.id='node-'+n.id;
+      el.style.left=n.x+'px'; el.style.top=n.y+'px'; el.style.width=n.w+'px'; el.style.minHeight=h+'px';
+      el.innerHTML='<span class="ic">'+n.ic+'</span>'
+        +(n.badge?'<span class="badge '+(n.badge==='ok'?'b-ok':'b-be')+'">'+(n.badge==='ok'?'0-BE':'BE')+'</span>':'')
+        +'<div class="t">'+n.t+'</div><div class="s">'+n.s+'</div>';
+      canvas.appendChild(el);
+    });
+    // edges
+    var paths='';
+    N.forEach(function(n){
+      (n.from||[]).forEach(function(pid){
+        var p=byId[pid]; if(!p)return;
+        var x1=p.x+p.w, y1=p.y+(H[p.id]||48)/2;
+        var x2=n.x, y2=n.y+(H[n.id]||48)/2;
+        var mx=(x1+x2)/2;
+        var cur = n.cls==='st-cur'||pid==='m2';
+        paths+='<path d="M'+x1+','+y1+' C'+mx+','+y1+' '+mx+','+y2+' '+x2+','+y2
+          +'" fill="none" stroke="'+(cur?'#d6006e':'#d9d3d6')+'" stroke-width="'+(cur?2.5:1.5)+'"'
+          +(n.group==='sat'?' stroke-dasharray="5 4"':'')+' data-sat="'+(n.group==='sat'?1:0)+'"/>';
+      });
+    });
+    svg.innerHTML=paths;
+  }
+  render();
+
+  var note=document.getElementById('note');
+  var NOTE={
+    all:'<b>Bản đồ hoàn chỉnh = xương sống Module→Lesson→Challenge (progress-aware) + nhánh vệ tinh cả khóa (Dự án · Ôn tập · Lab · Phỏng vấn).</b> Mọi node click được → nhảy thẳng vào surface đó (không ngõ cụt). Hiện mind-map CHỈ vẽ module→lesson rồi vứt <code>challenges[]</code> + <code>milestones[]</code> dù <code>myCourseOutline</code> ĐÃ trả về đủ. <b>Chấm điểm data-ceiling:</b> ⚔️ Challenge + 🏗️ Capstone-task = <span style="color:var(--success)">0-BE, render-là-xong</span>. 🃏 Flashcard · 🧪 Lab · 🎤 Phỏng-vấn = course-level, gắn ở gốc khóa được ngay (0-BE) nhưng muốn gắn ĐÚNG module thì <span style="color:var(--warning)">cần ref/aggregate BE</span> (deck/lab không có moduleId; interview technical CÓ moduleId nhưng stats còn course-grained).',
+    ready:'<b>CHỈ phần 0-BE (ship ngay, 0 đổi schema):</b> làm giàu xương sống bằng <b>⚔️ Challenge nodes dưới mỗi lesson</b> (status/điểm) + <b>🏗️ nhánh Dự án/Capstone</b> (task + progress) — tất cả ĐÃ nằm trong <code>myCourseOutline</code>, builder chỉ cần emit thêm node. Riêng việc này đã hết "nhàm". 3 vệ tinh 🃏🧪🎤 (mờ đi) gắn ĐÚNG-module cần BE → để phase sau, hoặc treo tạm ở gốc khóa (course-level query sẵn có).'
+  };
+  function setMode(ready){
+    document.getElementById('tReady').classList.toggle('on',ready);
+    document.getElementById('tAll').classList.toggle('on',!ready);
+    note.innerHTML=ready?NOTE.ready:NOTE.all;
+    // dim BE-only satellites + their edges in ready mode
+    ['fc','lab','iv'].forEach(function(id){
+      var el=document.getElementById('node-'+id); if(el)el.classList.toggle('dim',ready);
+    });
+    svg.querySelectorAll('path[data-sat="1"]').forEach(function(p){p.style.opacity=ready?'.2':'1'});
+  }
+  document.getElementById('tAll').onclick=function(){setMode(false)};
+  document.getElementById('tReady').onclick=function(){setMode(true)};
+  setMode(false);
+</script>
+</body>
+</html>

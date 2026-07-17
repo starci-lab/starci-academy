@@ -94,7 +94,7 @@ const WeakTagRow = ({
             className="group flex w-full cursor-pointer items-center justify-between gap-3 rounded-xl border border-default bg-default px-4 py-3 text-left outline-none transition-colors focus-visible:ring-2 focus-visible:ring-accent"
         >
             <div className="flex min-w-0 flex-col gap-0">
-                <Typography type="body-sm" weight="medium" className="truncate text-accent-soft-foreground underline-offset-2 group-hover:underline">
+                <Typography type="body-sm" weight="medium" className="truncate underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
                     {tag.tag}
                 </Typography>
                 <Typography type="body-xs" color="muted">

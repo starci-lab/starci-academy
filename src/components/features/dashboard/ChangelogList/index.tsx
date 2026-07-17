@@ -84,7 +84,7 @@ export const ChangelogList = ({
                                 href={entry.linkUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-sm font-medium text-primary hover:underline underline-offset-2"
+                                className="text-sm font-medium text-primary hover:underline underline-offset-4 decoration-[var(--separator-tertiary)]"
                             >
                                 {entry.title}
                             </a>

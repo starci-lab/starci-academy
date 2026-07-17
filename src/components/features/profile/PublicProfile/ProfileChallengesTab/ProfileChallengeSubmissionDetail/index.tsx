@@ -156,7 +156,7 @@ export const ProfileChallengeSubmissionDetail = ({
                                 href={detail.submissionUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex w-fit min-w-0 max-w-full items-center gap-2 text-accent-soft-foreground underline underline-offset-2"
+                                className="flex w-fit min-w-0 max-w-full items-center gap-2 text-accent-soft-foreground underline underline-offset-4 decoration-[var(--separator-tertiary)]"
                                 aria-label={t("publicProfile.openRepo", { title: detail.title })}
                             >
                                 <LinkIcon aria-hidden focusable="false" className="size-5 shrink-0" />
@@ -202,7 +202,7 @@ export const ProfileChallengeSubmissionDetail = ({
                                                         href={attempt.submissionUrl}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="flex w-fit min-w-0 max-w-full items-center gap-2 text-accent-soft-foreground underline underline-offset-2"
+                                                        className="flex w-fit min-w-0 max-w-full items-center gap-2 text-accent-soft-foreground underline underline-offset-4 decoration-[var(--separator-tertiary)]"
                                                         aria-label={t("publicProfile.openRepo", { title: detail.title })}
                                                     >
                                                         <LinkIcon aria-hidden focusable="false" className="size-4 shrink-0" />

@@ -146,7 +146,7 @@ export const JobDetail = ({ className }: JobDetailProps) => {
                                 <div className="flex min-w-0 flex-1 flex-col gap-1">
                                     {companyHref ? (
                                         <a href={companyHref} className="w-fit">
-                                            <Typography type="body" weight="semibold" className="hover:underline underline-offset-2">
+                                            <Typography type="body" weight="semibold" className="hover:underline underline-offset-4 decoration-[var(--separator-tertiary)]">
                                                 {job.company.title}
                                             </Typography>
                                         </a>

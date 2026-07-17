@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mind-map-wow — hành trình học tập (journey map)</title>
+<style>
+  :root{
+    --bg:#faf7f8;--surface:#fff;--border:#ece7ea;--fg:#1c1a1b;--muted:#8a8386;
+    --accent:#d6006e;--accent-2:#ff5ca8;--accent-soft:#fbe6f1;--accent-soft-fg:#b8005e;
+    --success:#16a34a;--gold:#eab308;--sky1:#fff4fa;--sky2:#f3ecff;--sky3:#eaf6ff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--fg);font:14px/1.4 system-ui,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+  .bar{padding:10px 16px;display:flex;gap:10px;align-items:center;border-bottom:1px solid var(--border)}
+  .bar b{font-size:14px}.bar .sp{margin-left:auto;color:var(--muted);font-size:12px}
+  .tgl{border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:12px;cursor:pointer}
+  .tgl.on{background:var(--fg);color:#fff;border-color:var(--fg)}
+
+  .stage{position:relative;width:1180px;height:660px;margin:14px auto;border-radius:24px;overflow:hidden;
+    background:radial-gradient(1200px 500px at 15% 110%,var(--sky1),transparent 60%),
+               radial-gradient(1000px 600px at 90% -10%,var(--sky3),transparent 55%),
+               linear-gradient(160deg,var(--sky2),#fff 70%)}
+  .stars{position:absolute;inset:0;pointer-events:none;opacity:.5}
+  .stars i{position:absolute;width:3px;height:3px;border-radius:99px;background:var(--accent);opacity:.25;animation:tw 3s infinite}
+  @keyframes tw{0%,100%{opacity:.15}50%{opacity:.5}}
+  svg.path{position:absolute;inset:0;width:100%;height:100%}
+
+  /* HUD */
+  .hud{position:absolute;top:18px;right:18px;background:rgba(255,255,255,.72);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:18px;padding:14px 16px;display:flex;gap:16px;align-items:center;box-shadow:0 8px 24px rgba(0,0,0,.06)}
+  .ring{position:relative;width:56px;height:56px}
+  .ring svg{transform:rotate(-90deg)}
+  .ring b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+  .hud .stat{font-size:12px;color:var(--muted)}
+  .hud .stat b{display:block;font-size:16px;color:var(--fg)}
+  .title{position:absolute;top:20px;left:24px}
+  .title .k{font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+  .title .n{font-size:22px;font-weight:800;margin-top:2px}
+
+  /* nodes */
+  .node{position:absolute;transform:translate(-50%,-50%);text-align:center;cursor:pointer;z-index:3}
+  .orb{width:76px;height:76px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto;
+    background:var(--surface);border:3px solid var(--border);box-shadow:0 6px 16px rgba(0,0,0,.08);position:relative}
+  .orb .rz{position:absolute;inset:-6px;border-radius:50%}
+  .lab{margin-top:8px;font-weight:700;font-size:13px;max-width:150px}
+  .sub{font-size:11px;color:var(--muted)}
+  /* states */
+  .done .orb{border-color:var(--success);background:linear-gradient(160deg,#eafaf0,#fff)}
+  .done .orb::after{content:'✓';position:absolute;bottom:-4px;right:-4px;width:22px;height:22px;border-radius:99px;background:var(--success);color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;border:2px solid #fff}
+  .cur .orb{border-color:var(--accent);background:linear-gradient(160deg,var(--accent-soft),#fff)}
+  .cur .rz{border:3px solid var(--accent);animation:pulse 1.8s infinite}
+  @keyframes pulse{0%{transform:scale(1);opacity:.7}70%{transform:scale(1.35);opacity:0}100%{opacity:0}}
+  .todo .orb{border-color:var(--border);filter:saturate(.6)}
+  .lock .orb{border-color:#d8d2d5;background:var(--surface);opacity:.65}
+  .lock .orb::after{content:'🔒';position:absolute;bottom:-6px;right:-6px;font-size:15px}
+  .summit .orb{width:92px;height:92px;font-size:42px;border-color:var(--gold);background:linear-gradient(160deg,#fff7db,#fff);box-shadow:0 8px 28px rgba(234,179,8,.35)}
+
+  /* avatar you-are-here */
+  .me{position:absolute;transform:translate(-50%,-115%);z-index:5;text-align:center}
+  .me .av{width:46px;height:46px;border-radius:50%;background:#2b6cb0;border:3px solid #fff;box-shadow:0 6px 16px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:22px}
+  .me .flag{margin-top:5px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap}
+  .me::after{content:'';position:absolute;left:50%;top:52px;transform:translateX(-50%);width:0;height:0;border:6px solid transparent;border-top-color:var(--accent)}
+
+  /* side-quest diamonds (challenges) */
+  .quest{position:absolute;transform:translate(-50%,-50%) rotate(45deg);width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;z-index:2;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.12)}
+  .quest span{transform:rotate(-45deg)}
+  .q-done{background:var(--success);color:#fff}.q-prog{background:var(--gold);color:#fff}.q-todo{background:#fff;border:2px solid var(--border)}
+
+  .cta{position:absolute;z-index:6;background:var(--accent);color:#fff;border:none;border-radius:14px;padding:11px 20px;font-weight:800;font-size:14px;cursor:pointer;box-shadow:0 8px 22px rgba(214,0,110,.4);display:flex;gap:8px;align-items:center}
+
+  .side{position:absolute;transform:translate(-50%,-50%);z-index:2;background:rgba(255,255,255,.8);backdrop-filter:blur(6px);border:1px dashed var(--border);border-radius:14px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;display:flex;gap:7px;align-items:center;color:var(--muted)}
+  .side b{color:var(--fg)}
+
+  .note{max-width:1180px;margin:0 auto 40px;padding:0 16px;font-size:12.5px;color:var(--muted)}
+  .note b{color:var(--fg)}.note code{background:#f4eef1;padding:1px 5px;border-radius:5px;font-size:11px}
+</style>
+</head>
+<body>
+  <div class="bar">
+    <b>Sơ đồ tư duy → HÀNH TRÌNH học tập</b>
+    <span class="sp">vẽ lại hoàn toàn: con đường leo tới mastery, không phải cây liệt kê module</span>
+  </div>
+
+  <div class="stage" id="stage">
+    <div class="stars" id="stars"></div>
+
+    <svg class="path" viewBox="0 0 1180 660" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="grad" x1="0" y1="1" x2="1" y2="0">
+          <stop offset="0" stop-color="#d6006e"/><stop offset="1" stop-color="#ff7ab8"/>
+        </linearGradient>
+        <filter id="glow"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <!-- remaining (ahead) -->
+      <path d="M520,360 C640,320 690,300 760,270 S900,205 950,175 S1060,110 1088,86"
+        fill="none" stroke="#e2dade" stroke-width="12" stroke-linecap="round" stroke-dasharray="2 20"/>
+      <!-- completed (glowing accent) -->
+      <path d="M110,600 C210,565 250,520 300,470 S440,405 520,360"
+        fill="none" stroke="url(#grad)" stroke-width="12" stroke-linecap="round" filter="url(#glow)"/>
+    </svg>
+
+    <div class="title"><div class="k">Lộ trình của bạn</div><div class="n">Fullstack Mastery</div></div>
+
+    <div class="hud">
+      <div class="ring">
+        <svg width="56" height="56"><circle cx="28" cy="28" r="24" fill="none" stroke="#eee" stroke-width="6"/>
+          <circle cx="28" cy="28" r="24" fill="none" stroke="var(--accent)" stroke-width="6" stroke-linecap="round"
+            stroke-dasharray="150.8" stroke-dashoffset="87.4"/></svg>
+        <b>42%</b>
+      </div>
+      <div class="stat">Chuỗi<b>🔥 7 ngày</b></div>
+      <div class="stat">XP tuần<b>640</b></div>
+    </div>
+
+    <!-- start -->
+    <div class="node done" style="left:110px;top:600px"><div class="orb">🚀</div><div class="sub" style="margin-top:6px">Bắt đầu</div></div>
+
+    <!-- module planets -->
+    <div class="node done" style="left:300px;top:470px"><div class="orb">🧱</div><div class="lab">Nền tảng backend</div><div class="sub">5/5 bài · xong</div></div>
+
+    <div class="node cur" style="left:520px;top:360px"><div class="orb"><div class="rz"></div>🗄️</div><div class="lab">DB & Caching</div><div class="sub">2/4 bài</div></div>
+
+    <div class="node todo" style="left:760px;top:270px"><div class="orb">🔌</div><div class="lab">REST API</div><div class="sub">1/4 bài</div></div>
+
+    <div class="node lock" style="left:950px;top:175px"><div class="orb">🔐</div><div class="lab">Xác thực</div><div class="sub">mở khi tới</div></div>
+
+    <!-- summit / capstone -->
+    <div class="node summit" style="left:1088px;top:80px"><div class="orb">🏆</div><div class="lab">Dự án Capstone</div><div class="sub">3/8 task</div></div>
+
+    <!-- side-quests (challenges) hanging near modules -->
+    <div class="quest q-done" style="left:360px;top:520px"><span>⚔️</span></div>
+    <div class="quest q-prog" style="left:470px;top:428px"><span>⚔️</span></div>
+    <div class="quest q-todo" style="left:585px;top:315px"><span>⚔️</span></div>
+    <div class="quest q-todo" style="left:820px;top:325px"><span>⚔️</span></div>
+
+    <!-- side rails: ôn tập + lab (course-wide, off to the side) -->
+    <div class="side" style="left:170px;top:300px">🃏 <b>Ôn tập</b> · 40 thẻ</div>
+    <div class="side" style="left:720px;top:120px">🧪 <b>Lab</b> · Docker/K8s</div>
+    <div class="side" style="left:1000px;top:400px">🎤 <b>Phỏng vấn thử</b></div>
+
+    <!-- avatar + CTA at current -->
+    <div class="me" style="left:520px;top:360px"><div class="av">🧑‍💻</div><div class="flag">Bạn đang ở đây</div></div>
+    <button class="cta" style="left:520px;top:452px;transform:translateX(-50%)">Tiếp tục học →</button>
+  </div>
+
+  <div class="note" id="note"><b>Ý tưởng:</b> mind-map = <b>con đường leo núi tới mastery</b> — mỗi module là 1 "hành tinh/chặng" trên đường, đường ĐÃ ĐI phát sáng accent, đường phía trước mờ + chấm-chấm, <b>avatar "Bạn đang ở đây"</b> pulse tại chặng hiện tại, đỉnh núi = 🏆 Capstone. Challenge = <b>nhiệm vụ phụ</b> (kim cương ⚔️ ven đường), Ôn tập/Lab/Phỏng-vấn = trạm bên lề. HUD góc: vòng % + chuỗi 🔥 + XP. Mọi thứ click được → nhảy vào surface. <b>Vẫn 100% data thật (0-BE):</b> module/lesson/challenge/progress/capstone-task đều từ <code>myCourseOutline</code> — chỉ đổi CÁCH VẼ, không bịa số. Đây là 1 hướng "wow" (adventure map); còn 2 vibe khác tôi có thể dựng: <b>skill-tree/constellation</b> (chòm sao tri thức mở khóa) hoặc <b>metro map</b> (tuyến tàu điện học tập).</div>
+</body>
+<script>
+  var s=document.getElementById('stars');
+  for(var i=0;i<40;i++){var d=document.createElement('i');d.style.left=(Math.random()*100)+'%';d.style.top=(Math.random()*100)+'%';d.style.animationDelay=(Math.random()*3)+'s';s.appendChild(d)}
+</script>
+</html>

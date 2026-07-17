@@ -1092,7 +1092,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                             revealed={showAnswer}
                             questionLabel={t("flashcard.questionLabel")}
                             answerLabel={t("flashcard.answerLabel")}
-                            front={<MarkdownContent markdown={card.question} />}
+                            front={<MarkdownContent plain markdown={card.question} />}
                             belowFront={card.level || (card.tags?.length ?? 0) > 0 ? (
                                 <div className="flex flex-wrap items-center gap-2">
                                     {card.level ? (
@@ -1110,13 +1110,13 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                             back={
                                 <>
                                     {card.answer ? (
-                                        <MarkdownContent markdown={card.answer} arcSections />
+                                        <MarkdownContent plain markdown={card.answer} arcSections />
                                     ) : (
                                         <Typography type="body-sm" color="muted">
                                             {t("flashcard.noAnswer")}
                                         </Typography>
                                     )}
-                                    {card.explanation ? <MarkdownContent markdown={card.explanation} /> : null}
+                                    {card.explanation ? <MarkdownContent plain markdown={card.explanation} /> : null}
                                 </>
                             }
                         />
@@ -1186,7 +1186,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                             that whole group ↔ next card = the outer gap-6). */}
                         <div className="flex flex-col gap-3">
                             <LabeledCard label={t("flashcard.questionLabel")} bordered>
-                                <MarkdownContent markdown={card.question} />
+                                <MarkdownContent plain markdown={card.question} />
                             </LabeledCard>
                             {card.level || (card.tags?.length ?? 0) > 0 ? (
                                 <div className="flex flex-wrap items-center gap-2">
@@ -1376,8 +1376,8 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                 {/* read the full model answer (the 5-layer reasoning), then self-grade */}
                                 {showAnswer ? (
                                     <LabeledCard label={t("flashcard.answerLabel")} bordered contentClassName="flex flex-col gap-3">
-                                        <MarkdownContent markdown={card.answer ?? ""} arcSections />
-                                        {card.explanation ? <MarkdownContent markdown={card.explanation} /> : null}
+                                        <MarkdownContent plain markdown={card.answer ?? ""} arcSections />
+                                        {card.explanation ? <MarkdownContent plain markdown={card.explanation} /> : null}
                                     </LabeledCard>
                                 ) : (
                                     <Button

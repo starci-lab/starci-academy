@@ -81,7 +81,7 @@ export const ChallengeCourseRow = ({
                         type="body-sm"
                         weight="medium"
                         truncate
-                        className={href ? "text-accent-soft-foreground underline-offset-2 group-hover:underline" : undefined}
+                        className={href ? "underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline" : undefined}
                     >
                         {courseTitle ?? t("publicProfile.challengesTab.ungrouped")}
                     </Typography>

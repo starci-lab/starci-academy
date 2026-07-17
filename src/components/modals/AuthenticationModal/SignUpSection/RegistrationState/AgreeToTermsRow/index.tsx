@@ -69,7 +69,7 @@ export const AgreeToTermsRow = ({
                                 <Link
                                     href={paths.terms().build()}
                                     target="_blank"
-                                    className="text-xs underline underline-offset-2 inline"
+                                    className="text-xs underline underline-offset-4 decoration-[var(--separator-tertiary)] inline"
                                 >
                                     {t("auth.signUp.agreeToTerms.terms")}
                                 </Link>{" "}
@@ -77,7 +77,7 @@ export const AgreeToTermsRow = ({
                                 <Link
                                     href={paths.privacy().build()}
                                     target="_blank"
-                                    className="text-xs underline underline-offset-2 inline"
+                                    className="text-xs underline underline-offset-4 decoration-[var(--separator-tertiary)] inline"
                                 >
                                     {t("auth.signUp.agreeToTerms.privacy")}
                                 </Link>

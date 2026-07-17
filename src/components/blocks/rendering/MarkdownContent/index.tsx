@@ -408,6 +408,13 @@ export interface MarkdownContentProps extends WithClassNames<undefined> {
      * flashcard/mock-interview answer (FlipCard back face) turns this on.
      */
     arcSections?: boolean
+    /**
+     * Plain-text mode: render authored content with INLINE markdown decoration
+     * stripped to raw text (inline code, bold, italic, links) while keeping block
+     * structure + `:::muted` arc labels + cloze. Opt-in for flashcard + mock-interview
+     * surfaces (thầy 2026-07-17 "render thô"); lesson/challenge content keeps full markdown.
+     */
+    plain?: boolean
 }
 
 /**
@@ -433,7 +440,7 @@ const stripClozeMarkers = (markdown: string): string =>
 /**
  * @see Story: .storybook/stories/blocks/rendering/MarkdownContent/MarkdownContent.stories
  */
-export const MarkdownContent = ({ markdown, reading = false, arcSections = false, className }: MarkdownContentProps) => {
+export const MarkdownContent = ({ markdown, reading = false, arcSections = false, plain = false, className }: MarkdownContentProps) => {
     const theme = useTheme()
     const t = useTranslations()
     // hold back an unterminated trailing mermaid fence FIRST — markdown streamed in
@@ -454,12 +461,14 @@ export const MarkdownContent = ({ markdown, reading = false, arcSections = false
             t,
             mermaidCaptions,
             reading,
+            plain,
         }),
         [
             theme.theme,
             t,
             mermaidCaptions,
             reading,
+            plain,
         ],
     )
     return (

@@ -113,7 +113,7 @@ const MockInterviewDiagramCanvas = ({ className, onChange }: MockInterviewDiagra
     const nodeTypes = useMemo(() => NODE_TYPES, [])
 
     return (
-        <div className={cn("relative flex h-full w-full flex-col overflow-hidden rounded-xl border border-divider", className)}>
+        <div className={cn("relative flex h-full w-full flex-col overflow-hidden rounded-xl", className)}>
             <div className="flex items-center justify-between gap-2 border-b border-divider bg-surface px-3 py-2">
                 <span className="text-sm font-medium text-foreground">{t("mockInterview.diagram.title")}</span>
                 <Button onPress={addBox} size="sm" variant="secondary">

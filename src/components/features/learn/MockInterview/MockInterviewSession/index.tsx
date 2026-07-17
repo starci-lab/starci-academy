@@ -359,11 +359,24 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         return initial === "history" || initial === "stats" ? initial : "begin"
     })
     const [tier, setTier] = useState<MockInterviewTier>("trung")
-    // programming language chosen ONCE at setup (like tier) — a code question
-    // (debug/review/optimize) is then rendered AND graded in this language: the
-    // server hands back that language's own prompt + given code and grades against
-    // its own ideal answer. No-code questions ignore it. Defaults to TypeScript.
-    const [interviewLang, setInterviewLang] = useState<ProgrammingLanguage>(ProgrammingLanguage.TypeScript)
+    // programming languages selected at setup (MULTI-select, 2026-07-17) — each
+    // code question authored across the 4 tracks is drawn in a RANDOM one of these;
+    // a code question authored in none of them is skipped by the server and a
+    // different one drawn instead. A non-track given-code question (e.g. dockerfile)
+    // and every no-code question ignore this. Defaults to just TypeScript (parity
+    // with the old single-select default); the candidate adds more to widen the draw.
+    const [interviewLangs, setInterviewLangs] = useState<Array<ProgrammingLanguage>>([ProgrammingLanguage.TypeScript])
+    // toggle a language in/out of the selected set, but NEVER let it empty — the
+    // draw needs at least one language to serve code questions in (deselecting the
+    // last one is a no-op rather than leaving zero).
+    const toggleInterviewLang = useCallback((lang: ProgrammingLanguage) => {
+        setInterviewLangs((previous) => {
+            if (previous.includes(lang)) {
+                return previous.length === 1 ? previous : previous.filter((value) => value !== lang)
+            }
+            return [...previous, lang]
+        })
+    }, [])
     // setup's "Tự động" vs "Tùy chỉnh" toggle — see MockInterviewConfigMode.
     const [configMode, setConfigMode] = useState<MockInterviewConfigMode>("auto")
     // "Tùy chỉnh" only — Số câu (single-select, kept as a string — see QUESTION_COUNT_OPTIONS).
@@ -788,7 +801,13 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                 courseId,
                 level: currentLevel,
                 mode: nextMode,
-                lang: interviewLang,
+                // multi-select language set (2026-07-17) — the server draws each code
+                // question in a random member of this set. `lang` (first selected) is
+                // sent alongside only to keep the deprecated single field populated (the
+                // server stores it as the session row's representative `lang`); the server
+                // ignores it whenever `langs` is present.
+                lang: interviewLangs[0],
+                langs: interviewLangs,
                 questionCount: isConfigurable ? Number(questionCount) : undefined,
                 kinds: isConfigurable && selectedKinds.length > 0 ? selectedKinds : undefined,
                 countsToReadiness: !isConfigurable,
@@ -859,7 +878,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
         // above navigates to `/interview/[id]`, unmounting this setup instance, so the
         // spinner naturally disappears with it (resetting here would flash the icon back
         // for a frame before the route swaps).
-    }, [courseId, courseDisplayId, currentLevel, mode, configMode, interviewLang, questionCount, selectedKinds, startSessionSwr, inProgressSessionSwr, router, locale, t])
+    }, [courseId, courseDisplayId, currentLevel, mode, configMode, interviewLangs, questionCount, selectedKinds, startSessionSwr, inProgressSessionSwr, router, locale, t])
 
     // resume, on mount, when reached via the dedicated `/interview/[sessionId]` route —
     // waits for `inProgressSessionSwr` to settle, then either rehydrates straight into
@@ -1432,11 +1451,18 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                     }}
                 />
 
-                {setupTab === "history" ? (
+                {/* history + stats stay MOUNTED (hidden toggle, not conditional render) so
+                    their accumulated list state survives switching setup tabs and back — the
+                    previous conditional render unmounted them, dropping the loaded history
+                    (thầy 2026-07-17: "vẫn dính lỗi chuyển tabs mất lịch sử"). Mirrors
+                    MockInterviewWorkspace's own keep-mounted tools. */}
+                <div className={cn(setupTab !== "history" && "hidden")}>
                     <MockInterviewHistory courseId={courseId} courseDisplayId={courseDisplayId} onStartInterview={() => setSetupTab("begin")} />
-                ) : setupTab === "stats" ? (
+                </div>
+                <div className={cn(setupTab !== "stats" && "hidden")}>
                     <MockInterviewStats courseId={courseId} courseDisplayId={courseDisplayId} onStartInterview={() => setSetupTab("begin")} />
-                ) : (
+                </div>
+                {setupTab === "begin" ? (
                     <>
                         {/* Zone 0 — resume: a session left in progress (24h TTL) deep-links straight
                     back into it, ABOVE every other zone (mirrors Flashcard Quiz's own resume
@@ -1639,16 +1665,19 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                         </Typography>
                                     </div>
 
-                                    {/* Programming language — chosen ONCE here (like the tier). A code
-                        question (debug/review/optimize) is then rendered AND graded in this
-                        language: the server returns that language's own prompt + given code
-                        and grades against its own ideal answer. No-code questions ignore it. */}
+                                    {/* Programming languages — MULTI-select (2026-07-17). A code question
+                        authored across the 4 tracks is drawn in a RANDOM one of the selected
+                        languages (a question in none of them is skipped, a different one drawn);
+                        the server returns that language's own prompt + given code and grades
+                        against its own ideal answer. Non-track (e.g. dockerfile) + no-code
+                        questions ignore this. At least one language stays selected. */}
                                     <div className="flex flex-col gap-3">
                                         <Label>{t("mockInterview.langLabel")}</Label>
                                         <FlexWrapButtonRadio
+                                            multiple
                                             ariaLabel={t("mockInterview.langLabel")}
-                                            value={interviewLang}
-                                            onChange={setInterviewLang}
+                                            values={interviewLangs}
+                                            onToggle={toggleInterviewLang}
                                             items={DEFAULT_PROGRAMMING_LANGUAGES.map((value) => ({
                                                 value,
                                                 content: getLanguageLabel(value),
@@ -1694,7 +1723,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                             <Callout status="danger" title={startError} onClose={() => setStartError(null)} />
                         ) : null}
                     </>
-                )}
+                ) : null}
             </div>
         )
     }
@@ -1848,22 +1877,20 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                     finishLabel: t("mockInterview.finishEarly"),
                 })}
 
-                {/* body — conversation is a centered readable column until the workspace
-                    opens, then the two become a first-class 2-pane split (stacked on mobile).
-                    `flex-1 min-h-0` fills the remaining height under the sticky header;
-                    `overflow-y-auto` lets THIS pane scroll internally instead of the whole
-                    page ([[full-bleed-work-surface]] "mỗi pane cuộn riêng"). No divider between
-                    the 2 panes (2026-07-13, thầy: "bỏ divider đi") — whitespace (`gap-6`) alone
-                    separates them, back to [[whitespace-over-dividers]]'s default now that
-                    neither pane has a card frame to clash against. */}
-                <div className="grid min-h-0 flex-1 gap-6 overflow-y-auto px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-                    {/* LEFT — the conversation. `justify-center` vertically centers this
-                        (naturally short) column within the full-viewport-tall grid row instead
-                        of pinning it to the top with a growing gap below (2026-07-17, thầy:
-                        "bố cục chưa gọn/cân đối" — the workspace pane now fills the row's full
-                        height, see below, so the conversation column reads as a floating
-                        top-pinned island unless it's centered to match). */}
-                    <div className="flex min-w-0 flex-col justify-center gap-6">
+                {/* body — 2-pane split (stacked on mobile). The container itself carries NO
+                    horizontal padding: the LEFT pane keeps its own reading padding, but the RIGHT
+                    workspace pane BLEEDS to the viewport's right/top/bottom edges and is separated
+                    only by a LEFT border — a docked IDE-style tool panel, NOT a floating card
+                    (2026-07-17, thầy: "height full và sát mép phải, bên trái có border"). Each pane
+                    scrolls on its own at `lg` ([[full-bleed-work-surface]] "mỗi pane cuộn riêng");
+                    on mobile the grid stacks and the whole body scrolls. */}
+                <div className="grid min-h-0 flex-1 overflow-y-auto lg:overflow-hidden lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+                    {/* LEFT — the conversation, with its own reading padding + scroll. `justify-center`
+                        vertically centers this (naturally short) column within the full-viewport-tall
+                        grid row instead of pinning it to the top (2026-07-17, thầy: "bố cục chưa
+                        gọn/cân đối" — the workspace pane fills the row's full height, so the
+                        conversation reads as a floating top-pinned island unless centered to match). */}
+                    <div className="flex min-w-0 flex-col justify-center gap-6 px-4 py-6 sm:px-6 lg:overflow-y-auto">
                         {errorCallout}
 
                         {/* interviewer presence — StarCi face + name + "đang nói" pulse + TTS
@@ -1881,7 +1908,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                             {isAsking ? (
                                 streamingText ? (
                                     <div className="text-sm font-medium text-foreground">
-                                        <MarkdownContent markdown={streamingText} />
+                                        <MarkdownContent plain markdown={streamingText} />
                                     </div>
                                 ) : (
                                     <Spinner size="sm" />
@@ -1893,7 +1920,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                 // workspace pane ALWAYS visible); the given code already sits right next
                                 // to this bubble, so announcing its presence was redundant clutter.
                                 <div className="text-sm font-medium text-foreground">
-                                    <MarkdownContent markdown={currentQuestionTurn.content} />
+                                    <MarkdownContent plain markdown={currentQuestionTurn.content} />
                                 </div>
                             ) : (
                                 <Typography type="body-sm" color="muted">
@@ -1939,18 +1966,19 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                         </Button>
                     </div>
 
-                    {/* RIGHT — workspace pane, ALWAYS visible now (2026-07-13, no more manual
-                        toggle): the tool when this question has one, else an EmptyState so the
-                        pane never just vanishes. Tool stays MOUNTED once shown so an in-progress
-                        sketch/code buffer survives a question switch. No card frame, no divider —
-                        just the grid's own `gap-6` separates it from the conversation pane. On
-                        mobile the grid stacks this under the conversation. `h-full` lets
-                        {@link MockInterviewWorkspace}'s own `h-full` fill the ENTIRE row height
-                        (2026-07-17 fix — the editor/whiteboard used to be a small fixed-height box
-                        floating inside this already-viewport-tall cell, reading "chưa gọn"). */}
-                    <div className="h-full min-w-0">
+                    {/* RIGHT — the workspace, a DOCKED tool panel: full row height, bleeding to the
+                        viewport's right/top/bottom edges (the container has no padding on this side),
+                        separated from the conversation by ONE left border only — an IDE-style side
+                        panel, not a floating rounded card (2026-07-17, thầy: "height full và sát mép
+                        phải, bên trái có border"). Supersedes the earlier bordered-card treatment.
+                        Inside, `p-6` gives the tool breathing room from the border/edges. On mobile
+                        the grid stacks, so the divider becomes a TOP border and a min-height keeps
+                        the editor usable. Tool stays MOUNTED once shown so an in-progress sketch/code
+                        buffer survives a question switch. */}
+                    <div className="flex min-h-[28rem] min-w-0 flex-col border-t border-default bg-surface p-6 lg:min-h-0 lg:border-t-0 lg:border-l">
                         {workspaceOpen ? (
                             <MockInterviewWorkspace
+                                className="min-h-0 flex-1"
                                 tool={workspaceTool}
                                 onDiagramChange={handleDiagramChange}
                                 codeState={codeState}
@@ -1958,7 +1986,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                 givenCodeVariants={currentSeedTopic?.givenCodes ?? []}
                             />
                         ) : (
-                            <div className="flex h-full items-center justify-center">
+                            <div className="flex min-h-0 flex-1 items-center justify-center">
                                 <EmptyState
                                     icon={<PenNibIcon aria-hidden focusable="false" />}
                                     title={t("mockInterview.workspace.emptyTitle")}
@@ -2001,13 +2029,15 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                 current: phaseIndex,
             })}
 
-            {/* body — 2-pane: conversation (presence + phase stepper + thread + composer) | workspace */}
-            <div className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto px-4 py-6 sm:px-6 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-6">
-                {/* LEFT — the conversation: presence + phase stepper + thread + voice composer.
-                    Unlike qna's sparse single-question column, this thread GROWS over the
-                    5 phases — stays top-anchored (no `justify-center`) so it doesn't jump
-                    around as turns are appended. */}
-                <div className="flex min-w-0 flex-col gap-3">
+            {/* body — 2-pane: conversation | docked workspace panel (same as qna: the workspace
+                bleeds to the right/top/bottom edges, left border only — see the qna branch's note).
+                Container carries no horizontal padding; the LEFT pane keeps its own. */}
+            <div className="flex min-h-0 flex-1 flex-col overflow-y-auto lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:overflow-hidden">
+                {/* LEFT — the conversation: presence + phase stepper + thread + voice composer, with
+                    its own reading padding + scroll. Unlike qna's sparse single-question column, this
+                    thread GROWS over the 5 phases — stays top-anchored (no `justify-center`) so it
+                    doesn't jump around as turns are appended. */}
+                <div className="flex min-w-0 flex-col gap-3 px-4 py-6 sm:px-6 lg:overflow-y-auto">
                     <InterviewerPresence
                         persona={persona}
                         speaking={isAsking}
@@ -2088,7 +2118,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                             turns.map((turn, position) => (
                                 <ChatBubble key={position} role={turn.role === "candidate" ? "user" : "assistant"}>
                                     <div className="text-sm text-foreground">
-                                        <MarkdownContent markdown={turn.content} />
+                                        <MarkdownContent plain markdown={turn.content} />
                                     </div>
                                 </ChatBubble>
                             ))
@@ -2097,7 +2127,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                             <ChatBubble role="assistant">
                                 {streamingText ? (
                                     <div className="text-sm text-foreground">
-                                        <MarkdownContent markdown={streamingText} />
+                                        <MarkdownContent plain markdown={streamingText} />
                                     </div>
                                 ) : (
                                     <Spinner size="sm" />
@@ -2165,14 +2195,19 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                 </div>
 
                 {/* RIGHT — the candidate tool workspace: renders straight to the whiteboard
-                (design mode is always architecture systems). Its artifact is folded
-                into the transcript as a labeled turn at grade time. */}
-                <MockInterviewWorkspace
-                    tool={workspaceTool}
-                    onDiagramChange={handleDiagramChange}
-                    codeState={codeState}
-                    onCodeStateChange={setCodeState}
-                />
+                (design mode is always architecture systems). Its artifact is folded into the
+                transcript as a labeled turn at grade time. Same DOCKED panel as the qna branch
+                (2026-07-17) — full height, bleeds to the right/top/bottom edges, left border only,
+                tool padded inside by `p-6`. */}
+                <div className="flex min-h-[28rem] min-w-0 flex-col border-t border-default bg-surface p-6 lg:min-h-0 lg:border-t-0 lg:border-l">
+                    <MockInterviewWorkspace
+                        className="min-h-0 flex-1"
+                        tool={workspaceTool}
+                        onDiagramChange={handleDiagramChange}
+                        codeState={codeState}
+                        onCodeStateChange={setCodeState}
+                    />
+                </div>
             </div>
         </div>
     )

@@ -1,8 +1,43 @@
 "use client"
 
 import React from "react"
+import Link from "next/link"
 import { cn, Typography } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+
+/**
+ * The interactive anchor for a clickable surface-list row. An INTERNAL app route
+ * (href starting with `/`) renders a Next `<Link>` → client-side `router.push`:
+ * SPA navigation that keeps history (Back works) with NO full-page reload — and
+ * NEVER `router.replace` (a link click must not erase the entry it came from).
+ * Protocol / external hrefs (`mailto:`, `tel:`, `http(s)://`, `#`) fall back to a
+ * native `<a>` (Next `<Link>` is for in-app routes only). Ref feedback 2026-07-17
+ * "bấm row = router.push chứ không phải router.replace, dù là link".
+ */
+const RowAnchor = ({
+    href,
+    onClick,
+    className,
+    children,
+}: {
+    href: string
+    onClick?: () => void
+    className?: string
+    children: React.ReactNode
+}) => {
+    if (href.startsWith("/")) {
+        return (
+            <Link href={href} onClick={onClick} className={className}>
+                {children}
+            </Link>
+        )
+    }
+    return (
+        <a href={href} onClick={onClick} className={className}>
+            {children}
+        </a>
+    )
+}
 
 /** Props for {@link SurfaceListCard}. */
 export interface SurfaceListCardProps extends WithClassNames<undefined> {
@@ -131,7 +166,7 @@ export const SurfaceListCardRow = ({
                 <Typography
                     type="body-sm"
                     truncate
-                    className={cn(underlineHover && "text-accent-soft-foreground underline-offset-2 group-hover:underline", titleClassName)}
+                    className={cn(underlineHover && "underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline", titleClassName)}
                 >
                     {title}
                 </Typography>
@@ -152,9 +187,9 @@ export const SurfaceListCardRow = ({
 
     if (href) {
         return (
-            <a href={href} onClick={onPress} className={rowClassName}>
+            <RowAnchor href={href} onClick={onPress} className={rowClassName}>
                 {content}
-            </a>
+            </RowAnchor>
         )
     }
 
@@ -223,9 +258,9 @@ export const SurfaceListCardItem = ({
 
     if (href) {
         return (
-            <a href={href} onClick={onPress} className={itemClassName}>
+            <RowAnchor href={href} onClick={onPress} className={itemClassName}>
                 {children}
-            </a>
+            </RowAnchor>
         )
     }
     if (onPress) {

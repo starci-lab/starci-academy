@@ -107,7 +107,7 @@ export const RecommendedCourses = ({
                                             type="body-sm"
                                             weight="medium"
                                             truncate
-                                            className="min-w-0 flex-1 text-accent-soft-foreground underline-offset-2 group-hover:underline"
+                                            className="min-w-0 flex-1 underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline"
                                         >
                                             {course.title}
                                         </Typography>

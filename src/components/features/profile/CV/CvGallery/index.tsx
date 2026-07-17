@@ -169,7 +169,7 @@ export const CvGallery = ({ className, breadcrumb }: CvGalleryProps) => {
                             {" "}
                             <Link
                                 href={coursesHref}
-                                className="text-accent-soft-foreground underline-offset-2 hover:underline"
+                                className="text-accent-soft-foreground underline-offset-4 decoration-[var(--separator-tertiary)] hover:underline"
                             >
                                 {t("cv.builder.emptyCoursesLinkCta")}
                             </Link>

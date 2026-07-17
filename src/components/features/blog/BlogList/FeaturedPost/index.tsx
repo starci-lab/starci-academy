@@ -52,7 +52,7 @@ export const FeaturedPost = ({ post, formattedDate }: FeaturedPostProps) => {
             )}
 
             {/* serif display title — the page's visual hero */}
-            <h2 className="text-3xl font-semibold leading-tight text-foreground underline-offset-2 group-hover:underline">
+            <h2 className="text-3xl font-semibold leading-tight text-foreground underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
                 {post.title}
             </h2>
             {post.excerpt && <p className="text-base text-muted">{post.excerpt}</p>}

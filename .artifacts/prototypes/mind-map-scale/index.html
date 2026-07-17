@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mind-map-scale — serpentine auto-layout + scroll (20 modules OK)</title>
+<style>
+  :root{--border:#ece7ea;--fg:#1c1a1b;--muted:#8a8386;--accent:#d6006e;--accent-soft:#fbe6f1;--accent-soft-fg:#b8005e;--success:#16a34a;--gold:#eab308}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#faf7f8;color:var(--fg);font:14px/1.4 system-ui,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+  .bar{padding:10px 16px;display:flex;gap:10px;align-items:center;border-bottom:1px solid var(--border)}
+  .bar b{font-size:14px}.bar .sp{margin-left:auto;color:var(--muted);font-size:12px}
+  .tgl{border:1px solid var(--border);background:#fff;border-radius:999px;padding:5px 12px;font-size:12px;cursor:pointer}
+  .tgl.on{background:var(--fg);color:#fff;border-color:var(--fg)}
+
+  .stage{position:relative;width:900px;height:640px;margin:14px auto;border-radius:24px;overflow:hidden;border:1px solid var(--border);
+    background:radial-gradient(700px 400px at 20% 100%,#fff4fa,transparent 60%),radial-gradient(700px 500px at 85% 0%,#eaf6ff,transparent 55%),linear-gradient(160deg,#f5eeff,#fff 70%)}
+  .viewport{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden}
+  .track{position:relative;width:900px}
+  svg.path{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+
+  /* node */
+  .node{position:absolute;transform:translate(-50%,-50%);text-align:center;cursor:pointer;z-index:3;width:150px}
+  .orb{width:66px;height:66px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:27px;margin:0 auto;background:#fff;border:3px solid var(--border);box-shadow:0 5px 14px rgba(0,0,0,.08);position:relative}
+  .ring{position:absolute;inset:-5px}
+  .lab{margin-top:6px;font-weight:700;font-size:12.5px;line-height:1.2}
+  .sub{font-size:11px;color:var(--muted);margin-top:1px}
+  .cbadge{position:absolute;top:-6px;right:-6px;background:#fff;border:1.5px solid var(--border);border-radius:999px;font-size:10px;font-weight:700;padding:1px 5px;color:var(--muted)}
+  .done .orb{border-color:var(--success);background:linear-gradient(160deg,#eafaf0,#fff)}
+  .done .orb::after{content:'✓';position:absolute;bottom:-3px;left:50%;transform:translateX(-50%);width:20px;height:20px;border-radius:99px;background:var(--success);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;border:2px solid #fff}
+  .cur .orb{border-color:var(--accent);background:linear-gradient(160deg,var(--accent-soft),#fff)}
+  .cur .rz{position:absolute;inset:-6px;border-radius:50%;border:3px solid var(--accent);animation:pulse 1.8s infinite}
+  @keyframes pulse{0%{transform:scale(1);opacity:.7}70%{transform:scale(1.45);opacity:0}100%{opacity:0}}
+  .todo .orb{filter:saturate(.5);opacity:.9}
+  .lock .orb{opacity:.55}.lock .orb::after{content:'🔒';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);font-size:13px}
+  .summit .orb{width:80px;height:80px;font-size:36px;border-color:var(--gold);background:linear-gradient(160deg,#fff7db,#fff);box-shadow:0 6px 24px rgba(234,179,8,.35)}
+
+  /* expanded module: lessons + challenges as satellites */
+  .sat{position:absolute;transform:translate(-50%,-50%);z-index:2;border-radius:50%}
+  .sat.lesson{width:16px;height:16px;background:#fff;border:2px solid var(--accent)}
+  .sat.lesson.read{background:var(--accent)}
+  .sat.quest{width:22px;height:22px;border-radius:6px;transform:translate(-50%,-50%) rotate(45deg);display:flex;align-items:center;justify-content:center;font-size:9px}
+  .sat.quest span{transform:rotate(-45deg)}
+  .q-done{background:var(--success);color:#fff}.q-prog{background:var(--gold);color:#fff}.q-todo{background:#fff;border:2px solid var(--border)}
+
+  .me{position:absolute;transform:translate(-50%,-120%);z-index:6;text-align:center}
+  .me .av{width:40px;height:40px;border-radius:50%;background:#2b6cb0;border:3px solid #fff;box-shadow:0 5px 14px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:19px;margin:0 auto}
+  .me .flag{margin-top:4px;background:var(--accent);color:#fff;font-size:10.5px;font-weight:700;padding:2px 9px;border-radius:999px;white-space:nowrap}
+
+  /* fixed overlays (don't scroll) */
+  .hud{position:absolute;top:14px;right:14px;z-index:9;background:rgba(255,255,255,.82);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:16px;padding:9px 13px;display:flex;gap:13px;align-items:center;box-shadow:0 8px 22px rgba(0,0,0,.08)}
+  .hud .st{font-size:11px;color:var(--muted)}.hud .st b{display:block;font-size:15px;color:var(--fg)}
+  .dock{position:absolute;left:14px;bottom:14px;z-index:9;display:flex;gap:8px}
+  .dock a{background:rgba(255,255,255,.9);border:1px solid var(--border);border-radius:12px;padding:7px 11px;font-size:12px;font-weight:600;text-decoration:none;color:var(--fg);box-shadow:0 4px 12px rgba(0,0,0,.06);cursor:pointer}
+  .jump{position:absolute;top:14px;left:14px;z-index:9;background:var(--accent);color:#fff;border:none;border-radius:12px;padding:8px 14px;font-weight:800;font-size:12.5px;cursor:pointer;box-shadow:0 6px 18px rgba(214,0,110,.4)}
+  .minimap{position:absolute;right:14px;bottom:14px;z-index:9;width:44px;background:rgba(255,255,255,.85);border:1px solid var(--border);border-radius:10px;padding:6px 4px;display:flex;flex-direction:column-reverse;gap:3px;align-items:center}
+  .minimap i{width:8px;height:8px;border-radius:50%;background:var(--border)}
+  .minimap i.d{background:var(--success)}.minimap i.c{background:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+  .note{max-width:900px;margin:0 auto 40px;padding:0 16px;font-size:12.5px;color:var(--muted)}
+  .note b{color:var(--fg)}.note code{background:#f4eef1;padding:1px 5px;border-radius:5px;font-size:11px}
+</style>
+</head>
+<body>
+  <div class="bar">
+    <b>Serpentine + SCROLL</b> <span style="color:var(--muted);font-size:12px">— auto-layout, 20 module cuộn được, current auto-center, chi tiết hiện dần</span>
+    <span class="sp"></span>
+    <button class="tgl on" id="tExp">Module hiện tại: nở lesson+challenge</button>
+  </div>
+
+  <div class="stage">
+    <div class="viewport" id="vp">
+      <div class="track" id="track">
+        <svg class="path" id="svg"></svg>
+      </div>
+    </div>
+    <button class="jump" id="jump">↧ Về vị trí của tôi</button>
+    <div class="hud"><div class="st">Hoàn thành<b>28%</b></div><div class="st">Chuỗi<b>🔥 7</b></div><div class="st">XP<b>640</b></div></div>
+    <div class="dock"><a>🃏 Ôn tập</a><a>🧪 Lab</a><a>🎤 Phỏng vấn</a></div>
+    <div class="minimap" id="mini"></div>
+  </div>
+
+  <div class="note" id="note"></div>
+
+<script>
+  var N=20, CUR=6, dy=140, W=900, topPad=110, botPad=90;
+  var TITLES=['Nền tảng backend','DB & Caching','REST API','Xác thực & Phân quyền','Testing & CI','Message Queue','Caching nâng cao','Observability','Docker hoá','Kubernetes','Microservices','gRPC & Contract','Event-driven','Search & Elastic','Bảo mật','Performance','Scaling','Data pipeline','Cloud deploy','System design'];
+  var ICONS=['🧱','🗄️','🔌','🔐','🧪','📨','⚡','📈','🐳','☸️','🧩','🔗','📡','🔎','🛡️','🚀','📊','🔀','☁️','🏛️'];
+  var track=document.getElementById('track'), svg=document.getElementById('svg'), vp=document.getElementById('vp'), mini=document.getElementById('mini');
+  var trackH=topPad+N*dy+botPad;
+  track.style.height=trackH+'px'; svg.setAttribute('viewBox','0 0 '+W+' '+trackH);
+
+  function mx(i){return W/2 + 210*Math.sin(i*0.85);}         // serpentine x
+  function my(i){return trackH - botPad - (i-1)*dy;}          // i=1 bottom → i=N top
+
+  // path (bottom→top), completed glow vs ahead dim
+  var pdC='', pdA='';
+  for(var i=1;i<N;i++){
+    var x1=mx(i),y1=my(i),x2=mx(i+1),y2=my(i+1), my_=(y1+y2)/2;
+    var seg='M'+x1+','+y1+' C'+x1+','+my_+' '+x2+','+my_+' '+x2+','+y2+' ';
+    if(i+1<=CUR) pdC+=seg; else pdA+=seg;
+  }
+  // capstone above module N
+  var cx=W/2, cy=my(N)-95;
+  svg.innerHTML='<defs><linearGradient id="g" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#d6006e"/><stop offset="1" stop-color="#ff7ab8"/></linearGradient>'
+    +'<filter id="gl"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>'
+    +'<path d="'+pdA+'" fill="none" stroke="#e4dde1" stroke-width="10" stroke-linecap="round" stroke-dasharray="2 16"/>'
+    +'<path d="'+pdC+'" fill="none" stroke="url(#g)" stroke-width="10" stroke-linecap="round" filter="url(#gl)"/>'
+    +'<path d="M'+mx(N)+','+my(N)+' L'+cx+','+cy+'" stroke="#e4dde1" stroke-width="10" stroke-dasharray="2 16" stroke-linecap="round"/>';
+
+  var expand=true;
+  function build(){
+    // clear nodes (keep svg)
+    track.querySelectorAll('.node,.me,.sat').forEach(function(n){n.remove()});
+    mini.innerHTML='';
+    for(var i=1;i<=N;i++){
+      var st = i<CUR?'done' : i===CUR?'cur' : i===CUR+1?'todo' : 'lock';
+      var lt = i<=4?4:5, ld = i<CUR?lt : i===CUR?2 : 0;
+      var ct = 3, cd = i<CUR?3:i===CUR?1:0;
+      var el=document.createElement('div'); el.className='node '+st;
+      el.style.left=mx(i)+'px'; el.style.top=my(i)+'px';
+      el.innerHTML='<div class="orb">'+(st==='cur'?'<div class="rz"></div>':'')+ICONS[i-1]
+        +'<span class="cbadge">'+ld+'/'+lt+' · ⚔️'+cd+'/'+ct+'</span></div>'
+        +'<div class="lab">'+i+'. '+TITLES[i-1]+'</div><div class="sub">'+(st==='done'?'xong ✓':st==='cur'?'Đang ở đây':st==='lock'?'🔒 khóa':'sắp tới')+'</div>';
+      track.appendChild(el);
+      // minimap dot
+      var m=document.createElement('i'); m.className=(i<CUR?'d':i===CUR?'c':''); mini.appendChild(m);
+      // expanded: current module blooms lessons + challenges around it
+      if(expand && i===CUR){
+        var cxp=mx(i), cyp=my(i);
+        for(var L=0;L<lt;L++){var a=-1.1+L*0.5; var s=document.createElement('div'); s.className='sat lesson'+(L<ld?' read':''); s.style.left=(cxp+70*Math.cos(a))+'px'; s.style.top=(cyp+70*Math.sin(a))+'px'; track.appendChild(s);}
+        for(var C=0;C<ct;C++){var a2=1.4+C*0.45; var q=document.createElement('div'); q.className='sat quest '+(C<cd?'q-done':C===cd?'q-prog':'q-todo'); q.style.left=(cxp+82*Math.cos(a2))+'px'; q.style.top=(cyp+82*Math.sin(a2))+'px'; q.innerHTML='<span>⚔️</span>'; track.appendChild(q);}
+      }
+    }
+    // capstone
+    var cap=document.createElement('div'); cap.className='node summit'; cap.style.left=cx+'px'; cap.style.top=cy+'px';
+    cap.innerHTML='<div class="orb">🏆</div><div class="lab">Capstone</div><div class="sub">3/8 task</div>';
+    track.appendChild(cap);
+    // avatar at current
+    var me=document.createElement('div'); me.className='me'; me.style.left=mx(CUR)+'px'; me.style.top=my(CUR)+'px';
+    me.innerHTML='<div class="av">🧑‍💻</div><div class="flag">Bạn đang ở đây</div>';
+    track.appendChild(me);
+  }
+  build();
+
+  function toCurrent(){ vp.scrollTo({top: my(CUR)-vp.clientHeight/2, behavior:'smooth'}); }
+  setTimeout(function(){ vp.scrollTop = my(CUR)-vp.clientHeight/2; },30);
+  document.getElementById('jump').onclick=toCurrent;
+  document.getElementById('tExp').onclick=function(){expand=!expand;this.classList.toggle('on',expand);build();};
+
+  document.getElementById('note').innerHTML='<b>Vì sao 20+ module OK — 3 cơ chế:</b> (1) <b>AUTO-LAYOUT serpentine</b> — path do JS sinh (sin-wave zigzag), KHÔNG đặt tay, N bao nhiêu cũng được. (2) <b>SCROLL</b> — canvas cao <code>'+trackH+'px</code>, cuộn để đi cả lộ trình; vào trang tự cuộn tới "Bạn đang ở đây", có nút <b>↧ Về vị trí của tôi</b> + <b>minimap</b> góc phải. (3) <b>PROGRESSIVE DETAIL</b> — overview mỗi module chỉ 1 orb + badge tổng <code>2/4 · ⚔️1/3</code>; CHỈ module đang mở/hiện-tại mới "nở" ra lesson (chấm) + challenge (kim cương) → không nhồi 80 challenge cùng lúc. Capstone/milestone nằm ở đỉnh (1 cụm nhỏ). Đây là mô hình Duolingo path — đã chứng minh scale tới hàng trăm bài.';
+</script>
+</body>
+</html>

@@ -33,7 +33,7 @@ export const EntityLink = ({ label, onPress, isPending, className }: EntityLinkP
         <Link
             onPress={onPress}
             isDisabled={isPending}
-            className={cn("inline cursor-pointer font-semibold text-foreground hover:underline underline-offset-2", className)}
+            className={cn("inline cursor-pointer font-semibold text-foreground hover:underline underline-offset-4 decoration-[var(--separator-tertiary)]", className)}
         >
             {label}
         </Link>

@@ -59,7 +59,7 @@ const RULES: Array<InlineRule> = [
                 href={match[2]}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-accent-soft-foreground hover:underline underline-offset-2"
+                className="text-accent-soft-foreground hover:underline underline-offset-4 decoration-[var(--separator-tertiary)]"
             >
                 {children}
             </a>

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { DotsThreeVerticalIcon, TrashIcon } from "@phosphor-icons/react"
 import { Button, Label, Typography } from "@heroui/react"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
-import { ATTEMPT_ITEMS, Controlled, DIFFICULTY_ITEMS, TIER_ITEMS } from "./components"
+import { ATTEMPT_ITEMS, Controlled, ControlledMulti, DIFFICULTY_ITEMS, LANGUAGE_ITEMS, TIER_ITEMS } from "./components"
 
 const meta: Meta<typeof FlexWrapButtonRadio> = {
     title: "Blocks/Navigation/FlexWrapButtonRadio",
@@ -50,6 +50,34 @@ export const Default: Story = {
             + "`SelectableCardGroup`. If a few options always fit on one row and never wrap → use "
             + "`TabsCard` (`variant=\"primary\"`). By default it's a cluster OUTSIDE a card (a detached filter/toolbar): an unselected option is `ghost` "
             + "hollow, taking the page or parent card as its surface — no dedicated border/background per choice.",
+    },
+}
+
+/**
+ * MULTI-select mode (`multiple` + `values` + `onToggle`) — every button is an independent toggle
+ * and a SET stays selected, instead of one-of-N. The caller owns the set and the "keep ≥1 selected"
+ * rule (deselecting the last one is a no-op here). Built for the Mock Interview setup's language
+ * picker: the candidate ticks the languages they want, and each drawn code question is served in a
+ * random one of them. Same pill look as single-select (filled `tertiary` when on, hollow `ghost` when off).
+ */
+export const MultiSelect: Story = {
+    tags: ["news"],
+    render: () => (
+        <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Languages (multi-select)</Label>
+                <Typography type="body-sm" color="muted">
+                    Tick one or more — each stays selected independently. At least one must remain on (deselecting the last is ignored).
+                </Typography>
+            </div>
+            <ControlledMulti items={LANGUAGE_ITEMS} initialValues={["typescript"]} ariaLabel="Select languages" />
+        </div>
+    ),
+    parameters: {
+        usage: "Chờ duyệt — MULTI-select mode (`multiple` + `values` + `onToggle`): every button is an independent toggle and a SET "
+            + "stays selected, instead of one-of-N. The caller owns the set + the \"keep ≥1 selected\" rule. Built for the Mock "
+            + "Interview setup's language picker (candidate ticks languages → each code question drawn in a random one). Same pill "
+            + "look as single-select.",
     },
 }
 

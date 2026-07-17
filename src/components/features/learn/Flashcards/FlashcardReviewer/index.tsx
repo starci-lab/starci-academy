@@ -576,7 +576,7 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                                 revealed={revealed}
                                 questionLabel={t("flashcard.questionLabel")}
                                 answerLabel={t("flashcard.answerLabel")}
-                                front={<MarkdownContent markdown={card?.question ?? ""} />}
+                                front={<MarkdownContent plain markdown={card?.question ?? ""} />}
                                 belowFront={card && (card.level || (card.tags?.length ?? 0) > 0) ? (
                                     <div className="flex flex-wrap items-center gap-2">
                                         {card.level ? (
@@ -607,14 +607,14 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                                         ) : (
                                             <>
                                                 {card?.answer ? (
-                                                    <MarkdownContent markdown={card.answer} arcSections />
+                                                    <MarkdownContent plain markdown={card.answer} arcSections />
                                                 ) : (
                                                     <Typography type="body-sm" color="muted">
                                                         {t("flashcard.noAnswer")}
                                                     </Typography>
                                                 )}
                                                 {card?.explanation ? (
-                                                    <MarkdownContent markdown={card.explanation} />
+                                                    <MarkdownContent plain markdown={card.explanation} />
                                                 ) : null}
                                             </>
                                         )}

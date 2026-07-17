@@ -14,14 +14,20 @@ export interface StartMockInterviewSessionRequest {
     /** Top-level flow to draw for ("qna" | "design"); unrecognized falls back to "qna". */
     mode: string
     /**
-     * Programming language chosen at session start ("typescript" | "java" |
-     * "csharp" | "go"). A code question (debug/review/optimize) is rendered AND
-     * graded in this language — the server returns that language's own prompt +
-     * given code and grades against its own ideal answer. Omitted/unrecognized
-     * falls back to "typescript" (or the question's agnostic root when its body
-     * for this language is absent). No-code questions ignore it.
+     * DEPRECATED single programming language chosen at session start — superseded
+     * by {@link langs}. Still sent (as `langs[0]`) so an older server that predates
+     * `langs` keeps working; a current server ignores it when `langs` is present.
      */
     lang?: string
+    /**
+     * The SET of implementation-track languages selected at setup ("typescript" |
+     * "java" | "csharp" | "go"). Each code question authored across the 4 tracks is
+     * drawn in a RANDOM member of this set (∩ the tracks it's authored in); a code
+     * question authored in NONE of them is skipped and a different one drawn. A
+     * non-track given-code question (e.g. `dockerfile`) and every no-code question
+     * ignore this. Empty/omitted falls back to `lang` then all 4 tracks.
+     */
+    langs?: Array<string>
     /**
      * Number of questions to draw for a `mode="qna"` session — one of `3 | 5 | 10`.
      * Ignored for `mode="design"`. Omitted/unrecognized falls back to `5`.

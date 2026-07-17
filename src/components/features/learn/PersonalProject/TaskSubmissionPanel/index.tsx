@@ -74,7 +74,7 @@ export const TaskSubmissionPanel = ({
                     >
                         <span className="flex items-center gap-2 text-sm">
                             <GearSixIcon className="size-4 shrink-0" />
-                            <span className="underline-offset-2 group-hover:underline">{t("finalProject.page.submitGithub.settingsTitle")}</span>
+                            <span className="underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">{t("finalProject.page.submitGithub.settingsTitle")}</span>
                         </span>
                         <span className="flex min-w-0 items-center gap-2 text-xs text-muted">
                             <span className="truncate">{(langLabelMap[lang] ?? lang)} · {branch}</span>

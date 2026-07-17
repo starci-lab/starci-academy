@@ -200,6 +200,7 @@ export const buildMarkdownRenderers = ({
     t,
     mermaidCaptions,
     reading = false,
+    plain = false,
 }: MarkdownRenderersParams): Components => {
     // Long-form lessons read the larger scale; cards / chat / modals keep the compact one.
     const bodySize = reading ? "base" : "sm"
@@ -314,6 +315,11 @@ export const buildMarkdownRenderers = ({
             if (!isInline) {
                 return children
             }
+            // plain mode: inline code renders as its raw text (no mono/background) —
+            // thầy 2026-07-17 "render thô" cho flashcard + mock interview.
+            if (plain) {
+                return <>{code}</>
+            }
             // Neutral inline code (GitHub/Stripe-style): subtle surface + foreground text, NOT
             // the brand accent — accent is reserved for links so a keyword-dense paragraph stays calm.
             return (
@@ -365,8 +371,9 @@ export const buildMarkdownRenderers = ({
             </blockquote>
         ),
         // Bold = weight only — no colour jump — so a keyword-heavy paragraph doesn't flicker.
-        strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
-        em: ({ children }) => <em className="italic">{children}</em>,
+        // plain mode drops the weight/italic entirely → raw text (thầy 2026-07-17 "render thô").
+        strong: ({ children }) => (plain ? <>{children}</> : <strong className="font-semibold">{children}</strong>),
+        em: ({ children }) => (plain ? <>{children}</> : <em className="italic">{children}</em>),
         hr: () => <hr className={`${reading ? "my-6 " : ""}border-default`} />,
         ol: ({ children }) => <ol className={`${reading ? "my-4 " : ""}list-decimal space-y-2 pl-5 marker:text-muted`}>{children}</ol>,
         ul: ({ children }) => <ul className={`${reading ? "my-4 " : ""}list-disc space-y-2 pl-5 marker:text-muted`}>{children}</ul>,
@@ -392,18 +399,22 @@ export const buildMarkdownRenderers = ({
             )
         },
         a: ({ href, children }) => {
-        // Internal links (e.g. related-problem `/practice/<slug>`) navigate in-app
-        // (same tab, locale-aware) via the next-intl Link; external links open a new tab.
+        // plain mode: strip the link chrome (accent + underline) → raw text (thầy 2026-07-17).
+            if (plain) {
+                return <>{children}</>
+            }
+            // Internal links (e.g. related-problem `/practice/<slug>`) navigate in-app
+            // (same tab, locale-aware) via the next-intl Link; external links open a new tab.
             const isInternal = typeof href === "string" && href.startsWith("/")
             if (isInternal) {
                 return (
-                    <IntlLink href={href} className="!inline text-accent-soft-foreground underline underline-offset-2">
+                    <IntlLink href={href} className="!inline text-accent-soft-foreground underline underline-offset-4 decoration-[var(--separator-tertiary)]">
                         {children}
                     </IntlLink>
                 )
             }
             return (
-                <Link href={href} target="_blank" className="!inline text-accent-soft-foreground underline underline-offset-2">
+                <Link href={href} target="_blank" className="!inline text-accent-soft-foreground underline underline-offset-4 decoration-[var(--separator-tertiary)]">
                     {children}
                 </Link>
             )

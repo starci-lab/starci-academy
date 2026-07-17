@@ -174,17 +174,17 @@ const MockInterviewQuestionReviewCard = ({
             <Accordion.Panel>
                 <Accordion.Body>
                     <div className="flex flex-col gap-2">
-                        <MarkdownContent markdown={review.question} />
+                        <MarkdownContent plain markdown={review.question} />
 
                         <div className="flex flex-col gap-1">
                             <Typography type="body-xs" color="muted">{t("mockInterview.questionReview.yourAnswer")}</Typography>
-                            <MarkdownContent markdown={review.candidateAnswer} className="text-muted" />
+                            <MarkdownContent plain markdown={review.candidateAnswer} className="text-muted" />
                         </div>
 
                         {review.modelAnswer ? (
                             <div className="flex flex-col gap-1">
                                 <Typography type="body-xs" color="muted">{t("mockInterview.questionReview.modelAnswer")}</Typography>
-                                <MarkdownContent markdown={review.modelAnswer} />
+                                <MarkdownContent plain markdown={review.modelAnswer} />
                             </div>
                         ) : null}
 
@@ -402,7 +402,7 @@ export const MockInterviewScorecard = ({
                     <CheckListCard>
                         {grade.strengths.map((strength, position) => (
                             <CheckListItem key={position}>
-                                <MarkdownContent markdown={strength} />
+                                <MarkdownContent plain markdown={strength} />
                             </CheckListItem>
                         ))}
                     </CheckListCard>
@@ -418,7 +418,7 @@ export const MockInterviewScorecard = ({
                             <SurfaceListCardItem key={position}>
                                 <div className="flex items-start gap-2">
                                     <WarningCircleIcon className="size-4 shrink-0 text-warning-soft-foreground" aria-hidden focusable="false" />
-                                    <MarkdownContent markdown={gap} className="min-w-0 flex-1" />
+                                    <MarkdownContent plain markdown={gap} className="min-w-0 flex-1" />
                                 </div>
                             </SurfaceListCardItem>
                         ))}
@@ -430,7 +430,7 @@ export const MockInterviewScorecard = ({
                 <LabeledCard label={t("mockInterview.followUpTitle")}>
                     <div className="flex items-start gap-2">
                         <ChatCircleIcon className="size-4 shrink-0 text-accent-soft-foreground" aria-hidden focusable="false" />
-                        <MarkdownContent markdown={grade.followUpQuestion} className="min-w-0 flex-1 italic" />
+                        <MarkdownContent plain markdown={grade.followUpQuestion} className="min-w-0 flex-1 italic" />
                     </div>
                 </LabeledCard>
             ) : null}

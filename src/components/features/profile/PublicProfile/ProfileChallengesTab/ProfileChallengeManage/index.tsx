@@ -313,7 +313,7 @@ export const ProfileChallengeManage = ({
                             >
                                 <div className="flex items-center justify-between gap-6">
                                     <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                        <Typography type="body-sm" weight="medium" truncate className="text-accent-soft-foreground underline-offset-2 group-hover:underline">
+                                        <Typography type="body-sm" weight="medium" truncate className="underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
                                             {challenge.title}
                                         </Typography>
                                         <div className="flex flex-wrap items-center gap-2 sm:grid sm:grid-cols-[6rem_5.5rem_1fr]">

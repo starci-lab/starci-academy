@@ -48,15 +48,26 @@ export interface LeaderboardStanding {
 
 /** Props for {@link LeaderboardListCard}. */
 export interface LeaderboardListCardProps extends WithClassNames<undefined> {
-    /** Card label (LabeledCard heading). */
-    title: React.ReactNode
+    /**
+     * Bare mode — skip the {@link LabeledCard} frame (`title`/`onSeeMore` ignored) and
+     * render just the standing + list. For a full page that already has its own
+     * `PageHeader` (the course leaderboard); the dashboard cards leave it off.
+     */
+    bare?: boolean
+    /** Card label (LabeledCard heading). Ignored when `bare`. */
+    title?: React.ReactNode
     /** "See more" handler (opens the full board). */
     onSeeMore?: () => void
     /** "See more" label. */
     seeMoreLabel?: React.ReactNode
     /** The viewer's own standing header line (omit when they have no rank). */
     standing?: LeaderboardStanding
-    /** The ranked rows (top-N slice). */
+    /**
+     * Optional node between the standing and the list — e.g. a `Podium` on a spacious
+     * page (course leaderboard). Dashboard cards omit it (compact, no podium).
+     */
+    topSlot?: React.ReactNode
+    /** The ranked rows (top-N slice; when a podium is in `topSlot`, pass rank 4+). */
     rows: Array<LeaderboardRow>
     /** Pinned self-row when the viewer sits below the shown slice. */
     selfRow?: LeaderboardRow
@@ -78,10 +89,12 @@ export interface LeaderboardListCardProps extends WithClassNames<undefined> {
  * @param props - {@link LeaderboardListCardProps}
  */
 export const LeaderboardListCard = ({
+    bare = false,
     title,
     onSeeMore,
     seeMoreLabel,
     standing,
+    topSlot,
     rows,
     selfRow,
     ellipsisLabel,
@@ -139,14 +152,8 @@ export const LeaderboardListCard = ({
         )
     }
 
-    return (
-        <LabeledCard
-            label={title}
-            onSeeMore={onSeeMore}
-            seeMoreLabel={seeMoreLabel}
-            className={className}
-            contentClassName="flex flex-col gap-3"
-        >
+    const content = (
+        <>
             {/* viewer's own standing — rank-driven badge (medal/cup) + rank text */}
             {standing ? (
                 <div className="flex items-center gap-3">
@@ -164,19 +171,42 @@ export const LeaderboardListCard = ({
                 </div>
             ) : null}
 
-            <SurfaceListCard bordered>
-                {rows.map(renderRow)}
-                {/* viewer below the slice → ellipsis + pinned self-row */}
-                {selfRow ? (
-                    <>
-                        <div className="flex items-center justify-center gap-2 bg-surface-secondary px-3 py-2 text-xs text-muted">
-                            <span className="text-base leading-none tracking-widest">⋯</span>
-                            {ellipsisLabel}
-                        </div>
-                        {renderRow(selfRow)}
-                    </>
-                ) : null}
-            </SurfaceListCard>
+            {/* optional podium (spacious page) between standing and the list */}
+            {topSlot}
+
+            {/* skip the list card entirely when there are no rows (all on the podium) */}
+            {rows.length > 0 || selfRow ? (
+                <SurfaceListCard bordered>
+                    {rows.map(renderRow)}
+                    {/* viewer below the slice → ellipsis + pinned self-row */}
+                    {selfRow ? (
+                        <>
+                            <div className="flex items-center justify-center gap-2 bg-surface-secondary px-3 py-2 text-xs text-muted">
+                                <span className="text-base leading-none tracking-widest">⋯</span>
+                                {ellipsisLabel}
+                            </div>
+                            {renderRow(selfRow)}
+                        </>
+                    ) : null}
+                </SurfaceListCard>
+            ) : null}
+        </>
+    )
+
+    // bare → the page owns the frame (PageHeader); dashboard cards keep the LabeledCard
+    if (bare) {
+        return <div className={cn("flex flex-col gap-3", className)}>{content}</div>
+    }
+
+    return (
+        <LabeledCard
+            label={title}
+            onSeeMore={onSeeMore}
+            seeMoreLabel={seeMoreLabel}
+            className={className}
+            contentClassName="flex flex-col gap-3"
+        >
+            {content}
         </LabeledCard>
     )
 }

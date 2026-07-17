@@ -592,7 +592,7 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
                                 revealed={revealed}
                                 questionLabel={t("flashcard.questionLabel")}
                                 answerLabel={t("flashcard.answerLabel")}
-                                front={<MarkdownContent markdown={card?.front ?? ""} />}
+                                front={<MarkdownContent plain markdown={card?.front ?? ""} />}
                                 belowFront={card && (card.level || (card.tags?.length ?? 0) > 0) ? (
                                     <div className="flex flex-wrap items-center gap-2">
                                         {card.level ? (
@@ -607,7 +607,7 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
                                         ))}
                                     </div>
                                 ) : undefined}
-                                back={<MarkdownContent markdown={card?.back ?? ""} arcSections />}
+                                back={<MarkdownContent plain markdown={card?.back ?? ""} arcSections />}
                             />
 
                             {/* reveal first, then grade recall (which advances) */}

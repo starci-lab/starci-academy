@@ -157,11 +157,13 @@ export const MockInterviewWorkspace = ({
                 thầy: "code terminal này hơi xấu" + pointed at react-codemirror's theme gallery) —
                 CM6 ships a clean, tunable theme system (no VS-Code-IDE chrome to fight) and its
                 content DOM disables the browser's native spellcheck by default, so the red
-                squiggly-underline bug Monaco had doesn't exist here at all. Toolbar + editor now
-                share ONE bordered card (was: a floating `Select` + a separately-boxed editor with
-                a gap between them, reading as 2 unrelated pieces) — same aesthetic pass. */}
-            <div className={cn("flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border border-default", tool !== "code" && "hidden")}>
-                <div className="flex items-center border-b border-default bg-default/40 px-3 py-2">
+                squiggly-underline bug Monaco had doesn't exist here at all. NO own outer border /
+                header fill anymore (2026-07-17): the parent pane is now ONE bordered surface with
+                `p-6`, so the tool renders INSIDE it — just a plain language label/picker row above
+                the editor (`gap-3`), the editor carrying its own themed background + rounded
+                corners. */}
+            <div className={cn("flex min-h-0 flex-1 flex-col gap-3", tool !== "code" && "hidden")}>
+                <div className="flex items-center">
                     {languageItems.length > 1 ? (
                         <Select.Root<{ id: string }, "single">
                             aria-label={t("mockInterview.workspace.languageLabel")}
@@ -203,7 +205,7 @@ export const MockInterviewWorkspace = ({
                         <span className="text-sm font-medium text-muted">{displayLangLabel(codeState.lang)}</span>
                     )}
                 </div>
-                <div className="min-h-0 flex-1">
+                <div className="min-h-0 flex-1 overflow-hidden rounded-xl">
                     <CodeMirror
                         height="100%"
                         theme={theme === "dark" ? vscodeDark : whiteLight}

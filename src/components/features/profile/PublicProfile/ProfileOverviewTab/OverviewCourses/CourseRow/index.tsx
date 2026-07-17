@@ -50,7 +50,7 @@ export const CourseRow = ({ item, isOwnProfile }: CourseRowProps) => {
                 <IconTile size="sm" src={item.thumbnailUrl} icon={<BookOpenIcon aria-hidden focusable="false" />} />
                 <div className="flex min-w-0 flex-1 flex-col gap-2">
                     <div className="flex items-center justify-between gap-2">
-                        <Typography type="body-sm" weight="medium" truncate className="min-w-0 flex-1 text-accent-soft-foreground underline-offset-2 group-hover:underline">
+                        <Typography type="body-sm" weight="medium" truncate className="min-w-0 flex-1 underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
                             {item.label}
                         </Typography>
                         {isOwnProfile ? <CourseTrialChip isEnrolled={item.isEnrolled} /> : null}

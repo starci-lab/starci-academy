@@ -191,7 +191,7 @@ export const CommentItem = ({
                     {/* replies toggle + recursive subtree */}
                     {comment.replyCount > 0 ? (
                         <Link
-                            className="cursor-pointer self-start text-xs font-medium text-accent-soft-foreground hover:underline underline-offset-2"
+                            className="cursor-pointer self-start text-xs font-medium text-accent-soft-foreground hover:underline underline-offset-4 decoration-[var(--separator-tertiary)]"
                             onPress={toggleReplies}
                         >
                             {expanded

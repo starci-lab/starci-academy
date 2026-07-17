@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mind-map-vibes — 3 hướng WOW (adventure · constellation · metro)</title>
+<style>
+  :root{--border:#ece7ea;--fg:#1c1a1b;--muted:#8a8386;--accent:#d6006e;--accent-soft:#fbe6f1;--accent-soft-fg:#b8005e;--success:#16a34a;--gold:#eab308}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#faf7f8;color:var(--fg);font:14px/1.4 system-ui,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+  .bar{position:sticky;top:0;z-index:20;background:rgba(250,247,248,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;gap:8px;align-items:center}
+  .bar b{font-size:14px;margin-right:8px}
+  .tab{border:1px solid var(--border);background:#fff;border-radius:999px;padding:6px 14px;font-size:13px;cursor:pointer;color:var(--fg)}
+  .tab.on{background:var(--fg);color:#fff;border-color:var(--fg)}
+  .screen{display:none}.screen.on{display:block}
+  .stage{position:relative;width:1180px;height:600px;margin:14px auto;border-radius:24px;overflow:hidden}
+  .note{max-width:1180px;margin:0 auto 34px;padding:0 16px;font-size:12.5px;color:var(--muted)}
+  .note b{color:var(--fg)}.note code{background:#f4eef1;padding:1px 5px;border-radius:5px;font-size:11px}
+  svg{position:absolute;inset:0;width:100%;height:100%}
+  .hud{position:absolute;top:16px;right:16px;z-index:8;background:rgba(255,255,255,.75);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:16px;padding:10px 14px;display:flex;gap:14px;align-items:center;box-shadow:0 8px 24px rgba(0,0,0,.07)}
+  .hud .st{font-size:11px;color:var(--muted)}.hud .st b{display:block;font-size:15px;color:var(--fg)}
+  .hud.dark{background:rgba(30,18,48,.6);border-color:#4a3468;color:#fff}.hud.dark .st{color:#c9b8e0}.hud.dark .st b{color:#fff}
+  .title{position:absolute;top:18px;left:22px;z-index:8}.title .k{font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}.title .n{font-size:21px;font-weight:800}
+  .title.light .k{color:#c9b8e0}.title.light .n{color:#fff}
+  .cta{position:absolute;z-index:9;background:var(--accent);color:#fff;border:none;border-radius:13px;padding:10px 18px;font-weight:800;font-size:13px;cursor:pointer;box-shadow:0 8px 22px rgba(214,0,110,.4)}
+
+  /* ===== ADVENTURE ===== */
+  .adv{background:radial-gradient(1000px 460px at 15% 115%,#fff4fa,transparent 60%),radial-gradient(900px 560px at 92% -12%,#eaf6ff,transparent 55%),linear-gradient(160deg,#f3ecff,#fff 72%)}
+  .node{position:absolute;transform:translate(-50%,-50%);text-align:center;cursor:pointer;z-index:3}
+  .orb{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto;background:#fff;border:3px solid var(--border);box-shadow:0 6px 16px rgba(0,0,0,.08);position:relative}
+  .lab{margin-top:7px;font-weight:700;font-size:13px}.sub{font-size:11px;color:var(--muted)}
+  .done .orb{border-color:var(--success);background:linear-gradient(160deg,#eafaf0,#fff)}
+  .done .orb::after{content:'✓';position:absolute;bottom:-3px;right:-3px;width:21px;height:21px;border-radius:99px;background:var(--success);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;border:2px solid #fff}
+  .cur .orb{border-color:var(--accent);background:linear-gradient(160deg,var(--accent-soft),#fff)}
+  .cur .rz{position:absolute;inset:-6px;border-radius:50%;border:3px solid var(--accent);animation:pulse 1.8s infinite}
+  @keyframes pulse{0%{transform:scale(1);opacity:.7}70%{transform:scale(1.4);opacity:0}100%{opacity:0}}
+  .todo .orb{filter:saturate(.55)}
+  .lock .orb{opacity:.6}.lock .orb::after{content:'🔒';position:absolute;bottom:-6px;right:-5px;font-size:14px}
+  .summit .orb{width:88px;height:88px;font-size:40px;border-color:var(--gold);background:linear-gradient(160deg,#fff7db,#fff);box-shadow:0 8px 28px rgba(234,179,8,.35)}
+  .me{position:absolute;transform:translate(-50%,-118%);z-index:6;text-align:center}
+  .me .av{width:44px;height:44px;border-radius:50%;background:#2b6cb0;border:3px solid #fff;box-shadow:0 6px 16px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:21px;margin:0 auto}
+  .me .flag{margin-top:5px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap}
+  .quest{position:absolute;transform:translate(-50%,-50%) rotate(45deg);width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;z-index:2;box-shadow:0 3px 8px rgba(0,0,0,.12)}
+  .quest span{transform:rotate(-45deg)}
+  .q-done{background:var(--success);color:#fff}.q-prog{background:var(--gold);color:#fff}.q-todo{background:#fff;border:2px solid var(--border)}
+  .side{position:absolute;transform:translate(-50%,-50%);z-index:2;background:rgba(255,255,255,.82);backdrop-filter:blur(6px);border:1px dashed var(--border);border-radius:13px;padding:6px 11px;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted)}
+  .side b{color:var(--fg)}
+
+  /* ===== CONSTELLATION ===== */
+  .con{background:radial-gradient(700px 500px at 85% 12%,#3a2260,#241542 55%,#180d2e)}
+  .star{position:absolute;transform:translate(-50%,-50%);border-radius:50%;background:#fff;z-index:3}
+  .star.lit{background:#ffe89a;box-shadow:0 0 10px 2px rgba(255,210,90,.8)}
+  .star.acc{background:#ff7ab8;box-shadow:0 0 14px 4px rgba(214,0,110,.7)}
+  .star.dim{background:#6b5a8a;opacity:.6}
+  .star.big{width:16px;height:16px}.star.sm{width:8px;height:8px}
+  .cpulse{position:absolute;transform:translate(-50%,-50%);width:18px;height:18px;border-radius:50%;border:2px solid #ff7ab8;z-index:2;animation:pulse 1.8s infinite}
+  .clabel{position:absolute;transform:translate(-50%,-50%);z-index:4;color:#fff;font-weight:700;font-size:13px;text-align:center;text-shadow:0 1px 6px rgba(0,0,0,.6);white-space:nowrap}
+  .clabel small{display:block;font-weight:500;font-size:11px;color:#c9b8e0}
+  .supernova{position:absolute;transform:translate(-50%,-50%);z-index:4;text-align:center}
+  .supernova .core{width:70px;height:70px;border-radius:50%;background:radial-gradient(circle,#fff3c4,#ffb703 60%,transparent);display:flex;align-items:center;justify-content:center;font-size:34px;box-shadow:0 0 40px 10px rgba(255,183,3,.5);margin:0 auto}
+  .supernova .l{color:#fff;font-weight:700;font-size:13px;margin-top:6px;text-shadow:0 1px 6px #000}
+  .conme{position:absolute;transform:translate(-50%,-135%);z-index:6;background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap}
+
+  /* ===== METRO ===== */
+  .met{background:#fff;background-image:linear-gradient(#f6f2f4 1px,transparent 1px),linear-gradient(90deg,#f6f2f4 1px,transparent 1px);background-size:26px 26px}
+  .station{position:absolute;transform:translate(-50%,-50%);z-index:3;text-align:center;cursor:pointer}
+  .station .d{width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--accent);margin:0 auto;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+  .station.done .d{background:var(--accent)}
+  .station.inter .d{width:24px;height:24px;border-width:4px}
+  .station.term .d{width:40px;height:40px;border-color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:20px}
+  .station .nm{font-size:11px;color:var(--muted);margin-top:4px;white-space:nowrap}
+  .station .nm b{color:var(--fg)}
+  .zone{position:absolute;transform:translate(-50%,-50%);z-index:1;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:3px 10px;border-radius:999px}
+  .metme{position:absolute;transform:translate(-50%,-135%);z-index:6;text-align:center}
+  .metme .t{font-size:24px}.metme .f{background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;white-space:nowrap}
+  .mlegend{position:absolute;left:18px;bottom:16px;z-index:8;background:rgba(255,255,255,.85);border:1px solid var(--border);border-radius:12px;padding:8px 12px;font-size:11px;display:flex;flex-direction:column;gap:5px}
+  .mlegend .k{display:flex;gap:7px;align-items:center}.mlegend .ln{width:20px;height:4px;border-radius:2px}
+</style>
+</head>
+<body>
+  <div class="bar">
+    <b>Mind-map WOW · 3 vibe</b>
+    <button class="tab on" data-s="adv">🗺️ Adventure</button>
+    <button class="tab" data-s="con">✨ Constellation</button>
+    <button class="tab" data-s="met">🚇 Metro</button>
+    <span style="margin-left:auto;color:var(--muted);font-size:12px">cùng data thật (0-BE) · chỉ khác cách vẽ</span>
+  </div>
+
+  <!-- ============ ADVENTURE ============ -->
+  <section class="screen on" data-screen="adv">
+    <div class="stage adv">
+      <svg viewBox="0 0 1180 600" preserveAspectRatio="none">
+        <defs><linearGradient id="g1" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#d6006e"/><stop offset="1" stop-color="#ff7ab8"/></linearGradient>
+        <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+        <path d="M110,545 C210,510 250,465 300,420 S440,355 520,310" fill="none" stroke="url(#g1)" stroke-width="11" stroke-linecap="round" filter="url(#glow)"/>
+        <path d="M520,310 C640,270 690,250 760,225 S900,160 950,135 S1058,80 1086,64" fill="none" stroke="#e2dade" stroke-width="11" stroke-linecap="round" stroke-dasharray="2 18"/>
+      </svg>
+      <div class="title"><div class="k">Lộ trình của bạn</div><div class="n">Fullstack Mastery</div></div>
+      <div class="hud"><div class="st">Hoàn thành<b>42%</b></div><div class="st">Chuỗi<b>🔥 7</b></div><div class="st">XP tuần<b>640</b></div></div>
+      <div class="node done" style="left:110px;top:545px"><div class="orb">🚀</div><div class="sub" style="margin-top:5px">Bắt đầu</div></div>
+      <div class="node done" style="left:300px;top:420px"><div class="orb">🧱</div><div class="lab">Nền tảng backend</div><div class="sub">5/5 · xong</div></div>
+      <div class="node cur" style="left:520px;top:310px"><div class="orb"><div class="rz"></div>🗄️</div><div class="lab">DB & Caching</div><div class="sub">2/4 bài</div></div>
+      <div class="node todo" style="left:760px;top:225px"><div class="orb">🔌</div><div class="lab">REST API</div><div class="sub">1/4</div></div>
+      <div class="node lock" style="left:950px;top:135px"><div class="orb">🔐</div><div class="lab">Xác thực</div><div class="sub">mở khi tới</div></div>
+      <div class="node summit" style="left:1086px;top:66px"><div class="orb">🏆</div><div class="lab">Capstone</div><div class="sub">3/8 task</div></div>
+      <div class="quest q-done" style="left:360px;top:468px"><span>⚔️</span></div>
+      <div class="quest q-prog" style="left:470px;top:376px"><span>⚔️</span></div>
+      <div class="quest q-todo" style="left:585px;top:268px"><span>⚔️</span></div>
+      <div class="side" style="left:175px;top:270px">🃏 <b>Ôn tập</b> · 40 thẻ</div>
+      <div class="side" style="left:720px;top:95px">🧪 <b>Lab</b></div>
+      <div class="side" style="left:990px;top:360px">🎤 <b>Phỏng vấn</b></div>
+      <div class="me" style="left:520px;top:310px"><div class="av">🧑‍💻</div><div class="flag">Bạn đang ở đây</div></div>
+      <button class="cta" style="left:520px;top:392px;transform:translateX(-50%)">Tiếp tục học →</button>
+    </div>
+    <div class="note"><b>🗺️ Adventure</b> — con đường leo tới mastery; module=chặng, avatar you-are-here, đỉnh=🏆 Capstone, challenge=nhiệm vụ phụ ⚔️. Game-y, tạo động lực. Đường đã đi phát sáng, phía trước mờ.</div>
+  </section>
+
+  <!-- ============ CONSTELLATION ============ -->
+  <section class="screen" data-screen="con">
+    <div class="stage con" id="conStage">
+      <svg viewBox="0 0 1180 600" preserveAspectRatio="none">
+        <path d="M250,430 L520,330 L770,240 L960,165 L1070,95" fill="none" stroke="#5a3f88" stroke-width="1.5" stroke-dasharray="4 6" opacity=".7"/>
+        <!-- constellation internal lines -->
+        <g stroke="#ffd25a" stroke-width="1" opacity=".55" fill="none">
+          <path d="M210,400 L260,440 L300,410 L270,470 L225,455 Z"/>
+        </g>
+        <g stroke="#ff7ab8" stroke-width="1" opacity=".6" fill="none">
+          <path d="M485,305 L540,330 L560,375 L505,360"/>
+        </g>
+        <g stroke="#6b5a8a" stroke-width="1" opacity=".4" fill="none">
+          <path d="M740,220 L790,245 L810,285"/>
+          <path d="M930,150 L975,175"/>
+        </g>
+      </svg>
+      <div class="title light"><div class="k">Thiên hà tri thức</div><div class="n">Fullstack Mastery</div></div>
+      <div class="hud dark"><div class="st">Sáng<b>42%</b></div><div class="st">Chuỗi<b>🔥 7</b></div><div class="st">XP<b>640</b></div></div>
+      <!-- M1 done: all lit -->
+      <div class="star lit big" style="left:210px;top:400px"></div><div class="star lit sm" style="left:260px;top:440px"></div>
+      <div class="star lit sm" style="left:300px;top:410px"></div><div class="star lit sm" style="left:270px;top:470px"></div><div class="star lit sm" style="left:225px;top:455px"></div>
+      <div class="clabel" style="left:255px;top:505px">Nền tảng backend <small>5/5 sáng ✓</small></div>
+      <!-- M2 current -->
+      <div class="star lit sm" style="left:485px;top:305px"></div><div class="star lit sm" style="left:540px;top:330px"></div>
+      <div class="star acc big" style="left:560px;top:375px"></div><div class="cpulse" style="left:560px;top:375px"></div>
+      <div class="star dim sm" style="left:505px;top:360px"></div>
+      <div class="clabel" style="left:520px;top:415px">DB & Caching <small>2/4 sáng</small></div>
+      <div class="conme" style="left:560px;top:375px">✨ Bạn đang ở đây</div>
+      <!-- M3 -->
+      <div class="star dim big" style="left:740px;top:220px"></div><div class="star dim sm" style="left:790px;top:245px"></div><div class="star dim sm" style="left:810px;top:285px"></div>
+      <div class="clabel" style="left:775px;top:320px" >REST API <small>1/4 sáng</small></div>
+      <!-- M4 locked -->
+      <div class="star dim big" style="left:930px;top:150px"></div><div class="star dim sm" style="left:975px;top:175px"></div>
+      <div class="clabel" style="left:950px;top:210px">Xác thực <small>🔒 chưa mở</small></div>
+      <!-- capstone supernova -->
+      <div class="supernova" style="left:1075px;top:90px"><div class="core">🏆</div><div class="l">Capstone</div></div>
+      <button class="cta" style="left:560px;top:445px;transform:translateX(-50%)">Tiếp tục học →</button>
+    </div>
+    <div class="note"><b>✨ Constellation</b> — mỗi module = 1 chòm sao; lesson=ngôi sao <b>sáng dần khi học xong</b> (vàng), sao hiện tại nhấp nháy hồng, chòm chưa tới còn tối. Capstone=siêu tân tinh 🏆. Huyền ảo, ít "game" hơn adventure, cảm giác "mở khóa vũ trụ tri thức".</div>
+  </section>
+
+  <!-- ============ METRO ============ -->
+  <section class="screen" data-screen="met">
+    <div class="stage met">
+      <svg viewBox="0 0 1180 600" preserveAspectRatio="none">
+        <!-- main line (accent) 45deg bends -->
+        <polyline points="90,500 300,500 380,420 380,300 520,300 600,220 820,220 900,140 1080,140" fill="none" stroke="#d6006e" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- ôn tập branch (gold) -->
+        <polyline points="380,420 260,420 200,360" fill="none" stroke="#eab308" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- dự án branch (green) -->
+        <polyline points="820,220 820,340 940,340" fill="none" stroke="#16a34a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="title"><div class="k">Tuyến học tập</div><div class="n">Fullstack Mastery</div></div>
+      <div class="hud"><div class="st">Đi được<b>42%</b></div><div class="st">Chuỗi<b>🔥 7</b></div><div class="st">XP<b>640</b></div></div>
+      <!-- zones -->
+      <div class="zone" style="left:200px;top:470px">Nền tảng ✓</div>
+      <div class="zone" style="left:450px;top:270px">DB & Caching</div>
+      <div class="zone" style="left:710px;top:190px">REST API</div>
+      <!-- main stations -->
+      <div class="station done inter" style="left:300px;top:500px"><div class="d"></div><div class="nm"><b>Module 1</b> · 5/5</div></div>
+      <div class="station done" style="left:380px;top:360px"><div class="d"></div></div>
+      <div class="station done" style="left:380px;top:300px"><div class="d"></div></div>
+      <div class="station inter" style="left:520px;top:300px"><div class="d"></div><div class="nm"><b>DB & Caching</b> · 2/4</div></div>
+      <div class="station" style="left:600px;top:220px"><div class="d"></div></div>
+      <div class="station inter" style="left:820px;top:220px"><div class="d"></div><div class="nm"><b>REST API</b></div></div>
+      <div class="station" style="left:900px;top:140px"><div class="d"></div></div>
+      <div class="station term" style="left:1080px;top:140px"><div class="d">🏆</div><div class="nm"><b>Capstone</b></div></div>
+      <!-- branch termini -->
+      <div class="station" style="left:200px;top:360px"><div class="d" style="border-color:#eab308"></div><div class="nm">🃏 Ôn tập</div></div>
+      <div class="station" style="left:940px;top:340px"><div class="d" style="border-color:#16a34a"></div><div class="nm">🏗️ Dự án</div></div>
+      <!-- current train -->
+      <div class="metme" style="left:520px;top:300px"><div class="t">🚆</div><div class="f">Bạn ở đây</div></div>
+      <button class="cta" style="left:520px;top:352px;transform:translateX(-50%)">Tiếp tục học →</button>
+      <div class="mlegend">
+        <div class="k"><span class="ln" style="background:#d6006e"></span>Mạch chính (module)</div>
+        <div class="k"><span class="ln" style="background:#eab308"></span>Ôn tập</div>
+        <div class="k"><span class="ln" style="background:#16a34a"></span>Dự án/Capstone</div>
+      </div>
+    </div>
+    <div class="note"><b>🚇 Metro</b> — bản đồ tàu điện: mạch chính chạy qua các module, ga=lesson, ga chuyển (to)=module/challenge, ga cuối=🏆 Capstone. Tuyến nhánh: Ôn tập (vàng) · Dự án (xanh). Train 🚆=vị trí hiện tại. Trí-tuệ, gọn, dễ đọc — ít "mơ mộng" hơn 2 cái kia nhưng rõ ràng nhất.</div>
+  </section>
+
+<script>
+  var screens=document.querySelectorAll('.screen'),tabs=document.querySelectorAll('.tab');
+  tabs.forEach(function(t){t.onclick=function(){
+    tabs.forEach(function(x){x.classList.remove('on')});t.classList.add('on');
+    screens.forEach(function(s){s.classList.toggle('on',s.dataset.screen===t.dataset.s)});
+  }});
+  // constellation twinkle stars (bg)
+  var cs=document.getElementById('conStage');
+  if(cs){for(var i=0;i<50;i++){var d=document.createElement('div');d.className='star dim sm';d.style.left=(Math.random()*100)+'%';d.style.top=(Math.random()*100)+'%';d.style.opacity=(0.15+Math.random()*0.3);d.style.zIndex=1;cs.appendChild(d)}}
+</script>
+</body>
+</html>

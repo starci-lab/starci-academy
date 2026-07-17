@@ -131,7 +131,7 @@ export const FeedbackCard = (props: FeedbackCardProps) => {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label={t("feedback.openFileOnGithub")}
-                            className="min-w-0 break-words text-accent-soft-foreground hover:underline underline-offset-2"
+                            className="min-w-0 break-words text-accent-soft-foreground hover:underline underline-offset-4 decoration-[var(--separator-tertiary)]"
                         >
                             {locationLabel}
                         </Link>

@@ -73,7 +73,7 @@ export const NestedCardSection = ({ title, eyebrow, children, className }: Neste
             type="body-sm"
             weight="medium"
             truncate
-            className="text-accent-soft-foreground underline-offset-2 group-hover:underline"
+            className="underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline"
         >
             {title}
         </Typography>

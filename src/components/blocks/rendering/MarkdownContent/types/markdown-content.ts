@@ -19,4 +19,14 @@ export interface MarkdownRenderersParams {
      * articles. Defaults to the compact scale used in cards / chat / modals.
      */
     reading?: boolean
+    /**
+     * Plain-text mode: strip INLINE markdown decoration to unstyled text — inline
+     * `code` (no mono/background), `strong` (no bold), `em` (no italic) and links
+     * (no accent/underline) render as their raw text. Block structure is KEPT
+     * (paragraphs, lists, tables, fenced code blocks, mermaid, and the `:::muted`
+     * arc-section labels). Opt-in for the flashcard + mock-interview surfaces where
+     * authored content carries stray inline markdown that shouldn't be styled (thầy
+     * 2026-07-17: "render thô"). Cloze `{{cN::}}` is untouched (handled upstream).
+     */
+    plain?: boolean
 }

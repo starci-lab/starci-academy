@@ -24,6 +24,14 @@ export const TIER_ITEMS: Array<FlexWrapButtonRadioItem<string>> = [
     { value: "premium", content: "Premium", isDisabled: true },
 ]
 
+/** Language-picker items — mirrors the Mock Interview setup's multi-select caller. */
+export const LANGUAGE_ITEMS: Array<FlexWrapButtonRadioItem<string>> = [
+    { value: "typescript", content: "TypeScript" },
+    { value: "java", content: "Java" },
+    { value: "csharp", content: "C#" },
+    { value: "go", content: "Go" },
+]
+
 /**
  * Wrapper that owns selection state so the story is truly interactive in the
  * Storybook canvas (the block itself is fully controlled — `value`/`onChange`).
@@ -44,6 +52,36 @@ export const Controlled = <T extends string>(props: {
             ariaLabel={props.ariaLabel}
             trailing={props.trailing}
             itemAction={props.itemAction}
+        />
+    )
+}
+
+/**
+ * Multi-select variant — owns a SET of selected values and enforces "keep at least
+ * one selected" (deselecting the last one is a no-op), exactly like the Mock
+ * Interview setup's language picker that this mode was built for.
+ */
+export const ControlledMulti = <T extends string>(props: {
+    items: Array<FlexWrapButtonRadioItem<T>>
+    initialValues: Array<T>
+    ariaLabel: string
+}) => {
+    const [values, setValues] = useState<Array<T>>(props.initialValues)
+    const toggle = (value: T): void => {
+        setValues((previous) => {
+            if (previous.includes(value)) {
+                return previous.length === 1 ? previous : previous.filter((entry) => entry !== value)
+            }
+            return [...previous, value]
+        })
+    }
+    return (
+        <FlexWrapButtonRadio
+            multiple
+            items={props.items}
+            values={values}
+            onToggle={toggle}
+            ariaLabel={props.ariaLabel}
         />
     )
 }

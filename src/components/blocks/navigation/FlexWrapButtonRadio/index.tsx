@@ -15,14 +15,10 @@ export interface FlexWrapButtonRadioItem<T extends string> {
     isDisabled?: boolean
 }
 
-/** Props for the {@link FlexWrapButtonRadio} block. */
-export interface FlexWrapButtonRadioProps<T extends string> extends WithClassNames<undefined> {
+/** Props shared by both the single- and multi-select modes of {@link FlexWrapButtonRadio}. */
+interface FlexWrapButtonRadioBaseProps<T extends string> extends WithClassNames<undefined> {
     /** The selectable buttons. */
     items: Array<FlexWrapButtonRadioItem<T>>
-    /** Currently selected value. */
-    value: T
-    /** Fired with the chosen value when a button is selected. */
-    onChange: (value: T) => void
     /** Accessible label for the group. */
     ariaLabel: string
     /**
@@ -46,6 +42,35 @@ export interface FlexWrapButtonRadioProps<T extends string> extends WithClassNam
      */
     itemAction?: (item: FlexWrapButtonRadioItem<T>) => ReactNode
 }
+
+/** Single-select mode (default) — exactly one value selected at a time. */
+interface FlexWrapButtonRadioSingleProps<T extends string> extends FlexWrapButtonRadioBaseProps<T> {
+    /** Single-select — omit or pass `false`. */
+    multiple?: false
+    /** Currently selected value. */
+    value: T
+    /** Fired with the chosen value when a button is selected. */
+    onChange: (value: T) => void
+}
+
+/**
+ * Multi-select mode — a SET of values, each button an independent toggle. The
+ * caller owns the set + the toggle logic (e.g. enforcing "at least one selected");
+ * this component only reports which button was pressed via {@link onToggle}.
+ */
+interface FlexWrapButtonRadioMultiProps<T extends string> extends FlexWrapButtonRadioBaseProps<T> {
+    /** Multi-select — pass `true`. */
+    multiple: true
+    /** Currently selected values. */
+    values: Array<T>
+    /** Fired with the pressed value (the caller adds/removes it from its own set). */
+    onToggle: (value: T) => void
+}
+
+/** Props for the {@link FlexWrapButtonRadio} block — a discriminated union on `multiple`. */
+export type FlexWrapButtonRadioProps<T extends string> =
+    | FlexWrapButtonRadioSingleProps<T>
+    | FlexWrapButtonRadioMultiProps<T>
 
 /**
  * A single-select toggle-button group laid out as a flex-wrap row (buttons wrap
@@ -74,25 +99,31 @@ export interface FlexWrapButtonRadioProps<T extends string> extends WithClassNam
  * plain `<Button>`s. Overridden to FULL height (`!top-0 !h-full`) from HeroUI's
  * default 50%.
  *
- * `role="group"` + `aria-pressed` per button (single-select toggle group). For a
- * grid with description/badge use `SelectableCardGroup`.
+ * `role="group"` + `aria-pressed` per button — works for BOTH the default
+ * single-select toggle group and the multi-select mode (`multiple`, a SET of
+ * pressed toggles; the caller owns add/remove + any "keep ≥1 selected" rule). For
+ * a grid with description/badge use `SelectableCardGroup`.
  *
  * @param props - {@link FlexWrapButtonRadioProps}
  * @see Story: .storybook/stories/blocks/navigation/FlexWrapButtonRadio/FlexWrapButtonRadio.stories
  */
-export const FlexWrapButtonRadio = <T extends string>({
-    items,
-    value,
-    onChange,
-    ariaLabel,
-    trailing,
-    itemAction,
-    className,
-}: FlexWrapButtonRadioProps<T>) => {
+export const FlexWrapButtonRadio = <T extends string>(props: FlexWrapButtonRadioProps<T>) => {
+    const { items, ariaLabel, trailing, itemAction, className } = props
+    // narrow the discriminated union once — selection state + the press handler are
+    // the only things that differ between single- and multi-select.
+    const isSelected = (candidate: T): boolean =>
+        (props.multiple ? props.values.includes(candidate) : props.value === candidate)
+    const handlePress = (candidate: T): void => {
+        if (props.multiple) {
+            props.onToggle(candidate)
+        } else {
+            props.onChange(candidate)
+        }
+    }
     return (
         <div role="group" aria-label={ariaLabel} className={cn("flex flex-wrap items-center gap-2", className)}>
             {items.map((item) => {
-                const selected = item.value === value
+                const selected = isSelected(item.value)
                 if (!itemAction) {
                     // standalone: selected = filled `tertiary` (neutral, NOT accent —
                     // a facet toggle isn't a CTA), unselected = hollow `ghost` (no
@@ -104,7 +135,7 @@ export const FlexWrapButtonRadio = <T extends string>({
                             variant={selected ? "tertiary" : "ghost"}
                             isDisabled={item.isDisabled}
                             aria-pressed={selected}
-                            onPress={() => onChange(item.value)}
+                            onPress={() => handlePress(item.value)}
                         >
                             {item.content}
                         </Button>
@@ -124,7 +155,7 @@ export const FlexWrapButtonRadio = <T extends string>({
                             variant={selected ? "secondary" : "tertiary"}
                             isDisabled={item.isDisabled}
                             aria-pressed={selected}
-                            onPress={() => onChange(item.value)}
+                            onPress={() => handlePress(item.value)}
                         >
                             {item.content}
                         </Button>

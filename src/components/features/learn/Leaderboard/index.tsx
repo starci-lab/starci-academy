@@ -1,22 +1,32 @@
 "use client"
 
-import React, { useMemo } from "react"
+import React, { useEffect, useMemo, useRef, useState } from "react"
 import { Button, Typography, cn } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useSearchParams } from "next/navigation"
 import { LearnBreadcrumb } from "../shared/LearnBreadcrumb"
 import { TrialEnrollHook } from "../shared/TrialEnrollHook"
-import { LeaderboardTable } from "./LeaderboardTable"
-import { LeaderboardPodium } from "./LeaderboardPodium"
-import { LeaderboardChampion } from "./LeaderboardChampion"
 import { LeaderboardCategoryRail } from "./LeaderboardCategoryRail"
-import { rankEntriesByCategory, parseCategoryParam, type LeaderboardCategoryKey } from "./categories"
+import {
+    categoryEntryXp,
+    categoryMyXp,
+    parseCategoryParam,
+    rankEntriesByCategory,
+    type LeaderboardCategoryKey,
+} from "./categories"
 import { useLeaderboardSwr } from "./useLeaderboardSwr"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryCourseSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseSwr"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import {
+    LeaderboardListCard,
+    LeaderboardRow,
+} from "@/components/features/dashboard/league/LeaderboardListCard"
+import { Podium } from "@/components/features/dashboard/league/Podium"
+import { Confetti } from "@/components/features/dashboard/league/Confetti"
+import { pathConfig } from "@/resources/path"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link Leaderboard}. */
@@ -63,11 +73,75 @@ export const Leaderboard = ({ className }: LeaderboardProps) => {
         milestone: t("leaderboard.categories.milestone"),
     }
 
-    // board shape: 1 learner → champion card; ≥3 → podium + list; otherwise → plain list
-    const isSole = rankedEntries.length === 1
-    const showPodium = rankedEntries.length >= 3
-    const podiumRows = showPodium ? rankedEntries.slice(0, 3) : []
-    const listRows = showPodium ? rankedEntries.slice(3) : rankedEntries
+    // dashboard-style board: viewer's own standing + a medal-ranked list (top-3 wear
+    // place medals), mirroring the dashboard "Top học viên" card, per category.
+    const viewerId = viewer?.id
+    const isMine = (userId: string) => Boolean(viewerId) && userId === viewerId
+    const viewerRow = rankedEntries.find((ranked) => isMine(ranked.entry.userId))
+    const viewerRank = viewerRow?.displayRank ?? data?.myRank?.rank
+    const viewerXp = viewerRow
+        ? categoryEntryXp(viewerRow.entry, selectedCategory)
+        : categoryMyXp(data?.myRank ?? null, selectedCategory)
+
+    const rows: Array<LeaderboardRow> = rankedEntries.map((ranked) => ({
+        key: ranked.entry.enrollmentId,
+        rank: ranked.displayRank,
+        username: ranked.entry.username,
+        avatar: ranked.entry.avatar,
+        valueLabel: t("leaderboard.xp", { xp: categoryEntryXp(ranked.entry, selectedCategory) }),
+        isMe: isMine(ranked.entry.userId),
+        profileHref: ranked.entry.username
+            ? pathConfig().locale(locale).profile(ranked.entry.username).build()
+            : undefined,
+    }))
+
+    // top-3 dais — the page is spacious (unlike the compact dashboard cards)
+    const podiumEntries = rankedEntries.slice(0, 3).map((ranked) => ({
+        rank: ranked.displayRank,
+        username: ranked.entry.username,
+        avatar: ranked.entry.avatar,
+        pointsLabel: t("leaderboard.xp", { xp: categoryEntryXp(ranked.entry, selectedCategory) }),
+        isMe: isMine(ranked.entry.userId),
+    }))
+
+    const standing = viewerRank
+        ? {
+            rank: viewerRank,
+            primary: `${t("leaderboard.rankPrefix")} #${viewerRank}`,
+            secondary: t("leaderboard.xp", { xp: viewerXp }),
+        }
+        : undefined
+
+    // viewer outside the fetched window → a pinned self-row (mirrors the dashboard)
+    const showSelfRow = !viewerRow && Boolean(data?.myRank)
+    const selfRow: LeaderboardRow | undefined = showSelfRow && data?.myRank
+        ? {
+            key: "self",
+            rank: data.myRank.rank,
+            username: viewer?.username ?? null,
+            avatar: viewer?.avatar,
+            valueLabel: t("leaderboard.xp", { xp: viewerXp }),
+            isMe: true,
+        }
+        : undefined
+    const hiddenBetween = showSelfRow && data?.myRank
+        ? Math.max(0, data.myRank.rank - rankedEntries.length - 1)
+        : 0
+
+    // celebrate a top-3 finish — fires on entry + when switching to another category
+    // where the viewer also places top-3 (the board doesn't remount on category change)
+    const isTop = Boolean(viewerRank) && (viewerRank ?? 99) <= 3
+    const [celebrateKey, setCelebrateKey] = useState(0)
+    const lastCelebrated = useRef<string | null>(null)
+    useEffect(
+        () => {
+            if (isTop && lastCelebrated.current !== selectedCategory) {
+                lastCelebrated.current = selectedCategory
+                setCelebrateKey((key) => key + 1)
+            }
+        },
+        [isTop, selectedCategory],
+    )
 
     return (
         <div className={cn("mx-auto flex w-full max-w-3xl flex-col gap-10", className)}>
@@ -139,28 +213,23 @@ export const Leaderboard = ({ className }: LeaderboardProps) => {
                         retryLabel: t("leaderboard.refresh"),
                     }}
                 >
-                    {isSole ? (
-                        <LeaderboardChampion
-                            entry={rankedEntries[0].entry}
-                            totalXp={rankedEntries[0].entry.totalXp}
-                            viewerUserId={viewer?.id}
-                        />
-                    ) : (
-                        <div className="flex flex-col gap-6">
-                            {showPodium ? (
-                                <LeaderboardPodium
-                                    top={podiumRows}
-                                    selectedCategory={selectedCategory}
-                                    viewerUserId={viewer?.id}
-                                />
+                    <>
+                        {/* confetti when the viewer places top-3 in this category */}
+                        <Confetti fireKey={celebrateKey} />
+                        <LeaderboardListCard
+                            bare
+                            standing={standing}
+                            topSlot={rankedEntries.length > 0 ? (
+                                <Podium entries={podiumEntries} meLabel={t("leaderboard.you")} />
                             ) : null}
-                            <LeaderboardTable
-                                rankedEntries={listRows}
-                                selectedCategory={selectedCategory}
-                                viewerUserId={viewer?.id}
-                            />
-                        </div>
-                    )}
+                            rows={rows.slice(3)}
+                            selfRow={selfRow}
+                            ellipsisLabel={hiddenBetween > 0
+                                ? t("dashboard.league.othersCount", { count: hiddenBetween })
+                                : undefined}
+                            meLabel={t("leaderboard.you")}
+                        />
+                    </>
                 </AsyncContent>
             </div>
         </div>

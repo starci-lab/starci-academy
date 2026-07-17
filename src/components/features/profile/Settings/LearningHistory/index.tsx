@@ -174,7 +174,7 @@ export const LearningHistory = ({
                                             <IconTile size="sm" src={course.thumbnailUrl} icon={<BookOpenIcon aria-hidden focusable="false" />} />
                                             <div className="flex min-w-0 flex-1 flex-col gap-2">
                                                 <div className="flex items-center justify-between gap-2">
-                                                    <Typography type="body-sm" weight="semibold" truncate className="min-w-0 flex-1 text-accent-soft-foreground underline-offset-2 group-hover:underline">
+                                                    <Typography type="body-sm" weight="semibold" truncate className="min-w-0 flex-1 underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
                                                         {course.label}
                                                     </Typography>
                                                     <CourseTrialChip isEnrolled={course.isEnrolled} />

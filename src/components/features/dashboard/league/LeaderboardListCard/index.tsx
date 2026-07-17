@@ -8,6 +8,7 @@ import {
 } from "@heroui/react"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import type { VerdictBand } from "@/components/blocks/cards/verdict-band"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { UserCell } from "@/components/blocks/identity/UserCell"
 import {
@@ -34,6 +35,13 @@ export interface LeaderboardRow {
     profileHref?: string
     /** Context action at the far right (rank-delta caret / follow button). */
     trailing?: React.ReactNode
+    /**
+     * Optional left band (`SurfaceListCardItem.withVerdict`, `card.md` §3i) — a DATA
+     * signal on this row (e.g. the weekly cohort's promote/demote zone). Pass the
+     * canonical {@link VerdictBand} (`variant`/`color`) — NOT a free-form `className`,
+     * which `verdictBandClassName` silently ignores (was the "invisible border" bug).
+     */
+    verdict?: VerdictBand
 }
 
 /** The viewer's own standing shown as the card's header line. */
@@ -107,23 +115,24 @@ export const LeaderboardListCard = ({
             ? `${row.username} · ${meLabel}`
             : (row.username ?? "")
         const identity = (
-            <UserCell username={displayName} avatar={row.avatar ?? undefined} />
+            <UserCell
+                username={displayName}
+                avatar={row.avatar ?? undefined}
+                nameClassName={row.isMe ? "text-accent" : undefined}
+            />
         )
         return (
-            <SurfaceListCardItem key={row.key}>
+            <SurfaceListCardItem key={row.key} withVerdict={row.verdict}>
                 <div className="flex items-center gap-3">
-                    {/* top-3 → place medal (🥇🥈🥉); rank 4+ → plain number */}
+                    {/* top-3 → place medal (🥇🥈🥉); rank 4+ → plain number. Number matches the
+                        medal's w-6 CENTERED slot (thầy 2026-07-17 "4,5 còn lệch") at the same
+                        text-sm foreground as the name (same-row same-size, `visual-hierarchy`). */}
                     {row.rank <= 3 ? (
                         <span className="flex w-6 shrink-0 items-center justify-center">
                             {placeMedalIcon(row.rank)}
                         </span>
                     ) : (
-                        <span
-                            className={cn(
-                                "w-6 shrink-0 text-right text-xs",
-                                row.isMe ? "font-semibold text-accent" : "text-muted",
-                            )}
-                        >
+                        <span className="flex w-6 shrink-0 items-center justify-center text-sm text-foreground">
                             {row.rank}
                         </span>
                     )}
@@ -137,10 +146,13 @@ export const LeaderboardListCard = ({
                     ) : (
                         <div className="flex min-w-0 flex-1 items-center">{identity}</div>
                     )}
+                    {/* value = meta → always muted + right-aligned tabular so the XP column
+                        lines up across rows (thầy 2026-07-17: accent moves to the NAME, value
+                        stays muted). */}
                     <Typography
                         type="body-sm"
-                        color={row.isMe ? undefined : "muted"}
-                        className={cn("shrink-0", row.isMe && "font-semibold text-accent")}
+                        color="muted"
+                        className="shrink-0 text-right tabular-nums"
                     >
                         {row.valueLabel}
                     </Typography>
@@ -178,13 +190,25 @@ export const LeaderboardListCard = ({
             {rows.length > 0 || selfRow ? (
                 <SurfaceListCard bordered>
                     {rows.map(renderRow)}
-                    {/* viewer below the slice → ellipsis + pinned self-row */}
+                    {/* viewer below the slice → collapsed-rows ellipsis + pinned self-row.
+                        Renders as a REAL row (thầy 2026-07-17): a `SurfaceListCardItem` so it
+                        gets the same `p-3` + full-bleed separator, a transparent bg that INHERITS
+                        the card's `bg-surface` (no `bg-surface-secondary` banner), and `min-h-8`
+                        on the inner box to match the avatar rows' height exactly (avatar sm =
+                        size-8). The ⋯ sits in the same `w-6` centred slot as the rank number so it
+                        aligns as one of the rows, not a strip between them. */}
                     {selfRow ? (
                         <>
-                            <div className="flex items-center justify-center gap-2 bg-surface-secondary px-3 py-2 text-xs text-muted">
-                                <span className="text-base leading-none tracking-widest">⋯</span>
-                                {ellipsisLabel}
-                            </div>
+                            <SurfaceListCardItem>
+                                <div className="flex min-h-8 items-center gap-3">
+                                    <span className="flex w-6 shrink-0 items-center justify-center text-base leading-none tracking-widest text-muted">
+                                        ⋯
+                                    </span>
+                                    <Typography type="body-sm" color="muted">
+                                        {ellipsisLabel}
+                                    </Typography>
+                                </div>
+                            </SurfaceListCardItem>
                             {renderRow(selfRow)}
                         </>
                     ) : null}

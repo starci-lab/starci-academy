@@ -167,6 +167,48 @@ export interface CodingSubmission {
     createdAt: string
 }
 
+/**
+ * One parsed per-testcase result, decoded from {@link CodingSubmission.perCaseResults}
+ * (a serialized JSON string). Input/expected/stdout are present ONLY for sample
+ * cases — hidden cases carry just the verdict + timing (the judge never leaks
+ * hidden IO). Mirrors backend `CodingPerCaseResult`.
+ */
+export interface CodingPerCaseResult {
+    /** 1-based evaluation order of the testcase. */
+    orderIndex: number
+    /** Whether this testcase is a public sample (only samples carry IO). */
+    isSample: boolean
+    /** Verdict for this single testcase run. */
+    verdict: CodingVerdict
+    /** Run time (ms), or null when not reported. */
+    timeMs: number | null
+    /** Peak memory (kb), or null when not reported. */
+    memoryKb: number | null
+    /** Sample-only: the stdin fed to the program. */
+    input?: string | null
+    /** Sample-only: the expected stdout. */
+    expectedOutput?: string | null
+    /** Sample-only: the program's actual stdout. */
+    stdout?: string | null
+}
+
+/**
+ * Decode {@link CodingSubmission.perCaseResults} (serialized JSON) into typed
+ * rows. Returns `[]` on null / malformed input — the caller renders an empty
+ * grid rather than throwing on bad data.
+ */
+export const parsePerCaseResults = (raw: string | null): Array<CodingPerCaseResult> => {
+    if (!raw) {
+        return []
+    }
+    try {
+        const parsed: unknown = JSON.parse(raw)
+        return Array.isArray(parsed) ? (parsed as Array<CodingPerCaseResult>) : []
+    } catch {
+        return []
+    }
+}
+
 /** One ranked leaderboard entry. */
 export interface CodingLeaderboardEntry {
     /** User id. */

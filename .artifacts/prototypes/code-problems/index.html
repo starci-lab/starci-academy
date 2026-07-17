@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Prototype — code-problems (render code UI mới)</title>
+<style>
+  :root {
+    --bg:#0b0f17; --surface:#131a26; --surface2:#0f1520; --border:#263042; --border2:#1b2434;
+    --text:#e6ecf5; --muted:#8b98ab;
+    --accent:#6366f1; --accent-fg:#fff; --accent-soft:#1e2540; --accent-soft-fg:#c3c9f5;
+    --success:#22c55e; --success-soft:#0f2a1c; --danger:#ef4444; --danger-soft:#2a1414; --warning:#f59e0b;
+    --radius:12px; --radius-lg:20px; --gap:12px; --nav-h:52px;
+    --code:#0a0e16; --code-line:#151c2a;
+  }
+  * { box-sizing:border-box; margin:0; }
+  html,body { height:100%; }
+  body { background:var(--bg); color:var(--text); font:14px/1.55 system-ui,-apple-system,Segoe UI,sans-serif; }
+  code,pre,.mono { font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace; }
+
+  .surface { display:none; }
+  .surface.active { display:block; }
+  /* centered reading surfaces (list) */
+  .surface.page { max-width:1120px; margin:0 auto; padding:20px 16px calc(var(--nav-h) + 32px); }
+  /* full-bleed work surface (solve) */
+  .surface.work { height:calc(100vh - var(--nav-h)); }
+
+  .row { display:flex; align-items:center; gap:8px; }
+  .col { display:flex; flex-direction:column; }
+  .between { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .wrap { flex-wrap:wrap; }
+  .grow { flex:1; min-width:0; }
+  .muted { color:var(--muted); }
+  .xs { font-size:12px; } .sm { font-size:13px; }
+  .b { font-weight:600; } .bb { font-weight:700; }
+  .sep { height:1px; background:var(--border2); border:0; }
+
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:var(--gap); }
+  .card.flush { padding:0; overflow:hidden; }
+
+  .chip { display:inline-flex; align-items:center; gap:5px; padding:3px 9px; border-radius:999px; font-size:12px; font-weight:600; line-height:1;
+          background:var(--surface2); border:1px solid var(--border); color:var(--muted); }
+  .chip.easy { background:var(--success-soft); color:#5ee08f; border-color:transparent; }
+  .chip.medium { background:#2a2410; color:#f2c14e; border-color:transparent; }
+  .chip.hard { background:var(--danger-soft); color:#ff8080; border-color:transparent; }
+  .chip.ok { background:var(--success-soft); color:#5ee08f; border-color:transparent; }
+  .chip.bad { background:var(--danger-soft); color:#ff8080; border-color:transparent; }
+  .chip.accent { background:var(--accent-soft); color:#aab2f7; border-color:transparent; }
+
+  .btn { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:10px; border:1px solid var(--border);
+         background:transparent; color:var(--text); cursor:pointer; font:inherit; font-weight:600; white-space:nowrap; }
+  .btn:hover { border-color:#33415c; }
+  .btn.primary { background:var(--accent); border-color:var(--accent); color:var(--accent-fg); }
+  .btn.success { background:var(--success); border-color:var(--success); color:#08210f; }
+  .btn.ghost { border-color:transparent; color:var(--muted); }
+  .btn.sm { padding:5px 10px; font-size:12px; border-radius:8px; }
+
+  /* segmented control */
+  .seg { display:inline-flex; background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:3px; gap:2px; }
+  .seg button { border:0; background:transparent; color:var(--muted); font:inherit; font-weight:600; font-size:12px; padding:5px 12px; border-radius:7px; cursor:pointer; }
+  .seg button.on { background:var(--accent); color:#fff; }
+
+  /* underline tabs */
+  .tabs { display:flex; gap:2px; border-bottom:1px solid var(--border2); padding:0 12px; }
+  .tabs button { border:0; background:transparent; color:var(--muted); font:inherit; font-weight:600; padding:12px 12px; cursor:pointer;
+                 border-bottom:2px solid transparent; margin-bottom:-1px; }
+  .tabs button.on { color:var(--text); border-bottom-color:var(--accent); }
+
+  .blocktag { display:inline-block; font-size:10px; font-weight:700; letter-spacing:.02em; color:#7c86ff;
+              background:#161d34; border:1px dashed #333e63; border-radius:6px; padding:1px 6px; margin-left:6px; vertical-align:middle; }
+  .note { font-size:11px; color:#6c7689; }
+  .flag { font-size:10px; font-weight:700; color:#f2c14e; background:#2a2410; border-radius:5px; padding:1px 6px; }
+
+  /* code block (shiki-ish) */
+  .codeblk { background:var(--code); border:1px solid var(--border2); border-radius:12px; overflow:hidden; }
+  .codeblk .chead { display:flex; justify-content:space-between; align-items:center; padding:6px 12px; border-bottom:1px solid var(--code-line); color:var(--muted); font-size:11px; }
+  .codeblk pre { padding:12px 14px; overflow:auto; font-size:12.5px; line-height:1.6; color:#cdd6e6; }
+  .k { color:#c792ea; } .s { color:#a5e0a0; } .f { color:#82aaff; } .c { color:#5a6577; } .n { color:#f2c14e; }
+
+  /* IO example card */
+  .io { border:1px solid var(--border2); border-radius:12px; overflow:hidden; }
+  .io .lbl { font-size:11px; color:var(--muted); padding:8px 12px 2px; }
+  .io pre { padding:2px 12px 10px; font-size:12.5px; color:#d5deee; white-space:pre-wrap; }
+  .io .split { border-top:1px dashed var(--border2); }
+
+  /* solve layout */
+  .ide { display:flex; height:100%; }
+  .pane { min-width:0; display:flex; flex-direction:column; height:100%; }
+  .pane.left { flex:0 0 46%; border-right:1px solid var(--border); }
+  .pane.right { flex:1; }
+  .drag { flex:0 0 6px; cursor:col-resize; background:linear-gradient(90deg,transparent,var(--border),transparent); }
+  .paneScroll { overflow:auto; padding:16px 18px; }
+  .paneHead { padding:12px 16px; border-bottom:1px solid var(--border2); }
+
+  /* editor mock */
+  .editor { flex:1; background:var(--code); overflow:auto; display:flex; }
+  .gutter { color:#3d475e; text-align:right; padding:12px 8px; user-select:none; font-size:12.5px; line-height:1.7; background:var(--surface2); }
+  .editor pre { padding:12px 14px; font-size:12.5px; line-height:1.7; color:#cdd6e6; }
+
+  /* console */
+  .console { flex:0 0 38%; border-top:1px solid var(--border); display:flex; flex-direction:column; background:var(--surface2); }
+  .caseTabs { display:flex; gap:6px; padding:10px 12px 0; flex-wrap:wrap; }
+  .casePill { font-size:12px; font-weight:600; padding:5px 10px; border-radius:8px; border:1px solid var(--border); color:var(--muted); cursor:pointer; background:transparent; }
+  .casePill.on { border-color:var(--accent); color:var(--text); }
+  .casePill.pass { border-color:transparent; background:var(--success-soft); color:#5ee08f; }
+  .casePill.fail { border-color:transparent; background:var(--danger-soft); color:#ff8080; }
+
+  .statgrid { display:grid; grid-template-columns:1fr 1fr 1fr; border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+  .statgrid .cell { padding:10px 12px; border-right:1px solid var(--border); border-bottom:1px solid var(--border); }
+  .statgrid .cell:nth-child(3n){ border-right:0; }
+  .statgrid .cell .v { font-size:18px; font-weight:700; } .statgrid .cell .l { font-size:11px; color:var(--muted); }
+
+  .actionbar { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 14px; border-top:1px solid var(--border2); background:var(--surface); }
+
+  .proto-nav { position:fixed; inset:auto 0 0 0; height:var(--nav-h); display:flex; gap:8px; justify-content:center; align-items:center;
+               padding:8px; background:rgba(11,15,23,.94); border-top:1px solid var(--border); z-index:50; backdrop-filter:blur(6px); }
+  .proto-nav .btn { padding:6px 12px; }
+  .caption { position:fixed; top:8px; left:50%; transform:translateX(-50%); background:#161d34cc; border:1px solid var(--border); border-radius:999px;
+             padding:4px 14px; font-size:12px; color:#aeb8cc; z-index:40; }
+
+  /* problem list */
+  .listrow { display:flex; align-items:center; gap:14px; padding:12px; border-bottom:1px solid var(--border2); cursor:pointer; }
+  .listrow:last-child { border-bottom:0; }
+  .listrow:hover { background:#0f1626; }
+  .stt { width:20px; text-align:center; color:var(--muted); }
+  .rail { flex:0 0 220px; border-right:1px solid var(--border); padding:16px 12px; }
+  .rail .navi { padding:8px 10px; border-radius:9px; color:var(--muted); cursor:pointer; }
+  .rail .navi.on { background:var(--accent-soft); color:#c3c9f5; }
+  .listShell { display:flex; height:100%; }
+
+  .hide { display:none !important; }
+  @media (max-width:820px){ .deskonly{ display:none; } }
+</style>
+</head>
+<body>
+
+<div class="caption" id="cap">Màn 1 — /practice (danh sách)</div>
+
+<!-- ============ S1: LIST /practice ============ -->
+<section class="surface page active" id="s1">
+  <!-- PageHeader + ResponsiveBreadcrumb -->
+  <div class="between" style="margin-bottom:6px">
+    <div class="col">
+      <div class="xs muted">Trang chủ · Luyện tập <span class="blocktag">ResponsiveBreadcrumb</span></div>
+      <h1 class="bb" style="font-size:22px; margin-top:4px">Luyện thuật toán <span class="blocktag">PageHeader</span></h1>
+      <div class="sm muted">Giải bài trực tiếp trên trình duyệt — chấm tự động bằng test case.</div>
+    </div>
+    <div class="chip accent">Đã giải 12 / 84 · 240 điểm <span class="blocktag">ProgressCockpit</span></div>
+  </div>
+
+  <div class="card flush" style="margin-top:14px; height:520px">
+    <div class="listShell">
+      <!-- rail -->
+      <div class="rail deskonly">
+        <div class="seg" style="width:100%; margin-bottom:12px">
+          <button class="on" style="flex:1">Bài tập</button><button style="flex:1">Xếp hạng</button>
+        </div>
+        <div class="xs muted" style="padding:0 10px 6px">Chủ đề <span class="blocktag">ResizableRail</span></div>
+        <div class="navi on">Tất cả · 84</div>
+        <div class="navi">Mảng &amp; chuỗi · 22</div>
+        <div class="navi">Bảng băm · 14</div>
+        <div class="navi">Cây &amp; đồ thị · 18</div>
+        <div class="navi">Quy hoạch động · 12</div>
+        <div class="navi muted xs" style="padding-left:10px">+ 16 chủ đề khác</div>
+      </div>
+      <!-- content -->
+      <div class="grow col">
+        <!-- filters -->
+        <div class="row wrap" style="padding:12px; border-bottom:1px solid var(--border2); gap:8px">
+          <input placeholder="Tìm bài…" style="flex:1; min-width:160px; background:var(--surface2); border:1px solid var(--border); border-radius:9px; padding:7px 12px; color:var(--text)"/>
+          <div class="seg"><button class="on">Tất cả</button><button>Cơ bản</button><button>Nâng cao</button><button>Enterprise</button></div>
+          <span class="blocktag">PracticeFilters</span>
+        </div>
+        <!-- rows -->
+        <div class="grow" style="overflow:auto">
+          <div class="xs muted b" style="padding:10px 12px 4px">MẢNG &amp; CHUỖI</div>
+          <div class="listrow" onclick="go('s2')">
+            <span class="stt" style="color:var(--success)">✓</span>
+            <div class="grow"><div class="b">Two Sum</div><div class="row wrap xs muted"><span class="chip" style="padding:2px 7px">array</span><span class="chip" style="padding:2px 7px">hash</span></div></div>
+            <span class="chip easy">Cơ bản</span><span class="xs muted">+10 điểm</span>
+          </div>
+          <div class="listrow" onclick="go('s2')">
+            <span class="stt" style="color:var(--warning)">◐</span>
+            <div class="grow"><div class="b">Longest Substring Without Repeat</div><div class="row wrap xs muted"><span class="chip" style="padding:2px 7px">sliding-window</span></div></div>
+            <span class="chip medium">Nâng cao</span><span class="xs muted">+15 điểm</span>
+          </div>
+          <div class="listrow" onclick="go('s2')">
+            <span class="stt">○</span>
+            <div class="grow"><div class="b">Trapping Rain Water</div><div class="row wrap xs muted"><span class="chip" style="padding:2px 7px">two-pointer</span></div></div>
+            <span class="chip hard">Enterprise</span><span class="xs muted">+20 điểm</span>
+          </div>
+          <div class="note" style="padding:10px 12px">Item = <b>ProblemRow</b> (SurfaceListCardItem) · trạng thái ✓/◐/○ = state-marker icon.md §6 · nhóm theo domain <span class="blocktag">ProblemCatalog</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="note" style="margin-top:10px">Danh sách <b>GIỮ NGUYÊN shell hiện tại</b> (rail + catalog đã ổn). Trọng tâm redesign là màn GIẢI BÀI → bấm 1 bài để xem.</div>
+</section>
+
+<!-- ============ S2: SOLVE /practice/[slug] — desktop (NEW CODE UI) ============ -->
+<section class="surface work" id="s2">
+  <div class="ide">
+    <!-- LEFT -->
+    <div class="pane left">
+      <div class="paneHead between">
+        <div class="row"><span class="btn ghost sm" onclick="go('s1')">← Quay lại <span class="blocktag">BackLink</span></span></div>
+        <div class="seg">
+          <button class="on" onclick="ltab(this,'l-desc')">Mô tả</button>
+          <button onclick="ltab(this,'l-sol')">Lời giải</button>
+          <button onclick="ltab(this,'l-sub')">Nộp trước</button>
+        </div>
+      </div>
+      <div class="paneScroll grow">
+        <!-- description tab -->
+        <div id="l-desc">
+          <div class="row wrap" style="gap:8px; margin-bottom:6px">
+            <h1 class="bb" style="font-size:20px">Two Sum</h1>
+            <span class="chip easy">Cơ bản · Junior</span>
+          </div>
+          <div class="row wrap xs muted" style="gap:10px; margin-bottom:14px">
+            <span>+10 điểm</span><span>· ⏱ 2000 ms <span class="flag">timeLimitMs (chưa vẽ)</span></span><span>· 🧠 256 MB <span class="flag">memoryLimitKb</span></span><span>· 🏷 array · hash</span>
+          </div>
+          <p style="margin-bottom:12px">Cho một mảng số nguyên <code>nums</code> và một số <code>target</code>, trả về chỉ số của hai phần tử có tổng bằng <code>target</code>.</p>
+
+          <div class="codeblk" style="margin-bottom:14px">
+            <div class="chead"><span>ví dụ trong đề</span><span>python</span></div>
+            <pre><span class="c"># nums[i] + nums[j] == target, i != j</span>
+<span class="k">def</span> <span class="f">two_sum</span>(nums, target): ...</pre>
+          </div>
+          <div class="note" style="margin-bottom:14px">Statement = <b>MarkdownContent</b> → fence tô màu bằng <b>CodeToHtml (Shiki)</b> — ĐÃ có, giữ.</div>
+
+          <div class="b sm" style="margin:6px 0 8px">Ví dụ <span class="blocktag">IOExampleCard · CẦN TẠO</span></div>
+          <div class="col" style="gap:10px">
+            <div class="io">
+              <div class="lbl">Đầu vào</div><pre>nums = [2,7,11,15], target = 9</pre>
+              <div class="split"></div>
+              <div class="lbl">Đầu ra</div><pre>[0,1]</pre>
+            </div>
+            <div class="io">
+              <div class="lbl">Đầu vào</div><pre>nums = [3,2,4], target = 6</pre>
+              <div class="split"></div>
+              <div class="lbl">Đầu ra</div><pre>[1,2]</pre>
+            </div>
+          </div>
+          <div class="note" style="margin:8px 0 14px">THAY raw <code>&lt;pre bg-default-100&gt;</code> hiện tại → card IO chuẩn (nhãn input/output, mono, copy). <span class="flag">nay đang hand-roll</span></div>
+
+          <hr class="sep" style="margin:14px 0"/>
+          <div class="between"><div class="b sm">💡 Gợi ý</div><span class="btn ghost sm" onclick="toggle('hintBody')">Hiện/ẩn</span></div>
+          <div id="hintBody" class="hide" style="margin-top:8px"><div class="card" style="background:var(--surface2)">Dùng bảng băm lưu <code>value → index</code>, mỗi phần tử tra <code>target - value</code> đã gặp chưa. O(n).</div></div>
+          <div class="note" style="margin-top:6px">Gợi ý = collapsible (đã có). Lời giải ở tab riêng (reveal-gated, mất điểm).</div>
+        </div>
+        <!-- solutions tab -->
+        <div id="l-sol" class="hide">
+          <div class="card" style="background:var(--surface2); text-align:center; padding:22px">
+            <div class="b">Xem lời giải mẫu?</div>
+            <div class="sm muted" style="margin:6px 0 12px">Mở lời giải sẽ <b>không tính điểm</b> bài này.</div>
+            <button class="btn primary">Mở lời giải (mất điểm)</button>
+          </div>
+          <div class="note" style="margin-top:10px">reveal-gated (mutateRevealCodingSolution) → tab lời giải per-language (Shiki). Tách khỏi tab Mô tả cho gọn.</div>
+        </div>
+        <!-- submissions tab -->
+        <div id="l-sub" class="hide">
+          <div class="b sm" style="margin-bottom:8px">Lần nộp của bạn <span class="blocktag">SurfaceListCard</span></div>
+          <div class="card flush">
+            <div class="listrow" style="cursor:default"><div class="grow sm">14:32 · hôm nay</div><span class="chip" style="padding:2px 7px">python</span><span class="chip ok">Accepted</span></div>
+            <div class="listrow" style="cursor:default"><div class="grow sm">14:20 · hôm nay</div><span class="chip" style="padding:2px 7px">python</span><span class="chip bad">Wrong Answer</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="drag" title="kéo đổi rộng (resizable)"></div>
+
+    <!-- RIGHT -->
+    <div class="pane right">
+      <!-- editor toolbar -->
+      <div class="paneHead between">
+        <div class="seg">
+          <button class="on">Python</button><button>JS</button><button>TS</button><button>Java</button><button>C++</button>
+        </div>
+        <div class="row">
+          <span class="blocktag">language = SegmentedControl</span>
+          <button class="btn ghost sm" title="về starter code">↺ Reset</button>
+        </div>
+      </div>
+      <!-- editor -->
+      <div class="editor">
+        <div class="gutter mono">1<br>2<br>3<br>4<br>5<br>6</div>
+        <pre class="mono grow"><span class="k">def</span> <span class="f">two_sum</span>(nums, target):
+    seen = {}
+    <span class="k">for</span> i, v <span class="k">in</span> <span class="f">enumerate</span>(nums):
+        <span class="k">if</span> target - v <span class="k">in</span> seen:
+            <span class="k">return</span> [seen[target - v], i]
+        seen[v] = i</pre>
+      </div>
+      <div class="note" style="padding:4px 14px; background:var(--code)">Editor = <b>Monaco</b> (đã có) — giữ. Cái mới là <b>khung console phía dưới</b> + thanh Run/Submit.</div>
+
+      <!-- console -->
+      <div class="console">
+        <div class="tabs">
+          <button class="on" onclick="ctab(this,'c-case')">Test case</button>
+          <button onclick="ctab(this,'c-res')">Kết quả</button>
+          <span class="blocktag" style="align-self:center; margin-left:auto">CodeConsole · CẦN TẠO</span>
+        </div>
+        <div class="grow" style="overflow:auto; padding:12px">
+          <!-- testcase tab -->
+          <div id="c-case">
+            <div class="caseTabs" style="padding:0 0 10px">
+              <button class="casePill on">Case 1</button><button class="casePill">Case 2</button>
+            </div>
+            <div class="io"><div class="lbl">nums</div><pre>[2,7,11,15]</pre><div class="split"></div><div class="lbl">target</div><pre>9</pre></div>
+            <div class="note" style="margin-top:8px">Chạy thử = chỉ chấm trên <b>sample testcase</b> (isSample). <span class="flag">RUN cần BE mới (đổi schema)</span></div>
+          </div>
+          <!-- result tab -->
+          <div id="c-res" class="hide">
+            <!-- state: accepted -->
+            <div id="res-ok">
+              <div class="row" style="margin-bottom:10px"><span class="chip ok" style="font-size:14px; padding:5px 12px">✓ Accepted</span><span class="muted sm">3/3 test case đã qua</span></div>
+              <div class="caseTabs" style="padding:0 0 10px">
+                <button class="casePill pass">Case 1 ✓</button><button class="casePill pass">Case 2 ✓</button><button class="casePill pass">Case 3 ✓</button>
+              </div>
+              <div class="statgrid" style="margin-bottom:6px">
+                <div class="cell"><div class="v">3/3</div><div class="l">Đúng</div></div>
+                <div class="cell"><div class="v">42<span class="xs"> ms</span></div><div class="l">Thời gian</div></div>
+                <div class="cell"><div class="v">17<span class="xs"> MB</span></div><div class="l">Bộ nhớ</div></div>
+              </div>
+              <div class="note">per-case grid + stats = render <b>perCaseResults</b> + runtimeMs/memoryKb <span class="flag">đã persist, NAY VỨT ĐI</span> <span class="blocktag">TestCaseResultGrid · CẦN TẠO</span> · <span class="blocktag">StatGridCard</span></div>
+            </div>
+            <!-- state: wrong -->
+            <div id="res-bad" class="hide">
+              <div class="row" style="margin-bottom:10px"><span class="chip bad" style="font-size:14px; padding:5px 12px">✕ Wrong Answer</span><span class="muted sm">2/3 test case đã qua</span></div>
+              <div class="caseTabs" style="padding:0 0 10px">
+                <button class="casePill pass">Case 1 ✓</button><button class="casePill pass">Case 2 ✓</button><button class="casePill fail on">Case 3 ✕</button>
+              </div>
+              <div class="io"><div class="lbl">Đầu vào</div><pre>nums=[3,3], target=6</pre><div class="split"></div><div class="lbl" style="color:#5ee08f">Mong đợi</div><pre>[0,1]</pre><div class="split"></div><div class="lbl" style="color:#ff8080">Nhận được</div><pre>[]</pre></div>
+              <div class="note" style="margin-top:8px">Case sai → mở đúng input + expected vs got (diff). Học viên thấy NGAY sai ở đâu.</div>
+            </div>
+            <!-- state: judging -->
+            <div id="res-judging" class="hide">
+              <div class="row"><span class="chip accent">⟳ Đang chấm…</span><span class="muted sm">gửi tới Judge0, đợi realtime qua socket</span></div>
+              <div class="note" style="margin-top:8px">= <b>AIProcessingText</b> (đã có, realtime /job_notifications).</div>
+            </div>
+          </div>
+        </div>
+        <!-- action bar -->
+        <div class="actionbar">
+          <span class="note">Chạy thử = sample · Nộp = full testcase ẩn</span>
+          <div class="row">
+            <button class="btn sm" onclick="showRes('res-judging')">▷ Chạy thử</button>
+            <button class="btn primary sm" onclick="showRes('res-ok')">Nộp bài</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ S3: SOLVE mobile (stacked) ============ -->
+<section class="surface page active hide" id="s3">
+  <div class="row" style="margin-bottom:10px"><span class="btn ghost sm" onclick="go('s1')">← Quay lại</span></div>
+  <div class="card" style="max-width:420px; margin:0 auto">
+    <div class="tabs" style="padding:0"><button class="on">Đề</button><button>Code</button><button>Kết quả</button></div>
+    <div style="padding:12px 4px">
+      <div class="row wrap" style="gap:8px; margin-bottom:8px"><h1 class="bb" style="font-size:18px">Two Sum</h1><span class="chip easy">Cơ bản</span></div>
+      <p class="sm" style="margin-bottom:10px">Cho <code>nums</code> và <code>target</code>, trả về chỉ số 2 phần tử có tổng bằng target.</p>
+      <div class="io"><div class="lbl">Đầu vào</div><pre>[2,7,11,15], 9</pre><div class="split"></div><div class="lbl">Đầu ra</div><pre>[0,1]</pre></div>
+    </div>
+    <div class="actionbar" style="border-radius:0 0 12px 12px"><span class="note">mobile: 3 tab dọc</span><button class="btn primary sm">Nộp bài</button></div>
+  </div>
+  <div class="note" style="text-align:center; margin-top:12px; max-width:420px; margin-left:auto; margin-right:auto">
+    Dưới <b>lg</b>: 2-pane → xếp DỌC thành 3 tab (Đề / Code / Kết quả). Editor full-width, console = tab thứ 3.
+  </div>
+</section>
+
+<!-- proto nav -->
+<nav class="proto-nav">
+  <button class="btn" onclick="setScreen('s1')">1 · Danh sách</button>
+  <button class="btn" onclick="setScreen('s2')">2 · Giải bài (desktop)</button>
+  <button class="btn" onclick="setScreen('s3')">3 · Mobile</button>
+  <span class="muted xs" style="align-self:center; margin-left:8px">Màn 2: bấm “Chạy thử / Nộp bài” để xem state kết quả</span>
+</nav>
+
+<script>
+  const caps = { s1:'Màn 1 — /practice (danh sách, giữ shell cũ)', s2:'Màn 2 — /practice/[slug] · CODE UI MỚI (2-pane IDE + console per-case)', s3:'Màn 3 — Giải bài trên mobile (stacked 3 tab)' };
+  function setScreen(id){
+    document.querySelectorAll('.surface').forEach(s=>{ s.classList.toggle('active', s.id===id); s.classList.toggle('hide', s.id!==id); });
+    document.getElementById('cap').textContent = caps[id] || '';
+    window.scrollTo(0,0);
+  }
+  function go(id){ setScreen(id); }
+  function ltab(btn,id){ btn.parentNode.querySelectorAll('button').forEach(b=>b.classList.remove('on')); btn.classList.add('on');
+    ['l-desc','l-sol','l-sub'].forEach(x=>document.getElementById(x).classList.toggle('hide', x!==id)); }
+  function ctab(btn,id){ btn.parentNode.querySelectorAll('button').forEach(b=>b.classList.remove('on')); btn.classList.add('on');
+    ['c-case','c-res'].forEach(x=>document.getElementById(x).classList.toggle('hide', x!==id)); }
+  function toggle(id){ document.getElementById(id).classList.toggle('hide'); }
+  function showRes(state){
+    // jump to result tab and show the requested state
+    document.querySelectorAll('#c-res > div').forEach(d=>d.classList.add('hide'));
+    document.getElementById(state).classList.remove('hide');
+    // flip console tabs to "Kết quả"
+    const tabBtns = document.querySelectorAll('.console .tabs button'); tabBtns.forEach(b=>b.classList.remove('on')); tabBtns[1].classList.add('on');
+    document.getElementById('c-case').classList.add('hide'); document.getElementById('c-res').classList.remove('hide');
+    if(state==='res-judging'){ setTimeout(()=>showRes(Math.random()>0.5?'res-ok':'res-bad'), 1100); }
+  }
+  setScreen('s1');
+</script>
+</body>
+</html>

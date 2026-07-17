@@ -40,9 +40,14 @@ export interface PlaygroundStep {
     title: string
     /** Step body — markdown, rendered via `MarkdownContent`. */
     body: string
-    /** Optional shell command shown as a copyable hint for this step. */
+    /** Optional shell command shown as a copyable hint for this step (terminal-kind steps). */
     commandHint?: string | null
+    /** Optional action to perform in the RAG widget for this step (rag-kind steps). */
+    actionHint?: string | null
 }
+
+/** Interaction kind of a playground — drives the right-hand widget + the step-hint field. */
+export type PlaygroundKind = "terminal" | "rag"
 
 /** Full playground exercise detail, keyed by slug. */
 export interface Playground {
@@ -52,6 +57,8 @@ export interface Playground {
     slug: string
     /** Display title. */
     title: string
+    /** Interaction kind — `terminal` (CLI agent + Terminal/Resources) or `rag` (import→ask→cite widget). */
+    kind: PlaygroundKind
     /** Guided steps, in order. */
     steps: Array<PlaygroundStep>
 }

@@ -69,11 +69,13 @@ const playgroundQuery1 = gql`
         id
         slug
         title
+        kind
         steps {
           sortIndex
           title
           body
           commandHint
+          actionHint
         }
       }
     }

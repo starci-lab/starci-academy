@@ -64,7 +64,15 @@ const FLAT_CHAT_INPUT_CLASS =
     "w-full !rounded-none border-0 !bg-transparent !p-0 !shadow-none ring-0 focus:ring-0 hover:!bg-transparent focus:!bg-transparent data-[hovered=true]:!bg-transparent data-[focused=true]:!bg-transparent"
 
 /** Props for the {@link RagPlayground} feature. */
-export type RagPlaygroundProps = WithClassNames<undefined>
+export interface RagPlaygroundProps extends WithClassNames<undefined> {
+    /**
+     * When true, render ONLY the 2-pane import→ask→cite workspace — no marketing
+     * hero, no closing course-CTA, no outer max-width padding — so it can be
+     * embedded as the right-hand widget of a `kind: "rag"` playground step
+     * (see `PlaygroundSession`). Default false keeps the standalone public page.
+     */
+    embedded?: boolean
+}
 
 /**
  * PUBLIC RAG Playground — a marketing demo: import a code sample (paste /
@@ -74,7 +82,7 @@ export type RagPlaygroundProps = WithClassNames<undefined>
  *
  * Split 2-pane layout: left = code import, right = chat + citations.
  */
-export const RagPlayground = ({ className }: RagPlaygroundProps) => {
+export const RagPlayground = ({ className, embedded = false }: RagPlaygroundProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
@@ -292,24 +300,33 @@ export const RagPlayground = ({ className }: RagPlaygroundProps) => {
 
     return (
         <div className={className}>
-            <div className="mx-auto flex max-w-6xl flex-col gap-16 px-4 pt-8 pb-16 sm:px-6 md:gap-20 md:pb-20 md:pt-10 lg:px-8">
-                {/* hero */}
-                <div className="flex min-h-[calc(70dvh-4rem)] flex-col justify-center">
-                    <HeroBanner
-                        eyebrow={t("ragPlayground.hero.eyebrow")}
-                        eyebrowIcon={<SparkleIcon aria-hidden focusable="false" className="size-3" />}
-                        headline={t.rich("ragPlayground.hero.headline", {
-                            accent: (chunks) => <span className="text-accent-soft-foreground">{chunks}</span>,
-                        })}
-                        subline={t("ragPlayground.hero.subline")}
-                        primary={(
-                            <Button variant="primary" size="lg" onPress={onSeePlayground}>
-                                {t("ragPlayground.hero.cta")}
-                                <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
-                            </Button>
-                        )}
-                    />
-                </div>
+            <div
+                className={cn(
+                    embedded
+                        // embedded in a session step pane: no marketing chrome, fill the pane
+                        ? "flex h-full flex-col"
+                        : "mx-auto flex max-w-6xl flex-col gap-16 px-4 pt-8 pb-16 sm:px-6 md:gap-20 md:pb-20 md:pt-10 lg:px-8",
+                )}
+            >
+                {/* hero — standalone marketing page only */}
+                {!embedded ? (
+                    <div className="flex min-h-[calc(70dvh-4rem)] flex-col justify-center">
+                        <HeroBanner
+                            eyebrow={t("ragPlayground.hero.eyebrow")}
+                            eyebrowIcon={<SparkleIcon aria-hidden focusable="false" className="size-3" />}
+                            headline={t.rich("ragPlayground.hero.headline", {
+                                accent: (chunks) => <span className="text-accent-soft-foreground">{chunks}</span>,
+                            })}
+                            subline={t("ragPlayground.hero.subline")}
+                            primary={(
+                                <Button variant="primary" size="lg" onPress={onSeePlayground}>
+                                    {t("ragPlayground.hero.cta")}
+                                    <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
+                                </Button>
+                            )}
+                        />
+                    </div>
+                ) : null}
 
                 {/* split 2-pane playground */}
                 <div id="playground" className="grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -570,22 +587,24 @@ export const RagPlayground = ({ className }: RagPlaygroundProps) => {
                     </div>
                 </div>
 
-                {/* closing course-CTA funnel — the demo has to point somewhere */}
-                <Card className="mx-auto w-full max-w-3xl">
-                    <CardContent className="flex flex-col items-center gap-3 py-10 text-center">
-                        <GraduationCapIcon aria-hidden focusable="false" className="size-8 text-accent-soft-foreground" />
-                        <Typography type="h6" weight="bold">
-                            {t("ragPlayground.closingCta.title")}
-                        </Typography>
-                        <Typography type="body-sm" color="muted" className="max-w-lg">
-                            {t("ragPlayground.closingCta.description")}
-                        </Typography>
-                        <Button variant="primary" size="lg" onPress={onSeeCourse}>
-                            {t("ragPlayground.closingCta.cta")}
-                            <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
-                        </Button>
-                    </CardContent>
-                </Card>
+                {/* closing course-CTA funnel — standalone marketing page only */}
+                {!embedded ? (
+                    <Card className="mx-auto w-full max-w-3xl">
+                        <CardContent className="flex flex-col items-center gap-3 py-10 text-center">
+                            <GraduationCapIcon aria-hidden focusable="false" className="size-8 text-accent-soft-foreground" />
+                            <Typography type="h6" weight="bold">
+                                {t("ragPlayground.closingCta.title")}
+                            </Typography>
+                            <Typography type="body-sm" color="muted" className="max-w-lg">
+                                {t("ragPlayground.closingCta.description")}
+                            </Typography>
+                            <Button variant="primary" size="lg" onPress={onSeeCourse}>
+                                {t("ragPlayground.closingCta.cta")}
+                                <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
+                            </Button>
+                        </CardContent>
+                    </Card>
+                ) : null}
             </div>
         </div>
     )

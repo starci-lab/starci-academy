@@ -13,6 +13,8 @@ import {
     cn,
 } from "@heroui/react"
 import {
+    ArrowLeftIcon,
+    ArrowRightIcon,
     CopyIcon,
     CubeIcon,
     LinkSimpleIcon,
@@ -30,6 +32,7 @@ import { ListRow } from "@/components/blocks/lists/ListRow"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
+import { RagPlayground } from "@/components/features/rag-playground/RagPlayground"
 import { useAppSelector } from "@/redux/hooks"
 import { pathConfig } from "@/resources/path"
 import { useQueryPlaygroundSwr } from "@/hooks/swr/api/graphql/queries/useQueryPlaygroundSwr"
@@ -110,6 +113,17 @@ export const PlaygroundSession = () => {
 
     const steps = playground?.steps ?? []
     const currentStep = steps[currentStepIndex]
+    // `rag`-kind playgrounds swap the CLI-agent Terminal/Resources for the
+    // self-contained RAG import→ask→cite widget, and walk steps MANUALLY
+    // (no agent to server-verify each step) — see the kind-branch below.
+    const isRag = playground?.kind === "rag"
+
+    const onPrevStep = useCallback(() => {
+        setCurrentStepIndex((prev) => Math.max(0, prev - 1))
+    }, [])
+    const onNextStep = useCallback(() => {
+        setCurrentStepIndex((prev) => Math.min(steps.length - 1, prev + 1))
+    }, [steps.length])
 
     const onLeave = useCallback(() => {
         router.push(pathConfig().locale(locale).course(courseDisplayId).learn().playground().build())
@@ -247,9 +261,36 @@ export const PlaygroundSession = () => {
                                     {currentStep.commandHint}
                                 </pre>
                             ) : null}
+                            {/* rag-kind steps carry an actionHint (what to do in the widget) instead of a shell command */}
+                            {currentStep.actionHint ? (
+                                <div className="rounded-medium border border-dashed border-default bg-default px-3 py-2 text-sm">
+                                    <MarkdownContent markdown={currentStep.actionHint} />
+                                </div>
+                            ) : null}
 
                             <div className="border-t border-default pt-4">
-                                {!sessionId ? (
+                                {isRag ? (
+                                    // rag path: no CLI agent — the learner works in the RAG widget
+                                    // on the right and walks the steps manually.
+                                    <div className="flex items-center gap-2">
+                                        <Button
+                                            variant="tertiary"
+                                            isDisabled={currentStepIndex === 0}
+                                            onPress={onPrevStep}
+                                        >
+                                            <ArrowLeftIcon aria-hidden focusable="false" className="size-4" />
+                                            {t("playground.session.prevStep")}
+                                        </Button>
+                                        <Button
+                                            variant="primary"
+                                            isDisabled={currentStepIndex >= steps.length - 1}
+                                            onPress={onNextStep}
+                                        >
+                                            {t("playground.session.nextStep")}
+                                            <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
+                                        </Button>
+                                    </div>
+                                ) : !sessionId ? (
                                     <div className="flex flex-col gap-3">
                                         <Typography type="body-sm" weight="medium">
                                             {t("playground.session.modeTitle")}
@@ -337,75 +378,84 @@ export const PlaygroundSession = () => {
                     )}
                 </div>
 
-                {/* ── RIGHT: Terminal / Resources workspace ── */}
+                {/* ── RIGHT: kind-branched workspace ── */}
                 <div className="flex flex-col overflow-hidden">
-                    <div className="border-b border-default px-4 py-2">
-                        <TabsCard
-                            leftTabs={{
-                                items: WORKSPACE_TABS,
-                                selectedKey: workspaceTab,
-                                ariaLabel: t("playground.session.tabsAria"),
-                                onSelectionChange: (key) => setWorkspaceTab(key as WorkspaceTab),
-                            }}
-                        />
-                    </div>
+                    {isRag ? (
+                        // rag path: the self-contained import→ask→cite widget IS the workspace
+                        <div className="h-full overflow-y-auto">
+                            <RagPlayground embedded className="h-full" />
+                        </div>
+                    ) : (
+                        <>
+                            <div className="border-b border-default px-4 py-2">
+                                <TabsCard
+                                    leftTabs={{
+                                        items: WORKSPACE_TABS,
+                                        selectedKey: workspaceTab,
+                                        ariaLabel: t("playground.session.tabsAria"),
+                                        onSelectionChange: (key) => setWorkspaceTab(key as WorkspaceTab),
+                                    }}
+                                />
+                            </div>
 
-                    <div className="flex-1 overflow-hidden p-4">
-                        {workspaceTab === "terminal" ? (
-                            <ScrollShadow hideScrollBar className="h-full overflow-y-auto rounded-2xl bg-default">
-                                {byomState.commandOutput ? (
-                                    <pre className="whitespace-pre-wrap p-4 font-mono text-xs">
-                                        {byomState.commandOutput}
-                                    </pre>
+                            <div className="flex-1 overflow-hidden p-4">
+                                {workspaceTab === "terminal" ? (
+                                    <ScrollShadow hideScrollBar className="h-full overflow-y-auto rounded-2xl bg-default">
+                                        {byomState.commandOutput ? (
+                                            <pre className="whitespace-pre-wrap p-4 font-mono text-xs">
+                                                {byomState.commandOutput}
+                                            </pre>
+                                        ) : (
+                                            <EmptyContent
+                                                icon={<TerminalWindowIcon aria-hidden focusable="false" className="size-8 text-muted" />}
+                                                title={t("playground.session.terminalEmptyTitle")}
+                                                description={t("playground.session.terminalEmptyDescription")}
+                                            />
+                                        )}
+                                    </ScrollShadow>
                                 ) : (
-                                    <EmptyContent
-                                        icon={<TerminalWindowIcon aria-hidden focusable="false" className="size-8 text-muted" />}
-                                        title={t("playground.session.terminalEmptyTitle")}
-                                        description={t("playground.session.terminalEmptyDescription")}
-                                    />
-                                )}
-                            </ScrollShadow>
-                        ) : (
-                            <Card className="h-full">
-                                <CardContent className={cn("flex h-full flex-col", byomState.resources.length === 0 && "justify-center")}>
-                                    {byomState.resources.length === 0 ? (
-                                        <EmptyContent
-                                            icon={<LinkSimpleIcon aria-hidden focusable="false" className="size-8 text-muted" />}
-                                            title={t("playground.session.resourcesEmptyTitle")}
-                                            description={t("playground.session.resourcesEmptyDescription")}
-                                        />
-                                    ) : (
-                                        <ScrollShadow hideScrollBar className="flex h-full flex-col overflow-y-auto">
-                                            {byomState.resources.map((resource, index) => (
-                                                <ListRow
-                                                    key={`${resource.kind}-${resource.name}`}
-                                                    leading={(
-                                                        <IconTile
-                                                            icon={RESOURCE_KIND_ICON[resource.kind.toLowerCase()] ?? RESOURCE_KIND_FALLBACK_ICON}
-                                                            tone="neutral"
-                                                            size="sm"
-                                                        />
-                                                    )}
-                                                    title={resource.name}
-                                                    subtitle={resource.kind}
-                                                    trailing={(
-                                                        <Chip
-                                                            size="sm"
-                                                            variant="soft"
-                                                            color={resourceStatusColor(resource.status)}
-                                                        >
-                                                            {resource.status}
-                                                        </Chip>
-                                                    )}
-                                                    divider={index < byomState.resources.length - 1}
+                                    <Card className="h-full">
+                                        <CardContent className={cn("flex h-full flex-col", byomState.resources.length === 0 && "justify-center")}>
+                                            {byomState.resources.length === 0 ? (
+                                                <EmptyContent
+                                                    icon={<LinkSimpleIcon aria-hidden focusable="false" className="size-8 text-muted" />}
+                                                    title={t("playground.session.resourcesEmptyTitle")}
+                                                    description={t("playground.session.resourcesEmptyDescription")}
                                                 />
-                                            ))}
-                                        </ScrollShadow>
-                                    )}
-                                </CardContent>
-                            </Card>
-                        )}
-                    </div>
+                                            ) : (
+                                                <ScrollShadow hideScrollBar className="flex h-full flex-col overflow-y-auto">
+                                                    {byomState.resources.map((resource, index) => (
+                                                        <ListRow
+                                                            key={`${resource.kind}-${resource.name}`}
+                                                            leading={(
+                                                                <IconTile
+                                                                    icon={RESOURCE_KIND_ICON[resource.kind.toLowerCase()] ?? RESOURCE_KIND_FALLBACK_ICON}
+                                                                    tone="neutral"
+                                                                    size="sm"
+                                                                />
+                                                            )}
+                                                            title={resource.name}
+                                                            subtitle={resource.kind}
+                                                            trailing={(
+                                                                <Chip
+                                                                    size="sm"
+                                                                    variant="soft"
+                                                                    color={resourceStatusColor(resource.status)}
+                                                                >
+                                                                    {resource.status}
+                                                                </Chip>
+                                                            )}
+                                                            divider={index < byomState.resources.length - 1}
+                                                        />
+                                                    ))}
+                                                </ScrollShadow>
+                                            )}
+                                        </CardContent>
+                                    </Card>
+                                )}
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         </div>

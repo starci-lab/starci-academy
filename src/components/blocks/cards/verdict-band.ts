@@ -54,7 +54,7 @@ export const verdictBandClassName = (withVerdict?: VerdictBand): string | undefi
             ? `before:bg-${withVerdict.color}`
             : undefined
     return cn(
-        "relative overflow-hidden pl-4 before:absolute before:inset-y-0 before:left-0 before:w-1 before:content-['']",
+        "relative overflow-hidden pl-4 before:absolute before:inset-y-0 before:left-0 before:w-[2px] before:content-['']",
         bgClass,
     )
 }

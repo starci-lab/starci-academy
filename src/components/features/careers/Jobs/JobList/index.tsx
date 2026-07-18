@@ -202,11 +202,11 @@ export const JobList = ({ className }: JobListProps) => {
             <AsyncContent
                 isLoading={isLoading && items.length === 0}
                 skeleton={(
-                    <div className="flex flex-col gap-2">
+                    <SurfaceListCard>
                         {Array.from({ length: 6 }).map((_unused, index) => (
                             <JobListRowSkeleton key={index} />
                         ))}
-                    </div>
+                    </SurfaceListCard>
                 )}
                 isEmpty={items.length === 0}
                 emptyContent={isPlatformEmpty

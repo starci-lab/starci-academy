@@ -1,29 +1,30 @@
 "use client"
 
 import React from "react"
-import {
-    Skeleton,
-} from "@heroui/react"
-import { SkeletonText } from "@/components/blocks/skeleton/SkeletonText"
-import { SkeletonParagraph } from "@/components/blocks/skeleton/SkeletonParagraph"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /**
- * Placeholder for the content header (title, description, meta chips) shown
- * while the content entity is loading.
+ * Placeholder for the content header (breadcrumb, title, description, meta chips)
+ * shown while the content entity is loading.
  *
- * Presentational: static skeleton, no props or logic. The title mirrors the
- * real `text-2xl` heading and the description mirrors the `text-sm` body, so
- * the layout does not shift when data arrives. The meta chip is a non-text
- * block, so it keeps a raw `Skeleton`.
+ * Presentational: static skeleton, no props or logic. Mirrors {@link ContentHeader}
+ * via {@link PageHeader} — a breadcrumb line above an H3 title + a description +
+ * a meta row of three items (read badge · reading-time chip · challenge count) —
+ * so the layout does not shift when data arrives.
  */
 export const ContentHeaderSkeleton = () => {
     return (
-        <div className="flex flex-col gap-3 p-3">
-            <SkeletonText size="2xl" width="w-1/2" />
-            <SkeletonParagraph size="sm" lines={3} />
+        // mirror PageHeader: breadcrumb ↔ title-block ↔ meta at gap-3; title ↔ description gap-2
+        <div className="flex flex-col gap-3">
+            <Skeleton.Breadcrumbs count={4} />
+            <div className="flex flex-col gap-2">
+                <Skeleton.Typography type="h3" width="1/2" />
+                <Skeleton.Paragraph lines={2} />
+            </div>
             <div className="flex flex-wrap items-center gap-2">
-                <Skeleton className="h-7 w-[120px] rounded-full" />
-                <Skeleton className="h-7 w-[100px] rounded-full" />
+                <Skeleton.Chip />
+                <Skeleton.Chip />
+                <Skeleton.Typography type="body-xs" width="1/4" />
             </div>
         </div>
     )

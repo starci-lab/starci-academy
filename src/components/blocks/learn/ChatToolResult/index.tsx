@@ -6,6 +6,8 @@ import { ArrowRightIcon } from "@phosphor-icons/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { SearchCourseContentItem } from "@/modules/api/graphql/queries/types/search-course-content"
 import { EntityResultRow } from "@/components/blocks/learn/EntityResultRow"
+import { SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Props for the {@link ChatToolResult} block. */
 export interface ChatToolResultProps extends WithClassNames<undefined> {
@@ -64,11 +66,21 @@ export const ChatToolResult = ({
             </div>
 
             {isLoading ? (
-                <div className="flex flex-col gap-2 p-3">
+                <>
                     {[0, 1].map((row) => (
-                        <div key={row} className="h-12 animate-pulse rounded-lg bg-default" />
+                        <SurfaceListCardItem key={row}>
+                            <div className="flex flex-col gap-2">
+                                {showKindChip ? (
+                                    <Skeleton.Chip />
+                                ) : (
+                                    <Skeleton.Typography type="body-xs" width="1/3" />
+                                )}
+                                <Skeleton.Typography type="body-sm" width="3/4" />
+                                <Skeleton.Typography type="body-xs" width="full" />
+                            </div>
+                        </SurfaceListCardItem>
                     ))}
-                </div>
+                </>
             ) : (
                 <>
                     {items.map((item, index) => (

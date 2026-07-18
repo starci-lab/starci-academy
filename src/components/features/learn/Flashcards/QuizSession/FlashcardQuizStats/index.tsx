@@ -8,7 +8,8 @@ import { useTranslations } from "next-intl"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
+import { SurfaceListCard, SurfaceListCardRow, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
 import { VerdictHeroCard, type VerdictHeroBand } from "@/components/blocks/stats/VerdictHeroCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
@@ -86,13 +87,40 @@ export const FlashcardQuizStats = ({ courseId, onStartQuiz, className }: Flashca
         <AsyncContent
             isLoading={statsSwr.isLoading && !stats}
             skeleton={(
-                // MIRROR the loaded 2-zone height (hero + gap-list) so switching INTO
-                // this sub-tab doesn't collapse then jump back tall on resolve (thầy
-                // 2026-07-13 "tab bị giật" — skeleton must mirror its layout,
-                // `starci-fe-skeleton-apply`).
+                // MIRROR the loaded 2-zone tree (label + VerdictHeroCard, then label +
+                // ranked SurfaceListCard) so switching INTO this sub-tab doesn't collapse
+                // then jump back on resolve (thầy 2026-07-13 "tab bị giật" — skeleton must
+                // mirror its layout).
                 <div className="flex flex-col gap-6">
-                    <Skeleton className="h-44 w-full rounded-xl" />
-                    <Skeleton className="h-32 w-full rounded-xl" />
+                    {/* ZONE 1 — "Độ phủ vs mục tiêu": label + verdict hero */}
+                    <section className="flex flex-col gap-3">
+                        <Skeleton className="h-[14px] w-40 rounded" />
+                        <SectionCard>
+                            <div className="flex items-baseline gap-1">
+                                <Skeleton className="h-9 w-20 rounded" />
+                                <Skeleton className="h-[14px] w-6 rounded" />
+                            </div>
+                            <Skeleton.Typography type="body-sm" width="3/4" />
+                            <Skeleton.Typography type="body-xs" width="1/2" />
+                            <Skeleton.ProgressBar />
+                            <Skeleton.Button width="w-44" />
+                        </SectionCard>
+                    </section>
+
+                    {/* ZONE 2 — "Chủ đề yếu": label + ranked list (tag + coverage chip) */}
+                    <section className="flex flex-col gap-3">
+                        <Skeleton className="h-[14px] w-32 rounded" />
+                        <SurfaceListCard>
+                            {Array.from({ length: 4 }).map((_unused, index) => (
+                                <SurfaceListCardItem key={index}>
+                                    <div className="flex items-center justify-between gap-3">
+                                        <Skeleton.Typography type="body-sm" width="1/3" />
+                                        <Skeleton className="h-6 w-12 shrink-0 rounded-full" />
+                                    </div>
+                                </SurfaceListCardItem>
+                            ))}
+                        </SurfaceListCard>
+                    </section>
                 </div>
             )}
             error={!stats ? statsSwr.error : undefined}

@@ -63,8 +63,9 @@ import {
 } from "../types"
 import { computeCvCompleteness } from "../completeness"
 import { CvBlockStack } from "../CvBlocksWorkspace/CvBlockStack"
-import { CvHtmlPreview } from "../CvBlocksWorkspace/CvHtmlPreview"
-import { buildCvExportHtml } from "../CvBlocksWorkspace/CvHtmlDocument"
+import { CvPdfPreview } from "../CvBlocksWorkspace/CvPdfPreview"
+import { CvTexEditor } from "../CvBlocksWorkspace/CvTexEditor"
+import { buildCvTexSource } from "../CvBlocksWorkspace/buildCvTexSource"
 import {
     CV_FONTS,
     CV_GOOGLE_FONTS_HREF,
@@ -91,6 +92,13 @@ const AUTOSAVE_DEBOUNCE_MS = 1000
 
 /** Which pane the mobile `Sửa | Xem` toggle is showing. */
 type MobilePane = "edit" | "preview"
+
+/**
+ * How the edit pane is authored: `"block"` = the block-by-block form (the
+ * `.tex` is regenerated from the blocks); `"latex"` = raw `.tex` editing (the
+ * user's hand-edited source wins). The compiled-PDF preview is the same in both.
+ */
+type WorkspaceMode = "block" | "latex"
 
 /** Font-scale segments the style rail offers ("Cỡ chữ"). */
 const FONT_SCALE_VALUES: Array<CvFontScale> = ["sm", "md", "lg"]
@@ -151,9 +159,37 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
     /** Local editable copy — the stack edits this; this component debounces the autosave. */
     const [draft, setDraft] = useState<CvDocument | undefined>(undefined)
 
+    /** Block-edit vs raw-LaTeX-edit for the edit pane (the preview is compiled-PDF either way). */
+    const [mode, setMode] = useState<WorkspaceMode>("block")
+    /** Hand-edited `.tex` buffer — only authoritative in `"latex"` mode. Seeded on first switch. */
+    const [texDraft, setTexDraft] = useState<string>("")
+
     useEffect(() => {
         setDraft(activeDocument)
     }, [activeDocument])
+
+    /**
+     * The CV's CURRENT `.tex` — regenerated from the blocks in block mode, or the
+     * user's hand-edited buffer in LaTeX mode. Feeds the compiled-PDF preview, the
+     * PDF export, and the "Tải .tex" download.
+     */
+    const currentTex = useMemo(() => {
+        if (!draft) {
+            return ""
+        }
+        return mode === "latex" ? texDraft : buildCvTexSource(draft)
+    }, [draft, mode, texDraft])
+
+    const onModeChange = useCallback((next: WorkspaceMode) => {
+        // Seed the hand-edit buffer the first time LaTeX mode opens: the persisted
+        // `tex_source` if any, else the current block-generated `.tex`.
+        if (next === "latex") {
+            setTexDraft((prev) => (prev.length > 0
+                ? prev
+                : (draft?.texSource ?? (draft ? buildCvTexSource(draft) : ""))))
+        }
+        setMode(next)
+    }, [draft])
 
     useEffect(() => {
         if (!draft) {
@@ -267,7 +303,7 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
             })
             const result = await exportDocument({
                 id: draft.id,
-                html: buildCvExportHtml(draft),
+                tex: currentTex,
                 format,
             })
             const url = result.data?.renderCvBlocks?.data?.url
@@ -277,7 +313,23 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
         } finally {
             setExportingFormat(null)
         }
-    }, [draft, updateDocument, exportDocument])
+    }, [draft, updateDocument, exportDocument, currentTex])
+
+    /** Download the current `.tex` as a client-side file (no server round-trip). */
+    const onDownloadTex = useCallback(() => {
+        if (!draft) {
+            return
+        }
+        const blob = new Blob([currentTex], { type: "text/x-tex" })
+        const objectUrl = URL.createObjectURL(blob)
+        const anchor = document.createElement("a")
+        anchor.href = objectUrl
+        anchor.download = `${draft.label || "cv"}.tex`
+        document.body.appendChild(anchor)
+        anchor.click()
+        anchor.remove()
+        URL.revokeObjectURL(objectUrl)
+    }, [draft, currentTex])
 
     // Feed the toolbar (rendered as the Navbar's bottom layer) via a store, and
     // register a STABLE node once so the name input never remounts (keeps focus).
@@ -290,8 +342,9 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
             onBack: onBackToGallery,
             onLabelChange,
             onExport,
+            onDownloadTex,
         })
-    }, [draft?.label, draft, exportingFormat, onBackToGallery, onLabelChange, onExport, setToolbar])
+    }, [draft?.label, draft, exportingFormat, onBackToGallery, onLabelChange, onExport, onDownloadTex, setToolbar])
     const toolbarNode = useMemo(() => <CvEditorToolbarBar />, [])
     useRegisterNavbarBottomLayer(toolbarNode)
 
@@ -622,30 +675,52 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
                         </ScrollShadow>
                     </ResizableRail>
 
-                    {/* Content — blocks | preview, each an independent scroll region. */}
+                    {/* Content — edit pane (block form | raw LaTeX) | compiled-PDF preview,
+                        each an independent scroll region. */}
                     <div className="grid min-w-0 flex-1 grid-cols-1 gap-6 p-6 lg:grid-cols-2 lg:overflow-hidden">
-                        {/* Blocks — ScrollShadow scroll region on desktop. */}
-                        <ScrollShadow
-                            hideScrollBar
+                        {/* Edit pane — a Khối | LaTeX toggle over either the block form or
+                            the raw `.tex` editor. */}
+                        <div
                             className={cn(
-                                "min-h-0 lg:pr-1",
-                                mobilePane !== "edit" && "hidden lg:block",
+                                "flex min-h-0 flex-col gap-3",
+                                mobilePane !== "edit" && "hidden lg:flex",
                             )}
                         >
-                            {draft ? (
-                                <CvBlockStack
-                                    blocks={draft.blocks}
-                                    onChange={onBlocksChange}
-                                    addableTypes={addableTypes}
-                                    onAddBlock={onAddBlock}
-                                    onAiRewrite={onAiRewrite}
-                                />
-                            ) : null}
-                        </ScrollShadow>
+                            <TabsCard
+                                variant="primary"
+                                size="sm"
+                                leftTabs={{
+                                    selectedKey: mode,
+                                    ariaLabel: t("cv.builder.modeAria"),
+                                    onSelectionChange: (key) => onModeChange(String(key) as WorkspaceMode),
+                                    items: [
+                                        { key: "block", label: t("cv.builder.modeBlock") },
+                                        { key: "latex", label: t("cv.builder.modeLatex") },
+                                    ],
+                                }}
+                            />
+                            {mode === "block" ? (
+                                <ScrollShadow hideScrollBar className="min-h-0 flex-1 lg:pr-1">
+                                    {draft ? (
+                                        <CvBlockStack
+                                            blocks={draft.blocks}
+                                            onChange={onBlocksChange}
+                                            addableTypes={addableTypes}
+                                            onAddBlock={onAddBlock}
+                                            onAiRewrite={onAiRewrite}
+                                        />
+                                    ) : null}
+                                </ScrollShadow>
+                            ) : (
+                                <div className="min-h-0 flex-1">
+                                    <CvTexEditor value={texDraft} onChange={setTexDraft} />
+                                </div>
+                            )}
+                        </div>
 
-                        {/* Preview — independent scroll region on desktop. */}
+                        {/* Preview — the compiled PDF (debounced tectonic compile). */}
                         <div className={cn("min-h-0", mobilePane !== "preview" && "hidden lg:block")}>
-                            {draft ? <CvHtmlPreview doc={draft} /> : null}
+                            {draft ? <CvPdfPreview cvId={draft.id} tex={currentTex} /> : null}
                         </div>
                     </div>
                 </div>

@@ -9,7 +9,8 @@ import { useRouter } from "next/navigation"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
+import { SurfaceListCard, SurfaceListCardRow, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { VerdictHeroCard } from "@/components/blocks/stats/VerdictHeroCard"
@@ -110,10 +111,52 @@ export const FlashcardReviewStats = ({ courseId, onStartReview, className }: Fla
         <AsyncContent
             isLoading={isLoading}
             skeleton={(
+                // MIRROR the loaded tree: ZONE 1 label + memory-health hero (value ·
+                // verdict · sub · meter · 2-up split · CTA), ZONE 2 label + weak-topic
+                // SurfaceListCard with a drill CTA + avg caption OUTSIDE the card.
                 <div className="flex flex-col gap-6">
-                    <Skeleton className="h-40 w-full rounded-xl" />
-                    <Skeleton className="h-28 w-full rounded-xl" />
-                    <Skeleton className="h-32 w-full rounded-xl" />
+                    {/* ZONE 1 — "Sức khoẻ trí nhớ" hero */}
+                    <section className="flex flex-col gap-3">
+                        <Skeleton className="h-[14px] w-40 rounded" />
+                        <SectionCard>
+                            <div className="flex items-baseline gap-1">
+                                <Skeleton className="h-9 w-20 rounded" />
+                                <Skeleton className="h-[14px] w-6 rounded" />
+                            </div>
+                            <Skeleton.Typography type="body-sm" width="3/4" />
+                            <Skeleton.Typography type="body-xs" width="1/2" />
+                            <Skeleton.ProgressBar />
+                            {/* mature/young 2-up split */}
+                            <div className="flex overflow-hidden rounded-2xl border border-default">
+                                {Array.from({ length: 2 }).map((_unused, index) => (
+                                    <div key={index} className={cn("flex flex-1 flex-col gap-1 p-3", index > 0 && "border-l border-default")}>
+                                        <Skeleton.Typography type="body-xs" width="2/3" />
+                                        <Skeleton className="h-5 w-14 rounded" />
+                                    </div>
+                                ))}
+                            </div>
+                            <Skeleton.Button width="w-40" />
+                        </SectionCard>
+                    </section>
+
+                    {/* ZONE 2 — "Điểm yếu theo chủ đề": label + list, then CTA + caption below the card */}
+                    <div className="flex flex-col">
+                        <section className="flex flex-col gap-3">
+                            <Skeleton className="h-[14px] w-40 rounded" />
+                            <SurfaceListCard>
+                                {Array.from({ length: 4 }).map((_unused, index) => (
+                                    <SurfaceListCardItem key={index}>
+                                        <div className="flex items-center justify-between gap-3">
+                                            <Skeleton.Typography type="body-sm" width="1/3" />
+                                            <Skeleton className="h-6 w-16 shrink-0 rounded-full" />
+                                        </div>
+                                    </SurfaceListCardItem>
+                                ))}
+                            </SurfaceListCard>
+                        </section>
+                        <Skeleton.Button width="w-44" className="mt-3 self-start" />
+                        <Skeleton.Typography type="body-xs" width="2/3" className="mt-2" />
+                    </div>
                 </div>
             )}
             error={!stats ? statsSwr.error : undefined}

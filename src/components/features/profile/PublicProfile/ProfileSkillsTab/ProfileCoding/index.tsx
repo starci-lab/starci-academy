@@ -229,9 +229,17 @@ export const ProfileCoding = ({
                             </SurfaceListCardItem>
                         </SurfaceListCard>
                     </div>
-                    {/* solve history — surface list card with item rows */}
+                    {/* solve history — search/filter toolbar + surface list card with item rows */}
                     <div className="flex flex-col gap-3">
                         <Skeleton.Typography type="body-sm" width="1/4" />
+                        {/* search/filter toolbar (search bar + funnel + found count) */}
+                        <div className="flex flex-wrap items-center justify-between gap-3">
+                            <div className="flex min-w-0 flex-1 items-center gap-3">
+                                <Skeleton className="h-9 min-w-0 flex-1 rounded-medium" />
+                                <Skeleton className="size-9 shrink-0 rounded-full" />
+                            </div>
+                            <Skeleton.Typography type="body-sm" className="w-16 shrink-0" />
+                        </div>
                         <SurfaceListCard>
                             {[0, 1, 2].map((row) => (
                                 <SurfaceListCardItem key={row}>

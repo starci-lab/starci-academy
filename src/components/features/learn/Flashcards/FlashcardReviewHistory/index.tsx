@@ -12,7 +12,7 @@ import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
-import { SkeletonListRow } from "@/components/blocks/skeleton/Skeleton/ListRow"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { queryMyFlashcardReviewHistory } from "@/modules/api/graphql/queries/query-my-flashcard-review-history"
 import type { QueryFlashcardReviewHistoryItem } from "@/modules/api/graphql/queries/types/my-flashcard-review-history"
 import { groupByTimeBucket } from "../historyBuckets"
@@ -175,10 +175,31 @@ export const FlashcardReviewHistory = ({ courseId, onStartReview, className }: F
         <AsyncContent
             isLoading={historySwr.isLoading && items.length === 0}
             skeleton={(
+                // MIRROR the loaded tree: a toolbar (search + count + deck/time toggle)
+                // above a SurfaceListCard of run rows (deck/date + card-count + a
+                // reviewed-ratio ProgressMeter, xp chip trailing).
                 <div className="flex flex-col gap-3">
-                    <SkeletonListRow withTrailing />
-                    <SkeletonListRow withTrailing />
-                    <SkeletonListRow withTrailing />
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                        <Skeleton className="h-9 w-full rounded-medium sm:max-w-xs" />
+                        <div className="flex shrink-0 items-center gap-3">
+                            <Skeleton className="h-[14px] w-16 rounded" />
+                            <Skeleton className="h-9 w-16 rounded-medium" />
+                        </div>
+                    </div>
+                    <SurfaceListCard>
+                        {Array.from({ length: 4 }).map((_unused, index) => (
+                            <SurfaceListCardItem key={index}>
+                                <div className="flex items-center gap-3">
+                                    <div className="flex min-w-0 flex-1 flex-col gap-1">
+                                        <Skeleton.Typography type="body-sm" width="1/2" />
+                                        <Skeleton.Typography type="body-xs" width="1/3" />
+                                        <Skeleton.ProgressBar className="max-w-[220px]" />
+                                    </div>
+                                    <Skeleton className="h-6 w-12 shrink-0 rounded-full" />
+                                </div>
+                            </SurfaceListCardItem>
+                        ))}
+                    </SurfaceListCard>
                 </div>
             )}
             error={items.length === 0 ? historySwr.error : undefined}

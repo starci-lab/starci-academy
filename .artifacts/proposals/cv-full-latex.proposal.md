@@ -36,11 +36,11 @@
 - **BE**: `render-cv-blocks.handler.ts` (Puppeteer→tectonic) · `graphql-types/request.ts` (`html`→`tex`) · `cv-blocks.entity.ts` (+`tex_source`) + migration · Dockerfile core (+tectonic) · template `.tex` + generator service · (git history: khôi phục logic tectonic cũ).
 - **FE**: `CvBlocksWorkspace` (editor .tex + PDF preview) · `mutation-render-cv-blocks.ts` + types (`html`→`tex`) · `cv-blocks.ts` query type (+`texSource`) · retire/repurpose `CvHtmlDocument`/`CvHtmlPreview` · sửa STALE doc-comment.
 
-## 6. Chờ thầy chốt (trước khi build)
-1. **Block-editor giữ hay bỏ?** (a) giữ block-editor → "Generate .tex" → sang chế độ sửa .tex (an toàn, 2 chế độ); (b) bỏ hẳn block-editor, CV = thuần `.tex` từ đầu (đơn giản hơn, nhưng mất UI soạn có cấu trúc). Thầy nói "xuất .tex user sửa" → nghiêng (a)?
-2. **Còn cần export Word (.docx) không?** LaTeX→docx khó/xấu. Nếu bỏ Word thì gọn; nếu giữ thì cần path riêng.
-3. **Duyệt đổi Docker image core (+tectonic)?** — deploy-affecting.
-4. **Build luôn hay để BACKLOG?** Đây là build BE+FE phối hợp (không thuần FE) — cần lane build + BE.
+## 6. Quyết định (thầy CHỐT 2026-07-18 — build luôn)
+1. **Block-editor GIỮ** (option a) — "build cv by block trở lại": block-editor sinh `.tex` ban đầu → user sửa `.tex` trực tiếp. 2 chế độ.
+2. **BỎ Word** — export chỉ PDF (tectonic) + tải `.tex`. Bỏ nhánh `html-to-docx`/Puppeteer.
+3. **DUYỆT đổi Docker core (+tectonic)** — deploy-affecting, thầy OK.
+4. **BUILD LUÔN** — BE+FE phối hợp, session này.
 
 ## 7. Bàn giao
 - Route build: **BE+FE phối hợp** (không thuần `starci-fe-build` — có Docker/entity/migration). Sau khi thầy chốt §6 → build.

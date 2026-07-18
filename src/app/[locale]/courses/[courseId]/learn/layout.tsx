@@ -11,6 +11,7 @@ import { OnThisPage } from "@/components/features/learn/OnThisPage"
 import { ContentAiFab } from "@/components/features/learn/ContentAiFab"
 import { ContentAiSelectionAsk } from "@/components/features/learn/ContentAiSelectionAsk"
 import { EnrollGate } from "@/components/features/learn/shared/EnrollGate"
+import { PersonalProjectGatePreview } from "@/components/features/learn/PersonalProject/PersonalProjectGatePreview"
 import { GithubLinkGate } from "@/components/features/auth/GithubLinkGate"
 import { ResizableRail } from "@/components/blocks/layout/ResizableRail"
 import { useQueryCourseSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseSwr"
@@ -30,6 +31,11 @@ const ENROLL_REQUIRED_SURFACES: ReadonlySet<string> = new Set([
 /** i18n key for each gated surface's display name (folded into the gate title). */
 const SURFACE_LABEL_KEY: Record<string, string> = {
     "personal-project": "finalProject.title",
+}
+
+/** Per-surface MOCK teaser rendered behind the enroll card (Medium-style gate). */
+const SURFACE_PREVIEW: Record<string, React.ReactNode> = {
+    "personal-project": <PersonalProjectGatePreview />,
 }
 
 const Layout = ({ children }: PropsWithChildren) => {
@@ -184,6 +190,7 @@ const Layout = ({ children }: PropsWithChildren) => {
                 <EnrollGate
                     title={t("enrollGate.title", { surface: gateLabelKey ? t(gateLabelKey) : "" })}
                     description={t("enrollGate.description")}
+                    preview={surface ? SURFACE_PREVIEW[surface] : undefined}
                 />
             )
             : (

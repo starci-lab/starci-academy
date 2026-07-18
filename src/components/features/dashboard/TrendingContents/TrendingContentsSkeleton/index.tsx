@@ -40,7 +40,8 @@ export const TrendingContentsSkeleton = ({ className }: TrendingContentsSkeleton
                 {ROW_WIDTHS.slice(0, SKELETON_ROW_COUNT).map((width, index) => (
                     <SurfaceListCardItem key={index}>
                         <div className="flex items-center gap-3">
-                            <Skeleton className="size-5 shrink-0 rounded" />
+                            {/* leading rank NUMBER (a w-5 text span), not a filled box */}
+                            <Skeleton className="h-4 w-5 shrink-0 rounded" />
                             <Skeleton.Typography type="body-sm" width={width} />
                         </div>
                     </SurfaceListCardItem>

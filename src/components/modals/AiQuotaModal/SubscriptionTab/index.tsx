@@ -5,7 +5,6 @@ import React, {
 } from "react"
 import {
     Button,
-    Skeleton,
     Typography,
 } from "@heroui/react"
 import {
@@ -26,6 +25,7 @@ import {
 } from "../types"
 import { useAiQuotaOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { useQueryMyAiQuotaSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyAiQuotaSwr"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { pathConfig } from "@/resources/path"
 
 /**
@@ -49,9 +49,10 @@ export const AiQuotaSubscriptionTab = () => {
 
     if (isLoading || !quota) {
         return (
-            <div className="flex flex-col gap-3">
-                <Skeleton className="h-4 w-40 rounded-md" />
-                <Skeleton className="h-9 w-40 rounded-xl" />
+            // mirror the no-tier card: bordered rounded-2xl frame + body-sm line + lg button
+            <div className="flex flex-col gap-3 rounded-2xl border border-default p-4">
+                <Skeleton.Typography type="body-sm" width="2/3" />
+                <Skeleton className="h-11 w-40 self-start rounded-xl" />
             </div>
         )
     }

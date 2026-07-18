@@ -904,11 +904,17 @@
       "noCourseHint": "Học một khóa và hoàn thành capstone để CV có dự án được xác thực.",
       "noCourseCta": "Vào khóa học",
       "downloadCta": "Tải PDF",
-      "downloadWordCta": "Tải Word",
+      "downloadTexCta": "Tải .tex",
+      "modeAria": "Chuyển giữa chế độ Khối và LaTeX",
+      "modeBlock": "Khối",
+      "modeLatex": "LaTeX",
       "mobilePaneAria": "Chuyển giữa Sửa và Xem",
       "editPane": "Sửa",
       "previewPane": "Xem",
       "previewTitle": "Bản xem trước CV (PDF)",
+      "preview": {
+        "compileError": "Không biên dịch được LaTeX. Kiểm tra lại cú pháp .tex."
+      },
       "addBlock": "Thêm block",
       "removeBlock": "Xoá block",
       "moveBlockUp": "Đưa block lên",
@@ -1294,6 +1300,18 @@
     }
   },
   "finalProject": {
+    "gatePreview": {
+      "milestone": "Chặng 1 · Dựng API core",
+      "t1Title": "Thiết kế schema & migration",
+      "t1Meta": "Trọng số 20% · chấm tự động + review",
+      "t1Crit": "ERD đủ bảng lõi, khóa ngoại đúng; migration chạy sạch, seed dữ liệu mẫu.",
+      "t2Title": "REST endpoints + validation",
+      "t2Meta": "Trọng số 30% · e2e test",
+      "t2Crit": "CRUD đủ, phân trang, mã lỗi đúng; DTO validate ở boundary.",
+      "t3Title": "Auth & phân quyền",
+      "t3Meta": "Trọng số 25% · review",
+      "t3Crit": "JWT + refresh token, guard theo vai trò."
+    },
     "dashboard": {
       "title": "Dự án cá nhân",
       "subtitle": "Xây dựng dự án của bạn theo từng chặng — chấm điểm bằng AI.",
@@ -2361,6 +2379,19 @@
     "subtitle": "Trả lời các câu hỏi phỏng vấn kỹ thuật ngẫu nhiên, AI chấm chi tiết.",
     "gateTitle": "Luyện phỏng vấn — chứng minh bạn sẵn sàng đi làm",
     "gateDescription": "Phỏng vấn chấm theo đúng khóa bạn học; điểm vào hồ sơ nhà tuyển dụng thấy. Đăng ký khóa để mở.",
+    "gatePreview": {
+      "q1Badge": "Câu 1 · System Design · Middle",
+      "q1Title": "Thiết kế dịch vụ rút gọn URL chịu 10.000 req/s",
+      "q1Body": "Nêu API, cách sinh short-code không đụng độ, chọn store (SQL vs KV) và cache đọc. Bạn tối ưu cho đọc hay ghi, vì sao?",
+      "answerHint": "Vùng trả lời của bạn — nói lời giải, AI ghi lại và chấm từng chiều.",
+      "r1": "Giao tiếp",
+      "r2": "Tư duy giải quyết",
+      "r3": "Kỹ thuật",
+      "r4": "Kiểm thử",
+      "q2Badge": "Câu 2 · Database · Senior",
+      "q2Title": "Khi nào chọn NoSQL thay vì SQL? Đánh đổi gì?",
+      "q2Body": "Phân tích theo mô hình dữ liệu, tính nhất quán và pattern truy vấn thực tế của sản phẩm bạn từng làm."
+    },
     "promptsRetry": "Thử lại",
     "syncError": "Không lưu được tiến độ phỏng vấn. Vui lòng thử lại.",
     "gradingLabel": "Chấm điểm",
@@ -2606,6 +2637,8 @@
       "workspaceLockedTitle": "Kết nối máy để mở workspace",
       "workspaceLockedHint": "Chạy lệnh bên trái trên máy bạn — terminal mở khi máy kết nối.",
       "confirmStep": "Xác nhận đã xong bước này",
+      "verifying": "Đang kiểm tra…",
+      "verifyMissed": "Chưa thấy bước hoàn thành — chạy lệnh ở trên trên máy bạn rồi bấm lại.",
       "prevStep": "Bước trước",
       "nextStep": "Bước sau",
       "completeTitle": "Hoàn thành bài tập!",

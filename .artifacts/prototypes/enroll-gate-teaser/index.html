@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>EnrollGate v2 — teaser preview + floating enroll card (surface gate)</title>
+<style>
+  :root{--bg:#faf7f5;--surface:#fff;--surface2:#f6f2ef;--border:#e7e0db;--fg:#241c1a;--muted:#8a7d76;
+    --accent:#ec4899;--accent-soft:#fce7f3;--accent-soft-fg:#9d1f5f;
+    --success-soft:#e3f5ee;--success-fg:#136b4f;--warn-soft:#fbf0dd;--warn-fg:#8a5510;--default:#f1ece9;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:ui-sans-serif,system-ui,"Segoe UI",sans-serif;background:var(--bg);color:var(--fg)}
+  .top{display:flex;align-items:center;gap:10px;padding:10px 18px;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:30;flex-wrap:wrap}
+  .top b{font-size:14px}
+  .seg{display:inline-flex;border:1px solid var(--border);border-radius:999px;overflow:hidden}
+  .seg button{border:0;background:transparent;padding:7px 14px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--muted)}
+  .seg button.on{background:var(--accent-soft);color:var(--accent-soft-fg)}
+  .seg.alt button.on{background:var(--default);color:var(--fg)}
+  .ml{margin-left:auto}
+  .stage{max-width:920px;margin:0 auto;padding:26px 20px 80px}
+  .pghead h1{font-size:26px;margin:0 0 6px}
+  .pghead p{color:var(--muted);font-size:14px;margin:0 0 22px}
+  /* ---------- teaser preview ---------- */
+  .teaserwrap{position:relative}
+  .teaser{position:relative;overflow:hidden;max-height:430px}
+  .fade{pointer-events:none;position:absolute;inset-inline:0;bottom:0;height:280px;background:linear-gradient(to bottom,transparent, rgba(250,247,245,.75) 55%, var(--bg));z-index:5}
+  .teaser .inner{pointer-events:none;filter:saturate(.96)}
+  /* mock content cards */
+  .card{background:var(--surface);border-radius:24px;box-shadow:0 1px 2px rgba(0,0,0,.05);padding:18px;margin-bottom:14px}
+  .qbadge{display:inline-block;font-size:11px;font-weight:600;color:var(--accent-soft-fg);background:var(--accent-soft);border-radius:999px;padding:3px 10px;margin-bottom:10px}
+  .qtitle{font-size:16px;font-weight:600;margin-bottom:8px}
+  .qbody{font-size:13.5px;color:#4a4340;line-height:1.55;margin-bottom:12px}
+  .answerbox{border:1px dashed var(--border);border-radius:16px;background:var(--surface2);color:var(--muted);font-size:13px;padding:14px;margin-bottom:12px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{font-size:11px;font-weight:600;background:var(--default);color:var(--muted);border-radius:999px;padding:4px 10px}
+  .chip.ok{background:var(--success-soft);color:var(--success-fg)}
+  /* project task rows */
+  .mstone{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:2px 0 10px}
+  .task{display:flex;gap:12px;align-items:flex-start}
+  .tnum{flex-shrink:0;width:26px;height:26px;border-radius:8px;background:var(--accent-soft);color:var(--accent-soft-fg);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .ttitle{font-size:14px;font-weight:600}
+  .tmeta{font-size:12px;color:var(--muted);margin:2px 0 6px}
+  .tcrit{font-size:12.5px;color:#4a4340;line-height:1.5;padding-left:16px;margin:0}
+  /* ---------- floating enroll card ---------- */
+  .enrollzone{position:relative;z-index:10;margin-top:-120px;display:flex;justify-content:center}
+  .enroll{width:100%;max-width:480px;background:var(--surface);border-radius:24px;box-shadow:0 12px 40px -12px rgba(0,0,0,.22),0 2px 8px rgba(0,0,0,.06);padding:28px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .tile{width:48px;height:48px;border-radius:12px;background:var(--warn-soft);color:var(--warn-fg);display:flex;align-items:center;justify-content:center}
+  .tile svg{width:24px;height:24px}
+  .etitle{font-size:20px;font-weight:700;line-height:1.25}
+  .edesc{font-size:13.5px;color:var(--muted);max-width:400px;line-height:1.55}
+  .price{display:flex;align-items:baseline;gap:8px;margin-top:2px}
+  .price .now{font-size:22px;font-weight:800}
+  .price .was{font-size:14px;color:var(--muted);text-decoration:line-through}
+  .price .off{font-size:12px;font-weight:700;color:var(--success-fg);background:var(--success-soft);border-radius:999px;padding:2px 8px}
+  .scar{font-size:12px;color:var(--warn-fg)}
+  .cta{margin-top:8px;width:100%;max-width:300px;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:#fff;border:0;border-radius:999px;padding:12px 18px;font-size:15px;font-weight:700;cursor:default}
+  .tag{display:inline-block;font-size:10px;border:1px dashed var(--accent);color:var(--accent-soft-fg);border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:middle}
+  /* ---------- OLD variant ---------- */
+  .oldwrap{display:flex;justify-content:center;padding-top:20px}
+  .oldcard{width:100%;max-width:560px;min-height:320px;background:var(--default);border-radius:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px;padding:40px}
+  .oldcard .tile{background:var(--warn-soft)}
+  .note{max-width:920px;margin:0 auto;padding:0 20px 40px;font-size:12.5px;color:var(--muted);line-height:1.6}
+</style>
+</head>
+<body>
+  <div class="top">
+    <b>EnrollGate v2 · surface gate</b>
+    <div class="seg" id="surf">
+      <button data-s="mock" class="on">Phỏng vấn thử</button>
+      <button data-s="proj">Dự án cá nhân</button>
+    </div>
+    <div class="seg alt ml" id="ver">
+      <button data-v="new" class="on">Mới · teaser + card</button>
+      <button data-v="old">Cũ · card trơ</button>
+    </div>
+  </div>
+
+  <div class="stage" id="stage"></div>
+  <div class="note" id="note"></div>
+
+<script>
+const LOCK='<svg viewBox="0 0 256 256" fill="currentColor"><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96Zm44,96a12,12,0,1,1-12-12A12,12,0,0,1,140,152Z"/></svg>';
+let surf='mock', ver='new';
+
+const MOCK_PREVIEW = `
+  <div class="inner">
+    <div class="card">
+      <span class="qbadge">Câu 1 · System Design · Middle</span>
+      <div class="qtitle">Thiết kế dịch vụ rút gọn URL (bit.ly) chịu 10k req/s</div>
+      <div class="qbody">Nêu API, cách sinh short-code không đụng độ, chọn store (SQL vs KV), và cache đọc. Bạn tối ưu cho đọc hay ghi, vì sao?</div>
+      <div class="answerbox">🎙️ Vùng trả lời của bạn — nói lời giải, AI ghi lại &amp; chấm từng chiều…</div>
+      <div class="chips"><span class="chip">Giao tiếp</span><span class="chip">Tư duy giải quyết</span><span class="chip">Kỹ thuật</span><span class="chip">Kiểm thử</span></div>
+    </div>
+    <div class="card">
+      <span class="qbadge">Câu 2 · Database · Senior</span>
+      <div class="qtitle">Khi nào chọn NoSQL thay vì SQL? Đánh đổi gì?</div>
+      <div class="qbody">Phân tích theo mô hình dữ liệu, tính nhất quán, và pattern truy vấn thực tế của sản phẩm bạn từng làm.</div>
+      <div class="answerbox">🎙️ Vùng trả lời của bạn…</div>
+    </div>
+  </div>`;
+
+const PROJ_PREVIEW = `
+  <div class="inner">
+    <div class="mstone">Chặng 1 · Dựng API core của sản phẩm capstone</div>
+    <div class="card"><div class="task"><div class="tnum">1</div><div><div class="ttitle">Thiết kế schema &amp; migration</div><div class="tmeta">Trọng số 20% · chấm tự động + review</div><ul class="tcrit"><li>ERD đủ 3 bảng lõi, khóa ngoại đúng</li><li>Migration chạy sạch, seed dữ liệu mẫu</li></ul></div></div></div>
+    <div class="card"><div class="task"><div class="tnum">2</div><div><div class="ttitle">REST endpoints + validation</div><div class="tmeta">Trọng số 30% · e2e test</div><ul class="tcrit"><li>CRUD đủ, phân trang, lỗi trả đúng mã</li><li>DTO validate ở boundary</li></ul></div></div></div>
+    <div class="card"><div class="task"><div class="tnum">3</div><div><div class="ttitle">Auth &amp; phân quyền</div><div class="tmeta">Trọng số 25% · review</div><ul class="tcrit"><li>JWT + refresh, guard theo vai</li></ul></div></div></div>
+  </div>`;
+
+const COPY = {
+  mock:{ h:'Phỏng vấn thử', sub:'Trả lời các câu hỏi phỏng vấn kỹ thuật ngẫu nhiên, AI chấm chi tiết.',
+    etitle:'Luyện phỏng vấn — chứng minh bạn sẵn sàng đi làm', edesc:'Phỏng vấn chấm theo đúng khóa bạn học; điểm vào hồ sơ nhà tuyển dụng thấy. Đăng ký khóa để mở.', preview:MOCK_PREVIEW },
+  proj:{ h:'Dự án cá nhân', sub:'Xây capstone thật theo từng chặng, dựng bằng chứng đi làm cho hồ sơ.',
+    etitle:'Mở khoá Dự án cá nhân', edesc:'Đăng ký khóa để mở phần này — thực hành thật, dựng bằng chứng đi làm cho hồ sơ.', preview:PROJ_PREVIEW },
+};
+
+function enrollCard(c){
+  return `<div class="enroll">
+    <div class="tile">${LOCK}<span class="tag" style="position:absolute;transform:translateY(38px)">IconTile warning sm</span></div>
+    <div class="etitle">${c.etitle}</div>
+    <div class="edesc">${c.edesc}</div>
+    <div class="price"><span class="now">1.062.500đ</span><span class="was">1.500.000đ</span><span class="off">-29%</span></div>
+    <div class="scar">⏳ Còn 100 suất giá Sớm · giá tăng lên 1.500.000đ sau đó</div>
+    <button class="cta">Đăng ký khóa học →</button>
+    <span class="tag">card rounded-3xl · PriceTag + PhaseScarcityNote + CTA primary lg</span>
+  </div>`;
+}
+
+function render(){
+  const c = COPY[surf];
+  const S=document.getElementById('stage'), N=document.getElementById('note');
+  let head = `<div class="pghead"><h1>${c.h}</h1><p>${c.sub}</p></div>`;
+  if(ver==='new'){
+    S.innerHTML = head + `
+      <div class="teaserwrap">
+        <div class="teaser">${c.preview}<div class="fade"></div></div>
+        <div class="enrollzone">${enrollCard(c)}</div>
+      </div>`;
+    N.innerHTML = `<b>[Mới]</b> teaser preview MOCK của trang (không interactive, aria-hidden) → fade về cuối (gradient to-bg) → <b>card khoá nổi</b> chồng lên vùng fade (Medium-style, như PremiumPaywall của lesson). Preview cho thấy "trong đó có gì" → CTA mạnh hơn hẳn card xám trơ.`;
+  } else {
+    S.innerHTML = head + `<div class="oldwrap"><div class="oldcard">
+      <div class="tile">${LOCK}</div>
+      <div class="etitle">${c.etitle}</div>
+      <div class="edesc">${c.edesc}</div>
+      <button class="cta">Đăng ký khóa học →</button>
+    </div></div>`;
+    N.innerHTML = `<b>[Cũ]</b> EnrollGate hiện tại = card xám <code>bg-default</code> trơ giữa màn, không cho thấy giá trị bên trong. Đây là cái thầy muốn thay.`;
+  }
+}
+document.getElementById('surf').onclick=e=>{if(e.target.dataset.s){surf=e.target.dataset.s;[...e.currentTarget.children].forEach(b=>b.classList.toggle('on',b.dataset.s===surf));render();}};
+document.getElementById('ver').onclick=e=>{if(e.target.dataset.v){ver=e.target.dataset.v;[...e.currentTarget.children].forEach(b=>b.classList.toggle('on',b.dataset.v===ver));render();}};
+render();
+</script>
+</body>
+</html>

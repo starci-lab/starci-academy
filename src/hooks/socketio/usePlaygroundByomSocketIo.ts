@@ -9,6 +9,7 @@ import type {
     PingPlaygroundByomSocketIoPayload,
     RunPlaygroundByomCommandSocketIoPayload,
     SubscribePlaygroundByomSocketIoPayload,
+    VerifyNowPlaygroundByomSocketIoPayload,
 } from "./types"
 import { PublicationEvent, SubscriptionEvent } from "./enums"
 import { playgroundByomSocket } from "./sockets"
@@ -51,6 +52,9 @@ export interface PlaygroundByomSocketIoControls {
     subscribe: (sessionId: string) => void
     /** Emit `command:run` to relay a shell command to the connected agent. */
     sendCommand: (command: string) => void
+    /** Emit `verify:now` — ask the agent to report resources immediately so the
+     * current step verifies without waiting for the next periodic snapshot. */
+    requestVerify: () => void
 }
 
 /**
@@ -189,9 +193,22 @@ export const usePlaygroundByomSocketIo = (): PlaygroundByomSocketIoControls => {
         [],
     )
 
+    const requestVerify = useCallback(
+        () => {
+            const sessionId = sessionIdRef.current
+            if (!sessionId) {
+                return
+            }
+            const payload: VerifyNowPlaygroundByomSocketIoPayload = { sessionId }
+            playgroundByomSocket.emit(PublicationEvent.PlaygroundByomVerifyNow, payload)
+        },
+        [],
+    )
+
     return {
         state,
         subscribe,
         sendCommand,
+        requestVerify,
     }
 }

@@ -65,8 +65,8 @@ export const OverviewCourses = ({ className, label, onSeeMore, seeMoreLabel }: O
                         {[0, 1].map((row) => (
                             <SurfaceListCardItem key={row}>
                                 <div className="flex items-center gap-3">
-                                    {/* IconTile (md = size-16 rounded-2xl) */}
-                                    <Skeleton className="size-12 shrink-0 rounded-2xl" />
+                                    {/* IconTile (sm = size-12 rounded-xl) */}
+                                    <Skeleton className="size-12 shrink-0 rounded-xl" />
                                     <div className="flex min-w-0 flex-1 flex-col gap-2">
                                         {/* title + percent row */}
                                         <div className="flex items-center justify-between gap-2">

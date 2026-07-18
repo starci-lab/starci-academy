@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation"
 import { type QuizSessionReadinessData, type QuizSessionWeakTagData } from "@/modules/api/graphql/mutations/types/complete-flashcard-quiz-session"
 import { Callout, STATUS_ACTION_CLASS } from "@/components/blocks/feedback/Callout"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { IconTile } from "@/components/blocks/identity/IconTile"
 import { usePaymentOverlayState } from "@/hooks/zustand/overlay/hooks"
 import { PaymentFlow } from "@/modules/types/payment"
 
@@ -35,9 +36,7 @@ export const RecapEnrollUpsell = () => {
 
     return (
         <div className="flex flex-col items-center gap-3 rounded-2xl border border-default bg-default px-6 py-8 text-center">
-            <div className="flex size-12 items-center justify-center rounded-full bg-accent/15">
-                <FlameIcon aria-hidden focusable="false" className="size-6 text-accent-soft-foreground" />
-            </div>
+            <IconTile icon={<FlameIcon aria-hidden focusable="false" />} tone="accent" size="sm" />
             <div className="flex flex-col gap-1">
                 <Typography type="h4" weight="semibold">
                     {t("flashcard.quiz.upsellTitle")}

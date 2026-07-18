@@ -19,6 +19,7 @@ const query1 = gql`
         blocks
         style
         pdfCdnKey
+        texSource
         createdAt
         updatedAt
       }

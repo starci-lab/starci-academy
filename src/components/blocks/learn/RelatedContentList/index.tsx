@@ -6,7 +6,8 @@ import { useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { EntityResultRow } from "@/components/blocks/learn/EntityResultRow"
 import { useQuerySearchCourseContentSwr } from "@/hooks/swr/api/graphql/queries/useQuerySearchCourseContentSwr"
@@ -76,11 +77,17 @@ export const RelatedContentList = ({
             <AsyncContent
                 isLoading={swr.isLoading}
                 skeleton={
-                    <div className="flex flex-col gap-2">
+                    <SurfaceListCard bordered>
                         {Array.from({ length: Math.min(limit, 2) }).map((_, index) => (
-                            <div key={index} className="h-14 animate-pulse rounded-xl bg-default" />
+                            <SurfaceListCardItem key={index}>
+                                <div className="flex flex-col gap-2">
+                                    <Skeleton.Typography type="body-xs" width="1/3" />
+                                    <Skeleton.Typography type="body-sm" width="3/4" />
+                                    <Skeleton.Typography type="body-xs" width="full" />
+                                </div>
+                            </SurfaceListCardItem>
                         ))}
-                    </div>
+                    </SurfaceListCard>
                 }
             >
                 <SurfaceListCard bordered>

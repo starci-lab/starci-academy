@@ -34,4 +34,6 @@ export enum PublicationEvent {
     RunPlaygroundByomCommand = "command:run",
     /** Ping the connected CLI agent to measure round-trip latency (must match backend `agent:ping`). */
     PlaygroundByomPing = "agent:ping",
+    /** Ask the agent to report resources NOW so the current step verifies immediately (must match backend `verify:now`). */
+    PlaygroundByomVerifyNow = "verify:now",
 }

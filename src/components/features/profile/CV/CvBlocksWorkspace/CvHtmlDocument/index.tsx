@@ -1,23 +1,20 @@
 import React from "react"
 import type { CSSProperties } from "react"
-import { renderToStaticMarkup } from "react-dom/server"
 import { CvBlockType as BlockType } from "@/modules/types/enums/cv-block-type"
 import { CvBlockItemSource } from "@/modules/types/enums/cv-block-item-source"
 import type { CvBlock, CvBlockItem, CvDocument, CvFontScale, CvTemplate } from "../../types"
-import { fontFamilyOf, googleFontHrefOf } from "./fonts"
+import { fontFamilyOf } from "./fonts"
 
 /**
- * The ONE shared CV template — a self-contained, INLINE-STYLED React render of
- * the block document. It is the single source of truth for both the instant
- * live preview (rendered directly, client-side) and the PDF/Word export (its
- * serialized HTML is handed to the backend converter — Puppeteer for PDF,
- * html-to-docx for Word — per `CV-BUILDER-BLOCK-EDITOR-BRAINSTORM.md`
- * "PIVOT: RENDER = HTML-FIRST").
+ * The self-contained, INLINE-STYLED React render of the block document. After
+ * the full-LaTeX pivot this is NO LONGER the preview or the export path (both are
+ * now the tectonic-compiled PDF — see `buildCvTexSource` + `CvPdfPreview`). It
+ * lives on as (1) the CV GALLERY thumbnail render (a cheap client-side minimap of
+ * each document) and (2) the executable SSOT for WHICH `item.fields` keys each
+ * `CvBlockType` reads — `buildCvTexSource` ports its per-block field logic.
  *
- * Everything is inline `style` (no external CSS / classes) so the serialized
- * markup is portable to a headless browser + a docx converter with zero style
- * loss. `style.accent` colors the name + section rules; `style.font` selects a
- * widely-available font stack (headless Chromium + Word both have these).
+ * Everything is inline `style` (no external CSS / classes). `style.accent` colors
+ * the name + section rules; `style.font` selects a widely-available font stack.
  */
 
 
@@ -468,28 +465,4 @@ export const CvHtmlDocument = ({ doc }: CvHtmlDocumentProps) => {
             <Template blocks={blocks} accent={accent} scale={scale} />
         </div>
     )
-}
-
-/**
- * Serializes {@link CvHtmlDocument} to a full, self-contained HTML document
- * string for the backend converter (Puppeteer PDF / html-to-docx). `@page`
- * sets A4 with margins; the body font mirrors the template.
- *
- * @param doc - the CV document to serialize.
- * @returns a complete `<!doctype html>…</html>` string.
- */
-export const buildCvExportHtml = (doc: CvDocument): string => {
-    const fontFamily = fontFamilyOf(doc.style.font)
-    const body = renderToStaticMarkup(<CvHtmlDocument doc={doc} />)
-    // load the selected Google font in the export head so Puppeteer (networkidle0)
-    // fetches + renders it before printing; system fonts need no link.
-    const googleHref = googleFontHrefOf(doc.style.font)
-    const fontLink = googleHref ? `<link rel="stylesheet" href="${googleHref}" />` : ""
-    return "<!doctype html><html><head><meta charset=\"utf-8\" />"
-        + fontLink
-        + "<style>"
-        + "@page { size: A4; margin: 14mm; }"
-        + "* { -webkit-print-color-adjust: exact; print-color-adjust: exact; }"
-        + `body { margin: 0; font-family: ${fontFamily}; }`
-        + `</style></head><body>${body}</body></html>`
 }

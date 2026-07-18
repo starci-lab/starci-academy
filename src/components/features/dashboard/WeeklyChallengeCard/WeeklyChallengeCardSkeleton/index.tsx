@@ -9,6 +9,7 @@ import type {
 } from "@/modules/types/base/class-name"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 
 /** Recent-finisher rows shown while the weekly challenge loads. */
 const SKELETON_ROW_COUNT = 3
@@ -44,16 +45,18 @@ export const WeeklyChallengeCardSkeleton = ({ className }: WeeklyChallengeCardSk
             {/* total passers */}
             <Skeleton.Typography type="body-xs" width="1/4" />
 
-            {/* recent finishers */}
-            <div className="flex flex-col gap-2">
+            {/* recent finishers — joined bordered SurfaceListCard (not loose rows) */}
+            <SurfaceListCard bordered>
                 {Array.from({ length: SKELETON_ROW_COUNT }).map((_row, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                        <Skeleton className="size-6 shrink-0 rounded-full" />
-                        <Skeleton className="h-4 flex-1 rounded-md" />
-                        <Skeleton className="h-4 w-12 shrink-0 rounded-md" />
-                    </div>
+                    <SurfaceListCardItem key={index}>
+                        <div className="flex items-center gap-3">
+                            <Skeleton.Avatar size="sm" />
+                            <Skeleton.Typography type="body-sm" width="1/2" className="min-w-0 flex-1" />
+                            <Skeleton className="h-3 w-12 shrink-0 rounded-sm" />
+                        </div>
+                    </SurfaceListCardItem>
                 ))}
-            </div>
+            </SurfaceListCard>
         </LabeledCard>
     )
 }

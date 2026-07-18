@@ -2,6 +2,8 @@
 
 import React, { useState } from "react"
 import {
+    Card,
+    CardContent,
     Tabs,
     Typography,
 } from "@heroui/react"
@@ -87,9 +89,27 @@ export const ManagePinnedProjectsModal = ({
                         isLoading={isLoading && pins.length === 0}
                         skeleton={(
                             <div className="flex flex-col gap-3">
-                                <Skeleton.Card lines={2} />
-                                <Skeleton.Card lines={2} />
-                                <Skeleton.Card lines={2} />
+                                {Array.from({ length: 3 }).map((_, index) => (
+                                    // mirror MediaCard (manage mode): cover · title · meta chip row ·
+                                    // description · footer of 4 icon-only action buttons
+                                    <Card key={index} className="gap-0 overflow-hidden p-0">
+                                        <Skeleton className="aspect-video w-full" />
+                                        <CardContent className="flex flex-col gap-3 px-4 pb-4 pt-3">
+                                            <Skeleton.Typography width="1/2" />
+                                            <div className="flex flex-wrap items-center gap-2">
+                                                <Skeleton.Chip />
+                                                <Skeleton.Chip />
+                                            </div>
+                                            <Skeleton.Typography type="body-sm" width="full" />
+                                            <Skeleton.Typography type="body-sm" width="2/3" />
+                                            <div className="flex items-center gap-2">
+                                                {Array.from({ length: 4 }).map((__, buttonIndex) => (
+                                                    <Skeleton key={buttonIndex} className="size-9 shrink-0 rounded-lg" />
+                                                ))}
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                ))}
                             </div>
                         )}
                         isEmpty={pins.length === 0}

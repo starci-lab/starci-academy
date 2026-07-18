@@ -16,6 +16,7 @@ import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** i18n key per {@link WorkMode} (reuses the existing profile labels). */
 const WORK_MODE_LABEL_KEY: Record<WorkMode, string> = {
@@ -91,9 +92,43 @@ export const JobDetail = ({ className }: JobDetailProps) => {
             <AsyncContent
                 isLoading={isLoading && !job}
                 skeleton={(
-                    <div className="flex flex-col gap-6">
-                        <div className="h-8 w-2/3 animate-pulse rounded-lg bg-default" />
-                        <div className="h-40 w-full animate-pulse rounded-3xl bg-default" />
+                    <div className="flex flex-col gap-10">
+                        {/* PageHeader: title + meta chip row */}
+                        <div className="flex flex-col gap-3">
+                            <Skeleton.Typography type="h3" width="2/3" />
+                            <div className="flex flex-wrap items-center gap-3">
+                                <Skeleton.Chip />
+                                <Skeleton.Chip />
+                                <Skeleton.Typography type="body-sm" width="1/4" />
+                            </div>
+                        </div>
+
+                        {/* company Card: IconTile (size md) + name/description + salary */}
+                        <Card>
+                            <div className="flex items-center gap-3">
+                                <Skeleton className="size-16 shrink-0 rounded-2xl" />
+                                <div className="flex min-w-0 flex-1 flex-col gap-1">
+                                    <Skeleton.Typography type="body" width="1/2" />
+                                    <Skeleton.Typography type="body-sm" width="3/4" />
+                                </div>
+                                <Skeleton.Typography type="h4" width="1/4" className="shrink-0" />
+                            </div>
+                        </Card>
+
+                        {/* description + requirements sections */}
+                        <div className="flex flex-col gap-6">
+                            <div className="flex flex-col gap-2">
+                                <Skeleton.Typography type="body" width="1/4" />
+                                <Skeleton.Paragraph lines={4} />
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <Skeleton.Typography type="body" width="1/4" />
+                                <Skeleton.Paragraph lines={3} />
+                            </div>
+                        </div>
+
+                        {/* primary apply CTA */}
+                        <Skeleton.Button width="w-40" />
                     </div>
                 )}
                 isEmpty={!isLoading && !job}

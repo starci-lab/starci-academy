@@ -4,22 +4,28 @@ import React from "react"
 import {
     Card,
     CardContent,
-    Skeleton,
     cn,
 } from "@heroui/react"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { ProfileHeroSkeleton } from "../ProfileHero/ProfileHeroSkeleton"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 
 /** Props for {@link ProfileLoadingState}. */
 export type ProfileLoadingStateProps = WithClassNames<undefined>
 
 /**
  * First-load skeleton for the public profile, shaped to MIRROR the real shell so
- * the layout never jumps on resolve: a full-width tab strip, then the 2-column
- * body — a BARE identity sidebar on the left (rank avatar + name + bio + CTA +
- * meta, no card) and a stack of labelled section cards on the right (label
- * placeholder OUTSIDE each card, matching `LabeledCard`).
+ * the layout never jumps on resolve. LEFT = the real {@link ProfileHeroSkeleton}
+ * (reused, not re-hand-rolled). RIGHT = the OVERVIEW tab's real sections, each a
+ * label + its own skeleton body: job-readiness (`Skeleton.Metric` + track card),
+ * courses list (`IconTile size-12 rounded-xl` + title/percent + progress rows),
+ * contributions (heatmap + streak line), then the 2-col skills grid — matching
+ * `ProfileJobReadiness` / `OverviewCourses` / `OverviewContributions` /
+ * `OverviewChallengeSkills`+`OverviewCodeSkills`. (Was wrong: 3 generic `h-40`
+ * boxes + a hand-rolled identity with a phantom bio.)
  *
  * @param props - {@link ProfileLoadingStateProps}
  */
@@ -41,46 +47,78 @@ export const ProfileLoadingState = ({
                 </div>
             </div>
 
-            {/* 2-col body: left identity BARE · right content cards */}
+            {/* 2-col body: left identity BARE · right overview sections */}
             <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-6 md:flex-row md:items-start">
-                {/* left: identity column, bare (no card) */}
+                {/* left: identity column — reuse the real hero skeleton */}
                 <aside className="flex w-full flex-col gap-4 md:w-72 md:shrink-0">
-                    {/* rank-framed avatar */}
-                    <Skeleton className="size-44 rounded-full" />
-                    {/* name + @handle */}
-                    <div className="flex flex-col gap-2">
-                        <Skeleton className="h-7 w-44 rounded-xl" />
-                        <Skeleton className="h-4 w-28 rounded-xl" />
-                    </div>
-                    {/* bio */}
-                    <div className="flex flex-col gap-2">
-                        <Skeleton className="h-4 w-full rounded-xl" />
-                        <Skeleton className="h-4 w-3/4 rounded-xl" />
-                    </div>
-                    {/* action cluster */}
-                    <div className="flex flex-col gap-2">
-                        <Skeleton className="h-10 w-full rounded-full" />
-                        <Skeleton className="h-10 w-full rounded-full" />
-                    </div>
-                    {/* meta lines */}
-                    <div className="flex flex-col gap-2">
-                        <Skeleton className="h-4 w-32 rounded-xl" />
-                        <Skeleton className="h-4 w-40 rounded-xl" />
-                    </div>
+                    <ProfileHeroSkeleton />
                 </aside>
 
-                {/* right: labelled section cards (label outside, card body) */}
+                {/* right: labelled overview sections (each = label + section skeleton body) */}
                 <main className="flex min-w-0 flex-1 flex-col gap-6">
-                    {[0, 1, 2].map((section) => (
-                        <div key={section} className="flex flex-col gap-3">
-                            <Skeleton className="h-5 w-40 rounded-xl" />
-                            <Card>
-                                <CardContent>
-                                    <Skeleton className="h-40 w-full rounded-xl" />
-                                </CardContent>
-                            </Card>
+                    {/* job readiness — Skeleton.Metric headline + track card */}
+                    <div className="flex flex-col gap-3">
+                        <Skeleton className="h-5 w-40 rounded-xl" />
+                        <div className="flex flex-col gap-3">
+                            <Skeleton.Metric />
+                            <SurfaceListCard>
+                                <SurfaceListCardItem>
+                                    <div className="flex flex-col gap-3">
+                                        <Skeleton.Typography type="body-sm" width="1/2" />
+                                        <Skeleton.ProgressBar />
+                                        <Skeleton.ProgressBar />
+                                    </div>
+                                </SurfaceListCardItem>
+                            </SurfaceListCard>
                         </div>
-                    ))}
+                    </div>
+
+                    {/* courses — IconTile (size-12 rounded-xl) + title/percent + progress rows */}
+                    <div className="flex flex-col gap-3">
+                        <Skeleton className="h-5 w-40 rounded-xl" />
+                        <SurfaceListCard>
+                            {[0, 1].map((row) => (
+                                <SurfaceListCardItem key={row}>
+                                    <div className="flex items-center gap-3">
+                                        <Skeleton className="size-12 shrink-0 rounded-xl" />
+                                        <div className="flex min-w-0 flex-1 flex-col gap-2">
+                                            <div className="flex items-center justify-between gap-2">
+                                                <Skeleton.Typography type="body-sm" width="1/2" />
+                                                <Skeleton className="h-3 w-8 rounded" />
+                                            </div>
+                                            <Skeleton.ProgressBar />
+                                        </div>
+                                    </div>
+                                </SurfaceListCardItem>
+                            ))}
+                        </SurfaceListCard>
+                    </div>
+
+                    {/* contributions — heatmap grid + streak line */}
+                    <div className="flex flex-col gap-3">
+                        <Skeleton className="h-5 w-40 rounded-xl" />
+                        <div className="flex flex-col gap-3">
+                            <Skeleton className="h-40 w-full rounded-xl" />
+                            <div className="flex items-center gap-2">
+                                <Skeleton className="size-4 shrink-0 rounded-full" />
+                                <Skeleton.Typography type="body-sm" width="1/2" />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* skills — 2-col grid of stat cards */}
+                    <div className="grid gap-6 md:grid-cols-2">
+                        {[0, 1].map((cardIndex) => (
+                            <div key={cardIndex} className="flex flex-col gap-3">
+                                <Skeleton className="h-5 w-40 rounded-xl" />
+                                <Card>
+                                    <CardContent>
+                                        <Skeleton.Metric />
+                                    </CardContent>
+                                </Card>
+                            </div>
+                        ))}
+                    </div>
                 </main>
             </div>
         </div>

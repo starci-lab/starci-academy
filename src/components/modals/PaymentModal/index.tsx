@@ -31,6 +31,7 @@ import { IconTile } from "@/components/blocks/identity/IconTile"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
 import { PriceTag } from "@/components/blocks/commerce/PriceTag"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import type { PriceCurrency } from "@/components/blocks/commerce/PriceTag"
 
@@ -498,14 +499,21 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                                                 <AsyncContent
                                                     isLoading={Boolean(priceLoading)}
                                                     skeleton={
-                                                        <div className="flex flex-col gap-2">
-                                                            {context.lines.map((line) => (
-                                                                <div key={line.courseId} className="flex items-center gap-3">
-                                                                    <div className="size-12 shrink-0 animate-pulse rounded-xl bg-default" />
-                                                                    <div className="h-4 min-w-0 flex-1 animate-pulse rounded-lg bg-default" />
-                                                                    <div className="h-5 w-20 shrink-0 animate-pulse rounded-lg bg-default" />
-                                                                </div>
-                                                            ))}
+                                                        <div className="flex flex-col gap-3">
+                                                            <div className="flex flex-col gap-2">
+                                                                {context.lines.map((line) => (
+                                                                    <div key={line.courseId} className="flex items-center gap-3">
+                                                                        <Skeleton className="size-12 shrink-0 rounded-xl" />
+                                                                        <Skeleton className="h-4 min-w-0 flex-1 rounded-lg" />
+                                                                        <Skeleton className="h-5 w-20 shrink-0 rounded-lg" />
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                            {/* total row — border-t + label + PriceTag */}
+                                                            <div className="flex items-center justify-between gap-3 border-t border-default pt-3">
+                                                                <Skeleton.Typography type="body-sm" width="1/4" />
+                                                                <Skeleton className="h-6 w-28 shrink-0 rounded-lg" />
+                                                            </div>
                                                         </div>
                                                     }
                                                     error={priceError}
@@ -574,7 +582,7 @@ export const PaymentModal = ({ className }: WithClassNames<undefined>) => {
                                                             </Typography>
                                                             <AsyncContent
                                                                 isLoading={Boolean(priceLoading)}
-                                                                skeleton={<div className="mt-2 h-6 w-28 animate-pulse rounded-lg bg-default" />}
+                                                                skeleton={<Skeleton className="mt-2 h-6 w-28 rounded-lg" />}
                                                                 error={priceError}
                                                                 errorContent={{ title: t("payment.priceError") }}
                                                             >

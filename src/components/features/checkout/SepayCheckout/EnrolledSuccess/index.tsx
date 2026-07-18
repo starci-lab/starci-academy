@@ -9,6 +9,7 @@ import {
 import {
     useTranslations,
 } from "next-intl"
+import { IconTile } from "@/components/blocks/identity/IconTile"
 
 /**
  * Success state shown once enrollment is confirmed, just before redirecting to
@@ -24,9 +25,7 @@ export const EnrolledSuccess = () => {
             <Card className="w-full max-w-md bg-default/40 p-8 text-center backdrop-blur-md">
                 <Card.Content>
                     <div className="mb-6 flex justify-center">
-                        <div className="flex h-20 w-20 items-center justify-center rounded-full bg-success/20">
-                            <CheckCircle className="h-10 w-10 text-success-soft-foreground" />
-                        </div>
+                        <IconTile icon={<CheckCircle aria-hidden focusable="false" />} tone="success" size="lg" />
                     </div>
                     <h1 className="mb-2 text-2xl font-bold">{t("payment.sepay.success")}</h1>
                     <p className="mb-6 text-muted">{t("payment.sepay.redirecting")}</p>

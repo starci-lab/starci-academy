@@ -17,6 +17,8 @@ import { useAppSelector } from "@/redux/hooks"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { PriceTag } from "@/components/blocks/commerce/PriceTag"
 import { PhaseScarcityNote } from "@/components/blocks/commerce/PhaseScarcityNote"
+import { IconTile } from "@/components/blocks/identity/IconTile"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /**
  * Medium-style inline paywall for a premium ("trial read") lesson the viewer has
@@ -48,9 +50,7 @@ export const PremiumPaywall = () => {
         // FLAT — no card frame: lives INSIDE the lesson body card (concepts/card.md:
         // no card-in-card), right under the faded teaser, as one continuous surface.
         <div className="flex flex-col items-center gap-3 pt-6 text-center">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-warning-soft">
-                <LockIcon className="h-6 w-6 text-warning-soft-foreground" />
-            </div>
+            <IconTile icon={<LockIcon aria-hidden focusable="false" />} tone="warning" size="sm" />
             <div className="text-xl font-semibold text-foreground">
                 {t("course.paywall.title")}
             </div>
@@ -59,7 +59,7 @@ export const PremiumPaywall = () => {
             </div>
             <AsyncContent
                 isLoading={priceLoading}
-                skeleton={<div className="h-7 w-32 animate-pulse rounded-xl bg-surface" />}
+                skeleton={<Skeleton className="h-7 w-32 rounded-xl" />}
                 error={priceSwr.error}
                 errorContent={{ title: t("payment.priceError") }}
             >

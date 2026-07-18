@@ -19,6 +19,8 @@ export interface CvBlocksDocumentPayload {
     style: CvStyle
     /** MinIO/CDN key of the last rendered PDF; null until `renderCvBlocks` has run once. */
     pdfCdnKey: string | null
+    /** The CV's LaTeX (`.tex`) source — user-editable; null until the first compile. */
+    texSource: string | null
     /** ISO 8601 creation timestamp. */
     createdAt: string
     /** ISO 8601 last-update timestamp. */

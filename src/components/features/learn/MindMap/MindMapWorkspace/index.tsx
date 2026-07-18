@@ -4,7 +4,9 @@ import React, {
     useMemo,
     useState,
 } from "react"
-import { Button, Skeleton, cn } from "@heroui/react"
+import { Button, cn } from "@heroui/react"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { MapTrifoldIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
@@ -99,7 +101,35 @@ export const MindMapWorkspace = ({
     return (
         <AsyncContent
             isLoading={isLoading && !data}
-            skeleton={<Skeleton className="h-full w-full" />}
+            skeleton={(
+                // mirror the two-pane workspace: the left rail (search + funnel + result
+                // list) beside the canvas — not one blank full-viewport box.
+                <div className="flex h-full w-full">
+                    <div className="flex h-full w-80 shrink-0 flex-col border-r border-default">
+                        {/* toolbar: search input + funnel button */}
+                        <div className="flex items-center gap-2 border-b border-default p-3">
+                            <Skeleton className="h-9 min-w-0 flex-1 rounded-medium" />
+                            <Skeleton className="size-9 shrink-0 rounded-medium" />
+                        </div>
+                        {/* result list */}
+                        <div className="flex min-h-0 flex-1 flex-col gap-3 p-3">
+                            <Skeleton.Typography type="body-xs" width="1/3" />
+                            <SurfaceListCard bordered>
+                                {[0, 1, 2, 3, 4].map((row) => (
+                                    <SurfaceListCardItem key={row}>
+                                        <div className="flex flex-col gap-2">
+                                            <Skeleton.Typography type="body-sm" width="3/4" />
+                                            <Skeleton.Typography type="body-xs" width="1/2" />
+                                        </div>
+                                    </SurfaceListCardItem>
+                                ))}
+                            </SurfaceListCard>
+                        </div>
+                    </div>
+                    {/* canvas */}
+                    <Skeleton className="h-full flex-1" />
+                </div>
+            )}
         >
             {isEmpty ? (
                 <div className="flex h-full w-full items-center justify-center p-6">

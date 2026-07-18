@@ -129,17 +129,13 @@ export const ProfileChallenges = ({
                         <SurfaceListCard>
                             {[0, 1, 2].map((row) => (
                                 <SurfaceListCardItem key={row}>
-                                    <div className="flex flex-col gap-3">
-                                        <div className="flex items-start gap-3">
-                                            <Skeleton className="size-12 shrink-0 rounded-xl" />
-                                            <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                                <Skeleton.Typography type="body-sm" width="1/2" />
-                                                <Skeleton.ProgressBar />
-                                                <Skeleton.Typography type="body-xs" width="1/3" />
-                                            </div>
+                                    <div className="flex items-start gap-3">
+                                        <Skeleton className="size-12 shrink-0 rounded-xl" />
+                                        <div className="flex min-w-0 flex-1 flex-col gap-2">
+                                            <Skeleton.Typography type="body-sm" width="1/2" />
+                                            <Skeleton.ProgressBar />
+                                            <Skeleton.Typography type="body-xs" width="1/3" />
                                         </div>
-                                        {/* disclosure link */}
-                                        <Skeleton.Typography type="body-sm" width="1/3" />
                                     </div>
                                 </SurfaceListCardItem>
                             ))}

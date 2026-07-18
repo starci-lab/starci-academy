@@ -15,6 +15,7 @@ import {
     ArrowRightIcon,
     LockIcon,
 } from "@phosphor-icons/react"
+import { IconTile } from "@/components/blocks/identity/IconTile"
 import { PriceTag } from "@/components/blocks/commerce/PriceTag"
 import { PhaseScarcityNote } from "@/components/blocks/commerce/PhaseScarcityNote"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
@@ -69,9 +70,7 @@ export const TrialConversionStrip = ({
     return (
         <div className={cn("flex flex-col gap-3 rounded-3xl bg-surface p-5 shadow-surface", className)}>
             <div className="flex items-start gap-3">
-                <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent-soft">
-                    <LockIcon aria-hidden focusable="false" className="size-5 text-accent-soft-foreground" />
-                </div>
+                <IconTile icon={<LockIcon aria-hidden focusable="false" />} tone="accent" size="sm" />
                 <div className="flex min-w-0 flex-col gap-1">
                     <Typography type="body" weight="semibold">
                         {t("courseContents.trial.title")}

@@ -96,6 +96,16 @@ export interface PingPlaygroundByomSocketIoPayload {
 }
 
 /**
+ * Browser → server payload for `verify:now` — asks the paired agent to report
+ * resources immediately so the current step verifies without waiting for the
+ * next periodic snapshot (matches `PlaygroundByomGateway.handleVerifyNow`).
+ */
+export interface VerifyNowPlaygroundByomSocketIoPayload {
+    /** The session whose connected agent should report its resources now. */
+    sessionId: string
+}
+
+/**
  * Browser → server payload for `command:run` — RAW (no `{data,locale}`
  * wrapper, matches `PlaygroundByomGateway.handleCommandRun`).
  */

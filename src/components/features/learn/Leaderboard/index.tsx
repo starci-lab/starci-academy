@@ -20,6 +20,7 @@ import { useQueryCourseSwr } from "@/hooks/swr/api/graphql/queries/useQueryCours
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import {
     LeaderboardListCard,
     LeaderboardRow,
@@ -188,18 +189,41 @@ export const Leaderboard = ({ className }: LeaderboardProps) => {
                 <AsyncContent
                     isLoading={waiting}
                     skeleton={(
-                        <div className="flex flex-col gap-2">
-                            {[0, 1, 2, 3, 4, 5].map((index) => (
-                                <div key={index} className="flex items-center gap-3 px-2 py-2">
-                                    <Skeleton className="size-5 rounded-md" />
-                                    <Skeleton className="size-9 rounded-full" />
-                                    <div className="flex flex-1 flex-col gap-2">
-                                        <Skeleton.Typography type="body-sm" width="1/3" />
-                                        <Skeleton className="h-1.5 w-4/5 rounded-full" />
-                                    </div>
-                                    <Skeleton.Typography type="body-sm" width="1/4" />
+                        <div className="flex flex-col gap-6">
+                            {/* standing header — badge + primary + secondary */}
+                            <div className="flex items-center gap-3">
+                                <Skeleton className="size-12 shrink-0 rounded-xl" />
+                                <div className="flex min-w-0 flex-1 flex-col gap-1">
+                                    <Skeleton.Typography type="body-sm" width="1/2" />
+                                    <Skeleton.Typography type="body-xs" width="1/3" />
                                 </div>
-                            ))}
+                            </div>
+                            {/* top-3 podium (champion centered + raised) */}
+                            <div className="flex items-end justify-center gap-3">
+                                {[false, true, false].map((isChampion, index) => (
+                                    <div key={index} className="flex flex-col items-center gap-2">
+                                        <Skeleton className={cn("shrink-0 rounded-full", isChampion ? "size-14" : "size-12")} />
+                                        <div className="flex w-20 flex-col items-center gap-1">
+                                            <Skeleton.Typography type="body-sm" width="3/4" />
+                                            <Skeleton.Typography type="body-xs" width="1/2" />
+                                        </div>
+                                        <Skeleton className={cn("w-20 rounded-t-2xl rounded-b-none", isChampion ? "h-16" : "h-10")} />
+                                    </div>
+                                ))}
+                            </div>
+                            {/* ranked rows — [rank · avatar · name · value] */}
+                            <SurfaceListCard>
+                                {[0, 1, 2, 3, 4].map((index) => (
+                                    <SurfaceListCardItem key={index}>
+                                        <div className="flex items-center gap-3">
+                                            <Skeleton className="h-3 w-6 shrink-0 rounded-sm" />
+                                            <Skeleton.Avatar size="sm" />
+                                            <Skeleton.Typography type="body-sm" width="1/3" className="min-w-0 flex-1" />
+                                            <Skeleton className="h-3 w-10 shrink-0 rounded-sm" />
+                                        </div>
+                                    </SurfaceListCardItem>
+                                ))}
+                            </SurfaceListCard>
                         </div>
                     )}
                     isEmpty={entries.length === 0}

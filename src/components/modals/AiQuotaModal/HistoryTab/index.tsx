@@ -7,7 +7,6 @@ import {
     cn,
     Chip,
     ScrollShadow,
-    Skeleton,
     Typography,
 } from "@heroui/react"
 import {
@@ -28,6 +27,7 @@ import {
 } from "../hooks"
 import { EmptyContent } from "@/components/blocks/async/EmptyContent"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { AiCeilSurface } from "@/modules/api/graphql/mutations/types/set-ai-ceil"
 import type { QueryMyCreditUsageHistoryItem } from "@/modules/api/graphql/queries/types/my-credit-usage-history"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -140,8 +140,12 @@ export const AiQuotaHistoryTab = ({
                     <div className="flex flex-col gap-2 rounded-xl border border-default p-4">
                         {[0, 1, 2].map((row) => (
                             <div key={row} className="flex items-center justify-between gap-2">
-                                <Skeleton className="h-4 w-32 rounded-md" />
-                                <Skeleton className="h-5 w-16 rounded-full" />
+                                {/* two stacked lines — model (body-sm) + purpose·time (body-xs) */}
+                                <div className="flex min-w-0 flex-col">
+                                    <Skeleton.Typography type="body-sm" className="w-32" />
+                                    <Skeleton.Typography type="body-xs" className="w-40" />
+                                </div>
+                                <Skeleton.Chip />
                             </div>
                         ))}
                     </div>

@@ -8,8 +8,8 @@ import { useRouter } from "next/navigation"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
-import { SkeletonListRow } from "@/components/blocks/skeleton/Skeleton/ListRow"
+import { SurfaceListCard, SurfaceListCardRow, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { SearchInput } from "@/components/blocks/form/SearchInput"
 import { FlexWrapButtonRadio } from "@/components/blocks/navigation/FlexWrapButtonRadio"
 import { useQueryMyMockInterviewAttemptsSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyMockInterviewAttemptsSwr"
@@ -150,10 +150,31 @@ export const MockInterviewHistory = ({ courseId, courseDisplayId, onStartIntervi
         <AsyncContent
             isLoading={attemptsSwr.isLoading && items.length === 0}
             skeleton={(
+                // MIRROR the loaded tree: a funnel toolbar (search + funnel button + count)
+                // above a SurfaceListCard of attempt rows (name/subtitle + verdict score
+                // chip + caret).
                 <div className="flex flex-col gap-3">
-                    <SkeletonListRow withTrailing />
-                    <SkeletonListRow withTrailing />
-                    <SkeletonListRow withTrailing />
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                        <div className="flex min-w-0 flex-1 items-center gap-3">
+                            <Skeleton className="h-9 min-w-0 flex-1 rounded-medium" />
+                            <Skeleton className="size-9 shrink-0 rounded-medium" />
+                        </div>
+                        <Skeleton className="h-[14px] w-16 shrink-0 rounded" />
+                    </div>
+                    <SurfaceListCard>
+                        {Array.from({ length: 4 }).map((_unused, index) => (
+                            <SurfaceListCardItem key={index}>
+                                <div className="flex items-center gap-3">
+                                    <div className="flex min-w-0 flex-1 flex-col gap-1">
+                                        <Skeleton.Typography type="body-sm" width="1/2" />
+                                        <Skeleton.Typography type="body-xs" width="1/3" />
+                                    </div>
+                                    <Skeleton className="h-6 w-10 shrink-0 rounded-full" />
+                                    <Skeleton className="size-4 shrink-0 rounded" />
+                                </div>
+                            </SurfaceListCardItem>
+                        ))}
+                    </SurfaceListCard>
                 </div>
             )}
             error={items.length === 0 ? attemptsSwr.error : undefined}

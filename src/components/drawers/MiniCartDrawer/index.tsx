@@ -1,12 +1,13 @@
 "use client"
 
 import React, { useCallback, useEffect, useMemo } from "react"
-import { Button, Chip, Drawer, ScrollShadow, Skeleton, Typography } from "@heroui/react"
+import { Button, Chip, Drawer, ScrollShadow, Typography } from "@heroui/react"
 import { ArrowRightIcon, ShoppingCartIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { PriceTag } from "@/components/blocks/commerce/PriceTag"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { CartLine } from "@/components/features/cart/CartView/CartLine"
@@ -152,18 +153,29 @@ export const MiniCartDrawer = () => {
                                 <AsyncContent
                                     isLoading={isLoading}
                                     skeleton={
-                                        // mirror the bordered nested list (not shadow-surface)
-                                        <div className="overflow-hidden rounded-3xl border border-default bg-surface">
-                                            {Array.from({ length: 2 }).map((_, index) => (
-                                                <div key={index} className="flex items-center gap-3 px-4 py-4">
-                                                    <Skeleton className="size-12 shrink-0 rounded-xl" />
-                                                    <div className="flex min-w-0 flex-1 flex-col gap-2">
-                                                        <Skeleton className="h-4 w-1/2 rounded-lg" />
-                                                        <Skeleton className="h-4 w-24 rounded-lg" />
-                                                    </div>
-                                                    <Skeleton className="size-9 shrink-0 rounded-lg" />
+                                        <div className="flex flex-col gap-6">
+                                            {/* combo-discount block above the list (label + bonus chip + meter + hint) */}
+                                            <div className="flex flex-col gap-2">
+                                                <div className="flex items-center justify-between gap-2">
+                                                    <Skeleton.Typography type="body-sm" width="1/2" />
+                                                    <Skeleton.Chip />
                                                 </div>
-                                            ))}
+                                                <Skeleton.ProgressBar />
+                                                <Skeleton.Typography type="body-xs" width="2/3" />
+                                            </div>
+                                            {/* mirror the bordered nested list (not shadow-surface) */}
+                                            <div className="overflow-hidden rounded-3xl border border-default bg-surface">
+                                                {Array.from({ length: 2 }).map((_, index) => (
+                                                    <div key={index} className="flex items-center gap-3 px-4 py-4">
+                                                        <Skeleton className="size-12 shrink-0 rounded-xl" />
+                                                        <div className="flex min-w-0 flex-1 flex-col gap-2">
+                                                            <Skeleton className="h-4 w-1/2 rounded-lg" />
+                                                            <Skeleton className="h-4 w-24 rounded-lg" />
+                                                        </div>
+                                                        <Skeleton className="size-9 shrink-0 rounded-lg" />
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     }
                                     isEmpty={items.length === 0}

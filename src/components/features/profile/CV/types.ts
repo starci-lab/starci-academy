@@ -116,6 +116,13 @@ export interface CvDocument {
     style: CvStyle
     /** MinIO/CDN key of the last rendered PDF; null until `renderCvBlocks` has run once. */
     pdfCdnKey: string | null
+    /**
+     * The CV's LaTeX (`.tex`) source. Null until the first compile. In block
+     * mode it is regenerated from the blocks (`buildCvTexSource`); in LaTeX mode
+     * the user's hand-edited value wins. Persisted BE-side on every
+     * `renderCvBlocks` compile (the FE never sends it via `updateCvBlocks`).
+     */
+    texSource: string | null
     /** ISO 8601 creation timestamp. */
     createdAt: string
     /** ISO 8601 last-update timestamp. */

@@ -147,8 +147,14 @@ export const InterviewSessionDetailDrawer = ({
     const skeleton = (
         <div className="flex flex-col gap-3">
             {Array.from({ length: 3 }).map((_, index) => (
-                <div key={index} className="flex flex-col gap-2 rounded-xl border border-default p-4">
-                    <Skeleton.Typography type="body-sm" width="1/3" />
+                <div key={index} className="flex flex-col gap-3 rounded-xl border border-default p-4">
+                    {/* header row — verdict chip (left) + score (right) */}
+                    <div className="flex items-center justify-between gap-3">
+                        <Skeleton.Chip />
+                        <Skeleton.Typography type="body-sm" width="1/4" />
+                    </div>
+                    {/* question label + body */}
+                    <Skeleton.Typography type="body-xs" width="1/3" />
                     <Skeleton.Typography type="body-sm" width="full" />
                     <Skeleton.Typography type="body-sm" width="2/3" />
                 </div>

@@ -42,7 +42,7 @@ export const WhoToFollowSkeleton = ({ className }: WhoToFollowSkeletonProps) => 
                         className="flex items-center gap-3 px-2 py-1"
                     >
                         <div className="flex min-w-0 flex-1 items-center gap-2">
-                            <Skeleton className="size-6 shrink-0 rounded-full" />
+                            <Skeleton className="size-8 shrink-0 rounded-full" />
                             <div className="flex min-w-0 flex-1 flex-col gap-0">
                                 <Skeleton.Typography type="body-sm" width="1/2" />
                                 <Skeleton.Typography type="body-xs" width="1/3" />

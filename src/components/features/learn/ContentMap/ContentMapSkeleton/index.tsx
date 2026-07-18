@@ -1,43 +1,58 @@
 "use client"
 
-import React from "react"
+import React, {
+    useMemo,
+} from "react"
+import {
+    useTranslations,
+} from "next-intl"
+import { AccordionSkeleton } from "@/components/blocks/skeleton/AccordionSkeleton"
+import { SkeletonText } from "@/components/blocks/skeleton/SkeletonText"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
-import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Number of placeholder modules shown while the content-map loads. */
 const SKELETON_MODULE_COUNT = 3
-
-/** Number of placeholder lesson rows shown per skeleton module. */
-const SKELETON_LESSON_COUNT = 4
 
 /** Props for {@link ContentMapSkeleton}. */
 export type ContentMapSkeletonProps = WithClassNames<undefined>
 
 /**
- * Loading placeholder for {@link import("../").ContentMap}: mirrors the module
- * header (title bar + progress bar) and a few compact lesson rows so the rail does
- * not jump when the outline arrives.
+ * Loading placeholder for {@link import("../").ContentMap}: mirrors the
+ * {@link OutlineRail} accordion — collapsed module rows (title bar + indicator)
+ * with only the first expanded to show its lesson lines — via
+ * {@link AccordionSkeleton}, matching its sibling {@link MilestoneOutlineSkeleton}
+ * so the rail does not jump when the outline arrives.
  *
  * @param props - {@link ContentMapSkeletonProps}
  */
 export const ContentMapSkeleton = ({ className }: ContentMapSkeletonProps) => {
-    return (
-        <div className={className}>
-            <div className="flex flex-col gap-6">
-                {Array.from({ length: SKELETON_MODULE_COUNT }).map((_module, moduleIndex) => (
-                    <div key={moduleIndex} className="flex flex-col gap-3">
-                        <Skeleton.Typography type="body-sm" width="2/3" />
-                        <Skeleton.ProgressBar />
-                        <div className="flex flex-col gap-2">
-                            {Array.from({ length: SKELETON_LESSON_COUNT }).map((_lesson, lessonIndex) => (
-                                <Skeleton.ListRow key={lessonIndex} withTrailing />
-                            ))}
-                        </div>
-                    </div>
-                ))}
+    const t = useTranslations()
+    const items = useMemo(
+        () => Array.from({ length: SKELETON_MODULE_COUNT }, (_, index) => ({
+            ariaLabel: t("module.aria", { index: index + 1 }),
+            expanded: index === 0,
+            titleSize: "base" as const,
+            showIndicator: true,
+        })),
+        [t],
+    )
+    const renderExpandedBody = useMemo(
+        () => () => (
+            <div className="flex flex-col gap-2">
+                <SkeletonText size="sm" className="w-3/4" />
+                <SkeletonText size="xs" className="w-full" />
+                <SkeletonText size="xs" className="w-3/4" />
             </div>
-        </div>
+        ),
+        [],
+    )
+    return (
+        <AccordionSkeleton
+            className={className}
+            items={items}
+            renderExpandedBody={renderExpandedBody}
+        />
     )
 }

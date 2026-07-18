@@ -26,7 +26,18 @@ export const CommunityFeedSkeleton = () => {
                                 </div>
                             </div>
                             <Skeleton className="h-16 w-full rounded-xl" />
-                            <Skeleton className="h-4 w-24 rounded-full" />
+                            {/* footer: reaction pills + comment count (mirrors CommunityPostCard) */}
+                            <div className="flex items-center gap-6">
+                                <div className="flex items-center gap-2">
+                                    <Skeleton className="h-7 w-14 rounded-full" />
+                                    <Skeleton className="h-7 w-14 rounded-full" />
+                                    <Skeleton className="h-7 w-14 rounded-full" />
+                                </div>
+                                <div className="flex items-center gap-1">
+                                    <Skeleton className="size-4 rounded" />
+                                    <Skeleton className="h-3 w-6 rounded" />
+                                </div>
+                            </div>
                         </div>
                     </CardContent>
                 </Card>

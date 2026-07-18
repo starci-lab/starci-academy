@@ -1,14 +1,14 @@
 import type { GraphQLResponse } from "../../types"
 import type { CvExportFormat } from "@/modules/types/enums/cv-export-format"
 
-/** GraphQL `RenderCvBlocksRequest` body (HTML-first export). */
+/** GraphQL `RenderCvBlocksRequest` body (full-LaTeX: `.tex` → tectonic → PDF). */
 export interface RenderCvBlocksRequest {
-    /** `cv_blocks.id` to export (ownership scope + PDF key persistence). */
+    /** `cv_blocks.id` to export (ownership scope + PDF/.tex persistence). */
     id: string
-    /** Self-contained HTML of the rendered CV template (converted server-side). */
-    html: string
-    /** Target file format (PDF or DOCX). */
-    format: CvExportFormat
+    /** The CV's LaTeX (`.tex`) source — compiled server-side via tectonic. */
+    tex: string
+    /** Target file format — PDF only now (kept for API compatibility). */
+    format?: CvExportFormat
 }
 
 /** Payload inside `renderCvBlocks.data` after the standard API wrapper. */

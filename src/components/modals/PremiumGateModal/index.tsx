@@ -90,7 +90,13 @@ export const PremiumGateModal = ({ className }: WithClassNames<undefined>) => {
                     {/* price anchor — single-source PriceTag (struck original + % off) */}
                     <AsyncContent
                         isLoading={priceLoading}
-                        skeleton={<Skeleton className="h-7 w-32 rounded-xl" />}
+                        skeleton={(
+                            // mirror the border-t block: PriceTag (lg) + scarcity note line
+                            <div className="flex flex-col gap-2 border-t border-default pt-3">
+                                <Skeleton className="h-7 w-32 rounded-xl" />
+                                <Skeleton.Typography type="body-xs" width="2/3" />
+                            </div>
+                        )}
                         error={priceSwr.error}
                         errorContent={{ title: t("payment.priceError") }}
                     >

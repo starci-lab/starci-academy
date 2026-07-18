@@ -7,6 +7,7 @@ import {
     Button,
     Chip,
     ScrollShadow,
+    Spinner,
     Tabs,
     Typography,
 } from "@heroui/react"
@@ -114,7 +115,7 @@ export const PlaygroundSession = () => {
     // user can still drag/tap the sheet to override until the next phase change.
     const [sheetOpen, setSheetOpen] = useState(false)
 
-    const { state: byomState, subscribe, sendCommand } = usePlaygroundByomSocketIo()
+    const { state: byomState, subscribe, requestVerify } = usePlaygroundByomSocketIo()
 
     const steps = playground?.steps ?? []
     const currentStep = steps[currentStepIndex]
@@ -185,20 +186,47 @@ export const PlaygroundSession = () => {
         setSheetOpen(Boolean(sessionId) && !byomState.connected)
     }, [isRag, sessionId, byomState.connected])
 
+    // "checking…" while a verify request is in flight, and a "not done yet" hint
+    // when it lands without advancing the step.
+    const [verifying, setVerifying] = useState(false)
+    const [verifyMissed, setVerifyMissed] = useState(false)
+
     // advance to the step the agent just verified (server-driven, not a local guess)
     useEffect(() => {
         if (byomState.verifiedStepIndex === null) {
             return
         }
         setCurrentStepIndex((prev) => Math.max(prev, byomState.verifiedStepIndex! + 1))
+        // a verify landed → clear the pending / miss UI.
+        setVerifying(false)
+        setVerifyMissed(false)
     }, [byomState.verifiedStepIndex])
 
+    // "Verify" = ask the agent to report resources NOW; the backend matches them to
+    // the step and pushes `step:verified`. It does NOT re-run the command (the
+    // learner runs that on their own machine), so clicking never triggers a
+    // "container already in use" conflict.
     const onConfirmStep = useCallback(() => {
-        if (!currentStep?.commandHint || !sessionId) {
+        if (!sessionId) {
             return
         }
-        sendCommand(currentStep.commandHint)
-    }, [currentStep, sessionId, sendCommand])
+        setVerifyMissed(false)
+        setVerifying(true)
+        requestVerify()
+    }, [sessionId, requestVerify])
+
+    // bound the "checking…" window; if the step didn't advance, hint the learner to
+    // run the command first.
+    useEffect(() => {
+        if (!verifying) {
+            return
+        }
+        const handle = setTimeout(() => {
+            setVerifying(false)
+            setVerifyMissed(true)
+        }, 2500)
+        return () => clearTimeout(handle)
+    }, [verifying])
 
     // The install / reconnect card — the pairing command plus its guidance. Shown
     // while waiting for the first pair AND (on demand) when the learner wants to
@@ -386,10 +414,19 @@ export const PlaygroundSession = () => {
                                         </Button>
                                     </div>
                                 ) : byomState.connected ? (
-                                    // machine paired → verify this step (connection lives in the sheet).
-                                    <Button variant="primary" onPress={onConfirmStep}>
-                                        {t("playground.session.confirmStep")}
-                                    </Button>
+                                    // machine paired → VERIFY this step (checks resources; never re-runs
+                                    // the command, so no "container already in use" conflict).
+                                    <div className="flex flex-col gap-2">
+                                        <Button variant="primary" isPending={verifying} onPress={onConfirmStep}>
+                                            {verifying ? <Spinner size="sm" aria-hidden /> : null}
+                                            {t(verifying ? "playground.session.verifying" : "playground.session.confirmStep")}
+                                        </Button>
+                                        {verifyMissed ? (
+                                            <Typography type="body-xs" color="muted">
+                                                {t("playground.session.verifyMissed")}
+                                            </Typography>
+                                        ) : null}
+                                    </div>
                                 ) : (
                                     // not connected → point to the ConnectSheet docked below.
                                     <Typography type="body-sm" color="muted">

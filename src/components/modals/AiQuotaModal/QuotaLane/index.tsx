@@ -5,11 +5,11 @@ import React, {
 } from "react"
 import {
     cn,
-    Skeleton,
 } from "@heroui/react"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import {
     useTranslations,
 } from "next-intl"
@@ -108,10 +108,12 @@ export const QuotaLane = ({
             {[0, 1].map((row) => (
                 <div key={row} className="flex flex-col gap-2">
                     <div className="flex items-center justify-between gap-2">
-                        <Skeleton className="h-4 w-24 rounded-md" />
-                        <Skeleton className="h-4 w-16 rounded-md" />
+                        <Skeleton.Typography type="body-sm" className="w-24" />
+                        <Skeleton.Typography type="body-sm" className="w-16" />
                     </div>
-                    <Skeleton className="h-2 w-full rounded-full" />
+                    <Skeleton.ProgressBar />
+                    {/* reset-label line under the bar */}
+                    <Skeleton.Typography type="body-xs" width="1/2" />
                 </div>
             ))}
         </div>

@@ -33,9 +33,10 @@ export type MutateRenderCvBlocksParams = MutateParams<
 >
 
 /**
- * Renders a CV document to PDF (blocks+style → 1 shared LaTeX template →
- * tectonic → MinIO, synchronous — no BullMQ queue). Feeds the live preview
- * pane (debounced ~1-2s after an edit) and the "Tải PDF" download button.
+ * Compiles a CV document to PDF: the FE builds the `.tex` (from blocks+style, or
+ * the user's own edits to it) and sends it; the server compiles with `tectonic`
+ * → MinIO, synchronous (no BullMQ queue). Feeds the live PDF preview (debounced
+ * ~1-2s after an edit) and the "Tải PDF" download button.
  */
 export const mutateRenderCvBlocks = async ({
     mutation = MutationRenderCvBlocks.Mutation1,

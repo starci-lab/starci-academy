@@ -9,8 +9,8 @@ import {
 } from "@heroui/react"
 import { useTranslations } from "next-intl"
 import {
-    FileDocIcon,
     FilePdfIcon,
+    FileTextIcon,
 } from "@phosphor-icons/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
@@ -24,6 +24,10 @@ export type CvEditorToolbarBarProps = WithClassNames<undefined>
  * The CV editor's toolbar, rendered as the global Navbar's BOTTOM LAYER (so it
  * reads as the navbar's second row — no divider between them; the Navbar owns
  * the single bottom border). Back link + editable CV name + Word/PDF export.
+ *
+ * Back link + editable CV name + a "Tải .tex" download (client-side, the raw
+ * LaTeX source) and the PDF export (compiled server-side via tectonic — Word
+ * was dropped in the full-LaTeX pivot).
  *
  * A STABLE node (registered once via `useRegisterNavbarBottomLayer`): it reads
  * all live state + callbacks from {@link useCvEditorToolbarStore} — which
@@ -40,6 +44,7 @@ export const CvEditorToolbarBar = ({ className }: CvEditorToolbarBarProps) => {
     const onBack = useCvEditorToolbarStore((state) => state.onBack)
     const onLabelChange = useCvEditorToolbarStore((state) => state.onLabelChange)
     const onExport = useCvEditorToolbarStore((state) => state.onExport)
+    const onDownloadTex = useCvEditorToolbarStore((state) => state.onDownloadTex)
 
     return (
         <div className={cn("flex w-full items-center justify-between gap-3 px-6 pb-3", className)}>
@@ -57,11 +62,11 @@ export const CvEditorToolbarBar = ({ className }: CvEditorToolbarBarProps) => {
             <div className="flex shrink-0 items-center gap-3">
                 <Button
                     variant="secondary"
-                    isDisabled={!canExport || exportingFormat !== null}
-                    onPress={() => onExport(CvExportFormat.Docx)}
+                    isDisabled={!canExport}
+                    onPress={onDownloadTex}
                 >
-                    <FileDocIcon aria-hidden className="size-5" />
-                    {t("cv.builder.downloadWordCta")}
+                    <FileTextIcon aria-hidden className="size-5" />
+                    {t("cv.builder.downloadTexCta")}
                 </Button>
                 <Button
                     variant="primary"

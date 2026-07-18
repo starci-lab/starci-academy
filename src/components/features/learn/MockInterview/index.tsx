@@ -4,6 +4,7 @@ import React from "react"
 import { useTranslations } from "next-intl"
 import { useSearchParams } from "next/navigation"
 import { EnrollGate } from "../shared/EnrollGate"
+import { MockInterviewGatePreview } from "./MockInterviewGatePreview"
 import { LearnBreadcrumb } from "../shared/LearnBreadcrumb"
 import { MockInterviewSession } from "./MockInterviewSession"
 import { MockInterviewResult } from "./MockInterviewResult"
@@ -91,6 +92,7 @@ export const MockInterview = ({ className, resumeSessionId, resultSessionId }: M
                         <EnrollGate
                             title={t("mockInterview.gateTitle")}
                             description={t("mockInterview.gateDescription")}
+                            preview={<MockInterviewGatePreview />}
                         />
                     ) : !(courseId && courseDisplayId) ? null : resultSessionId ? (
                         <MockInterviewResult

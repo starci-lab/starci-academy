@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useMemo } from "react"
-import { Drawer, ScrollShadow, Typography, cn } from "@heroui/react"
+import { Drawer, Label, ScrollShadow, Typography, cn } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
@@ -11,7 +11,7 @@ import { useQuerySearchCourseContentSwr } from "@/hooks/swr/api/graphql/queries/
 import { resolveSearchResultHref } from "@/modules/learn/resolve-search-result-href"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
-import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { EntityResultRow } from "@/components/blocks/learn/EntityResultRow"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
@@ -124,8 +124,19 @@ export const MindMapNodeDrawerView = ({
                                         <div className="flex flex-col gap-4">
                                             {[0, 1].map((section) => (
                                                 <div key={section} className="flex flex-col gap-2">
+                                                    {/* group label + count */}
                                                     <Skeleton.Typography type="body-xs" width="1/3" />
-                                                    <Skeleton className="h-28 w-full rounded-2xl" />
+                                                    {/* bordered list of EntityResultRows (breadcrumb + title) */}
+                                                    <SurfaceListCard bordered>
+                                                        {[0, 1].map((row) => (
+                                                            <SurfaceListCardItem key={row}>
+                                                                <div className="flex flex-col gap-2">
+                                                                    <Skeleton.Typography type="body-xs" width="1/3" />
+                                                                    <Skeleton.Typography type="body-sm" width="3/4" />
+                                                                </div>
+                                                            </SurfaceListCardItem>
+                                                        ))}
+                                                    </SurfaceListCard>
                                                 </div>
                                             ))}
                                         </div>
@@ -143,9 +154,10 @@ export const MindMapNodeDrawerView = ({
                                     }}
                                 >
                                     <div className="flex flex-col gap-4">
-                                        <Typography type="body-xs" color="muted">
-                                            {t("mindMap.drawer.eyebrow")}
-                                        </Typography>
+                                        {/* section label over the related-content groups (each an
+                                            interactive nav list) → `<Label>`, not hand-rolled muted
+                                            Typography (label.md §1b/§1c). */}
+                                        <Label>{t("mindMap.drawer.eyebrow")}</Label>
                                         {grouped.map((group) => (
                                             <LabeledCard
                                                 key={group.key}

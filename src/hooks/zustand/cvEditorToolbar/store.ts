@@ -25,8 +25,10 @@ interface CvEditorToolbarStoreState {
     onBack: () => void
     /** Rename the CV. */
     onLabelChange: (label: string) => void
-    /** Export the CV to the given format. */
+    /** Export the CV to the given format (PDF — compiled server-side via tectonic). */
     onExport: (format: CvExportFormat) => void
+    /** Download the CV's current `.tex` source as a client-side file (no server round-trip). */
+    onDownloadTex: () => void
     /** Patch the toolbar state (called by `CvEditor` as its state changes). */
     setToolbar: (partial: Partial<Omit<CvEditorToolbarStoreState, "setToolbar">>) => void
 }
@@ -39,5 +41,6 @@ export const useCvEditorToolbarStore = create<CvEditorToolbarStoreState>((set) =
     onBack: () => {},
     onLabelChange: () => {},
     onExport: () => {},
+    onDownloadTex: () => {},
     setToolbar: (partial) => set(partial),
 }))

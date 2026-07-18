@@ -8,9 +8,10 @@ export type ProfileHeroSkeletonProps = WithClassNames<undefined>
 
 /**
  * Loading placeholder for {@link import("..").ProfileHero}, mirroring the bare
- * identity column tree (gap-4 stack): rank-framed avatar + rank pill, name +
- * `@handle`, bio, follower line, the overlapping badge medals, the action cluster
- * (two full-width buttons), and the joined line. Pure presenter — fed to the
+ * identity column tree (gap-4 stack): rank-framed avatar + rank pill, name + role
+ * title + `@handle`, bio, the location · work-mode chip row, follower line, the
+ * overlapping badge medals, the action cluster (two full-width buttons), and the
+ * meta block (icon + text rows: github / linkedin / website / joined). Pure presenter — fed to the
  * hero's `AsyncContent` so the column never jumps when the profile resolves.
  *
  * @param props - optional className (placement only — the sidebar wrapper).
@@ -24,14 +25,24 @@ export const ProfileHeroSkeleton = ({ className }: ProfileHeroSkeletonProps) => 
                 <Skeleton className="h-6 w-20 rounded-full" />
             </div>
 
-            {/* name (h3) + @handle (body-sm) */}
+            {/* name (h3) + role title (body-sm) + @handle (body-sm) */}
             <div className="flex flex-col gap-0">
                 <Skeleton.Typography type="h3" width="3/4" />
+                <Skeleton.Typography type="body-sm" width="1/2" />
                 <Skeleton.Typography type="body-sm" width="1/3" />
             </div>
 
             {/* short bio */}
             <Skeleton.Typography type="body-sm" width="2/3" />
+
+            {/* location · preferred work mode (icon + text, then a status chip) */}
+            <div className="flex flex-wrap items-center gap-2">
+                <span className="flex items-center gap-2">
+                    <Skeleton className="size-5 shrink-0 rounded" />
+                    <Skeleton.Typography type="body-sm" className="w-20" />
+                </span>
+                <Skeleton.Chip />
+            </div>
 
             {/* follower / following line */}
             <div className="flex items-center gap-4">
@@ -52,8 +63,15 @@ export const ProfileHeroSkeleton = ({ className }: ProfileHeroSkeletonProps) => 
                 <Skeleton.Button width="w-full" />
             </div>
 
-            {/* joined line */}
-            <Skeleton.Typography type="body-sm" width="1/2" />
+            {/* meta: github · linkedin · website · joined — leading icon + text rows */}
+            <div className="flex flex-col gap-2">
+                {[0, 1, 2].map((row) => (
+                    <div key={row} className="flex items-center gap-2">
+                        <Skeleton className="size-5 shrink-0 rounded" />
+                        <Skeleton.Typography type="body-sm" width="1/2" />
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }

@@ -21,7 +21,7 @@ import { ProblemRow } from "./ProblemRow"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
-import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
+import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { CODING_DOMAIN_ORDER, type CodingDomain, type CodingProblem } from "@/modules/api/graphql/queries/types/coding"
 
 /** Props for {@link ProblemCatalog}. */
@@ -86,11 +86,30 @@ export const ProblemCatalog = ({
             // N domain-header sections when grouped, but we keep the skeleton a
             // simple 5-row approximation rather than pre-guessing group shape
             skeleton={(
-                <div className={cn("flex flex-col gap-3", className)}>
+                <SurfaceListCard className={className}>
                     {[0, 1, 2, 3, 4].map((row) => (
-                        <Skeleton.ListRow key={row} withLeading withTrailing />
+                        <SurfaceListCardItem key={row}>
+                            <div className="flex min-w-0 items-center gap-3">
+                                {/* status icon */}
+                                <Skeleton className="size-5 shrink-0 rounded-full" />
+                                {/* title + tags */}
+                                <div className="flex min-w-0 flex-col gap-2">
+                                    <Skeleton.Typography type="body-sm" width="1/2" />
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        <Skeleton.Typography type="body-xs" width="1/4" />
+                                        <Skeleton.Typography type="body-xs" width="1/4" />
+                                    </div>
+                                </div>
+                                {/* right cluster: difficulty + domain chips + points */}
+                                <div className="ml-auto flex shrink-0 items-center gap-2">
+                                    <Skeleton.Chip />
+                                    <Skeleton.Chip />
+                                    <Skeleton.Typography type="body-xs" width="1/4" className="w-10" />
+                                </div>
+                            </div>
+                        </SurfaceListCardItem>
                     ))}
-                </div>
+                </SurfaceListCard>
             )}
             isEmpty={filtered.length === 0}
             emptyContent={isFiltered

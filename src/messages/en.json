@@ -895,11 +895,17 @@
       "noCourseHint": "Take a course and finish its capstone to add a verified project to your CV.",
       "noCourseCta": "Browse courses",
       "downloadCta": "Download PDF",
-      "downloadWordCta": "Download Word",
+      "downloadTexCta": "Download .tex",
+      "modeAria": "Switch between Block and LaTeX mode",
+      "modeBlock": "Blocks",
+      "modeLatex": "LaTeX",
       "mobilePaneAria": "Switch between Edit and Preview",
       "editPane": "Edit",
       "previewPane": "Preview",
       "previewTitle": "CV preview (PDF)",
+      "preview": {
+        "compileError": "Couldn't compile the LaTeX. Check the .tex syntax."
+      },
       "addBlock": "Add block",
       "removeBlock": "Remove block",
       "moveBlockUp": "Move block up",
@@ -1285,6 +1291,18 @@
     }
   },
   "finalProject": {
+    "gatePreview": {
+      "milestone": "Milestone 1 · Build the core API",
+      "t1Title": "Design schema & migrations",
+      "t1Meta": "Weight 20% · auto-graded + review",
+      "t1Crit": "ERD covers the core tables with correct foreign keys; migrations run clean, seed sample data.",
+      "t2Title": "REST endpoints + validation",
+      "t2Meta": "Weight 30% · e2e tests",
+      "t2Crit": "Full CRUD, pagination, correct error codes; DTOs validated at the boundary.",
+      "t3Title": "Auth & authorization",
+      "t3Meta": "Weight 25% · review",
+      "t3Crit": "JWT + refresh token, role-based guards."
+    },
     "dashboard": {
       "title": "Personal project",
       "subtitle": "Build your project milestone by milestone — graded by AI.",
@@ -2352,6 +2370,19 @@
     "subtitle": "Answer randomly-drawn technical interview questions, graded in detail by AI.",
     "gateTitle": "Practice interviews — prove you're job-ready",
     "gateDescription": "Graded against the exact course you study; the score feeds the profile recruiters see. Enroll to unlock.",
+    "gatePreview": {
+      "q1Badge": "Q1 · System Design · Middle",
+      "q1Title": "Design a URL shortener handling 10,000 req/s",
+      "q1Body": "Cover the API, collision-free short-code generation, store choice (SQL vs KV) and a read cache. Do you optimize for reads or writes, and why?",
+      "answerHint": "Your answer space — say your solution out loud; the AI transcribes and grades each dimension.",
+      "r1": "Communication",
+      "r2": "Problem solving",
+      "r3": "Technical",
+      "r4": "Testing",
+      "q2Badge": "Q2 · Database · Senior",
+      "q2Title": "When would you pick NoSQL over SQL? What's the trade-off?",
+      "q2Body": "Reason from the data model, consistency needs and the real query patterns of a product you've shipped."
+    },
     "promptsRetry": "Retry",
     "syncError": "Couldn't save interview progress. Please try again.",
     "gradingLabel": "Grading",
@@ -2597,6 +2628,8 @@
       "workspaceLockedTitle": "Connect your machine to open the workspace",
       "workspaceLockedHint": "Run the command on the left on your machine — the terminal opens once it connects.",
       "confirmStep": "Confirm this step is done",
+      "verifying": "Checking…",
+      "verifyMissed": "Step not done yet — run the command above on your machine, then try again.",
       "prevStep": "Previous",
       "nextStep": "Next",
       "completeTitle": "Exercise complete!",

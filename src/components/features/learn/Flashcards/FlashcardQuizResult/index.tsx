@@ -8,6 +8,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 import { type QuizSessionReadinessData, type QuizSessionWeakTagData } from "@/modules/api/graphql/mutations/types/complete-flashcard-quiz-session"
 import type { MyFlashcardQuizSessionBySessionIdData } from "@/modules/api/graphql/queries/types/my-flashcard-quiz-session-by-session-id"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
@@ -202,11 +203,17 @@ export const FlashcardQuizResult = ({
                                         <AsyncContent
                                             isLoading={cardsSwr.isLoading && !cardsSwr.data}
                                             skeleton={(
-                                                <div className="flex flex-col gap-2">
-                                                    {Array.from({ length: Math.min(data.results.length, 5) }).map((_, index) => (
-                                                        <div key={index} className="h-12 w-full animate-pulse rounded-xl bg-default" />
+                                                <SurfaceListCard>
+                                                    {Array.from({ length: Math.min(data.results.length, 5) }).map((_unused, index) => (
+                                                        <SurfaceListCardItem key={index}>
+                                                            <div className="flex items-center gap-3">
+                                                                <Skeleton className="size-3 shrink-0 rounded-full" />
+                                                                <Skeleton.Typography type="body-sm" width="1/2" className="min-w-0 flex-1" />
+                                                                <Skeleton className="h-5 w-12 shrink-0 rounded-full" />
+                                                            </div>
+                                                        </SurfaceListCardItem>
                                                     ))}
-                                                </div>
+                                                </SurfaceListCard>
                                             )}
                                         >
                                             <SurfaceListCard>

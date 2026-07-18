@@ -30,8 +30,9 @@ export const PersonalProjectAttemptsSkeleton = () => {
                     <div className="mt-2">
                         <SkeletonText size="sm" width="w-5/6" />
                     </div>
-                    {/* processed-time line */}
-                    <div className="mt-2">
+                    {/* processed-time line — leading ClockIcon (size-3) + time text */}
+                    <div className="mt-2 flex items-center gap-1">
+                        <Skeleton className="size-3 shrink-0 rounded" />
                         <SkeletonText size="xs" width="w-1/3" />
                     </div>
                 </div>

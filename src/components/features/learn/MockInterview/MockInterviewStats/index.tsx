@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { VerdictHeroCard } from "@/components/blocks/stats/VerdictHeroCard"
@@ -117,9 +118,40 @@ export const MockInterviewStats = ({ courseId, courseDisplayId, onStartInterview
         <AsyncContent
             isLoading={statsSwr.isLoading && !stats}
             skeleton={(
+                // MIRROR the loaded tree: ZONE 1 label + readiness verdict hero (value ·
+                // verdict · trend sub · meter · CTA), ZONE 2 label + per-phase breakdown of
+                // label/caption + ProgressMeter rows.
                 <div className="flex flex-col gap-6">
-                    <Skeleton.Card />
-                    <Skeleton.Card />
+                    {/* ZONE 1 — readiness hero */}
+                    <section className="flex flex-col gap-3">
+                        <Skeleton className="h-[14px] w-40 rounded" />
+                        <SectionCard>
+                            <div className="flex items-baseline gap-1">
+                                <Skeleton className="h-9 w-20 rounded" />
+                                <Skeleton className="h-[14px] w-8 rounded" />
+                            </div>
+                            <Skeleton.Typography type="body-sm" width="3/4" />
+                            <Skeleton.Typography type="body-xs" width="1/2" />
+                            <Skeleton.ProgressBar />
+                            <Skeleton.Button width="w-44" />
+                        </SectionCard>
+                    </section>
+
+                    {/* ZONE 2 — per-phase breakdown rows (label/caption + meter) */}
+                    <section className="flex flex-col gap-3">
+                        <Skeleton className="h-[14px] w-32 rounded" />
+                        <div className="flex flex-col gap-3">
+                            {Array.from({ length: 4 }).map((_unused, index) => (
+                                <div key={index} className="flex items-center gap-3">
+                                    <div className="flex w-40 shrink-0 flex-col gap-1">
+                                        <Skeleton.Typography type="body-sm" width="2/3" />
+                                        <Skeleton.Typography type="body-xs" width="1/2" />
+                                    </div>
+                                    <Skeleton.ProgressBar className="flex-1" />
+                                </div>
+                            ))}
+                        </div>
+                    </section>
                 </div>
             )}
             error={!stats ? statsSwr.error : undefined}

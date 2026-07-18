@@ -91,7 +91,26 @@ export const ProfilePinned = ({
                     // mirror the responsive two-column pinned grid (bounded surface cards)
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                         {[0, 1, 2, 3].map((index) => (
-                            <Skeleton key={index} className="h-32 w-full rounded-2xl" />
+                            <div
+                                key={index}
+                                className="flex flex-col gap-2 rounded-2xl border border-default bg-surface p-4"
+                            >
+                                {/* top row: type badge + outbound icon */}
+                                <div className="flex items-center justify-between gap-2">
+                                    <Skeleton.Chip />
+                                    <Skeleton className="size-4 shrink-0 rounded" />
+                                </div>
+                                {/* title */}
+                                <Skeleton.Typography type="body-sm" width="3/4" />
+                                {/* one-line description */}
+                                <Skeleton.Typography type="body-xs" width="1/2" />
+                                {/* tech-stack chip row */}
+                                <div className="flex flex-wrap gap-2">
+                                    {[0, 1, 2].map((chip) => (
+                                        <Skeleton.Chip key={chip} />
+                                    ))}
+                                </div>
+                            </div>
                         ))}
                     </div>
                 )}

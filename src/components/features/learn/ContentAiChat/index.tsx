@@ -68,6 +68,7 @@ import type { SearchCourseContentItem } from "@/modules/api/graphql/queries/type
 import { ChatToolResult } from "@/components/blocks/learn/ChatToolResult"
 import { EntityResultRow } from "@/components/blocks/learn/EntityResultRow"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 
 /** Props for {@link ContentAiChat}. */
 export type ContentAiChatProps = WithClassNames<undefined>
@@ -732,11 +733,19 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                     <AsyncContent
                         isLoading={sessionsInfinite.data === undefined}
                         skeleton={
-                            <div className="flex flex-col gap-2">
+                            <SurfaceListCard bordered>
                                 {[0, 1, 2].map((row) => (
-                                    <div key={row} className="h-14 animate-pulse rounded-xl bg-default" />
+                                    <SurfaceListCardItem key={row}>
+                                        <div className="flex items-center gap-2">
+                                            <div className="flex min-w-0 flex-1 flex-col gap-0">
+                                                <Skeleton.Typography type="body-sm" width="2/3" />
+                                                <Skeleton.Typography type="body-xs" width="1/2" />
+                                            </div>
+                                            <Skeleton className="size-4 shrink-0 rounded" />
+                                        </div>
+                                    </SurfaceListCardItem>
                                 ))}
-                            </div>
+                            </SurfaceListCard>
                         }
                         isEmpty={drawerSessions.length === 0}
                         emptyContent={{
@@ -820,11 +829,19 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                     <AsyncContent
                         isLoading={contentSearchSwr.isLoading && debouncedContentSearchQuery.trim().length > 0}
                         skeleton={
-                            <div className="flex flex-col gap-2">
+                            <SurfaceListCard bordered>
                                 {[0, 1, 2].map((row) => (
-                                    <div key={row} className="h-14 animate-pulse rounded-xl bg-default" />
+                                    <SurfaceListCardItem key={row}>
+                                        <div className="flex items-center gap-2">
+                                            <div className="flex min-w-0 flex-1 flex-col gap-0">
+                                                <Skeleton.Typography type="body-sm" width="2/3" />
+                                                <Skeleton.Typography type="body-xs" width="1/2" />
+                                            </div>
+                                            <Skeleton className="size-4 shrink-0 rounded" />
+                                        </div>
+                                    </SurfaceListCardItem>
                                 ))}
-                            </div>
+                            </SurfaceListCard>
                         }
                         isEmpty={debouncedContentSearchQuery.trim().length > 0 && results.length === 0}
                         emptyContent={{

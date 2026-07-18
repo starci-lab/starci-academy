@@ -46,8 +46,9 @@ const VERDICT_VARIANT_CLASS: Record<VerdictBandVariant, string> = {
  *
  * Bonus: a pseudo-element BACKGROUND is not touched by HeroUI's `.card { border ... !important }`
  * reset, so this drops the whole `!important` / per-side `border-style` dance the old
- * `border-l` band needed to fight that reset. `relative` anchors the pseudo; `pl-4` clears
- * the pill from the content.
+ * `border-l` band needed to fight that reset. `relative` anchors the pseudo; `pl-6` clears
+ * the pill from the content with a comfortable gap (thầy 2026-07-18: "withVerdict thì text sang
+ * phải 1 tí" — `pl-4` left the text hugging the band).
  */
 export const verdictBandClassName = (withVerdict?: VerdictBand): string | undefined => {
     if (!withVerdict?.enable) {
@@ -59,7 +60,7 @@ export const verdictBandClassName = (withVerdict?: VerdictBand): string | undefi
             ? `before:bg-${withVerdict.color}`
             : undefined
     return cn(
-        "relative pl-4 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-1 before:rounded-full before:content-['']",
+        "relative pl-6 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-1 before:rounded-full before:content-['']",
         bgClass,
     )
 }

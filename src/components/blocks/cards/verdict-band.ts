@@ -33,21 +33,16 @@ const VERDICT_VARIANT_CLASS: Record<VerdictBandVariant, string> = {
 }
 
 /**
- * Resolves a {@link VerdictBand} into the INSET ROUNDED-PILL band classes (a `::before`
- * pseudo-element), or `undefined` when disabled.
+ * Resolves a {@link VerdictBand} into a FLUSH left-edge band (a `::before` pseudo-element),
+ * or `undefined` when disabled.
  *
- * The band is a `before:` pill — `w-1 rounded-full`, absolutely positioned and INSET on
- * every side (`left-2`, `top-2`, `bottom-2`) — NOT a `border-l`. A straight left border
- * gets hooked/clipped by the card's rounded corners (`rounded-3xl overflow-hidden`): on
- * the first/last row of a `SurfaceListCard`, or a standalone `SectionCard`, it wraps the
- * corner and reads cluttered (thầy 2026-07-18: "fix B ... nhìn đỡ rối"). Insetting top +
- * bottom always clears the corner for a first/last row AND a standalone card, so the pill
- * floats free of every edge in every consumer — no first/last-child fragility.
- *
- * Bonus: a pseudo-element BACKGROUND is not touched by HeroUI's `.card { border ... !important }`
- * reset, so this drops the whole `!important` / per-side `border-style` dance the old
- * `border-l` band needed to fight that reset. `relative` anchors the pseudo; `pl-4` clears
- * the pill from the content.
+ * The band is a `before:` bar pinned FLUSH to the left edge (`inset-y-0 left-0 w-1`) with the
+ * card's own `overflow-hidden` CLIPPING it to the rounded rect — so it hugs the edge and its
+ * top/bottom follow the corner curve cleanly, instead of a floating inset pill (thầy 2026-07-18:
+ * "border màu sát mép trái"). A pseudo-element BACKGROUND (not a `border-l`) is untouched by
+ * HeroUI's `.card { border ... !important }` reset, so it needs no `!important` dance; the
+ * `overflow-hidden` is what makes a straight edge bar follow the corners without the old
+ * corner-wrap clutter. `relative` anchors the pseudo; `pl-4` keeps the content off the bar.
  */
 export const verdictBandClassName = (withVerdict?: VerdictBand): string | undefined => {
     if (!withVerdict?.enable) {
@@ -59,7 +54,7 @@ export const verdictBandClassName = (withVerdict?: VerdictBand): string | undefi
             ? `before:bg-${withVerdict.color}`
             : undefined
     return cn(
-        "relative pl-4 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-1 before:rounded-full before:content-['']",
+        "relative overflow-hidden pl-4 before:absolute before:inset-y-0 before:left-0 before:w-1 before:content-['']",
         bgClass,
     )
 }

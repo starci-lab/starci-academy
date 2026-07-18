@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>verdict-band-variants — chọn kiểu dải verdict (A sát mép vuông · B pill thụt bo)</title>
+<style>
+  :root{--bg:#f4f4f6;--fg:#1a1a1e;--mut:#6b6b76;--line:#e2e2e8;--card:#fff;--acc:#c0407a;
+        --ok:#2f8f57;--warn:#c99a1e;--bad:#c0392b;--sep:#d7d7dd}
+  @media (prefers-color-scheme:dark){:root{--bg:#161619;--fg:#eaeaef;--mut:#9a9aa6;--line:#2a2a30;--card:#1d1d21;--sep:#33333b}}
+  :root[data-theme=dark]{--bg:#161619;--fg:#eaeaef;--card:#1d1d21;--line:#2a2a30;--sep:#33333b}
+  :root[data-theme=light]{--bg:#f4f4f6;--fg:#1a1a1e;--card:#fff;--line:#e2e2e8;--sep:#d7d7dd}
+  *{box-sizing:border-box}
+  body{margin:0;font:14px/1.55 ui-sans-serif,system-ui,-apple-system,sans-serif;color:var(--fg);background:var(--bg)}
+  .top{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;gap:10px;align-items:center}
+  .top b{font-size:15px}.top .sub{color:var(--mut);font-size:12px}.tglr{margin-left:auto;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:8px;padding:5px 9px;cursor:pointer}
+  .wrap{max-width:980px;margin:16px auto;padding:0 16px 60px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media (max-width:720px){.cols{grid-template-columns:1fr}}
+  .colh{font-size:13px;font-weight:800;margin:0 0 8px;display:flex;align-items:center;gap:8px}
+  .tag{font:10px ui-monospace,monospace;color:var(--mut);background:var(--card);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-weight:400}
+  .stack{display:flex;flex-direction:column;gap:12px}
+
+  /* base card (globals: rounded-3xl, bg-surface, border) */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;position:relative}
+  .card .in{padding:14px}
+  .lab{font-size:11px;color:var(--mut);margin:0 0 4px}
+  .h4{font-size:14px;font-weight:700;margin:0 0 4px}
+  .p{color:var(--fg);font-size:13px;margin:0}
+
+  /* ---- A: vạch SÁT MÉP, vuông, full-height (border-left thật, dùng box-shadow inset để né globals reset) ---- */
+  .vA{box-shadow:inset 3px 0 0 0 var(--v)}
+  .vA .in{padding-left:16px}
+  /* ---- A2: vạch sát mép mảnh 2px ---- */
+  .vA2{box-shadow:inset 2px 0 0 0 var(--v)}
+  .vA2 .in{padding-left:15px}
+  /* ---- B: pill thụt 8px, bo tròn, w-1 (HIỆN TẠI verdict-band.ts) ---- */
+  .vB::before{content:"";position:absolute;left:8px;top:8px;bottom:8px;width:4px;border-radius:99px;background:var(--v)}
+  .vB .in{padding-left:16px}
+
+  /* leaderboard-style row (như ảnh thầy) */
+  .row{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:12px;position:relative;padding:12px 14px}
+  .row.vA{box-shadow:inset 3px 0 0 0 var(--v)}.row.vA{padding-left:16px}
+  .row.vB::before{content:"";position:absolute;left:6px;top:8px;bottom:8px;width:4px;border-radius:99px;background:var(--v)}.row.vB{padding-left:18px}
+  .row .av{width:34px;height:34px;border-radius:50%;background:var(--line);flex:0 0 auto}
+  .row .nm{font-weight:600;font-size:13.5px}.row .xp{margin-left:auto;font-weight:700;color:var(--mut)}
+  .note{color:var(--mut);font-size:12px;margin:18px 0 0}
+</style>
+</head>
+<body>
+<div class="top"><b>Chọn kiểu dải verdict</b><span class="sub">A = sát mép vuông · B = pill thụt bo tròn (hiện tại). Cùng data.</span><button class="tglr" id="theme">◑</button></div>
+<div class="wrap">
+  <div class="cols">
+    <!-- A -->
+    <div>
+      <div class="colh">A · vạch SÁT MÉP, vuông <span class="tag">box-shadow inset · pl-4</span></div>
+      <div class="stack">
+        <div class="card vA" style="--v:var(--acc)"><div class="in"><div class="lab">TL;DR</div><p class="p">Signup đẩy email sang background job, trả về ngay thay vì chờ mail server.</p></div></div>
+        <div class="card vA" style="--v:var(--ok)"><div class="in"><div class="h4">How it works</div><p class="p">Request enqueue một message rồi return success; worker riêng nhặt khỏi queue làm phần chậm.</p></div></div>
+        <div class="row vA" style="--v:var(--warn)"><span class="av"></span><span class="nm">minh_dev</span><span class="xp">340 XP</span></div>
+        <div class="row vA" style="--v:var(--ok)"><span class="av"></span><span class="nm">linh_fe</span><span class="xp">80 XP</span></div>
+      </div>
+    </div>
+    <!-- B -->
+    <div>
+      <div class="colh">B · pill THỤT, bo tròn <span class="tag">before:left-2 w-1 rounded · pl-4 (HIỆN TẠI)</span></div>
+      <div class="stack">
+        <div class="card vB" style="--v:var(--acc)"><div class="in"><div class="lab">TL;DR</div><p class="p">Signup đẩy email sang background job, trả về ngay thay vì chờ mail server.</p></div></div>
+        <div class="card vB" style="--v:var(--ok)"><div class="in"><div class="h4">How it works</div><p class="p">Request enqueue một message rồi return success; worker riêng nhặt khỏi queue làm phần chậm.</p></div></div>
+        <div class="row vB" style="--v:var(--warn)"><span class="av"></span><span class="nm">minh_dev</span><span class="xp">340 XP</span></div>
+        <div class="row vB" style="--v:var(--ok)"><span class="av"></span><span class="nm">linh_fe</span><span class="xp">80 XP</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:20px">
+    <div class="colh">A2 · vạch sát mép MẢNH 2px (nếu A hơi dày) <span class="tag">inset 2px</span></div>
+    <div class="cols">
+      <div class="card vA2" style="--v:var(--acc)"><div class="in"><div class="lab">TL;DR</div><p class="p">Bản mảnh hơn — vạch 2px sát mép.</p></div></div>
+      <div class="row vA2" style="--v:var(--bad)"><span class="av"></span><span class="nm">pakoohacha588</span><span class="xp">150 XP</span></div>
+    </div>
+  </div>
+
+  <p class="note">A dùng <code>box-shadow: inset Npx 0 0 var(--v)</code> → vạch đặc SÁT mép, vuông cạnh, né được globals <code>.card{border:none!important}</code> (box-shadow không bị reset). B là bản hiện tại (pill thụt 8px, bo tròn). Padding text cả 2 giữ pl-4 (không đổi — bài học lần trước). Thầy chọn A / A2 / B; tôi sửa đúng 1 chỗ <code>verdict-band.ts</code>.</p>
+</div>
+<script>document.getElementById('theme').onclick=function(){var r=document.documentElement,d=r.getAttribute('data-theme')==='dark';r.setAttribute('data-theme',d?'light':'dark')};</script>
+</body>
+</html>

@@ -2,13 +2,11 @@ import {NextConfig} from "next"
 import createNextIntlPlugin from "next-intl/plugin"
  
 const nextConfig: NextConfig = {
-    // Deploy nhanh: bỏ qua tsc + eslint trong `next build` (code đã verify riêng
-    // qua tsc --noEmit + lint-staged pre-commit). Bật lại khi hết gấp.
+    // Deploy nhanh: bỏ qua tsc khi `next build` (code đã verify riêng qua
+    // tsc --noEmit + lint-staged pre-commit). Bật lại khi hết gấp.
+    // (Next 16 đã bỏ tích hợp ESLint-during-build nên không cần key `eslint`.)
     typescript: {
         ignoreBuildErrors: true,
-    },
-    eslint: {
-        ignoreDuringBuilds: true,
     },
     experimental: {
         // Rewrite `@heroui/react` barrel imports to direct sub-paths so a Server

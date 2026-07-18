@@ -51,7 +51,7 @@ export const MockInterviewSessionSkeleton = ({ className }: WithClassNames<undef
                 {/* LEFT — the conversation column (presence card + voice hero + action row) */}
                 <div className="flex min-w-0 flex-col gap-6">
                     {/* interviewer presence card — avatar + name/role + the question body */}
-                    <div className="flex flex-col gap-3 rounded-2xl bg-surface p-4 shadow-surface">
+                    <div className="flex flex-col gap-3 rounded-3xl bg-surface p-4 shadow-surface">
                         <div className="flex items-center gap-3">
                             <Skeleton.Avatar />
                             <div className="flex min-w-0 flex-col gap-1">

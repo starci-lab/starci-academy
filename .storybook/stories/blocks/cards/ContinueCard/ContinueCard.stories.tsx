@@ -41,9 +41,9 @@ export const Item: Story = {
     ),
 }
 
-/** Use when the card is the ONLY unfinished thing on the surface, and needs to pull the learner back — instead of variant="item" (when there are N things to choose from). The CTA becomes a chip button on its own line for enough weight, the icon sinks into the background, accent border because it is the thing being emphasized. */
+/** Use when the card is the ONLY unfinished thing on the surface, and needs to pull the learner back — instead of variant="item" (when there are N things to choose from). The CTA becomes a chip button on its own line for enough weight, the icon sinks into the background, and it's wrapped in a `HighlightCard` sweeping-light accent (`card.md` §3j) because it's the thing being emphasized. */
 export const Hero: Story = {
-    parameters: { usage: "Use when the card is the ONLY unfinished thing on the surface, and needs to pull the learner back — instead of variant=\"item\" (when there are N things to choose from). The CTA becomes a chip button on its own line for enough weight, the icon sinks into the background as a watermark, accent border because it is the thing being emphasized." },
+    parameters: { usage: "Use when the card is the ONLY unfinished thing on the surface, and needs to pull the learner back — instead of variant=\"item\" (when there are N things to choose from). The CTA becomes a chip button on its own line for enough weight, the icon sinks into the background as a watermark, wrapped in a HighlightCard sweeping-light accent (card.md §3j) because it's the thing being emphasized." },
     render: () => (
         <div className="flex flex-col gap-3">
             <div className="flex flex-col gap-2">

@@ -17,6 +17,12 @@ export interface UserCellProps extends WithClassNames<undefined> {
     size?: "sm" | "md"
     /** Optional right-aligned slot, e.g. a follow button or status chip. */
     trailing?: React.ReactNode
+    /**
+     * Extra classes on the NAME's own `Typography` (e.g. `text-accent` to mark the
+     * viewer's own row) — applied last so it overrides Typography's default colour,
+     * which a parent `text-*` can't reach through the component boundary.
+     */
+    nameClassName?: string
 }
 
 /**
@@ -40,6 +46,7 @@ export const UserCell = ({
     size = "sm",
     trailing,
     className,
+    nameClassName,
 }: UserCellProps) => {
     const name = displayName ?? username
 
@@ -52,7 +59,7 @@ export const UserCell = ({
                 size={size}
             />
             <div className="flex min-w-0 flex-col gap-0">
-                <Typography type="body-sm" weight="medium" truncate className="leading-5">{name}</Typography>
+                <Typography type="body-sm" weight="medium" truncate className={cn("leading-5", nameClassName)}>{name}</Typography>
                 {handle ? <Typography type="body-xs" color="muted" truncate className="leading-4">{handle}</Typography> : null}
             </div>
             {trailing ? <div className="ml-auto shrink-0">{trailing}</div> : null}

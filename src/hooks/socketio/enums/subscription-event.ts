@@ -36,4 +36,10 @@ export enum SubscriptionEvent {
     PlaygroundByomResourcesReport = "resources:report",
     /** The current step was verified as complete (must match backend). */
     PlaygroundByomStepVerified = "step:verified",
+    /** The learner's local CLI agent paired to this session (must match backend). */
+    PlaygroundByomAgentConnected = "agent:connected",
+    /** The learner's local CLI agent dropped (must match backend). */
+    PlaygroundByomAgentDisconnected = "agent:disconnected",
+    /** The agent's pong echo (carries the browser timestamp) for latency (must match backend `agent:pong`). */
+    PlaygroundByomAgentPong = "agent:pong",
 }

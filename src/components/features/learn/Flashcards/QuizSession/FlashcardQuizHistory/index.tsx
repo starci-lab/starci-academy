@@ -369,7 +369,7 @@ export const FlashcardQuizHistory = ({ courseId, onStartQuiz, className }: Flash
                         // group by time window — each non-empty bucket is a `LabeledCard frameless`
                         // (time window = label OUTSIDE + run count via `labelEnd`; content is a
                         // `SurfaceListCard` → frameless, no card-in-card).
-                        <div className="flex flex-col gap-6">
+                        <div className="flex flex-col gap-3">
                             {timeBuckets.map((bucket) => (
                                 <LabeledCard
                                     key={bucket.key}

@@ -201,6 +201,7 @@ export const buildMarkdownRenderers = ({
     mermaidCaptions,
     reading = false,
     plain = false,
+    codeElevated = false,
 }: MarkdownRenderersParams): Components => {
     // Long-form lessons read the larger scale; cards / chat / modals keep the compact one.
     const bodySize = reading ? "base" : "sm"
@@ -361,6 +362,7 @@ export const buildMarkdownRenderers = ({
                     theme={isDark
                         ? "material-theme-darker"
                         : "material-theme-lighter"}
+                    elevated={codeElevated}
                     className={blockMy}
                 />
             )

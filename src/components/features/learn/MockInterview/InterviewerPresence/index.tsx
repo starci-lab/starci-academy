@@ -60,7 +60,7 @@ export const InterviewerPresence = ({
     className,
 }: InterviewerPresenceProps) => {
     return (
-        <div className={cn("rounded-2xl bg-surface p-4 shadow-surface", className)}>
+        <div className={cn("rounded-3xl bg-surface p-4 shadow-surface", className)}>
             <div className="flex items-center gap-3">
                 <img
                     src={persona.avatarSrc}

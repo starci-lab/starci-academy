@@ -1,6 +1,7 @@
 import React from "react"
 import {
     Card,
+    cn,
 } from "@heroui/react"
 import type {
     WithClassNames,
@@ -44,11 +45,21 @@ export const StatRibbon = ({
 }: StatRibbonProps) => {
     return (
         <Card variant="default" className={className}>
-            <div className="grid grid-cols-2 gap-4 sm:flex sm:items-stretch sm:gap-0 sm:divide-x sm:divide-default">
-                {items.map((item) => (
+            {/* Desktop: bleed the row to the card's inner edges (`sm:-m-3` cancels the
+                globals `.card { p-3 !important }`) so the per-cell `border-l` reaches the
+                top+bottom border = FULL-HEIGHT (matching VerdictHeroCard's split), not
+                inset by the card padding. Cells carry their own padding instead. The
+                divider is a per-cell `border-l` (NOT `divide-x` — Tailwind v4 here emits
+                no `divide-*` rule; same reason StatGridCard uses `border-r`). Mobile keeps
+                the padded 2-col grid (no dividers there). */}
+            <div className="grid grid-cols-2 gap-4 sm:-m-3 sm:flex sm:items-stretch sm:gap-0">
+                {items.map((item, index) => (
                     <div
                         key={item.key}
-                        className="min-w-0 sm:flex-1 sm:px-6 sm:first:pl-0 sm:last:pr-0"
+                        className={cn(
+                            "min-w-0 sm:flex-1 sm:px-6 sm:py-3 sm:first:pl-3 sm:last:pr-3",
+                            index > 0 && "sm:border-l sm:border-default",
+                        )}
                     >
                         <StatPair value={item.value} label={item.label} />
                     </div>

@@ -66,3 +66,39 @@ export const Bash: Story = {
         </div>
     ),
 }
+
+/**
+ * Surface treatment — `elevated` flips the block between a recessed well (for use
+ * ON a surface/card) and a raised card (for use ON the bare page canvas). Each is
+ * shown on the container it is meant for, so the contrast reads correctly.
+ */
+export const SurfaceTreatment: Story = {
+    tags: ["news"],
+    parameters: { usage: "Chờ duyệt — `elevated`: recessed well (default, on a surface) vs raised card (on the page canvas, e.g. Playground left pane)." },
+    render: () => (
+        <div className="flex flex-col gap-6">
+            {/* default RECESSED well — correct ON a surface (bg-surface): the
+                bg-background block reads as a darker inset. */}
+            <div className="flex flex-col gap-2">
+                <Label>Default — recessed well (on a bg-surface card)</Label>
+                <Typography type="body-sm" color="muted">
+                    Default (`elevated={false}`): a `bg-background` inset that recesses INTO the surface around it — the lesson/card look.
+                </Typography>
+                <div className="rounded-2xl border border-default bg-surface p-4">
+                    <CodeToHtml code={BASH_SAMPLE} language="bash" theme="material-theme-lighter" />
+                </div>
+            </div>
+            {/* RAISED card — correct ON the page canvas (bg-background): the
+                bg-surface block + shadow floats up off the canvas. */}
+            <div className="flex flex-col gap-2">
+                <Label>Elevated — raised card (on the bg-background canvas)</Label>
+                <Typography type="body-sm" color="muted">
+                    `elevated`: a `bg-surface` + shadow card that floats UP off the canvas — for markdown rendered directly on the page (Playground left pane).
+                </Typography>
+                <div className="rounded-2xl bg-background p-4">
+                    <CodeToHtml code={BASH_SAMPLE} language="bash" theme="material-theme-lighter" elevated />
+                </div>
+            </div>
+        </div>
+    ),
+}

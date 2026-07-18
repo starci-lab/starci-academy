@@ -113,6 +113,47 @@ export const Tones: Story = {
 }
 
 /**
+ * Use when the fill should be read AGAINST a goal — pass `target` to drop the `ProgressMeterTargetMark` at that value: a rounded `bg-accent` pill (`w-1 h-5`) that overshoots the thin bar so it reads as a "notch" at the goal. Add a short `targetLabel` to float a caption above it; the meter then auto-reserves top room (`mt-5`) so that label never overlaps the text above. The bar's own color still carries the value's meaning; the marker just shows "where healthy is". Built for the memory-health hero ("39% vs an 85% goal"), reused across all 3 stats heroes.
+ */
+export const WithTarget: Story = {
+    tags: ["news"],
+    render: () => (
+        <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Below the goal (danger)</Label>
+                    <Typography type="body-sm" color="muted">Fill far short of the 85% goal. The marker is a rounded accent pill that overshoots the bar; the meter reserves its own top room so the floating "85%" clears the text above — no manual padding needed at the call-site.</Typography>
+                </div>
+                <div className="w-80">
+                    <ProgressMeter value={39} color="danger" target={85} targetLabel="85%" />
+                </div>
+            </div>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>At/above the goal (success)</Label>
+                    <Typography type="body-sm" color="muted">The fill has cleared the goal marker — value reads success.</Typography>
+                </div>
+                <div className="w-80">
+                    <ProgressMeter value={88} color="success" target={85} targetLabel="85%" />
+                </div>
+            </div>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Marker without a label</Label>
+                    <Typography type="body-sm" color="muted">Pass `target` without `targetLabel` for just the pill notch — no floating caption, so no extra top room is reserved.</Typography>
+                </div>
+                <div className="w-80">
+                    <ProgressMeter value={55} color="warning" target={70} />
+                </div>
+            </div>
+        </div>
+    ),
+    parameters: {
+        usage: "Pass `target` to drop the ProgressMeterTargetMark — a rounded accent pill (w-1 h-5) — at a goal value; add a short `targetLabel` to float a caption above it (the meter auto-reserves mt-5 so it clears the text above, no call-site padding). The bar color still carries the value's meaning; the marker shows where healthy is. Reused across all 3 stats heroes.",
+    },
+}
+
+/**
  * Use when the counting unit is not %, e.g. counting completed lessons/questions out of a total (7/10) instead of a percentage.
  */
 export const CustomMax: Story = {

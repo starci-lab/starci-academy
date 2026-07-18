@@ -10,47 +10,26 @@ const query1 = gql`
       message
       error
       data {
-        dailyActivity {
-          date
-          cardsReviewed
-        }
-        byDeck {
-          deckId
-          deckTitle
-          sessionCount
-          cardsReviewed
-          totalCards
-        }
-        dueToday
-        dueForecast {
-          date
-          count
-        }
-        masteryBreakdown {
-          mastered
-          learning
-          new
-        }
-        leechCards {
+        leechFocus {
           cardId
           question
-          forgotCount
           deckId
           deckTitle
+          lapseCount
+          reason
         }
-        weakReviewTag {
+        weakTags {
           tag
           retention
-          reviewCount
+          cardCount
         }
+        matureRetention
+        youngRetention
+        reviewedTotal
+        courseRetention
         deckRetention {
           deckId
           deckTitle
-          retention
-          reviewCount
-        }
-        retentionTrend {
-          date
           retention
           reviewCount
         }

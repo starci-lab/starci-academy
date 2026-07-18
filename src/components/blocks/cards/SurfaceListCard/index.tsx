@@ -4,6 +4,7 @@ import React from "react"
 import Link from "next/link"
 import { cn, Typography } from "@heroui/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { type VerdictBand, verdictBandClassName } from "../verdict-band"
 
 /**
  * The interactive anchor for a clickable surface-list row. An INTERNAL app route
@@ -119,13 +120,21 @@ export interface SurfaceListCardRowProps extends WithClassNames<undefined> {
      * the label, don't colour the whole block).
      */
     hover?: "fill" | "underline"
+    /**
+     * Verdict band: an inset colored PILL on the left marking this row with a signal
+     * that comes from DATA (`card.md` §3i) — e.g. a keyword's popularity tier. See
+     * {@link VerdictBand} (same shape as `SurfaceListCardItem.withVerdict`).
+     */
+    withVerdict?: VerdictBand
 }
 
 /**
- * One interactive row of a {@link SurfaceListCard}: a full-width `<button>` (or
- * `<a>`) with `hover:bg-default`, focus ring, and an inset bottom separator
- * (`after:`), auto-hidden on the last row. Lays out leading · title+subtitle ·
- * meta+trailing — the same slot shape as `ListRow` but with the surface-card skin.
+ * One row of a {@link SurfaceListCard}, laying out leading · title+subtitle ·
+ * meta+trailing (the same slot shape as `ListRow`, surface-card skin) with a
+ * full-bleed inset separator auto-hidden on the last row. STATIC by default (a
+ * plain `<div>`, NO hover/focus/cursor); pass `onPress`/`href` to make the whole
+ * row a tappable `<button>`/`<a>` with `hover:bg-default` + focus ring. A static
+ * row never fakes interactivity with a hover tint (`hover-style-matches-clickable-nature`).
  *
  * @param props - {@link SurfaceListCardRowProps}
  */
@@ -141,21 +150,27 @@ export const SurfaceListCardRow = ({
     selected = false,
     isDisabled = false,
     hover = "fill",
+    withVerdict,
     className,
 }: SurfaceListCardRowProps) => {
+    // a row is only interactive when it actually does something; a STATIC row must
+    // not fake interactivity with a hover tint / focus ring / button semantics
+    // (`hover-style-matches-clickable-nature` — mirrors SurfaceListCardItem).
+    const interactive = Boolean(onPress || href)
     const underlineHover = hover === "underline"
     const rowClassName = cn(
-        "relative flex w-full items-center gap-3 p-3 text-left outline-none transition-colors",
-        // link-style rows form a hover `group` (the title underlines) with no fill;
-        // card-style rows tint the whole row
-        underlineHover ? "group" : "hover:bg-default",
-        "focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent",
-        "disabled:cursor-not-allowed disabled:opacity-60",
+        "relative flex w-full items-center gap-3 p-3 text-left",
         // full-bleed separator, hidden on the last row of the card
         "after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-['']",
         "last:after:hidden",
-        !isDisabled && (onPress || href) && "cursor-pointer",
+        // hover + focus + cursor ONLY when interactive. link-style rows form a hover
+        // `group` (the title underlines) with no fill; card-style rows tint the row
+        interactive && "outline-none transition-colors focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent",
+        interactive && (underlineHover ? "group" : "hover:bg-default"),
+        interactive && !isDisabled && "cursor-pointer",
+        "disabled:cursor-not-allowed disabled:opacity-60",
         selected && "bg-accent-soft",
+        verdictBandClassName(withVerdict),
         className,
     )
 
@@ -192,12 +207,15 @@ export const SurfaceListCardRow = ({
             </RowAnchor>
         )
     }
-
-    return (
-        <button type="button" onClick={onPress} disabled={isDisabled} className={rowClassName}>
-            {content}
-        </button>
-    )
+    if (onPress) {
+        return (
+            <button type="button" onClick={onPress} disabled={isDisabled} className={rowClassName}>
+                {content}
+            </button>
+        )
+    }
+    // static row (no onPress/href) — a plain div: no button semantics, no hover
+    return <div className={rowClassName}>{content}</div>
 }
 
 /** Props for {@link SurfaceListCardItem}. */
@@ -219,6 +237,12 @@ export interface SurfaceListCardItemProps extends WithClassNames<undefined> {
      * `hover-style-matches-clickable-nature` (go-there → underline, stay-here → fill).
      */
     hover?: "fill" | "underline"
+    /**
+     * Verdict variant: a LEFT band (`border-l-4`) marking this row with a signal that
+     * comes from DATA (`card.md` §3i) — e.g. the league's promote/demote zone. See
+     * {@link VerdictBand} (same shape as `SectionCard.withVerdict`).
+     */
+    withVerdict?: VerdictBand
 }
 
 /**
@@ -239,11 +263,13 @@ export const SurfaceListCardItem = ({
     href,
     isDisabled = false,
     hover = "fill",
+    withVerdict,
     className,
 }: SurfaceListCardItemProps) => {
     const interactive = Boolean(onPress || href)
     const itemClassName = cn(
         "relative block w-full p-3 text-left",
+        verdictBandClassName(withVerdict),
         // full-bleed separator, hidden on the last row of the card
         "after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-['']",
         "last:after:hidden",

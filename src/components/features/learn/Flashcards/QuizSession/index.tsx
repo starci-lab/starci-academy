@@ -6,13 +6,9 @@ import { LayoutGroup, motion, useReducedMotion } from "framer-motion"
 import { Button, Chip, Input, Label, Spinner, TextField, Typography, cn } from "@heroui/react"
 import {
     ArrowRightIcon,
-    CardsIcon,
     CheckCircleIcon,
-    ClockCountdownIcon,
     ClockIcon,
     FlameIcon,
-    LightningIcon,
-    StackIcon,
     XCircleIcon,
 } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
@@ -29,6 +25,7 @@ import { type FlashcardCardEntity } from "@/modules/types/entities/flashcard-car
 import { GraphQLHeadersKey } from "@/modules/api/graphql/types"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { Callout } from "@/components/blocks/feedback/Callout"
+import { ConfirmDialog } from "@/components/blocks/feedback/ConfirmDialog"
 import { FlipCard } from "@/components/blocks/cards/FlipCard"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { RatingBar } from "@/components/blocks/buttons/RatingBar"
@@ -273,6 +270,10 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     const [results, setResults] = useState<Array<CardResult>>([])
     // in-session combo (consecutive well-answered cards) — drives the active HUD chip
     const [combo, setCombo] = useState(0)
+    // confirm-before-exit for the two irreversible active-session actions, mirroring
+    // MockInterviewSession: "leave" (Thoát — abandon this run) · "endEarly" (Kết thúc
+    // sớm — grade with the cards done so far). null = no dialog open.
+    const [confirmAction, setConfirmAction] = useState<null | "leave" | "endEarly">(null)
     // true while `startSession` is drawing + persisting a fresh run — drives the
     // "Bắt đầu luyện" button's own isPending (stays ON this screen; only the
     // eventual navigation to `/quiz/[sessionId]` leaves it, restructured 2026-07-09).
@@ -909,25 +910,8 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                     value={scope}
                                     onChange={setScope}
                                     items={[
-                                        {
-                                            value: "all",
-                                            content: (
-                                                <span className="flex items-center gap-2">
-                                                    <CardsIcon className="size-4" aria-hidden focusable="false" />
-                                                    {t("flashcard.mode.fullLabel")}
-                                                </span>
-                                            ),
-                                        },
-                                        {
-                                            value: "due",
-                                            isDisabled: dueDisabled,
-                                            content: (
-                                                <span className="flex items-center gap-2">
-                                                    <ClockCountdownIcon className="size-4" aria-hidden focusable="false" />
-                                                    {t("flashcard.mode.dueLabel")}
-                                                </span>
-                                            ),
-                                        },
+                                        { value: "all", content: t("flashcard.mode.fullLabel") },
+                                        { value: "due", isDisabled: dueDisabled, content: t("flashcard.mode.dueLabel") },
                                     ]}
                                 />
                             </div>
@@ -939,24 +923,8 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                                     value={mode}
                                     onChange={setMode}
                                     items={[
-                                        {
-                                            value: "quick",
-                                            content: (
-                                                <span className="flex items-center gap-2">
-                                                    <LightningIcon className="size-4" aria-hidden focusable="false" />
-                                                    {t("flashcard.quiz.modeQuick")}
-                                                </span>
-                                            ),
-                                        },
-                                        {
-                                            value: "deep",
-                                            content: (
-                                                <span className="flex items-center gap-2">
-                                                    <StackIcon className="size-4" aria-hidden focusable="false" />
-                                                    {t("flashcard.quiz.modeDeep")}
-                                                </span>
-                                            ),
-                                        },
+                                        { value: "quick", content: t("flashcard.quiz.modeQuick") },
+                                        { value: "deep", content: t("flashcard.quiz.modeDeep") },
                                     ]}
                                 />
                             </div>
@@ -1075,41 +1043,63 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
     // per-card meta belongs to the card body, not the fixed session chrome —
     // `components/card.md` Đính chính 2026-07-13).
     const header = (
-        <WorkSessionHeader
-            backLabel={t("flashcard.exit")}
-            onBack={exitToSetup}
-            title={t("flashcard.mode.quiz")}
-            identity={course?.title ? { name: course.title } : undefined}
-            counter={t("flashcard.quiz.progress", {
-                current: index + 1,
-                total: sessionLength,
-            })}
-            current={index}
-            total={sessionLength}
-            rightSlot={
-                <span className="flex shrink-0 items-center gap-3">
-                    {remainingSeconds !== null ? (
-                        <span
-                            className={cn(
-                                "flex shrink-0 items-center gap-2",
-                                remainingSeconds <= TIME_LIMIT_WARNING_SECONDS && "text-warning-soft-foreground",
-                            )}
-                        >
-                            <ClockIcon className="size-4" aria-hidden focusable="false" />
-                            <Typography type="body-sm" weight="medium" className="tabular-nums">
-                                {formatElapsed(remainingSeconds)}
-                            </Typography>
-                        </span>
-                    ) : null}
-                    {combo > 1 ? (
-                        <Chip size="sm" variant="soft" color="warning">
-                            <FlameIcon className="size-4" aria-hidden focusable="false" />
-                            {t("flashcard.quiz.comboChip", { combo })}
-                        </Chip>
-                    ) : null}
-                </span>
-            }
-        />
+        <>
+            <WorkSessionHeader
+                backLabel={t("flashcard.exit")}
+                onBack={() => setConfirmAction("leave")}
+                onFinish={() => setConfirmAction("endEarly")}
+                finishLabel={t("flashcard.finishEarly")}
+                title={t("flashcard.mode.quiz")}
+                identity={course?.title ? { name: course.title } : undefined}
+                counter={t("flashcard.quiz.progress", {
+                    current: index + 1,
+                    total: sessionLength,
+                })}
+                current={index}
+                total={sessionLength}
+                rightSlot={
+                    <span className="flex shrink-0 items-center gap-3">
+                        {remainingSeconds !== null ? (
+                            <span
+                                className={cn(
+                                    "flex shrink-0 items-center gap-2",
+                                    remainingSeconds <= TIME_LIMIT_WARNING_SECONDS && "text-warning-soft-foreground",
+                                )}
+                            >
+                                <ClockIcon className="size-4" aria-hidden focusable="false" />
+                                <Typography type="body-sm" weight="medium" className="tabular-nums">
+                                    {formatElapsed(remainingSeconds)}
+                                </Typography>
+                            </span>
+                        ) : null}
+                        {combo > 1 ? (
+                            <Chip size="sm" variant="soft" color="warning">
+                                <FlameIcon className="size-4" aria-hidden focusable="false" />
+                                {t("flashcard.quiz.comboChip", { combo })}
+                            </Chip>
+                        ) : null}
+                    </span>
+                }
+            />
+            <ConfirmDialog
+                isOpen={confirmAction !== null}
+                onOpenChange={(open) => { if (!open) { setConfirmAction(null) } }}
+                tone={confirmAction === "leave" ? "danger" : "default"}
+                title={confirmAction === "leave" ? t("flashcard.leaveTitle") : t("flashcard.finishEarlyTitle")}
+                description={confirmAction === "leave" ? t("flashcard.leaveConfirm") : t("flashcard.finishEarlyConfirm")}
+                confirmLabel={confirmAction === "leave" ? t("flashcard.leaveCta") : t("flashcard.finishEarlyCta")}
+                cancelLabel={t("flashcard.stayIn")}
+                onConfirm={() => {
+                    const action = confirmAction
+                    setConfirmAction(null)
+                    if (action === "leave") {
+                        exitToSetup()
+                    } else if (action === "endEarly") {
+                        void finish(results)
+                    }
+                }}
+            />
+        </>
     )
 
     // ── FALLBACK: card has no clozable key terms → plain flip + self-grade ──

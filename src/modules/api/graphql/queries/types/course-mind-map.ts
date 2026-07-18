@@ -42,6 +42,8 @@ export interface CourseMindMapNodeData {
     links: Array<CourseMindMapLink>
     /** Optional one-line gloss (authored concepts). */
     desc: string | null
+    /** Authored popularity tier (`high`/`medium`/`low`) — drives the node ring colour. Null on root. */
+    popularity: string | null
 }
 
 /** A mind-map node in `@xyflow/react` shape. */

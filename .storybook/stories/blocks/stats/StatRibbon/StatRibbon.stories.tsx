@@ -11,7 +11,7 @@ const meta: Meta<typeof StatRibbon> = {
 export default meta
 type Story = StoryObj<typeof StatRibbon>
 
-/** Use for the headline stat strip at the top of a profile tab (Challenges / Skills): 4 StatPairs in ONE card split by vertical dividers on wide screens, a 2-column grid on mobile. */
+/** Use for the headline stat strip at the top of a profile tab (Challenges / Skills): 4 StatPairs in ONE card split by FULL-HEIGHT vertical dividers (row bleeds to the card edges via `sm:-m-3` so the divider touches top+bottom, not inset by the card padding) on wide screens, a 2-column grid on mobile. */
 export const Default: Story = {
     parameters: { usage: "Use for the headline stat strip at the top of a profile tab (Challenges / Skills): 4 StatPairs in one card split by vertical dividers on wide screens, a 2-column grid on mobile." },
     render: () => (

@@ -1,0 +1,104 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Docker - 20-step guided path</title>
+<style>
+:root{--bg:#f4f4f6;--fg:#1a1a1e;--mut:#6b6b76;--line:#e2e2e8;--card:#fff;--acc:#c0407a;--ok:#2f8f57;--okbg:#e3f4ea;--code:#1e1e1e;--codefg:#d4d4d4}
+@media(prefers-color-scheme:dark){:root{--bg:#161619;--fg:#eaeaef;--mut:#9a9aa6;--line:#2a2a30;--card:#1d1d21;--okbg:#16281d}}
+*{box-sizing:border-box}body{margin:0;font:14px/1.5 ui-sans-serif,system-ui,sans-serif;color:var(--fg);background:var(--bg)}
+.top{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line);padding:0}
+.wshead{display:flex;align-items:center;gap:12px;padding:11px 18px;font-size:14px}
+.wshead b{font-size:15px}.wshead .sp{margin-left:auto;color:var(--mut);font-size:13px}
+.prog{height:3px;background:var(--line)}.prog>i{display:block;height:100%;background:var(--acc);transition:width .2s}
+.wrap{max-width:1100px;margin:0 auto;padding:16px}
+.work{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card);min-height:420px}
+.pane{padding:18px;min-width:0}.pane.left{border-right:1px solid var(--line)}
+.steptitle{font-size:18px;font-weight:700;margin:0}.stepbody{color:var(--mut);font-size:14px;margin:9px 0 0}
+.hintlabel{font-size:10px;font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.03em;margin:16px 0 5px}
+.cmd{background:var(--code);color:var(--codefg);font:12.5px ui-monospace,Menlo,monospace;padding:12px 14px;border-radius:9px;overflow-x:auto;white-space:pre-wrap;word-break:break-word}
+.action{background:var(--bg);border:1px dashed var(--line);border-radius:9px;padding:12px 14px;font-size:13.5px}
+.action b{color:var(--acc)}
+.modetog{display:flex;gap:6px;margin-top:16px}
+.modetog button{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:5px 12px;font:inherit;font-size:12px;cursor:pointer;color:var(--mut)}
+.modetog button.on{border-color:var(--acc);color:var(--acc);font-weight:700;background:color-mix(in oklab,var(--acc) 6%,transparent)}
+.verify{margin-top:16px;font-size:12px;color:var(--mut);border-top:1px dashed var(--line);padding-top:11px}
+.verify code{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:0 5px;font-size:11px}
+.rpanehd{font-size:11px;font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.03em;margin-bottom:9px;display:flex;gap:8px;align-items:center}
+.kt{margin-left:auto;font:9px ui-monospace,monospace;padding:0 5px;border-radius:5px}
+.kt.t{color:#2f6bd4;background:#2f6bd41f}.kt.r{color:var(--acc);background:color-mix(in oklab,var(--acc) 13%,transparent)}
+.terminal{background:var(--code);color:var(--codefg);border-radius:9px;font:12px ui-monospace,monospace;padding:13px;min-height:120px;white-space:pre-wrap;word-break:break-word}
+.terminal .p{color:#6a9955}
+.reslist{margin-top:13px}.resrow{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 11px;font-size:12px;opacity:.55}
+.rchip{margin-left:auto;font-size:10px;font-weight:700;padding:1px 8px;border-radius:20px;background:var(--line);color:var(--mut)}
+.ragimport{display:flex;gap:5px;margin-bottom:9px;flex-wrap:wrap}
+.ragimport span{border:1px solid var(--line);border-radius:7px;padding:4px 10px;font-size:11px;color:var(--mut)}
+.ragimport span.on{border-color:var(--acc);color:var(--acc);font-weight:700}
+.ragcode{background:var(--code);color:var(--codefg);font:11px ui-monospace,monospace;padding:11px;border-radius:8px;min-height:80px;white-space:pre-wrap}
+.ragq{margin-top:11px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:12.5px;background:var(--bg)}
+.cite{font-size:10.5px;color:var(--acc);margin-top:6px;display:inline-block}
+.navbar{display:flex;align-items:center;gap:10px;margin-top:14px}
+.btn{border:0;border-radius:10px;padding:10px 18px;font:inherit;font-weight:700;cursor:pointer;background:var(--acc);color:#fff;font-size:14px}
+.btn.ghost{background:var(--card);border:1px solid var(--line);color:var(--fg);font-weight:600}
+.btn:disabled{opacity:.4;cursor:default}
+.dots{display:flex;gap:4px;flex-wrap:wrap;margin-left:auto}
+.dots button{width:22px;height:22px;border:1px solid var(--line);background:var(--card);border-radius:6px;font:inherit;font-size:10px;cursor:pointer;color:var(--mut);padding:0}
+.dots button.on{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700}
+.dots button.done{border-color:var(--ok);color:var(--ok)}
+</style></head><body>
+<div class="top"><div class="wshead"><span>← Thoát</span><b id="wsTitle"></b><span class="sp" id="wsStep"></span></div><div class="prog"><i id="progBar"></i></div></div>
+<div class="wrap">
+  <div class="work">
+    <div class="pane left">
+      <h2 class="steptitle" id="stTitle"></h2>
+      <p class="stepbody" id="stBody"></p>
+      <div id="hintBox"></div>
+      <div class="modetog"><button id="mG" class="on" onclick="setMode('guided')">Có hướng dẫn</button><button id="mF" onclick="setMode('free')">Tự làm</button></div>
+      <div class="verify" id="verifyBox"></div>
+    </div>
+    <div class="pane" id="rightPane"></div>
+  </div>
+  <div class="navbar">
+    <button class="btn ghost" id="prevBtn" onclick="go(cur-1)">◀ Trước</button>
+    <button class="btn" id="nextBtn" onclick="go(cur+1)">Bước sau ▶</button>
+    <div class="dots" id="dots"></div>
+  </div>
+</div>
+<script>
+var D={"slug": "docker", "kind": "terminal", "emoji": "D", "title": "Docker", "steps": [{"title": "Chạy container đầu tiên", "body": "Khởi động một container Nginx nền (detached) với tên `starci-demo`.", "command": "docker run -d --name starci-demo nginx", "action": "", "vk": "Container", "vs": "Running"}, {"title": "Kiểm tra lại mọi container", "body": "Liệt kê toàn bộ container (kể cả đã dừng) để xác nhận `starci-demo` vẫn tồn tại.", "command": "docker ps -a", "action": "", "vk": "Container", "vs": "Running"}, {"title": "Xem log container", "body": "Xem log stdout/stderr của `starci-demo` để kiểm tra Nginx đã khởi động thành công.", "command": "docker logs starci-demo", "action": "", "vk": "Container", "vs": ""}, {"title": "Vào bên trong container", "body": "Chạy một lệnh bên trong container `starci-demo` đang sống để kiểm tra phiên bản Nginx.", "command": "docker exec -it starci-demo nginx -v", "action": "", "vk": "Container", "vs": "Running"}, {"title": "Dừng và xoá container", "body": "Dừng rồi xoá hẳn container `starci-demo` bằng một lệnh duy nhất.", "command": "docker rm -f starci-demo", "action": "", "vk": "Container", "vs": ""}, {"title": "Build image từ Dockerfile", "body": "Build một image từ `Dockerfile` trong thư mục hiện tại, gắn tag `v1`.", "command": "docker build -t starci-demo:v1 .", "action": "", "vk": "Image", "vs": ""}, {"title": "Gắn tag phiên bản cho image", "body": "Gắn thêm tag `latest` cho image `starci-demo:v1` vừa build, không build lại từ đầu.", "command": "docker tag starci-demo:v1 starci-demo:latest", "action": "", "vk": "Image", "vs": ""}, {"title": "Dùng .dockerignore & build lại", "body": "Thêm `.dockerignore` rồi build lại image tag `v2`, quan sát layer cache tăng tốc build.", "command": "docker build -t starci-demo:v2 .", "action": "", "vk": "Image", "vs": ""}, {"title": "Volume & port mapping", "body": "Chạy container mới có mount volume và map port 8081 ra port 80 của container.", "command": "docker run -d --name starci-demo-vol -p 8081:80 -v starci-vol:/usr/share/nginx/html nginx", "action": "", "vk": "Container", "vs": "Running"}, {"title": "Truyền biến môi trường", "body": "Chạy container mới truyền biến môi trường `APP_ENV=production` vào bên trong.", "command": "docker run -d --name starci-demo-env -e APP_ENV=production nginx", "action": "", "vk": "Container", "vs": "Running"}, {"title": "Bind mount thư mục local", "body": "Chạy container mới bind-mount thư mục `./html` trên máy host vào `/usr/share/nginx/html`.", "command": "docker run -d --name starci-demo-bind -v $(pwd)/html:/usr/share/nginx/html nginx", "action": "", "vk": "Container", "vs": "Running"}, {"title": "Kết nối container qua network", "body": "Tạo network riêng rồi kết nối container `starci-demo-vol` vào network đó.", "command": "docker network create starci-net && docker network connect starci-net starci-demo-vol", "action": "", "vk": "Network", "vs": ""}, {"title": "Compose up — chạy multi-container", "body": "Dùng `docker compose up -d` để khởi chạy nhiều container cùng lúc theo `docker-compose.yml`.", "command": "docker compose up -d", "action": "", "vk": "Container", "vs": "Running"}, {"title": "Xem log & tắt compose", "body": "Xem log tổng hợp rồi tắt toàn bộ stack bằng `docker compose down`.", "command": "docker compose down", "action": "", "vk": "Container", "vs": ""}, {"title": "Thêm healthcheck cho container", "body": "Chạy container mới có khai báo `--health-cmd` để Docker tự kiểm tra sức khoẻ định kỳ.", "command": "docker run -d --name starci-demo-health --health-cmd=\"curl -f http://localhost || exit 1\" --health-interval=5s nginx", "action": "", "vk": "Container", "vs": "Running"}, {"title": "Đặt restart policy", "body": "Chạy container mới với `--restart unless-stopped` để tự khởi động lại khi Docker restart.", "command": "docker run -d --name starci-demo-restart --restart unless-stopped nginx", "action": "", "vk": "Container", "vs": "Running"}, {"title": "Multi-stage build — image nhỏ gọn", "body": "Build image bằng Dockerfile multi-stage để có kích thước nhỏ gọn hơn, tag `slim`.", "command": "docker build -t starci-demo:slim -f Dockerfile.multistage .", "action": "", "vk": "Image", "vs": ""}, {"title": "Giới hạn tài nguyên (CPU/RAM)", "body": "Chạy container mới giới hạn tối đa 256MB RAM và 0.5 CPU.", "command": "docker run -d --name starci-demo-limit --memory=256m --cpus=0.5 nginx", "action": "", "vk": "Container", "vs": "Running"}, {"title": "Dọn dẹp image thừa (prune)", "body": "Xoá toàn bộ image \"dangling\" không còn container nào dùng tới.", "command": "docker image prune -f", "action": "", "vk": "Image", "vs": ""}, {"title": "Inspect & format kết quả", "body": "Dùng `docker inspect --format` để trích xuất đúng trường `State.Status` dạng JSON.", "command": "docker inspect --format='{{json .State.Status}}' starci-demo-limit", "action": "", "vk": "Container", "vs": "Running"}]}; var cur=0, mode='guided';
+function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
+function md(s){return (s||'').replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/`(.+?)`/g,'<code>$1</code>')}
+function rightTerminal(st){
+  return '<div class="rpanehd">Terminal <span class="kt t">kind: terminal</span></div>'+
+    (mode==='guided'
+      ? '<div class="terminal"><span class="p">$</span> '+esc(st.command)+'\n<span style="color:#888">(chua chay - ket noi may de thuc thi)</span></div><div class="reslist"><div class="rpanehd" style="margin-top:2px">Tai nguyen (0)</div><div class="resrow">'+esc(st.vk||'tai nguyen')+' hien o day sau khi chay <span class="rchip">cho</span></div></div>'
+      : '<div class="terminal"><span class="p">$</span> <span style="color:#888">_ (tu go - lenh goi y an)</span></div>');
+}
+function rightRag(st){
+  var m=/tab \*\*(Mau|Dan|Tai len|GitHub|Mẫu|Dán|Tải lên)\*\*/.exec(st.action||'');
+  var tabs=['Dan','Tai len','Mau','GitHub']; var onTab='Mau';
+  if(m){var x=m[1];if(/Dan|Dán/.test(x))onTab='Dan';else if(/Tai|Tải/.test(x))onTab='Tai len';else if(/GitHub/.test(x))onTab='GitHub';else onTab='Mau';}
+  return '<div class="rpanehd">RAG 2-pane <span class="kt r">kind: rag</span></div>'+
+    '<div class="ragimport">'+tabs.map(function(t){return '<span class="'+(t===onTab?'on':'')+'">'+t+(t===onTab&&mode==='guided'?' ◄':'')+'</span>'}).join('')+'</div>'+
+    '<div class="ragcode">// nguon dang index (mau/paste/upload/repo)\napp.get("/health",(req,res)=>res.send("ok"))</div>'+
+    '<div class="ragq"><b>Hoi:</b> (go cau hoi o day)<span class="cite">trich dan nguon hien duoi cau tra loi</span></div>';
+}
+function render(){
+  var st=D.steps[cur];
+  document.getElementById('wsTitle').textContent=D.emoji+' '+D.title+' · '+st.title;
+  document.getElementById('stTitle').textContent=st.title;
+  document.getElementById('stBody').textContent=st.body;
+  document.getElementById('wsStep').textContent='Buoc '+(cur+1)+'/'+D.steps.length;
+  document.getElementById('progBar').style.width=Math.round((cur+1)/D.steps.length*100)+'%';
+  var hb=document.getElementById('hintBox');
+  if(mode==='free'){hb.innerHTML='<div class="hintlabel">tu lam</div><div class="action" style="border-style:solid;color:var(--mut)">Chi co muc tieu - tu nghi cach (hint an).</div>';}
+  else if(D.kind==='terminal'){hb.innerHTML='<div class="hintlabel">lenh goi y · commandHint</div><div class="cmd">'+esc(st.command)+'</div>';}
+  else{hb.innerHTML='<div class="hintlabel">hanh dong goi y · actionHint</div><div class="action">'+md(st.action)+'</div>';}
+  document.getElementById('verifyBox').innerHTML='Verify: <code>'+esc(st.vk)+(st.vs?' / '+esc(st.vs):'')+'</code>';
+  document.getElementById('rightPane').innerHTML=D.kind==='terminal'?rightTerminal(st):rightRag(st);
+  document.getElementById('prevBtn').disabled=cur===0;
+  document.getElementById('nextBtn').disabled=cur===D.steps.length-1;
+  var dots=document.getElementById('dots');dots.innerHTML='';
+  D.steps.forEach(function(s,i){var b=document.createElement('button');b.textContent=i;b.className=(i===cur?'on':i<cur?'done':'');b.onclick=function(){go(i)};dots.appendChild(b);});
+}
+function go(i){cur=Math.max(0,Math.min(D.steps.length-1,i));window.scrollTo(0,0);render()}
+function setMode(m){mode=m;document.getElementById('mG').classList.toggle('on',m==='guided');document.getElementById('mF').classList.toggle('on',m==='free');render()}
+render();
+</script></body></html>

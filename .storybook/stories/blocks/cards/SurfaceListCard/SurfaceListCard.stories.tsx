@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
+import { Chip, Label, Typography } from "@heroui/react"
 import {
     CaretRightIcon,
     CheckCircleIcon,
@@ -277,6 +277,90 @@ export const StateMarkers: Story = {
                     leading={<XCircleIcon className="size-5 shrink-0 text-danger" aria-hidden focusable="false" />}
                     title={<span className="text-danger">Hoàn thành 1 phiên Phỏng vấn thử</span>}
                     meta={<Typography type="body-xs" color="muted">Hết hạn</Typography>}
+                />
+            </SurfaceListCard>
+        </div>
+    ),
+}
+
+/**
+ * STATIC rows — a read-only list (NO `onPress`/`href`). The row renders as a plain
+ * `<div>`: no hover tint, no focus ring, no pointer cursor. A hover fill on a row
+ * that does nothing falsely signals "clickable" (`hover-style-matches-clickable-nature`).
+ * Real case: the flashcard-review "weak topics" stat list — topic + retention chip,
+ * nothing to click. Only add `onPress`/`href` when the row genuinely acts or navigates.
+ */
+export const StaticRows: Story = {
+    parameters: {
+        usage:
+            "Read-only rows (no onPress/href) render as a plain <div> with NO hover/focus/cursor — a hover " +
+            "fill would falsely imply the row is clickable (hover-style-matches-clickable-nature). Real case: " +
+            "the flashcard-review weak-topic stat list (topic + retention chip, nothing to click).",
+    },
+    render: () => (
+        <div className="flex max-w-md flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Static (read-only) rows</Label>
+                <Typography type="body-sm" color="muted">
+                    A stat/summary list you only read — hovering a row does nothing, so the row stays flat. Reserve the hover fill for rows that actually act or navigate.
+                </Typography>
+            </div>
+            <SurfaceListCard>
+                <SurfaceListCardRow
+                    title="Resilience"
+                    meta={<Chip size="sm" variant="soft" color="danger" className="shrink-0">nhớ 25%</Chip>}
+                />
+                <SurfaceListCardRow
+                    title="Error Handling"
+                    meta={<Chip size="sm" variant="soft" color="warning" className="shrink-0">nhớ 33%</Chip>}
+                />
+                <SurfaceListCardRow
+                    title="Authorization"
+                    meta={<Chip size="sm" variant="soft" color="success" className="shrink-0">nhớ 57%</Chip>}
+                />
+            </SurfaceListCard>
+        </div>
+    ),
+}
+
+/**
+ * VERDICT band (`withVerdict`, card.md §3i) — an inset colored PILL on the left carrying a
+ * DATA signal (verdict tone / tier / zone), NOT decoration. Rendered as a `::before`
+ * rounded pill INSET on every side (not a `border-l`): a straight left border hooks into
+ * the card's rounded corners on the first/last row; the inset pill floats free (thầy
+ * 2026-07-18 "fix B ... đỡ rối"). Pass `variant` (accent/success/warning/danger) or a raw
+ * `color`. Real case: the mind-map rail's keyword-popularity tiers.
+ */
+export const VerdictBandRows: Story = {
+    parameters: {
+        usage:
+            "withVerdict (card.md §3i): an inset rounded PILL on the left carrying a DATA signal (tone/tier/zone). " +
+            "Rendered as a ::before pill inset on every side — a straight border-l would hook the card's rounded " +
+            "corners on the first/last row. Pass variant (accent/success/warning/danger) or a raw color.",
+    },
+    render: () => (
+        <div className="flex max-w-md flex-col gap-3">
+            <div className="flex flex-col gap-2">
+                <Label>Verdict band (data signal)</Label>
+                <Typography type="body-sm" color="muted">
+                    Use when the row&apos;s color MEANS something from the data (a mastery tier, a promote/demote zone). The pill is inset so it never wraps the card&apos;s rounded corner.
+                </Typography>
+            </div>
+            <SurfaceListCard>
+                <SurfaceListCardRow
+                    title="Shell &amp; hệ thống file"
+                    withVerdict={{ enable: true, variant: "success" }}
+                    onPress={() => {}}
+                />
+                <SurfaceListCardRow
+                    title="Redirect &amp; pipe"
+                    withVerdict={{ enable: true, variant: "warning" }}
+                    onPress={() => {}}
+                />
+                <SurfaceListCardRow
+                    title="Quyền file cơ bản"
+                    withVerdict={{ enable: true, variant: "danger" }}
+                    onPress={() => {}}
                 />
             </SurfaceListCard>
         </div>

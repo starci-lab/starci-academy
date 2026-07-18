@@ -22,16 +22,6 @@ export const parseCategoryParam = (param: string | null | undefined): Leaderboar
         ? (param as LeaderboardCategoryKey)
         : "total"
 
-/**
- * Per-category accent colour (data-driven, no semantic token) — shared by the rail
- * icon and the row segment bar so a category reads the same colour everywhere.
- */
-export const CATEGORY_COLOR: Record<"challenge" | "reading" | "milestone", string> = {
-    challenge: "#D85A30",
-    reading: "#378ADD",
-    milestone: "#1D9E75",
-}
-
 /** XP an entry contributes in a given category (the value we rank/sort by). */
 export const categoryEntryXp = (entry: CourseLeaderboardEntry, key: LeaderboardCategoryKey): number => {
     switch (key) {

@@ -16,10 +16,7 @@ const query1 = gql`
           designCount
         }
         trend {
-          completedAt
           overallScore
-          mode
-          verdict
         }
         byPhase {
           key
@@ -27,51 +24,6 @@ const query1 = gql`
           avgMax
           weakCount
           attemptCount
-        }
-        byKind {
-          key
-          avgScore
-          avgMax
-          weakCount
-          attemptCount
-        }
-        byAttribute {
-          key
-          avgScore
-          avgMax
-          weakCount
-          attemptCount
-        }
-        byLevel {
-          key
-          avgScore
-          avgMax
-          weakCount
-          attemptCount
-        }
-        byLanguage {
-          key
-          avgScore
-          avgMax
-          weakCount
-          attemptCount
-        }
-        recurringGaps {
-          text
-          count
-        }
-        weakest {
-          key
-          axis
-          avgScore
-          avgMax
-          weakCount
-          matchedContentId
-        }
-        verdictCounts {
-          pass
-          borderline
-          fail
         }
       }
     }

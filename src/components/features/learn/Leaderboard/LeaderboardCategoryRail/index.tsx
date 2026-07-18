@@ -12,7 +12,6 @@ import {
 } from "@phosphor-icons/react"
 import type { Icon } from "@phosphor-icons/react"
 import {
-    CATEGORY_COLOR,
     categoryMyXp,
     parseCategoryParam,
     type LeaderboardCategoryKey,
@@ -24,8 +23,6 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 interface RailItem {
     key: LeaderboardCategoryKey
     icon: Icon
-    /** Inline colour for the icon (matches the row segment bar); accent for total. */
-    color?: string
     label: string
     /** Viewer's XP in this category. */
     xp: number
@@ -80,7 +77,6 @@ export const LeaderboardCategoryRail = ({ variant, className }: LeaderboardCateg
         {
             key: "challenge",
             icon: PuzzlePieceIcon,
-            color: CATEGORY_COLOR.challenge,
             label: t("leaderboard.categories.challenge"),
             xp: categoryMyXp(myRank, "challenge"),
             caption: t("leaderboard.categories.captionChallenge", { count: myRank?.completedChallenges ?? 0 }),
@@ -88,7 +84,6 @@ export const LeaderboardCategoryRail = ({ variant, className }: LeaderboardCateg
         {
             key: "reading",
             icon: BookOpenIcon,
-            color: CATEGORY_COLOR.reading,
             label: t("leaderboard.categories.reading"),
             xp: categoryMyXp(myRank, "reading"),
             caption: t("leaderboard.categories.captionReading", { count: myRank?.lessonsRead ?? 0 }),
@@ -96,7 +91,6 @@ export const LeaderboardCategoryRail = ({ variant, className }: LeaderboardCateg
         {
             key: "milestone",
             icon: FlagIcon,
-            color: CATEGORY_COLOR.milestone,
             label: t("leaderboard.categories.milestone"),
             xp: categoryMyXp(myRank, "milestone"),
             caption: t("leaderboard.categories.captionMilestone", { count: myRank?.milestoneProgress ?? 0 }),
@@ -121,12 +115,9 @@ export const LeaderboardCategoryRail = ({ variant, className }: LeaderboardCateg
                                 item.disabled && "cursor-not-allowed opacity-55",
                             )}
                         >
-                            <item.icon
-                                aria-hidden
-                                focusable="false"
-                                className={cn("size-4 shrink-0", isSelected && "text-accent-soft-foreground")}
-                                style={!isSelected && item.color ? { color: item.color } : undefined}
-                            />
+                            {/* icon inherits the button's text colour (muted / accent-soft
+                                when selected) — same colour as the label, per thầy. */}
+                            <item.icon aria-hidden focusable="false" className="size-4 shrink-0" />
                             <span>{item.label}</span>
                             {!item.disabled ? (
                                 <span className="font-medium">{t("leaderboard.xp", { xp: item.xp })}</span>
@@ -165,14 +156,22 @@ export const LeaderboardCategoryRail = ({ variant, className }: LeaderboardCateg
                         className="cursor-pointer rounded-2xl px-3 py-2 data-[disabled=true]:cursor-not-allowed data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft data-[disabled=true]:opacity-55"
                     >
                         <div className="flex items-center gap-3">
+                            {/* icon = SAME colour as the label (thầy): foreground normally,
+                                accent-soft when this category is the selected one. */}
                             <item.icon
                                 aria-hidden
                                 focusable="false"
-                                className={cn("size-5 shrink-0", !item.color && "text-accent-soft-foreground")}
-                                style={item.color ? { color: item.color } : undefined}
+                                className={cn(
+                                    "size-5 shrink-0",
+                                    item.key === selected ? "text-accent-soft-foreground" : "text-foreground",
+                                )}
                             />
                             <div className="flex min-w-0 flex-1 flex-col gap-0">
-                                <Typography type="body-sm" weight="medium" className="line-clamp-1">
+                                <Typography
+                                    type="body-sm"
+                                    weight="medium"
+                                    className={cn("line-clamp-1", item.key === selected && "text-accent-soft-foreground")}
+                                >
                                     {item.label}
                                 </Typography>
                                 {item.caption ? (

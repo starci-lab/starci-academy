@@ -32,4 +32,6 @@ export enum PublicationEvent {
     SubscribePlaygroundByom = "browser:subscribe",
     /** Ask the connected CLI agent to run one command (must match backend). */
     RunPlaygroundByomCommand = "command:run",
+    /** Ping the connected CLI agent to measure round-trip latency (must match backend `agent:ping`). */
+    PlaygroundByomPing = "agent:ping",
 }

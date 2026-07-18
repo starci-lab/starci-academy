@@ -82,7 +82,7 @@ export const LearnNudges = ({ className }: LearnNudgesProps) => {
     if (dueCount > 0) {
         nudges.push({
             key: "due",
-            icon: <CardsIcon aria-hidden focusable="false" className="size-5 text-warning-soft-foreground" />,
+            icon: <CardsIcon aria-hidden focusable="false" className="size-5 text-foreground" />,
             label: t("courseContents.nudges.dueFlashcards", { count: dueCount }),
             href: learn.flashcards().build(),
         })
@@ -98,7 +98,7 @@ export const LearnNudges = ({ className }: LearnNudgesProps) => {
     if (rank !== null) {
         nudges.push({
             key: "rank",
-            icon: <TrophyIcon aria-hidden focusable="false" className="size-5 text-accent-soft-foreground" />,
+            icon: <TrophyIcon aria-hidden focusable="false" className="size-5 text-foreground" />,
             label: t("courseContents.nudges.rank", { rank }),
             href: learn.leaderboard().build(),
         })

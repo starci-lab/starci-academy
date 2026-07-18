@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>mind-map-rail — rail trái (search+filter+list) · lọc canvas · click→center</title>
+<style>
+  :root{--bg:#f4f4f6;--fg:#1a1a1e;--mut:#6b6b76;--line:#e2e2e8;--card:#fff;--acc:#c0407a;--acc-soft:#fbe6f1;
+        --core:#2f8f57;--common:#c99a1e;--niche:#c0392b;}
+  @media (prefers-color-scheme:dark){:root{--bg:#161619;--fg:#eaeaef;--mut:#9a9aa6;--line:#2a2a30;--card:#1d1d21;--acc-soft:#3a1526;--core:#3fa869;--common:#d8ab2e;--niche:#d1503f;}}
+  :root[data-theme=dark]{--bg:#161619;--fg:#eaeaef;--card:#1d1d21;--line:#2a2a30;--acc-soft:#3a1526;--core:#3fa869;--common:#d8ab2e;--niche:#d1503f}
+  :root[data-theme=light]{--bg:#f4f4f6;--fg:#1a1a1e;--card:#fff;--line:#e2e2e8}
+  *{box-sizing:border-box}
+  body{margin:0;font:13px/1.5 ui-sans-serif,system-ui,-apple-system,sans-serif;color:var(--fg);background:var(--bg)}
+  .top{position:sticky;top:0;z-index:30;background:var(--card);border-bottom:1px solid var(--line);padding:8px 14px;display:flex;gap:10px;align-items:center}
+  .top b{font-size:14px}.top .sub{color:var(--mut);font-size:11px}.tglr{margin-left:auto;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:8px;padding:5px 9px;cursor:pointer}
+  .wrap{display:flex;height:calc(100vh - 42px)}
+  /* RAIL trái */
+  .rail{width:288px;flex:0 0 288px;border-right:1px solid var(--line);background:var(--card);display:flex;flex-direction:column;min-height:0}
+  .rail .head{padding:12px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:9px}
+  .search{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:11px;padding:8px 11px;background:var(--bg)}
+  .search input{border:0;background:transparent;color:var(--fg);font:inherit;font-size:13px;width:100%;outline:none}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{border:1px solid var(--line);background:var(--card);color:var(--mut);border-radius:999px;padding:4px 11px;font-size:11.5px;cursor:pointer;font:inherit}
+  .chip.on{background:var(--acc);color:#fff;border-color:var(--acc);font-weight:700}
+  .list{flex:1;overflow-y:auto;padding:8px;display:flex;flex-direction:column;gap:6px;min-height:0}
+  .list .meta{font-size:10.5px;color:var(--mut);padding:2px 4px 4px}
+  .rcard{display:flex;align-items:flex-start;gap:9px;border:1px solid var(--line);border-left-width:3px;border-radius:10px;padding:8px 10px;cursor:pointer;background:var(--card)}
+  .rcard:hover{border-color:var(--acc)}
+  .rcard.core{border-left-color:var(--core)}.rcard.common{border-left-color:var(--common)}.rcard.niche{border-left-color:var(--niche)}
+  .rcard .kw{font-weight:600;font-size:12.5px}.rcard .bc{font-size:10.5px;color:var(--mut)}
+  .rcard.sel{background:var(--acc-soft);border-color:var(--acc)}
+  .empty{color:var(--mut);font-size:12px;text-align:center;padding:24px 8px}
+  /* STAGE phải */
+  .stage{flex:1;position:relative;overflow:hidden;background-image:radial-gradient(var(--line) 1px,transparent 1px);background-size:22px 22px}
+  svg.edges{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+  .plane{position:absolute;inset:0;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+  .node{position:absolute;transform:translateY(-50%);background:var(--card);border:2px solid var(--line);border-radius:14px;padding:7px 12px;display:flex;align-items:center;gap:8px;cursor:pointer;max-width:220px;transition:box-shadow .12s,opacity .2s}
+  .node .dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+  .node .kw{font-weight:600;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .node.core{border-color:var(--core)}.node.common{border-color:var(--common)}.node.niche{border-color:var(--niche)}
+  .node.core .dot{background:var(--core)}.node.common .dot{background:var(--common)}.node.niche .dot{background:var(--niche)}
+  .node.root{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:800}.node.root .kw{color:#fff}
+  .node.sel{box-shadow:0 0 0 3px var(--acc),0 6px 18px rgba(192,64,122,.3)}
+  .node.hide{opacity:0;pointer-events:none}
+  .zoom{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:5px;z-index:5}
+  .zoom button{width:30px;height:30px;border:1px solid var(--line);background:var(--card);border-radius:8px;font-size:15px;cursor:pointer;color:var(--fg)}
+  .legend{position:absolute;left:12px;bottom:12px;z-index:5;background:color-mix(in oklab,var(--card) 90%,transparent);border:1px solid var(--line);border-radius:9px;padding:6px 9px;font-size:10.5px;color:var(--mut);display:flex;gap:11px}
+  .legend i{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:3px;vertical-align:middle}
+</style>
+</head>
+<body>
+<div class="top"><b>Sơ đồ tư duy · RAIL trái</b><span class="sub">search+filter (trên) · list kết quả (dưới) · search ẩn node không khớp · click node/card → vào giữa</span><button class="tglr" id="theme">◑</button></div>
+
+<div class="wrap">
+  <!-- RAIL -->
+  <div class="rail">
+    <div class="head">
+      <div class="search"><span style="color:var(--mut)">🔍</span><input id="q" placeholder="Tìm keyword…" autocomplete="off"></div>
+      <div class="chips" id="chips">
+        <button class="chip on" data-t="all">Tất cả</button>
+        <button class="chip" data-t="common">≥ Phổ biến</button>
+        <button class="chip" data-t="core">Chỉ rất phổ biến</button>
+      </div>
+    </div>
+    <div class="list" id="list"></div>
+  </div>
+  <!-- STAGE -->
+  <div class="stage" id="stage">
+    <div class="plane" id="plane"><svg class="edges" id="edges"></svg></div>
+    <div class="legend"><span><i style="background:var(--core)"></i>Rất phổ biến</span><span><i style="background:var(--common)"></i>Phổ biến</span><span><i style="background:var(--niche)"></i>Chuyên sâu</span></div>
+    <div class="zoom"><button>+</button><button>−</button><button title="Fit">⤢</button></div>
+  </div>
+</div>
+
+<script>
+var NODES=[
+ {id:'root',kw:'Kỹ sư DevOps',tier:'core',depth:0,parent:null,root:1},
+ {id:'obs',kw:'Observability & SRE',tier:'core',depth:1,parent:'root'},
+   {id:'dtrace',kw:'Distributed tracing',tier:'common',depth:2,parent:'obs'},
+     {id:'otel',kw:'Instrument với OTel SDK',tier:'common',depth:3,parent:'dtrace'},
+     {id:'tempo',kw:'Collector & Tempo',tier:'niche',depth:3,parent:'dtrace'},
+   {id:'sre',kw:'SRE & SLO',tier:'core',depth:2,parent:'obs'},
+     {id:'slo',kw:'SLI, SLO & Error budget',tier:'common',depth:3,parent:'sre'},
+     {id:'alert',kw:'Alerting & Alertmanager',tier:'common',depth:3,parent:'sre'},
+     {id:'burn',kw:'Burn rate, runbook & postmortem',tier:'niche',depth:3,parent:'sre'},
+ {id:'auto',kw:'Autoscaling & Capacity',tier:'common',depth:1,parent:'root'},
+   {id:'hpa',kw:'HPA & custom metrics',tier:'common',depth:2,parent:'auto'},
+   {id:'keda',kw:'Cluster Autoscaler & KEDA',tier:'niche',depth:2,parent:'auto'},
+   {id:'ltest',kw:'Load test & capacity planning',tier:'niche',depth:2,parent:'auto'},
+   {id:'dr',kw:'RTO, RPO & backup strategy',tier:'niche',depth:2,parent:'auto'},
+ {id:'sec',kw:'Bảo mật & Secrets',tier:'core',depth:1,parent:'root'},
+   {id:'vault',kw:'Vault & KMS',tier:'common',depth:2,parent:'sec'},
+   {id:'oidc',kw:'OIDC & Federation',tier:'niche',depth:2,parent:'sec'},
+];
+var byId={};NODES.forEach(function(n){byId[n.id]=n});
+var COLX=[40,240,470,720], stage=document.getElementById('stage'),plane=document.getElementById('plane'),svg=document.getElementById('edges'),listEl=document.getElementById('list');
+var rc=0;
+function layout(n){var kids=NODES.filter(function(c){return c.parent===n.id});if(!kids.length){n.y=70+rc*58;rc++;}else{kids.forEach(layout);n.y=(kids[0].y+kids[kids.length-1].y)/2;}}
+layout(byId['root']);
+var W=1000,H=70+rc*58+70, tier='all', sel=null, q='';
+function tierRank(t){return t==='core'?3:t==='common'?2:1}
+function tierMin(){return tier==='all'?1:tier==='common'?2:3}
+function match(n){ if(n.root)return true; if(tierRank(n.tier)<tierMin())return false; if(q && n.kw.toLowerCase().indexOf(q)<0)return false; return true; }
+function render(){
+  plane.querySelectorAll('.node').forEach(function(e){e.remove()});
+  var e='';
+  NODES.forEach(function(n){n.px=COLX[n.depth];var p=byId[n.parent];
+    if(p){var vis=match(n)&&(match(p)||p.root);e+='<path d="M'+(p.px+70)+' '+p.y+' C '+((p.px+n.px)/2)+' '+p.y+' '+((p.px+n.px)/2)+' '+n.y+' '+n.px+' '+n.y+'" fill="none" stroke="var(--line)" stroke-width="1.6" opacity="'+(vis?1:0)+'"/>';}
+  });
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);svg.innerHTML=e;
+  NODES.forEach(function(n){var d=document.createElement('div');d.className='node '+n.tier+(n.root?' root':'')+(sel===n.id?' sel':'')+(match(n)?'':' hide');d.dataset.id=n.id;d.style.left=n.px+'px';d.style.top=n.y+'px';
+    d.innerHTML=(n.root?'':'<span class="dot"></span>')+'<span class="kw">'+n.kw+'</span>';d.onclick=function(){focus(n.id)};plane.appendChild(d);});
+  renderList();
+}
+function bc(n){var p=[],c=byId[n.parent];while(c&&!c.root){p.unshift(c.kw);c=byId[c.parent];}return p.join(' › ');}
+function renderList(){
+  var res=NODES.filter(function(n){return !n.root && match(n)});
+  listEl.innerHTML='<div class="meta">'+res.length+' kết quả'+(q?' cho "'+q+'"':'')+'</div>'+
+    (res.length? res.map(function(n){return '<div class="rcard '+n.tier+(sel===n.id?' sel':'')+'" data-id="'+n.id+'"><span class="dot" style="width:8px;height:8px;border-radius:50%;flex:0 0 auto;margin-top:3px;background:var(--'+n.tier+')"></span><div><div class="kw">'+n.kw+'</div>'+(bc(n)?'<div class="bc">'+bc(n)+'</div>':'')+'</div></div>'}).join('')
+      : '<div class="empty">Không thấy keyword khớp bộ lọc</div>');
+  listEl.querySelectorAll('.rcard').forEach(function(el){el.onclick=function(){focus(el.dataset.id)}});
+}
+function focus(id){ sel=id; var n=byId[id];
+  // "node vào trung tâm": dịch plane sao cho node ra giữa stage
+  var sw=stage.clientWidth, sh=stage.clientHeight;
+  plane.style.transform='translate('+((sw/2)-(n.px+35))+'px,'+((sh/2)-n.y)+'px)';
+  render();
+  var card=listEl.querySelector('.rcard[data-id="'+id+'"]'); if(card)card.scrollIntoView({block:'nearest'});
+}
+document.getElementById('q').addEventListener('input',function(e){q=e.target.value.trim().toLowerCase();render()});
+document.getElementById('chips').addEventListener('click',function(e){var b=e.target.closest('.chip');if(!b)return;document.querySelectorAll('#chips .chip').forEach(function(x){x.classList.remove('on')});b.classList.add('on');tier=b.dataset.t;render()});
+document.getElementById('theme').onclick=function(){var r=document.documentElement,d=r.getAttribute('data-theme')==='dark';r.setAttribute('data-theme',d?'light':'dark')};
+render();
+</script>
+</body>
+</html>

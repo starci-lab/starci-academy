@@ -14,6 +14,17 @@ export interface CodeToHtmlProps extends WithClassNames<undefined> {
     language: string
     /** Shiki theme id resolved from the app theme. */
     theme: string
+    /**
+     * Surface treatment (both variants are `rounded-3xl` — a code block is
+     * card-like). Default (`false`) = RECESSED well (`border border-default
+     * bg-background`) — the correct look when the block sits ON a reading surface /
+     * card (a bg-background inset reads as darker than the surface around it). Set
+     * `true` for a RAISED card (`bg-surface shadow-surface`, NO border — shadow
+     * does the lifting, axis-1 §16/§32) when the block sits on the page CANVAS
+     * (`bg-background`), so it "floats up" instead of blending canvas-on-canvas.
+     * Only opt in where the container is the bare canvas.
+     */
+    elevated?: boolean
 }
 
 /**
@@ -28,7 +39,7 @@ export interface CodeToHtmlProps extends WithClassNames<undefined> {
  * @param props - {@link CodeToHtmlProps}
  * @see Story: .storybook/stories/blocks/rendering/MarkdownContent/CodeToHtml/CodeToHtml.stories
  */
-export const CodeToHtml = ({ code, language, theme, className }: CodeToHtmlProps) => {
+export const CodeToHtml = ({ code, language, theme, elevated = false, className }: CodeToHtmlProps) => {
     const containerRef = useRef<HTMLDivElement>(null)
     /** Whether the block has entered (near) the viewport yet — only then do we highlight. */
     const [isVisible, setIsVisible] = useState(false)
@@ -78,7 +89,21 @@ export const CodeToHtml = ({ code, language, theme, className }: CodeToHtmlProps
     }, [isVisible, code, language, theme])
 
     return (
-        <div ref={containerRef} className={cn("w-full max-w-full overflow-hidden rounded-xl border border-default bg-background", className)}>
+        <div
+            ref={containerRef}
+            className={cn(
+                // BOTH variants = rounded-3xl (a code block is card-like → 3xl
+                // regardless of treatment, thầy 2026-07-18). Only bg/shadow differ:
+                // raised card ON canvas (`bg-surface shadow`, NO border — shadow
+                // lifts, axis-1 §16/§32) vs recessed well ON a surface (`bg-background`
+                // inset + border, so it doesn't fill-on-fill the surface around it).
+                "w-full max-w-full overflow-hidden rounded-3xl",
+                elevated
+                    ? "bg-surface shadow-surface"
+                    : "border border-default bg-background",
+                className,
+            )}
+        >
             {/* slim header: language label (left) + copy (right) — orients long lessons with many snippets */}
             <div className="flex items-center justify-between border-b border-default px-3 py-2">
                 <span className="font-mono text-xs uppercase text-muted">{language}</span>

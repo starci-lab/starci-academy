@@ -5,10 +5,16 @@ import React, {
     useState,
 } from "react"
 import {
+    Badge,
+    Button,
     Label,
+    Popover,
     Typography,
     cn,
 } from "@heroui/react"
+import {
+    FunnelIcon,
+} from "@phosphor-icons/react"
 import {
     useLocale,
     useTranslations,
@@ -145,6 +151,15 @@ export const ProfileCoding = ({
     const [search, setSearch] = useState("")
     const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilterValue>("all")
     const [languageFilter, setLanguageFilter] = useState<LanguageFilterValue>("all")
+    // difficulty/language facets live behind a FUNNEL popover (same toolbar shape as
+    // ProfileChallengeManage) — the toolbar stays a single clean line regardless of how
+    // many facet values exist; the funnel badges the active facet count.
+    const [filterOpen, setFilterOpen] = useState(false)
+    const activeFacetCount = (difficultyFilter !== "all" ? 1 : 0) + (languageFilter !== "all" ? 1 : 0)
+    const clearFacets = () => {
+        setDifficultyFilter("all")
+        setLanguageFilter("all")
+    }
     // filter option pools — only difficulties/languages actually present in the history
     const difficultyOptions = useMemo(
         () => Array.from(new Set(solvedHistory.map((item) => item.difficulty).filter(Boolean))),
@@ -319,50 +334,87 @@ export const ProfileCoding = ({
                         label={t("publicProfile.coding.history")}
                         frameless
                     >
-                        <div className="flex flex-col gap-3">
-                            <div className="flex flex-wrap items-center justify-between gap-3">
+                        {/* search + a FUNNEL popover (difficulty/language facets), one row.
+                            Facets live behind the funnel so the toolbar stays a single clean
+                            line regardless of how many facet values exist (mirrors
+                            ProfileChallengeManage). */}
+                        <div className="flex flex-wrap items-center justify-between gap-3">
+                            <div className="flex min-w-0 flex-1 items-center gap-3">
                                 <SearchInput
+                                    className="min-w-0 flex-1"
                                     value={search}
                                     onValueChange={setSearch}
                                     placeholder={t("publicProfile.coding.manage.searchPlaceholder")}
                                 />
-                                <Typography type="body-sm" color="muted" className="shrink-0">
-                                    {t("publicProfile.coding.manage.found", { count: filteredHistory.length })}
-                                </Typography>
-                            </div>
-                            <div className="flex flex-col gap-2">
-                                {difficultyOptions.length > 0 ? (
-                                    <FlexWrapButtonRadio<DifficultyFilterValue>
-                                        ariaLabel={t("publicProfile.coding.manage.difficultyFilterAria")}
-                                        value={difficultyFilter}
-                                        onChange={setDifficultyFilter}
-                                        items={[
-                                            { value: "all", content: t("publicProfile.coding.manage.allDifficulties") },
-                                            ...difficultyOptions.map((raw) => {
-                                                const meta = CODING_DIFFICULTY_CHIP[raw]
-                                                return {
-                                                    value: raw,
-                                                    content: meta ? <StatusChip tone={meta.tone}>{t(meta.labelKey)}</StatusChip> : raw,
-                                                }
-                                            }),
-                                        ]}
-                                    />
+                                {(difficultyOptions.length > 0 || languageOptions.length > 0) ? (
+                                    <Popover isOpen={filterOpen} onOpenChange={setFilterOpen}>
+                                        <Button
+                                            isIconOnly
+                                            variant="ghost"
+                                            aria-label={t("publicProfile.coding.manage.filterButton")}
+                                            className="shrink-0"
+                                        >
+                                            {activeFacetCount > 0 ? (
+                                                <Badge.Anchor>
+                                                    <FunnelIcon className="size-5" />
+                                                    <Badge size="sm" color="accent" placement="top-left">{activeFacetCount}</Badge>
+                                                </Badge.Anchor>
+                                            ) : (
+                                                <FunnelIcon className="size-5" />
+                                            )}
+                                        </Button>
+                                        <Popover.Content className="w-72">
+                                            <div className="flex flex-col gap-3 p-3">
+                                                {difficultyOptions.length > 0 ? (
+                                                    <div className="flex flex-col gap-2">
+                                                        <Typography type="body-xs" color="muted">{t("publicProfile.coding.manage.difficultyHeading")}</Typography>
+                                                        <FlexWrapButtonRadio<DifficultyFilterValue>
+                                                            ariaLabel={t("publicProfile.coding.manage.difficultyFilterAria")}
+                                                            value={difficultyFilter}
+                                                            onChange={setDifficultyFilter}
+                                                            items={[
+                                                                { value: "all", content: t("publicProfile.coding.manage.allDifficulties") },
+                                                                ...difficultyOptions.map((raw) => {
+                                                                    const meta = CODING_DIFFICULTY_CHIP[raw]
+                                                                    return {
+                                                                        value: raw,
+                                                                        content: meta ? <StatusChip tone={meta.tone}>{t(meta.labelKey)}</StatusChip> : raw,
+                                                                    }
+                                                                }),
+                                                            ]}
+                                                        />
+                                                    </div>
+                                                ) : null}
+                                                {languageOptions.length > 0 ? (
+                                                    <div className="flex flex-col gap-2">
+                                                        <Typography type="body-xs" color="muted">{t("publicProfile.coding.manage.languageHeading")}</Typography>
+                                                        <FlexWrapButtonRadio<LanguageFilterValue>
+                                                            ariaLabel={t("publicProfile.coding.manage.languageFilterAria")}
+                                                            value={languageFilter}
+                                                            onChange={setLanguageFilter}
+                                                            items={[
+                                                                { value: "all", content: t("publicProfile.coding.manage.allLanguages") },
+                                                                ...languageOptions.map((lang) => ({
+                                                                    value: lang,
+                                                                    content: <LanguageChip language={lang} />,
+                                                                })),
+                                                            ]}
+                                                        />
+                                                    </div>
+                                                ) : null}
+                                                {activeFacetCount > 0 ? (
+                                                    <Button variant="danger-soft" size="sm" className="self-start" onPress={clearFacets}>
+                                                        {t("publicProfile.coding.manage.clearFilters")}
+                                                    </Button>
+                                                ) : null}
+                                            </div>
+                                        </Popover.Content>
+                                    </Popover>
                                 ) : null}
-                                {languageOptions.length > 0 ? (
-                                    <FlexWrapButtonRadio<LanguageFilterValue>
-                                        ariaLabel={t("publicProfile.coding.manage.languageFilterAria")}
-                                        value={languageFilter}
-                                        onChange={setLanguageFilter}
-                                        items={[
-                                            { value: "all", content: t("publicProfile.coding.manage.allLanguages") },
-                                            ...languageOptions.map((lang) => ({
-                                                value: lang,
-                                                content: <LanguageChip language={lang} />,
-                                            })),
-                                        ]}
-                                    />
-                                ) : null}
                             </div>
+                            <Typography type="body-sm" color="muted" className="shrink-0">
+                                {t("publicProfile.coding.manage.found", { count: filteredHistory.length })}
+                            </Typography>
                         </div>
 
                         {filteredHistory.length === 0 ? (

@@ -36,9 +36,14 @@ export interface FlashcardReviewModeModalProps extends WithClassNames<undefined>
  * runs the whole deck; "Chỉ thẻ cần ôn" runs only the cards past due / never
  * learned (the deck's `dueCount`), and dims + auto-resets the picker back to
  * "full" when nothing is due. These are SELECT rows (they pick a mode, they do
- * not navigate), so hover PREVIEWS the pick with the same `bg-accent-soft` the
- * selected row wears — not the neutral `bg-default` fill nor the earlier title
- * underline (thầy 2026-07-17). `SurfaceListCard bordered` — this list is NESTED
+ * not navigate) → an UNSELECTED row hovers to the block's NATIVE `bg-default`
+ * fill (mode 3, `principles/hover-style-matches-clickable-nature`); a hovered
+ * row must NOT reuse the selected row's `bg-accent-soft` (thầy 2026-07-18: an
+ * accent-soft hover reads identical to the picked row above — the clash makes a
+ * hovered row look selected; reverts the 2026-07-17 accent-soft "preview"). The
+ * SELECTED row keeps `hover:bg-accent-soft` so it does not flicker to bg-default
+ * on hover (same idiom as `SubmissionResultHistoryDrawer`). Selection signal is
+ * the accent icon+title text. `SurfaceListCard bordered` — this list is NESTED
  * inside the modal surface, so it needs a real border rather than the
  * (invisible-in-dark) `shadow-surface` top-level default (`components/card.md`
  * §"surface-in-surface / nested").
@@ -87,12 +92,12 @@ export const FlashcardReviewModeModal = ({
 
                 <SurfaceListCard bordered>
                     <SurfaceListCardRow
-                        // select-mode rows: hover PREVIEWS the pick with the same accent-soft the
-                        // selected row wears (not the neutral bg-default fill) — thầy 2026-07-17.
-                        className="hover:bg-accent-soft"
-                        // selected → BOTH icon and title turn accent-soft-foreground (they stay the
-                        // same colour, icon.md §6); title via a span-node since `titleClassName` is
-                        // lint-forbidden. Row bg-accent-soft + accent text = the selection signal.
+                        // UNSELECTED → block-native bg-default hover (distinct from the accent-soft
+                        // selected tint, no clash). SELECTED → keep hover:bg-accent-soft so the picked
+                        // row does NOT flicker to bg-default on hover (same idiom as
+                        // SubmissionResultHistoryDrawer). Selection signal = accent icon+title
+                        // (icon.md §6); title via span-node (`titleClassName` is lint-forbidden).
+                        className={mode === "full" ? "hover:bg-accent-soft" : undefined}
                         leading={<CardsIcon className={cn("size-6", mode === "full" ? "text-accent-soft-foreground" : "text-foreground")} aria-hidden focusable="false" />}
                         title={<span className={mode === "full" ? "text-accent-soft-foreground" : undefined}>{t("flashcard.mode.fullLabel")}</span>}
                         subtitle={t("flashcard.mode.fullDescription")}
@@ -106,7 +111,7 @@ export const FlashcardReviewModeModal = ({
                         )}
                     />
                     <SurfaceListCardRow
-                        className="hover:bg-accent-soft"
+                        className={mode === "due" ? "hover:bg-accent-soft" : undefined}
                         leading={<ClockCountdownIcon className={cn("size-6", mode === "due" ? "text-accent-soft-foreground" : "text-foreground")} aria-hidden focusable="false" />}
                         title={<span className={mode === "due" ? "text-accent-soft-foreground" : undefined}>{t("flashcard.mode.dueLabel")}</span>}
                         subtitle={t("flashcard.mode.dueDescription")}

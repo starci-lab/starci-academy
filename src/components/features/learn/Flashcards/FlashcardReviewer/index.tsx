@@ -15,7 +15,9 @@ import { queryFlashcardDeck } from "@/modules/api/graphql/queries/query-flashcar
 import { type FlashcardCardEntity } from "@/modules/types/entities/flashcard-card"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { WorkSessionHeader } from "@/components/blocks/navigation/WorkSessionHeader"
+import { ConfirmDialog } from "@/components/blocks/feedback/ConfirmDialog"
 import { FlipCard } from "@/components/blocks/cards/FlipCard"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { RatingBar } from "@/components/blocks/buttons/RatingBar"
 import { useAppSelector } from "@/redux/hooks"
 import { useGraphQLWithToast } from "@/modules/toast/hooks"
@@ -108,6 +110,9 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
     const [gradedIndexes, setGradedIndexes] = useState<Set<number>>(() => new Set())
     // explicit "Kết thúc" — end the run now regardless of position.
     const [finished, setFinished] = useState(false)
+    // confirm-before-exit, mirroring MockInterviewSession: "leave" (Thoát) · "endEarly"
+    // (Kết thúc sớm — end the study run now). null = no dialog open.
+    const [confirmAction, setConfirmAction] = useState<null | "leave" | "endEarly">(null)
 
     // load the full deck graph (cards with question + answer)
     const { data, isLoading, error, mutate } = useSWR(
@@ -546,7 +551,7 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                         "2 cái trang này y chang nhau"). */}
                     <WorkSessionHeader
                         backLabel={t("flashcard.exit")}
-                        onBack={onBack ?? (() => {})}
+                        onBack={() => setConfirmAction("leave")}
                         title={t("flashcard.mode.study")}
                         identity={data?.title ? { name: data.title } : undefined}
                         counter={t("flashcard.cardProgress", {
@@ -562,8 +567,26 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                         total={cards.length}
                         doneSet={Array.from(gradedIndexes)}
                         onSegmentClick={goToIndex}
-                        onFinish={onFinish}
-                        finishLabel={t("flashcard.finish")}
+                        onFinish={() => setConfirmAction("endEarly")}
+                        finishLabel={t("flashcard.finishEarly")}
+                    />
+                    <ConfirmDialog
+                        isOpen={confirmAction !== null}
+                        onOpenChange={(open) => { if (!open) { setConfirmAction(null) } }}
+                        tone={confirmAction === "leave" ? "danger" : "default"}
+                        title={confirmAction === "leave" ? t("flashcard.leaveTitle") : t("flashcard.finishEarlyTitle")}
+                        description={confirmAction === "leave" ? t("flashcard.leaveConfirm") : t("flashcard.finishEarlyConfirm")}
+                        confirmLabel={confirmAction === "leave" ? t("flashcard.leaveCta") : t("flashcard.finishEarlyCta")}
+                        cancelLabel={t("flashcard.stayIn")}
+                        onConfirm={() => {
+                            const action = confirmAction
+                            setConfirmAction(null)
+                            if (action === "leave") {
+                                onBack?.()
+                            } else if (action === "endEarly") {
+                                onFinish()
+                            }
+                        }}
                     />
 
                     <div className="px-4 pb-6 pt-10 sm:px-6">
@@ -631,7 +654,10 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                                     </Button>
                                 </div>
                             ) : revealed ? (
-                                <div className="flex flex-col gap-3">
+                                <SectionCard
+                                    withVerdict={{ enable: true, variant: "accent" }}
+                                    contentClassName="flex flex-col gap-3"
+                                >
                                     <Label>{t("flashcard.review.rateHint")}</Label>
                                     <RatingBar
                                         options={ratingOptions}
@@ -639,7 +665,7 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                                         ariaLabel={t("flashcard.review.rateAria")}
                                         isPending={reviewing}
                                     />
-                                </div>
+                                </SectionCard>
                             ) : (
                                 // "Xem đáp án" (primary, lấp hết chỗ trống còn lại) · "Tiếp"/"Trước"
                                 // ICON-ONLY (caret, không text) — thầy 2026-07-13 (devtools) đổi lần 3:

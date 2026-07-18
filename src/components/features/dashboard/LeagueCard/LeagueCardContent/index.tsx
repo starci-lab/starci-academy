@@ -92,17 +92,28 @@ export const LeagueCardContent = ({
         ? Math.max(0, myEntry.rank - topRows.length - 1)
         : 0
 
-    /** Map a cohort entry → a normalised {@link LeaderboardRow} (caret trailing). */
-    const toRow = (entry: typeof data.entries[number]): LeaderboardRow => ({
-        key: entry.userGlobalId,
-        rank: entry.rank,
-        username: entry.username,
-        avatar: entry.avatar,
-        valueLabel: t("dashboard.league.points", { count: entry.weekPoints }),
-        isMe: isMine(entry.username),
-        profileHref: pathConfig().locale(locale).profile(entry.username ?? undefined).build(),
-        trailing: <RankDeltaCaret delta={entry.rankDelta} className="w-8 justify-end" />,
-    })
+    /** Map a cohort entry → a normalised {@link LeaderboardRow} (caret trailing + movement band). */
+    const toRow = (entry: typeof data.entries[number]): LeaderboardRow => {
+        // band = weekly rank MOVEMENT (mirrors the ▴▾ `RankDeltaCaret`), NOT the cohort
+        // promote/demote zone — a per-row signal that ALWAYS shows (no cohort-size gate,
+        // so a small seed cohort still renders it): climbed → success, dropped → danger,
+        // unchanged / no last-week baseline → no band (thầy 2026-07-17: dashboard preview
+        // luôn hiện; khác /league page vốn dùng zone thăng/rớt).
+        const delta = entry.rankDelta ?? 0
+        return {
+            key: entry.userGlobalId,
+            rank: entry.rank,
+            username: entry.username,
+            avatar: entry.avatar,
+            valueLabel: t("dashboard.league.points", { count: entry.weekPoints }),
+            isMe: isMine(entry.username),
+            profileHref: pathConfig().locale(locale).profile(entry.username ?? undefined).build(),
+            trailing: <RankDeltaCaret delta={entry.rankDelta} className="w-8 justify-end" />,
+            verdict: delta !== 0
+                ? { enable: true, variant: delta > 0 ? "success" : "danger" }
+                : undefined,
+        }
+    }
 
     /** League title (with help tooltip) — the card label. */
     const titleNode = (

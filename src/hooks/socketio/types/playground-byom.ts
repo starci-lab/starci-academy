@@ -53,12 +53,46 @@ export interface PlaygroundByomStepVerifiedSocketIoMessage {
 }
 
 /**
+ * Server → browser push for `agent:connected` / `agent:disconnected` — RAW
+ * (no envelope, no `sessionId`, room-scoped). Emitted when the learner's local
+ * CLI agent pairs / drops, plus a seed on `browser:subscribe`. Drives the
+ * install-gate: the UI only unlocks the lab once `connected` is `true`.
+ */
+export interface PlaygroundByomAgentConnectionSocketIoMessage {
+    /** `true` when the agent is paired to this session, `false` when it dropped. */
+    connected: boolean
+}
+
+/**
+ * Server → browser push for `agent:pong` — RAW (no envelope, no `sessionId`,
+ * room-scoped). Carries back the `t` timestamp the browser sent in its
+ * `agent:ping`, so the browser computes `Date.now() - t` as the round-trip
+ * latency to the learner's machine. See `PlaygroundByomGateway.handleAgentPong`.
+ */
+export interface PlaygroundByomAgentPongSocketIoMessage {
+    /** The browser timestamp (ms) echoed back by the agent. */
+    t: number
+}
+
+/**
  * Browser → server payload for `browser:subscribe` — RAW (no `{data,locale}`
  * wrapper, matches `PlaygroundByomGateway.handleBrowserSubscribe`).
  */
 export interface SubscribePlaygroundByomSocketIoPayload {
     /** The playground session to subscribe to (joins the session's room). */
     sessionId: string
+}
+
+/**
+ * Browser → server payload for `agent:ping` — RAW (matches
+ * `PlaygroundByomGateway.handleAgentPing`). The `t` is a `Date.now()` stamp the
+ * agent echoes back so the browser can measure round-trip latency.
+ */
+export interface PingPlaygroundByomSocketIoPayload {
+    /** The session whose connected agent should echo the ping. */
+    sessionId: string
+    /** Browser timestamp (ms) to be echoed back for latency measurement. */
+    t: number
 }
 
 /**

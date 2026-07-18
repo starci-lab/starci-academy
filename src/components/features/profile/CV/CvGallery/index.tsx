@@ -156,7 +156,7 @@ export const CvGallery = ({ className, breadcrumb }: CvGalleryProps) => {
                 skeleton={(
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                         {[0, 1, 2].map((key) => (
-                            <div key={key} className="h-[19rem] rounded-2xl border border-default bg-surface" />
+                            <div key={key} className="h-[19rem] rounded-3xl border border-default bg-surface" />
                         ))}
                     </div>
                 )}

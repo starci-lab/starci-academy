@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stats Canonical Fold — 3 tổng kết (Học thẻ · Hỏi nhanh · Phỏng vấn)</title>
+<style>
+  :root{--bg:#f4f4f6;--fg:#1a1a1e;--mut:#6b6b76;--line:#e2e2e8;--card:#fff;--acc:#c0407a;
+        --ok:#2f8f57;--okbg:#e3f4ea;--warn:#b0721f;--warnbg:#f7ecda;--bad:#c0392b;--badbg:#f7e2df;--radius:14px}
+  @media (prefers-color-scheme:dark){:root{--bg:#161619;--fg:#eaeaef;--mut:#9a9aa6;--line:#2a2a30;--card:#1d1d21;--okbg:#16281d;--warnbg:#2a2013;--badbg:#2b1917}}
+  :root[data-theme="light"]{--bg:#f4f4f6;--fg:#1a1a1e;--card:#fff}
+  :root[data-theme="dark"]{--bg:#161619;--fg:#eaeaef;--card:#1d1d21}
+  *{box-sizing:border-box}
+  body{margin:0;font:14px/1.5 ui-sans-serif,system-ui,-apple-system,sans-serif;color:var(--fg);background:var(--bg)}
+  .top{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+  .top b{font-size:15px}.top .sub{color:var(--mut);font-size:12px}
+  .grp{border:1px solid var(--line);border-radius:9px;overflow:hidden;display:flex;flex-wrap:wrap}
+  .grp button{border:0;background:var(--card);padding:6px 11px;cursor:pointer;font:inherit;font-size:12px;color:var(--mut);white-space:nowrap}
+  .grp button.on{background:var(--acc);color:#fff}
+  .grp .lbl{padding:6px 8px;font-size:10px;color:var(--mut);background:var(--bg);border-right:1px solid var(--line);font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+  .toolbar{margin-left:auto;display:flex;flex-wrap:wrap;gap:8px}
+
+  .stagewrap{padding:18px 16px 60px;display:flex;justify-content:center}
+  .stage{width:100%;max-width:560px;transition:max-width .2s}
+  .stage.mob{max-width:400px}
+  .pagehead h1{font-size:20px;margin:0}.pagehead p{color:var(--mut);font-size:13px;margin:2px 0 0}
+  .tabstrip{display:flex;gap:4px;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:4px;margin:14px 0}
+  .tabstrip button{flex:1;border:0;background:transparent;padding:8px;border-radius:9px;cursor:pointer;font:inherit;font-size:12.5px;color:var(--mut)}
+  .tabstrip button.on{background:var(--card);color:var(--fg);font-weight:700;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+
+  /* LabeledCard: label OUTSIDE + card */
+  .lc{margin-bottom:16px}
+  .lc>.lab{font-size:11px;font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.03em;margin:0 2px 7px;display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px}
+  .blocktag{font:9px ui-monospace,Menlo,monospace;color:var(--mut);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:0 4px;white-space:nowrap;font-weight:400}
+  .canon{font:9px ui-monospace,monospace;color:var(--ok);background:var(--okbg);border-radius:4px;padding:0 4px;font-weight:700}
+
+  .bignum{font-size:32px;font-weight:800;line-height:1}
+  .bignum.bad{color:var(--bad)}.bignum.warn{color:var(--warn)}.bignum.ok{color:var(--ok)}
+  .vsent{margin-top:8px;font-size:13.5px;font-weight:600}
+  .vsub{margin-top:3px;font-size:12px;color:var(--mut)}
+  .meterwrap{margin-top:10px}
+  .metercap{font-size:10px;color:var(--mut);margin-bottom:3px;display:flex;justify-content:flex-end}
+  .meter{position:relative;height:8px;border-radius:5px;background:var(--line);overflow:hidden}
+  .meter>i{display:block;height:100%}
+  .meter .tick{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--fg);opacity:.55}
+
+  /* StatPair = 1 thẻ surface-in-surface (bg-surface + border), divider FULL-HEIGHT chạm border */
+  .split{display:flex;align-items:stretch;margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .split>div{flex:1;padding:10px 12px}
+  .split>div+div{border-left:1px solid var(--line)}
+  .split .k{font-size:11px;color:var(--mut)}.split .v{font-size:18px;font-weight:800;margin-top:2px}
+  .btn{border:0;border-radius:10px;padding:9px 15px;font:inherit;font-weight:700;cursor:pointer;background:var(--acc);color:#fff;font-size:13px;display:inline-flex;gap:6px;align-items:center;margin-top:11px}
+
+  /* SurfaceListCard rows */
+  .row{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line)}
+  .row:first-child{border-top:0}.row .name{flex:1;min-width:0}
+  .row .name b{font-size:13px}.row .name span{display:block;font-size:11px;color:var(--mut)}
+  .chip{font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap}
+  .chip.ok{color:var(--ok);background:var(--okbg)}.chip.warn{color:var(--warn);background:var(--warnbg)}.chip.bad{color:var(--bad);background:var(--badbg)}
+  .minibar{flex:1;height:7px;border-radius:5px;background:var(--line);overflow:hidden}.minibar>i{display:block;height:100%}
+
+  /* Callout (alert-in-card) */
+  .callout{display:flex;gap:10px;background:var(--warnbg);border-radius:11px;padding:11px 12px;align-items:flex-start}
+  .callout .n{font-size:24px;font-weight:800;color:var(--warn);line-height:1}
+
+  .seg{display:flex;height:24px;border-radius:8px;overflow:hidden}
+  .seg>i{display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:700}
+  .seglegend{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;font-size:11px;color:var(--mut)}
+  .seglegend span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+
+  .refs{max-width:560px;margin:12px auto 0;font-size:11.5px;color:var(--mut)}
+  .nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);padding:8px 16px;text-align:center;font-size:11px;color:var(--mut)}
+</style>
+</head>
+<body>
+<div class="top">
+  <b>Stats Canonical Fold</b><span class="sub">3 tổng kết · sát Storybook</span>
+  <div class="toolbar">
+    <div class="grp"><span class="lbl">Tổng kết</span>
+      <button id="sReview" class="on" onclick="setS('review')">Học thẻ</button>
+      <button id="sQuiz" onclick="setS('quiz')">Hỏi nhanh</button>
+      <button id="sItv" onclick="setS('itv')">Phỏng vấn</button>
+    </div>
+    <div class="grp"><span class="lbl">Máy</span>
+      <button id="dDesk" class="on" onclick="setD('desk')">Desktop</button>
+      <button id="dMob" onclick="setD('mob')">Mobile</button>
+    </div>
+  </div>
+</div>
+
+<div class="stagewrap"><div class="stage" id="stage"></div></div>
+
+<div class="nav">3 tổng kết dùng chung nhịp: HERO không verdict-band (số/meter vẫn theo band) + StatPair (viền, divider full-height chạm border) + zone LabeledCard. Zone gắn tên block THẬT · 🟩canon.</div>
+
+<script>
+  var surface='review', dev='desk';
+
+  // ── shared builders ──────────────────────────────────────────────
+  function lc(label, tags, inner){ return '<div class="lc"><div class="lab">'+label+' '+tags+'</div>'+inner+'</div>'; }
+  function tag(t){ return '<span class="blocktag">'+t+'</span>'; }
+  var CANON='<span class="canon">canon</span>';
+  // hero = plain card (NO verdict band); number colored by band; optional meter (with target tick) + StatPair + CTA
+  function hero(band, num, unit, sentence, sub, meterPct, meterTargetPct, targetCap, splits, cta){
+    var m = meterPct==null ? '' :
+      '<div class="meterwrap">'+(targetCap?'<div class="metercap">'+targetCap+'</div>':'')+
+      '<div class="meter"><i style="width:'+meterPct+'%;background:var(--'+band+')"></i>'+
+      (meterTargetPct!=null?'<span class="tick" style="left:'+meterTargetPct+'%"></span>':'')+'</div></div>';
+    var sp = !splits ? '' : '<div class="split">'+splits.map(function(x){
+      return '<div><div class="k">'+x.k+'</div><div class="v"'+(x.c?' style="color:var(--'+x.c+')"':'')+'>'+x.v+'</div></div>';
+    }).join('')+'</div>';
+    return '<div class="card">'+
+      '<div class="bignum '+band+'">'+num+'<span style="font-size:15px;color:var(--mut)">'+unit+'</span></div>'+
+      '<div class="vsent">'+sentence+'</div>'+(sub?'<div class="vsub">'+sub+'</div>':'')+m+sp+
+      (cta?'<button class="btn">'+cta+'</button>':'')+'</div>';
+  }
+  function rows(list){ return '<div class="card" style="padding:6px 14px">'+list.map(function(r){
+    return '<div class="row"><div class="name"><b>'+r.n+'</b>'+(r.s?'<span>'+r.s+'</span>':'')+'</div>'+
+      (r.bar!=null?'<div class="minibar"><i style="width:'+r.bar+'%;background:var(--'+r.bc+')"></i></div>':'')+
+      (r.chip?'<span class="chip '+r.cc+'">'+r.chip+'</span>':'')+'</div>';
+  }).join('')+'</div>'; }
+
+  var TABS='<div class="tabstrip"><button>Ôn tập</button><button>Lịch sử</button><button class="on">Thống kê</button></div>';
+
+  // ── SURFACE 1: HỌC THẺ (spaced-repetition retention) ─────────────
+  function surfaceReview(){
+    return '<div class="pagehead"><h1>Ôn tập · Học thẻ</h1><p>Khắc sâu kiến thức bằng lặp lại ngắt quãng.</p></div>'+TABS+
+      lc('Sức khoẻ trí nhớ', tag('SectionCard')+tag('StatPair (chín/non)')+CANON,
+         hero('bad','39','%','Bạn đang <b>quá tải</b> — nạp thẻ mới nhanh hơn tốc độ ghi nhớ.',
+              'Tỷ lệ nhớ 39% (mốc lành mạnh ~85%). Vấn đề KHÔNG phải quên cái đã học — mà là nạp quá nhanh.',
+              39,85,'mục tiêu 85%',
+              [{k:'Thẻ đã học kỹ (chín) · bạn NHỚ được',v:'48%',c:'warn'},{k:'Thẻ mới (non) · đang tuột',v:'29%',c:'bad'}],
+              'Giảm thẻ mới · ôn kỹ thẻ cũ trước →'))+
+      lc('Điểm yếu theo chủ đề', tag('SurfaceListCard')+CANON,
+         rows([{n:'Resilience',s:'đã ôn 12 lượt',bar:25,bc:'bad',chip:'nhớ 25%',cc:'bad'},
+               {n:'Configuration',bar:25,bc:'bad',chip:'nhớ 25%',cc:'bad'},
+               {n:'Error Handling',bar:33,bc:'bad',chip:'nhớ 33%',cc:'bad'},
+               {n:'Security',bar:40,bc:'warn',chip:'nhớ 40%',cc:'warn'}]));
+  }
+
+  // ── SURFACE 2: HỎI NHANH (quiz coverage) ─────────────────────────
+  function surfaceQuiz(){
+    return '<div class="pagehead"><h1>Ôn tập · Hỏi nhanh</h1><p>Kiểm tra nhanh độ phủ kiến thức.</p></div>'+TABS+
+      lc('Độ phủ vs mục tiêu', tag('SectionCard')+tag('StatPair (đúng/phủ)')+CANON,
+         hero('warn','60','%','Mới phủ <b>12/20 chủ đề</b> — còn 8 chủ đề chưa đụng tới.',
+              'Mục tiêu chạm hết 20 chủ đề để lấp lỗ hổng trước phỏng vấn.',
+              60,100,'mục tiêu 100%',
+              [{k:'Câu đúng',v:'74%',c:'ok'},{k:'Chủ đề đã chạm',v:'12/20',c:'warn'}],
+              'Ôn 8 chủ đề chưa chạm →'))+
+      lc('Lỗ hổng — hay sai / chưa thử', tag('SurfaceListCard')+CANON,
+         rows([{n:'Concurrency',s:'sai 4/6 lần',chip:'hay sai',cc:'bad'},
+               {n:'Indexing',s:'sai 3/5 lần',chip:'hay sai',cc:'bad'},
+               {n:'Caching',s:'chưa thử lần nào',chip:'chưa chạm',cc:'warn'},
+               {n:'Message Queue',s:'chưa thử lần nào',chip:'chưa chạm',cc:'warn'}]));
+  }
+
+  // ── SURFACE 3: PHỎNG VẤN (interview readiness) ───────────────────
+  function surfaceItv(){
+    return '<div class="pagehead"><h1>Ôn tập · Phỏng vấn</h1><p>Luyện trả lời phỏng vấn, AI chấm điểm.</p></div>'+TABS+
+      lc('Độ sẵn sàng', tag('SectionCard')+tag('StatPair (mạnh/yếu)')+CANON,
+         hero('warn','62','/100','<b>Gần đạt</b> — cần ~2 phiên nữa để chạm mốc đậu.',
+              'Điểm TB 5 phiên gần nhất 62/100 (mốc đậu 70).',
+              62,70,'mốc đậu 70',
+              [{k:'Chiều mạnh · Giao tiếp',v:'78',c:'ok'},{k:'Chiều yếu · Kỹ thuật',v:'54',c:'bad'}],
+              'Luyện tiếp phần Kỹ thuật →'))+
+      lc('Theo pha phỏng vấn', tag('SurfaceListCard')+CANON,
+         rows([{n:'Làm rõ đề (clarify)',bar:82,bc:'ok',chip:'82',cc:'ok'},
+               {n:'Thiết kế / giải pháp',bar:54,bc:'bad',chip:'54',cc:'bad'},
+               {n:'Đánh đổi (trade-off)',bar:60,bc:'warn',chip:'60',cc:'warn'},
+               {n:'Kiểm thử / edge-case',bar:48,bc:'bad',chip:'48',cc:'bad'}]));
+  }
+
+  function render(){
+    var el=document.getElementById('stage');
+    el.className='stage'+(dev==='mob'?' mob':'');
+    el.innerHTML = surface==='quiz' ? surfaceQuiz() : surface==='itv' ? surfaceItv() : surfaceReview();
+  }
+  function setS(s){ surface=s;
+    ['review','quiz','itv'].forEach(function(k){document.getElementById(k==='review'?'sReview':k==='quiz'?'sQuiz':'sItv').classList.toggle('on',k===s);});
+    render();
+  }
+  function setD(d){ dev=d; document.getElementById('dDesk').classList.toggle('on',d==='desk'); document.getElementById('dMob').classList.toggle('on',d==='mob'); render(); }
+  render();
+</script>
+</body>
+</html>

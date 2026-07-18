@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Playground Connect Flow v2 — canonical blocks (font nhất quán + right 1 concept)</title>
+<style>
+  :root{--bg:#faf7f5;--surface:#fff;--surface2:#f6f2ef;--border:#e7e0db;--fg:#241c1a;--muted:#8a7d76;
+    --accent:#ec4899;--accent-soft:#fce7f3;--accent-soft-fg:#9d1f5f;
+    --success-soft:#e3f5ee;--success-fg:#136b4f;--warn-soft:#fbf0dd;--warn-fg:#8a5510;--info-soft:#e6f0fb;--info-fg:#1f5b96;}
+  *{box-sizing:border-box} body{margin:0;font-family:ui-sans-serif,system-ui,"Segoe UI",sans-serif;background:var(--bg);color:var(--fg)}
+  .app{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+  .top{display:flex;align-items:center;gap:12px;padding:9px 16px;border-bottom:1px solid var(--border);background:var(--surface)}
+  .top b{font-size:14px}.top .muted{color:var(--muted);font-size:12px}
+  .seg{margin-left:auto;display:inline-flex;border:1px solid var(--border);border-radius:999px;overflow:hidden;flex-wrap:wrap}
+  .seg button{border:0;background:transparent;padding:6px 12px;font-size:12px;cursor:pointer;color:var(--muted)}
+  .seg button.on{background:var(--accent-soft);color:var(--accent-soft-fg);font-weight:600}
+  .stage{flex:1;overflow:hidden}
+  .frame{height:100%;display:grid;grid-template-columns:1fr 1fr}
+  .stage.mobile .frame{max-width:400px;margin:0 auto;grid-template-columns:1fr;box-shadow:0 0 0 1px var(--border)}
+  .pane{overflow:auto;padding:22px}.left{border-right:1px solid var(--border)}
+  .pane.right{padding:0;display:flex;flex-direction:column;overflow:hidden}
+  .stage.mobile .right{display:none}
+  h6{margin:0 0 8px;font-size:15px;font-weight:700}
+  .body{font-size:13px;color:#4a4340;line-height:1.55;margin-bottom:14px}
+  .muted{color:var(--muted)}.xs{font-size:11px}
+  /* canonical code block (MarkdownContent CodeToHtml): slim header lang+copy, mono body — SAME for every command */
+  .code{border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;background:var(--surface)}
+  .code .hd{display:flex;align-items:center;justify-content:space-between;padding:5px 10px;background:var(--surface2);border-bottom:1px solid var(--border)}
+  .code .lang{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+  .code .cp{border:0;background:transparent;cursor:pointer;color:var(--muted);font-size:12px}
+  .code pre{margin:0;padding:10px 12px;font-family:ui-monospace,monospace;font-size:12.5px;white-space:pre-wrap;color:#241c1a}
+  .tag{display:inline-block;font-size:10px;border:1px dashed var(--accent);color:var(--accent-soft-fg);border-radius:6px;padding:1px 5px;margin-left:6px;vertical-align:middle}
+  .divider{border-top:1px solid var(--border);margin:16px 0;padding-top:16px}
+  .chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:4px 11px;border-radius:999px;width:fit-content}
+  .c-warn{background:var(--warn-soft);color:var(--warn-fg)}.c-ok{background:var(--success-soft);color:var(--success-fg)}
+  .dot{width:7px;height:7px;border-radius:999px;background:currentColor}.dot.pulse{animation:p 1s infinite}@keyframes p{50%{opacity:.3}}
+  .callout{border:1px solid var(--info-soft);background:var(--info-soft);border-radius:14px;padding:12px 14px;margin-bottom:12px}
+  .callout .t{font-size:13px;font-weight:600;color:var(--info-fg);margin-bottom:6px}
+  .mode{display:flex;gap:8px;margin:6px 0 12px}.mode .opt{flex:1;border:1px solid var(--border);border-radius:12px;padding:10px;font-size:12px;cursor:pointer}.mode .opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+  .btn{border:0;border-radius:999px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;background:var(--accent);color:#fff}
+  .btn.tert{background:var(--surface2);color:var(--fg)}
+  .steps{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}.steps span{font-size:11px;padding:3px 9px;border-radius:999px;background:var(--surface2);color:var(--muted)}.steps .cur{background:var(--accent-soft);color:var(--accent-soft-fg);font-weight:600}.steps .done{background:var(--success-soft);color:var(--success-fg)}
+  /* right pane */
+  .card{height:100%;background:var(--surface);overflow:hidden;display:flex;flex-direction:column}
+  .empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px;padding:28px}
+  .empty .ic{font-size:30px;color:var(--muted)}.empty .t{font-size:14px;font-weight:600}.empty .d{font-size:12px;color:var(--muted);max-width:300px}
+  /* ExtendedTabs: secondary underline tabs on a FULL-WIDTH baseline (like the dashboard tab bar) */
+  .constabs{display:flex;gap:0;padding:0 16px;border-bottom:1px solid var(--border);background:var(--surface)}
+  .constabs .t{font-size:13px;padding:12px 14px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+  .constabs .t.on{color:var(--accent-soft-fg);font-weight:600;border-bottom-color:var(--accent)}
+  .console{flex:1;background:#1e1a19;color:#dfe7dd;font-family:ui-monospace,monospace;font-size:12px;padding:16px;overflow:auto}
+  .note{padding:9px 16px;background:var(--surface2);border-top:1px solid var(--border);font-size:11px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <b>Playground connect · v2 canonical blocks</b>
+    <div class="seg" id="seg">
+      <button data-p="setup" class="on">Setup</button>
+      <button data-p="waiting">Cài + chờ</button>
+      <button data-p="connected">Đã kết nối</button>
+      <button data-p="lost">Máy ngắt</button>
+      <button data-p="rag">RAG</button>
+      <button data-dev="m">Mobile</button>
+    </div>
+  </div>
+  <div class="stage" id="stage"><div class="frame"><div class="pane left" id="left"></div><div class="pane right" id="right"></div></div></div>
+  <div class="note" id="note"></div>
+</div>
+<script>
+const CODE="U5SMS5"; let phase="setup";
+const codeBlock=(lang,cmd)=>`<div class="code"><div class="hd"><span class="lang">${lang} <span class="tag">MarkdownContent CodeToHtml + SnippetIcon copy</span></span><button class="cp">⧉ copy</button></div><pre>${cmd}</pre></div>`;
+const stepHead=(title,body,lang,cmd)=>`<div class="steps"><span class="done">1</span><span class="cur">2</span><span>3</span><span>4</span><span>5</span></div><h6>${title}</h6><div class="body">${body}</div>${codeBlock(lang,cmd)}`;
+
+function render(){
+  const L=document.getElementById('left'),R=document.getElementById('right'),N=document.getElementById('note');
+  let rightEmpty=true, concept='';
+
+  if(phase==='setup'){
+    L.innerHTML = stepHead('Dựng cluster kind','Tạo một cluster Kubernetes cục bộ bằng <code>kind</code>.','bash','kind create cluster --name starci-demo')
+      +`<div class="divider"></div>
+        <div class="body">Lab chạy trên MÁY BẠN (có hướng dẫn từng bước). Bấm để bắt đầu nối máy:</div>
+        <button class="btn" onclick="phase='waiting';paint()">Kết nối máy thật →</button>
+        <div class="xs muted" style="margin-top:8px">Bỏ mode "Tự làm" — chỉ Guided; nút này ra thẳng "đang chờ".</div>`;
+    concept='EmptyState "chưa kết nối" (chưa tạo phiên)';
+  }
+  else if(phase==='waiting'){
+    L.innerHTML = stepHead('Chạy container đầu tiên','Khởi động một container Nginx nền (detached) tên <code>starci-demo</code>.','bash','docker run -d --name starci-demo nginx')
+      +`<div class="divider"></div>
+        <span class="chip c-warn"><span class="dot pulse"></span>Đang chờ máy kết nối… <span class="tag">StatusChip warning</span></span>
+        <div class="callout" style="margin-top:12px"><div class="t">Kết nối máy của bạn <span class="tag">Callout info</span></div>
+          <div class="body" style="margin:0 0 8px">Lab chạy Docker/K8s trên máy bạn. Cài Node ≥18 rồi chạy lệnh này trong terminal:</div>
+          ${codeBlock('bash','npx @starciacademy/playground-agent '+CODE)}
+          <div class="xs muted">npx tự tải — không cần cài thường trực.</div>
+        </div>`;
+    concept='EmptyState "chưa kết nối" — GIỐNG HỆT setup (1 concept)';
+  }
+  else if(phase==='connected'){
+    L.innerHTML = stepHead('Chạy container đầu tiên','Khởi động một container Nginx nền (detached) tên <code>starci-demo</code>.','bash','docker run -d --name starci-demo nginx')
+      +`<div class="divider"></div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <span class="chip c-ok"><span class="dot"></span>Máy đã kết nối · <b id="ping">— ms</b></span>
+          <button class="btn tert xs" style="padding:5px 11px" onclick="phase='lost';paint()">Kết nối lại / đổi máy</button>
+          <span class="tag">StatusChip + ping 5s · reconnect luôn sẵn</span>
+        </div>
+        <div style="margin-top:12px"><button class="btn tert">← Trước</button> <button class="btn">Bước sau →</button></div>`;
+    rightEmpty=false;
+  }
+  else if(phase==='lost'){
+    L.innerHTML = stepHead('Chạy container đầu tiên','Khởi động một container Nginx nền (detached) tên <code>starci-demo</code>.','bash','docker run -d --name starci-demo nginx')
+      +`<div class="divider"></div>
+        <span class="chip c-warn"><span class="dot pulse"></span>Máy vừa ngắt kết nối <span class="tag">StatusChip warning</span></span>
+        <div class="callout" style="margin-top:12px"><div class="t">Kết nối lại để đi tiếp <span class="tag">Callout — reconnect, giữ tiến độ</span></div>
+          <div class="body" style="margin:0 0 8px">Tiến độ các chương đã pass được GIỮ. Chạy lại agent (máy cũ hoặc máy khác) để mở lại workspace:</div>
+          ${codeBlock('bash','npx @starciacademy/playground-agent '+CODE)}
+          <div class="xs muted">Gõ lại lệnh — hoặc bật service-mode để agent tự chạy lại khi mất kết nối.</div>
+        </div>`;
+    concept='EmptyState "chưa kết nối" — reconnect (progress giữ nguyên)';
+  }
+  else if(phase==='rag'){
+    L.innerHTML = stepHead('Hỏi RAG & kiểm chứng','Lab RAG chạy TRONG trình duyệt — <b>không cần cài agent</b>.','',null).replace(codeBlock('',null),'')
+      +`<div class="divider"></div><button class="btn">Bước sau →</button>`;
+    R.innerHTML = `<div class="card"><div class="constabs"><span class="t on">RAG widget <span class="tag">RagPlayground</span></span></div><div class="console">[ import → hỏi → xem trích dẫn ]</div></div>`;
+    N.innerHTML='[rag] không agent · right = RagPlayground (giữ)'; return;
+  }
+
+  // RIGHT: ONE concept — EmptyState khi chưa kết nối (mọi pha), console khi đã kết nối
+  if(rightEmpty){
+    R.innerHTML = `<div class="card"><div class="empty">
+      <div class="ic">▮</div>
+      <div class="t">Kết nối máy để mở workspace</div>
+      <div class="d">Chạy lệnh bên trái trên máy bạn — terminal + tài nguyên mở khi máy kết nối.</div>
+      <span class="tag">EmptyState (bọc Card) — 1 concept mọi pha pre-connected</span>
+    </div></div>`;
+    concept = concept||'EmptyState';
+  } else {
+    R.innerHTML = `<div class="card"><div class="constabs"><span class="t on">Terminal</span><span class="t">Tài nguyên (1)</span><span class="tag" style="margin-left:auto">CodeConsole</span></div>
+      <div class="console">$ docker run -d --name starci-demo nginx<br>a1b2c3… <br><br>✓ Bước verified — Container starci-demo Running</div></div>`;
+    concept='CodeConsole (Terminal|Tài nguyên) — đã kết nối';
+  }
+  N.innerHTML = `[${phase}] · Lệnh = MarkdownContent code (đồng cỡ, có copy) · Right = <b>${concept}</b> · Status = StatusChip`;
+}
+function paint(){ [...document.querySelectorAll('#seg [data-p]')].forEach(b=>b.classList.toggle('on',b.dataset.p===phase)); render(); }
+document.getElementById('seg').onclick=e=>{ if(e.target.dataset.p){phase=e.target.dataset.p;paint();} if(e.target.dataset.dev){document.getElementById('stage').classList.toggle('mobile');e.target.classList.toggle('on');} };
+// simulate the "ping every 5s + show latency" loop — when connected, #ping refreshes
+function tick(){ const el=document.getElementById('ping'); if(el){ const ms=28+Math.floor(Math.random()*45); el.textContent=ms+' ms'; el.style.color=ms<55?'var(--success-fg)':'var(--warn-fg)'; } }
+setInterval(tick,5000);
+paint(); setTimeout(tick,300);
+</script>
+</body>
+</html>

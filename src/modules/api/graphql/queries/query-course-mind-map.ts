@@ -27,6 +27,7 @@ const query1 = gql`
             moduleId
             displayId
             desc
+            popularity
             links {
               kind
               entityId

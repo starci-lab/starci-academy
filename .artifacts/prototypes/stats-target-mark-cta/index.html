@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>stats-target-mark-cta — ProgressMeter TargetMark + CTA icon/copy</title>
+<style>
+  :root{--bg:#f4f4f6;--fg:#1a1a1e;--mut:#6b6b76;--line:#e2e2e8;--card:#fff;--acc:#c0407a;
+        --ok:#2f8f57;--okbg:#e3f4ea;--warn:#b0721f;--warnbg:#f7ecda;--bad:#c0392b;--badbg:#f7e2df;--radius:14px}
+  @media (prefers-color-scheme:dark){:root{--bg:#161619;--fg:#eaeaef;--mut:#9a9aa6;--line:#2a2a30;--card:#1d1d21;--okbg:#16281d;--warnbg:#2a2013;--badbg:#2b1917}}
+  :root[data-theme="light"]{--bg:#f4f4f6;--fg:#1a1a1e;--card:#fff}
+  :root[data-theme="dark"]{--bg:#161619;--fg:#eaeaef;--card:#1d1d21}
+  *{box-sizing:border-box}
+  body{margin:0;font:14px/1.5 ui-sans-serif,system-ui,-apple-system,sans-serif;color:var(--fg);background:var(--bg)}
+  .top{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+  .top b{font-size:15px}.top .sub{color:var(--mut);font-size:12px}
+  .top button{margin-left:auto;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:8px;padding:5px 10px;cursor:pointer;font:inherit;font-size:12px}
+  .wrap{max-width:900px;margin:0 auto;padding:18px 16px 60px}
+  h2{font-size:14px;margin:26px 0 4px}
+  .note{font-size:12px;color:var(--mut);margin:0 0 12px}
+  .blocktag{font:9px ui-monospace,Menlo,monospace;color:var(--mut);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:0 4px;font-weight:400}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:640px){.cols{grid-template-columns:1fr}}
+  .col>.h{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--mut);margin:0 2px 6px;display:flex;align-items:center;gap:6px}
+  .col.now>.h::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--bad)}
+  .col.next>.h::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--ok)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px}
+  .bignum{font-size:34px;font-weight:800;line-height:1}.bignum span{font-size:14px;color:var(--mut);font-weight:400;margin-left:2px}
+  .bignum.bad{color:var(--bad)}.bignum.warn{color:var(--warn)}
+  .verdict{font-size:13.5px;font-weight:600;margin-top:9px}
+  .vsub{margin-top:3px;font-size:12px;color:var(--mut)}
+
+  /* ---- meter: current ---- */
+  .m-now{position:relative;margin-top:12px}
+  .m-now .bar{position:relative;height:8px;border-radius:5px;background:var(--line);overflow:hidden}
+  .m-now .bar>i{display:block;height:100%;border-radius:5px}
+  .m-now .tick{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--fg);opacity:.4}
+  .m-now .tick .cap{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--mut);white-space:nowrap}
+
+  /* ---- meter: proposed (TargetMark component) ---- */
+  .m-next{position:relative;margin-top:32px}           /* mt: chừa chỗ label, không đè caption */
+  .m-next .bar{position:relative;height:8px;border-radius:5px;background:var(--line);overflow:visible}
+  .m-next .bar>i{display:block;height:100%;border-radius:5px}
+  .tmark{position:absolute;top:50%;transform:translate(-50%,-50%);pointer-events:none}
+  .tmark .pin{width:4px;height:20px;border-radius:6px;background:var(--card);box-shadow:0 0 0 1px color-mix(in oklab,var(--fg) 12%,transparent)}
+  .tmark .cap{position:absolute;bottom:calc(100% + 3px);left:50%;transform:translateX(-50%);font-size:10px;color:var(--mut);white-space:nowrap}
+
+  .split{display:flex;align-items:stretch;margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .split>div{flex:1;padding:10px 12px}.split>div+div{border-left:1px solid var(--line)}
+  .split .k{font-size:11px;color:var(--mut)}.split .v{font-size:18px;font-weight:800;margin-top:2px}
+
+  .btn{border:0;border-radius:10px;padding:9px 15px;font:inherit;font-weight:700;cursor:pointer;background:var(--acc);color:#fff;font-size:13px;display:inline-flex;gap:6px;align-items:center;margin-top:13px}
+  .btn svg{width:16px;height:16px}
+  .badarrow{outline:2px solid var(--bad);outline-offset:2px}
+
+  .specrow{display:flex;gap:18px;flex-wrap:wrap;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+  .specrow .demo{position:relative;width:220px;height:8px;border-radius:5px;background:var(--line)}
+  .specrow .demo>i{display:block;height:100%;width:46%;border-radius:5px;background:var(--bad)}
+  .specrow code{font:11px ui-monospace,monospace;background:var(--bg);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+  .legend{font-size:12px;color:var(--mut)}.legend b{color:var(--fg)}
+</style>
+</head>
+<body>
+<div class="top">
+  <b>Stats — TargetMark + CTA</b>
+  <span class="sub">đỏ = mark hiện tại · xanh = đề xuất · áp cả 3 hero</span>
+  <button id="theme">◑ theme</button>
+</div>
+<div class="wrap">
+
+  <h2>1 · Anchor spec — <code>w-1 h-5 rounded bg-surface</code> <span class="blocktag">blocks/stats/ProgressMeter/TargetMark</span></h2>
+  <p class="note">Tách target-mark ra component riêng. Anchor = pill dọc <b>w-1 (4px) × h-5 (20px), rounded, bg-surface</b> — cắt ngang bar như 1 "khấc mốc", cao hơn bar (8px) nên luôn thấy. Hairline 12% để nổi trên track sáng.</p>
+  <div class="specrow">
+    <div class="demo">
+      <i></i>
+      <div class="tmark" style="left:85%"><div class="pin"></div><div class="cap">85%</div></div>
+    </div>
+    <div class="legend">Pill <b>bg-surface</b> tại mốc 85% · label nổi phía trên, cách bar 3px.<br>Meter dùng nó nhận thêm <code>mt-5</code> khi có label → hero cao hơn 1 tí, <b>label không đè caption</b>.</div>
+  </div>
+
+  <h2>2 · Học thẻ — Sức khoẻ trí nhớ <span class="blocktag">VerdictHeroCard</span></h2>
+  <div class="cols">
+    <div class="col now"><div class="h">Hiện tại</div>
+      <div class="card">
+        <div class="bignum bad">39<span>%</span></div>
+        <div class="verdict">Bạn đang <b>quá tải</b> — nạp thẻ mới nhanh hơn tốc độ ghi nhớ.</div>
+        <div class="vsub">Tỷ lệ nhớ 39% (mốc lành mạnh ~85%). Vấn đề KHÔNG phải quên cái đã học — mà là nạp quá nhanh.</div>
+        <div class="m-now"><div class="bar"><i style="width:39%;background:var(--bad)"></i></div>
+          <div class="tick" style="left:85%"><div class="cap">85%</div></div></div>
+        <div class="split"><div><div class="k">Thẻ đã học kỹ (chín) bạn NHỚ được</div><div class="v" style="color:var(--warn)">48%</div></div>
+          <div><div class="k">Thẻ mới (non) đang tuột</div><div class="v" style="color:var(--bad)">29%</div></div></div>
+        <button class="btn badarrow">Giảm thẻ mới · ôn kỹ thẻ cũ trước →</button>
+      </div>
+    </div>
+    <div class="col next"><div class="h">Đề xuất</div>
+      <div class="card">
+        <div class="bignum bad">39<span>%</span></div>
+        <div class="verdict">Bạn đang <b>quá tải</b> — nạp thẻ mới nhanh hơn tốc độ ghi nhớ.</div>
+        <div class="vsub">Tỷ lệ nhớ 39% (mốc lành mạnh ~85%). Vấn đề KHÔNG phải quên cái đã học — mà là nạp quá nhanh.</div>
+        <div class="m-next"><div class="bar"><i style="width:39%;background:var(--bad)"></i>
+          <div class="tmark" style="left:85%"><div class="pin"></div><div class="cap">85%</div></div></div></div>
+        <div class="split"><div><div class="k">Thẻ đã học kỹ (chín) bạn NHỚ được</div><div class="v" style="color:var(--warn)">48%</div></div>
+          <div><div class="k">Thẻ mới (non) đang tuột</div><div class="v" style="color:var(--bad)">29%</div></div></div>
+        <button class="btn">Khoan nạp thẻ mới — ôn chắc thẻ cũ đã <svg viewBox="0 0 256 256" fill="currentColor"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <h2>3 · Hỏi nhanh — Độ phủ vs mục tiêu <span class="blocktag">VerdictHeroCard</span></h2>
+  <div class="cols">
+    <div class="col now"><div class="h">Hiện tại</div>
+      <div class="card">
+        <div class="bignum warn">62<span>%</span></div>
+        <div class="verdict">Còn 5 chủ đề chưa đụng trên tổng 13.</div>
+        <div class="vsub">Mục tiêu 80% để coi như nắm chắc module.</div>
+        <div class="m-now"><div class="bar"><i style="width:62%;background:var(--warn)"></i></div>
+          <div class="tick" style="left:80%"><div class="cap">80%</div></div></div>
+        <button class="btn badarrow">Hỏi nhanh 5 chủ đề còn trống → <svg viewBox="0 0 256 256" fill="currentColor"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path></svg></button>
+        <div class="note" style="margin-top:6px;color:var(--bad)">↑ string có "→" + JSX đã có icon = double-arrow (bug hiện tại)</div>
+      </div>
+    </div>
+    <div class="col next"><div class="h">Đề xuất</div>
+      <div class="card">
+        <div class="bignum warn">62<span>%</span></div>
+        <div class="verdict">Còn 5 chủ đề chưa đụng trên tổng 13.</div>
+        <div class="vsub">Mục tiêu 80% để coi như nắm chắc module.</div>
+        <div class="m-next"><div class="bar"><i style="width:62%;background:var(--warn)"></i>
+          <div class="tmark" style="left:80%"><div class="pin"></div><div class="cap">80%</div></div></div></div>
+        <button class="btn">Thử 5 chủ đề chưa đụng tới <svg viewBox="0 0 256 256" fill="currentColor"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <h2>4 · Phỏng vấn — Độ sẵn sàng <span class="blocktag">VerdictHeroCard</span></h2>
+  <div class="cols">
+    <div class="col now"><div class="h">Hiện tại</div>
+      <div class="card">
+        <div class="bignum bad">18<span>/100</span></div>
+        <div class="verdict">Gần chạm mốc "đạt" — còn ~1 phiên mạnh nữa.</div>
+        <div class="vsub">Pass-bar 70. 3 phiên gần nhất: 18 → 18 → 10.</div>
+        <div class="m-now"><div class="bar"><i style="width:18%;background:var(--bad)"></i></div>
+          <div class="tick" style="left:70%"><div class="cap">70/100</div></div></div>
+        <button class="btn badarrow">Luyện 1 phiên nữa →</button>
+      </div>
+    </div>
+    <div class="col next"><div class="h">Đề xuất</div>
+      <div class="card">
+        <div class="bignum bad">18<span>/100</span></div>
+        <div class="verdict">Gần chạm mốc "đạt" — còn ~1 phiên mạnh nữa.</div>
+        <div class="vsub">Pass-bar 70. 3 phiên gần nhất: 18 → 18 → 10.</div>
+        <div class="m-next"><div class="bar"><i style="width:18%;background:var(--bad)"></i>
+          <div class="tmark" style="left:70%"><div class="pin"></div><div class="cap">70/100</div></div></div></div>
+        <button class="btn">Luyện 1 phiên nữa <svg viewBox="0 0 256 256" fill="currentColor"><path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <p class="note" style="margin-top:26px">Đổi so với hiện tại: (1) target-mark = pill <code>w-1 h-5 rounded bg-surface</code> tách component riêng · (2) meter <code>mt-5</code> → label mốc không đè caption · (3) CTA bỏ <code>"→"</code> baked, arrow = <code>ArrowRightIcon</code>, copy người hơn.</p>
+</div>
+<script>
+  document.getElementById('theme').onclick=function(){
+    var r=document.documentElement,d=r.getAttribute('data-theme')==='dark';
+    r.setAttribute('data-theme',d?'light':'dark');
+  };
+</script>
+</body>
+</html>

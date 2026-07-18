@@ -4,6 +4,7 @@ import React from "react"
 import { Button, Link, Typography, cn } from "@heroui/react"
 import { ArrowRightIcon } from "@phosphor-icons/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { HighlightCard } from "@/components/blocks/cards/HighlightCard"
 import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import { SeeMoreLink } from "@/components/blocks/navigation/SeeMoreLink"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
@@ -143,9 +144,8 @@ export const ContinueCard = ({
             )
         : null
 
-    return (
+    const cardNode = (
         <SectionCard
-            accent={isHero}
             className={cn("relative flex flex-col overflow-hidden", className)}
             contentClassName="flex flex-col gap-3"
         >
@@ -183,4 +183,10 @@ export const ContinueCard = ({
             {value === undefined ? null : <ProgressMeter value={value} max={max} />}
         </SectionCard>
     )
+
+    // `hero` = the ONE "tiếp tục phiên đang dở" standout on its surface — the
+    // canonical `HighlightCard` case (`card.md` §3j). `item` stays a static frame
+    // (N of them together — a highlighted card would just fight the others for
+    // attention, same reasoning `withVerdict` never applied to `item` either).
+    return isHero ? <HighlightCard>{cardNode}</HighlightCard> : cardNode
 }

@@ -5,6 +5,7 @@ import { cn } from "@heroui/react"
 import type { ReactNode } from "react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { PressableCard } from "@/components/blocks/cards/PressableCard"
+import { type VerdictBand, verdictBandClassName } from "@/components/blocks/cards/verdict-band"
 
 /**
  * Column count per CONTAINER width — these are container queries, not viewport
@@ -56,6 +57,13 @@ export interface GroupPressableCardItem {
      * content-sized track and squeezes the card to a sliver.
      */
     className?: string
+    /**
+     * Verdict variant: a LEFT band (`border-l-4`) marking this tile with a signal that
+     * comes from DATA (`card.md` §3i) — e.g. the SM-2 recall grade's tier. The canonical
+     * {@link VerdictBand} (`variant` semantic, or `color` raw-palette escape hatch), the
+     * SAME shape as `SectionCard`/`SurfaceListCardItem`.
+     */
+    withVerdict?: VerdictBand
 }
 
 /** Props for the {@link GroupPressableCard} block. */
@@ -215,7 +223,12 @@ export const GroupPressableCard = ({
                         href={item.href}
                         isDisabled={item.isDisabled}
                         label={item.label}
-                        className={cn(TILE_CHROME, item.className)}
+                        className={cn(
+                            TILE_CHROME,
+                            // canonical verdict left-band (shape + colour + !important fix)
+                            verdictBandClassName(item.withVerdict),
+                            item.className,
+                        )}
                     >
                         {item.content}
                     </PressableCard>

@@ -13,7 +13,7 @@ import type { WithClassNames } from "@/modules/types/base/class-name"
 export const MockInterviewSetupSkeleton = ({ className }: WithClassNames<undefined> = {}) => {
     return (
         <div className={className}>
-            <div className="flex flex-col gap-4 rounded-2xl bg-surface p-6 shadow-surface">
+            <div className="flex flex-col gap-4 rounded-3xl bg-surface p-6 shadow-surface">
                 {/* persona — avatar + name/role */}
                 <div className="flex items-center gap-3">
                     <Skeleton.Avatar size="lg" />

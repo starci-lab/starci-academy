@@ -29,6 +29,7 @@ import {
 } from "@phosphor-icons/react"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { Callout } from "@/components/blocks/feedback/Callout"
+import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { ModalShell } from "@/components/blocks/layout/ModalShell"
 import { useMutateRedeemRewardSwr } from "@/hooks/swr/api/graphql/mutations/useMutateRedeemRewardSwr"
@@ -47,6 +48,19 @@ const REWARD_ICON: Record<string, ReactNode> = {
     voucher10: <TicketIcon aria-hidden focusable="false" className="size-5 text-accent-soft-foreground" />,
     tshirt: <TShirtIcon aria-hidden focusable="false" className="size-5 text-accent-soft-foreground" />,
 }
+
+/**
+ * Coin-shop catalog grouped into user-facing SECTIONS by reward `kind` (thầy
+ * 2026-07-17 "chia nhiều hạng mục ra"). `aiCredit` + `digital` read as one
+ * "tăng tốc học" bucket; `voucher` and `physical` each stand alone. Order = display
+ * order. A reward whose `kind` matches no section is not shown in the grouped view —
+ * every current kind is covered here; adding a new kind means adding a section.
+ */
+const REWARD_SECTIONS: ReadonlyArray<{ key: string, icon: ReactNode, kinds: ReadonlyArray<string> }> = [
+    { key: "learn", icon: <LightningIcon aria-hidden focusable="false" className="size-5 text-accent-soft-foreground" />, kinds: ["aiCredit", "digital"] },
+    { key: "voucher", icon: <TicketIcon aria-hidden focusable="false" className="size-5 text-accent-soft-foreground" />, kinds: ["voucher"] },
+    { key: "physical", icon: <GiftIcon aria-hidden focusable="false" className="size-5 text-accent-soft-foreground" />, kinds: ["physical"] },
+]
 
 /** One redeem effect's takeaway shown right after redeeming (voucher code / AI-credit bump). */
 type JustRedeemed =
@@ -216,129 +230,148 @@ export const RewardCatalog = ({ className }: RewardCatalogProps) => {
                     onRetry: () => void rewardsSwr.mutate(),
                 }}
             >
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                    {(rewardsSwr.data ?? []).map((reward) => {
-                        const affordable = balance >= reward.cost
-                        const isPhysical = reward.kind === "physical"
-                        const formOpen = shippingFor === reward.key
-                        const shipReady = Boolean(
-                            ship.recipientName.trim()
+                <div className="flex flex-col gap-6">
+                    {REWARD_SECTIONS.map((section) => {
+                        const sectionItems = (rewardsSwr.data ?? []).filter((reward) => section.kinds.includes(reward.kind))
+                        if (sectionItems.length === 0) {
+                            return null
+                        }
+                        return (
+                            <LabeledCard
+                                key={section.key}
+                                label={(
+                                    <span className="flex items-center gap-2">
+                                        {section.icon}
+                                        {t(`rewards.section.${section.key}`)}
+                                    </span>
+                                )}
+                                contentClassName="grid grid-cols-1 gap-3 sm:grid-cols-2"
+                            >
+                                {sectionItems.map((reward) => {
+                                    const affordable = balance >= reward.cost
+                                    const isPhysical = reward.kind === "physical"
+                                    const formOpen = shippingFor === reward.key
+                                    const shipReady = Boolean(
+                                        ship.recipientName.trim()
                             && ship.phone.trim()
                             && ship.address.trim(),
-                        )
-                        return (
-                            <Card key={reward.key}>
-                                <div className="flex items-start gap-3">
-                                    <IconTile
-                                        size="sm"
-                                        tone="accent"
-                                        icon={REWARD_ICON[reward.key] ?? (
-                                            <GiftIcon aria-hidden focusable="false" className="size-5 text-accent-soft-foreground" />
-                                        )}
-                                    />
-                                    <div className="flex min-w-0 flex-1 flex-col gap-0">
-                                        <span className="truncate text-sm font-semibold text-foreground">
-                                            {reward.title}
-                                        </span>
-                                        <span className="text-xs text-muted">
-                                            {reward.description}
-                                        </span>
-                                    </div>
-                                </div>
+                                    )
+                                    return (
+                                        <Card key={reward.key}>
+                                            <div className="flex items-start gap-3">
+                                                <IconTile
+                                                    size="sm"
+                                                    tone="accent"
+                                                    icon={REWARD_ICON[reward.key] ?? (
+                                                        <GiftIcon aria-hidden focusable="false" className="size-5 text-accent-soft-foreground" />
+                                                    )}
+                                                />
+                                                <div className="flex min-w-0 flex-1 flex-col gap-0">
+                                                    <span className="truncate text-sm font-semibold text-foreground">
+                                                        {reward.title}
+                                                    </span>
+                                                    <span className="text-xs text-muted">
+                                                        {reward.description}
+                                                    </span>
+                                                </div>
+                                            </div>
 
-                                <div className="flex items-center justify-between gap-3">
-                                    <Chip color="accent" variant="soft" size="sm">
-                                        <Chip.Label>
-                                            {t("rewards.cost", { count: reward.cost })}
-                                        </Chip.Label>
-                                    </Chip>
-                                    {!formOpen ? (
-                                        <Button
-                                            variant="primary"
-                                            size="sm"
-                                            isDisabled={!affordable || redeeming !== null}
-                                            isPending={redeeming === reward.key}
-                                            onPress={() => {
-                                                if (isPhysical) {
-                                                    setShippingFor(reward.key)
-                                                } else {
-                                                    // Coin is real + redeem is irreversible — confirm
-                                                    // before spending (mirrors the shipping form's own
-                                                    // "Xác nhận đổi" step for physical rewards).
-                                                    setConfirming(reward)
-                                                }
-                                            }}
-                                        >
-                                            {affordable
-                                                ? t("rewards.redeem")
-                                                : t("rewards.cannotAfford")}
-                                        </Button>
-                                    ) : null}
-                                </div>
+                                            <div className="flex items-center justify-between gap-3">
+                                                <Chip color="accent" variant="soft" size="sm">
+                                                    <Chip.Label>
+                                                        {t("rewards.cost", { count: reward.cost })}
+                                                    </Chip.Label>
+                                                </Chip>
+                                                {!formOpen ? (
+                                                    <Button
+                                                        variant="primary"
+                                                        size="sm"
+                                                        isDisabled={!affordable || redeeming !== null}
+                                                        isPending={redeeming === reward.key}
+                                                        onPress={() => {
+                                                            if (isPhysical) {
+                                                                setShippingFor(reward.key)
+                                                            } else {
+                                                                // Coin is real + redeem is irreversible — confirm
+                                                                // before spending (mirrors the shipping form's own
+                                                                // "Xác nhận đổi" step for physical rewards).
+                                                                setConfirming(reward)
+                                                            }
+                                                        }}
+                                                    >
+                                                        {affordable
+                                                            ? t("rewards.redeem")
+                                                            : t("rewards.cannotAfford")}
+                                                    </Button>
+                                                ) : null}
+                                            </div>
 
-                                {formOpen ? (
-                                    <div className="flex flex-col gap-2">
-                                        <TextField variant="secondary">
-                                            <Label htmlFor={`reward-ship-name-${reward.key}`}>
-                                                {t("rewards.shipName")}
-                                            </Label>
-                                            <Input
-                                                id={`reward-ship-name-${reward.key}`}
-                                                value={ship.recipientName}
-                                                onChange={(event) => setShip((prev) => ({
-                                                    ...prev,
-                                                    recipientName: event.target.value,
-                                                }))}
-                                            />
-                                        </TextField>
-                                        <TextField variant="secondary">
-                                            <Label htmlFor={`reward-ship-phone-${reward.key}`}>
-                                                {t("rewards.shipPhone")}
-                                            </Label>
-                                            <Input
-                                                id={`reward-ship-phone-${reward.key}`}
-                                                type="tel"
-                                                value={ship.phone}
-                                                onChange={(event) => setShip((prev) => ({
-                                                    ...prev,
-                                                    phone: event.target.value,
-                                                }))}
-                                            />
-                                        </TextField>
-                                        <TextField variant="secondary">
-                                            <Label htmlFor={`reward-ship-address-${reward.key}`}>
-                                                {t("rewards.shipAddress")}
-                                            </Label>
-                                            <Input
-                                                id={`reward-ship-address-${reward.key}`}
-                                                value={ship.address}
-                                                onChange={(event) => setShip((prev) => ({
-                                                    ...prev,
-                                                    address: event.target.value,
-                                                }))}
-                                            />
-                                        </TextField>
-                                        <div className="flex items-center gap-2">
-                                            <Button
-                                                variant="primary"
-                                                size="sm"
-                                                isDisabled={!shipReady || redeeming !== null}
-                                                isPending={redeeming === reward.key}
-                                                onPress={() => void onRedeem(reward, ship)}
-                                            >
-                                                {t("rewards.confirmRedeem")}
-                                            </Button>
-                                            <Button
-                                                variant="tertiary"
-                                                size="sm"
-                                                onPress={() => setShippingFor(null)}
-                                            >
-                                                {t("rewards.cancel")}
-                                            </Button>
-                                        </div>
-                                    </div>
-                                ) : null}
-                            </Card>
+                                            {formOpen ? (
+                                                <div className="flex flex-col gap-2">
+                                                    <TextField variant="secondary">
+                                                        <Label htmlFor={`reward-ship-name-${reward.key}`}>
+                                                            {t("rewards.shipName")}
+                                                        </Label>
+                                                        <Input
+                                                            id={`reward-ship-name-${reward.key}`}
+                                                            value={ship.recipientName}
+                                                            onChange={(event) => setShip((prev) => ({
+                                                                ...prev,
+                                                                recipientName: event.target.value,
+                                                            }))}
+                                                        />
+                                                    </TextField>
+                                                    <TextField variant="secondary">
+                                                        <Label htmlFor={`reward-ship-phone-${reward.key}`}>
+                                                            {t("rewards.shipPhone")}
+                                                        </Label>
+                                                        <Input
+                                                            id={`reward-ship-phone-${reward.key}`}
+                                                            type="tel"
+                                                            value={ship.phone}
+                                                            onChange={(event) => setShip((prev) => ({
+                                                                ...prev,
+                                                                phone: event.target.value,
+                                                            }))}
+                                                        />
+                                                    </TextField>
+                                                    <TextField variant="secondary">
+                                                        <Label htmlFor={`reward-ship-address-${reward.key}`}>
+                                                            {t("rewards.shipAddress")}
+                                                        </Label>
+                                                        <Input
+                                                            id={`reward-ship-address-${reward.key}`}
+                                                            value={ship.address}
+                                                            onChange={(event) => setShip((prev) => ({
+                                                                ...prev,
+                                                                address: event.target.value,
+                                                            }))}
+                                                        />
+                                                    </TextField>
+                                                    <div className="flex items-center gap-2">
+                                                        <Button
+                                                            variant="primary"
+                                                            size="sm"
+                                                            isDisabled={!shipReady || redeeming !== null}
+                                                            isPending={redeeming === reward.key}
+                                                            onPress={() => void onRedeem(reward, ship)}
+                                                        >
+                                                            {t("rewards.confirmRedeem")}
+                                                        </Button>
+                                                        <Button
+                                                            variant="tertiary"
+                                                            size="sm"
+                                                            onPress={() => setShippingFor(null)}
+                                                        >
+                                                            {t("rewards.cancel")}
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                            ) : null}
+                                        </Card>
+                                    )
+                                })}
+                            </LabeledCard>
                         )
                     })}
                 </div>

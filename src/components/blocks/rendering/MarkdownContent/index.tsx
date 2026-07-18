@@ -415,6 +415,14 @@ export interface MarkdownContentProps extends WithClassNames<undefined> {
      * surfaces (thầy 2026-07-17 "render thô"); lesson/challenge content keeps full markdown.
      */
     plain?: boolean
+    /**
+     * Render fenced code blocks as RAISED cards (`bg-surface` + shadow) rather
+     * than the default recessed wells (`bg-background`). Opt-in for surfaces that
+     * render markdown on the bare page CANVAS (e.g. the Playground left pane),
+     * where a recessed well would blend canvas-on-canvas. Off by default —
+     * lesson/card content keeps the recessed well that reads on a surface.
+     */
+    codeElevated?: boolean
 }
 
 /**
@@ -440,7 +448,7 @@ const stripClozeMarkers = (markdown: string): string =>
 /**
  * @see Story: .storybook/stories/blocks/rendering/MarkdownContent/MarkdownContent.stories
  */
-export const MarkdownContent = ({ markdown, reading = false, arcSections = false, plain = false, className }: MarkdownContentProps) => {
+export const MarkdownContent = ({ markdown, reading = false, arcSections = false, plain = false, codeElevated = false, className }: MarkdownContentProps) => {
     const theme = useTheme()
     const t = useTranslations()
     // hold back an unterminated trailing mermaid fence FIRST — markdown streamed in
@@ -462,6 +470,7 @@ export const MarkdownContent = ({ markdown, reading = false, arcSections = false
             mermaidCaptions,
             reading,
             plain,
+            codeElevated,
         }),
         [
             theme.theme,
@@ -469,6 +478,7 @@ export const MarkdownContent = ({ markdown, reading = false, arcSections = false
             mermaidCaptions,
             reading,
             plain,
+            codeElevated,
         ],
     )
     return (

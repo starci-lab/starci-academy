@@ -22,7 +22,6 @@
     "@codemirror/language": "^6.12.4",
     "@codemirror/legacy-modes": "^6.5.3",
     "@codesandbox/sandpack-react": "^2.20.0",
-    "@dagrejs/dagre": "^3.0.0",
     "@emotion/is-prop-valid": "^1.4.0",
     "@fingerprintjs/fingerprintjs": "^5.2.0",
     "@gravity-ui/icons": "^2.18.0",

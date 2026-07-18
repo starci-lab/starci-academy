@@ -2,6 +2,7 @@ import React from "react"
 import type { ReactNode } from "react"
 import { Typography, cn } from "@heroui/react"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
+import { SectionCard } from "@/components/blocks/cards/SectionCard"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Semantic verdict tone — drives the left accent border, the big value's color, and the meter fill. */
@@ -47,13 +48,6 @@ export interface VerdictHeroCardProps extends WithClassNames<undefined> {
     action?: ReactNode
 }
 
-/** Left border + big-value color, one class per {@link VerdictHeroBand}. */
-const BAND_BORDER: Record<VerdictHeroBand, string> = {
-    danger: "border-l-danger",
-    warning: "border-l-warning",
-    success: "border-l-success",
-}
-
 /** Same tone pairing the `Score` block uses for a band-colored number on a plain (non-tinted) surface. */
 const BAND_TEXT: Record<VerdictHeroBand, string> = {
     danger: "text-danger-soft-foreground",
@@ -70,9 +64,11 @@ const BAND_TEXT: Record<VerdictHeroBand, string> = {
  * hero — every zone here reads verdict → evidence → action, never a number
  * alone (`stats-insight-redesign` proposal).
  *
- * The left accent border is drawn by hand (`border-l-4` + a band color,
- * layered on top of the card's own `border-y border-r`) rather than via
- * `SectionCard`, which has no asymmetric-border variant.
+ * No left accent band (2026-07-18 — thầy: bỏ verdict; the §3i `SectionCard
+ * withVerdict` band was dropped, the `band` prop now only colors the value / meter
+ * / split values). The `splits` render as ONE surface-in-surface StatPair card
+ * (border, bg-surface, full-height divider), and the meter's target mark is the
+ * canonical `ProgressMeter` `target` prop — none hand-rolled here.
  *
  * Pure/props-only — no store, no fetch, no `useTranslations` (all copy
  * arrives via props from a caller that already translated it).
@@ -92,19 +88,9 @@ export const VerdictHeroCard = ({
     className,
 }: VerdictHeroCardProps) => {
     const meterMax = meter?.max ?? 100
-    const safeMeterMax = meterMax > 0 ? meterMax : 1
-    const targetPercent = meter?.target === undefined
-        ? null
-        : Math.min(Math.max((meter.target / safeMeterMax) * 100, 0), 100)
 
     return (
-        <div
-            className={cn(
-                "flex flex-col gap-3 rounded-3xl border-y border-r border-default bg-surface p-3 border-l-4",
-                BAND_BORDER[band],
-                className,
-            )}
-        >
+        <SectionCard className={className}>
             <div className="flex items-baseline gap-1">
                 <span className={cn("text-4xl font-bold tabular-nums", BAND_TEXT[band])}>
                     {value}
@@ -120,33 +106,25 @@ export const VerdictHeroCard = ({
             ) : null}
 
             {meter ? (
-                <div className="relative">
-                    <ProgressMeter value={meter.value} max={meterMax} color={band} />
-                    {targetPercent === null ? null : (
-                        // The line overshoots the thin track (-top-1/-bottom-1) so it stays
-                        // visible instead of disappearing flush against the bar's own edges.
-                        <div
-                            className="pointer-events-none absolute -top-1 -bottom-1 w-px bg-foreground/40"
-                            style={{ left: `${targetPercent}%` }}
-                        >
-                            <Typography
-                                type="body-xs"
-                                color="muted"
-                                className="absolute -top-5 left-1/2 -translate-x-1/2 whitespace-nowrap"
-                            >
-                                {meter.target}{unit}
-                            </Typography>
-                        </div>
-                    )}
-                </div>
+                <ProgressMeter
+                    value={meter.value}
+                    max={meterMax}
+                    color={band}
+                    target={meter.target}
+                    targetLabel={meter.target === undefined ? undefined : `${meter.target}${unit ?? ""}`}
+                />
             ) : null}
 
             {splits && splits.length > 0 ? (
-                <div className="grid grid-cols-2 gap-3">
+                // StatPair: ONE surface-in-surface card — the parent SectionCard's bg-surface shows through, a
+                // border delineates it (surface-in-surface = border, not a bg-default fill). The halves are split by
+                // a FULL-HEIGHT divider that touches the top+bottom border: `flex` + stretch (default) makes each
+                // half fill the height, so its `border-l` reaches both borders.
+                <div className="flex overflow-hidden rounded-2xl border border-default">
                     {splits.map((split, index) => (
-                        // position-keyed: a fixed 2-up breakdown of the SAME headline number,
+                        // position-keyed: a fixed N-up breakdown of the SAME headline number,
                         // never reordered/filtered at runtime like a normal list.
-                        <div key={index} className="flex flex-col gap-1 rounded-2xl bg-default p-3">
+                        <div key={index} className={cn("flex flex-1 flex-col gap-1 p-3", index > 0 && "border-l border-default")}>
                             <Typography type="body-xs" color="muted">{split.label}</Typography>
                             <Typography
                                 type="h4"
@@ -161,6 +139,6 @@ export const VerdictHeroCard = ({
             ) : null}
 
             {action ? <div>{action}</div> : null}
-        </div>
+        </SectionCard>
     )
 }

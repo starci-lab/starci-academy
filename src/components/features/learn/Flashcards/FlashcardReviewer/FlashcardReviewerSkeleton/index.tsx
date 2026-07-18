@@ -16,7 +16,7 @@ export const FlashcardReviewerSkeleton = ({ className }: WithClassNames<undefine
                 {/* the flashcard — mirrors FlipCard's LabeledCard (label OUTSIDE + Card) */}
                 <div className="flex flex-col gap-3">
                     <Skeleton.Typography type="body-xs" width="1/4" />
-                    <div className="flex flex-col gap-3 rounded-2xl bg-surface p-6 shadow-surface">
+                    <div className="flex flex-col gap-3 rounded-3xl bg-surface p-6 shadow-surface">
                         <Skeleton.Typography type="body" width="3/4" />
                         <Skeleton.Typography type="body" width="2/3" />
                     </div>

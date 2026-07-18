@@ -8,6 +8,9 @@ import {
 import {
     UserAvatar,
 } from "@/components/blocks/identity/UserAvatar"
+import {
+    RankDeltaCaret,
+} from "@/components/features/profile/RankDeltaCaret"
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
@@ -24,6 +27,12 @@ export interface PodiumEntry {
     pointsLabel: React.ReactNode
     /** True when this finisher is the viewer → ring-accent avatar + accent name + label. */
     isMe?: boolean
+    /**
+     * Rank movement vs last week (`>0` climbed, `<0` dropped, `0`/`null` unchanged) —
+     * shown as a `▴▾N` caret ABOVE the avatar when there's real movement. Omit for a
+     * board that has no weekly baseline (e.g. the all-time global tab).
+     */
+    rankDelta?: number | null
 }
 
 /** Props for the {@link Podium} block. */
@@ -58,6 +67,10 @@ export const Podium = ({
                 const isChampion = entry.rank === 1
                 return (
                     <div key={entry.rank} className="flex flex-col items-center gap-2">
+                        {/* rank movement above the avatar — only when it actually moved */}
+                        {entry.rankDelta ? (
+                            <RankDeltaCaret delta={entry.rankDelta} />
+                        ) : null}
                         <UserAvatar
                             // the viewer's own avatar is ringed (accent-system §3 "của tôi"
                             // = ring + value accent, NOT a filled step)

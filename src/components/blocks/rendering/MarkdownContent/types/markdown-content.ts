@@ -29,4 +29,13 @@ export interface MarkdownRenderersParams {
      * 2026-07-17: "render thô"). Cloze `{{cN::}}` is untouched (handled upstream).
      */
     plain?: boolean
+    /**
+     * Render fenced code blocks as RAISED cards (`bg-surface` + shadow) instead
+     * of the default recessed wells (`bg-background`). Opt-in for surfaces that
+     * render markdown directly on the page CANVAS (e.g. the Playground left pane),
+     * where a `bg-background` code well would blend canvas-on-canvas. Forwarded to
+     * {@link CodeToHtml}'s `elevated` prop. Defaults off (lesson/card content keeps
+     * the recessed well that reads correctly on a surface).
+     */
+    codeElevated?: boolean
 }

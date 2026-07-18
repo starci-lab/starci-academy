@@ -23,12 +23,13 @@
 - **ContinueCard** ✎ — canon: `components/card.md` · concepts: leading icon qua prop (block tự màu) · resume/continue
 - **CrossListCard** — canon: `components/card.md` · concepts: mirror âm của CheckListCard (XCircle muted = luật-riêng-block)
 - **GroupPressableCard** — canon: `components/card.md` · `principles/hover-style-matches-clickable-nature` · concepts: nhóm card bấm được
+- **HighlightCard** ✎ — canon: `components/card.md §3j` · concepts: 1 vệt sáng accent QUÉT quanh card (card trong = lớp hiệu ứng, card ngoài nhỏ hơn 2px bán kính chồng lên) · thuần trang trí "nổi bật", KHÔNG mang data-signal (khác `withVerdict` §3i) · chỉ 1 card/surface
 - **LabeledCard** ✎ — canon: `components/card.md §2` · concepts: label NGOÀI + Card trong · `frameless`/`flushContent`/`subtleLabel` · surface-in-surface = Card thật
 - **MediaCard** — canon: `components/card.md` · `components/image.md` · concepts: card có cover
 - **NestedCard** — canon: `components/card.md` · concepts: card lồng (bordered khi nested)
 - **PressableCard** ✎ — canon: `components/card.md` · `principles/hover-style-matches-clickable-nature` (mode 4 hoverVariant fill/lift) · concepts: shadow-surface cả 2 variant lúc nghỉ
 - **SectionCard** — canon: `components/card.md` · concepts: card 1 section
-- **SurfaceListCard** ✎ — canon: `components/card.md §3b/§3c` · `components/icon.md §6 (state-marker palette) · §7 (cấm 2 icon leading)` · `principles/hover-style-matches-clickable-nature` · `principles/whitespace-over-dividers` · concepts: surface-list · **state-marker todo/done/fail** (story `StateMarkers`) · surface-in-surface (bordered) · row full-bleed divider · leading+title+subtitle+meta · `titleClassName` bị lint cấm → tô title bằng span-node
+- **SurfaceListCard** ✎ — canon: `components/card.md §3b/§3c` · `components/icon.md §6 (state-marker palette) · §7 (cấm 2 icon leading)` · `principles/hover-style-matches-clickable-nature` · `principles/whitespace-over-dividers` · concepts: surface-list · **state-marker todo/done/fail** (story `StateMarkers`) · surface-in-surface (bordered) · row full-bleed divider · leading+title+subtitle+meta · `titleClassName` bị lint cấm → tô title bằng span-node · **nút/CTA NGOÀI list-card** (card = list only qua `LabeledCard frameless`; CTA `mt-3 self-start`, caption `text-xs muted mt-2` — card.md §3c 2026-07-18)
 
 ## chips
 - **AiCategoryChip** — canon: `components/chip.md` · concepts: chip phân loại AI

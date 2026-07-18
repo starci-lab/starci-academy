@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Playground Guided Path — lộ trình từng-bước chung (.mount) cho Docker · K8s · RAG</title>
+<style>
+  :root{--bg:#f4f4f6;--fg:#1a1a1e;--mut:#6b6b76;--line:#e2e2e8;--card:#fff;--acc:#c0407a;
+        --ok:#2f8f57;--okbg:#e3f4ea;--warn:#b0721f;--warnbg:#f7ecda;--code:#1e1e1e;--codefg:#d4d4d4;--radius:14px}
+  @media (prefers-color-scheme:dark){:root{--bg:#161619;--fg:#eaeaef;--mut:#9a9aa6;--line:#2a2a30;--card:#1d1d21;--okbg:#16281d;--warnbg:#2a2013}}
+  :root[data-theme="light"]{--bg:#f4f4f6;--fg:#1a1a1e;--card:#fff}
+  :root[data-theme="dark"]{--bg:#161619;--fg:#eaeaef;--card:#1d1d21}
+  *{box-sizing:border-box}
+  body{margin:0;font:14px/1.5 ui-sans-serif,system-ui,-apple-system,sans-serif;color:var(--fg);background:var(--bg)}
+  .top{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+  .top b{font-size:15px}.top .sub{color:var(--mut);font-size:12px}
+  .grp{border:1px solid var(--line);border-radius:9px;overflow:hidden;display:flex;flex-wrap:wrap}
+  .grp button{border:0;background:var(--card);padding:6px 11px;cursor:pointer;font:inherit;font-size:12px;color:var(--mut);white-space:nowrap}
+  .grp button.on{background:var(--acc);color:#fff}
+  .grp .lbl{padding:6px 8px;font-size:10px;color:var(--mut);background:var(--bg);border-right:1px solid var(--line);font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+  .toolbar{margin-left:auto;display:flex;flex-wrap:wrap;gap:8px}
+
+  .legendbar{max-width:1000px;margin:12px auto 0;padding:0 16px;display:flex;flex-wrap:wrap;gap:14px;font-size:11.5px;color:var(--mut)}
+  .legendbar b{color:var(--fg)}
+  .kindtag{font:9px ui-monospace,monospace;font-weight:700;padding:0 5px;border-radius:5px}
+  .kindtag.term{color:#2f6bd4;background:#2f6bd41f}.kindtag.rag{color:var(--acc);background:color-mix(in oklab,var(--acc) 13%,transparent)}
+  .newx{font:9px ui-monospace,monospace;color:var(--ok);background:var(--okbg);border-radius:4px;padding:0 4px;font-weight:700}
+
+  .stagewrap{padding:16px;display:flex;justify-content:center}
+  .stage{width:100%;max-width:1040px}
+
+  /* work-surface: header band + 2-pane */
+  .surface{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+  .wshead{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line);font-size:13px}
+  .wshead b{color:var(--fg)}.wshead .sp{margin-left:auto;color:var(--mut);font-size:12px}
+  .prog{height:3px;background:var(--line)}.prog>i{display:block;height:100%;background:var(--acc)}
+  .work{display:grid;grid-template-columns:1fr 1fr;min-height:430px}
+  .stage.mob .work{grid-template-columns:1fr}
+  .pane{padding:16px;min-width:0}
+  .pane.left{border-right:1px solid var(--line)}
+  .stage.mob .pane.left{border-right:0;border-bottom:1px solid var(--line)}
+
+  .steptitle{font-size:17px;font-weight:700;margin:0}
+  .stepbody{color:var(--mut);font-size:13.5px;margin:8px 0 0}
+  .hintbox{margin-top:14px}
+  .hintlabel{font-size:10px;font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.03em;margin-bottom:5px;display:flex;gap:6px;align-items:center}
+  .cmd{background:var(--code);color:var(--codefg);font:12.5px ui-monospace,Menlo,monospace;padding:11px 13px;border-radius:9px;overflow-x:auto;white-space:pre}
+  .action{background:var(--bg);border:1px dashed var(--line);border-radius:9px;padding:11px 13px;font-size:13px}
+  .action b{color:var(--acc)}
+  .modetog{display:flex;gap:6px;margin-top:14px}
+  .modetog button{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:5px 11px;font:inherit;font-size:12px;cursor:pointer;color:var(--mut)}
+  .modetog button.on{border-color:var(--acc);color:var(--acc);font-weight:700;background:color-mix(in oklab,var(--acc) 6%,transparent)}
+  .verify{margin-top:14px;font-size:11.5px;color:var(--mut);border-top:1px dashed var(--line);padding-top:10px}
+  .verify code{background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:0 4px;font-size:10.5px}
+  .btn{border:0;border-radius:10px;padding:9px 15px;font:inherit;font-weight:700;cursor:pointer;background:var(--acc);color:#fff;font-size:13px;display:inline-flex;gap:6px;align-items:center;margin-top:14px}
+
+  /* right pane widgets by KIND */
+  .rpanehd{font-size:11px;font-weight:800;color:var(--mut);text-transform:uppercase;letter-spacing:.03em;margin-bottom:8px;display:flex;gap:8px;align-items:center}
+  .terminal{background:var(--code);color:var(--codefg);border-radius:9px;font:12px ui-monospace,monospace;padding:12px;min-height:150px}
+  .terminal .prompt{color:#6a9955}
+  .reslist{margin-top:12px;display:flex;flex-direction:column;gap:6px}
+  .resrow{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:12px}
+  .rchip{margin-left:auto;font-size:10px;font-weight:700;padding:1px 7px;border-radius:20px;background:var(--okbg);color:var(--ok)}
+  /* rag 2-pane widget */
+  .ragimport{display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap}
+  .ragimport button{border:1px solid var(--line);background:var(--card);border-radius:7px;padding:4px 9px;font:inherit;font-size:11px;cursor:pointer;color:var(--mut)}
+  .ragimport button.on{border-color:var(--acc);color:var(--acc);font-weight:700}
+  .ragcode{background:var(--code);color:var(--codefg);font:11px ui-monospace,monospace;padding:10px;border-radius:8px;min-height:90px}
+  .ragchat{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+  .bubble{border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-size:12.5px}
+  .bubble.q{background:var(--bg)}
+  .cite{font-size:10.5px;color:var(--acc);margin-top:5px;display:inline-block}
+
+  .empty{text-align:center;color:var(--mut);padding:40px 12px;font-size:12.5px}
+
+  /* .mount schema panel */
+  .schema{max-width:1040px;margin:14px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .stage.mob ~ .schema, .schema.mob{grid-template-columns:1fr}
+  .scard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .scard h4{margin:0 0 8px;font-size:12px}
+  .scard pre{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;font:11px ui-monospace,monospace;overflow-x:auto;white-space:pre;color:var(--fg);margin:0}
+  .scard .cmt{color:var(--mut)}
+  .scard .add{color:var(--ok);font-weight:700}
+  .refs{max-width:1040px;margin:12px auto 0;font-size:11.5px;color:var(--mut)}
+  .refs b{color:var(--fg)}
+  .nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);padding:8px 16px;text-align:center;font-size:11px;color:var(--mut)}
+</style>
+</head>
+<body>
+<div class="top">
+  <b>Playground Guided Path</b><span class="sub">lộ trình từng-bước chung · nội dung ở .mount</span>
+  <div class="toolbar">
+    <div class="grp"><span class="lbl">Playground</span>
+      <button id="pDocker" class="on" onclick="setP('docker')">🐳 Docker</button>
+      <button id="pK8s" onclick="setP('k8s')">☸️ Kubernetes</button>
+      <button id="pRag" onclick="setP('rag')">✨ RAG</button>
+    </div>
+    <div class="grp"><span class="lbl">Máy</span>
+      <button id="dDesk" class="on" onclick="setD('desk')">Desktop</button>
+      <button id="dMob" onclick="setD('mob')">Mobile</button>
+    </div>
+  </div>
+</div>
+
+<div class="legendbar">
+  <span><b>1 shell chung</b> — <code>kind</code> ở meta quyết pane phải + verify:</span>
+  <span><span class="kindtag term">kind: terminal</span> Docker/K8s (đã có)</span>
+  <span><span class="kindtag rag">kind: rag</span> RAG (mới — thành path có bước)</span>
+  <span><span class="newx">+ field mới ở .mount</span></span>
+</div>
+
+<div class="stagewrap"><div class="stage" id="stage">
+  <div class="surface">
+    <div class="wshead">
+      <span>← Thoát</span>
+      <b id="wsTitle">Chạy container đầu tiên</b>
+      <span class="sp" id="wsStep">Bước 1/5</span>
+    </div>
+    <div class="prog"><i id="progBar" style="width:20%"></i></div>
+    <div class="work">
+      <!-- LEFT: step (chung mọi kind) -->
+      <div class="pane left">
+        <h2 class="steptitle" id="stTitle">Chạy container đầu tiên</h2>
+        <p class="stepbody" id="stBody">Khởi động một container Nginx nền (detached) với tên starci-demo.</p>
+        <div class="hintbox" id="hintBox"></div>
+        <div class="modetog">
+          <button id="mGuided" class="on" onclick="setMode('guided')">Có hướng dẫn</button>
+          <button id="mFree" onclick="setMode('free')">Tự làm</button>
+        </div>
+        <div class="verify" id="verifyBox"></div>
+        <button class="btn">Kết nối máy thật →</button>
+      </div>
+      <!-- RIGHT: widget theo kind -->
+      <div class="pane" id="rightPane"></div>
+    </div>
+  </div>
+</div></div>
+
+<div class="schema" id="schema">
+  <div class="scard">
+    <h4>📄 .mount meta — <code>playgrounds/&lt;slug&gt;/{vi,en}.md</code></h4>
+    <pre># slug        <span class="cmt"># docker | kubernetes | rag</span>
+# title       <span class="cmt"># Docker</span>
+# description
+# icon        <span class="cmt"># 🐳</span>
+# sortIndex
+<span class="add"># kind        # terminal | rag   ← MỚI: chọn pane phải + họ verify</span></pre>
+  </div>
+  <div class="scard">
+    <h4>📄 .mount step — <code>steps/&lt;N&gt;-&lt;slug&gt;/{vi,en}.md</code></h4>
+    <pre># title       <span class="cmt"># chung mọi kind</span>
+# body        <span class="cmt"># mục tiêu bước, chung</span>
+
+<span class="cmt"># — HINT (đa hình theo kind) —</span>
+# commandHint <span class="cmt"># terminal: lệnh gợi ý (đã có)</span>
+<span class="add"># actionHint  # rag: "Dán code mẫu bên trái" (MỚI)</span>
+<span class="add"># sampleRef   # rag: id mẫu code prefill (MỚI, optional)</span>
+<span class="add"># askPrefill  # rag: câu hỏi gợi sẵn (MỚI, optional)</span>
+
+<span class="cmt"># — VERIFY (đa hình theo kind) —</span>
+# verifyResourceKind/NamePattern/ExpectedStatus  <span class="cmt"># terminal (đã có)</span>
+<span class="add"># verifyKind  # rag: imported | asked | answered (MỚI)</span></pre>
+  </div>
+</div>
+
+<div class="refs">
+  <b>Nguồn:</b> <code>.mount/data/courses/2-devops-mastery/playgrounds/{0-docker,1-kubernetes}</code> (step-path đã có: title/body/commandHint/verifyResource*) · BE <code>parsers/types/playground.ts</code> · entity <code>playground/playground-step/playground-session</code> (terminal) vs <code>ai-lab-playground/rag-playground-session</code> (RAG riêng) · FE <code>Playground/PlaygroundSession</code> (guided/free + Terminal + Resources) vs <code>rag-playground/RagPlayground</code> (2-pane import→ask→cite). KHÔNG web.
+</div>
+
+<div class="nav">Toggle Playground (Docker/K8s/RAG) — CÙNG 1 shell step-path, pane phải + hint + verify đổi theo <code>kind</code>. Bảng dưới = schema .mount (🟩 field mới).</div>
+
+<script>
+  var pg='docker', mode='guided', dev='desk';
+  var DATA = {
+    docker: { kind:'terminal', title:'Docker', total:5, cur:1,
+      stTitle:'Chạy container đầu tiên',
+      stBody:'Khởi động một container Nginx nền (detached) với tên starci-demo.',
+      command:'docker run -d --name starci-demo nginx',
+      verify:'Verify: resource <code>Container</code> tên <code>starci-demo</code> · trạng thái <code>Running</code>' },
+    k8s: { kind:'terminal', title:'Kubernetes', total:5, cur:1,
+      stTitle:'Dựng cluster kind',
+      stBody:'Tạo một cluster Kubernetes cục bộ bằng kind.',
+      command:'kind create cluster --name starci-demo',
+      verify:'Verify: resource <code>Cluster</code> tên <code>starci-demo</code> · trạng thái <code>Ready</code>' },
+    rag: { kind:'rag', title:'RAG', total:4, cur:1,
+      stTitle:'Nạp code mẫu vào RAG',
+      stBody:'Đưa một đoạn code vào — nó sẽ được chia nhỏ + nhúng vector vào Qdrant tạm.',
+      action:'Bấm tab <b>Dùng mẫu</b> bên phải → chọn mẫu → <b>Nạp</b>. (guided prefill sẵn mẫu đầu tiên)',
+      verify:'Verify: <code>verifyKind: imported</code> — 1 nguồn đã index xong' }
+  };
+
+  function rightTerminal(d){
+    return '<div class="rpanehd">⌨ Terminal <span class="kindtag term" style="margin-left:auto">kind: terminal</span></div>'+
+      (mode==='guided'
+        ? '<div class="terminal"><span class="prompt">$</span> '+d.command+'\\n<span style="color:#888">(chưa chạy — kết nối máy để thực thi)</span></div>'+
+          '<div class="reslist"><div class="rpanehd" style="margin-top:2px">Tài nguyên (0)</div><div class="resrow" style="opacity:.5">Chạy lệnh để tài nguyên hiện ở đây <span class="rchip" style="background:var(--line);color:var(--mut)">chờ</span></div></div>'
+        : '<div class="terminal"><span class="prompt">$</span> <span style="color:#888">_ (tự gõ — không hiện lệnh gợi ý)</span></div>');
+  }
+  function rightRag(d){
+    return '<div class="rpanehd">✨ RAG 2-pane <span class="kindtag rag" style="margin-left:auto">kind: rag</span></div>'+
+      '<div class="ragimport"><button>Dán code</button><button>Tải file</button><button class="on">Dùng mẫu'+(mode==='guided'?' ◄ prefill':'')+'</button><button>Repo GitHub</button></div>'+
+      '<div class="ragcode">// '+(mode==='guided'?'mẫu: express-server.js (nạp sẵn)':'nguồn bạn tự chọn')+'\\napp.get("/health", (req,res) =&gt; res.send("ok"))</div>'+
+      '<div class="ragchat"><div class="bubble q">Endpoint /health làm gì?</div>'+
+      '<div class="bubble">Trả về "ok" cho health-check.<span class="cite">▸ trích: express-server.js:2</span></div></div>';
+  }
+
+  function render(){
+    var d = DATA[pg];
+    document.getElementById('pDocker').classList.toggle('on',pg==='docker');
+    document.getElementById('pK8s').classList.toggle('on',pg==='k8s');
+    document.getElementById('pRag').classList.toggle('on',pg==='rag');
+    document.getElementById('wsTitle').textContent = d.stTitle;
+    document.getElementById('stTitle').textContent = d.stTitle;
+    document.getElementById('stBody').textContent = d.stBody;
+    document.getElementById('wsStep').textContent = 'Bước '+d.cur+'/'+d.total;
+    document.getElementById('progBar').style.width = Math.round(d.cur/d.total*100)+'%';
+    // hint (đa hình + ẩn ở free mode)
+    var hb = document.getElementById('hintBox');
+    if(mode==='free'){ hb.innerHTML = '<div class="hintlabel">tự làm</div><div class="action" style="border-style:solid;color:var(--mut)">Chỉ có mục tiêu — bạn tự nghĩ cách. (hint redact server-side)</div>'; }
+    else if(d.kind==='terminal'){ hb.innerHTML = '<div class="hintlabel">lệnh gợi ý <span class="kindtag term">commandHint</span></div><div class="cmd">'+d.command+'</div>'; }
+    else { hb.innerHTML = '<div class="hintlabel">hành động gợi ý <span class="kindtag rag">actionHint</span></div><div class="action">'+d.action+'</div>'; }
+    document.getElementById('verifyBox').innerHTML = d.verify;
+    document.getElementById('rightPane').innerHTML = d.kind==='terminal' ? rightTerminal(d) : rightRag(d);
+  }
+  function setP(p){pg=p;render()}
+  function setMode(m){mode=m;document.getElementById('mGuided').classList.toggle('on',m==='guided');document.getElementById('mFree').classList.toggle('on',m==='free');render()}
+  function setD(x){dev=x;document.getElementById('stage').className='stage'+(x==='mob'?' mob':'');document.getElementById('schema').className='schema'+(x==='mob'?' mob':'');document.getElementById('dDesk').classList.toggle('on',x==='desk');document.getElementById('dMob').classList.toggle('on',x==='mob')}
+  render();
+</script>
+</body>
+</html>

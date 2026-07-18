@@ -27,6 +27,68 @@
 @source not ".legacy/**/*.md";
 @source not ".uxuirefs/**/*.md";
 
+/* Safelist for `SectionCard`/`SurfaceListCard`'s `withVerdict.color` escape hatch
+ * (raw Tailwind palette color, e.g. "amber-500" — NOT one of the semantic `variant`
+ * tokens). The class is built at runtime (`before:bg-${color}` for the inset pill band —
+ * see `verdictBandClassName`), so it never appears as a literal string anywhere in source
+ * — Tailwind's static scanner can't see it and would silently drop the utility. This
+ * inline safelist pre-generates the full color × shade grid so the dynamic class always
+ * exists in the compiled CSS. (No `!important` form needed any more: the pill is a
+ * `::before` BACKGROUND, which HeroUI's `.card` border reset never touches — unlike the
+ * old `border-l` band that had to fight that reset with a trailing `!`.) */
+@source inline("before:bg-{red,orange,amber,yellow,lime,green,emerald,teal,cyan,sky,blue,indigo,violet,purple,fuchsia,pink,rose,slate,gray,zinc,neutral,stone}-{50,100,200,300,400,500,600,700,800,900,950}");
+
+/* `blocks/cards/HighlightCard` — a single accent-colored ARC sweeping around the
+ * wrapped card, sitting as its own INNER layer BEHIND it (a thin 2px sliver peeking out
+ * past the edges — no blur/shadow, crisp — `card.md` §3j — thuần trang trí "nổi bật",
+ * KHÁC `withVerdict` §3i là data-signal). 2 stacked cards: this `<div>` (the INNER
+ * "border" layer, bigger) placed BEFORE the wrapped card (OUTER, in front, 2px smaller
+ * in radius) in the DOM, both inside a `relative` wrapper — no z-index needed at all:
+ * `.card` is already `position: relative` (HeroUI base), so both count as "positioned,
+ * z-index:auto" elements at the SAME stacking level, and same-level positioned siblings
+ * paint in DOM order — inner sweep first (behind), outer card second (in front, its own
+ * opaque `bg-surface` covers the overlapping middle, leaving only the thin ring
+ * visible). The gradient itself is mostly `transparent` with ONE short accent arc (~10%
+ * of the circle, soft-edged) — thầy 2026-07-17, referencing a "shiny border button"
+ * reference video: "một đường quét màu accent thôi", NOT a full multi-stop rainbow ring
+ * (the earlier 3-stop version). This also means it never touches the `border` property,
+ * so it doesn't collide with HeroUI's `.card { border: none !important }` reset either. */
+@property --highlight-card-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+@keyframes highlight-card-spin {
+    to {
+        --highlight-card-angle: 360deg;
+    }
+}
+.highlight-card-sweep {
+    position: absolute;
+    inset: -2px;
+    /* `inherit` would pull from this div's own PARENT (the plain `relative` wrapper in
+     * `HighlightCard`, which has no radius of its own — 0 by default), NOT from the
+     * wrapped `<Card>` (a DOM SIBLING, not an ancestor of this element, so CSS
+     * inheritance can't reach it at all) — that mismatch is exactly the squared-off
+     * corners thầy caught live in the app. Hardcode the SAME formula `.card` itself
+     * uses (`@heroui/styles/dist/components/card.css`) so the 2 stacked layers always
+     * match, however Card's own radius token changes later. */
+    border-radius: min(32px, var(--radius-3xl));
+    background: conic-gradient(
+        from var(--highlight-card-angle),
+        transparent 0%,
+        transparent 82%,
+        var(--accent) 92%,
+        transparent 100%
+    );
+    animation: highlight-card-spin 3s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+    .highlight-card-sweep {
+        animation: none;
+    }
+}
+
 /*
  * Kill the "giật giật" jitter on learn pages: their left rail is exactly
  * `calc(100dvh - 4rem)` tall, so the document lands right ON the viewport height

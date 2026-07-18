@@ -173,7 +173,7 @@ export const CourseModuleNode = (props: NodeProps<CourseModuleFlowNode>) => {
     return (
         <div
             className={cn(
-                "relative flex min-h-[100px] min-w-[300px] w-[300px] flex-col items-stretch rounded-3xl px-4 py-3 text-center",
+                "relative flex min-h-[100px] min-w-[300px] w-[300px] flex-col items-stretch rounded-2xl px-4 py-3 text-center",
                 "border shadow-sm transition-all duration-200 dark:shadow-lg dark:shadow-black/30",
                 STATUS_TINT[data.status],
                 // one accent ring scale (no per-state opacity zoo): hover = light ring,

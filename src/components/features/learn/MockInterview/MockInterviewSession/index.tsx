@@ -175,6 +175,16 @@ const QUESTION_COUNT_OPTIONS: ReadonlyArray<"3" | "5" | "10"> = ["3", "5", "10"]
 const KIND_OPTIONS: ReadonlyArray<MockInterviewKind> = ["theory", "reasoning", "scenario"]
 
 /**
+ * Pseudo-value for the kind picker's "Tất cả" button — pressed when NO kind filter is set
+ * (`selectedKinds` empty). Lets the whole row be ONE canonical {@link FlexWrapButtonRadio}
+ * (multi) like the Ngôn ngữ picker, instead of a hand-rolled pill sitting beside the group.
+ */
+const KIND_ALL = "all" as const
+
+/** Kind-picker value: a real kind, or the {@link KIND_ALL} "no filter" pseudo-value. */
+type KindPickerValue = MockInterviewKind | typeof KIND_ALL
+
+/**
  * How the candidate answers each question — FE-only (the backend never sees
  * this): "voice" shows only the mic control, "text" only the typing box,
  * "both" (default) shows both, mirroring the mic-icon-inside-the-textfield
@@ -1609,7 +1619,15 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                     </div>
 
                                     {configMode === "configurable" ? (
-                                        <>
+                                        // Knobs that exist ONLY in "Tùy chỉnh" — grouped into their OWN card so they
+                                        // read as one block that appears WITH the mode, not loose fields mixed in with
+                                        // the always-on ones (Mức / Ngôn ngữ / Model).
+                                        // SURFACE-IN-SURFACE = BORDER, not shadow: this sits inside the config
+                                        // LabeledCard, where the global card skin (elevation) would be invisible. A
+                                        // HeroUI <Card> can't carry a border (globals force `.card{border:none
+                                        // !important}`), so this is a div + utilities — the same treatment
+                                        // SurfaceListCard/CheckListCard/NestedCard use for `bordered` (card.md §Gotcha).
+                                        <div className="flex flex-col gap-3 rounded-3xl border border-default bg-transparent p-3">
                                             <div className="flex flex-col gap-2">
                                                 <Label>{t("mockInterview.questionCountLabel")}</Label>
                                                 <FlexWrapButtonRadio
@@ -1625,42 +1643,29 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
 
                                             <div className="flex flex-col gap-2">
                                                 <Label>{t("mockInterview.kindPickerLabel")}</Label>
-                                                <div role="group" aria-label={t("mockInterview.kindPickerLabel")} className="flex flex-wrap items-center gap-2">
-                                                    <button
-                                                        type="button"
-                                                        aria-pressed={selectedKinds.length === 0}
-                                                        onClick={() => setSelectedKinds([])}
-                                                        className={cn(
-                                                            "cursor-pointer rounded-full border px-3 py-2 text-sm font-medium transition-colors",
-                                                            selectedKinds.length === 0
-                                                                ? "border-accent bg-accent-soft text-foreground"
-                                                                : "border-default bg-surface text-muted shadow-surface hover:bg-default",
-                                                        )}
-                                                    >
-                                                        {t("mockInterview.kindAll")}
-                                                    </button>
-                                                    {KIND_OPTIONS.map((kind) => {
-                                                        const isSelected = selectedKinds.includes(kind)
-                                                        return (
-                                                            <button
-                                                                key={kind}
-                                                                type="button"
-                                                                aria-pressed={isSelected}
-                                                                onClick={() => setSelectedKinds((previous) => (isSelected
-                                                                    ? previous.filter((value) => value !== kind)
-                                                                    : [...previous, kind]))}
-                                                                className={cn(
-                                                                    "cursor-pointer rounded-full border px-3 py-2 text-sm font-medium transition-colors",
-                                                                    isSelected
-                                                                        ? "border-accent bg-accent-soft text-foreground"
-                                                                        : "border-default bg-surface text-muted shadow-surface hover:bg-default",
-                                                                )}
-                                                            >
-                                                                {t(`mockInterview.kind.${kind}`)}
-                                                            </button>
-                                                        )
-                                                    })}
-                                                </div>
+                                                {/* same canonical control as its siblings (Số câu / Cách trả lời / Ngôn ngữ) —
+                                            multi-select, with "Tất cả" as the KIND_ALL pseudo-value meaning "no filter". */}
+                                                <FlexWrapButtonRadio<KindPickerValue>
+                                                    multiple
+                                                    ariaLabel={t("mockInterview.kindPickerLabel")}
+                                                    values={selectedKinds.length === 0 ? [KIND_ALL] : selectedKinds}
+                                                    onToggle={(value) => {
+                                                        if (value === KIND_ALL) {
+                                                            setSelectedKinds([])
+                                                            return
+                                                        }
+                                                        setSelectedKinds((previous) => (previous.includes(value)
+                                                            ? previous.filter((entry) => entry !== value)
+                                                            : [...previous, value]))
+                                                    }}
+                                                    items={[
+                                                        { value: KIND_ALL, content: t("mockInterview.kindAll") },
+                                                        ...KIND_OPTIONS.map((kind) => ({
+                                                            value: kind,
+                                                            content: t(`mockInterview.kind.${kind}`),
+                                                        })),
+                                                    ]}
+                                                />
                                             </div>
 
                                             <div className="flex flex-col gap-2">
@@ -1675,7 +1680,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                                                     }))}
                                                 />
                                             </div>
-                                        </>
+                                        </div>
                                     ) : null}
 
                                     <div className="flex flex-col gap-2">

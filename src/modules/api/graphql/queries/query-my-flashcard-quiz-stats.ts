@@ -11,38 +11,14 @@ const query1 = gql`
       error
       data {
         insufficientData
-        trend {
-          completedAt
-          coverage
-          xpEarned
-        }
         byTag {
           tag
           coverage
         }
-        byDeck {
-          deckId
-          deckTitle
-          sessionCount
-          cardsAnswered
-          totalCards
+        conceptCoverage {
+          covered
+          total
         }
-        weakTagLinks {
-          tag
-          coverage
-          moduleId
-          contentId
-        }
-        hardCards {
-          cardId
-          question
-          attempts
-          wrongCount
-          coverage
-          deckId
-          deckTitle
-        }
-        completedSessionCount
       }
     }
   }

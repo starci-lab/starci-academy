@@ -44,7 +44,7 @@ const TONE_CLASS: Record<IORowTone, string> = {
  */
 export const IOExampleCard = ({ rows, className }: IOExampleCardProps) => {
     return (
-        <div className={cn("overflow-hidden rounded-2xl border border-default bg-surface", className)}>
+        <div className={cn("overflow-hidden rounded-3xl border border-default bg-surface", className)}>
             {rows.map((row, index) => (
                 <div
                     key={row.key}

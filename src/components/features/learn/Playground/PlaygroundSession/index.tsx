@@ -5,17 +5,14 @@ import { useLocale, useTranslations } from "next-intl"
 import { useParams, useRouter } from "next/navigation"
 import {
     Button,
-    Card,
-    CardContent,
     Chip,
     ScrollShadow,
+    Tabs,
     Typography,
-    cn,
 } from "@heroui/react"
 import {
     ArrowLeftIcon,
     ArrowRightIcon,
-    CopyIcon,
     CubeIcon,
     LinkSimpleIcon,
     NetworkIcon,
@@ -24,10 +21,13 @@ import {
     TerminalWindowIcon,
 } from "@phosphor-icons/react"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
-import { TabsCard } from "@/components/blocks/navigation/TabsCard"
-import { SelectableCardGroup } from "@/components/blocks/navigation/SelectableCardGroup"
+import { ExtendedTabs } from "@/components/blocks/navigation/ExtendedTabs"
+import { ConnectSheet } from "@/components/blocks/layout/ConnectSheet"
 import { ErrorContent } from "@/components/blocks/async/ErrorContent"
 import { EmptyContent } from "@/components/blocks/async/EmptyContent"
+import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { StatusChip } from "@/components/blocks/chips/StatusChip"
+import { Callout } from "@/components/blocks/feedback/Callout"
 import { ListRow } from "@/components/blocks/lists/ListRow"
 import { IconTile } from "@/components/blocks/identity/IconTile"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
@@ -83,11 +83,13 @@ const resourceStatusColor = (status: string): "success" | "default" => {
 
 /**
  * Playground session — the full-bleed 2-pane hands-on work surface for one
- * course-scoped Docker/K8s exercise. LEFT: the current step's guide + a
- * "connect agent" pairing code + a verify button. RIGHT: `TabsCard` with a
- * raw Terminal log and a live Resources list (Pod/Container/Network/Service),
- * fed by the learner's local CLI agent relayed over the `/playground_byom`
- * socket. Modeled on `PracticeProblem`'s full-bleed 2-pane archetype.
+ * course-scoped Docker/K8s exercise. LEFT: the current step's guide + a single
+ * "connect your machine" flow (install command → waiting → connected) with a
+ * live latency readout + a reconnect/switch-machine option. RIGHT: the
+ * workspace — an {@link EmptyState} placeholder until the machine pairs, then a
+ * Terminal / Resources tab strip fed by the learner's local CLI agent relayed
+ * over the `/playground_byom` socket. Modeled on `PracticeProblem`'s full-bleed
+ * 2-pane archetype.
  */
 export const PlaygroundSession = () => {
     const t = useTranslations()
@@ -102,12 +104,15 @@ export const PlaygroundSession = () => {
 
     const [sessionId, setSessionId] = useState<string | null>(null)
     const [pairingCode, setPairingCode] = useState<string | null>(null)
-    // Chosen guidance level, picked BEFORE the session is created — Guided shows
-    // full command hints, Free redacts them server-side (learner types commands).
-    const [mode, setMode] = useState<PlaygroundSessionMode>(PlaygroundSessionMode.Guided)
-    const [copied, setCopied] = useState(false)
     const [currentStepIndex, setCurrentStepIndex] = useState(0)
     const [workspaceTab, setWorkspaceTab] = useState<WorkspaceTab>("terminal")
+    // Latches once the agent has EVER paired this session, so a later drop shows
+    // "reconnect" framing (progress kept) instead of first-time "waiting" copy.
+    const [everConnected, setEverConnected] = useState(false)
+    // Whether the docked ConnectSheet is expanded. CONTROLLED so it auto-snaps per
+    // phase (expanded while the learner must act, collapsed once connected); the
+    // user can still drag/tap the sheet to override until the next phase change.
+    const [sheetOpen, setSheetOpen] = useState(false)
 
     const { state: byomState, subscribe, sendCommand } = usePlaygroundByomSocketIo()
 
@@ -117,6 +122,20 @@ export const PlaygroundSession = () => {
     // self-contained RAG import→ask→cite widget, and walk steps MANUALLY
     // (no agent to server-verify each step) — see the kind-branch below.
     const isRag = playground?.kind === "rag"
+
+    const pairCommand = pairingCode ? `npx @starciacademy/playground-agent ${pairingCode}` : ""
+
+    // Render any shell command through MarkdownContent's code fence (one canonical
+    // style: mono + slim lang header + copy). `elevated` picks the surface
+    // treatment by CONTAINER: raised card ON the canvas (left pane, bg-background),
+    // recessed well ON a surface (the ConnectSheet body, bg-surface) — an elevated
+    // bg-surface card on the bg-surface sheet would be surface-in-surface (axis-1 §16).
+    const renderCommand = useCallback(
+        (command: string, elevated: boolean) => (
+            <MarkdownContent markdown={`\`\`\`bash\n${command}\n\`\`\``} codeElevated={elevated} />
+        ),
+        [],
+    )
 
     const onPrevStep = useCallback(() => {
         setCurrentStepIndex((prev) => Math.max(0, prev - 1))
@@ -133,30 +152,38 @@ export const PlaygroundSession = () => {
         if (!playground || createSessionMutation.isMutating) {
             return
         }
-        const response = await createSessionMutation.trigger({ playgroundId: playground.id, mode })
+        // guidance level is always Guided now — the lab walks every step, so there
+        // is no mode choice up front (the connect button goes straight to waiting).
+        const response = await createSessionMutation.trigger({
+            playgroundId: playground.id,
+            mode: PlaygroundSessionMode.Guided,
+        })
         const data = response.data?.createPlaygroundSession.data
         if (data) {
             setSessionId(data.id)
             setPairingCode(data.pairingCode)
             subscribe(data.id)
         }
-    }, [playground, createSessionMutation, subscribe, mode])
+    }, [playground, createSessionMutation, subscribe])
 
-    const onCopyPairingCode = useCallback(() => {
-        if (!pairingCode) {
-            return
-        }
-        void navigator.clipboard.writeText(`npx @starci/playground-agent ${pairingCode}`)
-        setCopied(true)
-    }, [pairingCode])
-
+    // latch "has ever connected" so a later drop re-frames the install-card as a
+    // reconnect (progress kept) rather than a first-time pairing.
     useEffect(() => {
-        if (!copied) {
+        if (byomState.connected) {
+            setEverConnected(true)
+        }
+    }, [byomState.connected])
+
+    // auto-snap the ConnectSheet per phase: EXPAND while the learner must act
+    // (session created but the machine hasn't paired — waiting / just dropped),
+    // COLLAPSE in setup (no session yet) and once connected (workspace is the
+    // focus). The user can drag/tap to override until the next phase change.
+    useEffect(() => {
+        if (isRag) {
             return
         }
-        const handle = setTimeout(() => setCopied(false), 2000)
-        return () => clearTimeout(handle)
-    }, [copied])
+        setSheetOpen(Boolean(sessionId) && !byomState.connected)
+    }, [isRag, sessionId, byomState.connected])
 
     // advance to the step the agent just verified (server-driven, not a local guess)
     useEffect(() => {
@@ -173,18 +200,82 @@ export const PlaygroundSession = () => {
         sendCommand(currentStep.commandHint)
     }, [currentStep, sessionId, sendCommand])
 
-    const WORKSPACE_TABS = [
-        {
-            key: "terminal",
-            label: t("playground.session.tabs.terminal"),
-            icon: <TerminalWindowIcon aria-hidden focusable="false" className="size-4" />,
-        },
-        {
-            key: "resources",
-            label: t("playground.session.tabs.resources", { count: byomState.resources.length }),
-            icon: <CubeIcon aria-hidden focusable="false" className="size-4" />,
-        },
-    ]
+    // The install / reconnect card — the pairing command plus its guidance. Shown
+    // while waiting for the first pair AND (on demand) when the learner wants to
+    // reconnect or switch machines mid-session.
+    const installCard = (
+        // gap-6 above the command (Callout → command) for breathing room; the
+        // command + its requirement note stay tight together (gap-2).
+        <div className="flex flex-col gap-6">
+            <Callout
+                status="accent"
+                icon={<PlugsConnectedIcon aria-hidden focusable="false" />}
+                title={t("playground.session.connectMachineTitle")}
+                description={
+                    everConnected
+                        ? t("playground.session.reconnectHint")
+                        : t("playground.session.pairingHint")
+                }
+            />
+            <div className="flex flex-col gap-2">
+                {/* recessed well (NOT elevated): the sheet body is bg-surface — a raised
+                    card here would be surface-in-surface (axis-1 §16). */}
+                {renderCommand(pairCommand, false)}
+                <Typography type="body-xs" color="muted">
+                    {t("playground.session.pairingRequirement")}
+                </Typography>
+            </div>
+        </div>
+    )
+
+    // ── ConnectSheet content per phase (peek row + expanded body) ──
+    // setup (no session) → neutral status + connect CTA; connected → success +
+    // live latency + reconnect; waiting/dropped → warning status. The body carries
+    // the intro (setup) or the pairing/reconnect install card.
+    const sheetPeek = !sessionId ? (
+        <div className="flex flex-wrap items-center gap-2">
+            <StatusChip tone="neutral">{t("playground.session.machineNotConnected")}</StatusChip>
+            <Button
+                className="ml-auto"
+                size="sm"
+                variant="primary"
+                isPending={createSessionMutation.isMutating}
+                onPress={() => void onConnectAgent()}
+            >
+                {t("playground.session.connectAgent")}
+            </Button>
+        </div>
+    ) : byomState.connected ? (
+        <div className="flex flex-wrap items-center gap-2">
+            <StatusChip tone="success">
+                {byomState.latencyMs !== null
+                    ? t("playground.session.agentConnectedLatency", { ms: byomState.latencyMs })
+                    : t("playground.session.agentConnected")}
+            </StatusChip>
+            <Button
+                className="ml-auto"
+                size="sm"
+                variant="tertiary"
+                onPress={() => setSheetOpen(true)}
+            >
+                {t("playground.session.reconnect")}
+            </Button>
+        </div>
+    ) : (
+        <StatusChip tone="warning">
+            {everConnected
+                ? t("playground.session.agentDisconnected")
+                : t("playground.session.agentWaiting")}
+        </StatusChip>
+    )
+
+    const sheetBody = !sessionId ? (
+        <Typography type="body-sm" color="muted">
+            {t("playground.session.connectMachineIntro")}
+        </Typography>
+    ) : (
+        installCard
+    )
 
     if (isLoading) {
         return (
@@ -247,20 +338,24 @@ export const PlaygroundSession = () => {
                 />
             </div>
 
-            <div className="grid flex-1 grid-cols-1 overflow-hidden lg:grid-cols-2">
-                {/* ── LEFT: step guide + connect agent + verify ── */}
-                <div className="flex flex-col overflow-y-auto border-r border-default px-6 py-5">
+            {/* `relative` so the docked ConnectSheet (absolute bottom) anchors here. */}
+            <div className="relative grid flex-1 grid-cols-1 overflow-hidden lg:grid-cols-2">
+                {/* ── LEFT: step guide + verify (connection lives in the ConnectSheet) ──
+                    bg-background (page canvas): the code blocks here render as
+                    RAISED cards (`codeElevated` → bg-surface + shadow) so they
+                    "float up" off the canvas, instead of a recessed well that
+                    would blend canvas-on-canvas (axis-1 §16). pb-24 clears the
+                    collapsed sheet peek docked at the bottom. */}
+                <div className="flex flex-col overflow-y-auto border-r border-default bg-background px-6 pt-5 pb-24">
                     {currentStep ? (
                         <div className="flex flex-col gap-4">
                             <Typography type="h6" weight="bold">
                                 {currentStep.title}
                             </Typography>
-                            <MarkdownContent markdown={currentStep.body} />
-                            {currentStep.commandHint ? (
-                                <pre className="whitespace-pre-wrap rounded-medium bg-default px-3 py-2 font-mono text-sm">
-                                    {currentStep.commandHint}
-                                </pre>
-                            ) : null}
+                            <MarkdownContent markdown={currentStep.body} codeElevated />
+                            {/* elevated card: the left pane is bg-background canvas → the
+                                command "floats up" (axis-1 §16). */}
+                            {currentStep.commandHint ? renderCommand(currentStep.commandHint, true) : null}
                             {/* rag-kind steps carry an actionHint (what to do in the widget) instead of a shell command */}
                             {currentStep.actionHint ? (
                                 <div className="rounded-medium border border-dashed border-default bg-default px-3 py-2 text-sm">
@@ -290,81 +385,16 @@ export const PlaygroundSession = () => {
                                             <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
                                         </Button>
                                     </div>
-                                ) : !sessionId ? (
-                                    <div className="flex flex-col gap-3">
-                                        <Typography type="body-sm" weight="medium">
-                                            {t("playground.session.modeTitle")}
-                                        </Typography>
-                                        <SelectableCardGroup
-                                            ariaLabel={t("playground.session.modeAria")}
-                                            value={mode}
-                                            onChange={setMode}
-                                            items={[
-                                                {
-                                                    value: PlaygroundSessionMode.Guided,
-                                                    label: t("playground.session.modeGuidedLabel"),
-                                                    description: t("playground.session.modeGuidedDescription"),
-                                                },
-                                                {
-                                                    value: PlaygroundSessionMode.Free,
-                                                    label: t("playground.session.modeFreeLabel"),
-                                                    description: t("playground.session.modeFreeDescription"),
-                                                },
-                                            ]}
-                                        />
-                                        <Button
-                                            variant="primary"
-                                            isPending={createSessionMutation.isMutating}
-                                            onPress={() => void onConnectAgent()}
-                                        >
-                                            {t("playground.session.connectAgent")}
-                                        </Button>
-                                    </div>
+                                ) : byomState.connected ? (
+                                    // machine paired → verify this step (connection lives in the sheet).
+                                    <Button variant="primary" onPress={onConfirmStep}>
+                                        {t("playground.session.confirmStep")}
+                                    </Button>
                                 ) : (
-                                    <div className="flex flex-col gap-3">
-                                        {!byomState.connected ? (
-                                            <div className="flex flex-col gap-2">
-                                                <Typography type="body-sm" color="muted">
-                                                    {t("playground.session.pairingHint")}
-                                                </Typography>
-                                                <div className="flex items-center gap-2 rounded-2xl bg-default px-4 py-3">
-                                                    <Typography
-                                                        type="h6"
-                                                        weight="bold"
-                                                        className="min-w-0 flex-1 truncate font-mono"
-                                                    >
-                                                        {`npx @starci/playground-agent ${pairingCode}`}
-                                                    </Typography>
-                                                    <Button
-                                                        isIconOnly
-                                                        size="sm"
-                                                        variant="tertiary"
-                                                        aria-label={t("playground.session.copyPairingCode")}
-                                                        onPress={onCopyPairingCode}
-                                                    >
-                                                        <CopyIcon aria-hidden focusable="false" className="size-5" />
-                                                    </Button>
-                                                </div>
-                                                <Typography type="body-xs" color="muted">
-                                                    {t("playground.session.pairingRequirement")}
-                                                </Typography>
-                                                {copied ? (
-                                                    <Typography type="body-xs" color="muted">
-                                                        {t("playground.session.copied")}
-                                                    </Typography>
-                                                ) : null}
-                                            </div>
-                                        ) : (
-                                            <div className="flex items-center gap-2">
-                                                <Chip size="sm" className="bg-success-soft text-success-soft-foreground">
-                                                    <Chip.Label>{t("playground.session.agentConnected")}</Chip.Label>
-                                                </Chip>
-                                                <Button variant="primary" onPress={onConfirmStep}>
-                                                    {t("playground.session.confirmStep")}
-                                                </Button>
-                                            </div>
-                                        )}
-                                    </div>
+                                    // not connected → point to the ConnectSheet docked below.
+                                    <Typography type="body-sm" color="muted">
+                                        {t("playground.session.connectFromSheetHint")}
+                                    </Typography>
                                 )}
                             </div>
                         </div>
@@ -378,27 +408,57 @@ export const PlaygroundSession = () => {
                     )}
                 </div>
 
-                {/* ── RIGHT: kind-branched workspace ── */}
-                <div className="flex flex-col overflow-hidden">
+                {/* ── RIGHT: kind-branched workspace ──
+                    ONE concept for the pre-connected state (setup + waiting + dropped):
+                    a single EmptyState. The Terminal / Resources workspace only
+                    appears once the machine actually pairs. bg-surface = a full
+                    surface panel (the workspace reads as one solid surface, while
+                    the left guide pane sits on the page canvas). */}
+                <div className="flex flex-col overflow-hidden bg-surface">
                     {isRag ? (
                         // rag path: the self-contained import→ask→cite widget IS the workspace
                         <div className="h-full overflow-y-auto">
                             <RagPlayground embedded className="h-full" />
                         </div>
+                    ) : !byomState.connected ? (
+                        <div className="flex h-full items-center justify-center p-6">
+                            <EmptyState
+                                icon={<TerminalWindowIcon aria-hidden focusable="false" />}
+                                title={t("playground.session.workspaceLockedTitle")}
+                                description={t("playground.session.workspaceLockedHint")}
+                            />
+                        </div>
                     ) : (
-                        <>
-                            <div className="border-b border-default px-4 py-2">
-                                <TabsCard
-                                    leftTabs={{
-                                        items: WORKSPACE_TABS,
-                                        selectedKey: workspaceTab,
-                                        ariaLabel: t("playground.session.tabsAria"),
-                                        onSelectionChange: (key) => setWorkspaceTab(key as WorkspaceTab),
-                                    }}
-                                />
+                        <div className="flex h-full flex-col overflow-hidden">
+                            {/* dashboard-style tab bar: secondary underline tabs riding on a
+                                full-width baseline (border-b on the strip container). */}
+                            <div className="border-b border-default px-3">
+                                <ExtendedTabs
+                                    selectedKey={workspaceTab}
+                                    onSelectionChange={(key) => setWorkspaceTab(key as WorkspaceTab)}
+                                >
+                                    <Tabs.ListContainer>
+                                        <Tabs.List aria-label={t("playground.session.tabsAria")}>
+                                            <Tabs.Tab id="terminal">
+                                                <span className="flex items-center gap-2">
+                                                    <TerminalWindowIcon aria-hidden focusable="false" className="size-4 shrink-0" />
+                                                    {t("playground.session.tabs.terminal")}
+                                                </span>
+                                                <Tabs.Indicator />
+                                            </Tabs.Tab>
+                                            <Tabs.Tab id="resources">
+                                                <span className="flex items-center gap-2">
+                                                    <CubeIcon aria-hidden focusable="false" className="size-4 shrink-0" />
+                                                    {t("playground.session.tabs.resources", { count: byomState.resources.length })}
+                                                </span>
+                                                <Tabs.Indicator />
+                                            </Tabs.Tab>
+                                        </Tabs.List>
+                                    </Tabs.ListContainer>
+                                </ExtendedTabs>
                             </div>
 
-                            <div className="flex-1 overflow-hidden p-4">
+                            <div className="min-h-0 flex-1 overflow-hidden p-4 pb-20">
                                 {workspaceTab === "terminal" ? (
                                     <ScrollShadow hideScrollBar className="h-full overflow-y-auto rounded-2xl bg-default">
                                         {byomState.commandOutput ? (
@@ -406,57 +466,69 @@ export const PlaygroundSession = () => {
                                                 {byomState.commandOutput}
                                             </pre>
                                         ) : (
-                                            <EmptyContent
-                                                icon={<TerminalWindowIcon aria-hidden focusable="false" className="size-8 text-muted" />}
-                                                title={t("playground.session.terminalEmptyTitle")}
-                                                description={t("playground.session.terminalEmptyDescription")}
-                                            />
+                                            <div className="flex h-full items-center justify-center">
+                                                <EmptyState
+                                                    icon={<TerminalWindowIcon aria-hidden focusable="false" />}
+                                                    title={t("playground.session.terminalEmptyTitle")}
+                                                    description={t("playground.session.terminalEmptyDescription")}
+                                                />
+                                            </div>
                                         )}
                                     </ScrollShadow>
+                                ) : byomState.resources.length === 0 ? (
+                                    <div className="flex h-full items-center justify-center">
+                                        <EmptyState
+                                            icon={<LinkSimpleIcon aria-hidden focusable="false" />}
+                                            title={t("playground.session.resourcesEmptyTitle")}
+                                            description={t("playground.session.resourcesEmptyDescription")}
+                                        />
+                                    </div>
                                 ) : (
-                                    <Card className="h-full">
-                                        <CardContent className={cn("flex h-full flex-col", byomState.resources.length === 0 && "justify-center")}>
-                                            {byomState.resources.length === 0 ? (
-                                                <EmptyContent
-                                                    icon={<LinkSimpleIcon aria-hidden focusable="false" className="size-8 text-muted" />}
-                                                    title={t("playground.session.resourcesEmptyTitle")}
-                                                    description={t("playground.session.resourcesEmptyDescription")}
-                                                />
-                                            ) : (
-                                                <ScrollShadow hideScrollBar className="flex h-full flex-col overflow-y-auto">
-                                                    {byomState.resources.map((resource, index) => (
-                                                        <ListRow
-                                                            key={`${resource.kind}-${resource.name}`}
-                                                            leading={(
-                                                                <IconTile
-                                                                    icon={RESOURCE_KIND_ICON[resource.kind.toLowerCase()] ?? RESOURCE_KIND_FALLBACK_ICON}
-                                                                    tone="neutral"
-                                                                    size="sm"
-                                                                />
-                                                            )}
-                                                            title={resource.name}
-                                                            subtitle={resource.kind}
-                                                            trailing={(
-                                                                <Chip
-                                                                    size="sm"
-                                                                    variant="soft"
-                                                                    color={resourceStatusColor(resource.status)}
-                                                                >
-                                                                    {resource.status}
-                                                                </Chip>
-                                                            )}
-                                                            divider={index < byomState.resources.length - 1}
-                                                        />
-                                                    ))}
-                                                </ScrollShadow>
-                                            )}
-                                        </CardContent>
-                                    </Card>
+                                    <ScrollShadow hideScrollBar className="flex h-full flex-col overflow-y-auto">
+                                        {byomState.resources.map((resource, index) => (
+                                            <ListRow
+                                                key={`${resource.kind}-${resource.name}`}
+                                                leading={(
+                                                    <IconTile
+                                                        icon={RESOURCE_KIND_ICON[resource.kind.toLowerCase()] ?? RESOURCE_KIND_FALLBACK_ICON}
+                                                        tone="neutral"
+                                                        size="sm"
+                                                    />
+                                                )}
+                                                title={resource.name}
+                                                subtitle={resource.kind}
+                                                trailing={(
+                                                    <Chip
+                                                        size="sm"
+                                                        variant="soft"
+                                                        color={resourceStatusColor(resource.status)}
+                                                    >
+                                                        {resource.status}
+                                                    </Chip>
+                                                )}
+                                                divider={index < byomState.resources.length - 1}
+                                            />
+                                        ))}
+                                    </ScrollShadow>
                                 )}
                             </div>
-                        </>
+                        </div>
                     )}
                 </div>
+
+                {/* ── ConnectSheet: docked, draggable connection console ──
+                    RAG labs need no agent → no sheet. Auto-snaps per phase; the
+                    learner can drag/tap to override. */}
+                {!isRag ? (
+                    <ConnectSheet
+                        open={sheetOpen}
+                        onOpenChange={setSheetOpen}
+                        toggleLabel={t("playground.session.sheetToggle")}
+                        peek={sheetPeek}
+                    >
+                        {sheetBody}
+                    </ConnectSheet>
+                ) : null}
             </div>
         </div>
     )

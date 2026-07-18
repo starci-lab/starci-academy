@@ -55,3 +55,30 @@ export const Plain: Story = {
         </div>
     ),
 }
+
+/** `withVerdict` — dải viền TRÁI dày, chồng lên viền sẵn có của card, đánh dấu card mang TÍN HIỆU TỪ DATA (band verdict · tier · zone). 2 cách truyền màu: `variant` (4 token semantic — an toàn tuyệt đối, Tailwind quét được literal) hoặc `color` (màu Tailwind thô + độ đậm, vd `"amber-500"` — build động `border-l-${color}`, cần safelist `@source inline(...)` trong `globals.css`, đã có sẵn cho cả bảng màu × shade). KHÔNG dùng dải này để trang trí hay phân biệt "vùng active" (đó là ca đã bị revert — `card.md` §3g). */
+export const WithVerdict: Story = {
+    tags: ["news"],
+    parameters: { usage: "Chờ duyệt — withVerdict: dải viền TRÁI = tín hiệu từ DATA (band verdict/tier/zone). `variant` = 4 token semantic (accent/success/warning/danger). `color` = màu Tailwind thô (vd \"amber-500\") cho ramp không map vào token. Cấm dùng để trang trí/phân biệt vùng active (card.md §3g/§3i)." },
+    render: () => (
+        <div className="flex max-w-md flex-col gap-3">
+            <SectionCard withVerdict={{ enable: true, variant: "danger" }}>
+                Trí nhớ đang tuột — bạn nạp thẻ mới nhanh hơn tốc độ ghi nhớ.
+            </SectionCard>
+            <SectionCard withVerdict={{ enable: true, variant: "warning" }}>
+                Chưa ổn định — vài chủ đề đang rơi, cần ôn đều hơn.
+            </SectionCard>
+            <SectionCard withVerdict={{ enable: true, variant: "success" }}>
+                Trí nhớ khỏe — giữ được phần lớn kiến thức đã học.
+            </SectionCard>
+            {/* màu Tailwind thô (không phải 1 trong 4 token semantic) — ramp riêng của caller (vd tier/zone không map vào accent/success/warning/danger) */}
+            <SectionCard withVerdict={{ enable: true, color: "amber-500" }}>
+                Màu thô theo thang riêng của caller (vd ramp độ khó của challenge).
+            </SectionCard>
+            {/* enable=false → không có dải, card thường */}
+            <SectionCard withVerdict={{ enable: false, variant: "danger" }}>
+                enable=false → về card thường, không dải viền.
+            </SectionCard>
+        </div>
+    ),
+}

@@ -357,7 +357,7 @@ export const PromptPlayground = ({ playground, className }: PromptPlaygroundProp
                     ) : null}
                     {isStreaming ? <Spinner size="sm" /> : null}
                 </div>
-                <div className="min-h-24 rounded-2xl border border-default bg-surface p-4">
+                <div className="min-h-24 rounded-3xl border border-default bg-surface p-4">
                     {isFailed ? (
                         <span className="text-sm text-danger-soft-foreground">
                             {run?.errorMessage ?? t("aiLab.playground.failed")}

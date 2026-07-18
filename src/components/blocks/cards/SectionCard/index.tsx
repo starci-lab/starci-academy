@@ -9,6 +9,7 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
+import { type VerdictBand, verdictBandClassName } from "../verdict-band"
 
 /** Props for {@link SectionCard}. */
 export interface SectionCardProps extends WithClassNames<undefined> {
@@ -22,6 +23,13 @@ export interface SectionCardProps extends WithClassNames<undefined> {
     action?: React.ReactNode
     /** Accent variant: tinted border + background (highlight / "yours"). */
     accent?: boolean
+    /**
+     * Verdict variant: a thick LEFT band (`border-l-4`) on top of the card's own
+     * border — the asymmetric-border shape for "card mang tín hiệu từ DATA"
+     * (`card.md` §3i). See {@link VerdictBand}. Left band ONLY reads as a DATA
+     * signal — never ad-hoc "vùng active" decoration (`card.md` §3g).
+     */
+    withVerdict?: VerdictBand
     /** Extra classes merged onto the inner content wrapper. */
     contentClassName?: string
 }
@@ -42,12 +50,19 @@ export const SectionCard = ({
     icon,
     action,
     accent = false,
+    withVerdict,
     className,
     contentClassName,
 }: SectionCardProps) => {
     const hasHeader = Boolean(title || action || icon)
     return (
-        <Card className={cn(accent && "border-accent", className)}>
+        <Card
+            className={cn(
+                accent && "border-accent",
+                verdictBandClassName(withVerdict),
+                className,
+            )}
+        >
             <CardContent className={cn("flex flex-col gap-3", contentClassName)}>
                 {hasHeader ? (
                     <div className="flex items-center justify-between gap-3 border-b border-separator pb-3">

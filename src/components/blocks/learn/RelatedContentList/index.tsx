@@ -2,7 +2,7 @@
 
 import React from "react"
 import { cn } from "@heroui/react"
-import { useLocale, useTranslations } from "next-intl"
+import { useLocale } from "next-intl"
 import { useRouter } from "next/navigation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
@@ -58,7 +58,6 @@ export const RelatedContentList = ({
     className,
 }: RelatedContentListProps) => {
     const locale = useLocale()
-    const t = useTranslations("common")
     const router = useRouter()
     const swr = useQuerySearchCourseContentSwr(courseId, query, Boolean(query.trim()))
     // drop the current surface's own source — a title-derived query always returns
@@ -89,7 +88,6 @@ export const RelatedContentList = ({
                         <EntityResultRow
                             key={`${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`}
                             item={item}
-                            ctaLabel={t("read")}
                             onSelect={(picked) => {
                                 const href = resolveSearchResultHref(picked, locale, courseDisplayId)
                                 if (href) {

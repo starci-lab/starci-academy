@@ -89,7 +89,7 @@ export const ChatPanel = ({
     return (
         <div
             className={cn(
-                "flex flex-col overflow-hidden rounded-2xl border border-default bg-surface",
+                "flex flex-col overflow-hidden rounded-3xl border border-default bg-surface",
                 heightClassName,
                 className,
             )}

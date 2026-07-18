@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototype — Cửa hàng Coin chia hạng mục</title>
+<style>
+  :root{--bg:#f4f4f6;--fg:#1a1a1e;--mut:#6b6b76;--line:#e2e2e8;--card:#fff;--acc:#c0407a;--acc-soft:#fbe6f0;--ok:#3b7d4f;--radius:16px;--sh:0 1px 2px rgba(0,0,0,.05),0 1px 3px rgba(0,0,0,.04)}
+  @media(prefers-color-scheme:dark){:root{--bg:#161619;--fg:#eaeaef;--mut:#9a9aa6;--line:#2a2a30;--card:#1d1d21;--acc-soft:#3a2230}}
+  *{box-sizing:border-box}
+  body{margin:0;font:14px/1.5 ui-sans-serif,system-ui,sans-serif;color:var(--fg);background:var(--bg)}
+  .top{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+  .top b{font-size:15px}.top .sub{color:var(--mut);font-size:12px}
+  .devtog{margin-left:auto;border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex}
+  .devtog button{border:0;background:var(--card);padding:5px 12px;cursor:pointer;font:inherit;font-size:12px;color:var(--mut)}
+  .devtog button.on{background:var(--acc);color:#fff}
+  .stage{padding:28px 16px 80px;margin:0 auto;transition:max-width .2s}
+  .stage.desktop{max-width:1040px}.stage.mobile{max-width:420px}
+  .bc{color:var(--mut);font-size:13px;margin-bottom:6px}
+  h1{font-size:26px;margin:0 0 4px}
+  .desc{color:var(--mut);margin:0 0 14px}
+  .coin{display:inline-flex;align-items:center;gap:6px;background:var(--acc-soft);color:var(--acc);border-radius:999px;padding:5px 12px;font-weight:600;font-size:13px;margin-bottom:20px}
+  .tabs{display:flex;gap:20px;border-bottom:1px solid var(--line);margin-bottom:24px}
+  .tabs button{border:0;background:0;padding:8px 2px;font:inherit;font-size:15px;color:var(--mut);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+  .tabs button.on{color:var(--acc);border-bottom-color:var(--acc);font-weight:600}
+  /* SECTION = LabeledCard (label ngoài) */
+  .section{margin-bottom:30px}
+  .shead{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .stile{width:34px;height:34px;border-radius:10px;background:var(--acc-soft);color:var(--acc);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+  .stitle{font-size:16px;font-weight:600;line-height:1.2}
+  .ssub{font-size:12px;color:var(--mut)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .stage.mobile .grid{grid-template-columns:1fr}
+  /* reward card */
+  .rc{background:var(--card);border-radius:var(--radius);box-shadow:var(--sh);padding:16px;display:flex;flex-direction:column;gap:12px}
+  .rc .rt{display:flex;gap:12px}
+  .rc .itile{width:40px;height:40px;border-radius:11px;background:var(--acc-soft);color:var(--acc);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+  .rc .rname{font-weight:600;font-size:15px;line-height:1.25}
+  .rc .rdesc{font-size:13px;color:var(--mut);margin-top:2px}
+  .rc .rfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto}
+  .cost{display:inline-flex;align-items:center;gap:5px;background:color-mix(in oklab,var(--fg) 6%,transparent);border-radius:999px;padding:4px 11px;font-size:13px;font-weight:600}
+  .btn{border:0;border-radius:11px;padding:9px 16px;font:inherit;font-weight:600;font-size:13px;cursor:pointer}
+  .btn.buy{background:var(--acc);color:#fff}
+  .btn.dis{background:var(--acc-soft);color:var(--acc);opacity:.75;cursor:not-allowed}
+  .blocktag{font:9px ui-monospace,monospace;color:var(--mut);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:0 4px;margin-left:6px;vertical-align:middle}
+  .note{font-size:12px;color:var(--mut);background:color-mix(in oklab,var(--acc) 6%,transparent);border-radius:10px;padding:9px 13px;margin-bottom:20px}
+  .kindtag{font-size:10px;font-weight:700;color:var(--acc);background:var(--acc-soft);border-radius:5px;padding:1px 6px;margin-left:6px;vertical-align:middle}
+</style>
+</head>
+<body>
+<div class="top">
+  <b>Prototype · Cửa hàng Coin chia hạng mục</b>
+  <span class="sub">/vi/rewards — flat grid → section theo <code>kind</code> (data-driven)</span>
+  <div class="devtog"><button id="d-desktop" class="on" onclick="dev('desktop')">Desktop</button><button id="d-mobile" onclick="dev('mobile')">Mobile</button></div>
+</div>
+<div class="stage desktop" id="stage">
+  <div class="note">Mỗi <b>section = <span class="blocktag">LabeledCard</span></b> (label ngoài, icon-tile + tiêu đề + subtitle) chứa <b>grid <span class="blocktag">Card</span></b> reward. Nhóm theo field <code>kind</code> reward đã có (digital/aiCredit → "Tăng tốc học" · voucher · physical). Bấm Desktop/Mobile để soi rail→stack.</div>
+
+  <div class="bc">Trang chủ › Cửa hàng Coin</div>
+  <h1>Cửa hàng Coin <span class="blocktag">PageHeader</span></h1>
+  <p class="desc">Đổi Coin kiếm được từ học tập lấy voucher, hạn mức AI, hoặc quà tặng.</p>
+  <div class="coin">🪙 1.240 Coin</div>
+
+  <div class="tabs"><button class="on">Cửa hàng</button><button>Ví của tôi</button></div>
+
+  <!-- SECTION 1 -->
+  <div class="section">
+    <div class="shead"><div class="stile">⚡</div><div><div class="stitle">Tăng tốc học tập <span class="kindtag">aiCredit · digital</span></div><div class="ssub">Đổi Coin lấy trợ lực học — hạn mức AI &amp; giữ chuỗi.</div></div></div>
+    <div class="grid">
+      <div class="rc"><div class="rt"><div class="itile">⚡</div><div><div class="rname">Nạp thêm hạn mức AI</div><div class="rdesc">+30 credit AI cho hạn mức 5 giờ và hạn mức tuần hiện tại.</div></div></div><div class="rfoot"><span class="cost">🪙 500</span><button class="btn buy">Đổi ngay</button></div></div>
+      <div class="rc"><div class="rt"><div class="itile">❄️</div><div><div class="rname">Đóng băng chuỗi</div><div class="rdesc">Giữ chuỗi khi bạn lỡ 1 ngày (giữ tối đa 3 cái).</div></div></div><div class="rfoot"><span class="cost">🪙 100</span><button class="btn buy">Đổi ngay</button></div></div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section">
+    <div class="shead"><div class="stile">🎟️</div><div><div class="stitle">Ưu đãi khóa học <span class="kindtag">voucher</span></div><div class="ssub">Mã giảm giá dùng khi đăng ký khóa mới.</div></div></div>
+    <div class="grid">
+      <div class="rc"><div class="rt"><div class="itile">🎟️</div><div><div class="rname">Voucher giảm 10% mọi khóa học</div><div class="rdesc">Mã giảm 10% dùng 1 lần cho bất kỳ khóa học nào, hiệu lực 30 ngày.</div></div></div><div class="rfoot"><span class="cost">🪙 800</span><button class="btn buy">Đổi ngay</button></div></div>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section">
+    <div class="shead"><div class="stile">🎁</div><div><div class="stitle">Quà tặng &amp; Merch <span class="kindtag">physical</span></div><div class="ssub">Vật phẩm StarCi gửi tận tay (cần địa chỉ nhận).</div></div></div>
+    <div class="grid">
+      <div class="rc"><div class="rt"><div class="itile">🎁</div><div><div class="rname">Bộ sticker StarCi</div><div class="rdesc">Bộ sticker StarCi gửi tận tay bạn.</div></div></div><div class="rfoot"><span class="cost">🪙 300</span><button class="btn buy">Đổi ngay</button></div></div>
+      <div class="rc"><div class="rt"><div class="itile">👕</div><div><div class="rname">Áo thun StarCi</div><div class="rdesc">Áo thun StarCi độc quyền gửi tận tay bạn.</div></div></div><div class="rfoot"><span class="cost">🪙 11.000</span><button class="btn dis">Không đủ Coin</button></div></div>
+    </div>
+  </div>
+</div>
+<script>
+  function dev(m){document.getElementById('stage').className='stage '+m;document.getElementById('d-desktop').classList.toggle('on',m==='desktop');document.getElementById('d-mobile').classList.toggle('on',m==='mobile');}
+</script>
+</body>
+</html>

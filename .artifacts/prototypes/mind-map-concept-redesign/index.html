@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>mind-map-concept-redesign — Sơ đồ khái niệm đọc được (3 hướng)</title>
+<style>
+  :root{--bg:#f4f4f6;--fg:#1a1a1e;--mut:#6b6b76;--line:#e2e2e8;--card:#fff;--acc:#c0407a;--acc-soft:#fbe6f1;
+        --t0:#c0407a;--t1:#2f8f57;--t2:#b0721f;--t3:#3b74c4;--t4:#8a4fc0;--t5:#c0392b;--t6:#178a8a;--t7:#5a6b18;}
+  @media (prefers-color-scheme:dark){:root{--bg:#161619;--fg:#eaeaef;--mut:#9a9aa6;--line:#2a2a30;--card:#1d1d21;--acc-soft:#3a1526;}}
+  :root[data-theme=light]{--bg:#f4f4f6;--fg:#1a1a1e;--card:#fff;--line:#e2e2e8}
+  :root[data-theme=dark]{--bg:#161619;--fg:#eaeaef;--card:#1d1d21;--line:#2a2a30;--acc-soft:#3a1526}
+  *{box-sizing:border-box}
+  body{margin:0;font:13px/1.5 ui-sans-serif,system-ui,-apple-system,sans-serif;color:var(--fg);background:var(--bg)}
+  .top{position:sticky;top:0;z-index:30;background:var(--card);border-bottom:1px solid var(--line);padding:9px 14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .top b{font-size:14px}.top .sub{color:var(--mut);font-size:11px}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;margin-left:auto}
+  .seg button{border:0;background:var(--card);color:var(--mut);font:inherit;font-size:12px;padding:6px 11px;cursor:pointer;white-space:nowrap}
+  .seg button.on{background:var(--acc);color:#fff;font-weight:700}
+  .tglr{border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:8px;padding:5px 9px;font:inherit;font-size:12px;cursor:pointer}
+  /* page header inside surface */
+  .pagehead{max-width:1180px;margin:12px auto 0;padding:0 14px}
+  .crumb{font-size:11px;color:var(--mut)}.crumb b{color:var(--fg)}
+  .pagehead h1{font-size:19px;margin:3px 0 0}.pagehead p{color:var(--mut);font-size:12px;margin:2px 0 0}
+  .blocktag{font:9px ui-monospace,monospace;color:var(--mut);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+  .canvaswrap{max-width:1180px;margin:12px auto;padding:0 14px}
+  .canvas{position:relative;background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;background-image:radial-gradient(var(--line) 1px,transparent 1px);background-size:22px 22px}
+  svg.edges{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+  /* nodes */
+  .root{position:absolute;transform:translate(-50%,-50%);background:var(--acc);color:#fff;border-radius:16px;padding:10px 16px;font-weight:800;font-size:14px;box-shadow:0 3px 12px rgba(192,64,122,.35);z-index:4;white-space:nowrap}
+  .theme{position:absolute;transform:translate(-50%,-50%);border-radius:13px;padding:8px 13px;font-weight:800;font-size:12.5px;color:#fff;z-index:3;white-space:nowrap;cursor:default;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+  .concept{position:absolute;transform:translate(-50%,-50%);background:var(--card);border:1.5px solid var(--line);border-radius:11px;padding:7px 10px;width:184px;z-index:2;cursor:pointer;transition:box-shadow .12s,border-color .12s}
+  .concept:hover{border-color:var(--acc);box-shadow:0 3px 12px rgba(0,0,0,.13)}
+  .concept .kw{font-weight:700;font-size:12px;line-height:1.25}
+  .concept .dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto}
+  .concept.pill{width:auto;display:flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+  .concept .ds{color:var(--mut);font-size:10px;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .kinds{display:flex;gap:3px;margin-top:5px}
+  .kind{font-size:9px;font-weight:700;border-radius:4px;padding:0 4px;line-height:15px}
+  .k-l{background:#e3f0fb;color:#2b64a8}.k-f{background:#e3f4ea;color:#2f8f57}.k-i{background:#f3e9fb;color:#7a3fb0}.k-m{background:#f7ecda;color:#a5701a}
+  @media (prefers-color-scheme:dark){.k-l{background:#16283a}.k-f{background:#16281d}.k-i{background:#24152e}.k-m{background:#2a2013}}
+  /* columns view */
+  .cols{display:flex;gap:12px;overflow-x:auto;padding:14px;scroll-snap-type:x proximity}
+  .tcol{flex:0 0 240px;scroll-snap-align:start;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--card);align-self:flex-start}
+  .tcol>.h{padding:9px 12px;font-weight:800;font-size:12.5px;color:#fff;display:flex;justify-content:space-between;align-items:center}
+  .tcol .body{padding:8px}
+  .crow{border:1px solid var(--line);border-radius:10px;padding:7px 9px;margin-bottom:7px;cursor:pointer;background:var(--card)}
+  .crow:last-child{margin-bottom:0}.crow:hover{border-color:var(--acc)}
+  .crow .kw{font-weight:700;font-size:12px}.crow .ds{color:var(--mut);font-size:10px;margin-top:1px}
+  /* RAG drawer (click keyword → related surfaces via RAG) */
+  .ovl{position:fixed;inset:0;background:rgba(0,0,0,.28);z-index:49;opacity:0;pointer-events:none;transition:opacity .18s}
+  .ovl.open{opacity:1;pointer-events:auto}
+  .pop{position:fixed;top:0;right:0;height:100vh;width:344px;z-index:50;background:var(--card);border-left:1px solid var(--line);box-shadow:-8px 0 30px rgba(0,0,0,.18);padding:16px;overflow-y:auto;transform:translateX(100%);transition:transform .2s}
+  .pop.open{transform:none}
+  .pop h4{margin:2px 0 0;font-size:15px}.pop .eyebrow{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+  .pop .pd{color:var(--mut);font-size:11.5px;margin:8px 0 12px}
+  .pop .grouphdr{font-size:11px;font-weight:800;color:var(--mut);margin:14px 0 6px}
+  .pop a{display:flex;gap:9px;align-items:center;padding:9px 10px;border:1px solid var(--line);border-radius:10px;margin-bottom:6px;text-decoration:none;color:var(--fg);font-size:12px;font-weight:600}
+  .pop a:hover{border-color:var(--acc)}
+  .pop a .ico{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;font-size:12px;flex:0 0 auto}
+  .pop a .arw{margin-left:auto;color:var(--acc)}
+  .pop .dclose{position:absolute;top:14px;right:14px;border:0;background:transparent;font-size:22px;color:var(--mut);cursor:pointer;line-height:1}
+  /* legend + zoom */
+  .legend{position:absolute;left:12px;bottom:12px;background:color-mix(in oklab,var(--card) 88%,transparent);border:1px solid var(--line);border-radius:10px;padding:7px 9px;display:flex;gap:11px;font-size:10.5px;color:var(--mut);z-index:6}
+  .legend i{width:9px;height:9px;border-radius:3px;display:inline-block;margin-right:3px;vertical-align:middle}
+  .zoom{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:5px;z-index:6}
+  .zoom button{width:30px;height:30px;border:1px solid var(--line);background:var(--card);border-radius:8px;font-size:15px;cursor:pointer;color:var(--fg)}
+  /* empty state */
+  .empty{max-width:520px;margin:60px auto;text-align:center;padding:26px}
+  .empty .ic{width:52px;height:52px;border-radius:14px;background:var(--acc-soft);color:var(--acc);display:grid;place-items:center;font-size:24px;margin:0 auto 12px}
+  .empty h3{margin:0 0 5px;font-size:15px}.empty p{color:var(--mut);font-size:12.5px;margin:0 0 15px}
+  .btn{border:0;border-radius:10px;padding:9px 15px;font:inherit;font-weight:700;background:var(--acc);color:#fff;cursor:pointer;font-size:13px;display:inline-flex;gap:6px;align-items:center}
+  .note{max-width:1180px;margin:8px auto 40px;padding:0 14px;font-size:11.5px;color:var(--mut)}
+  .hint{max-width:1180px;margin:0 auto;padding:2px 14px 0;font-size:11px;color:var(--mut)}
+</style>
+</head>
+<body>
+<div class="top">
+  <b>Sơ đồ khái niệm</b><span class="sub">data THẬT: 0-fullstack (root · 8 nhánh · 31 concept)</span>
+  <div class="seg" id="seg">
+    <button data-v="radial" class="on">A · Toả tròn</button>
+    <button data-v="tree">B · Cây gom nhánh</button>
+    <button data-v="cols">C · Cột chủ đề</button>
+    <button data-v="empty">Rỗng (devops)</button>
+  </div>
+  <button class="tglr" id="theme">◑</button>
+</div>
+
+<div class="pagehead">
+  <div class="crumb"><b>Fullstack Mastery</b> › Sơ đồ tư duy <span class="blocktag">PageHeader + ResponsiveBreadcrumb</span></div>
+  <h1>Sơ đồ khái niệm</h1>
+  <p>Bản đồ keyword của khóa — mỗi khái niệm dẫn tới nơi học · ôn · thi · làm nó.</p>
+</div>
+<div class="hint" id="hint">Node = KEYWORD thôi (ngắn gọn). Bấm keyword → RAG drawer lo nội dung liên quan (Học/Ôn/Thi/Làm) — không link author tay. Chuyển A/B/C góc phải để so 3 hướng layout.</div>
+
+<div class="canvaswrap"><div class="canvas" id="canvas" style="height:640px">
+  <svg class="edges" id="edges"></svg>
+  <div class="legend"><span><i style="background:var(--t0)"></i>chủ đề</span><span><i style="background:var(--card);border:1.5px solid var(--line)"></i>keyword</span><span>bấm keyword → RAG drawer (Học/Ôn/Thi/Làm)</span></div>
+  <div class="zoom"><button>+</button><button>−</button><button>⤢</button></div>
+</div></div>
+<div class="note" id="note"></div>
+
+<div class="ovl" id="ovl"></div>
+<div class="pop" id="pop"></div>
+
+<script>
+var KIND={l:{c:'k-l',e:'📖',t:'Học ở bài học'},f:{c:'k-f',e:'🃏',t:'Ôn ở flashcard'},i:{c:'k-i',e:'🎤',t:'Thi thử phỏng vấn'},m:{c:'k-m',e:'🏗️',t:'Làm ở milestone'}};
+var THEMES=[
+ {n:'Nền tảng backend',v:'--t0',cs:[
+   {kw:'Framework & vòng đời request',ds:'Middleware · guard · interceptor · pipe',k:'lfi'},
+   {kw:'Config · Logging · Xử lý lỗi',ds:'',k:'l'},
+   {kw:'Thiết kế REST API',ds:'CRUD · DTO/validation · Swagger',k:'lfi'},
+   {kw:'GraphQL API',ds:'Resolver · DataLoader (N+1) · pagination',k:'lfi'},
+   {kw:'TypeScript & Node runtime',ds:'',k:'f'}]},
+ {n:'Dữ liệu & Caching',v:'--t1',cs:[
+   {kw:'SQL/NoSQL & ORM',ds:'',k:'lfi'},
+   {kw:'Indexing & tối ưu truy vấn',ds:'B-tree · covering index · EXPLAIN',k:'mfi'},
+   {kw:'Caching với Redis',ds:'Cache-aside · TTL · invalidation',k:'lmf'},
+   {kw:'Concurrency & Idempotency',ds:'Flash-sale · lock · idempotency key',k:'mm'}]},
+ {n:'Xác thực & Bảo mật',v:'--t2',cs:[
+   {kw:'JWT & Refresh token',ds:'',k:'lfi'},
+   {kw:'RBAC & OAuth2',ds:'',k:'lm'},
+   {kw:'XSS · CSRF · CORS · Rate-limit',ds:'',k:'lfi'},
+   {kw:'Helmet/CSP & Secrets',ds:'',k:'lm'}]},
+ {n:'Realtime & Xử lý nền',v:'--t3',cs:[
+   {kw:'WebSocket / Socket.IO',ds:'Chat · presence · reconnection',k:'lfi'},
+   {kw:'Message queue & Workers',ds:'BullMQ · retry/DLQ · worker scaling',k:'lfim'}]},
+ {n:'Tích hợp & Dịch vụ',v:'--t4',cs:[
+   {kw:'Email · OTP · SMS',ds:'',k:'li'},
+   {kw:'Upload & lưu trữ file',ds:'S3/MinIO presigned · resumable',k:'lim'},
+   {kw:'Thanh toán',ds:'Webhook idempotency · refund · SePay',k:'lim'},
+   {kw:'Tích hợp AI/LLM',ds:'SSE · RAG + pgvector · cost guard',k:'li'}]},
+ {n:'Frontend cốt lõi',v:'--t5',cs:[
+   {kw:'React reactivity & effects',ds:'useSyncExternalStore · race/cancel',k:'lfi'},
+   {kw:'RSC · Suspense · Streaming',ds:'Server/Client boundary · PPR',k:'lfi'},
+   {kw:'Server state (TanStack Query)',ds:'Invalidation graph · optimistic',k:'lfi'},
+   {kw:'Form (RHF + Zod)',ds:'',k:'lfi'},
+   {kw:'Client state (Zustand/Jotai)',ds:'',k:'lfi'}]},
+ {n:'Frontend chất lượng',v:'--t6',cs:[
+   {kw:'Hiệu năng frontend',ds:'Code-split · memo · virtualization',k:'li'},
+   {kw:'Responsive & Adaptive',ds:'srcset · zero-CLS LQIP',k:'lfi'},
+   {kw:'Tương tác & A11y',ds:'dnd-kit · cmdk · focus-trap',k:'lfi'}]},
+ {n:'Vận hành & Giao hàng',v:'--t7',cs:[
+   {kw:'Observability',ds:'OpenTelemetry · Sentry · health probe',k:'lfi'},
+   {kw:'Chiến lược Testing',ds:'Vitest · Supertest · Playwright',k:'li'},
+   {kw:'Deploy & DevOps',ds:'Docker · CI/CD · canary · migration',k:'lfi'},
+   {kw:'Dự án Capstone',ds:'Xâu chuỗi toàn khóa → sản phẩm thật',k:'mm'}]}
+];
+var cv=document.getElementById('canvas'),svg=document.getElementById('edges'),pop=document.getElementById('pop'),ovl=document.getElementById('ovl'),note=document.getElementById('note');
+var W=1148,H=640;
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v)}
+function kinds(k){var h='<div class="kinds">';for(var i=0;i<k.length;i++){var m=KIND[k[i]];h+='<span class="kind '+m.c+'">'+m.e+'</span>';}return h+'</div>';}
+function clearCanvas(){cv.querySelectorAll('.root,.theme,.concept').forEach(function(e){e.remove()});svg.innerHTML='';}
+function addNode(cls,x,y,html,onclick,style){var e=document.createElement('div');e.className=cls;e.style.left=x+'px';e.style.top=y+'px';if(style)e.setAttribute('style',e.getAttribute('style')+';'+style);e.innerHTML=html;if(onclick)e.onclick=onclick;cv.appendChild(e);return e;}
+function edge(x1,y1,x2,y2,col,w){var mx=(x1+x2)/2;return '<path d="M'+x1+' '+y1+' C '+mx+' '+y1+' '+mx+' '+y2+' '+x2+' '+y2+'" fill="none" stroke="'+col+'" stroke-width="'+(w||1.5)+'" opacity="'+(w>2?.5:.35)+'"/>';}
+function edgeR(x1,y1,x2,y2,col){return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="'+col+'" stroke-width="1.5" opacity=".33"/>';}
+var RAGGROUPS=[
+  {t:'Học ở bài học',c:'k-l',e:'📖',rows:['Kết quả RAG #1','Kết quả RAG #2']},
+  {t:'Ôn ở flashcard',c:'k-f',e:'🃏',rows:['Bộ thẻ khớp keyword']},
+  {t:'Thi thử phỏng vấn',c:'k-i',e:'🎤',rows:['Câu phỏng vấn khớp keyword']},
+  {t:'Làm ở milestone',c:'k-m',e:'🏗️',rows:['Task capstone liên quan']}];
+function closeDrawer(){pop.classList.remove('open');ovl.classList.remove('open');}
+function showPop(ev,c){
+  var h='<button class="dclose" id="dclose">×</button><div class="eyebrow">Liên quan · RAG</div><h4>'+c.kw+'</h4>'+
+    '<p class="pd">RAG tìm nội dung khớp keyword này trên TOÀN khóa — không phải link author tay. Node chỉ là keyword; drawer này = <span class="blocktag">MindMapNodeDrawer + searchCourseContent</span>.</p>';
+  RAGGROUPS.forEach(function(g){h+='<div class="grouphdr">'+g.e+' '+g.t+'</div>';g.rows.forEach(function(r){h+='<a href="#"><span class="ico '+g.c+'">'+g.e+'</span>'+r+'<span class="arw">→</span></a>';});});
+  pop.innerHTML=h;pop.classList.add('open');ovl.classList.add('open');ev&&ev.stopPropagation();
+  document.getElementById('dclose').onclick=closeDrawer;}
+ovl.addEventListener('click',closeDrawer);
+
+function renderRadial(){
+  cv.style.height='640px';clearCanvas();W=cv.clientWidth;H=640;var cx=W/2,cy=H/2;
+  var e='';var TR=132,CR=250;
+  addNode('root',cx,cy,'Kỹ sư Fullstack');
+  THEMES.forEach(function(t,ti){
+    var ang=(ti/THEMES.length)*Math.PI*2-Math.PI/2;
+    var tx=cx+Math.cos(ang)*TR,ty=cy+Math.sin(ang)*TR;
+    e+=edgeR(cx,cy,tx,ty,css(t.v));
+    var n=t.cs.length;
+    t.cs.forEach(function(c,ci){
+      var spread=0.62,a2=ang+(ci-(n-1)/2)*(spread/Math.max(1,n-1||1));
+      if(n===1)a2=ang;
+      var r2=CR+ (n>3?  (ci%2)*46 :0);
+      var cxp=cx+Math.cos(a2)*r2,cyp=cy+Math.sin(a2)*r2;
+      e+=edgeR(tx,ty,cxp,cyp,css(t.v));
+      (function(c){addNode('concept',cxp,cyp,'<div class="kw">'+c.kw+'</div>',function(ev){showPop(ev,c)},'width:150px');})(c);
+    });
+    addNode('theme',tx,ty,t.n,null,'background:'+css(t.v));
+  });
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);svg.innerHTML=e;
+  note.innerHTML='<b>A · Toả tròn (radial)</b> — root ở tâm, 8 nhánh toả đều, concept rải trên cung ngoài theo màu nhánh. Dùng hết 2D → không có "chuỗi dọc". Đẹp/"wow" nhất, hợp bản-đồ-khái-niệm. Rủi ro: đông concept 1 nhánh có thể chật → cần giãn cung / lùi bán kính (đã minh hoạ so le). <span class="blocktag">bespoke canvas + SVG</span>';
+}
+function renderTree(){
+  clearCanvas();W=cv.clientWidth;
+  var pad=64,themeX=286,concX=612,rowH=44,gapMin=30,y=pad;
+  var positions=[];
+  THEMES.forEach(function(t){var h=t.cs.length*rowH;positions.push({t:t,y0:y,h:h});y+=h+gapMin;});
+  var total=y+pad-gapMin;cv.style.height=Math.max(640,total)+'px';H=total;
+  var e='';var rootY=total/2;
+  // subtle theme band behind each cluster → đọc ra "nhánh" ngay cả khi cuộn
+  positions.forEach(function(p){
+    var col=css(p.t.v);
+    e+='<rect x="'+(themeX-6)+'" y="'+(p.y0-10)+'" width="'+(concX+150-themeX)+'" height="'+(p.h+20)+'" rx="18" fill="'+col+'" opacity=".05"/>';
+  });
+  addNode('root',94,rootY,'Kỹ sư<br>Fullstack','',"text-align:center;padding:12px 18px;font-size:13.5px");
+  positions.forEach(function(p){
+    var tcy=p.y0+p.h/2, col=css(p.t.v);
+    e+=edge(160,rootY,themeX-60,tcy,col,2.5);
+    p.t.cs.forEach(function(c,ci){
+      var cyp=p.y0+ci*rowH+rowH/2;
+      e+=edge(themeX+62,tcy,concX-4,cyp,col,1.4);
+      (function(c,col){addNode('concept pill',concX,cyp,'<span class="dot" style="background:'+col+'"></span><span class="kw">'+c.kw+'</span>',function(ev){showPop(ev,c)},'max-width:260px;transform:translateY(-50%)');})(c,col);
+    });
+    addNode('theme',themeX,tcy,p.t.n,null,'background:'+col+';max-width:168px;white-space:normal;text-align:center;line-height:1.22');
+  });
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);svg.innerHTML=e;
+  note.innerHTML='<b>B · Cây gom nhánh (clustered LR)</b> — root → 8 nhánh → keyword của nhánh GOM NGAY cạnh cha (không dồn chung 1 rank như bug). Mỗi cụm có dải nền mờ theo màu nhánh + keyword-pill có chấm màu → đọc ra nhánh ngay cả khi cuộn. Đây là bản "sửa đúng" React-Flow: tree layout phân cụm thay dagre rank-packing. <span class="blocktag">@xyflow/react + custom clustered tree layout</span>';
+}
+function renderCols(){
+  clearCanvas();svg.innerHTML='';cv.style.height='auto';
+  var wrap=document.createElement('div');wrap.className='cols';wrap.id='colswrap';
+  THEMES.forEach(function(t){
+    var col=document.createElement('div');col.className='tcol';
+    var h='<div class="h" style="background:'+css(t.v)+'">'+t.n+'<span style="opacity:.85;font-weight:600">'+t.cs.length+'</span></div><div class="body">';
+    col.innerHTML=h;var body=document.createElement('div');
+    col.querySelector('.h').insertAdjacentHTML('afterend','<div class="body"></div>');
+    var b=col.querySelector('.body');
+    t.cs.forEach(function(c){var r=document.createElement('div');r.className='crow';r.innerHTML='<div class="kw">'+c.kw+'</div>';r.onclick=function(ev){showPop(ev,c)};b.appendChild(r);});
+    wrap.appendChild(col);
+  });
+  cv.innerHTML='';cv.appendChild(wrap);
+  note.innerHTML='<b>C · Cột chủ đề (kanban)</b> — bỏ hẳn "graph", mỗi chủ đề = 1 cột có tiêu đề màu + danh sách concept. Dễ đọc nhất, mobile chỉ cần cuộn/xếp dọc, không bao giờ vỡ. Đánh đổi: mất cảm giác "sơ đồ tư duy" toả nhánh. <span class="blocktag">SurfaceListCard theo theme</span>';
+}
+function renderEmpty(){
+  clearCanvas();svg.innerHTML='';cv.style.height='auto';
+  cv.innerHTML='<div class="empty"><div class="ic">🗺️</div><h3>Khóa này chưa có sơ đồ khái niệm</h3><p>Sơ đồ tư duy được biên soạn thủ công cho từng khóa. Khóa DevOps chưa được author — thay vì đổ 1 "cây module" cơ học khó đọc, dẫn bạn về học phần.</p><button class="btn">Vào học phần →</button><p style="margin-top:14px;font-size:11px">Quyết định cần thầy chốt: (a) empty-state phễu như đây · hay (b) vẫn vẽ 1 bản "derived-lite" gọn từ module. Khuyến nghị (a).</p></div>';
+  note.innerHTML='<b>Rỗng — devops (chưa authored)</b>. Đây LÀ cái đang vỡ trên màn thầy chỉ: devops rơi vào nhánh derived module-graph → chuỗi dọc. Sửa: khóa chưa authored → empty-state honest + phễu, KHÔNG render derived xấu.';
+}
+var R={radial:renderRadial,tree:renderTree,cols:renderCols,empty:renderEmpty};
+function restoreCanvas(){ if(!document.getElementById('edges')){cv.innerHTML='<svg class="edges" id="edges"></svg><div class="legend"><span><i style="background:var(--t0)"></i>chủ đề</span><span><i style="background:var(--card);border:1.5px solid var(--line)"></i>concept</span><span>📖 học · 🃏 ôn · 🎤 thi · 🏗️ làm</span></div><div class="zoom"><button>+</button><button>−</button><button>⤢</button></div>';svg=document.getElementById('edges');} }
+function go(v){restoreCanvas();svg=document.getElementById('edges');R[v]();}
+document.getElementById('seg').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;
+  document.querySelectorAll('#seg button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');go(b.dataset.v);});
+document.getElementById('theme').onclick=function(){var r=document.documentElement,d=r.getAttribute('data-theme')==='dark';r.setAttribute('data-theme',d?'light':'dark');var on=document.querySelector('#seg button.on');go(on.dataset.v);};
+go('radial');
+window.addEventListener('resize',function(){var on=document.querySelector('#seg button.on');if(on&&on.dataset.v!=='cols'&&on.dataset.v!=='empty')go(on.dataset.v);});
+</script>
+</body>
+</html>

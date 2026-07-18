@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>mind-map-node-ring — card + ring theo mức độ phổ biến + cụm nút lookup</title>
+<style>
+  :root{--bg:#f4f4f6;--fg:#1a1a1e;--mut:#6b6b76;--line:#e2e2e8;--card:#fff;--acc:#c0407a;--acc-soft:#fbe6f1;
+        --core:#2f8f57;--common:#c99a1e;--niche:#c0392b;}
+  @media (prefers-color-scheme:dark){:root{--bg:#161619;--fg:#eaeaef;--mut:#9a9aa6;--line:#2a2a30;--card:#1d1d21;--acc-soft:#3a1526;--core:#3fa869;--common:#d8ab2e;--niche:#d1503f;}}
+  :root[data-theme=dark]{--bg:#161619;--fg:#eaeaef;--card:#1d1d21;--line:#2a2a30;--acc-soft:#3a1526;--niche:#5b5b66}
+  :root[data-theme=light]{--bg:#f4f4f6;--fg:#1a1a1e;--card:#fff;--line:#e2e2e8}
+  *{box-sizing:border-box}
+  body{margin:0;font:13px/1.5 ui-sans-serif,system-ui,-apple-system,sans-serif;color:var(--fg);background:var(--bg)}
+  .top{position:sticky;top:0;z-index:30;background:var(--card);border-bottom:1px solid var(--line);padding:9px 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .top b{font-size:14px}.top .sub{color:var(--mut);font-size:11px}
+  .tglr{margin-left:auto;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:8px;padding:5px 9px;cursor:pointer}
+  .stage{position:relative;height:660px;margin:12px auto;max-width:1180px;background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;background-image:radial-gradient(var(--line) 1px,transparent 1px);background-size:22px 22px}
+  svg.edges{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+
+  /* NODE = card + ring theo tier phổ biến */
+  .node{position:absolute;transform:translateY(-50%);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 12px 8px 11px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:box-shadow .12s,opacity .15s,transform .12s;max-width:230px}
+  .node .kw{font-weight:600;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .node .dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+  /* ring = box-shadow, ĐỘ ĐẬM theo tier */
+  .node.core  {box-shadow:0 0 0 2px var(--core)}
+  .node.common{box-shadow:0 0 0 2px var(--common)}
+  .node.niche {box-shadow:0 0 0 2px var(--niche)}
+  .node.core .dot{background:var(--core)}.node.common .dot{background:var(--common)}.node.niche .dot{background:var(--niche)}
+  .node.root{background:var(--acc);color:#fff;box-shadow:0 3px 12px rgba(192,64,122,.35);font-weight:800;padding:10px 15px}
+  .node.root .kw{color:#fff;font-weight:800}
+  .node:hover{transform:translateY(-50%) translateY(-1px)}
+  .node.hit{box-shadow:0 0 0 3px var(--acc),0 4px 14px rgba(192,64,122,.3)}
+  .node.dim{opacity:.16}
+
+  /* CỤM NÚT SUPPORT (React Flow Panel) */
+  .toolbar{position:absolute;top:12px;left:12px;z-index:10;display:flex;flex-direction:column;gap:8px;width:230px}
+  .tb-search{display:flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--line);border-radius:11px;padding:7px 10px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+  .tb-search input{border:0;background:transparent;color:var(--fg);font:inherit;font-size:12.5px;width:100%;outline:none}
+  .tb-search .ic{color:var(--mut)}
+  .tb-row{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{border:1px solid var(--line);background:var(--card);color:var(--mut);border-radius:999px;padding:4px 10px;font-size:11px;cursor:pointer;font:inherit}
+  .chip.on{background:var(--acc);color:#fff;border-color:var(--acc);font-weight:700}
+  .tb-btns{display:flex;gap:6px}
+  .tb-btns button{flex:1;border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:9px;padding:6px;font:inherit;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
+  .sugg{background:var(--card);border:1px solid var(--line);border-radius:11px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.1);max-height:180px;overflow-y:auto}
+  .sugg div{padding:7px 11px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line)}
+  .sugg div:last-child{border-bottom:0}.sugg div:hover{background:var(--bg)}
+  .sugg .d{width:7px;height:7px;border-radius:50%;flex:0 0 auto}
+
+  /* legend + minimap */
+  .legend{position:absolute;left:12px;bottom:12px;z-index:10;background:color-mix(in oklab,var(--card) 90%,transparent);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:11px;color:var(--mut);display:flex;flex-direction:column;gap:5px}
+  .legend .r{display:flex;align-items:center;gap:7px}
+  .legend .sw{width:26px;height:14px;border-radius:5px;background:var(--card)}
+  .legend .sw.core{box-shadow:0 0 0 2px var(--core)}.legend .sw.common{box-shadow:0 0 0 2px var(--common)}.legend .sw.niche{box-shadow:0 0 0 2px var(--niche)}
+  .minimap{position:absolute;right:12px;bottom:12px;z-index:10;width:180px;height:120px;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .minimap i{position:absolute;border-radius:2px}
+  .minimap .vp{border:1.5px solid var(--acc);background:rgba(192,64,122,.08)}
+  .zoom{position:absolute;right:12px;top:12px;z-index:10;display:flex;flex-direction:column;gap:5px}
+  .zoom button{width:30px;height:30px;border:1px solid var(--line);background:var(--card);border-radius:8px;font-size:15px;cursor:pointer;color:var(--fg)}
+  .note{max-width:1180px;margin:0 auto 40px;font-size:12px;color:var(--mut);padding:0 14px}
+  .blocktag{font:9px ui-monospace,monospace;color:var(--mut);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+</style>
+</head>
+<body>
+<div class="top">
+  <b>Mind-map · node card+ring + cụm nút lookup</b>
+  <span class="sub">ring tô theo MỨC ĐỘ PHỔ BIẾN · toolbar search/filter/minimap · slice devops thật</span>
+  <button class="tglr" id="theme">◑ theme</button>
+</div>
+
+<div class="stage" id="stage">
+  <svg class="edges" id="edges"></svg>
+
+  <div class="toolbar">
+    <div class="tb-search">
+      <span class="ic">🔍</span>
+      <input id="q" placeholder="Tìm keyword… (VPC, Redis, RBAC)" autocomplete="off">
+    </div>
+    <div class="sugg" id="sugg" style="display:none"></div>
+    <div class="tb-row" id="tierchips">
+      <button class="chip on" data-tier="all">Tất cả</button>
+      <button class="chip" data-tier="common">≥ Phổ biến</button>
+      <button class="chip" data-tier="core">Chỉ Core</button>
+    </div>
+    <div class="tb-btns">
+      <button title="Vừa khung">⤢ Fit</button>
+      <button title="Thu gọn nhánh">⊟ Gom nhánh</button>
+    </div>
+  </div>
+
+  <div class="zoom"><button>+</button><button>−</button></div>
+
+  <div class="legend">
+    <div class="r"><span class="sw core"></span> Rất phổ biến</div>
+    <div class="r"><span class="sw common"></span> Phổ biến</div>
+    <div class="r"><span class="sw niche"></span> Chuyên sâu</div>
+  </div>
+
+  <div class="minimap" id="minimap"></div>
+</div>
+
+<div class="note" id="note"></div>
+
+<script>
+// slice devops thật (từ ảnh) + tier phổ biến gán tay để minh hoạ
+var T={core:3,common:2,niche:1};
+var NODES=[
+  {id:'root',kw:'Kỹ sư DevOps',tier:'core',x:70,depth:0,parent:null,root:1},
+  {id:'cloud',kw:'Hạ tầng đa Cloud',tier:'core',depth:1,parent:'root'},
+    {id:'do',kw:'DigitalOcean',tier:'common',depth:2,parent:'cloud'},
+      {id:'do-net',kw:'Nền tảng',tier:'common',depth:3,parent:'do'},
+        {id:'vpc',kw:'VPC & cô lập mạng',tier:'core',depth:4,parent:'do-net'},
+        {id:'fw',kw:'Firewall & Reserved IP',tier:'common',depth:4,parent:'do-net'},
+        {id:'pat',kw:'PAT, Spaces Key',tier:'niche',depth:4,parent:'do-net'},
+      {id:'do-com',kw:'Compute',tier:'common',depth:3,parent:'do'},
+        {id:'droplet',kw:'Droplet',tier:'common',depth:4,parent:'do-com'},
+        {id:'lb',kw:'Load Balancer',tier:'common',depth:4,parent:'do-com'},
+        {id:'asp',kw:'Droplet Autoscale Pool',tier:'niche',depth:4,parent:'do-com'},
+        {id:'cdn',kw:'Spaces CDN',tier:'niche',depth:4,parent:'do-com'},
+  {id:'iam',kw:'IAM & Bảo mật',tier:'core',depth:1,parent:'root'},
+    {id:'rbac',kw:'RBAC & Role',tier:'core',depth:2,parent:'iam'},
+    {id:'kms',kw:'Managed Identity & Federation',tier:'common',depth:2,parent:'iam'},
+    {id:'kv',kw:'Key Vault',tier:'common',depth:2,parent:'iam'},
+    {id:'redis',kw:'Redis Cache',tier:'core',depth:2,parent:'iam'},
+];
+var COLX=[60,250,470,700,940];
+var stage=document.getElementById('stage'),svg=document.getElementById('edges'),mini=document.getElementById('minimap');
+var byId={}; NODES.forEach(function(n){byId[n.id]=n});
+// y-layout: leaves stacked, parents centered (tidy tree, mini)
+var rc=0;
+function layout(n){
+  var kids=NODES.filter(function(c){return c.parent===n.id});
+  if(!kids.length){ n.y=60+rc*46; rc++; }
+  else { kids.forEach(layout); n.y=(kids[0].y+kids[kids.length-1].y)/2; }
+}
+layout(byId['root']);
+function place(){
+  stage.querySelectorAll('.node').forEach(function(e){e.remove()});
+  var e='';
+  NODES.forEach(function(n){
+    n.px=COLX[n.depth];
+    var p=byId[n.parent];
+    if(p) e+='<path d="M'+(p.px+70)+' '+p.y+' C '+((p.px+n.px)/2)+' '+p.y+' '+((p.px+n.px)/2)+' '+n.y+' '+n.px+' '+n.y+'" fill="none" stroke="var(--line)" stroke-width="1.4"/>';
+  });
+  svg.innerHTML=e; svg.setAttribute('viewBox','0 0 1180 '+(60+rc*46+60));
+  NODES.forEach(function(n){
+    var d=document.createElement('div');
+    d.className='node '+n.tier+(n.root?' root':''); d.dataset.id=n.id;
+    d.style.left=n.px+'px'; d.style.top=n.y+'px';
+    d.innerHTML=(n.root?'':'<span class="dot"></span>')+'<span class="kw">'+n.kw+'</span>';
+    stage.appendChild(d);
+  });
+  drawMini();
+}
+function drawMini(){
+  mini.querySelectorAll('i').forEach(function(x){x.remove()});
+  var maxY=60+rc*46+40, sx=180/1180, sy=120/maxY;
+  NODES.forEach(function(n){
+    var i=document.createElement('i');
+    i.style.left=(n.px*sx)+'px'; i.style.top=(n.y*sy)+'px';
+    i.style.width='10px'; i.style.height='4px';
+    i.style.background=n.tier==='core'?'var(--core)':n.tier==='common'?'var(--common)':'var(--niche)';
+    mini.appendChild(i);
+  });
+  var vp=document.createElement('i'); vp.className='vp';
+  vp.style.left='2px';vp.style.top='2px';vp.style.width='120px';vp.style.height='80px';
+  mini.appendChild(vp);
+}
+place();
+
+// ---- SEARCH: highlight + dim non-match (build: setCenter node) ----
+var q=document.getElementById('q'), sugg=document.getElementById('sugg');
+function clearFx(){stage.querySelectorAll('.node').forEach(function(e){e.classList.remove('hit','dim')})}
+q.addEventListener('input',function(){
+  var v=q.value.trim().toLowerCase();
+  clearFx();
+  if(!v){sugg.style.display='none';return}
+  var m=NODES.filter(function(n){return !n.root && n.kw.toLowerCase().indexOf(v)>-1});
+  sugg.innerHTML=m.slice(0,6).map(function(n){return '<div data-id="'+n.id+'"><span class="d" style="background:var(--'+n.tier+')"></span>'+n.kw+'</div>'}).join('')||'<div style="color:var(--mut)">Không thấy keyword</div>';
+  sugg.style.display='block';
+  stage.querySelectorAll('.node').forEach(function(e){ if(!e.classList.contains('root')&&e.querySelector('.kw').textContent.toLowerCase().indexOf(v)<0) e.classList.add('dim'); });
+});
+sugg.addEventListener('click',function(ev){var d=ev.target.closest('[data-id]');if(!d)return;
+  clearFx(); var el=stage.querySelector('.node[data-id="'+d.dataset.id+'"]'); el.classList.add('hit'); sugg.style.display='none'; q.value=el.querySelector('.kw').textContent;
+});
+// ---- TIER FILTER ----
+document.getElementById('tierchips').addEventListener('click',function(ev){
+  var b=ev.target.closest('.chip');if(!b)return;
+  document.querySelectorAll('#tierchips .chip').forEach(function(x){x.classList.remove('on')});b.classList.add('on');
+  var t=b.dataset.tier; clearFx();
+  stage.querySelectorAll('.node').forEach(function(e){
+    if(e.classList.contains('root'))return;
+    var tier=e.classList.contains('core')?3:e.classList.contains('common')?2:1;
+    var min=t==='all'?1:t==='common'?2:3;
+    e.classList.toggle('dim',tier<min);
+  });
+});
+document.getElementById('theme').onclick=function(){var r=document.documentElement,d=r.getAttribute('data-theme')==='dark';r.setAttribute('data-theme',d?'light':'dark')};
+document.getElementById('note').innerHTML='<b>Node = card + ring theo mức độ phổ biến</b> (core = ring accent đậm · phổ biến = ring vàng vừa · ít gặp = ring mảnh xám) + chấm màu trong card cho a11y (không chỉ dựa màu ring). <b>Cụm nút lookup</b> (React Flow <span class="blocktag">Panel</span>): 🔍 search keyword → gõ ra gợi ý → chọn = <span class="blocktag">setCenter</span> focus node (ở đây: highlight+dim); filter theo tier (giảm nhiễu, chỉ hiện core/phổ biến); Fit / Gom nhánh; <span class="blocktag">MiniMap</span> góc phải + zoom. ⚠️ CẦN CHỐT: nguồn "mức độ phổ biến" (xem tin nhắn).';
+</script>
+</body>
+</html>

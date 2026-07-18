@@ -2,13 +2,15 @@
 
 import React, { useEffect, useMemo, useState } from "react"
 import {
+    Badge,
     Button,
     Link,
     Pagination,
+    Popover,
     Typography,
     cn,
 } from "@heroui/react"
-import { BriefcaseIcon, TrayIcon } from "@phosphor-icons/react"
+import { BriefcaseIcon, FunnelIcon, TrayIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { JobListRow } from "./JobListRow"
@@ -59,6 +61,14 @@ export const JobList = ({ className }: JobListProps) => {
     const [workModeFilter, setWorkModeFilter] = useState<WorkModeFilterValue>("all")
     const [employmentTypeFilter, setEmploymentTypeFilter] = useState<EmploymentTypeFilterValue>("all")
     const [page, setPage] = useState(1)
+    // work-mode/employment facets live behind a FUNNEL popover so the toolbar stays a
+    // single clean line (mirrors ProfileChallengeManage); the funnel badges active count.
+    const [filterOpen, setFilterOpen] = useState(false)
+    const activeFacetCount = (workModeFilter !== "all" ? 1 : 0) + (employmentTypeFilter !== "all" ? 1 : 0)
+    const clearFacets = () => {
+        setWorkModeFilter("all")
+        setEmploymentTypeFilter("all")
+    }
 
     // any filter/search resets the page back to 1 so a narrowed result set never
     // opens on an out-of-range page
@@ -128,34 +138,65 @@ export const JobList = ({ className }: JobListProps) => {
                 )}
             />
 
-            <div className="flex flex-col gap-3">
-                {/* search row: filter input (left) + result count (right) */}
-                <div className="flex flex-wrap items-center justify-between gap-3">
+            {/* search + a FUNNEL popover (work-mode/employment facets), one row.
+                Facets live behind the funnel so the toolbar stays a single clean line
+                regardless of how many facet values exist (mirrors ProfileChallengeManage). */}
+            <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex min-w-0 flex-1 items-center gap-3">
                     <SearchInput
+                        className="min-w-0 flex-1"
                         value={search}
                         onValueChange={setSearch}
                         placeholder={t("jobs.list.searchPlaceholder")}
                     />
-                    <Typography type="body-sm" color="muted" className="shrink-0">
-                        {t("jobs.list.found", { count: total })}
-                    </Typography>
+                    <Popover isOpen={filterOpen} onOpenChange={setFilterOpen}>
+                        <Button
+                            isIconOnly
+                            variant="ghost"
+                            aria-label={t("jobs.list.filters.filterButton")}
+                            className="shrink-0"
+                        >
+                            {activeFacetCount > 0 ? (
+                                <Badge.Anchor>
+                                    <FunnelIcon className="size-5" />
+                                    <Badge size="sm" color="accent" placement="top-left">{activeFacetCount}</Badge>
+                                </Badge.Anchor>
+                            ) : (
+                                <FunnelIcon className="size-5" />
+                            )}
+                        </Button>
+                        <Popover.Content className="w-72">
+                            <div className="flex flex-col gap-3 p-3">
+                                <div className="flex flex-col gap-2">
+                                    <Typography type="body-xs" color="muted">{t("jobs.list.filters.workModeHeading")}</Typography>
+                                    <FlexWrapButtonRadio<WorkModeFilterValue>
+                                        ariaLabel={t("jobs.list.filters.workModeAria")}
+                                        value={workModeFilter}
+                                        onChange={setWorkModeFilter}
+                                        items={workModeItems}
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <Typography type="body-xs" color="muted">{t("jobs.list.filters.employmentTypeHeading")}</Typography>
+                                    <FlexWrapButtonRadio<EmploymentTypeFilterValue>
+                                        ariaLabel={t("jobs.list.filters.employmentTypeAria")}
+                                        value={employmentTypeFilter}
+                                        onChange={setEmploymentTypeFilter}
+                                        items={employmentTypeItems}
+                                    />
+                                </div>
+                                {activeFacetCount > 0 ? (
+                                    <Button variant="danger-soft" size="sm" className="self-start" onPress={clearFacets}>
+                                        {t("jobs.list.filters.clearFilters")}
+                                    </Button>
+                                ) : null}
+                            </div>
+                        </Popover.Content>
+                    </Popover>
                 </div>
-
-                {/* single-select filter rows */}
-                <div className="flex flex-col gap-2">
-                    <FlexWrapButtonRadio<WorkModeFilterValue>
-                        ariaLabel={t("jobs.list.filters.workModeAria")}
-                        value={workModeFilter}
-                        onChange={setWorkModeFilter}
-                        items={workModeItems}
-                    />
-                    <FlexWrapButtonRadio<EmploymentTypeFilterValue>
-                        ariaLabel={t("jobs.list.filters.employmentTypeAria")}
-                        value={employmentTypeFilter}
-                        onChange={setEmploymentTypeFilter}
-                        items={employmentTypeItems}
-                    />
-                </div>
+                <Typography type="body-sm" color="muted" className="shrink-0">
+                    {t("jobs.list.found", { count: total })}
+                </Typography>
             </div>
 
             <AsyncContent

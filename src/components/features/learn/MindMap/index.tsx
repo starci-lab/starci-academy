@@ -3,7 +3,7 @@
 import React from "react"
 import { Skeleton, cn } from "@heroui/react"
 import { useTranslations } from "next-intl"
-import { ConceptMap } from "./ConceptMap"
+import { MindMapWorkspace } from "./MindMapWorkspace"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryCourseSwr } from "@/hooks/swr/api/graphql/queries/useQueryCourseSwr"
@@ -45,7 +45,7 @@ export const MindMap = ({
                     retryLabel: t("courseLanding.retry"),
                 }}
             >
-                <ConceptMap />
+                <MindMapWorkspace />
             </AsyncContent>
         </div>
     )

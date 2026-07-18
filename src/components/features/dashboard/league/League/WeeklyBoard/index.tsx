@@ -76,11 +76,6 @@ export const WeeklyBoard = ({
     )
 
     const total = data?.entries.length ?? 0
-    const demoteFrom = total - (data?.demoteCount ?? 0)
-    // zone markers only when the promote & demote cut lines don't overlap; a small
-    // cohort (promoteCount + demoteCount ≥ total) would mark every row both ways →
-    // render a clean flat list instead (fixes the "everything tinted" degenerate case).
-    const zonesDisjoint = data ? data.promoteCount + data.demoteCount < total : false
 
     /** Whether an entry belongs to the viewer (best-effort username match). */
     const isMine = (username: string | null) => Boolean(me?.username) && username === me?.username
@@ -168,6 +163,7 @@ export const WeeklyBoard = ({
                             avatar: entry.avatar,
                             pointsLabel: t("dashboard.league.points", { count: entry.weekPoints }),
                             isMe: isMine(entry.username),
+                            rankDelta: entry.rankDelta,
                         }))}
                     />
 
@@ -188,15 +184,17 @@ export const WeeklyBoard = ({
                         <SurfaceListCard>
                             {data.entries.slice(3).map((entry) => {
                                 const mine = isMine(entry.username)
-                                const zoneUp = zonesDisjoint && entry.rank <= data.promoteCount
-                                const zoneDown = zonesDisjoint && entry.rank > demoteFrom
+                                // band = weekly rank MOVEMENT (mirrors the ▴▾ caret), a
+                                // per-row signal that ALWAYS shows — NOT the cohort zone
+                                // (which the disjoint gate hides on a small cohort). card.md §3i.
+                                const delta = entry.rankDelta ?? 0
                                 return (
                                     <SurfaceListCardItem
                                         key={entry.userGlobalId}
-                                        className={cn(
-                                            zoneUp && "border-l-2 border-success",
-                                            zoneDown && "border-l-2 border-danger",
-                                        )}
+                                        withVerdict={{
+                                            enable: delta !== 0,
+                                            variant: delta > 0 ? "success" : "danger",
+                                        }}
                                     >
                                         <div className="flex items-center gap-3">
                                             <span

@@ -312,7 +312,7 @@ export const FlashcardReviewHistory = ({ courseId, onStartReview, className }: F
                         // itself a `SurfaceListCard` → frameless avoids card-in-card). Titled
                         // block → LabeledCard, KHÔNG Typography-label + card tay (thầy
                         // 2026-07-13: "mấy cái này phải là Label Card"; `components/card.md` §2).
-                        <div className="flex flex-col gap-6">
+                        <div className="flex flex-col gap-3">
                             {timeBuckets.map((bucket) => (
                                 <LabeledCard
                                     key={bucket.key}

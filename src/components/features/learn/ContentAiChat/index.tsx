@@ -13,16 +13,21 @@ import {
 import {
     ArrowLeftIcon,
     ArrowRightIcon,
+    BookmarkSimpleIcon,
     BookOpenIcon,
     CardsIcon,
     CaretDownIcon,
     ChatsCircleIcon,
     FlagIcon,
+    FlaskIcon,
     GearIcon,
+    LightbulbIcon,
+    ListBulletsIcon,
     PaperPlaneTiltIcon,
     PlusIcon,
     PuzzlePieceIcon,
     QuotesIcon,
+    SparkleIcon,
     TrashIcon,
 } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
@@ -76,6 +81,33 @@ const SELECTION_SUGGESTION_KEYS = ["explain", "example", "simplify"] as const
 /** The kind an in-chat "find X" intent resolves to. */
 type ContentIntentKind = "content" | "challenge" | "flashcard" | "milestone"
 
+/**
+ * One discoverable slash-command. Typing `/` as the first token opens a menu of
+ * these so a learner SEES what the chatbot can do instead of guessing the magic
+ * phrasing (the plain ask "Các challenges liên quan" never triggered the find).
+ * Every command maps onto capabilities that ALREADY exist — `find` reuses the
+ * `runContentIntent` RAG search (kinds the BE `searchCourseContent` supports;
+ * `"all"` = related content across every kind), `prompt` sends a preset question
+ * (the same strings as the empty-thread suggestion chips). No BE change.
+ */
+type SlashCommand =
+    | { token: string, type: "find", kind: ContentIntentKind | "all", Icon: typeof CardsIcon }
+    | { token: string, type: "prompt", suggestionKey: typeof SUGGESTION_KEYS[number], Icon: typeof CardsIcon }
+
+/** The command set (order = menu order). Tokens are short English slugs (dev-tool
+ * convention); the Vietnamese description lives in `contentAi.commands.<token>`. */
+const SLASH_COMMANDS: ReadonlyArray<SlashCommand> = [
+    { token: "challenges", type: "find", kind: "challenge", Icon: PuzzlePieceIcon },
+    { token: "flashcards", type: "find", kind: "flashcard", Icon: CardsIcon },
+    { token: "lessons", type: "find", kind: "content", Icon: BookOpenIcon },
+    { token: "milestones", type: "find", kind: "milestone", Icon: FlagIcon },
+    { token: "related", type: "find", kind: "all", Icon: SparkleIcon },
+    { token: "summarize", type: "prompt", suggestionKey: "summarize", Icon: ListBulletsIcon },
+    { token: "hardest", type: "prompt", suggestionKey: "hardest", Icon: LightbulbIcon },
+    { token: "example", type: "prompt", suggestionKey: "example", Icon: FlaskIcon },
+    { token: "remember", type: "prompt", suggestionKey: "remember", Icon: BookmarkSimpleIcon },
+]
+
 /** A find-verb that signals the learner wants a LIST of course content, not a chat answer. */
 const CONTENT_INTENT_VERB_RE = /(tìm|find|gợi ý|liệt kê|list|show|kiếm)/i
 
@@ -100,12 +132,14 @@ const detectContentIntent = (text: string): ContentIntentKind | null => {
     return CONTENT_INTENT_KINDS.find((entry) => entry.re.test(text))?.kind ?? null
 }
 
-/** Per-kind header presentation for the in-chat tool-result widget. */
-const TOOL_RESULT_META: Record<ContentIntentKind, { labelKey: string, Icon: typeof CardsIcon }> = {
+/** Per-kind header presentation for the in-chat tool-result widget (`all` = the
+ * mixed "related content" list from the `/related` command). */
+const TOOL_RESULT_META: Record<ContentIntentKind | "all", { labelKey: string, Icon: typeof CardsIcon }> = {
     flashcard: { labelKey: "entityResult.kindFlashcard", Icon: CardsIcon },
     content: { labelKey: "entityResult.kindContent", Icon: BookOpenIcon },
     challenge: { labelKey: "entityResult.kindChallenge", Icon: PuzzlePieceIcon },
     milestone: { labelKey: "entityResult.kindMilestone", Icon: FlagIcon },
+    all: { labelKey: "contentAi.toolResult.relatedLabel", Icon: SparkleIcon },
 }
 
 /** Number of rows the in-chat tool result shows before "see all". */
@@ -137,8 +171,9 @@ interface ChatMessage {
      * pickable {@link ChatToolResult} list instead of streamed text.
      */
     toolResult?: {
-        /** Which corpus the results belong to (drives the header label/icon). */
-        kind: ContentIntentKind
+        /** Which corpus the results belong to (drives the header label/icon);
+         *  `all` = the mixed "related content" list from the `/related` command. */
+        kind: ContentIntentKind | "all"
         /** The query that produced them (feeds the "see all" full-search view). */
         query: string
         /** The matched sources (already sliced to {@link TOOL_RESULT_LIMIT}). */
@@ -170,6 +205,8 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     const { close: closeChat } = useContentAiChatOverlayState()
     const [messages, setMessages] = useState<Array<ChatMessage>>([])
     const [input, setInput] = useState("")
+    // highlighted row in the slash-command palette (keyboard ↑↓); reset to 0 on every keystroke
+    const [activeCommandIndex, setActiveCommandIndex] = useState(0)
     const [isStreaming, setIsStreaming] = useState(false)
     // lesson passage the learner highlighted to ask about (set by ContentAiSelectionAsk)
     const { selection, selectionContext, setSelection } = useContentAiSelection()
@@ -358,7 +395,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
      * then fill it from a course-wide RAG search. Client-side MVP — the BE intent
      * classifier + persisted tool turn is phase 2 (this turn is not saved yet).
      */
-    const runContentIntent = useCallback(async (raw: string, kind: ContentIntentKind) => {
+    const runContentIntent = useCallback(async (raw: string, kind: ContentIntentKind | "all") => {
         const courseId = course?.id
         if (!courseId) {
             return
@@ -380,9 +417,15 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             const res = await querySearchCourseContent({ courseId, searchQuery: groundedQuery })
             const all = res.data?.searchCourseContent?.data?.results ?? []
             items = all
-                .filter((item) => (kind === "content"
-                    ? item.kind === "content" || item.kind === "code"
-                    : item.kind === kind))
+                .filter((item) => {
+                    // "/related" shows every kind; "content" folds in "code" hits too
+                    if (kind === "all") {
+                        return true
+                    }
+                    return kind === "content"
+                        ? item.kind === "content" || item.kind === "code"
+                        : item.kind === kind
+                })
                 .slice(0, TOOL_RESULT_LIMIT)
         } catch {
             items = []
@@ -542,6 +585,34 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         />
     )
 
+    /** Run a slash-command: a `find` reuses the RAG list intent, a `prompt` sends
+     *  the preset question. Both clear the input themselves. */
+    const runSlashCommand = useCallback((cmd: SlashCommand) => {
+        setActiveCommandIndex(0)
+        if (cmd.type === "find") {
+            if (!course?.id) {
+                return
+            }
+            void runContentIntent(t(`contentAi.commands.${cmd.token}`), cmd.kind)
+            return
+        }
+        void onSend(t(`contentAi.suggestions.${cmd.suggestionKey}`))
+    }, [course?.id, runContentIntent, onSend, t])
+
+    // ── slash-command palette (derived from the current input) ─────────────
+    // "/" as the FIRST token (no space yet) opens the command menu; a space or a
+    // non-slash char leaves the input as an ordinary question (Enter still sends,
+    // the regex find-intent still runs).
+    const slashMatch = selection ? null : input.match(/^\/(\w*)$/)
+    const slashQuery = slashMatch ? slashMatch[1].toLowerCase() : null
+    const filteredCommands = slashQuery !== null
+        ? SLASH_COMMANDS.filter((cmd) => cmd.token.startsWith(slashQuery))
+        : []
+    const slashMenuOpen = filteredCommands.length > 0
+    const activeCommand = slashMenuOpen
+        ? filteredCommands[Math.min(activeCommandIndex, filteredCommands.length - 1)]
+        : undefined
+
     /** Plain input — parent composer/quote box owns fill + padding; this is chỉ chỗ gõ
      *  (no HeroUI field chrome, so it never nests a second border/ring inside the box). */
     const chatInputField = () => (
@@ -551,8 +622,38 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             className="w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted"
             placeholder={t("contentAi.placeholder")}
             value={input}
-            onChange={(event) => setInput(event.target.value)}
+            onChange={(event) => {
+                setInput(event.target.value)
+                setActiveCommandIndex(0)
+            }}
             onKeyDown={(event) => {
+                // while the slash palette is open, the arrow keys + Enter drive it
+                // (Enter runs the highlighted command, NOT a chat send)
+                if (slashMenuOpen) {
+                    if (event.key === "ArrowDown") {
+                        event.preventDefault()
+                        setActiveCommandIndex((index) => (index + 1) % filteredCommands.length)
+                        return
+                    }
+                    if (event.key === "ArrowUp") {
+                        event.preventDefault()
+                        setActiveCommandIndex((index) => (index - 1 + filteredCommands.length) % filteredCommands.length)
+                        return
+                    }
+                    if (event.key === "Enter") {
+                        event.preventDefault()
+                        if (activeCommand) {
+                            runSlashCommand(activeCommand)
+                        }
+                        return
+                    }
+                    if (event.key === "Escape") {
+                        event.preventDefault()
+                        setInput("")
+                        setActiveCommandIndex(0)
+                        return
+                    }
+                }
                 if (event.key === "Enter") {
                     event.preventDefault()
                     void onSend()
@@ -885,6 +986,45 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                         ))}
                     </div>
                     {chatInputField()}
+                </div>
+            ) : null}
+
+            {/* slash-command palette — the chatbot's capabilities made DISCOVERABLE:
+                typing "/" as the first token opens this list (find related content /
+                run a preset ask). Keyboard: ↑↓ move · Enter run · Esc close. Maps onto
+                the existing find-intent + suggestions — no BE change. */}
+            {slashMenuOpen ? (
+                <div
+                    role="listbox"
+                    aria-label={t("contentAi.commands.aria")}
+                    className="flex flex-col overflow-hidden rounded-2xl border border-default bg-surface"
+                >
+                    <div className="px-3 pb-1 pt-2">
+                        <Typography type="body-xs" color="muted">{t("contentAi.commands.hint")}</Typography>
+                    </div>
+                    <ScrollShadow hideScrollBar className="max-h-64 min-h-0 overflow-y-auto p-1">
+                        {filteredCommands.map((cmd) => {
+                            const CommandIcon = cmd.Icon
+                            const isActive = cmd === activeCommand
+                            return (
+                                <Button
+                                    key={cmd.token}
+                                    variant="ghost"
+                                    className={cn(
+                                        "h-auto w-full justify-start gap-3 px-3 py-2 text-start",
+                                        isActive && "bg-default",
+                                    )}
+                                    onPress={() => runSlashCommand(cmd)}
+                                >
+                                    <CommandIcon className="size-4 shrink-0 text-muted" aria-hidden focusable="false" />
+                                    <span className="flex min-w-0 flex-1 flex-col">
+                                        <span className="text-sm font-medium text-foreground">/{cmd.token}</span>
+                                        <span className="truncate text-xs text-muted">{t(`contentAi.commands.${cmd.token}`)}</span>
+                                    </span>
+                                </Button>
+                            )
+                        })}
+                    </ScrollShadow>
                 </div>
             ) : null}
 

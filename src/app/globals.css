@@ -41,7 +41,7 @@
 /* Same escape hatch, now for the INSET-SHADOW verdict band (`shadow-[inset_2px_0_0_0_var(--color-<name>-<shade>)]`,
  * built at runtime from `withVerdict.color` — see `verdictBandClassName`). Pre-generate the grid so the dynamic
  * arbitrary-shadow class exists in the compiled CSS. */
-@source inline("shadow-[inset_2px_0_0_0_var(--color-{red,orange,amber,yellow,lime,green,emerald,teal,cyan,sky,blue,indigo,violet,purple,fuchsia,pink,rose,slate,gray,zinc,neutral,stone}-{50,100,200,300,400,500,600,700,800,900,950})]");
+@source inline("inset-shadow-[2px_0_0_0_var(--color-{red,orange,amber,yellow,lime,green,emerald,teal,cyan,sky,blue,indigo,violet,purple,fuchsia,pink,rose,slate,gray,zinc,neutral,stone}-{50,100,200,300,400,500,600,700,800,900,950})]");
 
 /* `blocks/cards/HighlightCard` — a single accent-colored ARC sweeping around the
  * wrapped card, sitting as its own INNER layer BEHIND it (a thin 2px sliver peeking out

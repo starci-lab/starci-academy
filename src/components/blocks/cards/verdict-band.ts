@@ -24,12 +24,14 @@ export interface VerdictBand {
 }
 
 /** Literal per-variant inset-shadow class — MUST stay literal (no template interpolation) so
- * Tailwind's static scanner picks it up. `var(--<token>)` are the semantic colour CSS vars. */
+ * Tailwind's static scanner picks it up. Uses `inset-shadow-*` (Tailwind v4's SEPARATE `--tw-inset-shadow`
+ * slot) so it coexists with a consumer's own `shadow-*` (e.g. GroupPressableCard's `shadow-surface`)
+ * instead of overwriting it. `var(--<token>)` are the semantic colour CSS vars. */
 const VERDICT_VARIANT_CLASS: Record<VerdictBandVariant, string> = {
-    accent: "shadow-[inset_2px_0_0_0_var(--accent)]",
-    success: "shadow-[inset_2px_0_0_0_var(--success)]",
-    warning: "shadow-[inset_2px_0_0_0_var(--warning)]",
-    danger: "shadow-[inset_2px_0_0_0_var(--danger)]",
+    accent: "inset-shadow-[2px_0_0_0_var(--accent)]",
+    success: "inset-shadow-[2px_0_0_0_var(--success)]",
+    warning: "inset-shadow-[2px_0_0_0_var(--warning)]",
+    danger: "inset-shadow-[2px_0_0_0_var(--danger)]",
 }
 
 /**
@@ -51,7 +53,7 @@ export const verdictBandClassName = (withVerdict?: VerdictBand): string | undefi
     const shadowClass = withVerdict.variant
         ? VERDICT_VARIANT_CLASS[withVerdict.variant]
         : withVerdict.color
-            ? `shadow-[inset_2px_0_0_0_var(--color-${withVerdict.color})]`
+            ? `inset-shadow-[2px_0_0_0_var(--color-${withVerdict.color})]`
             : undefined
     return cn("pl-4", shadowClass)
 }

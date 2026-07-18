@@ -23,38 +23,35 @@ export interface VerdictBand {
     color?: string
 }
 
-/** Literal per-variant background class for the pill band — MUST stay literal (no template
- * interpolation) so Tailwind's static scanner picks it up. */
+/** Literal per-variant inset-shadow class — MUST stay literal (no template interpolation) so
+ * Tailwind's static scanner picks it up. `var(--<token>)` are the semantic colour CSS vars. */
 const VERDICT_VARIANT_CLASS: Record<VerdictBandVariant, string> = {
-    accent: "before:bg-accent",
-    success: "before:bg-success",
-    warning: "before:bg-warning",
-    danger: "before:bg-danger",
+    accent: "shadow-[inset_2px_0_0_0_var(--accent)]",
+    success: "shadow-[inset_2px_0_0_0_var(--success)]",
+    warning: "shadow-[inset_2px_0_0_0_var(--warning)]",
+    danger: "shadow-[inset_2px_0_0_0_var(--danger)]",
 }
 
 /**
- * Resolves a {@link VerdictBand} into a FLUSH left-edge band (a `::before` pseudo-element),
- * or `undefined` when disabled.
+ * Resolves a {@link VerdictBand} into a 2px left-edge band, or `undefined` when disabled.
  *
- * The band is a `before:` bar pinned FLUSH to the left edge (`inset-y-0 left-0 w-1`) with the
- * card's own `overflow-hidden` CLIPPING it to the rounded rect — so it hugs the edge and its
- * top/bottom follow the corner curve cleanly, instead of a floating inset pill (thầy 2026-07-18:
- * "border màu sát mép trái"). A pseudo-element BACKGROUND (not a `border-l`) is untouched by
- * HeroUI's `.card { border ... !important }` reset, so it needs no `!important` dance; the
- * `overflow-hidden` is what makes a straight edge bar follow the corners without the old
- * corner-wrap clutter. `relative` anchors the pseudo; `pl-4` keeps the content off the bar.
+ * The band is an INSET box-shadow (`inset 2px 0 0 0 <colour>`) — it hugs the left edge AND follows
+ * the card's `border-radius`, so it CURVES ("móc") around the top-left / bottom-left corners
+ * instead of being cut flat at the rounded corner (thầy 2026-07-18: "cái móc lên"). box-shadow is
+ * untouched by HeroUI's `.card { border ... !important }` reset, so no `!important` dance; and it
+ * needs no `overflow-hidden`. `pl-4` keeps the content off the bar. On a flush-row consumer
+ * (`SurfaceListCard`) the first/last row must own the matching corner radius for the hook to land
+ * (see those blocks). Colour: `variant` → a semantic token var; `color` → the raw Tailwind palette
+ * var `--color-<name>-<shade>` (v4), safelisted in `globals.css`.
  */
 export const verdictBandClassName = (withVerdict?: VerdictBand): string | undefined => {
     if (!withVerdict?.enable) {
         return undefined
     }
-    const bgClass = withVerdict.variant
+    const shadowClass = withVerdict.variant
         ? VERDICT_VARIANT_CLASS[withVerdict.variant]
         : withVerdict.color
-            ? `before:bg-${withVerdict.color}`
+            ? `shadow-[inset_2px_0_0_0_var(--color-${withVerdict.color})]`
             : undefined
-    return cn(
-        "relative overflow-hidden pl-4 before:absolute before:inset-y-0 before:left-0 before:w-[2px] before:content-['']",
-        bgClass,
-    )
+    return cn("pl-4", shadowClass)
 }

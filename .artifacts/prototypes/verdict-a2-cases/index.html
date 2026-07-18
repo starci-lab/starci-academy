@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>verdict-a2-cases — A2 (vạch 2px sát mép) · card đơn + SurfaceListCard</title>
+<style>
+  :root{--bg:#f4f4f6;--fg:#1a1a1e;--mut:#6b6b76;--line:#e2e2e8;--card:#fff;--sep:#e6e6ec;--acc:#c0407a;
+        --ok:#2f8f57;--warn:#c99a1e;--bad:#c0392b;--rose:#e11d48;--orange:#f97316;--amber:#f59e0b;--emerald:#10b981}
+  @media (prefers-color-scheme:dark){:root{--bg:#161619;--fg:#eaeaef;--mut:#9a9aa6;--line:#2a2a30;--card:#1d1d21;--sep:#2a2a30}}
+  :root[data-theme=dark]{--bg:#161619;--fg:#eaeaef;--card:#1d1d21;--line:#2a2a30;--sep:#2a2a30}
+  :root[data-theme=light]{--bg:#f4f4f6;--fg:#1a1a1e;--card:#fff;--line:#e2e2e8;--sep:#e6e6ec}
+  *{box-sizing:border-box}
+  body{margin:0;font:14px/1.55 ui-sans-serif,system-ui,-apple-system,sans-serif;color:var(--fg);background:var(--bg)}
+  .top{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;gap:10px;align-items:center}
+  .top b{font-size:15px}.top .sub{color:var(--mut);font-size:12px}.tglr{margin-left:auto;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:8px;padding:5px 9px;cursor:pointer}
+  .wrap{max-width:760px;margin:16px auto;padding:0 16px 60px}
+  h2{font-size:14px;margin:26px 0 4px}.note{color:var(--mut);font-size:12px;margin:0 0 12px}
+  .tag{font:10px ui-monospace,monospace;color:var(--mut);background:var(--card);border:1px solid var(--line);border-radius:5px;padding:1px 6px}
+
+  /* ===== A2 verdict = vạch 2px MÓC theo góc bo (box-shadow inset, cong quanh corner) ===== */
+  .v{box-shadow:inset 2px 0 0 0 var(--v);padding-left:16px}
+
+  /* card đơn (SectionCard: rounded-3xl border) — box-shadow inset móc cả 4 góc trái */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:24px}
+  .card .in{padding:14px}
+  .lab{font-size:11px;color:var(--mut);margin:0 0 4px}
+  .h4{font-size:14px;font-weight:700;margin:0 0 4px}.p{font-size:13px;margin:0}
+  .stack{display:flex;flex-direction:column;gap:12px}
+
+  /* SurfaceListCard: rows FLUSH; first/last row bo góc để box-shadow móc theo góc container */
+  .slc{background:var(--card);border:1px solid var(--line);border-radius:24px}
+  .row{position:relative;display:flex;align-items:center;gap:12px;padding:12px 14px;padding-left:16px}
+  .slc .row:first-child{border-radius:24px 24px 0 0}
+  .slc .row:last-child{border-radius:0 0 24px 24px}
+  .row+.row::after{content:"";position:absolute;top:0;left:14px;right:14px;height:1px;background:var(--sep)}
+  .row .av{width:34px;height:34px;border-radius:50%;background:var(--line);flex:0 0 auto}
+  .row .nm{font-weight:600;font-size:13.5px}.row .xp{margin-left:auto;font-weight:700;color:var(--mut)}
+  .cap{font-size:11px;color:var(--mut);margin:6px 2px 0}
+</style>
+</head>
+<body>
+<div class="top"><b>A2 · vạch 2px sát mép</b><span class="sub">card đơn vs SurfaceListCard · overflow-hidden clip theo radius</span><button class="tglr" id="theme">◑</button></div>
+<div class="wrap">
+
+  <h2>1 · Card ĐƠN (SectionCard) <span class="tag">box-shadow: inset 2px · MÓC 4 góc trái</span></h2>
+  <p class="note">Vạch 2px cong THEO góc bo (box-shadow đi theo border-radius) → móc lên ở góc trên-trái + dưới-trái, không cụt.</p>
+  <div class="stack">
+    <div class="card v" style="--v:var(--acc)"><div class="in"><div class="lab">TL;DR</div><p class="p">Signup đẩy email sang background job, trả về ngay thay vì chờ mail server.</p></div></div>
+    <div class="card v" style="--v:var(--ok)"><div class="in"><div class="h4">How it works</div><p class="p">Request enqueue một message rồi return success; worker riêng nhặt khỏi queue làm phần chậm — retry độc lập nếu lỗi.</p></div></div>
+    <div class="card v" style="--v:var(--bad)"><div class="in"><div class="h4">Bẫy thường gặp</div><p class="p">Gửi email inline trong request → mail server chậm là signup timeout. Đừng buộc user chờ third-party.</p></div></div>
+  </div>
+
+  <h2>2 · SurfaceListCard (leaderboard) <span class="tag">container rounded-3xl overflow-hidden · rows flush</span></h2>
+  <p class="note">1 card, rows flush chia bằng separator. Mỗi row có bar 2px sát mép, ĐỔI MÀU theo verdict. Bar row ĐẦU/CUỐI được container clip theo góc bo (cong), rows giữa thẳng → 1 dải liền mạch ôm góc.</p>
+  <div class="slc">
+    <div class="row v" style="--v:var(--rose)"><span class="av"></span><span class="nm">cuongnvtse160875 · Bạn</span><span class="xp">1120 XP</span></div>
+    <div class="row v" style="--v:var(--amber)"><span class="av"></span><span class="nm">minh_dev</span><span class="xp">340 XP</span></div>
+    <div class="row v" style="--v:var(--amber)"><span class="av"></span><span class="nm">huyen_codes</span><span class="xp">220 XP</span></div>
+    <div class="row v" style="--v:var(--orange)"><span class="av"></span><span class="nm">pakoohacha588</span><span class="xp">150 XP</span></div>
+    <div class="row v" style="--v:var(--emerald)"><span class="av"></span><span class="nm">linh_fe</span><span class="xp">80 XP</span></div>
+  </div>
+  <p class="cap">↑ Row đầu (cuongnvtse) bar cong theo góc trên-trái; row cuối (linh_fe) cong theo góc dưới-trái; giữa thẳng.</p>
+
+  <h2>3 · Nút SM-2 (RatingBar, color palette) <span class="tag">v::before 2px · rose/orange/amber/emerald</span></h2>
+  <p class="note">Cùng cơ chế, màu từ palette (rose-500…). Mỗi nút là 1 card đơn → bar cong 4 góc.</p>
+  <div class="stack" style="flex-direction:row;gap:10px;flex-wrap:wrap">
+    <div class="card v" style="--v:var(--rose);flex:1;min-width:130px"><div class="in"><div class="h4">Quên</div><p class="p" style="color:var(--mut)">Gặp lại sau 1 ngày</p></div></div>
+    <div class="card v" style="--v:var(--orange);flex:1;min-width:130px"><div class="in"><div class="h4">Khó</div><p class="p" style="color:var(--mut)">6 ngày</p></div></div>
+    <div class="card v" style="--v:var(--amber);flex:1;min-width:130px"><div class="in"><div class="h4">Được</div><p class="p" style="color:var(--mut)">6 ngày</p></div></div>
+    <div class="card v" style="--v:var(--emerald);flex:1;min-width:130px"><div class="in"><div class="h4">Dễ</div><p class="p" style="color:var(--mut)">6 ngày</p></div></div>
+  </div>
+
+  <p class="note" style="margin-top:22px">MÓC = <code>box-shadow: inset 2px 0 0 0 var(--màu)</code> — đi theo border-radius nên cong quanh góc (khác overflow-clip vốn cắt phẳng, trông cụt). ⚠️ Đổi impl: card đơn (SectionCard/SM-2) móc ngay. SurfaceListCard cần row đầu/cuối bo góc (rounded-t / rounded-b) để móc theo góc container — 1 chút xử first/last-child. Màu: variant → var(--accent…); palette (SM-2) → var(--color-rose-500…) (Tailwind v4) hoặc safelist shadow.</p>
+</div>
+<script>document.getElementById('theme').onclick=function(){var r=document.documentElement,d=r.getAttribute('data-theme')==='dark';r.setAttribute('data-theme',d?'light':'dark')};</script>
+</body>
+</html>

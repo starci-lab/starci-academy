@@ -171,6 +171,8 @@ export const SurfaceListCardRow = ({
         "disabled:cursor-not-allowed disabled:opacity-60",
         selected && "bg-accent-soft",
         verdictBandClassName(withVerdict),
+        // first/last row own the container's corner radius so the verdict box-shadow HOOKS the corner
+        withVerdict?.enable && "first:rounded-t-3xl last:rounded-b-3xl",
         className,
     )
 
@@ -270,6 +272,8 @@ export const SurfaceListCardItem = ({
     const itemClassName = cn(
         "relative block w-full p-3 text-left",
         verdictBandClassName(withVerdict),
+        // first/last row own the container's corner radius so the verdict box-shadow HOOKS the corner
+        withVerdict?.enable && "first:rounded-t-3xl last:rounded-b-3xl",
         // full-bleed separator, hidden on the last row of the card
         "after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-['']",
         "last:after:hidden",

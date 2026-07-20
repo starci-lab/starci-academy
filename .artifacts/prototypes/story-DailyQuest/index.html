@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>story-DailyQuest — surface-in-surface: hiện tại vs đề xuất</title>
+<style>
+  :root {
+    --accent: oklch(70.03% 0.2092 354.13);
+    --background: oklch(12.00% 0.0015 354.13);
+    --default: oklch(27.40% 0.0015 354.13);
+    --foreground: oklch(99.11% 0.0015 354.13);
+    --muted: oklch(70.50% 0.0030 354.13);
+    --surface: oklch(21.03% 0.0030 354.13);
+    --success: oklch(72% 0.16 155);
+    --shadow-surface: 0 1px 2px 0 rgb(0 0 0 / .30), 0 1px 3px 1px rgb(0 0 0 / .15);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+    width: 100%;
+    padding: 2rem;
+  }
+  .page { display: flex; flex-direction: column; gap: 1.5rem; max-width: 46rem; }
+
+  /* ——— khung so sánh ——— */
+  .case { display: flex; flex-direction: column; gap: 0.75rem; }
+  .case-head { display: flex; flex-direction: column; gap: 0.5rem; }
+  .tag {
+    align-self: flex-start; font-size: .6875rem; font-weight: 600; letter-spacing: .04em;
+    padding: .125rem .5rem; border-radius: 9999px; text-transform: uppercase;
+  }
+  .tag.bad  { background: color-mix(in oklch, red 22%, transparent); color: oklch(78% .14 25); }
+  .tag.good { background: color-mix(in oklch, var(--success) 20%, transparent); color: var(--success); }
+  .case-label { font-size: .875rem; font-weight: 600; }
+  .case-desc { font-size: .875rem; color: var(--muted); line-height: 1.5; }
+
+  /* ——— LabeledCard ——— */
+  .section { display: flex; flex-direction: column; gap: 0.75rem; }
+  .section-label { font-size: .875rem; font-weight: 600; }
+  .card { background: var(--surface); border-radius: 1rem; padding: 1rem; box-shadow: var(--shadow-surface); }
+
+  /* ——— SurfaceListCard ——— */
+  .listcard { border-radius: 1rem; overflow: hidden; }
+  .listcard.bordered { border: 1px solid var(--default); }
+  .listcard.toplevel { background: var(--surface); box-shadow: var(--shadow-surface); }
+  .row {
+    display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+    padding: .75rem 1rem;
+  }
+  .row + .row { border-top: 1px solid var(--default); }
+  .row-left { display: flex; align-items: center; gap: .5rem; min-width: 0; }
+  .circle { width: 1.25rem; height: 1.25rem; border-radius: 9999px; border: 1.5px solid var(--muted); flex: 0 0 auto; }
+  .ico { width: 1.25rem; height: 1.25rem; flex: 0 0 auto; opacity: .85; }
+  .row-title { font-size: .875rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row-meta { font-size: .75rem; color: var(--muted); flex: 0 0 auto; }
+
+  .prompt { font-size: .75rem; color: var(--muted); align-self: flex-start; }
+  .stack-3 { display: flex; flex-direction: column; gap: .75rem; }
+  .stack-2 { display: flex; flex-direction: column; gap: .5rem; }
+
+  /* ——— chú giải đo đạc ——— */
+  .surface-mark { position: relative; }
+  .surface-mark::after {
+    content: attr(data-mark);
+    position: absolute; top: .25rem; right: .5rem;
+    font-size: .625rem; letter-spacing: .03em; color: oklch(78% .14 25); opacity: .9;
+  }
+  .note { font-size: .75rem; color: var(--muted); line-height: 1.6; }
+  .note code { color: var(--foreground); }
+  hr { border: 0; border-top: 1px solid var(--default); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HIỆN TẠI ============ -->
+  <div class="case">
+    <div class="case-head">
+      <span class="tag bad">Hiện tại — illegal</span>
+      <span class="case-label">LabeledCard có khung + SurfaceListCard bordered</span>
+      <span class="case-desc">
+        Hai lớp fill chồng nhau: khung Card của LabeledCard là surface thứ nhất, SurfaceListCard bordered là
+        surface thứ hai — mà nó chiếm gần trọn thân card, không phải một phần nhỏ nằm trong. Dòng nhắc hoàn
+        thành bị nhốt bên trong khung, cách card gap-3.
+      </span>
+    </div>
+
+    <div class="section">
+      <span class="section-label">Nhiệm vụ hôm nay</span>
+      <div class="card surface-mark" data-mark="surface 1">
+        <div class="stack-3">
+          <div class="listcard bordered surface-mark" data-mark="surface 2">
+            <div class="row"><div class="row-left"><span class="circle"></span><svg class="ico" viewBox="0 0 256 256" fill="currentColor"><path d="M224 48h-64a32 32 0 0 0-32 32 32 32 0 0 0-32-32H32a8 8 0 0 0-8 8v128a8 8 0 0 0 8 8h64a24 24 0 0 1 24 24 8 8 0 0 0 16 0 24 24 0 0 1 24-24h64a8 8 0 0 0 8-8V56a8 8 0 0 0-8-8Z"/></svg><span class="row-title">Đọc nội dung</span></div><span class="row-meta">0/1</span></div>
+            <div class="row"><div class="row-left"><span class="circle"></span><svg class="ico" viewBox="0 0 256 256" fill="currentColor"><path d="M216 136h-14.1a40 40 0 0 0-77.8 0H112V95.9a40 40 0 0 0 0-77.8V16a8 8 0 0 0-16 0v2.1a40 40 0 0 0 0 77.8V136H56a8 8 0 0 0-8 8v72a8 8 0 0 0 8 8h72a8 8 0 0 0 8-8v-14.1a40 40 0 0 0 77.8 0H216a8 8 0 0 0 8-8v-64a8 8 0 0 0-8-8Z"/></svg><span class="row-title">Pass challenge</span></div><span class="row-meta">0/1</span></div>
+            <div class="row"><div class="row-left"><span class="circle"></span><svg class="ico" viewBox="0 0 256 256" fill="currentColor"><path d="M216 40H40a16 16 0 0 0-16 16v112a16 16 0 0 0 16 16h176a16 16 0 0 0 16-16V56a16 16 0 0 0-16-16Zm0 128H40V56h176v112Zm16 48a8 8 0 0 1-8 8H32a8 8 0 0 1 0-16h192a8 8 0 0 1 8 8Z"/></svg><span class="row-title">Ôn flashcard</span></div><span class="row-meta">0/5</span></div>
+            <div class="row"><div class="row-left"><span class="circle"></span><svg class="ico" viewBox="0 0 256 256" fill="currentColor"><path d="M128 176a48.05 48.05 0 0 0 48-48V64a48 48 0 0 0-96 0v64a48.05 48.05 0 0 0 48 48ZM96 64a32 32 0 0 1 64 0v64a32 32 0 0 1-64 0Zm40 143.6V232a8 8 0 0 1-16 0v-24.4A80.11 80.11 0 0 1 48 128a8 8 0 0 1 16 0 64 64 0 0 0 128 0 8 8 0 0 1 16 0 80.11 80.11 0 0 1-72 79.6Z"/></svg><span class="row-title">Hoàn thành 1 phiên Phỏng vấn thử</span></div><span class="row-meta">0/1</span></div>
+            <div class="row"><div class="row-left"><span class="circle"></span><svg class="ico" viewBox="0 0 256 256" fill="currentColor"><path d="M128 40a96 96 0 1 0 96 96 96.11 96.11 0 0 0-96-96Zm0 176a80 80 0 1 1 80-80 80.09 80.09 0 0 1-80 80Zm45.66-125.66a8 8 0 0 1 0 11.32l-40 40a8 8 0 0 1-11.32-11.32l40-40a8 8 0 0 1 11.32 0ZM96 16a8 8 0 0 1 8-8h48a8 8 0 0 1 0 16h-48a8 8 0 0 1-8-8Z"/></svg><span class="row-title">Hoàn thành 1 phiên Quiz nhanh</span></div><span class="row-meta">0/1</span></div>
+          </div>
+          <span class="prompt">Hoàn thành cả 3 để nhận 20 điểm</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="note">
+      Call-site: <code>OverviewTab</code> bọc <code>&lt;LabeledCard&gt;</code> KHÔNG có <code>frameless</code> ·
+      <code>DailyQuest</code> render <code>&lt;SurfaceListCard bordered&gt;</code> · wrapper <code>gap-3</code>.
+    </p>
+  </div>
+
+  <hr />
+
+  <!-- ============ ĐỀ XUẤT ============ -->
+  <div class="case">
+    <div class="case-head">
+      <span class="tag good">Đề xuất — card surface list</span>
+      <span class="case-label">LabeledCard frameless + SurfaceListCard top-level</span>
+      <span class="case-desc">
+        Một surface bounded liền: bỏ khung Card của LabeledCard, để chính SurfaceListCard làm surface duy nhất,
+        đọc bằng shadow thay vì viền. Dòng nhắc hoàn thành nay nằm ngoài card, neo trái, cách card gap-2.
+      </span>
+    </div>
+
+    <div class="section">
+      <span class="section-label">Nhiệm vụ hôm nay</span>
+      <div class="stack-2">
+        <div class="listcard toplevel">
+          <div class="row"><div class="row-left"><span class="circle"></span><svg class="ico" viewBox="0 0 256 256" fill="currentColor"><path d="M224 48h-64a32 32 0 0 0-32 32 32 32 0 0 0-32-32H32a8 8 0 0 0-8 8v128a8 8 0 0 0 8 8h64a24 24 0 0 1 24 24 8 8 0 0 0 16 0 24 24 0 0 1 24-24h64a8 8 0 0 0 8-8V56a8 8 0 0 0-8-8Z"/></svg><span class="row-title">Đọc nội dung</span></div><span class="row-meta">0/1</span></div>
+          <div class="row"><div class="row-left"><span class="circle"></span><svg class="ico" viewBox="0 0 256 256" fill="currentColor"><path d="M216 136h-14.1a40 40 0 0 0-77.8 0H112V95.9a40 40 0 0 0 0-77.8V16a8 8 0 0 0-16 0v2.1a40 40 0 0 0 0 77.8V136H56a8 8 0 0 0-8 8v72a8 8 0 0 0 8 8h72a8 8 0 0 0 8-8v-14.1a40 40 0 0 0 77.8 0H216a8 8 0 0 0 8-8v-64a8 8 0 0 0-8-8Z"/></svg><span class="row-title">Pass challenge</span></div><span class="row-meta">0/1</span></div>
+          <div class="row"><div class="row-left"><span class="circle"></span><svg class="ico" viewBox="0 0 256 256" fill="currentColor"><path d="M216 40H40a16 16 0 0 0-16 16v112a16 16 0 0 0 16 16h176a16 16 0 0 0 16-16V56a16 16 0 0 0-16-16Zm0 128H40V56h176v112Zm16 48a8 8 0 0 1-8 8H32a8 8 0 0 1 0-16h192a8 8 0 0 1 8 8Z"/></svg><span class="row-title">Ôn flashcard</span></div><span class="row-meta">0/5</span></div>
+          <div class="row"><div class="row-left"><span class="circle"></span><svg class="ico" viewBox="0 0 256 256" fill="currentColor"><path d="M128 176a48.05 48.05 0 0 0 48-48V64a48 48 0 0 0-96 0v64a48.05 48.05 0 0 0 48 48ZM96 64a32 32 0 0 1 64 0v64a32 32 0 0 1-64 0Zm40 143.6V232a8 8 0 0 1-16 0v-24.4A80.11 80.11 0 0 1 48 128a8 8 0 0 1 16 0 64 64 0 0 0 128 0 8 8 0 0 1 16 0 80.11 80.11 0 0 1-72 79.6Z"/></svg><span class="row-title">Hoàn thành 1 phiên Phỏng vấn thử</span></div><span class="row-meta">0/1</span></div>
+          <div class="row"><div class="row-left"><span class="circle"></span><svg class="ico" viewBox="0 0 256 256" fill="currentColor"><path d="M128 40a96 96 0 1 0 96 96 96.11 96.11 0 0 0-96-96Zm0 176a80 80 0 1 1 80-80 80.09 80.09 0 0 1-80 80Zm45.66-125.66a8 8 0 0 1 0 11.32l-40 40a8 8 0 0 1-11.32-11.32l40-40a8 8 0 0 1 11.32 0ZM96 16a8 8 0 0 1 8-8h48a8 8 0 0 1 0 16h-48a8 8 0 0 1-8-8Z"/></svg><span class="row-title">Hoàn thành 1 phiên Quiz nhanh</span></div><span class="row-meta">0/1</span></div>
+        </div>
+        <span class="prompt">Hoàn thành cả 3 để nhận 20 điểm</span>
+      </div>
+    </div>
+
+    <p class="note">
+      Đổi: <code>OverviewTab</code> thêm <code>frameless</code> (giống ContinueLearning ngay trên nó) ·
+      <code>DailyQuest</code> bỏ <code>bordered</code> · wrapper <code>gap-3</code> → <code>gap-2</code>
+      (cả nhánh content lẫn nhánh skeleton).
+    </p>
+  </div>
+
+</div>
+</body>
+</html>

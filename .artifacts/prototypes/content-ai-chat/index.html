@@ -3,489 +3,446 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Content-AI chat — bản cuối (mô hình phiên theo scope)</title>
+<title>Content-AI chat — luồng đầy đủ (5 category × 2 trang + cả khóa)</title>
 <style>
   :root{
-    --bg:#f7f3f4; --panel:#fbf8f9; --surface:#ffffff; --border:#eadfe3; --sep:#f2ebee;
-    --fg:#1b1719; --muted:#8a7f84; --faint:#b6abb0;
-    --accent:#e0398a; --accent-soft:#fdeef6; --accent-line:#f6c9df;
+    --bg:#f4eff1; --panel:#fbf8f9; --surface:#ffffff; --border:#e8dde1; --sep:#f1eaed;
+    --fg:#1b1719; --muted:#877c81; --faint:#b3a8ad;
+    --accent:#e0398a; --accent-soft:#fceef5; --accent-line:#f5c8de;
     --info:#2563eb; --info-soft:#eef4ff; --info-line:#c7dbfe;
-    --ok:#0f9d6b; --ok-soft:#eafaf3; --ok-line:#b5ecd4;
-    --violet:#7c5cff; --violet-soft:#f2eeff; --violet-line:#d9cffb;
-    --amber:#b26a06; --amber-soft:#fdf4e6; --amber-line:#f4dcae;
-    --r:18px; --r-sm:12px; --r-xs:9px;
-    --shadow:0 1px 2px rgba(27,23,25,.04), 0 8px 24px -14px rgba(27,23,25,.18);
+    --ok:#0f9d6b; --ok-soft:#e9faf3; --ok-line:#b3ecd3;
+    --chal:#e8590c; --chal-soft:#fff1e7; --chal-line:#f6cfae;
+    --violet:#7c5cff; --violet-soft:#f1edff; --violet-line:#d8cefb;
+    --quiz:#0d9488; --quiz-soft:#e6f7f4; --quiz-line:#a6e6db;
+    --amber:#b26a06; --amber-soft:#fdf3e4; --amber-line:#f3daac;
+    --r:16px; --r-sm:11px; --r-xs:9px;
     --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
     --sans:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+    --shadow:0 1px 2px rgba(27,23,25,.05),0 10px 26px -16px rgba(27,23,25,.22);
   }
   @media (prefers-color-scheme:dark){:root{
-    --bg:#141013; --panel:#1c171a; --surface:#221c20; --border:#33292e; --sep:#2a2227;
-    --fg:#f4edf0; --muted:#a99ea4; --faint:#6f636a;
-    --accent:#f472b6; --accent-soft:#31151f; --accent-line:#5a2138;
-    --info:#7aa5ff; --info-soft:#151d2e; --info-line:#26375c;
-    --ok:#4fd1a0; --ok-soft:#0f2019; --ok-line:#1d4034;
-    --violet:#b7a4ff; --violet-soft:#1e1830; --violet-line:#382c58;
-    --amber:#e6a54b; --amber-soft:#2a1f10; --amber-line:#4a3517;
-    --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px -16px rgba(0,0,0,.6);
+    --bg:#100c0f; --panel:#191418; --surface:#201a1e; --border:#31272c; --sep:#281f24;
+    --fg:#f4edf0; --muted:#a99ea4; --faint:#6c6167;
+    --accent:#f472b6; --accent-soft:#31151f; --accent-line:#572036;
+    --info:#7aa5ff; --info-soft:#141d2e; --info-line:#26375c;
+    --ok:#4fd1a0; --ok-soft:#0e1f18; --ok-line:#1d4034;
+    --chal:#ff922b; --chal-soft:#2a1a0e; --chal-line:#4a3117;
+    --violet:#b7a4ff; --violet-soft:#1d1730; --violet-line:#372b57;
+    --quiz:#2dd4bf; --quiz-soft:#0c211e; --quiz-line:#194a43;
+    --amber:#e6a54b; --amber-soft:#291e10; --amber-line:#493416;
+    --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 32px -18px rgba(0,0,0,.7);
   }}
-  :root[data-theme="light"]{
-    --bg:#f7f3f4; --panel:#fbf8f9; --surface:#ffffff; --border:#eadfe3; --sep:#f2ebee;
-    --fg:#1b1719; --muted:#8a7f84; --faint:#b6abb0;
-    --accent:#e0398a; --accent-soft:#fdeef6; --accent-line:#f6c9df;
-    --info:#2563eb; --info-soft:#eef4ff; --info-line:#c7dbfe;
-    --ok:#0f9d6b; --ok-soft:#eafaf3; --ok-line:#b5ecd4;
-    --violet:#7c5cff; --violet-soft:#f2eeff; --violet-line:#d9cffb;
-    --amber:#b26a06; --amber-soft:#fdf4e6; --amber-line:#f4dcae;
-  }
-  :root[data-theme="dark"]{
-    --bg:#141013; --panel:#1c171a; --surface:#221c20; --border:#33292e; --sep:#2a2227;
-    --fg:#f4edf0; --muted:#a99ea4; --faint:#6f636a;
-    --accent:#f472b6; --accent-soft:#31151f; --accent-line:#5a2138;
-    --info:#7aa5ff; --info-soft:#151d2e; --info-line:#26375c;
-    --ok:#4fd1a0; --ok-soft:#0f2019; --ok-line:#1d4034;
-    --violet:#b7a4ff; --violet-soft:#1e1830; --violet-line:#382c58;
-    --amber:#e6a54b; --amber-soft:#2a1f10; --amber-line:#4a3517;
-  }
+  :root[data-theme="light"]{--bg:#f4eff1;--panel:#fbf8f9;--surface:#fff;--border:#e8dde1;--sep:#f1eaed;--fg:#1b1719;--muted:#877c81;--faint:#b3a8ad;--accent:#e0398a;--accent-soft:#fceef5;--accent-line:#f5c8de;--info:#2563eb;--info-soft:#eef4ff;--info-line:#c7dbfe;--ok:#0f9d6b;--ok-soft:#e9faf3;--ok-line:#b3ecd3;--chal:#e8590c;--chal-soft:#fff1e7;--chal-line:#f6cfae;--violet:#7c5cff;--violet-soft:#f1edff;--violet-line:#d8cefb;--quiz:#0d9488;--quiz-soft:#e6f7f4;--quiz-line:#a6e6db;--amber:#b26a06;--amber-soft:#fdf3e4;--amber-line:#f3daac;}
+  :root[data-theme="dark"]{--bg:#100c0f;--panel:#191418;--surface:#201a1e;--border:#31272c;--sep:#281f24;--fg:#f4edf0;--muted:#a99ea4;--faint:#6c6167;--accent:#f472b6;--accent-soft:#31151f;--accent-line:#572036;--info:#7aa5ff;--info-soft:#141d2e;--info-line:#26375c;--ok:#4fd1a0;--ok-soft:#0e1f18;--ok-line:#1d4034;--chal:#ff922b;--chal-soft:#2a1a0e;--chal-line:#4a3117;--violet:#b7a4ff;--violet-soft:#1d1730;--violet-line:#372b57;--quiz:#2dd4bf;--quiz-soft:#0c211e;--quiz-line:#194a43;--amber:#e6a54b;--amber-soft:#291e10;--amber-line:#493416;}
+
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{margin:0;font-family:var(--sans);font-size:14px;line-height:1.55;background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased}
-  .wrap{max-width:1200px;margin:0 auto;padding:22px 20px 64px}
-  a{color:var(--accent)}
-  h1{font-size:22px;margin:0 0 4px;letter-spacing:-.01em;text-wrap:balance}
-  .sub{color:var(--muted);margin:0 0 4px;font-size:13.5px;max-width:70ch}
-  .lede{color:var(--fg);margin:0 0 18px;font-size:13.5px;max-width:74ch}
+  html,body{height:100%}
+  body{margin:0;font-family:var(--sans);font-size:14px;line-height:1.5;background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;overflow:hidden}
+  button{font:inherit;cursor:pointer}
 
-  .topbar{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-  .brand{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:-.01em}
+  /* top bar */
+  .top{flex:0 0 auto;display:flex;align-items:center;gap:12px;padding:9px 16px;background:var(--surface);border-bottom:1px solid var(--border)}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:-.01em;font-size:14px}
   .brand .logo{width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--violet));display:grid;place-items:center;color:#fff;font-size:14px}
+  .brand .tag{font-weight:500;color:var(--muted);font-size:12px;border-left:1px solid var(--border);padding-left:10px;margin-left:2px}
   .spacer{flex:1}
-  .ghostbtn{border:1px solid var(--border);background:var(--surface);color:var(--fg);border-radius:999px;padding:7px 13px;font:inherit;font-size:12.5px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
-  .ghostbtn:hover{background:var(--sep)}
+  .tbtn{border:1px solid var(--border);background:var(--surface);color:var(--fg);border-radius:999px;padding:7px 12px;font-size:12.5px;display:inline-flex;align-items:center;gap:6px}
+  .tbtn:hover{background:var(--sep)}
+  .tbtn.live.on{background:var(--amber-soft);border-color:var(--amber-line);color:var(--amber)}
 
-  .rule{background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:var(--r-sm);padding:11px 14px;margin-bottom:16px;font-size:13px}
-  .rule b{font-weight:650}
-  .rule .kbd{font-family:var(--mono);font-size:12px;background:var(--surface);border:1px solid var(--accent-line);border-radius:6px;padding:0 5px}
+  /* pager */
+  .pager{flex:0 0 auto;display:flex;align-items:center;gap:6px;padding:8px 16px;background:var(--panel);border-bottom:1px solid var(--border);overflow-x:auto}
+  .pg-lbl{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);flex:0 0 auto;margin-right:2px}
+  .grp{display:flex;align-items:center;gap:0;flex:0 0 auto;border:1px solid var(--border);border-radius:999px;background:var(--surface);overflow:hidden}
+  .grp .g-ic{padding:5px 4px 5px 10px;font-size:13px}
+  .pg{border:0;background:transparent;color:var(--muted);padding:6px 10px;font-size:12px;display:flex;align-items:center;gap:5px;white-space:nowrap}
+  .pg:hover{color:var(--fg)}
+  .pg.on{background:var(--fg);color:var(--bg)}
+  .pg.sel.on{background:var(--amber);color:#fff}
+  .grp .div{width:1px;align-self:stretch;background:var(--border)}
+  .pg-course{flex:0 0 auto;border:1px solid var(--info-line);background:var(--info-soft);color:var(--info);border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:6px}
+  .pg-course.on{background:var(--info);color:#fff;border-color:var(--info)}
+  .pgcount{margin-left:auto;flex:0 0 auto;font-size:11px;color:var(--faint)}
 
-  /* scenario controller */
-  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
-  .flow .lbl{font-size:12px;color:var(--muted);letter-spacing:.03em;text-transform:uppercase;margin-right:2px}
-  .step{border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:7px 13px;cursor:pointer;font:inherit;font-size:13px;display:flex;align-items:center;gap:7px;transition:.13s}
-  .step:hover{border-color:var(--faint)}
-  .step .d{width:8px;height:8px;border-radius:50%;background:var(--faint)}
-  .step.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
-  .step.on .d{background:currentColor}
-  .step.sel.on{background:var(--amber);border-color:var(--amber);color:#fff}
-  .toggles{display:flex;gap:8px;margin-left:auto;align-items:center}
+  /* app body: 3 columns */
+  .app{flex:1;min-height:0;display:grid;grid-template-columns:196px 1fr 400px;gap:0}
+  @media (max-width:960px){.app{grid-template-columns:1fr}.menu,.rail-wrap{display:none}}
 
-  /* the full learn-page mock */
-  .page{display:grid;grid-template-columns:210px 1fr 384px;gap:14px;align-items:start}
-  @media (max-width:1080px){.page{grid-template-columns:1fr}.menu{display:none}.rail{position:static}}
-  .col{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow)}
+  .menu{border-right:1px solid var(--border);background:var(--panel);padding:12px 10px;overflow-y:auto}
+  .menu .mt{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin:12px 8px 5px}
+  .mi{display:flex;align-items:center;gap:9px;padding:8px 9px;border-radius:9px;color:var(--muted);font-size:13px;width:100%;border:0;background:transparent;text-align:left}
+  .mi .mic{width:17px;text-align:center;flex:0 0 auto}
+  .mi:hover{background:var(--sep);color:var(--fg)}
+  .mi.on{background:var(--surface);color:var(--fg);font-weight:600;box-shadow:var(--shadow)}
+  .mi.live{background:var(--amber-soft);color:var(--amber);font-weight:600}
 
-  .menu{padding:12px;font-size:13px;min-height:520px}
-  .menu .mt{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin:12px 6px 6px}
-  .menu .mi{display:flex;align-items:center;gap:9px;padding:8px 9px;border-radius:10px;color:var(--muted);cursor:default}
-  .menu .mi .mic{width:16px;text-align:center}
-  .menu .mi.on{background:var(--accent-soft);color:var(--fg);font-weight:600}
-  .menu .mi.live{background:var(--amber-soft);color:var(--amber);font-weight:600}
+  .surface{overflow-y:auto;padding:24px 30px}
+  .crumbs{font-size:12px;color:var(--muted);margin-bottom:9px;display:flex;align-items:center;gap:7px}
+  .catchip{font-size:10.5px;font-weight:600;padding:2px 9px;border-radius:999px}
+  .surface h2{font-size:20px;margin:0 0 10px;letter-spacing:-.015em;max-width:24ch}
+  .surface p{margin:0 0 13px;max-width:60ch;color:var(--fg)}
+  .surface p.mut{color:var(--muted);font-size:13px}
+  .selectable{cursor:text}
+  .selectable .hot{background:var(--amber-soft);border-bottom:2px solid var(--amber);border-radius:3px;padding:0 2px;cursor:pointer}
+  .selectable .hot:hover{background:var(--amber-line)}
+  .codeblk{font-family:var(--mono);font-size:12.5px;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 14px;color:var(--fg);overflow-x:auto;margin:0 0 13px;white-space:pre-wrap;line-height:1.6}
+  .qz{border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin:0 0 12px;background:var(--surface);box-shadow:var(--shadow)}
+  .qz .opt{display:flex;align-items:center;gap:9px;padding:8px 10px;border:1px solid var(--border);border-radius:9px;margin-top:8px;font-size:13px;color:var(--muted)}
+  .selhint{font-size:12px;color:var(--amber);background:var(--amber-soft);border:1px solid var(--amber-line);border-radius:9px;padding:8px 11px;display:inline-flex;align-items:center;gap:7px;margin-top:2px}
+  .live-cover{display:none}
+  body.live .surface .live-cover{display:flex;flex-direction:column;gap:8px;align-items:flex-start;background:var(--amber-soft);border:1px solid var(--amber-line);color:var(--amber);border-radius:12px;padding:16px;font-size:13px;margin-bottom:14px}
 
-  .content{padding:20px 22px;min-height:520px}
-  .crumbs{font-size:12px;color:var(--muted);margin-bottom:10px}
-  .content h2{font-size:18px;margin:0 0 8px;letter-spacing:-.01em}
-  .content p{color:var(--fg);margin:0 0 12px;max-width:60ch}
-  .content p.mut{color:var(--muted)}
-  .content .sel{background:var(--amber-soft);border-bottom:2px solid var(--amber);border-radius:3px;padding:0 2px;cursor:pointer}
-  .codeblk{font-family:var(--mono);font-size:12.5px;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:11px 13px;color:var(--fg);overflow-x:auto;margin:0 0 12px}
-  .live-banner{display:none;background:var(--amber-soft);border:1px solid var(--amber-line);color:var(--amber);border-radius:12px;padding:14px 16px;font-size:13px;margin-bottom:14px}
-  body.live .live-banner{display:block}
-
-  /* the rail */
-  .rail{position:sticky;top:14px;height:560px;display:flex;flex-direction:column;overflow:hidden;padding:0}
-  .rhead{flex:0 0 auto;border-bottom:1px solid var(--sep);padding:11px 12px;display:flex;align-items:center;gap:9px}
-  .pill{display:flex;align-items:center;gap:9px;min-width:0;flex:1;border-radius:999px;padding:7px 12px;border:1px solid transparent}
-  .pill .ic{font-size:16px;line-height:1}
-  .pill .tx{min-width:0}
-  .pill .k{display:block;font-size:10.5px;line-height:1.2;opacity:.85}
-  .pill .v{display:block;font-size:13px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .pill.course{background:var(--info-soft);border-color:var(--info-line);color:var(--info)}
-  .pill.content{background:var(--accent-soft);border-color:var(--accent-line);color:var(--accent)}
-  .pill.task{background:var(--ok-soft);border-color:var(--ok-line);color:var(--ok)}
-  .pill.foundation{background:var(--violet-soft);border-color:var(--violet-line);color:var(--violet)}
-  .pill.selection{background:var(--amber-soft);border-color:var(--amber-line);color:var(--amber)}
-  .iconbtn{width:29px;height:29px;flex:0 0 auto;border:1px solid var(--border);background:var(--surface);border-radius:9px;display:grid;place-items:center;font-size:13px;color:var(--muted);cursor:pointer}
+  /* chat rail */
+  .rail-wrap{border-left:1px solid var(--border);background:var(--surface);display:flex;flex-direction:column;min-height:0}
+  .rhead{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:11px 12px;border-bottom:1px solid var(--sep)}
+  .pill{flex:1;min-width:0;display:flex;align-items:center;gap:9px;border:1px solid transparent;border-radius:12px;padding:7px 11px}
+  .pill .pic{font-size:16px;line-height:1;flex:0 0 auto}
+  .pill .ptx{min-width:0;line-height:1.25}
+  .pill .pk{display:block;font-size:10px;opacity:.85}
+  .pill .pv{display:block;font-size:13px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .iconbtn{width:30px;height:30px;flex:0 0 auto;border:1px solid var(--border);background:var(--surface);border-radius:9px;display:grid;place-items:center;font-size:13px;color:var(--muted)}
   .iconbtn:hover{background:var(--sep)}
   .iconbtn.on{background:var(--accent-soft);border-color:var(--accent-line);color:var(--accent)}
 
-  .rbody{flex:1;min-height:0;overflow-y:auto;padding:13px 12px;display:flex;flex-direction:column;gap:8px}
-  .born{font-size:11.5px;color:var(--amber);background:var(--amber-soft);border:1px solid var(--amber-line);border-radius:9px;padding:7px 10px;line-height:1.4}
-  .ground{font-size:11.5px;color:var(--muted);background:var(--panel);border:1px dashed var(--border);border-radius:9px;padding:7px 10px;line-height:1.45}
+  .backbar{flex:0 0 auto;padding:8px 12px 0}
+  .backbtn{width:100%;border:1px dashed var(--info-line);background:var(--info-soft);color:var(--info);border-radius:10px;padding:7px 10px;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:7px}
+  .backbtn:hover{background:var(--info);color:#fff;border-style:solid}
+
+  .rbody{flex:1 1 auto;min-height:0;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:9px}
+  .ground{flex:0 0 auto;font-size:11.5px;color:var(--muted);background:var(--panel);border:1px dashed var(--border);border-radius:9px;padding:8px 10px;line-height:1.45}
   .ground b{color:var(--fg);font-weight:600}
-  .gate{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:999px}
-  .gate.paid{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line)}
-  .gate.enr{background:var(--ok-soft);color:var(--ok);border:1px solid var(--ok-line)}
-  .gate.open{background:var(--info-soft);color:var(--info);border:1px solid var(--info-line)}
-  .msg{border-radius:var(--r-xs);padding:8px 11px;font-size:13px;max-width:86%;line-height:1.5}
-  .msg.me{background:var(--accent-soft);color:var(--fg);align-self:flex-end;border:1px solid var(--accent-line)}
-  .msg.ai{background:var(--sep);color:var(--fg);align-self:flex-start}
-  .empty{color:var(--muted);font-size:13px;text-align:center;margin:auto 0;padding:24px 10px}
-  .empty .big{font-size:26px;margin-bottom:8px;opacity:.5}
+  .gate{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:650;padding:2px 7px;border-radius:999px;white-space:nowrap}
+  .born{flex:0 0 auto;font-size:11.5px;color:var(--amber);background:var(--amber-soft);border:1px solid var(--amber-line);border-radius:9px;padding:8px 10px;line-height:1.45}
+  .msg{max-width:88%;padding:9px 12px;border-radius:13px;font-size:13px;line-height:1.5}
+  .msg.me{align-self:flex-end;background:var(--accent);color:#fff;border-bottom-right-radius:4px}
+  .msg.ai{align-self:flex-start;background:var(--sep);color:var(--fg);border-bottom-left-radius:4px}
+  .msg.ai .g{display:block;font-size:10.5px;color:var(--muted);margin-top:5px}
+  .typing{align-self:flex-start;display:flex;gap:3px;padding:11px 13px;background:var(--sep);border-radius:13px}
+  .typing i{width:5px;height:5px;border-radius:50%;background:var(--faint);animation:bl 1s infinite}
+  .typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+  @keyframes bl{0%,60%,100%{opacity:.3}30%{opacity:1}}
+  @media (prefers-reduced-motion:reduce){.typing i{animation:none}}
+  .empty{flex:1 1 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);text-align:center;gap:6px;padding:20px}
+  .empty .eic{font-size:30px;opacity:.45}
+  .empty small{font-size:12px;color:var(--faint);max-width:24ch}
 
   /* dedicated selection view */
-  .selview{display:flex;flex-direction:column;gap:10px}
-  .quote{border:1px solid var(--amber-line);background:var(--amber-soft);border-radius:12px;padding:11px 12px;display:flex;gap:9px;align-items:flex-start}
-  .quote .q{font-size:15px;color:var(--amber)}
-  .quote .qt{font-size:13px;color:var(--fg);font-style:italic;line-height:1.5}
-  .asklist{display:flex;flex-direction:column;gap:7px}
-  .askbtn{text-align:left;border:1px solid var(--border);background:var(--surface);border-radius:11px;padding:10px 12px;font:inherit;font-size:13px;color:var(--fg);cursor:pointer;display:flex;align-items:center;gap:9px}
+  .quote{flex:0 0 auto;display:flex;gap:9px;align-items:flex-start;border:1px solid var(--amber-line);background:var(--amber-soft);border-radius:12px;padding:11px 12px}
+  .quote .qm{font-size:18px;color:var(--amber);line-height:1;flex:0 0 auto}
+  .quote .qt{font-size:13px;font-style:italic;color:var(--fg);line-height:1.5}
+  .asklist{flex:0 0 auto;display:flex;flex-direction:column;gap:7px}
+  .askbtn{text-align:left;border:1px solid var(--border);background:var(--surface);border-radius:11px;padding:10px 12px;font-size:13px;color:var(--fg);display:flex;align-items:center;gap:9px}
   .askbtn:hover{border-color:var(--amber-line);background:var(--amber-soft)}
-  .askbtn .s{color:var(--amber)}
+  .askbtn .as{color:var(--amber);flex:0 0 auto}
 
   .rfoot{flex:0 0 auto;border-top:1px solid var(--sep);padding:10px 12px;display:flex;flex-direction:column;gap:8px}
-  .composer{display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:8px 10px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{font-size:11.5px;border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:4px 10px;color:var(--muted)}
+  .chip:hover{border-color:var(--faint);color:var(--fg)}
+  .composer{display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:6px 6px 6px 12px}
+  .composer:focus-within{border-color:var(--accent-line);box-shadow:0 0 0 3px var(--accent-soft)}
   .composer input{flex:1;border:0;background:transparent;font:inherit;font-size:13px;color:var(--fg);outline:none}
   .composer input::placeholder{color:var(--faint)}
-  .send{width:32px;height:32px;border:0;border-radius:10px;background:var(--accent);color:#fff;display:grid;place-items:center;cursor:pointer;flex:0 0 auto}
-  .model{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--muted)}
-  .model .mchip{border:1px solid var(--border);border-radius:999px;padding:2px 9px;background:var(--surface)}
-  .chips{display:flex;flex-wrap:wrap;gap:6px}
-  .chip{font-size:11.5px;border:1px solid var(--border);background:var(--surface);border-radius:999px;padding:4px 10px;color:var(--muted);cursor:pointer}
-  .chip:hover{border-color:var(--faint)}
+  .send{width:33px;height:33px;flex:0 0 auto;border:0;border-radius:10px;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:14px}
+  .send:disabled{opacity:.4}
+  .modelrow{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
+  .modelrow .mc{border:1px solid var(--border);border-radius:999px;padding:2px 9px;background:var(--surface)}
 
-  /* history panel (overlay-ish column shown under rail head via toggle) */
-  .histwrap{margin-top:14px}
-  .hh{display:flex;align-items:center;gap:9px;padding:12px 14px;border-bottom:1px solid var(--sep)}
-  .hh b{font-weight:650}
-  .hh .arch{margin-left:auto;font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:6px;cursor:pointer;user-select:none}
-  .hrow{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;border-bottom:1px solid var(--sep);cursor:pointer}
-  .hrow:hover{background:var(--sep)}
-  .hrow.active{background:var(--accent-soft)}
-  .hrow.arch{opacity:.6}
-  .hrow .dot{width:9px;height:9px;border-radius:50%;margin-top:5px;flex:0 0 auto}
-  .hrow .hb{flex:1;min-width:0}
-  .hrow .h1{font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
-  .hrow .h2{font-size:12px;color:var(--muted);margin-top:2px;display:flex;align-items:center;gap:6px}
-  .htag{font-size:10px;padding:1px 7px;border-radius:999px;background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber-line)}
-  .hempty{color:var(--muted);text-align:center;padding:26px;font-size:13px}
-
-  /* spec / rules grid */
-  .specs{margin-top:34px}
-  .specs h3{font-size:15px;margin:0 0 12px;letter-spacing:-.01em}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:12px}
-  .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
-  .card .ct{display:flex;align-items:center;gap:8px;font-weight:650;font-size:14px;margin-bottom:7px}
-  .card .ci{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;font-size:13px}
-  .card p{margin:0 0 6px;font-size:12.8px;color:var(--muted);line-height:1.5}
-  .card p b{color:var(--fg);font-weight:600}
-  .card .meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
-  .tag2{font-size:10.5px;padding:2px 8px;border-radius:999px;border:1px solid var(--border);color:var(--muted)}
-
-  .flowspec{margin-top:26px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 18px}
-  .flowspec h3{margin:0 0 10px;font-size:15px}
-  .flowspec ol{margin:0;padding-left:20px}
-  .flowspec li{margin:0 0 7px;font-size:13px;color:var(--fg)}
-  .flowspec li b{font-weight:650}
-  .flowspec code{font-family:var(--mono);font-size:12px;background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:0 5px}
-  .note{margin-top:22px;font-size:12.5px;color:var(--muted);border-left:3px solid var(--accent);padding:4px 0 4px 12px}
-  .foot{margin-top:30px;font-size:12px;color:var(--faint);border-top:1px solid var(--border);padding-top:14px}
+  .railcover{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--amber);text-align:center;padding:24px}
+  .railcover .lic{font-size:34px}
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <div class="topbar">
-    <div class="brand"><span class="logo">C</span> StarCi · Content-AI chat</div>
+  <div class="top">
+    <div class="brand"><span class="logo">C</span> StarCi <span class="tag">Trò chuyện AI — bản thiết kế duyệt</span></div>
     <span class="spacer"></span>
-    <button class="ghostbtn" id="theme">◑ Sáng / Tối</button>
+    <button class="tbtn live" id="livebtn">🔒 Quiz live</button>
+    <button class="tbtn" id="themebtn">◑ Sáng / Tối</button>
   </div>
 
-  <h1>Trò chuyện AI theo bài — bản cuối để duyệt</h1>
-  <p class="sub">Một khung chat duy nhất, đổi <b>ngữ cảnh (scope)</b> theo nơi người học đang đứng. Mỗi scope là một <b>phiên riêng</b>; lịch sử tích lại; bôi đen một đoạn mở ra một <b>view riêng, phiên lưu-trữ-sẵn</b>.</p>
-  <p class="lede">Bấm theo hành trình bên dưới để "đi" qua các surface và xem khung chat bên phải đổi theo. Đây là bản thiết kế cuối — duyệt xong tôi mới chỉnh code cho khớp đúng cái này.</p>
+  <div class="pager" id="pager"></div>
 
-  <div class="rule">
-    <b>Luật cốt lõi.</b> Phiên sinh ở <b>câu hỏi đầu tiên</b> trong một scope, khoá theo <span class="kbd">scope + đích</span>. Quay lại scope cũ → <b>mở lại đúng phiên đó</b> (không đẻ phiên rỗng). Đổi scope → phiên cũ nằm yên trong lịch sử — <b>không carry thread</b> giữa các scope. Bôi đen đoạn → phiên riêng, <b>sinh ra đã lưu trữ</b> (không rác danh sách, search vẫn thấy).
+  <div class="app">
+    <div class="menu" id="menu"></div>
+    <div class="surface" id="surface"></div>
+    <div class="rail-wrap" id="rail"></div>
   </div>
-
-  <div class="flow" id="flow">
-    <span class="lbl">Hành trình</span>
-  </div>
-
-  <div class="page">
-    <!-- left: course menu -->
-    <div class="col menu" id="menu"></div>
-
-    <!-- center: content -->
-    <div class="col content" id="content"></div>
-
-    <!-- right: chat rail -->
-    <div class="col rail" id="rail"></div>
-  </div>
-
-  <!-- history panel -->
-  <div class="col histwrap" id="histwrap"></div>
-
-  <!-- spec cards -->
-  <div class="specs">
-    <h3>Năm ngữ cảnh — mỗi cái grounding + cổng khác nhau</h3>
-    <div class="grid" id="grid"></div>
-  </div>
-
-  <div class="flowspec">
-    <h3>Đoạn bôi đen — view riêng (điểm đang lệch với app thật, cần sửa)</h3>
-    <ol>
-      <li>Bôi đen chữ trong bài → hiện <b>view đoạn riêng</b>: đầu là <code>Đang hỏi về đoạn đã chọn</code> + trích dẫn to, rồi <b>3 nút gợi ý dọc</b> (Giải thích / Cho ví dụ / Nói đơn giản hơn) + ô nhập. <b>Không</b> có chip retrieval, <b>không</b> lẫn lịch sử.</li>
-      <li>Đoạn <b>kế thừa grounding của surface cha</b> (bài / task / foundation / khoá) + chính đoạn bôi đen làm ngữ cảnh.</li>
-      <li>Hỏi câu đầu → tạo <b>phiên riêng, born-archived</b>: không hiện ở danh sách mặc định (bật "Đã lưu trữ" mới thấy), nhưng <b>search luôn tìm ra</b>.</li>
-      <li>Đoạn <b>sticky</b>: hỏi tiếp dồn vào cùng phiên đoạn; bấm <code>✕</code> (hoặc rời bài) mới quay về hội thoại chính của surface.</li>
-    </ol>
-  </div>
-
-  <div class="note">
-    Khi đang <b>làm quiz / phỏng vấn thử (live)</b>: ẩn toàn bộ nút chat + rail (chống mở kênh nhắc bài). Bấm nút "Quiz live" ở trên để xem.
-  </div>
-
-  <div class="foot">Prototype thiết kế · StarCi Academy · dùng đúng token màu của hệ thống (accent hồng, course xanh, task lục, foundation tím, đoạn hổ phách). Tự chứa, chạy offline.</div>
-</div>
 
 <script>
-const SCENES = [
-  {key:"course",   label:"✦ Vào khoá", sel:false},
-  {key:"content",  label:"📖 Mở bài B", sel:false},
-  {key:"selection",label:"🔖 Bôi đen đoạn", sel:true},
-  {key:"task",     label:"🎯 Mở task capstone", sel:false},
-  {key:"foundation",label:"📚 Mở foundation", sel:false},
-];
-
-const SCOPES = {
-  course:{
-    cls:"course", ic:"✦", k:"Đang hỏi về khoá", v:"DevOps Mastery",
-    menu:"modules", crumb:"Khoá · DevOps Mastery", title:"DevOps Mastery",
-    ground:"RAG <b>toàn khoá</b> — gom từ mọi bài đã học.",
-    gate:{cls:"enr", tx:"Chỉ khi đã ghi danh"}, seed:"Khoá này dạy Docker tới đâu?",
-    ctx:"✦ Cả khoá", archived:false,
-  },
+/* ---------- data: 5 categories + course ---------- */
+const CATS = {
   content:{
-    cls:"content", ic:"📖", k:"Đang hỏi về bài", v:"Bài B — Shell & Filesystem",
-    menu:"lessonB", crumb:"Bài B · Nền tảng", title:"Shell & Filesystem — điều hướng Linux",
-    ground:"Thân bài + <b>mã nguồn</b> của bài (nhồi cả bài nếu ngắn, RAG nếu dài).",
-    gate:{cls:"paid", tx:"Bài premium → phải ghi danh"}, seed:"Cho ví dụ path tuyệt đối",
-    ctx:"📖 Bài B", archived:false,
+    ic:"📖", cls:"content", cat:"Bài học", menu:"content",
+    pk:"Đang hỏi về bài", pv:"Bài B — Shell & Filesystem",
+    crumb:"Modules · Nền tảng backend", title:"Shell & Filesystem — điều hướng Linux",
+    ground:"thân bài + <b>mã nguồn</b> của bài",
+    gate:{cls:"paid",t:"Premium → cần ghi danh"},
+    sel:"đường dẫn tuyệt đối bắt đầu từ gốc /, tương đối tính từ thư mục hiện tại",
+    reply:"Đường dẫn <b>tuyệt đối</b> luôn bắt đầu bằng <code>/</code> (gốc), ví dụ <code>/var/log</code>. <b>Tương đối</b> tính từ nơi bạn đang đứng: <code>../etc</code> = lùi một cấp rồi vào <code>etc</code>.",
   },
-  selection:{
-    cls:"selection", ic:"🔖", k:"Đang hỏi về đoạn đã chọn", v:"“…path tuyệt đối vs tương đối…”",
-    menu:"lessonB", crumb:"Bài B · đoạn đã bôi đen", title:"Shell & Filesystem — điều hướng Linux",
-    ground:"Kế thừa <b>bài B</b> + chính đoạn bôi đen.",
-    gate:{cls:"paid", tx:"Theo bài cha"}, seed:"Giải thích đoạn này",
-    ctx:"🔖 Bài B · đoạn", archived:true, dedicated:true,
+  milestone:{
+    ic:"🎯", cls:"task", cat:"Dự án (milestone)", menu:"personal",
+    pk:"Đang hỏi về task", pv:"Task 2 — Dockerize API",
+    crumb:"Dự án cá nhân · Milestone 1", title:"Dockerize API — đóng gói dịch vụ",
+    ground:"<b>đề bài + tiêu chí chấm</b> của task (RAG milestone)",
+    gate:{cls:"enr",t:"Chỉ người đã ghi danh — không lộ đề"},
+    sel:"image cuối phải < 200MB, chạy bằng user non-root, có HEALTHCHECK",
+    reply:"Ba tiêu chí đó là điểm chấm cứng: dùng <b>multi-stage build</b> để bỏ devDependencies (giảm size), thêm <code>USER node</code> (non-root), và <code>HEALTHCHECK CMD</code> gọi <code>/health</code>. Mình gợi ý hướng, bạn tự viết Dockerfile nhé.",
   },
-  task:{
-    cls:"task", ic:"🎯", k:"Đang hỏi về task", v:"Task 2 — Dockerize API",
-    menu:"personal", crumb:"Dự án cá nhân · Task 2", title:"Dockerize API — đóng gói dịch vụ",
-    ground:"<b>Đề bài + tiêu chí chấm</b> của task (RAG milestone).",
-    gate:{cls:"enr", tx:"Chỉ khi đã ghi danh — chưa ghi danh KHÔNG lộ đề"}, seed:"Dockerfile này thiếu gì?",
-    ctx:"🎯 Task 2 — Dockerize API", archived:false,
+  challenges:{
+    ic:"⚔️", cls:"chal", cat:"Bài tập (challenge)", menu:"challenges",
+    pk:"Đang hỏi về bài tập", pv:"Challenge — FizzBuzz nâng cao",
+    crumb:"Bài B · Thử thách 3", title:"FizzBuzz nâng cao — chia hết tuỳ biến",
+    ground:"<b>đề + test case</b> của challenge",
+    gate:{cls:"paid",t:"Theo bài chứa nó"},
+    sel:"trả về 'Fizz' nếu chia hết cho 3, 'Buzz' cho 5, 'FizzBuzz' cho cả hai",
+    reply:"Bẫy hay gặp: kiểm tra <b>cả hai (15)</b> TRƯỚC khi kiểm 3 và 5 riêng, không thì 'FizzBuzz' không bao giờ ra. Không đưa lời giải — thử viết rồi chạy test case xem sao.",
   },
   foundation:{
-    cls:"foundation", ic:"📚", k:"Đang hỏi về nền tảng", v:"Foundation — Linux Permissions",
-    menu:"foundations", crumb:"Thư viện nền tảng · Linux Permissions", title:"Linux Permissions — chmod & chown",
-    ground:"Tài liệu foundation (RAG một tài liệu).",
-    gate:{cls:"open", tx:"Thư viện chung — không cần ghi danh"}, seed:"chmod 755 nghĩa là gì?",
-    ctx:"📚 Foundation — Linux Permissions", archived:false,
+    ic:"📚", cls:"foundation", cat:"Nền tảng", menu:"foundations",
+    pk:"Đang hỏi về nền tảng", pv:"Foundation — Linux Permissions",
+    crumb:"Thư viện nền tảng · Hệ điều hành", title:"Linux Permissions — chmod & chown",
+    ground:"một tài liệu foundation (RAG một-tài-liệu)",
+    gate:{cls:"open",t:"Thư viện chung — không cổng"},
+    sel:"755 nghĩa là chủ đủ rwx, nhóm và người khác chỉ r-x",
+    reply:"<code>755</code> đọc theo 3 nhóm: chủ = <b>7 (rwx)</b>, nhóm = <b>5 (r-x)</b>, người khác = <b>5 (r-x)</b>. Số = 4(r)+2(w)+1(x). Đây là thư viện chung nên ai cũng hỏi được.",
+  },
+  quiz:{
+    ic:"❓", cls:"quiz", cat:"Quiz", menu:"quiz",
+    pk:"Đang hỏi về quiz", pv:"Quiz — Câu 4: Volume vs Bind mount",
+    crumb:"Bài 5 · Quiz ôn tập", title:"Câu 4 — Volume khác Bind mount ở đâu?",
+    ground:"<b>câu hỏi + đáp án đúng</b> (chỉ sau khi nộp / khi ôn)",
+    gate:{cls:"enr",t:"Chỉ khi ÔN (đang làm live thì ẩn chat)"},
+    sel:"named volume do Docker quản lý, bind mount trỏ thẳng thư mục host",
+    reply:"Khác cốt lõi: <b>named volume</b> nằm trong vùng Docker quản lý (bền, portable); <b>bind mount</b> trỏ thẳng một đường dẫn trên host (tiện dev, phụ thuộc máy). Giải thích này chỉ hiện khi bạn ĐANG ÔN, không phải lúc làm bài.",
   },
 };
+const COURSE={
+  ic:"✦", cls:"course", cat:"Cả khóa", menu:"home",
+  pk:"Đang hỏi về khóa", pv:"DevOps Mastery",
+  crumb:"Khóa học", title:"DevOps Mastery",
+  ground:"RAG <b>toàn khóa</b> — gom từ mọi bài đã học",
+  gate:{cls:"enr",t:"Chỉ người đã ghi danh"},
+  reply:"Khóa này đi từ Linux/Shell → Docker → Compose → Kubernetes → CI/CD. Bạn đang ở phần nền tảng; hỏi tiếp mình gợi ý bài nên mở.",
+};
+const CAT_ORDER=["content","milestone","challenges","foundation","quiz"];
+const SELSUGGEST=["Giải thích đoạn này","Cho ví dụ cho đoạn này","Nói đơn giản hơn"];
 
-const CONTENT = {
-  course:`<div class="crumbs">{crumb}</div><h2>{title}</h2>
-    <p>Không có bài nào đang mở — người học đang ở trang khoá (bản đồ tư duy, bảng xếp hạng…). Khung chat rơi về <b>hỏi cả khoá</b>: câu trả lời gom kiến thức từ mọi bài đã học.</p>
-    <p class="mut">Đây cũng là scope khi bấm "hỏi cả khoá" lúc đang đọc một bài (mở rộng ra khỏi bài).</p>`,
-  content:`<div class="crumbs">{crumb}</div><h2>{title}</h2>
-    <p>Shell là cửa gõ lệnh; filesystem là cây thư mục. Điều hướng bằng <span class="sel" id="selword">đường dẫn tuyệt đối bắt đầu từ gốc <b>/</b>, còn tương đối tính từ thư mục hiện tại</span> — bôi đen câu này để hỏi riêng.</p>
+const MENU=[
+  ["home","🏠","Trang khóa"],
+  ["content","📄","Bài B — Shell & Filesystem"],
+  ["challenges","⚔️","Thử thách của bài B"],
+  ["quiz","❓","Quiz ôn tập"],
+  ["personal","🎓","Dự án cá nhân"],
+  ["foundations","📚","Nền tảng (thư viện)"],
+];
+
+/* body content per surface */
+function surfaceHTML(id){
+  const c = id==="course"?COURSE:CATS[id];
+  const chip=`<span class="catchip" style="background:var(--${c.cls}-soft);color:var(--${c.cls})">${c.ic} ${c.cat}</span>`;
+  const crumb=`<div class="crumbs">${c.crumb} ${chip}</div>`;
+  const hot = c.sel ? `<span class="hot" id="hot">${c.sel}</span>` : "";
+  const cover=`<div class="live-cover">🔒 Đang làm bài đánh giá (live)<small style="color:inherit;opacity:.8">Khung chat AI bị ẩn để giữ trung thực. Xong bài sẽ mở lại — lúc ôn mới hỏi được.</small></div>`;
+  if(id==="course") return crumb+`<h2>${c.title}</h2>
+    <p>Không có nội dung nào đang mở — bạn đang ở trang khóa. Khung chat rơi về <b>hỏi cả khóa</b>: câu trả lời gom từ mọi bài đã học.</p>
+    <p class="mut">Mở một bài / task / challenge / foundation / quiz ở menu trái để chat bám sát đúng phần đó.</p>`;
+  if(id==="content") return crumb+`<h2>${c.title}</h2>${cover}
+    <p class="selectable">Shell là cửa gõ lệnh; filesystem là cây thư mục. Điều hướng bằng ${hot} — <span class="mut">bôi đen câu trên để hỏi riêng đoạn.</span></p>
     <div class="codeblk">$ pwd            # bạn đang ở đâu
-/home/starci
-$ cd ../etc      # tương đối: lùi một cấp rồi vào etc
-$ cd /var/log    # tuyệt đối: đi thẳng từ gốc</div>
-    <p class="mut">Bài này là premium → khung chat chỉ nhồi được thân bài khi người học đã ghi danh.</p>`,
-  selection:`<div class="crumbs">{crumb}</div><h2>{title}</h2>
-    <p>Shell là cửa gõ lệnh; filesystem là cây thư mục. Điều hướng bằng <span class="sel" style="background:var(--amber-soft);border-bottom:2px solid var(--amber)">đường dẫn tuyệt đối bắt đầu từ gốc <b>/</b>, còn tương đối tính từ thư mục hiện tại</span> ← đã bôi đen.</p>
-    <div class="codeblk">$ cd ../etc      # tương đối
+$ cd ../etc      # tương đối
 $ cd /var/log    # tuyệt đối</div>
-    <p class="mut">Đoạn đã chọn → khung chat bên phải chuyển sang <b>view đoạn riêng</b>.</p>`,
-  task:`<div class="crumbs">{crumb}</div><h2>{title}</h2>
-    <p>Đóng gói API thành image chạy được ở mọi nơi. <b>Mục tiêu:</b> một <code>Dockerfile</code> multi-stage, image gọn, healthcheck thật.</p>
-    <div class="codeblk">FROM node:20-alpine AS build
-WORKDIR /app
-COPY . . && npm ci && npm run build
-# ... tiêu chí chấm: image < 200MB, healthcheck, non-root user</div>
-    <p class="mut">Đề + tiêu chí là <b>chỉ cho người đã ghi danh</b> — người ngoài hỏi sẽ không moi được đề qua AI.</p>`,
-  foundation:`<div class="crumbs">{crumb}</div><h2>{title}</h2>
-    <p>Quyền trên Linux gồm đọc/ghi/chạy cho chủ sở hữu, nhóm, và mọi người. <code>chmod 755</code> = chủ đủ quyền, còn lại đọc + chạy.</p>
+    <p class="mut">Bài premium → chat chỉ nhồi được thân bài khi đã ghi danh.</p>`;
+  if(id==="challenges") return crumb+`<h2>${c.title}</h2>${cover}
+    <p class="selectable">Viết hàm nhận n, in 1..n. Quy tắc: ${hot}.</p>
+    <div class="codeblk">function fizzbuzz(n){ /* ... */ }
+// test: fizzbuzz(15) -> "FizzBuzz"</div>
+    <p class="mut">Bôi đen quy tắc để hỏi mà không bị đưa lời giải.</p>`;
+  if(id==="foundation") return crumb+`<h2>${c.title}</h2>
+    <p class="selectable">Quyền Linux gồm đọc/ghi/chạy cho chủ, nhóm, và mọi người. ${hot}.</p>
     <div class="codeblk">$ chmod 755 deploy.sh
 $ chown starci:web deploy.sh</div>
-    <p class="mut">Foundation là <b>thư viện chung</b> — ai cũng hỏi được, không cần ghi danh.</p>`,
-};
-
-let active = "course";
-let sessions = {};        // key -> {turns:[...], title}
-let order = [];
-let showArch = false;
-let histOpen = true;
-let live = false;
-
-/* ---- scenario buttons ---- */
-const flowEl = document.getElementById("flow");
-SCENES.forEach(sc=>{
-  const b=document.createElement("button");
-  b.className="step"+(sc.sel?" sel":"");
-  b.dataset.k=sc.key;
-  b.innerHTML=`<span class="d"></span>${sc.label}`;
-  b.onclick=()=>{ active=sc.key; render(); };
-  flowEl.appendChild(b);
-});
-const tg=document.createElement("div"); tg.className="toggles";
-tg.innerHTML=`<button class="ghostbtn" id="livebtn">🔒 Quiz live</button>`;
-flowEl.appendChild(tg);
-
-/* ---- theme ---- */
-document.getElementById("theme").onclick=()=>{
-  const r=document.documentElement;
-  const now=r.getAttribute("data-theme")|| (matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
-  r.setAttribute("data-theme", now==="dark"?"light":"dark");
-};
-
-function ask(preset){
-  const s=SCOPES[active];
-  if(!sessions[active]){ sessions[active]={turns:[],title:preset||s.seed}; order.push(active); }
-  sessions[active].turns.push({q:preset||s.seed});
-  render();
+    <p class="mut">Foundation là thư viện chung — ai cũng hỏi được, không cần ghi danh.</p>`;
+  if(id==="milestone") return crumb+`<h2>${c.title}</h2>${cover}
+    <p class="selectable">Đóng gói API thành image chạy mọi nơi. Tiêu chí: ${hot}.</p>
+    <div class="codeblk">FROM node:20-alpine AS build
+# ... COPY, npm ci, build</div>
+    <p class="mut">Đề + tiêu chí chỉ cho người đã ghi danh — người ngoài không moi được qua AI.</p>`;
+  if(id==="quiz") return crumb+`<h2>${c.title}</h2>${cover}
+    <div class="qz"><b>Câu 4.</b> Volume khác Bind mount ở đâu?
+      <div class="opt selectable">A. ${hot}</div>
+      <div class="opt">B. Không có gì khác nhau</div>
+    </div>
+    <p class="mut">Sau khi nộp / khi ôn: bôi đen đáp án để hỏi sâu. Đang làm live → chat ẩn.</p>`;
+  return crumb;
 }
 
+/* ---------- state ---------- */
+let view="course";    // 'course' or a category id
+let selecting=false;  // selection sub-page of a category
+let live=false;
+let histOpen=false;
+const store={};       // key -> {msgs:[{role,text}], created}
+const keyOf=(v,s)=> v==="course" ? "course" : (s? v+":sel" : v);
+
+/* ---------- pager ---------- */
+function buildPager(){
+  const p=document.getElementById("pager");
+  let html=`<span class="pg-lbl">Trang</span>
+    <button class="pg-course" data-v="course" data-s="0">✦ Cả khóa</button>`;
+  CAT_ORDER.forEach(id=>{
+    const c=CATS[id];
+    html+=`<span class="grp">
+      <span class="g-ic" style="color:var(--${c.cls})">${c.ic}</span>
+      <button class="pg" data-v="${id}" data-s="0">Hỏi</button>
+      <span class="div"></span>
+      <button class="pg sel" data-v="${id}" data-s="1">🔖 Đoạn</button>
+    </span>`;
+  });
+  html+=`<span class="pgcount">11 trang · 5 category × 2 + cả khóa</span>`;
+  p.innerHTML=html;
+  p.querySelectorAll("[data-v]").forEach(b=>{
+    b.onclick=()=>{ go(b.dataset.v, b.dataset.s==="1"); };
+  });
+}
+function go(v,s){ view=v; selecting=(v!=="course")&&s; render(); }
+
+/* ---------- interactions ---------- */
+function ask(text){
+  if(live) return;
+  const k=keyOf(view,selecting);
+  if(!store[k]) store[k]={msgs:[],created:Date.now()};
+  const c = view==="course"?COURSE:CATS[view];
+  store[k].msgs.push({role:"me",text});
+  render(); scrollRail();
+  store[k].typing=true; render(); scrollRail();
+  setTimeout(()=>{
+    store[k].typing=false;
+    store[k].msgs.push({role:"ai",text:c.reply,g:(selecting?"🔖 đoạn · ":"")+c.pv});
+    render(); scrollRail();
+  }, 520);
+}
+function scrollRail(){ const b=document.getElementById("rbody"); if(b) b.scrollTop=b.scrollHeight; }
+
+/* ---------- render ---------- */
 function render(){
-  const s=SCOPES[active];
   document.body.classList.toggle("live", live);
-  document.getElementById("livebtn").onclick=()=>{ live=!live; render(); };
-  [...flowEl.querySelectorAll(".step")].forEach(b=>b.classList.toggle("on", b.dataset.k===active));
+  document.getElementById("livebtn").classList.toggle("on", live);
+
+  /* pager active */
+  document.querySelectorAll("#pager .pg,#pager .pg-course").forEach(b=>{
+    const on = b.dataset.v===view && ((b.dataset.s==="1")===(!!selecting));
+    b.classList.toggle("on", on);
+  });
 
   /* menu */
-  const menu = [
-    ["Modules","{ }","modules"],
-    ["Bài B — Shell & Filesystem","📄","lessonB"],
-    ["Dự án cá nhân","🎓","personal"],
-    ["Foundations","📚","foundations"],
-    ["Ôn tập","🗂","review"],
-    ["Phỏng vấn thử","🎙","mock"],
-  ];
+  const menuActive = view==="course" ? "home" : CATS[view].menu;
   document.getElementById("menu").innerHTML =
-    `<div class="mt">Khoá học</div>` +
-    menu.map(([t,ic,id])=>{
-      const on = id===s.menu;
-      const isLive = live && (id==="mock");
-      return `<div class="mi ${on?'on':''} ${isLive?'live':''}"><span class="mic">${ic}</span>${t}${isLive?' · đang làm':''}</div>`;
+    `<div class="mt">Khóa học</div>` +
+    MENU.map(([mid,ic,label])=>{
+      const on = mid===menuActive;
+      const isLive = live && mid==="quiz";
+      return `<button class="mi ${on?'on':''} ${isLive?'live':''}" data-m="${mid}"><span class="mic">${ic}</span>${label}${isLive?' · đang làm':''}</button>`;
     }).join("");
+  document.querySelectorAll("#menu .mi").forEach(b=>{
+    b.onclick=()=>{ const m=b.dataset.m; const cat=CAT_ORDER.find(id=>CATS[id].menu===m); go(cat||"course", false); };
+  });
 
-  /* content */
-  const html = (CONTENT[active]||"").replace("{crumb}",s.crumb).replace("{title}",s.title);
-  document.getElementById("content").innerHTML =
-    `<div class="live-banner">🔒 Đang làm bài đánh giá (live). Khung trò chuyện AI bị ẩn để giữ tính trung thực — xong bài sẽ hiện lại.</div>` + html;
-  const sw=document.getElementById("selword");
-  if(sw) sw.onclick=()=>{ active="selection"; render(); };
+  /* surface */
+  document.getElementById("surface").innerHTML = surfaceHTML(view);
+  const hot=document.getElementById("hot");
+  if(hot) hot.onclick=()=>{ selecting=true; render(); };
 
   /* rail */
-  renderRail(s);
-  /* history */
-  renderHist();
+  renderRail();
 }
 
-function renderRail(s){
+function renderRail(){
   const rail=document.getElementById("rail");
+  const c = view==="course"?COURSE:CATS[view];
   if(live){
-    rail.innerHTML=`<div class="empty" style="margin:auto"><div class="big">🔒</div>Ẩn khi đang làm bài đánh giá</div>`;
+    rail.innerHTML=`<div class="rhead"><div class="pill" style="background:var(--amber-soft);border-color:var(--amber-line);color:var(--amber)"><span class="pic">🔒</span><span class="ptx"><span class="pk">Tạm ẩn</span><span class="pv">Đang làm bài đánh giá</span></span></div></div>
+      <div class="railcover"><div class="lic">🔒</div><div>Khung chat ẩn khi đang làm quiz / phỏng vấn live.<br><small style="color:var(--muted)">Chống mở kênh nhắc bài. Tắt "Quiz live" để xem lại.</small></div></div>`;
     return;
   }
-  const sess=sessions[active];
+  const k=keyOf(view,selecting);
+  const sess=store[k];
+  const isSel=!!selecting;
+
+  /* pill */
+  const pk = isSel ? "Đang hỏi về đoạn đã chọn" : c.pk;
+  const pv = isSel ? "“"+c.sel.slice(0,34)+(c.sel.length>34?"…":"")+"”" : c.pv;
+  const pcls = isSel ? "selection" : c.cls;
+  const head=`<div class="rhead">
+    <div class="pill" style="background:var(--${pcls}-soft);border-color:var(--${pcls}-line);color:var(--${pcls})">
+      <span class="pic">${isSel?"🔖":c.ic}</span>
+      <span class="ptx"><span class="pk">${pk}</span><span class="pv">${pv}</span></span>
+    </div>
+    <button class="iconbtn ${histOpen?'on':''}" id="histbtn" title="Lịch sử">🕘</button>
+    <button class="iconbtn" id="xbtn" title="${isSel?'Bỏ chọn đoạn':'Đóng'}">✕</button>
+  </div>`;
+
+  /* back-to-course bar: shown on any specific surface (not course, not selection view) */
+  const back = (view!=="course" && !isSel)
+    ? `<div class="backbar"><button class="backbtn" id="backbtn">← Hỏi cả khóa thay vì chỉ ${c.cat.toLowerCase()}</button></div>` : "";
+
+  /* body */
   let body="";
-  if(s.dedicated){
-    body=`<div class="selview">
-      <div class="quote"><span class="q">❝</span><span class="qt">${s.v}</span></div>
-      <div class="ground">Neo: ${s.ground}</div>`;
+  if(isSel){
+    body += `<div class="quote"><span class="qm">❝</span><span class="qt">${c.sel}</span></div>`;
+    body += `<div class="ground">Neo: kế thừa <b>${c.cat.toLowerCase()}</b> + chính đoạn bôi đen.</div>`;
     if(sess){
-      body+=`<div class="born">🔖 Phiên đoạn — sinh ra đã lưu trữ. Tìm lại bằng search, không nằm trong danh sách thường.</div>`;
-      sess.turns.forEach(t=>body+=`<div class="msg me">${t.q}</div><div class="msg ai">…trả lời, grounded vào ${s.ctx}…</div>`);
+      body += `<div class="born">🔖 Phiên đoạn — sinh ra đã lưu trữ. Không nằm ở danh sách thường, nhưng search vẫn tìm ra.</div>`;
+      body += renderMsgs(sess);
     } else {
-      body+=`<div class="asklist">
-        <button class="askbtn" onclick="ask('Giải thích đoạn này')"><span class="s">✦</span> Giải thích đoạn này</button>
-        <button class="askbtn" onclick="ask('Cho ví dụ cho đoạn này')"><span class="s">✦</span> Cho ví dụ cho đoạn này</button>
-        <button class="askbtn" onclick="ask('Nói đơn giản hơn')"><span class="s">✦</span> Nói đơn giản hơn</button>
-      </div>`;
+      body += `<div class="asklist">`+SELSUGGEST.map(s=>`<button class="askbtn" onclick="ask('${s}')"><span class="as">✦</span>${s}</button>`).join("")+`</div>`;
     }
-    body+=`</div>`;
   } else {
-    body=`<div class="ground">Neo grounding: ${s.ground} <span class="gate ${s.gate.cls}">${s.gate.tx}</span></div>`;
-    if(sess){
-      sess.turns.forEach(t=>body+=`<div class="msg me">${t.q}</div><div class="msg ai">…trả lời, grounded vào ${s.ctx}…</div>`);
-    } else {
-      body+=`<div class="empty"><div class="big">${s.ic}</div>Chưa có phiên ở ${s.k.toLowerCase().replace('đang hỏi về ','')}.<br>Hỏi câu đầu để tạo.</div>`;
+    body += `<div class="ground">Neo grounding: ${c.ground}. <span class="gate" style="background:var(--${c.gate.cls==='paid'?'accent':c.gate.cls==='enr'?'ok':'info'}-soft);color:var(--${c.gate.cls==='paid'?'accent':c.gate.cls==='enr'?'ok':'info'})">${c.gate.t}</span></div>`;
+    if(sess){ body += renderMsgs(sess); }
+    else {
+      body += `<div class="empty"><span class="eic">${c.ic}</span><div>Chưa có phiên ở đây.</div><small>Hỏi câu đầu để tạo phiên cho ${isSel?'đoạn':c.cat.toLowerCase()}.</small></div>`;
     }
   }
 
-  const foot = s.dedicated
-    ? `<div class="composer"><input placeholder="Hỏi riêng đoạn này…"><button class="send">➤</button></div>`
-    : `<div class="chips">
-         <span class="chip">🔎 Tìm challenges của ${s.cls==='course'?'khoá':'bài'}</span>
-         <span class="chip">🃏 Flashcards</span>
-       </div>
-       <div class="composer"><input placeholder="Hỏi về ${s.v}…"><button class="send">➤</button></div>
-       <div class="model">Model <span class="mchip">✦ Auto · ưu tiên local</span></div>`;
+  /* foot */
+  let foot="";
+  if(isSel){
+    foot=`<div class="composer"><input placeholder="Hỏi riêng đoạn này…" id="inp"><button class="send" id="sendbtn">➤</button></div>`;
+  } else {
+    foot=`<div class="chips"><span class="chip" onclick="ask('Tìm challenges liên quan')">🔎 Challenges liên quan</span><span class="chip" onclick="ask('Gợi ý flashcards')">🃏 Flashcards</span></div>
+      <div class="composer"><input placeholder="Hỏi về ${c.pv}…" id="inp"><button class="send" id="sendbtn">➤</button></div>
+      <div class="modelrow">Model <span class="mc">✦ Auto · ưu tiên local (free)</span></div>`;
+  }
 
-  rail.innerHTML=`
-    <div class="rhead">
-      <div class="pill ${s.cls}"><span class="ic">${s.ic}</span><span class="tx"><span class="k">${s.k}</span><span class="v">${s.v}</span></span></div>
-      <div class="iconbtn ${histOpen?'on':''}" id="histbtn" title="Lịch sử">🕘</div>
-      <div class="iconbtn" title="Đóng">✕</div>
-    </div>
-    <div class="rbody">${body}</div>
-    <div class="rfoot">${foot}</div>`;
-  document.getElementById("histbtn").onclick=()=>{ histOpen=!histOpen; renderHist(); document.getElementById("histbtn").classList.toggle("on",histOpen); };
+  rail.innerHTML = head + back + `<div class="rbody" id="rbody">${body}</div>` + `<div class="rfoot">${foot}</div>`;
+
+  /* wire */
+  const hb=document.getElementById("histbtn"); if(hb) hb.onclick=()=>{ histOpen=!histOpen; renderRail(); };
+  const xb=document.getElementById("xbtn"); if(xb) xb.onclick=()=>{ if(isSel){selecting=false;render();} };
+  const bb=document.getElementById("backbtn"); if(bb) bb.onclick=()=>{ go("course",false); };
+  const send=document.getElementById("sendbtn"), inp=document.getElementById("inp");
+  if(send&&inp){ send.onclick=()=>{ const v=inp.value.trim(); if(v) ask(v); inp.value=""; };
+    inp.onkeydown=(e)=>{ if(e.key==="Enter"){ const v=inp.value.trim(); if(v) ask(v); inp.value=""; } }; }
+  scrollRail();
+}
+function renderMsgs(sess){
+  let h="";
+  sess.msgs.forEach(m=> h += `<div class="msg ${m.role}">${m.text}${m.g?`<span class="g">grounded ↳ ${m.g}</span>`:""}</div>`);
+  if(sess.typing) h+=`<div class="typing"><i></i><i></i><i></i></div>`;
+  return h;
 }
 
-function dotColor(cls){return `var(--${cls==='content'?'accent':cls==='course'?'info':cls==='task'?'ok':cls==='foundation'?'violet':'amber'})`;}
+/* ---------- controls ---------- */
+document.getElementById("livebtn").onclick=()=>{ live=!live; render(); };
+document.getElementById("themebtn").onclick=()=>{
+  const r=document.documentElement;
+  const cur=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+  r.setAttribute("data-theme", cur==="dark"?"light":"dark");
+};
 
-function renderHist(){
-  const wrap=document.getElementById("histwrap");
-  if(!histOpen || live){ wrap.style.display="none"; return; }
-  wrap.style.display="block";
-  const visible=order.filter(k=> showArch ? true : !SCOPES[k].archived);
-  let rows="";
-  if(!visible.length){ rows=`<div class="hempty">Chưa có phiên nào. Bấm một nút gợi ý / "Hỏi câu đầu" trong khung chat để tạo.</div>`; }
-  visible.forEach(k=>{
-    const sc=SCOPES[k], se=sessions[k];
-    rows+=`<div class="hrow ${k===active?'active':''} ${sc.archived?'arch':''}" onclick="active='${k}';render()">
-      <span class="dot" style="background:${dotColor(sc.cls)}"></span>
-      <div class="hb"><div class="h1">${se.title}</div>
-        <div class="h2"><span>${sc.ctx} · ${se.turns.length} lượt</span>${sc.archived?'<span class="htag">đã lưu trữ</span>':''}</div>
-      </div><div class="iconbtn">⋯</div></div>`;
-  });
-  wrap.innerHTML=`
-    <div class="hh"><span>🕘</span><b>Lịch sử trò chuyện</b>
-      <label class="arch"><input type="checkbox" ${showArch?'checked':''} onchange="showArch=this.checked;renderHist()"> Hiện đã lưu trữ</label>
-    </div>${rows}`;
-}
-
-/* ---- spec cards ---- */
-const CARDS=[
-  {cls:"content", ic:"📖", t:"Bài (content)", p:"Grounding: thân bài + mã nguồn. Nhồi cả bài nếu ngắn, RAG nếu dài.", gate:"Premium → phải ghi danh", tags:["mặc định khi mở bài","code + prose"]},
-  {cls:"task", ic:"🎯", t:"Task capstone", p:"Grounding: đề bài + tiêu chí chấm (RAG milestone). Cố vấn, không làm hộ.", gate:"Chỉ người đã ghi danh · chưa ghi danh KHÔNG lộ đề", tags:["dự án cá nhân"]},
-  {cls:"foundation", ic:"📚", t:"Foundation", p:"Grounding: một tài liệu nền tảng (RAG một-tài-liệu).", gate:"Thư viện chung — không cổng", tags:["global","không enrollment"]},
-  {cls:"course", ic:"✦", t:"Cả khoá (course)", p:"Grounding: RAG toàn khoá. Dùng khi không có bài nào mở, hoặc khi bấm 'hỏi cả khoá'.", gate:"Chỉ người đã ghi danh", tags:["fallback","widen từ bài"]},
-  {cls:"selection", ic:"🔖", t:"Đoạn bôi đen", p:"View riêng: trích dẫn + 3 gợi ý dọc + ô nhập, không chip retrieval. Kế thừa surface cha + đoạn.", gate:"Phiên sinh ra đã lưu trữ · search vẫn thấy", tags:["born-archived","sticky"]},
-];
-document.getElementById("grid").innerHTML=CARDS.map(c=>`
-  <div class="card">
-    <div class="ct"><span class="ci" style="background:var(--${c.cls==='content'?'accent':c.cls==='course'?'info':c.cls==='task'?'ok':c.cls==='foundation'?'violet':'amber'}-soft);color:${dotColor(c.cls)}">${c.ic}</span>${c.t}</div>
-    <p>${c.p}</p>
-    <p><b>Cổng:</b> ${c.gate}</p>
-    <div class="meta">${c.tags.map(t=>`<span class="tag2">${t}</span>`).join("")}</div>
-  </div>`).join("");
-
+buildPager();
 render();
 </script>
 </body>

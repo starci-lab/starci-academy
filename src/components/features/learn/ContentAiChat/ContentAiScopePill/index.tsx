@@ -2,10 +2,11 @@
 
 import React from "react"
 import { Link, Typography, cn } from "@heroui/react"
-import { BookOpenIcon, SparkleIcon, TargetIcon } from "@phosphor-icons/react"
+import { BookOpenIcon, QuotesIcon, SparkleIcon, TargetIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux/hooks"
 import { useContentAiChatScopeStore } from "@/hooks/zustand/contentAiChatScope/store"
+import { useContentAiSelection } from "@/hooks/zustand/overlay/hooks"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 
 /** Props for {@link ContentAiScopePill}. */
@@ -37,6 +38,10 @@ export const ContentAiScopePill = ({ className }: ContentAiScopePillProps) => {
     const foundationTitle = useAppSelector((state) => state.foundation.entity?.title)
     const courseTitle = useAppSelector((state) => state.course.entity?.title)
     const { prefersCourseScope, setPrefersCourseScope } = useContentAiChatScopeStore()
+    // a highlighted passage overrides every scope: the next answer is about THAT
+    // excerpt (its own born-archived side-thread), so the pill says so outright
+    const { selection } = useContentAiSelection()
+    const isSelection = !!selection
 
     // mirrors the scope rule in `ContentAiChat`: a lesson grounds on itself unless
     // widened; with no lesson open the surface falls to its next grounding
@@ -67,27 +72,34 @@ export const ContentAiScopePill = ({ className }: ContentAiScopePillProps) => {
         <div
             className={cn(
                 "flex min-w-0 items-center gap-2 rounded-xl border px-3 py-1.5",
-                isCourseScope
-                    ? "border-info bg-info-soft"
-                    : "border-accent bg-accent-soft",
+                isSelection
+                    ? "border-warning bg-warning-soft"
+                    : isCourseScope
+                        ? "border-info bg-info-soft"
+                        : "border-accent bg-accent-soft",
                 className,
             )}
         >
-            {isCourseScope ? (
+            {isSelection ? (
+                <QuotesIcon aria-hidden focusable="false" className="size-4 shrink-0 text-warning-soft-foreground" />
+            ) : isCourseScope ? (
                 <SparkleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-info-soft-foreground" />
             ) : (
                 <NonCourseIcon aria-hidden focusable="false" className="size-4 shrink-0 text-accent-soft-foreground" />
             )}
             <span className="flex min-w-0 flex-1 flex-col">
                 <Typography type="body-xs" color="muted">
-                    {t("contentAi.context.label")}
+                    {isSelection
+                        ? t("contentAi.context.selectionLabel")
+                        : t("contentAi.context.label")}
                 </Typography>
                 <Typography type="body-sm" className="truncate" weight="medium">
-                    {scopeTitle}
+                    {isSelection ? selection : scopeTitle}
                 </Typography>
             </span>
-            {/* only offered while a lesson EXISTS to widen from / narrow back to */}
-            {contentId ? (
+            {/* the widen link is a scope switch — hidden while a passage is selected
+                (the selected excerpt is its own thread; clear it to switch scope) */}
+            {contentId && !isSelection ? (
                 <Link
                     onPress={() => setPrefersCourseScope(!prefersCourseScope)}
                     className="shrink-0 cursor-pointer text-xs font-medium text-accent-soft-foreground"

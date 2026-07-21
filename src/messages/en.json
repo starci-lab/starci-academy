@@ -532,6 +532,7 @@
     "courseHint": "No lesson open — ask anything about this course.",
     "context": {
       "label": "Asking about",
+      "selectionLabel": "Asking about the selected passage",
       "wholeCourse": "Whole course · {course}",
       "askWholeCourse": "Ask whole course",
       "backToLesson": "Back to lesson",

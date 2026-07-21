@@ -1326,12 +1326,13 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                             onPress={() => setSelection(null)}
                         />
                     </div>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-col gap-2">
                         {SELECTION_SUGGESTION_KEYS.map((key) => (
                             <Button
                                 key={key}
                                 variant="secondary"
                                 size="sm"
+                                className="justify-start text-start"
                                 onPress={() => onSend(t(`contentAi.selectionSuggestions.${key}`))}
                             >
                                 {t(`contentAi.selectionSuggestions.${key}`)}

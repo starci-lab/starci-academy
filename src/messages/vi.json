@@ -532,6 +532,7 @@
     "courseHint": "Bạn chưa mở bài nào. Cứ hỏi bất cứ điều gì về cả khoá này.",
     "context": {
       "label": "Đang hỏi về",
+      "selectionLabel": "Đang hỏi về đoạn đã chọn",
       "wholeCourse": "Cả khoá · {course}",
       "askWholeCourse": "Hỏi cả khoá",
       "backToLesson": "Về bài đang đọc",

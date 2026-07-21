@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
 import { ImageDropzone } from "@/components/blocks/identity/ImageDropzone"
+import { Gallery, Variant } from "../../../../story-kit"
 
 const meta: Meta<typeof ImageDropzone> = {
     title: "Blocks/Identity/ImageDropzone",
@@ -9,41 +9,41 @@ const meta: Meta<typeof ImageDropzone> = {
 export default meta
 type Story = StoryObj<typeof ImageDropzone>
 
-/** Use when the upload is an IMAGE and the user needs to see the picked image immediately — rather than the generic `Dropzone` (any file, wired into React Hook Form). To change an avatar in place without a separate drop area, use `AvatarUploadButton`. */
-export const Default: Story = {
-    parameters: { usage: "Use when the upload is an IMAGE and the user needs to see the picked image immediately — rather than the generic `Dropzone` (any file, wired into React Hook Form). To change an avatar in place without a separate drop area, use `AvatarUploadButton`." },
+/**
+ * Toàn bộ ma trận trạng thái của ImageDropzone: có hint định dạng/kích thước
+ * và không hint. Dùng để tra khi nào nên nói trước ràng buộc định dạng, và khi
+ * nào có thể bỏ hint để khu vực thả ảnh gọn lại một dòng label.
+ */
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex max-w-md flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>With format hint</Label>
-                <Typography type="body-sm" color="muted">
-                    Pass hint when the backend has real constraints on format or size. Saying it up front here
-                    is cheaper than letting the user finish picking only to hit an error.
-                </Typography>
-            </div>
-            <ImageDropzone
-                onFile={() => {}}
-                label="Drag and drop an image here, or click to choose"
-                hint="PNG, JPG, WEBP, GIF · up to 5 MB"
-            />
-        </div>
+        <Gallery>
+            <Variant
+                label="Có hint định dạng"
+                hint="Dùng khi backend có ràng buộc thật về định dạng hoặc kích thước file. Nói trước ở đây rẻ hơn để người dùng chọn xong mới gặp lỗi. Dùng khi tải lên là ẢNH và cần thấy ngay ảnh vừa chọn — thay cho `Dropzone` chung (mọi loại file, nối vào React Hook Form). Để đổi avatar tại chỗ không cần khu vực thả riêng, dùng `AvatarUploadButton`."
+            >
+                <div className="max-w-md">
+                    <ImageDropzone
+                        onFile={() => {}}
+                        label="Drag and drop an image here, or click to choose"
+                        hint="PNG, JPG, WEBP, GIF · up to 5 MB"
+                    />
+                </div>
+            </Variant>
+            <Variant
+                label="Không hint"
+                hint="Bỏ hint khi mọi định dạng ảnh phổ biến đều được nhận và không có giới hạn kích thước đáng nói. Đừng bỏ chỉ để gọn — che một ràng buộc thật khiến người dùng gặp lỗi sau khi đã chọn."
+            >
+                <div className="max-w-md">
+                    <ImageDropzone onFile={() => {}} label="Click to choose an image" />
+                </div>
+            </Variant>
+        </Gallery>
     ),
-}
-
-/** Drop `hint` when there's no constraint worth stating up front — the drop area shrinks to a single label line. */
-export const WithoutHint: Story = {
-    parameters: { usage: "Drop `hint` when there's no constraint worth stating up front — the drop area shrinks to a single label line." },
-    render: () => (
-        <div className="flex max-w-md flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>No hint</Label>
-                <Typography type="body-sm" color="muted">
-                    Drop the hint when every common image format is accepted and there's no meaningful size
-                    cap. Don't drop it just to look tidy — hiding a real constraint means the user hits an
-                    error after picking.
-                </Typography>
-            </div>
-            <ImageDropzone onFile={() => {}} label="Click to choose an image" />
-        </div>
-    ),
+    parameters: {
+        usage:
+            "Toàn bộ ma trận trạng thái của ImageDropzone: có hint định dạng/kích thước và không hint. " +
+            "Dùng khi tải lên là ẢNH và cần thấy ngay ảnh vừa chọn — thay cho `Dropzone` chung (mọi loại " +
+            "file, nối vào React Hook Form). Để đổi avatar tại chỗ không cần khu vực thả riêng, dùng " +
+            "`AvatarUploadButton`.",
+    },
 }

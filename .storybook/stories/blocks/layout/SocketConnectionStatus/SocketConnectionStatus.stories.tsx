@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
 import { SocketConnectionStatus } from "@/components/blocks/layout/SocketConnectionStatus"
+import { Variant } from "../../../../story-kit"
 import { SocketScenario } from "./components"
 
 const meta: Meta<typeof SocketConnectionStatus> = {
@@ -10,52 +10,65 @@ const meta: Meta<typeof SocketConnectionStatus> = {
 export default meta
 type Story = StoryObj<typeof SocketConnectionStatus>
 
-/** Use when losing realtime doesn't BLOCK anything — the app keeps running over HTTP, so this is a notifying toast, not a blocking Modal or an error toast that forces the user to click. If a disconnect truly blocks an action, that's a job for a Modal, not this block. */
+/**
+ * Use when losing realtime doesn't BLOCK anything — the app keeps running over HTTP, so this is a
+ * notifying toast (in the same `ToastProvider` queue as every other toast), not a blocking Modal.
+ * If a disconnect truly blocks an action, that's a job for a Modal, not this block.
+ *
+ * The block itself renders nothing (`return null`) and is mounted exactly once, globally — it only
+ * drives the shared toast queue. That makes it the same shape as TopLoader/AppSplash: each phase
+ * stays its OWN export instead of a `<Gallery>`, because stacking multiple live scenarios side by
+ * side would mount several `ToastProvider`s at once and their timers would race/overlap the same
+ * toast slot.
+ */
 export const Default: Story = {
-    parameters: { usage: "Use when losing realtime doesn't BLOCK anything — the app keeps running over HTTP, so this is a notifying toast (in the same `ToastProvider` queue as every other toast), not a blocking Modal. If a disconnect truly blocks an action, that's a job for a Modal, not this block." },
+    parameters: {
+        usage: "Use when losing realtime doesn't BLOCK anything — the app keeps running over HTTP, so this is a notifying toast (in the same `ToastProvider` queue as every other toast), not a blocking Modal. If a disconnect truly blocks an action, that's a job for a Modal, not this block.",
+    },
     render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Normal connection</Label>
-                <Typography type="body-sm" color="muted">
-                    The steady state: every socket is alive, so no toast fires. An empty canvas is CORRECT — the block only speaks up when something goes wrong; it doesn't take up space constantly to report that everything is fine.
-                </Typography>
-            </div>
+        <Variant
+            label="Ổn định"
+            hint="Trạng thái bình thường: mọi socket đều sống, không toast nào bật lên. Canvas rỗng là ĐÚNG — block chỉ lên tiếng khi có sự cố, không chiếm chỗ liên tục để báo mọi thứ vẫn ổn."
+        >
             <SocketScenario scenario="stable" />
-        </div>
+        </Variant>
     ),
 }
 
-/** Use to inspect the "disconnected" branch: the toast only appears after the socket has been dead longer than the 2-second grace period, so a brief network blip never makes it pop out. */
+/**
+ * Use to inspect the "disconnected" branch: the toast only appears after the socket has been dead
+ * longer than the 2-second grace period, so a brief network blip never makes it pop out.
+ */
 export const Down: Story = {
     name: "Reconnecting",
-    parameters: { usage: "Use to inspect the \"disconnected\" branch: the warning toast only appears after the socket has been dead longer than the 2-second grace period (`timeout: 0` — it stays until reconnected), so a brief network blip never makes it pop out." },
+    parameters: {
+        usage: "Use to inspect the \"disconnected\" branch: the warning toast only appears after the socket has been dead longer than the 2-second grace period (`timeout: 0` — it stays until reconnected), so a brief network blip never makes it pop out.",
+    },
     render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Reconnecting</Label>
-                <Typography type="body-sm" color="muted">
-                    The state after the socket has been dead past the 2-second grace period: a warning toast appears and stays until it reconnects. Wait about 2 seconds after opening the story for it to appear — that's the grace period actually running.
-                </Typography>
-            </div>
+        <Variant
+            label="Đang kết nối lại"
+            hint="Toast warning chỉ hiện sau khi socket chết quá 2 giây (grace period, `timeout: 0` — ở lại tới khi kết nối lại). Đợi khoảng 2 giây sau khi mở story để thấy toast xuất hiện — đó là grace period đang chạy thật."
+        >
             <SocketScenario scenario="drop" />
-        </div>
+        </Variant>
     ),
 }
 
-/** Use to inspect the "reconnected" branch: the toast switches to success on its own, then auto-hides after 1.5 seconds; the user doesn't have to click anything to close it. */
+/**
+ * Use to inspect the "reconnected" branch: the toast switches to success on its own, then auto-hides
+ * after 1.5 seconds; the user doesn't have to click anything to close it.
+ */
 export const Recovered: Story = {
     name: "Reconnected",
-    parameters: { usage: "Use to inspect the \"reconnected\" branch: close the warning toast, fire a success toast, then auto-hide after 1.5 seconds — the user doesn't have to click anything to close it." },
+    parameters: {
+        usage: "Use to inspect the \"reconnected\" branch: close the warning toast, fire a success toast, then auto-hide after 1.5 seconds — the user doesn't have to click anything to close it.",
+    },
     render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Reconnected</Label>
-                <Typography type="body-sm" color="muted">
-                    The closing-loop state: after reconnecting, the toast confirms for 1.5 seconds then disappears on its own. The story runs the full drop-then-reconnect scenario, so wait a few seconds to see all three stages: hidden, dropped, confirmed.
-                </Typography>
-            </div>
+        <Variant
+            label="Đã kết nối lại"
+            hint="Sau khi kết nối lại, toast tự chuyển sang success rồi tự ẩn sau 1.5 giây — người dùng không cần bấm gì để đóng. Story chạy trọn kịch bản rớt-rồi-hồi, đợi vài giây để thấy đủ 3 pha: ẩn, rớt, xác nhận."
+        >
             <SocketScenario scenario="recover" />
-        </div>
+        </Variant>
     ),
 }

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
+import { Typography } from "@heroui/react"
 import { CrossListCard, CrossListItem } from "@/components/blocks/cards/CrossListCard"
+import { Gallery, Variant } from "../../../../story-kit"
 
 const meta: Meta<typeof CrossListCard> = {
     title: "Blocks/Cards/CrossListCard",
@@ -9,35 +10,43 @@ const meta: Meta<typeof CrossListCard> = {
 export default meta
 type Story = StoryObj<typeof CrossListCard>
 
-/** The NEGATIVE mirror of CheckListCard: each row has a faint ✗ — something NOT included/not met (not in the plan, a limitation). */
-export const Default: Story = {
-    parameters: { usage: "The opposite of CheckListCard: a list of 'not included / not met' — features not in the plan, limitations, unmet conditions. The `XCircleIcon` is FAINT (text-muted, not danger/error), read-only. Need pressable rows → SurfaceListCard; need things ACHIEVED (✓) → CheckListCard." },
+/**
+ * Toàn bộ trạng thái của CrossListCard: mặc định (đứng riêng, có shadow) và khi
+ * nằm trong một surface khác (bordered, không shadow). CrossListCard là mirror
+ * ÂM của CheckListCard — mỗi dòng là một điều KHÔNG có/không đáp ứng.
+ */
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex w-80 flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Not included in the plan</Label>
-                <Typography type="body-sm" color="muted">
-                    Each row is something this plan does NOT include — a faint ✗, neutral in tone (not an error).
-                </Typography>
-            </div>
-            <CrossListCard>
-                <CrossListItem><Typography type="body-sm">Grading with a premium model</Typography></CrossListItem>
-                <CrossListItem><Typography type="body-sm">Unlimited mock interviews</Typography></CrossListItem>
-                <CrossListItem><Typography type="body-sm">Priority support over email</Typography></CrossListItem>
-            </CrossListCard>
-        </div>
+        <Gallery>
+            <Variant
+                label="Mặc định"
+                hint="Đối lập với CheckListCard: danh sách các điều KHÔNG bao gồm/không đáp ứng — tính năng không có trong plan, giới hạn, điều kiện chưa đạt. Icon `XCircleIcon` MỜ (text-muted, không phải danger/error), chỉ đọc. Cần dòng bấm được → SurfaceListCard; cần điều ĐÃ đạt (✓) → CheckListCard."
+            >
+                <div className="w-80">
+                    <CrossListCard>
+                        <CrossListItem><Typography type="body-sm">Grading with a premium model</Typography></CrossListItem>
+                        <CrossListItem><Typography type="body-sm">Unlimited mock interviews</Typography></CrossListItem>
+                        <CrossListItem><Typography type="body-sm">Priority support over email</Typography></CrossListItem>
+                    </CrossListCard>
+                </div>
+            </Variant>
+            <Variant
+                label="Trong surface khác (bordered)"
+                hint="Khi nằm trong modal/drawer/panel: dùng `bordered` → viền thay cho bóng đổ (bóng đổ vô hình trên nền surface). Giống rule của `CheckListCard bordered` / `SurfaceListCard bordered`."
+            >
+                <div className="w-80 rounded-3xl bg-surface p-3 shadow-surface">
+                    <CrossListCard bordered>
+                        <CrossListItem><Typography type="body-sm">Export a PDF certificate</Typography></CrossListItem>
+                        <CrossListItem><Typography type="body-sm">Weekly 1-on-1 mentoring</Typography></CrossListItem>
+                    </CrossListCard>
+                </div>
+            </Variant>
+        </Gallery>
     ),
-}
-
-/** Sitting inside another surface (modal/drawer/panel): `bordered` → border instead of shadow (surface-in-surface). */
-export const SurfaceInSurface: Story = {
-    parameters: { usage: "Inside a modal/drawer/panel: pass `bordered` — use a border instead of shadow (the shadow is invisible on a surface background). Same as the `CheckListCard bordered` / `SurfaceListCard bordered` rule." },
-    render: () => (
-        <div className="w-80 rounded-3xl bg-surface p-3 shadow-surface">
-            <CrossListCard bordered>
-                <CrossListItem><Typography type="body-sm">Export a PDF certificate</Typography></CrossListItem>
-                <CrossListItem><Typography type="body-sm">Weekly 1-on-1 mentoring</Typography></CrossListItem>
-            </CrossListCard>
-        </div>
-    ),
+    parameters: {
+        usage:
+            "Toàn bộ trạng thái của CrossListCard: mặc định (đứng riêng, shadow) và khi nằm trong " +
+            "surface khác (bordered, không shadow). CrossListCard là mirror ÂM của CheckListCard — mỗi " +
+            "dòng là một điều KHÔNG bao gồm/không đáp ứng, icon XCircleIcon mờ chứ không phải trạng thái lỗi.",
+    },
 }

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
 import { ResponsiveBreadcrumb } from "@/components/blocks/navigation/ResponsiveBreadcrumb"
+import { Gallery, Variant } from "../../../../story-kit"
 
 const meta: Meta<typeof ResponsiveBreadcrumb> = {
     title: "Blocks/Navigation/ResponsiveBreadcrumb",
@@ -10,80 +10,54 @@ export default meta
 type Story = StoryObj<typeof ResponsiveBreadcrumb>
 
 /**
- * The FULL `Home › … › Current` on desktop — this is exactly what makes ResponsiveBreadcrumb DIFFERENT from BackLink
- * (BackLink only has a single "Back" arrow). Shown only when the trail is short (<4 crumbs) AND the width is >= sm; narrower and it
- * collapses itself into a BackLink. Drop it into the `breadcrumb` slot of `PageHeader`.
+ * Toàn bộ ma trận trạng thái của ResponsiveBreadcrumb: trail đầy đủ, trail dài
+ * tự collapse thành BackLink, và trang gốc không có back button. Dùng để tra
+ * khi nào breadcrumb hiện đủ `Home › … › Current` và khi nào nó tự thu lại.
  */
-export const Default: Story = {
-    parameters: {
-        usage: "The FULL `Home › … › Current` on desktop — this is what makes ResponsiveBreadcrumb differ from `BackLink` (which only has a single \"Back\" arrow). Shown only when the trail is short (<4 crumbs) AND the screen is >= sm; narrower and it collapses itself into a `BackLink`. Drop it into the `breadcrumb` slot of `PageHeader`.",
-    },
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Full trail</Label>
-                <Typography type="body-sm" color="muted">
-                    The full Home › … › Current on desktop — this is the difference from BackLink. It shows only when the trail is short (under 4 crumbs) and the screen is sm or wider; narrower and it collapses itself.
-                </Typography>
-            </div>
-            <ResponsiveBreadcrumb
-                items={[
-                    { key: "home", label: "Home", onPress: () => { } },
-                    { key: "courses", label: "Courses", onPress: () => { } },
-                    { key: "current", label: "Fullstack Mastery" },
-                ]}
-            />
-        </div>
+        <Gallery>
+            <Variant
+                label="Full trail"
+                hint="Trail đầy đủ Home › … › Current trên desktop — đây là điểm khác biệt so với BackLink (chỉ có một mũi tên Back). Chỉ hiện khi trail ngắn (dưới 4 crumb) và màn hình từ sm trở lên; hẹp hơn thì tự thu lại thành BackLink."
+            >
+                <ResponsiveBreadcrumb
+                    items={[
+                        { key: "home", label: "Home", onPress: () => { } },
+                        { key: "courses", label: "Courses", onPress: () => { } },
+                        { key: "current", label: "Fullstack Mastery" },
+                    ]}
+                />
+            </Variant>
+            <Variant
+                label="Collapsed (≥4 crumb → BackLink)"
+                hint="Từ 4 crumb trở lên (hoặc trên mobile) breadcrumb tái dùng chính BackLink 'Back' — tái dùng có chủ đích, không phải trùng lặp: trail dài sẽ xuống dòng và ăn chiều cao, mà một trang con sâu vốn được vào từ top nav nên chỉ cần một đường lùi lại. Đích lùi = tổ tiên gần nhất còn bấm được."
+            >
+                <ResponsiveBreadcrumb
+                    items={[
+                        { key: "home", label: "Home", onPress: () => { } },
+                        { key: "courses", label: "Courses", onPress: () => { } },
+                        { key: "fullstack", label: "Fullstack Mastery", onPress: () => { } },
+                        { key: "current", label: "Lesson 4: API design" },
+                    ]}
+                />
+            </Variant>
+            <Variant
+                label="Root page"
+                hint="Khi trang hiện tại chính là gốc điều hướng — không có tổ tiên nào để lùi về, nên không render nút back."
+            >
+                <ResponsiveBreadcrumb
+                    items={[
+                        { key: "current", label: "Home" },
+                    ]}
+                />
+            </Variant>
+        </Gallery>
     ),
-}
-
-/**
- * From 4 crumbs up (or on mobile) → it REUSES the very same `BackLink` "Back". This is DELIBERATE reuse,
- * not duplication: a long trail wraps + eats vertical height, but a deep descendant was reached from the top nav so it only needs one
- * way back. The back target = the nearest still-clickable ancestor.
- */
-export const Collapsed: Story = {
     parameters: {
-        usage: "From 4 crumbs up (or on mobile) → it REUSES the very same `BackLink` \"Back\" (deliberate reuse, not duplication): a long trail wraps + eats vertical height, and a deep descendant was reached from the top nav. The back target = the nearest still-clickable ancestor.",
+        usage:
+            "Toàn bộ ma trận trạng thái của ResponsiveBreadcrumb: trail đầy đủ (dưới 4 crumb, từ sm trở lên), " +
+            "trail dài tự collapse thành BackLink (từ 4 crumb hoặc trên mobile, tái dùng BackLink có chủ đích), " +
+            "và trang gốc không có back button. Drop vào slot `breadcrumb` của `PageHeader`.",
     },
-    render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Collapsed (≥4 crumbs → BackLink)</Label>
-                <Typography type="body-sm" color="muted">
-                    From 4 crumbs up (or on mobile) it reuses the very same BackLink — deliberate reuse, not duplication. A long trail wraps and eats vertical height, and a deep descendant was reached from the top nav.
-                </Typography>
-            </div>
-            <ResponsiveBreadcrumb
-                items={[
-                    { key: "home", label: "Home", onPress: () => { } },
-                    { key: "courses", label: "Courses", onPress: () => { } },
-                    { key: "fullstack", label: "Fullstack Mastery", onPress: () => { } },
-                    { key: "current", label: "Lesson 4: API design" },
-                ]}
-            />
-        </div>
-    ),
-}
-
-/** Use when the current page is itself the navigation root, with no ancestor to return to, so no back button is rendered. */
-export const RootOnly: Story = {
-    parameters: {
-        usage: "Use when the current page is itself the navigation root, with no ancestor to return to, so no back button is rendered.",
-    },
-    render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Root page</Label>
-                <Typography type="body-sm" color="muted">
-                    When the current page is itself the navigation root — no ancestor to return to, so no back button is rendered.
-                </Typography>
-            </div>
-            <ResponsiveBreadcrumb
-                items={[
-                    { key: "current", label: "Home" },
-                ]}
-            />
-        </div>
-    ),
 }

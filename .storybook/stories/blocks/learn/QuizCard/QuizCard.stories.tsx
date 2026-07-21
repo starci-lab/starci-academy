@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
 import { QuizCard } from "@/components/blocks/learn/QuizCard"
+import { Gallery, Variant } from "../../../../story-kit"
 import { ControlledQuizCard, SINGLE_OPTIONS, MULTIPLE_OPTIONS } from "./components"
 
 const meta: Meta<typeof QuizCard> = {
@@ -11,85 +11,70 @@ export default meta
 type Story = StoryObj<typeof QuizCard>
 
 /**
- * Before submitting: a single-answer question, with each row in its default or selected
- * state (accent border). The answer isn't revealed. Pick an option, then click check to see the graded state.
+ * Toàn bộ trạng thái của QuizCard: câu hỏi một đáp án trước khi nộp (mỗi hàng chỉ ở
+ * mặc định hoặc đã chọn, đáp án đúng chưa lộ), câu hỏi một đáp án sau khi nộp (hàng
+ * chọn sai tô danger kèm dấu X, hàng đúng bị bỏ lỡ có viền success nhạt kèm dấu tick,
+ * nhóm chuyển chỉ-đọc, giải thích hiện ra), và câu hỏi nhiều đáp án dùng CheckboxGroup
+ * trước khi nộp. Dùng để tra khi nào chọn selectionMode single hay multiple, và cách
+ * mỗi hàng đổi màu theo trạng thái chấm sau khi nộp.
  */
-export const SingleChoice: Story = {
-    parameters: {
-        usage: "Use for a single-answer multiple-choice question before the student submits. Each row has only two states: default and selected (accent border) — the correct answer is never revealed. The check button is locked until a selection is made.",
-    },
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex w-[32rem] max-w-full flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Single-answer question (before submitting)</Label>
-                <Typography type="body-sm" color="muted">
-                    Pick an option, then click check to reveal whether it's right or wrong.
-                </Typography>
-            </div>
-            <ControlledQuizCard
-                questionIndex={1}
-                question="Which way of storing a session token is safest in the browser?"
-                options={SINGLE_OPTIONS}
-                selectionMode="single"
-                explanation="A cookie with the HttpOnly flag can't be read by JavaScript, so it defends against XSS attacks stealing the token — unlike localStorage or a global variable."
-            />
-        </div>
+        <Gallery>
+            <Variant
+                label="Một đáp án — trước khi nộp"
+                hint="Câu hỏi trắc nghiệm chỉ có một đáp án đúng, trước khi học viên nộp bài — mỗi hàng chỉ ở trạng thái mặc định hoặc đã chọn (viền accent), đáp án đúng chưa lộ ra. Chọn một phương án rồi bấm kiểm tra để xem trạng thái sau khi chấm."
+            >
+                <div className="w-[32rem] max-w-full">
+                    <ControlledQuizCard
+                        questionIndex={1}
+                        question="Which way of storing a session token is safest in the browser?"
+                        options={SINGLE_OPTIONS}
+                        selectionMode="single"
+                        explanation="A cookie with the HttpOnly flag can't be read by JavaScript, so it defends against XSS attacks stealing the token — unlike localStorage or a global variable."
+                    />
+                </div>
+            </Variant>
+            <Variant
+                label="Một đáp án — sau khi nộp (chọn sai)"
+                hint="Trạng thái sau khi nộp của câu hỏi một đáp án, ở đây học viên chọn sai: hàng đã chọn tô danger kèm dấu X, hàng đúng bị bỏ lỡ có viền success nhạt kèm dấu tick, cả nhóm chuyển về chỉ-đọc và phần giải thích hiện ra bên dưới."
+            >
+                <div className="w-[32rem] max-w-full">
+                    <ControlledQuizCard
+                        questionIndex={1}
+                        question="Which way of storing a session token is safest in the browser?"
+                        options={SINGLE_OPTIONS}
+                        selectionMode="single"
+                        explanation="A cookie with the HttpOnly flag can't be read by JavaScript, so it defends against XSS attacks stealing the token — unlike localStorage or a global variable."
+                        startSelectedIds={["opt-local"]}
+                        startSubmitted
+                    />
+                </div>
+            </Variant>
+            <Variant
+                label="Nhiều đáp án — trước khi nộp"
+                hint="Câu hỏi có nhiều đáp án đúng dùng ngữ nghĩa checkbox (CheckboxGroup) — chọn được nhiều ô cùng lúc. Nút kiểm tra bị khoá tới khi có ít nhất một ô được chọn; sau khi nộp mỗi ô tự lộ trạng thái chấm riêng."
+            >
+                <div className="w-[32rem] max-w-full">
+                    <ControlledQuizCard
+                        questionIndex={2}
+                        question="Which columns are usually good candidates for indexing in a relational database?"
+                        options={MULTIPLE_OPTIONS}
+                        selectionMode="multiple"
+                        submitLabel="Check selection"
+                        explanation="Columns often filtered in WHERE or joined in JOIN are queried frequently and benefit from an index; low-value columns like a boolean, or ones almost never queried, gain little from an index."
+                    />
+                </div>
+            </Variant>
+        </Gallery>
     ),
-}
-
-/**
- * After submitting: a correct selected row is tinted success with a checkmark, a wrong
- * selected row is tinted danger with a cross, a correct-but-missed row has a soft success border, and the explanation appears.
- */
-export const SingleChoiceSubmitted: Story = {
     parameters: {
-        usage: "Use to view the post-submit state of a single-answer question. Here the student chose wrong: the selected row is tinted danger with a cross, the missed correct row has a soft success border with a checkmark, the group switches to read-only, and the explanation appears below.",
+        usage:
+            "Toàn bộ trạng thái của QuizCard: câu hỏi một đáp án trước khi nộp (mỗi hàng chỉ ở mặc định " +
+            "hoặc đã chọn, đáp án đúng chưa lộ), câu hỏi một đáp án sau khi nộp (hàng chọn sai tô danger " +
+            "kèm dấu X, hàng đúng bị bỏ lỡ có viền success nhạt kèm dấu tick, nhóm chuyển chỉ-đọc, giải " +
+            "thích hiện ra), và câu hỏi nhiều đáp án dùng CheckboxGroup trước khi nộp (nút kiểm tra khoá " +
+            "tới khi có ít nhất một ô được chọn). Dùng để tra selectionMode nên chọn single hay multiple, " +
+            "và cách mỗi hàng đổi màu theo trạng thái chấm sau khi nộp.",
     },
-    render: () => (
-        <div className="flex w-[32rem] max-w-full flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Single-answer question (submitted, chose wrong)</Label>
-                <Typography type="body-sm" color="muted">
-                    The group is locked read-only; each row reveals its graded state and the explanation appears.
-                </Typography>
-            </div>
-            <ControlledQuizCard
-                questionIndex={1}
-                question="Which way of storing a session token is safest in the browser?"
-                options={SINGLE_OPTIONS}
-                selectionMode="single"
-                explanation="A cookie with the HttpOnly flag can't be read by JavaScript, so it defends against XSS attacks stealing the token — unlike localStorage or a global variable."
-                startSelectedIds={["opt-local"]}
-                startSubmitted
-            />
-        </div>
-    ),
-}
-
-/**
- * A multiple-answer question with checkbox semantics: multiple options can be selected.
- * Check a few boxes, then click check to grade the whole selection.
- */
-export const MultipleChoice: Story = {
-    parameters: {
-        usage: "Use for a question with several correct answers — selectionMode multiple is built with CheckboxGroup so multiple boxes can be checked. The check button is locked until at least one box is checked; after submitting, each box reveals its own graded state.",
-    },
-    render: () => (
-        <div className="flex w-[32rem] max-w-full flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Multiple-answer question</Label>
-                <Typography type="body-sm" color="muted">
-                    Select all options that apply, then click check to grade the whole set.
-                </Typography>
-            </div>
-            <ControlledQuizCard
-                questionIndex={2}
-                question="Which columns are usually good candidates for indexing in a relational database?"
-                options={MULTIPLE_OPTIONS}
-                selectionMode="multiple"
-                submitLabel="Check selection"
-                explanation="Columns often filtered in WHERE or joined in JOIN are queried frequently and benefit from an index; low-value columns like a boolean, or ones almost never queried, gain little from an index."
-            />
-        </div>
-    ),
 }

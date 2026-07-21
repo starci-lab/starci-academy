@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
 import { StatRibbon } from "@/components/blocks/stats/StatRibbon"
+import { Gallery, Variant } from "../../../../story-kit"
 
 const meta: Meta<typeof StatRibbon> = {
     title: "Blocks/Stats/StatRibbon",
@@ -11,46 +11,43 @@ const meta: Meta<typeof StatRibbon> = {
 export default meta
 type Story = StoryObj<typeof StatRibbon>
 
-/** Use for the headline stat strip at the top of a profile tab (Challenges / Skills): 4 StatPairs in ONE card split by FULL-HEIGHT vertical dividers (row bleeds to the card edges via `sm:-m-3` so the divider touches top+bottom, not inset by the card padding) on wide screens, a 2-column grid on mobile. */
-export const Default: Story = {
-    parameters: { usage: "Use for the headline stat strip at the top of a profile tab (Challenges / Skills): 4 StatPairs in one card split by vertical dividers on wide screens, a 2-column grid on mobile." },
+/**
+ * Toàn bộ trạng thái của StatRibbon: dải đủ 4 stat và dải rút gọn khi viewer
+ * chưa có rank/percentile. Dùng để tra khi nào ribbon còn đủ 4 ô và khi nào
+ * chỉ còn 2 ô mà layout (divider + cell đều) vẫn phải lên gọn.
+ */
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Four stats</Label>
-                <Typography type="body-sm" color="muted">
-                    The profile Challenges / Skills header — passed count, XP, top percentile, rank — as one bordered ribbon.
-                </Typography>
-            </div>
-            <StatRibbon
-                items={[
-                    { key: "passed", value: 12, label: "Passed" },
-                    { key: "xp", value: "1,204", label: "XP" },
-                    { key: "top", value: "8%", label: "Top" },
-                    { key: "rank", value: "#3", label: "Rank" },
-                ]}
-            />
-        </div>
+        <Gallery>
+            <Variant
+                label="Đủ 4 stat"
+                hint="Dải stat đầu trang tab hồ sơ (Challenges / Skills): 4 StatPair — số đã pass, XP, top percentile, rank — trong một card, chia bởi divider dọc full-height trên màn rộng, grid 2 cột trên mobile."
+            >
+                <StatRibbon
+                    items={[
+                        { key: "passed", value: 12, label: "Passed" },
+                        { key: "xp", value: "1,204", label: "XP" },
+                        { key: "top", value: "8%", label: "Top" },
+                        { key: "rank", value: "#3", label: "Rank" },
+                    ]}
+                />
+            </Variant>
+            <Variant
+                label="Chỉ 2 stat (chưa có rank)"
+                hint="Viewer chưa pass bài nào nên chưa có rank/percentile — hai ô đó ẩn, ribbon chỉ còn 2 stat đã biết nhưng divider và cell đều vẫn lên layout gọn với 2 item."
+            >
+                <StatRibbon
+                    items={[
+                        { key: "passed", value: 0, label: "Passed" },
+                        { key: "xp", value: 0, label: "XP" },
+                    ]}
+                />
+            </Variant>
+        </Gallery>
     ),
-}
-
-/** Use when the viewer is unranked (no solved work yet): the ribbon holds only the stats that exist — the dividers and equal cells still lay out cleanly with 2 items. */
-export const FewStats: Story = {
-    parameters: { usage: "Use when the viewer is unranked (no solved work yet): the ribbon holds only the stats that exist — the dividers and equal cells still lay out cleanly with 2 items." },
-    render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Two stats (unranked)</Label>
-                <Typography type="body-sm" color="muted">
-                    Rank / percentile hide until the viewer has passed work, so the ribbon renders just the two known stats.
-                </Typography>
-            </div>
-            <StatRibbon
-                items={[
-                    { key: "passed", value: 0, label: "Passed" },
-                    { key: "xp", value: 0, label: "XP" },
-                ]}
-            />
-        </div>
-    ),
+    parameters: {
+        usage:
+            "Toàn bộ trạng thái của StatRibbon: dải đủ 4 stat (headline stat strip đầu tab hồ sơ) và " +
+            "dải rút gọn khi viewer chưa có rank/percentile. Dùng để tra layout ribbon khi số ô thay đổi.",
+    },
 }

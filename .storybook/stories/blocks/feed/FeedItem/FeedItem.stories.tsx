@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
 import { UserPlusIcon } from "@phosphor-icons/react"
 import { FeedItem } from "@/components/blocks/feed/FeedItem"
 import { ActivityAvatar } from "@/components/blocks/feed/ActivityAvatar"
 import { ReactionBar } from "@/components/blocks/feed/ReactionBar"
 import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
+import { Gallery, Variant } from "../../../../story-kit"
 import { usage } from "./components"
 
 const meta: Meta<typeof FeedItem> = {
@@ -14,114 +14,89 @@ const meta: Meta<typeof FeedItem> = {
 export default meta
 type Story = StoryObj<typeof FeedItem>
 
-/** Use for a basic activity item in the feed: an avatar with an activity-type badge, a sentence describing the action, and a relative timestamp. */
-export const Default: Story = {
+/**
+ * Toàn bộ ma trận trạng thái của FeedItem: mặc định, có thanh reaction, không có
+ * leading, và text hoạt động dài cần xuống dòng. Dùng để tra khi nào gắn reaction
+ * bar, khi nào bỏ leading, và cách cột text xử lý câu dài nhiều thực thể.
+ */
+export const AllVariants: Story = {
     parameters: { usage },
     render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Default</Label>
-                <Typography type="body-sm" color="muted">
-                    An activity tied to one person that no one can interact back with.
-                </Typography>
-            </div>
-            <FeedItem
-                leading={(
-                    <ActivityAvatar
-                        username="minhanh_dev"
-                        avatar="https://i.pravatar.cc/150?img=12"
-                        icon={<UserPlusIcon aria-hidden focusable="false" weight="bold" />}
-                    />
-                )}
-                timestamp="2 hours ago"
+        <Gallery>
+            <Variant
+                label="Mặc định"
+                hint="Một hoạt động gắn với một người mà không ai tương tác lại được: avatar kèm badge loại hoạt động, câu mô tả hành động, và mốc thời gian tương đối."
             >
-                <span><strong>minhanh_dev</strong> followed <strong>quochuy_backend</strong></span>
-            </FeedItem>
-        </div>
-    ),
-}
-
-/** When the activity can be interacted with by the community (for example completing a challenge), add a reaction bar at the bottom so viewers can react. */
-export const WithReactionBar: Story = {
-    parameters: { usage },
-    render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>With reaction bar</Label>
-                <Typography type="body-sm" color="muted">
-                    Use the footer slot when the activity is worth a community reaction, for example passing a challenge. Leave it empty for private activities or system logs.
-                </Typography>
-            </div>
-            <FeedItem
-                leading={(
-                    <ActivityAvatar
-                        username="quochuy_backend"
-                        avatar="https://i.pravatar.cc/150?img=33"
-                        icon={<UserPlusIcon aria-hidden focusable="false" weight="bold" />}
-                    />
-                )}
-                timestamp="15 minutes ago"
-                footer={(
-                    <ReactionBar
-                        count={8}
-                        myReaction={ReactionType.Like}
-                        onReact={() => {}}
-                    />
-                )}
+                <FeedItem
+                    leading={(
+                        <ActivityAvatar
+                            username="minhanh_dev"
+                            avatar="https://i.pravatar.cc/150?img=12"
+                            icon={<UserPlusIcon aria-hidden focusable="false" weight="bold" />}
+                        />
+                    )}
+                    timestamp="2 giờ trước"
+                >
+                    <span><strong>minhanh_dev</strong> đã follow <strong>quochuy_backend</strong></span>
+                </FeedItem>
+            </Variant>
+            <Variant
+                label="Có thanh reaction"
+                hint="Khi hoạt động có thể được cộng đồng tương tác lại (ví dụ vừa hoàn thành một challenge), thêm reaction bar vào slot footer để người xem bấm react. Bỏ trống slot này với hoạt động riêng tư hoặc system log."
             >
-                <span><strong>quochuy_backend</strong> passed the challenge <strong>Handling asynchronous flows</strong></span>
-            </FeedItem>
-        </div>
-    ),
-}
-
-/** When the activity isn't tied to a specific user or doesn't need an avatar (for example a system log), skip the leading slot so the row is text only. */
-export const WithoutLeading: Story = {
-    parameters: { usage },
-    render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Without leading</Label>
-                <Typography type="body-sm" color="muted">
-                    Leave the leading slot empty when the activity isn't caused by anyone, for example a system log. Don't stuff a placeholder avatar in just to balance the row.
-                </Typography>
-            </div>
-            <FeedItem timestamp="Yesterday at 21:40">
-                The system automatically backed up your course progress
-            </FeedItem>
-        </div>
-    ),
-}
-
-/** When the action description is long (many linked entities), the text column flexes and wraps naturally instead of overflowing the row. */
-export const LongActivityText: Story = {
-    parameters: { usage },
-    render: () => (
-        <div className="flex w-72 flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Long activity text</Label>
-                <Typography type="body-sm" color="muted">
-                    Shown in a narrow column to test a long sentence with many entities: the text column must wrap, without pushing the timestamp out of the row.
-                </Typography>
-            </div>
-            <FeedItem
-                leading={(
-                    <ActivityAvatar
-                        username="thuha_ux"
-                        avatar="https://i.pravatar.cc/150?img=45"
-                        icon={<UserPlusIcon aria-hidden focusable="false" weight="bold" />}
-                    />
-                )}
-                timestamp="3 days ago"
+                <FeedItem
+                    leading={(
+                        <ActivityAvatar
+                            username="quochuy_backend"
+                            avatar="https://i.pravatar.cc/150?img=33"
+                            icon={<UserPlusIcon aria-hidden focusable="false" weight="bold" />}
+                        />
+                    )}
+                    timestamp="15 phút trước"
+                    footer={(
+                        <ReactionBar
+                            count={8}
+                            myReaction={ReactionType.Like}
+                            onReact={() => {}}
+                        />
+                    )}
+                >
+                    <span><strong>quochuy_backend</strong> đã hoàn thành challenge <strong>Handling asynchronous flows</strong></span>
+                </FeedItem>
+            </Variant>
+            <Variant
+                label="Không có leading"
+                hint="Khi hoạt động không gắn với một người dùng cụ thể hoặc không cần avatar (ví dụ system log), bỏ trống slot leading để hàng chỉ còn text — đừng nhét avatar giả vào cho cân hàng."
             >
-                <span>
-                    <strong>thuha_ux</strong> completed the milestone
-                    {" "}
-                    <strong>Building a scalable design system for enterprise applications</strong>
-                    {" "}
-                    in the <strong>System Design Mastery</strong> course
-                </span>
-            </FeedItem>
-        </div>
+                <FeedItem timestamp="Hôm qua lúc 21:40">
+                    Hệ thống đã tự động backup tiến độ khóa học của bạn
+                </FeedItem>
+            </Variant>
+            <Variant
+                label="Text hoạt động dài"
+                hint="Đặt trong cột hẹp để kiểm câu mô tả dài nhiều thực thể liên kết: cột text phải co giãn và xuống dòng tự nhiên, không được đẩy mốc thời gian ra khỏi hàng."
+            >
+                <div className="w-72">
+                    <FeedItem
+                        leading={(
+                            <ActivityAvatar
+                                username="thuha_ux"
+                                avatar="https://i.pravatar.cc/150?img=45"
+                                icon={<UserPlusIcon aria-hidden focusable="false" weight="bold" />}
+                            />
+                        )}
+                        timestamp="3 ngày trước"
+                    >
+                        <span>
+                            <strong>thuha_ux</strong> đã hoàn thành milestone
+                            {" "}
+                            <strong>Building a scalable design system for enterprise applications</strong>
+                            {" "}
+                            trong khóa <strong>System Design Mastery</strong>
+                        </span>
+                    </FeedItem>
+                </div>
+            </Variant>
+        </Gallery>
     ),
 }

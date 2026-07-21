@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
 import {
     BookOpenIcon,
     CheckCircleIcon,
@@ -7,6 +6,7 @@ import {
     WarningIcon,
 } from "@phosphor-icons/react"
 import { IconTile } from "@/components/blocks/identity/IconTile"
+import { Gallery, Variant } from "../../../../story-kit"
 
 const meta: Meta<typeof IconTile> = {
     title: "Blocks/Identity/IconTile",
@@ -16,159 +16,88 @@ export default meta
 type Story = StoryObj<typeof IconTile>
 
 /**
- * Use only when the leading of a row/card represents ONE OBJECT with an identity — a lesson, a course,
- * a project: something the user can name and open by clicking. In that slot use IconTile, NOT a small
- * bare SVG icon — a bare icon reads as a SECONDARY MARKER (a status, difficulty, or content-type cue), not
- * enough mass to act as an avatar; placing it in the leading demotes the object to a caption. Conversely:
- * a cue paired with text should stay a bare icon, don't wrap it in a tile. If the IMAGE itself is the
- * content — a 16:9 cover in a course card — use CoverImage, not a square tile.
+ * Toàn bộ ma trận trạng thái của IconTile: mặc định chỉ-icon, 5 tone theo status
+ * (accent/success/warning/danger/neutral), 3 size theo mật độ khu vực (sm/md/lg),
+ * và 2 trạng thái cover-image (ảnh thật, ảnh lỗi fallback về icon). Chỉ dùng IconTile
+ * khi leading của một row/card đại diện cho MỘT OBJECT có định danh — một bài học,
+ * một khoá học, một dự án: thứ người dùng có thể gọi tên và bấm mở. Một icon trần đi
+ * kèm chữ thì vẫn để trần, đừng bọc vào tile (icon trần đọc như một CUE PHỤ — trạng
+ * thái, độ khó, loại nội dung — không đủ khối lượng để làm avatar; đặt nó ở leading
+ * sẽ hạ cấp object thành caption). Nếu chính ẢNH mới là nội dung — cover 16:9 của một
+ * course card — dùng CoverImage, không dùng tile vuông.
  */
-export const Default: Story = {
-    parameters: { usage: "Use only when the leading of a row/card represents ONE OBJECT with an identity — a lesson, a course, "
-        + "a project: something the user can name and open by clicking. In that slot use `IconTile`, NOT a small bare SVG "
-        + "icon — a bare icon reads as a SECONDARY MARKER (a status, difficulty, or content-type cue), not enough mass to act as an "
-        + "avatar; placing it in the leading demotes the object to a caption. Conversely: a cue paired with text should stay a bare "
-        + "icon, don't wrap it in a tile (the tile would compete with the row's real object). If the IMAGE itself is the content — a 16:9 "
-        + "cover in a course card — use `CoverImage`, not a square tile." },
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Default</Label>
-                <Typography type="body-sm" color="muted">
-                    Icon only, no cover image: the most common form, since most lessons and challenges have
-                    no asset of their own.
-                </Typography>
-            </div>
-            <IconTile icon={<BookOpenIcon />} />
-        </div>
-    ),
-}
-
-/** Pick the tone by the STATUS of what the tile represents, not by which color looks nice. */
-export const Tones: Story = {
-    parameters: { usage: "Pick the tone by the STATUS of what the tile represents, not by which color looks nice." },
-    render: () => (
-        <div className="flex max-w-2xl flex-col gap-6">
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Accent</Label>
-                    <Typography type="body-sm" color="muted">
-                        The thing being pushed forward: the item in progress, the thing just unlocked. At most
-                        one accent tile per eyeful — several accents at once and none of them stands out.
-                    </Typography>
-                </div>
+        <Gallery>
+            <Variant
+                label="Mặc định (chỉ icon)"
+                hint="Chỉ icon, không có cover image: hình thái phổ biến nhất, vì đa số bài học và challenge không có asset riêng."
+            >
+                <IconTile icon={<BookOpenIcon />} />
+            </Variant>
+            <Variant
+                label="Tone accent"
+                hint="Thứ đang được đẩy lên: item đang làm, thứ vừa mở khoá. Mỗi eyeful tối đa một tile accent — nhiều accent cùng lúc thì không cái nào nổi bật nữa."
+            >
                 <IconTile icon={<RocketLaunchIcon />} tone="accent" />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Success</Label>
-                    <Typography type="body-sm" color="muted">
-                        The object is fully done and needs nothing more: a completed lesson, a passed challenge.
-                    </Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Tone success"
+                hint="Object đã xong hoàn toàn, không cần thêm gì nữa: một bài học đã hoàn thành, một challenge đã pass."
+            >
                 <IconTile icon={<CheckCircleIcon />} tone="success" />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Warning</Label>
-                    <Typography type="body-sm" color="muted">
-                        There is work left and a real deadline: due soon, awaiting resubmission. Don't use it
-                        for something that simply hasn't started yet.
-                    </Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Tone warning"
+                hint="Còn việc chưa xong và có deadline thật: sắp hết hạn, đang chờ nộp lại. Đừng dùng cho thứ đơn giản là chưa bắt đầu."
+            >
                 <IconTile icon={<WarningIcon />} tone="warning" />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Danger</Label>
-                    <Typography type="body-sm" color="muted">
-                        Broken or failed, needing the user to act: a failed submission, an expired session that
-                        can't be recovered.
-                    </Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Tone danger"
+                hint="Bị hỏng hoặc thất bại, cần người dùng hành động: một bài nộp fail, một session hết hạn không khôi phục được."
+            >
                 <IconTile icon={<WarningIcon />} tone="danger" />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Neutral</Label>
-                    <Typography type="body-sm" color="muted">
-                        The default when the object carries no status: an item in a list to browse. When in
-                        doubt, pick this — don't add color for its own sake.
-                    </Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Tone neutral"
+                hint="Mặc định khi object không mang status nào: một item trong danh sách để lướt qua. Khi không chắc, chọn cái này — đừng thêm màu chỉ vì cho đẹp."
+            >
                 <IconTile icon={<BookOpenIcon />} tone="neutral" />
-            </div>
-        </div>
-    ),
-}
-
-/** Pick the size by the density of the area the tile sits in, not by the importance of the object. */
-export const Sizes: Story = {
-    parameters: { usage: "Pick the size by the density of the area the tile sits in, not by the importance of the object." },
-    render: () => (
-        <div className="flex max-w-2xl flex-col gap-6">
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Small (sm)</Label>
-                    <Typography type="body-sm" color="muted">
-                        The size for the leading of a row in a dense list — the default choice when a tile
-                        heads a row.
-                    </Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Size sm"
+                hint="Size cho leading của một row trong danh sách dày đặc — lựa chọn mặc định khi tile đứng đầu một row."
+            >
                 <IconTile icon={<BookOpenIcon />} size="sm" />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Medium (md)</Label>
-                    <Typography type="body-sm" color="muted">
-                        The size for a standalone card, where each object has its own frame rather than sitting
-                        packed against the next.
-                    </Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Size md"
+                hint="Size cho một card độc lập, nơi mỗi object có khung riêng của nó thay vì đứng chen với cái kế bên."
+            >
                 <IconTile icon={<BookOpenIcon />} size="md" />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Large (lg)</Label>
-                    <Typography type="body-sm" color="muted">
-                        The size for a hero block at the top of a page, where the object is the lead of the
-                        whole surface. Don't use it in a list — it will overpower the row's own title.
-                    </Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Size lg"
+                hint="Size cho hero block ở đầu trang, nơi object là điểm dẫn của cả surface. Đừng dùng trong danh sách — nó sẽ lấn title của row."
+            >
                 <IconTile icon={<BookOpenIcon />} size="lg" />
-            </div>
-        </div>
-    ),
-}
-
-/** The two cover-image states — a real asset and a broken URL — and the reason `icon` must always be passed. */
-export const CoverImage: Story = {
-    parameters: { usage: "The two cover-image states — a real asset and a broken URL — and the reason `icon` must always be passed. Always pass `icon` even when `src` is set: the image fills the tile, but if the URL is broken or not yet synced, the tile falls back to the icon instead of showing a broken-image glyph." },
-    render: () => (
-        <div className="flex max-w-2xl flex-col gap-6">
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Has a cover image</Label>
-                    <Typography type="body-sm" color="muted">
-                        Pass src when the course or project has a real asset; the image fills the tile and
-                        replaces the icon.
-                    </Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Có cover image"
+                hint="Truyền src khi khoá học hoặc dự án có asset thật; ảnh lấp đầy tile và thay chỗ icon."
+            >
                 <IconTile
                     icon={<BookOpenIcon />}
                     src="https://picsum.photos/seed/starci-course/128/128"
                     alt="Fullstack Mastery track"
                     size="lg"
                 />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Broken image, falls back to icon</Label>
-                    <Typography type="body-sm" color="muted">
-                        Not a choice but what happens when the URL is broken or the CDN hasn't synced. This is
-                        why you always pass icon alongside src: drop the icon and this becomes a broken-image cell.
-                    </Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Ảnh lỗi, fallback về icon"
+                hint="Không phải một lựa chọn mà là điều xảy ra khi URL bị hỏng hoặc CDN chưa sync xong. Đây là lý do luôn phải truyền icon kèm src: bỏ icon thì ô này sẽ thành ô ảnh vỡ."
+            >
                 <IconTile
                     icon={<BookOpenIcon />}
                     src="https://invalid.starci.example/not-found.jpg"
@@ -176,7 +105,17 @@ export const CoverImage: Story = {
                     size="lg"
                     tone="neutral"
                 />
-            </div>
-        </div>
+            </Variant>
+        </Gallery>
     ),
+    parameters: {
+        usage:
+            "Chỉ dùng IconTile khi leading của một row/card đại diện cho MỘT OBJECT có định danh — một bài " +
+            "học, một khoá học, một dự án: thứ người dùng có thể gọi tên và bấm mở. Đừng dùng cho một icon " +
+            "trần nhỏ đi kèm chữ — icon trần đọc như một CUE PHỤ (status, độ khó, loại nội dung), không đủ " +
+            "khối lượng để làm avatar; đặt nó ở leading sẽ hạ cấp object thành caption. Nếu chính ẢNH mới là " +
+            "nội dung — cover 16:9 của một course card — dùng `CoverImage`, không dùng tile vuông. Luôn " +
+            "truyền `icon` kể cả khi đã set `src`: ảnh lấp đầy tile, nhưng nếu URL hỏng hoặc chưa sync thì " +
+            "tile fallback về icon thay vì hiện glyph ảnh vỡ.",
+    },
 }

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
 import { ErrorState } from "@/components/blocks/feedback/ErrorState"
+import { Gallery, Variant } from "../../../../story-kit"
 
 const meta: Meta<typeof ErrorState> = {
     title: "Blocks/Feedback/ErrorState",
@@ -9,54 +9,57 @@ const meta: Meta<typeof ErrorState> = {
 export default meta
 type Story = StoryObj<typeof ErrorState>
 
-/** Use when data loading fails and can be retried right away: shows a title, short description, and a retry button. */
-export const Default: Story = {
-    parameters: { usage: "Use when data loading fails and can be retried right away: shows a title, short description, and a retry button." },
+/**
+ * Toàn bộ ma trận trạng thái của ErrorState: có nút thử lại, chỉ tiêu đề, tiêu đề
+ * kèm mô tả không thử lại, và mô tả dài để kiểm tra wrap. Dùng để tra khi nào cần
+ * retryLabel/onRetry và khi nào lỗi không có hành động khắc phục.
+ */
+export const AllVariants: Story = {
     render: () => (
-        <ErrorState
-            title="Couldn't load data"
-            description="Something went wrong while loading the content. Please try again."
-            retryLabel="Try again"
-            onRetry={() => {}}
-        />
-    ),
-}
-
-/** Use when the error has no recovery action: compares a title-only variant and one with an added description, neither showing a retry button. */
-export const WithoutRetry: Story = {
-    parameters: { usage: "Use when the error has no recovery action: compares a title-only variant and one with an added description, neither showing a retry button." },
-    render: () => (
-        <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Title only</Label>
-                    <Typography type="body-sm" color="muted">Use when the error is self-explanatory and there's nothing more to explain — pass only the title.</Typography>
-                </div>
+        <Gallery>
+            <Variant
+                label="Có nút thử lại"
+                hint="Dùng khi tải dữ liệu thất bại và có thể thử lại ngay: hiện tiêu đề, mô tả ngắn, và nút thử lại."
+            >
+                <ErrorState
+                    title="Couldn't load data"
+                    description="Something went wrong while loading the content. Please try again."
+                    retryLabel="Try again"
+                    onRetry={() => {}}
+                />
+            </Variant>
+            <Variant
+                label="Chỉ tiêu đề"
+                hint="Dùng khi lỗi đã tự giải thích và không còn gì để nói thêm — chỉ truyền title, không có mô tả hay nút thử lại."
+            >
                 <ErrorState title="An error occurred" />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Title and description</Label>
-                    <Typography type="body-sm" color="muted">Use when you need to spell out the cause — add a description but still without a recovery action.</Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Tiêu đề và mô tả, không thử lại"
+                hint="Dùng khi lỗi không có hành động khắc phục: cần giải thích rõ nguyên nhân nhưng vẫn không hiện nút thử lại."
+            >
                 <ErrorState
                     title="Course not found"
                     description="This course may have been removed or the link is no longer valid."
                 />
-            </div>
-        </div>
+            </Variant>
+            <Variant
+                label="Mô tả dài"
+                hint="Dùng với thông báo lỗi dài để kiểm tra mô tả xuống dòng và vẫn căn giữa mà không phá layout."
+            >
+                <ErrorState
+                    title="Connection to the server was interrupted"
+                    description="The system is having trouble connecting to the server, possibly due to an unstable network or scheduled maintenance. Please check your network connection and try again in a few minutes."
+                    retryLabel="Try again"
+                    onRetry={() => {}}
+                />
+            </Variant>
+        </Gallery>
     ),
-}
-
-/** Use with a long error message to check that the description wraps and stays centered without breaking the layout. */
-export const LongDescription: Story = {
-    parameters: { usage: "Use with a long error message to check that the description wraps and stays centered without breaking the layout." },
-    render: () => (
-        <ErrorState
-            title="Connection to the server was interrupted"
-            description="The system is having trouble connecting to the server, possibly due to an unstable network or scheduled maintenance. Please check your network connection and try again in a few minutes."
-            retryLabel="Try again"
-            onRetry={() => {}}
-        />
-    ),
+    parameters: {
+        usage:
+            "Toàn bộ ma trận trạng thái của ErrorState: có nút thử lại, chỉ tiêu đề, tiêu đề kèm mô tả " +
+            "không thử lại, và mô tả dài để kiểm tra wrap. Dùng khi cần tra retryLabel/onRetry nên dùng " +
+            "lúc nào và khi nào lỗi không có hành động khắc phục.",
+    },
 }

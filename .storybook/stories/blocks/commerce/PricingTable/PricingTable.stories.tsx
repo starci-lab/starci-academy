@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
 import { PricingTable } from "@/components/blocks/commerce/PricingTable"
+import { Gallery, Variant } from "../../../../story-kit"
 import { threeTiers } from "./components"
 
 const meta: Meta<typeof PricingTable> = {
@@ -10,41 +10,37 @@ const meta: Meta<typeof PricingTable> = {
 export default meta
 type Story = StoryObj<typeof PricingTable>
 
-/** Use when you need to compare 2–3 plans side by side — each column has a plan name, price and billing period, a feature list with checks or dashes, an action button, and one highlighted plan with a "popular" ribbon. */
-export const Default: Story = {
-    parameters: {
-        usage: "Use it on a pricing page or an upgrade step — comparing 2–3 plans side by side. Each plan holds its own pre-formatted price as a string; keep the feature labels the same across plans so they line up. Turn on isHighlighted for the middle plan to get the popular ribbon and an emphasized frame.",
-    },
+/**
+ * Toàn bộ ma trận trạng thái của PricingTable: ba plan với plan giữa nổi bật
+ * (ribbon "phổ biến" + khung nhấn), và hai plan không plan nào nổi bật (hai cột
+ * giãn đều, nút hành động thẳng hàng ở dưới). Dùng để tra khi nào bật
+ * isHighlighted và layout xử lý ra sao khi thiếu plan nổi bật.
+ */
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-                <Label>Three plans, middle one highlighted</Label>
-                <Typography type="body-sm" color="muted">
-                    The three columns share one feature set so the labels line up; the middle Professional plan is emphasized with the popular ribbon and an emphasized frame.
-                </Typography>
-            </div>
-            <PricingTable tiers={threeTiers} onSelectTier={() => {}} />
-        </div>
+        <Gallery>
+            <Variant
+                label="Ba plan, plan giữa nổi bật"
+                hint="Dùng trên trang giá hoặc bước nâng cấp khi so sánh 2-3 plan cạnh nhau. Mỗi plan giữ sẵn giá đã format dưới dạng string; giữ nhãn feature giống nhau giữa các plan để chúng thẳng hàng. Bật isHighlighted cho plan giữa để có ribbon phổ biến và khung nhấn."
+            >
+                <PricingTable tiers={threeTiers} onSelectTier={() => {}} />
+            </Variant>
+            <Variant
+                label="Hai plan, không nổi bật"
+                hint="Dùng khi chỉ có hai plan và không muốn nhấn plan nào — hai cột vẫn giãn đều, nút hành động thẳng hàng ở dưới. Không có isHighlighted thì không cột nào có ribbon."
+            >
+                <PricingTable
+                    tiers={threeTiers.slice(0, 2).map((tier) => ({ ...tier, isHighlighted: false }))}
+                    onSelectTier={() => {}}
+                />
+            </Variant>
+        </Gallery>
     ),
-}
-
-/** Use to check the layout when there are only two plans and none is emphasized — the two columns still stretch evenly and the buttons line up. */
-export const TwoTiersNoHighlight: Story = {
     parameters: {
-        usage: "Use when there are only two plans and you don't want to emphasize either — the two columns stretch evenly, with action buttons aligned at the bottom. Without isHighlighted, no column gets a ribbon.",
+        usage:
+            "Toàn bộ ma trận trạng thái của PricingTable: ba plan với plan giữa nổi bật (ribbon " +
+            "\"phổ biến\" + khung nhấn), và hai plan không plan nào nổi bật (hai cột giãn đều, nút " +
+            "hành động thẳng hàng ở dưới). Dùng khi cần so sánh 2-3 plan cạnh nhau trên trang giá hoặc " +
+            "bước nâng cấp, và xác nhận layout vẫn đúng khi không có plan nổi bật.",
     },
-    render: () => (
-        <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-                <Label>Two plans, no highlight</Label>
-                <Typography type="body-sm" color="muted">
-                    When there are only two plans and none is emphasized, the two columns still stretch evenly and the action buttons line up at the bottom.
-                </Typography>
-            </div>
-            <PricingTable
-                tiers={threeTiers.slice(0, 2).map((tier) => ({ ...tier, isHighlighted: false }))}
-                onSelectTier={() => {}}
-            />
-        </div>
-    ),
 }

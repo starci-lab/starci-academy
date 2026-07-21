@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button, Label, Typography } from "@heroui/react"
 
 import { ResizableRail } from "@/components/blocks/layout/ResizableRail"
+import { Gallery, Variant } from "../../../../story-kit"
 import { PracticeShellDemo } from "./components"
 
 const meta: Meta<typeof ResizableRail> = {
@@ -12,28 +13,50 @@ const meta: Meta<typeof ResizableRail> = {
 export default meta
 type Story = StoryObj<typeof ResizableRail>
 
-/** Use when the rail width is something THE READER should decide, not you on their behalf — a table of contents has lessons with names of varying length; some want it wide to read in full, others want it narrow to give room to the main content. For a fixed-width rail, don't use this block; a plain div is enough. The width the reader drags is remembered by storageKey, so two different rails must have different keys. */
-export const Default: Story = {
-    parameters: {
-        usage: "Use when the rail width is something THE READER should decide, not you on their behalf — a table of contents has lessons with names of varying length; some want it wide to read in full, others want it narrow to give room to the main content. For a fixed-width rail, don't use this block; a plain div is enough. The width the reader drags is remembered by `storageKey`, so two different rails must have different keys. The rail body = search + topic ListBox like `PracticeRail` (no tabs mode).",
-    },
+/**
+ * Toàn bộ trạng thái tĩnh của ResizableRail: mặc định (search + topic ListBox
+ * kiểu PracticeRail) và nội dung tràn phải cuộn trong rail. Dùng để tra khi
+ * nào chọn block này thay vì một div cố định, và xác nhận nội dung dài không
+ * đẩy khung shell cao lên.
+ */
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Draggable rail</Label>
-                <Typography type="body-sm" color="muted">
-                    the `/practice` shell: search + topic list in a `ResizableRail`, `PageHeader` pane on the right. Drag the handle on the right edge; reload the story and the width you dragged is still there.
-                </Typography>
-            </div>
-            <PracticeShellDemo
-                storageKey="storybook.practice.rail.width"
-                heightClassName="h-[32rem]"
-            />
-        </div>
+        <Gallery>
+            <Variant
+                label="Mặc định"
+                hint="Dùng khi độ rộng rail là thứ NGƯỜI ĐỌC nên tự quyết, không phải mình quyết thay họ — mục lục có tên bài học độ dài khác nhau, người muốn rộng để đọc hết, người muốn hẹp để dành đất cho nội dung chính. Với rail độ rộng cố định thì đừng dùng block này, một div thường là đủ. Độ rộng người đọc kéo được nhớ theo storageKey, nên hai rail khác nhau phải có key khác nhau. Thân rail = search + topic ListBox kiểu PracticeRail (không có mode tabs)."
+            >
+                <PracticeShellDemo
+                    storageKey="storybook.practice.rail.width"
+                    heightClassName="h-[32rem]"
+                />
+            </Variant>
+            <Variant
+                label="Nội dung tràn, cuộn trong rail"
+                hint="Dùng để soi nhánh overflow: mục lục cao hơn khung shell phải cuộn BÊN TRONG rail (ScrollShadow), không đẩy shell cao thêm hay tràn ra ngoài. Kéo rộng/hẹp trong lúc đang cuộn vẫn phải mượt."
+            >
+                <PracticeShellDemo
+                    storageKey="storybook.practice.rail.scroll.v2.width"
+                    heightClassName="h-80"
+                    defaultWidth={360}
+                />
+            </Variant>
+        </Gallery>
     ),
+    parameters: {
+        usage:
+            "Toàn bộ trạng thái tĩnh của ResizableRail: mặc định (search + topic ListBox kiểu PracticeRail, " +
+            "không có mode tabs) và nội dung tràn phải cuộn trong rail (ScrollShadow, shell giữ nguyên chiều " +
+            "cao). Độ rộng người đọc kéo được nhớ theo storageKey — hai rail khác nhau phải dùng key khác nhau.",
+    },
 }
 
-/** Use to inspect the moving-bounds branch: when the caller NARROWS `maxWidth`, an already-wider rail must snap back to the new bound on its own. */
+/**
+ * Use to inspect the moving-bounds branch: when the caller NARROWS `maxWidth`,
+ * an already-wider rail must snap back to the new bound on its own, without
+ * waiting for the next drag. The persisted width is left alone — it is the
+ * reader's preference, and a temporarily small window must not overwrite it.
+ */
 export const ShrinkingMaxWidth: Story = {
     parameters: {
         usage: "Use to inspect the moving-bounds branch. A caller may compute `maxWidth` from live measurements (the chat rail caps itself so the reading column never drops under its `lg` breakpoint), so the bound moves while the rail is mounted. Drag wide, then press the button: the rail must snap back to the new bound WITHOUT waiting for the next drag. The persisted width is deliberately left alone — it is the reader's preference, and a temporarily small window must not overwrite it.",
@@ -64,26 +87,4 @@ export const ShrinkingMaxWidth: Story = {
             </div>
         )
     },
-}
-
-/** Use to inspect the overflow branch: a table of contents taller than the shell must scroll INSIDE the rail, never push the shell taller or spill outside. */
-export const ScrollableContent: Story = {
-    parameters: {
-        usage: "Use to inspect the overflow branch: a topic list taller than the shell must scroll INSIDE the rail (`ScrollShadow`), never push the shell taller or spill outside.",
-    },
-    render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Overflowing content, scrolls in the rail</Label>
-                <Typography type="body-sm" color="muted">
-                    the shell is shorter than the topic list — it scrolls in `ScrollShadow` while the shell height stays fixed. Dragging wider/narrower while scrolling must still be smooth.
-                </Typography>
-            </div>
-            <PracticeShellDemo
-                storageKey="storybook.practice.rail.scroll.v2.width"
-                heightClassName="h-80"
-                defaultWidth={360}
-            />
-        </div>
-    ),
 }

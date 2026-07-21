@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Radio, RadioGroup, Typography } from "@heroui/react"
+import { Radio, RadioGroup } from "@heroui/react"
 import { OPTIONS } from "./components"
+import { Gallery, Variant } from "../../../../story-kit"
 
 /**
  * `RadioGroup` + `Radio` (HeroUI) — pick EXACTLY ONE of a few mutually exclusive options
@@ -17,66 +18,53 @@ const meta: Meta<typeof RadioGroup> = {
 export default meta
 type Story = StoryObj<typeof RadioGroup>
 
-/** Vertical list gap-2; each row = circle + horizontal label (Control sits inside Content). */
-export const Vertical: Story = {
-    parameters: {
-        usage: "Pick exactly one of a few mutually exclusive options. The group stacks vertically `gap-2`; each `Radio.Content` is a horizontal row (control + label). Correct HeroUI structure: `Control` sits INSIDE `Content` — leaving Control/Content as siblings under `Radio` makes `.radio` (`flex-col`) stack them vertically. Always set `defaultValue`.",
-    },
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex w-80 flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Pick one (vertical)</Label>
-                <Typography type="body-sm" color="muted">
-                    The group stacks vertically gap-2; each option is a button + label on one horizontal row.
-                </Typography>
-            </div>
-            <RadioGroup aria-label="Notification frequency" defaultValue="daily" className="flex flex-col gap-2">
-                {OPTIONS.map((opt) => (
-                    <Radio key={opt.value} value={opt.value}>
-                        <Radio.Content>
-                            <Radio.Control>
-                                <Radio.Indicator />
-                            </Radio.Control>
-                            {opt.label}
-                        </Radio.Content>
-                    </Radio>
-                ))}
-            </RadioGroup>
-        </div>
-    ),
-}
-
-/** With a locked item: `isDisabled` on one `Radio` — still visible but not selectable. */
-export const WithDisabledOption: Story = {
-    parameters: {
-        usage: "An option exists but isn't open to this user yet → `isDisabled` on that `Radio` (dimmed, not selectable) instead of hiding it — so they know the option exists.",
-    },
-    render: () => (
-        <div className="flex w-80 flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>With a locked option</Label>
-                <Typography type="body-sm" color="muted">
-                    The locked option stays visible (dimmed) so the user knows it exists.
-                </Typography>
-            </div>
-            <RadioGroup aria-label="Notification plan" defaultValue="free" className="flex flex-col gap-2">
-                <Radio value="free">
-                    <Radio.Content>
-                        <Radio.Control>
-                            <Radio.Indicator />
-                        </Radio.Control>
-                        Basic (free)
-                    </Radio.Content>
-                </Radio>
-                <Radio value="pro" isDisabled>
-                    <Radio.Content>
-                        <Radio.Control>
-                            <Radio.Indicator />
-                        </Radio.Control>
-                        Advanced (Pro plan only)
-                    </Radio.Content>
-                </Radio>
-            </RadioGroup>
-        </div>
+        <Gallery>
+            <Variant
+                label="Dọc (mặc định)"
+                hint="Pick exactly one trong vài lựa chọn loại trừ nhau. Nhóm xếp dọc gap-2; mỗi Radio.Content là một hàng ngang (control + label). Đúng cấu trúc HeroUI: Control nằm TRONG Content — để Control/Content làm anh em dưới Radio sẽ khiến .radio (flex-col) xếp chúng theo chiều dọc. Luôn đặt defaultValue."
+            >
+                <div className="w-80">
+                    <RadioGroup aria-label="Notification frequency" defaultValue="daily" className="flex flex-col gap-2">
+                        {OPTIONS.map((opt) => (
+                            <Radio key={opt.value} value={opt.value}>
+                                <Radio.Content>
+                                    <Radio.Control>
+                                        <Radio.Indicator />
+                                    </Radio.Control>
+                                    {opt.label}
+                                </Radio.Content>
+                            </Radio>
+                        ))}
+                    </RadioGroup>
+                </div>
+            </Variant>
+            <Variant
+                label="Có tuỳ chọn bị khoá"
+                hint="Một lựa chọn tồn tại nhưng chưa mở cho người dùng này → isDisabled trên Radio đó (mờ đi, không chọn được) thay vì ẩn hẳn — để họ vẫn biết lựa chọn đó có tồn tại."
+            >
+                <div className="w-80">
+                    <RadioGroup aria-label="Notification plan" defaultValue="free" className="flex flex-col gap-2">
+                        <Radio value="free">
+                            <Radio.Content>
+                                <Radio.Control>
+                                    <Radio.Indicator />
+                                </Radio.Control>
+                                Basic (free)
+                            </Radio.Content>
+                        </Radio>
+                        <Radio value="pro" isDisabled>
+                            <Radio.Content>
+                                <Radio.Control>
+                                    <Radio.Indicator />
+                                </Radio.Control>
+                                Advanced (Pro plan only)
+                            </Radio.Content>
+                        </Radio>
+                    </RadioGroup>
+                </div>
+            </Variant>
+        </Gallery>
     ),
 }

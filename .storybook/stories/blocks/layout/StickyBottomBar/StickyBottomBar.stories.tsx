@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Button, Label, Typography } from "@heroui/react"
+import { Button } from "@heroui/react"
 import { StickyBottomBar } from "@/components/blocks/layout/StickyBottomBar"
 import { PriceTag } from "@/components/blocks/commerce/PriceTag"
+import { Gallery, Variant } from "../../../../story-kit"
 import { IN_BOX, Screen } from "./components"
 
 const meta: Meta<typeof StickyBottomBar> = {
@@ -11,74 +12,64 @@ const meta: Meta<typeof StickyBottomBar> = {
 export default meta
 type Story = StoryObj<typeof StickyBottomBar>
 
-/** Use when an action must always stay within thumb's reach no matter how far the user scrolls on mobile — instead of letting the CTA drift with the content and scroll out of view. The block is just chrome: the background, the top border, and safe-area padding are its own; what to put inside is the caller's call. */
-export const Default: Story = {
-    parameters: { usage: "Use when an action must always stay within thumb's reach no matter how far the user scrolls on mobile — instead of letting the CTA drift with the content and scroll out of view. The block is just chrome: the background, top border, and safe-area padding are its own; what to put inside is the caller's call. Story: scroll the content above — the bar stays anchored to the bottom." },
+/**
+ * Toàn bộ cách bố trí nội dung bên trong StickyBottomBar: giá kèm hành động chính,
+ * chỉ một hành động full-width, và hành động chính kèm đường từ chối. Block chỉ lo
+ * phần khung (nền, viền trên, safe-area padding) — nội dung bên trong do nơi gọi
+ * quyết định. Cuộn phần nội dung phía trên để thấy thanh vẫn neo dưới đáy.
+ */
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Price with a primary action</Label>
-                <Typography type="body-sm" color="muted">
-                    The layout of the enrollment bar for a paid course: price on the left, button on the right. Scroll the content above — the bar stays anchored to the bottom.
-                </Typography>
-            </div>
-            <Screen
-                bar={(
-                    <StickyBottomBar className={IN_BOX}>
-                        <div className="flex items-center justify-between gap-3">
-                            <PriceTag discounted={599000} original={899000} size="sm" />
-                            <Button variant="primary" onPress={() => {}}>Enroll now</Button>
-                        </div>
-                    </StickyBottomBar>
-                )}
-            />
-        </div>
+        <Gallery>
+            <Variant
+                label="Giá kèm hành động chính"
+                hint="Bố cục thanh đăng ký của một khoá học trả phí: giá bên trái, nút bên phải. Cuộn nội dung phía trên — thanh vẫn neo ở đáy."
+            >
+                <Screen
+                    bar={(
+                        <StickyBottomBar className={IN_BOX}>
+                            <div className="flex items-center justify-between gap-3">
+                                <PriceTag discounted={599000} original={899000} size="sm" />
+                                <Button variant="primary" onPress={() => {}}>Enroll now</Button>
+                            </div>
+                        </StickyBottomBar>
+                    )}
+                />
+            </Variant>
+            <Variant
+                label="Một hành động, full width"
+                hint="Không còn gì để cân nhắc trước khi bấm — khoá học miễn phí, không có giá để đọc, nên nút chiếm hết chiều rộng thay vì bỏ trống nửa thanh."
+            >
+                <Screen
+                    bar={(
+                        <StickyBottomBar className={IN_BOX}>
+                            <Button variant="primary" className="w-full" onPress={() => {}}>Start learning for free</Button>
+                        </StickyBottomBar>
+                    )}
+                />
+            </Variant>
+            <Variant
+                label="Hành động chính kèm đường từ chối"
+                hint="Dùng khi thanh là một QUYẾT ĐỊNH chặn luồng — người dùng phải trả lời ngay tại đây trước khi đi tiếp (đồng ý cookie), nên đường từ chối phải đứng cạnh đường chấp nhận thay vì giấu ở nơi khác. Với thanh mời bình thường, giữ đúng một CTA chính như biến thể đầu tiên."
+            >
+                <Screen
+                    bar={(
+                        <StickyBottomBar className={IN_BOX}>
+                            <div className="flex items-center gap-3">
+                                <Button variant="secondary" className="flex-1" onPress={() => {}}>Decline</Button>
+                                <Button variant="primary" className="flex-1" onPress={() => {}}>Accept all</Button>
+                            </div>
+                        </StickyBottomBar>
+                    )}
+                />
+            </Variant>
+        </Gallery>
     ),
-}
-
-/** Use when there's nothing left to weigh before clicking — a free course, no price to read, so the button takes the full width instead of leaving half the bar empty. */
-export const SingleAction: Story = {
-    parameters: { usage: "Use when there's nothing left to weigh before clicking — a free course, no price to read, so the button takes the full width instead of leaving half the bar empty." },
-    render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>One action, full width</Label>
-                <Typography type="body-sm" color="muted">
-                    The layout for a free course: the button spans the full width. Scroll the content — the bar stays anchored to the bottom.
-                </Typography>
-            </div>
-            <Screen
-                bar={(
-                    <StickyBottomBar className={IN_BOX}>
-                        <Button variant="primary" className="w-full" onPress={() => {}}>Start learning for free</Button>
-                    </StickyBottomBar>
-                )}
-            />
-        </div>
-    ),
-}
-
-/** Use when the bar is a BLOCKING decision — the user must answer right here before moving on (cookie consent), so the decline path has to sit next to the accept path rather than being hidden elsewhere. For an ordinary inviting bar, keep exactly one primary CTA as in the Default story. */
-export const WithSecondaryAction: Story = {
-    parameters: { usage: "Use when the bar is a BLOCKING decision — the user must answer right here before moving on (cookie consent), so the decline path has to sit next to the accept path rather than being hidden elsewhere. For an ordinary inviting bar, keep exactly one primary CTA as in the Default story." },
-    render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Primary action with a decline path</Label>
-                <Typography type="body-sm" color="muted">
-                    The layout of a cookie-consent bar: two peer paths on the bar. Scroll the content — the bar stays anchored to the bottom.
-                </Typography>
-            </div>
-            <Screen
-                bar={(
-                    <StickyBottomBar className={IN_BOX}>
-                        <div className="flex items-center gap-3">
-                            <Button variant="secondary" className="flex-1" onPress={() => {}}>Decline</Button>
-                            <Button variant="primary" className="flex-1" onPress={() => {}}>Accept all</Button>
-                        </div>
-                    </StickyBottomBar>
-                )}
-            />
-        </div>
-    ),
+    parameters: {
+        usage:
+            "Toàn bộ cách bố trí nội dung bên trong StickyBottomBar: giá kèm hành động chính, chỉ một hành " +
+            "động full-width, và hành động chính kèm đường từ chối. Block chỉ lo phần khung (nền, viền trên, " +
+            "safe-area padding) — nội dung bên trong do nơi gọi quyết định. Dùng để tra khi nào nên full-width, " +
+            "khi nào cần thêm đường từ chối cạnh CTA chính.",
+    },
 }

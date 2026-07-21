@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CircuitryIcon, CloudIcon, DatabaseIcon, RobotIcon } from "@phosphor-icons/react"
-import { Label, Typography } from "@heroui/react"
 import { ReadinessChecklist, type ReadinessChecklistItem } from "@/components/blocks/feedback/ReadinessChecklist"
 import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
+import { Gallery, Variant } from "../../../../story-kit"
 
 /**
  * `ReadinessChecklist` — a vertical list of setup/prerequisite checks (agent
@@ -54,62 +54,49 @@ const ITEMS: Array<ReadinessChecklistItem> = [
     },
 ]
 
-/** Every prerequisite is still pending — the common state right after boot. */
-export const AllPending: Story = {
+/**
+ * Toàn bộ ma trận trạng thái của ReadinessChecklist: chờ hết (ngay sau khi cụm
+ * model local vừa boot) và chờ một phần (agent/runtime đã lên nhưng model còn
+ * tải) — checklist luôn render trong một `SurfaceListCard bordered` vì đó là
+ * cách nó được dùng thật (card lồng trên một surface cha).
+ */
+export const AllVariants: Story = {
     tags: ["news"],
-    args: {
-        items: ITEMS,
-        readyLabel: "Sẵn sàng",
-        pendingLabel: "Chờ",
-    },
-    parameters: {
-        usage: "Chờ duyệt — every row pending: the state right after the local model stack starts booting, before any health check has passed yet.",
-    },
-    render: (args) => (
-        <div className="flex max-w-md flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Local model stack — booting</Label>
-                <Typography type="body-sm" color="muted">
-                    None of the 4 prerequisites have reported ready yet.
-                </Typography>
-            </div>
-            {/* mirrors the real call-site: the checklist ALWAYS renders inside a
-                bounded list card, and `bordered` because that card is nested on a
-                parent surface (card.md §0 "GIỮ border" / surface-in-surface). */}
-            <SurfaceListCard bordered>
-                <ReadinessChecklist {...args} />
-            </SurfaceListCard>
-        </div>
+    render: () => (
+        <Gallery>
+            <Variant
+                label="Toàn bộ đang chờ"
+                hint="Chưa có tiền điều kiện nào báo sẵn sàng — trạng thái ngay sau khi cụm model local vừa khởi động, chưa health check nào pass."
+            >
+                <div className="max-w-md">
+                    <SurfaceListCard bordered>
+                        <ReadinessChecklist
+                            items={ITEMS}
+                            readyLabel="Sẵn sàng"
+                            pendingLabel="Chờ"
+                        />
+                    </SurfaceListCard>
+                </div>
+            </Variant>
+            <Variant
+                label="Một phần đã sẵn sàng"
+                hint="Agent và runtime đã lên, nhưng 2 model vẫn đang tải/nạp — một lát cắt thực tế giữa quá trình boot."
+            >
+                <div className="max-w-md">
+                    <SurfaceListCard bordered>
+                        <ReadinessChecklist
+                            items={ITEMS.map((item) => (
+                                item.id === "agent" || item.id === "ollama" ? { ...item, ready: true } : item
+                            ))}
+                            readyLabel="Sẵn sàng"
+                            pendingLabel="Chờ"
+                        />
+                    </SurfaceListCard>
+                </div>
+            </Variant>
+        </Gallery>
     ),
-}
-
-/** Some prerequisites are ready, others still pending — the mid-boot state. */
-export const PartlyReady: Story = {
-    tags: ["news"],
-    args: {
-        items: ITEMS.map((item) => (
-            item.id === "agent" || item.id === "ollama" ? { ...item, ready: true } : item
-        )),
-        readyLabel: "Sẵn sàng",
-        pendingLabel: "Chờ",
-    },
     parameters: {
-        usage: "Chờ duyệt — the agent and runtime are up, but the models are still being pulled/loaded — a realistic mid-boot snapshot.",
+        usage: "Chờ duyệt — toàn bộ ma trận trạng thái của ReadinessChecklist: chờ hết (right after boot, chưa health check nào pass) và chờ một phần (mid-boot, agent + runtime đã lên nhưng model còn tải/nạp). Checklist luôn render trong SurfaceListCard bordered vì đó mirrors call-site thật (surface-in-surface).",
     },
-    render: (args) => (
-        <div className="flex max-w-md flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Local model stack — mid-boot</Label>
-                <Typography type="body-sm" color="muted">
-                    Agent + runtime are reachable; the 2 models are still loading.
-                </Typography>
-            </div>
-            {/* mirrors the real call-site: the checklist ALWAYS renders inside a
-                bounded list card, and `bordered` because that card is nested on a
-                parent surface (card.md §0 "GIỮ border" / surface-in-surface). */}
-            <SurfaceListCard bordered>
-                <ReadinessChecklist {...args} />
-            </SurfaceListCard>
-        </div>
-    ),
 }

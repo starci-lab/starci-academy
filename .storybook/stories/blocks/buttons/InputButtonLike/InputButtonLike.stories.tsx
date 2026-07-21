@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Kbd, Label, Typography } from "@heroui/react"
+import { Kbd } from "@heroui/react"
 import { MagnifyingGlassIcon } from "@phosphor-icons/react"
 
 import { InputButtonLike } from "@/components/blocks/buttons/InputButtonLike"
+import { Gallery, Variant } from "../../../../story-kit"
 
 const meta: Meta<typeof InputButtonLike> = {
     title: "Blocks/Form/InputButtonLike",
@@ -11,90 +12,68 @@ const meta: Meta<typeof InputButtonLike> = {
 export default meta
 type Story = StoryObj<typeof InputButtonLike>
 
-/** Use when you need a field that looks like an input but is actually a button that opens an overlay, for example opening a global search dialog. */
-export const Default: Story = {
-    parameters: { usage: "Use when you need a field that looks like an input but is actually a button that opens an overlay, for example opening a global search dialog." },
+/**
+ * Toàn bộ biến thể của InputButtonLike: mặc định, có icon, có gợi ý phím tắt, và
+ * placeholder dài bị cắt. Dùng để tra khi nào cần thêm icon/suffix và xác nhận
+ * hành vi truncate khi placeholder vượt chiều rộng field.
+ */
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Default</Label>
-                <Typography type="body-sm" color="muted">
-                    You need a field that LOOKS like an input but is actually a button that opens an overlay. You can't type into it — if you need real typing, use Input.
-                </Typography>
-            </div>
-            <InputButtonLike
-                placeholder="Search courses..."
-                onPress={() => {}}
-                className="w-80"
-            />
-        </div>
+        <Gallery>
+            <Variant
+                label="Mặc định"
+                hint="Dùng khi cần một field trông như input nhưng thực chất là button mở overlay, ví dụ mở dialog tìm kiếm toàn cục; không gõ được vào field này — nếu cần gõ thật, dùng Input."
+            >
+                <InputButtonLike
+                    placeholder="Search courses..."
+                    onPress={() => {}}
+                    className="w-80"
+                />
+            </Variant>
+            <Variant
+                label="Có icon"
+                hint="Thêm icon kính lúp mờ ở phía trước khi field đóng vai ô tìm kiếm, giúp người dùng nhận diện chức năng ngay từ icon."
+            >
+                <InputButtonLike
+                    icon={<MagnifyingGlassIcon size={16} className="text-field-placeholder" />}
+                    placeholder="Search courses, lessons..."
+                    onPress={() => {}}
+                    className="w-80"
+                />
+            </Variant>
+            <Variant
+                label="Có gợi ý phím tắt"
+                hint="Gắn gợi ý phím tắt (Kbd) ở mép phải khi overlay có thể mở nhanh bằng bàn phím, ví dụ Cmd K cho tìm kiếm toàn cục."
+            >
+                <InputButtonLike
+                    icon={<MagnifyingGlassIcon size={16} className="text-field-placeholder" />}
+                    placeholder="Quick search..."
+                    suffix={(
+                        <Kbd>
+                            <Kbd.Content>⌘K</Kbd.Content>
+                        </Kbd>
+                    )}
+                    onPress={() => {}}
+                    className="w-80"
+                />
+            </Variant>
+            <Variant
+                label="Placeholder dài bị cắt"
+                hint="Khi placeholder dài hơn chiều rộng cho phép, chữ bị cắt một dòng thay vì phá vỡ layout."
+            >
+                <InputButtonLike
+                    icon={<MagnifyingGlassIcon size={16} className="text-field-placeholder" />}
+                    placeholder="Search Fullstack, System Design, DevOps courses and much more..."
+                    onPress={() => {}}
+                    className="w-64"
+                />
+            </Variant>
+        </Gallery>
     ),
-}
-
-/** Add a muted magnifying-glass icon in front when this field plays the role of a search box, so users recognize the function right away. */
-export const WithIcon: Story = {
-    parameters: { usage: "Add a muted magnifying-glass icon in front when this field plays the role of a search box, so users recognize the function right away." },
-    render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>With icon</Label>
-                <Typography type="body-sm" color="muted">
-                    A field acting as search — the magnifying-glass icon lets users recognize the function before they even read the text.
-                </Typography>
-            </div>
-            <InputButtonLike
-                icon={<MagnifyingGlassIcon size={16} className="text-field-placeholder" />}
-                placeholder="Search courses, lessons..."
-                onPress={() => {}}
-                className="w-80"
-            />
-        </div>
-    ),
-}
-
-/** Attach a keyboard-shortcut hint (Kbd) on the right edge when the overlay can be opened quickly from the keyboard, for example Cmd K for global search. */
-export const WithShortcutSuffix: Story = {
-    parameters: { usage: "Attach a keyboard-shortcut hint (Kbd) on the right edge when the overlay can be opened quickly from the keyboard, for example Cmd K for global search." },
-    render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>With shortcut hint</Label>
-                <Typography type="body-sm" color="muted">
-                    The overlay can be opened from the keyboard — the Kbd on the right edge teaches the shortcut right there, instead of making users hunt for it.
-                </Typography>
-            </div>
-            <InputButtonLike
-                icon={<MagnifyingGlassIcon size={16} className="text-field-placeholder" />}
-                placeholder="Quick search..."
-                suffix={(
-                    <Kbd>
-                        <Kbd.Content>⌘K</Kbd.Content>
-                    </Kbd>
-                )}
-                onPress={() => {}}
-                className="w-80"
-            />
-        </div>
-    ),
-}
-
-/** When the placeholder label is longer than the allowed width, the text truncates to a single line instead of breaking the layout. */
-export const LongPlaceholderTruncates: Story = {
-    parameters: { usage: "When the placeholder label is longer than the allowed width, the text truncates to a single line instead of breaking the layout." },
-    render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Long placeholder truncates</Label>
-                <Typography type="body-sm" color="muted">
-                    Checking a placeholder longer than the allowed width: it truncates to a single line instead of breaking the layout.
-                </Typography>
-            </div>
-            <InputButtonLike
-                icon={<MagnifyingGlassIcon size={16} className="text-field-placeholder" />}
-                placeholder="Search Fullstack, System Design, DevOps courses and much more..."
-                onPress={() => {}}
-                className="w-64"
-            />
-        </div>
-    ),
+    parameters: {
+        usage:
+            "Toàn bộ biến thể của InputButtonLike: mặc định, có icon, có gợi ý phím tắt, và " +
+            "placeholder dài bị cắt. Dùng khi cần tra lúc nào thêm icon/suffix và xác nhận hành vi " +
+            "truncate khi placeholder vượt chiều rộng field.",
+    },
 }

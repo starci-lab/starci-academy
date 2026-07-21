@@ -1,11 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Chip, Label, Typography } from "@heroui/react"
+import { Chip } from "@heroui/react"
+import { Gallery, Variant } from "../../../../story-kit"
 
-/**
- * Reference table for the HeroUI `Chip` — the base primitive behind every chip/pill/tag/badge
- * (all blocks in the `Core/Chip` family build on it). Kept here to look up "what each color looks
- * like" next to the sibling blocks, rather than splitting it into a separate branch.
- */
 const meta: Meta<typeof Chip> = {
     title: "Primitives/DataDisplay/Chip",
     component: Chip,
@@ -13,53 +9,52 @@ const meta: Meta<typeof Chip> = {
 export default meta
 type Story = StoryObj<typeof Chip>
 
-/** A chip is a status LABEL, not a button; pick the color by MEANING (accent = selected/next-step, success = done, warning = needs attention, danger = error, default = neutral). */
-export const AllColors: Story = {
+/**
+ * Toàn bộ bảng màu của `Chip` HeroUI — primitive nền cho mọi chip/pill/tag/badge (mọi
+ * block trong họ `Core/Chip` dựng trên nó). Dùng để tra "màu nào trông ra sao" cạnh các
+ * block khác, và chọn màu theo Ý NGHĨA, không phải thẩm mỹ.
+ */
+export const AllVariants: Story = {
     parameters: {
         usage:
-            "A chip is a status LABEL, NOT a button. Pick the color by MEANING: accent = selected / next-step · " +
-            "success = done · warning = needs attention · danger = error · default = neutral. Always use " +
-            "variant=\"soft\" for semantic tints (the native bg-<status>-soft + text-<status>-soft-foreground pair meets " +
-            "contrast in both light and dark — the raw hue on a light tint falls short of 4.5:1). Outside this gallery, a " +
-            "meta cluster may carry only ONE chip on ONE classification axis; leave the rest as plain text + icon.",
+            "Chip là nhãn TRẠNG THÁI, KHÔNG phải nút bấm. Chọn màu theo Ý NGHĨA: accent = đang chọn / bước tiếp " +
+            "theo · success = đã xong · warning = cần chú ý · danger = lỗi · default = trung tính. Luôn dùng " +
+            "variant=\"soft\" cho các sắc thái ngữ nghĩa (cặp bg-<status>-soft + text-<status>-soft-foreground đạt " +
+            "độ tương phản ở cả light và dark — màu gốc trên nền tint nhạt không đạt 4.5:1). Ngoài gallery này, " +
+            "một cụm meta chỉ được mang DUY NHẤT một chip trên MỘT trục phân loại; phần còn lại để text thường + icon.",
     },
     render: () => (
-        <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Accent</Label>
-                    <Typography type="body-sm" color="muted">Use when the item is currently selected or is the next step in progress — something you want to draw the user's eye to.</Typography>
-                </div>
+        <Gallery>
+            <Variant
+                label="Accent"
+                hint="Dùng khi mục đang được chọn hoặc là bước kế tiếp cần làm — thứ muốn kéo mắt người dùng vào."
+            >
                 <Chip color="accent" variant="soft"><Chip.Label>In progress</Chip.Label></Chip>
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Success</Label>
-                    <Typography type="body-sm" color="muted">Use when a task is complete and meets requirements, with no further action needed.</Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Success"
+                hint="Dùng khi một việc đã hoàn tất và đạt yêu cầu, không cần hành động gì thêm."
+            >
                 <Chip color="success" variant="soft"><Chip.Label>Completed</Chip.Label></Chip>
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Warning</Label>
-                    <Typography type="body-sm" color="muted">Use when the user needs to pay attention but it is not yet an error — for example nearing a deadline or still in progress.</Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Warning"
+                hint="Dùng khi người dùng cần chú ý nhưng chưa phải lỗi — ví dụ gần hết hạn hoặc còn đang xử lý."
+            >
                 <Chip color="warning" variant="soft"><Chip.Label>Due soon</Chip.Label></Chip>
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Danger</Label>
-                    <Typography type="body-sm" color="muted">Use when the outcome is an error or a failure — a state the user needs to fix.</Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Danger"
+                hint="Dùng khi kết quả là lỗi hoặc thất bại — trạng thái người dùng cần sửa."
+            >
                 <Chip color="danger" variant="soft"><Chip.Label>Not passed</Chip.Label></Chip>
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Default</Label>
-                    <Typography type="body-sm" color="muted">Use for a neutral label that carries no status meaning — for example a draft or an ordinary category.</Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Default"
+                hint="Dùng cho nhãn trung tính không mang ý nghĩa trạng thái — ví dụ bản nháp hoặc một phân loại thông thường."
+            >
                 <Chip color="default" variant="soft"><Chip.Label>Draft</Chip.Label></Chip>
-            </div>
-        </div>
+            </Variant>
+        </Gallery>
     ),
 }

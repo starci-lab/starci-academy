@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CalendarBlankIcon } from "@phosphor-icons/react"
-import { Label, Typography } from "@heroui/react"
 import { EmptyContent } from "@/components/blocks/async/EmptyContent"
+import { Gallery, Variant } from "../../../../story-kit"
 
 const meta: Meta<typeof EmptyContent> = {
     title: "Blocks/Async/EmptyContent",
@@ -10,59 +10,53 @@ const meta: Meta<typeof EmptyContent> = {
 export default meta
 type Story = StoryObj<typeof EmptyContent>
 
-/** Use when a list or data block has nothing to show and you just need to let the user know. */
-export const Default: Story = {
-    parameters: { usage: "Use when a list or data block has nothing to show and you just need to let the user know." },
+/**
+ * Toàn bộ ma trận trạng thái của EmptyContent: mặc định chỉ báo rỗng, có nút thử
+ * lại khi tải lỗi, và icon tuỳ chỉnh cho ngữ cảnh rỗng riêng biệt. Dùng để tra khi
+ * nào cần onRetry + retryLabel và khi nào nên đổi icon mặc định.
+ */
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex max-w-md flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Default</Label>
-                <Typography type="body-sm" color="muted">
-                    Just signals emptiness, with no action to suggest — the list has nothing yet and that's perfectly normal.
-                </Typography>
-            </div>
-            <EmptyContent title="No content yet" />
-        </div>
+        <Gallery>
+            <Variant
+                label="Mặc định"
+                hint="Chỉ báo hiệu rỗng, không gợi ý hành động — danh sách chưa có gì và đó là bình thường."
+            >
+                <div className="max-w-md">
+                    <EmptyContent title="No content yet" />
+                </div>
+            </Variant>
+            <Variant
+                label="Có nút thử lại"
+                hint="Rỗng vì tải lỗi và người dùng có thể thử lại. Cần CẢ HAI onRetry và retryLabel — thiếu một trong hai nút sẽ không hiện."
+            >
+                <div className="max-w-md">
+                    <EmptyContent
+                        title="Couldn't load data"
+                        description="Something went wrong while loading the content. Please try again."
+                        onRetry={() => {}}
+                        retryLabel="Try again"
+                    />
+                </div>
+            </Variant>
+            <Variant
+                label="Icon tuỳ chỉnh"
+                hint="Một ngữ cảnh rỗng cụ thể (lịch, giỏ hàng) mà icon khay mặc định quá chung."
+            >
+                <div className="max-w-md">
+                    <EmptyContent
+                        icon={<CalendarBlankIcon aria-hidden focusable="false" weight="duotone" className="size-8 text-foreground" />}
+                        title="No scheduled sessions yet"
+                        description="Your class schedule is currently empty."
+                    />
+                </div>
+            </Variant>
+        </Gallery>
     ),
-}
-
-/** Use when a data-loading error can be recovered by retrying and needs a clear action button. */
-export const WithRetry: Story = {
-    parameters: { usage: "Use when a data-loading error can be recovered by retrying and needs a clear action button." },
-    render: () => (
-        <div className="flex max-w-md flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>With retry button</Label>
-                <Typography type="body-sm" color="muted">
-                    Empty because the load failed and the user can retry. Needs BOTH onRetry AND retryLabel — miss either one and the button won't render.
-                </Typography>
-            </div>
-            <EmptyContent
-                title="Couldn't load data"
-                description="Something went wrong while loading the content. Please try again."
-                onRetry={() => {}}
-                retryLabel="Try again"
-            />
-        </div>
-    ),
-}
-
-/** Use when a specific empty context (a calendar or cart, say) needs its own icon instead of the default tray icon. */
-export const WithCustomIcon: Story = {
-    parameters: { usage: "Use when a specific empty context (a calendar or cart, say) needs its own icon instead of the default tray icon." },
-    render: () => (
-        <div className="flex max-w-md flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Custom icon</Label>
-                <Typography type="body-sm" color="muted">
-                    A specific empty context (calendar, cart) where the default tray icon feels too generic.
-                </Typography>
-            </div>
-            <EmptyContent
-                icon={<CalendarBlankIcon aria-hidden focusable="false" weight="duotone" className="size-8 text-foreground" />}
-                title="No scheduled sessions yet"
-                description="Your class schedule is currently empty."
-            />
-        </div>
-    ),
+    parameters: {
+        usage:
+            "Toàn bộ ma trận trạng thái của EmptyContent: mặc định chỉ báo rỗng, có nút thử lại khi tải lỗi " +
+            "(cần cả onRetry và retryLabel), và icon tuỳ chỉnh cho ngữ cảnh rỗng riêng biệt (lịch, giỏ hàng...) " +
+            "khi icon khay mặc định quá chung.",
+    },
 }

@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Card, CardContent, Label, Link, Typography } from "@heroui/react"
+import { Card, CardContent, Link, Typography } from "@heroui/react"
 import { PencilIcon } from "@phosphor-icons/react"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { Gallery, Variant } from "../../../../story-kit"
 import { SampleBody } from "./components"
 
 /**
@@ -17,244 +18,138 @@ export default meta
 type Story = StoryObj<typeof LabeledCard>
 
 /**
- * Use for EVERY titled block — this is the default block, even when the label is just a small eyebrow
- * ("Today", "Last 7 days"): don't reach for a bare Card and place a Typography on top yourself. The Label sits
- * OUTSIDE the card, the card holds only content. Each metric with a different MEANING is its own LabeledCard —
- * don't cram two or three different-meaning things into one card; conversely a single lone number doesn't
- * deserve its own card, gather same-meaning ones together. A block with NO title → a plain Card. The ONE narrow
- * exception to this "default": a block inside a RAIL/PANEL whose list is only a few rows → LabeledList (label + list, no card frame).
+ * Toàn bộ ma trận trạng thái của LabeledCard: slot phải trống (mặc định), có
+ * labelEnd, có onSeeMore, có action, có description dưới card, surface-in-surface
+ * (lồng trong panel cha), và danh sách chia nhóm bằng subtleLabel. Dùng để tra khi
+ * nào chọn slot nào cho phần bên phải label, và khi nào cần frameless/subtleLabel
+ * để tránh lồng surface-trong-surface.
  */
-export const Default: Story = {
-    args: {
-        label: "My courses",
-        children: <SampleBody />,
-    },
-    render: (args) => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Default</Label>
-                <Typography type="body-sm" color="muted">
-                    The slot to the right of the label is empty — the starting state. Only fill in labelEnd, onSeeMore or action
-                    when the block genuinely has something to attach there, since all three compete for the same spot.
-                </Typography>
-            </div>
-            <LabeledCard {...args} />
-        </div>
-    ),
-    parameters: {
-        usage:
-            "Use for EVERY titled block — this is the default block, even when the label is just a small eyebrow (\"Today\", " +
-            "\"Last 7 days\"): don't reach for a bare Card and place a Typography on top yourself. The Label sits OUTSIDE the " +
-            "card, the card holds only content. Each metric with a different MEANING is its own LabeledCard — don't cram two " +
-            "or three different-meaning things into one card; conversely a single lone number doesn't deserve its own card, " +
-            "gather same-meaning ones together. A block with NO title → a plain Card. The ONE narrow exception to this " +
-            "\"default\": a block inside a RAIL/PANEL whose list is only a few rows → LabeledList (label + list, no card frame).",
-    },
-}
-
-/** Use when you need to attach a short unit/note right next to the label (VND, a unit of measure, a summary status). */
-export const WithLabelEnd: Story = {
-    args: {
-        label: "Tuition remaining",
-        labelEnd: "VND",
-        children: <SampleBody />,
-    },
-    render: (args) => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>With a secondary label on the right</Label>
-                <Typography type="body-sm" color="muted">
-                    The right slot carries a MUTE tag, not pressable. The lowest priority of the three competing for that slot:
-                    pass onSeeMore or action alongside it and labelEnd no longer renders.
-                </Typography>
-            </div>
-            <LabeledCard {...args} />
-        </div>
-    ),
-    parameters: { usage: "Use when you need to attach a short unit/note right next to the label (VND, a unit of measure, a summary status)." },
-}
-
-/** Use when the card is only a SHORTENED version of a longer list and needs a way through to the full page — `onSeeMore` attaches that path right next to the label, without taking up space in the card body. Don't attach it when the card already shows all the data, because "see more" with nothing more to see is an empty promise. Adjust `seeMoreLabel` when "See more" doesn't fit the context (e.g. "See all"). Need a MANAGEMENT action (add/edit) instead of a link away → use `action`. */
-export const WithSeeMore: Story = {
-    args: {
-        label: "Featured courses",
-        onSeeMore: () => {},
-        children: <SampleBody />,
-    },
-    render: (args) => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>With a see-more link</Label>
-                <Typography type="body-sm" color="muted">
-                    The right slot carries a NAVIGATION path away from the card. Middle priority: it overrides labelEnd when passed together,
-                    but is itself overridden by action.
-                </Typography>
-            </div>
-            <LabeledCard {...args} />
-        </div>
-    ),
-    parameters: { usage: "Use when the card is only a SHORTENED version of a longer list and needs a way through to the full page — onSeeMore attaches that path right next to the label, without taking up space in the card body. Don't attach it when the card already shows all the data, because \"see more\" with nothing more to see is an empty promise. Adjust seeMoreLabel when \"See more\" doesn't fit the context (e.g. \"See all\"). Need a MANAGEMENT action (add/edit) instead of a link away → use action." },
-}
-
-/**
- * Use when the block needs a management action alongside the label (add/edit/manage) rather than a link to
- * another page like "see more". `action` is ALWAYS a `Link` (not a solid Button/Chip) — the same hover formula
- * as `onSeeMore`: `no-underline` + `transition-opacity hover:opacity-60` (NO underline on hover).
- * An optional icon goes before or after the text; only `onSeeMore`'s `CaretRightIcon` gets the subtle
- * slide effect (`group-hover:translate-x-1`), other icons don't need it.
- */
-export const WithAction: Story = {
-    args: {
-        label: "Manager",
-        action: (
-            <Link className="inline-flex shrink-0 cursor-pointer items-center gap-1 text-sm text-accent-soft-foreground no-underline transition-opacity hover:opacity-60">
-                <PencilIcon aria-hidden focusable="false" className="size-4" />
-                Add / manage
-            </Link>
-        ),
-        children: <SampleBody />,
-    },
-    render: (args) => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>With a management action</Label>
-                <Typography type="body-sm" color="muted">
-                    The right slot carries an IN-PLACE action (add/edit/manage) rather than a link away. The highest priority
-                    of the three competing for the slot: with action present, both labelEnd and onSeeMore are ignored.
-                </Typography>
-            </div>
-            <LabeledCard {...args} />
-        </div>
-    ),
-    parameters: { usage: "Use when the block needs a management action alongside the label (add/edit/manage) rather than a link to another page like \"see more\". `action` is always a Link, hover = opacity (no underline), optional icon before/after the text." },
-}
-
-/**
- * Use `description` for a caption/prompt/status that belongs to the section but sits BELOW the card (`gap-2`),
- * never inside the surface — e.g. a "complete all 3 to claim" prompt or a claim button under a task list. Keeps
- * it out of the card so it never becomes surface-in-surface. The caller owns the node's alignment. Real pattern:
- * `DailyQuest` ("Nhiệm vụ hôm nay") — the task list is the card, the claim prompt/button is the description.
- */
-export const WithDescription: Story = {
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>With a description below the card</Label>
-                <Typography type="body-sm" color="muted">
-                    The DailyQuest shape: `frameless` LabeledCard → `SurfaceListCard` (the ONE surface) → rows, with
-                    the claim prompt as `description` BELOW the card at `gap-2` — kept OUTSIDE the surface so it never
-                    becomes surface-in-surface. The label→card gap stays `gap-3`; only card→description is `gap-2`.
-                </Typography>
-            </div>
-            <LabeledCard
-                label="Today's tasks"
-                frameless
-                description={(
-                    <Typography type="body-xs" color="muted">
-                        Complete all 3 to claim 20 points.
-                    </Typography>
-                )}
+        <Gallery>
+            <Variant
+                label="Mặc định (slot phải trống)"
+                hint={"Dùng cho MỌI block có tiêu đề — đây là block mặc định, kể cả khi label chỉ là một eyebrow nhỏ (\"Hôm nay\", \"7 ngày qua\"): đừng tự lấy Card trơn rồi đặt Typography lên trên. Label nằm NGOÀI card, card chỉ chứa nội dung. Mỗi số liệu khác Ý NGHĨA là một LabeledCard riêng — đừng nhồi 2-3 thứ khác ý nghĩa vào 1 card; ngược lại một số liệu đơn lẻ thì không cần card riêng, gộp các số cùng ý nghĩa lại. Block không có tiêu đề → dùng Card trơn. Ngoại lệ hẹp: block trong RAIL/PANEL mà list chỉ vài dòng → LabeledList (label + list, không khung card)."}
             >
-                <SurfaceListCard>
-                    <SurfaceListCardItem>
-                        <span className="text-sm">Read a lesson</span>
-                    </SurfaceListCardItem>
-                    <SurfaceListCardItem>
-                        <span className="text-sm">Pass a challenge</span>
-                    </SurfaceListCardItem>
-                    <SurfaceListCardItem>
-                        <span className="text-sm">Review flashcards</span>
-                    </SurfaceListCardItem>
-                </SurfaceListCard>
-            </LabeledCard>
-        </div>
-    ),
-    parameters: { usage: "The DailyQuest shape: `frameless` LabeledCard + `SurfaceListCard` list + a claim prompt as `description` below the card (gap-2), outside the surface so it never becomes surface-in-surface. Use `description` for any caption/prompt/button tied to the section but that must stay out of the card." },
-}
-
-/**
- * Surface-in-surface: a list surface NESTED inside a visible PARENT surface (modal/drawer/panel body). The
- * parent panel is a REAL `Card` (don't hand-roll a `<div>` mimicking Card's exact classes — Card is already a
- * ready-made component, defaulting to `p-3 rounded-3xl shadow-surface`, exactly the "top-level surface" skin you
- * need); inside it a nested `SurfaceListCard bordered` — use a BORDER instead of shadow because shadow-surface is
- * nearly invisible when placed on another `bg-surface`. This is the true "surface in surface" (DIFFERENT from a
- * list card standing alone in `CategorizedList`). Real pattern:
- * `PaymentModal` (a payment-gateway list nested in the modal body).
- */
-export const SurfaceInSurface: Story = {
-    render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Nested in a parent surface</Label>
-                <Typography type="body-sm" color="muted">
-                    Use when a list sits inside a visible PARENT surface (modal/panel body). Enable frameless
-                    and give the inner list a SurfaceListCard bordered.
-                </Typography>
-            </div>
-            {/* parent panel = modal/drawer body (PARENT surface) — has its own label + content */}
-            <Card>
-                <CardContent>
-                    <LabeledCard label="Payment method" frameless>
-                        <SurfaceListCard bordered>
+                <LabeledCard label="My courses">
+                    <SampleBody />
+                </LabeledCard>
+            </Variant>
+            <Variant
+                label="Có labelEnd"
+                hint="Gắn một đơn vị/chú thích ngắn ngay cạnh label (VND, đơn vị đo, trạng thái tóm tắt). Slot phải mang tag MUTE, không bấm được — ưu tiên THẤP NHẤT trong 3 slot cạnh label: truyền onSeeMore hoặc action cùng lúc thì labelEnd không còn render."
+            >
+                <LabeledCard label="Tuition remaining" labelEnd="VND">
+                    <SampleBody />
+                </LabeledCard>
+            </Variant>
+            <Variant
+                label="Có onSeeMore"
+                hint={"Card chỉ là bản RÚT GỌN của một danh sách dài hơn và cần đường dẫn sang trang đầy đủ — onSeeMore gắn đường dẫn đó ngay cạnh label, không chiếm chỗ trong thân card. Đừng gắn khi card đã hiện đủ hết dữ liệu, vì \"xem thêm\" mà không còn gì để xem là lời hứa suông. Đổi seeMoreLabel khi \"Xem thêm\" không hợp ngữ cảnh (ví dụ \"Xem tất cả\"). Cần một HÀNH ĐỘNG QUẢN LÝ (thêm/sửa) thay vì một liên kết đi → dùng action."}
+            >
+                <LabeledCard label="Featured courses" onSeeMore={() => {}}>
+                    <SampleBody />
+                </LabeledCard>
+            </Variant>
+            <Variant
+                label="Có action"
+                hint={"Block cần một hành động quản lý cạnh label (thêm/sửa/quản lý) thay vì một liên kết \"xem thêm\" sang trang khác. action LUÔN là một Link (không phải Button/Chip đặc) — cùng công thức hover với onSeeMore: no-underline + transition-opacity hover:opacity-60 (không gạch chân khi hover). Icon tuỳ chọn đặt trước/sau text; chỉ CaretRightIcon của onSeeMore mới có hiệu ứng trượt (group-hover:translate-x-1), icon khác thì không cần. action có mặt thì cả labelEnd và onSeeMore đều bị bỏ qua — ưu tiên CAO NHẤT."}
+            >
+                <LabeledCard
+                    label="Manager"
+                    action={(
+                        <Link className="inline-flex shrink-0 cursor-pointer items-center gap-1 text-sm text-accent-soft-foreground no-underline transition-opacity hover:opacity-60">
+                            <PencilIcon aria-hidden focusable="false" className="size-4" />
+                            Add / manage
+                        </Link>
+                    )}
+                >
+                    <SampleBody />
+                </LabeledCard>
+            </Variant>
+            <Variant
+                label="Có description dưới card"
+                hint={"Dùng description cho một chú thích/lời nhắc/trạng thái thuộc về section nhưng nằm DƯỚI card (gap-2), không bao giờ nằm trong surface — ví dụ lời nhắc \"hoàn thành cả 3 để nhận quà\" hoặc nút claim dưới danh sách nhiệm vụ. Giữ nó ngoài card để không bao giờ thành surface-trong-surface; người gọi tự quyết alignment của node này. Ví dụ thật: DailyQuest (\"Nhiệm vụ hôm nay\") — danh sách nhiệm vụ là card, lời nhắc/nút claim là description. Gap label→card vẫn là gap-3, chỉ card→description là gap-2."}
+            >
+                <LabeledCard
+                    label="Today's tasks"
+                    frameless
+                    description={(
+                        <Typography type="body-xs" color="muted">
+                            Complete all 3 to claim 20 points.
+                        </Typography>
+                    )}
+                >
+                    <SurfaceListCard>
+                        <SurfaceListCardItem>
+                            <span className="text-sm">Read a lesson</span>
+                        </SurfaceListCardItem>
+                        <SurfaceListCardItem>
+                            <span className="text-sm">Pass a challenge</span>
+                        </SurfaceListCardItem>
+                        <SurfaceListCardItem>
+                            <span className="text-sm">Review flashcards</span>
+                        </SurfaceListCardItem>
+                    </SurfaceListCard>
+                </LabeledCard>
+            </Variant>
+            <Variant
+                label="Surface-in-surface (lồng trong panel cha)"
+                hint={"Một list surface LỒNG bên trong một PARENT surface đang hiển thị (thân modal/drawer/panel). Panel cha là một Card THẬT (đừng tự chế div mô phỏng đúng class của Card — Card đã là component sẵn dùng, mặc định p-3 rounded-3xl shadow-surface, đúng lớp da \"surface cấp cao nhất\" cần); bên trong nó là SurfaceListCard bordered — dùng BORDER thay vì shadow vì shadow-surface gần như vô hình khi đặt trên một bg-surface khác. Đây mới là surface-trong-surface THẬT (KHÁC với một list card đứng riêng lẻ như ở biến thể chia nhóm dưới đây). Ví dụ thật: PaymentModal (danh sách cổng thanh toán lồng trong thân modal)."}
+            >
+                <Card>
+                    <CardContent>
+                        <LabeledCard label="Payment method" frameless>
+                            <SurfaceListCard bordered>
+                                <SurfaceListCardItem>
+                                    <span className="text-sm">MoMo wallet</span>
+                                </SurfaceListCardItem>
+                                <SurfaceListCardItem>
+                                    <span className="text-sm">VNPay QR</span>
+                                </SurfaceListCardItem>
+                                <SurfaceListCardItem>
+                                    <span className="text-sm">Credit / debit card</span>
+                                </SurfaceListCardItem>
+                            </SurfaceListCard>
+                        </LabeledCard>
+                    </CardContent>
+                </Card>
+            </Variant>
+            <Variant
+                label="Danh sách chia nhóm bằng subtleLabel"
+                hint="Sub-label theo category: cắt MỘT danh sách dài thành các NHÓM. Một LabeledCard frameless (label chính) bọc nhiều cụm LabeledCard subtleLabel frameless + SurfaceListCard — mỗi nhóm có một eyebrow sub-label (text-xs text-muted) nằm ngay trên một LIST CARD độc lập (shadow, KHÔNG bordered — vì nó không lồng trong surface nào, khác với biến thể surface-in-surface phía trên). Khoảng cách giữa các nhóm là gap-3 (cùng một category, không phải hai vùng riêng biệt). Dùng khi một danh sách cần chia mục (Cơ bản / Nâng cao…) thay vì đổ dồn một lượt."
+            >
+                <LabeledCard label="Lesson list" frameless contentClassName="flex flex-col gap-3">
+                    <LabeledCard label="Basic" subtleLabel frameless>
+                        <SurfaceListCard>
                             <SurfaceListCardItem>
-                                <span className="text-sm">MoMo wallet</span>
+                                <span className="text-sm">Lesson 1: Intro to React Hooks</span>
                             </SurfaceListCardItem>
                             <SurfaceListCardItem>
-                                <span className="text-sm">VNPay QR</span>
-                            </SurfaceListCardItem>
-                            <SurfaceListCardItem>
-                                <span className="text-sm">Credit / debit card</span>
+                                <span className="text-sm">Lesson 2: useState and useEffect</span>
                             </SurfaceListCardItem>
                         </SurfaceListCard>
                     </LabeledCard>
-                </CardContent>
-            </Card>
-        </div>
-    ),
-    parameters: { usage: "TRUE surface-in-surface: 1 list surface nested in a visible PARENT surface (modal/panel body: a REAL `Card`, not a hand-rolled div). The inner uses `SurfaceListCard bordered` (border instead of shadow because the shadow is invisible on bg-surface). Different from a list card standing alone. Real pattern: PaymentModal." },
-}
-
-/**
- * Sub-label by category: split ONE long list into GROUPS. A single `LabeledCard frameless` (the main label)
- * wraps several `LabeledCard subtleLabel frameless` + `SurfaceListCard` clusters — each group has a sub-label
- * eyebrow (`text-xs text-muted`) sitting right above a standalone LIST CARD (shadow, NOT `bordered` — it is NOT
- * nested inside any surface, unlike `SurfaceInSurface`). The gap between groups is `gap-3` (they belong to the
- * same category, not two separate regions). Use when a list needs sectioning (Basic / Advanced…) rather than
- * being dumped flat in one run.
- */
-export const CategorizedList: Story = {
-    render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Grouped by sub-label</Label>
-                <Typography type="body-sm" color="muted">
-                    Use when a long list needs to be split into subgroups (Basic / Advanced) rather than dumped flat.
-                    Each group is a standalone list card, not nested in a surface.
-                </Typography>
-            </div>
-            <LabeledCard label="Lesson list" frameless contentClassName="flex flex-col gap-3">
-                <LabeledCard label="Basic" subtleLabel frameless>
-                    <SurfaceListCard>
-                        <SurfaceListCardItem>
-                            <span className="text-sm">Lesson 1: Intro to React Hooks</span>
-                        </SurfaceListCardItem>
-                        <SurfaceListCardItem>
-                            <span className="text-sm">Lesson 2: useState and useEffect</span>
-                        </SurfaceListCardItem>
-                    </SurfaceListCard>
+                    <LabeledCard label="Advanced" subtleLabel frameless>
+                        <SurfaceListCard>
+                            <SurfaceListCardItem>
+                                <span className="text-sm">Lesson 3: Custom Hooks</span>
+                            </SurfaceListCardItem>
+                            <SurfaceListCardItem>
+                                <span className="text-sm">Lesson 4: useReducer &amp; Context</span>
+                            </SurfaceListCardItem>
+                        </SurfaceListCard>
+                    </LabeledCard>
                 </LabeledCard>
-                <LabeledCard label="Advanced" subtleLabel frameless>
-                    <SurfaceListCard>
-                        <SurfaceListCardItem>
-                            <span className="text-sm">Lesson 3: Custom Hooks</span>
-                        </SurfaceListCardItem>
-                        <SurfaceListCardItem>
-                            <span className="text-sm">Lesson 4: useReducer &amp; Context</span>
-                        </SurfaceListCardItem>
-                    </SurfaceListCard>
-                </LabeledCard>
-            </LabeledCard>
-        </div>
+            </Variant>
+        </Gallery>
     ),
-    parameters: { usage: "Sub-label by category: split a long list into groups. 1 `LabeledCard frameless` (main label) wraps several `LabeledCard subtleLabel frameless` + `SurfaceListCard` clusters — each group has a sub-label eyebrow above a standalone LIST CARD (shadow, NOT bordered — not nested in a surface). Gap between groups is gap-3 (same category). Different from surface-in-surface." },
+    parameters: {
+        usage:
+            "Toàn bộ ma trận trạng thái của LabeledCard: slot phải trống (mặc định), có labelEnd, có " +
+            "onSeeMore, có action, có description dưới card, surface-in-surface (lồng trong panel cha), " +
+            "và danh sách chia nhóm bằng subtleLabel. Dùng để tra khi nào chọn slot nào cho phần bên phải " +
+            "label (labelEnd < onSeeMore < action theo độ ưu tiên), và khi nào cần frameless/subtleLabel " +
+            "để tránh lồng surface-trong-surface.",
+    },
 }

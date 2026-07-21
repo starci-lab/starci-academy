@@ -36,6 +36,8 @@ export const TagChips = ({ tags, maxVisible = 3, variant = "soft", classNames }:
     const t = useTranslations()
     const [menuOpen, setMenuOpen] = useState(false)
     const visibleTags = useMemo(() => tags.slice(0, maxVisible), [tags, maxVisible])
+    // Số tag bị gom lại; chỉ khi > 0 mới có "tràn" thật để hiện chip +N (tránh số âm/0 khi rỗng hoặc chưa tràn).
+    const overflowCount = Math.max(0, tags.length - maxVisible)
     return (
         <div className="flex items-center gap-2">
             {visibleTags.map((tag, index) => (
@@ -43,22 +45,24 @@ export const TagChips = ({ tags, maxVisible = 3, variant = "soft", classNames }:
                     <Chip.Label>{tag}</Chip.Label>
                 </Chip>
             ))}
-            <Tooltip isOpen={menuOpen} onOpenChange={setMenuOpen}>
-                <Tooltip.Trigger className={classNames?.trigger}>
-                    <Chip color="default" variant={variant}>
-                        <Chip.Label>{t("common.tagsMore", { count: tags.length - maxVisible })}</Chip.Label>
-                    </Chip>
-                </Tooltip.Trigger>
-                <Tooltip.Content className={classNames?.content}>
-                    <ScrollShadow className="max-h-[200px]" hideScrollBar={true} orientation="horizontal">
-                        <div className="flex flex-col gap-2 text-sm">
-                            {tags.map((tag) => (
-                                <div key={tag}>{tag}</div>
-                            ))}
-                        </div>
-                    </ScrollShadow>
-                </Tooltip.Content>
-            </Tooltip>
+            {overflowCount > 0 && (
+                <Tooltip isOpen={menuOpen} onOpenChange={setMenuOpen}>
+                    <Tooltip.Trigger className={classNames?.trigger}>
+                        <Chip color="default" variant={variant}>
+                            <Chip.Label>{t("common.tagsMore", { count: overflowCount })}</Chip.Label>
+                        </Chip>
+                    </Tooltip.Trigger>
+                    <Tooltip.Content className={classNames?.content}>
+                        <ScrollShadow className="max-h-[200px]" hideScrollBar={true} orientation="horizontal">
+                            <div className="flex flex-col gap-2 text-sm">
+                                {tags.map((tag) => (
+                                    <div key={tag}>{tag}</div>
+                                ))}
+                            </div>
+                        </ScrollShadow>
+                    </Tooltip.Content>
+                </Tooltip>
+            )}
         </div>
     )
 }

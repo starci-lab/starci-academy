@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
 import { VerdictHeroCard } from "@/components/blocks/stats/VerdictHeroCard"
+import { Gallery, Variant } from "../../../../story-kit"
 import { PrimaryAction, REVIEW_HEALTH_SPLITS } from "./components"
 
 const meta: Meta<typeof VerdictHeroCard> = {
@@ -12,75 +12,52 @@ const meta: Meta<typeof VerdictHeroCard> = {
 export default meta
 type Story = StoryObj<typeof VerdictHeroCard>
 
-/** Use for the "phán xử" hero at the top of any Thống kê surface: a band-colored headline, a verdict sentence, a target-marked meter, a 2-up split breakdown, and a primary action — the full shape from flashcard review's "Sức khoẻ trí nhớ" zone. */
-export const Default: Story = {
-    parameters: {
-        usage: "The full shape: value + verdict + sub + meter with a target mark + a 2-up split + a primary action. Use when the number has both a meaningful target AND a natural breakdown (e.g. flashcard review's memory-health hero, mature vs young retention).",
-    },
+/**
+ * Toàn bộ ma trận trạng thái của VerdictHeroCard: shape đầy đủ (meter + split +
+ * action), shape rút gọn không có split, và 3 band (danger/warning/success) theo
+ * Ý NGHĨA của verdict — không theo trang trí. Dùng để tra khi nào bỏ `splits`,
+ * và band nào ứng với tình huống nào.
+ */
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Full — meter + splits + action</Label>
-                <Typography type="body-sm" color="muted">
-                    Danger band: the value, the left border and the meter fill all read as one bad-news signal, and the split shows the number is really two different stories (mature retention is fine, new cards are not).
-                </Typography>
-            </div>
-            <div className="max-w-md">
-                <VerdictHeroCard
-                    value={39}
-                    unit="%"
-                    band="danger"
-                    verdict="Bạn đang quá tải — nạp thẻ mới nhanh hơn tốc độ ghi nhớ."
-                    sub="Tỷ lệ nhớ 39% (mốc lành mạnh ~85%). Vấn đề KHÔNG phải quên cái đã học — mà là nạp quá nhanh."
-                    meter={{ value: 39, max: 100, target: 85 }}
-                    splits={REVIEW_HEALTH_SPLITS}
-                    action={<PrimaryAction>Giảm thẻ mới · ôn kỹ thẻ cũ trước →</PrimaryAction>}
-                />
-            </div>
-        </div>
-    ),
-}
-
-/** Use when the number has a target worth marking but no natural 2-up breakdown — drop `splits` rather than inventing a fake one. */
-export const WithoutSplits: Story = {
-    parameters: {
-        usage: "Drop `splits` when the number has no natural 2-up breakdown — e.g. an interview readiness score (a single trend, not two sub-populations). Keep the meter + target, since the pass-bar is still the main evidence.",
-    },
-    render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Meter only — no split row</Label>
-                <Typography type="body-sm" color="muted">
-                    Warning band: close to the target but not there yet. The sub-line carries the trend evidence instead of a split, since a readiness score has no 2-up breakdown to show.
-                </Typography>
-            </div>
-            <div className="max-w-md">
-                <VerdictHeroCard
-                    value={64}
-                    unit="/100"
-                    band="warning"
-                    verdict={"Gần chạm mốc \"đạt\" — còn ~1 phiên mạnh nữa."}
-                    sub="Pass-bar 70. 3 phiên gần nhất: 58 → 61 → 64 (đang tăng đều)."
-                    meter={{ value: 64, max: 100, target: 70 }}
-                    action={<PrimaryAction>Luyện 1 phiên nữa →</PrimaryAction>}
-                />
-            </div>
-        </div>
-    ),
-}
-
-/** Use to pick `band` by the MEANING of the verdict (success/warning/danger), never by decoration — the value color, left border and meter fill are always driven by this one prop. */
-export const Bands: Story = {
-    parameters: {
-        usage: "Pick `band` by the MEANING of the verdict, not by decoration: danger = the number signals a real problem · warning = close but not there · success = the target is met. All three drive the same 3 things (value color, left border, meter fill) together.",
-    },
-    render: () => (
-        <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Danger</Label>
-                    <Typography type="body-sm" color="muted">The number signals a real problem the learner needs to act on now.</Typography>
+        <Gallery>
+            <Variant
+                label="Full — meter + splits + action"
+                hint="Dùng cho hero 'phán xử' đầy đủ: giá trị + verdict + sub + meter có mốc target + split 2-up + hành động chính. Danger band: giá trị, viền trái và fill của meter cùng đọc là một tín hiệu xấu, còn split cho thấy con số này thực ra là hai câu chuyện khác nhau (thẻ cũ vẫn ổn, thẻ mới thì không)."
+            >
+                <div className="max-w-md">
+                    <VerdictHeroCard
+                        value={39}
+                        unit="%"
+                        band="danger"
+                        verdict="Bạn đang quá tải — nạp thẻ mới nhanh hơn tốc độ ghi nhớ."
+                        sub="Tỷ lệ nhớ 39% (mốc lành mạnh ~85%). Vấn đề KHÔNG phải quên cái đã học — mà là nạp quá nhanh."
+                        meter={{ value: 39, max: 100, target: 85 }}
+                        splits={REVIEW_HEALTH_SPLITS}
+                        action={<PrimaryAction>Giảm thẻ mới · ôn kỹ thẻ cũ trước →</PrimaryAction>}
+                    />
                 </div>
+            </Variant>
+            <Variant
+                label="Meter only — không có split"
+                hint={"Bỏ `splits` khi con số không có breakdown 2-up tự nhiên — ví dụ điểm sẵn sàng phỏng vấn (một xu hướng, không phải hai nhóm nhỏ). Vẫn giữ meter + target vì pass-bar vẫn là bằng chứng chính. Warning band: gần chạm target nhưng chưa tới — sub-line mang bằng chứng xu hướng thay cho split."}
+            >
+                <div className="max-w-md">
+                    <VerdictHeroCard
+                        value={64}
+                        unit="/100"
+                        band="warning"
+                        verdict={"Gần chạm mốc \"đạt\" — còn ~1 phiên mạnh nữa."}
+                        sub="Pass-bar 70. 3 phiên gần nhất: 58 → 61 → 64 (đang tăng đều)."
+                        meter={{ value: 64, max: 100, target: 70 }}
+                        action={<PrimaryAction>Luyện 1 phiên nữa →</PrimaryAction>}
+                    />
+                </div>
+            </Variant>
+            <Variant
+                label="Band: Danger"
+                hint="Chọn `band` theo Ý NGHĨA của verdict, không theo trang trí — danger là khi con số báo hiệu một vấn đề thật, học viên cần hành động ngay."
+            >
                 <div className="max-w-md">
                     <VerdictHeroCard
                         value={39}
@@ -90,12 +67,11 @@ export const Bands: Story = {
                         meter={{ value: 39, max: 100, target: 85 }}
                     />
                 </div>
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Warning</Label>
-                    <Typography type="body-sm" color="muted">Progress is real but hasn't crossed the target yet.</Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Band: Warning"
+                hint="Warning là khi tiến độ có thật nhưng chưa vượt qua target."
+            >
                 <div className="max-w-md">
                     <VerdictHeroCard
                         value={61}
@@ -105,12 +81,11 @@ export const Bands: Story = {
                         meter={{ value: 61, max: 100, target: 80 }}
                     />
                 </div>
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Success</Label>
-                    <Typography type="body-sm" color="muted">The target is met — the verdict should say so plainly, not just show a number.</Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Band: Success"
+                hint="Success là khi target đã đạt — verdict nên nói thẳng điều đó, không chỉ hiện một con số."
+            >
                 <div className="max-w-md">
                     <VerdictHeroCard
                         value={88}
@@ -120,7 +95,13 @@ export const Bands: Story = {
                         meter={{ value: 88, max: 100, target: 85 }}
                     />
                 </div>
-            </div>
-        </div>
+            </Variant>
+        </Gallery>
     ),
+    parameters: {
+        usage:
+            "Toàn bộ ma trận trạng thái của VerdictHeroCard: shape đầy đủ (meter + split + action), " +
+            "shape rút gọn không có split, và 3 band (danger/warning/success) theo Ý NGHĨA của verdict — " +
+            "không theo trang trí. Dùng để tra khi nào bỏ `splits`, và band nào ứng với tình huống nào.",
+    },
 }

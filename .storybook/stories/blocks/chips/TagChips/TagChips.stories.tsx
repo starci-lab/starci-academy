@@ -20,7 +20,7 @@ export const AllVariants: Story = {
         <Gallery>
             <Variant
                 label="Rỗng"
-                hint="Bài viết/khoá học chưa gắn tag nào. Lưu ý: TagChips luôn render chip đếm còn-lại bất kể có tràn hay không, nên ở trạng thái rỗng chip này hiện số âm (0 - maxVisible) — hành vi thật của component, chưa có điều kiện ẩn khi không tràn."
+                hint="Bài viết/khoá học chưa gắn tag nào — không render gì cả, kể cả chip đếm +N (chỉ hiện khi có tag bị gom, tức số tràn > 0)."
             >
                 <TagChips tags={[]} />
             </Variant>

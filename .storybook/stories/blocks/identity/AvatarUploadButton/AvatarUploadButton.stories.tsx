@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
 import { AvatarUploadButton } from "@/components/blocks/identity/AvatarUploadButton"
+import { Gallery, Variant } from "../../../../story-kit"
 
 const meta: Meta<typeof AvatarUploadButton> = {
     title: "Blocks/Identity/AvatarUploadButton",
@@ -9,43 +9,30 @@ const meta: Meta<typeof AvatarUploadButton> = {
 export default meta
 type Story = StoryObj<typeof AvatarUploadButton>
 
-/** Use when the avatar itself is the button for changing the photo — rather than `UserAvatar` (display only, not editable) or `ImageDropzone` (a separate drop area for any image, not anchored to one person's identity). Place it in a profile form, where the user is editing themselves. */
-export const Default: Story = {
-    parameters: { usage: "Use when the avatar itself is the button for changing the photo — rather than `UserAvatar` (display only, not editable) or `ImageDropzone` (a separate drop area for any image, not anchored to one person's identity). Place it in a profile form, where the user is editing themselves." },
+/**
+ * Toàn bộ trạng thái của AvatarUploadButton: đã có ảnh, chưa có ảnh nhưng còn
+ * danh tính để sinh avatar, và trống hoàn toàn danh tính. Dùng để tra khi nào
+ * đổi nhãn nút giữa "Change"/"Upload"/"Add" theo đúng trạng thái ảnh hiện có.
+ */
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Has a photo</Label>
-                <Typography type="body-sm" color="muted">
-                    The state when the profile already has a saved photo: the label names what happens on
-                    press, so write it as change, not upload.
-                </Typography>
-            </div>
-            <AvatarUploadButton
-                avatar="https://i.pravatar.cc/150?img=12"
-                displayName="Ethan Carter"
-                seed="ethan.carter@example.com"
-                label="Change profile photo"
-                onPress={() => {}}
-            />
-        </div>
-    ),
-}
-
-/** The two fallbacks when no photo has been uploaded, depending on whether identity remains to generate an avatar. */
-export const NoAvatar: Story = {
-    parameters: { usage: "The two fallbacks when no photo has been uploaded, depending on whether identity remains to generate an avatar." },
-    render: () => (
-        <div className="flex max-w-2xl flex-col gap-6">
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Has name and seed</Label>
-                    <Typography type="body-sm" color="muted">
-                        The common fallback: no photo uploaded yet, but the user has registered so a name and
-                        email remain to generate a stable avatar. Always pass seed alongside displayName —
-                        without seed, every render produces a different face.
-                    </Typography>
-                </div>
+        <Gallery>
+            <Variant
+                label="Đã có ảnh"
+                hint="Trạng thái khi profile đã có ảnh lưu sẵn: nhãn đặt theo hành động khi nhấn, nên viết là change, không phải upload."
+            >
+                <AvatarUploadButton
+                    avatar="https://i.pravatar.cc/150?img=12"
+                    displayName="Ethan Carter"
+                    seed="ethan.carter@example.com"
+                    label="Change profile photo"
+                    onPress={() => {}}
+                />
+            </Variant>
+            <Variant
+                label="Chưa có ảnh, còn tên và seed"
+                hint="Fallback phổ biến nhất: chưa upload ảnh nào, nhưng user đã đăng ký nên còn tên và email để sinh avatar ổn định. Luôn truyền seed kèm displayName — thiếu seed thì mỗi lần render ra một mặt khác nhau."
+            >
                 <AvatarUploadButton
                     avatar={null}
                     displayName="Olivia Bennett"
@@ -53,16 +40,11 @@ export const NoAvatar: Story = {
                     label="Upload profile photo"
                     onPress={() => {}}
                 />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Empty identity</Label>
-                    <Typography type="body-sm" color="muted">
-                        The last fallback: no photo, no name, no seed falls back to the default face. This
-                        happens with a freshly created, still-empty profile — the label should be add, since
-                        there has never been anything to change.
-                    </Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Trống hoàn toàn danh tính"
+                hint="Fallback cuối cùng: không ảnh, không tên, không seed thì rơi về mặt mặc định. Xảy ra với profile vừa tạo còn trống — nhãn nên là add, vì chưa từng có gì để đổi."
+            >
                 <AvatarUploadButton
                     avatar={null}
                     displayName={null}
@@ -70,7 +52,14 @@ export const NoAvatar: Story = {
                     label="Add profile photo"
                     onPress={() => {}}
                 />
-            </div>
-        </div>
+            </Variant>
+        </Gallery>
     ),
+    parameters: {
+        usage:
+            "Toàn bộ trạng thái của AvatarUploadButton: đã có ảnh, chưa có ảnh nhưng còn danh tính để sinh " +
+            "avatar, và trống hoàn toàn danh tính. Dùng khi avatar chính là nút đổi ảnh — khác với " +
+            "`UserAvatar` (chỉ hiển thị, không sửa được) hoặc `ImageDropzone` (vùng thả ảnh riêng, không " +
+            "gắn với danh tính một người) — đặt trong form hồ sơ, nơi user tự sửa ảnh của mình.",
+    },
 }

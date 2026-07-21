@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
 import { NotificationList } from "@/components/blocks/notifications/NotificationList"
+import { Gallery, Variant } from "../../../../story-kit"
 import { SAMPLE_GROUPS } from "./components"
 
 const meta: Meta<typeof NotificationList> = {
@@ -10,41 +10,44 @@ const meta: Meta<typeof NotificationList> = {
 export default meta
 type Story = StoryObj<typeof NotificationList>
 
-/** A list with a header + date grouping, scrolling within a fixed max height. */
-export const Grouped: Story = {
-    parameters: {
-        usage: "Use for a notification list with a header (title + mark-all-as-read button) and date-group labels. The list body scrolls within a max height so a long history doesn't balloon the container.",
-    },
+/**
+ * Toàn bộ trạng thái của NotificationList: có thông báo (header + gom theo ngày,
+ * cuộn trong chiều cao cố định) và rỗng (fallback về EmptyState nhưng vẫn giữ
+ * header nếu có truyền).
+ */
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex w-[380px] flex-col gap-2 rounded-2xl border border-separator bg-surface p-1">
-            <NotificationList
-                title="Notifications"
-                onMarkAllRead={() => {}}
-                groups={SAMPLE_GROUPS}
-            />
-        </div>
+        <Gallery>
+            <Variant
+                label="Có thông báo, gom theo ngày"
+                hint="Danh sách có header (tiêu đề + nút đánh dấu đã đọc hết) và nhãn gom theo ngày. Phần thân cuộn trong chiều cao tối đa nên lịch sử dài không làm phình container."
+            >
+                <div className="flex w-[380px] flex-col gap-2 rounded-2xl border border-separator bg-surface p-1">
+                    <NotificationList
+                        title="Notifications"
+                        onMarkAllRead={() => {}}
+                        groups={SAMPLE_GROUPS}
+                    />
+                </div>
+            </Variant>
+            <Variant
+                label="Rỗng"
+                hint="Khi không có thông báo nào, danh sách hiện empty state mặc định (dùng lại feedback/EmptyState) thay vì một container trống — header vẫn giữ nếu có truyền vào."
+            >
+                <div className="w-[380px] rounded-2xl border border-separator bg-surface p-1">
+                    <NotificationList
+                        title="Notifications"
+                        groups={[{ items: [] }]}
+                    />
+                </div>
+            </Variant>
+        </Gallery>
     ),
-}
-
-/** No notifications — falls back to the default empty state (reuses feedback/EmptyState). */
-export const Empty: Story = {
     parameters: {
-        usage: "When there are no notifications, the list shows an empty state (reuses feedback/EmptyState) instead of a blank container — it still keeps the header if one is passed.",
+        usage:
+            "Every state of NotificationList: a header (title + mark-all-as-read button) with date-group " +
+            "labels, the list body scrolling within a max height so a long history doesn't balloon the " +
+            "container, and the empty fallback (reuses feedback/EmptyState) which still keeps the header " +
+            "when one is passed.",
     },
-    render: () => (
-        <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-2">
-                <Label>Empty</Label>
-                <Typography type="body-sm" color="muted">
-                    Every group has no items, so the list falls back to the default empty state.
-                </Typography>
-            </div>
-            <div className="w-[380px] rounded-2xl border border-separator bg-surface p-1">
-                <NotificationList
-                    title="Notifications"
-                    groups={[{ items: [] }]}
-                />
-            </div>
-        </div>
-    ),
 }

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
 import { LanguageChip } from "@/components/blocks/chips/LanguageChip"
+import { Gallery, Variant } from "../../../../story-kit"
 
 const meta: Meta<typeof LanguageChip> = {
     title: "Features/Chips/LanguageChip",
@@ -9,18 +9,19 @@ const meta: Meta<typeof LanguageChip> = {
 export default meta
 type Story = StoryObj<typeof LanguageChip>
 
-/** All 14 GitHub-linguist brand colors side by side, plus the unknown-language case — this is the ONLY chip that escapes the 5 semantic colors, so look here before coloring a language yourself elsewhere. */
-export const AllLanguages: Story = {
-    parameters: { usage: "Reference table of 14 GitHub-linguist brand colors (source: `getLanguageColor`) + the unknown-language case. Use it to indicate the language of a submission/repo: the dot carries the color, the text stays `body-xs` muted — NOT a pill. This is a DELIBERATE exception to the \"tokens only, no hex\" rule: brand colors from outside the app (like the GitHub logo), not part of the semantic palette. Same color source as `LanguageDonut`, so the two always match." },
+/**
+ * Toàn bộ 14 màu brand GitHub-linguist đặt cạnh nhau, cộng trường hợp ngôn ngữ
+ * không xác định — đây là chip DUY NHẤT thoát khỏi 5 màu semantic, nên tra ở đây
+ * trước khi tự tô màu ngôn ngữ ở nơi khác. Cùng nguồn màu với `LanguageDonut` nên
+ * hai chỗ luôn khớp nhau.
+ */
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-6">
-            <div className="flex flex-col items-start gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Languages with a brand color</Label>
-                    <Typography type="body-sm" color="muted">
-                        When the language key is in the linguist table. The dot uses that language's exact hex, so the colors here do NOT go through semantic tokens: Go comes out cyan, Javascript amber, Rust burnt orange. Keys with their own display name (csharp, cpp, php) turn into C#, C++, PHP automatically.
-                    </Typography>
-                </div>
+        <Gallery>
+            <Variant
+                label="Ngôn ngữ có màu brand"
+                hint="Khi language key có trong bảng linguist. Dot dùng đúng hex của ngôn ngữ đó nên màu ở đây KHÔNG đi qua semantic token: Go ra cyan, Javascript ra vàng, Rust ra cam cháy. Key có tên hiển thị riêng (csharp, cpp, php) tự đổi thành C#, C++, PHP."
+            >
                 <div className="flex flex-col gap-2">
                     <LanguageChip language="typescript" />
                     <LanguageChip language="javascript" />
@@ -37,16 +38,21 @@ export const AllLanguages: Story = {
                     <LanguageChip language="swift" />
                     <LanguageChip language="dart" />
                 </div>
-            </div>
-            <div className="flex flex-col items-start gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Unknown language</Label>
-                    <Typography type="body-sm" color="muted">
-                        When the key is not in the linguist table. The chip still renders with a neutral gray dot instead of breaking or dropping the dot, so pass the server value straight through without pre-filtering.
-                    </Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Ngôn ngữ không xác định"
+                hint="Khi key không có trong bảng linguist. Chip vẫn render với dot xám trung tính thay vì vỡ hoặc bỏ dot, nên cứ truyền thẳng giá trị từ server, không cần lọc trước."
+            >
                 <LanguageChip language="cobol" />
-            </div>
-        </div>
+            </Variant>
+        </Gallery>
     ),
+    parameters: {
+        usage:
+            "Bảng tra 14 màu brand GitHub-linguist (nguồn: `getLanguageColor`) + trường hợp ngôn ngữ " +
+            "không xác định. Dùng để chỉ ngôn ngữ của một submission/repo: dot mang màu, chữ giữ " +
+            "`body-xs` muted — KHÔNG phải pill. Đây là ngoại lệ CHỦ Ý của luật \"chỉ token, không hex\": " +
+            "màu brand từ bên ngoài app (như logo GitHub), không thuộc semantic palette. Cùng nguồn màu " +
+            "với `LanguageDonut` nên hai nơi luôn khớp.",
+    },
 }

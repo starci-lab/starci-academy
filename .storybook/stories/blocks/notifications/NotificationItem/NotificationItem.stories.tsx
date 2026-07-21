@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
+import { Typography } from "@heroui/react"
 import {
     ChatCircleIcon,
     CheckCircleIcon,
     FlameIcon,
 } from "@phosphor-icons/react"
 import { NotificationItem } from "@/components/blocks/notifications/NotificationItem"
+import { Gallery, Variant } from "../../../../story-kit"
 
 const meta: Meta<typeof NotificationItem> = {
     title: "Blocks/Notifications/NotificationItem",
@@ -15,21 +16,18 @@ export default meta
 type Story = StoryObj<typeof NotificationItem>
 
 /**
- * Three states side by side: unread (soft accent background + accent dot), read
- * (transparent background), and a row with a trailing action. The icon tile changes
- * color by `tone`, and the time is a pre-formatted relative string.
+ * Toàn bộ trạng thái của một dòng thông báo trên nền tảng học tập: unread (nền
+ * accent nhạt + dot accent), read (nền trong suốt), và dòng có thêm action slot
+ * ở cuối. Icon tile đổi màu theo `tone`, time là chuỗi tương đối đã format sẵn.
+ * Cả dòng bấm được khi có `onPress`.
  */
-export const States: Story = {
-    parameters: {
-        usage: "Use for a single notification row on the learning platform: an icon tile colored by tone, a title + optional body, a pre-formatted time label, an accent dot + soft accent background when unread, and a trailing action slot. The whole row is clickable when onPress is set.",
-    },
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-2">
-                <Label>Unread</Label>
-                <Typography type="body-sm" color="muted">
-                    An unread row has a soft accent background and an accent dot next to the title — the unread signal comes from tokens, not a state overlay.
-                </Typography>
+        <Gallery>
+            <Variant
+                label="Chưa đọc (unread)"
+                hint="Dòng chưa đọc có nền accent nhạt và một dot accent cạnh title — tín hiệu unread đến từ token, không phải overlay trạng thái."
+            >
                 <NotificationItem
                     icon={<CheckCircleIcon />}
                     tone="success"
@@ -39,13 +37,11 @@ export const States: Story = {
                     isUnread
                     onPress={() => {}}
                 />
-            </div>
-
-            <div className="flex flex-col gap-2">
-                <Label>Read</Label>
-                <Typography type="body-sm" color="muted">
-                    A read row drops the tint background and accent dot, keeping only hover when clickable.
-                </Typography>
+            </Variant>
+            <Variant
+                label="Đã đọc (read)"
+                hint="Dòng đã đọc bỏ nền tint và dot accent, chỉ giữ hover khi vẫn bấm được."
+            >
                 <NotificationItem
                     icon={<FlameIcon />}
                     tone="warning"
@@ -54,13 +50,11 @@ export const States: Story = {
                     timeLabel="Yesterday"
                     onPress={() => {}}
                 />
-            </div>
-
-            <div className="flex flex-col gap-2">
-                <Label>With a trailing action</Label>
-                <Typography type="body-sm" color="muted">
-                    The trailing action slot keeps its size and doesn't force the text column to shrink.
-                </Typography>
+            </Variant>
+            <Variant
+                label="Có action slot ở cuối"
+                hint="Action slot ở cuối dòng giữ nguyên kích thước, không ép cột text co lại."
+            >
                 <NotificationItem
                     icon={<ChatCircleIcon />}
                     tone="accent"
@@ -75,7 +69,10 @@ export const States: Story = {
                     }
                     onPress={() => {}}
                 />
-            </div>
-        </div>
+            </Variant>
+        </Gallery>
     ),
+    parameters: {
+        usage: "Dùng cho một dòng thông báo đơn trên nền tảng học tập: icon tile tô màu theo tone, title + body tuỳ chọn, time label đã format sẵn, dot accent + nền accent nhạt khi unread, và action slot ở cuối. Cả dòng bấm được khi có onPress.",
+    },
 }

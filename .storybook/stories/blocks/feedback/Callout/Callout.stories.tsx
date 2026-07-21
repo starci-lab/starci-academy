@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Button, Label, Typography } from "@heroui/react"
-import { Callout, type CalloutStatus, STATUS_ACTION_CLASS } from "@/components/blocks/feedback/Callout"
+import { Button } from "@heroui/react"
+import { Callout, STATUS_ACTION_CLASS } from "@/components/blocks/feedback/Callout"
+import { Gallery, Variant } from "../../../../story-kit"
 import { TONE_CONTENT, ACTION_EXAMPLES } from "./components"
 
 /**
@@ -19,58 +20,71 @@ const meta: Meta<typeof Callout> = {
 export default meta
 type Story = StoryObj<typeof Callout>
 
-/** Use for a neutral in-card notice (draft saved, system note) — without any warning or success tone. */
-export const Default: Story = {
-    args: {
-        status: "default",
-    },
-    parameters: {
-        usage: "Use for a neutral in-card notice (draft saved, system note) — without any warning or success tone.",
-    },
-}
-
-/** Use to signal a soft state INSIDE a card (submission OK / due soon / connection error / update available…) — without creating a card-in-card. */
-export const Tones: Story = {
-    render: () => (
-        <div className="flex flex-col gap-6">
-            {(Object.keys(TONE_CONTENT) as CalloutStatus[]).map((status) => (
-                <div key={status} className="flex flex-col gap-3">
-                    <div className="flex flex-col gap-2">
-                        <Label>{TONE_CONTENT[status].label}</Label>
-                        <Typography type="body-sm" color="muted">{TONE_CONTENT[status].when}</Typography>
-                    </div>
-                    <Callout
-                        status={status}
-                        title={TONE_CONTENT[status].title}
-                        description={TONE_CONTENT[status].description}
-                    />
-                </div>
-            ))}
-        </div>
-    ),
-    parameters: {
-        usage: "Use to signal a soft state INSIDE a card (submission OK / due soon / connection error / update available…) — without creating a card-in-card.",
-    },
-}
-
 /**
- * Use when you want the user to TRY a new feature right away (with an action button)
- * instead of just reading and moving on. The action is always `variant="secondary"` +
- * `STATUS_ACTION_CLASS` (NOT the default HeroUI `secondary` — its near-white `--default`
- * background blends into the callout tint). `STATUS_ACTION_CLASS` = a SOLID `bg-<status>`
- * background (not `/10` like the callout tint) + `text-<status>-foreground` — clearly set
- * apart from the callout's light background while staying in the same color family as each
- * callout's tone, without forcing a solid accent on every tone.
+ * Toàn bộ ma trận trạng thái của Callout: 5 tone (default/accent/success/warning/danger),
+ * biến thể kèm action button cho 3 tone thường dùng để mời hành động, biến thể có thể đóng
+ * (closable), và biến thể chỉ có title không có description. Dùng để tra chọn tone nào cho
+ * ngữ cảnh nào, và khi nào nên thêm action/close/description.
  */
-export const WithAction: Story = {
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-6">
+        <Gallery>
+            <Variant
+                label="Default"
+                hint="Dùng cho thông báo trung tính trong card (nội dung nháp đã lưu, ghi chú hệ thống) — không mang sắc thái cảnh báo hay thành công."
+            >
+                <Callout
+                    status="default"
+                    title={TONE_CONTENT.default.title}
+                    description={TONE_CONTENT.default.description}
+                />
+            </Variant>
+            <Variant
+                label="Accent"
+                hint="Dùng cho thông tin đáng chú ý nhưng không phải cảnh báo — một bản cập nhật hoặc tính năng mới người dùng nên biết."
+            >
+                <Callout
+                    status="accent"
+                    title={TONE_CONTENT.accent.title}
+                    description={TONE_CONTENT.accent.description}
+                />
+            </Variant>
+            <Variant
+                label="Success"
+                hint="Dùng để xác nhận một hành động vừa hoàn tất thành công — một bài nộp đã ghi nhận, một thao tác thành công."
+            >
+                <Callout
+                    status="success"
+                    title={TONE_CONTENT.success.title}
+                    description={TONE_CONTENT.success.description}
+                />
+            </Variant>
+            <Variant
+                label="Warning"
+                hint="Dùng để nhắc người dùng xử lý điều gì đó trước khi quá muộn — hạn nộp gần tới, việc chưa hoàn thành; không dùng cho lỗi đã xảy ra rồi."
+            >
+                <Callout
+                    status="warning"
+                    title={TONE_CONTENT.warning.title}
+                    description={TONE_CONTENT.warning.description}
+                />
+            </Variant>
+            <Variant
+                label="Danger"
+                hint="Dùng để báo một thao tác vừa thất bại và người dùng cần xử lý hoặc thử lại — lỗi kết nối, bài nộp thất bại."
+            >
+                <Callout
+                    status="danger"
+                    title={TONE_CONTENT.danger.title}
+                    description={TONE_CONTENT.danger.description}
+                />
+            </Variant>
             {ACTION_EXAMPLES.map((example) => (
-                <div key={example.status} className="flex flex-col gap-3">
-                    <div className="flex flex-col gap-2">
-                        <Label>{example.label}</Label>
-                        <Typography type="body-sm" color="muted">{example.when}</Typography>
-                    </div>
+                <Variant
+                    key={example.status}
+                    label={`Có action — ${example.label}`}
+                    hint={`${example.when} Nút hành động luôn dùng variant="secondary" + STATUS_ACTION_CLASS (không dùng "secondary" mặc định của HeroUI vì nền gần-trắng của nó lẫn vào màu tint của callout) — nền đặc bg-<status> + text-<status>-foreground, tách rõ khỏi nền nhạt của callout mà vẫn cùng nhóm màu với tone, không ép accent đặc lên mọi tone.`}
+                >
                     <Callout
                         status={example.status}
                         title={example.title}
@@ -82,37 +96,33 @@ export const WithAction: Story = {
                             </Button>
                         )}
                     />
-                </div>
+                </Variant>
             ))}
-        </div>
+            <Variant
+                label="Có thể đóng (Closable)"
+                hint="Dùng cho cảnh báo người dùng có thể đóng sau khi đọc (kết nối chập chờn) — không dùng cho lỗi buộc phải xử lý."
+            >
+                <Callout
+                    status="warning"
+                    title="Unstable connection"
+                    description="Some features may run slower than usual."
+                    onClose={() => {}}
+                    closeAriaLabel="Dismiss notice"
+                />
+            </Variant>
+            <Variant
+                label="Chỉ có title (Title only)"
+                hint="Dùng khi nội dung đã rõ trong một dòng ngắn (đã lưu bản nháp) — tránh thêm description gây rối."
+            >
+                <Callout status="default" title="Draft saved" description={undefined} />
+            </Variant>
+        </Gallery>
     ),
     parameters: {
-        usage: "Use when you want the user to TRY a new feature right away (with an action button) instead of just reading and moving on. Action `variant=\"secondary\"` + a solid `bg-<status>` background specific to each tone (not `/10` like the callout tint) — clearly set apart from the callout's light background while staying in the same color, without forcing a solid accent on every tone.",
-    },
-}
-
-/** Use for a warning the user can dismiss after reading (spotty connection) — not for errors that must be handled. */
-export const Closable: Story = {
-    args: {
-        status: "warning",
-        title: "Unstable connection",
-        description: "Some features may run slower than usual.",
-        onClose: () => {},
-        closeAriaLabel: "Dismiss notice",
-    },
-    parameters: {
-        usage: "Use for a warning the user can dismiss after reading (spotty connection) — not for errors that must be handled.",
-    },
-}
-
-/** Use when the message is already clear in one short line (draft saved) — avoid an extra description that adds clutter. */
-export const TitleOnly: Story = {
-    args: {
-        status: "default",
-        title: "Draft saved",
-        description: undefined,
-    },
-    parameters: {
-        usage: "Use when the message is already clear in one short line (draft saved) — avoid an extra description that adds clutter.",
+        usage:
+            "Toàn bộ ma trận trạng thái của Callout: 5 tone (default/accent/success/warning/danger), " +
+            "biến thể kèm action button cho 3 tone thường dùng để mời hành động, biến thể có thể đóng " +
+            "(closable), và biến thể chỉ có title không có description. Dùng để tra chọn tone nào cho " +
+            "ngữ cảnh nào, và khi nào nên thêm action/close/description.",
     },
 }

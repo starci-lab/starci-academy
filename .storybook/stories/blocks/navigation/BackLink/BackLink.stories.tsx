@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
+import { Gallery, Variant } from "../../../../story-kit"
 
 const meta: Meta<typeof BackLink> = {
     title: "Blocks/Navigation/BackLink",
@@ -9,18 +9,22 @@ const meta: Meta<typeof BackLink> = {
 export default meta
 type Story = StoryObj<typeof BackLink>
 
-/** Use when a subpage only needs a generic way back, without naming the specific destination it returns to. */
-export const Default: Story = {
-    parameters: { usage: "Use when a subpage only needs a generic way back, without naming the specific destination it returns to." },
+/**
+ * Trạng thái duy nhất của BackLink: nhãn chung "Trở lại" khi subpage chỉ cần
+ * một đường về chung, không cần nêu đích cụ thể.
+ */
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Generic back</Label>
-                <Typography type="body-sm" color="muted">
-                    Use when a subpage only needs a generic way back, without naming the specific destination it returns to.
-                </Typography>
-            </div>
-            <BackLink onPress={() => {}} />
-        </div>
+        <Gallery>
+            <Variant
+                label="Đường về chung"
+                hint="Dùng khi subpage chỉ cần một đường về chung, không cần nêu đích cụ thể quay lại."
+            >
+                <BackLink onPress={() => {}} />
+            </Variant>
+        </Gallery>
     ),
+    parameters: {
+        usage: "Use when a subpage only needs a generic way back, without naming the specific destination it returns to.",
+    },
 }

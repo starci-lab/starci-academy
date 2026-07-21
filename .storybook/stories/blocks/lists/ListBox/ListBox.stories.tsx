@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, ListBox, Typography } from "@heroui/react"
+import { ListBox } from "@heroui/react"
 import { ControlledListBox } from "./components"
+import { Gallery, Variant } from "../../../../story-kit"
 
 /**
  * `ListBox` + `ListBox.Item` (HeroUI, react-aria) — a SELECTABLE list: each row is a
@@ -16,38 +17,32 @@ const meta: Meta<typeof ListBox> = {
 export default meta
 type Story = StoryObj<typeof ListBox>
 
-/** A single-select list — use for a filter rail/item picker when the list is long or dynamic and needs keyboard navigation. */
-export const SingleSelect: Story = {
-    parameters: {
-        usage: "Use when you need a selectable list where the selected item stands out with an accent background; suits long or dynamic lists (topic filter rail, item picker) that need keyboard navigation — unlike RadioGroup, which is for a few short choices always showing radio buttons.",
-    },
+/**
+ * Toàn bộ trạng thái của ListBox: chọn đơn bình thường và có item bị khoá bằng
+ * disabledKeys. Dùng để tra khi nào chọn ListBox thay RadioGroup, và cách hiện một
+ * lựa chọn tồn tại nhưng chưa mở khoá cho user.
+ */
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Select an item</Label>
-                <Typography type="body-sm" color="muted">
-                    A long or dynamic list that needs single selection and keyboard navigation.
-                </Typography>
-            </div>
-            <ControlledListBox initial="string" />
-        </div>
+        <Gallery>
+            <Variant
+                label="Chọn đơn"
+                hint="Danh sách dài hoặc động cần chọn một mục và điều hướng bằng bàn phím — item được chọn nổi lên với nền accent; khác RadioGroup (vài lựa chọn ngắn, luôn hiện nút radio)."
+            >
+                <ControlledListBox initial="string" />
+            </Variant>
+            <Variant
+                label="Có item bị khoá"
+                hint="Dùng disabledKeys khi một lựa chọn tồn tại nhưng chưa mở khoá cho user này — item vẫn hiện (mờ đi, không bấm được) để user biết nó tồn tại, thay vì ẩn hẳn."
+            >
+                <ControlledListBox initial="array" disabledKeys={["sliding-window"]} />
+            </Variant>
+        </Gallery>
     ),
-}
-
-/** With a disabled item — use disabledKeys when a choice exists but isn't unlocked for this user; it stays visible but dimmed and unselectable. */
-export const WithDisabledItem: Story = {
     parameters: {
-        usage: "Use disabledKeys when an item exists but isn't unlocked for this user, so it stays visible (dimmed, unselectable) instead of hidden — the user knows it exists but can't click it.",
+        usage:
+            "Toàn bộ trạng thái của ListBox: chọn đơn cho danh sách dài/động cần điều hướng " +
+            "bàn phím, và item bị khoá bằng disabledKeys khi một lựa chọn tồn tại nhưng chưa mở " +
+            "khoá cho user (vẫn hiện, mờ, không bấm được, thay vì ẩn hẳn).",
     },
-    render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>With a disabled item</Label>
-                <Typography type="body-sm" color="muted">
-                    The disabled item stays visible but dimmed so the user knows it exists.
-                </Typography>
-            </div>
-            <ControlledListBox initial="array" disabledKeys={["sliding-window"]} />
-        </div>
-    ),
 }

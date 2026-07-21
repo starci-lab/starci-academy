@@ -1,18 +1,22 @@
+import { useState } from "react"
+import type { Key } from "react"
 import { GlobeIcon } from "@phosphor-icons/react"
 import { Card, CardContent, Typography } from "@heroui/react"
+import { TabsCard } from "@/components/blocks/navigation/TabsCard"
+import type { TabsCardItem, TabsCardProps } from "@/components/blocks/navigation/TabsCard"
 
-export const CONTENT_TABS = [
+export const CONTENT_TABS: Array<TabsCardItem> = [
     { key: "overview", label: "Overview" },
     { key: "content", label: "Content" },
     { key: "reviews", label: "Reviews" },
 ]
 
-export const LANGUAGE_TABS = [
+export const LANGUAGE_TABS: Array<TabsCardItem> = [
     { key: "vi", label: "Tiếng Việt", icon: <GlobeIcon size={16} /> },
     { key: "en", label: "English", icon: <GlobeIcon size={16} /> },
 ]
 
-export const PANEL_CONTENT: Record<string, { title: string; body: string }> = {
+export const PANEL_CONTENT: Record<string, { title: string, body: string }> = {
     overview: { title: "Overview", body: "Introduces the course, its learning outcomes and the week-by-week study path." },
     content: { title: "Content", body: "The list of lessons and exercises for each module, with their durations." },
     reviews: { title: "Reviews", body: "Feedback and ratings from learners who have completed the course." },
@@ -34,5 +38,47 @@ export const TabPanel = ({ selectedKey }: { selectedKey: string }) => {
                 </div>
             </CardContent>
         </Card>
+    )
+}
+
+/** Wrapper that owns left/right selected-tab state since `TabsCard`'s groups are fully controlled. */
+export const Controlled = (props: Omit<TabsCardProps, "leftTabs" | "rightTabs"> & {
+    leftItems: Array<TabsCardItem>
+    leftAriaLabel?: string
+    defaultLeftKey: string
+    rightItems?: Array<TabsCardItem>
+    rightAriaLabel?: string
+    defaultRightKey?: string
+}) => {
+    const {
+        leftItems,
+        leftAriaLabel = "Course sections",
+        defaultLeftKey,
+        rightItems,
+        rightAriaLabel = "Language",
+        defaultRightKey,
+        ...rest
+    } = props
+    const [leftKey, setLeftKey] = useState(defaultLeftKey)
+    const [rightKey, setRightKey] = useState(defaultRightKey ?? "")
+    return (
+        <div className="flex w-[36rem] max-w-full flex-col gap-4">
+            <TabsCard
+                {...rest}
+                leftTabs={{
+                    items: leftItems,
+                    selectedKey: leftKey,
+                    ariaLabel: leftAriaLabel,
+                    onSelectionChange: (key: Key) => setLeftKey(String(key)),
+                }}
+                rightTabs={rightItems ? {
+                    items: rightItems,
+                    selectedKey: rightKey,
+                    ariaLabel: rightAriaLabel,
+                    onSelectionChange: (key: Key) => setRightKey(String(key)),
+                } : undefined}
+            />
+            <TabPanel selectedKey={leftKey} />
+        </div>
     )
 }

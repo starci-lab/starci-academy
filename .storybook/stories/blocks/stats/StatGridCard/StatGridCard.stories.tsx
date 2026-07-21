@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
+import { Typography } from "@heroui/react"
 import { BookOpenIcon, CardsIcon, CodeIcon, FlameIcon, PuzzlePieceIcon } from "@phosphor-icons/react"
 import { StatGridCard } from "@/components/blocks/stats/StatGridCard"
+import { Gallery, Variant } from "../../../../story-kit"
 
 const meta: Meta<typeof StatGridCard> = {
     title: "Blocks/Stats/StatGridCard",
@@ -30,61 +31,50 @@ const statCell = (icon: React.ReactNode, label: string, current: number, target:
 )
 
 /**
- * Use for compact stat cells side-by-side (a weekly-goal KPI breakdown) instead of a tall single-column list —
- * the grid sibling of `SurfaceListCard`. Cells are divided by thin border seams (not `gap`), so the card stays
- * ONE continuous bordered block instead of floating pieces. An ODD item count (5 here) never leaves a dangling
- * empty cell — the last cell spans both columns automatically.
+ * Toàn bộ ma trận đếm-ô của StatGridCard: số lẻ (ô cuối span 2 cột) và số chẵn
+ * (mọi hàng đủ cặp). Dùng để tra khi nào cần lo về ô-lẻ-dôi và khi nào không.
  */
-export const Default: Story = {
+export const AllVariants: Story = {
+    render: () => (
+        <Gallery>
+            <Variant
+                label="5 ô (lẻ — ô cuối span full width)"
+                hint="Áp đầu: WeeklyGoals' 5 weekly-KPI cells (thầy 2026-07-17: “render kiểu grid 2x3 được không, cho gọn”). Dùng cho stat cell nằm cạnh nhau (weekly-goal KPI breakdown) thay vì list một cột dài — sibling grid của SurfaceListCard. Cell chia nhau bằng đường viền mỏng (không dùng gap) để card vẫn là MỘT khối liền, không rời rạc. Số ô LẺ (5 ở đây) không bao giờ để trống một ô — ô cuối tự span 2 cột."
+            >
+                <div className="max-w-md">
+                    <StatGridCard
+                        items={[
+                            { key: "lessons", content: statCell(<BookOpenIcon aria-hidden focusable="false" className="size-5 shrink-0" />, "Nội dung", 2, 5) },
+                            { key: "studyDays", content: statCell(<FlameIcon aria-hidden focusable="false" className="size-5 shrink-0" />, "Ngày học", 4, 5) },
+                            { key: "challenges", content: statCell(<PuzzlePieceIcon aria-hidden focusable="false" className="size-5 shrink-0" />, "Challenge", 0, 3) },
+                            { key: "coding", content: statCell(<CodeIcon aria-hidden focusable="false" className="size-5 shrink-0" />, "Coding", 0, 3) },
+                            { key: "flashcards", content: statCell(<CardsIcon aria-hidden focusable="false" className="size-5 shrink-0" />, "Flashcard", 12, 20) },
+                        ]}
+                    />
+                </div>
+            </Variant>
+            <Variant
+                label="4 ô (chẵn — mọi hàng đủ cặp)"
+                hint="Số ô chia hết cho 2 nên không có ô dôi cần lấp — mọi hàng tự ghép cặp đủ, không ô nào phải span."
+            >
+                <div className="max-w-md">
+                    <StatGridCard
+                        items={[
+                            { key: "lessons", content: statCell(<BookOpenIcon aria-hidden focusable="false" className="size-5 shrink-0" />, "Nội dung", 2, 5) },
+                            { key: "studyDays", content: statCell(<FlameIcon aria-hidden focusable="false" className="size-5 shrink-0" />, "Ngày học", 4, 5) },
+                            { key: "challenges", content: statCell(<PuzzlePieceIcon aria-hidden focusable="false" className="size-5 shrink-0" />, "Challenge", 0, 3) },
+                            { key: "coding", content: statCell(<CodeIcon aria-hidden focusable="false" className="size-5 shrink-0" />, "Coding", 0, 3) },
+                        ]}
+                    />
+                </div>
+            </Variant>
+        </Gallery>
+    ),
     parameters: {
         usage:
-            "Use for compact stat cells side-by-side (a weekly-goal KPI breakdown) instead of a tall " +
-            "single-column list — the grid sibling of SurfaceListCard. Cells are divided by thin border seams " +
-            "(not gap), so the card stays one continuous bordered block instead of floating pieces. An odd item " +
-            "count (5 here) never leaves a dangling empty cell — the last cell spans both columns automatically.",
+            "Toàn bộ ma trận đếm-ô của StatGridCard: số lẻ (ô cuối tự span 2 cột, không để trống) và số chẵn " +
+            "(mọi hàng đủ cặp, không ô nào cần span). Dùng cho stat cell cạnh nhau (weekly-goal KPI breakdown) " +
+            "thay vì list một cột dài — sibling grid của SurfaceListCard, chia ô bằng viền mỏng để card vẫn " +
+            "là một khối liền.",
     },
-    render: () => (
-        <div className="flex max-w-md flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>5 cells (odd — last spans full width)</Label>
-                <Typography type="body-sm" color="muted">
-                    Áp đầu: WeeklyGoals&apos; 5 weekly-KPI cells (thầy 2026-07-17: &quot;render kiểu grid 2x3 được không, cho gọn&quot;).
-                </Typography>
-            </div>
-            <StatGridCard
-                items={[
-                    { key: "lessons", content: statCell(<BookOpenIcon aria-hidden focusable="false" className="size-5 shrink-0" />, "Nội dung", 2, 5) },
-                    { key: "studyDays", content: statCell(<FlameIcon aria-hidden focusable="false" className="size-5 shrink-0" />, "Ngày học", 4, 5) },
-                    { key: "challenges", content: statCell(<PuzzlePieceIcon aria-hidden focusable="false" className="size-5 shrink-0" />, "Challenge", 0, 3) },
-                    { key: "coding", content: statCell(<CodeIcon aria-hidden focusable="false" className="size-5 shrink-0" />, "Coding", 0, 3) },
-                    { key: "flashcards", content: statCell(<CardsIcon aria-hidden focusable="false" className="size-5 shrink-0" />, "Flashcard", 12, 20) },
-                ]}
-            />
-        </div>
-    ),
-}
-
-/** An EVEN item count fills the grid exactly — no spanning cell needed. */
-export const EvenCount: Story = {
-    parameters: {
-        usage: "An even item count (4 here) fills the 2-col grid exactly — no cell needs to span, every row is a full pair.",
-    },
-    render: () => (
-        <div className="flex max-w-md flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>4 cells (even — every row is a full pair)</Label>
-                <Typography type="body-sm" color="muted">
-                    No dangling cell to fill when the count divides evenly by 2 — every row pairs up.
-                </Typography>
-            </div>
-            <StatGridCard
-                items={[
-                    { key: "lessons", content: statCell(<BookOpenIcon aria-hidden focusable="false" className="size-5 shrink-0" />, "Nội dung", 2, 5) },
-                    { key: "studyDays", content: statCell(<FlameIcon aria-hidden focusable="false" className="size-5 shrink-0" />, "Ngày học", 4, 5) },
-                    { key: "challenges", content: statCell(<PuzzlePieceIcon aria-hidden focusable="false" className="size-5 shrink-0" />, "Challenge", 0, 3) },
-                    { key: "coding", content: statCell(<CodeIcon aria-hidden focusable="false" className="size-5 shrink-0" />, "Coding", 0, 3) },
-                ]}
-            />
-        </div>
-    ),
 }

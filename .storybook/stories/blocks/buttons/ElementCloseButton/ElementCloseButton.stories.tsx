@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
 
 import { ElementCloseButton } from "@/components/blocks/buttons/ElementCloseButton"
+import { Gallery, Variant } from "../../../../story-kit"
 
 const meta: Meta<typeof ElementCloseButton> = {
     title: "Primitives/Actions/ElementCloseButton",
@@ -10,56 +10,49 @@ const meta: Meta<typeof ElementCloseButton> = {
 export default meta
 type Story = StoryObj<typeof ElementCloseButton>
 
-/** A strip of five tones side by side for a quick comparison: pick the tone that matches the semantic color of the surface being closed. */
-export const AllTones: Story = {
-    parameters: { usage: "A strip of five tones (neutral, accent, success, warning, danger) side by side for a quick comparison; pick the tone that matches the semantic color of the surface being closed." },
+/**
+ * Toàn bộ 5 tone của ElementCloseButton side-by-side: neutral, accent, success,
+ * warning, danger. Dùng để tra tone nào khớp màu ngữ nghĩa của khối đang bị đóng —
+ * nút X luôn theo tone của host, không tự chọn màu riêng.
+ */
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Neutral</Label>
-                    <Typography type="body-sm" color="muted">
-                        The default — when the host is a banner/panel that carries no semantic color.
-                    </Typography>
-                </div>
+        <Gallery>
+            <Variant
+                label="Neutral"
+                hint="Mặc định — khi host là banner/panel không mang màu ngữ nghĩa nào."
+            >
                 <ElementCloseButton label="Close banner" onPress={() => {}} tone="neutral" />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Accent</Label>
-                    <Typography type="body-sm" color="muted">
-                        When the host is an accent block/chip — the X follows the host's tone, it doesn't pick its own color.
-                    </Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Accent"
+                hint="Khi host là block/chip accent — nút X theo tone của host, không tự chọn màu riêng."
+            >
                 <ElementCloseButton label="Close card" onPress={() => {}} tone="accent" />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Success</Label>
-                    <Typography type="body-sm" color="muted">
-                        When the host is a success callout (done, saved).
-                    </Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Success"
+                hint="Khi host là callout success (đã xong, đã lưu)."
+            >
                 <ElementCloseButton label="Close notification" onPress={() => {}} tone="success" />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Warning</Label>
-                    <Typography type="body-sm" color="muted">
-                        When the host is a warning callout (needs attention, about to expire).
-                    </Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Warning"
+                hint="Khi host là callout warning (cần chú ý, sắp hết hạn)."
+            >
                 <ElementCloseButton label="Close warning" onPress={() => {}} tone="warning" />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Danger</Label>
-                    <Typography type="body-sm" color="muted">
-                        When the host is a danger callout (error, broken).
-                    </Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Danger"
+                hint="Khi host là callout danger (lỗi, hỏng)."
+            >
                 <ElementCloseButton label="Close error" onPress={() => {}} tone="danger" />
-            </div>
-        </div>
+            </Variant>
+        </Gallery>
     ),
+    parameters: {
+        usage:
+            "Toàn bộ 5 tone (neutral, accent, success, warning, danger) side by side để so sánh nhanh; " +
+            "chọn tone khớp màu ngữ nghĩa của khối đang bị đóng.",
+    },
 }

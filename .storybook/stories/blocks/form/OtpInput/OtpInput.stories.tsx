@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
 import { OtpInput } from "@/components/blocks/form/OtpInput"
+import { Gallery, Variant } from "../../../../story-kit"
 import { Controlled } from "./components"
 
 /**
@@ -16,42 +16,37 @@ const meta: Meta<typeof OtpInput> = {
 export default meta
 type Story = StoryObj<typeof OtpInput>
 
-/** A normal 6-digit code + the error state, each with a Label and a short description. */
-export const Default: Story = {
-    parameters: {
-        usage:
-            "One-time-code input for 2FA / email verification — `length` defaults to 6, controlled via `value`/`onChange`. " +
-            "Pair it with a `Label` (\"Verification code\") and a short hint saying where the code comes from. The error state turns on " +
-            "`isInvalid` + `errorMessage` that tells HOW to fix (\"re-enter the code from the email\"), not just that it's 'wrong'.",
-    },
+/**
+ * Toàn bộ trạng thái của OtpInput: mặc định (đang gõ mã, chưa lỗi) và trạng thái
+ * lỗi xác thực (viền đỏ + dòng lỗi bên dưới). Dùng để tra khi nào cần kèm Label
+ * mô tả nguồn mã và cách viết error message.
+ */
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Default</Label>
-                    <Typography type="body-sm" color="muted">
-                        Six empty boxes — the code was just sent to the email, the user types each digit.
-                    </Typography>
-                </div>
+        <Gallery>
+            <Variant
+                label="Mặc định"
+                hint="Mã vừa được gửi tới email, người dùng gõ từng số vào các ô — chưa có lỗi."
+            >
+                <Controlled label="Mã xác minh" initialValue="12" />
+            </Variant>
+            <Variant
+                label="Lỗi xác thực"
+                hint="Mã đã nhập không khớp — viền đỏ và dòng thông báo lỗi hiện ngay dưới các ô, nói rõ cách sửa chứ không chỉ báo sai."
+            >
                 <Controlled
-                    label="Verification code"
-                    initialValue="12"
-                />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Validation error</Label>
-                    <Typography type="body-sm" color="muted">
-                        The entered code doesn't match — red border and an error line appear below the boxes.
-                    </Typography>
-                </div>
-                <Controlled
-                    label="Verification code"
+                    label="Mã xác minh"
                     initialValue="482913"
                     isInvalid
-                    errorMessage="Incorrect code — check the email and enter the latest code."
+                    errorMessage="Mã không đúng — kiểm tra email và nhập lại mã mới nhất."
                 />
-            </div>
-        </div>
+            </Variant>
+        </Gallery>
     ),
+    parameters: {
+        usage:
+            "Toàn bộ trạng thái của OtpInput: mặc định (đang gõ mã, chưa lỗi) và trạng thái lỗi xác thực " +
+            "(viền đỏ + dòng lỗi bên dưới). Ghép với Label mô tả nguồn mã (\"Mã xác minh\") và error message " +
+            "nói cách sửa (\"nhập lại mã từ email\"), không chỉ báo \"sai\".",
+    },
 }

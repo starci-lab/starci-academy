@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Chip, Label, Typography } from "@heroui/react"
+import { Chip, Typography } from "@heroui/react"
 import {
     CaretRightIcon,
     CheckCircleIcon,
@@ -9,6 +9,7 @@ import {
     XCircleIcon,
 } from "@phosphor-icons/react"
 import { SurfaceListCard, SurfaceListCardItem, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
+import { Gallery, Variant } from "../../../../story-kit"
 
 const meta: Meta<typeof SurfaceListCard> = {
     title: "Blocks/Cards/SurfaceListCard",
@@ -20,349 +21,253 @@ export default meta
 type Story = StoryObj<typeof SurfaceListCard>
 
 /**
- * Use when each item is SIMPLE (label + subtitle + leading) and there are many items: gather them ALL into
- * this ONE card, with rows separated by a separator — do NOT scatter N separate Card blocks. If each item is
- * RICH (cover image, several distinct actions) to the point that it deserves its own standalone block →
- * only then split into N separate cards spaced gap-3. If the list needs to collapse/expand by group →
- * Accordion. This story is a card floating on the page background.
+ * Toàn bộ ma trận trạng thái của SurfaceListCard: text-only, bordered (nested
+ * trong surface khác), selected, disabled, hover underline, leading + meta,
+ * nội dung free-form, checklist state-marker, row tĩnh (read-only), và
+ * verdict band (tín hiệu dữ liệu). Dùng để tra khi nào ghép nhiều row đơn
+ * giản vào MỘT card thay vì rải N card riêng, và khi nào chọn từng biến thể.
  */
-export const Default: Story = {
+export const AllVariants: Story = {
     parameters: {
         usage:
-            "Use when each item is SIMPLE (label + subtitle + leading) and there are many items: gather them ALL into " +
-            "this ONE card, with rows separated by a separator — do NOT scatter N separate Card blocks. If each item is " +
-            "RICH (cover image, several distinct actions) to the point that it deserves its own standalone block → only " +
-            "then split into N separate cards spaced gap-3. If the list needs to collapse/expand by group → Accordion. " +
-            "This story is a card floating on the page background (choosing a course, choosing a settings item).",
+            "Toàn bộ ma trận trạng thái của SurfaceListCard: text-only, bordered (nested trong surface khác), " +
+            "selected, disabled, hover underline, leading + meta, nội dung free-form, checklist state-marker, " +
+            "row tĩnh (read-only), và verdict band (tín hiệu dữ liệu). Dùng khi mỗi item ĐƠN GIẢN (label + " +
+            "subtitle + leading) và có nhiều item — gom hết vào MỘT card này, các row cách nhau bằng separator, " +
+            "đừng rải N Card riêng. Item RÀNH (ảnh cover, nhiều action riêng) đến mức đáng là 1 block độc lập " +
+            "→ tách thành N card cách gap-3. Danh sách cần thu/mở theo nhóm → dùng Accordion.",
     },
     render: () => (
-        <div className="flex max-w-md flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Default</Label>
-                <Typography type="body-sm" color="muted">
-                    The text-only row template: title is the required line, subtitle is an extra line added when a short piece of context is needed to help the reader pick the right row. Put a caret in trailing when pressing the row GOES to another screen; drop the caret if the row runs an action in place.
-                </Typography>
-            </div>
-            <SurfaceListCard>
-                <SurfaceListCardRow
-                    title="Programming fundamentals"
-                    subtitle="12 lessons · 4 hours"
-                    onPress={() => {}}
-                    trailing={<CaretRightIcon className="size-4 text-muted" aria-hidden focusable="false" />}
-                />
-                <SurfaceListCardRow
-                    title="Data structures & algorithms"
-                    subtitle="18 lessons · 7 hours"
-                    onPress={() => {}}
-                    trailing={<CaretRightIcon className="size-4 text-muted" aria-hidden focusable="false" />}
-                />
-                <SurfaceListCardRow
-                    title="System design"
-                    subtitle="9 lessons · 5 hours"
-                    onPress={() => {}}
-                    trailing={<CaretRightIcon className="size-4 text-muted" aria-hidden focusable="false" />}
-                />
-            </SurfaceListCard>
-        </div>
-    ),
-}
-
-/**
- * Gallery of row states: `bordered` when the card is NESTED inside another surface (for example
- * inside a modal), `selected` to mark the currently chosen item (language, payment method),
- * `isDisabled` for an option not yet unlocked, `hover="underline"` for a row leading to an article/content.
- */
-export const RowVariants: Story = {
-    parameters: {
-        usage: "Gallery of row states: `bordered` when the card is NESTED inside another surface (for example inside a modal), `selected` to mark the currently chosen item (language, payment method), `isDisabled` for an option not yet unlocked, `hover=\"underline\"` for a row leading to an article/content.",
-    },
-    render: () => (
-        <div className="flex flex-col gap-6">
-            <div className="flex max-w-md flex-col gap-3 rounded-3xl bg-surface p-3 shadow-surface">
-                <div className="flex flex-col gap-2">
-                    <Label>Bordered</Label>
-                    <Typography type="body-sm" color="muted">
-                        Enable when the card is NESTED inside another visible surface — a modal, drawer, or panel body. There the shadow is nearly invisible because it sits on a surface background, so it must read via a border. A card standing alone on the page background keeps the default (shadow).
-                    </Typography>
+        <Gallery>
+            <Variant
+                label="Chỉ text (title + subtitle)"
+                hint="Mẫu row chỉ chữ: title là dòng bắt buộc, subtitle thêm khi cần một dòng ngữ cảnh ngắn giúp phân biệt các row. Thêm caret ở trailing khi bấm row CHUYỂN sang màn khác; bỏ caret khi row chạy hành động ngay tại chỗ."
+            >
+                <div className="max-w-md">
+                    <SurfaceListCard>
+                        <SurfaceListCardRow
+                            title="Programming fundamentals"
+                            subtitle="12 lessons · 4 hours"
+                            onPress={() => {}}
+                            trailing={<CaretRightIcon className="size-4 text-muted" aria-hidden focusable="false" />}
+                        />
+                        <SurfaceListCardRow
+                            title="Data structures & algorithms"
+                            subtitle="18 lessons · 7 hours"
+                            onPress={() => {}}
+                            trailing={<CaretRightIcon className="size-4 text-muted" aria-hidden focusable="false" />}
+                        />
+                        <SurfaceListCardRow
+                            title="System design"
+                            subtitle="9 lessons · 5 hours"
+                            onPress={() => {}}
+                            trailing={<CaretRightIcon className="size-4 text-muted" aria-hidden focusable="false" />}
+                        />
+                    </SurfaceListCard>
                 </div>
-                <SurfaceListCard bordered>
-                    <SurfaceListCardRow
-                        title="MoMo wallet"
-                        subtitle="Linked on 12/06/2026"
-                        onPress={() => {}}
-                    />
-                    <SurfaceListCardRow
-                        title="Visa card •••• 4242"
-                        subtitle="Expires 08/28"
-                        onPress={() => {}}
-                        selected
-                    />
-                </SurfaceListCard>
-            </div>
-            <div className="flex max-w-md flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Selected</Label>
-                    <Typography type="body-sm" color="muted">
-                        Enable for a row where the choice STAYS and reads as "the one I'm using" — language, payment method. A press-and-go row has no such state.
-                    </Typography>
+            </Variant>
+            <Variant
+                label="Bordered"
+                hint="Bật khi card NẰM TRONG một surface khác đang hiện (modal, drawer, panel) — ở đó shadow gần như vô hình vì đứng trên nền surface, nên phải hiện bằng border. Card đứng riêng trên nền trang giữ mặc định (shadow)."
+            >
+                <div className="max-w-md rounded-3xl bg-surface p-3 shadow-surface">
+                    <SurfaceListCard bordered>
+                        <SurfaceListCardRow
+                            title="MoMo wallet"
+                            subtitle="Linked on 12/06/2026"
+                            onPress={() => {}}
+                        />
+                        <SurfaceListCardRow
+                            title="Visa card •••• 4242"
+                            subtitle="Expires 08/28"
+                            onPress={() => {}}
+                            selected
+                        />
+                    </SurfaceListCard>
                 </div>
-                <SurfaceListCard>
-                    <SurfaceListCardRow title="Vietnamese" onPress={() => {}} />
-                    <SurfaceListCardRow title="English" selected onPress={() => {}} />
-                </SurfaceListCard>
-            </div>
-            <div className="flex max-w-md flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Disabled</Label>
-                    <Typography type="body-sm" color="muted">
-                        Enable when an option exists but is not unlocked for this user — keep the row rather than hiding it, because hiding it means they don't know it exists, whereas seeing it but not being able to press it makes it clear they need to upgrade or wait.
-                    </Typography>
+            </Variant>
+            <Variant
+                label="Selected"
+                hint="Bật cho row mà lựa chọn Ở LẠI và đọc là 'cái mình đang dùng' — ngôn ngữ, phương thức thanh toán. Row bấm-rồi-đi thì không cần trạng thái này."
+            >
+                <div className="max-w-md">
+                    <SurfaceListCard>
+                        <SurfaceListCardRow title="Vietnamese" onPress={() => {}} />
+                        <SurfaceListCardRow title="English" selected onPress={() => {}} />
+                    </SurfaceListCard>
                 </div>
-                <SurfaceListCard>
-                    <SurfaceListCardRow title="Export PDF invoice" onPress={() => {}} />
-                    <SurfaceListCardRow
-                        title="Export Excel report (coming soon)"
-                        subtitle="Not yet available on the current plan"
-                        isDisabled
-                        onPress={() => {}}
-                    />
-                </SurfaceListCard>
-            </div>
-            <div className="flex max-w-md flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Hover underline</Label>
-                    <Typography type="body-sm" color="muted">
-                        Switch to underline when the row leads TO an article — the title (kept `foreground`, content-first) underlines on hover using HeroUI `Link`'s own underline CSS (`underline-offset-4` + `decoration-[var(--separator-tertiary)]`, a subtle grey line) because it is fundamentally a link. A row that runs an action in place, or opens an item within the app, keeps the default (background fill).
-                    </Typography>
+            </Variant>
+            <Variant
+                label="Disabled"
+                hint="Bật khi option đã tồn tại nhưng chưa mở khoá cho user này — giữ row hiện diện (đừng ẩn) vì ẩn nghĩa là họ không biết nó tồn tại, còn thấy mà không bấm được thì rõ ràng cần nâng cấp hoặc chờ."
+            >
+                <div className="max-w-md">
+                    <SurfaceListCard>
+                        <SurfaceListCardRow title="Export PDF invoice" onPress={() => {}} />
+                        <SurfaceListCardRow
+                            title="Export Excel report (coming soon)"
+                            subtitle="Not yet available on the current plan"
+                            isDisabled
+                            onPress={() => {}}
+                        />
+                    </SurfaceListCard>
                 </div>
-                <SurfaceListCard>
-                    <SurfaceListCardRow
-                        title="Why do learners drop out of courses?"
-                        subtitle="12.4k reads"
-                        hover="underline"
-                        href="#"
-                    />
-                    <SurfaceListCardRow
-                        title="The path to becoming a Senior Backend engineer"
-                        subtitle="9.1k reads"
-                        hover="underline"
-                        href="#"
-                    />
-                </SurfaceListCard>
-            </div>
-        </div>
-    ),
-}
-
-/** Use when each row needs an illustrative icon + a secondary label (offer, note) — for example choosing a payment method. */
-export const WithLeadingAndMeta: Story = {
-    parameters: {
-        usage: "Use when each row needs an illustrative icon + a secondary label (offer, note) — for example choosing a payment method.",
-    },
-    render: () => (
-        <div className="flex max-w-md flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>With leading and meta</Label>
-                <Typography type="body-sm" color="muted">
-                    Add leading when rows are recognized faster by IMAGE than by text — payment methods, courses; drop it for a plain text list. Add meta for a short piece of info that belongs to a single row and is worth comparing across rows, for example an offer; leave it empty on rows that don't have it, don't fill it just for evenness.
-                </Typography>
-            </div>
-            <SurfaceListCard>
-                <SurfaceListCardRow
-                    leading={
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent-soft">
-                            <CreditCardIcon className="size-5 text-accent-soft-foreground" aria-hidden focusable="false" />
-                        </div>
-                    }
-                    title="One-time payment"
-                    subtitle="Pay the full tuition now"
-                    meta={<span className="text-xs text-muted">Save 10%</span>}
-                    onPress={() => {}}
-                />
-                <SurfaceListCardRow
-                    leading={
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-default">
-                            <WalletIcon className="size-5 text-muted" aria-hidden focusable="false" />
-                        </div>
-                    }
-                    title="Installments over 3 months"
-                    subtitle="No interest"
-                    onPress={() => {}}
-                />
-            </SurfaceListCard>
-        </div>
-    ),
-}
-
-/** Use when the row content doesn't fit the title/subtitle/leading template — for example a row with its own progress bar. */
-export const FreeFormItems: Story = {
-    parameters: {
-        usage: "Use when the row content doesn't fit the title/subtitle/leading template — for example a row with its own progress bar.",
-    },
-    render: () => (
-        <div className="flex max-w-md flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Free-form content</Label>
-                <Typography type="body-sm" color="muted">
-                    SurfaceListCardItem is a STATIC row by default — only add onPress or href when the whole row is genuinely pressable, as in this demo. In exchange, layout is entirely up to the caller: you must handle truncation and keep rows the same height yourself, two things the SurfaceListCardRow template already locks down.
-                </Typography>
-            </div>
-            <SurfaceListCard>
-                <SurfaceListCardItem onPress={() => {}}>
-                    <div className="flex items-center justify-between gap-3">
-                        <div className="flex min-w-0 flex-col gap-1">
-                            <span className="truncate text-sm">
-                                Introduction to Backend Programming
-                            </span>
-                            <div className="h-1.5 w-40 overflow-hidden rounded-full bg-default">
-                                <div className="h-full w-2/3 rounded-full bg-accent" />
+            </Variant>
+            <Variant
+                label="Hover underline"
+                hint="Chuyển sang underline khi row dẫn TỚI một bài viết — title (giữ foreground, content-first) gạch chân khi hover bằng CSS underline của HeroUI Link vì bản chất nó là link. Row chạy hành động tại chỗ hoặc mở item trong app giữ mặc định (tô nền)."
+            >
+                <div className="max-w-md">
+                    <SurfaceListCard>
+                        <SurfaceListCardRow
+                            title="Why do learners drop out of courses?"
+                            subtitle="12.4k reads"
+                            hover="underline"
+                            href="#"
+                        />
+                        <SurfaceListCardRow
+                            title="The path to becoming a Senior Backend engineer"
+                            subtitle="9.1k reads"
+                            hover="underline"
+                            href="#"
+                        />
+                    </SurfaceListCard>
+                </div>
+            </Variant>
+            <Variant
+                label="Leading + meta"
+                hint="Thêm leading khi row được nhận diện nhanh hơn bằng ẢNH thay vì chữ — phương thức thanh toán, khoá học; bỏ đi cho danh sách chỉ chữ. Thêm meta cho một thông tin ngắn thuộc riêng 1 row và đáng so sánh giữa các row, ví dụ ưu đãi; để trống ở row không có, đừng nhồi cho đều."
+            >
+                <div className="max-w-md">
+                    <SurfaceListCard>
+                        <SurfaceListCardRow
+                            leading={
+                                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent-soft">
+                                    <CreditCardIcon className="size-5 text-accent-soft-foreground" aria-hidden focusable="false" />
+                                </div>
+                            }
+                            title="One-time payment"
+                            subtitle="Pay the full tuition now"
+                            meta={<span className="text-xs text-muted">Save 10%</span>}
+                            onPress={() => {}}
+                        />
+                        <SurfaceListCardRow
+                            leading={
+                                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-default">
+                                    <WalletIcon className="size-5 text-muted" aria-hidden focusable="false" />
+                                </div>
+                            }
+                            title="Installments over 3 months"
+                            subtitle="No interest"
+                            onPress={() => {}}
+                        />
+                    </SurfaceListCard>
+                </div>
+            </Variant>
+            <Variant
+                label="Nội dung free-form"
+                hint="Dùng khi nội dung row không khớp khuôn title/subtitle/leading — ví dụ row có progress bar riêng. SurfaceListCardItem tĩnh theo mặc định, chỉ thêm onPress/href khi cả row thật sự bấm được (như demo này); đổi lại layout do caller tự lo — phải tự xử lý truncate và giữ các row cùng chiều cao, hai việc mà mẫu SurfaceListCardRow đã lo sẵn."
+            >
+                <div className="max-w-md">
+                    <SurfaceListCard>
+                        <SurfaceListCardItem onPress={() => {}}>
+                            <div className="flex items-center justify-between gap-3">
+                                <div className="flex min-w-0 flex-col gap-1">
+                                    <span className="truncate text-sm">
+                                        Introduction to Backend Programming
+                                    </span>
+                                    <div className="h-1.5 w-40 overflow-hidden rounded-full bg-default">
+                                        <div className="h-full w-2/3 rounded-full bg-accent" />
+                                    </div>
+                                </div>
+                                <span className="shrink-0 text-xs text-muted">65%</span>
                             </div>
-                        </div>
-                        <span className="shrink-0 text-xs text-muted">65%</span>
-                    </div>
-                </SurfaceListCardItem>
-                <SurfaceListCardItem onPress={() => {}}>
-                    <div className="flex items-center justify-between gap-3">
-                        <div className="flex min-w-0 flex-col gap-1">
-                            <span className="truncate text-sm">
-                                Relational databases
-                            </span>
-                            <div className="h-1.5 w-40 overflow-hidden rounded-full bg-default">
-                                <div className="h-full w-1/5 rounded-full bg-accent" />
+                        </SurfaceListCardItem>
+                        <SurfaceListCardItem onPress={() => {}}>
+                            <div className="flex items-center justify-between gap-3">
+                                <div className="flex min-w-0 flex-col gap-1">
+                                    <span className="truncate text-sm">
+                                        Relational databases
+                                    </span>
+                                    <div className="h-1.5 w-40 overflow-hidden rounded-full bg-default">
+                                        <div className="h-full w-1/5 rounded-full bg-accent" />
+                                    </div>
+                                </div>
+                                <span className="shrink-0 text-xs text-muted">20%</span>
                             </div>
-                        </div>
-                        <span className="shrink-0 text-xs text-muted">20%</span>
-                    </div>
-                </SurfaceListCardItem>
-            </SurfaceListCard>
-        </div>
-    ),
-}
-
-/**
- * Leading STATE-MARKER palette (icon.md §6): a checklist row whose leading icon signals progress. Icon AND
- * title carry the SAME color per state ("buộc cùng màu") — `todo` = `CircleIcon` + title both `text-foreground`;
- * `done` = `CheckCircleIcon` + title both `text-success-soft-foreground`; `fail` = `XCircleIcon` + title both
- * `text-muted` (soft/expired) or `text-danger` (needs attention). Recolor the title via a NODE (`<span>`), NOT
- * `titleClassName` (banned by lint `no-modal-title-classname`) — safe here because the row has no
- * underline-on-hover. Only ONE leading icon per row (icon.md §7 — never a state-marker + a type-icon together).
- */
-export const StateMarkers: Story = {
-    parameters: {
-        usage:
-            "Leading state-marker palette (icon.md §6): icon AND title share the same color per state — todo = " +
-            "CircleIcon + foreground, done = CheckCircleIcon + success, fail = XCircleIcon + muted or danger. Recolor " +
-            "the title via a <span> node, not titleClassName (lint-banned). One leading icon per row only (§7).",
-    },
-    render: () => (
-        <div className="flex max-w-md flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>State markers</Label>
-                <Typography type="body-sm" color="muted">
-                    Use for a checklist whose rows track progress (daily quests, a lesson&apos;s tasks). The leading icon is a STATE signal, not a type icon — pick exactly one per row and let the title take its color, so the eye reads state from both at once.
-                </Typography>
-            </div>
-            <SurfaceListCard>
-                <SurfaceListCardRow
-                    leading={<CircleIcon className="size-5 shrink-0 text-foreground" aria-hidden focusable="false" />}
-                    title="Đọc nội dung bài học"
-                    meta={<Typography type="body-xs" color="muted">0/1</Typography>}
-                />
-                <SurfaceListCardRow
-                    leading={<CheckCircleIcon className="size-5 shrink-0 text-success-soft-foreground" aria-hidden focusable="false" />}
-                    title={<span className="text-success-soft-foreground">Ôn 5 flashcard</span>}
-                    meta={<Typography type="body-xs" color="muted">5/5</Typography>}
-                />
-                <SurfaceListCardRow
-                    leading={<XCircleIcon className="size-5 shrink-0 text-danger" aria-hidden focusable="false" />}
-                    title={<span className="text-danger">Hoàn thành 1 phiên Phỏng vấn thử</span>}
-                    meta={<Typography type="body-xs" color="muted">Hết hạn</Typography>}
-                />
-            </SurfaceListCard>
-        </div>
-    ),
-}
-
-/**
- * STATIC rows — a read-only list (NO `onPress`/`href`). The row renders as a plain
- * `<div>`: no hover tint, no focus ring, no pointer cursor. A hover fill on a row
- * that does nothing falsely signals "clickable" (`hover-style-matches-clickable-nature`).
- * Real case: the flashcard-review "weak topics" stat list — topic + retention chip,
- * nothing to click. Only add `onPress`/`href` when the row genuinely acts or navigates.
- */
-export const StaticRows: Story = {
-    parameters: {
-        usage:
-            "Read-only rows (no onPress/href) render as a plain <div> with NO hover/focus/cursor — a hover " +
-            "fill would falsely imply the row is clickable (hover-style-matches-clickable-nature). Real case: " +
-            "the flashcard-review weak-topic stat list (topic + retention chip, nothing to click).",
-    },
-    render: () => (
-        <div className="flex max-w-md flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Static (read-only) rows</Label>
-                <Typography type="body-sm" color="muted">
-                    A stat/summary list you only read — hovering a row does nothing, so the row stays flat. Reserve the hover fill for rows that actually act or navigate.
-                </Typography>
-            </div>
-            <SurfaceListCard>
-                <SurfaceListCardRow
-                    title="Resilience"
-                    meta={<Chip size="sm" variant="soft" color="danger" className="shrink-0">nhớ 25%</Chip>}
-                />
-                <SurfaceListCardRow
-                    title="Error Handling"
-                    meta={<Chip size="sm" variant="soft" color="warning" className="shrink-0">nhớ 33%</Chip>}
-                />
-                <SurfaceListCardRow
-                    title="Authorization"
-                    meta={<Chip size="sm" variant="soft" color="success" className="shrink-0">nhớ 57%</Chip>}
-                />
-            </SurfaceListCard>
-        </div>
-    ),
-}
-
-/**
- * VERDICT band (`withVerdict`, card.md §3i) — an inset colored PILL on the left carrying a
- * DATA signal (verdict tone / tier / zone), NOT decoration. Rendered as a `::before`
- * rounded pill INSET on every side (not a `border-l`): a straight left border hooks into
- * the card's rounded corners on the first/last row; the inset pill floats free (thầy
- * 2026-07-18 "fix B ... đỡ rối"). Pass `variant` (accent/success/warning/danger) or a raw
- * `color`. Real case: the mind-map rail's keyword-popularity tiers.
- */
-export const VerdictBandRows: Story = {
-    parameters: {
-        usage:
-            "withVerdict (card.md §3i): an inset rounded PILL on the left carrying a DATA signal (tone/tier/zone). " +
-            "Rendered as a ::before pill inset on every side — a straight border-l would hook the card's rounded " +
-            "corners on the first/last row. Pass variant (accent/success/warning/danger) or a raw color.",
-    },
-    render: () => (
-        <div className="flex max-w-md flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Verdict band (data signal)</Label>
-                <Typography type="body-sm" color="muted">
-                    Use when the row&apos;s color MEANS something from the data (a mastery tier, a promote/demote zone). The pill is inset so it never wraps the card&apos;s rounded corner.
-                </Typography>
-            </div>
-            <SurfaceListCard>
-                <SurfaceListCardRow
-                    title="Shell &amp; hệ thống file"
-                    withVerdict={{ enable: true, variant: "success" }}
-                    onPress={() => {}}
-                />
-                <SurfaceListCardRow
-                    title="Redirect &amp; pipe"
-                    withVerdict={{ enable: true, variant: "warning" }}
-                    onPress={() => {}}
-                />
-                <SurfaceListCardRow
-                    title="Quyền file cơ bản"
-                    withVerdict={{ enable: true, variant: "danger" }}
-                    onPress={() => {}}
-                />
-            </SurfaceListCard>
-        </div>
+                        </SurfaceListCardItem>
+                    </SurfaceListCard>
+                </div>
+            </Variant>
+            <Variant
+                label="State markers (checklist)"
+                hint="Dùng cho checklist mà mỗi row theo dõi tiến độ (nhiệm vụ ngày, task của 1 bài học). Icon leading là TÍN HIỆU TRẠNG THÁI, không phải icon loại — chọn đúng 1 icon/row (icon.md §7) và để title ăn theo màu đó: todo = CircleIcon + foreground, done = CheckCircleIcon + success, fail = XCircleIcon + muted/danger. Tô màu title qua node <span>, không dùng titleClassName (lint cấm)."
+            >
+                <div className="max-w-md">
+                    <SurfaceListCard>
+                        <SurfaceListCardRow
+                            leading={<CircleIcon className="size-5 shrink-0 text-foreground" aria-hidden focusable="false" />}
+                            title="Đọc nội dung bài học"
+                            meta={<Typography type="body-xs" color="muted">0/1</Typography>}
+                        />
+                        <SurfaceListCardRow
+                            leading={<CheckCircleIcon className="size-5 shrink-0 text-success-soft-foreground" aria-hidden focusable="false" />}
+                            title={<span className="text-success-soft-foreground">Ôn 5 flashcard</span>}
+                            meta={<Typography type="body-xs" color="muted">5/5</Typography>}
+                        />
+                        <SurfaceListCardRow
+                            leading={<XCircleIcon className="size-5 shrink-0 text-danger" aria-hidden focusable="false" />}
+                            title={<span className="text-danger">Hoàn thành 1 phiên Phỏng vấn thử</span>}
+                            meta={<Typography type="body-xs" color="muted">Hết hạn</Typography>}
+                        />
+                    </SurfaceListCard>
+                </div>
+            </Variant>
+            <Variant
+                label="Static (row tĩnh, read-only)"
+                hint="Danh sách chỉ để đọc (không onPress/href): row render như <div> phẳng, không hover/focus/cursor — tô hover cho row không làm gì là tín hiệu giả 'bấm được' (hover-style-matches-clickable-nature). Ví dụ thật: list điểm yếu của flashcard-review (chủ đề + chip % nhớ), không có gì để bấm."
+            >
+                <div className="max-w-md">
+                    <SurfaceListCard>
+                        <SurfaceListCardRow
+                            title="Resilience"
+                            meta={<Chip size="sm" variant="soft" color="danger" className="shrink-0">nhớ 25%</Chip>}
+                        />
+                        <SurfaceListCardRow
+                            title="Error Handling"
+                            meta={<Chip size="sm" variant="soft" color="warning" className="shrink-0">nhớ 33%</Chip>}
+                        />
+                        <SurfaceListCardRow
+                            title="Authorization"
+                            meta={<Chip size="sm" variant="soft" color="success" className="shrink-0">nhớ 57%</Chip>}
+                        />
+                    </SurfaceListCard>
+                </div>
+            </Variant>
+            <Variant
+                label="Verdict band (tín hiệu dữ liệu)"
+                hint="Dùng withVerdict khi MÀU của row MANG NGHĨA từ dữ liệu (tier mastery, vùng promote/demote) — ví dụ tier độ phổ biến từ khoá của mind-map. Pill được inset cách đều mọi cạnh (không phải border-l thẳng) để không đâm vào góc tròn của card ở row đầu/cuối. Truyền variant (accent/success/warning/danger) hoặc color thô."
+            >
+                <div className="max-w-md">
+                    <SurfaceListCard>
+                        <SurfaceListCardRow
+                            title="Shell &amp; hệ thống file"
+                            withVerdict={{ enable: true, variant: "success" }}
+                            onPress={() => {}}
+                        />
+                        <SurfaceListCardRow
+                            title="Redirect &amp; pipe"
+                            withVerdict={{ enable: true, variant: "warning" }}
+                            onPress={() => {}}
+                        />
+                        <SurfaceListCardRow
+                            title="Quyền file cơ bản"
+                            withVerdict={{ enable: true, variant: "danger" }}
+                            onPress={() => {}}
+                        />
+                    </SurfaceListCard>
+                </div>
+            </Variant>
+        </Gallery>
     ),
 }

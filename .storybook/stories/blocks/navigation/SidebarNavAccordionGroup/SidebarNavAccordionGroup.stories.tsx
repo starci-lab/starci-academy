@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CubeIcon } from "@phosphor-icons/react"
-import { Label, Typography } from "@heroui/react"
 
 import { SidebarNavAccordionGroup } from "@/components/blocks/navigation/SidebarNavAccordionGroup"
 import { SidebarCollapsedContext } from "@/components/blocks/navigation/CollapsibleSidebar/context"
+import { Gallery, Variant } from "../../../../story-kit"
 
 const meta: Meta<typeof SidebarNavAccordionGroup> = {
     title: "Blocks/Navigation/SidebarNavAccordionGroup",
@@ -12,71 +12,18 @@ const meta: Meta<typeof SidebarNavAccordionGroup> = {
 export default meta
 type Story = StoryObj<typeof SidebarNavAccordionGroup>
 
-/** Use for a small cluster of related destinations (for example Playground's Docker/Kubernetes/RAG) that don't warrant breaking out into separate flat rows in the sidebar. */
-export const Default: Story = {
-    parameters: { usage: "Use for a small cluster of related destinations (for example Playground's Docker/Kubernetes/RAG) that don't warrant breaking out into separate flat rows in the sidebar." },
+/**
+ * Toàn bộ ma trận trạng thái của SidebarNavAccordionGroup: mặc định, có mục con
+ * đang active, sidebar thu gọn (icon-only rail), và nhãn mục con dài tràn chữ.
+ */
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Collapsible cluster</Label>
-                <Typography type="body-sm" color="muted">
-                    For a small cluster of related destinations (e.g. Docker / Kubernetes / RAG) that don't warrant breaking out into separate flat rows.
-                </Typography>
-            </div>
-            <div className="w-64 rounded-2xl border border-separator bg-surface p-2">
-                <SidebarNavAccordionGroup
-                    icon={CubeIcon}
-                    label="Playground"
-                    items={[
-                        { value: "docker", label: "Docker", onPress: () => {} },
-                        { value: "k8s", label: "Kubernetes", onPress: () => {} },
-                        { value: "rag", label: "RAG", onPress: () => {} },
-                    ]}
-                />
-            </div>
-        </div>
-    ),
-}
-
-/** Use when one of the child destinations is the current page, to highlight that row with an accent-soft background. */
-export const WithActiveChild: Story = {
-    parameters: { usage: "Use when one of the child destinations is the current page, to highlight that row with an accent-soft background." },
-    render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>With active child</Label>
-                <Typography type="body-sm" color="muted">
-                    When one child destination is the current page — highlight that row with an accent-soft background.
-                </Typography>
-            </div>
-            <div className="w-64 rounded-2xl border border-separator bg-surface p-2">
-                <SidebarNavAccordionGroup
-                    icon={CubeIcon}
-                    label="Playground"
-                    items={[
-                        { value: "docker", label: "Docker", isActive: true, onPress: () => {} },
-                        { value: "k8s", label: "Kubernetes", onPress: () => {} },
-                        { value: "rag", label: "RAG", onPress: () => {} },
-                    ]}
-                />
-            </div>
-        </div>
-    ),
-}
-
-/** Use when the sidebar is collapsed (icon-only rail) — the group shows only its trigger icon, with no room left for the child panel. */
-export const Collapsed: Story = {
-    parameters: { usage: "Use when the sidebar is collapsed (icon-only rail) — the group shows only its trigger icon, with no room left for the child panel." },
-    render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Collapsed rail</Label>
-                <Typography type="body-sm" color="muted">
-                    When the sidebar is an icon-only rail — the group shows only its trigger icon, with no room left for the child panel.
-                </Typography>
-            </div>
-            <SidebarCollapsedContext.Provider value={true}>
-                <div className="w-16 rounded-2xl border border-separator bg-surface p-2">
+        <Gallery>
+            <Variant
+                label="Cụm mặc định"
+                hint="Dùng cho một cụm nhỏ các đích đến liên quan (ví dụ Docker/Kubernetes/RAG của Playground) không đáng để tách thành các dòng riêng phẳng trong sidebar."
+            >
+                <div className="w-64 rounded-2xl border border-separator bg-surface p-2">
                     <SidebarNavAccordionGroup
                         icon={CubeIcon}
                         label="Playground"
@@ -87,33 +34,62 @@ export const Collapsed: Story = {
                         ]}
                     />
                 </div>
-            </SidebarCollapsedContext.Provider>
-        </div>
+            </Variant>
+            <Variant
+                label="Có mục con đang active"
+                hint="Khi một trong các đích đến con là trang hiện tại — làm nổi dòng đó bằng nền accent-soft."
+            >
+                <div className="w-64 rounded-2xl border border-separator bg-surface p-2">
+                    <SidebarNavAccordionGroup
+                        icon={CubeIcon}
+                        label="Playground"
+                        items={[
+                            { value: "docker", label: "Docker", isActive: true, onPress: () => {} },
+                            { value: "k8s", label: "Kubernetes", onPress: () => {} },
+                            { value: "rag", label: "RAG", onPress: () => {} },
+                        ]}
+                    />
+                </div>
+            </Variant>
+            <Variant
+                label="Sidebar thu gọn"
+                hint="Khi sidebar là rail chỉ hiện icon — nhóm chỉ hiện icon kích hoạt, không còn chỗ cho panel con."
+            >
+                <SidebarCollapsedContext.Provider value={true}>
+                    <div className="w-16 rounded-2xl border border-separator bg-surface p-2">
+                        <SidebarNavAccordionGroup
+                            icon={CubeIcon}
+                            label="Playground"
+                            items={[
+                                { value: "docker", label: "Docker", onPress: () => {} },
+                                { value: "k8s", label: "Kubernetes", onPress: () => {} },
+                                { value: "rag", label: "RAG", onPress: () => {} },
+                            ]}
+                        />
+                    </div>
+                </SidebarCollapsedContext.Provider>
+            </Variant>
+            <Variant
+                label="Nhãn mục con dài"
+                hint="Khi nhãn của một đích đến con rộng hơn panel — chữ phải tràn có dấu ba chấm thay vì làm vỡ layout."
+            >
+                <div className="w-64 rounded-2xl border border-separator bg-surface p-2">
+                    <SidebarNavAccordionGroup
+                        icon={CubeIcon}
+                        label="Playground"
+                        items={[
+                            { value: "docker", label: "Docker — spin up containers for hands-on labs", onPress: () => {} },
+                            { value: "k8s", label: "Kubernetes", onPress: () => {} },
+                            { value: "rag", label: "RAG", onPress: () => {} },
+                        ]}
+                    />
+                </div>
+            </Variant>
+        </Gallery>
     ),
-}
-
-/** Use when a child destination's label is wider than the panel — the text must truncate with an ellipsis instead of breaking the layout. */
-export const LongChildLabel: Story = {
-    parameters: { usage: "Use when a child destination's label is wider than the panel — the text must truncate with an ellipsis instead of breaking the layout." },
-    render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Long child label</Label>
-                <Typography type="body-sm" color="muted">
-                    When a child destination's label is wider than the panel — the text truncates with an ellipsis instead of breaking the layout.
-                </Typography>
-            </div>
-            <div className="w-64 rounded-2xl border border-separator bg-surface p-2">
-                <SidebarNavAccordionGroup
-                    icon={CubeIcon}
-                    label="Playground"
-                    items={[
-                        { value: "docker", label: "Docker — spin up containers for hands-on labs", onPress: () => {} },
-                        { value: "k8s", label: "Kubernetes", onPress: () => {} },
-                        { value: "rag", label: "RAG", onPress: () => {} },
-                    ]}
-                />
-            </div>
-        </div>
-    ),
+    parameters: {
+        usage:
+            "Toàn bộ ma trận trạng thái của SidebarNavAccordionGroup: cụm mặc định, có mục con đang active " +
+            "(nền accent-soft), sidebar thu gọn chỉ hiện icon kích hoạt, và nhãn mục con dài tràn có dấu ba chấm.",
+    },
 }

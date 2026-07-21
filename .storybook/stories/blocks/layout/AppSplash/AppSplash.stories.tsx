@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
 import { AppSplash } from "@/components/blocks/layout/AppSplash"
+import { Gallery, Variant } from "../../../../story-kit"
 
 const meta: Meta<typeof AppSplash> = {
     title: "Layout/AppSplash",
@@ -9,18 +9,30 @@ const meta: Meta<typeof AppSplash> = {
 export default meta
 type Story = StoryObj<typeof AppSplash>
 
-/** Use for the FIRST load (cold load / hard refresh), when there's nothing on screen yet to wait on — cover the whole screen with the StarCi lockup. For navigation between pages do NOT use this; use TopLoader instead: the old content is still there and readable, and covering it with a splash takes away what the user is reading. Both blocks share the same accent bar, differing only in whether they cover the screen. */
-export const Default: Story = {
-    parameters: { usage: "Use for the FIRST load (cold load / hard refresh), when there's nothing on screen yet to wait on — cover the whole screen with the StarCi lockup. For navigation between pages do NOT use this; use TopLoader instead: the old content is still there and readable, and covering it with a splash takes away what the user is reading. Both blocks share the same accent bar, differing only in whether they cover the screen." },
+/**
+ * Trạng thái duy nhất của AppSplash: dùng cho lần LOAD ĐẦU (cold load / hard
+ * refresh) khi chưa có gì trên màn hình để chờ — phủ toàn màn hình bằng logo
+ * StarCi. Khi chuyển trang giữa các route thì KHÔNG dùng cái này, dùng
+ * TopLoader thay thế: nội dung cũ vẫn còn đọc được, phủ splash lên là che
+ * mất thứ người dùng đang đọc. Cả hai block dùng chung thanh accent, chỉ
+ * khác ở việc có phủ toàn màn hình hay không.
+ */
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Startup splash</Label>
-                <Typography type="body-sm" color="muted">
-                    the block manages its own lifecycle: it shows for at least 550ms, then fades out over 350ms and returns null permanently, so on this canvas it only flashes by in the first second or so — reload the preview to see it again. No prop keeps it on screen.
-                </Typography>
-            </div>
-            <AppSplash />
-        </div>
+        <Gallery>
+            <Variant
+                label="Splash khởi động"
+                hint="Block tự quản lý lifecycle: hiện tối thiểu 550ms rồi fade out trong 350ms và trả về null vĩnh viễn, nên trên canvas này nó chỉ lướt qua trong giây đầu tiên — reload preview để xem lại. Không có prop nào giữ nó ở lại trên màn hình."
+            >
+                <AppSplash />
+            </Variant>
+        </Gallery>
     ),
+    parameters: {
+        usage:
+            "Dùng cho lần LOAD ĐẦU (cold load / hard refresh) khi chưa có gì trên màn hình để chờ — phủ toàn " +
+            "màn hình bằng logo StarCi. Khi chuyển trang giữa các route thì KHÔNG dùng cái này, dùng TopLoader " +
+            "thay thế: nội dung cũ vẫn còn đọc được, phủ splash lên là che mất thứ người dùng đang đọc. Cả hai " +
+            "block dùng chung thanh accent, chỉ khác ở việc có phủ toàn màn hình hay không.",
+    },
 }

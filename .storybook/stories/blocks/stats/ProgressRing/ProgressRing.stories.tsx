@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
 import { ProgressRing } from "@/components/blocks/stats/ProgressRing"
+import { Gallery, Variant } from "../../../../story-kit"
 
 const meta: Meta<typeof ProgressRing> = {
     title: "Primitives/DataDisplay/ProgressRing",
@@ -9,99 +9,83 @@ const meta: Meta<typeof ProgressRing> = {
 export default meta
 type Story = StoryObj<typeof ProgressRing>
 
-/** Use when you need to choose the ring diameter by where it's placed — sm for tight spots next to a line of text, md for cards, lg for a standout metric at the top of a page. */
-export const Sizes: Story = {
-    parameters: { usage: "Use when you need to choose the ring diameter by where it's placed: sm (64px) for tight/inline spots, md (96px) for regular cards, lg (128px) for a hero metric at the top of a page. The center label scales with the size." },
+/**
+ * Toàn bộ ma trận trạng thái của ProgressRing: 3 kích thước (sm/md/lg), 4 tone
+ * theo ngưỡng ý nghĩa của số liệu (accent/success/warning/danger), và các cách
+ * dùng caption/label ở tâm vòng (mặc định phần trăm, nhãn tuỳ chỉnh, hoặc bỏ
+ * caption). Dùng để tra chọn size theo vị trí đặt, chọn tone theo ý nghĩa số,
+ * và khi nào cần caption giải thích vòng đang đo cái gì.
+ */
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Small</Label>
-                    <Typography type="body-sm" color="muted">Use in tight spots, next to a line of text or in a compact list, when the ring is only a secondary detail.</Typography>
-                </div>
+        <Gallery>
+            <Variant
+                label="Nhỏ (sm)"
+                hint="Dùng ở chỗ chật, nằm cạnh một dòng chữ hoặc trong danh sách gọn, khi vòng chỉ là chi tiết phụ."
+            >
                 <ProgressRing value={68} size="sm" />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Medium</Label>
-                    <Typography type="body-sm" color="muted">Use in a regular stat card, when the ring is the card's main content.</Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Vừa (md)"
+                hint="Dùng trong một stat card thông thường, khi vòng là nội dung chính của card."
+            >
                 <ProgressRing value={68} size="md" />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Large</Label>
-                    <Typography type="body-sm" color="muted">Use as a standout metric at the top of a page or dashboard, when you want the number to catch the eye first.</Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Lớn (lg)"
+                hint="Dùng làm số liệu nổi bật ở đầu trang hoặc dashboard, khi muốn con số đập vào mắt trước tiên."
+            >
                 <ProgressRing value={68} size="lg" />
-            </div>
-        </div>
-    ),
-}
-
-/** Use when the value itself carries meaning and the color should change by threshold — accent for neutral progress, success/warning/danger when the number says good or bad. */
-export const Tones: Story = {
-    parameters: { usage: "Use when the ring color should reflect the MEANING of the number: accent for neutral progress, success when doing well, warning when it needs attention, danger when below the threshold. Don't change the color just for decoration." },
-    render: () => (
-        <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Accent</Label>
-                    <Typography type="body-sm" color="muted">Use for neutral progress, when the number only shows how far along you are and says nothing good or bad.</Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Tone Accent"
+                hint="Dùng cho tiến độ trung tính, khi con số chỉ cho biết đã đi được bao xa và không mang nghĩa tốt/xấu."
+            >
                 <ProgressRing value={68} tone="accent" caption="Course progress" />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Success</Label>
-                    <Typography type="body-sm" color="muted">Use when the number has reached a good level, e.g. a test score above the passing threshold.</Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Tone Success"
+                hint="Dùng khi con số đã đạt mức tốt, ví dụ điểm kiểm tra vượt ngưỡng đạt."
+            >
                 <ProgressRing value={92} tone="success" caption="Test score" />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Warning</Label>
-                    <Typography type="body-sm" color="muted">Use when the number is at a level that needs attention — not yet there, but not yet worrying either.</Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Tone Warning"
+                hint="Dùng khi con số ở mức cần chú ý — chưa tới nhưng cũng chưa đáng lo."
+            >
                 <ProgressRing value={45} tone="warning" caption="This week's progress" />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Danger</Label>
-                    <Typography type="body-sm" color="muted">Use when the number is below the threshold and needs a warning, e.g. a completion rate that's too low.</Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Tone Danger"
+                hint="Dùng khi con số dưới ngưỡng và cần cảnh báo, ví dụ tỉ lệ hoàn thành quá thấp."
+            >
                 <ProgressRing value={18} tone="danger" caption="Completion rate" />
-            </div>
-        </div>
-    ),
-}
-
-/** Use when you need a line of context below the ring to say what it's measuring — caption is an optional slot, drop it when the surrounding context is already clear. */
-export const WithCaption: Story = {
-    parameters: { usage: "Use when you need a line of context below the ring to say what it's measuring; caption is an optional slot, drop it when the surrounding context (card title, column header) is already clear. The center label can be the default percentage or a custom fraction." },
-    render: () => (
-        <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>With caption</Label>
-                    <Typography type="body-sm" color="muted">Add a caption when the ring stands alone and needs to spell out what it measures.</Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Có caption"
+                hint="Thêm caption khi vòng đứng độc lập và cần nói rõ nó đang đo cái gì."
+            >
                 <ProgressRing value={68} size="lg" caption="Course progress" />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Custom label</Label>
-                    <Typography type="body-sm" color="muted">Override the center label with a fraction when a count is easier to understand than a percentage.</Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Nhãn tuỳ chỉnh"
+                hint="Ghi đè nhãn ở tâm vòng bằng một phân số khi số lượng dễ hiểu hơn phần trăm."
+            >
                 <ProgressRing value={90} size="lg" tone="success" label="9/10" caption="Lessons completed" />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>No caption</Label>
-                    <Typography type="body-sm" color="muted">Drop the caption when the surrounding context is enough and you only need the ring and the number.</Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Không caption"
+                hint="Bỏ caption khi ngữ cảnh xung quanh đã đủ rõ, chỉ cần vòng và con số."
+            >
                 <ProgressRing value={68} size="lg" />
-            </div>
-        </div>
+            </Variant>
+        </Gallery>
     ),
+    parameters: {
+        usage:
+            "Toàn bộ ma trận trạng thái của ProgressRing: 3 kích thước (sm/md/lg), 4 tone theo ngưỡng ý nghĩa " +
+            "(accent/success/warning/danger), và các cách dùng caption/label ở tâm vòng (phần trăm mặc định, " +
+            "nhãn tuỳ chỉnh, hoặc bỏ caption). Dùng khi cần chọn size theo vị trí đặt, chọn tone theo ý nghĩa " +
+            "của con số, và xác định lúc nào cần caption giải thích.",
+    },
 }

@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
 import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react"
 
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
+import { Gallery, Variant, VariantRow } from "../../../../story-kit"
 import { TONES } from "./components"
 
 const meta: Meta<typeof StatusChip> = {
@@ -18,108 +18,66 @@ export default meta
 type Story = StoryObj<typeof StatusChip>
 
 /**
- * Use for an "undetermined / unprocessed" status — a draft, an item awaiting input — a neutral tone that doesn't draw attention.
+ * Toàn bộ ma trận trạng thái của StatusChip: tone neutral mặc định, 4 tone
+ * semantic (success/warning/danger/accent), 2 chip có icon dẫn đầu (chỉ dành
+ * cho 2 trạng thái xác định success/error), và chip có nút xoá (removable).
+ * Dùng để tra chọn tone theo Ý NGHĨA thật của trạng thái, khi nào được gắn
+ * icon, và khi nào dùng onCancel thay icon.
  */
-export const Default: Story = {
-    parameters: {
-        usage:
-            "Use for an \"undetermined / unprocessed\" status — a draft, an item awaiting input — a neutral tone that doesn't draw attention.",
-    },
-    args: {
-        tone: "neutral",
-        children: "Draft",
-    },
-}
-
-/**
- * Pick the tone by the MEANING of the real status in the app: success = done, warning = due soon / needs attention, danger = cancelled / error, accent = highlighted / new — not by aesthetics.
- */
-export const Tones: Story = {
-    parameters: {
-        usage:
-            "Pick the tone by the MEANING of the real status in the app: success = done, warning = due soon / needs attention, danger = cancelled / error, accent = highlighted / new — not by aesthetics.",
-    },
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-6">
+        <Gallery>
+            <Variant
+                label="Neutral (mặc định)"
+                hint="Dùng cho trạng thái chưa xác định / chưa xử lý — một bản nháp, một mục đang chờ nhập liệu — tone trung tính không gây chú ý."
+            >
+                <StatusChip tone="neutral">Draft</StatusChip>
+            </Variant>
             {TONES.map(({ tone, name, label, desc }) => (
-                <div key={tone} className="flex flex-col gap-3">
-                    <div className="flex flex-col gap-2">
-                        <Label>{name}</Label>
-                        <Typography type="body-sm" color="muted">
-                            {desc}
-                        </Typography>
-                    </div>
+                <Variant key={tone} label={name} hint={desc}>
                     <StatusChip tone={tone}>{label}</StatusChip>
-                </div>
+                </Variant>
             ))}
-        </div>
-    ),
-}
-
-/**
- * A chip WITH an icon = ONLY for the 2 DEFINITIVE statuses, icon LEADING, static:
- * - success / verified → the REAL Phosphor `CheckCircleIcon` (circle-check) + tone `success`.
- * - error / failure → `XCircleIcon` (circle-x) + tone `danger`.
- * NO bare `CheckIcon`/`XIcon`, NO hand-rolled SVG (icon.md §2 — pass/fail marks = circle).
- * Other tones (neutral/warning/accent) get NO icon. The component forces the icon to size-4.
- */
-export const WithIcon: Story = {
-    parameters: {
-        usage:
-            "A chip with an icon is only for the 2 definitive statuses: success = `CheckCircleIcon` (circle-check, tone success), error = `XCircleIcon` (circle-x, tone danger). Icon leading, static. Other tones get no icon.",
-    },
-    render: () => (
-        <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Success</Label>
-                    <Typography type="body-sm" color="muted">
-                        A successful or verified result — use CheckCircleIcon with tone success, icon leading and static.
-                    </Typography>
-                </div>
+            <Variant
+                label="Success + icon"
+                hint="Một kết quả thành công hoặc đã xác minh — dùng CheckCircleIcon với tone success, icon dẫn đầu và tĩnh."
+            >
                 <StatusChip tone="success" icon={<CheckCircleIcon />}>
                     Verified
                 </StatusChip>
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Error</Label>
-                    <Typography type="body-sm" color="muted">
-                        An error or failed result — use XCircleIcon with tone danger, icon leading and static.
-                    </Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Error + icon"
+                hint="Một kết quả lỗi hoặc thất bại — dùng XCircleIcon với tone danger, icon dẫn đầu và tĩnh."
+            >
                 <StatusChip tone="danger" icon={<XCircleIcon />}>
                     Processing error
                 </StatusChip>
-            </div>
-        </div>
+            </Variant>
+            <VariantRow
+                label="Có nút xoá (removable)"
+                hint="Prop onCancel render một nút X phía sau = ElementCloseButton (bọc HeroUI CloseButton; trong suốt lúc nghỉ + tint theo tone lúc hover, giống Callout). Chip có nút X thì KHÔNG có icon dẫn đầu — một chip chỉ mang icon trạng thái HOẶC nút xoá, không cả hai."
+            >
+                <StatusChip tone="accent" onCancel={() => {}} cancelLabel="Remove React filter">
+                    React
+                </StatusChip>
+                <StatusChip tone="accent" onCancel={() => {}} cancelLabel="Remove TypeScript filter">
+                    TypeScript
+                </StatusChip>
+                <StatusChip tone="neutral" onCancel={() => {}} cancelLabel="Remove Junior filter">
+                    Junior
+                </StatusChip>
+            </VariantRow>
+        </Gallery>
     ),
-}
-
-/**
- * A REMOVABLE chip (filter/tag): the `onCancel` prop → a TRAILING X button pressed to remove/dismiss the chip.
- * The X button = the shared **`ElementCloseButton`** block (wrapping HeroUI `CloseButton`): transparent
- * at rest + on hover fills the background by the chip's TONE — the SAME approach as `Callout`'s dismiss
- * (no more each place styling its hover differently). Rule: a chip with a remove-X has **NO leading status
- * icon** — one chip carries EITHER a status icon OR a remove-X, not both (passing both `icon` and
- * `onCancel` drops the icon).
- */
-export const Removable: Story = {
     parameters: {
         usage:
-            "A removable chip: `onCancel` renders a trailing X button = `ElementCloseButton` (shared block wrapping HeroUI `CloseButton`; transparent at rest + hover tint by the chip's tone, like Callout). A chip with a remove-X has NO leading icon (it carries EITHER a status icon OR a remove-X).",
+            "Toàn bộ ma trận trạng thái của StatusChip: tone neutral mặc định cho trạng thái chưa xác định " +
+            "(bản nháp, chờ xử lý); 4 tone semantic chọn theo Ý NGHĨA thật của trạng thái trong app — success = " +
+            "hoàn thành, warning = sắp đến hạn / cần chú ý, danger = huỷ / lỗi, accent = nổi bật / mới — không " +
+            "theo thẩm mỹ; icon dẫn đầu CHỈ dành cho 2 trạng thái xác định (success = CheckCircleIcon tone " +
+            "success, error = XCircleIcon tone danger), icon tĩnh, các tone khác không gắn icon; và chip có " +
+            "nút xoá qua onCancel (render ElementCloseButton phía sau) — một chip chỉ mang icon trạng thái HOẶC " +
+            "nút xoá, không cả hai.",
     },
-    render: () => (
-        <div className="flex flex-wrap items-start gap-2">
-            <StatusChip tone="accent" onCancel={() => {}} cancelLabel="Remove React filter">
-                React
-            </StatusChip>
-            <StatusChip tone="accent" onCancel={() => {}} cancelLabel="Remove TypeScript filter">
-                TypeScript
-            </StatusChip>
-            <StatusChip tone="neutral" onCancel={() => {}} cancelLabel="Remove Junior filter">
-                Junior
-            </StatusChip>
-        </div>
-    ),
 }

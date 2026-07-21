@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
 import { OutlineRail } from "@/components/blocks/navigation/OutlineRail"
+import { Gallery, Variant } from "../../../../story-kit"
 import { Controlled, mockGroups } from "./components"
 
 const meta: Meta<typeof OutlineRail> = {
@@ -10,156 +10,125 @@ const meta: Meta<typeof OutlineRail> = {
 export default meta
 type Story = StoryObj<typeof OutlineRail>
 
-/** Use when showing the course navigation rail with overall progress, a search box, and modules that already have data. */
-export const Default: Story = {
-    parameters: { usage: "Use when showing the course navigation rail with overall progress, a search box, and modules that already have data." },
+/**
+ * Toàn bộ ma trận trạng thái của OutlineRail: có dữ liệu, đang tải lần đầu, khóa
+ * học rỗng, tìm kiếm không khớp, và lỗi tải kèm nút thử lại. Dùng để tra khi nào
+ * mỗi trạng thái xuất hiện trong luồng học bài thật.
+ */
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>With data</Label>
-                <Typography type="body-sm" color="muted">
-                    The course navigation rail with overall progress, a search box, and modules that already have data.
-                </Typography>
-            </div>
-            <Controlled
-                header={{
-                    label: "Progress",
-                    progress: { done: 3, total: 9 },
-                    countLabel: "3/9 lessons",
-                    continue: { label: "Continue learning", onPress: () => {} },
-                }}
-                groups={mockGroups}
-                async={{
-                    isLoading: false,
-                    skeleton: null,
-                    isEmpty: false,
-                    emptyTitle: "No content yet",
-                    errorTitle: "Couldn't load content",
-                    onRetry: () => {},
-                    retryLabel: "Retry",
-                    noMatchLabel: "No matching lessons found",
-                }}
-            />
-        </div>
+        <Gallery>
+            <Variant
+                label="Có dữ liệu"
+                hint="Rail điều hướng khóa học đã có tiến độ tổng, ô tìm kiếm, và các module đã có dữ liệu — trạng thái mặc định khi mọi thứ tải xong."
+            >
+                <Controlled
+                    header={{
+                        label: "Progress",
+                        progress: { done: 3, total: 9 },
+                        countLabel: "3/9 lessons",
+                        continue: { label: "Continue learning", onPress: () => {} },
+                    }}
+                    groups={mockGroups}
+                    async={{
+                        isLoading: false,
+                        skeleton: null,
+                        isEmpty: false,
+                        emptyTitle: "No content yet",
+                        errorTitle: "Couldn't load content",
+                        onRetry: () => {},
+                        retryLabel: "Retry",
+                        noMatchLabel: "No matching lessons found",
+                    }}
+                />
+            </Variant>
+            <Variant
+                label="Đang tải"
+                hint="Dữ liệu module đang tải lần đầu, trước khi có tiến độ nào để hiện ở phần header."
+            >
+                <Controlled
+                    groups={[]}
+                    async={{
+                        isLoading: true,
+                        skeleton: (
+                            <div className="flex flex-col gap-3">
+                                <div className="h-14 w-full animate-pulse rounded-lg bg-default-100" />
+                                <div className="h-14 w-full animate-pulse rounded-lg bg-default-100" />
+                                <div className="h-14 w-full animate-pulse rounded-lg bg-default-100" />
+                            </div>
+                        ),
+                        isEmpty: false,
+                        emptyTitle: "No content yet",
+                        errorTitle: "Couldn't load content",
+                        onRetry: () => {},
+                        retryLabel: "Retry",
+                        noMatchLabel: "No matching lessons found",
+                    }}
+                />
+            </Variant>
+            <Variant
+                label="Rỗng"
+                hint="Khóa học chưa có module/bài học nào được xuất bản."
+            >
+                <Controlled
+                    groups={[]}
+                    async={{
+                        isLoading: false,
+                        skeleton: null,
+                        isEmpty: true,
+                        emptyTitle: "No content for this course yet",
+                        errorTitle: "Couldn't load content",
+                        onRetry: () => {},
+                        retryLabel: "Retry",
+                        noMatchLabel: "No matching lessons found",
+                    }}
+                />
+            </Variant>
+            <Variant
+                label="Không tìm thấy"
+                hint="Từ khóa tìm kiếm không khớp với bài học nào trong các module hiện có."
+            >
+                <Controlled
+                    initialQuery="advanced 3d graphics"
+                    groups={[]}
+                    async={{
+                        isLoading: false,
+                        skeleton: null,
+                        isEmpty: false,
+                        emptyTitle: "No content yet",
+                        errorTitle: "Couldn't load content",
+                        onRetry: () => {},
+                        retryLabel: "Retry",
+                        noMatchLabel: "No lessons match your search",
+                    }}
+                />
+            </Variant>
+            <Variant
+                label="Lỗi tải"
+                hint="Tải dữ liệu module thất bại và người dùng cần cách để thử lại."
+            >
+                <Controlled
+                    groups={[]}
+                    async={{
+                        isLoading: false,
+                        skeleton: null,
+                        isEmpty: false,
+                        emptyTitle: "No content yet",
+                        errorTitle: "Couldn't load the lesson list",
+                        error: new Error("Network request failed"),
+                        onRetry: () => {},
+                        retryLabel: "Retry",
+                        noMatchLabel: "No matching lessons found",
+                    }}
+                />
+            </Variant>
+        </Gallery>
     ),
-}
-
-/** Use when the module data is loading for the first time, before there is any progress to show in the header. */
-export const Loading: Story = {
-    parameters: { usage: "Use when the module data is loading for the first time, before there is any progress to show in the header." },
-    render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Loading</Label>
-                <Typography type="body-sm" color="muted">
-                    When the module data is loading for the first time, before there is any progress to show in the header.
-                </Typography>
-            </div>
-            <Controlled
-                groups={[]}
-                async={{
-                    isLoading: true,
-                    skeleton: (
-                        <div className="flex flex-col gap-3">
-                            <div className="h-14 w-full animate-pulse rounded-lg bg-default-100" />
-                            <div className="h-14 w-full animate-pulse rounded-lg bg-default-100" />
-                            <div className="h-14 w-full animate-pulse rounded-lg bg-default-100" />
-                        </div>
-                    ),
-                    isEmpty: false,
-                    emptyTitle: "No content yet",
-                    errorTitle: "Couldn't load content",
-                    onRetry: () => {},
-                    retryLabel: "Retry",
-                    noMatchLabel: "No matching lessons found",
-                }}
-            />
-        </div>
-    ),
-}
-
-/** Use when the course has no published modules/lessons yet. */
-export const Empty: Story = {
-    parameters: { usage: "Use when the course has no published modules/lessons yet." },
-    render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Empty</Label>
-                <Typography type="body-sm" color="muted">
-                    When the course has no published modules/lessons yet.
-                </Typography>
-            </div>
-            <Controlled
-                groups={[]}
-                async={{
-                    isLoading: false,
-                    skeleton: null,
-                    isEmpty: true,
-                    emptyTitle: "No content for this course yet",
-                    errorTitle: "Couldn't load content",
-                    onRetry: () => {},
-                    retryLabel: "Retry",
-                    noMatchLabel: "No matching lessons found",
-                }}
-            />
-        </div>
-    ),
-}
-
-/** Use when the search term doesn't match any lesson in the available modules. */
-export const NoMatch: Story = {
-    parameters: { usage: "Use when the search term doesn't match any lesson in the available modules." },
-    render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>No search match</Label>
-                <Typography type="body-sm" color="muted">
-                    When the search term doesn't match any lesson in the available modules.
-                </Typography>
-            </div>
-            <Controlled
-                initialQuery="advanced 3d graphics"
-                groups={[]}
-                async={{
-                    isLoading: false,
-                    skeleton: null,
-                    isEmpty: false,
-                    emptyTitle: "No content yet",
-                    errorTitle: "Couldn't load content",
-                    onRetry: () => {},
-                    retryLabel: "Retry",
-                    noMatchLabel: "No lessons match your search",
-                }}
-            />
-        </div>
-    ),
-}
-
-/** Use when loading the module data fails and the user needs a way to retry. */
-export const ErrorState: Story = {
-    parameters: { usage: "Use when loading the module data fails and the user needs a way to retry." },
-    render: () => (
-        <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-                <Label>Load error</Label>
-                <Typography type="body-sm" color="muted">
-                    When loading the module data fails and the user needs a way to retry.
-                </Typography>
-            </div>
-            <Controlled
-                groups={[]}
-                async={{
-                    isLoading: false,
-                    skeleton: null,
-                    isEmpty: false,
-                    emptyTitle: "No content yet",
-                    errorTitle: "Couldn't load the lesson list",
-                    error: new Error("Network request failed"),
-                    onRetry: () => {},
-                    retryLabel: "Retry",
-                    noMatchLabel: "No matching lessons found",
-                }}
-            />
-        </div>
-    ),
+    parameters: {
+        usage:
+            "Toàn bộ ma trận trạng thái của OutlineRail: có dữ liệu (tiến độ tổng + ô tìm kiếm + module đã " +
+            "tải), đang tải lần đầu (skeleton thay header tiến độ), khóa học rỗng (chưa có module/bài học " +
+            "xuất bản), tìm kiếm không khớp bài học nào, và lỗi tải kèm nút thử lại. Dùng khi cần tra trạng " +
+            "thái nào hiện khi nào trong luồng học bài.",
+    },
 }

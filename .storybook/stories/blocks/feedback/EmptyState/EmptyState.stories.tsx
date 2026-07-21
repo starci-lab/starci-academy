@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Button, Label, Typography } from "@heroui/react"
+import { Button } from "@heroui/react"
 import { MagnifyingGlassIcon, TrayIcon, WarningCircleIcon } from "@phosphor-icons/react"
 
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
+import { Gallery, Variant } from "../../../../story-kit"
 
 /**
  * `EmptyState` — a presentational, props-only empty-state placeholder.
@@ -12,10 +13,6 @@ import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 const meta: Meta<typeof EmptyState> = {
     title: "Blocks/Feedback/EmptyState",
     component: EmptyState,
-    // default title satisfies the required prop for render-only stories (they render their own).
-    args: {
-        title: "No data",
-    },
 }
 
 export default meta
@@ -23,74 +20,63 @@ export default meta
 type Story = StoryObj<typeof EmptyState>
 
 /**
- * Use when you just need to report "nothing here" quickly — no icon/description/action needed, e.g. a secondary result slot with no data yet.
+ * Toàn bộ ma trận trạng thái của EmptyState: chỉ tiêu đề, icon + tiêu đề, thêm
+ * mô tả gợi ý, kèm nút hành động, và tông lỗi khi tải dữ liệu thất bại. Dùng để
+ * tra khi nào chọn mức chi tiết nào cho tình huống thật.
  */
-export const Default: Story = {
-    args: {
-        title: "No data",
-    },
-    parameters: {
-        usage: "Use when you just need to report \"nothing here\" quickly — no icon/description/action needed, e.g. a secondary result slot with no data yet.",
-    },
-}
-
-/**
- * Pick the right level of detail for the real situation: an empty course list (icon only), a search with no results (icon + suggestion), or an empty list page with an action button to create a new item.
- */
-export const Compositions: Story = {
-    parameters: {
-        usage: "Pick the right level of detail for the real situation: an empty course list (icon only), a search with no results (icon + suggestion), or an empty list page with an action button to create a new item.",
-    },
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Icon and title only</Label>
-                    <Typography type="body-sm" color="muted">Use for a normal empty list, when you just need to report emptiness without guidance or a next action.</Typography>
-                </div>
-                <EmptyState
-                    icon={<TrayIcon weight="duotone" />}
-                    title="No courses yet"
-                />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Add a description</Label>
-                    <Typography type="body-sm" color="muted">Use when you need to hint at what to do next, e.g. a search with no results should suggest changing filters or keywords.</Typography>
-                </div>
+        <Gallery>
+            <Variant
+                label="Chỉ tiêu đề"
+                hint="Dùng khi chỉ cần báo “không có gì ở đây” nhanh gọn — không cần icon/mô tả/hành động, ví dụ một khu vực kết quả phụ chưa có dữ liệu."
+            >
+                <EmptyState title="No data" />
+            </Variant>
+            <Variant
+                label="Icon và tiêu đề"
+                hint="Dùng cho danh sách rỗng thông thường, khi chỉ cần báo trống mà không cần gợi ý hay hành động tiếp theo."
+            >
+                <EmptyState icon={<TrayIcon weight="duotone" />} title="No courses yet" />
+            </Variant>
+            <Variant
+                label="Thêm mô tả"
+                hint="Dùng khi cần gợi ý bước tiếp theo, ví dụ tìm kiếm không ra kết quả nên gợi ý đổi bộ lọc hoặc từ khoá."
+            >
                 <EmptyState
                     icon={<MagnifyingGlassIcon weight="duotone" />}
                     title="No results found"
                     description="Try adjusting your filters or search keywords to see more results."
                 />
-            </div>
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>With an action</Label>
-                    <Typography type="body-sm" color="muted">Use when there's a clear create-new action so the user can leave the empty state right here.</Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Kèm hành động"
+                hint="Dùng khi có một hành động tạo-mới rõ ràng để người dùng rời khỏi trạng thái rỗng ngay tại đây."
+            >
                 <EmptyState
                     icon={<TrayIcon weight="duotone" />}
                     title="Empty list"
                     description="You haven't saved any items to this list yet."
                     action={<Button variant="primary">Add new item</Button>}
                 />
-            </div>
-        </div>
+            </Variant>
+            <Variant
+                label="Tông lỗi"
+                hint="Dùng khi tải dữ liệu thất bại (lỗi mạng, lỗi API) — icon cảnh báo kèm nút “Try again” để người dùng khôi phục, không phải trạng thái rỗng thông thường."
+            >
+                <EmptyState
+                    icon={<WarningCircleIcon weight="duotone" />}
+                    title="Couldn't load data"
+                    description="Something went wrong. Please try again later."
+                    action={<Button variant="danger">Try again</Button>}
+                />
+            </Variant>
+        </Gallery>
     ),
-}
-
-/**
- * Use when data loading fails (network error, API error) — a warning icon + a "Try again" button so the user can recover, not an ordinary empty state.
- */
-export const ErrorTone: Story = {
-    args: {
-        icon: <WarningCircleIcon weight="duotone" />,
-        title: "Couldn't load data",
-        description: "Something went wrong. Please try again later.",
-        action: <Button variant="danger">Try again</Button>,
-    },
     parameters: {
-        usage: "Use when data loading fails (network error, API error) — a warning icon + a \"Try again\" button so the user can recover, not an ordinary empty state.",
+        usage:
+            "Toàn bộ ma trận trạng thái của EmptyState: chỉ tiêu đề, icon + tiêu đề, thêm mô tả gợi ý, " +
+            "kèm nút hành động, và tông lỗi khi tải dữ liệu thất bại. Dùng để tra khi nào chọn mức chi " +
+            "tiết nào cho tình huống thật.",
     },
 }

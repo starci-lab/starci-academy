@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
 import { DifficultyChip } from "@/components/blocks/chips/DifficultyChip"
+import { Gallery, Variant } from "../../../../story-kit"
 
 const meta: Meta<typeof DifficultyChip> = {
     title: "Features/Chips/DifficultyChip",
@@ -9,47 +9,40 @@ const meta: Meta<typeof DifficultyChip> = {
 export default meta
 type Story = StoryObj<typeof DifficultyChip>
 
-/** The 4-level difficulty scale → dot color, drawn from DIFFICULTY_COLOR — the SINGLE source of this ramp; import it instead of re-declaring the map at each surface. */
-export const AllDifficulties: Story = {
-    parameters: { usage: "Reference table mapping the 4 difficulty levels → dot color, read from `DIFFICULTY_COLOR` (`DifficultyChip/index.tsx`) — the SINGLE source of the ramp. Need difficulty colors on another surface? IMPORT this constant, don't re-declare a separate map (re-declaring is how surfaces diverge — `FlashcardDeckList` has this bug). Difficulty is a RANK, not a status — colors come from the Tailwind palette, not borrowed accent/success/warning/danger: 4 levels need 4 distinct colors, whereas 4 semantic tokens would read `advanced` as an ERROR instead of HARD." },
+/**
+ * Toàn bộ 4 mức độ khó → màu dot, đọc từ DIFFICULTY_COLOR — nguồn DUY NHẤT của
+ * dải màu này; import hằng số đó thay vì khai lại map ở mỗi surface.
+ */
+export const AllVariants: Story = {
     render: () => (
-        <div className="flex flex-col gap-6">
-            <div className="flex flex-col items-start gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Beginner</Label>
-                    <Typography type="body-sm" color="muted">
-                        An opening lesson that needs almost no prior knowledge. Green because this is a safe place to start.
-                    </Typography>
-                </div>
+        <Gallery>
+            <Variant
+                label="Beginner"
+                hint="Bài học mở đầu, hầu như không cần kiến thức nền. Xanh lá vì đây là điểm bắt đầu an toàn."
+            >
                 <DifficultyChip difficulty="beginner" />
-            </div>
-            <div className="flex flex-col items-start gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Intermediate</Label>
-                    <Typography type="body-sm" color="muted">
-                        Requires grasping the core concepts first. Yellow = consider carefully, not yet a warning.
-                    </Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Intermediate"
+                hint="Cần nắm các khái niệm cốt lõi trước. Vàng = cần cân nhắc kỹ, chưa phải mức cảnh báo."
+            >
                 <DifficultyChip difficulty="intermediate" />
-            </div>
-            <div className="flex flex-col items-start gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Advanced</Label>
-                    <Typography type="body-sm" color="muted">
-                        Requires non-trivial design decisions. Orange, one step deeper than Intermediate — no longer borrowing the error color (danger) to signal HARD.
-                    </Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Advanced"
+                hint="Cần đưa ra các quyết định thiết kế không tầm thường. Cam, một bậc sâu hơn Intermediate — không còn mượn màu lỗi (danger) để báo hiệu KHÓ."
+            >
                 <DifficultyChip difficulty="advanced" />
-            </div>
-            <div className="flex flex-col items-start gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Insane</Label>
-                    <Typography type="body-sm" color="muted">
-                        The highest level. Now has its own color instead of borrowing accent — four levels, four colors, no overlaps.
-                    </Typography>
-                </div>
+            </Variant>
+            <Variant
+                label="Insane"
+                hint="Mức cao nhất. Có màu riêng thay vì mượn accent — bốn mức, bốn màu, không trùng lặp."
+            >
                 <DifficultyChip difficulty="insane" />
-            </div>
-        </div>
+            </Variant>
+        </Gallery>
     ),
+    parameters: {
+        usage: "Bảng tham chiếu mapping 4 mức độ khó → màu dot, đọc từ `DIFFICULTY_COLOR` (`DifficultyChip/index.tsx`) — nguồn DUY NHẤT của dải màu này. Cần màu difficulty ở surface khác? IMPORT hằng số này, đừng khai lại map riêng (khai lại là cách các surface lệch nhau — `FlashcardDeckList` từng mắc bug này). Difficulty là một THỨ HẠNG, không phải trạng thái — màu lấy từ bảng màu Tailwind, không mượn accent/success/warning/danger: 4 mức cần 4 màu riêng biệt, trong khi 4 token semantic sẽ khiến `advanced` đọc thành LỖI thay vì KHÓ.",
+    },
 }

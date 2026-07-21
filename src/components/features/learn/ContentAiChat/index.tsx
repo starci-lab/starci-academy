@@ -416,24 +416,29 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                 : `course:${course?.id ?? ""}`
 
     // recent conversations for the header (auto-select most recent + current title).
-    // Only LESSON scope narrows to a content; task/foundation/course all list the
-    // enrollment's conversations course-wide — the sessions query has no
-    // task/foundation filter yet (BE slice), so those scopes resume from (and add
-    // to) the course-wide list rather than a per-task / per-foundation one.
-    const sessionListContentId = isLessonScope ? contentId : undefined
-    const sessionListCourseId = isLessonScope ? undefined : course?.id
+    // Each surface lists ITS OWN sessions: the active scope + its single anchor go
+    // to the query, so a lesson lists that lesson's, a task that task's, a
+    // foundation that foundation's, and the course surface the whole-course ones.
+    // The BE scope literal is "content" (the FE calls it "lesson" internally).
+    const sessionListScope = scope === "lesson" ? "content" : scope
     const sessionsSwr = useQueryContentAiSessionsSwr(
-        sessionListContentId,
+        askContentId,
         undefined,
-        sessionListCourseId,
+        askCourseId,
+        sessionListScope,
+        askTaskId,
+        askFoundationId,
     )
     // the conversations view list is paginated/infinite (mirror followers infinite)
     const sessionsInfinite = useQueryContentAiSessionsInfiniteSwr(
-        sessionListContentId,
+        askContentId,
         searchTerm,
         view === "conversations",
-        sessionListCourseId,
+        askCourseId,
         showArchived,
+        sessionListScope,
+        askTaskId,
+        askFoundationId,
     )
     // saved turns of the OPEN conversation
     const historySwr = useQueryContentAiHistorySwr(currentSessionId ?? undefined)
@@ -1025,9 +1030,17 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                                                     SEARCHING — that is the one moment it earns the row,
                                                     by showing which line matched. */}
                                                 <Typography type="body-xs" color="muted" className="truncate">
+                                                    {/* content rows carry their lesson title; course rows read
+                                                        "Cả khoá"; task/foundation rows have no origin title (null),
+                                                        so they fall back to just the turn count rather than a
+                                                        misleading course-wide label. */}
                                                     {searchTerm.trim() && session.snippet
                                                         ? displayText(session.snippet)
-                                                        : `${session.originContentTitle ?? t("contentAi.context.courseWide")} · ${t("contentAi.turnsCount", { count: session.messageCount })}`}
+                                                        : session.originContentTitle
+                                                            ? `${session.originContentTitle} · ${t("contentAi.turnsCount", { count: session.messageCount })}`
+                                                            : session.scope === "course"
+                                                                ? `${t("contentAi.context.courseWide")} · ${t("contentAi.turnsCount", { count: session.messageCount })}`
+                                                                : t("contentAi.turnsCount", { count: session.messageCount })}
                                                 </Typography>
                                             </button>
                                         )}

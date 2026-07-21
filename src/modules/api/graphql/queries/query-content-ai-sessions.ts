@@ -17,6 +17,7 @@ const query = gql`
           title
           updatedAt
           messageCount
+          scope
           originContentId
           originContentTitle
           snippet

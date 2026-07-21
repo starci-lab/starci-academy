@@ -5,25 +5,40 @@ import { useAppSelector } from "@/redux/hooks"
 
 /**
  * SWR query wrapper for {@link queryContentAiSessions}. Lists the current user's
- * content-AI conversations for a content, or for a whole course when `contentId`
- * is omitted and `courseId` is passed instead — or, when `search` is non-empty,
- * searches ALL their conversations in the course. Runs only when authenticated
- * and at least one of `contentId` / `courseId` is present.
+ * content-AI conversations for the active grounding surface — a lesson content, a
+ * capstone task, a foundation doc, or the whole course — selected by `scope` plus
+ * the matching anchor id. When `search` is non-empty it searches ALL their
+ * conversations in the course. Runs only when authenticated and at least one
+ * anchor (`contentId` / `taskId` / `foundationId` / `courseId`) is present.
  */
 export const useQueryContentAiSessionsSwr = (
     contentId: string | undefined,
     search?: string,
     courseId?: string,
+    scope?: string,
+    taskId?: string,
+    foundationId?: string,
 ) => {
     const authenticated = useAppSelector((state) => state.keycloak.authenticated)
     const trimmed = (search ?? "").trim()
     const swr = useSWR<Array<ContentAiSessionSummary>>(
-        authenticated && (contentId || courseId)
-            ? ["QUERY_CONTENT_AI_SESSIONS_SWR", contentId, courseId, trimmed]
+        authenticated && (contentId || taskId || foundationId || courseId)
+            ? [
+                "QUERY_CONTENT_AI_SESSIONS_SWR",
+                scope,
+                contentId,
+                taskId,
+                foundationId,
+                courseId,
+                trimmed,
+            ]
             : null,
         async () => {
             const data = await queryContentAiSessions({
+                scope,
                 contentId,
+                taskId,
+                foundationId,
                 courseId,
                 search: trimmed || undefined,
             })

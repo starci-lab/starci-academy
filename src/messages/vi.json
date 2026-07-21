@@ -595,6 +595,7 @@
     "settings": "Cài đặt",
     "modelLabel": "Model trả lời",
     "thinking": "Đang trả lời…",
+    "sendFailed": "Không gửi được — không tạo được hội thoại. Kiểm tra kết nối rồi thử lại.",
     "error": "Xin lỗi, mình chưa trả lời được. Hãy thử lại sau.",
     "upgrade": "Nâng cấp để hỏi tiếp",
     "suggestions": {

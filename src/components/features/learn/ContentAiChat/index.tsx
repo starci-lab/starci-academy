@@ -716,6 +716,15 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                 .catch(() => undefined)
             sessionId = created?.data?.id ?? null
             if (!sessionId) {
+                // creating the conversation failed (offline, or the server rejected
+                // the request) — surface it instead of a silent no-op, so a dead
+                // "Giải thích đoạn này" / send is never a mystery. Show the question
+                // the learner sent + a one-line error under it.
+                setMessages((prev) => [
+                    ...prev,
+                    { role: "user", content: raw },
+                    { role: "assistant", content: `⚠️ ${t("contentAi.sendFailed")}` },
+                ])
                 return
             }
             setCurrentSessionId(sessionId)
@@ -778,7 +787,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                 })
             },
         })
-    }, [input, askContentId, askTaskId, askChallengeId, askQuizId, askFoundationId, askCourseId, isStreaming, currentSessionId, createSwr, selection, selectionContext, messages, ask, appendToAssistant, setSelection, sessionsSwr, sessionsInfinite, modelSelection, runContentIntent, course?.id])
+    }, [t, input, askContentId, askTaskId, askChallengeId, askQuizId, askFoundationId, askCourseId, isStreaming, currentSessionId, createSwr, selection, selectionContext, messages, ask, appendToAssistant, setSelection, sessionsSwr, sessionsInfinite, modelSelection, runContentIntent, course?.id])
 
     /** Start a fresh conversation (created lazily on the first message). */
     const onNewConversation = useCallback(() => {

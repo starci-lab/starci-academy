@@ -595,6 +595,7 @@
     "settings": "Settings",
     "modelLabel": "Reply model",
     "thinking": "Thinking…",
+    "sendFailed": "Couldn't send — the conversation could not be created. Check your connection and try again.",
     "error": "Sorry, I couldn't answer that. Please try again.",
     "upgrade": "Upgrade to keep asking",
     "suggestions": {

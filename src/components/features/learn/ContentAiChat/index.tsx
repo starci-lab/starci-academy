@@ -407,13 +407,20 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     // lesson/task/foundation/course, but NOT when they widen a lesson to course
     // (a widen is an overlay on the same surface → same session). Drives the reset
     // + auto-select effects so each scope keeps its own thread.
-    const surfaceScopeKey = contentId
+    const baseSurfaceKey = contentId
         ? `lesson:${contentId}`
         : taskId
             ? `task:${taskId}`
             : foundationId
                 ? `foundation:${foundationId}`
                 : `course:${course?.id ?? ""}`
+    // a SELECTED PASSAGE is its own scope-key → its own born-archived side-thread
+    // (inherits the surface grounding + the passage). Selecting or changing the
+    // highlight resets to a fresh thread; clearing it (✕ / navigating) reverts to
+    // the surface's own conversation.
+    const surfaceScopeKey = selection
+        ? `${baseSurfaceKey}|sel:${selection}`
+        : baseSurfaceKey
 
     // recent conversations for the header (auto-select most recent + current title).
     // Each surface lists ITS OWN sessions: the active scope + its single anchor go
@@ -513,12 +520,23 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     // last conversation the user read in this scope (persisted in the DB, not the
     // browser). Runs for EVERY scope now, so task/foundation/course resume too.
     useEffect(() => {
-        if (scopeSelectedRef.current === surfaceScopeKey || sessionsSwr.data === undefined) {
+        if (scopeSelectedRef.current === surfaceScopeKey) {
+            return
+        }
+        // a selected-passage thread is a fresh born-archived side-chat — it is NOT
+        // in the surface list, so never resume a surface session into it. Start
+        // empty; the born-archived session is created on the first ask.
+        if (selection) {
+            setCurrentSessionId(null)
+            scopeSelectedRef.current = surfaceScopeKey
+            return
+        }
+        if (sessionsSwr.data === undefined) {
             return
         }
         setCurrentSessionId(sessionsSwr.data[0]?.id ?? null)
         scopeSelectedRef.current = surfaceScopeKey
-    }, [surfaceScopeKey, sessionsSwr.data])
+    }, [surfaceScopeKey, sessionsSwr.data, selection])
 
     // clear a stale selected passage only when the content ACTUALLY changes
     useEffect(() => {
@@ -666,6 +684,8 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                     taskId: askTaskId,
                     foundationId: askFoundationId,
                     courseId: askCourseId,
+                    // a selection-passage ask is a born-archived side-thread
+                    archived: selection ? true : undefined,
                 })
                 .catch(() => undefined)
             sessionId = created?.data?.id ?? null
@@ -691,7 +711,12 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             { role: "assistant", content: "" },
         ])
         setInput("")
-        setSelection(null)
+        // KEEP the selection sticky: it is part of the scope-key, so clearing it
+        // here would revert the key and reset the thread — wiping the answer that
+        // is about to stream. The passage stays (its input + quick-asks remain) so
+        // follow-ups accumulate in the SAME born-archived side-thread; the learner
+        // dismisses it with the quote's ✕ (or by navigating) to return to the
+        // surface's own conversation.
         setIsStreaming(true)
         ask({
             sessionId,

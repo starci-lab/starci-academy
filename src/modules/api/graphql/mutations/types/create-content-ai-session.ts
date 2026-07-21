@@ -10,6 +10,8 @@ export interface CreateContentAiSessionRequest {
     foundationId?: string
     /** Course the conversation starts in, when `contentId` is omitted (course-general conversation). */
     courseId?: string
+    /** Born-archived: create it already archived (kept out of the default history list, still searchable). Used for selection-passage "explain this" side-threads. */
+    archived?: boolean
 }
 
 /** Payload inside `createContentAiSession.data` after the standard API wrapper. */

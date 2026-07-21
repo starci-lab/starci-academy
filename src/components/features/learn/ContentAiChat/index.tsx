@@ -538,6 +538,27 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         [course?.displayId, locale, router, closeChat],
     )
 
+    // DEEP-LINK: `?chatSession=<uuid>` (paired with `?openChat=true`, opened by
+    // InnerLayout) restores that exact conversation on load — read ONCE from the URL
+    // and pinned so the auto-select-most-recent below does not override it. One-shot:
+    // a later surface navigation clears it and normal resume takes over.
+    const deepLinkAppliedRef = useRef(false)
+    useEffect(() => {
+        if (deepLinkAppliedRef.current) {
+            return
+        }
+        deepLinkAppliedRef.current = true
+        const deepLinkSessionId = new URLSearchParams(window.location.search).get("chatSession")
+        if (!deepLinkSessionId) {
+            return
+        }
+        setCurrentSessionId(deepLinkSessionId)
+        // mark this surface as resumed so the auto-select effect skips it, and let
+        // the deep-linked conversation's turns hydrate from the server
+        scopeSelectedRef.current = surfaceScopeKey
+        hydratedRef.current = undefined
+    }, [surfaceScopeKey])
+
     // once this scope's conversations load, reopen the most recent one — opening a
     // chat bumps its recency server-side (touchSession), so "most recent" = the
     // last conversation the user read in this scope (persisted in the DB, not the

@@ -40,8 +40,22 @@ export const InnerLayout = ({ children }: PropsWithChildren) => {
     // Hoisting it here makes the split honest — the app column owns its own navbar
     // and re-lays-out against ITS width (`@container` below), so a wide rail turns
     // the app compact instead of breaking it.
-    const { isOpen: chatOpen } = useContentAiChatOverlayState()
+    const { isOpen: chatOpen, open: openChatOverlay } = useContentAiChatOverlayState()
     const { mode: chatMode } = useContentAiChatModeStore()
+    // DEEP-LINK: `?openChat=true` reopens the content-AI chat on load (paired with
+    // `?chatSession=<uuid>`, which `ContentAiChat` consumes to restore that exact
+    // conversation). One-shot on mount; read from the URL directly (client-only, so
+    // no Suspense boundary is needed the way `useSearchParams` would demand).
+    const openedFromUrlRef = React.useRef(false)
+    React.useEffect(() => {
+        if (openedFromUrlRef.current) {
+            return
+        }
+        openedFromUrlRef.current = true
+        if (new URLSearchParams(window.location.search).get("openChat") === "true") {
+            openChatOverlay()
+        }
+    }, [openChatOverlay])
     // Still viewport-driven ON PURPOSE: this decides whether the panel exists as a
     // docked rail at all, and that is a question about the SCREEN. Once the rail is
     // mounted, everything inside the app column keys off the column instead.

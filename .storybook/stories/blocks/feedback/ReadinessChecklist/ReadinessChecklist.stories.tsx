@@ -10,14 +10,14 @@ import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
  * with a leading `IconTile` (success check when ready), a ready/pending
  * subtitle, and a trailing `StatusChip` spelling out the state.
  */
-const meta = {
+const meta: Meta<typeof ReadinessChecklist> = {
     title: "Blocks/Feedback/ReadinessChecklist",
     component: ReadinessChecklist,
-} satisfies Meta<typeof ReadinessChecklist>
+}
 
 export default meta
 
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof ReadinessChecklist>
 
 const ITEMS: Array<ReadinessChecklistItem> = [
     {

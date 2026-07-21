@@ -8,14 +8,14 @@ import { RagSourceGraph } from "@/components/blocks/rendering/RagSourceGraph"
  * the left, fanning out to a card per source on the right (edge label = the
  * retrieval score, when the backend reports one).
  */
-const meta = {
+const meta: Meta<typeof RagSourceGraph> = {
     title: "Blocks/Rendering/RagSourceGraph",
     component: RagSourceGraph,
-} satisfies Meta<typeof RagSourceGraph>
+}
 
 export default meta
 
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof RagSourceGraph>
 
 /** A question grounded by 3 sources, each with a retrieval score. */
 export const Default: Story = {

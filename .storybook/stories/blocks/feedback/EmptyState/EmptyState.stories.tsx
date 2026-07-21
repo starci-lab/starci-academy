@@ -9,18 +9,18 @@ import { EmptyState } from "@/components/blocks/feedback/EmptyState"
  * All copy is passed in as `ReactNode`; the block never calls a translation
  * hook itself, so every story below uses static copy.
  */
-const meta = {
+const meta: Meta<typeof EmptyState> = {
     title: "Blocks/Feedback/EmptyState",
     component: EmptyState,
     // default title satisfies the required prop for render-only stories (they render their own).
     args: {
         title: "No data",
     },
-} satisfies Meta<typeof EmptyState>
+}
 
 export default meta
 
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof EmptyState>
 
 /**
  * Use when you just need to report "nothing here" quickly — no icon/description/action needed, e.g. a secondary result slot with no data yet.

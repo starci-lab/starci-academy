@@ -10,15 +10,15 @@ import { StatusChip } from "@/components/blocks/chips/StatusChip"
  * Uses `Accordion variant="default"` so the base full-bleed separator shows; the
  * surface frame comes from the wrapping `SurfaceListCard`.
  */
-const meta = {
+const meta: Meta<typeof LabeledAccordionCard> = {
     title: "Blocks/Cards/LabeledAccordionCard",
     component: LabeledAccordionCard,
     parameters: { layout: "padded" },
-} satisfies Meta<typeof LabeledAccordionCard>
+}
 
 export default meta
 
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof LabeledAccordionCard>
 
 /** A short body node reused across the demo sections. */
 const body = (text: string) => (

@@ -9,14 +9,14 @@ import { ARCHITECTURE_EDGES, ARCHITECTURE_NODES } from "./components"
  * feature's data (unlike MindMap/KnowledgeGraph/MockInterviewDiagram) — just pass
  * standard xyflow `nodes`/`edges`.
  */
-const meta = {
+const meta: Meta<typeof FlowDiagram> = {
     title: "Primitives/Rendering/FlowDiagram",
     component: FlowDiagram,
-} satisfies Meta<typeof FlowDiagram>
+}
 
 export default meta
 
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof FlowDiagram>
 
 /** A simple architecture diagram using the default card node (concept + short description). */
 export const Default: Story = {

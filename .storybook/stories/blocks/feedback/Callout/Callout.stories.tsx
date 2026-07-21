@@ -7,17 +7,17 @@ import { TONE_CONTENT, ACTION_EXAMPLES } from "./components"
  * A tinted, flat note for use **inside a card / surface** — wraps HeroUI `Alert` +
  * `CloseButton` with a status-driven soft tint so it doesn't read as a card-in-card.
  */
-const meta = {
+const meta: Meta<typeof Callout> = {
     title: "Primitives/Feedback/Callout",
     component: Callout,
     args: {
         title: "Lesson saved",
         description: "Your progress syncs automatically after each completion.",
     },
-} satisfies Meta<typeof Callout>
+}
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof Callout>
 
 /** Use for a neutral in-card notice (draft saved, system note) — without any warning or success tone. */
 export const Default: Story = {

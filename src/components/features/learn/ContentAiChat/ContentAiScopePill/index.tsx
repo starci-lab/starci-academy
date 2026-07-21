@@ -44,7 +44,7 @@ export const ContentAiScopePill = ({ className }: ContentAiScopePillProps) => {
     const scope = prefersCourseScope
         ? "course"
         : contentId
-            ? "lesson"
+            ? "content"
             : taskId
                 ? "task"
                 : foundationId

@@ -136,7 +136,7 @@ const RETRIEVAL_SKILLS: ReadonlyArray<RetrievalSkill> = [
  * one) and leads with the practice that follows the reading instead.
  */
 const EMPTY_STATE_SKILLS: Record<ChatContextScope, ReadonlyArray<string>> = {
-    lesson: ["challenges", "flashcards"],
+    content: ["challenges", "flashcards"],
     course: ["lessons", "challenges", "flashcards"],
     // a capstone task and a foundation each read like a single lesson — lead with
     // the practice that follows the reading, not "find a lesson" (you are in one)
@@ -153,7 +153,7 @@ const EMPTY_STATE_SKILLS: Record<ChatContextScope, ReadonlyArray<string>> = {
  * modules. The search itself was always course-wide; only the promise was wrong.
  */
 const SCOPE_LABEL_SUFFIX: Record<ChatContextScope, string> = {
-    lesson: "OfLesson",
+    content: "OfLesson",
     course: "InCourse",
     task: "OfTask",
     foundation: "OfFoundation",
@@ -164,11 +164,11 @@ const retrievalLabelKey = (token: string, scope: ChatContextScope): string =>
 /**
  * Which grounding the next question runs against — surfaced to the learner as the
  * context pill above the composer so it is never a mystery what the AI is reading.
- * `lesson` is the DEFAULT whenever a lesson is open; `course` is both the
+ * `content` is the DEFAULT whenever a lesson is open; `course` is both the
  * automatic fallback on a lesson-less surface (flashcards, mind-map, leaderboard)
  * and an explicit widening the learner can pick while reading.
  */
-type ChatContextScope = "lesson" | "course" | "task" | "foundation"
+type ChatContextScope = "content" | "course" | "task" | "foundation"
 
 /** A find-verb that signals the learner wants a LIST of course content, not a chat answer. */
 const CONTENT_INTENT_VERB_RE = /(tìm|find|gợi ý|liệt kê|list|show|kiếm)/i
@@ -391,15 +391,15 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     const scope: ChatContextScope = prefersCourseScope
         ? "course"
         : contentId
-            ? "lesson"
+            ? "content"
             : taskId
                 ? "task"
                 : foundationId
                     ? "foundation"
                     : "course"
-    const isLessonScope = scope === "lesson"
+    const isContentScope = scope === "content"
     // what the next question actually grounds on — exactly one id per scope
-    const askContentId = scope === "lesson" ? contentId : undefined
+    const askContentId = scope === "content" ? contentId : undefined
     const askTaskId = scope === "task" ? taskId : undefined
     const askFoundationId = scope === "foundation" ? foundationId : undefined
     const askCourseId = scope === "course" ? course?.id : undefined
@@ -408,7 +408,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     // (a widen is an overlay on the same surface → same session). Drives the reset
     // + auto-select effects so each scope keeps its own thread.
     const baseSurfaceKey = contentId
-        ? `lesson:${contentId}`
+        ? `content:${contentId}`
         : taskId
             ? `task:${taskId}`
             : foundationId
@@ -426,13 +426,11 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     // Each surface lists ITS OWN sessions: the active scope + its single anchor go
     // to the query, so a lesson lists that lesson's, a task that task's, a
     // foundation that foundation's, and the course surface the whole-course ones.
-    // The BE scope literal is "content" (the FE calls it "lesson" internally).
-    const sessionListScope = scope === "lesson" ? "content" : scope
     const sessionsSwr = useQueryContentAiSessionsSwr(
         askContentId,
         undefined,
         askCourseId,
-        sessionListScope,
+        scope,
         askTaskId,
         askFoundationId,
     )
@@ -443,7 +441,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         view === "conversations",
         askCourseId,
         showArchived,
-        sessionListScope,
+        scope,
         askTaskId,
         askFoundationId,
     )
@@ -837,7 +835,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     // back to this lesson (cross-lesson navigation is a later enhancement); in COURSE
     // scope keep every row — there is no lesson to narrow to, and filtering on an
     // absent contentId would silently empty the whole result list.
-    const drawerSessions = trimmedSearch && isLessonScope
+    const drawerSessions = trimmedSearch && isContentScope
         ? infiniteItems.filter((session) => session.originContentId === contentId)
         : infiniteItems
 
@@ -1236,14 +1234,14 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                     {messages.length === 0 && !selection ? (
                         <div className="flex flex-col gap-2">
                             <Typography type="body-sm" color="muted">
-                                {isLessonScope
+                                {isContentScope
                                     ? t("contentAi.hint")
                                     : t("contentAi.courseHint")}
                             </Typography>
                             {/* summarize / hardest / example only make sense against an
                                 OPEN lesson — there is no "this lesson" to summarise for a
                                 task / foundation / course, so those scopes offer retrieval only */}
-                            {isLessonScope ? SUGGESTION_KEYS.map((key) => (
+                            {isContentScope ? SUGGESTION_KEYS.map((key) => (
                                 <Button
                                     key={key}
                                     variant="secondary"

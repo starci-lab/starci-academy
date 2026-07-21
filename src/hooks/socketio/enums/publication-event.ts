@@ -14,10 +14,6 @@ export enum PublicationEvent {
     AskContentAi = "content_ai.ask.publication",
     /** Abort an in-flight content-AI answer stream (must match backend). */
     AbortContentAi = "content_ai.abort.publication",
-    /** Subscribe to a RAG Playground run's token stream (must match backend). */
-    SubscribeRagPlaygroundRun = "rag_playground.subscribe_run.publication",
-    /** Abort an in-flight RAG Playground run (must match backend). */
-    AbortRagPlaygroundRun = "rag_playground.abort_run.publication",
     /** Ask the mock interviewer for its next turn and stream it back (must match backend). */
     AskMockInterviewTurn = "mock_interview.ask.publication",
     /** Abort an in-flight mock-interviewer turn stream (must match backend). */
@@ -30,10 +26,12 @@ export enum PublicationEvent {
      * gateway and this string is shared with it.
      */
     SubscribePlaygroundByom = "browser:subscribe",
-    /** Ask the connected CLI agent to run one command (must match backend). */
-    RunPlaygroundByomCommand = "command:run",
     /** Ping the connected CLI agent to measure round-trip latency (must match backend `agent:ping`). */
     PlaygroundByomPing = "agent:ping",
     /** Ask the agent to report resources NOW so the current step verifies immediately (must match backend `verify:now`). */
     PlaygroundByomVerifyNow = "verify:now",
+    /** Ask the connected agent to index a code source into an ephemeral RAG collection (must match backend `rag:index`). */
+    PlaygroundByomRagIndex = "rag:index",
+    /** Ask the connected agent to answer a question over the indexed code (must match backend `rag:ask`). */
+    PlaygroundByomRagAsk = "rag:ask",
 }

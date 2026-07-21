@@ -122,4 +122,3 @@ export * from "./useQueryMyDailyQuestSwr"
 export * from "./useQueryRecommendedCoursesSwr"
 
 export * from "./useQueryMyGithubTeamStatusSwr"
-export * from "./useQueryRagPlaygroundSamplesSwr"

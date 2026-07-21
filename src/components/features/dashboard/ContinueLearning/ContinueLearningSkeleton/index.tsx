@@ -17,7 +17,7 @@ export type ContinueLearningSkeletonProps = WithClassNames<undefined>
 /**
  * Loading skeleton for {@link import("..").ContinueLearning}. Mirrors the loaded
  * resume-cards grid — three placeholder cards in the same
- * `sm:grid-cols-2 lg:grid-cols-3` layout, each echoing a {@link import("../ResumeCard").ResumeCard}'s
+ * `@app-sm:grid-cols-2 @app-lg:grid-cols-3` layout, each echoing a {@link import("../ResumeCard").ResumeCard}'s
  * `ContinueCard variant="item"` anatomy: NO leading icon, a title + subtitle
  * column, then the "Tiếp tục →" CTA (`SeeMoreLink`) on its OWN row below — no
  * progress-meter line (`hideProgress`). So it reserves the real height and never
@@ -28,7 +28,7 @@ export type ContinueLearningSkeletonProps = WithClassNames<undefined>
 export const ContinueLearningSkeleton = ({
     className,
 }: ContinueLearningSkeletonProps) => (
-    <div className={cn("grid gap-3 sm:grid-cols-2 lg:grid-cols-3", className)}>
+    <div className={cn("grid gap-3 @app-sm:grid-cols-2 @app-lg:grid-cols-3", className)}>
         {[0, 1, 2].map((card) => (
             <Card key={card} className="h-full">
                 <CardContent className="flex h-full flex-col gap-3">

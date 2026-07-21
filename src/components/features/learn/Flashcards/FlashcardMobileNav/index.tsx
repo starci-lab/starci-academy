@@ -14,7 +14,7 @@ export type FlashcardMobileNavProps = WithClassNames<undefined>
  * Mobile (`<lg`) fallback for the flashcards LEFT RAIL — which is hidden on
  * small screens. Surfaces the mode switch (Study / Quiz) the rail owns,
  * driving the URL via {@link useFlashcardNav} so the rail (desktop) and this
- * bar (mobile) stay in sync. Rendered `lg:hidden` above the work pane.
+ * bar (mobile) stay in sync. Rendered `@app-lg:hidden` above the work pane.
  *
  * The horizontal deck-chip picker this bar used to ALSO surface (a mobile
  * form of the rail's deck list) was removed (thầy 2026-07-09: "xoá cái này
@@ -27,7 +27,7 @@ export const FlashcardMobileNav = ({ className }: FlashcardMobileNavProps) => {
     const { mode, goMode } = useFlashcardNav()
 
     return (
-        <div className={cn("flex flex-col gap-3 lg:hidden", className)}>
+        <div className={cn("flex flex-col gap-3 @app-lg:hidden", className)}>
             {/* page-FEATURE switch (mirrors the desktop rail's own mode control, see
                 Flashcards/index.tsx) → TabsCard variant="primary"
                 (fe/components/tabs.md §0b, corrected 2026-07-09). */}

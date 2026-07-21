@@ -547,7 +547,7 @@ export const PracticeProblem = () => {
 
     return (
         // full-bleed 2-pane IDE: left reading column | right editor + console
-        <div className="grid h-[calc(100vh-4rem)] grid-cols-1 lg:grid-cols-2">
+        <div className="grid h-[calc(100vh-4rem)] grid-cols-1 @app-lg:grid-cols-2">
 
             {/* ── LEFT: tabbed reading column ── */}
             <div className="flex min-h-0 flex-col overflow-hidden border-r border-default">

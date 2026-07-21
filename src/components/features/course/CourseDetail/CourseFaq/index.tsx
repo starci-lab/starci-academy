@@ -4,10 +4,6 @@ import React, {
     useMemo,
 } from "react"
 import {
-    Accordion,
-    Typography,
-} from "@heroui/react"
-import {
     useTranslations,
 } from "next-intl"
 import _ from "lodash"
@@ -19,6 +15,7 @@ import type {
 } from "@/modules/types/base/class-name"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { LabeledAccordionCard } from "@/components/blocks/cards/LabeledAccordionCard"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
@@ -46,17 +43,27 @@ export const CourseFaq = ({ className }: CourseFaqProps) => {
         [rawQnas],
     )
 
-    // frameless ONLY once the accordion itself self-frames (surface variant); while
-    // loading/erroring there is no bounded surface, so LabeledCard's own Card must
-    // frame it — otherwise the skeleton/error renders bare on the page background.
     const hasQnas = !isLoading && !error && qnas.length > 0
 
+    // Q&As present → the accordion card IS the frame + owns its own label.
+    if (hasQnas) {
+        return (
+            <LabeledAccordionCard
+                className={className}
+                label={t("courseLanding.faq")}
+                items={qnas.map((qna) => ({
+                    id: qna.id,
+                    title: qna.question,
+                    body: <MarkdownContent markdown={qna.answer} />,
+                }))}
+            />
+        )
+    }
+
+    // loading / error / empty → LabeledCard's own Card frames the skeleton/state,
+    // otherwise it would render bare on the page background.
     return (
-        <LabeledCard
-            className={className}
-            label={t("courseLanding.faq")}
-            frameless={hasQnas}
-        >
+        <LabeledCard className={className} label={t("courseLanding.faq")}>
             <AsyncContent
                 isLoading={isLoading && qnas.length === 0}
                 skeleton={<Skeleton.Accordion items={3} />}
@@ -67,33 +74,11 @@ export const CourseFaq = ({ className }: CourseFaqProps) => {
                     retryLabel: t("courseLanding.retry"),
                 }}
             >
-                {hasQnas ? (
-                    // Accordion Card (xem elements/card.md §3): surface accordion frameless + viền.
-                    <Accordion variant="surface" className="overflow-hidden shadow-surface">
-                        {qnas.map((qna) => (
-                            <Accordion.Item key={qna.id} aria-label={qna.question}>
-                                <Accordion.Heading>
-                                    <Accordion.Trigger>
-                                        <Typography type="body-sm" weight="medium">
-                                            {qna.question}
-                                        </Typography>
-                                    </Accordion.Trigger>
-                                </Accordion.Heading>
-                                <Accordion.Panel>
-                                    <Accordion.Body>
-                                        <MarkdownContent markdown={qna.answer} />
-                                    </Accordion.Body>
-                                </Accordion.Panel>
-                            </Accordion.Item>
-                        ))}
-                    </Accordion>
-                ) : (
-                    <EmptyState
-                        icon={<QuestionIcon aria-hidden focusable="false" />}
-                        title={t("courseLanding.empty.faq.title")}
-                        description={t("courseLanding.empty.faq.hint")}
-                    />
-                )}
+                <EmptyState
+                    icon={<QuestionIcon aria-hidden focusable="false" />}
+                    title={t("courseLanding.empty.faq.title")}
+                    description={t("courseLanding.empty.faq.hint")}
+                />
             </AsyncContent>
         </LabeledCard>
     )

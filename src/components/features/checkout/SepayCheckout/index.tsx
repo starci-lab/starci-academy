@@ -100,7 +100,7 @@ const SepayCheckoutContent = () => {
 
     return (
         <div className="flex min-h-screen flex-col items-center px-4 py-12">
-            <div className="grid w-full max-w-4xl grid-cols-1 gap-8 md:grid-cols-2">
+            <div className="grid w-full max-w-4xl grid-cols-1 gap-8 @app-md:grid-cols-2">
                 <QrPanel />
                 <OrderSummary />
             </div>

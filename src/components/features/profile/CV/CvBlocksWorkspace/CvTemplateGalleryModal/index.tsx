@@ -67,7 +67,7 @@ export const CvTemplateGalleryModal = ({
                             </Typography>
                         </Modal.Header>
                         <Modal.Body>
-                            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                            <div className="grid grid-cols-1 gap-4 @app-sm:grid-cols-2">
                                 {TEMPLATE_ORDER.map((template) => {
                                     const isTwoColumn = CV_TWO_COLUMN_TEMPLATES.has(template)
                                     const isSelected = current === template

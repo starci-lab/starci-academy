@@ -80,8 +80,8 @@ export const HeroBanner = ({
 
             <div
                 className={cn(
-                    "flex flex-col items-stretch gap-3 sm:flex-row sm:items-center",
-                    hasVisual ? "sm:justify-start" : "sm:justify-center",
+                    "flex flex-col items-stretch gap-3 @app-sm:flex-row @app-sm:items-center",
+                    hasVisual ? "@app-sm:justify-start" : "@app-sm:justify-center",
                 )}
             >
                 {primary}
@@ -120,9 +120,9 @@ export const HeroBanner = ({
     }
 
     return (
-        <section className={cn("flex flex-col items-center gap-10 lg:flex-row lg:gap-12", className)}>
+        <section className={cn("flex flex-col items-center gap-10 @app-lg:flex-row @app-lg:gap-12", className)}>
             {textColumn}
-            <div className="flex w-full max-w-md shrink-0 items-center justify-center lg:max-w-none lg:flex-1">
+            <div className="flex w-full max-w-md shrink-0 items-center justify-center @app-lg:max-w-none @app-lg:flex-1">
                 {visual}
             </div>
         </section>

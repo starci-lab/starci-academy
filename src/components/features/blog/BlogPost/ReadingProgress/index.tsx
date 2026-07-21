@@ -27,7 +27,7 @@ export const ReadingProgress = () => {
 
     return (
         <div
-            className="fixed inset-x-0 top-0 z-50 h-0.5 bg-transparent"
+            className="fixed top-0 left-0 right-[var(--app-rail-w,0px)] z-50 h-0.5 bg-transparent"
             role="progressbar"
             aria-label="Reading progress"
             aria-valuemin={0}

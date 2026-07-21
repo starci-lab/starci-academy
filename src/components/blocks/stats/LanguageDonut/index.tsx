@@ -73,7 +73,7 @@ export const LanguageDonut = ({
     const innerRadius = Math.max(0, outerRadius - thickness)
 
     return (
-        <div className={cn("flex flex-col items-center gap-6 sm:flex-row", className)}>
+        <div className={cn("flex flex-col items-center gap-6 @app-sm:flex-row", className)}>
             {/* the donut — labelled as an image for screen readers */}
             <div
                 role="img"

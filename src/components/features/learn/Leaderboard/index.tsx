@@ -158,7 +158,7 @@ export const Leaderboard = ({ className }: LeaderboardProps) => {
 
             <div className="flex flex-col gap-6">
                 {/* mobile category selector (the desktop rail lives in the shell's left slot) */}
-                <LeaderboardCategoryRail variant="chips" className="lg:hidden" />
+                <LeaderboardCategoryRail variant="chips" className="@app-lg:hidden" />
 
                 {/* board toolbar: what we're ranked by + freshness + a plain refresh */}
                 <div className="flex items-center justify-between gap-3">

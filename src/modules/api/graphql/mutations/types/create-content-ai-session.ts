@@ -3,7 +3,13 @@ import type { GraphQLResponse } from "../../types"
 /** GraphQL `CreateContentAiSessionRequest` body. */
 export interface CreateContentAiSessionRequest {
     /** Content the conversation starts in. */
-    contentId: string
+    contentId?: string
+    /** Capstone task the conversation starts in (task scope). */
+    taskId?: string
+    /** Foundation the conversation starts in (foundation scope). */
+    foundationId?: string
+    /** Course the conversation starts in, when `contentId` is omitted (course-general conversation). */
+    courseId?: string
 }
 
 /** Payload inside `createContentAiSession.data` after the standard API wrapper. */

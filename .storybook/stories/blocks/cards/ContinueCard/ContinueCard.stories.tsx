@@ -21,7 +21,7 @@ export const Item: Story = {
                     The subtitle carries the content type (reading, challenge) to distinguish cards standing next to each other in the same grid. Navigate via href on the CTA when the card only points to an existing address.
                 </Typography>
             </div>
-            <div className="grid w-[42rem] gap-3 sm:grid-cols-2">
+            <div className="grid w-[42rem] gap-3 @app-sm:grid-cols-2">
                 <ContinueCard
                     variant="item"
                     title="Building a RESTful API with NestJS"

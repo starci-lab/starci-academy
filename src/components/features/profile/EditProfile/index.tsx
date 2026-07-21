@@ -53,8 +53,9 @@ const WORK_MODE_OPTIONS = [
  * Owns only the page chrome (breadcrumb + header) and the field markup — the form
  * itself (values, avatar file, validation, submit) lives in the `useEditProfileForm`
  * react-hook-form hook (per the form pattern; no scattered local state). On save the
- * hook uploads a freshly picked avatar then persists the text fields + lock flag and
- * pushes the fresh user into redux. Mounted by `/profile/edit`.
+ * hook uploads a freshly picked avatar then persists the text fields and pushes the
+ * fresh user into redux. Mounted by `/profile/edit`. Profile-visibility controls
+ * (lock + per-section) live on the dedicated Privacy settings page, not here.
  */
 export const EditProfile = () => {
     const t = useTranslations()
@@ -79,7 +80,6 @@ export const EditProfile = () => {
     // controlled bindings read straight from the form state (no component useState)
     const displayName = watch("displayName")
     const bio = watch("bio")
-    const profileLocked = watch("profileLocked")
     const openToWork = watch("openToWork")
     const roleTitle = watch("roleTitle")
     const location = watch("location")
@@ -248,29 +248,6 @@ export const EditProfile = () => {
                     ) : null}
                 </TextField>
 
-                {/* privacy: lock profile (FB-style) */}
-                <div className="flex items-start justify-between gap-3">
-                    <div className="flex flex-col gap-0">
-                        <Label htmlFor="profile-locked">{t("profileEdit.lockProfile")}</Label>
-                        <Typography type="body-xs" color="muted">
-                            {t("profileEdit.lockProfileHint")}
-                        </Typography>
-                    </div>
-                    <Checkbox
-                        id="profile-locked"
-                        className="shrink-0"
-                        isSelected={profileLocked}
-                        onChange={(selected) => setValue("profileLocked", selected)}
-                        aria-label={t("profileEdit.lockProfile")}
-                    >
-                        <Checkbox.Content>
-                            <Checkbox.Control>
-                                <Checkbox.Indicator />
-                            </Checkbox.Control>
-                        </Checkbox.Content>
-                    </Checkbox>
-                </div>
-
                 {/* hiring: open to work */}
                 <div className="flex items-start justify-between gap-3">
                     <div className="flex flex-col gap-0">
@@ -296,7 +273,8 @@ export const EditProfile = () => {
 
                 <Button
                     variant="primary"
-                    className="self-end"
+                    size="lg"
+                    className="h-12 self-end px-8 text-base"
                     isDisabled={isSubmitting || !isValid}
                     isPending={isSubmitting}
                     onPress={() => onSubmit()}

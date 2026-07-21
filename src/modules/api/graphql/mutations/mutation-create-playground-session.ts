@@ -15,6 +15,7 @@ const mutation1 = gql`
       data {
         id
         pairingCode
+        pairingCodeExpiresAt
       }
     }
   }

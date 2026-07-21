@@ -150,7 +150,7 @@ export const TalentMarketplace = ({ className }: TalentMarketplaceProps) => {
                 eyebrow={t("landing.outcome.eyebrow")}
                 title={t("landing.outcome.title")}
             />
-            <div className="grid grid-cols-1 gap-x-12 gap-y-20 lg:grid-cols-2 lg:items-center">
+            <div className="grid grid-cols-1 gap-x-12 gap-y-20 @app-lg:grid-cols-2 @app-lg:items-center">
                 {/* Trái — hai journey + CTA tách */}
                 <div className="flex flex-col gap-6">
                     <div className="flex flex-col gap-6">

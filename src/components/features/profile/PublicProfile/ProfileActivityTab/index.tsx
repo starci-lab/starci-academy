@@ -13,6 +13,9 @@ import {
 import {
     ProfileActivity,
 } from "./ProfileActivity"
+import {
+    ProfileSectionGuard,
+} from "../ProfileSectionGuard"
 
 /** Props for {@link ProfileActivityTab}. */
 export type ProfileActivityTabProps = WithClassNames<undefined>
@@ -31,9 +34,11 @@ export const ProfileActivityTab = ({
     className,
 }: ProfileActivityTabProps) => {
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
-            <ProfileAchievements />
-            <ProfileActivity />
-        </div>
+        <ProfileSectionGuard section="activity" className={className}>
+            <div className={cn("flex flex-col gap-6", className)}>
+                <ProfileAchievements />
+                <ProfileActivity />
+            </div>
+        </ProfileSectionGuard>
     )
 }

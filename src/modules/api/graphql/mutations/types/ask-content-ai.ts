@@ -11,7 +11,9 @@ export interface AskContentAiHistoryMessage {
 /** GraphQL `AskContentAiRequest` body. */
 export interface AskContentAiRequest {
     /** Content the question is about. */
-    contentId: string
+    contentId?: string
+    /** Course the question is about, when `contentId` is omitted (course-general conversation). */
+    courseId?: string
     /** The learner's question about this content. */
     question: string
     /** Recent prior turns (oldest first) for short-term memory; capped server-side. */

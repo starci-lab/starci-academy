@@ -2,6 +2,7 @@
 
 import React from "react"
 import { Chip, Typography, cn } from "@heroui/react"
+import { LockSimpleIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import type { SearchCourseContentItem } from "@/modules/api/graphql/queries/types/search-course-content"
@@ -92,6 +93,18 @@ export const EntityResultRow = ({
                 <Typography type="body-xs" color="muted" truncate>
                     {item.snippet}
                 </Typography>
+            ) : null}
+            {/* locked = this viewer must enrol to open it (premium lesson / capstone).
+                The row still NAVIGATES — landing on the surface's own enrol gate is the
+                funnel; this only sets the expectation first. The backend also strips the
+                snippet for these, so there is nothing to read here anyway. */}
+            {item.isLocked ? (
+                <span className="flex items-center gap-1 text-warning-soft-foreground">
+                    <LockSimpleIcon aria-hidden focusable="false" className="size-3.5 shrink-0" />
+                    <Typography type="body-xs" className="text-warning-soft-foreground">
+                        {t("enrollToOpen")}
+                    </Typography>
+                </span>
             ) : null}
         </button>
     )

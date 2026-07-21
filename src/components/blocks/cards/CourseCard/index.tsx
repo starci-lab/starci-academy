@@ -190,7 +190,7 @@ export const CourseCard = ({
                 <div className="flex items-center gap-3">
                     {/* thumbnail 16:9 (branded fallback); hidden on the narrowest screens.
                         rounded-2xl = the "inner" step under the card's rounded-3xl. */}
-                    <div className="relative hidden aspect-video w-36 shrink-0 overflow-hidden rounded-2xl bg-surface sm:block">
+                    <div className="relative hidden aspect-video w-36 shrink-0 overflow-hidden rounded-2xl bg-surface @app-sm:block">
                         {showCover ? (
                             <img
                                 src={course.coverImageUrl ?? undefined}

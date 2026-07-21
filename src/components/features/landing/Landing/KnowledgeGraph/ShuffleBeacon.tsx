@@ -80,7 +80,7 @@ export const ShuffleBeacon = ({ onShuffle }: ShuffleBeaconProps) => {
                     className="absolute size-3 text-accent-soft-foreground transition-transform duration-300 group-hover:rotate-180"
                 />
             </span>
-            <span className="hidden sm:inline">{t("landing.treasure.beaconLabel")}</span>
+            <span className="hidden @app-sm:inline">{t("landing.treasure.beaconLabel")}</span>
         </button>
     )
 }

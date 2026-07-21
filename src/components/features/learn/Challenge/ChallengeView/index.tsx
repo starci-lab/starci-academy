@@ -13,6 +13,7 @@ import { useGraphQLWithToast } from "@/modules/toast/hooks"
 import { CheckListCard, CheckListItem } from "@/components/blocks/cards/CheckListCard"
 import { BackLink } from "@/components/blocks/navigation/BackLink"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
+import { LabeledAccordionCard } from "@/components/blocks/cards/LabeledAccordionCard"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
 import { useAppSelector } from "@/redux/hooks"
 import { difficultyPalette } from "@/components/pallettes/difficulty"
@@ -191,10 +192,11 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
     }
 
     return (
-        <div className={cn("flex flex-col gap-6 xl:flex-row xl:items-start xl:gap-8", className)}>
+        <div className={cn("flex flex-col gap-6 @app-xl:flex-row @app-xl:items-start @app-xl:gap-8", className)}>
             {/* CENTER — the brief (read), a centered reading column */}
             <div className="min-w-0 flex-1">
-                <div className="mx-auto flex w-full max-w-3xl flex-col gap-10">
+                {/* data-ai-selectable: the challenge brief is a valid "ask AI about this passage" region */}
+                <div className="mx-auto flex w-full max-w-3xl flex-col gap-10" data-ai-selectable>
                     {/* header → PageHeader: back link (breadcrumb slot = leaf nav) · title H3 ·
                         description · meta chips (score · difficulty · status) */}
                     <PageHeader
@@ -239,79 +241,35 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
                         ) : null}
 
                         {requirements.length > 0 ? (
-                            <section className="flex flex-col gap-3">
-                                <Typography type="body" weight="semibold" className="text-foreground">
-                                    {t("challenge.requirements")}
-                                </Typography>
-                                {/* requirements as a surface accordion (card fill — this is a standalone
-                                    solve page, not a markdown code-block cluster); collapsed by default —
-                                    the per-requirement points stay visible in each header. */}
-                                <Accordion
-                                    variant="surface"
-                                    className="overflow-hidden shadow-surface"
-                                    allowsMultipleExpanded
-                                >
-                                    {requirements.map((item, index) => (
-                                        <Accordion.Item key={`req-${index}`} id={`req-${index}`} aria-label={item.title}>
-                                            <Accordion.Heading>
-                                                <Accordion.Trigger className="w-full">
-                                                    <div className="flex w-full items-center justify-between gap-3 text-start">
-                                                        <span className="text-base font-semibold">{item.title}</span>
-                                                        <div className="flex shrink-0 items-center gap-2">
-                                                            {item.score !== undefined ? (
-                                                                <Chip color="accent" variant="soft" size="sm">
-                                                                    <Chip.Label>{t("challenge.score", { score: item.score })}</Chip.Label>
-                                                                </Chip>
-                                                            ) : null}
-                                                            <Accordion.Indicator />
-                                                        </div>
-                                                    </div>
-                                                </Accordion.Trigger>
-                                            </Accordion.Heading>
-                                            <Accordion.Panel>
-                                                <Accordion.Body>
-                                                    <MarkdownContent markdown={item.body} />
-                                                </Accordion.Body>
-                                            </Accordion.Panel>
-                                        </Accordion.Item>
-                                    ))}
-                                </Accordion>
-                            </section>
+                            // requirements as an accordion card, collapsed by default — the
+                            // per-requirement points ride in each header via `titleEnd`.
+                            <LabeledAccordionCard
+                                label={t("challenge.requirements")}
+                                allowsMultipleExpanded
+                                items={requirements.map((item, index) => ({
+                                    id: `req-${index}`,
+                                    title: item.title,
+                                    titleEnd: item.score !== undefined ? (
+                                        <Chip color="accent" variant="soft" size="sm">
+                                            <Chip.Label>{t("challenge.score", { score: item.score })}</Chip.Label>
+                                        </Chip>
+                                    ) : undefined,
+                                    body: <MarkdownContent markdown={item.body} />,
+                                }))}
+                            />
                         ) : null}
 
                         {steps.length > 0 ? (
-                            <section className="flex flex-col gap-3">
-                                <Typography type="body" weight="semibold" className="text-foreground">
-                                    {t("challenge.steps.title")}
-                                </Typography>
-                                {/* steps share the requirements' surface accordion, collapsed by
-                                    default (a guide you expand step by step). */}
-                                <Accordion
-                                    variant="surface"
-                                    className="overflow-hidden shadow-surface"
-                                    allowsMultipleExpanded
-                                >
-                                    {steps.map((step, index) => (
-                                        <Accordion.Item key={`step-${index}`} id={`step-${index}`} aria-label={step.title}>
-                                            <Accordion.Heading>
-                                                <Accordion.Trigger className="w-full">
-                                                    <div className="flex w-full items-center justify-between gap-3 text-start">
-                                                        <span className="text-base font-semibold">
-                                                            {`${index + 1}. ${step.title || t("challenge.steps.label", { index: index + 1 })}`}
-                                                        </span>
-                                                        <Accordion.Indicator />
-                                                    </div>
-                                                </Accordion.Trigger>
-                                            </Accordion.Heading>
-                                            <Accordion.Panel>
-                                                <Accordion.Body>
-                                                    <MarkdownContent markdown={step.body} />
-                                                </Accordion.Body>
-                                            </Accordion.Panel>
-                                        </Accordion.Item>
-                                    ))}
-                                </Accordion>
-                            </section>
+                            // a guide you expand step by step — same accordion card, no header chip
+                            <LabeledAccordionCard
+                                label={t("challenge.steps.title")}
+                                allowsMultipleExpanded
+                                items={steps.map((step, index) => ({
+                                    id: `step-${index}`,
+                                    title: `${index + 1}. ${step.title || t("challenge.steps.label", { index: index + 1 })}`,
+                                    body: <MarkdownContent markdown={step.body} />,
+                                }))}
+                            />
                         ) : null}
 
                         {outputs.length > 0 ? (
@@ -361,10 +319,10 @@ export const ChallengeView = ({ className, onBack }: ChallengeViewProps) => {
             {/* RIGHT — the submit + result (act): a sticky aside of cards, like the task page.
                 The inner ScrollShadow owns the overflow + fades the top/bottom edges so a long
                 submission panel scrolls within the viewport with a clear "more below" cue. */}
-            <aside className="w-full shrink-0 xl:sticky xl:top-24 xl:w-[360px] xl:self-start">
+            <aside className="w-full shrink-0 @app-xl:sticky @app-xl:top-24 @app-xl:w-[360px] @app-xl:self-start">
                 <ScrollShadow
                     hideScrollBar
-                    className="flex flex-col gap-6 xl:max-h-[calc(100dvh-7rem)] xl:overflow-y-auto"
+                    className="flex flex-col gap-6 @app-xl:max-h-[calc(100dvh-7rem)] @app-xl:overflow-y-auto"
                 >
                     <LabeledCard
                         label={t("challenge.submissionModal.title")}

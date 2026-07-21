@@ -63,7 +63,7 @@ export const EnrollGate = ({ title, description, preview, className }: EnrollGat
     // it sits alone on the canvas or over the faded teaser.
     const enrollCard = (
         <div className="flex w-full max-w-[480px] flex-col items-center gap-3 rounded-3xl bg-surface px-7 py-8 text-center shadow-surface">
-            <IconTile icon={<LockIcon aria-hidden focusable="false" />} tone="warning" size="sm" />
+            <IconTile icon={<LockIcon aria-hidden focusable="false" />} tone="accent" size="sm" />
             <Typography type="h4" weight="bold">{title}</Typography>
             <Typography type="body-sm" color="muted" className="max-w-[400px]">{description}</Typography>
             <AsyncContent
@@ -114,14 +114,19 @@ export const EnrollGate = ({ title, description, preview, className }: EnrollGat
         )
     }
 
-    // teaser → mock preview (aria-hidden, non-interactive) fading into the page
-    // canvas, with the enroll card floating over the faded tail.
+    // teaser → the FULL real preview (no height cap — mirrors LessonReader, which
+    // renders the whole real body and only fades its tail, never truncates early),
+    // with the enroll card floating over the faded tail.
     return (
         <div className={cn("relative", className)}>
-            <div className="pointer-events-none relative max-h-[440px] overflow-hidden" aria-hidden>
+            <div className="pointer-events-none relative" aria-hidden>
                 {preview}
-                {/* fade the tail of the preview into the page canvas (bg-background) */}
-                <div className="absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent via-background/70 to-background" />
+                {/* fade into the preview's OWN card token (bg-surface), not the page
+                    canvas — the teaser content is bg-surface cards, so fading to
+                    `background` cut them off mid-card. Same band height as
+                    LessonReader's locked-body fade (`h-72`, `via-surface/70 to-surface`)
+                    — canonical value, not re-tuned here. */}
+                <div className="absolute inset-x-0 bottom-0 h-72 bg-gradient-to-b from-transparent via-surface/70 to-surface" />
             </div>
             <div className="relative z-10 -mt-32 flex justify-center px-4 pb-6">
                 {enrollCard}

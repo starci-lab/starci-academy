@@ -4,7 +4,6 @@ import React, {
     useMemo,
 } from "react"
 import {
-    Accordion,
     Chip,
     Typography,
     cn,
@@ -27,6 +26,7 @@ import { useQueryMyCourseOutlineSwr } from "@/hooks/swr/api/graphql/queries/useQ
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { EmptyContent } from "@/components/blocks/async/EmptyContent"
 import { ListRow } from "@/components/blocks/lists/ListRow"
+import { LabeledAccordionCard } from "@/components/blocks/cards/LabeledAccordionCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
 import type { StatusChipTone } from "@/components/blocks/chips/StatusChip"
@@ -44,9 +44,6 @@ export interface CourseMilestoneOutlineProps extends WithClassNames<undefined> {
 
 /** Number of placeholder accordion milestones shown while the outline loads. */
 const SKELETON_MILESTONE_COUNT = 4
-
-/** Accordion-card skin — `variant="surface"` bakes bg-surface + rounded; we add the border. */
-const ACCORDION_CARD = "overflow-hidden shadow-surface"
 
 /** Skeleton frame mirroring the surface accordion-card. */
 const ACCORDION_CARD_SKELETON = "flex flex-col rounded-3xl bg-surface shadow-surface"
@@ -180,83 +177,73 @@ export const CourseMilestoneOutline = ({
             {milestones.length === 0 ? (
                 <EmptyContent title={t("profileSettings.learning.outline.noMatch")} />
             ) : (
-                <Accordion
-                    variant="surface"
-                    className={cn(ACCORDION_CARD, className)}
-                    defaultExpandedKeys={defaultOpenId ? [defaultOpenId] : undefined}
-                >
-                    {milestones.map((milestone) => {
+                // NO `label`: the accordion IS the tab content (the tab already names it);
+                // per-milestone status + progress ride in the header via `titleEnd`.
+                <LabeledAccordionCard
+                    className={className}
+                    defaultExpandedKeys={defaultOpenId ? new Set([defaultOpenId]) : undefined}
+                    items={milestones.map((milestone) => {
                         const state = milestoneState(milestone)
                         const done = milestone.tasks.filter((task) => task.completed).length
                         const total = milestone.tasks.length
-                        return (
-                            <Accordion.Item key={milestone.id} aria-label={milestone.title}>
-                                <Accordion.Heading>
-                                    <Accordion.Trigger>
-                                        <div className="flex w-full items-center justify-between gap-3 text-start">
-                                            <Typography type="body" weight="semibold" truncate>
-                                                {milestone.title}
-                                            </Typography>
-                                            <div className="flex shrink-0 items-center gap-2">
-                                                <StatusChip tone={STATE_TONE[state]}>
-                                                    {t(`profileSettings.learning.outline.milestoneStatus.${state}`)}
-                                                </StatusChip>
-                                                <Typography type="body-xs" color="muted">
-                                                    {t("profileSettings.learning.outline.taskProgress", { done, total })}
-                                                </Typography>
-                                                <Accordion.Indicator />
-                                            </div>
-                                        </div>
-                                    </Accordion.Trigger>
-                                </Accordion.Heading>
-                                <Accordion.Panel>
-                                    <Accordion.Body>
-                                        <div className="flex flex-col gap-2">
-                                            {milestone.tasks.map((task) => {
-                                                const attempted = !task.completed && task.lastScore > 0
-                                                return (
-                                                    <ListRow
-                                                        key={task.id}
-                                                        leading={task.completed ? (
-                                                            <CheckCircleIcon aria-hidden focusable="false" className="size-5 text-success-soft-foreground" />
-                                                        ) : attempted ? (
-                                                            <CircleHalfIcon aria-hidden focusable="false" className="size-5 text-warning-soft-foreground" />
-                                                        ) : (
-                                                            <CircleIcon aria-hidden focusable="false" className="size-5 text-foreground" />
-                                                        )}
-                                                        title={task.completed ? (
-                                                            <span className="text-success-soft-foreground">{task.title}</span>
-                                                        ) : attempted ? (
-                                                            <span className="text-warning-soft-foreground">{task.title}</span>
-                                                        ) : (
-                                                            task.title
-                                                        )}
-                                                        meta={(
-                                                            <>
-                                                                {task.type ? (
-                                                                    <Chip size="sm" variant="soft">
-                                                                        <Chip.Label>
-                                                                            {t(`profileSettings.learning.outline.taskType.${task.type}`)}
-                                                                        </Chip.Label>
-                                                                    </Chip>
-                                                                ) : null}
-                                                                {task.completed || attempted ? (
-                                                                    <Typography type="body-xs" color="muted">
-                                                                        {`${task.lastScore}/${task.maxScore}`}
-                                                                    </Typography>
-                                                                ) : null}
-                                                            </>
-                                                        )}
-                                                    />
-                                                )
-                                            })}
-                                        </div>
-                                    </Accordion.Body>
-                                </Accordion.Panel>
-                            </Accordion.Item>
-                        )
+                        return {
+                            id: milestone.id,
+                            title: milestone.title,
+                            titleEnd: (
+                                <>
+                                    <StatusChip tone={STATE_TONE[state]}>
+                                        {t(`profileSettings.learning.outline.milestoneStatus.${state}`)}
+                                    </StatusChip>
+                                    <Typography type="body-xs" color="muted">
+                                        {t("profileSettings.learning.outline.taskProgress", { done, total })}
+                                    </Typography>
+                                </>
+                            ),
+                            body: (
+                                <div className="flex flex-col gap-2">
+                                    {milestone.tasks.map((task) => {
+                                        const attempted = !task.completed && task.lastScore > 0
+                                        return (
+                                            <ListRow
+                                                key={task.id}
+                                                leading={task.completed ? (
+                                                    <CheckCircleIcon aria-hidden focusable="false" className="size-5 text-success-soft-foreground" />
+                                                ) : attempted ? (
+                                                    <CircleHalfIcon aria-hidden focusable="false" className="size-5 text-warning-soft-foreground" />
+                                                ) : (
+                                                    <CircleIcon aria-hidden focusable="false" className="size-5 text-foreground" />
+                                                )}
+                                                title={task.completed ? (
+                                                    <span className="text-success-soft-foreground">{task.title}</span>
+                                                ) : attempted ? (
+                                                    <span className="text-warning-soft-foreground">{task.title}</span>
+                                                ) : (
+                                                    task.title
+                                                )}
+                                                meta={(
+                                                    <>
+                                                        {task.type ? (
+                                                            <Chip size="sm" variant="soft">
+                                                                <Chip.Label>
+                                                                    {t(`profileSettings.learning.outline.taskType.${task.type}`)}
+                                                                </Chip.Label>
+                                                            </Chip>
+                                                        ) : null}
+                                                        {task.completed || attempted ? (
+                                                            <Typography type="body-xs" color="muted">
+                                                                {`${task.lastScore}/${task.maxScore}`}
+                                                            </Typography>
+                                                        ) : null}
+                                                    </>
+                                                )}
+                                            />
+                                        )
+                                    })}
+                                </div>
+                            ),
+                        }
                     })}
-                </Accordion>
+                />
             )}
         </AsyncContent>
     )

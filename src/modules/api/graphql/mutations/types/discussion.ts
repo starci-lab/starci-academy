@@ -86,3 +86,17 @@ export interface MutateReactToCommentResponse {
     /** Top-level `reactToComment` field wrapping the standard API response. */
     reactToComment: GraphQLResponse<ReactionSummary>
 }
+
+/** GraphQL `AcceptAnswerRequest` body (accept/clear a reply as the answer). */
+export interface AcceptAnswerRequest {
+    /** The reply (direct answer) to accept or unaccept. */
+    commentId: string
+    /** True to accept this answer (clearing any sibling), false to clear it. */
+    accepted: boolean
+}
+
+/** Apollo response shape for `acceptAnswer` (success-only). */
+export interface MutateAcceptAnswerResponse {
+    /** Top-level `acceptAnswer` field wrapping the standard API response. */
+    acceptAnswer: GraphQLResponse<boolean>
+}

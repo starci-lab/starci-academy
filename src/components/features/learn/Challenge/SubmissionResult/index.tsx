@@ -90,7 +90,7 @@ const FindingAccordionItem = ({
                             className="min-w-0 flex-1 text-sm [&_p]:m-0 [&_p]:line-clamp-1"
                         />
                         {feedback.location ? (
-                            <Chip size="sm" className="hidden max-w-[34%] shrink-0 sm:inline-flex">
+                            <Chip size="sm" className="hidden max-w-[34%] shrink-0 @app-sm:inline-flex">
                                 <Chip.Label className="truncate">{feedback.location}</Chip.Label>
                             </Chip>
                         ) : null}

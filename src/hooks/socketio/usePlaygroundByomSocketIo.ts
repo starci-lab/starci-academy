@@ -1,13 +1,20 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import type {
     PlaygroundByomAgentConnectionSocketIoMessage,
+    PlaygroundByomAgentLogSocketIoMessage,
     PlaygroundByomAgentPongSocketIoMessage,
-    PlaygroundByomCommandOutputSocketIoMessage,
+    PlaygroundByomDeviceInfoSocketIoMessage,
+    PlaygroundByomEnvReportSocketIoMessage,
+    PlaygroundByomOllamaStatusSocketIoMessage,
+    PlaygroundByomRagAnswerSocketIoMessage,
+    PlaygroundByomRagCitationsSocketIoMessage,
+    PlaygroundByomRagEventSocketIoMessage,
     PlaygroundByomResource,
     PlaygroundByomResourcesReportSocketIoMessage,
     PlaygroundByomStepVerifiedSocketIoMessage,
+    AskRagPlaygroundByomSocketIoPayload,
+    IndexRagPlaygroundByomSocketIoPayload,
     PingPlaygroundByomSocketIoPayload,
-    RunPlaygroundByomCommandSocketIoPayload,
     SubscribePlaygroundByomSocketIoPayload,
     VerifyNowPlaygroundByomSocketIoPayload,
 } from "./types"
@@ -20,8 +27,6 @@ import { LocalStorageId } from "@/modules/storage/local/enums/id"
 export interface PlaygroundByomState {
     /** Whether the learner's local CLI agent is currently connected + paired to this session. */
     connected: boolean
-    /** Raw command/output log, newest line last — fed straight into the Terminal tab. */
-    commandOutput: string
     /** Latest reported live resources (Pod/Container/Network/Service) — fed into the Resources tab. */
     resources: Array<PlaygroundByomResource>
     /** Index of the step most recently verified as complete by the agent/server, or `null`. */
@@ -31,14 +36,42 @@ export interface PlaygroundByomState {
      * pinging the agent every 5s while connected. `null` until the first pong.
      */
     latencyMs: number | null
+    /** The connected machine's hardware/OS snapshot (sent once on pair), or `null`. */
+    deviceInfo: PlaygroundByomDeviceInfoSocketIoMessage | null
+    /**
+     * Whether this lab's tooling is installed AND answering, probed by the agent
+     * on pair and on every `verify:now`. `null` until the first report. Kept
+     * SEPARATE from `connected` on purpose — an agent pairs fine while Docker's
+     * daemon is stopped, so pairing is not evidence the engine works.
+     */
+    envReport: PlaygroundByomEnvReportSocketIoMessage | null
+    /** Streamed agent lifecycle/diagnostic log lines, newest last (capped). */
+    agentLog: Array<PlaygroundByomAgentLogSocketIoMessage>
+    /** Latest local Ollama runtime serving state + loaded models, or `null` until first reported. */
+    ollamaStatus: { serving: boolean; models: Array<string> } | null
+    /** Latest streamed machine-backed RAG answer chunk, or `null` until the first `rag:answer`. */
+    ragAnswer: PlaygroundByomRagAnswerSocketIoMessage | null
+    /** Latest machine-backed RAG citations, or `null` until the first `rag:citations`. */
+    ragCitations: PlaygroundByomRagCitationsSocketIoMessage | null
+    /** Latest machine-backed RAG lifecycle event, or `null` until the first `rag:event`. */
+    ragEvent: PlaygroundByomRagEventSocketIoMessage | null
 }
+
+/** Max agent log lines kept in memory (older lines drop off). */
+const AGENT_LOG_CAP = 100
 
 const INITIAL_STATE: PlaygroundByomState = {
     connected: false,
-    commandOutput: "",
     resources: [],
     verifiedStepIndex: null,
     latencyMs: null,
+    deviceInfo: null,
+    envReport: null,
+    agentLog: [],
+    ollamaStatus: null,
+    ragAnswer: null,
+    ragCitations: null,
+    ragEvent: null,
 }
 
 /** How often (ms) to ping the connected agent for a fresh latency reading. */
@@ -50,29 +83,34 @@ export interface PlaygroundByomSocketIoControls {
     state: PlaygroundByomState
     /** Begin tracking a session: reset state and emit `browser:subscribe`. */
     subscribe: (sessionId: string) => void
-    /** Emit `command:run` to relay a shell command to the connected agent. */
-    sendCommand: (command: string) => void
     /** Emit `verify:now` — ask the agent to report resources immediately so the
      * current step verifies without waiting for the next periodic snapshot. */
     requestVerify: () => void
+    /** Emit `rag:index` — ask the connected agent to index a code source into an
+     * ephemeral RAG collection. The `sessionId` is filled from the tracked session. */
+    sendRagIndex: (source: Omit<IndexRagPlaygroundByomSocketIoPayload, "sessionId">) => void
+    /** Emit `rag:ask` — ask the connected agent to answer a question over the
+     * indexed code, correlated by `runId` to the streamed `rag:answer`/`rag:citations`. */
+    sendRagAsk: (runId: string, question: string) => void
 }
 
 /**
  * Consumer hook for the course-scoped Playground "bring your own machine"
  * relay: connects to the `/playground_byom` namespace, subscribes to one
- * session's room, and accumulates the command-output log + live resource
- * snapshot + step-verified events pushed by the backend gateway (itself
- * relaying from the learner's local CLI agent).
+ * session's room, and accumulates the live resource snapshot + step-verified
+ * events pushed by the backend gateway (itself relaying from the learner's
+ * local CLI agent). There is no command relay — the learner runs commands in
+ * their own terminal; `requestVerify` just asks the agent to re-snapshot.
  *
- * Self-contained like {@link import("./useRagPlaygroundRunStreamSocketIo").useRagPlaygroundRunStreamSocketIo}
- * (connects on mount, local `useState`, no global lifecycle wiring). The
+ * Self-contained (connects on mount, local `useState`, no global lifecycle
+ * wiring). The
  * backend `PlaygroundByomGateway` is UNAUTHENTICATED (the paired CLI agent has
  * no Keycloak session — gated by a short-lived pairing code instead), so a
  * bearer token is attached defensively but the gateway ignores it either way.
  *
- * All 3 server pushes (`command:output` / `resources:report` / `step:verified`)
- * are ROOM-SCOPED by the gateway — no `sessionId` on the payload to filter by,
- * unlike this app's other socket features (see `types/playground-byom.ts`).
+ * The server pushes (`resources:report` / `step:verified` / …) are ROOM-SCOPED
+ * by the gateway — no `sessionId` on the payload to filter by, unlike this
+ * app's other socket features (see `types/playground-byom.ts`).
  */
 export const usePlaygroundByomSocketIo = (): PlaygroundByomSocketIoControls => {
     const [state, setState] = useState<PlaygroundByomState>(INITIAL_STATE)
@@ -104,19 +142,43 @@ export const usePlaygroundByomSocketIo = (): PlaygroundByomSocketIoControls => {
         const onAgentPong = (message: PlaygroundByomAgentPongSocketIoMessage) =>
             setState((prev) => ({ ...prev, latencyMs: Math.max(0, Date.now() - message.t) }))
 
-        const onCommandOutput = (message: PlaygroundByomCommandOutputSocketIoMessage) => {
-            setState((prev) => ({
-                ...prev,
-                commandOutput: `${prev.commandOutput}\n${message.output}`,
-            }))
-        }
-
         const onResourcesReport = (message: PlaygroundByomResourcesReportSocketIoMessage) => {
             setState((prev) => ({ ...prev, resources: message.resources }))
         }
 
         const onStepVerified = (message: PlaygroundByomStepVerifiedSocketIoMessage) => {
             setState((prev) => ({ ...prev, verifiedStepIndex: message.data.stepIndex }))
+        }
+
+        const onDeviceInfo = (message: PlaygroundByomDeviceInfoSocketIoMessage) => {
+            setState((prev) => ({ ...prev, deviceInfo: message }))
+        }
+
+        const onEnvReport = (message: PlaygroundByomEnvReportSocketIoMessage) => {
+            setState((prev) => ({ ...prev, envReport: message }))
+        }
+
+        const onAgentLog = (message: PlaygroundByomAgentLogSocketIoMessage) => {
+            setState((prev) => ({
+                ...prev,
+                agentLog: [...prev.agentLog, message].slice(-AGENT_LOG_CAP),
+            }))
+        }
+
+        const onOllamaStatus = (message: PlaygroundByomOllamaStatusSocketIoMessage) => {
+            setState((prev) => ({ ...prev, ollamaStatus: { serving: message.serving, models: message.models } }))
+        }
+
+        const onRagAnswer = (message: PlaygroundByomRagAnswerSocketIoMessage) => {
+            setState((prev) => ({ ...prev, ragAnswer: message }))
+        }
+
+        const onRagCitations = (message: PlaygroundByomRagCitationsSocketIoMessage) => {
+            setState((prev) => ({ ...prev, ragCitations: message }))
+        }
+
+        const onRagEvent = (message: PlaygroundByomRagEventSocketIoMessage) => {
+            setState((prev) => ({ ...prev, ragEvent: message }))
         }
 
         // function form → re-evaluated on every (re)connection attempt, so a
@@ -130,21 +192,33 @@ export const usePlaygroundByomSocketIo = (): PlaygroundByomSocketIoControls => {
         }
         socket.on("connect", onConnect)
         socket.on("disconnect", onDisconnect)
-        socket.on(SubscriptionEvent.PlaygroundByomCommandOutput, onCommandOutput)
         socket.on(SubscriptionEvent.PlaygroundByomResourcesReport, onResourcesReport)
         socket.on(SubscriptionEvent.PlaygroundByomStepVerified, onStepVerified)
         socket.on(SubscriptionEvent.PlaygroundByomAgentConnected, onAgentConnected)
         socket.on(SubscriptionEvent.PlaygroundByomAgentDisconnected, onAgentDisconnected)
         socket.on(SubscriptionEvent.PlaygroundByomAgentPong, onAgentPong)
+        socket.on(SubscriptionEvent.PlaygroundByomDeviceInfo, onDeviceInfo)
+        socket.on(SubscriptionEvent.PlaygroundByomEnvReport, onEnvReport)
+        socket.on(SubscriptionEvent.PlaygroundByomAgentLog, onAgentLog)
+        socket.on(SubscriptionEvent.PlaygroundByomOllamaStatus, onOllamaStatus)
+        socket.on(SubscriptionEvent.PlaygroundByomRagAnswer, onRagAnswer)
+        socket.on(SubscriptionEvent.PlaygroundByomRagCitations, onRagCitations)
+        socket.on(SubscriptionEvent.PlaygroundByomRagEvent, onRagEvent)
         return () => {
             socket.off("connect", onConnect)
             socket.off("disconnect", onDisconnect)
-            socket.off(SubscriptionEvent.PlaygroundByomCommandOutput, onCommandOutput)
             socket.off(SubscriptionEvent.PlaygroundByomResourcesReport, onResourcesReport)
             socket.off(SubscriptionEvent.PlaygroundByomStepVerified, onStepVerified)
             socket.off(SubscriptionEvent.PlaygroundByomAgentConnected, onAgentConnected)
             socket.off(SubscriptionEvent.PlaygroundByomAgentDisconnected, onAgentDisconnected)
             socket.off(SubscriptionEvent.PlaygroundByomAgentPong, onAgentPong)
+            socket.off(SubscriptionEvent.PlaygroundByomDeviceInfo, onDeviceInfo)
+            socket.off(SubscriptionEvent.PlaygroundByomEnvReport, onEnvReport)
+            socket.off(SubscriptionEvent.PlaygroundByomAgentLog, onAgentLog)
+            socket.off(SubscriptionEvent.PlaygroundByomOllamaStatus, onOllamaStatus)
+            socket.off(SubscriptionEvent.PlaygroundByomRagAnswer, onRagAnswer)
+            socket.off(SubscriptionEvent.PlaygroundByomRagCitations, onRagCitations)
+            socket.off(SubscriptionEvent.PlaygroundByomRagEvent, onRagEvent)
         }
     }, [])
 
@@ -181,18 +255,6 @@ export const usePlaygroundByomSocketIo = (): PlaygroundByomSocketIoControls => {
         [],
     )
 
-    const sendCommand = useCallback(
-        (command: string) => {
-            const sessionId = sessionIdRef.current
-            if (!sessionId) {
-                return
-            }
-            const payload: RunPlaygroundByomCommandSocketIoPayload = { sessionId, command }
-            playgroundByomSocket.emit(PublicationEvent.RunPlaygroundByomCommand, payload)
-        },
-        [],
-    )
-
     const requestVerify = useCallback(
         () => {
             const sessionId = sessionIdRef.current
@@ -205,10 +267,35 @@ export const usePlaygroundByomSocketIo = (): PlaygroundByomSocketIoControls => {
         [],
     )
 
+    const sendRagIndex = useCallback(
+        (source: Omit<IndexRagPlaygroundByomSocketIoPayload, "sessionId">) => {
+            const sessionId = sessionIdRef.current
+            if (!sessionId) {
+                return
+            }
+            const payload: IndexRagPlaygroundByomSocketIoPayload = { sessionId, ...source }
+            playgroundByomSocket.emit(PublicationEvent.PlaygroundByomRagIndex, payload)
+        },
+        [],
+    )
+
+    const sendRagAsk = useCallback(
+        (runId: string, question: string) => {
+            const sessionId = sessionIdRef.current
+            if (!sessionId) {
+                return
+            }
+            const payload: AskRagPlaygroundByomSocketIoPayload = { sessionId, runId, question }
+            playgroundByomSocket.emit(PublicationEvent.PlaygroundByomRagAsk, payload)
+        },
+        [],
+    )
+
     return {
         state,
         subscribe,
-        sendCommand,
         requestVerify,
+        sendRagIndex,
+        sendRagAsk,
     }
 }

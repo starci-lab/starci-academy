@@ -4,26 +4,30 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import {
     Button,
     CloseButton,
-    Label,
+    Dropdown,
+    DropdownItem,
+    DropdownMenu,
+    DropdownPopover,
+    DropdownSection,
+    DropdownTrigger,
     Link,
     ScrollShadow,
+    Switch,
     Typography,
     cn,
 } from "@heroui/react"
 import {
+    ArchiveIcon,
     ArrowLeftIcon,
     ArrowRightIcon,
-    BookmarkSimpleIcon,
     BookOpenIcon,
     CardsIcon,
     CaretDownIcon,
     ChatsCircleIcon,
-    FlagIcon,
-    FlaskIcon,
-    GearIcon,
-    LightbulbIcon,
-    ListBulletsIcon,
+    DotsThreeVerticalIcon,
+    MagnifyingGlassIcon,
     PaperPlaneTiltIcon,
+    PencilSimpleIcon,
     PlusIcon,
     PuzzlePieceIcon,
     QuotesIcon,
@@ -56,6 +60,8 @@ import {
 } from "@/hooks/swr/api/graphql/queries/useQueryContentAiSessionsInfiniteSwr"
 import { useMutateCreateContentAiSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCreateContentAiSessionSwr"
 import { useMutateClearContentAiHistorySwr } from "@/hooks/swr/api/graphql/mutations/useMutateClearContentAiHistorySwr"
+import { useMutateRenameContentAiSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateRenameContentAiSessionSwr"
+import { useMutateSetContentAiSessionArchivedSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetContentAiSessionArchivedSwr"
 import { useMutateTouchContentAiSessionSwr } from "@/hooks/swr/api/graphql/mutations/useMutateTouchContentAiSessionSwr"
 import { ChatBubble, type ChatRole } from "@/components/blocks/feed/ChatBubble"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
@@ -64,50 +70,105 @@ import { InfiniteScrollSentinel } from "@/components/blocks/async/InfiniteScroll
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { useQuerySearchCourseContentSwr } from "@/hooks/swr/api/graphql/queries/useQuerySearchCourseContentSwr"
 import { querySearchCourseContent } from "@/modules/api/graphql/queries/query-search-course-content"
+import { defaultChallengesListSorts, queryChallenges } from "@/modules/api/graphql/queries/query-challenges"
 import type { SearchCourseContentItem } from "@/modules/api/graphql/queries/types/search-course-content"
 import { ChatToolResult } from "@/components/blocks/learn/ChatToolResult"
 import { EntityResultRow } from "@/components/blocks/learn/EntityResultRow"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
+import { useContentAiChatScopeStore } from "@/hooks/zustand/contentAiChatScope/store"
 
 /** Props for {@link ContentAiChat}. */
 export type ContentAiChatProps = WithClassNames<undefined>
 
-/** Generic starter questions shown in the empty chat (i18n keys under `contentAi.suggestions`). */
-const SUGGESTION_KEYS = ["summarize", "hardest", "example", "remember"] as const
+/** Starter questions shown in the empty chat WITH A LESSON OPEN (keys under `contentAi.suggestions`). */
+const SUGGESTION_KEYS = ["summarize", "hardest", "example"] as const
 
 /** Scoped quick-asks shown when a lesson passage is selected (keys under `contentAi.selectionSuggestions`). */
 const SELECTION_SUGGESTION_KEYS = ["explain", "example", "simplify"] as const
 
-/** The kind an in-chat "find X" intent resolves to. */
-type ContentIntentKind = "content" | "challenge" | "flashcard" | "milestone"
+/**
+ * The kind an in-chat "find X" intent resolves to.
+ *
+ * NOTE there is no `milestone` here on purpose: capstone tasks are not something
+ * a learner looks up mid-lesson. They hang off the COURSE (not any content), the
+ * personal-project surface is enrolled-only, and there is exactly one of it
+ * reachable from the rail — so every capstone hit was noise (and, for a trial
+ * viewer, a locked row). The backend still indexes and serves the kind for other
+ * consumers (e.g. the mind-map node drawer); the chat just never asks for it.
+ */
+type ContentIntentKind = "content" | "challenge" | "flashcard"
 
 /**
- * One discoverable slash-command. Typing `/` as the first token opens a menu of
- * these so a learner SEES what the chatbot can do instead of guessing the magic
- * phrasing (the plain ask "Các challenges liên quan" never triggered the find).
- * Every command maps onto capabilities that ALREADY exist — `find` reuses the
- * `runContentIntent` RAG search (kinds the BE `searchCourseContent` supports;
- * `"all"` = related content across every kind), `prompt` sends a preset question
- * (the same strings as the empty-thread suggestion chips). No BE change.
+ * The retrieval "skills" the chat exposes — the ONLY tool-shaped capability it
+ * has, and the reason they are surfaced as chips + a composer menu rather than a
+ * slash grammar: each one runs the `searchCourseContent` RAG search and answers
+ * with a PICKABLE list that navigates somewhere real.
+ *
+ * The old `/` palette also carried `summarize`/`explain`/`example`, which merely
+ * sent a preset question and streamed plain prose back — those are not tools, so
+ * they now live purely as empty-state suggestion chips ({@link SUGGESTION_KEYS})
+ * and the slash grammar is gone entirely: learners here are beginners, often on a
+ * phone, and a two-level `<verb> <noun>` grammar was a power-user affordance most
+ * never discovered. Typing "tìm thử thách…" already routes here via
+ * {@link detectContentIntent}.
  */
-type SlashCommand =
-    | { token: string, type: "find", kind: ContentIntentKind | "all", Icon: typeof CardsIcon }
-    | { token: string, type: "prompt", suggestionKey: typeof SUGGESTION_KEYS[number], Icon: typeof CardsIcon }
-
-/** The command set (order = menu order). Tokens are short English slugs (dev-tool
- * convention); the Vietnamese description lives in `contentAi.commands.<token>`. */
-const SLASH_COMMANDS: ReadonlyArray<SlashCommand> = [
-    { token: "challenges", type: "find", kind: "challenge", Icon: PuzzlePieceIcon },
-    { token: "flashcards", type: "find", kind: "flashcard", Icon: CardsIcon },
-    { token: "lessons", type: "find", kind: "content", Icon: BookOpenIcon },
-    { token: "milestones", type: "find", kind: "milestone", Icon: FlagIcon },
-    { token: "related", type: "find", kind: "all", Icon: SparkleIcon },
-    { token: "summarize", type: "prompt", suggestionKey: "summarize", Icon: ListBulletsIcon },
-    { token: "hardest", type: "prompt", suggestionKey: "hardest", Icon: LightbulbIcon },
-    { token: "example", type: "prompt", suggestionKey: "example", Icon: FlaskIcon },
-    { token: "remember", type: "prompt", suggestionKey: "remember", Icon: BookmarkSimpleIcon },
+interface RetrievalSkill {
+    /** i18n token — label at `contentAi.commands.<token>`. */
+    token: string
+    /** Corpus this skill searches (`all` = every kind, the mixed "related" list). */
+    kind: ContentIntentKind | "all"
+    /** Leading icon (signals the result kind at a glance). */
+    Icon: typeof CardsIcon
+}
+const RETRIEVAL_SKILLS: ReadonlyArray<RetrievalSkill> = [
+    { token: "challenges", kind: "challenge", Icon: PuzzlePieceIcon },
+    { token: "flashcards", kind: "flashcard", Icon: CardsIcon },
+    { token: "lessons", kind: "content", Icon: BookOpenIcon },
+    { token: "related", kind: "all", Icon: SparkleIcon },
 ]
+
+/**
+ * Which retrieval chips lead the EMPTY state, per scope.
+ *
+ * Course scope leads with `lessons` because with no lesson open the first useful
+ * move is finding one; lesson scope has no reason to offer it (you are already in
+ * one) and leads with the practice that follows the reading instead.
+ */
+const EMPTY_STATE_SKILLS: Record<ChatContextScope, ReadonlyArray<string>> = {
+    lesson: ["challenges", "flashcards"],
+    course: ["lessons", "challenges", "flashcards"],
+    // a capstone task and a foundation each read like a single lesson — lead with
+    // the practice that follows the reading, not "find a lesson" (you are in one)
+    task: ["challenges", "flashcards"],
+    foundation: ["challenges", "flashcards"],
+}
+
+/**
+ * Label for a retrieval chip, worded for the scope it will actually search.
+ *
+ * The labels used to be fixed lesson-wording ("Tìm challenges liên quan BÀI NÀY")
+ * and rendered in both scopes, so on a lesson-less surface the chat offered to
+ * search a lesson that was not open — and answered with hits from unrelated
+ * modules. The search itself was always course-wide; only the promise was wrong.
+ */
+const SCOPE_LABEL_SUFFIX: Record<ChatContextScope, string> = {
+    lesson: "OfLesson",
+    course: "InCourse",
+    task: "OfTask",
+    foundation: "OfFoundation",
+}
+const retrievalLabelKey = (token: string, scope: ChatContextScope): string =>
+    `contentAi.commands.${token}${SCOPE_LABEL_SUFFIX[scope]}`
+
+/**
+ * Which grounding the next question runs against — surfaced to the learner as the
+ * context pill above the composer so it is never a mystery what the AI is reading.
+ * `lesson` is the DEFAULT whenever a lesson is open; `course` is both the
+ * automatic fallback on a lesson-less surface (flashcards, mind-map, leaderboard)
+ * and an explicit widening the learner can pick while reading.
+ */
+type ChatContextScope = "lesson" | "course" | "task" | "foundation"
 
 /** A find-verb that signals the learner wants a LIST of course content, not a chat answer. */
 const CONTENT_INTENT_VERB_RE = /(tìm|find|gợi ý|liệt kê|list|show|kiếm)/i
@@ -116,7 +177,6 @@ const CONTENT_INTENT_VERB_RE = /(tìm|find|gợi ý|liệt kê|list|show|kiếm)
 const CONTENT_INTENT_KINDS: Array<{ re: RegExp, kind: ContentIntentKind }> = [
     { re: /(flashcard|thẻ)/i, kind: "flashcard" },
     { re: /(thử thách|challenge|bài tập)/i, kind: "challenge" },
-    { re: /(dự án|milestone|capstone|nhiệm vụ)/i, kind: "milestone" },
     { re: /(bài học|bài|lesson|nội dung)/i, kind: "content" },
 ]
 
@@ -139,12 +199,57 @@ const TOOL_RESULT_META: Record<ContentIntentKind | "all", { labelKey: string, Ic
     flashcard: { labelKey: "entityResult.kindFlashcard", Icon: CardsIcon },
     content: { labelKey: "entityResult.kindContent", Icon: BookOpenIcon },
     challenge: { labelKey: "entityResult.kindChallenge", Icon: PuzzlePieceIcon },
-    milestone: { labelKey: "entityResult.kindMilestone", Icon: FlagIcon },
     all: { labelKey: "contentAi.toolResult.relatedLabel", Icon: SparkleIcon },
 }
 
+/** Corpus kinds the chat's "everything related" skill spans — capstone tasks excluded (see {@link ContentIntentKind}). */
+const RELATED_KINDS: ReadonlyArray<string> = ["content", "code", "challenge", "flashcard"]
+
 /** Number of rows the in-chat tool result shows before "see all". */
 const TOOL_RESULT_LIMIT = 5
+
+/**
+ * The open lesson's OWN challenges, shaped as tool-result rows.
+ *
+ * A challenge hangs off exactly one content (FK `content_id`), so while a lesson
+ * is open "thử thách của bài này" is an exact list, not a similarity guess — this
+ * reads the challenges-by-content query instead of RAG. Never locked: the learner
+ * is already reading the parent lesson, so they can open its challenges.
+ *
+ * @param contentId - The open lesson.
+ * @param contentTitle - Its title, used as each row's breadcrumb.
+ * @returns Up to {@link TOOL_RESULT_LIMIT} rows (empty when the lesson has none).
+ */
+const loadContentChallenges = async (
+    contentId: string,
+    contentTitle: string | null,
+): Promise<Array<SearchCourseContentItem>> => {
+    const res = await queryChallenges({
+        request: {
+            contentId,
+            filters: {
+                pageNumber: 0,
+                limit: TOOL_RESULT_LIMIT,
+                sorts: defaultChallengesListSorts,
+            },
+        },
+    })
+    const rows = res.data?.challenges?.data?.data ?? []
+    return rows.map((challenge) => ({
+        kind: "challenge",
+        title: challenge.title,
+        breadcrumb: contentTitle,
+        snippet: challenge.description ?? "",
+        // a direct relation, not a similarity ranking — score is only used for
+        // ordering RAG hits, and these arrive already ordered by `sortIndex`
+        score: 1,
+        moduleId: null,
+        contentId,
+        deckId: null,
+        taskId: null,
+        isLocked: false,
+    }))
+}
 
 /** Extract the visible `<display>…</display>` part of a message (hides `<context>` from the UI). */
 const DISPLAY_RE = /<display>([\s\S]*?)<\/display>/
@@ -202,12 +307,26 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     const contentId = useAppSelector((state) => state.content.id)
     const contentEntity = useAppSelector((state) => state.content.entity)
     const course = useAppSelector((state) => state.course.entity)
+    // grounding ids for the non-lesson scopes (capstone task, foundation) — the
+    // route/outline populate these via redux (milestone.selectedTaskId is set by
+    // MilestoneOutline/PersonalProject; foundation.foundationId by
+    // useSyncReduxFoundationId). Absent → the scope falls back to course.
+    const taskId = useAppSelector((state) => state.milestone.selectedTaskId)
+    const foundationId = useAppSelector((state) => state.foundation.foundationId)
     const { ask, abort } = useContentAiStream()
     const { close: closeChat } = useContentAiChatOverlayState()
     const [messages, setMessages] = useState<Array<ChatMessage>>([])
     const [input, setInput] = useState("")
-    // highlighted row in the slash-command palette (keyboard ↑↓); reset to 0 on every keystroke
-    const [activeCommandIndex, setActiveCommandIndex] = useState(0)
+    // whether the composer's retrieval-skill menu is open (the ⌥ button) — the
+    // mid-conversation way to reach the skills once the empty-state chips are gone
+    const [isSkillMenuOpen, setSkillMenuOpen] = useState(false)
+    // explicit "ask the whole course instead" widening while a lesson IS open;
+    // ignored (and reset) when there is no lesson to narrow back to.
+    // Lives in a store, not local state: the scope PILL renders in the panel
+    // header (rail + drawer), so the host has to read the same value this body
+    // grounds on — otherwise the header could claim a scope the next question
+    // does not use.
+    const { prefersCourseScope, resetScope } = useContentAiChatScopeStore()
     const [isStreaming, setIsStreaming] = useState(false)
     // lesson passage the learner highlighted to ask about (set by ContentAiSelectionAsk)
     const { selection, selectionContext, setSelection } = useContentAiSelection()
@@ -216,6 +335,12 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     const [currentSessionId, setCurrentSessionId] = useState<string | null>(null)
     const [view, setView] = useState<PanelView>("chat")
     const [searchTerm, setSearchTerm] = useState("")
+    // "Đã lưu trữ" toggle — folds archived conversations into the history list
+    // (born-archived selection chats + anything manually archived). Default off.
+    const [showArchived, setShowArchived] = useState(false)
+    // inline-rename state: which history row is being renamed + its draft title
+    const [renamingSessionId, setRenamingSessionId] = useState<string | null>(null)
+    const [renameDraft, setRenameDraft] = useState("")
 
     // "Tìm nội dung khóa" (search view) — debounced so typing never fires an
     // embedding call per keystroke (unlike the plain-ILIKE conversations search above)
@@ -258,22 +383,70 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         }
     }, [selectedModel, models])
 
-    // recent conversations for the header (auto-select most recent + current title)
-    const sessionsSwr = useQueryContentAiSessionsSwr(contentId)
+    // ACTIVE SCOPE — one session per scope. A lesson grounds on itself unless the
+    // learner widened to the course; with no lesson open the surface picks the
+    // next grounding it has (capstone task → foundation → whole course).
+    // Everything downstream (what we send, which chips show, what the pill says)
+    // reads this one value.
+    const scope: ChatContextScope = prefersCourseScope
+        ? "course"
+        : contentId
+            ? "lesson"
+            : taskId
+                ? "task"
+                : foundationId
+                    ? "foundation"
+                    : "course"
+    const isLessonScope = scope === "lesson"
+    // what the next question actually grounds on — exactly one id per scope
+    const askContentId = scope === "lesson" ? contentId : undefined
+    const askTaskId = scope === "task" ? taskId : undefined
+    const askFoundationId = scope === "foundation" ? foundationId : undefined
+    const askCourseId = scope === "course" ? course?.id : undefined
+    // the raw SURFACE key — changes when the learner moves to a different
+    // lesson/task/foundation/course, but NOT when they widen a lesson to course
+    // (a widen is an overlay on the same surface → same session). Drives the reset
+    // + auto-select effects so each scope keeps its own thread.
+    const surfaceScopeKey = contentId
+        ? `lesson:${contentId}`
+        : taskId
+            ? `task:${taskId}`
+            : foundationId
+                ? `foundation:${foundationId}`
+                : `course:${course?.id ?? ""}`
+
+    // recent conversations for the header (auto-select most recent + current title).
+    // Only LESSON scope narrows to a content; task/foundation/course all list the
+    // enrollment's conversations course-wide — the sessions query has no
+    // task/foundation filter yet (BE slice), so those scopes resume from (and add
+    // to) the course-wide list rather than a per-task / per-foundation one.
+    const sessionListContentId = isLessonScope ? contentId : undefined
+    const sessionListCourseId = isLessonScope ? undefined : course?.id
+    const sessionsSwr = useQueryContentAiSessionsSwr(
+        sessionListContentId,
+        undefined,
+        sessionListCourseId,
+    )
     // the conversations view list is paginated/infinite (mirror followers infinite)
     const sessionsInfinite = useQueryContentAiSessionsInfiniteSwr(
-        contentId,
+        sessionListContentId,
         searchTerm,
         view === "conversations",
+        sessionListCourseId,
+        showArchived,
     )
     // saved turns of the OPEN conversation
     const historySwr = useQueryContentAiHistorySwr(currentSessionId ?? undefined)
     const createSwr = useMutateCreateContentAiSessionSwr()
     const deleteSwr = useMutateClearContentAiHistorySwr()
+    const renameSwr = useMutateRenameContentAiSessionSwr()
+    const archiveSwr = useMutateSetContentAiSessionArchivedSwr()
     const touchSwr = useMutateTouchContentAiSessionSwr()
 
     const hydratedRef = useRef<string | undefined>(undefined)
-    const contentSelectedRef = useRef<string | undefined>(undefined)
+    // which surface-scope the auto-select effect has already resumed a session for
+    // (guards it from re-firing on unrelated re-renders / streamed tokens)
+    const scopeSelectedRef = useRef<string | undefined>(undefined)
     const prevContentIdRef = useRef<string | undefined>(undefined)
     // thread scroll container — auto-follow the answer to the bottom as it
     // streams, scrolling ONLY this region (never the page)
@@ -282,20 +455,29 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     // re-read, so streaming does not drag them back down
     const stickToBottomRef = useRef<boolean>(true)
 
-    // a new content resets everything (thread, open session, view, search)
+    // One session per scope, NO carry-thread. Moving to a different surface
+    // (lesson → task → foundation → course) RESETS the thread; the auto-select
+    // effect below then resumes THAT surface's own most-recent session (or leaves
+    // an empty thread until the first question). Continuity between scopes comes
+    // from the conversations history list — never from carrying turns across, so
+    // there is no context divider either.
     useEffect(() => {
         abort()
-        setMessages([])
         setInput("")
         setIsStreaming(false)
-        setCurrentSessionId(null)
         setView("chat")
         setSearchTerm("")
         setContentSearchQuery("")
         setDebouncedContentSearchQuery("")
+        // a widening belongs to the surface it was made on — landing on a new one
+        // starts from that surface's natural scope again
+        resetScope()
+        setSkillMenuOpen(false)
         hydratedRef.current = undefined
-        contentSelectedRef.current = undefined
-    }, [contentId, abort])
+        setMessages([])
+        setCurrentSessionId(null)
+        scopeSelectedRef.current = undefined
+    }, [surfaceScopeKey, abort, resetScope])
 
     /** Jump to a search result's real surface (content/challenge/flashcard/milestone), then close the panel. */
     const onSelectSearchResult = useCallback(
@@ -321,16 +503,17 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         [course?.displayId, locale, router, closeChat],
     )
 
-    // once the lesson's conversations load, reopen the most recent one — opening a
+    // once this scope's conversations load, reopen the most recent one — opening a
     // chat bumps its recency server-side (touchSession), so "most recent" = the
-    // last conversation the user read (persisted in the DB, not the browser)
+    // last conversation the user read in this scope (persisted in the DB, not the
+    // browser). Runs for EVERY scope now, so task/foundation/course resume too.
     useEffect(() => {
-        if (!contentId || contentSelectedRef.current === contentId || sessionsSwr.data === undefined) {
+        if (scopeSelectedRef.current === surfaceScopeKey || sessionsSwr.data === undefined) {
             return
         }
         setCurrentSessionId(sessionsSwr.data[0]?.id ?? null)
-        contentSelectedRef.current = contentId
-    }, [contentId, sessionsSwr.data])
+        scopeSelectedRef.current = surfaceScopeKey
+    }, [surfaceScopeKey, sessionsSwr.data])
 
     // clear a stale selected passage only when the content ACTUALLY changes
     useEffect(() => {
@@ -393,8 +576,16 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
 
     /**
      * Run an in-chat "find content" intent: append a tool-result assistant turn,
-     * then fill it from a course-wide RAG search. Client-side MVP — the BE intent
-     * classifier + persisted tool turn is phase 2 (this turn is not saved yet).
+     * then fill it. Client-side MVP — the BE intent classifier + persisted tool
+     * turn is phase 2 (this turn is not saved yet).
+     *
+     * Two data paths, because they answer two different questions:
+     * - **Challenges while a lesson is open** come from the challenges-OF-THIS-CONTENT
+     *   query, not RAG. A challenge belongs to exactly one lesson (FK `content_id`),
+     *   so "thử thách của bài này" has an EXACT, complete answer; semantic search
+     *   could rank this lesson's own challenges below another lesson's, or miss them.
+     * - **Everything else** is a semantic question ("what in this course relates to
+     *   what I'm reading") → course-wide RAG.
      */
     const runContentIntent = useCallback(async (raw: string, kind: ContentIntentKind | "all") => {
         const courseId = course?.id
@@ -415,19 +606,25 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         const groundedQuery = contentEntity?.title || raw
         let items: Array<SearchCourseContentItem> = []
         try {
-            const res = await querySearchCourseContent({ courseId, searchQuery: groundedQuery })
-            const all = res.data?.searchCourseContent?.data?.results ?? []
-            items = all
-                .filter((item) => {
-                    // "/related" shows every kind; "content" folds in "code" hits too
-                    if (kind === "all") {
-                        return true
-                    }
-                    return kind === "content"
-                        ? item.kind === "content" || item.kind === "code"
-                        : item.kind === kind
-                })
-                .slice(0, TOOL_RESULT_LIMIT)
+            if (kind === "challenge" && contentId) {
+                items = await loadContentChallenges(contentId, contentEntity?.title ?? null)
+            } else {
+                // scope the retrieval to the kinds we actually render: the backend takes
+                // ONE top-k across every kind, so an unscoped topical query comes back
+                // content-dominated and the old client-side filter emptied the list.
+                const kinds = kind === "all"
+                    ? [...RELATED_KINDS]
+                    : kind === "content"
+                        ? ["content", "code"]
+                        : [kind]
+                const res = await querySearchCourseContent({ courseId, searchQuery: groundedQuery, kinds })
+                const all = res.data?.searchCourseContent?.data?.results ?? []
+                items = all
+                    // defensive: the backend serves capstone hits to other consumers,
+                    // and the chat never shows them (see ContentIntentKind)
+                    .filter((item) => item.kind !== "milestone")
+                    .slice(0, TOOL_RESULT_LIMIT)
+            }
         } catch {
             items = []
         }
@@ -439,12 +636,14 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             }
             return next
         })
-    }, [course?.id, contentEntity?.title])
+    }, [course?.id, contentEntity?.title, contentId])
 
     /** Send a question, creating a conversation lazily on the first message. */
     const onSend = useCallback(async (preset?: string) => {
         const raw = (preset ?? input).trim()
-        if (!raw || !contentId || isStreaming) {
+        // a question needs SOME grounding scope — a lesson, capstone task,
+        // foundation, or the whole course (a missing id must not silently swallow the send)
+        if (!raw || (!askContentId && !askTaskId && !askFoundationId && !askCourseId) || isStreaming) {
             return
         }
         // an in-chat "find <kind>" ask renders a pickable list, not a streamed
@@ -456,7 +655,14 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         }
         let sessionId = currentSessionId
         if (!sessionId) {
-            const created = await createSwr.trigger({ contentId }).catch(() => undefined)
+            const created = await createSwr
+                .trigger({
+                    contentId: askContentId,
+                    taskId: askTaskId,
+                    foundationId: askFoundationId,
+                    courseId: askCourseId,
+                })
+                .catch(() => undefined)
             sessionId = created?.data?.id ?? null
             if (!sessionId) {
                 return
@@ -484,7 +690,10 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         setIsStreaming(true)
         ask({
             sessionId,
-            contentId,
+            contentId: askContentId,
+            taskId: askTaskId,
+            foundationId: askFoundationId,
+            courseId: askCourseId,
             question: content,
             history,
             model: modelSelection.model,
@@ -511,7 +720,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                 })
             },
         })
-    }, [input, contentId, isStreaming, currentSessionId, createSwr, selection, selectionContext, messages, ask, appendToAssistant, setSelection, sessionsSwr, sessionsInfinite, modelSelection, runContentIntent, course?.id])
+    }, [input, askContentId, askTaskId, askFoundationId, askCourseId, isStreaming, currentSessionId, createSwr, selection, selectionContext, messages, ask, appendToAssistant, setSelection, sessionsSwr, sessionsInfinite, modelSelection, runContentIntent, course?.id])
 
     /** Start a fresh conversation (created lazily on the first message). */
     const onNewConversation = useCallback(() => {
@@ -558,14 +767,47 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         }
     }, [deleteSwr, sessionsSwr, sessionsInfinite, currentSessionId])
 
+    /** Archive a conversation (drops from the default list, stays searchable);
+     *  if it was open, drop back to a fresh thread. */
+    const onArchiveConversation = useCallback(async (sessionId: string) => {
+        await archiveSwr.trigger({ sessionId, archived: true }).catch(() => undefined)
+        void sessionsSwr.mutate()
+        void sessionsInfinite.mutate()
+        if (sessionId === currentSessionId) {
+            setMessages([])
+            setCurrentSessionId(null)
+            hydratedRef.current = undefined
+        }
+    }, [archiveSwr, sessionsSwr, sessionsInfinite, currentSessionId])
+
+    /** Open the inline rename editor for a row, seeded with its current title. */
+    const onStartRename = useCallback((sessionId: string, currentTitle: string | null) => {
+        setRenamingSessionId(sessionId)
+        setRenameDraft(currentTitle ?? "")
+    }, [])
+
+    /** Commit the inline rename (blank title resets to auto-titling); revalidate the lists. */
+    const onCommitRename = useCallback(async () => {
+        const sessionId = renamingSessionId
+        if (!sessionId) {
+            return
+        }
+        setRenamingSessionId(null)
+        await renameSwr.trigger({ sessionId, title: renameDraft.trim() }).catch(() => undefined)
+        void sessionsSwr.mutate()
+        void sessionsInfinite.mutate()
+    }, [renamingSessionId, renameDraft, renameSwr, sessionsSwr, sessionsInfinite])
+
     const trimmedSearch = searchTerm.trim()
     // flatten the infinite pages; a short last page means there are no more
     const infiniteItems = (sessionsInfinite.data ?? []).flat()
     const lastSessionsPage = sessionsInfinite.data?.[sessionsInfinite.data.length - 1]
     const hasMoreSessions = !!lastSessionsPage && lastSessionsPage.length === CONTENT_AI_SESSIONS_PAGE_LIMIT
-    // search is course-wide on the server; scope the displayed rows to this lesson
-    // (cross-lesson navigation is a later enhancement)
-    const drawerSessions = trimmedSearch
+    // search is course-wide on the server. In LESSON scope narrow the displayed rows
+    // back to this lesson (cross-lesson navigation is a later enhancement); in COURSE
+    // scope keep every row — there is no lesson to narrow to, and filtering on an
+    // absent contentId would silently empty the whole result list.
+    const drawerSessions = trimmedSearch && isLessonScope
         ? infiniteItems.filter((session) => session.originContentId === contentId)
         : infiniteItems
 
@@ -586,33 +828,17 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         />
     )
 
-    /** Run a slash-command: a `find` reuses the RAG list intent, a `prompt` sends
-     *  the preset question. Both clear the input themselves. */
-    const runSlashCommand = useCallback((cmd: SlashCommand) => {
-        setActiveCommandIndex(0)
-        if (cmd.type === "find") {
-            if (!course?.id) {
-                return
-            }
-            void runContentIntent(t(`contentAi.commands.${cmd.token}`), cmd.kind)
+    /** Run one retrieval skill (chip or ⌥ menu row) — same RAG list either way. */
+    const runRetrievalSkill = useCallback((skill: RetrievalSkill) => {
+        setSkillMenuOpen(false)
+        if (!course?.id) {
             return
         }
-        void onSend(t(`contentAi.suggestions.${cmd.suggestionKey}`))
-    }, [course?.id, runContentIntent, onSend, t])
-
-    // ── slash-command palette (derived from the current input) ─────────────
-    // "/" as the FIRST token (no space yet) opens the command menu; a space or a
-    // non-slash char leaves the input as an ordinary question (Enter still sends,
-    // the regex find-intent still runs).
-    const slashMatch = selection ? null : input.match(/^\/(\w*)$/)
-    const slashQuery = slashMatch ? slashMatch[1].toLowerCase() : null
-    const filteredCommands = slashQuery !== null
-        ? SLASH_COMMANDS.filter((cmd) => cmd.token.startsWith(slashQuery))
-        : []
-    const slashMenuOpen = filteredCommands.length > 0
-    const activeCommand = slashMenuOpen
-        ? filteredCommands[Math.min(activeCommandIndex, filteredCommands.length - 1)]
-        : undefined
+        // the label IS the question that lands in the thread, so it has to be the
+        // scoped one — this is what put "Tìm challenges liên quan bài này" in the
+        // transcript on a surface with no lesson open
+        void runContentIntent(t(retrievalLabelKey(skill.token, scope)), skill.kind)
+    }, [course?.id, runContentIntent, scope, t])
 
     /** Plain input — parent composer/quote box owns fill + padding; this is chỉ chỗ gõ
      *  (no HeroUI field chrome, so it never nests a second border/ring inside the box). */
@@ -623,41 +849,18 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             className="w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted"
             placeholder={t("contentAi.placeholder")}
             value={input}
-            onChange={(event) => {
-                setInput(event.target.value)
-                setActiveCommandIndex(0)
-            }}
+            onChange={(event) => setInput(event.target.value)}
             onKeyDown={(event) => {
-                // while the slash palette is open, the arrow keys + Enter drive it
-                // (Enter runs the highlighted command, NOT a chat send)
-                if (slashMenuOpen) {
-                    if (event.key === "ArrowDown") {
-                        event.preventDefault()
-                        setActiveCommandIndex((index) => (index + 1) % filteredCommands.length)
-                        return
-                    }
-                    if (event.key === "ArrowUp") {
-                        event.preventDefault()
-                        setActiveCommandIndex((index) => (index - 1 + filteredCommands.length) % filteredCommands.length)
-                        return
-                    }
-                    if (event.key === "Enter") {
-                        event.preventDefault()
-                        if (activeCommand) {
-                            runSlashCommand(activeCommand)
-                        }
-                        return
-                    }
-                    if (event.key === "Escape") {
-                        event.preventDefault()
-                        setInput("")
-                        setActiveCommandIndex(0)
-                        return
-                    }
-                }
+                // plain composer: Enter sends. A retrieval ask needs no special
+                // grammar — `detectContentIntent` picks "tìm thử thách…" out of
+                // ordinary typing inside `onSend`.
                 if (event.key === "Enter") {
                     event.preventDefault()
                     void onSend()
+                }
+                if (event.key === "Escape" && isSkillMenuOpen) {
+                    event.preventDefault()
+                    setSkillMenuOpen(false)
                 }
             }}
         />
@@ -728,6 +931,24 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                         <PlusIcon className="size-5" />
                     </Button>
                 </div>
+                {/* fold archived conversations into the list — born-archived selection
+                    chats + anything the learner manually archived (search always spans
+                    archived regardless, so this only affects plain browsing) */}
+                <label className="flex cursor-pointer items-center justify-between gap-2">
+                    <Typography type="body-sm" color="muted">{t("contentAi.showArchived")}</Typography>
+                    <Switch
+                        className="shrink-0"
+                        isSelected={showArchived}
+                        onChange={setShowArchived}
+                        aria-label={t("contentAi.showArchived")}
+                    >
+                        <Switch.Content>
+                            <Switch.Control>
+                                <Switch.Thumb />
+                            </Switch.Control>
+                        </Switch.Content>
+                    </Switch>
+                </label>
                 {/* list — self-bounded ScrollShadow + infinite scroll (mirror OutlineRail + followers infinite) */}
                 <ScrollShadow hideScrollBar className="-mx-1 max-h-[55vh] min-h-0 min-w-0 flex-1 overflow-y-auto px-1">
                     <AsyncContent
@@ -741,7 +962,8 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                                                 <Skeleton.Typography type="body-sm" width="2/3" />
                                                 <Skeleton.Typography type="body-xs" width="1/2" />
                                             </div>
-                                            <Skeleton className="size-4 shrink-0 rounded" />
+                                            {/* matches the row's ⋯ overflow-menu trigger (size-sm icon button) */}
+                                            <Skeleton className="size-8 shrink-0 rounded-xl" />
                                         </div>
                                     </SurfaceListCardItem>
                                 ))}
@@ -765,28 +987,100 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                                             session.id === currentSessionId && "text-accent-soft-foreground",
                                         )}
                                     >
-                                        <button
-                                            type="button"
-                                            className="flex min-w-0 flex-1 cursor-pointer flex-col text-left"
-                                            onClick={() => onSwitchConversation(session.id)}
-                                        >
-                                            <Typography type="body-sm" className="truncate">
-                                                {session.title ?? t("contentAi.untitled")}
-                                            </Typography>
-                                            <Typography type="body-xs" color="muted" className="truncate">
-                                                {session.snippet
-                                                    ? displayText(session.snippet)
-                                                    : t("contentAi.turnsCount", { count: session.messageCount })}
-                                            </Typography>
-                                        </button>
-                                        <button
-                                            type="button"
-                                            aria-label={t("contentAi.deleteConversation")}
-                                            className="shrink-0 cursor-pointer text-muted opacity-0 transition-opacity hover:text-danger-soft-foreground group-hover:opacity-100"
-                                            onClick={() => void onDeleteConversation(session.id)}
-                                        >
-                                            <TrashIcon className="size-4" />
-                                        </button>
+                                        {renamingSessionId === session.id ? (
+                                            // inline rename — replaces the title row while editing;
+                                            // Enter / blur commits, Escape cancels
+                                            <input
+                                                type="text"
+                                                autoFocus
+                                                aria-label={t("contentAi.renameConversation")}
+                                                className="min-w-0 flex-1 border-b border-default bg-transparent py-1 text-sm text-foreground outline-none focus:border-accent"
+                                                value={renameDraft}
+                                                onChange={(event) => setRenameDraft(event.target.value)}
+                                                onBlur={() => void onCommitRename()}
+                                                onKeyDown={(event) => {
+                                                    if (event.key === "Enter") {
+                                                        event.preventDefault()
+                                                        void onCommitRename()
+                                                    }
+                                                    if (event.key === "Escape") {
+                                                        event.preventDefault()
+                                                        setRenamingSessionId(null)
+                                                    }
+                                                }}
+                                            />
+                                        ) : (
+                                            <button
+                                                type="button"
+                                                className="flex min-w-0 flex-1 cursor-pointer flex-col text-left"
+                                                onClick={() => onSwitchConversation(session.id)}
+                                            >
+                                                <Typography type="body-sm" className="truncate">
+                                                    {session.title ?? t("contentAi.untitled")}
+                                                </Typography>
+                                                {/* WHERE this conversation was had + how long it ran.
+                                                    Sessions split per lesson, so without the source a
+                                                    learner sees a pile of fragments with no idea which
+                                                    belongs where. The snippet only replaces it while
+                                                    SEARCHING — that is the one moment it earns the row,
+                                                    by showing which line matched. */}
+                                                <Typography type="body-xs" color="muted" className="truncate">
+                                                    {searchTerm.trim() && session.snippet
+                                                        ? displayText(session.snippet)
+                                                        : `${session.originContentTitle ?? t("contentAi.context.courseWide")} · ${t("contentAi.turnsCount", { count: session.messageCount })}`}
+                                                </Typography>
+                                            </button>
+                                        )}
+                                        {/* overflow menu ⋯ — Đổi tên · Lưu trữ · Xoá (hidden while
+                                            this row is being renamed) */}
+                                        {renamingSessionId === session.id ? null : (
+                                            <Dropdown>
+                                                <DropdownTrigger className="shrink-0 cursor-pointer">
+                                                    <Button
+                                                        isIconOnly
+                                                        size="sm"
+                                                        variant="tertiary"
+                                                        aria-label={t("contentAi.conversationActions")}
+                                                    >
+                                                        <DotsThreeVerticalIcon weight="bold" className="size-5" />
+                                                    </Button>
+                                                </DropdownTrigger>
+                                                <DropdownPopover placement="bottom end" className="min-w-44">
+                                                    <DropdownMenu aria-label={t("contentAi.conversationActions")}>
+                                                        <DropdownSection>
+                                                            <DropdownItem
+                                                                key="rename"
+                                                                onPress={() => onStartRename(session.id, session.title)}
+                                                            >
+                                                                <div className="flex items-center gap-2">
+                                                                    <PencilSimpleIcon className="size-4 shrink-0" />
+                                                                    <span className="text-sm">{t("contentAi.renameConversation")}</span>
+                                                                </div>
+                                                            </DropdownItem>
+                                                            <DropdownItem
+                                                                key="archive"
+                                                                onPress={() => void onArchiveConversation(session.id)}
+                                                            >
+                                                                <div className="flex items-center gap-2">
+                                                                    <ArchiveIcon className="size-4 shrink-0" />
+                                                                    <span className="text-sm">{t("contentAi.archiveConversation")}</span>
+                                                                </div>
+                                                            </DropdownItem>
+                                                            <DropdownItem
+                                                                key="delete"
+                                                                className="text-danger-soft-foreground"
+                                                                onPress={() => void onDeleteConversation(session.id)}
+                                                            >
+                                                                <div className="flex items-center gap-2">
+                                                                    <TrashIcon className="size-4 shrink-0" />
+                                                                    <span className="text-sm">{t("contentAi.deleteConversation")}</span>
+                                                                </div>
+                                                            </DropdownItem>
+                                                        </DropdownSection>
+                                                    </DropdownMenu>
+                                                </DropdownPopover>
+                                            </Dropdown>
+                                        )}
                                     </div>
                                 </SurfaceListCardItem>
                             ))}
@@ -809,7 +1103,9 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
 
     // ── search view ("Tìm nội dung khóa") ──────────────────────────────────
     if (view === "search") {
-        const results = contentSearchSwr.data ?? []
+        // same exclusion as the in-chat skills: the chat never surfaces capstone
+        // tasks, so its own "see all" view must not either (see ContentIntentKind)
+        const results = (contentSearchSwr.data ?? []).filter((item) => item.kind !== "milestone")
         return (
             <div className={cn("flex h-full flex-col gap-3", className)}>
                 <button
@@ -875,27 +1171,6 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         )
     }
 
-    // ── settings view (model picker) ──────────────────────────────────────
-    if (view === "settings") {
-        return (
-            <div className={cn("flex h-full flex-col gap-3", className)}>
-                {/* back — link sm, icon + label both muted */}
-                <button
-                    type="button"
-                    className="group flex w-fit cursor-pointer items-center gap-2 text-sm text-muted transition-colors hover:text-foreground"
-                    onClick={() => setView("chat")}
-                >
-                    <ArrowLeftIcon className="size-4" />
-                    <span className="underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">{t("contentAi.settings")}</span>
-                </button>
-                <div className="flex flex-col gap-2">
-                    <Label>{t("contentAi.modelLabel")}</Label>
-                    {modelPicker("bottom start")}
-                </div>
-            </div>
-        )
-    }
-
     // ── chat view ─────────────────────────────────────────────────────────
     return (
         <div className={cn("flex h-full flex-col gap-3", className)}>
@@ -923,9 +1198,14 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                     {messages.length === 0 && !selection ? (
                         <div className="flex flex-col gap-2">
                             <Typography type="body-sm" color="muted">
-                                {t("contentAi.hint")}
+                                {isLessonScope
+                                    ? t("contentAi.hint")
+                                    : t("contentAi.courseHint")}
                             </Typography>
-                            {SUGGESTION_KEYS.map((key) => (
+                            {/* summarize / hardest / example only make sense against an
+                                OPEN lesson — there is no "this lesson" to summarise for a
+                                task / foundation / course, so those scopes offer retrieval only */}
+                            {isLessonScope ? SUGGESTION_KEYS.map((key) => (
                                 <Button
                                     key={key}
                                     variant="secondary"
@@ -935,7 +1215,27 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                                 >
                                     {t(`contentAi.suggestions.${key}`)}
                                 </Button>
-                            ))}
+                            )) : null}
+                            {/* retrieval skills — available in BOTH scopes (the search is
+                                course-wide either way), but the LABEL follows the scope so
+                                a lesson-less surface never offers "of this lesson" */}
+                            {RETRIEVAL_SKILLS
+                                .filter((skill) => EMPTY_STATE_SKILLS[scope].includes(skill.token))
+                                .map((skill) => {
+                                    const SkillIcon = skill.Icon
+                                    return (
+                                        <Button
+                                            key={skill.token}
+                                            variant="secondary"
+                                            size="sm"
+                                            className="justify-start text-start"
+                                            onPress={() => runRetrievalSkill(skill)}
+                                        >
+                                            <SkillIcon aria-hidden focusable="false" className="size-4 shrink-0 text-muted" />
+                                            {t(retrievalLabelKey(skill.token, scope))}
+                                        </Button>
+                                    )
+                                })}
                         </div>
                     ) : (
                         messages.map((message, index) => (
@@ -1006,11 +1306,10 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                 </div>
             ) : null}
 
-            {/* slash-command palette — the chatbot's capabilities made DISCOVERABLE:
-                typing "/" as the first token opens this list (find related content /
-                run a preset ask). Keyboard: ↑↓ move · Enter run · Esc close. Maps onto
-                the existing find-intent + suggestions — no BE change. */}
-            {slashMenuOpen ? (
+            {/* retrieval-skill menu — the ⌥ composer button opens it. This replaces the
+                old "/" grammar: same capabilities, but TAPPABLE (works on a phone) and
+                reachable MID-conversation, once the empty-state chips are gone. */}
+            {isSkillMenuOpen ? (
                 <div
                     role="listbox"
                     aria-label={t("contentAi.commands.aria")}
@@ -1020,23 +1319,18 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                         <Typography type="body-xs" color="muted">{t("contentAi.commands.hint")}</Typography>
                     </div>
                     <ScrollShadow hideScrollBar className="max-h-64 min-h-0 overflow-y-auto p-1">
-                        {filteredCommands.map((cmd) => {
-                            const CommandIcon = cmd.Icon
-                            const isActive = cmd === activeCommand
+                        {RETRIEVAL_SKILLS.map((skill) => {
+                            const SkillIcon = skill.Icon
                             return (
                                 <Button
-                                    key={cmd.token}
+                                    key={skill.token}
                                     variant="ghost"
-                                    className={cn(
-                                        "h-auto w-full justify-start gap-3 px-3 py-2 text-start",
-                                        isActive && "bg-default",
-                                    )}
-                                    onPress={() => runSlashCommand(cmd)}
+                                    className="h-auto w-full justify-start gap-3 px-3 py-2 text-start"
+                                    onPress={() => runRetrievalSkill(skill)}
                                 >
-                                    <CommandIcon className="size-4 shrink-0 text-muted" aria-hidden focusable="false" />
-                                    <span className="flex min-w-0 flex-1 flex-col">
-                                        <span className="text-sm font-medium text-foreground">/{cmd.token}</span>
-                                        <span className="truncate text-xs text-muted">{t(`contentAi.commands.${cmd.token}`)}</span>
+                                    <SkillIcon className="size-4 shrink-0 text-muted" aria-hidden focusable="false" />
+                                    <span className="min-w-0 flex-1 truncate text-sm font-medium text-foreground">
+                                        {t(retrievalLabelKey(skill.token, scope))}
                                     </span>
                                 </Button>
                             )
@@ -1044,6 +1338,11 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                     </ScrollShadow>
                 </div>
             ) : null}
+
+            {/* The CONTEXT PILL used to live here, above the composer. It moved into
+                the panel HEADER (`ContentAiScopePill`, rendered by the rail + drawer):
+                the header already named the same thing as a plain title, so the panel
+                stated its context twice, two screen-heights apart. */}
 
             {/* composer — input lives in quote block while a passage is selected */}
             <div className="flex flex-col gap-2 rounded-2xl bg-default px-3 py-2 focus-within:ring-2 focus-within:ring-accent">
@@ -1053,14 +1352,17 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                         {modelPicker("top start")}
                     </div>
                     <div className="flex shrink-0 items-center gap-2">
+                        {/* retrieval skills, mid-conversation — the tappable replacement
+                            for the removed "/" grammar */}
                         <Button
                             isIconOnly
                             size="sm"
-                            variant="ghost"
-                            aria-label={t("contentAi.settings")}
-                            onPress={() => setView("settings")}
+                            variant="tertiary"
+                            aria-label={t("contentAi.commands.aria")}
+                            aria-expanded={isSkillMenuOpen}
+                            onPress={() => setSkillMenuOpen((previous) => !previous)}
                         >
-                            <GearIcon className="size-5" />
+                            <MagnifyingGlassIcon className="size-5" />
                         </Button>
                         <Button
                             isIconOnly

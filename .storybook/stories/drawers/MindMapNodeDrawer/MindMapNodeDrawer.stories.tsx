@@ -4,11 +4,11 @@ import type { SearchCourseContentItem } from "@/modules/api/graphql/queries/type
 
 /** Relevance-ordered RAG hits across all four kinds, as `searchCourseContent` returns them. */
 const RESULTS: Array<SearchCourseContentItem> = [
-    { kind: "content", title: "Resumable upload với tus protocol: resume sau khi mất mạng", breadcrumb: "File Upload & Storage", snippet: "tus dùng PATCH + Upload-Offset để tiếp tục đúng byte đang dở…", score: 0.91, moduleId: "m1", contentId: "c1", deckId: null, taskId: null },
-    { kind: "content", title: "Chunked upload with progress tracking", breadcrumb: "File Upload & Storage", snippet: "Chia file thành phần nhỏ, theo dõi tiến độ từng chunk…", score: 0.78, moduleId: "m1", contentId: "c2", deckId: null, taskId: null },
-    { kind: "flashcard", title: "tus protocol hoạt động thế nào?", breadcrumb: null, snippet: "PATCH request mang Upload-Offset để nối tiếp phần đã tải…", score: 0.74, moduleId: null, contentId: null, deckId: "d1", taskId: null },
-    { kind: "challenge", title: "Cài tus server + resume một upload 2GB bị ngắt", breadcrumb: "File Upload & Storage", snippet: "Chứng minh upload tiếp tục đúng offset sau khi rớt mạng…", score: 0.83, moduleId: "m1", contentId: "c3", deckId: null, taskId: null },
-    { kind: "milestone", title: "Task: pipeline upload resumable cho video", breadcrumb: "Capstone · Media Service", snippet: "Ghép tus vào service upload video của đồ án cuối khoá…", score: 0.69, moduleId: null, contentId: null, deckId: null, taskId: "t1" },
+    { kind: "content", title: "Resumable upload với tus protocol: resume sau khi mất mạng", breadcrumb: "File Upload & Storage", snippet: "tus dùng PATCH + Upload-Offset để tiếp tục đúng byte đang dở…", score: 0.91, moduleId: "m1", contentId: "c1", deckId: null, taskId: null, isLocked: false },
+    { kind: "content", title: "Chunked upload with progress tracking", breadcrumb: "File Upload & Storage", snippet: "Chia file thành phần nhỏ, theo dõi tiến độ từng chunk…", score: 0.78, moduleId: "m1", contentId: "c2", deckId: null, taskId: null, isLocked: false },
+    { kind: "flashcard", title: "tus protocol hoạt động thế nào?", breadcrumb: null, snippet: "PATCH request mang Upload-Offset để nối tiếp phần đã tải…", score: 0.74, moduleId: null, contentId: null, deckId: "d1", taskId: null, isLocked: false },
+    { kind: "challenge", title: "Cài tus server + resume một upload 2GB bị ngắt", breadcrumb: "File Upload & Storage", snippet: "Chứng minh upload tiếp tục đúng offset sau khi rớt mạng…", score: 0.83, moduleId: "m1", contentId: "c3", deckId: null, taskId: null, isLocked: false },
+    { kind: "milestone", title: "Task: pipeline upload resumable cho video", breadcrumb: "Capstone · Media Service", snippet: "Ghép tus vào service upload video của đồ án cuối khoá…", score: 0.69, moduleId: null, contentId: null, deckId: null, taskId: "t1", isLocked: false },
 ]
 
 const meta: Meta<typeof MindMapNodeDrawerView> = {

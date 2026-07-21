@@ -4,6 +4,8 @@ import React, { useState } from "react"
 import type { ReactNode } from "react"
 import {
     Button,
+    Switch,
+    Typography,
     cn,
 } from "@heroui/react"
 import { useLocale, useTranslations } from "next-intl"
@@ -21,6 +23,7 @@ import { pathConfig } from "@/resources/path"
 import { useQueryMyCvBlocksSwr } from "@/hooks/swr/api/graphql/queries/useQueryMyCvBlocksSwr"
 import { useMutateCreateCvBlocksSwr } from "@/hooks/swr/api/graphql/mutations/useMutateCreateCvBlocksSwr"
 import { useMutateDeleteCvBlocksSwr } from "@/hooks/swr/api/graphql/mutations/useMutateDeleteCvBlocksSwr"
+import { useMutateSetCvBlocksPublicSwr } from "@/hooks/swr/api/graphql/mutations/useMutateSetCvBlocksPublicSwr"
 import {
     DEFAULT_CV_STYLE,
     type CvDocument,
@@ -39,11 +42,15 @@ const CvGalleryCard = ({
     label,
     onOpen,
     onDelete,
+    onTogglePublic,
+    isTogglingPublic,
 }: {
     doc: CvDocument
     label: string
     onOpen: () => void
     onDelete: () => void
+    onTogglePublic: (isPublic: boolean) => void
+    isTogglingPublic: boolean
 }) => {
     const t = useTranslations()
     return (
@@ -73,16 +80,44 @@ const CvGalleryCard = ({
             )}
             title={<span className="block truncate">{label}</span>}
             footer={(
-                <div className="flex justify-end">
-                    <Button
-                        isIconOnly
-                        size="sm"
-                        variant="ghost"
-                        aria-label={t("cv.builder.deleteCta")}
-                        onPress={onDelete}
-                    >
-                        <TrashIcon aria-hidden className="size-4 text-muted" />
-                    </Button>
+                <div className="flex flex-col gap-2">
+                    <div className="flex items-center justify-between gap-2">
+                        {/* "Công khai" toggle — flags this as the ONE public CV
+                            (single-public-per-user, BE-enforced). Label is a
+                            sibling (not inside Switch.Content) to dodge the
+                            react-aria slot requirement. */}
+                        <div className="flex items-center gap-2">
+                            <Switch
+                                isSelected={doc.isPublic}
+                                isDisabled={isTogglingPublic}
+                                onChange={(value) => onTogglePublic(value)}
+                                aria-label={t("publicProfile.cv.publicToggle")}
+                            >
+                                <Switch.Content>
+                                    <Switch.Control>
+                                        <Switch.Thumb />
+                                    </Switch.Control>
+                                </Switch.Content>
+                            </Switch>
+                            <Typography type="body-sm" color="muted">
+                                {t("publicProfile.cv.publicToggle")}
+                            </Typography>
+                        </div>
+                        <Button
+                            isIconOnly
+                            size="sm"
+                            variant="ghost"
+                            aria-label={t("cv.builder.deleteCta")}
+                            onPress={onDelete}
+                        >
+                            <TrashIcon aria-hidden className="size-4 text-muted" />
+                        </Button>
+                    </div>
+                    {doc.isPublic ? (
+                        <Typography type="body-xs" color="muted">
+                            {t("publicProfile.cv.publicHint")}
+                        </Typography>
+                    ) : null}
                 </div>
             )}
         />
@@ -107,7 +142,9 @@ export const CvGallery = ({ className, breadcrumb }: CvGalleryProps) => {
     const documents = documentsSwr.data ?? []
     const { trigger: createDocument, isMutating: isCreating } = useMutateCreateCvBlocksSwr()
     const { trigger: deleteDocument } = useMutateDeleteCvBlocksSwr()
+    const { trigger: setPublic } = useMutateSetCvBlocksPublicSwr()
     const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null)
+    const [pendingPublicId, setPendingPublicId] = useState<string | null>(null)
 
     const openEditor = (id: string) => {
         router.push(pathConfig().locale(locale).profile().cv().document(id).build())
@@ -138,6 +175,18 @@ export const CvGallery = ({ className, breadcrumb }: CvGalleryProps) => {
         }
     }
 
+    // Flag/unflag ONE CV as public. Single-public-per-user is BE-enforced (turning
+    // one on turns any other off), so the refetch reflects the whole set.
+    const onTogglePublic = async (id: string, isPublic: boolean) => {
+        setPendingPublicId(id)
+        try {
+            await setPublic({ id, isPublic })
+            await documentsSwr.mutate()
+        } finally {
+            setPendingPublicId(null)
+        }
+    }
+
     const isLoading = documentsSwr.isLoading && !documentsSwr.data
     const isEmpty = !documentsSwr.isLoading && documents.length === 0
 
@@ -154,7 +203,7 @@ export const CvGallery = ({ className, breadcrumb }: CvGalleryProps) => {
             <AsyncContent
                 isLoading={isLoading}
                 skeleton={(
-                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-6 @app-sm:grid-cols-2 @app-lg:grid-cols-3">
                         {[0, 1, 2].map((key) => (
                             <div key={key} className="h-[19rem] rounded-3xl border border-default bg-surface" />
                         ))}
@@ -185,7 +234,7 @@ export const CvGallery = ({ className, breadcrumb }: CvGalleryProps) => {
                     retryLabel: t("cv.builder.retry"),
                 }}
             >
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid grid-cols-1 gap-6 @app-sm:grid-cols-2 @app-lg:grid-cols-3">
                     {documents.map((doc, index) => (
                         <CvGalleryCard
                             key={doc.id}
@@ -197,6 +246,12 @@ export const CvGallery = ({ className, breadcrumb }: CvGalleryProps) => {
                                     void onDelete(doc.id)
                                 }
                             }}
+                            onTogglePublic={(isPublic) => {
+                                if (pendingPublicId === null) {
+                                    void onTogglePublic(doc.id, isPublic)
+                                }
+                            }}
+                            isTogglingPublic={pendingPublicId === doc.id}
                         />
                     ))}
                     <button

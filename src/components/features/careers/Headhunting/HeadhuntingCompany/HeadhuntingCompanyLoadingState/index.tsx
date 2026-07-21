@@ -14,8 +14,8 @@ export const HeadhuntingCompanyLoadingState = () => (
         {/* breadcrumb row */}
         <Skeleton.Breadcrumbs count={3} />
 
-        {/* company profile block (logo · title · description) — mirrors md:flex-row */}
-        <div className="flex flex-col gap-3 md:flex-row md:items-start">
+        {/* company profile block (logo · title · description) — mirrors @app-md:flex-row */}
+        <div className="flex flex-col gap-3 @app-md:flex-row @app-md:items-start">
             <Skeleton className="h-16 w-40 shrink-0 rounded-2xl" />
             <div className="flex flex-1 flex-col gap-3">
                 <Skeleton.Typography type="h3" width="1/2" />
@@ -24,7 +24,7 @@ export const HeadhuntingCompanyLoadingState = () => (
         </div>
 
         {/* consultants grid — one skeleton card per column */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 @app-md:grid-cols-2 @app-lg:grid-cols-3">
             {[0, 1, 2].map((index) => (
                 <ConsultantCardSkeleton key={index} />
             ))}

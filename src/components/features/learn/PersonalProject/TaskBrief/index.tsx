@@ -74,7 +74,10 @@ export const TaskBrief = ({
     return (
         // the brief IS a labeled card: "Hướng dẫn" is the label OUTSIDE, the markdown body inside.
         <LabeledCard className={className} label={t("task.briefTitle")}>
-            <MarkdownContent markdown={body} />
+            {/* data-ai-selectable: the task brief is a valid "ask AI about this passage" region */}
+            <div data-ai-selectable>
+                <MarkdownContent markdown={body} />
+            </div>
         </LabeledCard>
     )
 }

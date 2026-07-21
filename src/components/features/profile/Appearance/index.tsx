@@ -212,7 +212,7 @@ export const Appearance = () => {
                 </LabeledCard>
 
                 <LabeledCard label={t("appearance.effectLabel")}>
-                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
+                    <div className="grid grid-cols-2 gap-3 @app-sm:grid-cols-3 @app-md:grid-cols-5">
                         {EFFECT_OPTIONS.map((option) => (
                             <button
                                 key={option}

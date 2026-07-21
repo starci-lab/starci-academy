@@ -533,7 +533,7 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
                         current={effectiveCards.length}
                         total={effectiveCards.length}
                     />
-                    <div className="px-4 pb-6 pt-10 sm:px-6">
+                    <div className="px-4 pb-6 pt-10 @app-sm:px-6">
                         <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10">
                             <Spinner size="lg" />
                             <Typography type="body-sm" color="muted">
@@ -580,7 +580,7 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
                         finishLabel={t("flashcard.finish")}
                     />
 
-                    <div className="px-4 pb-6 pt-10 sm:px-6">
+                    <div className="px-4 pb-6 pt-10 @app-sm:px-6">
                         <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
                             {/* the flip card: prompt → answer; the level/tag chips ride under
                                 the QUESTION via `belowFront` (thầy 2026-07-13: "chip gap-3 ở
@@ -630,8 +630,8 @@ export const DueReview = ({ onExit, sessionId, className }: DueReviewProps) => {
                                     {/* KHÔNG expand full-width trên desktop — hug-content, nằm bên trái
                                         cùng 2 nút caret (thầy 2026-07-13: "tất cả nằm bên trái, không
                                         expand trừ khi card nhỏ"). `w-full` chỉ dưới `sm:` (mobile, tap
-                                        target rộng hơn dễ bấm), `sm:w-auto` trở lên hug-content. */}
-                                    <Button size="sm" variant="primary" className="w-full sm:w-auto" onPress={() => setRevealed(true)}>
+                                        target rộng hơn dễ bấm), `@app-sm:w-auto` trở lên hug-content. */}
+                                    <Button size="sm" variant="primary" className="w-full @app-sm:w-auto" onPress={() => setRevealed(true)}>
                                         {t("flashcard.showAnswer")}
                                     </Button>
                                     <Button

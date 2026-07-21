@@ -1366,7 +1366,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                         {timer}
                         {opts.rightSlot ? (
                             <>
-                                <span className="hidden h-5 w-px shrink-0 bg-default sm:block" aria-hidden />
+                                <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />
                                 {opts.rightSlot}
                             </>
                         ) : null}
@@ -1771,7 +1771,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
             // `isMockInterviewLive`), so this screen owns its own page padding.
             <div className={cn("flex w-full flex-col", className)}>
                 {renderWorkHeader({ counter: t("mockInterview.grading"), total: 1, current: 1 })}
-                <div className="px-4 pb-6 pt-10 sm:px-6">
+                <div className="px-4 pb-6 pt-10 @app-sm:px-6">
                     <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
                         {/* "session time limit" — HONEST: never let a timeout-triggered grade
                             read as a random/silent cutoff. Only shown when THIS grade was
@@ -1918,13 +1918,13 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                     (2026-07-17, thầy: "height full và sát mép phải, bên trái có border"). Each pane
                     scrolls on its own at `lg` ([[full-bleed-work-surface]] "mỗi pane cuộn riêng");
                     on mobile the grid stacks and the whole body scrolls. */}
-                <div className="grid min-h-0 flex-1 overflow-y-auto lg:overflow-hidden lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+                <div className="grid min-h-0 flex-1 overflow-y-auto @app-lg:overflow-hidden @app-lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
                     {/* LEFT — the conversation, with its own reading padding + scroll. `justify-center`
                         vertically centers this (naturally short) column within the full-viewport-tall
                         grid row instead of pinning it to the top (2026-07-17, thầy: "bố cục chưa
                         gọn/cân đối" — the workspace pane fills the row's full height, so the
                         conversation reads as a floating top-pinned island unless centered to match). */}
-                    <div className="flex min-w-0 flex-col justify-center gap-6 px-4 py-6 sm:px-6 lg:overflow-y-auto">
+                    <div className="flex min-w-0 flex-col justify-center gap-6 px-4 py-6 @app-sm:px-6 @app-lg:overflow-y-auto">
                         {errorCallout}
 
                         {/* interviewer presence — StarCi face + name + "đang nói" pulse + TTS
@@ -2009,7 +2009,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                         the grid stacks, so the divider becomes a TOP border and a min-height keeps
                         the editor usable. Tool stays MOUNTED once shown so an in-progress sketch/code
                         buffer survives a question switch. */}
-                    <div className="flex min-h-[28rem] min-w-0 flex-col border-t border-default bg-surface p-6 lg:min-h-0 lg:border-t-0 lg:border-l">
+                    <div className="flex min-h-[28rem] min-w-0 flex-col border-t border-default bg-surface p-6 @app-lg:min-h-0 @app-lg:border-t-0 @app-lg:border-l">
                         {workspaceOpen ? (
                             <MockInterviewWorkspace
                                 className="min-h-0 flex-1"
@@ -2066,12 +2066,12 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
             {/* body — 2-pane: conversation | docked workspace panel (same as qna: the workspace
                 bleeds to the right/top/bottom edges, left border only — see the qna branch's note).
                 Container carries no horizontal padding; the LEFT pane keeps its own. */}
-            <div className="flex min-h-0 flex-1 flex-col overflow-y-auto lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:overflow-hidden">
+            <div className="flex min-h-0 flex-1 flex-col overflow-y-auto @app-lg:grid @app-lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] @app-lg:overflow-hidden">
                 {/* LEFT — the conversation: presence + phase stepper + thread + voice composer, with
                     its own reading padding + scroll. Unlike qna's sparse single-question column, this
                     thread GROWS over the 5 phases — stays top-anchored (no `justify-center`) so it
                     doesn't jump around as turns are appended. */}
-                <div className="flex min-w-0 flex-col gap-3 px-4 py-6 sm:px-6 lg:overflow-y-auto">
+                <div className="flex min-w-0 flex-col gap-3 px-4 py-6 @app-sm:px-6 @app-lg:overflow-y-auto">
                     <InterviewerPresence
                         persona={persona}
                         speaking={isAsking}
@@ -2233,7 +2233,7 @@ export const MockInterviewSession = ({ courseId, courseDisplayId, resumeSessionI
                 transcript as a labeled turn at grade time. Same DOCKED panel as the qna branch
                 (2026-07-17) — full height, bleeds to the right/top/bottom edges, left border only,
                 tool padded inside by `p-6`. */}
-                <div className="flex min-h-[28rem] min-w-0 flex-col border-t border-default bg-surface p-6 lg:min-h-0 lg:border-t-0 lg:border-l">
+                <div className="flex min-h-[28rem] min-w-0 flex-col border-t border-default bg-surface p-6 @app-lg:min-h-0 @app-lg:border-t-0 @app-lg:border-l">
                     <MockInterviewWorkspace
                         className="min-h-0 flex-1"
                         tool={workspaceTool}

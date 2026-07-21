@@ -447,7 +447,7 @@ const LearnLoopStatic = ({ className }: LearnLoopScrollProps) => {
     return (
         <section className={cn("flex flex-col gap-16", className)}>
             <LoopHeading />
-            <div className="grid grid-cols-1 items-center gap-x-12 gap-y-12 lg:grid-cols-2 lg:gap-y-20">
+            <div className="grid grid-cols-1 items-center gap-x-12 gap-y-12 @app-lg:grid-cols-2 @app-lg:gap-y-20">
                 <div>
                     <LoopStepList active={active} onSelect={setActive} />
                 </div>
@@ -496,7 +496,7 @@ const LearnLoopPinned = ({ className }: LearnLoopScrollProps) => {
         <section ref={sectionRef} className={cn("relative h-[360vh]", className)}>
             <div className="sticky top-0 flex h-screen flex-col justify-center gap-16 py-12">
                 <LoopHeading />
-                <div className="grid grid-cols-1 items-center gap-x-12 gap-y-12 lg:grid-cols-2 lg:gap-y-20">
+                <div className="grid grid-cols-1 items-center gap-x-12 gap-y-12 @app-lg:grid-cols-2 @app-lg:gap-y-20">
                     {/* TRÁI — list 4 bước (scroll lái active; bấm → cuộn tới). PHẢI — visual đổi. */}
                     <div>
                         <LoopStepList active={active} onSelect={jumpToStep} />

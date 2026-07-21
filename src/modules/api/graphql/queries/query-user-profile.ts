@@ -28,6 +28,12 @@ const query1 = gql`
         isFollowedByMe
         profileLocked
         openToWork
+        sectionVisibility {
+          projects
+          challenges
+          skills
+          activity
+        }
         featuredAchievementSlug
         roleTitle
         location

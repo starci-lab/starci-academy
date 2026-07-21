@@ -33,7 +33,7 @@ export const FlashcardSessionStatsSkeleton = () => {
             {/* session metric tiles — LabeledCard label → 4 MetricCard grid */}
             <section className="flex flex-col gap-3">
                 <Skeleton className="h-[14px] w-28 rounded" />
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                <div className="grid grid-cols-2 gap-3 @app-sm:grid-cols-4">
                     {Array.from({ length: 4 }).map((_unused, index) => (
                         <Skeleton.Metric key={index} />
                     ))}

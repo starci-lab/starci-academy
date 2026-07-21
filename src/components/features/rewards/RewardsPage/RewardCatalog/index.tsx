@@ -202,7 +202,7 @@ export const RewardCatalog = ({ className }: RewardCatalogProps) => {
             <AsyncContent
                 isLoading={!rewardsSwr.data}
                 skeleton={(
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-3 @app-sm:grid-cols-2">
                         {Array.from({ length: 4 }).map((_, index) => (
                             <div
                                 key={index}
@@ -245,7 +245,7 @@ export const RewardCatalog = ({ className }: RewardCatalogProps) => {
                                         {t(`rewards.section.${section.key}`)}
                                     </span>
                                 )}
-                                contentClassName="grid grid-cols-1 gap-3 sm:grid-cols-2"
+                                contentClassName="grid grid-cols-1 gap-3 @app-sm:grid-cols-2"
                             >
                                 {sectionItems.map((reward) => {
                                     const affordable = balance >= reward.cost

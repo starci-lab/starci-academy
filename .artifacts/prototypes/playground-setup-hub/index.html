@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Playground Setup — hub archetype (kiểu Ôn tập)</title>
+<style>
+  :root{
+    --bg:#0c1016; --canvas:#0f141b; --surface:#151c26; --surface-2:#1b232f; --raised:#212b39;
+    --ink:#e7edf4; --muted:#9aa6b2; --faint:#6c7883;
+    --line:#2a3543; --dash:#38465699;
+    --accent:#ec4899; --accent-soft:#ec489922;
+    --ok:#4ade80; --warn:#fbbf24; --bad:#fb7185;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.55}
+  .top{position:sticky;top:0;z-index:20;background:#0a0e14ee;backdrop-filter:blur(6px);border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 14px}
+  .top b{font-size:12.5px;margin-right:6px}
+  .nav{display:flex;gap:5px;flex-wrap:wrap}
+  .nav button{font:inherit;font-size:12px;padding:5px 10px;border-radius:8px;border:1px solid var(--line);
+    background:var(--surface);color:var(--muted);cursor:pointer}
+  .nav button.on{background:var(--accent-soft);border-color:var(--accent);color:var(--ink)}
+  .spacer{flex:1}
+  .toggle{font:inherit;font-size:11.5px;padding:5px 9px;border-radius:999px;border:1px solid var(--line);
+    background:var(--surface);color:var(--muted);cursor:pointer}
+  .toggle.on{border-color:var(--accent);color:var(--ink);background:var(--accent-soft)}
+
+  .stage{max-width:1100px;margin:0 auto;padding:16px}
+  .stage.mobile{max-width:412px}
+  .screen{display:none} .screen.on{display:block}
+  .verdict{border-left:3px solid var(--accent);padding:8px 0 8px 12px;margin:0 0 16px;color:var(--muted);font-size:13px}
+  .verdict b{color:var(--ink)}
+
+  /* reading column — mirrors Flashcards hub: mx-auto max-w-3xl gap-10 */
+  .col{max-width:768px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+  .cluster{display:flex;flex-direction:column;gap:24px}
+
+  .block{position:relative;border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:12px}
+  .tag{position:absolute;top:-9px;left:10px;font-family:var(--mono);font-size:9.5px;background:var(--bg);
+    color:var(--faint);padding:0 6px;border-radius:4px;border:1px solid var(--line)}
+  .lbl{font-size:12.5px;font-weight:650;color:var(--ink);margin-bottom:8px;display:block}
+  .h1{font-size:22px;font-weight:750;letter-spacing:-.01em}
+  .sub{color:var(--muted);font-size:13px}
+  .mut{color:var(--muted)}
+  .code{font-family:var(--mono);font-size:12px;background:var(--raised);border:1px solid var(--line);border-radius:10px;
+    padding:9px 11px;color:#cde3ff;white-space:pre-wrap}
+  .btn{display:inline-flex;align-items:center;gap:7px;justify-content:center;font-weight:650;font-size:13.5px;
+    background:var(--accent);color:#fff;border:none;border-radius:11px;padding:10px 16px;cursor:pointer}
+  .btn.dis{background:var(--surface-2);color:var(--faint);cursor:not-allowed}
+  .pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-family:var(--mono);padding:3px 8px;border-radius:999px;border:1px solid}
+  .pill.ok{color:var(--ok);border-color:#4ade8055;background:#4ade8014}
+  .pill.warn{color:var(--warn);border-color:#fbbf2455;background:#fbbf2414}
+  .pill.neu{color:var(--muted);border-color:var(--line);background:var(--surface-2)}
+  .note{font-family:var(--mono);font-size:10px;color:var(--faint)}
+  .row{display:flex;gap:10px} .stack{display:flex;flex-direction:column;gap:10px}
+  .between{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+  .meter{height:7px;border-radius:999px;background:var(--surface-2);overflow:hidden;border:1px solid var(--line)}
+  .meter i{display:block;height:100%;background:var(--accent)}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:8px}
+  .dot{width:8px;height:8px;border-radius:999px;display:inline-block;margin-right:5px}
+  .listrow{display:flex;align-items:center;gap:10px;padding:12px;border-bottom:1px solid var(--line)}
+  .listrow:last-child{border-bottom:none}
+  .icontile{width:30px;height:30px;border-radius:9px;background:var(--raised);display:flex;align-items:center;justify-content:center;font-size:14px;flex:0 0 auto}
+  .cardflush{border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden}
+  .acc{border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden}
+  .acc .item{border-bottom:1px solid var(--line)}
+  .acc .item:last-child{border-bottom:none}
+  .acc .head{display:flex;align-items:center;gap:10px;padding:12px;cursor:pointer}
+  .acc .head:hover{background:#ffffff06}
+  .acc .body{display:none;padding:0 12px 12px}
+  .acc .item.open .body{display:block}
+  .num{width:24px;height:24px;border-radius:999px;background:var(--accent-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex:0 0 auto}
+  .mk{font-family:var(--mono);font-size:9.5px;padding:1px 5px;border-radius:4px;border:1px solid}
+  .mk.cta{background:#ec489914;border-color:#ec489955;color:var(--accent)}
+  .mk.psy{background:#fbbf2414;border-color:#fbbf2455;color:var(--warn)}
+  .mk.lnk{background:#5b9bff14;border-color:#5b9bff55;color:#5b9bff}
+  .hot{cursor:pointer} .hot:hover{outline:2px solid var(--accent);outline-offset:2px}
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .stage.mobile .compare{grid-template-columns:1fr}
+  .bad{border:1px solid #fb718555;background:#fb718510;border-radius:12px;padding:11px 13px;font-size:12.5px;color:#ffd7dd}
+  .good{border:1px solid #4ade8055;background:#4ade8010;border-radius:12px;padding:11px 13px;font-size:12.5px;color:#d6ffe6}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <b>Setup = hub</b>
+  <div class="nav" id="nav">
+    <button data-s="hub" class="on">① Setup hub (mới)</button>
+    <button data-s="lab">② Lab (vào từ CTA)</button>
+    <button data-s="why">③ Vì sao đổi</button>
+  </div>
+  <span class="spacer"></span>
+  <span class="note">state:</span>
+  <button class="toggle on" data-st="unpaired" onclick="setState('unpaired',this)">chưa nối máy</button>
+  <button class="toggle" data-st="fresh" onclick="setState('fresh',this)">đã nối · 0/20</button>
+  <button class="toggle" data-st="mid" onclick="setState('mid',this)">đang dở 4/20</button>
+  <button class="toggle" data-st="done" onclick="setState('done',this)">xong 20/20</button>
+  <button class="toggle" id="mtoggle">▭ desktop</button>
+</div>
+
+<div class="stage" id="stage">
+
+  <!-- ══════ SETUP HUB ══════ -->
+  <section class="screen on" data-screen="hub">
+    <p class="verdict"><b>Setup giờ là TRANG HUB của bài lab</b> — cột đọc căn giữa như trang Ôn tập, KHÔNG còn 2-pane. Có <b>tiến độ</b>, có <b>chuẩn bị</b>, bấm CTA là làm tiếp. Bỏ tab <code>Chuẩn bị|Lab</code> (hub vào bằng CTA, ra bằng BackLink — đúng mô hình Flashcards hub → session).</p>
+    <div class="col">
+      <!-- header tier -->
+      <div class="stack" style="gap:12px">
+        <span class="sub hot">← Quay lại Playground <span class="note">BackLink</span></span>
+        <div class="block" style="border:none;background:none;padding:0">
+          <span class="tag" style="position:static;display:inline-block;margin-bottom:6px">PageHeader</span>
+          <div class="h1">Docker</div>
+          <div class="sub" style="margin-top:6px">20 bước thực hành trên chính máy bạn — chạy lệnh thật, hệ thống tự chấm từng bước.</div>
+        </div>
+      </div>
+
+      <div class="cluster">
+        <!-- ── SECTION 1: TIẾP TỤC (mirror "Đến hạn hôm nay") ── -->
+        <div>
+          <span class="lbl">Tiếp tục</span>
+          <div class="block"><span class="tag">LabeledCard → row [text + Button]</span>
+            <div class="between">
+              <div class="stack" style="gap:2px">
+                <div id="contTitle" style="font-weight:650">Chưa bắt đầu</div>
+                <div class="note" id="contHint">Nối máy ở mục Chuẩn bị bên dưới để mở khoá.</div>
+              </div>
+              <button class="btn dis" id="contCta">Bắt đầu lab →</button>
+            </div>
+            <div class="note" style="margin-top:10px"><span class="mk cta">CTA primary duy nhất của trang</span> — "bấm vào là làm tiếp"</div>
+          </div>
+        </div>
+
+        <!-- ── SECTION 2: TIẾN ĐỘ (mirror "Tiến bộ") ── -->
+        <div>
+          <span class="lbl">Tiến độ</span>
+          <div class="block"><span class="tag">LabeledCard + ProgressMeter</span>
+            <div class="between" style="margin-bottom:8px">
+              <div><b id="progText">Đã xong 0/20 bước</b> <span class="mut">· <span id="progPct">0%</span></span></div>
+              <span class="pill neu" id="progChip">chưa bắt đầu</span>
+            </div>
+            <div class="meter"><i id="progBar" style="width:0%"></i></div>
+            <div class="legend">
+              <span><span class="dot" style="background:var(--ok)"></span>Đã qua · <b id="lgDone">0</b></span>
+              <span><span class="dot" style="background:var(--warn)"></span>Đang ở · <b id="lgCur">—</b></span>
+              <span><span class="dot" style="background:var(--faint)"></span>Còn lại · <b id="lgLeft">20</b></span>
+            </div>
+            <div class="note" style="margin-top:8px"><span class="mk psy">psych: goal-gradient — số THẬT từ passedStepIndexes</span></div>
+          </div>
+        </div>
+
+        <!-- ── SECTION 3: CHUẨN BỊ MÁY — 2 KHỐI CÓ TÊN ── -->
+        <div>
+          <span class="lbl">Chuẩn bị máy</span>
+          <div class="stack" style="gap:16px">
+
+            <!-- KHỐI 1 -->
+            <div class="block"><span class="tag">LabeledCard · bước 1</span>
+              <div class="between" style="margin-bottom:6px">
+                <div class="row" style="align-items:center;gap:10px"><span class="num">1</span><b style="font-size:15px">Cài đặt Docker</b></div>
+                <span class="pill warn" id="engChip">Chưa kiểm tra</span>
+              </div>
+              <div class="sub" style="margin-bottom:10px">Docker Desktop chạy engine trên máy bạn — mọi lệnh của lab đều gọi vào engine này. Cài xong nhớ <b>mở app</b> (cài mà chưa chạy thì lệnh vẫn lỗi).</div>
+              <div class="row" style="gap:6px;margin-bottom:8px">
+                <span class="pill neu">macOS</span><span class="pill neu">Windows</span><span class="pill neu">Linux</span>
+              </div>
+              <div class="code">brew install --cask docker</div>
+              <div class="note" style="margin:8px 0">Sau khi cài: mở Docker Desktop, đợi biểu tượng cá voi báo “running”.</div>
+              <button class="btn" style="background:var(--surface-2);color:var(--ink);border:1px solid var(--line)" id="engBtn" onclick="check('eng')">
+                <span id="engBtnIcon">↻</span> <span id="engBtnText">Kiểm tra lại</span>
+              </button>
+              <div class="note" style="margin-top:8px" id="engDetail">Agent sẽ chạy <code>docker info</code> trên máy bạn.</div>
+            </div>
+
+            <!-- KHỐI 2 -->
+            <div class="block"><span class="tag">LabeledCard · bước 2</span>
+              <div class="between" style="margin-bottom:6px">
+                <div class="row" style="align-items:center;gap:10px"><span class="num">2</span><b style="font-size:15px">Cấu hình StarCi Agent</b></div>
+                <span class="pill warn" id="agentChip">Chờ</span>
+              </div>
+              <div class="sub" style="margin-bottom:10px">Agent là cầu nối giữa máy bạn và bài học: nó chuyển tiếp output lệnh lên trình duyệt và tự chấm từng bước. Chạy lệnh dưới đây trong terminal, <b>để cửa sổ đó mở</b> suốt buổi lab.</div>
+              <div class="code">npx @starciacademy/playground-docker-agent 8850620a-…</div>
+              <div class="note" style="margin:8px 0">Cần Node.js ≥ 18 (npx tự tải, không cài thường trực). Nối xong dòng trạng thái bên dưới sẽ sáng.</div>
+              <button class="btn" style="background:var(--surface-2);color:var(--ink);border:1px solid var(--line)" id="agBtn" onclick="check('ag')">
+                <span id="agBtnIcon">↻</span> <span id="agBtnText">Kiểm tra lại</span>
+              </button>
+              <div class="note" style="margin-top:8px" id="agDetail">Chưa thấy agent nào nối vào phiên này.</div>
+            </div>
+
+            <!-- trạng thái máy -->
+            <div>
+              <span class="lbl" style="font-weight:600;color:var(--muted);font-size:12px">Trạng thái máy</span>
+              <div class="cardflush"><span class="tag" style="position:static;display:inline-block;margin:8px 0 0 10px">LabeledList › SurfaceListCard bordered</span>
+                <div class="listrow"><div class="icontile">🐳</div>
+                  <div style="flex:1"><b style="font-size:13px">Docker engine</b><div class="note" id="engDesc">Chưa kiểm tra.</div></div>
+                  <span class="pill warn" id="engChip2">Chờ</span></div>
+                <div class="listrow"><div class="icontile">🤖</div>
+                  <div style="flex:1"><b style="font-size:13px">starci agent</b><div class="note" id="agentDesc">Chạy lệnh ghép nối để agent kết nối.</div></div>
+                  <span class="pill warn" id="agentChip2">Chờ</span></div>
+                <div class="listrow"><div class="icontile">📦</div>
+                  <div style="flex:1"><b style="font-size:13px">Máy đã nhận diện</b><div class="note" id="devDesc">Chưa nhận được thông tin máy.</div></div>
+                  <span class="pill warn" id="devChip">Chờ</span></div>
+              </div>
+              <div class="note" style="margin-top:8px">Dòng <b>Docker engine</b> giờ có tín hiệu THẬT — agent chạy <code>docker info</code> và báo về (<code>env:report</code>), không suy ra từ việc pair thành công.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── SECTION 4: 20 bước (mirror list bộ thẻ) ── -->
+        <div>
+          <span class="lbl">Các bước</span>
+          <div class="cardflush"><span class="tag" style="position:static;display:inline-block;margin:8px 0 0 10px">SurfaceListCard (rút gọn — xem tất cả)</span>
+            <div class="listrow"><span class="pill ok" id="s1">✓</span><div style="flex:1"><b style="font-size:13px">1 · Chạy container đầu tiên</b><div class="note">docker run -d --name starci-demo nginx</div></div></div>
+            <div class="listrow"><span class="pill ok" id="s2">✓</span><div style="flex:1"><b style="font-size:13px">2 · Liệt kê container</b><div class="note">docker ps -a</div></div></div>
+            <div class="listrow"><span class="pill neu" id="s3">3</span><div style="flex:1"><b style="font-size:13px">3 · Xem log container</b><div class="note">docker logs starci-demo</div></div></div>
+            <div class="listrow"><span class="mut" style="font-size:12.5px">… còn 17 bước</span></div>
+          </div>
+          <div class="note" style="margin-top:8px"><span class="mk lnk">link: bấm 1 bước → vào lab đúng bước đó</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ LAB ══════ -->
+  <section class="screen" data-screen="lab">
+    <p class="verdict"><b>Lab</b> giữ nguyên full-bleed 2-pane (work surface). Vào bằng CTA ở hub, ra bằng <code>BackLink</code> — không còn tab strip.</p>
+    <div class="block" style="padding:10px 12px;margin-bottom:12px">
+      <div class="between">
+        <span class="sub hot" onclick="go('hub')">← Chuẩn bị <span class="note">BackLink → hub</span></span>
+        <span class="pill neu">Bước 4 / 20</span>
+      </div>
+      <div class="meter" style="margin-top:8px"><i style="width:20%"></i></div>
+    </div>
+    <div class="compare">
+      <div class="block"><span class="tag">LEFT · step guide</span>
+        <b>Dừng &amp; xoá container</b>
+        <div class="code" style="margin-top:8px">docker rm -f starci-demo</div>
+      </div>
+      <div class="block"><span class="tag">RIGHT · Terminal / Resources</span>
+        <div class="code" style="min-height:110px">$ docker rm -f starci-demo
+starci-demo</div>
+      </div>
+    </div>
+    <div class="block" style="margin-top:12px"><span class="tag">status strip</span>
+      <div class="row" style="align-items:center;gap:8px"><span class="pill ok">● Đã nối</span><span class="note">12 ms · RTX 5060</span></div>
+    </div>
+  </section>
+
+  <!-- ══════ WHY ══════ -->
+  <section class="screen" data-screen="why">
+    <p class="verdict">Đối chiếu bản đang chạy vs bản đề xuất.</p>
+    <div class="compare">
+      <div class="stack">
+        <div class="bad"><b>Hiện tại — 2-pane full-bleed</b><br>Setup là work-surface: nửa trái hướng dẫn, nửa phải bảng trạng thái. Không có tiến độ 20 bước. Không biết đang dở tới đâu. Tab <code>Chuẩn bị|Lab</code> đá với BackLink.</div>
+        <div class="note">shell sai JOB: setup là việc ĐỌC + chuẩn bị, không phải work-surface.</div>
+      </div>
+      <div class="stack">
+        <div class="good"><b>Đề xuất — hub cột đọc (kiểu Ôn tập)</b><br>PageHeader + 4 section xếp dọc: <b>Tiếp tục</b> (CTA) · <b>Tiến độ</b> (20 bước) · <b>Chuẩn bị máy</b> (accordion + trạng thái) · <b>Các bước</b>. Vào lab bằng CTA, ra bằng BackLink.</div>
+        <div class="note">mirror `Flashcards` hub → session: hub = cột đọc, session = full-bleed.</div>
+      </div>
+    </div>
+    <div class="block" style="margin-top:16px"><span class="tag">hệ quả kỹ thuật</span>
+      <div class="sub"><b>1.</b> <code>learn/layout.tsx</code>: <code>isPlaygroundSession</code> đang full-bleed MỌI route có <code>segments[1]</code> ⇒ phải siết còn <code>segments[2]==="lab"</code>, nếu không hub sẽ bị full-bleed (mất cột đọc).<br>
+      <b>2.</b> Bỏ <code>PlaygroundHeader</code> tab strip khỏi route Setup (Lab vẫn giữ BackLink + progress).<br>
+      <b>3.</b> Tiến độ cần <code>passedStepIndexes</code> + <code>currentStepIndex</code> từ session — BE đã có (gateway ghi khi verify).</div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  const nav=document.getElementById('nav')
+  function go(s){
+    document.querySelectorAll('.screen').forEach(el=>el.classList.toggle('on', el.dataset.screen===s))
+    nav.querySelectorAll('button').forEach(b=>b.classList.toggle('on', b.dataset.s===s))
+    window.scrollTo(0,0)
+  }
+  nav.addEventListener('click',e=>{ if(e.target.dataset.s) go(e.target.dataset.s) })
+  document.getElementById('mtoggle').addEventListener('click',function(){
+    const m=document.getElementById('stage').classList.toggle('mobile')
+    this.textContent=m?'▯ mobile':'▭ desktop'
+  })
+  const S={
+    unpaired:{done:0,cur:null,paired:false,title:"Chưa bắt đầu",hint:"Nối máy ở mục Chuẩn bị bên dưới để mở khoá.",cta:"Bắt đầu lab →",dis:true,chip:"chưa bắt đầu"},
+    fresh:{done:0,cur:1,paired:true,title:"Sẵn sàng",hint:"Máy đã nối — bắt đầu từ bước 1.",cta:"Bắt đầu lab →",dis:false,chip:"sẵn sàng"},
+    mid:{done:4,cur:5,paired:true,title:"Đang dở · bước 5/20",hint:"Lần trước bạn dừng ở bước 5.",cta:"Tiếp tục bước 5 →",dis:false,chip:"đang làm"},
+    done:{done:20,cur:null,paired:true,title:"Đã hoàn thành",hint:"Bạn đã qua cả 20 bước.",cta:"Ôn lại từ đầu →",dis:false,chip:"hoàn thành"},
+  }
+  function setState(k,btn){
+    document.querySelectorAll('.toggle[data-st]').forEach(b=>b.classList.toggle('on',b===btn))
+    const s=S[k], pct=Math.round(s.done/20*100)
+    contTitle.textContent=s.title; contHint.textContent=s.hint
+    contCta.textContent=s.cta; contCta.className='btn'+(s.dis?' dis':'')
+    contCta.onclick=s.dis?null:()=>go('lab')
+    progText.textContent=`Đã xong ${s.done}/20 bước`; progPct.textContent=pct+'%'
+    progBar.style.width=pct+'%'; progChip.textContent=s.chip
+    lgDone.textContent=s.done; lgCur.textContent=s.cur??'—'; lgLeft.textContent=20-s.done
+    const ok=s.paired
+    // agent
+    for(const el of [agentChip,agentChip2]){ el.textContent=ok?'Sẵn sàng':'Chờ'; el.className='pill '+(ok?'ok':'warn') }
+    agentDesc.textContent=ok?'Agent đã bắt tay với phiên này.':'Chạy lệnh ghép nối để agent kết nối.'
+    agDetail.textContent=ok?'Agent đang chạy — giữ cửa sổ terminal mở.':'Chưa thấy agent nào nối vào phiên này.'
+    // device
+    devChip.textContent=ok?'Sẵn sàng':'Chờ'; devChip.className='pill '+(ok?'ok':'warn')
+    devDesc.textContent=ok?'Windows · i7-14700KF · 64 GB RAM':'Chưa nhận được thông tin máy.'
+    // docker engine — tín hiệu ĐỘC LẬP với pair (env:report)
+    for(const el of [engChip,engChip2]){ el.textContent=ok?'Đang chạy':'Chưa kiểm tra'; el.className='pill '+(ok?'ok':'warn') }
+    engDesc.textContent=ok?'Đang chạy · v29.5.2':'Chưa kiểm tra.'
+    engDetail.textContent=ok?'Agent đã chạy `docker info` → engine trả lời.':'Agent sẽ chạy `docker info` trên máy bạn.'
+    s1.className='pill '+(s.done>=1?'ok':'neu'); s1.textContent=s.done>=1?'✓':'1'
+    s2.className='pill '+(s.done>=2?'ok':'neu'); s2.textContent=s.done>=2?'✓':'2'
+    s3.className='pill '+(s.done>=3?'ok':'neu'); s3.textContent=s.done>=3?'✓':'3'
+  }
+  // nút "Kiểm tra lại" — isPending THẬT: đổi nhãn + render spinner (HeroUI isPending
+  // KHÔNG tự hiện spinner, phải tự render — memory feedback-heroui-ispending)
+  function check(which){
+    const btn = which==='eng'?engBtn:agBtn
+    const icon= which==='eng'?engBtnIcon:agBtnIcon
+    const text= which==='eng'?engBtnText:agBtnText
+    const detail=which==='eng'?engDetail:agDetail
+    if(btn.dataset.busy) return
+    btn.dataset.busy='1'; btn.style.opacity='.65'; btn.style.cursor='wait'
+    icon.textContent='◐'; icon.style.display='inline-block'
+    let deg=0; const spin=setInterval(()=>{deg=(deg+45)%360; icon.style.transform=`rotate(${deg}deg)`},80)
+    text.textContent='Đang kiểm tra…'
+    detail.textContent='Đang hỏi agent (env:report)…'
+    setTimeout(()=>{
+      clearInterval(spin); icon.style.transform=''; icon.textContent='↻'
+      btn.dataset.busy=''; btn.style.opacity=''; btn.style.cursor=''
+      text.textContent='Kiểm tra lại'
+      const paired=document.querySelector('.toggle[data-st].on')?.dataset.st!=='unpaired'
+      if(which==='eng'){
+        detail.textContent=paired?'Agent đã chạy `docker info` → engine trả lời (v29.5.2).':'Chưa nối agent nên chưa probe được — chạy lệnh ở bước 2 trước.'
+      }else{
+        detail.textContent=paired?'Agent đang chạy — giữ cửa sổ terminal mở.':'Vẫn chưa thấy agent — kiểm tra lệnh npx đã chạy chưa.'
+      }
+    },1400)
+  }
+  setState('unpaired',document.querySelector('.toggle[data-st="unpaired"]'))
+</script>
+</body>
+</html>

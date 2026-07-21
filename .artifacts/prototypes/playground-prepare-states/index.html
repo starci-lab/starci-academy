@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Prototype — Card "Cấu hình StarCi Agent": hàng nút + mọi state</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --surface:#fff; --well:#fafafa; --border:#e6e8ec;
+    --text:#1a1d23; --muted:#6b7280; --faint:#9aa1ac;
+    --accent:#e8447f; --accent-soft:#fdeef4;
+    --success:#15803d; --success-bg:#e7f6ec;
+    --danger:#dc4b3e; --danger-bg:#fdeae4;
+    --radius:20px;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--bg);color:var(--text);font:15px/1.6 system-ui,-apple-system,Segoe UI,sans-serif}
+  .surface{display:none;max-width:1120px;margin:0 auto;padding:30px 20px 120px}
+  .surface.active{display:block}
+  h1{font-size:22px;font-weight:700;margin-bottom:8px}
+  h2{font-size:15px;font-weight:700;margin:30px 0 12px}
+  .lede{color:var(--muted);margin-bottom:22px;max-width:900px;font-size:14px}
+  code{background:#eef0f3;padding:1px 5px;border-radius:5px;font-size:12.5px;font-family:ui-monospace,Menlo,Consolas,monospace}
+
+  /* ── mô phỏng UI thật ── */
+  .steplabel{font-size:17px;font-weight:700;margin-bottom:10px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px}
+  .row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+  .explain{color:var(--muted);font-size:14px;flex:1}
+  .chip{font-size:12px;padding:3px 11px;border-radius:999px;background:#f1f2f5;color:var(--muted);white-space:nowrap}
+  .chip.ready{background:var(--success-bg);color:var(--success)}
+  .code{margin-top:10px;background:var(--well);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+  .code .bar{display:flex;justify-content:space-between;align-items:center;padding:7px 12px;font-size:11px;color:var(--faint);letter-spacing:.09em}
+  .code pre{padding:10px 12px 12px;font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;overflow-x:auto;white-space:pre;color:#3a7d3a}
+  .code pre .np{color:#c2410c}
+  .meta{font-size:13px;color:var(--muted);margin-top:10px}
+  .meta .urg{color:var(--danger)}
+  .err{font-size:13px;color:var(--danger);margin-top:10px}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:7px 16px;border-radius:11px;
+       border:1px solid transparent;background:#f1f2f5;color:var(--accent);cursor:pointer;font:inherit;font-size:14px;white-space:nowrap}
+  .btn.dangersoft{background:var(--danger-bg);color:var(--danger)}
+  .btn[disabled]{opacity:.5;cursor:not-allowed}
+  .spin{width:12px;height:12px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;
+        display:inline-block;animation:sp .7s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .actions{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:nowrap}
+  .stackbad>.btn{display:flex;width:max-content;margin-top:10px}
+
+  /* ── chrome prototype ── */
+  .state{margin-top:26px}
+  .state-label{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:9px}
+  .state-label .when{font-weight:400;color:var(--faint);margin-left:7px}
+  .note{margin-top:10px;font-size:13px;color:var(--muted);border-left:3px solid var(--border);padding-left:12px;max-width:880px}
+  .note b{color:var(--text)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .grid2>div{min-width:0}
+  .box{border:1px dashed var(--border);border-radius:16px;padding:14px;background:#fcfcfd}
+  .box.bad{border-color:#f0b4ab} .box.good{border-color:#a7d8b8}
+  .boxtitle{font-size:13px;font-weight:700;margin-bottom:12px}
+  .boxtitle.bad{color:var(--danger)} .boxtitle.good{color:var(--success)}
+  .flag{background:#fff8e6;border:1px solid #f0dca8;border-radius:14px;padding:12px 14px;font-size:13.5px;margin-top:18px;color:#6b5410}
+  .flag b{color:#4a3a08}
+  .tag{display:inline-block;font-size:11px;background:#eef0f3;color:var(--muted);padding:1px 7px;border-radius:6px;margin-left:6px;font-weight:400}
+  .mob{max-width:400px}
+  .proto-nav{position:fixed;inset:auto 0 0 0;display:flex;gap:6px;justify-content:center;flex-wrap:wrap;
+             padding:10px;background:rgba(255,255,255,.97);border-top:1px solid var(--border);z-index:9}
+  .proto-nav button{padding:6px 13px;border-radius:9px;border:1px solid var(--border);background:#fff;
+                    color:var(--muted);cursor:pointer;font:inherit;font-size:13px}
+  .proto-nav button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+</style>
+</head>
+<body>
+
+<!-- ═══════ S1 ═══════ -->
+<section class="surface active" id="s1">
+  <h1>1 · Vì sao rối — và sửa ở đâu</h1>
+  <p class="lede">
+    Card này xếp <b>7 tầng dọc</b>, hai nút bị một dòng chữ chen giữa. Gốc rễ: hai nút sinh ra ở
+    <b>hai nhánh render khác nhau</b> — <code>Lấy mã mới</code> nằm trong <code>step.body</code>
+    (<code>renderPairBody</code>), <code>Kiểm tra lại</code> nằm trong footer dùng chung cho mọi step.
+    Không chỗ nào trong code “biết” bước này có 2 nút, nên không ai gom được thành hàng.
+  </p>
+
+  <div class="grid2">
+    <div class="box bad">
+      <div class="boxtitle bad">HIỆN TẠI — 7 tầng, 2 nút rời hàng</div>
+      <div class="steplabel">1. Cấu hình StarCi Agent</div>
+      <div class="card">
+        <div class="row">
+          <span class="explain">Agent là cầu nối giữa máy bạn và bài học: nó chuyển tiếp output lệnh lên trình duyệt và tự chấm từng bước.</span>
+          <span class="chip">Chờ</span>
+        </div>
+        <div class="code"><div class="bar"><span>BASH</span><span>⧉</span></div>
+          <pre><span class="np">npx</span> @starciacademy/playground-docker-agent b5f003ad…</pre></div>
+        <p class="meta">Mã ghép nối còn hiệu lực 5:30.</p>
+        <div class="stackbad"><button class="btn dangersoft">Lấy mã mới</button></div>
+        <p class="meta">Cần Node.js ≥ 18 (npx tự tải). GIỮ cửa sổ terminal đó mở suốt buổi thực hành.</p>
+        <div class="stackbad"><button class="btn">Kiểm tra lại</button></div>
+      </div>
+      <p class="note">Mắt phải đi: lệnh → đồng hồ → <b>nút</b> → chữ → <b>nút</b>.
+      Không đọc ra được “đây là 2 lựa chọn của cùng một bước”.</p>
+    </div>
+
+    <div class="box good">
+      <div class="boxtitle good">ĐỀ XUẤT — 4 tầng, 1 hàng hành động</div>
+      <div class="steplabel">1. Cấu hình StarCi Agent</div>
+      <div class="card">
+        <div class="row">
+          <span class="explain">Agent là cầu nối giữa máy bạn và bài học: nó chuyển tiếp output lệnh lên trình duyệt và tự chấm từng bước.</span>
+          <span class="chip">Chờ</span>
+        </div>
+        <div class="code"><div class="bar"><span>BASH</span><span>⧉</span></div>
+          <pre><span class="np">npx</span> @starciacademy/playground-docker-agent b5f003ad…</pre></div>
+        <p class="meta">Mã còn hiệu lực 5:30 · Cần Node.js ≥ 18, giữ terminal mở suốt buổi.</p>
+        <div class="actions">
+          <button class="btn">Kiểm tra lại</button>
+          <button class="btn dangersoft">Lấy mã mới</button>
+        </div>
+      </div>
+      <p class="note">
+        Ba việc: (1) <b>gom 2 nút</b> thành hàng hành động cuối card; (2) <b>gộp countdown + hint</b>
+        thành một dòng meta — hai dòng xám cạnh nhau nói hai chuyện nhưng đọc như một khối nhiễu;
+        (3) cảnh báo “mã mới sẽ ngắt agent” rời khỏi card → chuyển thành xác nhận lúc bấm (state ⑤).
+      </p>
+    </div>
+  </div>
+
+  <div class="flag">
+    <b>Đây là drift, không phải thiết kế sai từ đầu.</b> Prototype <code>playground-pairing-code-states</code>
+    (chốt cùng ngày) vẽ mỗi state <b>chỉ 1 nút</b>: còn-hạn → chỉ “Kiểm tra lại”, hết-hạn → chỉ “Lấy mã mới”.
+    Sau đó canon đổi luật thành <i>“Lấy mã mới available at ALL times”</i> và code thêm nút vào mọi state,
+    nhưng không ai vẽ lại xem 2 nút cạnh nhau ra sao.
+  </div>
+</section>
+
+<!-- ═══════ S2 ═══════ -->
+<section class="surface" id="s2">
+  <h1>2 · Ba phương án cho hàng nút</h1>
+  <p class="lede">Cả ba đều đưa 2 nút về một hàng. Khác nhau ở <b>countdown đi đâu</b> và
+  <b>2 nút có được coi là ngang vai không</b>.</p>
+
+  <h2>A — Hàng hành động cuối card <span class="tag">khuyến nghị</span></h2>
+  <div class="card" style="max-width:660px">
+    <div class="row"><span class="explain">Agent là cầu nối giữa máy bạn và bài học…</span><span class="chip">Chờ</span></div>
+    <div class="code"><div class="bar"><span>BASH</span><span>⧉</span></div><pre><span class="np">npx</span> @starciacademy/playground-docker-agent b5f003ad…</pre></div>
+    <p class="meta">Mã còn hiệu lực 5:30 · Cần Node.js ≥ 18, giữ terminal mở suốt buổi.</p>
+    <div class="actions"><button class="btn">Kiểm tra lại</button><button class="btn dangersoft">Lấy mã mới</button></div>
+  </div>
+  <p class="note">
+    Card thành <b>4 vùng cố định</b>: <code>explain+chip → body → meta → actions</code>. Bước “Cài đặt Docker”
+    chỉ có 1 nút thì hàng đó còn 1 nút — vẫn cùng khuôn, không lệch.
+    <b>Vai nút:</b> “Kiểm tra lại” = <code>tertiary</code> (theo <code>button.md §1</code>: nút phụ đứng một mình,
+    không có primary trong cụm — primary duy nhất của màn là “Bắt đầu playground” ở card trên cùng);
+    “Lấy mã mới” = <code>danger-soft</code> (phá mã đang chạy, nhưng lặp lại được).
+    Hiện “Kiểm tra lại” đang là <code>secondary</code> → sai vai, sửa luôn.
+  </p>
+
+  <h2>B — Nút gắn với thứ nó tác động</h2>
+  <div class="card" style="max-width:660px">
+    <div class="row"><span class="explain">Agent là cầu nối giữa máy bạn và bài học…</span><span class="chip">Chờ</span></div>
+    <div class="code"><div class="bar"><span>BASH</span><span>⧉</span></div><pre><span class="np">npx</span> @starciacademy/playground-docker-agent b5f003ad…</pre></div>
+    <div class="actions" style="justify-content:space-between;margin-top:10px">
+      <span class="meta" style="margin:0">Mã còn hiệu lực 5:30.</span>
+      <button class="btn dangersoft">Lấy mã mới</button>
+    </div>
+    <p class="meta">Cần Node.js ≥ 18 (npx tự tải). GIỮ cửa sổ terminal đó mở suốt buổi thực hành.</p>
+    <div class="actions"><button class="btn">Kiểm tra lại</button></div>
+  </div>
+  <p class="note">
+    Lập luận ngược: 2 nút này <b>không ngang vai</b>. “Lấy mã mới” tác động lên <b>MÃ</b>, “Kiểm tra lại”
+    tác động lên <b>BƯỚC</b>. Ghép chung hàng là nói dối về quan hệ giữa chúng. Bản này để mã + đồng hồ +
+    nút-xoay-mã thành một cụm, footer giữ đúng 1 nút verify như mọi step khác.
+    <b>Đổi lại:</b> vẫn 2 nút ở 2 độ cao — chưa giải quyết điều thầy chỉ ra.
+  </p>
+
+  <h2>C — Countdown chui vào nút <span class="tag">gọn nhất</span></h2>
+  <div class="card" style="max-width:660px">
+    <div class="row"><span class="explain">Agent là cầu nối giữa máy bạn và bài học…</span><span class="chip">Chờ</span></div>
+    <div class="code"><div class="bar"><span>BASH</span><span>⧉</span></div><pre><span class="np">npx</span> @starciacademy/playground-docker-agent b5f003ad…</pre></div>
+    <p class="meta">Cần Node.js ≥ 18 (npx tự tải). GIỮ cửa sổ terminal đó mở suốt buổi thực hành.</p>
+    <div class="actions"><button class="btn">Kiểm tra lại</button><button class="btn dangersoft">Lấy mã mới · còn 5:30</button></div>
+  </div>
+  <p class="note">
+    Giết hẳn dòng countdown: hạn của mã chính là <b>lý do</b> người ta bấm “Lấy mã mới”.
+    <b>Rủi ro:</b> nhãn nút đổi mỗi giây (nhấp nháy trong vùng nhìn), và dưới 60 giây nút phải đổi tông —
+    lúc đó <code>danger-soft</code> đang mang nghĩa “phá mã cũ” lại kiêm nghĩa “sắp hết hạn”,
+    hai nghĩa chồng lên một tín hiệu màu. Em nghiêng về <b>A</b> vì lý do này.
+  </p>
+</section>
+
+<!-- ═══════ S3 ═══════ -->
+<section class="surface" id="s3">
+  <h1>3 · Mọi state của card này — 8 state</h1>
+  <p class="lede">
+    Dựng theo phương án <b>A</b>. Nguồn state: <code>pairingCodeSecondsLeft</code> ·
+    <code>pairingCodeExpired</code> · <code>isRefreshingPairingCode</code> ·
+    <code>readyById.get("agent")</code> · <code>checking</code> · <code>checkError</code>.
+    Một tổ hợp <b>không thể xảy ra</b>: hết hạn + đã pair — <code>pairingCodeExpired</code> có
+    <code>!connected</code> trong công thức, nên pair xong là hạn tự biến mất.
+  </p>
+
+  <div class="state">
+    <div class="state-label">① Đang tạo mã <span class="when">— vừa vào trang, mutation đang bay</span></div>
+    <div class="steplabel">1. Cấu hình StarCi Agent</div>
+    <div class="card">
+      <div class="row"><span class="explain">Agent là cầu nối giữa máy bạn và bài học…</span><span class="chip">Chờ</span></div>
+      <div class="code"><div class="bar"><span>BASH</span><span>⧉</span></div><pre style="color:var(--faint)">Đang tạo mã ghép nối…</pre></div>
+      <div class="actions"><button class="btn" disabled>Kiểm tra lại</button><button class="btn dangersoft" disabled><span class="spin"></span> Lấy mã mới</button></div>
+    </div>
+    <p class="note"><b>State này hiện chưa được vẽ riêng</b> — code render <code>pairCommand</code> ngay cả khi
+    chưa có mã. Cần skeleton cho khối lệnh, nếu không học viên copy nhầm lệnh cụt.</p>
+  </div>
+
+  <div class="state">
+    <div class="state-label">② Mã còn hạn <span class="when">— &gt; 60s, chưa pair</span></div>
+    <div class="steplabel">1. Cấu hình StarCi Agent</div>
+    <div class="card">
+      <div class="row"><span class="explain">Agent là cầu nối giữa máy bạn và bài học…</span><span class="chip">Chờ</span></div>
+      <div class="code"><div class="bar"><span>BASH</span><span>⧉</span></div><pre><span class="np">npx</span> @starciacademy/playground-docker-agent b5f003ad…</pre></div>
+      <p class="meta">Mã còn hiệu lực 5:30 · Cần Node.js ≥ 18, giữ terminal mở suốt buổi.</p>
+      <div class="actions"><button class="btn">Kiểm tra lại</button><button class="btn dangersoft">Lấy mã mới</button></div>
+    </div>
+  </div>
+
+  <div class="state">
+    <div class="state-label">③ Sắp hết hạn <span class="when">— ≤ 60s</span></div>
+    <div class="steplabel">1. Cấu hình StarCi Agent</div>
+    <div class="card">
+      <div class="row"><span class="explain">Agent là cầu nối giữa máy bạn và bài học…</span><span class="chip">Chờ</span></div>
+      <div class="code"><div class="bar"><span>BASH</span><span>⧉</span></div><pre><span class="np">npx</span> @starciacademy/playground-docker-agent b5f003ad…</pre></div>
+      <p class="meta"><span class="urg">Mã còn hiệu lực 0:42.</span> · Cần Node.js ≥ 18, giữ terminal mở suốt buổi.</p>
+      <div class="actions"><button class="btn">Kiểm tra lại</button><button class="btn dangersoft">Lấy mã mới</button></div>
+    </div>
+    <p class="note">Gộp meta vẫn giữ được đổi tông: chỉ <b>vế countdown</b> chuyển danger, vế hint giữ muted.</p>
+  </div>
+
+  <div class="state">
+    <div class="state-label">④ Hết hạn <span class="when">— quá 15 phút, chưa ai pair</span></div>
+    <div class="steplabel">1. Cấu hình StarCi Agent</div>
+    <div class="card">
+      <div class="row"><span class="explain">Agent là cầu nối giữa máy bạn và bài học…</span><span class="chip">Chờ</span></div>
+      <p class="err">Mã ghép nối đã hết hạn nên chạy lệnh cũ sẽ không nối được. Lấy mã mới rồi chạy lại.</p>
+      <div class="actions"><button class="btn dangersoft">Lấy mã mới</button></div>
+    </div>
+    <p class="note">Khối lệnh <b>biến mất</b> và “Kiểm tra lại” <b>biến mất</b> (<code>hideCheck</code>) — giữ nguyên
+    luật đã chốt. Hàng hành động còn 1 nút, vẫn cùng khuôn. Hint bỏ luôn: chưa có lệnh để chạy thì nhắc
+    Node.js là nhiễu.</p>
+  </div>
+
+  <div class="state">
+    <div class="state-label">⑤ Đã pair <span class="when">— agent đang chạy · state ở lại lâu nhất</span></div>
+    <div class="steplabel">1. Cấu hình StarCi Agent</div>
+    <div class="card">
+      <div class="row"><span class="explain">Agent là cầu nối giữa máy bạn và bài học…</span><span class="chip ready">Sẵn sàng</span></div>
+      <div class="code"><div class="bar"><span>BASH</span><span>⧉</span></div><pre><span class="np">npx</span> @starciacademy/playground-docker-agent b5f003ad…</pre></div>
+      <p class="meta">Cần Node.js ≥ 18, giữ terminal mở suốt buổi.</p>
+      <div class="actions"><button class="btn">Kiểm tra lại</button><button class="btn dangersoft">Lấy mã mới</button></div>
+    </div>
+    <p class="note">
+      Countdown biến mất (mã xong việc, phiên vẫn sống). <b>Đề xuất đổi:</b> dòng
+      “<i>Lấy mã mới sẽ ngắt agent đang chạy — bạn phải chạy lại lệnh npx</i>” <b>bỏ khỏi card</b>,
+      chuyển thành <b>xác nhận khi bấm</b> (ConfirmDialog tone default, không danger — theo luật đã chốt:
+      danger chỉ cho delete/undo). Cảnh báo đó chỉ có nghĩa <b>tại khoảnh khắc bấm</b>; để thường trực là
+      trả phí thị giác mọi lúc cho một hệ quả hiếm khi xảy ra.
+    </p>
+  </div>
+
+  <div class="state">
+    <div class="state-label">⑥ Đang kiểm tra <span class="when">— cửa sổ bận 1.5s cứng</span></div>
+    <div class="steplabel">1. Cấu hình StarCi Agent</div>
+    <div class="card">
+      <div class="row"><span class="explain">Agent là cầu nối giữa máy bạn và bài học…</span><span class="chip ready">Sẵn sàng</span></div>
+      <div class="code"><div class="bar"><span>BASH</span><span>⧉</span></div><pre><span class="np">npx</span> @starciacademy/playground-docker-agent b5f003ad…</pre></div>
+      <p class="meta">Cần Node.js ≥ 18, giữ terminal mở suốt buổi.</p>
+      <div class="actions"><button class="btn" disabled><span class="spin"></span> Đang kiểm tra…</button><button class="btn dangersoft">Lấy mã mới</button></div>
+    </div>
+    <p class="note">Code hiện tự chế <code>isDisabled</code> + ternary spinner — lệch <code>button.md §6c</code>
+    (phải dùng prop <code>isPending</code> của HeroUI + spinner qua render-prop). Sửa trong cùng lượt build.</p>
+  </div>
+
+  <div class="state">
+    <div class="state-label">⑦ Bấm kiểm tra khi chưa pair <span class="when">— từ chối, không quay spinner giả</span></div>
+    <div class="steplabel">1. Cấu hình StarCi Agent</div>
+    <div class="card">
+      <div class="row"><span class="explain">Agent là cầu nối giữa máy bạn và bài học…</span><span class="chip">Chờ</span></div>
+      <div class="code"><div class="bar"><span>BASH</span><span>⧉</span></div><pre><span class="np">npx</span> @starciacademy/playground-docker-agent b5f003ad…</pre></div>
+      <p class="meta">Mã còn hiệu lực 5:30 · Cần Node.js ≥ 18, giữ terminal mở suốt buổi.</p>
+      <div class="actions"><button class="btn">Kiểm tra lại</button><button class="btn dangersoft">Lấy mã mới</button></div>
+      <p class="err">Chưa nối được StarCi Agent nên không kiểm tra được. Chạy lệnh npx ở bước Cấu hình StarCi Agent rồi thử lại.</p>
+    </div>
+    <p class="note">Dòng lỗi nằm <b>DƯỚI</b> hàng hành động (hệ quả của lần bấm vừa rồi), không chen giữa 2 nút.
+    Nó <b>derived</b> — agent nối được là tự biến mất.</p>
+  </div>
+
+  <div class="state">
+    <div class="state-label">⑧ Đang lấy mã mới</div>
+    <div class="steplabel">1. Cấu hình StarCi Agent</div>
+    <div class="card">
+      <div class="row"><span class="explain">Agent là cầu nối giữa máy bạn và bài học…</span><span class="chip">Chờ</span></div>
+      <div class="code"><div class="bar"><span>BASH</span><span>⧉</span></div><pre style="color:var(--faint)">Đang tạo mã ghép nối…</pre></div>
+      <div class="actions"><button class="btn" disabled>Kiểm tra lại</button><button class="btn dangersoft" disabled><span class="spin"></span> Lấy mã mới</button></div>
+    </div>
+  </div>
+
+  <h2>Mobile — hàng nút KHÔNG được wrap</h2>
+  <div class="mob">
+    <div class="steplabel">1. Cấu hình StarCi Agent</div>
+    <div class="card">
+      <div class="row"><span class="explain">Agent là cầu nối giữa máy bạn và bài học…</span><span class="chip">Chờ</span></div>
+      <div class="code"><div class="bar"><span>BASH</span><span>⧉</span></div><pre style="font-size:11.5px"><span class="np">npx</span> @starciacademy/playground-docker-agent b5f003ad…</pre></div>
+      <p class="meta">Mã còn hiệu lực 5:30 · Cần Node.js ≥ 18, giữ terminal mở.</p>
+      <div class="actions">
+        <button class="btn" style="flex:1;min-width:0">Kiểm tra lại</button>
+        <button class="btn dangersoft" style="flex:1;min-width:0">Lấy mã mới</button>
+      </div>
+    </div>
+  </div>
+  <p class="note">
+    Theo <code>button.md §6</code> (hàng nút trong container hẹp = 1 hàng, <b>KHÔNG</b> <code>flex-wrap</code>):
+    hai nút chia đôi bề ngang bằng <code>flex-1 min-w-0</code>, nhãn dài thì truncate.
+  </p>
+</section>
+
+<nav class="proto-nav">
+  <button onclick="go(0)">1 · Chẩn đoán</button>
+  <button onclick="go(1)">2 · Ba phương án</button>
+  <button onclick="go(2)">3 · 8 state</button>
+</nav>
+
+<script>
+  const surfaces=[...document.querySelectorAll('.surface')];
+  const navs=[...document.querySelectorAll('.proto-nav button')];
+  let idx=0;
+  function render(){
+    surfaces.forEach((s,i)=>s.classList.toggle('active',i===idx));
+    navs.forEach((b,i)=>b.classList.toggle('on',i===idx));
+    window.scrollTo(0,0);
+  }
+  function go(i){idx=i;render()}
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'){idx=Math.min(surfaces.length-1,idx+1);render()}
+    if(e.key==='ArrowLeft'){idx=Math.max(0,idx-1);render()}
+  });
+  render();
+</script>
+</body>
+</html>

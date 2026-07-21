@@ -222,7 +222,7 @@ export const MilestoneOutline = ({ className, collapsed = false }: MilestoneOutl
     // collapsed rail: only the slim numbered index (clicking a number jumps to that milestone)
     if (collapsed) {
         return (
-            <div className={cn("lg:min-h-0 lg:flex-1 lg:overflow-y-auto", className)}>
+            <div className={cn("@app-lg:min-h-0 @app-lg:flex-1 @app-lg:overflow-y-auto", className)}>
                 <MilestoneIndexStrip
                     milestones={milestones}
                     activeMilestoneId={activeMilestoneId}
@@ -234,7 +234,7 @@ export const MilestoneOutline = ({ className, collapsed = false }: MilestoneOutl
 
     return (
         <OutlineRail
-            className={cn("lg:min-h-0 lg:flex-1", className)}
+            className={cn("@app-lg:min-h-0 @app-lg:flex-1", className)}
             header={taskTotals.total > 0 ? {
                 label: t("courseContents.progress"),
                 progress: { done: taskTotals.done, total: taskTotals.total },

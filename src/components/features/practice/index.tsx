@@ -36,17 +36,17 @@ export const Practice = () => {
 
     return (
         // single column on mobile/tablet; rail + content side-by-side from lg up
-        <div className="flex w-full flex-col items-start lg:flex-row">
+        <div className="flex w-full flex-col items-start @app-lg:flex-row">
             {/* docs-style left rail — sticks under the navbar, viewport-tall, drag-resizable */}
             <ResizableRail
-                className="hidden shrink-0 lg:sticky lg:top-16 lg:flex lg:h-[calc(100dvh-4rem)] lg:flex-col lg:self-start"
+                className="hidden shrink-0 @app-lg:sticky @app-lg:top-16 @app-lg:flex @app-lg:h-[calc(100dvh-4rem)] @app-lg:flex-col @app-lg:self-start"
                 storageKey="starci.practice.rail.width"
                 defaultWidth={300}
                 minWidth={256}
                 maxWidth={420}
                 ariaLabel={t("practice.rail.modeAria")}
             >
-                <PracticeRail className="min-h-0 lg:flex-1" />
+                <PracticeRail className="min-h-0 @app-lg:flex-1" />
             </ResizableRail>
 
             {/* content column — owns the canonical p-6 reading padding */}

@@ -85,7 +85,7 @@ export const CommentItem = ({
             className={cn(
                 "flex flex-col gap-2",
                 // indent nested replies with a guide border, capped after a few levels
-                depth > 0 ? "border-l border-default pl-3 sm:pl-4" : undefined,
+                depth > 0 ? "border-l border-default pl-3 @app-sm:pl-4" : undefined,
                 className,
             )}
         >

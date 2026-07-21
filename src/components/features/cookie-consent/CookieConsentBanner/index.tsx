@@ -41,7 +41,7 @@ export const CookieConsentBanner = () => {
             <div
                 role="region"
                 aria-label={t("cookieConsent.title")}
-                className="mx-auto flex max-w-[1280px] flex-col gap-3 sm:flex-row sm:items-center"
+                className="mx-auto flex max-w-[1280px] flex-col gap-3 @app-sm:flex-row @app-sm:items-center"
             >
                 <Typography type="body-sm" color="muted" className="flex-1">
                     {t("cookieConsent.body")}

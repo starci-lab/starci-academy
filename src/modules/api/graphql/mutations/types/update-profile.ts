@@ -15,6 +15,20 @@ export interface UpdateProfileRequest {
     profileLocked?: boolean
     /** Mark the user as open to work (shows a hiring badge); omit to leave unchanged. */
     openToWork?: boolean
+    /**
+     * Partial per-section visibility update — only the sections present are changed
+     * (each omitted flag is left unchanged). Every flag defaults to true.
+     */
+    sectionVisibility?: {
+        /** Show the "Projects" tab to visitors. */
+        projects?: boolean
+        /** Show the "Challenges" tab to visitors. */
+        challenges?: boolean
+        /** Show the "Skills" tab to visitors. */
+        skills?: boolean
+        /** Show the "Activity" tab to visitors. */
+        activity?: boolean
+    }
     /** Slug of the achievement to pin as the profile mascot; null clears it. */
     featuredAchievementSlug?: string | null
     /** Professional headline / role title; null clears it. */

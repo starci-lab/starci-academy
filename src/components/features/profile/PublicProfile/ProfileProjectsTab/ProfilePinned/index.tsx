@@ -89,7 +89,7 @@ export const ProfilePinned = ({
                 isLoading={isLoading && !data}
                 skeleton={(
                     // mirror the responsive two-column pinned grid (bounded surface cards)
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-3 @app-sm:grid-cols-2">
                         {[0, 1, 2, 3].map((index) => (
                             <div
                                 key={index}
@@ -131,7 +131,7 @@ export const ProfilePinned = ({
                 }}
             >
                 {/* responsive two-column grid like GitHub pinned repos */}
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-3 @app-sm:grid-cols-2">
                     {pins.map((pin) => (
                         <PinnedProjectCard
                             key={pin.id}

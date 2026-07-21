@@ -20,6 +20,7 @@ const query1 = gql`
           parentCommentId
           replyCount
           isFounderAuthor
+          isAcceptedAnswer
           author {
             id
             username

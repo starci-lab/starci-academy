@@ -16,14 +16,14 @@ export const FlashcardReviewerSkeleton = ({ className }: WithClassNames<undefine
         <div className={cn("flex flex-col gap-6", className)}>
             {/* header band — mirrors WorkSessionHeader's own edge-to-edge shell */}
             <div className="border-b border-default bg-surface">
-                <div className="flex items-center gap-3 px-4 py-2 sm:px-6">
+                <div className="flex items-center gap-3 px-4 py-2 @app-sm:px-6">
                     <Skeleton className="h-4 w-16 rounded" />
-                    <span className="hidden h-5 w-px shrink-0 bg-default sm:block" aria-hidden />
-                    <Skeleton className="hidden h-4 w-24 rounded sm:block" />
-                    <span className="hidden h-5 w-px shrink-0 bg-default sm:block" aria-hidden />
+                    <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />
+                    <Skeleton className="hidden h-4 w-24 rounded @app-sm:block" />
+                    <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />
                     <Skeleton className="h-4 w-20 rounded" />
                 </div>
-                <div className="flex gap-1 px-4 pb-2 sm:px-6">
+                <div className="flex gap-1 px-4 pb-2 @app-sm:px-6">
                     {Array.from({ length: 6 }, (_unused, index) => (
                         <Skeleton key={index} className="h-1 flex-1 rounded-full" />
                     ))}

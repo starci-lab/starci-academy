@@ -176,14 +176,14 @@ export const SecondaryFilter: Story = {
                             <Tabs.Tab id="courses" aria-controls="panel-courses">
                                 <span className="flex items-center gap-2">
                                     <GraduationCapIcon aria-hidden focusable="false" className="size-5 shrink-0" />
-                                    <span className="hidden md:inline">Courses</span>
+                                    <span className="hidden @app-md:inline">Courses</span>
                                 </span>
                                 <Tabs.Indicator />
                             </Tabs.Tab>
                             <Tabs.Tab id="explore" aria-controls="panel-explore">
                                 <span className="flex items-center gap-2">
                                     <CompassIcon aria-hidden focusable="false" className="size-5 shrink-0" />
-                                    <span className="hidden md:inline">Explore</span>
+                                    <span className="hidden @app-md:inline">Explore</span>
                                 </span>
                                 <Tabs.Indicator />
                             </Tabs.Tab>

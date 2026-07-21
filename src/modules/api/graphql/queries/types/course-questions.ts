@@ -1,4 +1,5 @@
 import type { GraphQLResponse } from "../../types"
+import type { ReactionSummary } from "./discussion"
 
 /**
  * Status/scope filter for the course-wide Q&A roll-up (`courseQuestions`).
@@ -14,6 +15,8 @@ export enum CourseQuestionFilter {
     Mine = "mine",
     /** No status filter — every question, recency-sorted. */
     All = "all",
+    /** No status filter; ordered by engagement (reactions + replies) — the hottest first. */
+    Engagement = "engagement",
 }
 
 /** Minimal author shape attached to a course question (mirrors `UserEntity` selection). */
@@ -26,6 +29,8 @@ export interface CourseQuestionAuthor {
     displayName: string | null
     /** Author avatar url, or null. */
     avatar: string | null
+    /** Whether the viewer already follows this author (drives the follow button in the header). */
+    isFollowedByMe: boolean
 }
 
 /** One question row in the course-wide Q&A roll-up (mirrors `CourseQuestionNodeObject`). */
@@ -52,6 +57,10 @@ export interface CourseQuestionNode {
     answeredByFounder: boolean
     /** Whether the question author is the founder (drives the founder author badge). */
     isFounderAuthor: boolean
+    /** Reaction summary for the question itself (the question is a top-level comment) from the viewer's view. */
+    reactions: ReactionSummary
+    /** Whether this question is pinned to the top of the roll-up (founder moderation). */
+    isPinned: boolean
 }
 
 /** Variables for the `courseQuestions` query (mirrors `CourseQuestionsRequest`). */

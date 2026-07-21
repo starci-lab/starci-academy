@@ -391,7 +391,7 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
                 }}
             >
                 {/* Mobile mode switch — desktop shows all zones. */}
-                <div className="px-6 pt-4 lg:hidden">
+                <div className="px-6 pt-4 @app-lg:hidden">
                     <TabsCard
                         variant="primary"
                         leftTabs={{
@@ -409,7 +409,7 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
                 {/* Full-bleed shell — flush style SIDEBAR (border-r, viewport-tall,
                     drag-resizable on desktop) + content (blocks | preview), each an
                     independent scroll region. */}
-                <div className="flex flex-col lg:h-[calc(100dvh-7.5rem)] lg:flex-row">
+                <div className="flex flex-col @app-lg:h-[calc(100dvh-7.5rem)] @app-lg:flex-row">
                     {/* Style sidebar — flush-left, full-height, docs-style. Resizable
                         (mirrors the learn-shell content rail); mobile stays full-width
                         (the JS-driven width + drag handle are desktop-only). */}
@@ -425,9 +425,9 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
                             // top of the handle line reads as a doubled/thicker divider). The
                             // long content scrolls inside a ScrollShadow (fade edges) below —
                             // the root just frames + carries the resize handle.
-                            "relative flex flex-col border-b border-separator max-lg:w-full! lg:shrink-0 lg:border-b-0",
+                            "relative flex flex-col border-b border-separator @max-app-lg:w-full! @app-lg:shrink-0 @app-lg:border-b-0",
                             "[&>[role=separator]]:max-lg:hidden",
-                            mobilePane !== "edit" && "hidden lg:flex",
+                            mobilePane !== "edit" && "hidden @app-lg:flex",
                         )}
                     >
                         {/* Long style/config list → ScrollShadow (fade edges) on desktop
@@ -435,7 +435,7 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
                             naturally in the page stack (no fixed-height scroll). */}
                         <ScrollShadow
                             hideScrollBar
-                            className="flex flex-col gap-6 p-6 lg:min-h-0 lg:flex-1 lg:overflow-y-auto"
+                            className="flex flex-col gap-6 p-6 @app-lg:min-h-0 @app-lg:flex-1 @app-lg:overflow-y-auto"
                         >
                             {/* Mẫu (template) — coarsest style lever, so it sits at the top.
                             Shows the CURRENT value and opens a picker (the thumbnail
@@ -677,13 +677,13 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
 
                     {/* Content — edit pane (block form | raw LaTeX) | compiled-PDF preview,
                         each an independent scroll region. */}
-                    <div className="grid min-w-0 flex-1 grid-cols-1 gap-6 p-6 lg:grid-cols-2 lg:overflow-hidden">
+                    <div className="grid min-w-0 flex-1 grid-cols-1 gap-6 p-6 @app-lg:grid-cols-2 @app-lg:overflow-hidden">
                         {/* Edit pane — a Khối | LaTeX toggle over either the block form or
                             the raw `.tex` editor. */}
                         <div
                             className={cn(
                                 "flex min-h-0 flex-col gap-3",
-                                mobilePane !== "edit" && "hidden lg:flex",
+                                mobilePane !== "edit" && "hidden @app-lg:flex",
                             )}
                         >
                             <TabsCard
@@ -700,7 +700,7 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
                                 }}
                             />
                             {mode === "block" ? (
-                                <ScrollShadow hideScrollBar className="min-h-0 flex-1 lg:pr-1">
+                                <ScrollShadow hideScrollBar className="min-h-0 flex-1 @app-lg:pr-1">
                                     {draft ? (
                                         <CvBlockStack
                                             blocks={draft.blocks}
@@ -719,7 +719,7 @@ export const CvEditor = ({ className, cvId }: CvEditorProps) => {
                         </div>
 
                         {/* Preview — the compiled PDF (debounced tectonic compile). */}
-                        <div className={cn("min-h-0", mobilePane !== "preview" && "hidden lg:block")}>
+                        <div className={cn("min-h-0", mobilePane !== "preview" && "hidden @app-lg:block")}>
                             {draft ? <CvPdfPreview cvId={draft.id} tex={currentTex} /> : null}
                         </div>
                     </div>

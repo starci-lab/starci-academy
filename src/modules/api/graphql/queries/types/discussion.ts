@@ -71,6 +71,8 @@ export interface CommentNode {
     reactions: ReactionSummary
     /** Whether the comment author is the founder (drives the founder badge). */
     isFounderAuthor: boolean
+    /** Whether this reply is the accepted answer to its question (asker/founder chosen). */
+    isAcceptedAnswer: boolean
 }
 
 /** A page of comments plus total count. */

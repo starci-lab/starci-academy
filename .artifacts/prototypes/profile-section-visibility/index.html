@@ -1,0 +1,164 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8">
+<title>profile-section-visibility</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  :root{
+    --accent:#e84393; --accent-soft:#fdecf4; --accent-fg:#fff;
+    --bg:#faf7f5; --surface:#fff; --border:#ece5e1; --default:#f3eeeb;
+    --fg:#241c1a; --muted:#8a7d76; --success:#16a34a; --danger:#dc2626; --warning:#d97706;
+    --radius:20px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);font-family:system-ui,Segoe UI,Roboto,sans-serif;color:var(--fg);padding:24px}
+  h1{font-size:20px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 20px}
+  .blocktag{display:inline-block;font-size:10px;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:middle;font-weight:600}
+  .grid{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start}
+  .col{flex:1;min-width:340px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+  .card h2{font-size:15px;margin:0 0 2px}
+  .card .hint{color:var(--muted);font-size:12px;margin:0 0 14px}
+  /* toggle row (mirrors EditProfile lock/open-to-work row) */
+  .row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid var(--border)}
+  .row:first-of-type{border-top:0}
+  .row .lbl{font-size:14px;font-weight:500}
+  .row .lblhint{font-size:11.5px;color:var(--muted);margin-top:2px;max-width:340px}
+  .row.disabled{opacity:.42;pointer-events:none}
+  /* switch */
+  .sw{position:relative;width:40px;height:24px;flex:0 0 auto;border-radius:999px;background:var(--default);border:1px solid var(--border);cursor:pointer;transition:.15s;margin-top:2px}
+  .sw::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:.15s}
+  .sw.on{background:var(--accent);border-color:var(--accent)}
+  .sw.on::after{transform:translateX(16px)}
+  .master{background:var(--accent-soft);border:1px solid #f6d4e5;border-radius:14px;padding:12px;margin-bottom:6px}
+  /* visitor tab bar (mirrors ProfileTabsBar) */
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:10px;margin-bottom:12px}
+  .tab{font-size:13.5px;padding:6px 10px;border-radius:10px;color:var(--muted);display:flex;gap:6px;align-items:center}
+  .tab.active{color:var(--accent);font-weight:600;border-bottom:2px solid var(--accent);border-radius:0}
+  .tab.hidden{display:none}
+  .tab .dot{width:6px;height:6px;border-radius:50%;background:var(--success)}
+  .panel{min-height:120px;border:1px dashed var(--border);border-radius:14px;padding:16px;color:var(--muted);font-size:13px;display:flex;align-items:center;justify-content:center;text-align:center}
+  .locked{background:#fff7f9;border-color:#f6d4e5;color:var(--fg)}
+  .who{font-size:12px;color:var(--muted);margin:0 0 8px}
+  .who b{color:var(--fg)}
+  .legend{font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.5}
+  .kbd{background:var(--default);border-radius:5px;padding:0 5px;font-size:11px}
+  .note{font-size:11.5px;color:var(--muted);margin-top:12px;padding-left:12px;border-left:3px solid var(--accent);line-height:1.55}
+  .flip{display:inline-flex;gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:12px}
+  .flip button{border:0;background:var(--surface);padding:6px 12px;font-size:12.5px;cursor:pointer;color:var(--muted)}
+  .flip button.on{background:var(--accent);color:#fff;font-weight:600}
+</style></head>
+<body>
+  <h1>Hiển thị hồ sơ — riêng-tư 3 tầng <span class="blocktag">layout prototype</span></h1>
+  <p class="sub">Khoá cả hồ sơ (đè hết) → ẩn/hiện từng hạng mục (MỚI) → CV công khai từng cái. Bật/tắt bên trái, xem góc nhìn khách đổi ngay bên phải.</p>
+
+  <div class="grid">
+    <!-- OWNER settings -->
+    <div class="col">
+      <div class="card">
+        <h2>Cài đặt → Chỉnh sửa hồ sơ <span class="blocktag">EditProfile</span></h2>
+        <p class="hint">Nhóm "Hiển thị hồ sơ" — mirror đúng hàng toggle "Khoá hồ sơ"/"Open to work" đã có.</p>
+
+        <div class="master">
+          <div class="row" style="padding-top:0">
+            <div><div class="lbl">🔒 Khoá hồ sơ <span class="blocktag">ĐÃ CÓ · profileLocked</span></div>
+              <div class="lblhint">Bật = chỉ mình bạn xem đủ; khách thấy "Hồ sơ riêng tư". Đè mọi tuỳ chọn hạng mục bên dưới.</div></div>
+            <div class="sw" id="sw-lock" onclick="tog('lock')"></div>
+          </div>
+        </div>
+
+        <div id="sectionGroup">
+          <div class="row"><div><div class="lbl">Tổng quan</div><div class="lblhint">Danh tính + chỉ số cơ bản — LUÔN hiển thị (không tắt được).</div></div>
+            <div class="sw on" style="opacity:.5;pointer-events:none"></div></div>
+          <div class="row"><div><div class="lbl">Dự án</div><div class="lblhint">Dự án cá nhân / capstone ghim.</div></div>
+            <div class="sw on" id="sw-projects" onclick="tog('projects')"></div></div>
+          <div class="row"><div><div class="lbl">Thử thách</div><div class="lblhint">Bài nộp coding-challenge đã chấm.</div></div>
+            <div class="sw on" id="sw-challenges" onclick="tog('challenges')"></div></div>
+          <div class="row"><div><div class="lbl">Kỹ năng</div><div class="lblhint">Chỉ số coding + lịch sử giải bài.</div></div>
+            <div class="sw on" id="sw-skills" onclick="tog('skills')"></div></div>
+          <div class="row"><div><div class="lbl">Hoạt động</div><div class="lblhint">Dòng thời gian đóng góp.</div></div>
+            <div class="sw on" id="sw-activity" onclick="tog('activity')"></div></div>
+          <div class="row"><div><div class="lbl">CV <span class="blocktag">ĐÃ CÓ · is_public</span></div><div class="lblhint">CV công khai (bật từ trang /profile/cv, single-public).</div></div>
+            <div class="sw" id="sw-cv" onclick="tog('cv')"></div></div>
+        </div>
+        <p class="note">Data: 1 field <span class="kbd">sectionVisibility</span> JSONB trên user (<span class="kbd">{projects,challenges,skills,activity}</span>) + <span class="kbd">updateProfile</span> + migration. CV giữ cờ riêng (đã có). Lock giữ cờ riêng (đã có).</p>
+      </div>
+    </div>
+
+    <!-- VISITOR preview -->
+    <div class="col">
+      <div class="card">
+        <h2>Xem trước <span class="blocktag">ProfileTabsBar + PublicProfile</span></h2>
+        <div class="flip">
+          <button id="v-guest" class="on" onclick="setView('guest')">Góc nhìn KHÁCH</button>
+          <button id="v-self" onclick="setView('self')">Góc nhìn CHỦ (isSelf)</button>
+        </div>
+        <p class="who" id="whoLine"></p>
+        <div class="tabs" id="tabbar">
+          <div class="tab active" data-k="overview">Tổng quan</div>
+          <div class="tab" data-k="projects">Dự án</div>
+          <div class="tab" data-k="challenges">Thử thách</div>
+          <div class="tab" data-k="skills">Kỹ năng</div>
+          <div class="tab" data-k="activity">Hoạt động</div>
+          <div class="tab" data-k="cv">CV</div>
+        </div>
+        <div class="panel" id="panel"></div>
+        <p class="legend">
+          • Khách chỉ thấy tab của hạng mục ĐANG bật (giống cơ chế <span class="kbd">hasPublicCv</span> của CV vừa làm).<br>
+          • Chủ (<span class="kbd">isSelf</span>) LUÔN thấy hết + nhãn "ẩn" ở mục đang tắt.<br>
+          • Khoá hồ sơ ON → khách chỉ thấy <b>Hồ sơ riêng tư</b> (đè), mọi toggle hạng mục xám đi.
+        </p>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const state={lock:false,projects:true,challenges:true,skills:true,activity:true,cv:false,view:'guest'};
+  function tog(k){state[k]=!state[k];render();}
+  function setView(v){state.view=v;render();}
+  const SECT=[['projects','Dự án'],['challenges','Thử thách'],['skills','Kỹ năng'],['activity','Hoạt động'],['cv','CV']];
+  function render(){
+    // switches
+    document.getElementById('sw-lock').classList.toggle('on',state.lock);
+    ['projects','challenges','skills','activity','cv'].forEach(k=>{
+      const el=document.getElementById('sw-'+k); if(el) el.classList.toggle('on',state[k]);
+    });
+    // section group disabled when locked
+    document.getElementById('sectionGroup').style.opacity=state.lock?'.4':'1';
+    document.getElementById('sectionGroup').style.pointerEvents=state.lock?'none':'auto';
+    // view buttons
+    document.getElementById('v-guest').classList.toggle('on',state.view==='guest');
+    document.getElementById('v-self').classList.toggle('on',state.view==='self');
+    const self=state.view==='self';
+    document.getElementById('whoLine').innerHTML = self
+      ? 'Đang xem như <b>CHỦ hồ sơ</b> — thấy hết + nút "Chỉnh sửa".'
+      : 'Đang xem như <b>KHÁCH</b> — chỉ thấy mục công khai + nút "Theo dõi".';
+    // locked overrides everything for guest
+    const locked = state.lock && !self;
+    document.querySelectorAll('#tabbar .tab').forEach(t=>{
+      const k=t.dataset.k;
+      let show=true;
+      if(k==='overview') show=true;
+      else if(self) show=true;                    // owner sees all
+      else if(locked) show=(k==='overview')?false:false; // guest+locked: no tabs (private state)
+      else show=!!state[k];                        // guest: only public sections
+      t.classList.toggle('hidden', locked ? true : !show);
+      // owner label for hidden sections
+      t.querySelector('.tag')?.remove();
+      if(self && k!=='overview' && !state[k]){
+        const s=document.createElement('span'); s.className='tag'; s.textContent='· ẩn';
+        s.style.cssText='font-size:10px;color:var(--muted)'; t.appendChild(s);
+      }
+    });
+    const panel=document.getElementById('panel');
+    if(locked){ panel.className='panel locked'; panel.innerHTML='🔒 <b style="margin-left:6px">Hồ sơ riêng tư</b> — người này đã khoá hồ sơ. <span style="margin-left:4px">(ProfileLockedState)</span>'; }
+    else{
+      const visible=['overview',...SECT.filter(([k])=> self? true : state[k]).map(([k])=>k)];
+      panel.className='panel';
+      panel.innerHTML= self
+        ? 'Chủ thấy đủ '+ (1+SECT.length) +' tab. Mục đang tắt vẫn xem được (gắn nhãn "ẩn").'
+        : 'Khách thấy '+ visible.length +' tab: '+ visible.map(k=>({overview:'Tổng quan',projects:'Dự án',challenges:'Thử thách',skills:'Kỹ năng',activity:'Hoạt động',cv:'CV'}[k])).join(' · ');
+    }
+  }
+  render();
+</script>
+</body></html>

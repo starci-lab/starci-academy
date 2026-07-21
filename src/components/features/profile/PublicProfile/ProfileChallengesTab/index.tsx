@@ -10,6 +10,9 @@ import type {
 import {
     ProfileChallenges,
 } from "./ProfileChallenges"
+import {
+    ProfileSectionGuard,
+} from "../ProfileSectionGuard"
 
 /** Props for {@link ProfileChallengesTab}. */
 export type ProfileChallengesTabProps = WithClassNames<undefined>
@@ -27,8 +30,10 @@ export const ProfileChallengesTab = ({
     className,
 }: ProfileChallengesTabProps) => {
     return (
-        <div className={cn("flex min-w-0 flex-col gap-6", className)}>
-            <ProfileChallenges />
-        </div>
+        <ProfileSectionGuard section="challenges" className={className}>
+            <div className={cn("flex min-w-0 flex-col gap-6", className)}>
+                <ProfileChallenges />
+            </div>
+        </ProfileSectionGuard>
     )
 }

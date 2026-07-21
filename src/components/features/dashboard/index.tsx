@@ -58,9 +58,9 @@ export const Dashboard = ({
         <div className={cn("flex w-full flex-col", className)}>
             {/* tab strip is registered as the Navbar bottom layer above (not here) */}
             {/* 2-col body (starci concept): left identity BARE, right content cards */}
-            <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-6 md:flex-row md:items-start">
+            <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-6 @app-md:flex-row @app-md:items-start">
                 {/* LEFT: identity + standing, bare, scrolls with the page */}
-                <aside className="flex w-full flex-col gap-4 md:w-72 md:shrink-0">
+                <aside className="flex w-full flex-col gap-4 @app-md:w-72 @app-md:shrink-0">
                     <DashboardIdentity />
                 </aside>
                 {/* RIGHT: the open tab's content (only the active panel mounts) */}

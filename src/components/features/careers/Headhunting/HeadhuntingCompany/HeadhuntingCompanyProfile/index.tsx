@@ -28,7 +28,7 @@ export const HeadhuntingCompanyProfile = () => {
     }
 
     return (
-        <div className="flex flex-col gap-3 md:flex-row md:items-start">
+        <div className="flex flex-col gap-3 @app-md:flex-row @app-md:items-start">
             {company.logoUrl ? (
                 <img
                     src={company.logoUrl}

@@ -7,6 +7,9 @@ import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
 
+/** Value (title) typography size — `h4` (default) · `h5` · `body` (text-base). */
+export type StatPairValueType = "h4" | "h5" | "body"
+
 /** Props for {@link StatPair}. */
 export interface StatPairProps extends WithClassNames<undefined> {
     /**
@@ -19,6 +22,8 @@ export interface StatPairProps extends WithClassNames<undefined> {
      * Rendered small and muted beneath the value.
      */
     label: React.ReactNode
+    /** Value (title) size — defaults to `h4`; use `body` (text-base) for a smaller title (long strings). */
+    valueType?: StatPairValueType
 }
 
 /**
@@ -33,11 +38,12 @@ export interface StatPairProps extends WithClassNames<undefined> {
 export const StatPair = ({
     value,
     label,
+    valueType = "h4",
     className,
 }: StatPairProps) => {
     return (
         <div className={cn("flex flex-col items-start gap-0", className)}>
-            <Typography type="h4" weight="semibold">{value}</Typography>
+            <Typography type={valueType} weight="semibold">{value}</Typography>
             <Typography type="body-xs" color="muted">{label}</Typography>
         </div>
     )

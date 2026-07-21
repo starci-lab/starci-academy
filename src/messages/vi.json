@@ -19,7 +19,7 @@
       "placeholder": "Viết bình luận…",
       "send": "Bình luận",
       "loading": "Đang tải bình luận…",
-      "empty": "Chưa có bình luận. Bắt đầu trò chuyện nào.",
+      "empty": "Chưa có bình luận. Bạn viết bình luận đầu tiên nhé.",
       "error": "Không tải được bình luận",
       "reply": "Trả lời",
       "replyPlaceholder": "Viết trả lời…",
@@ -35,7 +35,7 @@
       "placeholder": "Nhập tin nhắn…",
       "send": "Gửi",
       "loading": "Đang tải tin nhắn…",
-      "empty": "Chưa có tin nhắn. Chào một câu nào!",
+      "empty": "Chưa có tin nhắn. Bạn mở lời trước nhé.",
       "error": "Không tải được tin nhắn",
       "signInRequired": "Đăng nhập bằng tài khoản có gói member để vào chat."
     },
@@ -47,7 +47,7 @@
     "title": "Giỏ hàng",
     "description": "Xem lại các khóa học bạn đã chọn và thanh toán một lần.",
     "empty": "Giỏ hàng đang trống",
-    "emptyHint": "Chưa có khóa học nào trong giỏ. Khám phá các khóa học và thêm vào giỏ nhé.",
+    "emptyHint": "Giỏ hàng đang trống. Bạn có thể xem danh sách khóa học để chọn khóa phù hợp.",
     "browseCourses": "Xem các khóa học",
     "add": "Thêm vào giỏ",
     "added": "Đã thêm vào giỏ hàng",
@@ -78,7 +78,7 @@
   },
   "contact": {
     "title": "Liên hệ",
-    "intro": "StarCi do một người dựng nên — câu hỏi của bạn tới thẳng người làm ra nó. Chọn cách nhanh nhất bên dưới, hoặc gửi tin nhắn.",
+    "intro": "StarCi do một người dựng nên, nên câu hỏi của bạn tới thẳng người làm ra nó. Chọn cách liên hệ nhanh nhất bên dưới, hoặc gửi tin nhắn.",
     "responseTime": "Thường phản hồi trong vòng 24 giờ (giờ hỗ trợ T2–T6, 9:00–18:00).",
     "direct": {
       "title": "Liên hệ trực tiếp",
@@ -130,7 +130,7 @@
       "q4": "Tôi muốn hợp tác hoặc tuyển học viên StarCi?",
       "a4": "Chọn lý do \"Hợp tác / tuyển dụng\" khi gửi form, hoặc nhắn trực tiếp founder qua LinkedIn.",
       "q5": "Câu hỏi về khoá học, hoặc StarCi có hợp với tôi không?",
-      "a5": "Xem mục Câu hỏi thường gặp ở trang chủ — phần đó trả lời kỹ về lộ trình, đối tượng và cách học.",
+      "a5": "Xem mục Câu hỏi thường gặp ở trang chủ. Phần đó trả lời kỹ về lộ trình, đối tượng và cách học.",
       "landingLink": "Xem FAQ về khoá học ở trang chủ"
     }
   },
@@ -157,6 +157,10 @@
   "profileSettings": {
     "title": "Cài đặt",
     "subtitle": "Quản lý tài khoản, AI, nội dung và thành viên.",
+    "privacy": {
+      "title": "Quyền riêng tư",
+      "description": "Kiểm soát ai xem được hồ sơ và từng hạng mục của bạn."
+    },
     "loginMethod": "Phương thức đăng nhập",
     "loginMethodValue": {
       "github": "GitHub",
@@ -176,6 +180,7 @@
       "editProfile": "Chỉnh sửa hồ sơ",
       "appearance": "Giao diện",
       "security": "Bảo mật",
+      "privacy": "Quyền riêng tư",
       "sessions": "Thiết bị",
       "courseHistory": "Lịch sử học",
       "submissions": "Bài nộp",
@@ -259,7 +264,7 @@
         "today": "Hôm nay",
         "yesterday": "Hôm qua",
         "empty": "Khóa này chưa có hoạt động học nào.",
-        "emptyHint": "Đọc một bài hoặc vượt qua một challenge thì hoạt động sẽ hiện ở đây.",
+        "emptyHint": "Đọc một bài hoặc vượt qua một challenge để bắt đầu ghi hoạt động.",
         "noMatch": "Không có hoạt động nào khớp với tìm kiếm.",
         "eventType": {
           "lessonRead": "Đã đọc bài",
@@ -341,7 +346,7 @@
     "resumeContinue": "Tiếp tục"
   },
   "footer": {
-    "tagline": "Học bằng cách tự tay dựng hệ thống thật — đủ trình cho mọi vòng phỏng vấn kỹ thuật.",
+    "tagline": "Học bằng cách tự tay dựng hệ thống thật, đủ trình cho mọi vòng phỏng vấn kỹ thuật.",
     "exploreTitle": "Khám phá",
     "supportTitle": "Hỗ trợ",
     "links": {
@@ -403,7 +408,7 @@
   },
   "cookieConsent": {
     "title": "Cookie",
-    "body": "Bọn mình dùng cookie cần thiết để bạn đăng nhập và ghi nhớ ngôn ngữ, cùng cookie phân tích (Google Analytics) để cải thiện trải nghiệm. Bạn có thể chấp nhận, từ chối, hoặc tùy chỉnh.",
+    "body": "StarCi dùng cookie cần thiết để bạn đăng nhập và ghi nhớ ngôn ngữ, cùng cookie phân tích (Google Analytics) để cải thiện trải nghiệm. Bạn có thể chấp nhận, từ chối, hoặc tùy chỉnh.",
     "acceptAll": "Chấp nhận tất cả",
     "reject": "Từ chối",
     "customize": "Tùy chỉnh",
@@ -412,7 +417,7 @@
     "necessaryLabel": "Cần thiết",
     "necessaryHint": "Đăng nhập, bảo mật và ghi nhớ ngôn ngữ. Luôn bật.",
     "analyticsLabel": "Phân tích",
-    "analyticsHint": "Google Analytics — đo lường ẩn danh để cải thiện sản phẩm.",
+    "analyticsHint": "Google Analytics: đo lường ẩn danh để cải thiện sản phẩm.",
     "save": "Lưu lựa chọn"
   },
   "courseContents": {
@@ -452,15 +457,15 @@
     "metaModulesLabel": "chương",
     "metaHoursLabel": "giờ học",
     "metaLearnersLabel": "học viên",
-    "capstoneEyebrow": "Đã xong nội dung — tới đồ án cá nhân",
+    "capstoneEyebrow": "Đã xong nội dung, tới đồ án cá nhân",
     "resumeCapstone": "Tiếp tục đồ án",
     "trial": {
       "title": "Bạn đang học thử khóa này",
-      "desc": "Mở khóa để học trọn khóa + dựng bằng chứng đi làm — capstone, thử thách đã chấm, phỏng vấn — cho hồ sơ nhà tuyển dụng thấy.",
+      "desc": "Mở khóa để học trọn khóa và dựng bằng chứng đi làm cho nhà tuyển dụng xem: capstone, thử thách đã chấm, phỏng vấn thử.",
       "descRemaining": "Còn {remaining} bài đọc thử. Mở khóa để học trọn khóa + dựng bằng chứng đi làm cho hồ sơ nhà tuyển dụng thấy.",
       "cta": "Mở khóa học",
       "earnedTitle": "Bạn đang học thử nghiêm túc đấy",
-      "earnedDesc": "Mở khóa để học trọn khóa + dựng bằng chứng đi làm — nút Mở khóa ngay trên trang này."
+      "earnedDesc": "Mở khóa để học trọn khóa và dựng bằng chứng đi làm."
     },
     "nudges": {
       "dueFlashcards": "{count} thẻ đến hạn hôm nay",
@@ -517,25 +522,59 @@
   },
   "contentAi": {
     "title": "Hỏi StarCi AI",
+    "close": "Đóng",
+    "mode": {
+      "aria": "Kiểu hiển thị chat",
+      "rail": "Ghim cạnh phải (kéo giãn)",
+      "drawer": "Ngăn trượt"
+    },
     "hint": "Hỏi bất cứ điều gì về nội dung này.",
+    "courseHint": "Bạn chưa mở bài nào. Cứ hỏi bất cứ điều gì về cả khoá này.",
+    "context": {
+      "label": "Đang hỏi về",
+      "wholeCourse": "Cả khoá · {course}",
+      "askWholeCourse": "Hỏi cả khoá",
+      "backToLesson": "Về bài đang đọc",
+      "courseWide": "Cả khoá",
+      "switchedToLesson": "đã mở bài {title}",
+      "switchedToCourse": "đã rời bài, hỏi về cả khoá"
+    },
     "toolResult": {
-      "intro": "Nội dung liên quan phần này — chọn để mở:",
+      "intro": "Nội dung liên quan tới phần này:",
       "empty": "Chưa tìm thấy nội dung khớp. Thử hỏi khác nhé.",
       "viewAll": "Xem tất cả trong khóa",
       "relatedLabel": "Nội dung liên quan"
     },
     "commands": {
-      "hint": "Lệnh nhanh — chọn để chạy",
+      "hint": "Lệnh nhanh",
       "aria": "Danh sách lệnh nhanh",
+      "find": "Tìm trong khóa → challenges · flashcards · lessons · milestones · related",
       "challenges": "Tìm challenges liên quan bài này",
       "flashcards": "Tìm thẻ ôn liên quan",
       "lessons": "Tìm bài học liên quan",
       "milestones": "Tìm task dự án liên quan",
       "related": "Tất cả nội dung liên quan bài này",
       "summarize": "Tóm tắt bài này trong 3 ý chính",
+      "explain": "Giải thích phần khó nhất / khái niệm chính",
       "hardest": "Giải thích phần khó nhất",
       "example": "Cho ví dụ thực tế",
-      "remember": "Điều nên nhớ từ bài này"
+      "remember": "Điều nên nhớ từ bài này",
+      "challengesOfLesson": "Tìm thử thách của bài này",
+      "challengesInCourse": "Tìm thử thách trong khoá",
+      "flashcardsOfLesson": "Tìm thẻ ôn của bài này",
+      "flashcardsInCourse": "Tìm thẻ ôn trong khoá",
+      "lessonsOfLesson": "Tìm bài học liên quan",
+      "lessonsInCourse": "Tìm bài học trong khoá",
+      "relatedOfLesson": "Tất cả nội dung liên quan bài này",
+      "relatedInCourse": "Tất cả nội dung trong khoá",
+      "challengesOfTask": "Tìm thử thách liên quan task này",
+      "flashcardsOfTask": "Tìm thẻ ôn liên quan task này",
+      "lessonsOfTask": "Tìm bài học liên quan task này",
+      "relatedOfTask": "Tất cả nội dung liên quan task này",
+      "challengesOfFoundation": "Tìm thử thách liên quan nền tảng này",
+      "flashcardsOfFoundation": "Tìm thẻ ôn liên quan nền tảng này",
+      "lessonsOfFoundation": "Tìm bài học liên quan nền tảng này",
+      "relatedOfFoundation": "Tất cả nội dung liên quan nền tảng này"
     },
     "placeholder": "Hỏi về nội dung này, hoặc gõ / để xem lệnh…",
     "ask": "Hỏi AI",
@@ -557,7 +596,7 @@
     },
     "askAboutSelection": "Hỏi AI về đoạn này",
     "selectionHintTitle": "Hỏi AI về đoạn bất kỳ",
-    "selectionHint": "Bôi đen một đoạn trong bài, nút hỏi AI sẽ hiện ra ngay.",
+    "selectionHint": "Bôi đen một đoạn trong bài để hỏi AI về đoạn đó.",
     "dismissHint": "Bỏ qua gợi ý",
     "new": "Mới",
     "clearSelection": "Bỏ chọn đoạn",
@@ -575,9 +614,13 @@
     "noConversations": "Chưa có hội thoại nào",
     "searchContent": "Tìm nội dung khóa",
     "searchContentPlaceholder": "Tìm bài học, thử thách, thẻ ôn tập, nhiệm vụ...",
-    "searchContentHint": "Hỏi bằng câu tự nhiên cũng được — AI hiểu nghĩa, không cần đúng từ khoá.",
+    "searchContentHint": "Bạn hỏi bằng câu tự nhiên cũng được, không cần đúng từ khoá.",
     "searchContentEmpty": "Không tìm thấy nội dung nào khớp",
     "deleteConversation": "Xoá hội thoại",
+    "renameConversation": "Đổi tên",
+    "archiveConversation": "Lưu trữ",
+    "conversationActions": "Tuỳ chọn hội thoại",
+    "showArchived": "Đã lưu trữ",
     "turnsCount": "{count} tin nhắn"
   },
   "contentActions": {
@@ -598,6 +641,9 @@
   "courses": {
     "featuredTitle": "Khóa học tiêu biểu",
     "viewCourse": "Xem khóa học",
+    "viewAria": "Kiểu hiển thị danh sách khóa học",
+    "viewGrid": "Xem dạng lưới",
+    "viewLine": "Xem dạng danh sách",
     "searchPlaceholder": "Tìm khóa học...",
     "learners": "{count} học viên",
     "empty": "Chưa có khóa học nào",
@@ -678,7 +724,7 @@
         "hint": "Khóa học này chưa liệt kê những gì bạn sẽ học được."
       },
       "prerequisites": {
-        "title": "Chưa có điều kiện tiên quyết",
+        "title": "Học được ngay, không cần điều kiện tiên quyết",
         "hint": "Khóa học chưa liệt kê điều kiện tiên quyết nào."
       },
       "curriculum": {
@@ -741,7 +787,7 @@
     },
     "rail": {
       "count": "{count, plural, =0 {Không có kết quả} =1 {1 kết quả} other {# kết quả}}",
-      "empty": "Không thấy keyword khớp bộ lọc",
+      "empty": "Không có keyword nào khớp bộ lọc",
       "resizeAria": "Kéo để đổi rộng cột"
     },
     "drawer": {
@@ -756,7 +802,7 @@
       "count": "{count, plural, =1 {1 mục} other {# mục}}",
       "emptyTitle": "Chưa có phần liên quan",
       "emptyDescription": "Chưa tìm thấy nội dung, thẻ, thử thách hay dự án nào liên quan tới \"{keyword}\".",
-      "loadError": "Không tải được phần liên quan",
+      "loadError": "Không tải được nội dung liên quan",
       "retry": "Thử lại"
     },
     "links": {
@@ -779,7 +825,7 @@
       "lessons": "bài",
       "tasks": "task",
       "emptyTitle": "Lộ trình đang trống",
-      "emptyDescription": "Khóa học chưa có học phần nào — quay lại sau hoặc bắt đầu học để mở lộ trình."
+      "emptyDescription": "Khóa học này chưa có học phần nào. Bạn quay lại sau, hoặc bắt đầu học để mở lộ trình."
     },
     "fullscreen": "Xem toàn màn hình",
     "exitFullscreen": "Thoát toàn màn hình",
@@ -803,7 +849,7 @@
   },
   "enrollGate": {
     "title": "Mở khoá {surface}",
-    "description": "Đăng ký khoá để mở phần này — thực hành thật, dựng bằng chứng cho hồ sơ đi làm.",
+    "description": "Đăng ký khoá để mở phần này. Bạn thực hành thật và dựng bằng chứng cho hồ sơ đi làm.",
     "cta": "Đăng ký khoá học",
     "locked": "Cần đăng ký khoá học",
     "hookTitle": "Bạn đang học thử",
@@ -861,14 +907,14 @@
   },
   "cv": {
     "title": "CV",
-    "description": "Điểm CV, góp ý từ AI và bản xem trước — luôn cạnh nhau để bạn đối chiếu.",
+    "description": "Điểm CV, góp ý từ AI và bản xem trước nằm cạnh nhau để bạn đối chiếu.",
     "builder": {
       "title": "Dựng CV",
-      "description": "Ghép từng khối thông tin — dự án, kinh nghiệm, học vấn — và xem bản PDF cập nhật ngay bên cạnh.",
+      "description": "Bạn ghép từng khối thông tin: dự án, kinh nghiệm, học vấn. Bản PDF cập nhật theo ngay.",
       "documentsAria": "Chọn CV đang chỉnh sửa",
       "addDocument": "Thêm CV mới",
       "untitled": "CV #{number}",
-      "galleryDescription": "Các CV của bạn. Bấm một CV để chỉnh sửa, hoặc tạo CV mới.",
+      "galleryDescription": "Các CV bạn đã tạo.",
       "galleryTarget": "danh sách CV",
       "createCta": "Tạo CV mới",
       "openEditor": "Mở chỉnh sửa",
@@ -900,7 +946,7 @@
       "trustBadge": "{count} dự án đã xác thực",
       "nameLabel": "Tên CV",
       "namePlaceholder": "Đặt tên cho CV này",
-      "noCourseTitle": "Chưa có dự án xác thực",
+      "noCourseTitle": "Chưa có dự án nào được xác thực",
       "noCourseHint": "Học một khóa và hoàn thành capstone để CV có dự án được xác thực.",
       "noCourseCta": "Vào khóa học",
       "downloadCta": "Tải PDF",
@@ -925,7 +971,7 @@
       "removeItem": "Xoá mục",
       "splitEntryCta": "Dán CV có sẵn",
       "splitModalTitle": "Dán CV có sẵn",
-      "splitModalDescription": "Dán nội dung một bản CV bạn đã có — AI sẽ tách thành các block để bạn tiếp tục chỉnh sửa (không lưu tự động, bạn xem lại rồi mới lưu).",
+      "splitModalDescription": "Bạn dán nội dung một bản CV đã có, AI tách thành các block để bạn chỉnh sửa tiếp. Kết quả không tự lưu, bạn xem lại rồi mới lưu.",
       "splitModalFieldLabel": "Nội dung CV",
       "splitModalPlaceholder": "Dán toàn bộ nội dung CV vào đây...",
       "splitModalSubmit": "Tách thành block",
@@ -945,7 +991,7 @@
       "aiAssistantLabel": "Trợ lý AI",
       "tailorEntryCta": "Chỉnh theo tin tuyển dụng",
       "tailorModalTitle": "Chỉnh CV theo tin tuyển dụng",
-      "tailorModalDescription": "Dán mô tả công việc bạn muốn ứng tuyển — AI sẽ điều chỉnh câu chữ và thứ tự các mục trong CV cho sát với tin tuyển dụng này (không lưu tự động, bạn xem lại rồi mới lưu).",
+      "tailorModalDescription": "Bạn dán mô tả công việc muốn ứng tuyển, AI chỉnh câu chữ và thứ tự các mục trong CV cho sát tin tuyển dụng này. Kết quả không tự lưu, bạn xem lại rồi mới lưu.",
       "tailorModalFieldLabel": "Mô tả công việc",
       "tailorModalPlaceholder": "Dán mô tả công việc / tin tuyển dụng vào đây...",
       "tailorModalSubmit": "Chỉnh theo tin tuyển dụng",
@@ -1063,7 +1109,7 @@
         "pickFromStarciLabel": "Chọn từ dự án StarCi",
         "pickFromStarciPlaceholder": "Chọn một dự án đã hoàn thành...",
         "pickFromStarciLoading": "Đang tải danh sách dự án...",
-        "pickFromStarciEmpty": "Chưa có dự án nào đã hoàn thành để chọn.",
+        "pickFromStarciEmpty": "Bạn chưa hoàn thành dự án nào để chọn.",
         "fields": {
           "title": "Tên dự án",
           "description": "Mô tả"
@@ -1166,7 +1212,7 @@
       "resultLabel": "Kết quả",
       "feedbackLabel": "Góp ý",
       "unlocked": "Đủ điều kiện liên hệ nhà tuyển dụng",
-      "locked": "Chưa đủ điều kiện liên hệ NTD",
+      "locked": "Chưa đủ điều kiện liên hệ nhà tuyển dụng",
       "needMore": "Cần thêm {score} điểm để mở khoá liên hệ nhà tuyển dụng.",
       "noScoreYet": "Chưa có điểm",
       "stillScoring": "Đang chấm điểm…",
@@ -1175,32 +1221,32 @@
       "noSuggestion": "Không có gợi ý cụ thể.",
       "noFeedback": "Chưa có góp ý.",
       "emptyTitle": "CV của bạn bắt đầu từ việc học",
-      "emptyHint": "CV dựng từ capstone · thử thách · coding bạn hoàn thành trong khóa — không viết tay.",
+      "emptyHint": "CV được dựng từ capstone, thử thách và bài coding bạn hoàn thành trong khóa, không phải viết tay.",
       "emptyPrimaryCta": "Vào khóa học",
       "emptyUploadCta": "Tải CV lên",
       "sourceGenerated": "Đã xác thực",
       "sourceUploaded": "Tự khai · chưa đối chiếu",
       "sourceUploadedBannerTitle": "Được StarCi xác thực để nổi bật hơn",
-      "sourceUploadedHint": "CV này do bạn tự khai — vẫn tính điểm và mở khoá liên hệ bình thường. Tạo CV từ thành tích thật (capstone, thử thách đã chấm) để nhà tuyển dụng thấy nhãn \"Đã xác thực\", xếp hạng cao hơn khi so ứng viên.",
+      "sourceUploadedHint": "CV này do bạn tự khai, vẫn được tính điểm và mở khóa liên hệ bình thường. Nếu tạo CV từ thành tích thật (capstone, thử thách đã chấm), bạn được gắn nhãn \"Đã xác thực\" và xếp hạng cao hơn khi nhà tuyển dụng so ứng viên.",
       "demandBridgeCta": "Tạo CV từ thành tích",
       "overflowMore": "+{count}"
     },
     "generate": {
       "title": "Tạo CV bằng AI",
-      "description": "Để AI dựng một bản CV developer từ hoạt động học tập của bạn trên StarCi, hoặc chỉnh sửa CV bạn đã tải lên. Kết quả được biên dịch ra PDF thật, xem ở khung bên phải — tải file .tex về nếu muốn tinh chỉnh thêm.",
+      "description": "AI dựng một bản CV developer từ hoạt động học tập của bạn trên StarCi, hoặc chỉnh sửa CV bạn đã tải lên. Kết quả được biên dịch ra PDF thật, và bạn tải file .tex về nếu muốn tinh chỉnh thêm.",
       "extraPromptsLabel": "Kể thêm về dự án/kinh nghiệm ngoài StarCi (tuỳ chọn)",
       "extraPromptsPlaceholder": "vd: Tôi làm dự án A, dự án B, tôi biết Golang/TypeScript...",
       "generateAction": "Tạo CV",
       "reviseAction": "Chỉnh sửa CV của tôi",
       "downloadTex": "Tải file .tex",
-      "previewReadyHint": "Đã tạo xong — xem bản PDF ở khung bên phải.",
+      "previewReadyHint": "Đã tạo xong bản PDF.",
       "renderFallback": "Không thể biên dịch ra PDF. Vui lòng tải file .tex về để xem.",
       "previewAria": "Bản xem trước CV",
-      "noAchievementsHint": "Chưa có gì để dựng? Vào khóa học để tích lũy thành tích trước."
+      "noAchievementsHint": "Bạn chưa có thành tích nào để dựng CV. Vào khóa học và hoàn thành bài trước đã."
     },
     "submission": {
       "uploadLabel": "Tải lên CV (PDF)",
-      "dropHint": "Kéo thả CV vào đây hoặc bấm để chọn — chỉ PDF, tối đa 10MB",
+      "dropHint": "Kéo thả CV vào đây hoặc bấm để chọn (chỉ PDF, tối đa 10MB)",
       "uploadSuccess": "Tải lên thành công. Bấm \"Xử lý CV\" để tiếp tục.",
       "uploadCta": "Tải CV lên",
       "uploadingCta": "Đang tải lên S3...",
@@ -1209,14 +1255,14 @@
       "processCta": "Xử lý CV",
       "processingCta": "Đang xử lý CV...",
       "fileCardTitle": "Thông tin CV đã nộp",
-      "submittedAtPending": "Chưa có thời gian nộp từ hệ thống.",
+      "submittedAtPending": "Hệ thống chưa ghi nhận thời gian nộp.",
       "download": "Tải xuống",
       "aiReviewSectionTitle": "Đánh giá bằng AI",
       "reviewAction": "Chạy đánh giá CV",
       "reviewActionRerun": "Đánh giá lại CV",
       "reviewLevelLabel": "Mức đánh giá",
       "reviewLevelPlaceholder": "Chọn mức rubric",
-      "reviewLevelSectionDescription": "Mức rubric hiện tại: {level}. Bấm Cập nhật để mở danh sách và chọn mức khác.",
+      "reviewLevelSectionDescription": "Mức rubric hiện tại: {level}.",
       "reviewLevelUpdate": "Cập nhật",
       "reviewLevelDetails": {
         "titleFallback": "Chi tiết mức đánh giá",
@@ -1296,25 +1342,34 @@
         "fileTypeInvalid": "CV phải là định dạng PDF.",
         "fileSizeInvalid": "Dung lượng file tối đa là 10MB."
       },
-      "unverifiedHint": "CV tải lên được chấm cùng rubric và vẫn tính điểm/mở khoá liên hệ bình thường — nhưng đây là CV tự khai, chưa đối chiếu với thành tích thật. Tạo CV từ thành tích StarCi (capstone, thử thách đã chấm) ở trên để được gắn nhãn \"Đã xác thực\", xếp hạng cao hơn khi nhà tuyển dụng so ứng viên."
+      "unverifiedHint": "CV tải lên được chấm theo cùng rubric, vẫn tính điểm và mở khóa liên hệ bình thường. Nhưng đây là CV tự khai, chưa đối chiếu với thành tích thật. Nếu tạo CV từ thành tích StarCi (capstone, thử thách đã chấm) ở trên, bạn được gắn nhãn \"Đã xác thực\" và xếp hạng cao hơn khi nhà tuyển dụng so ứng viên."
     }
   },
   "finalProject": {
     "gatePreview": {
-      "milestone": "Chặng 1 · Dựng API core",
-      "t1Title": "Thiết kế schema & migration",
-      "t1Meta": "Trọng số 20% · chấm tự động + review",
-      "t1Crit": "ERD đủ bảng lõi, khóa ngoại đúng; migration chạy sạch, seed dữ liệu mẫu.",
-      "t2Title": "REST endpoints + validation",
-      "t2Meta": "Trọng số 30% · e2e test",
-      "t2Crit": "CRUD đủ, phân trang, mã lỗi đúng; DTO validate ở boundary.",
-      "t3Title": "Auth & phân quyền",
-      "t3Meta": "Trọng số 25% · review",
-      "t3Crit": "JWT + refresh token, guard theo vai trò."
+      "taskMeta": "Trọng số 2 · 100 điểm",
+      "fullstackMastery": {
+        "milestone": "Nền Tảng Dự Án",
+        "heroTitle": "Dựng Khung Backend StarCi Shop + Endpoint Health",
+        "item1Title": "Boot StarCi Shop với Typed Config + Logging",
+        "item2Title": "Lưu Sản Phẩm StarCi Shop (Postgres + Migration)"
+      },
+      "systemDesignMastery": {
+        "milestone": "Monorepo & Khởi tạo bộ khung Service",
+        "heroTitle": "Chia Shop Thành Các Service Trong Một Monorepo",
+        "item1Title": "Dựng khung workspace cho service Catalog và Cart",
+        "item2Title": "Mở GET /health trên Mọi Service của Shop"
+      },
+      "devopsMastery": {
+        "milestone": "Nền Tảng Linux & Bộ Đồ Nghề SRE",
+        "heroTitle": "Bản Thiết Kế Máy Chủ Baseline cho Opsboard",
+        "item1Title": "Service User và Least-Privilege cho Opsboard",
+        "item2Title": "Chạy App như một systemd Unit"
+      }
     },
     "dashboard": {
       "title": "Dự án cá nhân",
-      "subtitle": "Xây dựng dự án của bạn theo từng chặng — chấm điểm bằng AI.",
+      "subtitle": "Bạn dựng dự án theo từng chặng, mỗi chặng được AI chấm điểm.",
       "progress": "Tiến độ",
       "tasksDone": "{done}/{total} nhiệm vụ",
       "nextTask": "Nhiệm vụ kế tiếp",
@@ -1339,7 +1394,7 @@
     "page": {
       "title": "Dự án cá nhân",
       "searchTaskPlaceholder": "Tìm task...",
-      "description": "Hiện thực hóa dự án cá nhân qua lộ trình Milestone bài bản. Với sự đồng hành của StarCI AI, mọi dòng code và giải pháp của bạn đều được đánh giá chuyên sâu, giúp tối ưu chất lượng sản phẩm ngay trong quá trình thực hiện.",
+      "description": "Bạn hiện thực hóa dự án cá nhân qua lộ trình milestone. StarCi AI đánh giá code và giải pháp ở từng chặng, để bạn chỉnh chất lượng ngay trong lúc làm.",
       "submit": {
         "title": "Nộp ý tưởng dự án",
         "placeholder": "Dán link repository GitHub của bạn",
@@ -1359,7 +1414,7 @@
         "langFieldTitle": "Ngôn ngữ chấm điểm",
         "langFieldHint": "Backend của bạn được chấm theo tiêu chí approach của ngôn ngữ này.",
         "modelFieldTitle": "Model chấm điểm",
-        "modelFieldHint": "Chọn model AI để chấm dự án — từ gói Tiết kiệm trở lên.",
+        "modelFieldHint": "Chọn model AI để chấm dự án, từ gói Tiết kiệm trở lên.",
         "repoFieldTitle": "URL GitHub",
         "branchFieldTitle": "Nhánh cần đánh giá",
         "branchPlaceholder": "main",
@@ -1377,7 +1432,7 @@
         "syncFailed": "Đồng bộ thất bại. Vui lòng thử lại.",
         "privateTokenFieldTitle": "Token GitHub (repo riêng tư)",
         "privateTokenPlaceholder": "github_pat_… hoặc ghp_…",
-        "privateTokenHint": "Chỉ cần khi repo riêng tư. Tạo fine-grained token (quyền Contents: read) cho đúng repo này — token được mã hóa khi lưu và không hiển thị lại.",
+        "privateTokenHint": "Chỉ cần khi repo riêng tư. Tạo fine-grained token (quyền Contents: read) cho đúng repo này. Token được mã hóa khi lưu và không hiển thị lại.",
         "privateTokenSaveButton": "Lưu token",
         "privateTokenRemoveButton": "Xóa token"
       },
@@ -1482,7 +1537,7 @@
     "loadingResults": "Đang tải kết quả chấm điểm...",
     "resultsTitle": "Kết quả chấm điểm",
     "previewLockedAlertTitle": "Hoàn thành bài trước trước",
-    "previewLockedAlertDescription": "Bạn vẫn xem được tiêu chí của bài này. Đánh giá AI, xem phản hồi/lịch sử và chỉnh GitHub chỉ được bật sau khi hoàn thành bước trước.",
+    "previewLockedAlertDescription": "Bạn vẫn xem được tiêu chí của bài này. Đánh giá AI, phản hồi, lịch sử và phần GitHub sẽ mở sau khi bạn hoàn thành bước trước.",
     "previewLockedGoToCurrentTaskButton": "Về bài hiện tại",
     "personalProjectDockerMultiStageIntro": "Đóng gói ứng dụng NestJS của bạn bằng Dockerfile multi-stage để tối ưu hóa dung lượng image. Build image và push lên một container registry như Docker Hub.",
     "attemptNumber": "Lần #{number}",
@@ -1515,11 +1570,11 @@
     "upNext": {
       "eyebrow": "Tiếp theo · Luyện tập bài này",
       "challengesTitle": "Làm {count} thử thách của bài này",
-      "challengesDesc": "Áp dụng ngay điều vừa học — thử thách được chấm tự động, tính vào tiến độ của bạn.",
+      "challengesDesc": "Áp dụng ngay điều vừa học. Thử thách được chấm tự động và tính vào tiến độ của bạn.",
       "challengesCta": "Làm thử thách",
-      "challengesDoneEyebrow": "Đã đạt hết thử thách ✓ · Tiếp theo",
+      "challengesDoneEyebrow": "Đã đạt hết thử thách · Tiếp theo",
       "nextLessonTitle": "Sang bài tiếp: {title}",
-      "nextLessonDesc": "Bạn đã hoàn thành bài này — tiếp tục lộ trình học.",
+      "nextLessonDesc": "Bạn đã hoàn thành bài này, tiếp tục lộ trình học.",
       "nextLessonCta": "Bài tiếp theo"
     },
     "language": "Ngôn ngữ",
@@ -1572,7 +1627,7 @@
     "e2e": {
       "empty": "Chưa có dữ liệu E2E cho bài học này.",
       "title": "Kiểm thử end-to-end (Playwright)",
-      "passedCount": "{passed}/{total} luồng pass — log thật ghi lại từ lần chạy E2E trên backend & UI thật.",
+      "passedCount": "{passed}/{total} luồng pass, log thật ghi lại từ lần chạy E2E trên backend và UI thật.",
       "languagesAria": "Ngôn ngữ E2E",
       "statusPass": "pass",
       "statusFail": "fail"
@@ -1595,7 +1650,7 @@
   "aiCredit": {
     "usage": "Còn {remaining}/{quota} credit tuần này",
     "quotaReached": "Đã hết credit tuần này",
-    "quotaReachedBurst": "Đã dùng hết credit trong ít phút vừa rồi — thử lại sau"
+    "quotaReachedBurst": "Bạn đã dùng hết credit trong ít phút vừa rồi. Thử lại sau."
   },
   "challenge": {
     "title": "Thử thách",
@@ -1782,7 +1837,7 @@
   "courseQa": {
     "navLabel": "Hỏi đáp",
     "title": "Hỏi đáp khóa này",
-    "description": "Hỏi khi bạn kẹt — founder và cả lớp trả lời. Câu hỏi và lời giải ở đây tích luỹ theo thời gian, mọi cohort sau đều được hưởng.",
+    "description": "Hỏi khi bạn kẹt, founder và cả lớp sẽ trả lời. Câu hỏi và lời giải tích luỹ lại theo thời gian, những khoá sau đều được hưởng.",
     "answeredLine": "{total} câu hỏi · {answered} đã được trả lời",
     "learnersLine": "{count} học viên đang học khóa này",
     "filterAria": "Lọc câu hỏi",
@@ -1790,7 +1845,8 @@
       "unanswered": "Chưa trả lời",
       "answered": "Đã trả lời",
       "mine": "Của tôi",
-      "all": "Tất cả"
+      "all": "Tất cả",
+      "engagement": "Sôi nổi nhất"
     },
     "searchPlaceholder": "Tìm câu hỏi...",
     "searchEmpty": "Không tìm thấy câu hỏi khớp.",
@@ -1802,11 +1858,20 @@
     "replyCount": "{count} trả lời",
     "lessonTag": "Bài: {title}",
     "generalTag": "Chung",
+    "you": "Bạn",
+    "askedBy": "{name} hỏi",
+    "collapse": "Thu gọn",
+    "beFirstToAnswer": "Chưa có ai trả lời, bạn trả lời đầu tiên nhé",
+    "replyingTo": "↳ trả lời {name}",
+    "acceptedAnswer": "Câu trả lời được chấp nhận",
+    "accept": "Chấp nhận câu trả lời",
+    "unaccept": "Bỏ chấp nhận",
+    "pinned": "Đã ghim",
     "composerPlaceholder": "Hỏi chung khóa học...",
     "composerSubmit": "Đăng câu hỏi",
     "empty": {
       "title": "Chưa có câu hỏi nào",
-      "hint": "Mở một bài học và hỏi khi bạn kẹt — founder sẽ trả lời."
+      "hint": "Mở một bài học và hỏi khi bạn kẹt, founder sẽ trả lời."
     },
     "emptyCta": "Vào nội dung khóa",
     "loadError": "Không tải được câu hỏi",
@@ -1854,7 +1919,7 @@
       "captionMilestone": "{count} task · ×10"
     },
     "rankedBy": "Xếp hạng theo {category}",
-    "empty": "Chưa có ai trên bảng xếp hạng. Hãy làm challenge hoặc đọc bài để ghi điểm đầu tiên!",
+    "empty": "Chưa có ai trên bảng xếp hạng. Làm challenge hoặc đọc bài để ghi điểm đầu tiên.",
     "myRankEmpty": "Bạn chưa có hoạt động nào trong khoá học này. Làm challenge hoặc đọc bài để lên bảng xếp hạng.",
     "error": "Không tải được bảng xếp hạng. Vui lòng thử lại."
   },
@@ -1919,7 +1984,7 @@
     "leaderboard": {
       "you": "Bạn",
       "solved": "Đã giải {count} bài",
-      "empty": "Chưa có ai trên bảng xếp hạng. Giải một bài để chiếm vị trí đầu tiên!",
+      "empty": "Chưa có ai trên bảng xếp hạng. Giải một bài để đứng đầu tiên.",
       "error": "Không tải được bảng xếp hạng"
     }
   },
@@ -1965,10 +2030,10 @@
     "statMemory": "Bộ nhớ",
     "expected": "Mong đợi",
     "got": "Nhận được",
-    "hiddenCase": "Test case ẩn — không hiển thị dữ liệu",
+    "hiddenCase": "Test case ẩn, không hiển thị dữ liệu",
     "points": "+{points} điểm",
     "totalPoints": "{points} điểm",
-    "emptyHint": "Đang thêm bài phỏng vấn mới — quay lại sau nhé.",
+    "emptyHint": "Bài phỏng vấn mới đang được thêm vào. Bạn quay lại sau nhé.",
     "solvedOf": "Đã giải {solved}/{total}",
     "allLevels": "Tất cả",
     "filterAria": "Lọc theo cấp độ",
@@ -2022,7 +2087,7 @@
       "compileError": "Lỗi biên dịch",
       "internalError": "Lỗi hệ thống"
     },
-    "historyEmpty": "Chưa có lần nộp bài nào — nộp bài đầu tiên để bắt đầu theo dõi lịch sử."
+    "historyEmpty": "Bạn chưa nộp bài nào. Nộp bài đầu tiên để bắt đầu theo dõi lịch sử."
   },
   "flashcard": {
     "title": "Ôn tập",
@@ -2049,7 +2114,7 @@
       "countBreakdown": "{overdue} quá hạn + {newCapped} thẻ mới (tối đa 20/ngày)",
       "start": "Ôn {count} thẻ",
       "allCaught": "Đã ôn hết",
-      "allCaughtHint": "Hiện không có thẻ nào đến hạn. Ôn trước một bộ thẻ bên dưới để đi trước.",
+      "allCaughtHint": "Hiện không còn thẻ nào đến hạn. Chọn một bộ thẻ bên dưới để ôn trước.",
       "resumeTitle": "Ôn tập dở dang",
       "resumeSubtitle": "Thẻ {current}/{total}",
       "resumeCta": "Tiếp tục"
@@ -2087,26 +2152,26 @@
       "statsEmptyDescription": "Thống kê ở đây chỉ tính lượt ôn của khoá này. Ôn vài lượt để xem sức khoẻ trí nhớ, điểm yếu theo chủ đề và thẻ sắp quên.",
       "deckRetentionChip": "nhớ {retention}%",
       "memoryHealthLabel": "Sức khoẻ trí nhớ",
-      "verdictOverloadSentence": "Bạn đang <b>quá tải</b> — nạp thẻ mới nhanh hơn tốc độ ghi nhớ.",
-      "verdictOverloadCaption": "Tỷ lệ nhớ {retention}% (mốc lành mạnh ~{target}%). Vấn đề KHÔNG phải quên cái đã học — mà là nạp quá nhanh.",
-      "verdictLeakingSentence": "Trí nhớ <b>chưa ổn định</b> — vài chủ đề đang tuột, cần ôn đều hơn.",
-      "verdictLeakingCaption": "Tỷ lệ nhớ {retention}% (mục tiêu ~{target}%). Đang tiến tới ngưỡng lành mạnh — giữ nhịp ôn đều để vượt qua.",
-      "verdictHealthySentence": "Trí nhớ <b>khỏe</b> — bạn đang giữ được phần lớn kiến thức đã học.",
-      "verdictHealthyCaption": "Tỷ lệ nhớ {retention}% — đạt/vượt mốc lành mạnh {target}%. Có thể nạp thêm thẻ mới mà không sợ tuột.",
+      "verdictOverloadSentence": "Bạn đang <b>quá tải</b>, nạp thẻ mới nhanh hơn tốc độ ghi nhớ.",
+      "verdictOverloadCaption": "Tỷ lệ nhớ {retention}% (mốc lành mạnh ~{target}%). Vấn đề không phải bạn quên kiến thức cũ, mà là nạp thẻ mới quá nhanh.",
+      "verdictLeakingSentence": "Trí nhớ <b>chưa ổn định</b>, vài chủ đề đang tuột nên bạn cần ôn đều hơn.",
+      "verdictLeakingCaption": "Tỷ lệ nhớ {retention}% (mục tiêu ~{target}%). Bạn đang tiến tới ngưỡng lành mạnh, giữ nhịp ôn đều để vượt qua.",
+      "verdictHealthySentence": "Trí nhớ <b>khỏe</b>, bạn đang giữ được phần lớn kiến thức đã học.",
+      "verdictHealthyCaption": "Tỷ lệ nhớ {retention}%, đạt hoặc vượt mốc lành mạnh {target}%. Bạn có thể nạp thêm thẻ mới mà không sợ tuột.",
       "reviewWeakestCta": "Ôn bộ thẻ yếu nhất",
       "matureSplitLabel": "Thẻ đã học kỹ (chín)",
       "matureSplitCaption": "bạn NHỚ được",
       "youngSplitLabel": "Thẻ mới (non)",
       "youngSplitCaption": "đang tuột",
-      "reduceNewCardsCta": "Khoan nạp thẻ mới — ôn chắc thẻ cũ đã",
+      "reduceNewCardsCta": "Ôn chắc thẻ cũ trước",
       "weakTopicMapLabel": "Điểm yếu theo chủ đề",
       "weakTopicDrillCta": "Ôn \"{tag}\" (yếu nhất)",
-      "weakTopicAvgCaption": "Trung bình chung {avg}% giấu chủ đề {tag} chỉ {low}%. Bấm để cày đúng chỗ.",
+      "weakTopicAvgCaption": "Trung bình chung {avg}%, nhưng riêng chủ đề {tag} chỉ {low}%. Ôn đúng chỗ này trước.",
       "stats": {
         "headerCaption": "Kết quả phiên ôn",
         "headerCaptionDue": "Kết quả phiên ôn thẻ đến hạn",
         "headerCaptionDeck": "Kết quả phiên ôn {deckTitle}",
-        "heroSubtitle": "Chấm Dễ hoặc Được thì thẻ đó biến mất khỏi các phiên ôn sắp tới, đợi lâu mới quay lại. Chấm Khó hoặc Quên thì thẻ quay lại sớm hơn nhiều, có khi mai đã thấy lại.",
+        "heroSubtitle": "Chấm Dễ hoặc Được thì thẻ đó lâu mới quay lại. Chấm Khó hoặc Quên thì thẻ quay lại sớm hơn nhiều, có khi ngay ngày mai.",
         "gradeCountPercent": "{count} · {percent}%",
         "rollup": "{solid} vững · {needsWork} cần củng cố",
         "metricsLabel": "Chỉ số phiên",
@@ -2193,7 +2258,7 @@
       "stop": "Dừng",
       "recording": "Đang nghe…",
       "yourAnswer": "Câu trả lời của bạn",
-      "transcriptHint": "Bấm “Trả lời bằng giọng nói” và nói câu trả lời — hệ thống tự chuyển thành văn bản.",
+      "transcriptHint": "Bấm “Trả lời bằng giọng nói” rồi nói câu trả lời, lời nói của bạn được chuyển thành văn bản.",
       "unsupported": "Trình duyệt này không hỗ trợ nhập bằng giọng nói. Hãy thử Chrome hoặc Edge.",
       "micError": "Không truy cập được micro. Kiểm tra quyền và thử lại.",
       "submit": "Nộp câu trả lời",
@@ -2260,9 +2325,9 @@
       "configTitle": "Cấu hình phiên",
       "gradeTitle": "Chấm điểm",
       "gradeHelper": "Chọn AI chấm câu trả lời của bạn. Tự động = hệ thống chọn model phù hợp.",
-      "pickHint": "Chọn 1 bộ thẻ ở danh sách bên trái để bắt đầu phiên phỏng vấn.",
+      "pickHint": "Chọn một bộ thẻ ở danh sách bên trái để bắt đầu phiên phỏng vấn.",
       "gateTitle": "Hỏi nhanh dành cho học viên",
-      "gateDescription": "Đăng ký khóa học để luyện nhớ lại kiến thức bằng flashcard — tự chấm theo từ khoá và nhận XP sau mỗi phiên.",
+      "gateDescription": "Đăng ký khóa học để luyện nhớ kiến thức bằng flashcard. Mỗi phiên được chấm theo từ khoá và cộng XP.",
       "masteryTitle": "Độ thuộc",
       "configLabel": "Cấu hình luyện",
       "clozeInstruction": "Điền các ô trống bằng từ khoá đúng.",
@@ -2288,11 +2353,11 @@
       "practiceMore": "Luyện thêm",
       "emptyAtLevel": "Chưa có thẻ ở cấp độ này",
       "scopeLabel": "Phạm vi luyện",
-      "emptyAtScope": "Không còn thẻ cần ôn — thử \"Ôn tất cả\" hoặc đổi cấp độ.",
+      "emptyAtScope": "Bạn đã ôn hết thẻ ở phạm vi này. Thử \"Ôn tất cả\" hoặc đổi cấp độ.",
       "backToSetup": "Quay lại",
       "exitToSetup": "Thoát",
       "dailyCapReached": "Đã đạt giới hạn XP hôm nay cho tính năng này",
-      "upsellTitle": "Giữ đà học này — mở khoá cả khóa học",
+      "upsellTitle": "Giữ đà học này, mở khoá cả khóa học",
       "upsellDescription": "Bạn vừa luyện xong 1 phiên. Đăng ký khóa học để học đủ mọi bài, làm capstone thật và tiếp tục cộng dồn tiến độ này.",
       "upsellCta": "Mở khóa khóa học",
       "weakTagsEmpty": "Chưa đủ dữ liệu để gợi ý bài cần ôn lại. Luyện thêm vài phiên nữa nhé.",
@@ -2301,14 +2366,14 @@
       "reviewLesson": "Học lại bài",
       "weakTagSecondaryLink": "Ôn lại: {tag}",
       "readinessLockedTitle": "Độ sẵn sàng cho AI Mock Interview",
-      "readinessLockedDescription": "Cần độ thuộc trung bình ≥ {threshold}% — bạn đang ở {currentAvg}%.",
+      "readinessLockedDescription": "Cần độ thuộc trung bình ≥ {threshold}%, bạn đang ở {currentAvg}%.",
       "readinessUnlockedTitle": "Sẵn sàng thử AI Mock Interview",
-      "readinessUnlockedDescription": "Độ thuộc của bạn đã đạt ngưỡng — thử buổi phỏng vấn được AI chấm điểm thật xem sao.",
+      "readinessUnlockedDescription": "Độ thuộc của bạn đã đạt ngưỡng. Thử một buổi phỏng vấn do AI chấm điểm xem sao.",
       "readinessUnlockedCta": "Vào AI Mock Interview",
       "resumeTitle": "Hỏi nhanh dở dang",
       "resumeSubtitle": "Câu {current}/{total} · còn {minutes} phút",
       "resumeCta": "Tiếp tục",
-      "resumeFailed": "Không thể tiếp tục phiên này — có thể đã hết hạn. Bắt đầu phiên mới bên dưới.",
+      "resumeFailed": "Phiên này có thể đã hết hạn nên không tiếp tục được. Bắt đầu phiên mới bên dưới.",
       "setupTabBegin": "Bắt đầu",
       "setupTabHistory": "Lịch sử",
       "setupTabStats": "Thống kê",
@@ -2352,7 +2417,7 @@
       "quizStatsEmptyDescription": "Luyện thêm vài phiên Hỏi nhanh để xem thống kê chi tiết.",
       "quizStatsGapLabel": "Lỗ hổng cần lấp",
       "quizStatsCoverageVsTargetLabel": "Độ phủ vs mục tiêu",
-      "quizStatsCoverageSentence": "Phủ được {coverage}% khái niệm — còn {remaining}/{total} chủ đề chưa đụng tới.",
+      "quizStatsCoverageSentence": "Bạn đã phủ {coverage}% khái niệm, còn {remaining}/{total} chủ đề chưa đụng tới.",
       "quizStatsCoverageTargetCaption": "Mục tiêu {target}% để coi như nắm chắc module.",
       "quizStatsCoverageDrillCta": "Thử {count} chủ đề chưa đụng tới",
       "quizStatsTopicNeverTried": "chưa làm bao giờ",
@@ -2377,13 +2442,13 @@
     "navLabel": "Phỏng vấn thử",
     "title": "Phỏng vấn thử",
     "subtitle": "Trả lời các câu hỏi phỏng vấn kỹ thuật ngẫu nhiên, AI chấm chi tiết.",
-    "gateTitle": "Luyện phỏng vấn — chứng minh bạn sẵn sàng đi làm",
+    "gateTitle": "Luyện phỏng vấn để chứng minh bạn sẵn sàng đi làm",
     "gateDescription": "Phỏng vấn chấm theo đúng khóa bạn học; điểm vào hồ sơ nhà tuyển dụng thấy. Đăng ký khóa để mở.",
     "gatePreview": {
       "q1Badge": "Câu 1 · System Design · Middle",
       "q1Title": "Thiết kế dịch vụ rút gọn URL chịu 10.000 req/s",
       "q1Body": "Nêu API, cách sinh short-code không đụng độ, chọn store (SQL vs KV) và cache đọc. Bạn tối ưu cho đọc hay ghi, vì sao?",
-      "answerHint": "Vùng trả lời của bạn — nói lời giải, AI ghi lại và chấm từng chiều.",
+      "answerHint": "Bạn nói lời giải, AI ghi lại và chấm theo từng chiều.",
       "r1": "Giao tiếp",
       "r2": "Tư duy giải quyết",
       "r3": "Kỹ thuật",
@@ -2415,16 +2480,16 @@
     "tierLabel": "Mức",
     "tierCaption": "Đề & kiểu câu hỏi được chọn ngẫu nhiên như phỏng vấn thật",
     "langLabel": "Ngôn ngữ",
-    "langCaption": "Chọn một hoặc nhiều ngôn ngữ — mỗi câu code sẽ ra ngẫu nhiên 1 trong số đó; câu không hợp ngôn ngữ nào sẽ đổi câu khác",
+    "langCaption": "Chọn một hoặc nhiều ngôn ngữ. Mỗi câu code sẽ dùng ngẫu nhiên một ngôn ngữ bạn chọn, câu nào không hợp thì được thay bằng câu khác.",
     "modelLabel": "Model chấm điểm",
     "autoCredit": "Còn {remaining}/{quota} credit tuần này",
     "begin": "Bắt đầu phỏng vấn",
     "grading": "Đang chấm buổi phỏng vấn…",
-    "gradingPending": "Đang tổng hợp toàn bộ buổi phỏng vấn — có thể mất khoảng 1 phút.",
-    "sessionExpiredBanner": "Đã hết giờ 1 tiếng — hệ thống tự động nộp bài với câu trả lời đã có.",
+    "gradingPending": "Đang tổng hợp toàn bộ buổi phỏng vấn, việc này mất khoảng 1 phút.",
+    "sessionExpiredBanner": "Buổi phỏng vấn đã hết giờ 1 tiếng. Bài của bạn được nộp tự động với những câu đã trả lời.",
     "gradingFailed": "Chấm điểm thất bại. Thử lại.",
-    "startFailed": "Không thể bắt đầu phỏng vấn. Thử lại.",
-    "resumeFailed": "Không thể tiếp tục phiên trước — phiên đã hết hạn hoặc không còn tồn tại. Hãy bắt đầu phiên mới.",
+    "startFailed": "Buổi phỏng vấn chưa bắt đầu được. Vui lòng thử lại.",
+    "resumeFailed": "Phiên phỏng vấn trước đã hết hạn nên không tiếp tục được. Bạn hãy bắt đầu một phiên mới.",
     "resumeCta": "Tiếp tục",
     "resumeSubtitleWithDeadline": "{progress} · Mức {tier} · còn {minutes} phút",
     "resumeSubtitleExpired": "{progress} · Mức {tier} · đã hết giờ 1 tiếng",
@@ -2467,13 +2532,13 @@
     "historyDetailTitle": "Chi tiết buổi phỏng vấn",
     "serverUnverifiedBadge": "Chưa xác thực server",
     "serverUnverifiedTitle": "Vì sao chưa xác thực?",
-    "serverUnverifiedHint": "Bản ghi buổi phỏng vấn hiện được gửi từ trình duyệt, chưa được máy chủ tự dựng lại từ luồng ghi âm gốc — điểm này tạm thời mang tính tự khai.",
-    "moatCalloutTitled": "Chấm theo khóa của bạn — trích từ bài \"{title}\"",
-    "moatCalloutUntitled": "Chấm theo khóa của bạn — có trích dẫn nội dung liên quan.",
+    "serverUnverifiedHint": "Bản ghi buổi phỏng vấn hiện do trình duyệt gửi lên, máy chủ chưa dựng lại từ luồng ghi âm gốc. Vì vậy điểm này tạm tính là tự khai.",
+    "moatCalloutTitled": "Chấm theo khóa của bạn, trích từ bài \"{title}\"",
+    "moatCalloutUntitled": "Chấm theo khóa của bạn, có trích dẫn nội dung liên quan.",
     "moatCalloutGeneric": "Chấm theo kiến thức của khóa học này.",
     "viewInLesson": "Xem trong bài học",
     "trackSnapshotLabel": "Điểm phỏng vấn (khóa này)",
-    "trackSnapshotHint": "Độ sẵn sàng của cả track (dự án, phỏng vấn, CV) — không chỉ riêng phỏng vấn.",
+    "trackSnapshotHint": "Đây là độ sẵn sàng của cả lộ trình, gồm dự án, phỏng vấn và CV, không chỉ riêng phỏng vấn.",
     "weakPhaseCta": "Ôn lại {phase} trong khóa",
     "weakPhaseCtaGeneric": "Xem lại nội dung khóa",
     "capstoneCta": "Làm dự án cá nhân",
@@ -2520,18 +2585,18 @@
       "languageLabel": "Ngôn ngữ",
       "codePlaceholder": "Viết code ở đây…",
       "emptyTitle": "Câu này không cần công cụ",
-      "emptyDescription": "Trả lời bằng lời — không cần vẽ sơ đồ hay viết code cho câu hỏi này."
+      "emptyDescription": "Câu này bạn trả lời bằng lời, không cần vẽ sơ đồ hay viết code."
     },
     "voiceUnavailable": {
       "title": "Máy chưa có giọng đọc tiếng Việt",
-      "description": "Người phỏng vấn đọc câu hỏi bằng giọng nói của trình duyệt. Máy này chưa cài giọng tiếng Việt, nên câu hỏi sẽ bị đọc bằng giọng tiếng Anh (sai dấu). Cài giọng tiếng Việt để nghe tự nhiên hơn:",
+      "description": "Người phỏng vấn đọc câu hỏi bằng giọng nói của trình duyệt. Máy này chưa có giọng tiếng Việt nên câu hỏi sẽ được đọc bằng giọng tiếng Anh, nghe sai dấu. Cài giọng tiếng Việt để nghe tự nhiên hơn:",
       "stepWindows1": "Mở Cài đặt Windows → Thời gian & Ngôn ngữ → Giọng nói.",
       "stepWindows2": "Ở mục Giọng nói, bấm Thêm giọng nói và chọn Tiếng Việt.",
       "stepWindows3": "Tải xong, quay lại đây và bấm Kiểm tra lại.",
       "macNote": "Trên macOS: System Settings → Accessibility → Spoken Content → System Voice → Manage Voices → thêm giọng Tiếng Việt. Trên điện thoại, cài gói giọng nói trong phần cài đặt Trợ năng.",
       "openSettings": "Mở cài đặt giọng nói",
       "recheck": "Kiểm tra lại",
-      "found": "Đã tìm thấy giọng tiếng Việt — sẵn sàng!",
+      "found": "Đã tìm thấy giọng tiếng Việt trên máy này.",
       "stillNotFound": "Vẫn chưa thấy giọng tiếng Việt. Thử tải lại trang sau khi cài xong.",
       "dismiss": "Bỏ qua, vẫn tiếp tục"
     },
@@ -2582,7 +2647,7 @@
     "statsVerdictPass": "Đạt",
     "statsWeakRatioCaption": "{weak}/{total} phiên yếu",
     "statsReadinessLabel": "Độ sẵn sàng phỏng vấn",
-    "statsReadinessAlmostSentence": "Gần chạm mốc \"đạt\" — còn ~{sessionsNeeded} phiên mạnh nữa.",
+    "statsReadinessAlmostSentence": "Bạn gần chạm mốc \"đạt\", còn khoảng {sessionsNeeded} phiên làm tốt nữa.",
     "statsReadinessTrendCaption": "Pass-bar {passBar}. {count} phiên gần nhất: {scores} (đang tăng đều).",
     "statsReadinessPracticeMoreCta": "Luyện {count} phiên nữa",
     "personaRole": {
@@ -2598,17 +2663,89 @@
     "navChildRag": "RAG",
     "hub": {
       "title": "Playground",
-      "subtitle": "Bài tập thực hành Docker/Kubernetes — chạy lệnh thật trên máy của bạn, có hướng dẫn từng bước.",
+      "subtitle": "Bài thực hành Docker và Kubernetes. Bạn gõ lệnh thật trên máy mình, có hướng dẫn từng bước.",
       "cta": "Vào playground",
       "stepCount": "{count} bước",
       "emptyTitle": "Chưa có bài tập nào",
-      "emptyDescription": "Khóa học này chưa có bài Playground thực hành nào — quay lại sau nhé."
+      "emptyDescription": "Khóa học này chưa có bài Playground nào. Bạn quay lại sau nhé."
+    },
+    "prepare": {
+      "title": "Chuẩn bị máy",
+      "introRag": "Nạp code vào model chạy ngay trên máy bạn, rồi hỏi và thấy câu trả lời bám đúng code vừa nạp. Code không rời khỏi máy.",
+      "stepOllamaTitle": "Cài & chạy Ollama",
+      "stepPullTitle": "Tải model (embedding và trả lời)",
+      "stepPairTitle": "Nối StarCi Agent",
+      "checkCta": "Kiểm tra lại",
+      "checkingCta": "Đang kiểm tra…",
+      "pairCodeCountdown": "Mã ghép nối còn hiệu lực {time}.",
+      "pairCodeExpired": "Mã ghép nối đã hết hạn nên chạy lệnh cũ sẽ không nối được. Lấy mã mới rồi chạy lại.",
+      "pairCodeRefreshCta": "Lấy mã mới",
+      "pairCodeRefreshWhileConnected": "Lấy mã mới sẽ ngắt agent đang chạy — bạn phải chạy lại lệnh npx.",
+      "pairCodeRefreshConfirmTitle": "Lấy mã ghép nối mới?",
+      "checkNoAgent": "Chưa nối được StarCi Agent nên không kiểm tra được. Chạy lệnh npx ở bước Cấu hình StarCi Agent rồi thử lại.",
+      "continueLabel": "Tiếp tục",
+      "continueReady": "Sẵn sàng vào playground",
+      "continuePending": "Chưa vào playground được",
+      "stepInstallNamed": "Cài đặt {name}",
+      "stepAgentTitle": "Cấu hình StarCi Agent",
+      "explainEngineInfra": "Mọi lệnh trong playground đều chạy qua công cụ này trên máy bạn.",
+      "explainEngineOllama": "Ollama chạy model ngay trên máy bạn, code không gửi lên cloud.",
+      "explainPull": "Playground cần hai vai model: một để tạo embedding khi nạp code, một để trả lời. Model embedding dùng chung cho mọi máy, chỉ model trả lời đổi theo VRAM.",
+      "explainAgent": "Agent là cầu nối giữa máy bạn và bài học: nó chuyển tiếp output lệnh lên trình duyệt và tự chấm từng bước.",
+      "hintAgent": "Cần Node.js ≥ 18 (npx tự tải). GIỮ cửa sổ terminal đó mở suốt buổi thực hành.",
+      "gpuRecommend": "Nên cài {model}, vừa với VRAM của bạn.",
+      "gpuNone": "Máy không có GPU rời, nên dùng model nhẹ qwen2.5:3b. Model chạy bằng CPU nên chậm hơn.",
+      "introDocker": "Chạy container, build image từ Dockerfile, gắn volume và mạng, rồi ghép nhiều service bằng Docker Compose. Tất cả trên máy bạn.",
+      "introK8s": "Dựng cluster bằng minikube, triển khai deployment và service, rồi tập rolling update, rollback và autoscale. Tất cả trên máy bạn.",
+      "stepEngineTitle": "Cài công cụ dòng lệnh",
+      "osMac": "macOS",
+      "osWin": "Windows",
+      "osLinux": "Linux",
+      "readinessHeading": "Trạng thái máy",
+      "readyLabel": "Sẵn sàng",
+      "pendingLabel": "Chờ",
+      "enterCta": "Bắt đầu playground",
+      "enterHintReady": "Máy đã sẵn sàng. Bạn có thể mở workspace.",
+      "enterHintPending": "Còn {count} mục chưa sẵn sàng.",
+      "modelTableVram": "VRAM trống",
+      "modelTableGen": "Model trả lời",
+      "modelTableYours": "(máy bạn)",
+      "modelTierLow": "Không có GPU rời, hoặc dưới 4 GB",
+      "modelTierMid": "4 – 8 GB",
+      "modelTierHigh": "Trên 8 GB",
+      "hintPull": "Tải về chưa đủ. Ollama phải đang chạy và giữ được cả hai model thì hàng Trạng thái máy mới xanh.",
+      "gpuPending": "Chưa đọc được cấu hình máy. Nối agent xong sẽ gợi ý model hợp với máy bạn.",
+      "pullPending": "Chưa đọc được cấu hình máy. Nối agent xong sẽ gợi ý model trả lời hợp với máy bạn, kèm lệnh tải.",
+      "modelsReady": "Đã có đủ model. Không cần tải thêm.",
+      "modelRecommend": "Nên cài {model} — vừa với máy bạn."
+    },
+    "ragWorkspace": {
+      "onlyInlineHint": "Lab trên máy chỉ nhận code bạn dán trực tiếp hoặc tải file lên. Mẫu có sẵn và repo GitHub chưa hỗ trợ.",
+      "emptyNoImportTitle": "Nạp code để bắt đầu hỏi (chạy trên Ollama máy bạn)",
+      "emptyReadyTitle": "Hỏi câu đầu tiên"
+    },
+    "ragSession": {
+      "prepareHeading": "Chuẩn bị máy",
+      "readyAgent": "StarCi Agent",
+      "readyAgentReady": "Agent đã kết nối vào phiên này.",
+      "readyAgentPending": "Agent chưa kết nối. Chạy lệnh bên trên để nối.",
+      "readyServing": "Ollama",
+      "readyServingReady": "Ollama đang chạy trên máy bạn.",
+      "readyServingPending": "Ollama chưa chạy. Mở Ollama lên rồi bấm kiểm tra lại.",
+      "readyEmbed": "Model embedding",
+      "readyEmbedReady": "Model embedding đã sẵn sàng.",
+      "readyEmbedPending": "Chưa tải model embedding (nomic-embed-text).",
+      "readyGen": "Model trả lời",
+      "readyGenReady": "Model trả lời đã sẵn sàng.",
+      "readyGenPending": "Model trả lời (qwen2.5) chưa được tải về.",
+      "readyEnginePending": "Ollama phải đang chạy và đã tải đủ hai model. Xong rồi bấm Kiểm tra lại."
     },
     "session": {
       "leave": "Thoát",
       "backToHub": "Về danh sách Playground",
+      "pageTitle": "{name} Playground",
       "loadErrorTitle": "Không tải được bài tập",
-      "loadErrorDescription": "Đường truyền hoặc máy chủ đang gặp sự cố — thử lại sau vài giây.",
+      "loadErrorDescription": "Đường truyền hoặc máy chủ đang gặp sự cố. Bạn thử lại sau vài giây.",
       "notFoundTitle": "Không tìm thấy bài tập này",
       "notFoundDescription": "Bài Playground này có thể chưa được thêm hoặc đã bị đổi tên.",
       "stepCounter": "Bước {current}/{total}",
@@ -2617,7 +2754,7 @@
       "modeGuidedLabel": "Có hướng dẫn",
       "modeGuidedDescription": "Xem đầy đủ gợi ý lệnh cho từng bước.",
       "modeFreeLabel": "Tự làm không cần hướng dẫn",
-      "modeFreeDescription": "Chỉ có mục tiêu mỗi bước — bạn tự gõ lệnh.",
+      "modeFreeDescription": "Mỗi bước chỉ nêu mục tiêu, bạn tự gõ lệnh.",
       "connectAgent": "Kết nối máy thật",
       "connectMachineIntro": "Lab này chạy trên máy bạn (Docker/K8s), có hướng dẫn từng bước. Nối máy để bắt đầu:",
       "connectMachineTitle": "Kết nối máy của bạn",
@@ -2631,27 +2768,40 @@
       "machineNotConnected": "Máy chưa nối",
       "connectFromSheetHint": "Nối máy ở thanh dưới để mở bước này.",
       "sheetToggle": "Mở hoặc thu bảng kết nối máy",
+      "readyEngine": "Công cụ trên máy",
+      "readyEngineReady": "Công cụ đã sẵn sàng.",
+      "readyEnginePending": "Chưa kiểm tra được công cụ. Nối agent xong rồi bấm Kiểm tra lại.",
+      "readyDevice": "Cấu hình máy",
+      "readyDeviceReady": "Đã đọc được cấu hình máy bạn.",
+      "readyDevicePending": "Chưa đọc được cấu hình máy. Chạy lệnh bên trên để nối agent.",
+      "reconnectFromPrepareHint": "Máy đang mất kết nối. Mở tab Chuẩn bị để nối lại hoặc đổi sang máy khác.",
       "reconnect": "Kết nối lại / đổi máy",
-      "reconnectHint": "Tiến độ các bước đã xong được giữ nguyên — chạy lại agent (máy cũ hoặc máy khác) để đi tiếp.",
+      "reconnectHint": "Tiến độ các bước đã xong vẫn được giữ nguyên. Chạy lại agent trên máy cũ hoặc máy khác để đi tiếp.",
       "agentWaiting": "Đang chờ máy kết nối…",
       "workspaceLockedTitle": "Kết nối máy để mở workspace",
-      "workspaceLockedHint": "Chạy lệnh bên trái trên máy bạn — terminal mở khi máy kết nối.",
+      "workspaceLockedHint": "Chạy lệnh bên trái trên máy bạn để nối máy và xem tài nguyên ở đây.",
       "confirmStep": "Xác nhận đã xong bước này",
       "verifying": "Đang kiểm tra…",
-      "verifyMissed": "Chưa thấy bước hoàn thành — chạy lệnh ở trên trên máy bạn rồi bấm lại.",
+      "verifyMissed": "Bước này chưa hoàn thành. Chạy lệnh phía trên ở máy bạn rồi bấm kiểm tra lại.",
+      "deviceTitle": "Máy của bạn",
+      "deviceOs": "Hệ điều hành",
+      "deviceCpu": "CPU",
+      "deviceCores": "{count} nhân",
+      "deviceRam": "RAM",
+      "deviceRamFree": "{gb} GB trống",
+      "deviceGpu": "GPU",
+      "deviceGpuUnknown": "không đọc được",
+      "deviceVramFree": "trống",
+      "agentLogTitle": "Nhật ký agent",
       "prevStep": "Bước trước",
       "nextStep": "Bước sau",
       "completeTitle": "Hoàn thành bài tập!",
-      "completeDescription": "Bạn đã hoàn thành mọi bước của playground này — còn nhiều bài học khác đang chờ trong khóa.",
-      "tabsAria": "Tab khu vực làm việc",
+      "completeDescription": "Bạn đã hoàn thành mọi bước của playground này. Khóa học còn nhiều bài khác đang chờ.",
       "tabs": {
-        "terminal": "Terminal",
         "resources": "Tài nguyên ({count})"
       },
-      "terminalEmptyTitle": "Chưa có kết quả nào",
-      "terminalEmptyDescription": "Kết nối máy của bạn và chạy lệnh của bước này để xem kết quả tại đây.",
       "resourcesEmptyTitle": "Chưa có tài nguyên nào",
-      "resourcesEmptyDescription": "Pod, container, network và service mà agent báo cáo sẽ hiện ở đây.",
+      "resourcesEmptyDescription": "Chưa có pod, container, network hay service nào đang chạy trên máy bạn.",
       "resourceKind": {
         "pod": "Pod",
         "container": "Container",
@@ -2669,15 +2819,15 @@
   "jobReadiness": {
     "title": "Sẵn sàng đi làm",
     "myTitle": "Sẵn sàng đi làm của bạn",
-    "subtitle": "Điểm tổng hợp từ CV, độ mạnh giải thử thách, và năng lực theo từng khóa — mọi chỉ số do AI chấm.",
+    "subtitle": "Điểm tổng hợp từ CV, kết quả giải thử thách và năng lực theo từng khóa. Mọi chỉ số đều do AI chấm.",
     "aiVerified": "Mọi chỉ số do AI chấm trên bài nộp thật",
     "error": "Không tải được điểm sẵn sàng đi làm.",
-    "empty": "Chưa có dữ liệu sẵn sàng đi làm.",
-    "myEmpty": "Bạn chưa có dữ liệu sẵn sàng đi làm.",
+    "empty": "Chưa có dữ liệu về mức sẵn sàng đi làm.",
+    "myEmpty": "Bạn chưa có dữ liệu về mức sẵn sàng đi làm.",
     "emptyHint": "Đọc bài, nộp thử thách và cập nhật CV để bắt đầu tính điểm sẵn sàng đi làm.",
     "foundationTitle": "Nền tảng",
     "tracksTitle": "Năng lực theo khóa",
-    "tracksEmpty": "Chưa có khóa nào — tham gia 1 khóa để tạo track đầu tiên.",
+    "tracksEmpty": "Bạn chưa tham gia khóa nào. Tham gia một khóa để tạo track đầu tiên.",
     "notStarted": "Chưa có",
     "trackCapstone": "Dự án",
     "trackInterview": "Phỏng vấn",
@@ -2708,9 +2858,9 @@
     "filterFree": "Miễn phí",
     "filterPaid": "Trả phí",
     "filterOnlySuited": "Chỉ hiện model phù hợp tác vụ",
-    "offTaskWarning": "Không tối ưu cho tác vụ này — vẫn chọn được nhưng kết quả có thể kém",
+    "offTaskWarning": "Model này không tối ưu cho tác vụ đang chạy. Bạn vẫn chọn được, nhưng kết quả có thể kém hơn.",
     "subscribeToGrade": "Đăng ký gói trả phí để chấm bài bằng model này",
-    "belowFloorWarning": "Model dưới mức khuyến nghị — có thể trả về kết quả không chính xác",
+    "belowFloorWarning": "Model này dưới mức khuyến nghị, kết quả có thể không chính xác.",
     "modelUnavailable": "Model tạm không khả dụng (không có key hoạt động)",
     "selfHostGpuAria": "GPU self-host",
     "selfHostGpuTooltip": "Model này được StarCi self-host trên GPU RTX 5060.",
@@ -2737,7 +2887,7 @@
       },
       "byok": {
         "title": "Dùng khoá riêng (BYOK)",
-        "desc": "Tự cung cấp khoá API của bạn — không bị trừ hạn mức hệ thống."
+        "desc": "Bạn dùng API key của riêng mình, không bị trừ hạn mức hệ thống."
       }
     },
     "byok": {
@@ -2753,8 +2903,8 @@
       "upsellPrompt": "Bạn muốn dùng model premium mà không cần khóa riêng?",
       "upsellSubtitle": "ignore"
     },
-    "byokSubtitle": "Thêm API key của riêng bạn để dùng model từ nhà cung cấp của bạn. Khóa được mã hóa khi lưu và sẽ không hiển thị lại.",
-    "systemDescription": "AI tự động chọn model theo độ khó của bài và gói của bạn — không cần cấu hình. Nâng gói để mở các model mạnh hơn.",
+    "byokSubtitle": "Thêm API key của riêng bạn để dùng model từ nhà cung cấp bạn chọn. Key được mã hóa khi lưu và không hiển thị lại.",
+    "systemDescription": "AI tự chọn model theo độ khó của bài và gói của bạn, bạn không cần cấu hình gì. Nâng gói sẽ mở thêm các model mạnh hơn.",
     "upgradePrompt": "Muốn dùng model mạnh hơn để chấm bài?",
     "ceil": {
       "description": "Đặt mức trần model AI cho từng hạng mục để kiểm soát credit. Auto vẫn tự chọn model theo độ khó; trần chỉ giới hạn mức cao nhất.",
@@ -2783,7 +2933,7 @@
     "cta": "Trở thành hội viên",
     "card": {
       "title": "Hội viên cộng đồng StarCi",
-      "desc": "Tất cả những gì bạn cần để học nhanh hơn và có việc — trong một gói hội viên."
+      "desc": "Một gói hội viên gồm mọi thứ bạn cần để học nhanh hơn và tìm được việc."
     },
     "perks": {
       "blog": "Đọc trọn vẹn blog kỹ thuật premium",
@@ -2818,7 +2968,7 @@
   "admin": {
     "aiBalancer": {
       "title": "Trạng thái AI Balancer",
-      "subtitle": "Trạng thái key API từ cache ping — key disabled sẽ bị bỏ qua ở lần gọi tiếp theo.",
+      "subtitle": "Trạng thái key API lấy từ cache ping. Key bị tắt sẽ được bỏ qua ở lần gọi tiếp theo.",
       "backToAdmin": "Về trang admin",
       "uploadVideoTool": "Tải lên video",
       "refreshing": "Đang làm mới…",
@@ -2855,13 +3005,13 @@
     "subtitle": "Credit chấm bài trong 5 giờ và trong tuần",
     "creditWindows": {
       "title": "Credit chấm bài (Auto)",
-      "caption": "Giống nhãn Auto trên form nộp bài — tính theo credit, không phải lượt."
+      "caption": "Giống nhãn Auto trên form nộp bài: tính theo credit, không phải theo lượt."
     },
     "rollingPool": {
       "overQuota": "Hết credit"
     },
     "premiumLimits": {
-      "caption": "Credit Premium — áp dụng cho cả hai cửa sổ bên dưới."
+      "caption": "Credit Premium áp dụng cho cả hai cửa sổ bên dưới."
     },
     "cardTitle": "Hạn mức AI",
     "viewDetails": "Xem chi tiết",
@@ -2873,7 +3023,7 @@
     "windowWeek": "Trong 7 ngày",
     "windowResetAt": "Reset lúc {time}",
     "creditsUnit": "credit",
-    "noPremium": "Chưa có gói trả phí — nâng cấp để mở khoá credit Premium.",
+    "noPremium": "Bạn chưa có gói trả phí. Nâng cấp để mở khoá credit Premium.",
     "tabsAria": "Phần hạn mức AI",
     "tabs": {
       "auto": "Tự động",
@@ -2957,14 +3107,23 @@
     "websiteUrlPlaceholder": "https://trang-cua-ban.com",
     "workMode": "Hình thức làm việc",
     "workModeNone": "Chưa xác định",
-    "invalidUrl": "Đường dẫn không hợp lệ. Vui lòng nhập URL đầy đủ (vd: https://...)."
+    "invalidUrl": "Đường dẫn không hợp lệ. Vui lòng nhập URL đầy đủ (vd: https://...).",
+    "sectionVisibility": "Hiển thị hồ sơ",
+    "sectionVisibilityHint": "Chọn hạng mục cho người khác xem. Tổng quan luôn hiển thị.",
+    "sectionVisibilityLockedHint": "Hồ sơ của bạn đang khóa nên mọi mục đều ẩn với người khác. Tắt khóa hồ sơ để chỉnh từng mục.",
+    "sectionVisibilityDesc": {
+      "projects": "Dự án cá nhân và capstone bạn ghim, để nhà tuyển dụng xem sản phẩm thật.",
+      "challenges": "Bài nộp coding-challenge đã chấm điểm (theo khóa, độ khó, ngôn ngữ).",
+      "skills": "Chỉ số coding, phân bố độ khó/chủ đề/ngôn ngữ & lịch sử giải bài.",
+      "activity": "Dòng thời gian đóng góp, cho thấy bạn học đều đặn tới đâu."
+    }
   },
   "sessions": {
     "title": "Thiết bị",
     "subtitle": "Các thiết bị đang đăng nhập vào tài khoản của bạn.",
     "thisDevice": "Thiết bị này",
     "revoke": "Đăng xuất",
-    "empty": "Không có phiên đăng nhập nào.",
+    "empty": "Bạn chưa có phiên đăng nhập nào.",
     "unknownDevice": "Thiết bị không xác định"
   },
   "installmentPlans": {
@@ -3030,6 +3189,11 @@
       "title": "Hồ sơ này ở chế độ riêng tư",
       "description": "Người dùng đã khóa hồ sơ. Chỉ chủ hồ sơ mới xem được hoạt động, thành tích và khóa học."
     },
+    "tabHidden": "· ẩn",
+    "sectionPrivate": {
+      "title": "Mục này ở chế độ riêng tư",
+      "description": "Người dùng đã ẩn hạng mục này khỏi hồ sơ công khai."
+    },
     "tabs": {
       "overview": "Tổng quan",
       "achievements": "Thành tích",
@@ -3041,6 +3205,20 @@
       "projects": "Dự án",
       "challenges": "Thử thách",
       "cv": "CV"
+    },
+    "publicCv": {
+      "editCta": "Chỉnh sửa CV",
+      "iframeTitle": "CV",
+      "emptyTitle": "Người dùng chưa công khai CV",
+      "emptySelfHint": "Bật \"Công khai\" cho một CV trong trình chỉnh sửa để hiển thị tại đây.",
+      "notCompiled": "CV chưa được biên dịch",
+      "notCompiledSelfHint": "Mở trình chỉnh sửa và biên dịch CV để hiển thị bản PDF tại đây.",
+      "errorTitle": "Không tải được CV",
+      "retry": "Thử lại"
+    },
+    "cv": {
+      "publicToggle": "Công khai",
+      "publicHint": "CV công khai hiện trên hồ sơ của bạn"
     },
     "coding": {
       "solved": "Đã giải",
@@ -3120,7 +3298,7 @@
     "bioEmpty": "Người dùng này chưa viết phần giới thiệu.",
     "achievementsEmpty": "Chưa có thành tích nào.",
     "activityEmpty": "Chưa có hoạt động nào",
-    "activityEmptyHint": "Đọc bài, vượt thử thách hay nộp dự án — hoạt động sẽ hiện ở đây.",
+    "activityEmptyHint": "Đọc bài, vượt thử thách hoặc nộp dự án để bắt đầu ghi hoạt động.",
     "coursesEmpty": "Chưa tham gia khóa học nào.",
     "capstoneEmpty": "Chưa hoàn thành dự án nào.",
     "loadMore": "Xem thêm",
@@ -3229,7 +3407,7 @@
   },
   "talents": {
     "title": "Ứng viên sẵn sàng làm việc",
-    "description": "Những học viên đang mở cơ hội việc làm. Bấm vào để xem hồ sơ.",
+    "description": "Những học viên đang mở cơ hội việc làm.",
     "empty": "Chưa có ứng viên nào bật “Sẵn sàng nhận việc”."
   },
   "jobs": {
@@ -3294,7 +3472,7 @@
       },
       "company": {
         "searchPlaceholder": "Tìm công ty đã có trên StarCi Academy",
-        "notFoundHint": "Không tìm thấy? Điền thông tin công ty mới bên dưới.",
+        "notFoundHint": "Không tìm thấy công ty của bạn? Điền thông tin công ty mới bên dưới.",
         "change": "Đổi công ty",
         "newTitle": "Tên công ty mới",
         "newTitlePlaceholder": "Ví dụ: Công ty TNHH ABC",
@@ -3338,7 +3516,7 @@
       },
       "success": {
         "title": "Tin tuyển dụng đã được đăng",
-        "description": "Tin của bạn đã hiển thị công khai trên bảng việc làm — không cần chờ duyệt.",
+        "description": "Tin của bạn đã hiển thị công khai trên bảng việc làm, không cần chờ duyệt.",
         "viewPosting": "Xem tin vừa đăng",
         "backToBoard": "Về bảng việc làm"
       }
@@ -3364,7 +3542,7 @@
         "placeholder": "Nhập email của bạn",
         "invalid": "Vui lòng nhập địa chỉ email hợp lệ",
         "required": "Vui lòng nhập email",
-        "notExists": "Không tìm thấy tài khoản với email này",
+        "notExists": "Chưa có tài khoản nào dùng email này",
         "checking": "Đang kiểm tra email…"
       },
       "password": {
@@ -3383,7 +3561,7 @@
       "success": "Đăng nhập thành công",
       "otp": {
         "title": "Nhập mã OTP",
-        "desc": "Vui lòng kiểm tra hộp thư <emailHighlight>{email}</emailHighlight>, sau đó nhập mã xác nhận bên dưới.",
+        "desc": "Kiểm tra hộp thư <emailHighlight>{email}</emailHighlight> rồi nhập mã xác nhận bên dưới.",
         "label": "Mã OTP",
         "placeholder": "Nhập mã OTP 6 số",
         "required": "Vui lòng nhập mã OTP",
@@ -3491,7 +3669,7 @@
       "payInstallment": "Trả góp",
       "months": "{months} tháng",
       "perMonth": "{amount}/tháng",
-      "summary": "Tổng {total} (đã gồm phí trả góp +{markup}%) · chỉ hỗ trợ cổng nội địa (VND)"
+      "summary": "Tổng {total}, đã gồm phí trả góp +{markup}%. Chỉ hỗ trợ cổng thanh toán nội địa (VND)"
     },
     "loyalty": {
       "enrolled": "Bạn đã sở hữu {count} khóa học",
@@ -3576,7 +3754,7 @@
       },
       "completed": {
         "title": "Review dự án hoàn tất",
-        "description": "Dự án đã được review xong. Xem kết quả chấm điểm bên dưới để nhận phản hồi chi tiết."
+        "description": "Dự án của bạn đã được chấm xong, kèm phản hồi chi tiết."
       },
       "failed": {
         "title": "Đánh giá tiến độ thất bại",
@@ -3610,7 +3788,14 @@
     "kindContent": "Bài học",
     "kindChallenge": "Thử thách",
     "kindFlashcard": "Flashcard",
-    "kindMilestone": "Dự án"
+    "kindMilestone": "Dự án",
+    "enrollToOpen": "Ghi danh để mở"
+  },
+  "errorPage": {
+    "notFoundTitle": "Không tìm thấy trang",
+    "notFoundDescription": "Trang bạn tìm không tồn tại hoặc đã được chuyển đi.",
+    "errorTitle": "Đã có lỗi xảy ra",
+    "errorDescription": "Máy chủ gặp sự cố khi xử lý yêu cầu. Thử lại sau giây lát nhé."
   },
   "common": {
     "loading": "Đang tải…",
@@ -3644,15 +3829,15 @@
   "home": {
     "intro": "Khóa học IT trên mạng tràn lan, nhưng nội dung cô đọng và đi vào tư duy thực chiến lại rất ít.",
     "intro2": "StarCi Academy được thành lập ra để thay đổi điều đó.",
-    "intro3": "Chúng tớ tập trung xây dựng tư duy lập trình - từ Fullstack, DevOps, Security đến Solution Architect - với lộ trình rõ ràng và thực tế.",
+    "intro3": "Chúng tớ tập trung xây dựng tư duy lập trình từ Fullstack, DevOps, Security đến Solution Architect, với lộ trình rõ ràng và thực tế.",
     "diff": {
       "title": "Điều gì làm cho StarCi Academy khác biệt?",
-      "des1": "StarCi Academy tập trung vào bản chất của ngành IT. Chúng tớ không chỉ dạy kiến thức mà còn đào tạo tư duy lập trình chuẩn mực và khả năng thiết kế hệ thống - những năng lực cốt lõi giúp bạn phát triển bền vững trong thời đại AI.",
+      "des1": "StarCi Academy tập trung vào bản chất của ngành IT. Chúng tớ dạy cả kiến thức lẫn tư duy lập trình chuẩn mực và khả năng thiết kế hệ thống, hai năng lực cốt lõi giúp bạn đi đường dài trong thời đại AI.",
       "des2": "Tư duy trước stack",
       "des3": "Công nghệ thay đổi liên tục và kiến thức thì ở khắp nơi. Chúng tớ tập trung dạy bản chất, keyword và tư duy để sau khóa bạn tự research, đọc docs và mở rộng theo bất kỳ stack nào.",
       "des4": "Chi phí tối thiểu, tiêu chuẩn cao",
-      "des5": "StarCi Academy vận hành theo mô hình tinh gọn, loại bỏ các chi phí không cần thiết để giữ học phí ở mức dễ tiếp cận. Mục tiêu của chúng tớ là tạo ra một môi trường học tập chất lượng cao mà bất kỳ ai nghiêm túc với nghề đều có thể tham gia.",
-      "des6": "Chúng tớ dạy để bạn xây dựng những project có giá trị thực sự và hỗ trợ lâu dài trong quá trình phát triển sự nghiệp."
+      "des5": "StarCi Academy vận hành tinh gọn, cắt các chi phí không cần thiết để giữ học phí ở mức dễ tiếp cận. Mục tiêu của chúng tớ là một môi trường học chất lượng cao mà ai nghiêm túc với nghề cũng theo được.",
+      "des6": "Chúng tớ dạy để bạn dựng được những project có giá trị thật, dùng được lâu dài cho sự nghiệp của bạn."
     }
   },
   "dashboard": {
@@ -3844,7 +4029,7 @@
     },
     "aiQuota": {
       "title": "Credit AI",
-      "poolCaption": "Cùng một pool credit — làm mới theo từng cửa sổ.",
+      "poolCaption": "Cùng một pool credit, làm mới theo từng cửa sổ.",
       "credits": "Còn {remaining}/{limit}",
       "upgrade": "Nâng cấp gói",
       "window5h": "5 giờ gần nhất",
@@ -3858,7 +4043,7 @@
     },
     "dailyGoal": {
       "cta": "Học một nội dung",
-      "done": "Hôm nay xong rồi — chuỗi {count} ngày được giữ vững",
+      "done": "Hôm nay bạn học xong rồi, chuỗi {count} ngày vẫn được giữ",
       "nudge": "Học một nội dung hôm nay để giữ chuỗi của bạn"
     },
     "kpi": {
@@ -3891,9 +4076,9 @@
     "recommended": {
       "title": "Khóa học cho bạn",
       "reason": {
-        "both": "Độc quyền cho bạn — vì chăm chỉ & đã học {count} khóa",
-        "enrolledCount": "Độc quyền cho bạn — vì đã học {count} khóa",
-        "diligent": "Độc quyền cho bạn — vì bạn chăm chỉ"
+        "both": "Gợi ý riêng cho bạn, vì bạn chăm chỉ và đã học {count} khóa",
+        "enrolledCount": "Gợi ý riêng cho bạn, vì bạn đã học {count} khóa",
+        "diligent": "Gợi ý riêng cho bạn, vì bạn học chăm chỉ"
       }
     },
     "upcomingLive": {
@@ -3984,7 +4169,7 @@
   },
   "discussion": {
     "title": "Thảo luận · {count}",
-    "archiveLine": "{answered}/{total} câu hỏi đã được trả lời — tích luỹ theo thời gian",
+    "archiveLine": "{answered}/{total} câu hỏi đã được trả lời, tích luỹ theo thời gian",
     "founderBadge": "Founder",
     "react": "Bày tỏ cảm xúc",
     "post": "Đăng",
@@ -4020,17 +4205,17 @@
     "title": "Tham gia team khóa học",
     "linkFirst": "Trước tiên, hãy liên kết GitHub để chúng tôi có thể mời bạn vào team khóa học.",
     "linkCta": "Liên kết GitHub",
-    "requestDescription": "Bạn đã ghi danh nhưng chưa ở trong team GitHub của khóa học. Hãy gửi yêu cầu tham gia, sau đó chấp nhận lời mời trên GitHub để tiếp tục.",
+    "requestDescription": "Bạn đã ghi danh nhưng chưa vào team GitHub của khóa. Gửi yêu cầu tham gia, rồi chấp nhận lời mời trên GitHub để tiếp tục.",
     "requestCta": "Gửi yêu cầu vào team",
     "sending": "Đang gửi yêu cầu…",
-    "recheckCta": "Tôi đã chấp nhận — kiểm tra lại",
+    "recheckCta": "Tôi đã chấp nhận, kiểm tra lại",
     "acceptHint": "Sau khi gửi yêu cầu, mở GitHub và chấp nhận lời mời vào team, rồi bấm kiểm tra lại.",
     "warningTitle": "Bạn chưa vào team GitHub của khóa",
-    "warningBody": "Chưa vào team thì không mở được nội dung premium của khóa — nội dung này nằm trong repo GitHub của khóa.",
+    "warningBody": "Nội dung premium nằm trong repo GitHub của khóa, nên bạn cần vào team mới mở được.",
     "openCta": "Vào team",
-    "step1": "Bấm \"Gửi yêu cầu vào team\" bên dưới — chúng tôi sẽ gửi lời mời cho bạn.",
+    "step1": "Bấm \"Gửi yêu cầu vào team\" bên dưới, chúng tôi sẽ gửi lời mời cho bạn.",
     "step2": "Mở GitHub và chấp nhận lời mời: từ email mời, hoặc tại github.com/orgs/StarCi-Academy → Invitations.",
-    "step3": "Quay lại đây và bấm \"Tôi đã chấp nhận — kiểm tra lại\".",
+    "step3": "Quay lại đây và bấm \"Tôi đã chấp nhận, kiểm tra lại\".",
     "state": {
       "active": "Đã vào team",
       "pending": "Đang chờ chấp nhận",
@@ -4042,7 +4227,7 @@
       "eyebrow": "Lộ trình thực chiến cho vòng interview",
       "solveWith": "Chiến bằng ngôn ngữ của bạn:",
       "headline": "Kiến thức & Tư duy để chinh phục mọi vòng <accent>phỏng vấn</accent>",
-      "subline": "Ngày xưa, Intern bắt đầu bằng việc vặt: sửa UI, viết CRUD, gõ boilerplate.\nNhưng thời AI, những task đó đã bị giải trong vài giây.\nDoanh nghiệp trả lương cao cho Tư duy & Kiến thức thực chiến — thứ AI chưa thay thế.",
+      "subline": "Ngày xưa, intern bắt đầu bằng việc vặt: sửa UI, viết CRUD, gõ boilerplate.\nGiờ AI làm xong những việc đó trong vài giây.\nDoanh nghiệp trả lương cao cho tư duy và kiến thức thực chiến, thứ AI chưa thay được.",
       "diagramCaption": "Nhìn ra nơi dễ sập. Thiết kế hệ thống không thể bị sập.",
       "ctaRoadmap": "Xem lộ trình",
       "ctaFounder": "Gặp người dựng StarCi Academy",
@@ -4061,7 +4246,7 @@
     "courses": {
       "eyebrow": "Lộ trình",
       "title": "Ba lộ trình. Một tư duy chuẩn về ngành.",
-      "intro": "Các lộ trình được xây dựng bài bản, khác nhau theo cấp độ nhưng chung một tư duy chuẩn chỉ, không dắt mũi người học vì tiền. Toàn bộ nội dung đều được biên soạn kỹ lưỡng.",
+      "intro": "Mỗi lộ trình hợp với một cấp độ, nhưng chung một tư duy chuẩn và không dắt mũi người học vì tiền. Toàn bộ nội dung đều được biên soạn kỹ.",
       "view": "Vào khóa",
       "systems": "20 hệ thống",
       "items": {
@@ -4077,7 +4262,7 @@
           "modules": "24 Modules",
           "systems": "20 Bài toán kiến trúc",
           "title": "System Design",
-          "desc": "Sharding · replication · consensus · idempotency — thiết kế để chịu được sự cố."
+          "desc": "Sharding · replication · consensus · idempotency, thiết kế để chịu được sự cố."
         },
         "devops": {
           "tag": "DEVOPS",
@@ -4091,7 +4276,7 @@
     "systems": {
       "eyebrow": "Không phải CRUD",
       "title": "Những hệ thống bạn tự tay dựng",
-      "intro": "Mỗi capstone là một hệ thống chạy thật ở production — không phải app to-do.",
+      "intro": "Mỗi capstone là một hệ thống chạy thật ở production, không phải app to-do.",
       "items": {
         "newsfeed": {
           "name": "News Feed",
@@ -4131,20 +4316,20 @@
       "name": "Nguyễn Văn Tự Cường",
       "titles": "CTO @ Nivo Technology · CTO @ TEDO Technology",
       "blog": "Đọc blog",
-      "thesis": "Nhiều nơi dạy lập trình để bạn thấy dễ chịu và nhanh có chứng chỉ. StarCi Academy thì khác, tôi chỉ nói những sự thật trần trụi về ngành và những gì hệ thống thực tế yêu cầu.",
+      "thesis": "Nhiều nơi dạy lập trình để bạn thấy dễ chịu và nhanh có chứng chỉ. StarCi Academy thì khác: tôi nói thẳng sự thật về ngành và những gì hệ thống thật sự đòi hỏi.",
       "truth1": "Kinh nghiệm dự án lớn không giúp bạn thành công khi phỏng vấn.",
-      "fix1": "Nhiều người làm dự án lớn mỗi ngày nhưng vào phỏng vấn lại không vẽ nổi kiến trúc phân tán mạch lạc. Tôi dạy bạn tư duy và phản biện kiến trúc cho rõ ràng.",
+      "fix1": "Nhiều người làm dự án lớn mỗi ngày nhưng vào phỏng vấn lại không vẽ nổi một kiến trúc phân tán mạch lạc. Tôi dạy bạn tư duy kiến trúc và cách phản biện nó cho rõ ràng.",
       "truth2": "Thuộc lý thuyết Microservices vẫn tạch khi bị hỏi tới bản chất.",
       "fix2": "Người phỏng vấn giỏi không hỏi định nghĩa. Họ xoáy vào nhất quán dữ liệu, sự cố mạng và điểm lỗi đơn. Tôi luyện bạn hiểu tận gốc để đối thoại sòng phẳng.",
       "truth3": "Mang văn mẫu từ blog đi phỏng vấn là cách nhanh nhất để bị bắt bài.",
       "fix3": "Kiến trúc \"sách giáo khoa\" thường vỡ trước bài toán thực tế của doanh nghiệp. Tôi dạy bạn tư duy độc lập để xử lý mọi đề biến tấu.",
-      "truth4": "Thị trường hết thời thừa thãi — không ai trả lương Senior cho người chỉ biết chém gió keyword.",
-      "fix4": "Doanh nghiệp đang siết đầu vào rất gắt. Tôi rèn cho bạn năng lực kiến trúc thực chất để tự tin qua các vòng kiểm duyệt khắt khe."
+      "truth4": "Thị trường không còn dư chỗ. Không ai trả lương senior cho người chỉ thuộc keyword.",
+      "fix4": "Doanh nghiệp đang siết đầu vào rất gắt. Tôi rèn cho bạn năng lực kiến trúc thực chất để đi qua những vòng phỏng vấn khắt khe."
     },
     "recruiter": {
       "eyebrow": "Cho nhà tuyển dụng",
       "title": "Tuyển kỹ sư đã chứng minh được",
-      "intro": "Những học viên hoàn thành bài thật và bật chế độ sẵn sàng đi làm — được đánh giá bằng thứ họ dựng, không phải bằng CV.",
+      "intro": "Những học viên hoàn thành bài thật và bật chế độ sẵn sàng đi làm. Nhà tuyển dụng đánh giá họ bằng thứ họ dựng, không phải bằng CV.",
       "count": "{count}+ kỹ sư đang sẵn sàng đi làm",
       "cta": "Xem hồ sơ ứng viên",
       "partnersLabel": "Đối tác tuyển dụng"
@@ -4155,7 +4340,7 @@
       "items": {
         "engineer": {
           "title": "Cho người dùng",
-          "body": "Bạn xây portfolio từ dự án thật, chuẩn production và tôi đưa thẳng tới nhà tuyển dụng. Họ gọi bạn vì thứ bạn làm được, không phải vì CV đẹp.",
+          "body": "Bạn xây portfolio từ dự án thật, chuẩn production, và tôi đưa thẳng tới nhà tuyển dụng. Họ gọi bạn vì thứ bạn làm được, không phải vì CV đẹp.",
           "cta": "Bắt đầu xây hồ sơ",
           "jobsCta": "Xem việc làm IT"
         },
@@ -4183,7 +4368,7 @@
       "q2": "AI có làm những kỹ năng này lỗi thời không?",
       "a2": "Ngược lại, kỹ năng hệ thống là thứ giúp bạn không bị đào thải. Các công cụ tự động hiện tại có thể viết code CRUD rất nhanh, nhưng chúng không thể tự thiết kế một kiến trúc chịu tải triệu user, xử lý bài toán scale, hay đứng ra bảo vệ các quyết định kỹ thuật trước hội đồng phỏng vấn và CTO. Đó mới là những gì bạn được rèn luyện ở đây.",
       "q3": "Mình mới bắt đầu. Có hợp không?",
-      "a3": "Khóa học này thiết kế riêng cho những bạn đã có nền tảng lập trình cơ bản và muốn bứt phá lên tầm thiết kế kiến trúc hệ thống (System Design/DevOps). Nếu bạn chưa từng gõ dòng code nào, lộ trình này sẽ quá sức — bạn nên tích lũy kinh nghiệm code thực tế trước đã.",
+      "a3": "Khóa học này thiết kế riêng cho những bạn đã có nền tảng lập trình cơ bản và muốn bứt phá lên tầm thiết kế kiến trúc hệ thống (System Design/DevOps). Nếu bạn chưa từng gõ dòng code nào, lộ trình này sẽ quá sức. Bạn nên tích lũy kinh nghiệm code thực tế trước đã.",
       "q4": "AI chấm thực sự hoạt động thế nào?",
       "a4": "Hệ thống sẽ đánh giá bài làm của bạn dựa trên các tiêu chuẩn vận hành thực tế (production-ready). Thay vì chỉ báo Đúng/Sai, bạn sẽ nhận được các nhận xét chi tiết, chỉ rõ lỗ hổng trong logic thiết kế và gợi ý cách tối ưu để bạn tự tay sửa lại cho đến khi hoàn thiện.",
       "q5": "'Headhunt' ở đây thực sự nghĩa là gì?",
@@ -4197,7 +4382,7 @@
     "learnLoop": {
       "eyebrow": "Học kiểu thực chiến",
       "title": "Học theo phương pháp của tôi.",
-      "intro": "Đi phỏng vấn, thứ người ta quan tâm không phải số năm kinh nghiệm, mà là tư duy giải quyết vấn đề. Tôi đã hệ thống hóa kiến thức của ngành vào đứa con tâm huyết này, đồng thời xây dựng phương pháp học hiệu quả để nhiều người có thể tiếp cận và bứt phá.",
+      "intro": "Đi phỏng vấn, thứ người ta quan tâm không phải số năm kinh nghiệm mà là tư duy giải quyết vấn đề. Tôi hệ thống hóa kiến thức của ngành vào khóa học này và xây một phương pháp học để nhiều người tiếp cận được.",
       "cta": "Vào cày thử",
       "items": {
         "read": {
@@ -4216,7 +4401,7 @@
           "step": "03",
           "title": "Capstone",
           "tag": "Hệ thống thật",
-          "desc": "Dựng một hệ thống chạy thật ở production — không phải app demo."
+          "desc": "Dựng một hệ thống chạy thật ở production, không phải app demo."
         },
         "rank": {
           "step": "04",
@@ -4229,31 +4414,31 @@
     "treasure": {
       "eyebrow": "Bản đồ năng lực hệ thống",
       "title": "Học để giải bài toán thật, không học để thuộc bài.",
-      "intro": "Từ backend đến hạ tầng, bạn luyện tư duy xử lý vấn đề đến nơi đến chốn — thứ quyết định bạn trụ được ở dự án lớn.",
+      "intro": "Từ backend đến hạ tầng, bạn luyện tư duy xử lý vấn đề đến nơi đến chốn. Đó là thứ quyết định bạn có trụ được ở dự án lớn hay không.",
       "statConcepts": "khái niệm",
       "statTracks": "lộ trình",
       "interconnect": "Idempotency học ở System Design → tái dùng ở Payment, Webhooks (Fullstack).",
       "cta": "Xem khóa",
       "beaconLabel": "Chạm để xáo lại",
-      "beaconTap": "Tự xáo lại mỗi 10 giây — chạm để xáo ngay",
+      "beaconTap": "Tự xáo lại mỗi 10 giây. Chạm để xáo ngay",
       "graph": {
-        "cap": "Đánh đổi nhất quán vs khả dụng khi mạng phân vùng — chọn đúng cho từng hệ.",
+        "cap": "Đánh đổi nhất quán và khả dụng khi mạng phân vùng, chọn đúng cho từng hệ.",
         "sharding": "Chia dữ liệu ra nhiều shard để mở rộng ghi/đọc vượt một node.",
         "saga": "Giao dịch dài qua nhiều service bằng các bước bù trừ, không cần 2PC.",
-        "idempotency": "Gọi lại nhiều lần vẫn một kết quả — chống trùng khi retry.",
+        "idempotency": "Gọi lại nhiều lần vẫn cho một kết quả, chống trùng khi retry.",
         "redlock": "Khoá phân tán trên Redis + fencing token chống race nhiều client.",
         "kafka": "Log append-only làm nguồn sự thật: replay, tách producer/consumer.",
-        "cdc": "Bắt thay đổi DB (Debezium) đẩy ra stream — hết double-write.",
+        "cdc": "Bắt thay đổi DB (Debezium) rồi đẩy ra stream, hết cảnh double-write.",
         "token-bucket": "Giới hạn tần suất mượt bằng token bucket + Redis Lua atomic.",
         "websocket": "Cổng realtime hai chiều, fan-out sự kiện tới hàng nghìn client.",
         "tracing": "Lần theo một request xuyên nhiều service để tìm nút thắt (OTel/Jaeger).",
         "nestjs": "Khung backend module hoá, DI rõ ràng cho API quy mô lớn.",
-        "typeorm": "ORM TypeScript: entity, quan hệ, migration — sát SQL khi cần.",
+        "typeorm": "ORM cho TypeScript: entity, quan hệ, migration; xuống sát SQL khi cần.",
         "webhooks": "Nhận sự kiện bên thứ ba an toàn: verify chữ ký + idempotent.",
         "payment": "Tích hợp cổng thanh toán: idempotency, đối soát, hoàn tiền chuẩn.",
         "rag": "Tìm ngữ nghĩa bằng pgvector rồi cho LLM trả lời có dẫn nguồn.",
         "oauth": "Đăng nhập + phân quyền bằng OAuth2/JWT, refresh token an toàn.",
-        "jobs": "Hàng đợi job nền: retry, backoff, lịch chạy — tách khỏi request.",
+        "jobs": "Hàng đợi job nền: retry, backoff, lịch chạy; tách khỏi vòng đời request.",
         "rsc": "React Server Components: render ở server, gửi ít JS xuống client.",
         "k8s": "Điều phối container: tự phục hồi, scale, rollout khai báo.",
         "ingress": "Định tuyến HTTP vào cluster: host/path, TLS, cân tải.",
@@ -4263,16 +4448,16 @@
         "rbac": "Phân quyền theo vai trò trong K8s: ai làm gì, tối thiểu đặc quyền.",
         "terraform": "Hạ tầng bằng mã, đa cloud, plan/apply tái lập được.",
         "falco": "Phát hiện hành vi bất thường runtime trong container theo thời gian thực.",
-        "consistentHashing": "Băm nhất quán: thêm/bớt node ít phải xáo lại key — nền cho sharding co giãn.",
-        "circuitBreaker": "Ngắt mạch khi service phụ thuộc lỗi liên tục — chặn lỗi lan dây chuyền.",
+        "consistentHashing": "Băm nhất quán: thêm hoặc bớt node ít phải xáo lại key, nền cho sharding co giãn.",
+        "circuitBreaker": "Ngắt mạch khi service phụ thuộc lỗi liên tục, chặn lỗi lan dây chuyền.",
         "eventSourcing": "Lưu chuỗi sự kiện làm nguồn sự thật; dựng lại state bằng replay.",
-        "readReplica": "Bản sao chỉ-đọc gánh tải đọc — đánh đổi độ trễ replication.",
+        "readReplica": "Bản sao chỉ đọc gánh tải đọc, đổi lại là độ trễ replication.",
         "graphql": "API kiểu hoá: client lấy đúng field cần qua một endpoint.",
         "redisCache": "Cache-aside trên Redis: TTL, invalidation, chống cache stampede.",
         "sse": "Server-Sent Events: server đẩy một chiều, nhẹ hơn WebSocket cho stream.",
         "zodValidation": "Validate + suy kiểu runtime bằng Zod ở biên API.",
         "helm": "Đóng gói manifest K8s thành chart tái dùng + values theo môi trường.",
-        "autoscaling": "HPA tự co giãn pod theo CPU/metric — bám tải thật.",
+        "autoscaling": "HPA co giãn pod theo CPU hoặc metric, bám sát tải thật.",
         "serviceMesh": "Lớp mesh lo mTLS, retry, chia traffic giữa service (Istio/Linkerd).",
         "grafana": "Dashboard + cảnh báo trực quan trên metric Prometheus."
       }
@@ -4319,7 +4504,7 @@
       "systemPromptPlaceholder": "Tùy chọn. Thiết lập vai trò và quy tắc cho mô hình.",
       "userTemplate": "Mẫu prompt người dùng",
       "userTemplatePlaceholder": "Dùng {{input}} ở nơi cần chèn nội dung của từng test case.",
-      "templatePlaceholderHint": "Dùng placeholder {{input}} — nó sẽ được thay bằng nội dung của từng test case.",
+      "templatePlaceholderHint": "Dùng placeholder {{input}}, chỗ đó sẽ được thay bằng nội dung của từng test case.",
       "submit": "Nộp để chấm",
       "submitting": "Đang nộp…",
       "grading": "Đang chấm…",
@@ -4393,7 +4578,7 @@
     "typeCapstone": "Capstone",
     "typeExternal": "Dự án",
     "verifiedByStarci": "Được StarCi xác nhận",
-    "openAria": "{title} — mở trong tab mới"
+    "openAria": "{title}, mở trong tab mới"
   },
   "blog": {
     "back": "Quay lại blog",
@@ -4415,10 +4600,10 @@
     "readingMinutes": "Đọc {minutes} phút",
     "relatedTitle": "Thêm trong mục {category}",
     "retry": "Thử lại",
-    "subtitle": "Phân tích kỹ thuật chuyên sâu về chính hạ tầng đang chạy StarCi — kiến trúc, đánh đổi, và code thật.",
+    "subtitle": "Phân tích kỹ thuật chuyên sâu về chính hạ tầng đang chạy StarCi: kiến trúc, đánh đổi và code thật.",
     "title": "Hệ thống StarCi, mổ xẻ",
     "masthead": {
-      "caption": "Kiến trúc thật của backend StarCi — kéo để xoay bản đồ."
+      "caption": "Kiến trúc thật của backend StarCi. Kéo để xoay bản đồ."
     },
     "startHere": "Bắt đầu ở đây",
     "topics": "Chủ đề",
@@ -4449,7 +4634,7 @@
       "physical": "Quà tặng & Merch"
     },
     "catalogEmptyTitle": "Cửa hàng chưa có quà nào",
-    "catalogEmptyDescription": "Quay lại sau — quà mới sẽ sớm xuất hiện ở đây.",
+    "catalogEmptyDescription": "Hiện chưa có phần quà nào. Bạn quay lại sau nhé.",
     "redeem": "Đổi quà",
     "redeemedTitle": "Lịch sử đổi thưởng",
     "shipAddress": "Địa chỉ nhận hàng",
@@ -4540,6 +4725,12 @@
     "communityReply": {
       "title": "{actor} đã trả lời bình luận của bạn"
     },
+    "commentReply": {
+      "title": "{actor} đã trả lời câu hỏi của bạn"
+    },
+    "commentMention": {
+      "title": "{actor} đã nhắc đến bạn trong một câu hỏi"
+    },
     "milestoneGraded": {
       "title": "Task \"{title}\" đã được chấm: {result, select, passed {Đạt} failed {Chưa đạt} other {}}"
     },
@@ -4572,7 +4763,7 @@
     "emptyDescription": "Quay lại vào đầu tuần sau để tham gia thử thách mới, hoặc tiếp tục học ở khoá của bạn."
   },
   "bookmarks": {
-    "noMatch": "Không có mục đã lưu nào khớp với tìm kiếm của bạn.",
+    "noMatch": "Không có mục đã lưu nào khớp tìm kiếm.",
     "searchPlaceholder": "Tìm trong bookmark",
     "heading": "Bookmark",
     "subtitle": "Các bài học bạn đã lưu để xem lại",
@@ -4619,7 +4810,7 @@
     "empty": "Đạt thành tích để ghim linh vật."
   },
   "socketStatus": {
-    "reconnecting": "Mất kết nối — đang thử lại…",
+    "reconnecting": "Mất kết nối, đang thử nối lại…",
     "reconnected": "Đã kết nối lại"
   },
   "maintenance": {
@@ -4630,7 +4821,7 @@
   },
   "status": {
     "title": "Trạng thái hệ thống",
-    "subtitle": "Tình trạng trực tiếp của nền tảng StarCi Academy — làm công khai, không cần đăng nhập.",
+    "subtitle": "Tình trạng trực tiếp của nền tảng StarCi Academy, công khai cho mọi người, không cần đăng nhập.",
     "refresh": "Làm mới",
     "overall": "{up}/{total} thành phần khỏe",
     "infraHeading": "Hạ tầng",
@@ -4646,7 +4837,7 @@
     },
     "error": {
       "title": "Không tải được trạng thái",
-      "description": "Không thể kết nối tới endpoint trạng thái. Vui lòng thử lại.",
+      "description": "Chưa lấy được tình trạng hệ thống. Vui lòng thử lại.",
       "retry": "Thử lại"
     },
     "empty": {
@@ -4659,8 +4850,8 @@
   "ragPlayground": {
     "hero": {
       "eyebrow": "RAG Playground · Model chạy local",
-      "headline": "Dán code vào. Hỏi bất cứ điều gì. <accent>AI tự host trả lời — miễn phí, không cần đăng nhập.</accent>",
-      "subline": "Đây là RAG thật: code của bạn được chia nhỏ, nhúng vector, tìm theo ngữ nghĩa — rồi model chạy trên máy chủ local của StarCi (không phải API trả phí) trả lời kèm trích dẫn nguồn.",
+      "headline": "Dán code vào. Hỏi bất cứ điều gì. <accent>AI tự host trả lời, miễn phí và không cần đăng nhập.</accent>",
+      "subline": "Đây là RAG thật: code của bạn được chia nhỏ, nhúng vector rồi tìm theo ngữ nghĩa. Model chạy trên máy chủ local của StarCi, không phải API trả phí, và trả lời kèm trích dẫn nguồn.",
       "cta": "Thử ngay bên dưới"
     },
     "import": {
@@ -4673,7 +4864,7 @@
       },
       "pastePlaceholder": "Dán code vào đây…",
       "uploadHint": "Chọn 1 file code (.ts, .py, .go, .java, …)",
-      "sampleHint": "Chọn 1 trong các mẫu có sẵn bên dưới — không cần chuẩn bị gì.",
+      "sampleHint": "Chọn một mẫu có sẵn bên dưới, bạn không cần chuẩn bị gì thêm.",
       "samplePicker": {
         "ariaLabel": "Chọn 1 mẫu",
         "loadError": "Không tải được danh sách mẫu, thử lại.",
@@ -4681,6 +4872,7 @@
         "emptyDescription": "Catalog mẫu hiện đang trống. Thử dán nội dung của riêng bạn hoặc quay lại sau."
       },
       "githubPlaceholder": "https://github.com/owner/repo",
+        "githubHint": "Dán link một repo GitHub công khai NHỎ để nạp nhiều file cùng lúc (agent chỉ tải file nguồn, bỏ qua file nhị phân/vendor).",
       "cta": "Nạp & lập chỉ mục",
       "indexed": "Đã lập chỉ mục {count} đoạn",
       "genericError": "Không nạp được code này, thử lại hoặc chọn cách khác.",
@@ -4692,9 +4884,11 @@
       "emptyNoIndexTitle": "Chưa có code để hỏi",
       "emptyNoIndexDescription": "Nạp code ở khung bên trái trước, rồi quay lại đây hỏi.",
       "emptyReadyTitle": "Sẵn sàng rồi!",
-      "emptyReadyDescription": "Hỏi bất cứ điều gì về đoạn code vừa nạp — model sẽ trích dẫn đúng chỗ liên quan.",
+      "emptyReadyDescription": "Hỏi bất cứ điều gì về đoạn code vừa nạp. Câu trả lời sẽ kèm trích dẫn đúng chỗ trong code.",
       "thinking": "Đang suy nghĩ…",
       "sources": "Nguồn trích dẫn",
+      "sourcesModeDoc": "Tài liệu",
+      "sourcesModeGraph": "Sơ đồ",
       "placeholder": "Hỏi về đoạn code này…",
       "stop": "Dừng",
       "send": "Gửi câu hỏi",
@@ -4702,13 +4896,13 @@
     },
     "closingCta": {
       "title": "Thích những gì stack RAG tự host này làm được?",
-      "description": "Khóa AI & LLM Mastery dạy bạn dựng chính pipeline này — chia nhỏ văn bản, nhúng vector, truy hồi, và model tự host — từ đầu.",
+      "description": "Khóa AI & LLM Mastery dạy bạn tự dựng chính pipeline này từ đầu: chia nhỏ văn bản, nhúng vector, truy hồi, và model tự host.",
       "cta": "Khám phá khóa học"
     }
   },
   "architecture": {
     "title": "Hệ thống StarCi, đang sống",
-    "subtitle": "Bản đồ kỹ thuật công khai — mỗi node là 1 thành phần hạ tầng THẬT, chấm trạng thái do chính request của bạn kiểm chứng, không có gì giả lập.",
+    "subtitle": "Bản đồ kỹ thuật công khai. Mỗi node là một thành phần hạ tầng thật, trạng thái được kiểm chứng bằng chính request của bạn, không có gì giả lập.",
     "mapCaption": "Kéo để xoay bản đồ. Bấm 1 nhóm để mở sơ đồ chi tiết.",
     "rail": {
       "ariaLabel": "Danh sách thành phần hệ thống",
@@ -4746,7 +4940,7 @@
       "errorDescription": "Không gọi được API health. Thử lại sau giây lát.",
       "retry": "Thử lại",
       "coreDrillHint": "Kéo để xoay bản đồ. Bấm 1 nhóm để mở luồng chi tiết, hoặc bấm Core API để xem các module bên trong.",
-      "moduleHint": "Bấm 1 module để làm nổi hạ tầng mà nó chạy trên. Kéo để xoay bản đồ.",
+      "moduleHint": "Bấm một module để thấy hạ tầng mà nó chạy trên. Kéo để xoay bản đồ.",
       "atlasHint": "Toàn hệ thống trên 1 bản đồ. Bấm 1 thành phần để xem chi tiết, kéo để xoay."
     },
     "status": {
@@ -4779,7 +4973,7 @@
       "backToOverview": "‹ Về toàn hệ thống",
       "eraAria": "Chọn dòng thời gian",
       "layoutAria": "Chọn cách hiển thị",
-      "coreDetail": "Core API — mổ xẻ theo module (bấm để xem chi tiết)."
+      "coreDetail": "Core API tách theo module. Bấm để xem chi tiết."
     },
     "pod": {
       "payment": {
@@ -4817,7 +5011,7 @@
     },
     "future": {
       "comingSoon": "Sắp ra mắt",
-      "caption": "Hướng đi sắp tới — tách monolith thành microservices.",
+      "caption": "Hướng đi sắp tới: tách monolith thành microservices.",
       "bus": "Event bus",
       "busSub": "kafka · nats",
       "order": "order-service",
@@ -4828,18 +5022,18 @@
       "notification": "notification-service"
     },
     "role": {
-      "keycloak": "Máy chủ định danh OIDC + OAuth — phát hành token, quản lý phiên đăng nhập theo thiết bị.",
+      "keycloak": "Máy chủ định danh OIDC và OAuth. Phát hành token, quản lý phiên đăng nhập theo thiết bị.",
       "aiBalancer": "Điều phối mọi lời gọi AI qua nhiều provider, tự xoay key theo sức khoẻ và fallback khi lỗi.",
-      "judge0": "Bộ chạy code cô lập — biên dịch, chạy test và chấm bài coding của học viên.",
+      "judge0": "Bộ chạy code cô lập. Biên dịch, chạy test và chấm bài coding của học viên.",
       "ollama": "LLM chạy nội bộ (tương thích OpenAI) cho các tác vụ không cần model đám mây.",
       "redis": "Cache, hàng đợi job (BullMQ), throttler và socket adapter.",
-      "postgres": "Cơ sở dữ liệu quan hệ chính (TypeORM) — nguồn sự thật cho mọi dữ liệu bền vững.",
-      "qdrant": "Kho vector cho RAG (LangChain) — tìm ngữ cảnh để AI chấm bài sát hơn.",
+      "postgres": "Cơ sở dữ liệu quan hệ chính (TypeORM). Đây là nguồn sự thật cho mọi dữ liệu bền vững.",
+      "qdrant": "Kho vector cho RAG (LangChain). Tìm ngữ cảnh để AI chấm bài sát hơn.",
       "elasticsearch": "Tìm kiếm nội dung và khoá học với độ trễ thấp.",
       "minio": "Lưu trữ tương thích S3 cho ảnh bìa, media và tài nguyên.",
       "mail": "Gửi email giao dịch qua Brevo SMTP.",
-      "kafka": "Event bus + CDC (Debezium) — đồng bộ read-model theo mô hình CQRS.",
-      "nats": "JetStream — truyền trạng thái job theo thời gian thực về client.",
+      "kafka": "Event bus và CDC (Debezium). Đồng bộ read-model theo mô hình CQRS.",
+      "nats": "JetStream, truyền trạng thái job theo thời gian thực về client.",
       "github": "OAuth đăng nhập + quản lý repo/team để chấm bài qua repository.",
       "stripe": "Cổng thẻ quốc tế cho thanh toán ngoài Việt Nam.",
       "paypal": "Ví quốc tế cho thanh toán ngoài Việt Nam.",
@@ -4849,15 +5043,15 @@
     "why": {
       "keycloak": "Không có nó thì không ai đăng nhập được — toàn bộ quyền truy cập đi qua đây.",
       "aiBalancer": "Giữ AI ổn định và rẻ, không khoá chết vào một nhà cung cấp duy nhất.",
-      "judge0": "Quyết định bài coding đạt hay chưa — chấm phải chạy được code thật.",
+      "judge0": "Quyết định bài coding đạt hay chưa. Muốn chấm được thì phải chạy được code thật.",
       "ollama": "Giảm phụ thuộc và chi phí model đám mây cho tác vụ nhẹ.",
       "redis": "Tăng tốc phản hồi và điều phối job nền cho cả hệ.",
-      "postgres": "Mất nó là mất dữ liệu — mọi ghi bền vững đều nằm ở đây.",
+      "postgres": "Mất nó là mất dữ liệu, vì mọi ghi bền vững đều nằm ở đây.",
       "qdrant": "Cho phép AI chấm dựa trên ngữ cảnh thật thay vì đoán mò.",
       "elasticsearch": "Tìm bài học và khoá học nhanh khi dữ liệu lớn dần.",
       "minio": "Nơi ảnh, video và tài nguyên khoá học thực sự nằm.",
       "mail": "Kênh chạm tới học viên: xác thực, biên nhận, nhắc nhở.",
-      "kafka": "Là xương sống đồng bộ read-model — bằng chứng CQRS chạy thật.",
+      "kafka": "Đây là xương sống đồng bộ read-model, cũng là bằng chứng CQRS chạy thật.",
       "nats": "Cho học viên thấy tiến độ chấm/chạy job ngay lập tức.",
       "github": "Vừa là cách đăng nhập, vừa là nơi lấy bài nộp để chấm.",
       "stripe": "Mở cửa cho người dùng quốc tế trả tiền bằng thẻ.",
@@ -4869,12 +5063,12 @@
       "auth": {
         "name": "Xác thực",
         "sub": "keycloak · oauth",
-        "role": "Đăng nhập, phiên và OAuth GitHub — cửa vào của toàn hệ thống, cấp danh tính cho mọi request."
+        "role": "Đăng nhập, phiên và OAuth GitHub. Đây là cửa vào của toàn hệ thống, cấp danh tính cho mọi request."
       },
       "learning": {
         "name": "Học tập",
         "sub": "khóa · bài · nội dung",
-        "role": "Khóa học, học phần, bài học và tiến độ — trái tim nội dung của StarCi, đọc/ghi Postgres, tìm kiếm và media."
+        "role": "Khóa học, học phần, bài học và tiến độ. Đây là trái tim nội dung của StarCi, đọc/ghi Postgres, tìm kiếm và media."
       },
       "coding": {
         "name": "Chấm code",
@@ -4884,12 +5078,12 @@
       "ai": {
         "name": "AI",
         "sub": "chấm · rag · trợ lý",
-        "role": "Chấm CV/bài, gợi ý và trợ lý — điều phối qua AI Balancer, chạy LLM nội bộ, tra cứu ngữ cảnh bằng vector."
+        "role": "Chấm CV và bài nộp, gợi ý, trợ lý. Điều phối qua AI Balancer, chạy LLM nội bộ, tra cứu ngữ cảnh bằng vector."
       },
       "payment": {
         "name": "Thanh toán",
         "sub": "gói · đơn hàng",
-        "role": "Mua khóa, gói thành viên và trả góp — nối 4 cổng thanh toán trong và ngoài nước."
+        "role": "Mua khóa, gói thành viên và trả góp. Nối 4 cổng thanh toán trong và ngoài nước."
       },
       "community": {
         "name": "Cộng đồng",
@@ -4899,7 +5093,7 @@
       "careers": {
         "name": "Nghề nghiệp",
         "sub": "cv · việc làm · phỏng vấn",
-        "role": "Hồ sơ CV, gợi ý việc làm và phỏng vấn thử — biến thành tích học thành bằng chứng cho nhà tuyển dụng."
+        "role": "Hồ sơ CV, gợi ý việc làm và phỏng vấn thử. Biến thành tích học thành bằng chứng cho nhà tuyển dụng."
       },
       "notify": {
         "name": "Thông báo",
@@ -4909,7 +5103,7 @@
       "ranking": {
         "name": "Xếp hạng",
         "sub": "bảng · thưởng · huy hiệu",
-        "role": "Bảng xếp hạng, phần thưởng và huy hiệu — vòng động lực giữ người học quay lại."
+        "role": "Bảng xếp hạng, phần thưởng và huy hiệu. Đây là vòng động lực giữ người học quay lại."
       },
       "media": {
         "name": "Media",
@@ -4923,17 +5117,17 @@
     },
     "courseCta": {
       "title": "Hệ thống thật này là thứ bạn sẽ học để tự dựng.",
-      "body": "Mọi thành phần trên đây đều được dạy trong lộ trình StarCi — học để tự tay dựng nên nó.",
+      "body": "Mọi thành phần trên đây đều được dạy trong lộ trình StarCi. Bạn học để tự tay dựng nên nó.",
       "cta": "Vào khóa học"
     }
   },
   "talentDirectory": {
     "title": "Sàn tuyển dụng",
-    "description": "Chọn một lộ trình, rồi duyệt các ứng viên sẵn sàng nhận việc — xếp hạng theo độ sâu riêng của lộ trình đó.",
+    "description": "Chọn một lộ trình để xem các ứng viên sẵn sàng nhận việc, xếp hạng theo độ sâu của chính lộ trình đó.",
     "trackFilterAria": "Lọc ứng viên theo lộ trình",
     "candidatesAria": "Danh sách ứng viên theo lộ trình đang chọn",
     "qualified": "Đạt chuẩn",
     "empty": "Chưa có ứng viên cho lộ trình này.",
-    "emptyHint": "Chưa có ai sẵn sàng nhận việc xây dựng đủ độ sâu ở lộ trình này. Thử lộ trình khác."
+    "emptyHint": "Chưa có ứng viên nào đạt đủ độ sâu ở lộ trình này. Bạn thử lộ trình khác xem sao."
   }
 }

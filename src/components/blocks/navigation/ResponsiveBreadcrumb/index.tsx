@@ -50,7 +50,7 @@ export const ResponsiveBreadcrumb = ({
             {/* desktop + short trail: the full path */}
             <Breadcrumbs
                 className={cn(
-                    isLongTrail ? "hidden" : "hidden sm:flex",
+                    isLongTrail ? "hidden" : "hidden @app-sm:flex",
                     className,
                 )}
             >
@@ -66,7 +66,7 @@ export const ResponsiveBreadcrumb = ({
                 <BackLink
                     onPress={parent.onPress}
                     className={cn(
-                        isLongTrail ? undefined : "sm:hidden",
+                        isLongTrail ? undefined : "@app-sm:hidden",
                         className,
                     )}
                 />

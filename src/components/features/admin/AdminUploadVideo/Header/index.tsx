@@ -27,7 +27,7 @@ export const AdminUploadVideoHeader = ({
                 <VideoCameraIcon className="h-3.5 w-3.5" />
                 Admin Tools
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-white via-indigo-200 to-purple-300 bg-clip-text text-transparent">
+            <h1 className="text-3xl @app-md:text-4xl font-bold bg-gradient-to-r from-white via-indigo-200 to-purple-300 bg-clip-text text-transparent">
                 Video Upload
             </h1>
             <p className="text-sm text-slate-400 max-w-md mx-auto">

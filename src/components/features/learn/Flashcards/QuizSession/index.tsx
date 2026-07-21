@@ -1001,7 +1001,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
                     current={sessionLength}
                     total={sessionLength}
                 />
-                <div className="px-4 pb-6 pt-10 sm:px-6">
+                <div className="px-4 pb-6 pt-10 @app-sm:px-6">
                     <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10">
                         <Spinner size="lg" />
                         <Typography type="body-sm" color="muted">
@@ -1084,7 +1084,6 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
             <ConfirmDialog
                 isOpen={confirmAction !== null}
                 onOpenChange={(open) => { if (!open) { setConfirmAction(null) } }}
-                tone={confirmAction === "leave" ? "danger" : "default"}
                 title={confirmAction === "leave" ? t("flashcard.leaveTitle") : t("flashcard.finishEarlyTitle")}
                 description={confirmAction === "leave" ? t("flashcard.leaveConfirm") : t("flashcard.finishEarlyConfirm")}
                 confirmLabel={confirmAction === "leave" ? t("flashcard.leaveCta") : t("flashcard.finishEarlyCta")}
@@ -1107,7 +1106,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
         return (
             <div className={cn("flex w-full flex-col", className)}>
                 {header}
-                <div className="px-4 pb-6 pt-10 sm:px-6">
+                <div className="px-4 pb-6 pt-10 @app-sm:px-6">
                     <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
                         <FlipCard
                             revealed={showAnswer}
@@ -1188,7 +1187,7 @@ export const QuizSession = ({ courseId, className, resumeSessionId }: QuizSessio
             <div className={cn("flex w-full flex-col", className)}>
                 {header}
 
-                <div className="px-4 pb-6 pt-10 sm:px-6">
+                <div className="px-4 pb-6 pt-10 @app-sm:px-6">
                     <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
                         {/* question — plain Card shell (bo góc + shadow-surface), CÙNG kiểu với
                     FlipCard — the earlier accent/5 + left-border tint (2026-07-09) was

@@ -117,7 +117,7 @@ export const FlashcardSessionStats = ({
         // (`review/sessions/[sessionId]`), `fullBleed` for the whole session
         // including this recap phase — same gap as `FlashcardQuizResult`
         // (2026-07-12, thầy: "thiếu padding p-6"). Owns its own page padding.
-        <div className={cn("flex flex-col gap-6 px-4 py-6 sm:px-6", className)}>
+        <div className={cn("flex flex-col gap-6 px-4 py-6 @app-sm:px-6", className)}>
             <PageHeader
                 className="mx-auto w-full max-w-3xl"
                 breadcrumb={<BackLink label={t("flashcard.title")} onPress={onBack} />}
@@ -214,7 +214,7 @@ export const FlashcardSessionStats = ({
 
                                 {/* session metric tiles */}
                                 <LabeledCard label={t("flashcard.review.stats.metricsLabel")} frameless>
-                                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                                    <div className="grid grid-cols-2 gap-3 @app-sm:grid-cols-4">
                                         <MetricCard
                                             value={stats.reviewedCount}
                                             label={t("flashcard.review.stats.metricTotal")}

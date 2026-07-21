@@ -723,7 +723,7 @@ export const ArchitectureScene = ({ data = DEFAULT_DATA, caption, className, sel
     const palette = usePalette()
     return (
         <div className={cn("w-full", className)}>
-            <div className="h-[440px] w-full sm:h-[560px]">
+            <div className="h-[440px] w-full @app-sm:h-[560px]">
                 <Canvas
                     flat
                     orthographic

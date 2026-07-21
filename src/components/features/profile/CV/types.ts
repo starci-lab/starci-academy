@@ -123,6 +123,8 @@ export interface CvDocument {
      * `renderCvBlocks` compile (the FE never sends it via `updateCvBlocks`).
      */
     texSource: string | null
+    /** Whether this CV is the user's ONE public résumé (single-public-per-user). */
+    isPublic: boolean
     /** ISO 8601 creation timestamp. */
     createdAt: string
     /** ISO 8601 last-update timestamp. */

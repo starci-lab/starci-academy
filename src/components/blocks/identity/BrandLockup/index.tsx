@@ -25,7 +25,7 @@ export const BrandLockup = ({ className }: BrandLockupProps) => {
     return (
         <span className={cn("inline-flex items-center gap-0", className)}>
             <BrandLogo className="h-10" />
-            <span className="hidden flex-col gap-0 md:flex">
+            <span className="hidden flex-col gap-0 @app-md:flex">
                 <div className="text-sm font-semibold leading-none text-foreground">
                     StarCi
                 </div>

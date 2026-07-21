@@ -2,13 +2,14 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react"
 import useSWR from "swr"
-import { Accordion, Button, Card, CardContent, Chip, Input, TextField, Typography, cn } from "@heroui/react"
+import { Button, Card, CardContent, Chip, Input, TextField, Typography, cn } from "@heroui/react"
 import { CardsIcon, ClockCounterClockwiseIcon, ClockIcon } from "@phosphor-icons/react"
 import { useLocale, useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
 import { SurfaceListCard, SurfaceListCardItem } from "@/components/blocks/cards/SurfaceListCard"
+import { LabeledAccordionCard } from "@/components/blocks/cards/LabeledAccordionCard"
 import { LabeledCard } from "@/components/blocks/cards/LabeledCard"
 import { ProgressMeter } from "@/components/blocks/stats/ProgressMeter"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
@@ -180,7 +181,7 @@ export const FlashcardReviewHistory = ({ courseId, onStartReview, className }: F
                 // reviewed-ratio ProgressMeter, xp chip trailing).
                 <div className="flex flex-col gap-3">
                     <div className="flex flex-wrap items-center justify-between gap-3">
-                        <Skeleton className="h-9 w-full rounded-medium sm:max-w-xs" />
+                        <Skeleton className="h-9 w-full rounded-medium @app-sm:max-w-xs" />
                         <div className="flex shrink-0 items-center gap-3">
                             <Skeleton className="h-[14px] w-16 rounded" />
                             <Skeleton className="h-9 w-16 rounded-medium" />
@@ -232,7 +233,7 @@ export const FlashcardReviewHistory = ({ courseId, onStartReview, className }: F
                     {/* Toolbar: search decks (left) + run count and grouping toggle (right) —
                         the history surface's find-a-run affordance (thầy 2026-07-13 relayout). */}
                     <div className="flex flex-wrap items-center justify-between gap-3">
-                        <TextField className="w-full sm:max-w-xs">
+                        <TextField className="w-full @app-sm:max-w-xs">
                             <Input
                                 type="search"
                                 aria-label={t("flashcard.review.historySearchPlaceholder")}
@@ -290,43 +291,33 @@ export const FlashcardReviewHistory = ({ courseId, onStartReview, className }: F
                             </CardContent>
                         </Card>
                     ) : groupMode === "deck" ? (
-                        // group=deck — each deck is a real `Accordion.Item` (trigger + caret +
-                        // "N lượt", panel = that deck's runs), same pattern as `CourseCurriculum`
-                        // (`components/card.md` §3 Accordion Card).
-                        <Accordion variant="surface" className="overflow-hidden shadow-surface">
-                            {groupedByDeck.map((group) => (
-                                <Accordion.Item key={group.deckId} aria-label={group.deckTitle}>
-                                    <Accordion.Heading>
-                                        <Accordion.Trigger>
-                                            <div className="flex min-w-0 flex-1 items-center justify-between gap-3">
-                                                <Typography type="body-sm" weight="medium" truncate className="min-w-0">
-                                                    {group.deckTitle}
-                                                </Typography>
-                                                <Typography type="body-xs" color="muted" className="shrink-0">
-                                                    {t("flashcard.review.historyDeckRunCount", { count: group.items.length })}
-                                                </Typography>
-                                            </div>
-                                        </Accordion.Trigger>
-                                    </Accordion.Heading>
-                                    <Accordion.Panel>
-                                        <Accordion.Body>
-                                            <div className="flex flex-col gap-1">
-                                                {group.items.map((item) => (
-                                                    <button
-                                                        key={item.id}
-                                                        type="button"
-                                                        onClick={() => goToDeck(item.deckId)}
-                                                        className="rounded-lg px-2 py-2 text-left transition-colors hover:bg-default"
-                                                    >
-                                                        {runRow(item, false)}
-                                                    </button>
-                                                ))}
-                                            </div>
-                                        </Accordion.Body>
-                                    </Accordion.Panel>
-                                </Accordion.Item>
-                            ))}
-                        </Accordion>
+                        // group=deck — NO `label` (the toolbar's group toggle is the heading);
+                        // "N lượt" rides in the header via `titleEnd`, panel = that deck's runs.
+                        <LabeledAccordionCard
+                            items={groupedByDeck.map((group) => ({
+                                id: group.deckId,
+                                title: group.deckTitle,
+                                titleEnd: (
+                                    <Typography type="body-xs" color="muted" className="shrink-0">
+                                        {t("flashcard.review.historyDeckRunCount", { count: group.items.length })}
+                                    </Typography>
+                                ),
+                                body: (
+                                    <div className="flex flex-col gap-1">
+                                        {group.items.map((item) => (
+                                            <button
+                                                key={item.id}
+                                                type="button"
+                                                onClick={() => goToDeck(item.deckId)}
+                                                className="rounded-lg px-2 py-2 text-left transition-colors hover:bg-default"
+                                            >
+                                                {runRow(item, false)}
+                                            </button>
+                                        ))}
+                                    </div>
+                                ),
+                            }))}
+                        />
                     ) : (
                         // group=time — each non-empty bucket is a `LabeledCard frameless`
                         // (time window = label OUTSIDE + run count via `labelEnd`; content is

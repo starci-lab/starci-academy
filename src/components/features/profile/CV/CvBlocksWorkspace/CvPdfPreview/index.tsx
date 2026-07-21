@@ -81,7 +81,7 @@ export const CvPdfPreview = ({ className, cvId, tex }: CvPdfPreviewProps) => {
     }, [tex, cvId, trigger, t])
 
     return (
-        <div className={cn("h-[420px] lg:h-full", className)}>
+        <div className={cn("h-[420px] @app-lg:h-full", className)}>
             <div className="relative mx-auto flex h-full max-w-[820px] flex-col overflow-hidden rounded-3xl bg-white shadow-surface">
                 {/* First-compile placeholder — nothing rendered yet. */}
                 {!url && !errorMessage ? (

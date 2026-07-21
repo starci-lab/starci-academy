@@ -157,6 +157,10 @@
   "profileSettings": {
     "title": "Settings",
     "subtitle": "Manage your account, AI, content and membership.",
+    "privacy": {
+      "title": "Privacy",
+      "description": "Control who can see your profile and each of its sections."
+    },
     "loginMethod": "Login method",
     "loginMethodValue": {
       "github": "GitHub",
@@ -176,6 +180,7 @@
       "editProfile": "Edit profile",
       "appearance": "Appearance",
       "security": "Security",
+      "privacy": "Privacy",
       "sessions": "Devices",
       "courseHistory": "Course history",
       "submissions": "Submissions",
@@ -517,7 +522,23 @@
   },
   "contentAi": {
     "title": "Ask StarCi AI",
+    "close": "Close",
+    "mode": {
+      "aria": "Chat display mode",
+      "rail": "Dock to the right (resizable)",
+      "drawer": "Slide-in drawer"
+    },
     "hint": "Ask anything about this content.",
+    "courseHint": "No lesson open — ask anything about this course.",
+    "context": {
+      "label": "Asking about",
+      "wholeCourse": "Whole course · {course}",
+      "askWholeCourse": "Ask whole course",
+      "backToLesson": "Back to lesson",
+      "courseWide": "Whole course",
+      "switchedToLesson": "opened {title}",
+      "switchedToCourse": "left the lesson, asking about the course"
+    },
     "toolResult": {
       "intro": "Related content for this section — pick one to open:",
       "empty": "No matching content found. Try asking differently.",
@@ -527,15 +548,33 @@
     "commands": {
       "hint": "Quick commands — pick to run",
       "aria": "Quick command list",
+      "find": "Search the course → challenges · flashcards · lessons · milestones · related",
       "challenges": "Find related challenges for this lesson",
       "flashcards": "Find related flashcards",
       "lessons": "Find related lessons",
       "milestones": "Find related project tasks",
       "related": "All content related to this lesson",
       "summarize": "Summarize this lesson in 3 key points",
+      "explain": "Explain the hardest part / a key concept",
       "hardest": "Explain the hardest part",
       "example": "Give a real-world example",
-      "remember": "What to remember from this lesson"
+      "remember": "What to remember from this lesson",
+      "challengesOfLesson": "Find challenges for this lesson",
+      "challengesInCourse": "Find challenges in this course",
+      "flashcardsOfLesson": "Find flashcards for this lesson",
+      "flashcardsInCourse": "Find flashcards in this course",
+      "lessonsOfLesson": "Find related lessons",
+      "lessonsInCourse": "Find lessons in this course",
+      "relatedOfLesson": "Everything related to this lesson",
+      "relatedInCourse": "Everything in this course",
+      "challengesOfTask": "Find challenges for this task",
+      "flashcardsOfTask": "Find flashcards for this task",
+      "lessonsOfTask": "Find related lessons for this task",
+      "relatedOfTask": "Everything related to this task",
+      "challengesOfFoundation": "Find challenges for this foundation",
+      "flashcardsOfFoundation": "Find flashcards for this foundation",
+      "lessonsOfFoundation": "Find related lessons for this foundation",
+      "relatedOfFoundation": "Everything related to this foundation"
     },
     "placeholder": "Ask about this content, or type / for commands…",
     "ask": "Ask AI",
@@ -578,6 +617,10 @@
     "searchContentHint": "Ask a natural question too — AI understands meaning, not just keywords.",
     "searchContentEmpty": "No matching content found",
     "deleteConversation": "Delete conversation",
+    "renameConversation": "Rename",
+    "archiveConversation": "Archive",
+    "conversationActions": "Conversation options",
+    "showArchived": "Archived",
     "turnsCount": "{count} messages"
   },
   "contentActions": {
@@ -598,6 +641,9 @@
   "courses": {
     "featuredTitle": "Featured courses",
     "viewCourse": "View Course",
+    "viewAria": "Course list layout",
+    "viewGrid": "Grid view",
+    "viewLine": "List view",
     "searchPlaceholder": "Search courses...",
     "learners": "{count} learners",
     "empty": "No courses yet",
@@ -1292,16 +1338,25 @@
   },
   "finalProject": {
     "gatePreview": {
-      "milestone": "Milestone 1 · Build the core API",
-      "t1Title": "Design schema & migrations",
-      "t1Meta": "Weight 20% · auto-graded + review",
-      "t1Crit": "ERD covers the core tables with correct foreign keys; migrations run clean, seed sample data.",
-      "t2Title": "REST endpoints + validation",
-      "t2Meta": "Weight 30% · e2e tests",
-      "t2Crit": "Full CRUD, pagination, correct error codes; DTOs validated at the boundary.",
-      "t3Title": "Auth & authorization",
-      "t3Meta": "Weight 25% · review",
-      "t3Crit": "JWT + refresh token, role-based guards."
+      "taskMeta": "Weight 2 · 100 pts",
+      "fullstackMastery": {
+        "milestone": "Project Foundation",
+        "heroTitle": "Scaffold StarCi Shop Backend + Health Endpoint",
+        "item1Title": "Boot StarCi Shop with Typed Config + Logging",
+        "item2Title": "Persist StarCi Shop Products (Postgres + Migrations)"
+      },
+      "systemDesignMastery": {
+        "milestone": "Monorepo & Service Scaffolding",
+        "heroTitle": "Map the Shop Into Services in One Monorepo",
+        "item1Title": "Scaffold the Catalog & Cart Service Workspaces",
+        "item2Title": "Expose GET /health on Every Shop Service"
+      },
+      "devopsMastery": {
+        "milestone": "Linux Baseline & SRE Toolkit",
+        "heroTitle": "The Baseline Host Design for Opsboard",
+        "item1Title": "Service User and Least-Privilege for Opsboard",
+        "item2Title": "Run the App as a systemd Unit"
+      }
     },
     "dashboard": {
       "title": "Personal project",
@@ -1781,7 +1836,8 @@
       "unanswered": "Unanswered",
       "answered": "Answered",
       "mine": "Mine",
-      "all": "All"
+      "all": "All",
+      "engagement": "Most active"
     },
     "searchPlaceholder": "Search questions...",
     "searchEmpty": "No matching questions.",
@@ -1793,6 +1849,15 @@
     "replyCount": "{count} replies",
     "lessonTag": "Lesson: {title}",
     "generalTag": "General",
+    "you": "You",
+    "askedBy": "{name} asked",
+    "collapse": "Collapse",
+    "beFirstToAnswer": "No answers yet — be the first",
+    "replyingTo": "↳ replying to {name}",
+    "acceptedAnswer": "Accepted answer",
+    "accept": "Accept answer",
+    "unaccept": "Unaccept",
+    "pinned": "Pinned",
     "composerPlaceholder": "Ask a question about the whole course...",
     "composerSubmit": "Post question",
     "empty": {
@@ -2595,9 +2660,81 @@
       "emptyTitle": "No exercises yet",
       "emptyDescription": "This course has no hands-on Playground exercises published yet — check back soon."
     },
+    "prepare": {
+      "title": "Prepare your machine",
+      "introRag": "Load your code into a model running on your own machine, then ask questions and see answers grounded in that code. Your code never leaves the machine.",
+      "stepOllamaTitle": "Install & run Ollama",
+      "stepPullTitle": "Pull models (embedding + generation)",
+      "stepPairTitle": "Pair the StarCi Agent",
+      "checkCta": "Check again",
+      "checkingCta": "Checking…",
+      "pairCodeCountdown": "This pairing code is valid for another {time}.",
+      "pairCodeExpired": "This pairing code has expired, so the old command won't connect. Get a new code and run it again.",
+      "pairCodeRefreshCta": "Get a new code",
+      "pairCodeRefreshWhileConnected": "A new code disconnects the running agent — you'll need to run the npx command again.",
+      "pairCodeRefreshConfirmTitle": "Get a new pairing code?",
+      "checkNoAgent": "Can't check yet — the StarCi Agent isn't connected. Run the npx command in the Set up the StarCi Agent step, then try again.",
+      "continueLabel": "Continue",
+      "continueReady": "Ready for the playground",
+      "continuePending": "Playground not ready yet",
+      "stepInstallNamed": "Install {name}",
+      "stepAgentTitle": "Set up the StarCi Agent",
+      "explainEngineInfra": "Every command in the playground runs through this tool on your machine.",
+      "explainEngineOllama": "Ollama runs the model on your own machine — your code never leaves it.",
+      "explainPull": "The playground needs two model roles: one to embed your code as it is indexed, one to answer. The embedding model is the same on every machine; only the generation model changes with VRAM.",
+      "explainAgent": "The agent bridges your machine and the lesson: it relays command output to the browser and auto-verifies each step.",
+      "hintAgent": "Needs Node.js ≥ 18 (npx fetches it). KEEP that terminal window open for the whole session.",
+      "gpuRecommend": "Install {model} — fits your VRAM.",
+      "gpuNone": "No discrete GPU detected — using the light qwen2.5:3b model (runs on CPU, slower).",
+      "introDocker": "Run containers, build images from a Dockerfile, wire up volumes and networks, then compose multiple services. All on your own machine.",
+      "introK8s": "Spin up a minikube cluster, deploy workloads behind a service, then practise rolling updates, rollbacks and autoscaling. All on your own machine.",
+      "stepEngineTitle": "Install the command-line tools",
+      "osMac": "macOS",
+      "osWin": "Windows",
+      "osLinux": "Linux",
+      "readinessHeading": "Machine status",
+      "readyLabel": "Ready",
+      "pendingLabel": "Pending",
+      "enterCta": "Start the playground",
+      "enterHintReady": "All set — open the workspace.",
+      "enterHintPending": "{count} item(s) still not ready.",
+      "modelTableVram": "Free VRAM",
+      "modelTableGen": "Generation model",
+      "modelTableYours": "(your machine)",
+      "modelTierLow": "No discrete GPU, or under 4 GB",
+      "modelTierMid": "4 – 8 GB",
+      "modelTierHigh": "Over 8 GB",
+      "hintPull": "Pulling is not enough. Ollama must be running and serving both models before the machine status row turns green.",
+      "gpuPending": "Machine specs not read yet. Once the agent connects, we'll suggest a model sized to it.",
+      "pullPending": "Machine specs not read yet. Once the agent connects, we'll suggest a generation model sized to it, with the exact pull command.",
+      "modelsReady": "Both models are ready. Nothing to pull.",
+      "modelRecommend": "Install {model} — a fit for your machine."
+    },
+    "ragWorkspace": {
+      "onlyInlineHint": "The on-device playground currently indexes pasted code or an uploaded file only — built-in samples and GitHub repos aren't supported yet.",
+      "emptyNoImportTitle": "Import code to start asking (runs on your own Ollama)",
+      "emptyReadyTitle": "Ask your first question"
+    },
+    "ragSession": {
+      "prepareHeading": "Prepare your machine",
+      "readyAgent": "StarCi Agent",
+      "readyAgentReady": "The agent has paired with this session.",
+      "readyAgentPending": "Run the pairing command so the agent connects.",
+      "readyServing": "Ollama running",
+      "readyServingReady": "Ollama is serving on your machine.",
+      "readyServingPending": "Ollama isn't running yet — start it up.",
+      "readyEmbed": "Embedding model",
+      "readyEmbedReady": "The embedding model is ready.",
+      "readyEmbedPending": "The embedding model (nomic-embed-text) isn't pulled yet.",
+      "readyGen": "Generation model",
+      "readyGenReady": "The generation model is ready.",
+      "readyGenPending": "The generation model (qwen2.5) isn't pulled yet.",
+      "readyEnginePending": "Ollama must be running with both models pulled. Once it is, hit Check again."
+    },
     "session": {
       "leave": "Exit",
       "backToHub": "Back to Playground list",
+      "pageTitle": "{name} Playground",
       "loadErrorTitle": "Couldn't load this exercise",
       "loadErrorDescription": "A network or server issue — try again in a few seconds.",
       "notFoundTitle": "Exercise not found",
@@ -2622,25 +2759,38 @@
       "machineNotConnected": "Machine not connected",
       "connectFromSheetHint": "Connect your machine in the bar below to unlock this step.",
       "sheetToggle": "Expand or collapse the connection panel",
+      "readyEngine": "Local tooling",
+      "readyEngineReady": "The tooling is ready.",
+      "readyEnginePending": "Couldn't check yet — pair the agent, then press Check again.",
+      "readyDevice": "Machine detected",
+      "readyDeviceReady": "Your machine's specs came through.",
+      "readyDevicePending": "No machine info yet — run the pairing command.",
+      "reconnectFromPrepareHint": "The machine dropped — open the Setup tab to pair again or switch machines.",
       "reconnect": "Reconnect / switch machine",
       "reconnectHint": "Your completed steps are kept — run the agent again (same or a different machine) to continue.",
       "agentWaiting": "Waiting for your machine…",
       "workspaceLockedTitle": "Connect your machine to open the workspace",
-      "workspaceLockedHint": "Run the command on the left on your machine — the terminal opens once it connects.",
+      "workspaceLockedHint": "Run the command on the left on your machine — its resources show up here once it connects.",
       "confirmStep": "Confirm this step is done",
       "verifying": "Checking…",
       "verifyMissed": "Step not done yet — run the command above on your machine, then try again.",
+      "deviceTitle": "Your machine",
+      "deviceOs": "Operating system",
+      "deviceCpu": "CPU",
+      "deviceCores": "{count} cores",
+      "deviceRam": "RAM",
+      "deviceRamFree": "{gb} GB free",
+      "deviceGpu": "GPU",
+      "deviceGpuUnknown": "couldn't read",
+      "deviceVramFree": "free",
+      "agentLogTitle": "Agent log",
       "prevStep": "Previous",
       "nextStep": "Next",
       "completeTitle": "Exercise complete!",
       "completeDescription": "You've finished every step of this playground — there's more waiting in the course.",
-      "tabsAria": "Workspace tabs",
       "tabs": {
-        "terminal": "Terminal",
         "resources": "Resources ({count})"
       },
-      "terminalEmptyTitle": "No output yet",
-      "terminalEmptyDescription": "Connect your machine and run the step's command to see output here.",
       "resourcesEmptyTitle": "No resources yet",
       "resourcesEmptyDescription": "Pods, containers, networks, and services your agent reports will show up here.",
       "resourceKind": {
@@ -2948,7 +3098,16 @@
     "linkedinUrlPlaceholder": "https://linkedin.com/in/username",
     "workMode": "Work mode",
     "workModeNone": "Not specified",
-    "invalidUrl": "Invalid URL. Please enter a full URL (e.g. https://...)."
+    "invalidUrl": "Invalid URL. Please enter a full URL (e.g. https://...).",
+    "sectionVisibility": "Profile visibility",
+    "sectionVisibilityHint": "Choose which sections others can see. Overview is always visible.",
+    "sectionVisibilityLockedHint": "Profile is locked — every section is hidden from others. Turn off Lock profile to control sections individually.",
+    "sectionVisibilityDesc": {
+      "projects": "Personal projects & pinned capstones — show recruiters real work.",
+      "challenges": "Graded coding-challenge submissions (by course, difficulty, language).",
+      "skills": "Coding stats, difficulty/topic/language breakdown & solve history.",
+      "activity": "Contribution timeline — how consistently you learn."
+    }
   },
   "sessions": {
     "title": "Devices",
@@ -3021,6 +3180,11 @@
       "title": "This profile is private",
       "description": "This user has locked their profile. Only they can see their activity, achievements and courses."
     },
+    "tabHidden": "· hidden",
+    "sectionPrivate": {
+      "title": "This section is private",
+      "description": "This user has hidden this section from their public profile."
+    },
     "tabs": {
       "overview": "Overview",
       "achievements": "Achievements",
@@ -3032,6 +3196,20 @@
       "projects": "Projects",
       "challenges": "Challenges",
       "cv": "CV"
+    },
+    "publicCv": {
+      "editCta": "Edit CV",
+      "iframeTitle": "CV",
+      "emptyTitle": "This user hasn't made a CV public",
+      "emptySelfHint": "Turn on \"Public\" for one CV in the editor to show it here.",
+      "notCompiled": "CV hasn't been compiled yet",
+      "notCompiledSelfHint": "Open the editor and compile the CV to show its PDF here.",
+      "errorTitle": "Couldn't load the CV",
+      "retry": "Try again"
+    },
+    "cv": {
+      "publicToggle": "Public",
+      "publicHint": "Your public CV shows on your profile"
     },
     "coding": {
       "solved": "Solved",
@@ -3601,7 +3779,14 @@
     "kindContent": "Lesson",
     "kindChallenge": "Challenge",
     "kindFlashcard": "Flashcard",
-    "kindMilestone": "Project"
+    "kindMilestone": "Project",
+    "enrollToOpen": "Enrol to open"
+  },
+  "errorPage": {
+    "notFoundTitle": "Page not found",
+    "notFoundDescription": "The page you're looking for doesn't exist or has moved.",
+    "errorTitle": "Something went wrong",
+    "errorDescription": "The server hit a problem handling your request. Try again in a moment."
   },
   "common": {
     "loading": "Loading…",
@@ -4540,6 +4725,12 @@
     "communityReply": {
       "title": "{actor} replied to your comment"
     },
+    "commentReply": {
+      "title": "{actor} replied to your question"
+    },
+    "commentMention": {
+      "title": "{actor} mentioned you in a question"
+    },
     "milestoneGraded": {
       "title": "Task \"{title}\" was graded: {result, select, passed {Passed} failed {Not yet passed} other {}}"
     },
@@ -4681,6 +4872,7 @@
         "emptyDescription": "The sample catalog is empty right now. Try pasting your own content, or check back later."
       },
       "githubPlaceholder": "https://github.com/owner/repo",
+        "githubHint": "Paste a SMALL public GitHub repo URL to index many files at once (the agent fetches source files only, skipping binaries/vendored code).",
       "cta": "Import & index",
       "indexed": "Indexed {count} chunks",
       "genericError": "Could not import this code — try again or pick another method.",
@@ -4695,6 +4887,8 @@
       "emptyReadyDescription": "Ask anything about the code you just imported — the model will cite the relevant parts.",
       "thinking": "Thinking…",
       "sources": "Cited sources",
+      "sourcesModeDoc": "Document",
+      "sourcesModeGraph": "Graph",
       "placeholder": "Ask about this code…",
       "stop": "Stop",
       "send": "Send question",

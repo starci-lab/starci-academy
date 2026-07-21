@@ -89,7 +89,7 @@ export const PositionSection = ({
                     />
                 </TextField>
 
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-3 @app-sm:grid-cols-2">
                     <div className="flex flex-col gap-2">
                         <Label htmlFor="job-post-employment-type">{t("jobs.post.position.employmentType")}</Label>
                         <Select.Root<{ id: string }, "single">
@@ -186,7 +186,7 @@ export const PositionSection = ({
                 </TextField>
 
                 <div className="flex flex-col gap-2">
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-3 @app-sm:grid-cols-2">
                         <TextField variant="secondary">
                             <Label htmlFor="job-post-salary-min">{t("jobs.post.position.salaryMin")}</Label>
                             <Input

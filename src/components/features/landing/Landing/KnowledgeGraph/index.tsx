@@ -268,7 +268,7 @@ export type KnowledgeGraphProps = WithClassNames<undefined>
  * @param props - {@link KnowledgeGraphProps}
  */
 export const KnowledgeGraph = ({ className }: KnowledgeGraphProps) => (
-    <div className={cn("h-[460px] w-full overflow-hidden rounded-3xl border border-default bg-background sm:h-[560px]", className)}>
+    <div className={cn("h-[460px] w-full overflow-hidden rounded-3xl border border-default bg-background @app-sm:h-[560px]", className)}>
         <ReactFlowProvider>
             <KnowledgeGraphFlow />
         </ReactFlowProvider>

@@ -245,7 +245,7 @@ export const PersonalProjectDashboard = ({
                         <LabeledCard
                             label={`${t("finalProject.dashboard.keepGoing")} · ${currentMilestone.title}`}
                             frameless
-                            contentClassName="grid gap-3 sm:grid-cols-2"
+                            contentClassName="grid gap-3 @app-sm:grid-cols-2"
                         >
                             {(currentMilestone.tasks ?? []).map((task) => {
                                 const isCompleted = progressMap.get(task.id)?.completed ?? false

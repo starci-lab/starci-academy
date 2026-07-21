@@ -96,7 +96,7 @@ export const ArchitectureMobileNav = ({ healthByName, selectedId, onSelect, clas
     const externalComponents = ARCHITECTURE_COMPONENTS.filter((c) => c.group === "external")
 
     return (
-        <div className={cn("flex flex-col gap-3 lg:hidden", className)}>
+        <div className={cn("flex flex-col gap-3 @app-lg:hidden", className)}>
             <div className="flex flex-col gap-2">
                 <Typography type="body-xs" color="muted">{t("rail.ownGroup")}</Typography>
                 <ScrollShadow orientation="horizontal" hideScrollBar className="flex gap-2 overflow-x-auto pb-1">

@@ -42,7 +42,7 @@ export const Contact = ({ className }: ContactProps) => {
                 </div>
 
                 {/* left: real channels + founder · right: the working form */}
-                <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                <div className="grid grid-cols-1 gap-6 @app-lg:grid-cols-2">
                     <ContactChannels />
                     <LabeledCard label={t("contact.form.title")}>
                         <ContactForm />

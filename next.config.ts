@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
     typescript: {
         ignoreBuildErrors: true,
     },
+    // `@lobehub/icons` (the AI-model brand marks used in the playground readiness
+    // rows) ships pure ESM. Left untranspiled it surfaces as "CJS module can't be
+    // async" in the bundler graph; listing it here makes Next compile it with the
+    // app's own pipeline so the ESM/CJS boundary is handled.
+    transpilePackages: ["@lobehub/icons"],
     experimental: {
         // Rewrite `@heroui/react` barrel imports to direct sub-paths so a Server
         // Component pulling only e.g. Typography doesn't transitively load Toast

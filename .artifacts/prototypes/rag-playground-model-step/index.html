@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Prototype — RAG Playground · Bước 3 Tải model (state machine)</title>
+<style>
+  :root {
+    --bg: #0b0f17; --surface: #131a26; --border: #263042;
+    --text: #e6ecf5; --muted: #8b98ab;
+    --accent: #ec4899; --accent-fg: #ffffff;
+    --success: #16a34a; --success-soft: #0f2419; --success-fg: #4ade80;
+    --warning: #ca8a04; --warning-soft: #241d0a; --warning-fg: #facc15;
+    --danger: #dc2626; --danger-soft: #240f0f; --danger-fg: #f87171;
+    --gap-color: #6b7280;
+    --radius: 12px; --gap: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--bg); color: var(--text); font: 14px/1.55 system-ui, sans-serif; }
+
+  .surface { display: none; max-width: 980px; margin: 0 auto; padding: 24px 16px 140px; }
+  .surface.active { display: block; }
+
+  h1 { font-size: 18px; margin-bottom: 4px; }
+  h2 { font-size: 15px; margin-bottom: 8px; }
+  .muted { color: var(--muted); font-size: 12px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--gap); }
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--border);
+         background: transparent; color: var(--text); cursor: pointer; font: inherit; }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); font-weight: 600; }
+  .btn:hover { filter: brightness(1.15); }
+  code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+  /* ── mini state-graph nav (không thuộc UI thật, ĐIỀU HƯỚNG prototype) ── */
+  .graph { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 22px; }
+  .node { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface);
+          color: var(--muted); font-size: 12px; cursor: pointer; white-space: nowrap; }
+  .node:hover { border-color: var(--accent); color: var(--text); }
+  .node.current { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); font-weight: 600; }
+  .node.gap { border-style: dashed; border-color: var(--gap-color); color: var(--gap-color); }
+  .node.gap.current { background: var(--gap-color); border-color: var(--gap-color); color: #fff; }
+
+  /* ── mirror UI THẬT của bước 3 (PlaygroundPrepare step "pull") ── */
+  .step-card { border-radius: 24px; padding: 20px; }
+  .step-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+  .step-title { font-weight: 600; font-size: 15px; }
+  .step-desc { color: var(--muted); font-size: 13px; margin-top: 2px; }
+  .chip { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+  .chip.ready { background: var(--success-soft); color: var(--success-fg); }
+  .chip.pending { background: var(--border); color: var(--muted); }
+
+  .callout { display: flex; align-items: center; gap: 10px; border-radius: 16px; padding: 12px 14px; margin: 10px 0; font-size: 13px; }
+  .callout.success { background: var(--success-soft); color: var(--success-fg); }
+  .callout.default { background: var(--border); color: var(--text); }
+  .callout.warning { background: var(--warning-soft); color: var(--warning-fg); }
+  .callout.danger { background: var(--danger-soft); color: var(--danger-fg); }
+  .callout .ico { font-size: 16px; }
+
+  .pull-block { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 10px 14px; margin: 8px 0; }
+  .pull-block .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+  .pull-block code { font-size: 13px; color: var(--accent); }
+
+  .status-line { display: flex; align-items: center; gap: 8px; margin-top: 12px; }
+  .spinner { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--border); border-top-color: var(--accent);
+             animation: spin .8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* element-aware label chips — nối brief block THẬT */
+  .block-tag { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 6px; background: rgba(99,102,241,.15);
+               color: #a5b4fc; font-size: 10px; font-family: ui-monospace, monospace; vertical-align: middle; }
+
+  .side { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 16px; }
+  @media (min-width: 760px) { .side { grid-template-columns: 1.1fr .9fr; } }
+
+  .evidence { font-size: 12px; }
+  .evidence .row { display: flex; gap: 8px; padding: 6px 0; border-top: 1px solid var(--border); }
+  .evidence .row:first-child { border-top: none; }
+  .evidence .k { color: var(--muted); min-width: 90px; flex-shrink: 0; }
+
+  .triggers { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .triggers .btn.gap-trigger { border-style: dashed; border-color: var(--gap-color); color: var(--gap-color); }
+
+  .gap-banner { background: var(--danger-soft); color: var(--danger-fg); border: 1px dashed var(--danger); border-radius: 14px;
+                padding: 10px 14px; font-size: 13px; margin-bottom: 14px; }
+
+  /* Thanh điều khiển prototype */
+  .proto-nav { position: fixed; inset: auto 0 0 0; display: flex; gap: 8px; justify-content: center; align-items: center;
+               padding: 10px; background: rgba(11,15,23,.92); border-top: 1px solid var(--border); backdrop-filter: blur(6px); }
+  .proto-nav .muted { align-self: center; }
+</style>
+</head>
+<body>
+
+<!-- ============ STATE 1: NotConnected ============ -->
+<section class="surface active" id="s-not-connected" data-cat="real">
+  <h1>State machine — "3. Tải model (embedding và trả lời)"</h1>
+  <p class="muted">RAG Playground Setup · <code>/learn/playground/rag</code> · mỗi node dưới đây = 1 state THẬT (bấm để nhảy tới)</p>
+  <nav class="graph" id="graph"></nav>
+
+  <h2>① Chưa kết nối agent <span class="block-tag">ConnectSheet / agentRow</span></h2>
+  <div class="card step-card">
+    <div class="step-head">
+      <div>
+        <div class="step-title">3. Tải model (embedding và trả lời)</div>
+        <div class="step-desc">Playground cần hai vai model: một để tạo embedding khi nạp code, một để trả lời.</div>
+      </div>
+      <span class="chip pending">Đang chờ</span>
+    </div>
+    <div class="callout default"><span class="ico">🔌</span> Kết nối StarCi Agent trước — chưa có dữ liệu máy để kiểm tra model.</div>
+  </div>
+
+  <div class="side">
+    <div class="card evidence">
+      <h2>Ground</h2>
+      <div class="row"><span class="k">field</span><span><code>agentRow.ready = byomState.connected</code></span></div>
+      <div class="row"><span class="k">file</span><span class="mono">PlaygroundSessionProvider/index.tsx:282</span></div>
+    </div>
+    <div class="card">
+      <h2>Trigger đi tiếp</h2>
+      <div class="triggers">
+        <button class="btn primary" onclick="go('s-probing')">agent pairs (npx …) → Probing</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATE 2: Probing ============ -->
+<section class="surface" id="s-probing" data-cat="real">
+  <nav class="graph" id="graph2"></nav>
+  <h2>② Đã connect, chờ probe đầu <span class="block-tag">AsyncContent loading</span></h2>
+  <div class="card step-card">
+    <div class="step-head">
+      <div>
+        <div class="step-title">3. Tải model (embedding và trả lời)</div>
+        <div class="step-desc">Playground cần hai vai model: một để tạo embedding khi nạp code, một để trả lời.</div>
+      </div>
+      <span class="chip pending">Đang chờ</span>
+    </div>
+    <div class="callout default"><span class="spinner"></span>&nbsp; Đang chờ dữ liệu máy (device:info / env:report / ollama:status) …</div>
+  </div>
+  <div class="side">
+    <div class="card evidence">
+      <h2>Ground</h2>
+      <div class="row"><span class="k">state</span><span>chưa có <code>deviceInfo</code> lẫn <code>ollamaStatus</code> đầu tiên</span></div>
+      <div class="row"><span class="k">push khi</span><span>pair xong (once) + poll 4s (<code>ollama:status</code>)</span></div>
+      <div class="row"><span class="k">file</span><span class="mono">rag-agent.service.ts:46-48, 80-85 · rag-constants.ts:5</span></div>
+    </div>
+    <div class="card">
+      <h2>Rẽ nhánh khi data về</h2>
+      <div class="triggers">
+        <button class="btn" onclick="go('s-device-unknown')">deviceInfo vẫn null</button>
+        <button class="btn" onclick="go('s-ollama-down')">Ollama chưa serving</button>
+        <button class="btn" onclick="go('s-missing-both')">serving, 0 model</button>
+        <button class="btn" onclick="go('s-only-embed')">serving, chỉ embed</button>
+        <button class="btn" onclick="go('s-only-gen')">serving, chỉ gen</button>
+        <button class="btn primary" onclick="go('s-all-ready')">serving, đủ cả 2</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATE 3: DeviceUnknown ============ -->
+<section class="surface" id="s-device-unknown" data-cat="real">
+  <nav class="graph" id="graph3"></nav>
+  <h2>③ Máy chưa xác định (deviceInfo=null) <span class="block-tag">Callout status=default</span></h2>
+  <div class="card step-card">
+    <div class="step-head">
+      <div><div class="step-title">3. Tải model (embedding và trả lời)</div></div>
+      <span class="chip pending">Đang chờ</span>
+    </div>
+    <div class="callout default"><span class="ico">❔</span> Chưa xác định được cấu hình máy — kiểm tra lại sau khi agent gửi thông tin thiết bị.</div>
+  </div>
+  <div class="side">
+    <div class="card evidence">
+      <h2>Ground</h2>
+      <div class="row"><span class="k">field</span><span><code>deviceKnown = deviceInfo != null</code></span></div>
+      <div class="row"><span class="k">copy key</span><span><code>playground.prepare.pullPending</code></span></div>
+      <div class="row"><span class="k">file</span><span class="mono">PlaygroundPrepare/index.tsx:257, 483-486</span></div>
+    </div>
+    <div class="card">
+      <h2>Trigger đi tiếp</h2>
+      <div class="triggers">
+        <button class="btn" onclick="go('s-missing-both')">device:info về + serving thiếu cả 2</button>
+        <button class="btn" onclick="go('s-only-embed')">device:info về + chỉ có embed</button>
+        <button class="btn" onclick="go('s-only-gen')">device:info về + chỉ có gen</button>
+        <button class="btn primary" onclick="go('s-all-ready')">device:info về + đủ cả 2</button>
+        <button class="btn" onclick="go('s-ollama-down')">device:info về nhưng Ollama vẫn chưa serving</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATE 4: OllamaDown ============ -->
+<section class="surface" id="s-ollama-down" data-cat="real">
+  <nav class="graph" id="graph4"></nav>
+  <h2>④ Ollama chưa serving <span class="block-tag">Callout status=warning</span></h2>
+  <div class="card step-card">
+    <div class="step-head">
+      <div><div class="step-title">3. Tải model (embedding và trả lời)</div></div>
+      <span class="chip pending">Đang chờ</span>
+    </div>
+    <div class="callout warning"><span class="ico">⚠️</span> Chưa chạy — mở Ollama rồi kiểm tra lại.</div>
+    <button class="btn" onclick="go('s-checking')" style="margin-top:10px">Kiểm tra lại</button>
+  </div>
+  <div class="side">
+    <div class="card evidence">
+      <h2>Ground</h2>
+      <div class="row"><span class="k">probe</span><span><code>probeOllama()</code> fetch <code>GET :11434/api/tags</code> fail → <code>{serving:false, models:[]}</code></span></div>
+      <div class="row"><span class="k">detail text</span><span>"Chưa chạy — mở Ollama rồi kiểm tra lại."</span></div>
+      <div class="row"><span class="k">file</span><span class="mono">rag.service.ts:26-34 · rag-agent.service.ts:31-43</span></div>
+    </div>
+    <div class="card">
+      <h2>Trigger đi tiếp</h2>
+      <div class="triggers">
+        <button class="btn primary" onclick="go('s-checking')">bấm "Kiểm tra lại" → Checking</button>
+        <button class="btn" onclick="go('s-missing-both')">poll 4s: vừa serving, 0 model</button>
+        <button class="btn" onclick="go('s-all-ready')">poll 4s: vừa serving, đủ cả 2</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATE 5: MissingBoth ============ -->
+<section class="surface" id="s-missing-both" data-cat="real">
+  <nav class="graph" id="graph5"></nav>
+  <h2>⑤ Serving, chưa cài model nào <span class="block-tag">Callout status=warning + 2× pull block</span></h2>
+  <div class="card step-card">
+    <div class="step-head">
+      <div><div class="step-title">3. Tải model (embedding và trả lời)</div></div>
+      <span class="chip pending">Đang chờ</span>
+    </div>
+    <div class="callout warning"><span class="ico">⚠️</span> Đang chạy nhưng thiếu model embedding + model sinh câu.</div>
+    <div class="pull-block"><div class="label">Chạy trên máy bạn</div><code>ollama pull nomic-embed-text</code></div>
+    <div class="pull-block"><div class="label">&nbsp;</div><code>ollama pull qwen2.5-coder:7b</code></div>
+    <div class="muted" style="margin-top:6px">↳ model gen ví dụ theo tier VRAM hiện tại (xem state ⑫)</div>
+    <button class="btn" onclick="go('s-checking')" style="margin-top:10px">Kiểm tra lại</button>
+  </div>
+  <div class="side">
+    <div class="card evidence">
+      <h2>Ground</h2>
+      <div class="row"><span class="k">field</span><span><code>hasEmbedModel=false, hasGenModel=false</code></span></div>
+      <div class="row"><span class="k">heuristic</span><span><code>models.some(m =&gt; m.includes("embed"))</code></span></div>
+      <div class="row"><span class="k">file</span><span class="mono">PlaygroundSessionProvider/index.tsx:292-296 · PlaygroundPrepare/index.tsx:310-314</span></div>
+    </div>
+    <div class="card">
+      <h2>Trigger đi tiếp</h2>
+      <div class="triggers">
+        <button class="btn primary" onclick="go('s-checking')">bấm "Kiểm tra lại" → Checking</button>
+        <button class="btn" onclick="go('s-only-embed')">poll 4s: đã pull xong embed (chưa gen)</button>
+        <button class="btn" onclick="go('s-only-gen')">poll 4s: đã pull xong gen (chưa embed)</button>
+        <button class="btn" onclick="go('s-all-ready')">poll 4s: đã pull xong cả 2</button>
+        <button class="btn gap-trigger" onclick="go('s-gap-download')">(học viên đang pull thật) → xem GAP progress</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATE 6: OnlyEmbed ============ -->
+<section class="surface" id="s-only-embed" data-cat="real">
+  <nav class="graph" id="graph6"></nav>
+  <h2>⑥ Có embedding, thiếu model trả lời <span class="block-tag">Callout status=warning + 1× pull block</span></h2>
+  <div class="card step-card">
+    <div class="step-head">
+      <div><div class="step-title">3. Tải model (embedding và trả lời)</div></div>
+      <span class="chip pending">Đang chờ</span>
+    </div>
+    <div class="callout warning"><span class="ico">⚠️</span> Đang chạy nhưng thiếu model sinh câu.</div>
+    <div class="pull-block"><div class="label">Chạy trên máy bạn</div><code>ollama pull qwen2.5-coder:7b</code></div>
+    <button class="btn" onclick="go('s-checking')" style="margin-top:10px">Kiểm tra lại</button>
+  </div>
+  <div class="side">
+    <div class="card evidence">
+      <h2>Ground</h2>
+      <div class="row"><span class="k">field</span><span><code>hasEmbedModel=true, hasGenModel=false</code></span></div>
+      <div class="row"><span class="k">recommend</span><span><code>recommendGenModel(vramFreeMb)</code> — chỉ tồn tại ở FE</span></div>
+      <div class="row"><span class="k">file</span><span class="mono">PlaygroundPrepare/index.tsx:115-144, 258, 310-314</span></div>
+    </div>
+    <div class="card">
+      <h2>Trigger đi tiếp</h2>
+      <div class="triggers">
+        <button class="btn primary" onclick="go('s-checking')">bấm "Kiểm tra lại" → Checking</button>
+        <button class="btn" onclick="go('s-all-ready')">poll 4s: đã pull xong gen</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATE 7: OnlyGen ============ -->
+<section class="surface" id="s-only-gen" data-cat="real">
+  <nav class="graph" id="graph7"></nav>
+  <h2>⑦ Có model trả lời, thiếu embedding <span class="block-tag">Callout status=warning + 1× pull block</span></h2>
+  <div class="card step-card">
+    <div class="step-head">
+      <div><div class="step-title">3. Tải model (embedding và trả lời)</div></div>
+      <span class="chip pending">Đang chờ</span>
+    </div>
+    <div class="callout warning"><span class="ico">⚠️</span> Đang chạy nhưng thiếu model embedding.</div>
+    <div class="pull-block"><div class="label">Chạy trên máy bạn</div><code>ollama pull nomic-embed-text</code></div>
+    <button class="btn" onclick="go('s-checking')" style="margin-top:10px">Kiểm tra lại</button>
+  </div>
+  <div class="side">
+    <div class="card evidence">
+      <h2>Ground</h2>
+      <div class="row"><span class="k">field</span><span><code>hasEmbedModel=false, hasGenModel=true</code></span></div>
+      <div class="row"><span class="k">file</span><span class="mono">PlaygroundSessionProvider/index.tsx:292-296</span></div>
+    </div>
+    <div class="card">
+      <h2>Trigger đi tiếp</h2>
+      <div class="triggers">
+        <button class="btn primary" onclick="go('s-checking')">bấm "Kiểm tra lại" → Checking</button>
+        <button class="btn" onclick="go('s-all-ready')">poll 4s: đã pull xong embed</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATE 8: AllReady ============ -->
+<section class="surface" id="s-all-ready" data-cat="real">
+  <nav class="graph" id="graph8"></nav>
+  <h2>⑧ Đủ cả 2 model <span class="block-tag">Callout status=success</span></h2>
+  <div class="card step-card">
+    <div class="step-head">
+      <div><div class="step-title">3. Tải model (embedding và trả lời)</div></div>
+      <span class="chip ready">Sẵn sàng</span>
+    </div>
+    <div class="callout success"><span class="ico">✅</span> Đã có đủ model. Không cần tải thêm.</div>
+    <button class="btn" onclick="go('s-checking')" style="margin-top:10px">Kiểm tra lại</button>
+  </div>
+  <div class="side">
+    <div class="card evidence">
+      <h2>Ground</h2>
+      <div class="row"><span class="k">field</span><span><code>allModelsInstalled = genInstalled && embedInstalled</code></span></div>
+      <div class="row"><span class="k">tác dụng</span><span>góp phần mở CTA "Bắt đầu playground" (<code>allReady</code>)</span></div>
+      <div class="row"><span class="k">file</span><span class="mono">PlaygroundPrepare/index.tsx:306-308, 480-482</span></div>
+    </div>
+    <div class="card">
+      <h2>Trigger đi tiếp</h2>
+      <div class="triggers">
+        <button class="btn" onclick="go('s-checking')">vẫn cho bấm "Kiểm tra lại"</button>
+        <button class="btn gap-trigger" onclick="go('s-gap-vram')">(VRAM đổi, model cũ lệch tier) → xem GAP</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATE 9: Checking ============ -->
+<section class="surface" id="s-checking" data-cat="real">
+  <nav class="graph" id="graph9"></nav>
+  <h2>⑨ Đang kiểm tra lại <span class="block-tag">Button isPending + Spinner</span></h2>
+  <div class="card step-card">
+    <div class="step-head">
+      <div><div class="step-title">3. Tải model (embedding và trả lời)</div></div>
+      <span class="chip pending">Đang chờ</span>
+    </div>
+    <div class="status-line"><span class="spinner"></span> Đang kiểm tra…</div>
+  </div>
+  <div class="side">
+    <div class="card evidence">
+      <h2>Ground</h2>
+      <div class="row"><span class="k">field</span><span><code>checking === step.id</code></span></div>
+      <div class="row"><span class="k">⚠️ lưu ý</span><span>spinner cứng <code>CHECK_FEEDBACK_MS=1500</code>ms — KHÔNG chờ promise thật, fire-and-forget qua socket</span></div>
+      <div class="row"><span class="k">file</span><span class="mono">PlaygroundPrepare/index.tsx (hằng số CHECK_FEEDBACK_MS)</span></div>
+    </div>
+    <div class="card">
+      <h2>Rẽ nhánh sau 1500ms</h2>
+      <div class="triggers">
+        <button class="btn" onclick="go('s-check-refused')">!agentConnected lúc bấm</button>
+        <button class="btn" onclick="go('s-ollama-down')">kết quả mới = chưa serving</button>
+        <button class="btn" onclick="go('s-missing-both')">kết quả mới = 0 model</button>
+        <button class="btn" onclick="go('s-only-embed')">kết quả mới = chỉ embed</button>
+        <button class="btn" onclick="go('s-only-gen')">kết quả mới = chỉ gen</button>
+        <button class="btn primary" onclick="go('s-all-ready')">kết quả mới = đủ cả 2</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATE 10: CheckRefused ============ -->
+<section class="surface" id="s-check-refused" data-cat="real">
+  <nav class="graph" id="graph10"></nav>
+  <h2>⑩ Bấm "Kiểm tra lại" nhưng agent chưa nối <span class="block-tag">text danger</span></h2>
+  <div class="card step-card">
+    <div class="step-head">
+      <div><div class="step-title">3. Tải model (embedding và trả lời)</div></div>
+      <span class="chip pending">Đang chờ</span>
+    </div>
+    <div class="callout danger"><span class="ico">✕</span> Cần nối StarCi Agent trước khi kiểm tra.</div>
+  </div>
+  <div class="side">
+    <div class="card evidence">
+      <h2>Ground</h2>
+      <div class="row"><span class="k">field</span><span><code>checkError === step.id && !agentConnected</code></span></div>
+      <div class="row"><span class="k">copy key</span><span><code>checkNoAgent</code></span></div>
+      <div class="row"><span class="k">file</span><span class="mono">PlaygroundPrepare/index.tsx:515-518</span></div>
+    </div>
+    <div class="card">
+      <h2>Trigger đi tiếp</h2>
+      <div class="triggers">
+        <button class="btn primary" onclick="go('s-probing')">agent pair lại → Probing</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATE 11: GAP wrong VRAM tier ============ -->
+<section class="surface" id="s-gap-vram" data-cat="gap">
+  <nav class="graph" id="graph11"></nav>
+  <div class="gap-banner">⚠️ <b>GAP THẬT — không có code chống đỡ.</b> Đây KHÔNG phải state đang chạy trong app, là lỗ hổng em tìm ra khi đọc source.</div>
+  <h2>⑪ Model gen đã cài LỆCH tier VRAM hiện tại</h2>
+  <div class="card step-card">
+    <div class="step-head">
+      <div><div class="step-title">3. Tải model (embedding và trả lời)</div></div>
+      <span class="chip ready">Sẵn sàng <span style="opacity:.6">(nhưng sai)</span></span>
+    </div>
+    <div class="callout success"><span class="ico">✅</span> Đã có đủ model. Không cần tải thêm. <span class="muted">← UI KHÔNG PHÂN BIỆT được đây là model sai tier</span></div>
+  </div>
+  <div class="side">
+    <div class="card evidence">
+      <h2>Vì sao là gap</h2>
+      <div class="row"><span class="k">hasGenModel</span><span>chỉ cần "có 1 tag non-embed BẤT KỲ" — không so với <code>recommendGenModel(vramFreeMb)</code> hiện tại</span></div>
+      <div class="row"><span class="k">kịch bản</span><span>đổi máy / driver báo VRAM khác → khuyến nghị đổi nhưng model cũ (tier thấp) vẫn được coi là "đủ"</span></div>
+      <div class="row"><span class="k">file</span><span class="mono">PlaygroundSessionProvider/index.tsx:292-296 (hasGenModel) · rag.service.ts:108-115 (pickGenModel — chỉ dùng lúc TRẢ LỜI, không dùng lúc kiểm tra readiness)</span></div>
+    </div>
+    <div class="card">
+      <h2>Đề xuất (nếu thầy muốn vá — CHƯA build)</h2>
+      <p class="muted">So tag model đã cài với <code>recommendGenModel()</code> hiện tại; lệch → callout <code>warning</code> riêng "Model đã cài không khớp cấu hình máy hiện tại" thay vì <code>success</code>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATE 12: GAP download progress ============ -->
+<section class="surface" id="s-gap-download" data-cat="gap">
+  <nav class="graph" id="graph12"></nav>
+  <div class="gap-banner">⚠️ <b>GAP THẬT — không có code chống đỡ.</b> Đây KHÔNG phải state đang chạy trong app, là lỗ hổng em tìm ra khi đọc source.</div>
+  <h2>⑫ Đang tải model thật (không có % tiến độ)</h2>
+  <div class="card step-card">
+    <div class="step-head">
+      <div><div class="step-title">3. Tải model (embedding và trả lời)</div></div>
+      <span class="chip pending">Đang chờ <span style="opacity:.6">(đứng yên)</span></span>
+    </div>
+    <div class="callout warning"><span class="ico">⚠️</span> Đang chạy nhưng thiếu model sinh câu. <span class="muted">← y hệt trước khi học viên bấm pull — không đổi gì cho tới lần poll/kiểm-tra kế</span></div>
+    <div class="pull-block"><div class="label">Chạy trên máy bạn</div><code>ollama pull qwen2.5-coder:7b</code> <span class="muted">← học viên ĐANG chạy lệnh này thật ở terminal ngoài</span></div>
+  </div>
+  <div class="side">
+    <div class="card evidence">
+      <h2>Vì sao là gap</h2>
+      <div class="row"><span class="k">EnvReport</span><span><code>{ ready, label, detail? }</code> — không có field %/progress nào</span></div>
+      <div class="row"><span class="k">agent</span><span>RAG agent KHÔNG relay lệnh <code>ollama pull</code> (chỉ wire <code>rag:index</code>/<code>rag:ask</code>) — học viên tự chạy ngoài UI</span></div>
+      <div class="row"><span class="k">file</span><span class="mono">types.ts:37-44 (EnvReport) · rag-agent.service.ts onSetup()</span></div>
+    </div>
+    <div class="card">
+      <h2>Cách UI "thấy" được tiến độ hiện tại</h2>
+      <p class="muted">Chỉ 2 đường: bấm "Kiểm tra lại" (state ⑨ Checking) hoặc chờ poll cứng 4s (<code>OLLAMA_STATUS_INTERVAL_MS</code>) — không có push khi pull BẮT ĐẦU hay HOÀN TẤT.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Thanh điều khiển prototype -->
+<nav class="proto-nav">
+  <button class="btn" onclick="step(-1)">← Prev</button>
+  <span class="muted" id="proto-pos"></span>
+  <button class="btn" onclick="step(1)">Next →</button>
+</nav>
+
+<script>
+  const STATES = [
+    { id: 's-not-connected', label: '① Not connected', cat: 'real' },
+    { id: 's-probing', label: '② Probing', cat: 'real' },
+    { id: 's-device-unknown', label: '③ Device unknown', cat: 'real' },
+    { id: 's-ollama-down', label: '④ Ollama down', cat: 'real' },
+    { id: 's-missing-both', label: '⑤ Missing both', cat: 'real' },
+    { id: 's-only-embed', label: '⑥ Only embed', cat: 'real' },
+    { id: 's-only-gen', label: '⑦ Only gen', cat: 'real' },
+    { id: 's-all-ready', label: '⑧ All ready', cat: 'real' },
+    { id: 's-checking', label: '⑨ Checking', cat: 'real' },
+    { id: 's-check-refused', label: '⑩ Check refused', cat: 'real' },
+    { id: 's-gap-vram', label: '⑪ GAP · wrong VRAM tier', cat: 'gap' },
+    { id: 's-gap-download', label: '⑫ GAP · download progress', cat: 'gap' },
+  ];
+  const surfaces = [...document.querySelectorAll('.surface')];
+
+  function buildGraph(container) {
+    container.innerHTML = '';
+    STATES.forEach(st => {
+      const b = document.createElement('button');
+      b.className = 'node' + (st.cat === 'gap' ? ' gap' : '') + (st.id === currentId() ? ' current' : '');
+      b.textContent = st.label;
+      b.onclick = () => go(st.id);
+      container.appendChild(b);
+    });
+  }
+
+  function currentId() {
+    const active = document.querySelector('.surface.active');
+    return active ? active.id : STATES[0].id;
+  }
+
+  function render() {
+    const idx = STATES.findIndex(s => s.id === currentId());
+    surfaces.forEach(s => s.classList.remove('active'));
+    document.getElementById(currentId()).classList.add('active');
+    document.getElementById('proto-pos').textContent = (idx + 1) + ' / ' + STATES.length + ' — ' + STATES[idx].label;
+    document.querySelectorAll('.graph').forEach(buildGraph);
+    window.scrollTo(0, 0);
+  }
+  function go(id) {
+    surfaces.forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    render();
+  }
+  function step(d) {
+    const idx = STATES.findIndex(s => s.id === currentId());
+    const next = Math.min(STATES.length - 1, Math.max(0, idx + d));
+    go(STATES[next].id);
+  }
+  render();
+</script>
+</body>
+</html>

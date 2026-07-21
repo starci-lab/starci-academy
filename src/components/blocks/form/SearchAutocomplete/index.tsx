@@ -104,7 +104,7 @@ export const SearchAutocomplete = ({
     return (
         <ComboBox
             aria-label={placeholder}
-            className={cn("w-full sm:max-w-sm", className)}
+            className={cn("w-full @app-sm:max-w-sm", className)}
             variant="secondary"
             allowsEmptyCollection
             items={items}

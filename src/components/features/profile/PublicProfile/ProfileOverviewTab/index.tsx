@@ -78,7 +78,7 @@ export const ProfileOverviewTab = ({
             </LabeledCard>
 
             {/* two skill cards side by side on desktop */}
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="grid gap-6 @app-md:grid-cols-2">
                 <OverviewChallengeSkills
                     label={t("publicProfile.overview.challengeSkills")}
                     onSeeMore={() => goToTab("challenges")}

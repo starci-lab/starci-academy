@@ -41,7 +41,7 @@ export const LearnPanelToggles = ({ className }: LearnPanelTogglesProps) => {
     return (
         // full-height, click-through overlay spanning the content column; desktop only.
         // absolute so it adds no layout, z-20 to float above the article text.
-        <div className={cn("pointer-events-none absolute inset-0 z-20 hidden lg:block", className)}>
+        <div className={cn("pointer-events-none absolute inset-0 z-20 hidden @app-lg:block", className)}>
             {/* zero-height bar that sticks at viewport mid-line, so the handle stays centered while scrolling */}
             <div className="sticky top-1/2">
                 {/* right handle: sits on the divider between content and the outline rail */}

@@ -27,6 +27,13 @@ export interface CreatePlaygroundSessionData {
     id: string
     /** Short code the learner enters into the local CLI agent to pair it with this session. */
     pairingCode: string
+    /**
+     * When {@link pairingCode} stops being accepted by the pairing gateway
+     * (ISO-8601, server-derived). The Setup surface counts down to this instant
+     * and offers a fresh code once passed — do NOT recompute it client-side from
+     * a local TTL copy, or the countdown drifts from the server's real cutoff.
+     */
+    pairingCodeExpiresAt: string
 }
 
 /** Apollo response shape for `createPlaygroundSession`. */

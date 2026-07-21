@@ -7,6 +7,7 @@ import { useMutateCreateCommentSwr } from "@/hooks/swr/api/graphql/mutations/use
 import { useMutateUpdateCommentSwr } from "@/hooks/swr/api/graphql/mutations/useMutateUpdateCommentSwr"
 import { useMutateDeleteCommentSwr } from "@/hooks/swr/api/graphql/mutations/useMutateDeleteCommentSwr"
 import { useMutateReactToCommentSwr } from "@/hooks/swr/api/graphql/mutations/useMutateReactToCommentSwr"
+import { useMutateAcceptAnswerSwr } from "@/hooks/swr/api/graphql/mutations/useMutateAcceptAnswerSwr"
 import { queryContentComments } from "@/modules/api/graphql/queries/query-content-comments"
 import type { CommentNode, ReactionType } from "@/modules/api/graphql/queries/types/discussion"
 
@@ -26,6 +27,10 @@ export interface UseQuestionAnswersResult {
     onDelete: (commentId: string) => Promise<void>
     /** React to an answer/reply (`type: null` removes the reaction). */
     onReactComment: (commentId: string, type: ReactionType | null) => Promise<void>
+    /** React to the question itself — the question is a top-level comment (`type: null` removes it). */
+    onReactQuestion: (type: ReactionType | null) => Promise<void>
+    /** Accept (or clear) a direct answer as the accepted answer to this question. */
+    onAcceptAnswer: (commentId: string, accepted: boolean) => Promise<void>
     /** Load (or reload) a nested reply subtree on demand. */
     onLoadReplies: (parentId: string) => void
 }
@@ -53,6 +58,7 @@ export const useQuestionAnswers = (
     const updateSwr = useMutateUpdateCommentSwr()
     const deleteSwr = useMutateDeleteCommentSwr()
     const reactSwr = useMutateReactToCommentSwr()
+    const acceptSwr = useMutateAcceptAnswerSwr()
 
     // nested reply-to-reply subtrees: loaded on demand and kept in local state —
     // same non-paginated, non-realtime shape as the top-level answers list, since
@@ -125,6 +131,37 @@ export const useQuestionAnswers = (
         }
     }, [runGraphQL, reactSwr, answersSwr])
 
+    const onReactQuestion = useCallback(async (type: ReactionType | null) => {
+        const success = await runGraphQL(async () => {
+            const response = await reactSwr.trigger({ commentId: questionId, type })
+            if (!response.data?.reactToComment) {
+                throw new Error(response.error?.message)
+            }
+            return response.data.reactToComment
+        })
+        if (success) {
+            // the question's reaction summary lives in the roll-up list, not the answer
+            // thread — revalidate the parent list so the updated counts show
+            onAnswered?.()
+        }
+    }, [runGraphQL, reactSwr, questionId, onAnswered])
+
+    const onAcceptAnswer = useCallback(async (commentId: string, accepted: boolean) => {
+        const success = await runGraphQL(async () => {
+            const response = await acceptSwr.trigger({ commentId, accepted })
+            if (!response.data?.acceptAnswer?.success) {
+                throw new Error(response.error?.message)
+            }
+            return response.data.acceptAnswer
+        })
+        if (success) {
+            // reload the thread (accepted flag flips + any sibling gets cleared) and
+            // let the roll-up refresh its answered aggregates
+            void answersSwr.mutate()
+            onAnswered?.()
+        }
+    }, [runGraphQL, acceptSwr, answersSwr, onAnswered])
+
     const onLoadReplies = useCallback((parentId: string) => {
         void loadReplies(parentId)
     }, [loadReplies])
@@ -137,6 +174,8 @@ export const useQuestionAnswers = (
         onEdit,
         onDelete,
         onReactComment,
+        onReactQuestion,
+        onAcceptAnswer,
         onLoadReplies,
     }
 }

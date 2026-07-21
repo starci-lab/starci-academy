@@ -50,10 +50,10 @@ export const Architecture = () => {
 
     return (
         // single column on mobile/tablet; rail + content side-by-side from lg up
-        <div className="flex w-full flex-col items-start lg:flex-row">
+        <div className="flex w-full flex-col items-start @app-lg:flex-row">
             {/* docs-style left rail — sticks under the navbar, viewport-tall, drag-resizable */}
             <ResizableRail
-                className="hidden shrink-0 lg:sticky lg:top-16 lg:flex lg:h-[calc(100dvh-4rem)] lg:flex-col lg:self-start"
+                className="hidden shrink-0 @app-lg:sticky @app-lg:top-16 @app-lg:flex @app-lg:h-[calc(100dvh-4rem)] @app-lg:flex-col @app-lg:self-start"
                 storageKey="starci.architecture.rail.width"
                 defaultWidth={300}
                 minWidth={256}
@@ -61,7 +61,7 @@ export const Architecture = () => {
                 ariaLabel={t("rail.ariaLabel")}
             >
                 <ArchitectureRail
-                    className="min-h-0 lg:flex-1"
+                    className="min-h-0 @app-lg:flex-1"
                     healthByName={healthByName}
                     selectedId={node}
                     onSelect={setNode}
@@ -115,7 +115,7 @@ export const Architecture = () => {
                             surfaces as a small inline note above the map (nodes fall back to the
                             honest "checking…"/"unknown" tones), never hides the whole diagram. */}
                         {isLoading && !healthByName && !error ? (
-                            <Skeleton className="h-[440px] w-full rounded-3xl sm:h-[560px]" />
+                            <Skeleton className="h-[440px] w-full rounded-3xl @app-sm:h-[560px]" />
                         ) : (
                             <>
                                 {error && !healthByName ? (
@@ -143,7 +143,7 @@ export const Architecture = () => {
 
                         {/* course-CTA band — closes the loop: this real, live system is
                             exactly what the courses teach you to build → go learn to build it */}
-                        <div className="flex flex-col items-start gap-3 rounded-3xl bg-accent-soft p-6 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex flex-col items-start gap-3 rounded-3xl bg-accent-soft p-6 @app-sm:flex-row @app-sm:items-center @app-sm:justify-between">
                             <div className="flex flex-col gap-1">
                                 <Typography type="body" weight="semibold">{t("courseCta.title")}</Typography>
                                 <Typography type="body-sm" color="muted">{t("courseCta.body")}</Typography>

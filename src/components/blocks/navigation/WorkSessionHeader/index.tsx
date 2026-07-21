@@ -143,7 +143,7 @@ export const WorkSessionHeader = ({
             <ScrollShadow
                 orientation="horizontal"
                 hideScrollBar
-                className="flex items-center gap-3 px-4 py-2 sm:px-6"
+                className="flex items-center gap-3 px-4 py-2 @app-sm:px-6"
             >
                 <BackLink label={backLabel} onPress={onBack} />
                 {title ? (
@@ -156,7 +156,7 @@ export const WorkSessionHeader = ({
                 ) : null}
                 {identity ? (
                     <>
-                        <span className="hidden h-5 w-px shrink-0 bg-default sm:block" aria-hidden />
+                        <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />
                         <span className="flex shrink-0 items-center gap-2">
                             {identity.avatarSrc ? (
                                 <img
@@ -166,22 +166,22 @@ export const WorkSessionHeader = ({
                                     aria-hidden
                                 />
                             ) : null}
-                            <Typography type="body-sm" weight="medium" className="hidden truncate sm:block">
+                            <Typography type="body-sm" weight="medium" className="hidden truncate @app-sm:block">
                                 {identity.name}
                             </Typography>
                         </span>
                     </>
                 ) : null}
-                <span className="hidden h-5 w-px shrink-0 bg-default sm:block" aria-hidden />
+                <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />
                 <Typography
                     type="body-sm"
                     weight="medium"
                     color="muted"
-                    className="hidden shrink-0 whitespace-nowrap sm:block"
+                    className="hidden shrink-0 whitespace-nowrap @app-sm:block"
                 >
                     {counter}
                 </Typography>
-                {meta ? <span className="hidden shrink-0 items-center gap-2 sm:flex">{meta}</span> : null}
+                {meta ? <span className="hidden shrink-0 items-center gap-2 @app-sm:flex">{meta}</span> : null}
                 <span className="flex-1" />
                 {rightSlot ? <span className="shrink-0">{rightSlot}</span> : null}
                 {/* "Kết thúc" — end the session NOW (→ results), distinct from the
@@ -213,7 +213,7 @@ export const WorkSessionHeader = ({
                 — no new shape, no extra color, the SAME rectangle just reads
                 more prominent (mirrors how a waveform/equalizer highlights the
                 active bar by height alone). */}
-            <div className="flex items-center gap-1 px-4 sm:px-6">
+            <div className="flex items-center gap-1 px-4 @app-sm:px-6">
                 {Array.from({ length: total }, (_, position) => {
                     const fillClass = isDone(position) ? "bg-success" : "bg-default"
                     const isCurrent = position === current

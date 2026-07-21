@@ -6,7 +6,7 @@ import {
 import type {
     WithClassNames,
 } from "@/modules/types/base/class-name"
-import { StatPair } from "@/components/blocks/stats/StatPair"
+import { StatPair, type StatPairValueType } from "@/components/blocks/stats/StatPair"
 
 /** One statistic in a {@link StatRibbon} — a headline value with its caption. */
 export interface StatRibbonItem {
@@ -25,6 +25,15 @@ export interface StatRibbonProps extends WithClassNames<undefined> {
      * cell.
      */
     items: ReadonlyArray<StatRibbonItem>
+    /** Value (title) size for every pair — defaults to `h4`; `body` = text-base. */
+    valueType?: StatPairValueType
+    /**
+     * Add a border instead of relying on the card's `shadow-surface` — for when
+     * the ribbon is NESTED on another surface (surface-in-surface), where the
+     * shadow is invisible so a border must delineate it (`foundations/elevation` /
+     * `card.md` §nested). The `!` beats HeroUI's `.card { border: none !important }`.
+     */
+    bordered?: boolean
 }
 
 /**
@@ -41,27 +50,32 @@ export interface StatRibbonProps extends WithClassNames<undefined> {
  */
 export const StatRibbon = ({
     items,
+    valueType,
+    bordered = false,
     className,
 }: StatRibbonProps) => {
     return (
-        <Card variant="default" className={className}>
-            {/* Desktop: bleed the row to the card's inner edges (`sm:-m-3` cancels the
+        <Card
+            variant="default"
+            className={cn(bordered && "!border !border-solid !border-default !shadow-none", className)}
+        >
+            {/* Desktop: bleed the row to the card's inner edges (`@app-sm:-m-3` cancels the
                 globals `.card { p-3 !important }`) so the per-cell `border-l` reaches the
                 top+bottom border = FULL-HEIGHT (matching VerdictHeroCard's split), not
                 inset by the card padding. Cells carry their own padding instead. The
                 divider is a per-cell `border-l` (NOT `divide-x` — Tailwind v4 here emits
                 no `divide-*` rule; same reason StatGridCard uses `border-r`). Mobile keeps
                 the padded 2-col grid (no dividers there). */}
-            <div className="grid grid-cols-2 gap-4 sm:-m-3 sm:flex sm:items-stretch sm:gap-0">
+            <div className="grid grid-cols-2 gap-4 @app-sm:-m-3 @app-sm:flex @app-sm:items-stretch @app-sm:gap-0">
                 {items.map((item, index) => (
                     <div
                         key={item.key}
                         className={cn(
-                            "min-w-0 sm:flex-1 sm:px-6 sm:py-3 sm:first:pl-3 sm:last:pr-3",
-                            index > 0 && "sm:border-l sm:border-default",
+                            "min-w-0 @app-sm:flex-1 @app-sm:px-6 @app-sm:py-3 @app-sm:first:pl-3 @app-sm:last:pr-3",
+                            index > 0 && "@app-sm:border-l @app-sm:border-default",
                         )}
                     >
-                        <StatPair value={item.value} label={item.label} />
+                        <StatPair value={item.value} label={item.label} valueType={valueType} />
                     </div>
                 ))}
             </div>

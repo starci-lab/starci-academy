@@ -22,7 +22,7 @@ export const PageContainer = ({ children, className }: PageContainerProps) => {
     return (
         <div
             className={cn(
-                "w-full py-16 pr-4 sm:pr-6 lg:pr-8",
+                "w-full py-16 pr-4 @app-sm:pr-6 @app-lg:pr-8",
                 className,
             )}
         >

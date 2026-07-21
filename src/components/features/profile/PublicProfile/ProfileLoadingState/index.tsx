@@ -48,9 +48,9 @@ export const ProfileLoadingState = ({
             </div>
 
             {/* 2-col body: left identity BARE · right overview sections */}
-            <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-6 md:flex-row md:items-start">
+            <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-6 @app-md:flex-row @app-md:items-start">
                 {/* left: identity column — reuse the real hero skeleton */}
-                <aside className="flex w-full flex-col gap-4 md:w-72 md:shrink-0">
+                <aside className="flex w-full flex-col gap-4 @app-md:w-72 @app-md:shrink-0">
                     <ProfileHeroSkeleton />
                 </aside>
 
@@ -107,7 +107,7 @@ export const ProfileLoadingState = ({
                     </div>
 
                     {/* skills — 2-col grid of stat cards */}
-                    <div className="grid gap-6 md:grid-cols-2">
+                    <div className="grid gap-6 @app-md:grid-cols-2">
                         {[0, 1].map((cardIndex) => (
                             <div key={cardIndex} className="flex flex-col gap-3">
                                 <Skeleton className="h-5 w-40 rounded-xl" />

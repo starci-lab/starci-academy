@@ -54,8 +54,8 @@ export interface ShowcaseMockupProps {
 /** Tilt presets — a perspective turn + a visible 2D slant (so it reads clearly as
  * "tilted", not flat). Only applied from `md` up (mobile stays flat). */
 const TILT: Record<Tilt, string> = {
-    left: "md:[transform:perspective(1500px)_rotateX(2deg)_rotateY(8deg)_rotate(-2.5deg)]",
-    right: "md:[transform:perspective(1500px)_rotateX(2deg)_rotateY(-8deg)_rotate(2.5deg)]",
+    left: "@app-md:[transform:perspective(1500px)_rotateX(2deg)_rotateY(8deg)_rotate(-2.5deg)]",
+    right: "@app-md:[transform:perspective(1500px)_rotateX(2deg)_rotateY(-8deg)_rotate(2.5deg)]",
     none: "",
 }
 
@@ -143,7 +143,7 @@ export const ShowcaseMockup = ({
             <div
                 aria-hidden
                 className={cn(
-                    "absolute -inset-y-4 inset-x-8 -z-10 origin-center rounded-3xl transition-transform duration-500 ease-out md:group-hover:[transform:none]",
+                    "absolute -inset-y-4 inset-x-8 -z-10 origin-center rounded-3xl transition-transform duration-500 ease-out @app-md:group-hover:[transform:none]",
                     TILT[OPPOSITE[tilt]],
                 )}
                 style={{ backgroundColor: "color-mix(in oklch, var(--sc-1) 18%, var(--surface))" }}
@@ -152,7 +152,7 @@ export const ShowcaseMockup = ({
             {/* the foreground window card — surface follows light/dark tokens, its own tilt */}
             <div
                 className={cn(
-                    "relative w-full origin-center overflow-hidden rounded-3xl border border-default bg-surface transition-transform duration-500 ease-out md:group-hover:[transform:none]",
+                    "relative w-full origin-center overflow-hidden rounded-3xl border border-default bg-surface transition-transform duration-500 ease-out @app-md:group-hover:[transform:none]",
                     TILT[tilt],
                 )}
             >

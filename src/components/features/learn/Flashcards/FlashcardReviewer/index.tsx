@@ -531,7 +531,7 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                         current={cards.length}
                         total={cards.length}
                     />
-                    <div className="px-4 pb-6 pt-10 sm:px-6">
+                    <div className="px-4 pb-6 pt-10 @app-sm:px-6">
                         <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-3 py-10">
                             <Spinner size="lg" />
                             <Typography type="body-sm" color="muted">
@@ -573,7 +573,6 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                     <ConfirmDialog
                         isOpen={confirmAction !== null}
                         onOpenChange={(open) => { if (!open) { setConfirmAction(null) } }}
-                        tone={confirmAction === "leave" ? "danger" : "default"}
                         title={confirmAction === "leave" ? t("flashcard.leaveTitle") : t("flashcard.finishEarlyTitle")}
                         description={confirmAction === "leave" ? t("flashcard.leaveConfirm") : t("flashcard.finishEarlyConfirm")}
                         confirmLabel={confirmAction === "leave" ? t("flashcard.leaveCta") : t("flashcard.finishEarlyCta")}
@@ -589,7 +588,7 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                         }}
                     />
 
-                    <div className="px-4 pb-6 pt-10 sm:px-6">
+                    <div className="px-4 pb-6 pt-10 @app-sm:px-6">
                         <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
                             {/* the flip card: question → answer (+ optional depth); the
                                 level/tag chips ride under the QUESTION via `belowFront`
@@ -675,8 +674,8 @@ export const FlashcardReviewer = ({ deckId, sessionId, className, onBack }: Flas
                                     {/* KHÔNG expand full-width trên desktop — hug-content, nằm bên trái
                                         cùng 2 nút caret (thầy 2026-07-13: "tất cả nằm bên trái, không
                                         expand trừ khi card nhỏ"). `w-full` chỉ dưới `sm:` (mobile, tap
-                                        target rộng hơn dễ bấm), `sm:w-auto` trở lên hug-content. */}
-                                    <Button size="sm" variant="primary" className="w-full sm:w-auto" onPress={() => setRevealed(true)}>
+                                        target rộng hơn dễ bấm), `@app-sm:w-auto` trở lên hug-content. */}
+                                    <Button size="sm" variant="primary" className="w-full @app-sm:w-auto" onPress={() => setRevealed(true)}>
                                         {t("flashcard.showAnswer")}
                                     </Button>
                                     <Button

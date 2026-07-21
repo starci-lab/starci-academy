@@ -202,6 +202,15 @@ export const pathConfig = () => {
                     build,
                 }
             }
+            const privacy = () => {
+                const privacyPath = `${settingsPath}/privacy`
+                const build = () => {
+                    return privacyPath
+                }
+                return {
+                    build,
+                }
+            }
             // public-profile top-level tabs (`/profile/<username>/<tab>`), nested
             // routes replacing the old `?tab=` query param + Zustand store. Bare
             // `overview` has no extra segment — it IS `profilePath` itself. Leaves
@@ -302,6 +311,7 @@ export const pathConfig = () => {
                 feedback,
                 cv,
                 appearance,
+                privacy,
                 overview,
                 projects,
                 challenges,
@@ -596,8 +606,17 @@ export const pathConfig = () => {
                     const build = () => {
                         return playgroundPath
                     }
+                    // `/playground/<slug>` is the SETUP surface (install + pair) and
+                    // `/playground/<slug>/session` the 20-step work surface — two routes
+                    // so Back/Forward, refresh and deep-links land where the learner expects.
+                    const session = () => {
+                        return {
+                            build: () => `${playgroundPath}/session`,
+                        }
+                    }
                     return {
                         build,
+                        session,
                     }
                 }
                 const foundations = (categoryId?: string) => {
@@ -798,17 +817,6 @@ export const pathConfig = () => {
                 build,
             }
         }
-        const ragPlayground = () => {
-            // public marketing demo: import code, ask questions, answered by the
-            // local self-hosted model — no login required
-            const ragPlaygroundPath = `${localePath}/rag-playground`
-            const build = () => {
-                return ragPlaygroundPath
-            }
-            return {
-                build,
-            }
-        }
         const review = () => {
             // flashcard review session (SM-2): all due cards across courses
             const reviewPath = `${localePath}/review`
@@ -883,7 +891,6 @@ export const pathConfig = () => {
             dashboard,
             cart,
             practice,
-            ragPlayground,
             review,
             notifications,
             talents,

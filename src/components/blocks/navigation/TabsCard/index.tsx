@@ -162,7 +162,7 @@ export const TabsCard = ({
                                     (icon-only) and shows it from sm up; `sr-only` keeps the
                                     accessible name on mobile. An icon-less tab always shows it. */}
                                 {item.label ? (
-                                    <span className={cn(item.icon && "sr-only sm:not-sr-only")}>
+                                    <span className={cn(item.icon && "sr-only @app-sm:not-sr-only")}>
                                         {item.label}
                                     </span>
                                 ) : null}
@@ -260,8 +260,8 @@ export const TabsCard = ({
                     ? (
                         <>
                             {/* mobile: collapse to a dropdown; sm+: inline tabs */}
-                            <div className="sm:hidden">{renderSelect(rightTabs)}</div>
-                            <div className="hidden sm:block">{renderGroup(rightTabs, !rightTabsNeutral)}</div>
+                            <div className="@app-sm:hidden">{renderSelect(rightTabs)}</div>
+                            <div className="hidden @app-sm:block">{renderGroup(rightTabs, !rightTabsNeutral)}</div>
                         </>
                     )
                     : renderGroup(rightTabs, !rightTabsNeutral)

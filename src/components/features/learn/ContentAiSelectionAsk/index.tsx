@@ -11,8 +11,13 @@ import {
 } from "@/hooks/zustand/overlay/hooks"
 import { useSelectionHintStore } from "./hintStore"
 
-/** Id of the lesson article wrapper — selection only counts inside it. */
-const ARTICLE_ID = "lesson-article"
+/**
+ * Marker attribute for any readable text region a selection may be asked about —
+ * lesson body, foundation body, task brief, challenge brief. Selection only counts
+ * when it lands inside an element carrying `[data-ai-selectable]` (no longer bound
+ * to the single `#lesson-article` id, so the feature works on every reading surface).
+ */
+const SELECTABLE_SELECTOR = "[data-ai-selectable]"
 /** Ignore trivially short selections (clicks, single words barely worth asking about). */
 const MIN_CHARS = 3
 /** Cap the stored passage so a huge selection doesn't bloat the prompt / bubble. */
@@ -43,17 +48,23 @@ const containingBlock = (node: Node | null): Element | null => {
     return start?.closest?.(BLOCK_SELECTOR) ?? null
 }
 
+/** Resolve the nearest AI-selectable reading region containing a selection node. */
+const containingSelectable = (node: Node | null): Element | null => {
+    const start = node?.nodeType === Node.TEXT_NODE ? node.parentElement : (node as Element | null)
+    return start?.closest?.(SELECTABLE_SELECTOR) ?? null
+}
+
 /** Clean text of a heading element (prefer the anchor-free toc label). */
 const headingText = (el: Element): string =>
     (el.getAttribute("data-toc-label") ?? el.textContent ?? "").trim()
 
-/** The nearest section heading appearing BEFORE a block in the article. */
-const nearestHeading = (block: Element | null, article: Element): string | null => {
+/** The nearest section heading appearing BEFORE a block within the reading region. */
+const nearestHeading = (block: Element | null, region: Element): string | null => {
     if (!block) {
         return null
     }
     let found: Element | null = null
-    for (const heading of Array.from(article.querySelectorAll(HEADING_SELECTOR))) {
+    for (const heading of Array.from(region.querySelectorAll(HEADING_SELECTOR))) {
         // heading precedes the block → it's a candidate section for the selection
         if (heading.compareDocumentPosition(block) & Node.DOCUMENT_POSITION_FOLLOWING) {
             found = heading
@@ -76,8 +87,9 @@ const buildSelectionContext = (text: string, paragraph: string, heading: string 
 
 /**
  * "Ask AI about this passage" floating action — the entry point for the
- * selection-anchored content-AI flow. Watches for a text selection INSIDE the
- * lesson article (`#lesson-article`); when one settles it shows a small button
+ * selection-anchored content-AI flow. Watches for a text selection INSIDE any
+ * readable region marked `[data-ai-selectable]` (lesson body, foundation body,
+ * task brief, challenge brief); when one settles it shows a small button
  * above the highlight. Pressing it stashes the passage in the overlay store and
  * opens the ask-AI chat ({@link import("./../ContentAiChat").ContentAiChat} reads
  * the passage to scope the next question). Mounted once by the learn layout,
@@ -99,16 +111,17 @@ export const ContentAiSelectionAsk = () => {
     const markSeen = useSelectionHintStore((state) => state.markSeen)
     useEffect(() => hydrate(), [hydrate])
 
-    // recompute the button anchor when a selection settles inside the article
+    // recompute the button anchor when a selection settles inside a selectable region
     const onSettle = useCallback(() => {
         const selection = window.getSelection()
         if (!selection || selection.isCollapsed || selection.rangeCount === 0) {
             setAnchor(null)
             return
         }
-        const article = document.getElementById(ARTICLE_ID)
         const range = selection.getRangeAt(0)
-        if (!article || !article.contains(range.commonAncestorContainer)) {
+        // the selection must land inside a marked reading region ([data-ai-selectable])
+        const region = containingSelectable(range.commonAncestorContainer)
+        if (!region) {
             setAnchor(null)
             return
         }
@@ -126,7 +139,7 @@ export const ContentAiSelectionAsk = () => {
         // gives the model enough to reason about (sent hidden, not shown in the UI)
         const block = containingBlock(range.commonAncestorContainer)
         const paragraph = (block?.textContent ?? "").trim().slice(0, MAX_CONTEXT)
-        const heading = nearestHeading(block, article)
+        const heading = nearestHeading(block, region)
         const cappedText = text.slice(0, MAX_CHARS)
         setAnchor({
             x: rect.left + rect.width / 2,
@@ -164,6 +177,12 @@ export const ContentAiSelectionAsk = () => {
         if (!anchor) {
             return
         }
+        // TODO(slice-4e born-archived): a session started FROM a selection should be
+        // created born-archived (archived_at = now) so it never clutters the history
+        // list yet stays search-reachable (proposal §4d). Not wired here yet — the FE
+        // has no `setContentAiSessionArchived` mutation/hook and session creation lives
+        // in ContentAiChat, not this component. Once slice 4e lands the archive
+        // mutation, flag this selection-originated session as archived on first send.
         setSelection(anchor.text, anchor.context)
         markSeen()
         open()

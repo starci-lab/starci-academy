@@ -37,7 +37,7 @@ export const ConsultantGrid = ({ className }: ConsultantGridProps) => {
         <AsyncContent
             isLoading={!consultants}
             skeleton={(
-                <div className={cn("grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3", className)}>
+                <div className={cn("grid grid-cols-1 gap-6 @app-sm:grid-cols-2 @app-lg:grid-cols-3", className)}>
                     {Array.from({ length: SKELETON_COUNT }).map((_, index) => (
                         <ConsultantCardSkeleton key={index} />
                     ))}
@@ -46,7 +46,7 @@ export const ConsultantGrid = ({ className }: ConsultantGridProps) => {
             isEmpty={sortedConsultants.length === 0}
             emptyContent={{ title: t("headhuntings.empty") }}
         >
-            <div className={cn("grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3", className)}>
+            <div className={cn("grid grid-cols-1 gap-6 @app-sm:grid-cols-2 @app-lg:grid-cols-3", className)}>
                 {sortedConsultants.map((consultant) => (
                     <ConsultantCard
                         key={consultant.id}

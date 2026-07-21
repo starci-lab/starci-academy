@@ -54,7 +54,7 @@ export const LearnMobileBar = ({ className }: LearnMobileBarProps) => {
         // fixed FOOTER bar (mirrors LearnMobileTabBar's own bottom placement — every
         // learn page's mobile chrome lives in the SAME footer zone, whether it renders
         // this simple drawer trigger or the reader's full tab bar); mobile/tablet only
-        <div className={cn("fixed inset-x-0 bottom-0 z-40 flex h-16 items-center gap-3 border-t bg-background/90 px-3 backdrop-blur-xl lg:hidden", className)}>
+        <div className={cn("fixed bottom-0 left-0 right-[var(--app-rail-w,0px)] z-40 flex h-16 items-center gap-3 border-t bg-background/90 px-3 backdrop-blur-xl @app-lg:hidden", className)}>
             {/* trigger: open the course navigation drawer */}
             <Button variant="ghost" size="sm" onPress={() => setMenuOpen(true)}>
                 <ListIcon className="size-5" />

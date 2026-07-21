@@ -72,10 +72,10 @@ export const LearnShell = ({
     return (
         // single column on mobile/tablet; a horizontal flow from lg up so the
         // content-map rail (left) and the optional right rail sit beside content
-        <div className={cn("flex w-full flex-col items-start lg:flex-row", className)}>
+        <div className={cn("flex w-full flex-col items-start @app-lg:flex-row", className)}>
             {/* desktop course-nav icon rail — sticks under the 4rem navbar, viewport-tall;
                 the block owns its own scroll, divider, width animation + collapse. */}
-            <aside className="hidden shrink-0 lg:sticky lg:top-16 lg:block lg:h-[calc(100dvh-4rem)]">
+            <aside className="hidden shrink-0 @app-lg:sticky @app-lg:top-16 @app-lg:block @app-lg:h-[calc(100dvh-4rem)]">
                 <LearnSidebar />
             </aside>
             {/* persistent left content-map rail (course content tree) supplied by the layout */}
@@ -84,12 +84,12 @@ export const LearnShell = ({
                 for every learn page (features supply only max-w + mx-auto + gap), except
                 full-bleed routes (mind-map canvas). Also anchors the collapse handle +
                 right border for the redux-driven (milestone) rail that opts into it */}
-            <div className={cn("min-h-0 w-full min-w-0 flex-1 lg:w-auto", !fullBleed && "p-6", "max-lg:pb-16", rightRail && "lg:pr-0 lg:pb-0", showRightCollapse && "relative lg:border-r")}>
+            <div className={cn("min-h-0 w-full min-w-0 flex-1 @app-lg:w-auto", !fullBleed && "p-6", "@max-app-lg:pb-16", rightRail && "@app-lg:pr-0 @app-lg:pb-0", showRightCollapse && "relative @app-lg:border-r")}>
                 {showRightCollapse && <LearnPanelToggles />}
                 {/* mobile chrome: BOTH bars now live in the same fixed FOOTER zone (the
                     reader's 4-column layout folds into a bottom-tab bar; every other
                     learn tab gets the plain course-nav drawer trigger) — content gets
-                    max-lg:pb-16 regardless of which bar renders, so it's never covered. */}
+                    @max-app-lg:pb-16 regardless of which bar renders, so it's never covered. */}
                 {useTabBar ? <LearnMobileTabBar /> : <LearnMobileBar />}
                 {children}
             </div>

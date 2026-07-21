@@ -104,7 +104,7 @@ const CommentThreadItem = ({
             className={cn(
                 "flex flex-col gap-3",
                 // indent nested replies with a guide rail, capped so deep threads stay readable
-                depth > 0 && depth <= MAX_INDENT_DEPTH ? "border-l border-default pl-3 sm:pl-4" : undefined,
+                depth > 0 && depth <= MAX_INDENT_DEPTH ? "border-l border-default pl-3 @app-sm:pl-4" : undefined,
             )}
         >
             <CommunityCommentRow

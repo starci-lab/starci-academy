@@ -67,7 +67,7 @@ export const ContinueLearning = ({
             <div className={cn("flex flex-col gap-3", className)}>
                 {/* resume cards, or an onboarding CTA when there is nothing to resume */}
                 {resumeItems.length > 0 ? (
-                    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                    <div className="grid gap-3 @app-sm:grid-cols-2 @app-lg:grid-cols-3">
                         {resumeItems.map((item) => (
                             <ResumeCard
                                 key={item.globalId}

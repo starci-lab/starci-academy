@@ -31,8 +31,6 @@ export interface EditProfileFormValues {
     displayName: string
     /** Short bio / tagline (empty string = clear). */
     bio: string
-    /** Lock profile (FB-style): when on, only the owner sees full content. */
-    profileLocked: boolean
     /** Open to work: when on, the profile shows a hiring badge. */
     openToWork: boolean
     /** Professional headline / role title (empty string = clear). */
@@ -80,7 +78,6 @@ export const useEditProfileForm = () => {
         () => z.object({
             displayName: z.string().trim().max(DISPLAY_NAME_MAX),
             bio: z.string().trim().max(BIO_MAX),
-            profileLocked: z.boolean(),
             openToWork: z.boolean(),
             roleTitle: z.string().trim().max(ROLE_TITLE_MAX),
             location: z.string().trim().max(LOCATION_MAX),
@@ -98,7 +95,6 @@ export const useEditProfileForm = () => {
         values: {
             displayName: user?.displayName ?? "",
             bio: user?.bio ?? "",
-            profileLocked: user?.profileLocked ?? false,
             openToWork: user?.openToWork ?? false,
             roleTitle: user?.roleTitle ?? "",
             location: user?.location ?? "",
@@ -176,11 +172,10 @@ export const useEditProfileForm = () => {
                     }
                 }
 
-                // 2) persist the text fields + lock flag; empty string clears the column
+                // 2) persist the text fields; empty string clears the column
                 const result = await updateProfileSwr.trigger({
                     displayName: value.displayName.trim() ? value.displayName.trim() : null,
                     bio: value.bio.trim() ? value.bio.trim() : null,
-                    profileLocked: value.profileLocked,
                     openToWork: value.openToWork,
                     roleTitle: value.roleTitle.trim() ? value.roleTitle.trim() : null,
                     location: value.location.trim() ? value.location.trim() : null,

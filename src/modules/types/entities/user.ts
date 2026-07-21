@@ -4,6 +4,22 @@ import type { SubmissionEntity } from "./submission"
 import type { WorkMode, AuthenticationType, BackgroundEffect } from "../enums"
 
 /**
+ * Per-section visibility flags for the public profile (all default true). Each key
+ * gates ONE section tab (projects / challenges / skills / activity) for visitors;
+ * Overview + CV are never gated by these flags.
+ */
+export interface SectionVisibility {
+    /** Show the "Projects" tab to visitors. */
+    projects: boolean
+    /** Show the "Challenges" tab to visitors. */
+    challenges: boolean
+    /** Show the "Skills" tab to visitors. */
+    skills: boolean
+    /** Show the "Activity" tab to visitors. */
+    activity: boolean
+}
+
+/**
  * Application user; identity comes from Keycloak (keycloakId = JWT sub).
  */
 export interface UserEntity extends AbstractEntity {
@@ -37,6 +53,13 @@ export interface UserEntity extends AbstractEntity {
     profileLocked?: boolean
     /** When true the user is open to work (shows a hiring badge). */
     openToWork?: boolean
+    /**
+     * Per-section profile visibility (all default true). When a flag is false the
+     * matching profile tab is hidden from VISITORS and its data query is guarded by
+     * the backend; the owner always sees every section. Overview + CV are unaffected
+     * (CV keeps its own `is_public` gate). Absent = treat every section as visible.
+     */
+    sectionVisibility?: SectionVisibility
     /** Slug of the achievement pinned as the profile mascot (frames the avatar); null = none. */
     featuredAchievementSlug?: string | null
     /** Professional headline / role title shown under the user's name. */

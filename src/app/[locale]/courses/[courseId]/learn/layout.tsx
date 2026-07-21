@@ -91,7 +91,7 @@ const Layout = ({ children }: PropsWithChildren) => {
     // never matched the real route, so the shell kept applying its `p-6`
     // reading-column padding ON TOP of the surface's own full-bleed padding
     // (thầy: "bỏ padding-6 ở đây này", pointed at DevTools showing the shell's
-    // `p-6 max-lg:pb-16` wrapper still active on a live review session).
+    // `p-6 @max-app-lg:pb-16` wrapper still active on a live review session).
     const isFlashcardReviewLive = isFlashcards && segments[1] === "review" && segments[2] === "sessions"
     // the mind-map is a full-bleed interactive canvas (fills the viewport edge-to-edge),
     // so it opts out of the shell's canonical p-6 reading-column padding.
@@ -109,11 +109,16 @@ const Layout = ({ children }: PropsWithChildren) => {
     // for the same route too.
     const isMockInterviewInterviewRoute = isMockInterview && segments[1] === "interview"
     const isMockInterviewLive = isMockInterviewInterviewRoute || (isMockInterview && searchParams.get("phase") === "interview")
-    // a single playground exercise (`…/playground/<slug>`) is a full-bleed work
+    // a live quiz / interview grades a recruiter-facing signal → the AI chat is a
+    // cheat channel there and gets suppressed (mirrors the same gate in InnerLayout,
+    // which also kills a rail the learner left open before navigating in).
+    const isAssessmentLive = isFlashcardQuizLive || isMockInterviewLive
+    // ONLY the session (`…/playground/<slug>/session`) is a full-bleed work
     // surface (step guide + terminal/resources tabs), same reasoning as the live
-    // mock-interview route — the hub list (`…/playground`, no 2nd segment) stays
-    // in the normal reading column.
-    const isPlaygroundSession = segments[0] === "playground" && Boolean(segments[1])
+    // mock-interview route. The exercise's SETUP page (`…/playground/<slug>`) and
+    // the hub list (`…/playground`) are reading surfaces — install + pair
+    // guidance, progress, machine status — so they keep the normal reading column.
+    const isPlaygroundSession = segments[0] === "playground" && segments[2] === "session"
     // the leaderboard shows its XP-category selector as a sidebar (like the content
     // page) on the LEFT; the board reads the selection from the `?category=` URL param.
     const isLeaderboard = segments[0] === "leaderboard"
@@ -126,7 +131,7 @@ const Layout = ({ children }: PropsWithChildren) => {
     // (persisted) via ResizableRail; sticky under the navbar and a flex column bounded to
     // the viewport so the rail pins its header/search and scrolls ONLY the list. Hidden
     // below lg (mobile opens it in the LearnMobileBar drawer).
-    const railClass = "hidden shrink-0 lg:flex lg:flex-col lg:sticky lg:top-16 lg:self-start lg:h-[calc(100dvh-4rem)]"
+    const railClass = "hidden shrink-0 @app-lg:flex @app-lg:flex-col @app-lg:sticky @app-lg:top-16 @app-lg:self-start @app-lg:h-[calc(100dvh-4rem)]"
 
     // left rail: course content-map while reading lessons AND on the content home;
     // milestone outline for the capstone.
@@ -139,7 +144,7 @@ const Layout = ({ children }: PropsWithChildren) => {
             maxWidth={560}
             ariaLabel={t("courseContents.resizeRail")}
         >
-            <ContentMap className="min-h-0 lg:flex-1" />
+            <ContentMap className="min-h-0 @app-lg:flex-1" />
         </ResizableRail>
     ) : isPersonalProject ? (
         <ResizableRail
@@ -150,7 +155,7 @@ const Layout = ({ children }: PropsWithChildren) => {
             maxWidth={560}
             ariaLabel={t("courseContents.resizeRail")}
         >
-            <MilestoneOutline className="min-h-0 lg:flex-1" />
+            <MilestoneOutline className="min-h-0 @app-lg:flex-1" />
         </ResizableRail>
     ) : isLeaderboard ? (
         <ResizableRail
@@ -161,7 +166,7 @@ const Layout = ({ children }: PropsWithChildren) => {
             maxWidth={420}
             ariaLabel={t("leaderboard.categories.label")}
         >
-            <LeaderboardCategoryRail variant="rail" className="min-h-0 lg:flex-1" />
+            <LeaderboardCategoryRail variant="rail" className="min-h-0 @app-lg:flex-1" />
         </ResizableRail>
     ) : undefined
     // right rail: on-this-page for the LESSON READER only (a real "contents/<id>" route) —
@@ -173,6 +178,10 @@ const Layout = ({ children }: PropsWithChildren) => {
     const rightRail = (isLessonReader && !isChallenge) ? (
         <OnThisPage />
     ) : undefined
+
+    // The content-AI chat rail is NOT a learn concern any more: it docks beside the
+    // whole app from `InnerLayout`, so the learn right-rail slot is free to keep
+    // serving the surface's own outline again.
 
     // enroll-gate: a trial viewer hitting a hands-on surface sees the enroll CTA, not a broken
     // page. Only gate once enrollment is KNOWN (enrolled defaults false → would flash otherwise);
@@ -203,10 +212,15 @@ const Layout = ({ children }: PropsWithChildren) => {
         <>
             {/* soft prompt: nudge learners with no linked GitHub to connect once per session */}
             <GithubLinkGate />
-            {/* floating "ask StarCi AI" mascot button (self-hides when no content is open) */}
-            <ContentAiFab />
+            {/* floating "ask StarCi AI" mascot button — available on EVERY learn tab
+                (grounds on the open lesson, or on the whole course when there is none)
+                EXCEPT a live quiz / mock-interview: those grade a recruiter-facing
+                signal, so a course-grounded AI beside them is a cheat channel that
+                inflates the score (assessment-surface-integrity). Chat returns after
+                the session, on the scorecard, for "ôn tag yếu". */}
+            {!isAssessmentLive ? <ContentAiFab /> : null}
             {/* "ask AI about this passage" button on lesson-article text selection */}
-            <ContentAiSelectionAsk />
+            {!isAssessmentLive ? <ContentAiSelectionAsk /> : null}
             <LearnShell
                 leftRail={showSurface ? leftRail : undefined}
                 rightRail={showSurface ? rightRail : undefined}

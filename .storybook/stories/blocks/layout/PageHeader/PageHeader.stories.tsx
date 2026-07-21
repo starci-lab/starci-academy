@@ -90,3 +90,27 @@ export const LongDescriptionClamped: Story = {
         </div>
     ),
 }
+
+/** `size="compact"` beside the default, so the two scales can be compared: use compact when the header labels a PANE/PHASE inside a page that already has its own header, where an H3 out-shouts the surface it names. */
+export const Compact: Story = {
+    parameters: { usage: "`size=\"compact\"` renders the title at body scale (font-base bold) instead of H3. Use it when the header labels a PANE or PHASE inside a page shell that already carries its own header + nav — an H3 there reads as a second page title. Real use: the playground Setup pane (`PlaygroundPrepare`), which sits under the session back-link + Chuẩn bị/Lab tab strip." },
+    render: () => (
+        <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-2">
+                <Label>size=&quot;page&quot; (default)</Label>
+                <PageHeader
+                    title="Chuẩn bị máy"
+                    description="Trước khi vào playground, cài công cụ dòng lệnh rồi nối StarCi Agent."
+                />
+            </div>
+            <div className="flex flex-col gap-2">
+                <Label>size=&quot;compact&quot;</Label>
+                <PageHeader
+                    size="compact"
+                    title="Chuẩn bị máy"
+                    description="Trước khi vào playground, cài công cụ dòng lệnh rồi nối StarCi Agent."
+                />
+            </div>
+        </div>
+    ),
+}

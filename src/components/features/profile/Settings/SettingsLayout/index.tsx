@@ -59,13 +59,13 @@ export const SettingsLayout = ({
                 // ONE scroll context (the page/body). No shell padding — the sidebar
                 // sits flush so its border-r runs from under the navbar straight to
                 // the bottom edge; the rail + content each own their p-6 breathing.
-                "flex w-full flex-col md:flex-row md:items-start",
+                "flex w-full flex-col @app-md:flex-row @app-md:items-start",
                 className,
             )}
         >
             {/* sidebar — sticks under the 4rem navbar, viewport-tall on desktop; the
                 block owns its own scroll (ScrollShadow), divider + width animation. */}
-            <aside className="hidden shrink-0 md:block md:sticky md:top-16 md:h-[calc(100dvh-4rem)]">
+            <aside className="hidden shrink-0 @app-md:block @app-md:sticky @app-md:top-16 @app-md:h-[calc(100dvh-4rem)]">
                 <CollapsibleSidebar
                     title={t("profileSettings.title")}
                     collapseLabel={t("profileSettings.collapseMenu")}
@@ -96,7 +96,7 @@ export const SettingsLayout = ({
             <main className="min-w-0 flex-1">
                 {/* mobile fallback for the hidden sidebar: a horizontal scroll of the
                     settings nav (the desktop rail stacks full-height otherwise) */}
-                <div className="sticky top-16 z-30 flex gap-2 overflow-x-auto border-b bg-background/80 px-4 py-2 backdrop-blur-xl md:hidden">
+                <div className="sticky top-16 z-30 flex gap-2 overflow-x-auto border-b bg-background/80 px-4 py-2 backdrop-blur-xl @app-md:hidden">
                     {groups.flatMap((group) => group.items).map((item) => (
                         <button
                             key={item.key}

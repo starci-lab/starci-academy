@@ -41,6 +41,7 @@ import {
 } from "./ProfileLockedState"
 import { useAppSelector } from "@/redux/hooks"
 import { useQueryUserProfileSwr } from "@/hooks/swr/api/graphql/queries/useQueryUserProfileSwr"
+import { useQueryPublicUserCvSwr } from "@/hooks/swr/api/graphql/queries/useQueryPublicUserCvSwr"
 import { useRegisterNavbarBottomLayer } from "@/hooks/zustand/navbarBottomLayer/store"
 
 /** Props for {@link PublicProfile}. */
@@ -76,6 +77,7 @@ export const PublicProfile = ({
     const {
         data: user,
         isLoading,
+        isValidating,
         error,
     } = useQueryUserProfileSwr(username)
 
@@ -97,26 +99,48 @@ export const PublicProfile = ({
         router.replace(query ? `${target}?${query}` : target)
     }, [routeUsername, user?.username, locale, searchParams, router])
 
-    const isSelf = !!viewer && !!user?.id && viewer.id === user.id
+    // "my own profile" = the route's username IS the signed-in viewer — match by
+    // USERNAME (the route is username-keyed; viewer.id vs the projected profile id
+    // can live in different namespaces and falsely read as a visitor). id kept as a
+    // fallback. (thầy 2026-07-18: "username = current me thì coi như trang mình".)
+    const isSelf = !!viewer && !!user
+        && ((!!viewer.username && viewer.username === user.username) || viewer.id === user.id)
+    // the CV tab shows for visitors only when the user has a PUBLIC CV (the owner
+    // always sees it) — drives the tab gate + its href in ProfileTabsBar.
+    const { data: publicCv } = useQueryPublicUserCvSwr(user?.username)
     // locked profile viewed by a non-owner → hero + "private" notice, tabs withheld
     const isLocked = Boolean(user?.profileLocked) && !isSelf
     // the profile tab strip renders as the global Navbar's bottom layer, but only
     // when the main profile actually shows (not on loading / not-found / locked).
     const showTabs = !isLoading && !(authenticated && !username) && Boolean(user) && !error && !isLocked
     const tabsNode = useMemo(
-        () => (user ? <ProfileTabsBar username={user.username} isSelf={isSelf} /> : null),
-        [user, isSelf],
+        () => (user ? (
+            <ProfileTabsBar
+                username={user.username}
+                isSelf={isSelf}
+                hasPublicCv={Boolean(publicCv)}
+                sectionVisibility={user.sectionVisibility}
+            />
+        ) : null),
+        [user, isSelf, publicCv],
     )
     useRegisterNavbarBottomLayer(showTabs ? tabsNode : null)
 
     // first load → skeleton so the column never jumps. On the bare `/profile` the
     // username is null until the signed-in user hydrates — treat that as loading.
-    if (isLoading || (authenticated && !username)) {
+    // Also hold the skeleton while the read is STILL in flight with no user yet —
+    // incl. SWR's retry after a transient error (e.g. a 401 before the token is
+    // attached on a cold load). Otherwise the not-found flashes for the retry
+    // window before the profile actually resolves.
+    if (isLoading || (isValidating && !user) || (authenticated && !username)) {
         return <ProfileLoadingState className={className} />
     }
 
-    // not found / soft-deleted / failed read → a proper 404-style page
-    if (!user || error) {
+    // SETTLED with no user (query done, not validating) → a proper 404-style page.
+    // `error` no longer forces this on its own: a transient error is still
+    // validating above; only a definitively-empty read (or an error that has
+    // stopped retrying) lands here.
+    if (!user) {
         return <ProfileNotFoundState className={className} />
     }
 
@@ -130,9 +154,9 @@ export const PublicProfile = ({
                 above (useRegisterNavbarBottomLayer), so it is NOT rendered here. */}
 
             {/* starci-concept: flex 2-col — left identity BARE, right content cards */}
-            <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-6 md:flex-row md:items-start">
+            <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-6 @app-md:flex-row @app-md:items-start">
                 {/* left: identity column, bare (no card) — scrolls with the page (not sticky) */}
-                <aside className="flex w-full flex-col gap-4 md:w-72 md:shrink-0">
+                <aside className="flex w-full flex-col gap-4 @app-md:w-72 @app-md:shrink-0">
                     <ProfileHero />
                 </aside>
 

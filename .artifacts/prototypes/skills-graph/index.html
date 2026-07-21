@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototype — Skills Graph (canonical taxonomy)</title>
+<style>
+  :root{--bg:#f4f4f6;--fg:#1a1a1e;--mut:#6b6b76;--line:#e2e2e8;--card:#fff;--acc:#c0407a;--acc-soft:#fbe6f0;--ok:#3b7d4f;--warn:#b06a1f;--danger:#c0392b;--radius:16px;--sh:0 1px 2px rgba(0,0,0,.05),0 1px 3px rgba(0,0,0,.04)}
+  @media(prefers-color-scheme:dark){:root{--bg:#161619;--fg:#eaeaef;--mut:#9a9aa6;--line:#2a2a30;--card:#1d1d21;--acc-soft:#3a2230}}
+  *{box-sizing:border-box}
+  body{margin:0;font:14px/1.5 ui-sans-serif,system-ui,sans-serif;color:var(--fg);background:var(--bg)}
+  .top{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+  .top b{font-size:15px}.top .sub{color:var(--mut);font-size:12px}
+  .devtog{margin-left:auto;border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex}
+  .devtog button{border:0;background:var(--card);padding:5px 12px;cursor:pointer;font:inherit;font-size:12px;color:var(--mut)}
+  .devtog button.on{background:var(--acc);color:#fff}
+  .wrap{max-width:1180px;margin:0 auto;padding:24px 16px 60px}
+  .bc{color:var(--mut);font-size:13px;margin-bottom:4px}
+  h1{font-size:24px;margin:0 0 4px}
+  .desc{color:var(--mut);margin:0 0 14px}
+  .legend{display:flex;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--mut);margin-bottom:16px}
+  .legend .sw{display:inline-flex;align-items:center;gap:6px}
+  .dot{width:12px;height:12px;border-radius:50%}
+  .layout{display:grid;grid-template-columns:1fr;gap:16px}
+  @media(min-width:900px){.layout{grid-template-columns:1fr 320px}}
+  /* graph canvas */
+  .canvas{background:var(--card);border-radius:var(--radius);box-shadow:var(--sh);padding:8px;position:relative;min-height:520px;overflow:hidden}
+  .cluster{position:absolute;border:1.5px dashed var(--line);border-radius:18px;padding:26px 12px 12px}
+  .clabel{position:absolute;top:-11px;left:14px;background:var(--card);padding:0 8px;font-size:12px;font-weight:600;color:var(--mut)}
+  .node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
+  .ring{width:var(--sz);height:var(--sz);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;box-shadow:0 1px 4px rgba(0,0,0,.15);transition:transform .12s}
+  .node:hover .ring{transform:scale(1.08)}
+  .node.sel .ring{outline:3px solid var(--acc);outline-offset:2px}
+  .nlabel{font-size:11px;font-weight:600;text-align:center;max-width:92px;line-height:1.15}
+  .edge{position:absolute;height:1.5px;background:var(--line);transform-origin:0 0;pointer-events:none}
+  /* detail panel */
+  .panel{background:var(--card);border-radius:var(--radius);box-shadow:var(--sh);padding:16px;align-self:start;position:sticky;top:70px}
+  .panel h3{margin:0 0 2px;font-size:17px}
+  .panel .m{font-size:13px;color:var(--mut);margin-bottom:14px}
+  .bigm{font-size:34px;font-weight:800;line-height:1}
+  .srcrow{display:flex;align-items:center;gap:10px;margin:9px 0}
+  .srcrow .k{width:96px;flex-shrink:0;font-size:12px;color:var(--mut)}
+  .bar{flex:1;height:7px;border-radius:4px;background:color-mix(in oklab,var(--fg) 9%,transparent);overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:4px}
+  .srcrow .v{width:52px;text-align:right;font-size:12px;font-weight:600}
+  .cta{margin-top:14px;width:100%;border:0;border-radius:11px;background:var(--acc);color:#fff;padding:10px;font:inherit;font-weight:600;cursor:pointer}
+  .blocktag{font:9px ui-monospace,monospace;color:var(--mut);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:0 4px;margin-left:6px;vertical-align:middle}
+  .note{font-size:12px;color:var(--mut);background:color-mix(in oklab,var(--acc) 6%,transparent);border-radius:10px;padding:9px 13px;margin-bottom:16px}
+  .placeholder{color:var(--mut);font-size:13px;text-align:center;padding:40px 10px}
+</style>
+</head>
+<body>
+<div class="top">
+  <b>Prototype · Skills Graph</b><span class="sub">/vi/skills — canonical skill taxonomy, mastery gộp cross-source (BE Option D)</span>
+  <div class="devtog"><button class="on" onclick="dev('desktop')" id="dD">Desktop</button><button onclick="dev('mobile')" id="dM">Mobile</button></div>
+</div>
+<div class="wrap" id="wrap">
+  <div class="note"><b>Graph <span class="blocktag">@xyflow SkillGraph (mới)</span></b>: mỗi <b>node = 1 canonical skill</b> (màu theo <b>mastery gộp</b>, size theo lượng evidence), cụm theo <b>domain</b>, cạnh = skill liên quan/tiên quyết. Click node → panel bên phải: <b>mastery tách theo NGUỒN</b> (flashcard/coding/interview/challenge/milestone) + CTA luyện. Data từ <b>projection cross-source mới</b> (BE build). Bấm 1 node để xem.</div>
+  <div class="bc">Trang chủ › Kỹ năng</div>
+  <h1>Sơ đồ Kỹ năng <span class="blocktag">PageHeader</span></h1>
+  <p class="desc">Bản đồ kỹ năng tổng hợp từ mọi hoạt động — flashcard, luyện code, phỏng vấn, thử thách, dự án.</p>
+  <div class="legend">
+    <span class="sw"><span class="dot" style="background:var(--danger)"></span>Yếu (&lt;40)</span>
+    <span class="sw"><span class="dot" style="background:var(--warn)"></span>Đang lên (40–70)</span>
+    <span class="sw"><span class="dot" style="background:var(--ok)"></span>Vững (&gt;70)</span>
+    <span class="sw" style="margin-left:auto">Size = lượng bằng chứng · Cạnh = skill liên quan</span>
+  </div>
+  <div class="layout">
+    <div class="canvas" id="canvas"></div>
+    <div class="panel" id="panel"><div class="placeholder">Bấm 1 kỹ năng trên sơ đồ để xem mastery theo nguồn.</div></div>
+  </div>
+</div>
+<script>
+  // canonical skills w/ domain, mastery, per-source breakdown (flashcard/coding/interview/challenge/milestone; null=nguồn không đóng góp skill này)
+  const CLUSTERS=[
+    {key:'be',label:'Backend',x:4,y:6,w:44,h:52},
+    {key:'db',label:'Databases',x:52,y:6,w:44,h:40},
+    {key:'sd',label:'System Design',x:4,y:62,w:44,h:34},
+    {key:'devops',label:'DevOps',x:52,y:50,w:44,h:46},
+  ];
+  const S=[
+    {id:'di',dom:'be',name:'Dependency Injection',x:16,y:20,m:47,src:{flashcard:47,interview:52,challenge:null,coding:null,milestone:null}},
+    {id:'pipe',dom:'be',name:'Request Pipeline',x:34,y:16,m:46,src:{flashcard:46,interview:60,challenge:70,coding:null,milestone:65}},
+    {id:'authz',dom:'be',name:'Authorization',x:24,y:40,m:57,src:{flashcard:57,interview:null,challenge:80,coding:null,milestone:null}},
+    {id:'log',dom:'be',name:'Logging',x:38,y:44,m:50,src:{flashcard:50,interview:44,challenge:null,coding:null,milestone:null}},
+    {id:'orm',dom:'db',name:'ORM & Query',x:64,y:18,m:72,src:{flashcard:72,interview:null,challenge:88,coding:null,milestone:70}},
+    {id:'tx',dom:'db',name:'Transactions',x:84,y:30,m:38,src:{flashcard:38,interview:35,challenge:null,coding:null,milestone:null}},
+    {id:'obs',dom:'sd',name:'Observability',x:16,y:78,m:44,src:{flashcard:44,interview:40,challenge:null,coding:null,milestone:null}},
+    {id:'res',dom:'sd',name:'Resilience',x:34,y:84,m:25,src:{flashcard:25,interview:30,challenge:null,coding:null,milestone:null}},
+    {id:'k8s',dom:'devops',name:'Kubernetes',x:66,y:64,m:61,src:{flashcard:61,interview:null,challenge:74,coding:null,milestone:80}},
+    {id:'ci',dom:'devops',name:'CI/CD',x:84,y:78,m:68,src:{flashcard:68,interview:null,challenge:null,coding:null,milestone:85}},
+    {id:'algo',dom:'devops',name:'Scaling',x:64,y:88,m:52,src:{flashcard:null,interview:52,challenge:null,coding:60,milestone:null}},
+  ];
+  const EDGES=[['di','pipe'],['di','authz'],['pipe','log'],['orm','tx'],['obs','res'],['k8s','ci'],['k8s','algo'],['pipe','obs']];
+  const SRC_LABEL={flashcard:'Flashcard',coding:'Luyện code',interview:'Phỏng vấn',challenge:'Thử thách',milestone:'Dự án'};
+  const color=m=>m<40?'var(--danger)':m<=70?'var(--warn)':'var(--ok)';
+  const canvas=document.getElementById('canvas');
+  function layout(){
+    canvas.innerHTML='';
+    // clusters
+    CLUSTERS.forEach(c=>{const d=document.createElement('div');d.className='cluster';d.style.left=c.x+'%';d.style.top=c.y+'%';d.style.width=c.w+'%';d.style.height=c.h+'%';d.innerHTML='<span class="clabel">'+c.label+'</span>';canvas.appendChild(d);});
+    // edges (drawn as rotated bars between node centers, % of canvas)
+    const rect=canvas.getBoundingClientRect();
+    EDGES.forEach(([a,b])=>{const na=S.find(s=>s.id===a),nb=S.find(s=>s.id===b);const ax=na.x/100*rect.width,ay=na.y/100*rect.height,bx=nb.x/100*rect.width,by=nb.y/100*rect.height;const dx=bx-ax,dy=by-ay,len=Math.hypot(dx,dy),ang=Math.atan2(dy,dx)*180/Math.PI;const e=document.createElement('div');e.className='edge';e.style.left=ax+'px';e.style.top=ay+'px';e.style.width=len+'px';e.style.transform='rotate('+ang+'deg)';canvas.appendChild(e);});
+    // nodes
+    S.forEach(s=>{const evidence=Object.values(s.src).filter(v=>v!=null).length;const sz=34+evidence*7;const n=document.createElement('div');n.className='node';n.id='n-'+s.id;n.style.left=s.x+'%';n.style.top=s.y+'%';n.innerHTML='<div class="ring" style="--sz:'+sz+'px;background:'+color(s.m)+'">'+s.m+'</div><div class="nlabel">'+s.name+'</div>';n.onclick=()=>select(s);canvas.appendChild(n);});
+  }
+  function select(s){
+    document.querySelectorAll('.node').forEach(n=>n.classList.remove('sel'));
+    document.getElementById('n-'+s.id).classList.add('sel');
+    const rows=Object.entries(s.src).map(([k,v])=>v==null?'':'<div class="srcrow"><span class="k">'+SRC_LABEL[k]+'</span><span class="bar"><i style="width:'+v+'%;background:'+color(v)+'"></i></span><span class="v">'+v+'%</span></div>').join('')
+      +Object.entries(s.src).filter(([k,v])=>v==null).map(([k])=>'<div class="srcrow"><span class="k">'+SRC_LABEL[k]+'</span><span class="bar"></span><span class="v" style="color:var(--mut);font-weight:400">—</span></div>').join('');
+    const weakest=Object.entries(s.src).filter(([k,v])=>v!=null).sort((a,b)=>a[1]-b[1])[0];
+    document.getElementById('panel').innerHTML='<h3>'+s.name+'</h3><div class="m">Mastery gộp cross-source</div><div class="bigm" style="color:'+color(s.m)+'">'+s.m+'<span style="font-size:16px;color:var(--mut)">/100</span></div><div style="margin-top:14px;font-size:12px;color:var(--mut)">Đóng góp theo nguồn</div>'+rows+'<button class="cta">Luyện "'+s.name+'" — yếu nhất ở '+SRC_LABEL[weakest[0]]+' →</button>';
+  }
+  function dev(m){document.getElementById('wrap').style.maxWidth=m==='mobile'?'420px':'1180px';document.getElementById('dD').classList.toggle('on',m==='desktop');document.getElementById('dM').classList.toggle('on',m==='mobile');setTimeout(layout,50);}
+  layout();window.addEventListener('resize',layout);
+</script>
+</body>
+</html>

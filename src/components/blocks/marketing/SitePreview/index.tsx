@@ -54,7 +54,7 @@ export const SitePreview = () => (
                     <span aria-hidden className="size-3.5 rounded-md bg-accent" />
                     StarCi
                 </span>
-                <span className="hidden items-center gap-3 text-xs text-muted sm:flex">
+                <span className="hidden items-center gap-3 text-xs text-muted @app-sm:flex">
                     <span className="text-foreground">Khóa học</span>
                     <span>Lộ trình</span>
                     <span>Bảng giá</span>
@@ -65,7 +65,7 @@ export const SitePreview = () => (
 
         {/* body: sidebar filter + list khoá */}
         <div className="flex min-h-0 flex-1">
-            <div className="hidden w-1/3 max-w-[180px] shrink-0 flex-col gap-3 border-r border-default p-3 text-xs sm:flex">
+            <div className="hidden w-1/3 max-w-[180px] shrink-0 flex-col gap-3 border-r border-default p-3 text-xs @app-sm:flex">
                 <div className="flex flex-col gap-2">
                     <span className="font-medium text-muted">Chủ đề</span>
                     <FilterRow label="Fullstack" on />

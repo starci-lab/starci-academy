@@ -10,6 +10,9 @@ import type {
 import {
     ProfileCoding,
 } from "./ProfileCoding"
+import {
+    ProfileSectionGuard,
+} from "../ProfileSectionGuard"
 
 /** Props for {@link ProfileSkillsTab}. */
 export type ProfileSkillsTabProps = WithClassNames<undefined>
@@ -27,9 +30,11 @@ export const ProfileSkillsTab = ({
     className,
 }: ProfileSkillsTabProps) => {
     return (
-        <div className={cn("flex flex-col gap-6", className)}>
-            {/* metric row → gathered stats card → solve history */}
-            <ProfileCoding />
-        </div>
+        <ProfileSectionGuard section="skills" className={className}>
+            <div className={cn("flex flex-col gap-6", className)}>
+                {/* metric row → gathered stats card → solve history */}
+                <ProfileCoding />
+            </div>
+        </ProfileSectionGuard>
     )
 }

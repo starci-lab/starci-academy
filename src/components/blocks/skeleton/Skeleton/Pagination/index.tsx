@@ -10,7 +10,7 @@ export interface SkeletonPaginationProps extends WithClassNames<undefined> {
 }
 
 /** Prev/next arrow slot — a chevron centered in the SAME 32px box as a page button. */
-const ARROW_SLOT = "flex size-9 shrink-0 items-center justify-center md:size-8"
+const ARROW_SLOT = "flex size-9 shrink-0 items-center justify-center @app-md:size-8"
 
 /**
  * Skeleton matching a HeroUI <Pagination/> content row: real prev/next chevrons
@@ -30,7 +30,7 @@ export const SkeletonPagination = ({
             {Array.from({ length: count }).map((_, index) => (
                 <Skeleton
                     key={index}
-                    className="size-9 rounded-3xl md:size-8"
+                    className="size-9 rounded-3xl @app-md:size-8"
                 />
             ))}
             <div className={ARROW_SLOT}>

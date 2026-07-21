@@ -21,6 +21,12 @@ const mutation1 = gql`
         followingCount
         profileLocked
         openToWork
+        sectionVisibility {
+          projects
+          challenges
+          skills
+          activity
+        }
         featuredAchievementSlug
         roleTitle
         location

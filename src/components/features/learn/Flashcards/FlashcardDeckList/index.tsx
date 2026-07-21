@@ -233,7 +233,7 @@ export const FlashcardDeckList = ({
                     {/* search row: filter input (left) + result count & view toggle (right).
                     The input sits on the page background → no variant (clean bg-field). */}
                     <div className="flex flex-wrap items-center justify-between gap-3">
-                        <TextField className="w-full sm:max-w-sm">
+                        <TextField className="w-full @app-sm:max-w-sm">
                             <Input
                                 type="search"
                                 aria-label={t("flashcard.searchPlaceholder")}
@@ -288,7 +288,7 @@ export const FlashcardDeckList = ({
                         <div className="flex flex-col gap-3">
                             {view === "grid" ? (
                             /* GRID — roomy cards in a responsive grid; keeps the description. */
-                                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                                <div className="grid grid-cols-1 gap-3 @app-sm:grid-cols-2">
                                     {pagedDecks.map((deck: FlashcardDeckEntity) => {
                                         const total = deck.cards?.length ?? 0
                                         const mastered = deck.masteredCount ?? 0

@@ -73,7 +73,13 @@ const preview: Preview = {
             return (
                 <NextIntlClientProvider locale="vi" messages={messages}>
                     <HeroUIProvider>
-                        <div className={`${theme} bg-background text-foreground min-h-screen w-full p-8`}>
+                        {/* `@container` MIRRORS the app shell: the real app renders inside a
+                            container-marked column (`InnerLayout`) so it can re-lay-out when the
+                            chat rail narrows it, and every component's breakpoints are `@app-*`
+                            container variants. Without a container here, those variants would
+                            have nothing to measure and every story would render at its narrowest
+                            layout — the canvas must establish one for stories to match the app. */}
+                        <div className={`${theme} @container bg-background text-foreground min-h-screen w-full p-8`}>
                             {showUsage ? (
                                 // standalone on the page canvas → raw `Alert` (surface +
                                 // shadow). Callout tint is only for surface-in-surface.

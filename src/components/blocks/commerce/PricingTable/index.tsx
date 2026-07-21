@@ -96,7 +96,7 @@ export const PricingTable = ({
     return (
         // Responsive tier comparison: stacked on mobile, columns from md up. items-stretch
         // keeps every column the same height so the CTAs align along a single baseline.
-        <div className={cn("flex flex-col items-stretch gap-6 md:flex-row", className)}>
+        <div className={cn("flex flex-col items-stretch gap-6 @app-md:flex-row", className)}>
             {tiers.map((tier) => (
                 <PricingCard
                     key={tier.id}

@@ -2,8 +2,10 @@ import { createAuthApolloClient } from "../clients"
 import { type QueryParams } from "../types"
 import { DocumentNode, gql } from "@apollo/client"
 import type {
+    MyOpenPlaygroundSessionRequest,
     PlaygroundRequest,
     PlaygroundsRequest,
+    QueryMyOpenPlaygroundSessionResponse,
     QueryPlaygroundResponse,
     QueryPlaygroundsResponse,
 } from "./types/playground"
@@ -112,6 +114,57 @@ export const queryPlayground = async ({
         query: playgroundQueryMap[query],
         variables: {
             slug: request?.slug,
+        },
+    })
+}
+
+const myOpenPlaygroundSessionQuery1 = gql`
+  query MyOpenPlaygroundSession($playgroundId: String!) {
+    myOpenPlaygroundSession(playgroundId: $playgroundId) {
+      success
+      message
+      error
+      data {
+        id
+        pairingCode
+        pairingCodeExpiresAt
+        connected
+      }
+    }
+  }
+`
+
+export enum QueryMyOpenPlaygroundSession {
+    Query1 = "query1",
+}
+
+const myOpenPlaygroundSessionQueryMap: Record<QueryMyOpenPlaygroundSession, DocumentNode> = {
+    [QueryMyOpenPlaygroundSession.Query1]: myOpenPlaygroundSessionQuery1,
+}
+
+/**
+ * Looks up the caller's still-usable session for one playground so a page reload
+ * RESUMES it instead of creating a new one. Mirrors backend
+ * `myOpenPlaygroundSession` (queries/playgrounds/my-open-playground-session).
+ */
+export const queryMyOpenPlaygroundSession = async ({
+    query = QueryMyOpenPlaygroundSession.Query1,
+    request,
+    headers,
+    debug,
+    signal,
+}: QueryParams<QueryMyOpenPlaygroundSession, MyOpenPlaygroundSessionRequest>) => {
+    const apollo = createAuthApolloClient({
+        cache: false,
+        headers,
+        debug,
+        signal,
+    })
+
+    return apollo.query<QueryMyOpenPlaygroundSessionResponse>({
+        query: myOpenPlaygroundSessionQueryMap[query],
+        variables: {
+            playgroundId: request?.playgroundId,
         },
     })
 }

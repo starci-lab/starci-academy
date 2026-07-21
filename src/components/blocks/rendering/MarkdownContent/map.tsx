@@ -263,11 +263,17 @@ export const buildMarkdownRenderers = ({
         tabcode: ({ children }: { children?: React.ReactNode }) => <TabPane kind="code">{children}</TabPane>,
         tabpreview: ({ children }: { children?: React.ReactNode }) => <TabPane kind="preview">{children}</TabPane>,
         // ::::accordion / :::panel{title} → HeroUI collapsible accordion (see remarkAccordion in ./index).
-        // Use the DEFAULT variant (no baked bg-surface to fight) + an explicit bg-default fill — the
-        // same distinct neutral the code blocks use — so the accordion clearly stands apart from the
-        // page bg in dark mode. (Surface variant's bg-surface ≈ page bg → it blended in.)
+        // Matches the `LabeledAccordionCard` skin (accordion.md §3e): `variant="default"` keeps the item
+        // separator FULL-BLEED (`left-0 w-full`; surface would inset it to 3%), with the light hairline
+        // `--separator` re-point so dividers read the same as the SurfaceListCard family. Default bakes no
+        // bg/radius, so add `bg-surface rounded-3xl` here; `border` delineates it as a nested surface
+        // (reading column / step card) where a shadow can vanish in dark mode.
         accordionblock: ({ children }: { children?: React.ReactNode }) => (
-            <HeroUI.Accordion variant="surface" className={`${reading ? "my-4" : "my-2"} overflow-hidden border border-default`}>{children}</HeroUI.Accordion>
+            <HeroUI.Accordion
+                variant="default"
+                style={{ "--separator": "color-mix(in oklab, var(--surface-foreground) 6%, transparent)" } as React.CSSProperties}
+                className={`${reading ? "my-4" : "my-2"} overflow-hidden rounded-3xl border border-default bg-surface`}
+            >{children}</HeroUI.Accordion>
         ),
         accordionpanel: ({ title, children }: { title?: string, children?: React.ReactNode }) => (
             <HeroUI.Accordion.Item aria-label={String(title ?? "")}>

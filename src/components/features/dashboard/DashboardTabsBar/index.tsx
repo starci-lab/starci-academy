@@ -62,7 +62,7 @@ export const DashboardTabsBar = ({ className }: DashboardTabsBarProps) => {
                                                 focusable="false"
                                                 className="size-5 shrink-0"
                                             />
-                                            <span className="hidden md:inline">
+                                            <span className="hidden @app-md:inline">
                                                 {t(`dashboard.tabs.${tabId}`)}
                                             </span>
                                         </span>

@@ -25,6 +25,7 @@
 - **GroupPressableCard** — canon: `components/card.md` · `principles/hover-style-matches-clickable-nature` · concepts: nhóm card bấm được
 - **HighlightCard** ✎ — canon: `components/card.md §3j` · concepts: 1 vệt sáng accent QUÉT quanh card (card trong = lớp hiệu ứng, card ngoài nhỏ hơn 2px bán kính chồng lên) · thuần trang trí "nổi bật", KHÔNG mang data-signal (khác `withVerdict` §3i) · chỉ 1 card/surface
 - **LabeledCard** ✎ — canon: `components/card.md §2` · concepts: label NGOÀI + Card trong · `frameless`/`flushContent`/`subtleLabel` · surface-in-surface = Card thật
+- **LabeledAccordionCard** ✎ — canon: `components/accordion.md §3d (block giờ TỒN TẠI, đảo ghi chú cũ; danh sách migrate 7 call-site) · §3e (separator FULL-BLEED = variant="default" KHÔNG surface)` · concepts: label + list-gập-theo-nhóm 1 card; đóng gói `LabeledCard frameless` → `SurfaceListCard` (bordered khi nested) → `Accordion default`; API `items[{id,title,subtitle?,titleEnd?,body}]`/`label?`(no-label=trần cho pane có tab)/`allowsMultipleExpanded`/`defaultExpandedKeys(Set)`; story `Default`/`MultipleExpanded`/`WithTitleEnd`/`NoLabel`/`Bordered` (news); migrated: ChallengeView·CourseFaq·PlaygroundSession-Resources·TaskCriteriaList·Course(Milestone)Outline·FlashcardReviewHistory — CHỐT 2026-07-20
 - **MediaCard** — canon: `components/card.md` · `components/image.md` · concepts: card có cover
 - **NestedCard** — canon: `components/card.md` · concepts: card lồng (bordered khi nested)
 - **PressableCard** ✎ — canon: `components/card.md` · `principles/hover-style-matches-clickable-nature` (mode 4 hoverVariant fill/lift) · concepts: shadow-surface cả 2 variant lúc nghỉ
@@ -87,7 +88,8 @@
 - **AppSplash** — canon: `patterns/loading-feedback-three-tiers-splash-toploader-skeleton` · concepts: splash tier-1
 - **ModalShell** ✎ — canon: `layouts/` · concepts: khung modal · header = Typography body semibold (lint `no-modal-title-classname` cấm `titleClassName` escape-hatch)
 - **PageContainer** — canon: `layouts/` · concepts: khung trang max-width
-- **PageHeader** — canon: `layouts/` · concepts: header trang
+- **PageHeader** ✎ — canon: `components/header.md` (§1 4-slot · §2 gap-10 header→content · §3 breadcrumb=BackLink cho leaf · §6 đừng lặp title ở card dưới · **§7 `size="page"|"compact"`** 2026-07-20) · concepts: header trang · **`size="compact"`** = title body-bold cho header của PANE/PHA nằm trong page shell đã có header riêng (story `Compact`; áp đầu `PlaygroundPrepare` pha prepare)
+- **ReadinessChecklist** ✎ — canon: `components/card.md` (row-block khác `SurfaceListCardItem` lồng trong list-card phải tự mang **`p-3`**, divider full-bleed — CHỐT 2026-07-20) · concepts: hàng điều-kiện-sẵn-sàng (IconTile check khi ready + StatusChip trailing); LUÔN render trong `SurfaceListCard` (nested → `bordered`)
 - **ResizableRail** — canon: `layouts/` · concepts: rail kéo rộng
 - **ScrollShadow** — canon: `foundations/` · concepts: bóng mép scroll
 - **SocketConnectionStatus** — canon: `layouts/` · concepts: trạng thái socket

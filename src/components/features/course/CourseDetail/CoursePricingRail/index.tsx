@@ -63,7 +63,7 @@ export const CoursePricingRail = ({ className }: CoursePricingRailProps) => {
     const previewPending = previewLoading && !preview
 
     return (
-        <div className={cn("md:sticky md:top-[88px] md:self-start", className)}>
+        <div className={cn("@app-md:sticky @app-md:top-[88px] @app-md:self-start", className)}>
             <Card>
                 <CardContent>
                     <div className="flex flex-col gap-4">

@@ -41,7 +41,7 @@ export const HeadhuntingCompanyConsultants = ({ className }: HeadhuntingCompanyC
         <AsyncContent
             isLoading={!consultants}
             skeleton={(
-                <div className={cn("grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3", className)}>
+                <div className={cn("grid grid-cols-1 gap-3 @app-sm:grid-cols-2 @app-lg:grid-cols-3", className)}>
                     {Array.from({ length: SKELETON_COUNT }).map((_, index) => (
                         <ConsultantCardSkeleton key={index} />
                     ))}
@@ -50,7 +50,7 @@ export const HeadhuntingCompanyConsultants = ({ className }: HeadhuntingCompanyC
             isEmpty={companyConsultants.length === 0}
             emptyContent={{ title: t("headhuntings.empty") }}
         >
-            <div className={cn("grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3", className)}>
+            <div className={cn("grid grid-cols-1 gap-3 @app-sm:grid-cols-2 @app-lg:grid-cols-3", className)}>
                 {companyConsultants.map((consultant) => (
                     <ConsultantCard
                         key={consultant.id}

@@ -149,7 +149,7 @@ export const CourseCatalog = ({ className }: CourseCatalogProps) => {
 
     // skeleton mirrors the active view so the catalog does not jump on resolve
     const gridSkeleton = (
-        <div className="grid w-full grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid w-full grid-cols-1 gap-3 @app-md:grid-cols-2 @app-lg:grid-cols-3">
             {Array.from({ length: 6 }).map((_, index) => (
                 <CourseCardSkeleton key={index} />
             ))}
@@ -162,7 +162,7 @@ export const CourseCatalog = ({ className }: CourseCatalogProps) => {
                     {/* plain div, NOT Card.Content — mirrors the real line CourseCard
                         (Card.Content bakes flex-col, which breaks a horizontal row) */}
                     <div className="flex items-center gap-4">
-                        <Skeleton className="hidden aspect-video w-36 shrink-0 rounded-2xl sm:block" />
+                        <Skeleton className="hidden aspect-video w-36 shrink-0 rounded-2xl @app-sm:block" />
                         <div className="flex min-w-0 flex-1 flex-col gap-2">
                             <Skeleton className="h-5 w-1/2 rounded" />
                             <Skeleton className="h-4 w-3/4 rounded" />
@@ -204,7 +204,7 @@ export const CourseCatalog = ({ className }: CourseCatalogProps) => {
                 {/* search row: filter input (left) + result count & grid⇆line toggle (right) */}
                 <div className="flex flex-wrap items-center justify-between gap-3">
                     <SearchInput
-                        className="w-full sm:max-w-sm"
+                        className="w-full @app-sm:max-w-sm"
                         value={query}
                         onValueChange={setQuery}
                         placeholder={t("courses.searchPlaceholder")}
@@ -269,7 +269,7 @@ export const CourseCatalog = ({ className }: CourseCatalogProps) => {
                     skeleton={view === "grid" ? gridSkeleton : lineSkeleton}
                 >
                     {view === "grid" ? (
-                        <div className="grid w-full grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+                        <div className="grid w-full grid-cols-1 gap-3 @app-md:grid-cols-2 @app-lg:grid-cols-3">
                             {list.map((course) => (
                                 <CatalogCourseCard key={course.id} course={course} layout="grid" />
                             ))}

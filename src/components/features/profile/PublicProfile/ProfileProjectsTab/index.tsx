@@ -13,6 +13,9 @@ import {
 import {
     ProfileCapstone,
 } from "./ProfileCapstone"
+import {
+    ProfileSectionGuard,
+} from "../ProfileSectionGuard"
 
 /** Props for {@link ProfileProjectsTab}. */
 export type ProfileProjectsTabProps = WithClassNames<undefined>
@@ -40,9 +43,11 @@ export const ProfileProjectsTab = ({
     className,
 }: ProfileProjectsTabProps) => {
     return (
-        <div className={cn("flex min-w-0 flex-col gap-6", className)}>
-            <ProfilePinned />
-            <ProfileCapstone />
-        </div>
+        <ProfileSectionGuard section="projects" className={className}>
+            <div className={cn("flex min-w-0 flex-col gap-6", className)}>
+                <ProfilePinned />
+                <ProfileCapstone />
+            </div>
+        </ProfileSectionGuard>
     )
 }

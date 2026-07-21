@@ -4,7 +4,6 @@ import React, {
     useMemo,
 } from "react"
 import {
-    Accordion,
     Typography,
     cn,
 } from "@heroui/react"
@@ -33,6 +32,7 @@ import { AsyncContent } from "@/components/blocks/async/AsyncContent"
 import { DifficultyChip } from "@/components/blocks/chips/DifficultyChip"
 import { EmptyContent } from "@/components/blocks/async/EmptyContent"
 import { ListRow } from "@/components/blocks/lists/ListRow"
+import { LabeledAccordionCard } from "@/components/blocks/cards/LabeledAccordionCard"
 import { Skeleton } from "@/components/blocks/skeleton/Skeleton"
 import { StatusChip } from "@/components/blocks/chips/StatusChip"
 import { fromGlobalId } from "@/modules/utils/globalId"
@@ -49,14 +49,6 @@ export interface CourseOutlineProps extends WithClassNames<undefined> {
 
 /** Number of placeholder accordion modules shown while the outline loads. */
 const SKELETON_MODULE_COUNT = 4
-
-/**
- * Accordion-card skin shared by the Contents + Personal Project tabs: HeroUI's
- * `variant="surface"` bakes the card fill (`bg-surface`) + rounded-3xl + item
- * separators, so here we only add the card border (the surface variant has none).
- * Surface reads as a real card on the settings page's `bg-background`.
- */
-const ACCORDION_CARD = "overflow-hidden shadow-surface"
 
 /** Skeleton frame that mirrors the surface accordion-card (bg-surface + rounded + border). */
 const ACCORDION_CARD_SKELETON = "flex flex-col rounded-3xl bg-surface shadow-surface"
@@ -173,118 +165,104 @@ export const CourseOutline = ({
             {modules.length === 0 ? (
                 <EmptyContent title={t("profileSettings.learning.outline.noMatch")} />
             ) : (
-                <Accordion
-                    variant="surface"
-                    className={cn(ACCORDION_CARD, className)}
-                    defaultExpandedKeys={defaultOpenId ? [defaultOpenId] : undefined}
-                >
-                    {modules.map((module) => {
+                // NO `label`: the accordion IS the tab content; the premium lock +
+                // read-count ride in the header via `titleEnd`.
+                <LabeledAccordionCard
+                    className={className}
+                    defaultExpandedKeys={defaultOpenId ? new Set([defaultOpenId]) : undefined}
+                    items={modules.map((module) => {
                         const read = module.lessons.filter((lesson) => lesson.isRead).length
                         const total = module.lessons.length
                         const allRead = total > 0 && read === total
-                        return (
-                            <Accordion.Item key={module.id} aria-label={module.title}>
-                                <Accordion.Heading>
-                                    <Accordion.Trigger>
-                                        <div className="flex w-full items-center justify-between gap-3 text-start">
-                                            <div className="flex min-w-0 items-center gap-2">
-                                                <Typography type="body" weight="semibold" truncate>
-                                                    {module.title}
-                                                </Typography>
-                                                {module.isPremium ? (
-                                                    <LockIcon
-                                                        aria-label={t("profileSettings.learning.outline.premium")}
-                                                        focusable="false"
-                                                        className="size-5 shrink-0 text-muted"
-                                                    />
-                                                ) : null}
-                                            </div>
-                                            <div className="flex shrink-0 items-center gap-2">
-                                                {allRead ? (
-                                                    <Typography type="body-xs" className="text-success-soft-foreground">
-                                                        {t("profileSettings.learning.outline.readCount", { read, total })}
-                                                    </Typography>
-                                                ) : (
-                                                    <Typography type="body-xs" color="muted">
-                                                        {t("profileSettings.learning.outline.readCount", { read, total })}
-                                                    </Typography>
-                                                )}
-                                                <Accordion.Indicator />
-                                            </div>
-                                        </div>
-                                    </Accordion.Trigger>
-                                </Accordion.Heading>
-                                <Accordion.Panel>
-                                    <Accordion.Body>
-                                        <div className="flex flex-col gap-2">
-                                            {module.lessons.map((lesson) => (
-                                                <div key={lesson.id} className="flex flex-col gap-2">
-                                                    <ListRow
-                                                        title={lesson.title}
-                                                        subtitle={t("content.minutesRead", { minutes: lesson.minutesRead })}
-                                                        meta={(
-                                                            <>
-                                                                {lesson.difficulty ? (
-                                                                    <DifficultyChip difficulty={toDifficulty(lesson.difficulty)} />
-                                                                ) : null}
-                                                                {lesson.isPremium ? (
-                                                                    <LockIcon
-                                                                        aria-label={t("profileSettings.learning.outline.premium")}
-                                                                        focusable="false"
-                                                                        className="size-5 text-muted"
-                                                                    />
-                                                                ) : null}
-                                                                {lesson.isRead ? (
-                                                                    <CheckCircleIcon
-                                                                        aria-label={t("profileSettings.learning.outline.read")}
-                                                                        focusable="false"
-                                                                        className="size-5 text-success-soft-foreground"
-                                                                    />
-                                                                ) : (
-                                                                    <CircleIcon
-                                                                        aria-label={t("profileSettings.learning.outline.unread")}
-                                                                        focusable="false"
-                                                                        className="size-5 text-muted"
-                                                                    />
-                                                                )}
-                                                            </>
+                        return {
+                            id: module.id,
+                            title: module.title,
+                            titleEnd: (
+                                <>
+                                    {module.isPremium ? (
+                                        <LockIcon
+                                            aria-label={t("profileSettings.learning.outline.premium")}
+                                            focusable="false"
+                                            className="size-5 shrink-0 text-muted"
+                                        />
+                                    ) : null}
+                                    <Typography
+                                        type="body-xs"
+                                        color={allRead ? undefined : "muted"}
+                                        className={allRead ? "text-success-soft-foreground" : undefined}
+                                    >
+                                        {t("profileSettings.learning.outline.readCount", { read, total })}
+                                    </Typography>
+                                </>
+                            ),
+                            body: (
+                                <div className="flex flex-col gap-2">
+                                    {module.lessons.map((lesson) => (
+                                        <div key={lesson.id} className="flex flex-col gap-2">
+                                            <ListRow
+                                                title={lesson.title}
+                                                subtitle={t("content.minutesRead", { minutes: lesson.minutesRead })}
+                                                meta={(
+                                                    <>
+                                                        {lesson.difficulty ? (
+                                                            <DifficultyChip difficulty={toDifficulty(lesson.difficulty)} />
+                                                        ) : null}
+                                                        {lesson.isPremium ? (
+                                                            <LockIcon
+                                                                aria-label={t("profileSettings.learning.outline.premium")}
+                                                                focusable="false"
+                                                                className="size-5 text-muted"
+                                                            />
+                                                        ) : null}
+                                                        {lesson.isRead ? (
+                                                            <CheckCircleIcon
+                                                                aria-label={t("profileSettings.learning.outline.read")}
+                                                                focusable="false"
+                                                                className="size-5 text-success-soft-foreground"
+                                                            />
+                                                        ) : (
+                                                            <CircleIcon
+                                                                aria-label={t("profileSettings.learning.outline.unread")}
+                                                                focusable="false"
+                                                                className="size-5 text-muted"
+                                                            />
                                                         )}
-                                                    />
-                                                    {lesson.challenges.length > 0 ? (
-                                                        <div className="flex flex-col gap-2 pl-6">
-                                                            {lesson.challenges.map((challenge) => (
-                                                                <ListRow
-                                                                    key={challenge.id}
-                                                                    leading={(
-                                                                        <PuzzlePieceIcon aria-hidden focusable="false" className="size-5 text-foreground" />
-                                                                    )}
-                                                                    title={challenge.title}
-                                                                    meta={(
-                                                                        <>
-                                                                            <DifficultyChip difficulty={toDifficulty(challenge.difficulty)} />
-                                                                            <StatusChip tone={toStatusTone(challenge.status)}>
-                                                                                {t(`profileSettings.learning.outline.status.${challenge.status}`)}
-                                                                            </StatusChip>
-                                                                            {isAttempted(challenge.status) ? (
-                                                                                <Typography type="body-xs" color="muted">
-                                                                                    {`${challenge.lastScore}/${challenge.maxScore}`}
-                                                                                </Typography>
-                                                                            ) : null}
-                                                                        </>
-                                                                    )}
-                                                                />
-                                                            ))}
-                                                        </div>
-                                                    ) : null}
+                                                    </>
+                                                )}
+                                            />
+                                            {lesson.challenges.length > 0 ? (
+                                                <div className="flex flex-col gap-2 pl-6">
+                                                    {lesson.challenges.map((challenge) => (
+                                                        <ListRow
+                                                            key={challenge.id}
+                                                            leading={(
+                                                                <PuzzlePieceIcon aria-hidden focusable="false" className="size-5 text-foreground" />
+                                                            )}
+                                                            title={challenge.title}
+                                                            meta={(
+                                                                <>
+                                                                    <DifficultyChip difficulty={toDifficulty(challenge.difficulty)} />
+                                                                    <StatusChip tone={toStatusTone(challenge.status)}>
+                                                                        {t(`profileSettings.learning.outline.status.${challenge.status}`)}
+                                                                    </StatusChip>
+                                                                    {isAttempted(challenge.status) ? (
+                                                                        <Typography type="body-xs" color="muted">
+                                                                            {`${challenge.lastScore}/${challenge.maxScore}`}
+                                                                        </Typography>
+                                                                    ) : null}
+                                                                </>
+                                                            )}
+                                                        />
+                                                    ))}
                                                 </div>
-                                            ))}
+                                            ) : null}
                                         </div>
-                                    </Accordion.Body>
-                                </Accordion.Panel>
-                            </Accordion.Item>
-                        )
+                                    ))}
+                                </div>
+                            ),
+                        }
                     })}
-                </Accordion>
+                />
             )}
         </AsyncContent>
     )

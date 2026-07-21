@@ -2,7 +2,6 @@
 
 import React, { useMemo } from "react"
 import {
-    Accordion,
     Chip,
     cn,
 } from "@heroui/react"
@@ -12,6 +11,7 @@ import {
 import _ from "lodash"
 import { ListChecksIcon } from "@phosphor-icons/react"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import { LabeledAccordionCard } from "@/components/blocks/cards/LabeledAccordionCard"
 import { MarkdownContent } from "@/components/blocks/rendering/MarkdownContent"
 import { useAppSelector } from "@/redux/hooks"
 import { EmptyState } from "@/components/blocks/feedback/EmptyState"
@@ -65,41 +65,28 @@ export const TaskCriteriaList = ({
     }
 
     return (
-        <div className={cn(className)}>
-            <Accordion allowsMultipleExpanded variant="surface">
-                {sortedCriterias.map((criteria, index) => (
-                    <Accordion.Item key={criteria.id}>
-                        <Accordion.Heading>
-                            <Accordion.Trigger className="w-full p-3">
-                                <div className="flex w-full items-center gap-3">
-                                    <div className="min-w-0 flex-1 text-left">
-                                        <div className="text-sm">
-                                            {index + 1}. {criteria.text}
-                                        </div>
-                                    </div>
-                                    <Chip size="sm" variant="secondary" color="accent">
-                                        {t("task.criteriaScore", { score: criteria.score })}
-                                    </Chip>
-                                    <Accordion.Indicator />
-                                </div>
-                            </Accordion.Trigger>
-                        </Accordion.Heading>
-                        <Accordion.Panel>
-                            <Accordion.Body>
-                                {criteria.hint ? (
-                                    <div className="pl-9">
-                                        <MarkdownContent markdown={criteria.hint} />
-                                    </div>
-                                ) : (
-                                    <div className="pl-9 text-sm text-muted italic">
-                                        {t("task.criteriaNoHint")}
-                                    </div>
-                                )}
-                            </Accordion.Body>
-                        </Accordion.Panel>
-                    </Accordion.Item>
-                ))}
-            </Accordion>
-        </div>
+        // NO `label`: the parent already renders the "task.criteriaTitle" heading
+        // above this list — a label here would be label-on-label (accordion.md §3d).
+        // The per-criterion score rides in the header via `titleEnd`.
+        <LabeledAccordionCard
+            className={className}
+            allowsMultipleExpanded
+            items={sortedCriterias.map((criteria, index) => ({
+                id: criteria.id,
+                title: `${index + 1}. ${criteria.text}`,
+                titleEnd: (
+                    <Chip size="sm" variant="secondary" color="accent">
+                        {t("task.criteriaScore", { score: criteria.score })}
+                    </Chip>
+                ),
+                body: criteria.hint ? (
+                    <MarkdownContent markdown={criteria.hint} />
+                ) : (
+                    <div className="text-sm text-muted italic">
+                        {t("task.criteriaNoHint")}
+                    </div>
+                ),
+            }))}
+        />
     )
 }

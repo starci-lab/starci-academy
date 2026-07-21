@@ -108,7 +108,7 @@ export const ProgressCockpit = ({
             skeleton={(
                 <div className={cn("flex flex-col gap-6", className)}>
                     {/* metric row — solved · points · rank · percentile */}
-                    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                    <div className="grid grid-cols-2 gap-3 @app-sm:grid-cols-4">
                         {[0, 1, 2, 3].map((index) => (
                             <Skeleton key={index} className="h-24 w-full rounded-2xl" />
                         ))}
@@ -129,7 +129,7 @@ export const ProgressCockpit = ({
         >
             <div className={cn("flex flex-col gap-6", className)}>
                 {/* headline metric row — pending rank/percentile cards skeleton in place */}
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                <div className="grid grid-cols-2 gap-3 @app-sm:grid-cols-4">
                     {stats.map((stat) => (
                         stat.value === null ? (
                             <Skeleton key={stat.key} className="h-24 w-full rounded-2xl" />

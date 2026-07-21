@@ -9,8 +9,8 @@ import { LearnSidebar } from "@/components/features/learn/LearnShell/LearnSideba
  */
 const Layout = ({ children }: PropsWithChildren) => {
     return (
-        <div className="flex w-full flex-col items-start lg:flex-row">
-            <aside className="hidden shrink-0 lg:sticky lg:top-16 lg:block lg:h-[calc(100dvh-4rem)]">
+        <div className="flex w-full flex-col items-start @app-lg:flex-row">
+            <aside className="hidden shrink-0 @app-lg:sticky @app-lg:top-16 @app-lg:block @app-lg:h-[calc(100dvh-4rem)]">
                 <LearnSidebar />
             </aside>
             <div className="min-h-0 min-w-0 flex-1">

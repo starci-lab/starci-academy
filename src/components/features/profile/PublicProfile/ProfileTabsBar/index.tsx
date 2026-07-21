@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useMemo } from "react"
+import React, { useCallback, useMemo } from "react"
 import { cn, Tabs } from "@heroui/react"
 import {
     HouseIcon,
@@ -13,10 +13,26 @@ import {
 import { useTranslations, useLocale } from "next-intl"
 import { usePathname, useRouter } from "next/navigation"
 import type { WithClassNames } from "@/modules/types/base/class-name"
+import type { SectionVisibility } from "@/modules/types/entities/user"
 import { PROFILE_TABS } from "../types"
 import type { ProfileTab } from "../types"
 import { ExtendedTabs } from "@/components/blocks/navigation/ExtendedTabs"
 import { pathConfig } from "@/resources/path"
+
+/**
+ * The section tabs gated by `sectionVisibility` (Overview + CV are never gated —
+ * Overview always shows, CV keeps its own `hasPublicCv` gate).
+ */
+const SECTION_TABS: ReadonlyArray<keyof SectionVisibility> = [
+    "projects",
+    "challenges",
+    "skills",
+    "activity",
+]
+
+/** Whether a tab is one of the visibility-gated section tabs. */
+const isSectionTab = (tabId: ProfileTab): tabId is keyof SectionVisibility =>
+    (SECTION_TABS as ReadonlyArray<ProfileTab>).includes(tabId)
 
 /** Leading icon shown on each profile tab, keyed by tab id. */
 const TAB_ICONS: Record<ProfileTab, typeof HouseIcon> = {
@@ -32,14 +48,23 @@ const TAB_ICONS: Record<ProfileTab, typeof HouseIcon> = {
 export interface ProfileTabsBarProps extends WithClassNames<undefined> {
     /** The viewed user's canonical username (drives every tab's href). */
     username: string
-    /** Whether the viewer is the profile owner — withholds the owner-only "CV" tab otherwise. */
+    /** Whether the viewer is the profile owner — shows the "CV" tab even without a public CV. */
     isSelf: boolean
+    /** Whether the viewed user has a PUBLIC CV — shows the "CV" tab to visitors too. */
+    hasPublicCv: boolean
+    /**
+     * The viewed user's per-section visibility (all default true). A section tab is
+     * withheld from VISITORS when its flag is false; the owner ({@link isSelf}) always
+     * sees every tab (with a "· ẩn" marker on hidden ones). Absent = all visible.
+     */
+    sectionVisibility?: SectionVisibility
 }
 
 /**
- * Build the href for a profile tab. Every tab nests under `/profile/<username>`
- * EXCEPT "cv" — that stays on the pre-existing, always-own `/profile/cv` CV
- * gallery route (never `/profile/<username>/cv`), so it takes no username.
+ * Build the href for a profile tab. Every tab nests under `/profile/<username>`,
+ * INCLUDING "cv" — the public, read-only CV view (`/profile/<username>/cv`). The
+ * owner's private editor stays reachable from the "Chỉnh sửa CV" button inside
+ * that view (the always-own `/profile/cv` gallery).
  */
 const tabHref = (locale: string, username: string, tabId: ProfileTab): string => {
     const profile = pathConfig().locale(locale).profile(username)
@@ -55,7 +80,7 @@ const tabHref = (locale: string, username: string, tabId: ProfileTab): string =>
     case "activity":
         return profile.activity().build()
     case "cv":
-        return pathConfig().locale(locale).profile().cv().build()
+        return profile.cv().build()
     }
 }
 
@@ -76,15 +101,30 @@ const tabHref = (locale: string, username: string, tabId: ProfileTab): string =>
  *
  * @param props - {@link ProfileTabsBarProps}
  */
-export const ProfileTabsBar = ({ username, isSelf, className }: ProfileTabsBarProps) => {
+export const ProfileTabsBar = ({ username, isSelf, hasPublicCv, sectionVisibility, className }: ProfileTabsBarProps) => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
     const pathname = usePathname()
-    // "cv" is the owner's résumé tool — withheld from visitors viewing someone else's profile.
+    // Whether a SECTION tab is hidden for the current viewer: false flag + visitor.
+    // The owner (isSelf) always sees it (just marked "· ẩn"); an absent flag = visible.
+    const isSectionHidden = useCallback(
+        (tabId: ProfileTab): boolean =>
+            !isSelf && isSectionTab(tabId) && sectionVisibility?.[tabId] === false,
+        [isSelf, sectionVisibility],
+    )
+    // Tab gating, combined:
+    //  • "cv" shows for the owner (always) or when the viewed user has a PUBLIC CV.
+    //  • a section tab (projects/challenges/skills/activity) is withheld from VISITORS
+    //    when its sectionVisibility flag is false. Overview is never gated.
     const visibleTabs = useMemo(
-        () => PROFILE_TABS.filter((tabId) => tabId !== "cv" || isSelf),
-        [isSelf],
+        () => PROFILE_TABS.filter((tabId) => {
+            if (tabId === "cv") {
+                return isSelf || hasPublicCv
+            }
+            return !isSectionHidden(tabId)
+        }),
+        [isSelf, hasPublicCv, isSectionHidden],
     )
 
     // active tab = the tab whose path is a PREFIX of the current pathname (so a
@@ -127,8 +167,15 @@ export const ProfileTabsBar = ({ username, isSelf, className }: ProfileTabsBarPr
                                                 className="size-5 shrink-0"
                                             />
                                             {/* mobile = icon only; label shows from md up */}
-                                            <span className="hidden md:inline">
+                                            <span className="hidden @app-md:inline">
                                                 {t(`publicProfile.tabs.${tabId}`)}
+                                                {/* owner-only marker on a section hidden from
+                                                    visitors (visitors never see the tab at all) */}
+                                                {isSelf && isSectionTab(tabId) && sectionVisibility?.[tabId] === false ? (
+                                                    <span className="ml-1 text-foreground-500">
+                                                        {t("publicProfile.tabHidden")}
+                                                    </span>
+                                                ) : null}
                                             </span>
                                         </span>
                                         <Tabs.Indicator />

@@ -48,7 +48,7 @@ const CTA: Record<TrackColor, string> = { accent: "text-accent-soft-foreground",
  * (icon tile + title + meta) over a vertical 4-tier path (foundation →
  * application, each rung = coloured dot + tier eyebrow + topic) with a "Vào khóa"
  * CTA pinned to the bottom. Self-contained bounded object — render 3 side-by-side
- * (`md:grid-cols-3 gap-6`) so the tracks read + compare without a shared-axis
+ * (`@app-md:grid-cols-3 gap-6`) so the tracks read + compare without a shared-axis
  * matrix. Colour comes from one semantic token via {@link TrackColor}.
  *
  * @param props - {@link TrackCardProps}

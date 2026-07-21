@@ -15,7 +15,7 @@ export const FlashcardQuizResultSkeleton = () => {
     return (
         <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
             {/* HERO — 3 MetricCard tiles (value + label), each Skeleton.Metric shares the real card's box */}
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <div className="grid grid-cols-1 gap-3 @app-sm:grid-cols-3">
                 <Skeleton.Metric />
                 <Skeleton.Metric />
                 <Skeleton.Metric />

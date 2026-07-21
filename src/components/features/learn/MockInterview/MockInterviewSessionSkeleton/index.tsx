@@ -23,16 +23,16 @@ export const MockInterviewSessionSkeleton = ({ className }: WithClassNames<undef
         <div className={cn("flex h-[calc(100dvh-4rem)] w-full flex-col", className)}>
             {/* sub-navbar band — mirrors WorkSessionHeader */}
             <div className="sticky top-16 z-10 border-b border-default bg-surface">
-                <div className="flex items-center gap-3 px-4 py-2 sm:px-6">
+                <div className="flex items-center gap-3 px-4 py-2 @app-sm:px-6">
                     {/* back-link ("Rời") */}
                     <Skeleton className="h-4 w-14 rounded" />
-                    <span className="hidden h-5 w-px shrink-0 bg-default sm:block" aria-hidden />
+                    <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />
                     {/* identity — persona avatar + name */}
                     <span className="flex min-w-0 items-center gap-2">
                         <Skeleton className="size-7 shrink-0 rounded-full" />
-                        <Skeleton className="hidden h-4 w-20 rounded sm:block" />
+                        <Skeleton className="hidden h-4 w-20 rounded @app-sm:block" />
                     </span>
-                    <span className="hidden h-5 w-px shrink-0 bg-default sm:block" aria-hidden />
+                    <span className="hidden h-5 w-px shrink-0 bg-default @app-sm:block" aria-hidden />
                     {/* "Câu x/N" counter */}
                     <Skeleton className="h-4 w-20 rounded" />
                     <span className="flex-1" />
@@ -40,14 +40,14 @@ export const MockInterviewSessionSkeleton = ({ className }: WithClassNames<undef
                     <Skeleton className="h-4 w-14 rounded" />
                 </div>
                 {/* progress-segment bar */}
-                <div className="flex gap-1 px-4 pb-2 sm:px-6" role="presentation">
+                <div className="flex gap-1 px-4 pb-2 @app-sm:px-6" role="presentation">
                     {Array.from({ length: PROGRESS_SEGMENTS }, (_, position) => (
                         <Skeleton key={position} className="h-1 flex-1 rounded-full" />
                     ))}
                 </div>
             </div>
 
-            <div className="grid min-h-0 flex-1 gap-6 overflow-y-auto px-4 py-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+            <div className="grid min-h-0 flex-1 gap-6 overflow-y-auto px-4 py-6 @app-sm:px-6 @app-lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
                 {/* LEFT — the conversation column (presence card + voice hero + action row) */}
                 <div className="flex min-w-0 flex-col gap-6">
                     {/* interviewer presence card — avatar + name/role + the question body */}

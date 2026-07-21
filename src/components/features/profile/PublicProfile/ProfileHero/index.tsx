@@ -98,7 +98,10 @@ export const ProfileHero = ({
         onToggle: onToggleFollow,
     } = useProfileFollow()
 
-    const isSelf = !!viewer && !!targetUserId && viewer.id === targetUserId
+    // "my own profile" = match by USERNAME (route is username-keyed; viewer.id vs the
+    // projected profile id can differ and falsely read as a visitor). id as fallback.
+    const isSelf = !!viewer && !!user
+        && ((!!viewer.username && viewer.username === user.username) || viewer.id === targetUserId)
     const hasDisplayName = Boolean(user?.displayName?.trim())
     const title = hasDisplayName ? user?.displayName : user?.username
     // recruiter CTA is the single primary action when the user opts in + exposes

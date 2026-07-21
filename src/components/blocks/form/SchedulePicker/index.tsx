@@ -156,7 +156,7 @@ export const SchedulePicker = ({
                 <div
                     role="group"
                     aria-label={slotsLabel}
-                    className="grid grid-cols-2 gap-2 sm:grid-cols-3"
+                    className="grid grid-cols-2 gap-2 @app-sm:grid-cols-3"
                 >
                     {availableSlots.map((slot) => {
                         const selected = slot.id === selectedSlotId

@@ -2,14 +2,18 @@ import type { GraphQLResponse } from "../../types"
 
 /** GraphQL `ContentAiSessionsRequest` body. */
 export interface ContentAiSessionsRequest {
-    /** Current content (anchors the list / scopes search to its course). */
-    contentId: string
+    /** Current content — lists THAT lesson's conversations. Omit it and pass `courseId` to list every conversation of the course (lesson-anchored + course-general mixed). */
+    contentId?: string
+    /** Course to list all conversations of, when `contentId` is omitted. */
+    courseId?: string
     /** When set, search ALL conversations in the course by title + message text. */
     search?: string
     /** Page size (recency-first). Defaults to 20. */
     limit?: number
     /** Rows to skip for pagination. Defaults to 0. */
     offset?: number
+    /** Include archived conversations in the list. Defaults to false. (Ignored when searching — search always spans archived.) */
+    includeArchived?: boolean
 }
 
 /** One content-AI conversation in the list / search results. */
@@ -22,9 +26,9 @@ export interface ContentAiSessionSummary {
     updatedAt: string
     /** Number of turns in the conversation. */
     messageCount: number
-    /** Content the conversation is anchored to. */
-    originContentId: string
-    /** Title of the anchoring content (search results only). */
+    /** Content the conversation is anchored to; null for a course-general conversation. */
+    originContentId: string | null
+    /** Title of the anchoring content (search results only); null for a course-general conversation. */
     originContentTitle: string | null
     /** First matching message (search results only). */
     snippet: string | null

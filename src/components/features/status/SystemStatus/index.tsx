@@ -110,7 +110,7 @@ export const SystemStatus = () => {
                             <h2 className="text-sm font-medium text-muted">
                                 {t("infraHeading")}
                             </h2>
-                            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                            <div className="grid grid-cols-1 gap-3 @app-sm:grid-cols-2 @app-lg:grid-cols-3">
                                 {components.map((component) => (
                                     <ComponentCard
                                         key={component.name}

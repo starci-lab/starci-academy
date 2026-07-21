@@ -43,6 +43,33 @@
  * arbitrary-shadow class exists in the compiled CSS. */
 @source inline("inset-shadow-[2px_0_0_0_var(--color-{red,orange,amber,yellow,lime,green,emerald,teal,cyan,sky,blue,indigo,violet,purple,fuchsia,pink,rose,slate,gray,zinc,neutral,stone}-{50,100,200,300,400,500,600,700,800,900,950})]");
 
+/* ── Container breakpoints that MIRROR the viewport scale ────────────────────
+ *
+ * The app shell is a SPLIT: the whole web app renders in a left column that a
+ * docked side panel (the content-AI chat rail) can narrow at will, so layout must
+ * respond to THAT COLUMN's width, not to the window's. Every `sm:`/`md:`/`lg:`/
+ * `xl:` inside the shell therefore moves to the container variants declared here.
+ *
+ * These names exist because Tailwind's BUILT-IN container scale is a different
+ * scale from the viewport one, and silently so:
+ *
+ *      viewport   lg: = 1024px          container   @lg: = 512px
+ *
+ * Rewriting `lg:` to `@lg:` would halve every breakpoint while still compiling —
+ * no type error, no lint error, just every layout switching at the wrong width.
+ * `@app-*` below is pinned to the SAME pixel values as the viewport scale, so the
+ * migration is a rename that PRESERVES behaviour: `lg:` → `@app-lg:`.
+ *
+ * Viewport variants stay correct for anything sizing itself against the SCREEN
+ * rather than the shell column — modal/drawer shells, toasts and other fixed
+ * overlays, which render outside the shell container entirely. */
+@theme {
+    --container-app-sm: 40rem;
+    --container-app-md: 48rem;
+    --container-app-lg: 64rem;
+    --container-app-xl: 80rem;
+}
+
 /* `blocks/cards/HighlightCard` — a single accent-colored ARC sweeping around the
  * wrapped card, sitting as its own INNER layer BEHIND it (a thin 2px sliver peeking out
  * past the edges — no blur/shadow, crisp — `card.md` §3j — thuần trang trí "nổi bật",
@@ -298,13 +325,16 @@ html {
 }
 
 /*
- * Modal gutter — HeroUI bakes `.modal__dialog { p-6 }` (24px). Standardise the
- * dialog gutter to p-4 (16px) app-wide so every modal reads tighter; the block
- * owns the padding (no per-modal `p-*` override on Modal.Body). The body's own
- * `-m-[3px] p-[3px]` focus-ring breathing is untouched.
+ * Modal gutter — HeroUI bakes `.modal__dialog { p-6 }` and `.alert-dialog__dialog
+ * { p-6 }` (24px). Standardise BOTH to p-3 (12px) app-wide so a modal / confirm
+ * dialog reads with the SAME outer gutter as a card (card = p-3, thầy 2026-07-18:
+ * "modal padding ngoài p-3 như card"); the block owns the padding (no per-modal
+ * `p-*` override on Modal.Body). The body's own `-m-[3px] p-[3px]` focus-ring
+ * breathing is untouched.
  */
-.modal__dialog {
-    padding: 1rem !important;
+.modal__dialog,
+.alert-dialog__dialog {
+    padding: 0.75rem !important;
 }
 /*
  * Full-bleed exception — the global search (cmd-k) palette IS the input; the

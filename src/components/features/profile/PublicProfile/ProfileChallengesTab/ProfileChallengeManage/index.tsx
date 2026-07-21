@@ -316,7 +316,7 @@ export const ProfileChallengeManage = ({
                                         <Typography type="body-sm" weight="medium" truncate className="underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
                                             {challenge.title}
                                         </Typography>
-                                        <div className="flex flex-wrap items-center gap-2 sm:grid sm:grid-cols-[6rem_5.5rem_1fr]">
+                                        <div className="flex flex-wrap items-center gap-2 @app-sm:grid @app-sm:grid-cols-[6rem_5.5rem_1fr]">
                                             {level ? <DifficultyChip difficulty={level} /> : null}
                                             {challenge.selectedLang ? <LanguageChip language={challenge.selectedLang} /> : null}
                                             {passedAt ? (

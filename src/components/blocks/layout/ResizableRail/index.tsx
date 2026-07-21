@@ -24,6 +24,25 @@ export interface ResizableRailProps extends WithClassNames<undefined> {
     maxWidth?: number
     /** Accessible name for the drag handle (separator). */
     ariaLabel?: string
+    /**
+     * Which edge the drag handle sits on. `"right"` (default) suits a LEFT rail
+     * (drag right = wider). `"left"` suits a RIGHT rail (handle on the inner edge,
+     * drag left = wider) — e.g. a right-docked chat panel.
+     */
+    handleSide?: "left" | "right"
+    /**
+     * Publish the live width to this CSS custom property on `:root` (e.g.
+     * `"--app-rail-w"`), resetting it to `0px` while unmounted.
+     *
+     * `position: fixed` chrome cannot be constrained by a docked rail through CSS
+     * alone: fixed elements resolve against the VIEWPORT, and the obvious lever
+     * (`contain: layout` on the sibling column) re-anchors them to that column's
+     * FULL box — which is page-tall, so anything `bottom-*` lands thousands of
+     * pixels below the fold. Exporting the width instead lets each piece of chrome
+     * keep viewport anchoring and simply subtract the rail:
+     * `right-[var(--app-rail-w,0px)]`.
+     */
+    widthVar?: string
 }
 
 /**
@@ -36,7 +55,7 @@ export interface ResizableRailProps extends WithClassNames<undefined> {
  * Positioning (sticky / hidden-on-mobile / max-height) is supplied by the caller
  * through `className`; this block only owns the width + the handle. The root is
  * NOT forced to `position: relative` — that would override a caller's
- * `lg:sticky`; the handle instead anchors to whatever positioned context the
+ * `@app-lg:sticky`; the handle instead anchors to whatever positioned context the
  * caller establishes (the sticky rail itself).
  *
  * @param props - {@link ResizableRailProps}
@@ -49,8 +68,12 @@ export const ResizableRail = ({
     minWidth = 256,
     maxWidth = 560,
     ariaLabel,
+    handleSide = "right",
+    widthVar,
     className,
 }: ResizableRailProps) => {
+    // a left-edge handle widens when dragged LEFT (negative deltaX), so flip the sign.
+    const dir = handleSide === "left" ? -1 : 1
     const [width, setWidth] = useState(defaultWidth)
     /** Latest width mirror so pointer-up can persist without a stale closure. */
     const widthRef = useRef(defaultWidth)
@@ -85,6 +108,33 @@ export const ResizableRail = ({
         }
     }, [storageKey, applyWidth])
 
+    // Re-clamp when the BOUNDS move under us. `clamp` alone is not enough: it only
+    // runs on hydrate/drag/keydown, so a caller that narrows `maxWidth` (e.g. the
+    // window shrank, and the rail must not squeeze the content column below its
+    // layout breakpoint) would keep rendering the old, now-illegal width until the
+    // reader happens to drag again. Deliberately NOT persisted — the stored width is
+    // the reader's PREFERENCE, and a temporary small window should not overwrite it.
+    useEffect(() => {
+        const bounded = clamp(widthRef.current)
+        if (bounded !== widthRef.current) {
+            widthRef.current = bounded
+            setWidth(bounded)
+        }
+    }, [clamp])
+
+    // Publish the live width so viewport-anchored `fixed` chrome can dodge the rail.
+    // Reset to `0px` on unmount, NOT delete: consumers read it with a `0px` fallback,
+    // but a stale non-zero value would leave every FAB floating in from the edge
+    // after the rail closes.
+    useEffect(() => {
+        if (!widthVar) {
+            return
+        }
+        const root = document.documentElement
+        root.style.setProperty(widthVar, `${Math.round(width)}px`)
+        return () => root.style.setProperty(widthVar, "0px")
+    }, [widthVar, width])
+
     const onPointerDown = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
         event.preventDefault()
         event.currentTarget.setPointerCapture(event.pointerId)
@@ -97,8 +147,8 @@ export const ResizableRail = ({
         if (!dragRef.current) {
             return
         }
-        applyWidth(dragRef.current.startWidth + (event.clientX - dragRef.current.startX))
-    }, [applyWidth])
+        applyWidth(dragRef.current.startWidth + dir * (event.clientX - dragRef.current.startX))
+    }, [applyWidth, dir])
 
     const onPointerUp = useCallback((event: React.PointerEvent<HTMLDivElement>) => {
         if (!dragRef.current) {
@@ -124,7 +174,7 @@ export const ResizableRail = ({
     return (
         <div className={cn(className)} style={{ width }}>
             {children}
-            {/* splitter: a thin line at the right edge that thickens to accent on hover/drag */}
+            {/* splitter: a thin line at the chosen edge that thickens to accent on hover/drag */}
             <div
                 role="separator"
                 aria-orientation="vertical"
@@ -134,7 +184,10 @@ export const ResizableRail = ({
                 onPointerMove={onPointerMove}
                 onPointerUp={onPointerUp}
                 onKeyDown={onKeyDown}
-                className="group absolute inset-y-0 right-0 z-20 flex w-3 translate-x-1/2 cursor-col-resize items-stretch justify-center outline-none"
+                className={cn(
+                    "group absolute inset-y-0 z-20 flex w-3 cursor-col-resize items-stretch justify-center outline-none",
+                    handleSide === "left" ? "left-0 -translate-x-1/2" : "right-0 translate-x-1/2",
+                )}
             >
                 <span className="h-full w-px bg-separator transition-colors group-hover:bg-accent group-focus-visible:bg-accent" />
             </div>

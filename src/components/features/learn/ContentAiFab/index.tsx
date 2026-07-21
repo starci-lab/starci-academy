@@ -3,19 +3,16 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import {
     Button,
-    Popover,
-    PopoverContent,
     cn,
 } from "@heroui/react"
 import { SparkleIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { useSmViewpoint } from "@/hooks/reuseables/useSmViewpoint"
-import { ContentAiChat } from "@/components/features/learn/ContentAiChat"
 import type { WithClassNames } from "@/modules/types/base/class-name"
 import { useAppSelector } from "@/redux/hooks"
 import { useContentAiChatOverlayState } from "@/hooks/zustand/overlay/hooks"
+import { useContentAiChatModeStore } from "@/hooks/zustand/contentAiChatMode/store"
 import { FloatingActionButton } from "@/components/blocks/buttons/FloatingActionButton"
-import { EntityLink } from "@/components/blocks/feed/EntityLink"
 
 /** localStorage key for the FAB's persisted vertical position (px from viewport bottom). */
 const STORAGE_KEY = "contentAiFabBottom"
@@ -32,26 +29,30 @@ const TOP_GUARD = 80
 export type ContentAiFabProps = WithClassNames<undefined>
 
 /**
- * Floating "ask StarCi AI" button shown while a content is open.
+ * Floating "ask StarCi AI" button shown anywhere inside a course — the TRIGGER for
+ * the chat, whose panel is presented per the learner's persisted choice
+ * ({@link useContentAiChatModeStore}), switchable in the panel header:
+ * - **rail** — a resizable right-edge side panel that reflows the lesson, rendered
+ *   as the learn shell's `rightRail` (see the learn `layout`); the FAB here is only
+ *   the draggable toggle, hidden while the rail is open (the rail carries its close).
+ * - **drawer** — the slide-in {@link import("@/components/drawers/ContentAiChatDrawer").ContentAiChatDrawer}
+ *   (rendered globally); the FAB is its trigger.
  *
- * - **Desktop:** a right-edge FAB the user can drag **vertically** to park it out of
- *   the way (position persisted in localStorage); clicking it opens the AI chat in an
- *   anchored {@link Popover} beside the bubble (read the lesson + chat side by side).
- * - **Mobile:** a fixed bottom-right FAB that opens the bottom-sheet
- *   {@link import("@/components/drawers/ContentAiChatDrawer").ContentAiChatDrawer} instead
- *   (a popover is too cramped on a phone).
- *
- * Open-state lives in the shared overlay store (`contentAiChat` key); the thread +
- * composer are rendered by {@link ContentAiChat}, which reads the active content from redux.
+ * MOBILE always uses the drawer regardless of the preference. Open-state lives in
+ * the shared overlay store (`contentAiChat` key).
  *
  * @param props - {@link ContentAiFabProps}
  */
 export const ContentAiFab = ({ className }: ContentAiFabProps) => {
     const t = useTranslations()
-    const contentId = useAppSelector((state) => state.content.id)
-    const contentTitle = useAppSelector((state) => state.content.entity?.title)
+    // the chat is available across the whole COURSE, not just the lesson reader —
+    // with a lesson open it grounds on that lesson, otherwise on the course.
+    const courseId = useAppSelector((state) => state.course.entity?.id)
     const { isOpen, setOpen, open } = useContentAiChatOverlayState()
+    const { mode } = useContentAiChatModeStore()
     const { isMobile } = useSmViewpoint()
+    // a phone is always the drawer — a side rail is too cramped there.
+    const effectiveMode = isMobile ? "drawer" : mode
 
     // vertical position of the FAB (px from viewport bottom); restored from localStorage on mount
     const [bottom, setBottom] = useState<number>(DEFAULT_BOTTOM)
@@ -63,7 +64,7 @@ export const ContentAiFab = ({ className }: ContentAiFabProps) => {
         }
     }, [])
 
-    // drag bookkeeping: a press opens the popover ONLY when it did not become a drag
+    // drag bookkeeping: a press opens the panel ONLY when it did not become a drag
     const draggingRef = useRef(false)
     const startRef = useRef<{ pointerY: number; bottom: number } | null>(null)
 
@@ -72,7 +73,6 @@ export const ContentAiFab = ({ className }: ContentAiFabProps) => {
         (event: React.PointerEvent) => {
             startRef.current = { pointerY: event.clientY, bottom }
             draggingRef.current = false
-            // capture so we keep getting move/up even if the pointer leaves the button
             event.currentTarget.setPointerCapture?.(event.pointerId)
         },
         [bottom],
@@ -105,25 +105,25 @@ export const ContentAiFab = ({ className }: ContentAiFabProps) => {
         [bottom],
     )
 
-    // swallow the popover toggle that React Aria fires at the END of a drag-release
-    const onOpenChange = useCallback(
-        (next: boolean) => {
-            if (draggingRef.current) {
-                draggingRef.current = false
-                return
-            }
-            setOpen(next)
-        },
-        [setOpen],
-    )
+    // a real press (not a drag) opens the panel; swallow the click that fires at the
+    // end of a drag-release.
+    const onOpen = useCallback(() => {
+        if (draggingRef.current) {
+            draggingRef.current = false
+            return
+        }
+        setOpen(true)
+    }, [setOpen])
 
-    // the FAB is only meaningful while a content is open
-    if (!contentId) {
+    // the FAB needs a COURSE to scope the conversation to (its enrollment owns the
+    // session). A lesson is NOT required: on flashcards / mind-map / leaderboard
+    // the chat opens course-general instead of hiding itself.
+    if (!courseId) {
         return null
     }
 
-    // MOBILE — fixed FAB that opens the bottom-sheet drawer (rendered by DrawerContainer)
-    if (isMobile) {
+    // DRAWER — the panel is the global ContentAiChatDrawer; here just the FAB trigger.
+    if (effectiveMode === "drawer") {
         return (
             <FloatingActionButton
                 onPress={open}
@@ -136,37 +136,30 @@ export const ContentAiFab = ({ className }: ContentAiFabProps) => {
         )
     }
 
-    // DESKTOP — draggable right-edge FAB anchoring the chat popover
+    // RAIL — the resizable rail is rendered by the learn shell (rightRail) when open.
+    // The FAB is the draggable toggle, hidden while the rail is open (the rail closes itself).
+    if (isOpen) {
+        return null
+    }
+
     return (
-        <Popover isOpen={isOpen} onOpenChange={onOpenChange}>
-            <Button
-                isIconOnly
-                variant="primary"
-                aria-label={t("contentAi.ask")}
-                onPointerDown={onPointerDown}
-                onPointerMove={onPointerMove}
-                onPointerUp={onPointerUp}
-                style={{ bottom }}
-                className={cn(
-                    // keep the bubble clear of the bottom safe area (home indicator) on mobile
-                    "fixed right-4 z-40 mb-[env(safe-area-inset-bottom)] touch-none rounded-full shadow-lg",
-                    className,
-                )}
-            >
-                {/* sparkle = AI intent; the isIconOnly button sizes the svg itself */}
-                <SparkleIcon />
-            </Button>
-            <PopoverContent placement="left bottom" className="w-[380px] p-0">
-                <div className="p-3">
-                    {/* entity reference to the content currently open (already the active
-                        route — no onPress: EntityLink renders it as a plain bold token
-                        rather than a dead/self-navigating link) */}
-                    <EntityLink label={contentTitle ?? t("contentAi.title")} />
-                </div>
-                <div className="p-3 pt-0">
-                    <ContentAiChat />
-                </div>
-            </PopoverContent>
-        </Popover>
+        <Button
+            isIconOnly
+            variant="primary"
+            aria-label={t("contentAi.ask")}
+            aria-expanded={isOpen}
+            onPointerDown={onPointerDown}
+            onPointerMove={onPointerMove}
+            onPointerUp={onPointerUp}
+            onPress={onOpen}
+            style={{ bottom }}
+            className={cn(
+                "fixed right-[calc(var(--app-rail-w,0px)+1rem)] z-40 mb-[env(safe-area-inset-bottom)] touch-none rounded-full shadow-lg",
+                className,
+            )}
+        >
+            {/* sparkle = AI intent; the isIconOnly button sizes the svg itself */}
+            <SparkleIcon />
+        </Button>
     )
 }

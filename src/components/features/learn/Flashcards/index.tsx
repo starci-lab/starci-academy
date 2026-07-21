@@ -352,7 +352,7 @@ export const Flashcards = ({
                         this was on a pill toggle before, which is what let QuizSession's OWN
                         inner setup tabs (also variant="primary") render at the exact same visual
                         weight as this outer mode switch — see tabs.md §0d for the fix. */}
-                    <div className="hidden lg:block">
+                    <div className="hidden @app-lg:block">
                         <TabsCard
                             variant="primary"
                             leftTabs={{

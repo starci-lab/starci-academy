@@ -66,7 +66,7 @@ export const LearnMobileTabBar = () => {
         <>
             {/* full-screen "Mục lục" overlay — course-nav + the lesson list */}
             {view === "map" && (
-                <div className="fixed inset-x-0 top-16 bottom-16 z-30 overflow-y-auto bg-background lg:hidden">
+                <div className="fixed top-16 bottom-16 left-0 right-[var(--app-rail-w,0px)] z-30 overflow-y-auto bg-background @app-lg:hidden">
                     <div className="flex flex-col gap-3 p-6">
                         {items.map((item) => (
                             <SidebarNavItem
@@ -85,7 +85,7 @@ export const LearnMobileTabBar = () => {
 
             {/* full-screen "Trên trang" overlay — the lesson outline + actions */}
             {view === "toc" && hasToc && (
-                <div className="fixed inset-x-0 top-16 bottom-16 z-30 overflow-y-auto bg-background lg:hidden">
+                <div className="fixed top-16 bottom-16 left-0 right-[var(--app-rail-w,0px)] z-30 overflow-y-auto bg-background @app-lg:hidden">
                     <OnThisPage mobile />
                 </div>
             )}
@@ -94,7 +94,7 @@ export const LearnMobileTabBar = () => {
             <nav
                 role="tablist"
                 aria-label={t("learnTabs.contents")}
-                className="fixed inset-x-0 bottom-0 z-40 flex h-16 border-t bg-background/90 backdrop-blur-xl lg:hidden"
+                className="fixed bottom-0 left-0 right-[var(--app-rail-w,0px)] z-40 flex h-16 border-t bg-background/90 backdrop-blur-xl @app-lg:hidden"
             >
                 {tabs.map((tab) => {
                     const isActive = view === tab.key

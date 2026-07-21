@@ -16,7 +16,7 @@ const ArchitectureScene = dynamic(
         loading: () => (
             <div
                 aria-hidden
-                className="h-[440px] w-full animate-pulse rounded-3xl bg-default/20 sm:h-[560px]"
+                className="h-[440px] w-full animate-pulse rounded-3xl bg-default/20 @app-sm:h-[560px]"
             />
         ),
     },

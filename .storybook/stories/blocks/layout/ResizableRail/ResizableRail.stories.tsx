@@ -1,5 +1,6 @@
+import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Label, Typography } from "@heroui/react"
+import { Button, Label, Typography } from "@heroui/react"
 
 import { ResizableRail } from "@/components/blocks/layout/ResizableRail"
 import { PracticeShellDemo } from "./components"
@@ -30,6 +31,39 @@ export const Default: Story = {
             />
         </div>
     ),
+}
+
+/** Use to inspect the moving-bounds branch: when the caller NARROWS `maxWidth`, an already-wider rail must snap back to the new bound on its own. */
+export const ShrinkingMaxWidth: Story = {
+    parameters: {
+        usage: "Use to inspect the moving-bounds branch. A caller may compute `maxWidth` from live measurements (the chat rail caps itself so the reading column never drops under its `lg` breakpoint), so the bound moves while the rail is mounted. Drag wide, then press the button: the rail must snap back to the new bound WITHOUT waiting for the next drag. The persisted width is deliberately left alone — it is the reader's preference, and a temporarily small window must not overwrite it.",
+    },
+    render: () => {
+        const [maxWidth, setMaxWidth] = useState(560)
+        return (
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                    <Label>Bounds that move under the rail</Label>
+                    <Typography type="body-sm" color="muted">
+                        drag the rail out to its full {maxWidth}px, then shrink the cap. The rail re-clamps itself; it must not sit at an illegal width until the reader drags again.
+                    </Typography>
+                    <div className="flex gap-2">
+                        <Button size="sm" variant="secondary" onPress={() => setMaxWidth(560)}>
+                            maxWidth 560
+                        </Button>
+                        <Button size="sm" variant="secondary" onPress={() => setMaxWidth(360)}>
+                            maxWidth 360
+                        </Button>
+                    </div>
+                </div>
+                <PracticeShellDemo
+                    storageKey="storybook.practice.rail.bounds.width"
+                    heightClassName="h-[32rem]"
+                    maxWidth={maxWidth}
+                />
+            </div>
+        )
+    },
 }
 
 /** Use to inspect the overflow branch: a table of contents taller than the shell must scroll INSIDE the rail, never push the shell taller or spill outside. */

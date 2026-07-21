@@ -39,6 +39,14 @@ export interface PageHeaderProps extends WithClassNames<undefined> {
      * title block. Omit when the header carries no stats.
      */
     meta?: ReactNode
+    /**
+     * Title scale. `"page"` (default) = `Typography.Heading` level 3 — a route's
+     * OWN page title. `"compact"` = body-size bold, for a header that labels a
+     * PANE/PHASE inside an existing page shell, where a full page title
+     * out-shouts the surface it sits on (e.g. the playground Setup pane, which
+     * already lives under the session header + Setup/Lab tab strip).
+     */
+    size?: "page" | "compact"
 }
 
 /**
@@ -67,6 +75,7 @@ export const PageHeader = ({
     breadcrumb,
     actions,
     meta,
+    size = "page",
     className,
 }: PageHeaderProps) => {
     return (
@@ -82,10 +91,14 @@ export const PageHeader = ({
             <div className="flex items-start justify-between gap-3">
                 {/* Left column: stacked title and optional description */}
                 <div className="flex min-w-0 flex-col gap-2">
-                    <Typography.Heading level={3} weight="bold">{title}</Typography.Heading>
+                    {size === "compact" ? (
+                        <Typography type="body" weight="bold">{title}</Typography>
+                    ) : (
+                        <Typography.Heading level={3} weight="bold">{title}</Typography.Heading>
+                    )}
                     {description ? (
                         // clamp to 2 lines on mobile (keep the header short on a phone); full on sm+
-                        <Typography type="body-sm" color="muted" className="line-clamp-2 sm:line-clamp-none">
+                        <Typography type="body-sm" color="muted" className="line-clamp-2 @app-sm:line-clamp-none">
                             {description}
                         </Typography>
                     ) : null}

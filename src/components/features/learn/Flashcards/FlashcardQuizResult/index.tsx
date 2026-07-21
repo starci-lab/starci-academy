@@ -123,7 +123,7 @@ export const FlashcardQuizResult = ({
         // directly instead of relying on it (2026-07-12, thầy: "thiếu padding
         // p-6"). `PageHeader` itself only owns header→content spacing (gap-10),
         // never page-level padding.
-        <div className={cn("flex flex-col gap-6 px-4 py-6 sm:px-6", className)}>
+        <div className={cn("flex flex-col gap-6 px-4 py-6 @app-sm:px-6", className)}>
             <PageHeader
                 className="mx-auto w-full max-w-3xl"
                 breadcrumb={<BackLink label={t("flashcard.title")} onPress={onBack} />}
@@ -174,7 +174,7 @@ export const FlashcardQuizResult = ({
                         return (
                             <>
                                 {/* HERO — three authoritative metric tiles (outcome first). */}
-                                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                                <div className="grid grid-cols-1 gap-3 @app-sm:grid-cols-3">
                                     <MetricCard
                                         value={data.coverage != null ? `${Math.round(data.coverage * 100)}%` : "—"}
                                         label={t("flashcard.quiz.result.coverageLabel")}

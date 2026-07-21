@@ -39,7 +39,7 @@ export const TierGrid = ({
     const currentTier = mySettings?.tier ?? null
 
     return (
-        <div className={cn("grid grid-cols-1 gap-6 sm:grid-cols-2", className)}>
+        <div className={cn("grid grid-cols-1 gap-6 @app-sm:grid-cols-2", className)}>
             <FreeTierCard isCurrent={currentTier === null} />
             {tiers.map((tier) => (
                 <TierCard

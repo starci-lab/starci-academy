@@ -17,7 +17,7 @@ const ArchitectureScene = dynamic(
     () => import("@/components/blocks/marketing/ArchitectureScene").then((mod) => mod.ArchitectureScene),
     {
         ssr: false,
-        loading: () => <Skeleton className="h-[440px] w-full rounded-3xl sm:h-[560px]" />,
+        loading: () => <Skeleton className="h-[440px] w-full rounded-3xl @app-sm:h-[560px]" />,
     },
 )
 

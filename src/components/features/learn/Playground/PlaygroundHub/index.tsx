@@ -2,13 +2,12 @@
 
 import React, { useCallback } from "react"
 import { useLocale, useTranslations } from "next-intl"
-import { useRouter } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { Typography } from "@heroui/react"
 import { TerminalWindowIcon } from "@phosphor-icons/react"
 import { PlaygroundCard } from "@/components/blocks/cards/PlaygroundCard"
 import { EmptyContent } from "@/components/blocks/async/EmptyContent"
 import { useQueryPlaygroundsSwr } from "@/hooks/swr/api/graphql/queries/useQueryPlaygroundsSwr"
-import { useAppSelector } from "@/redux/hooks"
 import { pathConfig } from "@/resources/path"
 
 /**
@@ -22,7 +21,10 @@ export const PlaygroundHub = () => {
     const t = useTranslations()
     const locale = useLocale()
     const router = useRouter()
-    const courseDisplayId = useAppSelector((state) => state.course.displayId)
+    // Course from the URL, NOT the store — playgrounds are shared by every course,
+    // so a stale `state.course.displayId` navigates the learner out of theirs.
+    const params = useParams()
+    const courseDisplayId = String(params.courseId ?? "")
     const { data: playgrounds, isLoading } = useQueryPlaygroundsSwr()
 
     const onOpen = useCallback(
@@ -50,7 +52,7 @@ export const PlaygroundHub = () => {
                     description={t("playground.hub.emptyDescription")}
                 />
             ) : (
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4 @app-sm:grid-cols-2">
                     {(playgrounds ?? []).map((playground) => (
                         <PlaygroundCard
                             key={playground.id}

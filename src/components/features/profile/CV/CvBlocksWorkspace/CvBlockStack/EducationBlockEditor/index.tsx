@@ -59,7 +59,7 @@ export const EducationBlockEditor = ({ className, block, onChange }: EducationBl
                     onMoveUp={index > 0 ? () => onMove(index, -1) : undefined}
                     onMoveDown={index < block.items.length - 1 ? () => onMove(index, 1) : undefined}
                 >
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-3 @app-sm:grid-cols-2">
                         <TextField variant="secondary">
                             <Label htmlFor={`cv-education-school-${item.id}`}>
                                 {t("cv.blocks.education.fields.school")}

@@ -19,13 +19,13 @@ export const CvWorkspaceSkeleton = ({ className }: CvWorkspaceSkeletonProps) => 
         <div className={cn("flex flex-col gap-6", className)}>
             <Skeleton className="h-10 w-full max-w-md rounded-2xl" />
             <Skeleton className="h-16 w-full rounded-2xl" />
-            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <div className="grid grid-cols-1 gap-6 @app-lg:grid-cols-2">
                 <div className="flex flex-col gap-3">
                     <Skeleton className="h-24 w-full rounded-2xl" />
                     <Skeleton className="h-24 w-full rounded-2xl" />
                     <Skeleton className="h-24 w-full rounded-2xl" />
                 </div>
-                <Skeleton className="h-[300px] w-full rounded-2xl lg:h-[75vh]" />
+                <Skeleton className="h-[300px] w-full rounded-2xl @app-lg:h-[75vh]" />
             </div>
         </div>
     )

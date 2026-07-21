@@ -132,6 +132,15 @@ export const SizesAndStates: Story = {
             </div>
             <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-2">
+                    <Label>Settings save (xl-bump)</Label>
+                    <Typography type="body-sm" color="muted">
+                        The "Lưu thay đổi" button ending every settings page — HeroUI Button has no size xl, so it&apos;s size lg + a bump className (h-12 px-8 text-base). Same treatment on ALL settings pages. Ref button.md §9.
+                    </Typography>
+                </div>
+                <Button variant="primary" size="lg" className="h-12 self-start px-8 text-base">Lưu thay đổi</Button>
+            </div>
+            <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
                     <Label>Disabled</Label>
                     <Typography type="body-sm" color="muted">
                         Not clickable because a condition isn't met yet. When waiting on the network use the isPending prop, don't hand-roll isDisabled + a ternary.

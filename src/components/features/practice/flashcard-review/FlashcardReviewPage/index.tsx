@@ -169,7 +169,7 @@ export const FlashcardReviewPage = ({
 
             {/* the card: front always, back after flip */}
             <Card>
-                <CardContent className="flex flex-col gap-3 p-6 sm:p-7">
+                <CardContent className="flex flex-col gap-3 p-6 @app-sm:p-7">
                     <span className="text-xl font-semibold text-foreground">
                         {current.front}
                     </span>
@@ -186,7 +186,7 @@ export const FlashcardReviewPage = ({
 
             {/* flip → reveal; revealed → grade buttons */}
             {flipped ? (
-                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                <div className="grid grid-cols-2 gap-2 @app-sm:grid-cols-4">
                     {GRADES.map((item) => (
                         <Button
                             key={item.grade}

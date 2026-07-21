@@ -102,10 +102,13 @@ export const PracticeShellDemo = ({
     storageKey,
     heightClassName,
     defaultWidth = 300,
+    maxWidth = 420,
 }: {
     storageKey: string
     heightClassName: string
     defaultWidth?: number
+    /** Exposed so a story can MOVE the bound while the rail is mounted. */
+    maxWidth?: number
 }) => {
     const t = useTranslations()
 
@@ -116,7 +119,7 @@ export const PracticeShellDemo = ({
                 storageKey={storageKey}
                 defaultWidth={defaultWidth}
                 minWidth={256}
-                maxWidth={420}
+                maxWidth={maxWidth}
                 ariaLabel={t("practice.rail.topicsAria")}
             >
                 <PracticeTopicsBody className="min-h-0 flex-1" />

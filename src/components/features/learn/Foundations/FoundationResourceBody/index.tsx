@@ -35,7 +35,8 @@ export const FoundationResourceBody = ({
         // reading article sits in a "paper" Card like the lesson reader's ContentBody
         // (not flat on the canvas) — markdown is the reading content, the card is its surface.
         return (
-            <Card className={className}>
+            // data-ai-selectable: the reading article is a valid "ask AI about this passage" region
+            <Card className={className} data-ai-selectable>
                 <CardContent>
                     <MarkdownContent markdown={foundation.value ?? ""} />
                 </CardContent>

@@ -88,3 +88,45 @@ export const Disabled: Story = {
         </div>
     ),
 }
+
+/**
+ * SETTINGS ROW GROUP — the canonical layout for a stack of switch options on a settings
+ * page (privacy, preferences). Each row = `label (+ body-xs muted description) ↔ Switch`,
+ * `flex items-start justify-between gap-3 **my-2**`; the wrapping column is `flex flex-col
+ * gap-3` — the vertical rhythm is gap-3 (container) + my-2 (per row), NOT gap-0 (thầy
+ * 2026-07-18 "my-2 nhưng mà vẫn gap-3"). The label is a SIBLING of the Switch (never inside
+ * `Switch.Content` — react-aria slot). Real case: `/profile/settings/privacy`. Ref
+ * `patterns/form-flow.md`.
+ */
+export const SettingsRows: Story = {
+    parameters: {
+        usage:
+            "Stack of switch options on a settings page: each row is label + body-xs description ↔ Switch, " +
+            "wrapped `flex items-start justify-between gap-3 my-2`; the column is `flex flex-col gap-3`. Vertical " +
+            "rhythm = gap-3 (container) + my-2 (per row). Label is a sibling of the Switch, never inside Switch.Content.",
+    },
+    render: () => (
+        <div className="flex w-96 flex-col gap-3">
+            {[
+                { label: "Dự án", desc: "Dự án cá nhân & capstone bạn ghim — cho nhà tuyển dụng xem sản phẩm thật." },
+                { label: "Thử thách", desc: "Bài nộp coding-challenge đã chấm điểm (theo khóa, độ khó, ngôn ngữ)." },
+                { label: "Kỹ năng", desc: "Chỉ số coding, phân bố độ khó/chủ đề/ngôn ngữ & lịch sử giải bài." },
+                { label: "Hoạt động", desc: "Dòng thời gian đóng góp — bạn học đều đặn tới đâu." },
+            ].map((row) => (
+                <div key={row.label} className="my-2 flex items-start justify-between gap-3">
+                    <div className="flex min-w-0 flex-col gap-0">
+                        <Label>{row.label}</Label>
+                        <Typography type="body-xs" color="muted">{row.desc}</Typography>
+                    </div>
+                    <Switch defaultSelected className="shrink-0" aria-label={row.label}>
+                        <Switch.Content>
+                            <Switch.Control>
+                                <Switch.Thumb />
+                            </Switch.Control>
+                        </Switch.Content>
+                    </Switch>
+                </div>
+            ))}
+        </div>
+    ),
+}

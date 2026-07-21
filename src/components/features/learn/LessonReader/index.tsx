@@ -327,8 +327,9 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                     reads inside a centered "paper" card on the page canvas. */}
                 {isFullWidthTab ? (
                     <div className="relative w-full">
-                        {/* id scopes the "on this page" rail's heading scan (#lesson-article [data-toc]) */}
-                        <div id="lesson-article">
+                        {/* id scopes the "on this page" rail's heading scan (#lesson-article [data-toc]);
+                            data-ai-selectable makes the body a valid "ask AI about this passage" region */}
+                        <div id="lesson-article" data-ai-selectable>
                             {bodyComponent}
                         </div>
                     </div>
@@ -336,7 +337,7 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                     // capped reading width but flat — the Challenges body is already a list
                     // of cards, so it sits directly on the canvas (no paper card-in-card)
                     <div className="mx-auto w-full max-w-3xl">
-                        <div id="lesson-article">
+                        <div id="lesson-article" data-ai-selectable>
                             {bodyComponent}
                         </div>
                     </div>
@@ -348,7 +349,7 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                                     is otherwise only discoverable AFTER selecting) */}
                                 {!isLocked ? <SelectionHintCallout /> : null}
                                 <div className="relative">
-                                    <div id="lesson-article" className={cn(isLocked && "select-none")}>
+                                    <div id="lesson-article" data-ai-selectable className={cn(isLocked && "select-none")}>
                                         {bodyComponent}
                                     </div>
                                     {/* Medium-style teaser: fade the tail of the body into the
@@ -376,7 +377,7 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                             </CardContent>
                         </Card>
                         {/* completion handoff: after reading, the natural next rung is
-                            this lesson's own challenges. MOBILE-ONLY (`lg:hidden`): on
+                            this lesson's own challenges. MOBILE-ONLY (`@app-lg:hidden`): on
                             desktop the right rail's "Luyện tập bài này" already surfaces
                             these challenges with a CTA, so a 2nd accent CTA here would be
                             a duplicate / accent-flood. Fired only on the Content tab when
@@ -385,7 +386,7 @@ export const LessonReader = ({ className }: LessonReaderProps) => {
                         {selectedTabKey === ContentTab.Content
                             && (content?.challenges?.length ?? 0) > 0 ? (
                                 <UpNextCard
-                                    className="mx-auto w-full max-w-3xl lg:hidden"
+                                    className="mx-auto w-full max-w-3xl @app-lg:hidden"
                                     eyebrow={t("content.upNext.eyebrow")}
                                     title={t("content.upNext.challengesTitle", {
                                         count: content?.challenges?.length ?? 0,

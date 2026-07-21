@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Prototype — Vòng đời mã ghép nối (Playground Setup)</title>
+<style>
+  /* Token lấy từ globals.css THẬT (light mode) — để thầy soi đúng màu app đang chạy. */
+  :root {
+    --accent: oklch(70.03% 0.2092 354.13);
+    --accent-foreground: oklch(100% 0 0);
+    --background: oklch(97.02% 0.0015 354.13);
+    --overlay: oklch(100.00% 0.0004 354.13);
+    --foreground: oklch(21.03% 0.0015 354.13);
+    --muted: oklch(55.17% 0.0030 354.13);
+    --default: oklch(94.00% 0.0015 354.13);
+    --border: oklch(90.00% 0.0015 354.13);
+    --danger: oklch(65.32% 0.2335 37.78);
+    --success: oklch(62% 0.17 150);
+    --radius-3xl: 24px;
+    --radius-2xl: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--background); color: var(--foreground);
+    font: 14px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+    padding: 24px 16px 96px;
+  }
+  .wrap { max-width: 780px; margin: 0 auto; }
+  h1 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  .lede { color: var(--muted); font-size: 13px; margin-bottom: 24px; }
+
+  .state-label {
+    display: flex; align-items: baseline; gap: 8px;
+    margin: 28px 0 8px; font-size: 13px; font-weight: 600;
+  }
+  .state-label .when { color: var(--muted); font-weight: 400; font-size: 12px; }
+
+  /* ===== Khối bước Setup (LabeledCard) ===== */
+  .step-title { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+  .card {
+    background: var(--overlay); border-radius: var(--radius-3xl);
+    padding: 12px; box-shadow: 0 1px 2px rgba(0,0,0,.04);
+  }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .explain { color: var(--muted); font-size: 13px; }
+  .chip {
+    font-size: 12px; padding: 2px 10px; border-radius: 999px;
+    background: var(--default); color: var(--muted); white-space: nowrap;
+  }
+  .chip.ready { background: color-mix(in oklab, var(--success) 15%, white); color: var(--success); }
+
+  /* code block = recessed well (đang nằm trong card bg-overlay) */
+  .code {
+    margin-top: 12px; background: var(--background);
+    border-radius: var(--radius-2xl); overflow: hidden;
+  }
+  .code .bar {
+    font-size: 11px; letter-spacing: .04em; color: var(--muted);
+    padding: 8px 12px; display: flex; justify-content: space-between;
+  }
+  .code pre {
+    padding: 0 12px 12px; font: 12.5px/1.6 ui-monospace, "SF Mono", Menlo, monospace;
+    overflow-x: auto; color: #2f7d32;
+  }
+  .code pre .pkg { color: #b45309; }
+
+  .hint { color: var(--muted); font-size: 12px; margin-top: 8px; }
+  .countdown { color: var(--muted); font-size: 12px; margin-top: 8px; }
+  .countdown.low { color: var(--danger); }
+  .err { color: var(--danger); font-size: 13px; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px; margin-top: 12px;
+    padding: 6px 14px; border-radius: 999px; border: 1px solid var(--border);
+    background: var(--default); color: var(--foreground);
+    font: inherit; font-size: 13px; cursor: pointer;
+  }
+  .btn svg { width: 14px; height: 14px; }
+
+  .note {
+    margin-top: 10px; font-size: 12px; color: var(--muted);
+    border-left: 2px solid var(--border); padding-left: 10px;
+  }
+  .note b { color: var(--foreground); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Vòng đời mã ghép nối — 4 trạng thái</h1>
+  <p class="lede">
+    Bước “1. Cấu hình StarCi Agent” trên trang Setup, dựng đúng theo code đang chạy
+    (<code>PlaygroundPrepare.renderPairBody</code>). TTL = 15 phút.
+  </p>
+
+  <!-- ── 1 ── -->
+  <div class="state-label">① Mã còn hạn <span class="when">— vừa vào trang / vừa lấy mã mới</span></div>
+  <p class="step-title">1. Cấu hình StarCi Agent</p>
+  <div class="card">
+    <div class="row">
+      <span class="explain">Agent là cầu nối giữa máy bạn và bài học: nó chuyển tiếp output lệnh lên trình duyệt và tự chấm từng bước.</span>
+      <span class="chip">Chờ</span>
+    </div>
+    <div class="code">
+      <div class="bar"><span>BASH</span><span>⧉</span></div>
+      <pre>npx <span class="pkg">@starciacademy/playground-docker-agent</span> 995f5b32-7a75-4515-a78c-834e4d2bcc03</pre>
+    </div>
+    <p class="countdown">Mã ghép nối còn hiệu lực 14:25.</p>
+    <p class="hint">Cần Node.js ≥ 18 (npx tự tải). GIỮ cửa sổ terminal đó mở suốt buổi thực hành.</p>
+    <button class="btn">↻ Kiểm tra lại</button>
+  </div>
+
+  <!-- ── 2 ── -->
+  <div class="state-label">② Sắp hết hạn <span class="when">— dưới 1 phút</span></div>
+  <p class="step-title">1. Cấu hình StarCi Agent</p>
+  <div class="card">
+    <div class="row">
+      <span class="explain">Agent là cầu nối giữa máy bạn và bài học: nó chuyển tiếp output lệnh lên trình duyệt và tự chấm từng bước.</span>
+      <span class="chip">Chờ</span>
+    </div>
+    <div class="code">
+      <div class="bar"><span>BASH</span><span>⧉</span></div>
+      <pre>npx <span class="pkg">@starciacademy/playground-docker-agent</span> 995f5b32-7a75-4515-a78c-834e4d2bcc03</pre>
+    </div>
+    <p class="countdown low">Mã ghép nối còn hiệu lực 0:42.</p>
+    <p class="hint">Cần Node.js ≥ 18 (npx tự tải). GIỮ cửa sổ terminal đó mở suốt buổi thực hành.</p>
+    <button class="btn">↻ Kiểm tra lại</button>
+  </div>
+  <p class="note">
+    Dưới <b>60 giây</b> (<code>PAIR_CODE_URGENT_SECONDS</code>) countdown chuyển tông danger.
+    Chữ mờ đọc như thông tin nền cho tới đúng lúc mã chết — mà đó lại là lúc cần thúc.
+  </p>
+
+  <!-- ── 3 ── -->
+  <div class="state-label">③ Hết hạn <span class="when">— quá 15 phút mà chưa ai pair (đây là cái thầy hỏi)</span></div>
+  <p class="step-title">1. Cấu hình StarCi Agent</p>
+  <div class="card">
+    <div class="row">
+      <span class="explain">Agent là cầu nối giữa máy bạn và bài học: nó chuyển tiếp output lệnh lên trình duyệt và tự chấm từng bước.</span>
+      <span class="chip">Chờ</span>
+    </div>
+    <p class="err" style="margin-top:12px">Mã ghép nối đã hết hạn nên chạy lệnh cũ sẽ không nối được. Lấy mã mới rồi chạy lại.</p>
+    <button class="btn">↻ Lấy mã mới</button>
+    <p class="hint">Cần Node.js ≥ 18 (npx tự tải). GIỮ cửa sổ terminal đó mở suốt buổi thực hành.</p>
+  </div>
+  <p class="note">
+    Hai thứ biến mất ở đây: <b>khối lệnh</b> (để mã chết vẫn copy được là mời học viên dán
+    rồi nhận lỗi khó hiểu) và <b>nút “Kiểm tra lại”</b> — lúc này pair là bất khả thi nên nó
+    chỉ có thể trả lời “chưa nối được agent”; một nút chắc chắn thất bại thì tệ hơn là không có.
+    Còn đúng <b>một</b> hành động: lấy mã mới.
+  </p>
+
+  <!-- ── 4 ── -->
+  <div class="state-label">④ Đã pair <span class="when">— agent đang chạy</span></div>
+  <p class="step-title">1. Cấu hình StarCi Agent</p>
+  <div class="card">
+    <div class="row">
+      <span class="explain">Agent là cầu nối giữa máy bạn và bài học: nó chuyển tiếp output lệnh lên trình duyệt và tự chấm từng bước.</span>
+      <span class="chip ready">Sẵn sàng</span>
+    </div>
+    <div class="code">
+      <div class="bar"><span>BASH</span><span>⧉</span></div>
+      <pre>npx <span class="pkg">@starciacademy/playground-docker-agent</span> 995f5b32-7a75-4515-a78c-834e4d2bcc03</pre>
+    </div>
+    <p class="hint">Cần Node.js ≥ 18 (npx tự tải). GIỮ cửa sổ terminal đó mở suốt buổi thực hành.</p>
+    <button class="btn">↻ Kiểm tra lại</button>
+  </div>
+  <p class="note">
+    <b>Countdown biến mất</b> khi đã pair — mã đã xong việc, phiên vẫn sống. Nếu vẫn đếm ngược
+    thì học viên đọc nhầm thành “phiên sắp hết hạn”.
+  </p>
+
+</div>
+</body>
+</html>

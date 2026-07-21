@@ -26,7 +26,7 @@ export const AiSubscriptionSkeleton = ({
     className,
 }: AiSubscriptionSkeletonProps) => {
     return (
-        <div className={cn("grid grid-cols-1 gap-6 sm:grid-cols-2", className)}>
+        <div className={cn("grid grid-cols-1 gap-6 @app-sm:grid-cols-2", className)}>
             <FreeTierCardSkeleton />
             <TierCardSkeleton />
             <TierCardSkeleton />

@@ -35,8 +35,14 @@ export interface AskContentAiSocketIoPayload {
         streamId: string
         /** Conversation (session) this turn belongs to — the saved turn is keyed by it. */
         sessionId: string
-        /** Content the question is grounded on. */
-        contentId: string
+        /** Content the question is grounded on; omit with `courseId` for a course-general conversation. */
+        contentId?: string | null
+        /** Capstone task the question is grounded on (task scope). */
+        taskId?: string | null
+        /** Foundation the question is grounded on (foundation scope). */
+        foundationId?: string | null
+        /** Course the question is grounded on, when `contentId` is omitted (course-general conversation). */
+        courseId?: string | null
         /** The learner's question. */
         question: string
         /** Recent prior turns (oldest first) for short-term memory. */

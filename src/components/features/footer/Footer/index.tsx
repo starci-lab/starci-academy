@@ -76,9 +76,9 @@ export const Footer = ({ className }: FooterProps) => {
 
     return (
         <footer className={cn("border-t border-default bg-surface", className)}>
-            <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+            <div className="mx-auto w-full max-w-6xl px-4 py-12 @app-sm:px-6 @app-lg:px-8">
                 {/* top: brand+manifesto+socials (left) · link columns (right) */}
-                <div className="flex flex-col justify-between gap-10 md:flex-row">
+                <div className="flex flex-col justify-between gap-10 @app-md:flex-row">
                     <div className="flex max-w-sm flex-col gap-3">
                         {/* the column is a flex-col (align-items: stretch by default), which
                             would otherwise stretch the lockup's auto width to the full column
@@ -103,14 +103,14 @@ export const Footer = ({ className }: FooterProps) => {
                         </div>
                     </div>
 
-                    <div className="flex gap-12 sm:gap-16">
+                    <div className="flex gap-12 @app-sm:gap-16">
                         <FooterNavColumn title={t("footer.exploreTitle")} links={exploreLinks} />
                         <FooterNavColumn title={t("footer.supportTitle")} links={supportLinks} />
                     </div>
                 </div>
 
                 {/* bottom bar: copyright + credit (left) · legal stubs (right) */}
-                <div className="mt-10 flex flex-col gap-3 border-t border-default pt-6 sm:flex-row sm:items-center sm:justify-between">
+                <div className="mt-10 flex flex-col gap-3 border-t border-default pt-6 @app-sm:flex-row @app-sm:items-center @app-sm:justify-between">
                     <Typography type="body-xs" color="muted">
                         {t("footer.copyright", { year })} · {t("footer.madeBy")}
                     </Typography>

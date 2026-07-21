@@ -125,7 +125,7 @@ export const Bookmarks = () => {
                         {/* search row: primary input (left, on the page background → no
                             variant) balanced by the result count (right) */}
                         <div className="flex flex-wrap items-center justify-between gap-3">
-                            <TextField className="w-full sm:max-w-sm">
+                            <TextField className="w-full @app-sm:max-w-sm">
                                 <Input
                                     type="search"
                                     aria-label={t("bookmarks.searchPlaceholder")}

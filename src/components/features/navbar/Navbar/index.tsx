@@ -102,18 +102,18 @@ export const Navbar = ({ className }: NavbarProps) => {
 
                 <div className="flex items-center justify-end gap-2">
                     {/* desktop: full input-style search; mobile: just an icon */}
-                    <SearchButton className="hidden w-[260px] md:flex" />
+                    <SearchButton className="hidden w-[260px] @app-md:flex" />
                     <Button
                         isIconOnly
                         variant="tertiary"
                         aria-label={t("search.label")}
-                        className="md:hidden"
+                        className="@app-md:hidden"
                         onPress={openSearch}
                     >
                         <SearchIcon className="size-5" />
                     </Button>
                     {/* desktop: language + theme inline; on mobile they move into the drawer */}
-                    <div className="hidden items-center gap-2 md:flex">
+                    <div className="hidden items-center gap-2 @app-md:flex">
                         <LanguageDropdown />
                         <DarkLightModeSwitch />
                     </div>
@@ -125,7 +125,7 @@ export const Navbar = ({ className }: NavbarProps) => {
                         isIconOnly
                         variant="ghost"
                         aria-label={t("nav.mobileMenu")}
-                        className="md:hidden"
+                        className="@app-md:hidden"
                         onPress={() => setDrawerOpen(true)}
                     >
                         <MenuIcon className="size-5" />

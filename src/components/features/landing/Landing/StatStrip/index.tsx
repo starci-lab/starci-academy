@@ -91,10 +91,10 @@ const Stat = ({ icon, value, label }: { icon: React.ReactNode, value: number, la
     return (
         <div
             ref={ref}
-            className="flex flex-col items-center gap-2 px-4 md:border-l md:border-default md:first:border-l-0"
+            className="flex flex-col items-center gap-2 px-4 @app-md:border-l @app-md:border-default @app-md:first:border-l-0"
         >
             <span className="text-accent-soft-foreground [&>svg]:size-6">{icon}</span>
-            <div className="text-4xl font-semibold tracking-tight tabular-nums text-foreground md:text-5xl">
+            <div className="text-4xl font-semibold tracking-tight tabular-nums text-foreground @app-md:text-5xl">
                 {shown.toLocaleString(locale)}
             </div>
             <Typography type="body-sm" color="muted">
@@ -125,7 +125,7 @@ export const StatStrip = ({ className }: StatStripProps) => {
             <AsyncContent
                 isLoading={isLoading && !data && !error}
                 skeleton={(
-                    <div className="grid grid-cols-2 gap-y-8 md:grid-cols-4 md:gap-0">
+                    <div className="grid grid-cols-2 gap-y-8 @app-md:grid-cols-4 @app-md:gap-0">
                         {[0, 1, 2, 3].map((cell) => (
                             <div key={cell} className="flex flex-col items-center gap-2 px-4">
                                 <Skeleton className="size-6 rounded-full" />
@@ -137,7 +137,7 @@ export const StatStrip = ({ className }: StatStripProps) => {
                 )}
             >
                 {stats ? (
-                    <div className="grid grid-cols-2 gap-y-8 md:grid-cols-4 md:gap-0">
+                    <div className="grid grid-cols-2 gap-y-8 @app-md:grid-cols-4 @app-md:gap-0">
                         <Stat
                             icon={<UsersIcon aria-hidden focusable="false" />}
                             value={stats.totalLearners}

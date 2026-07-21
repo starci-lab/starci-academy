@@ -73,7 +73,7 @@ export const PersonalBlockEditor = ({ className, block, onChange }: PersonalBloc
     }
 
     return (
-        <div className={cn("grid grid-cols-1 gap-3 sm:grid-cols-3", className)}>
+        <div className={cn("grid grid-cols-1 gap-3 @app-sm:grid-cols-3", className)}>
             {FIELD_KEYS.map((key) => {
                 const value = typeof fields[key] === "string" ? (fields[key] as string) : ""
 

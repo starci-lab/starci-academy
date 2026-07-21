@@ -25,11 +25,21 @@ const query1 = gql`
           replyCount
           answeredByFounder
           isFounderAuthor
+          isPinned
+          reactions {
+            total
+            myReaction
+            counts {
+              type
+              count
+            }
+          }
           author {
             id
             username
             displayName
             avatar
+            isFollowedByMe
           }
         }
       }

@@ -21,6 +21,8 @@ export interface CvBlocksDocumentPayload {
     pdfCdnKey: string | null
     /** The CV's LaTeX (`.tex`) source — user-editable; null until the first compile. */
     texSource: string | null
+    /** Whether this CV is the user's ONE public résumé (single-public-per-user). */
+    isPublic: boolean
     /** ISO 8601 creation timestamp. */
     createdAt: string
     /** ISO 8601 last-update timestamp. */

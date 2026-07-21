@@ -8,7 +8,7 @@ export interface SearchCourseContentItem {
     title: string
     /** Short context line above the title (module name / milestone name); null for flashcard decks. */
     breadcrumb: string | null
-    /** The best-matching chunk's text (raw — truncate/escape before rendering). */
+    /** The best-matching chunk's text (raw — truncate/escape before rendering); empty when `isLocked`. */
     snippet: string
     /** Cosine similarity of the best-matching chunk (0-1, higher = closer). */
     score: number
@@ -20,6 +20,8 @@ export interface SearchCourseContentItem {
     deckId: string | null
     /** kind=milestone: the milestone task id to jump to. */
     taskId: string | null
+    /** True when THIS viewer must enroll before opening the result (premium lesson, a challenge on one, or a capstone task) — drives the lock badge + enrol CTA; always false for an enrolled learner. */
+    isLocked: boolean
 }
 
 /** Payload inside `searchCourseContent.data`. */

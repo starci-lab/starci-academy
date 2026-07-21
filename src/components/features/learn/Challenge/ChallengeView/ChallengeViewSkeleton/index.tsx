@@ -20,7 +20,7 @@ export type ChallengeViewSkeletonProps = WithClassNames<undefined>
  */
 export const ChallengeViewSkeleton = ({ className }: ChallengeViewSkeletonProps) => {
     return (
-        <div className={cn("flex flex-col gap-6 xl:flex-row xl:items-start xl:gap-8", className)}>
+        <div className={cn("flex flex-col gap-6 @app-xl:flex-row @app-xl:items-start @app-xl:gap-8", className)}>
             {/* center — brief column */}
             <div className="min-w-0 flex-1">
                 <div className="mx-auto flex w-full max-w-3xl flex-col gap-6">
@@ -40,7 +40,7 @@ export const ChallengeViewSkeleton = ({ className }: ChallengeViewSkeletonProps)
                 </div>
             </div>
             {/* aside — submit + result cards */}
-            <aside className="w-full shrink-0 xl:w-[360px]">
+            <aside className="w-full shrink-0 @app-xl:w-[360px]">
                 <div className="flex flex-col gap-6">
                     <Skeleton className="h-52 w-full rounded-3xl" />
                     <Skeleton className="h-28 w-full rounded-3xl" />

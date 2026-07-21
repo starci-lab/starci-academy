@@ -56,18 +56,18 @@ export const CourseDetail = ({ className }: CourseDetailProps) => {
 
     return (
         <div className={className}>
-            <div className="mx-auto w-full max-w-6xl px-6 py-6 pb-24 md:pb-6">
+            <div className="mx-auto w-full max-w-6xl px-6 py-6 pb-24 @app-md:pb-6">
                 <AsyncContent
                     isLoading={isLoading && !course}
                     skeleton={(
-                        <div className="grid grid-cols-1 items-start gap-x-6 gap-y-10 md:grid-cols-3">
-                            <div className="flex flex-col gap-3 md:col-span-2 md:col-start-1 md:row-start-1">
+                        <div className="grid grid-cols-1 items-start gap-x-6 gap-y-10 @app-md:grid-cols-3">
+                            <div className="flex flex-col gap-3 @app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-1">
                                 <Skeleton.Typography type="h2" />
                                 <Skeleton.Typography type="body" />
                                 <Skeleton.Metric />
                             </div>
-                            <Skeleton.Card className="md:col-span-1 md:col-start-3 md:row-span-2 md:row-start-1" />
-                            <Skeleton.Accordion items={3} className="md:col-span-2 md:col-start-1 md:row-start-2" />
+                            <Skeleton.Card className="@app-md:col-span-1 @app-md:col-start-3 @app-md:row-span-2 @app-md:row-start-1" />
+                            <Skeleton.Accordion items={3} className="@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-2" />
                         </div>
                     )}
                     isEmpty={!isLoading && !error && !course}
@@ -85,10 +85,10 @@ export const CourseDetail = ({ className }: CourseDetailProps) => {
                         column gap = 6. DOM order hero → card → narrative → mobile stacks
                         header → purchase card → curriculum. */}
                     <>
-                        <div className="grid grid-cols-1 items-start gap-x-6 gap-y-10 md:grid-cols-3">
-                            <CourseHero className="md:col-span-2 md:col-start-1 md:row-start-1" />
-                            <CoursePricingRail className="md:col-span-1 md:col-start-3 md:row-span-2 md:row-start-1" />
-                            <div className="flex flex-col gap-6 md:col-span-2 md:col-start-1 md:row-start-2">
+                        <div className="grid grid-cols-1 items-start gap-x-6 gap-y-10 @app-md:grid-cols-3">
+                            <CourseHero className="@app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-1" />
+                            <CoursePricingRail className="@app-md:col-span-1 @app-md:col-start-3 @app-md:row-span-2 @app-md:row-start-1" />
+                            <div className="flex flex-col gap-6 @app-md:col-span-2 @app-md:col-start-1 @app-md:row-start-2">
                                 <CourseValueProps />
                                 <CourseCurriculum />
                                 <CoursePrerequisites />
@@ -96,7 +96,7 @@ export const CourseDetail = ({ className }: CourseDetailProps) => {
                             </div>
                         </div>
                         {/* mobile-only sticky enroll bar (renders only with a loaded course) */}
-                        <CourseMobileEnrollBar className="md:hidden" />
+                        <CourseMobileEnrollBar className="@app-md:hidden" />
                     </>
                 </AsyncContent>
             </div>

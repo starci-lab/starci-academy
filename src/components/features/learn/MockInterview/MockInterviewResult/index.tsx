@@ -61,7 +61,7 @@ export const MockInterviewResult = ({
     return (
         <div className={className}>
             <PageHeader
-                className="mx-auto w-full max-w-3xl px-4 pt-6 sm:px-6"
+                className="mx-auto w-full max-w-3xl px-4 pt-6 @app-sm:px-6"
                 breadcrumb={<BackLink label={t("mockInterview.title")} onPress={goToMockInterviewHome} />}
                 title={t("mockInterview.debriefTitle")}
             />
@@ -71,7 +71,7 @@ export const MockInterviewResult = ({
                     // mirrors MockInterviewScorecard's real tree: verdict Alert, track
                     // snapshot, phase breakdown — each is a bordered card in the real
                     // render, so Skeleton.Card (not raw pulse bars) matches its box.
-                    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 pb-6 sm:px-6">
+                    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 pb-6 @app-sm:px-6">
                         <Skeleton.Card lines={2} />
                         <Skeleton.Card lines={3} />
                         <Skeleton.Card lines={3} />
@@ -85,7 +85,7 @@ export const MockInterviewResult = ({
                 }}
             >
                 {attemptSwr.data ? (
-                    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 pb-6 sm:px-6">
+                    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 pb-6 @app-sm:px-6">
                         <MockInterviewScorecard
                             grade={mapMockInterviewAttemptToGradeResult(attemptSwr.data)}
                             courseId={courseId}
@@ -98,7 +98,7 @@ export const MockInterviewResult = ({
                         </Button>
                     </div>
                 ) : (
-                    <div className="mx-auto flex w-full max-w-3xl px-4 pb-6 sm:px-6">
+                    <div className="mx-auto flex w-full max-w-3xl px-4 pb-6 @app-sm:px-6">
                         <EmptyState
                             title={t("mockInterview.scorecardPending")}
                             action={(

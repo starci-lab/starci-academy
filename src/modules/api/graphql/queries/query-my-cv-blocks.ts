@@ -20,6 +20,7 @@ const query1 = gql`
         style
         pdfCdnKey
         texSource
+        isPublic
         createdAt
         updatedAt
       }

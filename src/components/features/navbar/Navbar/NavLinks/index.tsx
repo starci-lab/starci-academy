@@ -31,7 +31,7 @@ export const NavLinks = ({ className }: NavLinksProps) => {
     const items = useNavbarItems()
 
     return (
-        <div className={cn("hidden flex-1 items-center justify-center gap-2 md:flex", className)}>
+        <div className={cn("hidden flex-1 items-center justify-center gap-2 @app-md:flex", className)}>
             {items.map((item) => (
                 <Link key={item.path} onPress={() => router.push(item.path)}>
                     <span

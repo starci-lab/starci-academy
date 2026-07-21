@@ -8,13 +8,13 @@ import { SkeletonText } from "@/components/blocks/skeleton/SkeletonText"
 /**
  * Loading placeholder for {@link PracticeProblem}. Mirrors the real two-pane
  * full-bleed IDE shell exactly (`grid h-[calc(100vh-4rem)] grid-cols-1
- * lg:grid-cols-2`, no Card wrapper, `border-r` divider) so the shell never jumps
+ * @app-lg:grid-cols-2`, no Card wrapper, `border-r` divider) so the shell never jumps
  * on resolve: left = back link + tab strip + statement + samples; right =
  * language selector + editor + a bottom console (tabs + action bar).
  */
 export const PracticeProblemSkeleton = () => {
     return (
-        <div className="grid h-[calc(100vh-4rem)] grid-cols-1 lg:grid-cols-2">
+        <div className="grid h-[calc(100vh-4rem)] grid-cols-1 @app-lg:grid-cols-2">
             {/* ── LEFT: back + tabs + statement + samples ── */}
             <div className="flex min-h-0 flex-col overflow-hidden border-r border-default">
                 <div className="flex flex-col gap-3 border-b border-default px-6 py-3">

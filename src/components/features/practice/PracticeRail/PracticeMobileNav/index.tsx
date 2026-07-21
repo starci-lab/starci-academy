@@ -40,7 +40,7 @@ export const PracticeMobileNav = ({ className }: PracticeMobileNavProps) => {
     const { filters, setFilters } = usePracticeFilters()
 
     return (
-        <div className={cn("flex flex-col gap-3 lg:hidden", className)}>
+        <div className={cn("flex flex-col gap-3 @app-lg:hidden", className)}>
             {/* mode switch — mirrors the desktop rail's TabsCard (see PracticeRail) */}
             <TabsCard
                 variant="primary"

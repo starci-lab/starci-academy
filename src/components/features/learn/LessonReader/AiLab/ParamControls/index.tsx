@@ -89,7 +89,7 @@ export const ParamControls = ({
 }: ParamControlsProps) => {
     const t = useTranslations()
     return (
-        <div className={cn("grid grid-cols-1 gap-3 sm:grid-cols-3", className)}>
+        <div className={cn("grid grid-cols-1 gap-3 @app-sm:grid-cols-3", className)}>
             <ParamField
                 id="ai-lab-temperature"
                 label={t("aiLab.playground.temperature")}

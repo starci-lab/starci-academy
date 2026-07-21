@@ -31,7 +31,7 @@ const ArchitectureScene3D = dynamic(
         loading: () => (
             <div
                 aria-hidden
-                className="h-[440px] w-full animate-pulse rounded-3xl bg-default/20 sm:h-[560px]"
+                className="h-[440px] w-full animate-pulse rounded-3xl bg-default/20 @app-sm:h-[560px]"
             />
         ),
     },
@@ -122,7 +122,7 @@ export const Landing = ({ className }: LandingProps) => {
             {/* Section-to-section rhythm: gap-16→20 (64–80px) between beats. Chỉ HERO là
                 min-h-screen; các beat khác co theo content → gap nhỏ này là khoảng trắng THẬT,
                 đủ tách section mà section ngắn (stats, learn-loop) không bị trôi giữa nửa màn trống. */}
-            <div className="mx-auto flex max-w-6xl flex-col gap-16 px-4 pt-8 pb-16 sm:px-6 md:gap-20 md:pb-20 md:pt-10 lg:px-8">
+            <div className="mx-auto flex max-w-6xl flex-col gap-16 px-4 pt-8 pb-16 @app-sm:px-6 @app-md:gap-20 @app-md:pb-20 @app-md:pt-10 @app-lg:px-8">
                 {/* 1 — Hero */}
                 <div className={screen}>
                     <HeroBanner
@@ -184,7 +184,7 @@ export const Landing = ({ className }: LandingProps) => {
                     {/* "Ba lộ trình · một tư duy": mỗi track = 1 card tự gói (identity + path 4
                         tier DỌC foundation→application + "Vào khóa" → course thật). 3 card cạnh
                         nhau để đọc + so; cấu trúc 4 tier đồng nhất = "một tư duy". */}
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-6 @app-md:grid-cols-3">
                         {LANDING_COURSE_TRACKS.map((key) => (
                             <TrackCard
                                 key={key}
@@ -203,7 +203,7 @@ export const Landing = ({ className }: LandingProps) => {
                 {/* Bản đồ năng lực — SPLIT: copy "flex trình" (trái) + knowledge graph contained
                     (phải). Graph KHÔNG còn full-bleed (hết "tràn lan") nhưng giữ wow tương tác. */}
                 <section id="treasure" className="scroll-mt-24">
-                    <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12">
+                    <div className="grid grid-cols-1 items-center gap-10 @app-lg:grid-cols-[0.85fr_1.15fr] @app-lg:gap-12">
                         {/* TRÁI — copy flex: heading + stat editorial + dòng lồng ghép + CTA */}
                         <div className="flex flex-col gap-6">
                             <SectionHeading
@@ -216,7 +216,7 @@ export const Landing = ({ className }: LandingProps) => {
                             {/* editorial stat: số to + label nhỏ + divider (grounded: số node + số track) */}
                             <div className="flex items-center gap-6">
                                 <div className="flex flex-col">
-                                    <span className="text-3xl font-medium tracking-tight text-foreground sm:text-4xl">
+                                    <span className="text-3xl font-medium tracking-tight text-foreground @app-sm:text-4xl">
                                         {KNOWLEDGE_NODES.length}
                                     </span>
                                     <Typography type="body-xs" color="muted">
@@ -225,7 +225,7 @@ export const Landing = ({ className }: LandingProps) => {
                                 </div>
                                 <span aria-hidden className="h-10 w-px bg-default" />
                                 <div className="flex flex-col">
-                                    <span className="text-3xl font-medium tracking-tight text-foreground sm:text-4xl">
+                                    <span className="text-3xl font-medium tracking-tight text-foreground @app-sm:text-4xl">
                                         {LANDING_COURSE_TRACKS.length}
                                     </span>
                                     <Typography type="body-xs" color="muted">
@@ -281,7 +281,7 @@ export const Landing = ({ className }: LandingProps) => {
                                         {t("landing.founder.titles")}
                                     </Typography>
                                 </div>
-                                <div className="flex items-center gap-3 sm:ml-auto">
+                                <div className="flex items-center gap-3 @app-sm:ml-auto">
                                     {/* social proof — brand icons (GitHub · LinkedIn · Facebook) */}
                                     {FOUNDER_SOCIALS.map(({ key, href, icon: Icon, label }) => (
                                         <Link
@@ -361,7 +361,7 @@ export const Landing = ({ className }: LandingProps) => {
                     variant="primary"
                     aria-label={t("landing.backToTop")}
                     onPress={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                    className="fixed bottom-6 right-6 z-40 size-12 rounded-full shadow-lg"
+                    className="fixed bottom-6 right-[calc(var(--app-rail-w,0px)+1.5rem)] z-40 size-12 rounded-full shadow-lg"
                 >
                     <ArrowUpIcon aria-hidden focusable="false" className="size-5" />
                 </Button>

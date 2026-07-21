@@ -26,6 +26,7 @@ import {
 import { QuestionRow } from "./QuestionRow"
 import { CourseQaSkeleton } from "./CourseQaSkeleton"
 import { AsyncContent } from "@/components/blocks/async/AsyncContent"
+import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
 import { TabsCard } from "@/components/blocks/navigation/TabsCard"
 import { SearchInput } from "@/components/blocks/form/SearchInput"
 import { PageHeader } from "@/components/blocks/layout/PageHeader"
@@ -47,6 +48,7 @@ const SEARCH_DEBOUNCE_MS = 300
 const FILTER_ORDER: ReadonlyArray<CourseQuestionFilter> = [
     CourseQuestionFilter.Unanswered,
     CourseQuestionFilter.Answered,
+    CourseQuestionFilter.Engagement,
     CourseQuestionFilter.Mine,
     CourseQuestionFilter.All,
 ]
@@ -170,7 +172,8 @@ export const CourseQa = () => {
 
     // whether the roll-up is empty AFTER a resolved load (no filter/search applied yet
     // AND zero rows) → the invitation state; a filtered-empty result is handled inline.
-    const hasQuery = filter !== CourseQuestionFilter.All || debouncedSearch.trim().length > 0
+    const hasQuery = (filter !== CourseQuestionFilter.All && filter !== CourseQuestionFilter.Engagement)
+        || debouncedSearch.trim().length > 0
     const isInvitationEmpty = !isLoading && !error && total === 0 && !hasQuery
 
     const filterTabs = FILTER_ORDER.map((value) => ({
@@ -248,7 +251,7 @@ export const CourseQa = () => {
                         />
                         <div className="flex flex-wrap items-center justify-between gap-3">
                             <SearchInput
-                                className="w-full sm:max-w-sm"
+                                className="w-full @app-sm:max-w-sm"
                                 value={searchInput}
                                 onValueChange={setSearchInput}
                                 placeholder={t("courseQa.searchPlaceholder")}
@@ -272,16 +275,19 @@ export const CourseQa = () => {
                             retryLabel: t("courseQa.retry"),
                         }}
                     >
-                        <div className="flex flex-col gap-3">
-                            {questions.map((question) => (
-                                <QuestionRow
-                                    key={question.id}
-                                    question={question}
-                                    currentUserId={currentUserId}
-                                    currentUser={currentUser ? { username: currentUser.username, avatar: currentUser.avatar } : null}
-                                    onAnswered={() => { void mutate() }}
-                                />
-                            ))}
+                        <div className="flex flex-col gap-6">
+                            {/* social inbox: one card, flush conversation rows (each expands inline) */}
+                            <SurfaceListCard className="divide-y divide-default">
+                                {questions.map((question) => (
+                                    <QuestionRow
+                                        key={question.id}
+                                        question={question}
+                                        currentUserId={currentUserId}
+                                        currentUser={currentUser ? { username: currentUser.username, avatar: currentUser.avatar } : null}
+                                        onAnswered={() => { void mutate() }}
+                                    />
+                                ))}
+                            </SurfaceListCard>
 
                             {/* pager: left-aligned + hover, hidden on a single page. */}
                             {totalPages > 1 ? (

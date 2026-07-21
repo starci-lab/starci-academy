@@ -84,3 +84,98 @@ export const AllVariants: Story = {
             "body). Dùng để tra khi nào bật/tắt tick và khi nào cần `bordered`.",
     },
 }
+
+/**
+ * Mỗi dòng là một điều gì đó người học ĐẠT ĐƯỢC — tick thành công cố định xác nhận
+ * đã hoàn thành. Đây là công dụng chính của block: danh sách "tóm tắt có/không tick"
+ * cho giá trị đạt được, kết quả đầu ra, mục tiêu học.
+ */
+export const DataChecked: Story = {
+    render: () => (
+        <div className="w-80">
+            <CheckListCard>
+                <CheckListItem>Build a complete RESTful API</CheckListItem>
+                <CheckListItem>Implement secure JWT authentication</CheckListItem>
+                <CheckListItem>Optimize database queries</CheckListItem>
+            </CheckListCard>
+        </div>
+    ),
+    parameters: {
+        usage:
+            "Mỗi dòng là một điều gì đó người học ĐẠT ĐƯỢC — tick thành công cố định xác nhận đã hoàn " +
+            "thành. Đây là công dụng chính của block.",
+    },
+}
+
+/**
+ * `showCheck={false}` từng dòng — dùng khi mỗi dòng là một ĐIỀU KIỆN (yêu cầu đầu
+ * vào, tiên quyết) chứ không phải một thành tựu. Tick sẽ khẳng định thay cho người
+ * học điều họ chưa được ai xác nhận, nên tắt tick trong trường hợp này.
+ */
+export const DataNoCheck: Story = {
+    render: () => (
+        <div className="w-80">
+            <CheckListCard>
+                <CheckListItem showCheck={false}>Completed a basic programming course</CheckListItem>
+                <CheckListItem showCheck={false}>A machine with Node.js 20+ installed</CheckListItem>
+                <CheckListItem showCheck={false}>A basic understanding of Git</CheckListItem>
+            </CheckListCard>
+        </div>
+    ),
+    parameters: {
+        usage:
+            "showCheck={false} từng dòng — mỗi dòng là một ĐIỀU KIỆN (yêu cầu đầu vào, tiên quyết) chứ " +
+            "không phải một thành tựu, nên không mang tick.",
+    },
+}
+
+/**
+ * Một dòng dài KHÔNG bị cắt — nó xuống dòng, và tick giữ nguyên vị trí ở đầu dòng
+ * đầu tiên thay vì trôi vào giữa khối chữ. Chứng minh block xử lý được nhiều dòng
+ * mà không cần rút ngắn nội dung ở nơi gọi.
+ */
+export const OverflowLongrow: Story = {
+    render: () => (
+        <div className="w-80">
+            <CheckListCard>
+                <CheckListItem>
+                    Design and implement a highly scalable microservices system handling millions of requests per day with low latency
+                </CheckListItem>
+                <CheckListItem>Write unit tests with over 80% coverage</CheckListItem>
+            </CheckListCard>
+        </div>
+    ),
+    parameters: {
+        usage:
+            "Một dòng dài KHÔNG bị cắt — nó xuống dòng, tick giữ nguyên vị trí ở đầu dòng đầu tiên thay " +
+            "vì trôi vào giữa khối chữ.",
+    },
+}
+
+/**
+ * `bordered` render viền thay cho shadow-surface — dùng khi CheckListCard lồng
+ * trong một surface cha (modal/drawer/panel body), nơi shadow vô hình trên
+ * bg-surface. Ghép với LabeledCard frameless cho nhãn mục.
+ */
+export const Bordered: Story = {
+    render: () => (
+        <div className="max-w-sm">
+            <Card>
+                <CardContent>
+                    <LabeledCard label="Included" frameless>
+                        <CheckListCard bordered>
+                            <CheckListItem>The entire learning path</CheckListItem>
+                            <CheckListItem>AI grading</CheckListItem>
+                            <CheckListItem>Course community</CheckListItem>
+                        </CheckListCard>
+                    </LabeledCard>
+                </CardContent>
+            </Card>
+        </div>
+    ),
+    parameters: {
+        usage:
+            "bordered render viền thay cho shadow-surface — dùng khi CheckListCard lồng trong một surface " +
+            "cha (modal/drawer/panel body), nơi shadow vô hình trên bg-surface.",
+    },
+}

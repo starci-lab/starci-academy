@@ -6,9 +6,57 @@ import { Gallery, Variant } from "../../../../story-kit"
 const meta: Meta<typeof HostPlatformChip> = {
     title: "Blocks/Chip/HostPlatformChip",
     component: HostPlatformChip,
+    argTypes: {
+        hostPlatform: {
+            control: "select",
+            options: [
+                VideoHostPlatform.Youtube,
+                VideoHostPlatform.GoogleDrive,
+                VideoHostPlatform.Vimeo,
+                VideoHostPlatform.CloudflareStream,
+            ],
+            description: "Host platform of the lesson video. `Other` is intentionally excluded — EnumChip throws for it (no map entry).",
+        },
+    },
 }
 export default meta
 type Story = StoryObj<typeof HostPlatformChip>
+
+/**
+ * YouTube — public or unlisted video, the most common case for lecture videos.
+ */
+export const YouTube: Story = {
+    args: {
+        hostPlatform: VideoHostPlatform.Youtube,
+    },
+}
+
+/**
+ * Google Drive — internal content shared via a Drive link.
+ */
+export const GoogleDrive: Story = {
+    args: {
+        hostPlatform: VideoHostPlatform.GoogleDrive,
+    },
+}
+
+/**
+ * Vimeo — video with tighter privacy controls than YouTube.
+ */
+export const Vimeo: Story = {
+    args: {
+        hostPlatform: VideoHostPlatform.Vimeo,
+    },
+}
+
+/**
+ * Cloudflare Stream — self-hosted CDN delivery with adaptive bitrate.
+ */
+export const CloudflareStream: Story = {
+    args: {
+        hostPlatform: VideoHostPlatform.CloudflareStream,
+    },
+}
 
 /**
  * All 4 handled host platforms. `VideoHostPlatform.Other` is intentionally

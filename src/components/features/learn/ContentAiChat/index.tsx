@@ -752,10 +752,13 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             hydratedRef.current = sessionId
         }
         // when a passage is selected, wrap the turn so the UI shows only the
-        // question (<display>) while the model also gets the hidden <context>
-        // (the surrounding paragraph + section) to reason about a short selection
+        // question (<display>) while the model also gets the hidden <context>: the
+        // selected passage + its surrounding paragraph/section. A weak/degraded model
+        // otherwise under-uses the passage and replies "hãy gửi đoạn văn cụ thể", so
+        // the context ends with an explicit directive that the passage IS provided
+        // and must be answered directly — never asked for again.
         const content = selection
-            ? `<display>${raw}</display>\n<context>${selectionContext ?? selection}</context>`
+            ? `<display>${raw}</display>\n<context>${selectionContext ?? `Đoạn được chọn: «${selection}»`}\nLƯU Ý: đoạn được chọn đã có ngay trên đây — hãy giải thích/trả lời TRỰC TIẾP về nó dựa trên nội dung bài và kiến thức của bạn; TUYỆT ĐỐI không yêu cầu người học gửi hay nêu lại đoạn văn.</context>`
             : raw
         const history = messages.map((message) => ({
             role: message.role,

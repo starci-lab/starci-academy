@@ -17,6 +17,10 @@ export interface AskContentAiStreamParams {
     contentId?: string | null
     /** Capstone task the question is grounded on (task scope). */
     taskId?: string | null
+    /** Hands-on challenge the question is grounded on (challenge scope). */
+    challengeId?: string | null
+    /** Flashcard-quiz deck the question is grounded on (quiz scope). */
+    quizId?: string | null
     /** Foundation the question is grounded on (foundation scope). */
     foundationId?: string | null
     /** Course the question is grounded on, when `contentId` is omitted (course-general conversation). */
@@ -100,6 +104,8 @@ export const useContentAiStream = (): ContentAiStreamControls => {
                     sessionId: params.sessionId,
                     contentId: params.contentId,
                     taskId: params.taskId,
+                    challengeId: params.challengeId,
+                    quizId: params.quizId,
                     foundationId: params.foundationId,
                     courseId: params.courseId,
                     question: params.question,

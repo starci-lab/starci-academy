@@ -6,6 +6,10 @@ export interface CreateContentAiSessionRequest {
     contentId?: string
     /** Capstone task the conversation starts in (task scope). */
     taskId?: string
+    /** Hands-on challenge the conversation starts in (challenge scope). */
+    challengeId?: string
+    /** Flashcard-quiz deck the conversation starts in (quiz scope). */
+    quizId?: string
     /** Foundation the conversation starts in (foundation scope). */
     foundationId?: string
     /** Course the conversation starts in, when `contentId` is omitted (course-general conversation). */

@@ -2,12 +2,16 @@ import type { GraphQLResponse } from "../../types"
 
 /** GraphQL `ContentAiSessionsRequest` body. */
 export interface ContentAiSessionsRequest {
-    /** Which grounding surface to list: "content" | "task" | "foundation" | "course". The BE derives it from whichever anchor id is present (content > task > foundation > course) when omitted, but the FE sends it explicitly. */
+    /** Which grounding surface to list: "content" | "task" | "challenge" | "quiz" | "foundation" | "course". The BE derives it from whichever anchor id is present (content > task > challenge > quiz > foundation > course) when omitted, but the FE sends it explicitly. */
     scope?: string
     /** Current content — lists THAT lesson's conversations. Omit it and pass `courseId` to list every conversation of the course (lesson-anchored + course-general mixed). */
     contentId?: string
     /** Capstone task — lists THAT task's conversations. */
     taskId?: string
+    /** Hands-on challenge — lists THAT challenge's conversations. */
+    challengeId?: string
+    /** Flashcard-quiz deck — lists THAT quiz's conversations. */
+    quizId?: string
     /** Foundation doc — lists THAT foundation's conversations. */
     foundationId?: string
     /** Course to list all conversations of, when `contentId` is omitted. */
@@ -32,7 +36,7 @@ export interface ContentAiSessionSummary {
     updatedAt: string
     /** Number of turns in the conversation. */
     messageCount: number
-    /** Grounding surface of the conversation: "content" | "task" | "foundation" | "course". */
+    /** Grounding surface of the conversation: "content" | "task" | "challenge" | "quiz" | "foundation" | "course". */
     scope: string
     /** Content the conversation is anchored to; null for task/foundation/course-general conversations. */
     originContentId: string | null

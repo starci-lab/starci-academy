@@ -39,6 +39,10 @@ export interface AskContentAiSocketIoPayload {
         contentId?: string | null
         /** Capstone task the question is grounded on (task scope). */
         taskId?: string | null
+        /** Hands-on challenge the question is grounded on (challenge scope). */
+        challengeId?: string | null
+        /** Flashcard-quiz deck the question is grounded on (quiz scope). */
+        quizId?: string | null
         /** Foundation the question is grounded on (foundation scope). */
         foundationId?: string | null
         /** Course the question is grounded on, when `contentId` is omitted (course-general conversation). */

@@ -575,7 +575,15 @@
       "challengesOfFoundation": "Tìm thử thách liên quan nền tảng này",
       "flashcardsOfFoundation": "Tìm thẻ ôn liên quan nền tảng này",
       "lessonsOfFoundation": "Tìm bài học liên quan nền tảng này",
-      "relatedOfFoundation": "Tất cả nội dung liên quan nền tảng này"
+      "relatedOfFoundation": "Tất cả nội dung liên quan nền tảng này",
+      "challengesOfChallenge": "Tìm thử thách liên quan thử thách này",
+      "flashcardsOfChallenge": "Tìm thẻ ôn liên quan thử thách này",
+      "lessonsOfChallenge": "Tìm bài học liên quan thử thách này",
+      "relatedOfChallenge": "Tất cả nội dung liên quan thử thách này",
+      "challengesOfQuiz": "Tìm thử thách liên quan bộ thẻ này",
+      "flashcardsOfQuiz": "Tìm thẻ ôn liên quan bộ thẻ này",
+      "lessonsOfQuiz": "Tìm bài học liên quan bộ thẻ này",
+      "relatedOfQuiz": "Tất cả nội dung liên quan bộ thẻ này"
     },
     "placeholder": "Hỏi về nội dung này, hoặc gõ / để xem lệnh…",
     "ask": "Hỏi AI",

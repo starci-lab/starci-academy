@@ -2,7 +2,7 @@
 
 import React from "react"
 import { Link, Typography, cn } from "@heroui/react"
-import { BookOpenIcon, QuotesIcon, SparkleIcon, TargetIcon } from "@phosphor-icons/react"
+import { BookOpenIcon, CardsIcon, PuzzlePieceIcon, QuotesIcon, SparkleIcon, TargetIcon } from "@phosphor-icons/react"
 import { useTranslations } from "next-intl"
 import { useAppSelector } from "@/redux/hooks"
 import { useContentAiChatScopeStore } from "@/hooks/zustand/contentAiChatScope/store"
@@ -34,6 +34,13 @@ export const ContentAiScopePill = ({ className }: ContentAiScopePillProps) => {
     const contentTitle = useAppSelector((state) => state.content.entity?.title)
     const taskId = useAppSelector((state) => state.milestone.selectedTaskId)
     const taskTitle = useAppSelector((state) => state.milestone.selectedTaskDetail?.title)
+    const challengeId = useAppSelector((state) => state.challenge.id)
+    const challengeTitle = useAppSelector((state) => state.challenge.entity?.title)
+    // TODO: the flashcard-quiz deck id/title are not held in redux (they live only
+    // in the quiz/review route params + props), so quiz scope stays dormant here
+    // until a slice/selector exposes them — matches ContentAiChat.
+    const quizId: string | undefined = undefined
+    const quizTitle: string | undefined = undefined
     const foundationId = useAppSelector((state) => state.foundation.foundationId)
     const foundationTitle = useAppSelector((state) => state.foundation.entity?.title)
     const courseTitle = useAppSelector((state) => state.course.entity?.title)
@@ -45,28 +52,43 @@ export const ContentAiScopePill = ({ className }: ContentAiScopePillProps) => {
 
     // mirrors the scope rule in `ContentAiChat`: a lesson grounds on itself unless
     // widened; with no lesson open the surface falls to its next grounding
-    // (capstone task → foundation → whole course)
+    // (capstone task → challenge → quiz → foundation → whole course)
     const scope = prefersCourseScope
         ? "course"
         : contentId
             ? "content"
             : taskId
                 ? "task"
-                : foundationId
-                    ? "foundation"
-                    : "course"
+                : challengeId
+                    ? "challenge"
+                    : quizId
+                        ? "quiz"
+                        : foundationId
+                            ? "foundation"
+                            : "course"
     const isCourseScope = scope === "course"
-    // a task uses a distinct 🎯 icon; a lesson and a foundation (which reads like a
-    // single lesson) share the 📖 book
-    const NonCourseIcon = scope === "task" ? TargetIcon : BookOpenIcon
+    // a task uses a distinct 🎯 icon; a challenge its 🧩 puzzle piece and a quiz its
+    // 🃏 cards (matching their retrieval-skill icons); a lesson and a foundation
+    // (which reads like a single lesson) share the 📖 book
+    const NonCourseIcon = scope === "task"
+        ? TargetIcon
+        : scope === "challenge"
+            ? PuzzlePieceIcon
+            : scope === "quiz"
+                ? CardsIcon
+                : BookOpenIcon
     // what the next answer grounds on, worded per scope
     const scopeTitle = scope === "course"
         ? t("contentAi.context.wholeCourse", { course: courseTitle ?? "" })
         : scope === "task"
             ? taskTitle
-            : scope === "foundation"
-                ? foundationTitle
-                : contentTitle
+            : scope === "challenge"
+                ? challengeTitle
+                : scope === "quiz"
+                    ? quizTitle
+                    : scope === "foundation"
+                        ? foundationTitle
+                        : contentTitle
 
     return (
         <div

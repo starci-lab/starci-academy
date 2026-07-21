@@ -575,7 +575,15 @@
       "challengesOfFoundation": "Find challenges for this foundation",
       "flashcardsOfFoundation": "Find flashcards for this foundation",
       "lessonsOfFoundation": "Find related lessons for this foundation",
-      "relatedOfFoundation": "Everything related to this foundation"
+      "relatedOfFoundation": "Everything related to this foundation",
+      "challengesOfChallenge": "Find challenges for this challenge",
+      "flashcardsOfChallenge": "Find flashcards for this challenge",
+      "lessonsOfChallenge": "Find related lessons for this challenge",
+      "relatedOfChallenge": "Everything related to this challenge",
+      "challengesOfQuiz": "Find challenges for this deck",
+      "flashcardsOfQuiz": "Find flashcards for this deck",
+      "lessonsOfQuiz": "Find related lessons for this deck",
+      "relatedOfQuiz": "Everything related to this deck"
     },
     "placeholder": "Ask about this content, or type / for commands…",
     "ask": "Ask AI",

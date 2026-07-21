@@ -138,9 +138,12 @@ const RETRIEVAL_SKILLS: ReadonlyArray<RetrievalSkill> = [
 const EMPTY_STATE_SKILLS: Record<ChatContextScope, ReadonlyArray<string>> = {
     content: ["challenges", "flashcards"],
     course: ["lessons", "challenges", "flashcards"],
-    // a capstone task and a foundation each read like a single lesson — lead with
-    // the practice that follows the reading, not "find a lesson" (you are in one)
+    // a capstone task, a challenge, a quiz deck, and a foundation each read like a
+    // single lesson — lead with the practice that follows the reading, not "find a
+    // lesson" (you are in one)
     task: ["challenges", "flashcards"],
+    challenge: ["challenges", "flashcards"],
+    quiz: ["challenges", "flashcards"],
     foundation: ["challenges", "flashcards"],
 }
 
@@ -156,6 +159,8 @@ const SCOPE_LABEL_SUFFIX: Record<ChatContextScope, string> = {
     content: "OfLesson",
     course: "InCourse",
     task: "OfTask",
+    challenge: "OfChallenge",
+    quiz: "OfQuiz",
     foundation: "OfFoundation",
 }
 const retrievalLabelKey = (token: string, scope: ChatContextScope): string =>
@@ -168,7 +173,7 @@ const retrievalLabelKey = (token: string, scope: ChatContextScope): string =>
  * automatic fallback on a lesson-less surface (flashcards, mind-map, leaderboard)
  * and an explicit widening the learner can pick while reading.
  */
-type ChatContextScope = "content" | "course" | "task" | "foundation"
+type ChatContextScope = "content" | "course" | "task" | "challenge" | "quiz" | "foundation"
 
 /** A find-verb that signals the learner wants a LIST of course content, not a chat answer. */
 const CONTENT_INTENT_VERB_RE = /(tìm|find|gợi ý|liệt kê|list|show|kiếm)/i
@@ -307,11 +312,17 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     const contentId = useAppSelector((state) => state.content.id)
     const contentEntity = useAppSelector((state) => state.content.entity)
     const course = useAppSelector((state) => state.course.entity)
-    // grounding ids for the non-lesson scopes (capstone task, foundation) — the
-    // route/outline populate these via redux (milestone.selectedTaskId is set by
-    // MilestoneOutline/PersonalProject; foundation.foundationId by
+    // grounding ids for the non-lesson scopes (capstone task, challenge, quiz,
+    // foundation) — the route/outline populate these via redux
+    // (milestone.selectedTaskId is set by MilestoneOutline/PersonalProject;
+    // challenge.id by ChallengePage; foundation.foundationId by
     // useSyncReduxFoundationId). Absent → the scope falls back to course.
     const taskId = useAppSelector((state) => state.milestone.selectedTaskId)
+    const challengeId = useAppSelector((state) => state.challenge.id)
+    // TODO: the flashcard-quiz deck id is not held in redux (it lives only in the
+    // quiz/review route params + component props — see QuizSession/FlashcardReviewer),
+    // so quiz scope stays plumbed-but-dormant until a slice/selector exposes it.
+    const quizId: string | undefined = undefined
     const foundationId = useAppSelector((state) => state.foundation.foundationId)
     const { ask, abort } = useContentAiStream()
     const { close: closeChat } = useContentAiChatOverlayState()
@@ -394,26 +405,36 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             ? "content"
             : taskId
                 ? "task"
-                : foundationId
-                    ? "foundation"
-                    : "course"
+                : challengeId
+                    ? "challenge"
+                    : quizId
+                        ? "quiz"
+                        : foundationId
+                            ? "foundation"
+                            : "course"
     const isContentScope = scope === "content"
     // what the next question actually grounds on — exactly one id per scope
     const askContentId = scope === "content" ? contentId : undefined
     const askTaskId = scope === "task" ? taskId : undefined
+    const askChallengeId = scope === "challenge" ? challengeId : undefined
+    const askQuizId = scope === "quiz" ? quizId : undefined
     const askFoundationId = scope === "foundation" ? foundationId : undefined
     const askCourseId = scope === "course" ? course?.id : undefined
     // the raw SURFACE key — changes when the learner moves to a different
-    // lesson/task/foundation/course, but NOT when they widen a lesson to course
-    // (a widen is an overlay on the same surface → same session). Drives the reset
-    // + auto-select effects so each scope keeps its own thread.
+    // lesson/task/challenge/quiz/foundation/course, but NOT when they widen a lesson
+    // to course (a widen is an overlay on the same surface → same session). Drives
+    // the reset + auto-select effects so each scope keeps its own thread.
     const baseSurfaceKey = contentId
         ? `content:${contentId}`
         : taskId
             ? `task:${taskId}`
-            : foundationId
-                ? `foundation:${foundationId}`
-                : `course:${course?.id ?? ""}`
+            : challengeId
+                ? `challenge:${challengeId}`
+                : quizId
+                    ? `quiz:${quizId}`
+                    : foundationId
+                        ? `foundation:${foundationId}`
+                        : `course:${course?.id ?? ""}`
     // a SELECTED PASSAGE is its own scope-key → its own born-archived side-thread
     // (inherits the surface grounding + the passage). Selecting or changing the
     // highlight resets to a fresh thread; clearing it (✕ / navigating) reverts to
@@ -433,6 +454,8 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         scope,
         askTaskId,
         askFoundationId,
+        askChallengeId,
+        askQuizId,
     )
     // the conversations view list is paginated/infinite (mirror followers infinite)
     const sessionsInfinite = useQueryContentAiSessionsInfiniteSwr(
@@ -444,6 +467,8 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
         scope,
         askTaskId,
         askFoundationId,
+        askChallengeId,
+        askQuizId,
     )
     // saved turns of the OPEN conversation
     const historySwr = useQueryContentAiHistorySwr(currentSessionId ?? undefined)
@@ -663,8 +688,9 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
     const onSend = useCallback(async (preset?: string) => {
         const raw = (preset ?? input).trim()
         // a question needs SOME grounding scope — a lesson, capstone task,
-        // foundation, or the whole course (a missing id must not silently swallow the send)
-        if (!raw || (!askContentId && !askTaskId && !askFoundationId && !askCourseId) || isStreaming) {
+        // challenge, quiz, foundation, or the whole course (a missing id must not
+        // silently swallow the send)
+        if (!raw || (!askContentId && !askTaskId && !askChallengeId && !askQuizId && !askFoundationId && !askCourseId) || isStreaming) {
             return
         }
         // an in-chat "find <kind>" ask renders a pickable list, not a streamed
@@ -680,6 +706,8 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                 .trigger({
                     contentId: askContentId,
                     taskId: askTaskId,
+                    challengeId: askChallengeId,
+                    quizId: askQuizId,
                     foundationId: askFoundationId,
                     courseId: askCourseId,
                     // a selection-passage ask is a born-archived side-thread
@@ -720,6 +748,8 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
             sessionId,
             contentId: askContentId,
             taskId: askTaskId,
+            challengeId: askChallengeId,
+            quizId: askQuizId,
             foundationId: askFoundationId,
             courseId: askCourseId,
             question: content,
@@ -748,7 +778,7 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                 })
             },
         })
-    }, [input, askContentId, askTaskId, askFoundationId, askCourseId, isStreaming, currentSessionId, createSwr, selection, selectionContext, messages, ask, appendToAssistant, setSelection, sessionsSwr, sessionsInfinite, modelSelection, runContentIntent, course?.id])
+    }, [input, askContentId, askTaskId, askChallengeId, askQuizId, askFoundationId, askCourseId, isStreaming, currentSessionId, createSwr, selection, selectionContext, messages, ask, appendToAssistant, setSelection, sessionsSwr, sessionsInfinite, modelSelection, runContentIntent, course?.id])
 
     /** Start a fresh conversation (created lazily on the first message). */
     const onNewConversation = useCallback(() => {

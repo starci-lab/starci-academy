@@ -1,7 +1,5 @@
 import type { Preview } from "@storybook/nextjs"
 import React from "react"
-import { Alert } from "@heroui/react"
-import { InfoIcon } from "@phosphor-icons/react"
 import { NextIntlClientProvider } from "next-intl"
 import { HeroUIProvider } from "../src/components/providers/HeroUIProvider"
 import messages from "../src/messages/vi.json"
@@ -11,25 +9,13 @@ import "../src/app/globals.css"
  * Global decorator: HeroUI provider + Tailwind/HeroUI CSS + theme wrapper.
  * `theme` toolbar (light/dark) drives the `.dark`/`.light` class HeroUI/Tailwind read.
  * a11y addon runs axe on every story (fail-on-error surfaces contrast/aria bugs lint can't see).
+ *
+ * The canvas is intentionally CLEAN: the story renders JUST the component + its states.
+ * A story's JSDoc still becomes its description in the Docs/Overview tab (autodocs), but is
+ * NOT painted as a "Usage" alert on the canvas (thầy: bỏ usage khỏi canvas).
  */
-/**
- * Render inline markdown in the "Usage" caption — backtick `code` spans become
- * styled `<code>` (the usage strings are written in markdown). Lightweight on
- * purpose: only inline code, no block parsing / heavy markdown pipeline needed.
- */
-const renderUsage = (text: string): React.ReactNode =>
-    text.split(/(`[^`]+`)/g).map((part, index) =>
-        part.length > 1 && part.startsWith("`") && part.endsWith("`") ? (
-            <code key={index} className="rounded bg-default px-1 text-[13px] text-foreground">
-                {part.slice(1, -1)}
-            </code>
-        ) : (
-            <React.Fragment key={index}>{part}</React.Fragment>
-        ),
-    )
-
 const preview: Preview = {
-    // autodocs: render each story's JSDoc as its "usage" description in the Docs tab.
+    // autodocs: render each story's JSDoc as its description in the Docs/Overview tab.
     tags: ["autodocs"],
     parameters: {
         a11y: { test: "error" },
@@ -40,11 +26,8 @@ const preview: Preview = {
         // NextjsRouterMocksNotAvailable on render.
         nextjs: { appDirectory: true },
         // full-bleed canvas for EVERY story — the decorator below fills it
-        // (`min-h-screen w-full p-8`) and content flows from the top-left. No
-        // per-story `layout` overrides: one uniform canvas across the whole book
-        // (full-bleed canvas, content anchored top-left). `fullscreen` (not the SB
-        // default "padded"/"centered") is what lets the decorator's height reach
-        // the real iframe — "centered" shrink-wraps it and strands `h-full`.
+        // (`min-h-screen w-full`) and content flows from the top-left. Each story owns
+        // its OWN `p-8` wrapper (the decorator adds no padding — no double-padding).
         layout: "fullscreen",
     },
     globalTypes: {
@@ -65,11 +48,6 @@ const preview: Preview = {
     decorators: [
         (Story, context) => {
             const theme = context.globals.theme || "dark"
-            // Show the story's "usage" text as an Alert caption ON the canvas —
-            // not just in the Docs tab. Only on the canvas (viewMode "story") so it
-            // doesn't duplicate the description Docs already renders.
-            const usage = context.parameters?.usage || context.parameters?.docs?.description?.story
-            const showUsage = usage && context.viewMode === "story"
             return (
                 <NextIntlClientProvider locale="vi" messages={messages}>
                     <HeroUIProvider>
@@ -79,20 +57,7 @@ const preview: Preview = {
                             container variants. Without a container here, those variants would
                             have nothing to measure and every story would render at its narrowest
                             layout — the canvas must establish one for stories to match the app. */}
-                        <div className={`${theme} @container bg-background text-foreground min-h-screen w-full p-8`}>
-                            {showUsage ? (
-                                // standalone on the page canvas → raw `Alert` (surface +
-                                // shadow). Callout tint is only for surface-in-surface.
-                                <Alert status="accent" className="mb-6">
-                                    <Alert.Indicator className="[&_svg]:size-6!">
-                                        <InfoIcon />
-                                    </Alert.Indicator>
-                                    <Alert.Content>
-                                        <Alert.Title>Usage</Alert.Title>
-                                        <Alert.Description>{renderUsage(usage)}</Alert.Description>
-                                    </Alert.Content>
-                                </Alert>
-                            ) : null}
+                        <div className={`${theme} @container bg-background text-foreground min-h-screen w-full`}>
                             <Story />
                         </div>
                     </HeroUIProvider>

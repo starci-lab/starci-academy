@@ -1,90 +1,104 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { TagChips } from "@/components/blocks/chips/TagChips"
-import { Gallery, Variant, VariantRow } from "../../../../story-kit"
+import { TagChips } from "./TagChips"
 
 const meta: Meta<typeof TagChips> = {
-    title: "Blocks/Chip/TagChips",
+    title: "Primitives/Chip/TagChips",
     component: TagChips,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
+
 export default meta
+
 type Story = StoryObj<typeof TagChips>
 
 /**
- * Toàn bộ ma trận trạng thái của TagChips: rỗng, một tag, đúng maxVisible, vượt
- * maxVisible (chip "+N" mở tooltip liệt kê hết), tuỳ chỉnh maxVisible, và các biến
- * thể variant của Chip nền dưới. Dùng để tra khi nào chọn maxVisible bao nhiêu và
- * khi nào tràn thật sự xảy ra.
+ * Empty: no tags → renders NOTHING (not even the +N counter, which only appears
+ * when the overflow count > 0). This is the component's real empty behaviour — a
+ * tag row simply collapses, so no EmptyState primitive is used.
  */
-export const AllVariants: Story = {
+export const Empty: Story = {
     render: () => (
-        <Gallery>
-            <Variant
-                label="Rỗng"
-                hint="Bài viết/khoá học chưa gắn tag nào — không render gì cả, kể cả chip đếm +N (chỉ hiện khi có tag bị gom, tức số tràn > 0)."
-            >
-                <TagChips tags={[]} />
-            </Variant>
-            <Variant
-                label="Một tag"
-                hint="Chỉ một tag duy nhất, ví dụ bài viết mới gắn nhãn chủ đề đầu tiên."
-            >
-                <TagChips tags={["nestjs"]} />
-            </Variant>
-            <Variant
-                label="Bằng maxVisible (chưa tràn)"
-                hint="Số tag bằng đúng maxVisible mặc định (3) — mọi tag đều hiện, không tag nào bị gom vào chip +N."
-            >
-                <TagChips tags={["typescript", "nodejs", "postgresql"]} />
-            </Variant>
-            <Variant
-                label="Vượt maxVisible (tràn thật)"
-                hint="Danh sách tag của một bài lab dài, chỉ 3 tag đầu hiện ra, phần còn lại gom vào chip +N; rê chuột vào chip +N mở tooltip liệt kê đủ toàn bộ tag."
-            >
-                <TagChips
-                    tags={[
-                        "system-design",
-                        "microservices",
-                        "docker",
-                        "kubernetes",
-                        "graphql",
-                        "keycloak",
-                        "rag",
-                    ]}
-                />
-            </Variant>
-            <Variant
-                label="Tuỳ chỉnh maxVisible"
-                hint="Trang có nhiều chỗ trống hơn (ví dụ card lớn) nên nới maxVisible lên 5 để hiện được nhiều tag hơn trước khi gom."
-            >
-                <TagChips
-                    tags={[
-                        "javascript",
-                        "react",
-                        "nextjs",
-                        "tailwindcss",
-                        "heroui",
-                        "vitest",
-                        "playwright",
-                        "ci-cd",
-                    ]}
-                    maxVisible={5}
-                />
-            </Variant>
-            <VariantRow
-                label="Biến thể variant của Chip nền"
-                hint="TagChips truyền variant xuống thẳng từng Chip; soft (mặc định) dùng cho tag nổi trên nền surface, tertiary/primary/secondary dùng khi cụm tag cần hoà nhẹ hơn hoặc nổi hơn theo ngữ cảnh xung quanh."
-            >
-                <TagChips tags={["frontend", "backend", "ai", "vector-db"]} variant="soft" />
-                <TagChips tags={["frontend", "backend", "ai", "vector-db"]} variant="tertiary" />
-                <TagChips tags={["frontend", "backend", "ai", "vector-db"]} variant="primary" />
-            </VariantRow>
-        </Gallery>
+        <div className="p-8">
+            <TagChips tags={[]} />
+        </div>
     ),
-    parameters: {
-        usage:
-            "Toàn bộ ma trận trạng thái của TagChips: rỗng, một tag, đúng maxVisible, vượt maxVisible " +
-            "(chip \"+N\" mở tooltip liệt kê hết), tuỳ chỉnh maxVisible, và các biến thể variant của Chip nền. " +
-            "Dùng khi cần tra maxVisible nên đặt bao nhiêu cho một khu vực cụ thể, và xác nhận lúc nào tràn " +
-            "thật sự xảy ra để chip +N có ý nghĩa.",
-    },
+}
+
+/** Single tag: e.g. a post that just got its first topic label. */
+export const SingleTag: Story = {
+    render: () => (
+        <div className="p-8">
+            <TagChips tags={["nestjs"]} />
+        </div>
+    ),
+}
+
+/** At maxVisible (no overflow): exactly the default 3 — every tag shows, no +N chip. */
+export const AtMaxVisible: Story = {
+    render: () => (
+        <div className="p-8">
+            <TagChips tags={["typescript", "nodejs", "postgresql"]} />
+        </div>
+    ),
+}
+
+/**
+ * Overflow: a long tag list — only the first 3 show, the rest collapse into a +N chip;
+ * hover the +N chip to open a tooltip listing every tag.
+ */
+export const Overflow: Story = {
+    render: () => (
+        <div className="p-8">
+            <TagChips
+                tags={[
+                    "system-design",
+                    "microservices",
+                    "docker",
+                    "kubernetes",
+                    "graphql",
+                    "keycloak",
+                    "rag",
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** Custom maxVisible: a roomier area (a big card) → raise maxVisible to 5 before collapsing. */
+export const CustomMaxVisible: Story = {
+    render: () => (
+        <div className="p-8">
+            <TagChips
+                tags={[
+                    "javascript",
+                    "react",
+                    "nextjs",
+                    "tailwindcss",
+                    "heroui",
+                    "vitest",
+                    "playwright",
+                    "ci-cd",
+                ]}
+                maxVisible={5}
+            />
+        </div>
+    ),
+}
+
+/**
+ * Base-chip variants: `variant` is passed straight down to each `Chip`. `soft`
+ * (default) for tags over a surface; `tertiary`/`primary` when the cluster should
+ * blend in more softly or stand out more, per surrounding context.
+ */
+export const Variants: Story = {
+    render: () => (
+        <div className="flex flex-col gap-3 p-8">
+            <TagChips tags={["frontend", "backend", "ai", "vector-db"]} variant="soft" />
+            <TagChips tags={["frontend", "backend", "ai", "vector-db"]} variant="tertiary" />
+            <TagChips tags={["frontend", "backend", "ai", "vector-db"]} variant="primary" />
+        </div>
+    ),
 }

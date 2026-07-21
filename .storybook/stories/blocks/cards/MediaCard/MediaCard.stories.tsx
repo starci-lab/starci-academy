@@ -1,74 +1,119 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button, Chip } from "@heroui/react"
-import { MediaCard } from "@/components/blocks/cards/MediaCard"
-import { Gallery, Variant } from "../../../../story-kit"
+import { MediaCard } from "./MediaCard"
+import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 
 const meta: Meta<typeof MediaCard> = {
-    title: "Blocks/Cards/MediaCard",
+    title: "Primitives/Card/MediaCard",
     component: MediaCard,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
+
 export default meta
+
 type Story = StoryObj<typeof MediaCard>
 
-/**
- * Toàn bộ trạng thái của MediaCard: một single-shape content card dùng chung cho
- * mọi entity grid (course, lesson, challenge, blog) — 16:9 full-bleed cover trên
- * đầu (flush mép card, Card p-0) rồi title, meta, summary, CTA trong body p-3.
- */
-export const AllVariants: Story = {
+const metaChips = (
+    <>
+        <Chip size="sm">Fullstack</Chip>
+        <Chip size="sm" variant="soft">Intermediate</Chip>
+    </>
+)
+
+const DESCRIPTION = "Build a solid foundation from frontend to backend through hands-on projects, graded by AI."
+
+/** With cover — a 16:9 full-bleed image at the top, then title / meta / description / CTA in the padded body. */
+export const WithCover: Story = {
     render: () => (
-        <Gallery>
-            <Variant
-                label="Có ảnh cover"
-                hint="Entity có ảnh cover: ảnh 16:9 full-bleed trên đầu, để trống bất kỳ slot text nào không có dữ liệu. Card KHÔNG tự pressable — muốn cả card bấm được phải truyền `href`/`onPress`, nếu không footer phải tự có nút riêng. Mô tả bị clamp 2 dòng (line-clamp) nên chiều cao card không đổi theo dữ liệu."
-            >
-                <div style={{ width: 320 }}>
-                    <MediaCard
-                        cover={
-                            <img
-                                src="https://placehold.co/640x360"
-                                alt="Course cover"
-                                className="size-full object-cover"
-                            />
-                        }
-                        title="Fullstack Mastery path"
-                        meta={
-                            <>
-                                <Chip size="sm">Fullstack</Chip>
-                                <Chip size="sm" variant="soft">Intermediate</Chip>
-                            </>
-                        }
-                        description="Build a solid foundation from frontend to backend through hands-on projects, graded by AI."
-                        footer={<Button size="sm">View course</Button>}
-                    />
-                </div>
-            </Variant>
-            <Variant
-                label="Không có cover — fallback 16:9"
-                hint="Entity chưa có ảnh cover: không truyền `cover`, MediaCard tự render placeholder 16:9 full-bleed flush mép card để grid vẫn đều hàng thay vì để trống slot media."
-            >
-                <div style={{ width: 320 }}>
-                    <MediaCard
-                        title="Fullstack Mastery path"
-                        meta={
-                            <>
-                                <Chip size="sm">Fullstack</Chip>
-                                <Chip size="sm" variant="soft">Intermediate</Chip>
-                            </>
-                        }
-                        description="Build a solid foundation from frontend to backend through hands-on projects, graded by AI."
-                        footer={<Button size="sm">View course</Button>}
-                    />
-                </div>
-            </Variant>
-        </Gallery>
+        <div className="p-8">
+            <div style={{ width: 320 }}>
+                <MediaCard
+                    cover={<img src="https://placehold.co/640x360" alt="Course cover" className="size-full object-cover" />}
+                    title="Fullstack Mastery path"
+                    meta={metaChips}
+                    description={DESCRIPTION}
+                    footer={<Button size="sm">View course</Button>}
+                />
+            </div>
+        </div>
     ),
-    parameters: {
-        usage:
-            "Một single-shape content card dùng chung cho mọi entity grid (course, lesson, challenge, blog): " +
-            "16:9 full-bleed cover trên đầu (flush mép card, Card p-0) rồi title, meta, summary, CTA trong body p-3. " +
-            "Không truyền cover → fallback placeholder 16:9. Để trống bất kỳ slot text nào không có dữ liệu. " +
-            "Card KHÔNG tự pressable — muốn cả card bấm được phải truyền href/onPress, nếu không footer phải tự có nút riêng. " +
-            "Mô tả bị clamp 2 dòng (line-clamp) nên chiều cao card không đổi theo dữ liệu.",
-    },
+}
+
+/** No cover — omit `cover` and a 16:9 placeholder fills the slot so a grid stays even instead of leaving a hole. */
+export const WithoutCover: Story = {
+    render: () => (
+        <div className="p-8">
+            <div style={{ width: 320 }}>
+                <MediaCard
+                    title="Fullstack Mastery path"
+                    meta={metaChips}
+                    description={DESCRIPTION}
+                    footer={<Button size="sm">View course</Button>}
+                />
+            </div>
+        </div>
+    ),
+}
+
+/** `onPress` — the whole card is a single pressable, keyboard-accessible target (custom handler). */
+export const Pressable: Story = {
+    render: () => (
+        <div className="p-8">
+            <div style={{ width: 320 }}>
+                <MediaCard
+                    cover={<img src="https://placehold.co/640x360" alt="Course cover" className="size-full object-cover" />}
+                    title="Fullstack Mastery path"
+                    meta={metaChips}
+                    description={DESCRIPTION}
+                    onPress={() => {}}
+                />
+            </div>
+        </div>
+    ),
+}
+
+/** `href` — the whole card is one accessible link (navigates on click). */
+export const AsLink: Story = {
+    render: () => (
+        <div className="p-8">
+            <div style={{ width: 320 }}>
+                <MediaCard
+                    cover={<img src="https://placehold.co/640x360" alt="Course cover" className="size-full object-cover" />}
+                    title="Fullstack Mastery path"
+                    meta={metaChips}
+                    description={DESCRIPTION}
+                    href="#"
+                />
+            </div>
+        </div>
+    ),
+}
+
+/**
+ * Loading: MIRROR the real card — keep the `Card` frame + the full-bleed 16:9 cover slot,
+ * swap the cover image + body text for `Skeleton` bars sized to match (title body, two-line
+ * description, a footer button) so the layout never jumps when the entity resolves.
+ */
+export const SkeletonLoading: Story = {
+    render: () => (
+        <div className="p-8">
+            <div style={{ width: 320 }}>
+                <MediaCard
+                    cover={<Skeleton className="aspect-video w-full" />}
+                    title={<Skeleton className="h-4 my-2 w-2/3 rounded" />}
+                    meta={<Skeleton.Chip />}
+                    description={
+                        <span className="flex flex-col gap-1">
+                            <Skeleton className="h-3 w-full rounded" />
+                            <Skeleton className="h-3 w-1/2 rounded" />
+                        </span>
+                    }
+                    footer={<Skeleton.Button />}
+                />
+            </div>
+        </div>
+    ),
 }

@@ -1,30 +1,42 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { BackLink } from "@/components/blocks/navigation/BackLink"
-import { Gallery, Variant } from "../../../../story-kit"
+import { BackLink } from "./BackLink"
 
 const meta: Meta<typeof BackLink> = {
-    title: "Blocks/Navigation/BackLink",
+    title: "Primitives/Navigation/BackLink",
     component: BackLink,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
+
 export default meta
+
 type Story = StoryObj<typeof BackLink>
 
-/**
- * Trạng thái duy nhất của BackLink: nhãn chung "Trở lại" khi subpage chỉ cần
- * một đường về chung, không cần nêu đích cụ thể.
- */
-export const AllVariants: Story = {
+/** Generic "Trở lại" — a subpage that only needs one way back, no named destination. */
+export const Default: Story = {
     render: () => (
-        <Gallery>
-            <Variant
-                label="Đường về chung"
-                hint="Dùng khi subpage chỉ cần một đường về chung, không cần nêu đích cụ thể quay lại."
-            >
-                <BackLink onPress={() => {}} />
-            </Variant>
-        </Gallery>
+        <div className="p-8">
+            <BackLink onPress={() => {}} />
+        </div>
     ),
-    parameters: {
-        usage: "Use when a subpage only needs a generic way back, without naming the specific destination it returns to.",
-    },
+}
+
+/** `target` appends the destination — "Trở lại {target}". */
+export const WithTarget: Story = {
+    render: () => (
+        <div className="p-8">
+            <BackLink target="thử thách" onPress={() => {}} />
+        </div>
+    ),
+}
+
+/** `label` overrides the whole text (the caller supplies its own copy). */
+export const CustomLabel: Story = {
+    render: () => (
+        <div className="p-8">
+            <BackLink label="Quay lại danh sách khoá học" onPress={() => {}} />
+        </div>
+    ),
 }

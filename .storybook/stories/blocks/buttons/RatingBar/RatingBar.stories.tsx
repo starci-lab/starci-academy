@@ -1,12 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { RatingBar } from "@/components/blocks/buttons/RatingBar"
-import { Gallery, Variant } from "../../../../story-kit"
+import { RatingBar } from "./RatingBar"
 
 const meta: Meta<typeof RatingBar> = {
-    title: "Blocks/Button/RatingBar",
+    title: "Primitives/Button/RatingBar",
     component: RatingBar,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
+
 export default meta
+
 type Story = StoryObj<typeof RatingBar>
 
 /** Bốn mức nhớ SM-2 kèm số ngày ôn lại tiếp theo, dùng ngay dưới mặt sau thẻ flashcard. */
@@ -26,57 +31,68 @@ const gradesWithoutInterval = [
 ]
 
 /**
- * Toàn bộ state của RatingBar trong một gallery: mặc định có hint khoảng lặp,
- * thẻ mới chưa có hint, đang gửi điểm (disabled), và cách bar co về 2 cột khi
- * container hẹp.
+ * Mặc định — có hint khoảng lặp. Dùng khi thẻ đã có lịch sử ôn tập: mỗi mức hiện
+ * luôn số ngày tới lần ôn kế tiếp để người học cân nhắc trước khi chọn.
  */
-export const AllVariants: Story = {
-    parameters: { usage: "Xem RatingBar ở mọi trạng thái trước khi ghép vào màn ôn flashcard hoặc quiz — trạng thái nào cần disable khi đang lưu điểm, khi nào hint khoảng lặp biến mất." },
+export const Default: Story = {
     render: () => (
-        <Gallery>
-            <Variant
-                label="Mặc định — có hint khoảng lặp"
-                hint="Dùng khi thẻ đã có lịch sử ôn tập: mỗi mức hiện luôn số ngày tới lần ôn kế tiếp để người học cân nhắc trước khi chọn."
-            >
+        <div className="p-8">
+            <RatingBar
+                options={gradesWithInterval}
+                onRate={() => {}}
+                ariaLabel="Chọn mức độ nhớ"
+            />
+        </div>
+    ),
+}
+
+/**
+ * Không có hint — thẻ mới. Thẻ chưa từng được ôn nên chưa tính được khoảng lặp kế
+ * tiếp; bar vẫn hoạt động đầy đủ, chỉ ẩn dòng hint.
+ */
+export const NoHint: Story = {
+    render: () => (
+        <div className="p-8">
+            <RatingBar
+                options={gradesWithoutInterval}
+                onRate={() => {}}
+                ariaLabel="Chọn mức độ nhớ"
+            />
+        </div>
+    ),
+}
+
+/**
+ * Đang gửi điểm (isPending). Bật khi request chấm điểm đang chạy — khoá cả bốn ô để
+ * người học không bấm chồng lệnh trong lúc chờ.
+ */
+export const Pending: Story = {
+    render: () => (
+        <div className="p-8">
+            <RatingBar
+                options={gradesWithInterval}
+                onRate={() => {}}
+                ariaLabel="Chọn mức độ nhớ"
+                isPending
+            />
+        </div>
+    ),
+}
+
+/**
+ * Container hẹp — co về 2 cột. Dưới 384px container tự co về lưới 2x2 thay vì 4 ô dẹt
+ * một hàng, tránh dòng hint bị bể chữ.
+ */
+export const NarrowContainer: Story = {
+    render: () => (
+        <div className="p-8">
+            <div className="w-72">
                 <RatingBar
                     options={gradesWithInterval}
                     onRate={() => {}}
                     ariaLabel="Chọn mức độ nhớ"
                 />
-            </Variant>
-            <Variant
-                label="Không có hint — thẻ mới"
-                hint="Thẻ chưa từng được ôn nên chưa tính được khoảng lặp kế tiếp; bar vẫn hoạt động đầy đủ, chỉ ẩn dòng hint."
-            >
-                <RatingBar
-                    options={gradesWithoutInterval}
-                    onRate={() => {}}
-                    ariaLabel="Chọn mức độ nhớ"
-                />
-            </Variant>
-            <Variant
-                label="Đang gửi điểm (isPending)"
-                hint="Bật khi request chấm điểm đang chạy — khoá cả bốn ô để người học không bấm chồng lệnh trong lúc chờ."
-            >
-                <RatingBar
-                    options={gradesWithInterval}
-                    onRate={() => {}}
-                    ariaLabel="Chọn mức độ nhớ"
-                    isPending
-                />
-            </Variant>
-            <Variant
-                label="Container hẹp — co về 2 cột"
-                hint="Dưới 384px container tự co về lưới 2x2 thay vì 4 ô dẹt một hàng, tránh dòng hint bị bể chữ."
-            >
-                <div className="w-72">
-                    <RatingBar
-                        options={gradesWithInterval}
-                        onRate={() => {}}
-                        ariaLabel="Chọn mức độ nhớ"
-                    />
-                </div>
-            </Variant>
-        </Gallery>
+            </div>
+        </div>
     ),
 }

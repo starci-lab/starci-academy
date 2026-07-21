@@ -1,32 +1,40 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
+import React from "react"
 import { UserPlusIcon } from "@phosphor-icons/react"
-import { FeedItem } from "@/components/blocks/feed/FeedItem"
-import { ActivityAvatar } from "@/components/blocks/feed/ActivityAvatar"
-import { ReactionBar } from "@/components/blocks/feed/ReactionBar"
-import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
-import { Gallery, Variant } from "../../../../story-kit"
-import { usage } from "./components"
+import { FeedItem } from "./FeedItem"
+import { ActivityAvatar } from "../ActivityAvatar/ActivityAvatar"
+import { ReactionBar, ReactionType } from "../ReactionBar/ReactionBar"
+import { EntityLink } from "../EntityLink/EntityLink"
+import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof FeedItem> = {
-    title: "Blocks/Feed/FeedItem",
+    title: "Block/Feed/FeedItem",
     component: FeedItem,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
+
 export default meta
+
 type Story = StoryObj<typeof FeedItem>
 
-/**
- * Toàn bộ ma trận trạng thái của FeedItem: mặc định, có thanh reaction, không có
- * leading, và text hoạt động dài cần xuống dòng. Dùng để tra khi nào gắn reaction
- * bar, khi nào bỏ leading, và cách cột text xử lý câu dài nhiều thực thể.
- */
-export const AllVariants: Story = {
-    parameters: { usage },
-    render: () => (
-        <Gallery>
-            <Variant
-                label="Mặc định"
-                hint="Một hoạt động gắn với một người mà không ai tương tác lại được: avatar kèm badge loại hoạt động, câu mô tả hành động, và mốc thời gian tương đối."
-            >
+const ANATOMY = {
+    primitives: [
+        { name: "ActivityAvatar", role: "slot leading — avatar + badge loại hoạt động" },
+        { name: "EntityLink", role: "mốc thực thể bấm được trong câu action" },
+        { name: "ReactionBar", role: "slot footer — thả cảm xúc" },
+        { name: "Typography", role: "câu action + mốc thời gian muted" },
+    ],
+    reason:
+        "Một hàng thuật lại một SỰ KIỆN đã xảy ra (ai làm gì, khi nào) — chỉ đọc, khác ListRow bấm được. Bố cục leading + cột text + footer để feature ghép avatar/câu/reaction vào đúng chỗ mà không tự dựng lại layout hàng.",
+}
+
+export const Default: Story = {
+    render: () =>
+        blockShell(
+            <div className="w-96">
                 <FeedItem
                     leading={(
                         <ActivityAvatar
@@ -37,13 +45,21 @@ export const AllVariants: Story = {
                     )}
                     timestamp="2 giờ trước"
                 >
-                    <span><strong>minhanh_dev</strong> đã follow <strong>quochuy_backend</strong></span>
+                    <span>
+                        <EntityLink label="minhanh_dev" onPress={() => {}} />
+                        {" "}đã follow{" "}
+                        <EntityLink label="quochuy_backend" onPress={() => {}} />
+                    </span>
                 </FeedItem>
-            </Variant>
-            <Variant
-                label="Có thanh reaction"
-                hint="Khi hoạt động có thể được cộng đồng tương tác lại (ví dụ vừa hoàn thành một challenge), thêm reaction bar vào slot footer để người xem bấm react. Bỏ trống slot này với hoạt động riêng tư hoặc system log."
-            >
+            </div>,
+            ANATOMY,
+        ),
+}
+
+export const WithReaction: Story = {
+    render: () =>
+        blockShell(
+            <div className="w-96">
                 <FeedItem
                     leading={(
                         <ActivityAvatar
@@ -53,50 +69,54 @@ export const AllVariants: Story = {
                         />
                     )}
                     timestamp="15 phút trước"
-                    footer={(
-                        <ReactionBar
-                            count={8}
-                            myReaction={ReactionType.Like}
-                            onReact={() => {}}
-                        />
-                    )}
+                    footer={<ReactionBar count={8} myReaction={ReactionType.Like} onReact={() => {}} />}
                 >
-                    <span><strong>quochuy_backend</strong> đã hoàn thành challenge <strong>Handling asynchronous flows</strong></span>
+                    <span>
+                        <EntityLink label="quochuy_backend" onPress={() => {}} />
+                        {" "}đã hoàn thành challenge{" "}
+                        <EntityLink label="Xử lý luồng bất đồng bộ" onPress={() => {}} />
+                    </span>
                 </FeedItem>
-            </Variant>
-            <Variant
-                label="Không có leading"
-                hint="Khi hoạt động không gắn với một người dùng cụ thể hoặc không cần avatar (ví dụ system log), bỏ trống slot leading để hàng chỉ còn text — đừng nhét avatar giả vào cho cân hàng."
-            >
+            </div>,
+            ANATOMY,
+        ),
+}
+
+export const NoLeading: Story = {
+    render: () =>
+        blockShell(
+            <div className="w-96">
                 <FeedItem timestamp="Hôm qua lúc 21:40">
                     Hệ thống đã tự động backup tiến độ khóa học của bạn
                 </FeedItem>
-            </Variant>
-            <Variant
-                label="Text hoạt động dài"
-                hint="Đặt trong cột hẹp để kiểm câu mô tả dài nhiều thực thể liên kết: cột text phải co giãn và xuống dòng tự nhiên, không được đẩy mốc thời gian ra khỏi hàng."
-            >
-                <div className="w-72">
-                    <FeedItem
-                        leading={(
-                            <ActivityAvatar
-                                username="thuha_ux"
-                                avatar="https://i.pravatar.cc/150?img=45"
-                                icon={<UserPlusIcon aria-hidden focusable="false" weight="bold" />}
-                            />
-                        )}
-                        timestamp="3 ngày trước"
-                    >
-                        <span>
-                            <strong>thuha_ux</strong> đã hoàn thành milestone
-                            {" "}
-                            <strong>Building a scalable design system for enterprise applications</strong>
-                            {" "}
-                            trong khóa <strong>System Design Mastery</strong>
-                        </span>
-                    </FeedItem>
-                </div>
-            </Variant>
-        </Gallery>
-    ),
+            </div>,
+            ANATOMY,
+        ),
+}
+
+export const LongText: Story = {
+    render: () =>
+        blockShell(
+            <div className="w-72">
+                <FeedItem
+                    leading={(
+                        <ActivityAvatar
+                            username="thuha_ux"
+                            avatar="https://i.pravatar.cc/150?img=45"
+                            icon={<UserPlusIcon aria-hidden focusable="false" weight="bold" />}
+                        />
+                    )}
+                    timestamp="3 ngày trước"
+                >
+                    <span>
+                        <EntityLink label="thuha_ux" onPress={() => {}} />
+                        {" "}đã hoàn thành milestone{" "}
+                        <EntityLink label="Building a scalable design system for enterprise applications" onPress={() => {}} />
+                        {" "}trong khóa{" "}
+                        <EntityLink label="System Design Mastery" onPress={() => {}} />
+                    </span>
+                </FeedItem>
+            </div>,
+            ANATOMY,
+        ),
 }

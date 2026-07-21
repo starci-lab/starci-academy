@@ -1,18 +1,29 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-
-import { ShowcaseMockup, SHOWCASE_THEMES } from "@/components/blocks/marketing/ShowcaseMockup"
-import { Gallery, Variant } from "../../../../story-kit"
+import { ShowcaseMockup, SHOWCASE_THEMES } from "./ShowcaseMockup"
+import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof ShowcaseMockup> = {
-    title: "Blocks/Marketing/ShowcaseMockup",
+    title: "Block/Marketing/ShowcaseMockup",
     component: ShowcaseMockup,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
 
 export default meta
 
 type Story = StoryObj<typeof ShowcaseMockup>
 
-/** Nội dung mẫu bên trong khung mockup — một danh sách khoá học rút gọn. */
+const ANATOMY = {
+    primitives: [
+        { name: "Typography", role: "chuỗi URL trên thanh address (type=code)" },
+    ],
+    reason:
+        "Khung cửa sổ trình duyệt tái dùng (3 chấm + address bar) bọc bất kỳ nội dung nào, nghiêng 3D + quầng sáng màu — cái look hero StarCi/Uni-Education gói thành một block. Feature chỉ đổi theme/tilt/backdrop/url + children; surface card luôn theo token light/dark.",
+}
+
+/** Sample content inside the mockup — a condensed course list. */
 const DemoContent = () => (
     <div className="flex flex-col gap-2 p-4">
         <span className="text-sm font-semibold text-foreground">Khoá học nổi bật</span>
@@ -24,98 +35,124 @@ const DemoContent = () => (
     </div>
 )
 
-/**
- * Toàn bộ variant của ShowcaseMockup trong một gallery: 3 bộ màu glow, 3 hướng
- * nghiêng, 4 kiểu nền trang trí, khung tỉ lệ 16:9, và trạng thái ẩn address bar.
- */
-export const AllVariants: Story = {
-    parameters: {
-        usage: "Dùng gallery này để so trực tiếp các bộ màu, hướng nghiêng và kiểu nền của ShowcaseMockup trước khi chọn tổ hợp cho một khu vực landing cụ thể.",
-    },
-    render: () => (
-        <Gallery>
-            <Variant
-                label="Mặc định"
-                hint="Bộ màu accent đơn sắc, nghiêng trái, nền quầng sáng — dùng khi chưa cần đồng bộ màu với khu vực xung quanh."
-            >
+export const Default: Story = {
+    render: () =>
+        blockShell(
+            <div className="max-w-lg">
                 <ShowcaseMockup url="starci.edu.vn/khoa-hoc">
                     <DemoContent />
                 </ShowcaseMockup>
-            </Variant>
-            <Variant
-                label="Bộ màu StarCi"
-                hint="Ba màu hồng/vàng/xanh khớp với sơ đồ kiến trúc — dùng khi mockup đứng cạnh ArchitectureScene để đồng bộ bảng màu."
-            >
+            </div>,
+            ANATOMY,
+        ),
+}
+
+export const ThemeStarci: Story = {
+    render: () =>
+        blockShell(
+            <div className="max-w-lg">
                 <ShowcaseMockup url="starci.edu.vn/kien-truc" theme={SHOWCASE_THEMES.starci}>
                     <DemoContent />
                 </ShowcaseMockup>
-            </Variant>
-            <Variant
-                label="Bộ màu Aqua"
-                hint="Ba màu xanh dương/xanh ngọc/tím kiểu Uni-Education — dùng cho khu vực mang phong cách sản phẩm giáo dục cổ điển hơn."
-            >
+            </div>,
+            ANATOMY,
+        ),
+}
+
+export const ThemeAqua: Story = {
+    render: () =>
+        blockShell(
+            <div className="max-w-lg">
                 <ShowcaseMockup url="uni-education.vn/demo" theme={SHOWCASE_THEMES.aqua}>
                     <DemoContent />
                 </ShowcaseMockup>
-            </Variant>
-            <Variant
-                label="Nghiêng phải"
-                hint="Nghiêng ngược hướng mặc định — dùng khi mockup nằm bên trái khối text, để mắt người đọc dồn vào nội dung bên phải."
-            >
+            </div>,
+            ANATOMY,
+        ),
+}
+
+export const TiltRight: Story = {
+    render: () =>
+        blockShell(
+            <div className="max-w-lg">
                 <ShowcaseMockup url="starci.edu.vn/lo-trinh" tilt="right">
                     <DemoContent />
                 </ShowcaseMockup>
-            </Variant>
-            <Variant
-                label="Không nghiêng"
-                hint="Đứng thẳng, không xoay 3D — dùng khi đặt mockup giữa trang hoặc xếp nhiều mockup cạnh nhau trong một lưới."
-            >
+            </div>,
+            ANATOMY,
+        ),
+}
+
+export const TiltNone: Story = {
+    render: () =>
+        blockShell(
+            <div className="max-w-lg">
                 <ShowcaseMockup url="starci.edu.vn/gia" tilt="none">
                     <DemoContent />
                 </ShowcaseMockup>
-            </Variant>
-            <Variant
-                label="Nền lưới điểm"
-                hint="Nền chấm lưới tĩnh thay cho quầng sáng gradient — dùng khi khu vực muốn cảm giác kỹ thuật, tối giản hơn."
-            >
+            </div>,
+            ANATOMY,
+        ),
+}
+
+export const BackdropGrid: Story = {
+    render: () =>
+        blockShell(
+            <div className="max-w-lg">
                 <ShowcaseMockup url="starci.edu.vn/tai-lieu" backdrop="grid">
                     <DemoContent />
                 </ShowcaseMockup>
-            </Variant>
-            <Variant
-                label="Nền sao"
-                hint="Các đốm sáng nhỏ rải quanh mockup — dùng cho khu vực nền tối, gợi không gian thay vì quầng sáng liền mạch."
-            >
+            </div>,
+            ANATOMY,
+        ),
+}
+
+export const BackdropStars: Story = {
+    render: () =>
+        blockShell(
+            <div className="max-w-lg">
                 <ShowcaseMockup url="starci.edu.vn/cong-dong" backdrop="stars">
                     <DemoContent />
                 </ShowcaseMockup>
-            </Variant>
-            <Variant
-                label="Không nền trang trí"
-                hint="Bỏ hẳn lớp trang trí phía sau — dùng khi khu vực đặt mockup đã có hoa văn/nền riêng, tránh chồng lớp rối mắt."
-            >
+            </div>,
+            ANATOMY,
+        ),
+}
+
+export const BackdropNone: Story = {
+    render: () =>
+        blockShell(
+            <div className="max-w-lg">
                 <ShowcaseMockup url="starci.edu.vn/lien-he" backdrop="none">
                     <DemoContent />
                 </ShowcaseMockup>
-            </Variant>
-            <Variant
-                label="Khoá tỉ lệ 16:9"
-                hint="Khung nội dung cố định theo tỉ lệ video — dùng khi children là ảnh chụp toàn trang web thay vì nội dung co giãn tự do."
-            >
+            </div>,
+            ANATOMY,
+        ),
+}
+
+export const AspectVideo: Story = {
+    render: () =>
+        blockShell(
+            <div className="max-w-lg">
                 <ShowcaseMockup url="starci.edu.vn/preview" aspect="video">
                     <div className="flex size-full items-center justify-center bg-surface-2 text-xs text-muted">
                         Ảnh chụp toàn trang web
                     </div>
                 </ShowcaseMockup>
-            </Variant>
-            <Variant
-                label="Không có address bar"
-                hint="Ẩn chuỗi URL giả, chỉ giữ 3 chấm màu của thanh chrome — dùng khi không cần gợi ý địa chỉ trang cụ thể."
-            >
+            </div>,
+            ANATOMY,
+        ),
+}
+
+export const NoAddressBar: Story = {
+    render: () =>
+        blockShell(
+            <div className="max-w-lg">
                 <ShowcaseMockup>
                     <DemoContent />
                 </ShowcaseMockup>
-            </Variant>
-        </Gallery>
-    ),
+            </div>,
+            ANATOMY,
+        ),
 }

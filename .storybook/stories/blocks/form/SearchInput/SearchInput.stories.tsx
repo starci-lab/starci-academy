@@ -1,33 +1,15 @@
+import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { fn, userEvent, within } from "storybook/test"
-import { SearchInput } from "@/components/blocks/form/SearchInput"
-import { OVERFLOW_SUGGESTIONS, SUGGESTIONS } from "./components"
+import { userEvent, within } from "storybook/test"
+import { SearchInput } from "./SearchInput"
+import type { SearchInputSuggestion } from "./SearchInput"
 
 const meta: Meta<typeof SearchInput> = {
-    title: "Blocks/Form/SearchInput",
+    title: "Primitives/Form/SearchInput",
     component: SearchInput,
-    args: {
-        placeholder: "Search courses, lessons…",
-        onValueChange: fn(),
-    },
-    argTypes: {
-        value: {
-            control: "text",
-            description: "Current search query (controlled) — the parent owns it.",
-        },
-        variant: {
-            control: "select",
-            options: ["primary", "secondary"],
-            description: "HeroUI input surface variant; `secondary` uses a muted field background for a search box sitting on a light surface (card/toolbar).",
-        },
-        suggestions: {
-            control: false,
-            description: "Optional typeahead suggestions. Paired with `onSelectSuggestion`, a listbox dropdown renders while focused and the query is non-empty.",
-        },
-        onSelectSuggestion: {
-            control: false,
-            description: "Fired with the chosen suggestion; its presence is what enables the dropdown.",
-        },
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
     },
 }
 
@@ -35,43 +17,105 @@ export default meta
 
 type Story = StoryObj<typeof SearchInput>
 
+/** A handful of typeahead suggestions — enough to see the dropdown without scrolling. */
+const SUGGESTIONS: Array<SearchInputSuggestion> = [
+    { id: "1", label: "React hooks" },
+    { id: "2", label: "React Server Components" },
+    { id: "3", label: "React Query" },
+    { id: "4", label: "React Testing Library" },
+    { id: "5", label: "React Router" },
+]
+
+/** A long suggestion list — exceeds the dropdown's `max-h-72` so it has to scroll. */
+const OVERFLOW_SUGGESTIONS: Array<SearchInputSuggestion> = [
+    { id: "1", label: "Node.js Streams" },
+    { id: "2", label: "TypeScript Generics" },
+    { id: "3", label: "Next.js Middleware" },
+    { id: "4", label: "GraphQL Federation" },
+    { id: "5", label: "Redis Caching" },
+    { id: "6", label: "Kubernetes Deployments" },
+    { id: "7", label: "Docker Compose" },
+    { id: "8", label: "PostgreSQL Indexes" },
+    { id: "9", label: "Elasticsearch Queries" },
+    { id: "10", label: "WebSocket Events" },
+    { id: "11", label: "Server-Sent Events" },
+    { id: "12", label: "OAuth2 Flows" },
+    { id: "13", label: "JWT Refresh Tokens" },
+    { id: "14", label: "Rate Limiting Strategies" },
+    { id: "15", label: "Message Queues" },
+    { id: "16", label: "Event Sourcing" },
+    { id: "17", label: "CQRS Pattern" },
+    { id: "18", label: "Database Sharding" },
+    { id: "19", label: "Load Balancing" },
+    { id: "20", label: "CDN Edge Caching" },
+    { id: "21", label: "Webhook Delivery" },
+    { id: "22", label: "gRPC Streaming" },
+    { id: "23", label: "Microservices Testing" },
+    { id: "24", label: "Serverless Functions" },
+]
+
+/** Local controlled wrapper — holds `value` so the field is typeable on the canvas. */
+const Controlled = ({
+    initialValue = "",
+    placeholder,
+    variant,
+    suggestions,
+    withSelect,
+}: {
+    initialValue?: string
+    placeholder?: string
+    variant?: "primary" | "secondary"
+    suggestions?: Array<SearchInputSuggestion>
+    withSelect?: boolean
+}) => {
+    const [value, setValue] = useState(initialValue)
+    return (
+        <SearchInput
+            value={value}
+            onValueChange={setValue}
+            placeholder={placeholder}
+            variant={variant}
+            suggestions={suggestions}
+            onSelectSuggestion={withSelect ? (s) => setValue(s.label) : undefined}
+        />
+    )
+}
+
 /**
- * Empty query, unfocused — the bare search field with icon + placeholder. The
- * dropdown never opens here: it requires a non-empty value AND suggestions.
+ * Default: empty query, unfocused — the bare search field with icon + placeholder.
+ * The dropdown never opens here: it requires a non-empty value AND suggestions.
  */
 export const Default: Story = {
-    parameters: { usage: "Controlled (value + onValueChange). The parent owns the query. Empty and unfocused — the dropdown requires a non-empty value plus suggestions, so it stays closed." },
-    args: {
-        value: "",
-    },
+    render: () => (
+        <div className="p-8">
+            <Controlled placeholder="Search courses, lessons…" />
+        </div>
+    ),
 }
 
 /**
- * `variant="secondary"` — a muted field background, for a search box sitting
- * on a light surface (e.g. inside a card/toolbar).
+ * Secondary: `variant="secondary"` — a muted field background, for a search box
+ * sitting on a light surface (e.g. inside a card/toolbar).
  */
 export const Secondary: Story = {
-    parameters: { usage: "variant=\"secondary\": a muted field background, for a search box on a light surface (card/toolbar)." },
-    args: {
-        value: "",
-        variant: "secondary",
-        placeholder: "Filter the list…",
-    },
+    render: () => (
+        <div className="p-8">
+            <Controlled variant="secondary" placeholder="Filter the list…" />
+        </div>
+    ),
 }
 
 /**
- * With typeahead: `suggestions` + `onSelectSuggestion` → a listbox dropdown
- * renders under the field once focused and the query is non-empty, with the
- * matched substring styled. The parent supplies the data source (e.g. an
- * Elasticsearch-backed query) — the story focuses the field to reveal it.
+ * DataSuggestions: `suggestions` + `onSelectSuggestion` → a listbox dropdown
+ * renders once focused and the query is non-empty, with the matched substring
+ * styled. The play step focuses the field to reveal it.
  */
 export const DataSuggestions: Story = {
-    parameters: { usage: "Typeahead: suggestions + onSelectSuggestion → a dropdown when focused and the query is non-empty. The parent supplies the data source." },
-    args: {
-        value: "Re",
-        suggestions: SUGGESTIONS,
-        onSelectSuggestion: fn(),
-    },
+    render: () => (
+        <div className="p-8">
+            <Controlled initialValue="Re" suggestions={SUGGESTIONS} withSelect />
+        </div>
+    ),
     play: async ({ canvasElement }) => {
         const canvas = within(canvasElement)
         await userEvent.click(canvas.getByRole("searchbox"))
@@ -79,17 +123,15 @@ export const DataSuggestions: Story = {
 }
 
 /**
- * A long suggestions list exceeds the dropdown's `max-h-72` and scrolls. The
- * keyboard-highlighted row (`activeIndex`) scrolls into view as ArrowDown
- * moves it past the visible area — a real, distinct render from the short list.
+ * Overflow: a long suggestions list exceeds the dropdown's `max-h-72` and
+ * scrolls. Arrow keys move the keyboard highlight and scroll it into view.
  */
 export const Overflow: Story = {
-    parameters: { usage: "A long suggestions list scrolls past max-h-72; arrow keys move the keyboard highlight and scroll it into view." },
-    args: {
-        value: "e",
-        suggestions: OVERFLOW_SUGGESTIONS,
-        onSelectSuggestion: fn(),
-    },
+    render: () => (
+        <div className="p-8">
+            <Controlled initialValue="e" suggestions={OVERFLOW_SUGGESTIONS} withSelect />
+        </div>
+    ),
     play: async ({ canvasElement }) => {
         const canvas = within(canvasElement)
         const input = canvas.getByRole("searchbox")

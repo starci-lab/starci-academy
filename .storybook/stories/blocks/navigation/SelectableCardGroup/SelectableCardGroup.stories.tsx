@@ -1,81 +1,106 @@
+import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-
-import { SelectableCardGroup } from "@/components/blocks/navigation/SelectableCardGroup"
-import { Gallery, Variant } from "../../../../story-kit"
-import { ControlledGroup, LANGUAGE_ITEMS, PLAN_ITEMS } from "./components"
+import { SelectableCardGroup, type SelectableCardItem } from "./SelectableCardGroup"
 
 const meta: Meta<typeof SelectableCardGroup> = {
-    title: "Blocks/Navigation/SelectableCardGroup",
+    title: "Primitives/Navigation/SelectableCardGroup",
     component: SelectableCardGroup,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
 
 export default meta
 
 type Story = StoryObj<typeof SelectableCardGroup>
 
-/**
- * Toàn bộ ma trận trạng thái của SelectableCardGroup: option giàu thông tin (icon +
- * mô tả + badge), số cột 1 và 3, và card có icon nhận diện kèm một lựa chọn bị khoá.
- * Dùng để tra khi nào chọn SelectableCardGroup thay các block chọn khác, và chọn
- * số cột theo bề rộng khu vực hiển thị.
- */
-export const AllVariants: Story = {
+type PlanValue = "monthly" | "quarterly" | "yearly"
+
+const savePill = (text: string) => (
+    <span className="rounded-full bg-accent-soft px-2 py-0 text-xs font-medium text-accent-soft-foreground">
+        {text}
+    </span>
+)
+
+const PLAN_ITEMS: Array<SelectableCardItem<PlanValue>> = [
+    { value: "monthly", label: "Monthly", description: "299.000đ / month" },
+    { value: "quarterly", label: "Quarterly", description: "799.000đ / quarter", badge: savePill("Save 11%") },
+    { value: "yearly", label: "Yearly", description: "2.499.000đ / year", badge: savePill("Save 30%") },
+]
+
+const StarIcon = () => (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path
+            d="M8 1.5l1.9 4.2 4.6.5-3.4 3.2.9 4.6L8 11.8l-4 2.2.9-4.6-3.4-3.2 4.6-.5L8 1.5z"
+            stroke="currentColor"
+            strokeWidth="1.2"
+            strokeLinejoin="round"
+        />
+    </svg>
+)
+
+const LANGUAGE_ITEMS: Array<SelectableCardItem<"ts" | "java" | "csharp" | "go">> = [
+    { value: "ts", label: "TypeScript", description: "Node.js / NestJS", icon: <StarIcon /> },
+    { value: "java", label: "Java", description: "Spring Boot" },
+    { value: "csharp", label: "C#", description: ".NET" },
+    { value: "go", label: "Go", description: "Coming soon", isDisabled: true },
+]
+
+/** Owns the selection so the group is interactive (the block is fully controlled). */
+const ControlledGroup = <T extends string>({
+    items,
+    initialValue,
+    ariaLabel,
+    columns,
+    width = "420px",
+}: {
+    items: Array<SelectableCardItem<T>>
+    initialValue: T
+    ariaLabel: string
+    columns?: 1 | 2 | 3
+    width?: string
+}) => {
+    const [value, setValue] = useState<T>(initialValue)
+    return (
+        <div style={{ width }}>
+            <SelectableCardGroup items={items} value={value} onChange={setValue} ariaLabel={ariaLabel} columns={columns} />
+        </div>
+    )
+}
+
+/** Rich options (icon-less here): label + description + badge, 2 columns — a real radio group. */
+export const RichOption: Story = {
     render: () => (
-        <Gallery>
-            <Variant
-                label="Pick a rich option"
-                hint="Pick 1-of-N when each option is rich (icon + description + badge) and the selection must stay readable — a real radio (billing cycle, service plan)."
-            >
-                <ControlledGroup
-                    items={PLAN_ITEMS}
-                    initialValue="monthly"
-                    ariaLabel="Select billing cycle"
-                    columns={2}
-                />
-            </Variant>
-            <Variant
-                label="1 column"
-                hint="For a narrow block or sidebar, when the choices must stack in a single column."
-            >
-                <ControlledGroup
-                    items={PLAN_ITEMS}
-                    initialValue="quarterly"
-                    ariaLabel="Select billing cycle"
-                    columns={1}
-                />
-            </Variant>
-            <Variant
-                label="3 columns"
-                hint="For listing many options side by side on a wide block, for example choosing a programming language."
-            >
-                <ControlledGroup
-                    items={LANGUAGE_ITEMS}
-                    initialValue="ts"
-                    ariaLabel="Select language"
-                    columns={3}
-                    width="640px"
-                />
-            </Variant>
-            <Variant
-                label="With icons + locked item"
-                hint="Use when the choices need an identifying icon (language, technology) and one option is not yet available — the disabled card still shows to signal coming soon instead of being hidden."
-            >
-                <ControlledGroup
-                    items={LANGUAGE_ITEMS}
-                    initialValue="java"
-                    ariaLabel="Select language"
-                    columns={2}
-                />
-            </Variant>
-        </Gallery>
+        <div className="p-8">
+            <ControlledGroup items={PLAN_ITEMS} initialValue="monthly" ariaLabel="Select billing cycle" columns={2} />
+        </div>
     ),
-    parameters: {
-        usage:
-            "Use when picking 1-of-N where each option is RICH (icon + description + badge) and the selection must STAY, readable " +
-            "as \"the one I chose\" — this is a real radio (billing cycle, service plan). If pressing it leaves NOTHING behind " +
-            "and the card just runs one action then stops (open a page, submit for grading) → GroupPressableCard. If each choice " +
-            "is just a short one-line label → TabsCard (primary pill). If the choices are small, many, and need to wrap onto the next line → " +
-            "FlexWrapButtonRadio. Choose the column count by context: 1 column for a narrow block/sidebar, 3 columns when listing " +
-            "many options side by side (for example choosing a programming language).",
-    },
+}
+
+/** `columns={1}` — stacks in a single column for a narrow block / sidebar. */
+export const OneColumn: Story = {
+    render: () => (
+        <div className="p-8">
+            <ControlledGroup items={PLAN_ITEMS} initialValue="quarterly" ariaLabel="Select billing cycle" columns={1} />
+        </div>
+    ),
+}
+
+/** `columns={3}` — many options side by side on a wide block. */
+export const ThreeColumns: Story = {
+    render: () => (
+        <div className="p-8">
+            <ControlledGroup items={LANGUAGE_ITEMS} initialValue="ts" ariaLabel="Select language" columns={3} width="640px" />
+        </div>
+    ),
+}
+
+/** With an identifying `icon` and a locked (`isDisabled`) option that still shows. */
+export const WithIconsAndLocked: Story = {
+    render: () => (
+        <div className="p-8">
+            <ControlledGroup items={LANGUAGE_ITEMS} initialValue="java" ariaLabel="Select language" columns={2} />
+        </div>
+    ),
 }

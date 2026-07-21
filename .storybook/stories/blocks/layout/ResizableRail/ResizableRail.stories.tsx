@@ -1,89 +1,207 @@
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Button, Label, Typography } from "@heroui/react"
-
-import { ResizableRail } from "@/components/blocks/layout/ResizableRail"
-import { Gallery, Variant } from "../../../../story-kit"
-import { PracticeShellDemo } from "./components"
+import {
+    Button,
+    Input,
+    Label,
+    ListBox,
+    ScrollShadow,
+    TextField,
+    Typography,
+    cn,
+} from "@heroui/react"
+import { ResizableRail } from "./ResizableRail"
+import { PageHeader } from "../PageHeader/PageHeader"
 
 const meta: Meta<typeof ResizableRail> = {
-    title: "Layout/ResizableRail",
+    title: "Primitives/Layout/ResizableRail",
     component: ResizableRail,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
+
 export default meta
+
 type Story = StoryObj<typeof ResizableRail>
 
-/**
- * Toàn bộ trạng thái tĩnh của ResizableRail: mặc định (search + topic ListBox
- * kiểu PracticeRail) và nội dung tràn phải cuộn trong rail. Dùng để tra khi
- * nào chọn block này thay vì một div cố định, và xác nhận nội dung dài không
- * đẩy khung shell cao lên.
- */
-export const AllVariants: Story = {
+const TOPICS = [
+    "Tất cả",
+    "Mảng & Chuỗi",
+    "Danh sách liên kết",
+    "Ngăn xếp & Hàng đợi",
+    "Cây & BST",
+    "Đồ thị",
+    "Quy hoạch động",
+    "Tham lam",
+    "Băm & Tập hợp",
+    "Sắp xếp",
+    "Hai con trỏ",
+    "Cửa sổ trượt",
+]
+
+/** Topic search + ListBox — the rail body, mirroring `PracticeRail` (problems mode) without the mode tabs. */
+const PracticeTopicsBody = ({ className }: { className?: string }) => {
+    const [query, setQuery] = useState("")
+    const [topic, setTopic] = useState("Tất cả")
+
+    const topics = useMemo(() => {
+        const normalized = query.trim().toLowerCase()
+        if (!normalized) {
+            return TOPICS
+        }
+        return TOPICS.filter((item) => item.toLowerCase().includes(normalized))
+    }, [query])
+
+    return (
+        <div className={cn("relative flex min-h-0 min-w-0 flex-col gap-3 p-6", className)}>
+            <div className="flex flex-col gap-2">
+                <Label className="px-1 text-xs text-muted">Chủ đề</Label>
+                <TextField>
+                    <Input
+                        type="search"
+                        aria-label="Tìm chủ đề"
+                        placeholder="Tìm chủ đề"
+                        value={query}
+                        onChange={(event) => setQuery(event.target.value)}
+                    />
+                </TextField>
+            </div>
+
+            <ScrollShadow
+                hideScrollBar
+                className="-mx-1 min-h-0 min-w-0 flex-1 overflow-y-auto px-1"
+            >
+                {topics.length === 0 ? (
+                    <Typography type="body-sm" color="muted" className="px-3 py-2">
+                        Không có chủ đề khớp "{query.trim()}"
+                    </Typography>
+                ) : (
+                    <ListBox
+                        aria-label="Danh sách chủ đề"
+                        selectionMode="single"
+                        disallowEmptySelection
+                        selectedKeys={[topic]}
+                        onSelectionChange={(keys) => {
+                            const key = [...keys][0]
+                            if (typeof key === "string") {
+                                setTopic(key)
+                            }
+                        }}
+                        className="gap-1 p-0"
+                    >
+                        {topics.map((item) => (
+                            <ListBox.Item
+                                key={item}
+                                id={item}
+                                textValue={item}
+                                className="cursor-pointer rounded-2xl px-3 py-2 text-foreground data-[hovered=true]:bg-default-100 data-[selected=true]:bg-accent-soft data-[selected=true]:text-accent-soft-foreground"
+                            >
+                                <Typography type="body-sm" className="min-w-0 flex-1 truncate text-inherit">
+                                    {item}
+                                </Typography>
+                            </ListBox.Item>
+                        ))}
+                    </ListBox>
+                )}
+            </ScrollShadow>
+        </div>
+    )
+}
+
+/** Shell mirrored from `Practice`: flex row, rail `relative shrink-0`, content pane `flex-1` + PageHeader. */
+const PracticeShellDemo = ({
+    storageKey,
+    heightClassName,
+    defaultWidth = 300,
+    maxWidth = 420,
+}: {
+    storageKey: string
+    heightClassName: string
+    defaultWidth?: number
+    maxWidth?: number
+}) => (
+    <div className={`flex w-full items-start ${heightClassName}`}>
+        <ResizableRail
+            className="relative flex h-full shrink-0 flex-col self-stretch"
+            storageKey={storageKey}
+            defaultWidth={defaultWidth}
+            minWidth={256}
+            maxWidth={maxWidth}
+            ariaLabel="Kéo để đổi độ rộng danh sách chủ đề"
+        >
+            <PracticeTopicsBody className="min-h-0 flex-1" />
+        </ResizableRail>
+
+        <div className="min-h-0 min-w-0 flex-1 overflow-y-auto p-6">
+            <div className="mx-auto flex max-w-5xl flex-col gap-10">
+                <PageHeader
+                    title="Luyện tập coding"
+                    description="Chọn một chủ đề ở bên trái để bắt đầu luyện các bài tập tương ứng."
+                />
+            </div>
+        </div>
+    </div>
+)
+
+/** Default: search + topic ListBox rail beside a content pane. Drag the right-edge handle to resize. */
+export const Default: Story = {
     render: () => (
-        <Gallery>
-            <Variant
-                label="Mặc định"
-                hint="Dùng khi độ rộng rail là thứ NGƯỜI ĐỌC nên tự quyết, không phải mình quyết thay họ — mục lục có tên bài học độ dài khác nhau, người muốn rộng để đọc hết, người muốn hẹp để dành đất cho nội dung chính. Với rail độ rộng cố định thì đừng dùng block này, một div thường là đủ. Độ rộng người đọc kéo được nhớ theo storageKey, nên hai rail khác nhau phải có key khác nhau. Thân rail = search + topic ListBox kiểu PracticeRail (không có mode tabs)."
-            >
-                <PracticeShellDemo
-                    storageKey="storybook.practice.rail.width"
-                    heightClassName="h-[32rem]"
-                />
-            </Variant>
-            <Variant
-                label="Nội dung tràn, cuộn trong rail"
-                hint="Dùng để soi nhánh overflow: mục lục cao hơn khung shell phải cuộn BÊN TRONG rail (ScrollShadow), không đẩy shell cao thêm hay tràn ra ngoài. Kéo rộng/hẹp trong lúc đang cuộn vẫn phải mượt."
-            >
-                <PracticeShellDemo
-                    storageKey="storybook.practice.rail.scroll.v2.width"
-                    heightClassName="h-80"
-                    defaultWidth={360}
-                />
-            </Variant>
-        </Gallery>
+        <div className="p-8">
+            <PracticeShellDemo
+                storageKey="storybook.practice.rail.width"
+                heightClassName="h-[32rem]"
+            />
+        </div>
     ),
-    parameters: {
-        usage:
-            "Toàn bộ trạng thái tĩnh của ResizableRail: mặc định (search + topic ListBox kiểu PracticeRail, " +
-            "không có mode tabs) và nội dung tràn phải cuộn trong rail (ScrollShadow, shell giữ nguyên chiều " +
-            "cao). Độ rộng người đọc kéo được nhớ theo storageKey — hai rail khác nhau phải dùng key khác nhau.",
-    },
+}
+
+/** Overflow branch: a taller topic list scrolls INSIDE the rail (ScrollShadow), never pushing the shell taller. */
+export const OverflowScrollsInRail: Story = {
+    render: () => (
+        <div className="p-8">
+            <PracticeShellDemo
+                storageKey="storybook.practice.rail.scroll.v2.width"
+                heightClassName="h-80"
+                defaultWidth={360}
+            />
+        </div>
+    ),
 }
 
 /**
- * Use to inspect the moving-bounds branch: when the caller NARROWS `maxWidth`,
- * an already-wider rail must snap back to the new bound on its own, without
- * waiting for the next drag. The persisted width is left alone — it is the
- * reader's preference, and a temporarily small window must not overwrite it.
+ * Moving-bounds branch: when the caller NARROWS `maxWidth`, an already-wider rail
+ * must snap back to the new bound on its own, without waiting for the next drag.
+ * The persisted width is left alone — the reader's preference, not overwritten by
+ * a temporarily small window. Drag wide, then shrink the cap.
  */
 export const ShrinkingMaxWidth: Story = {
-    parameters: {
-        usage: "Use to inspect the moving-bounds branch. A caller may compute `maxWidth` from live measurements (the chat rail caps itself so the reading column never drops under its `lg` breakpoint), so the bound moves while the rail is mounted. Drag wide, then press the button: the rail must snap back to the new bound WITHOUT waiting for the next drag. The persisted width is deliberately left alone — it is the reader's preference, and a temporarily small window must not overwrite it.",
-    },
     render: () => {
         const [maxWidth, setMaxWidth] = useState(560)
         return (
-            <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-2">
-                    <Label>Bounds that move under the rail</Label>
-                    <Typography type="body-sm" color="muted">
-                        drag the rail out to its full {maxWidth}px, then shrink the cap. The rail re-clamps itself; it must not sit at an illegal width until the reader drags again.
-                    </Typography>
-                    <div className="flex gap-2">
-                        <Button size="sm" variant="secondary" onPress={() => setMaxWidth(560)}>
-                            maxWidth 560
-                        </Button>
-                        <Button size="sm" variant="secondary" onPress={() => setMaxWidth(360)}>
-                            maxWidth 360
-                        </Button>
+            <div className="p-8">
+                <div className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-2">
+                        <Label>Bounds that move under the rail</Label>
+                        <Typography type="body-sm" color="muted">
+                            drag the rail out to its full {maxWidth}px, then shrink the cap. The rail re-clamps itself; it must not sit at an illegal width until the reader drags again.
+                        </Typography>
+                        <div className="flex gap-2">
+                            <Button size="sm" variant="secondary" onPress={() => setMaxWidth(560)}>
+                                maxWidth 560
+                            </Button>
+                            <Button size="sm" variant="secondary" onPress={() => setMaxWidth(360)}>
+                                maxWidth 360
+                            </Button>
+                        </div>
                     </div>
+                    <PracticeShellDemo
+                        storageKey="storybook.practice.rail.bounds.width"
+                        heightClassName="h-[32rem]"
+                        maxWidth={maxWidth}
+                    />
                 </div>
-                <PracticeShellDemo
-                    storageKey="storybook.practice.rail.bounds.width"
-                    heightClassName="h-[32rem]"
-                    maxWidth={maxWidth}
-                />
             </div>
         )
     },

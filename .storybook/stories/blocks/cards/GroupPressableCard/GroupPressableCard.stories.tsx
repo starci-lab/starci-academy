@@ -1,62 +1,130 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { CaretRightIcon } from "@phosphor-icons/react"
 import { Typography } from "@heroui/react"
-import { RatingBar } from "@/components/blocks/buttons/RatingBar"
-import { GroupPressableCard } from "@/components/blocks/cards/GroupPressableCard"
-import { Gallery, Variant } from "../../../../story-kit"
-import { settingsItems, ratingOptions } from "./components"
+import { CaretRightIcon, GearIcon } from "@phosphor-icons/react"
+import { GroupPressableCard, type GroupPressableCardItem } from "./GroupPressableCard"
 
 const meta: Meta<typeof GroupPressableCard> = {
-    title: "Blocks/Cards/GroupPressableCard",
+    title: "Primitives/Card/GroupPressableCard",
     component: GroupPressableCard,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
+
 export default meta
+
 type Story = StoryObj<typeof GroupPressableCard>
 
-/**
- * Toàn bộ ma trận trạng thái của GroupPressableCard: mặc định (grid điều hướng
- * phụ), cụm hành động chính có phím tắt 1–N (qua `RatingBar`, thử bấm phím 1
- * đến 4), toàn cụm bị khoá khi đang submit, và thẻ lẻ trong pager phải ghim
- * đúng cột phải khi thẻ trước bị thiếu. Dùng để tra khi nào bật shortcut, khi
- * nào khoá cả cụm, và cách ghim đúng trục khi grid chỉ còn một thẻ.
- */
-export const AllVariants: Story = {
+const settingsItems: Array<GroupPressableCardItem> = ["Edit profile", "Appearance", "Security", "Notifications"].map((title) => ({
+    key: title,
+    onPress: () => {},
+    className: "flex items-center gap-3",
+    content: (
+        <>
+            <GearIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
+            <Typography type="body-sm" weight="medium" truncate>{title}</Typography>
+        </>
+    ),
+}))
+
+/** SM-2 grade tile content — a value + label + hint, mirroring a flashcard rating option. */
+const rateTile = (grade: number, label: string, hint: string) => (
+    <div className="flex flex-col gap-1 text-center">
+        <span className="text-sm font-semibold text-foreground">{grade + 1}. {label}</span>
+        <span className="text-xs text-muted">{hint}</span>
+    </div>
+)
+
+const ratingItems: Array<GroupPressableCardItem> = [
+    { grade: 0, label: "Forgot", hint: "Review now" },
+    { grade: 1, label: "Hard", hint: "In 10 minutes" },
+    { grade: 2, label: "Good", hint: "In 1 day" },
+    { grade: 3, label: "Easy", hint: "In 4 days" },
+].map((o) => ({
+    key: o.label,
+    onPress: () => {},
+    label: `${o.label} — ${o.hint}`,
+    content: rateTile(o.grade, o.label, o.hint),
+}))
+
+/** Default: each cell opens its own destination; the whole grid is a secondary path on the screen (no shortcut). */
+export const Default: Story = {
     render: () => (
-        <Gallery>
-            <Variant
-                label="Mặc định"
-                hint="Dùng khi mỗi ô mở một điểm đến riêng và cả lưới chỉ là đường đi phụ trên màn hình: không ô nào cần nổi hơn ô khác, và không ô nào chiếm phím số của trang."
-            >
+        <div className="p-8">
+            <div className="max-w-md">
+                <GroupPressableCard ariaLabel="Settings pages" columns={{ base: 1, sm: 2 }} items={settingsItems} />
+            </div>
+        </div>
+    ),
+}
+
+/**
+ * `keyboardShortcut` — the group is the screen's PRIMARY action (a flashcard rating bar):
+ * number keys 1–N drive it without the mouse. Try pressing 1 to 4.
+ */
+export const KeyboardShortcut: Story = {
+    render: () => (
+        <div className="p-8">
+            <div className="max-w-md">
                 <GroupPressableCard
-                    ariaLabel="Settings pages"
-                    columns={{ base: 1, sm: 2 }}
-                    items={settingsItems}
-                />
-            </Variant>
-            <Variant
-                label="Cụm hành động chính có phím tắt"
-                hint="Dùng khi cụm này là hành động CHÍNH của màn hình: bật phím tắt 1–N để người dùng đang gõ phím vẫn thao tác được. Chỉ bật shortcut ở đây — listener sống trên window, nên một lưới điều hướng phụ mà cũng bật cờ này sẽ cướp hết phím số của trang. Trường hợp thật duy nhất là chấm thẻ SM-2, nên story render trực tiếp RatingBar (wrapper mỏng của GroupPressableCard với đúng cờ này) để khỏi lệch khi component đổi. Thử bấm phím 1 đến 4."
-            >
-                <RatingBar
                     ariaLabel="Rate how well you remembered this card"
-                    options={ratingOptions}
-                    onRate={() => {}}
+                    columns={{ base: 2, sm: 4 }}
+                    items={ratingItems}
+                    keyboardShortcut
                 />
-            </Variant>
-            <Variant
-                label="Toàn cụm bị khoá"
-                hint="Dùng khi một lượt submit đang chạy — khoá cả cụm để chặn bấm lần hai; phím tắt cũng ngưng theo, khác với việc ẩn ô đi (người dùng vẫn thấy các lựa chọn tồn tại, chỉ là chưa bấm được)."
-            >
+            </div>
+        </div>
+    ),
+}
+
+/** All items `isDisabled` — a submit is in flight: the whole group is locked (and the shortcut stops), options still visible. */
+export const Disabled: Story = {
+    render: () => (
+        <div className="p-8">
+            <div className="max-w-md">
                 <GroupPressableCard
                     ariaLabel="Settings pages"
                     columns={{ base: 1, sm: 2 }}
                     items={settingsItems.map((item) => ({ ...item, isDisabled: true }))}
                 />
-            </Variant>
-            <Variant
-                label="Thẻ pager lẻ ghim cột phải"
-                hint="Dùng khi thẻ đầu của pager bị thiếu nhưng thẻ còn lại vẫn phải nằm đúng cột phải: ghim bằng `@sm:col-start-2` — cùng trục container mà grid chia cột, KHÔNG dùng `col-start-2` trần (ở bước 1 cột nó sinh ra một cột ẩn co thẻ lại còn ~30px) và KHÔNG dùng breakpoint `sm:` (sai trục: khung hẹp trong cửa sổ rộng vẫn vỡ, khung rộng trong cửa sổ hẹp thì không). Thu nhỏ cửa sổ để thấy thẻ vẫn full-width khi grid rớt về 1 cột."
-            >
+            </div>
+        </div>
+    ),
+}
+
+/**
+ * `withVerdict` per item — a LEFT DATA-signal band on each tile (e.g. the SM-2 recall tier),
+ * the same canonical band as `SectionCard`/`SurfaceListCardItem`.
+ */
+export const Verdict: Story = {
+    render: () => (
+        <div className="p-8">
+            <div className="max-w-md">
+                <GroupPressableCard
+                    ariaLabel="Chủ đề theo mức ghi nhớ"
+                    columns={{ base: 1, sm: 2 }}
+                    items={[
+                        { key: "a", onPress: () => {}, withVerdict: { enable: true, variant: "success" }, content: <Typography type="body-sm" weight="medium">Shell & hệ thống file</Typography> },
+                        { key: "b", onPress: () => {}, withVerdict: { enable: true, variant: "warning" }, content: <Typography type="body-sm" weight="medium">Redirect & pipe</Typography> },
+                        { key: "c", onPress: () => {}, withVerdict: { enable: true, variant: "danger" }, content: <Typography type="body-sm" weight="medium">Quyền file cơ bản</Typography> },
+                        { key: "d", onPress: () => {}, withVerdict: { enable: true, color: "amber-500" }, content: <Typography type="body-sm" weight="medium">Cron & scheduling</Typography> },
+                    ]}
+                />
+            </div>
+        </div>
+    ),
+}
+
+/**
+ * `@sm:col-start-2` — a lone pager card pinned to the right column (previous card missing).
+ * Uses the CONTAINER variant at the SAME step the grid actually reaches 2 columns, so it never
+ * lands in an implicit, content-sized track. Narrow the window: it stays full-width at 1 column.
+ */
+export const PagerPinRight: Story = {
+    render: () => (
+        <div className="p-8">
+            <div className="max-w-md">
                 <GroupPressableCard
                     ariaLabel="Go to previous or next content"
                     columns={{ base: 1, sm: 2 }}
@@ -67,23 +135,14 @@ export const AllVariants: Story = {
                             className: "@sm:col-start-2",
                             content: (
                                 <div className="flex items-center justify-end gap-2">
-                                    <Typography type="body-sm" weight="medium">
-                                        Next content
-                                    </Typography>
+                                    <Typography type="body-sm" weight="medium">Next content</Typography>
                                     <CaretRightIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
                                 </div>
                             ),
                         },
                     ]}
                 />
-            </Variant>
-        </Gallery>
+            </div>
+        </div>
     ),
-    parameters: {
-        usage:
-            "Toàn bộ ma trận trạng thái của GroupPressableCard: mặc định (grid điều hướng phụ), cụm hành động " +
-            "chính có phím tắt 1–N (qua RatingBar), toàn cụm bị khoá khi đang submit, và thẻ lẻ trong pager " +
-            "ghim đúng cột phải khi thẻ trước bị thiếu. Dùng khi cần tra lúc nào bật shortcut, lúc nào khoá cả " +
-            "cụm, và cách ghim đúng trục khi grid chỉ còn một thẻ.",
-    },
 }

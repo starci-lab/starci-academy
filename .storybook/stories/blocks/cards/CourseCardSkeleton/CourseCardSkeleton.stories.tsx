@@ -1,47 +1,50 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { CourseCardSkeleton } from "@/components/blocks/cards/CourseCardSkeleton"
-import { Gallery, Variant } from "../../../../story-kit"
+import { CourseCardSkeleton } from "./CourseCardSkeleton"
+import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof CourseCardSkeleton> = {
-    title: "Blocks/Card/CourseCardSkeleton",
+    title: "Block/Cards/CourseCardSkeleton",
     component: CourseCardSkeleton,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
+
 export default meta
+
 type Story = StoryObj<typeof CourseCardSkeleton>
 
-/**
- * The only shape this block has: a single placeholder card, and the catalog
- * grid loading N of them at once. There is no variant/tone/size prop and no
- * empty/error/disabled/selected state — the block itself IS the "loading"
- * state that stands in for `CourseCard` before the query resolves.
- */
-export const AllVariants: Story = {
-    render: () => (
-        <Gallery>
-            <Variant
-                label="Một card"
-                hint="Dùng khi chỉ có một CourseCard đang chờ dữ liệu, ví dụ ô 'khoá học tiếp theo nên học' trên trang chủ — kích thước placeholder khớp đúng layout grid của CourseCard nên trang không giật khi data về."
-            >
-                <div className="w-80">
-                    <CourseCardSkeleton />
-                </div>
-            </Variant>
-            <Variant
-                label="Lưới N card"
-                hint="Dùng khi cả trang catalog/course-grid đang tải: render đúng số ô sẽ có (ví dụ 3) để giữ chiều cao lưới ổn định, tránh nhảy layout khi CourseCard thật thay vào."
-            >
-                <div className="grid w-full gap-4 @app-sm:grid-cols-2 @app-lg:grid-cols-3">
-                    <CourseCardSkeleton />
-                    <CourseCardSkeleton />
-                    <CourseCardSkeleton />
-                </div>
-            </Variant>
-            <Variant
-                label="className tuỳ biến"
-                hint="className truyền xuống Card root — dùng khi ô skeleton cần khớp một bề rộng/khung riêng của surface gọi nó (ví dụ carousel một cột hẹp), thay vì luôn full-width theo grid cha."
-            >
-                <CourseCardSkeleton className="w-64" />
-            </Variant>
-        </Gallery>
-    ),
+const ANATOMY = {
+    primitives: [
+        { name: "Skeleton", role: "mọi node nội dung (cover / dòng chữ / nút) thành shimmer bar khớp box thật" },
+    ],
+    reason:
+        "Loading state của lưới catalog phải GIỮ nguyên cây layout của CourseCard grid (cover 16:9, tiêu đề, 2 dòng mô tả, 3 dòng value-prop, dòng giá, hàng 2 nút) và chỉ đổi node nội dung sang Skeleton đúng kích thước — nhờ vậy trang không giật khi CourseCard thật thay vào.",
+}
+
+export const SingleCard: Story = {
+    render: () =>
+        blockShell(
+            <div className="w-80">
+                <CourseCardSkeleton />
+            </div>,
+            ANATOMY,
+        ),
+}
+
+export const Grid: Story = {
+    render: () =>
+        blockShell(
+            <div className="grid w-full gap-4 @app-sm:grid-cols-2 @app-lg:grid-cols-3">
+                <CourseCardSkeleton />
+                <CourseCardSkeleton />
+                <CourseCardSkeleton />
+            </div>,
+            ANATOMY,
+        ),
+}
+
+export const CustomWidth: Story = {
+    render: () => blockShell(<CourseCardSkeleton className="w-64" />, ANATOMY),
 }

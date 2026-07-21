@@ -1,19 +1,32 @@
-import React from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { SWRConfig, unstable_serialize } from "swr"
-import { RelatedContentList } from "@/components/blocks/learn/RelatedContentList"
-import type { SearchCourseContentItem } from "@/modules/api/graphql/queries/types/search-course-content"
-import { Gallery, Variant } from "../../../../story-kit"
+import { RelatedContentList } from "./RelatedContentList"
+import type { SearchCourseContentItem } from "../EntityResultRow/EntityResultRow"
+import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof RelatedContentList> = {
-    title: "Blocks/Learn/RelatedContentList",
+    title: "Block/Learn/RelatedContentList",
     component: RelatedContentList,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
+
 export default meta
+
 type Story = StoryObj<typeof RelatedContentList>
 
-const COURSE_ID = "course-fullstack-mastery"
-const COURSE_DISPLAY_ID = "fullstack-mastery"
+const ANATOMY = {
+    primitives: [
+        { name: "LabeledCard", role: "nhãn section ngoài khung (frameless — nội dung tự là card)" },
+        { name: "SurfaceListCard", role: "khung surface bordered ôm các hàng edge-to-edge" },
+        { name: "EntityResultRow", role: "mỗi hàng kết quả (breadcrumb + tiêu đề, mặc định không chip/snippet)" },
+        { name: "Skeleton", role: "bars mirror hàng lúc đang tải" },
+    ],
+    reason:
+        "Gợi ý nội dung liên quan cuối một bề mặt học cần một nhãn section (LabeledCard) trên một khung list bordered (SurfaceListCard) chứa các EntityResultRow dùng chung. Gói nhãn + khung + danh sách + skeleton + logic tự-ẩn (query rỗng / rỗng kết quả → null) + lọc excludeId + limit vào một block, để mỗi bề mặt chỉ truyền query ngữ cảnh — không dựng lại khung và cơ chế tự-ẩn.",
+}
+
 const LABEL = "Nội dung liên quan"
 const QUERY = "Access token JWT hết hạn thì xử lý thế nào"
 
@@ -82,164 +95,92 @@ const ITEM_OAUTH_CONTENT: SearchCourseContentItem = {
     isLocked: false,
 }
 
-/**
- * Seed the SWR cache the real `useQuerySearchCourseContentSwr` hook reads from,
- * keyed EXACTLY the way the hook builds it, then disable every revalidation
- * trigger — so `RelatedContentList` renders the given `results` synchronously
- * and never actually calls the RAG endpoint (no Apollo auth/csrf/retry chain to
- * fake, no dependency on a live backend). This only wraps the story; the real
- * component and hook are untouched.
- */
-const MockSearchResults = ({
-    courseId,
-    query,
-    results,
-    children,
-}: {
-    courseId: string
-    query: string
-    results: Array<SearchCourseContentItem>
-    children: React.ReactNode
-}) => (
-    <SWRConfig
-        value={{
-            fallback: {
-                [unstable_serialize(["QUERY_SEARCH_COURSE_CONTENT_SWR", courseId, query.trim()])]: results,
-            },
-            revalidateOnMount: false,
-            revalidateIfStale: false,
-            revalidateOnFocus: false,
-            revalidateOnReconnect: false,
-        }}
-    >
-        {children}
-    </SWRConfig>
-)
+/** query="" → block self-hides (renders null); empty/error results self-hide identically. */
+export const SelfHidden: Story = {
+    render: () =>
+        blockShell(
+            <RelatedContentList results={[]} query="" label={LABEL} className="w-full max-w-xl" />,
+            ANATOMY,
+        ),
+}
 
-/**
- * Toàn bộ trạng thái của RelatedContentList: tự ẩn khi chưa có query, một kết quả,
- * nhiều kết quả trộn loại nguồn, dòng bị khoá vì chưa ghi danh, excludeId loại bỏ
- * nguồn hiện tại, và limit giới hạn số dòng hiển thị. Vì component tự fetch qua
- * `useQuerySearchCourseContentSwr`, mỗi trạng thái có kết quả được seed thẳng vào
- * SWR cache (xem `MockSearchResults`) thay vì gọi RAG thật.
- */
-export const AllVariants: Story = {
-    parameters: {
-        usage: "Đặt block ở cuối một bài học, một brief thử thách, hay một thẻ flashcard để gợi ý nội dung liên quan trong cùng khoá — query luôn tự build từ ngữ cảnh (tiêu đề bài, brief, tag yếu…), học viên không gõ tay. Chọn excludeId đúng id của bề mặt hiện tại để khỏi gợi ý lại chính nó, và cân limit theo chỗ đặt (sidebar hẹp thì 1-2, khối cuối trang thì 3).",
-    },
-    render: () => (
-        <Gallery>
-            <Variant
-                label="Query rỗng — tự ẩn hoàn toàn"
-                hint="Khi ngữ cảnh chưa build được câu query (ví dụ trang vừa mount, content.title chưa load xong), block render null ngay — không skeleton nháy, không khung 'không có gợi ý' nào lộ ra. Kết quả rỗng hoặc RAG lỗi cũng render null giống hệt vậy — cả ba trường hợp không phân biệt được trên UI, đây là chủ đích: một gợi ý thụ động tốt hơn hết nên biến mất, hơn là xin lỗi vì không tìm được gì."
-            >
-                <RelatedContentList
-                    courseId={COURSE_ID}
-                    courseDisplayId={COURSE_DISPLAY_ID}
-                    query=""
-                    label={LABEL}
-                    className="w-full max-w-xl"
-                />
-            </Variant>
+export const Loading: Story = {
+    render: () =>
+        blockShell(
+            <RelatedContentList results={[]} query={QUERY} label={LABEL} isLoading className="w-full max-w-xl" />,
+            ANATOMY,
+        ),
+}
 
-            <Variant
-                label="Một kết quả duy nhất (N=1)"
-                hint="Khi RAG chỉ tìm được một nguồn đủ liên quan, danh sách vẫn hiện đúng một dòng trong SurfaceListCard, không co khung lại thành ô rời rạc."
-            >
-                <MockSearchResults courseId={COURSE_ID} query={QUERY} results={[ITEM_PROACTIVE_REFRESH_CHALLENGE]}>
-                    <RelatedContentList
-                        courseId={COURSE_ID}
-                        courseDisplayId={COURSE_DISPLAY_ID}
-                        query={QUERY}
-                        label={LABEL}
-                        className="w-full max-w-xl"
-                    />
-                </MockSearchResults>
-            </Variant>
+export const SingleResult: Story = {
+    render: () =>
+        blockShell(
+            <RelatedContentList
+                results={[ITEM_PROACTIVE_REFRESH_CHALLENGE]}
+                query={QUERY}
+                label={LABEL}
+                className="w-full max-w-xl"
+            />,
+            ANATOMY,
+        ),
+}
 
-            <Variant
-                label="Nhiều kết quả (N) — trộn content/challenge/flashcard"
-                hint="Ba dòng xếp liền nhau với đường kẻ phân cách mảnh; dòng flashcard không có breadcrumb (đứng lẻ, không thuộc module) nên chỉ còn tiêu đề — đúng hành vi mặc định showKindChip=false, showSnippet=false của EntityResultRow trong danh sách liên quan."
-            >
-                <MockSearchResults
-                    courseId={COURSE_ID}
-                    query={QUERY}
-                    results={[ITEM_REFRESH_TOKEN, ITEM_PROACTIVE_REFRESH_CHALLENGE, ITEM_JWT_FLASHCARD]}
-                >
-                    <RelatedContentList
-                        courseId={COURSE_ID}
-                        courseDisplayId={COURSE_DISPLAY_ID}
-                        query={QUERY}
-                        label={LABEL}
-                        className="w-full max-w-xl"
-                    />
-                </MockSearchResults>
-            </Variant>
+export const MultipleMixed: Story = {
+    render: () =>
+        blockShell(
+            <RelatedContentList
+                results={[ITEM_REFRESH_TOKEN, ITEM_PROACTIVE_REFRESH_CHALLENGE, ITEM_JWT_FLASHCARD]}
+                query={QUERY}
+                label={LABEL}
+                className="w-full max-w-xl"
+            />,
+            ANATOMY,
+        ),
+}
 
-            <Variant
-                label="Có dòng bị khoá — chưa ghi danh"
-                hint="Dòng milestone khoá vẫn nằm trong danh sách và vẫn bấm điều hướng được — đích đến tự hiện cổng ghi danh; ở đây chỉ báo trước bằng icon khoá, backend cũng đã lược bỏ snippet nên không có gì để đọc trước."
-            >
-                <MockSearchResults
-                    courseId={COURSE_ID}
-                    query={QUERY}
-                    results={[ITEM_PROACTIVE_REFRESH_CHALLENGE, ITEM_SSO_MILESTONE_LOCKED]}
-                >
-                    <RelatedContentList
-                        courseId={COURSE_ID}
-                        courseDisplayId={COURSE_DISPLAY_ID}
-                        query={QUERY}
-                        label={LABEL}
-                        className="w-full max-w-xl"
-                    />
-                </MockSearchResults>
-            </Variant>
+export const WithLockedRow: Story = {
+    render: () =>
+        blockShell(
+            <RelatedContentList
+                results={[ITEM_PROACTIVE_REFRESH_CHALLENGE, ITEM_SSO_MILESTONE_LOCKED]}
+                query={QUERY}
+                label={LABEL}
+                className="w-full max-w-xl"
+            />,
+            ANATOMY,
+        ),
+}
 
-            <Variant
-                label="excludeId — loại bỏ nguồn hiện tại khỏi kết quả"
-                hint="Học viên đang đọc chính content-refresh-token: truyền excludeId cùng id đó nên dòng của nó biến mất khỏi 3 kết quả seed, chỉ còn 2 dòng — tránh cảnh 'nên đọc: bài chính nó' vì query auto-build từ title luôn ra chính nó là top hit."
-            >
-                <MockSearchResults
-                    courseId={COURSE_ID}
-                    query={QUERY}
-                    results={[ITEM_REFRESH_TOKEN, ITEM_PROACTIVE_REFRESH_CHALLENGE, ITEM_JWT_FLASHCARD]}
-                >
-                    <RelatedContentList
-                        courseId={COURSE_ID}
-                        courseDisplayId={COURSE_DISPLAY_ID}
-                        query={QUERY}
-                        label={LABEL}
-                        excludeId="content-refresh-token"
-                        className="w-full max-w-xl"
-                    />
-                </MockSearchResults>
-            </Variant>
+export const ExcludeCurrentSource: Story = {
+    render: () =>
+        blockShell(
+            <RelatedContentList
+                results={[ITEM_REFRESH_TOKEN, ITEM_PROACTIVE_REFRESH_CHALLENGE, ITEM_JWT_FLASHCARD]}
+                query={QUERY}
+                label={LABEL}
+                excludeId="content-refresh-token"
+                className="w-full max-w-xl"
+            />,
+            ANATOMY,
+        ),
+}
 
-            <Variant
-                label="limit — giới hạn số dòng hiển thị"
-                hint="5 kết quả seed nhưng limit=2 nên chỉ 2 dòng khớp nhất được cắt ra hiển thị; mặc định limit là 3 khi không truyền — dùng limit nhỏ hơn cho ô hẹp như sidebar."
-            >
-                <MockSearchResults
-                    courseId={COURSE_ID}
-                    query={QUERY}
-                    results={[
-                        ITEM_REFRESH_TOKEN,
-                        ITEM_PROACTIVE_REFRESH_CHALLENGE,
-                        ITEM_JWT_FLASHCARD,
-                        ITEM_SSO_MILESTONE_LOCKED,
-                        ITEM_OAUTH_CONTENT,
-                    ]}
-                >
-                    <RelatedContentList
-                        courseId={COURSE_ID}
-                        courseDisplayId={COURSE_DISPLAY_ID}
-                        query={QUERY}
-                        label={LABEL}
-                        limit={2}
-                        className="w-full max-w-xl"
-                    />
-                </MockSearchResults>
-            </Variant>
-        </Gallery>
-    ),
+export const LimitedRows: Story = {
+    render: () =>
+        blockShell(
+            <RelatedContentList
+                results={[
+                    ITEM_REFRESH_TOKEN,
+                    ITEM_PROACTIVE_REFRESH_CHALLENGE,
+                    ITEM_JWT_FLASHCARD,
+                    ITEM_SSO_MILESTONE_LOCKED,
+                    ITEM_OAUTH_CONTENT,
+                ]}
+                query={QUERY}
+                label={LABEL}
+                limit={2}
+                className="w-full max-w-xl"
+            />,
+            ANATOMY,
+        ),
 }

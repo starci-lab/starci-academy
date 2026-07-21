@@ -1,18 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CircuitryIcon, CloudIcon, DatabaseIcon, RobotIcon } from "@phosphor-icons/react"
-import { ReadinessChecklist, type ReadinessChecklistItem } from "@/components/blocks/feedback/ReadinessChecklist"
-import { SurfaceListCard } from "@/components/blocks/cards/SurfaceListCard"
-import { Gallery, Variant } from "../../../../story-kit"
+import { ReadinessChecklist, type ReadinessChecklistItem } from "./ReadinessChecklist"
+import { SurfaceListCard } from "../../cards/SurfaceListCard/SurfaceListCard"
 
-/**
- * `ReadinessChecklist` — a vertical list of setup/prerequisite checks (agent
- * health, model availability, indexing status…), each rendered as a `ListRow`
- * with a leading `IconTile` (success check when ready), a ready/pending
- * subtitle, and a trailing `StatusChip` spelling out the state.
- */
 const meta: Meta<typeof ReadinessChecklist> = {
-    title: "Blocks/Feedback/ReadinessChecklist",
+    title: "Primitives/Feedback/ReadinessChecklist",
     component: ReadinessChecklist,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
 
 export default meta
@@ -54,49 +51,38 @@ const ITEMS: Array<ReadinessChecklistItem> = [
     },
 ]
 
-/**
- * Toàn bộ ma trận trạng thái của ReadinessChecklist: chờ hết (ngay sau khi cụm
- * model local vừa boot) và chờ một phần (agent/runtime đã lên nhưng model còn
- * tải) — checklist luôn render trong một `SurfaceListCard bordered` vì đó là
- * cách nó được dùng thật (card lồng trên một surface cha).
- */
-export const AllVariants: Story = {
-    tags: ["news"],
+/** All waiting — no prerequisite ready yet (right after the local model cluster boots, no health check passed). */
+export const AllWaiting: Story = {
     render: () => (
-        <Gallery>
-            <Variant
-                label="Toàn bộ đang chờ"
-                hint="Chưa có tiền điều kiện nào báo sẵn sàng — trạng thái ngay sau khi cụm model local vừa khởi động, chưa health check nào pass."
-            >
-                <div className="max-w-md">
-                    <SurfaceListCard bordered>
-                        <ReadinessChecklist
-                            items={ITEMS}
-                            readyLabel="Sẵn sàng"
-                            pendingLabel="Chờ"
-                        />
-                    </SurfaceListCard>
-                </div>
-            </Variant>
-            <Variant
-                label="Một phần đã sẵn sàng"
-                hint="Agent và runtime đã lên, nhưng 2 model vẫn đang tải/nạp — một lát cắt thực tế giữa quá trình boot."
-            >
-                <div className="max-w-md">
-                    <SurfaceListCard bordered>
-                        <ReadinessChecklist
-                            items={ITEMS.map((item) => (
-                                item.id === "agent" || item.id === "ollama" ? { ...item, ready: true } : item
-                            ))}
-                            readyLabel="Sẵn sàng"
-                            pendingLabel="Chờ"
-                        />
-                    </SurfaceListCard>
-                </div>
-            </Variant>
-        </Gallery>
+        <div className="p-8">
+            <div className="max-w-md">
+                <SurfaceListCard bordered>
+                    <ReadinessChecklist
+                        items={ITEMS}
+                        readyLabel="Sẵn sàng"
+                        pendingLabel="Chờ"
+                    />
+                </SurfaceListCard>
+            </div>
+        </div>
     ),
-    parameters: {
-        usage: "Chờ duyệt — toàn bộ ma trận trạng thái của ReadinessChecklist: chờ hết (right after boot, chưa health check nào pass) và chờ một phần (mid-boot, agent + runtime đã lên nhưng model còn tải/nạp). Checklist luôn render trong SurfaceListCard bordered vì đó mirrors call-site thật (surface-in-surface).",
-    },
+}
+
+/** Partially ready — agent + runtime are up, but the two models are still loading (mid-boot). */
+export const PartiallyReady: Story = {
+    render: () => (
+        <div className="p-8">
+            <div className="max-w-md">
+                <SurfaceListCard bordered>
+                    <ReadinessChecklist
+                        items={ITEMS.map((item) => (
+                            item.id === "agent" || item.id === "ollama" ? { ...item, ready: true } : item
+                        ))}
+                        readyLabel="Sẵn sàng"
+                        pendingLabel="Chờ"
+                    />
+                </SurfaceListCard>
+            </div>
+        </div>
+    ),
 }

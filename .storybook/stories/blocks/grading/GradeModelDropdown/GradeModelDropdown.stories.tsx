@@ -1,21 +1,38 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
-import { GradeModelDropdown } from "@/components/blocks/grading/GradeModelDropdown"
-import type { GradeModelSelection } from "@/components/blocks/grading/GradeModelDropdown"
-import { AiModelCategory, AiModelTask } from "@/modules/api/graphql/queries/query-ai-models"
-import { ModelProvider } from "@/modules/api/graphql/queries/query-my-ai-settings"
-import type { AiGradableModel } from "@/modules/api/graphql/queries/types/ai-models"
-import { Gallery, Variant } from "../../../../story-kit"
+import {
+    GradeModelDropdown,
+    AiModelCategory,
+    AiModelTask,
+    ModelProvider,
+} from "./GradeModelDropdown"
+import type { AiGradableModel, GradeModelSelection } from "./GradeModelDropdown"
+import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof GradeModelDropdown> = {
-    title: "Blocks/Grading/GradeModelDropdown",
+    title: "Block/Grading/GradeModelDropdown",
     component: GradeModelDropdown,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
 
 export default meta
+
 type Story = StoryObj<typeof GradeModelDropdown>
 
-/** Danh mục model đủ 5 hạng, dùng chung cho mọi variant — gpt-4o cố tình "down" (available=false) để minh hoạ hàng bị disable. */
+const ANATOMY = {
+    primitives: [
+        { name: "AiCategoryChip", role: "chip hạng (tier) tô màu ở cuối mỗi hàng model" },
+        { name: "FlexWrapButtonRadio", role: "cụm pill lọc theo hạng trong popover" },
+        { name: "SelfHostGpuMark", role: "icon GPU cạnh model self-host trên hạ tầng nội bộ" },
+    ],
+    reason:
+        "Picker lane + model dùng chung cho mọi surface AI (chấm bài, AI lab). Gói search + lọc theo hạng (FlexWrapButtonRadio) + mỗi hàng model có chip hạng (AiCategoryChip), dấu self-host (SelfHostGpuMark), badge health, và các trạng thái disabled/locked/warning vào MỘT block — feature chỉ truyền catalog + selection, không phải tự dựng lại toàn bộ logic khoá gói / dưới-floor / hợp-tác-vụ ở mỗi màn.",
+}
+
+/** Danh mục model đủ 5 hạng — gpt-4o cố tình "down" (available=false) để minh hoạ hàng bị disable. */
 const FULL_CATALOG: Array<AiGradableModel> = [
     {
         model: "qwen2.5-coder:7b",
@@ -102,119 +119,119 @@ const Controlled = ({
     )
 }
 
-/**
- * Toàn bộ state của GradeModelDropdown trong một gallery: 4 kiểu trigger (inline
- * mặc định, field isDropdown, button isButton, button full-width), có/không lane
- * Auto, model bị khoá vì chưa mở gói, model dưới mức khuyến nghị (floor), catalog
- * rỗng, và cả control bị khoá. Mỗi ô là component thật — bấm vào để mở popover và
- * thấy đúng hàng disabled (gpt-4o "down"), hàng locked, hàng warning bên trong.
- */
-export const AllVariants: Story = {
-    parameters: {
-        usage:
-            "Dùng GradeModelDropdown ở mọi nơi cần chọn lane chấm bài (Auto hoặc pin một model cụ thể): trigger inline mặc định khi đứng độc lập, isDropdown khi cần đồng bộ chrome với các Select khác trong form, isButton khi đứng cạnh các nút/pill khác. Truyền floor để cảnh báo model dưới mức khuyến nghị (chấm bài dùng Economy, chatbot bỏ trống), showAutoLane=false khi surface bắt buộc phải chốt một model cụ thể (review dự án cá nhân), và canPremium=false để khoá các hạng Balanced/Premium/Frontier cho tới khi người dùng mở gói hoặc enroll khoá.",
-    },
-    render: () => (
-        <Gallery>
-            <Variant
-                label="Trigger mặc định — có lane Auto"
-                hint="Trigger inline mặc định, dùng khi dropdown không cần đứng cạnh field Select nào khác. Bấm để mở popover: lane Auto trên cùng, rồi 5 model theo hạng — gpt-4o hiện icon cảnh báo vì đang tạm ngưng (available=false)."
-            >
-                <Controlled
-                    models={FULL_CATALOG}
-                    initialSelection={{ model: null, provider: null }}
-                    canPremium
-                />
-            </Variant>
-            <Variant
-                label="Trigger dạng field (isDropdown)"
-                hint="isDropdown biến trigger thành field viền/nền giống Select thật — dùng khi model picker nằm cạnh các Select khác trong cùng form và cần đồng bộ chrome (viền, hover, focus)."
-            >
-                <Controlled
-                    models={FULL_CATALOG}
-                    initialSelection={{ model: null, provider: null }}
-                    canPremium
-                    isDropdown
-                />
-            </Variant>
-            <Variant
-                label="Trigger dạng nút (isButton)"
-                hint="isButton render trigger như một Button variant tertiary — dùng khi model picker đứng cạnh các nút/pill khác (ví dụ cụm pill FlexWrapButtonRadio trong Mock Interview) để đồng bộ hình khối."
-            >
+export const DefaultTrigger: Story = {
+    render: () =>
+        blockShell(
+            <Controlled
+                models={FULL_CATALOG}
+                initialSelection={{ model: null, provider: null }}
+                canPremium
+            />,
+            ANATOMY,
+        ),
+}
+
+export const FieldTrigger: Story = {
+    render: () =>
+        blockShell(
+            <Controlled
+                models={FULL_CATALOG}
+                initialSelection={{ model: null, provider: null }}
+                canPremium
+                isDropdown
+            />,
+            ANATOMY,
+        ),
+}
+
+export const ButtonTrigger: Story = {
+    render: () =>
+        blockShell(
+            <Controlled
+                models={FULL_CATALOG}
+                initialSelection={{ model: null, provider: null }}
+                canPremium
+                isButton
+            />,
+            ANATOMY,
+        ),
+}
+
+export const ButtonFullWidth: Story = {
+    render: () =>
+        blockShell(
+            <div className="w-64">
                 <Controlled
                     models={FULL_CATALOG}
                     initialSelection={{ model: null, provider: null }}
                     canPremium
                     isButton
+                    isButtonFullWidth
                 />
-            </Variant>
-            <Variant
-                label="Trigger dạng nút full-width (isButton + isButtonFullWidth)"
-                hint="Kết hợp isButton với isButtonFullWidth khi model picker nằm trong sidebar xếp các field full-width theo chiều dọc (ví dụ trình sửa CV xếp Font/Font-size)."
-            >
-                <div className="w-64">
-                    <Controlled
-                        models={FULL_CATALOG}
-                        initialSelection={{ model: null, provider: null }}
-                        canPremium
-                        isButton
-                        isButtonFullWidth
-                    />
-                </div>
-            </Variant>
-            <Variant
-                label="Không có lane Auto, đã pin sẵn một model (showAutoLane=false)"
-                hint="showAutoLane=false ẩn lựa chọn Auto khi surface bắt buộc phải chốt một model cụ thể — ví dụ review dự án cá nhân phải pin model, không được để balancer tự chọn. Trigger hiện sẵn tên model đã pin."
-            >
-                <Controlled
-                    models={FULL_CATALOG}
-                    initialSelection={{ model: "gemini-2.5-flash", provider: ModelProvider.Gemini }}
-                    canPremium
-                    showAutoLane={false}
-                />
-            </Variant>
-            <Variant
-                label="Model cần mở khoá (canPremium=false)"
-                hint="canPremium=false khoá các hạng Balanced/Premium/Frontier — bấm vào một model bị khoá gọi onUpgrade để đưa người dùng tới trang nâng cấp, thay vì chọn được ngay."
-            >
-                <Controlled
-                    models={FULL_CATALOG}
-                    initialSelection={{ model: null, provider: null }}
-                    canPremium={false}
-                />
-            </Variant>
-            <Variant
-                label="Model dưới mức khuyến nghị (floor=Economy)"
-                hint="floor gắn cờ cảnh báo màu hổ phách cho model nằm dưới mức khuyến nghị — model hạng Free vẫn chọn được nhưng kết quả chấm có thể không chính xác. Chấm bài truyền floor=Economy; chatbot bỏ trống prop này vì Free là lane bình thường của nó."
-            >
-                <Controlled
-                    models={FULL_CATALOG}
-                    initialSelection={{ model: null, provider: null }}
-                    canPremium
-                    floor={AiModelCategory.Economy}
-                />
-            </Variant>
-            <Variant
-                label="Danh mục rỗng — chưa có model nào"
-                hint="Khi models=[] (catalog trống hoặc bộ lọc không khớp), popover hiện dòng thông báo Không có model khớp thay cho danh sách."
-            >
-                <Controlled
-                    models={[]}
-                    initialSelection={{ model: null, provider: null }}
-                    canPremium
-                />
-            </Variant>
-            <Variant
-                label="Cả control bị khoá (isDisabled)"
-                hint="isDisabled khoá toàn bộ trigger khi một lượt chấm đang chạy — không bấm mở popover được, dù đã pin model từ trước."
-            >
-                <Controlled
-                    models={FULL_CATALOG}
-                    initialSelection={{ model: "gpt-4o-mini", provider: ModelProvider.OpenAI }}
-                    canPremium
-                    isDisabled
-                />
-            </Variant>
-        </Gallery>
-    ),
+            </div>,
+            ANATOMY,
+        ),
+}
+
+export const NoAutoLanePinned: Story = {
+    render: () =>
+        blockShell(
+            <Controlled
+                models={FULL_CATALOG}
+                initialSelection={{ model: "gemini-2.5-flash", provider: ModelProvider.Gemini }}
+                canPremium
+                showAutoLane={false}
+            />,
+            ANATOMY,
+        ),
+}
+
+export const LockedModels: Story = {
+    render: () =>
+        blockShell(
+            <Controlled
+                models={FULL_CATALOG}
+                initialSelection={{ model: null, provider: null }}
+                canPremium={false}
+            />,
+            ANATOMY,
+        ),
+}
+
+export const BelowFloorWarning: Story = {
+    render: () =>
+        blockShell(
+            <Controlled
+                models={FULL_CATALOG}
+                initialSelection={{ model: null, provider: null }}
+                canPremium
+                floor={AiModelCategory.Economy}
+            />,
+            ANATOMY,
+        ),
+}
+
+export const EmptyCatalog: Story = {
+    render: () =>
+        blockShell(
+            <Controlled
+                models={[]}
+                initialSelection={{ model: null, provider: null }}
+                canPremium
+            />,
+            ANATOMY,
+        ),
+}
+
+export const DisabledControl: Story = {
+    render: () =>
+        blockShell(
+            <Controlled
+                models={FULL_CATALOG}
+                initialSelection={{ model: "gpt-4o-mini", provider: ModelProvider.OpenAI }}
+                canPremium
+                isDisabled
+            />,
+            ANATOMY,
+        ),
 }

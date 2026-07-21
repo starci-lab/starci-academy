@@ -1,80 +1,92 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button } from "@heroui/react"
-import { CourseCard } from "@/components/blocks/cards/CourseCard"
-import { PricingPhase } from "@/modules/types/enums/pricing-phase"
-import type { CourseEntity } from "@/modules/types/entities/course"
-import { Gallery, Variant } from "../../../../story-kit"
+import { CourseCard } from "./CourseCard"
+import type { CourseCardCourse } from "./CourseCard"
+import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof CourseCard> = {
-    title: "Blocks/Card/CourseCard",
+    title: "Block/Cards/CourseCard",
     component: CourseCard,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
+
 export default meta
+
 type Story = StoryObj<typeof CourseCard>
 
-/** Fields every mock course shares — spread and override per specimen below. */
+const ANATOMY = {
+    primitives: [
+        { name: "CrossListCard", role: "value-props (bordered, mark=check ✓) — KHÔNG vẽ tay CheckCircleIcon; framed surface-in-surface" },
+        { name: "PriceTag", role: "dòng giá: số đã giảm + gốc gạch ngang + chip −% (popover). ⚠ đang inline — PriceTag local thiếu dòng USD-hint" },
+        { name: "Skeleton", role: "dòng giá khi loyalty preview đang tải (loyaltyPending)" },
+        { name: "Typography muted + UsersIcon", role: "số học viên — meta-count render text muted (không bọc Chip: lạm dụng chip)" },
+    ],
+    reason:
+        "Một ô khóa học trong catalog cần: value-props check-list (CrossListCard bordered, compose primitive thay vì vẽ tay ✓), ĐÚNG một cách render giá (PriceTag — logic giảm giá không lệch), placeholder giá khi cá-nhân-hoá đang tải (Skeleton), và số học viên (text muted — meta count, không lạm dụng Chip). Gói cover + tiêu đề + value-props + giá + CTA (2 layout grid/line, 2 nút khi đã đăng ký) vào một block để feature chỉ truyền `course`.",
+}
+
+// storybook renders inside a CSP-restricted canvas — cover is a data-URI SVG (no external host).
+const COVER =
+    "data:image/svg+xml;utf8," +
+    encodeURIComponent(
+        "<svg xmlns='http://www.w3.org/2000/svg' width='640' height='360'>" +
+            "<defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>" +
+            "<stop offset='0' stop-color='#6366f1'/><stop offset='1' stop-color='#8b5cf6'/>" +
+            "</linearGradient></defs><rect width='640' height='360' fill='url(#g)'/>" +
+            "<text x='50%' y='50%' fill='white' font-family='sans-serif' font-size='30'" +
+            " text-anchor='middle' dominant-baseline='middle'>Course cover</text></svg>",
+    )
+
+/** Fields every mock course shares — spread and override per specimen. */
 const baseCourse = {
-    id: "course-fullstack-mastery",
-    createdAt: new Date("2026-01-10T00:00:00.000Z"),
-    updatedAt: new Date("2026-01-10T00:00:00.000Z"),
     displayId: "fullstack-mastery",
-    slug: "fullstack-mastery",
-    cdnUrl: null,
-    coverImageUrl: "https://placehold.co/640x360",
     description: "Xây nền tảng vững từ frontend đến backend qua các dự án thực chiến, được AI chấm điểm.",
+    coverImageUrl: COVER,
     originalPrice: 2990000,
     originalPriceUsd: 129,
     enrollmentCount: 482,
     valuePropositions: [
-        { id: "vp-1", createdAt: new Date("2026-01-10T00:00:00.000Z"), updatedAt: new Date("2026-01-10T00:00:00.000Z"), text: "Xây 3 dự án thực chiến từ đầu đến khi triển khai", sortIndex: 1 },
-        { id: "vp-2", createdAt: new Date("2026-01-10T00:00:00.000Z"), updatedAt: new Date("2026-01-10T00:00:00.000Z"), text: "Chấm bài bằng AI theo checklist tuyển dụng thật", sortIndex: 2 },
-        { id: "vp-3", createdAt: new Date("2026-01-10T00:00:00.000Z"), updatedAt: new Date("2026-01-10T00:00:00.000Z"), text: "Mock interview không giới hạn số lần", sortIndex: 3 },
+        { text: "Xây 3 dự án thực chiến từ đầu đến khi triển khai" },
+        { text: "Chấm bài bằng AI theo checklist tuyển dụng thật" },
+        { text: "Mock interview không giới hạn số lần" },
     ],
     pricingPhases: [
-        { id: "pp-1", createdAt: new Date("2026-01-10T00:00:00.000Z"), updatedAt: new Date("2026-01-10T00:00:00.000Z"), phase: PricingPhase.Pioneer, price: 1490000, priceUsd: 59, slotAvailable: 20, sortIndex: 1 },
-        { id: "pp-2", createdAt: new Date("2026-01-10T00:00:00.000Z"), updatedAt: new Date("2026-01-10T00:00:00.000Z"), phase: PricingPhase.EarlyBird, price: 2190000, priceUsd: 89, slotAvailable: 60, sortIndex: 2 },
-        { id: "pp-3", createdAt: new Date("2026-01-10T00:00:00.000Z"), updatedAt: new Date("2026-01-10T00:00:00.000Z"), phase: PricingPhase.Regular, price: 2990000, priceUsd: 129, slotAvailable: null, sortIndex: 3 },
+        { phase: "pioneer", price: 1490000, priceUsd: 59 },
+        { phase: "early-bird", price: 2190000, priceUsd: 89 },
+        { phase: "regular", price: 2990000, priceUsd: 129 },
     ],
-    currentPhase: PricingPhase.Pioneer,
-} satisfies Partial<CourseEntity>
+    currentPhase: "pioneer",
+} satisfies Partial<CourseCardCourse>
 
-/** Course still selling in the Pioneer phase — loyalty preview resolved with a real discount. */
-const discountedCourse: CourseEntity = {
+const discountedCourse: CourseCardCourse = {
     ...baseCourse,
     title: "Fullstack Mastery",
     isEnrolled: false,
 }
 
-/** Same course, viewed by a learner already enrolled. */
-const enrolledCourse: CourseEntity = {
+const enrolledCourse: CourseCardCourse = {
     ...baseCourse,
-    id: "course-system-design",
     displayId: "system-design-mastery",
-    slug: "system-design-mastery",
     title: "System Design Mastery",
     isEnrolled: true,
 }
 
-/** No cover uploaded yet — the branded gradient + icon fallback shows instead. */
-const noCoverCourse: CourseEntity = {
+const noCoverCourse: CourseCardCourse = {
     ...baseCourse,
-    id: "course-devops",
     displayId: "devops-mastery",
-    slug: "devops-mastery",
     title: "DevOps Mastery",
     coverImageUrl: null,
     isEnrolled: false,
 }
 
-/** A free intro course: no pricing phase, no list price, no learners yet. */
-const freeCourse: CourseEntity = {
+const freeCourse: CourseCardCourse = {
     ...baseCourse,
-    id: "course-git-intro",
     displayId: "git-nhap-mon",
-    slug: "git-nhap-mon",
     title: "Nhập môn Git",
     description: "Làm chủ nhánh, merge và rebase qua các bài tập ngắn.",
-    coverImageUrl: "https://placehold.co/640x360",
     originalPrice: null,
     originalPriceUsd: null,
     pricingPhases: [],
@@ -84,86 +96,87 @@ const freeCourse: CourseEntity = {
     isEnrolled: false,
 }
 
-/**
- * The catalog's featured course card — covers both layouts (`grid` roomy, `line`
- * compact row) across the states that actually change its shape: cover missing,
- * enrolled vs not, price loading/discounted/absent. `coverFailed` (broken `<img>`)
- * is internal state the block manages itself, not a prop — not shown here.
- */
-export const AllVariants: Story = {
-    render: () => (
-        <Gallery>
-            <Variant
-                label="Lưới — mặc định, có giá loyalty"
-                hint="Layout grid mặc định cho lưới catalog. loyaltyPriceVnd/loyaltyOriginalVnd được truyền nên card ưu tiên giá cá nhân hoá (đã trừ loyalty) thay vì giá theo phase; action là slot do feature sở hữu (ví dụ nút Thêm vào giỏ)."
-            >
-                <div className="w-80">
-                    <CourseCard
-                        course={discountedCourse}
-                        loyaltyPriceVnd={1341000}
-                        loyaltyOriginalVnd={2990000}
-                        action={<Button variant="secondary" className="flex-1">Thêm vào giỏ</Button>}
-                    />
-                </div>
-            </Variant>
-            <Variant
-                label="Lưới — đã đăng ký"
-                hint="isEnrolled truyền qua course.isEnrolled: CTA chính đổi thành Tiếp tục học và trỏ vào trang học, action bị thay bằng nút phụ Xem khóa học (trỏ trang marketing) — không còn Thêm vào giỏ vì học viên đã sở hữu."
-            >
-                <div className="w-80">
-                    <CourseCard
-                        course={enrolledCourse}
-                        loyaltyPriceVnd={1341000}
-                        loyaltyOriginalVnd={2990000}
-                    />
-                </div>
-            </Variant>
-            <Variant
-                label="Lưới — chưa có ảnh cover"
-                hint="coverImageUrl là null (hoặc ảnh lỗi onError): card rơi về khối gradient nhánh accent kèm icon sách và tên khóa học, thay vì để trống ô ảnh."
-            >
-                <div className="w-80">
-                    <CourseCard course={noCoverCourse} />
-                </div>
-            </Variant>
-            <Variant
-                label="Lưới — giá cá nhân hoá đang tải"
-                hint="loyaltyPending truyền true khi viewer đã đăng nhập và app đang chờ coursePricePreview trả về — dòng giá hiện skeleton thay vì chớp giá theo phase rồi nhảy sang giá loyalty."
-            >
-                <div className="w-80">
-                    <CourseCard course={discountedCourse} loyaltyPending />
-                </div>
-            </Variant>
-            <Variant
-                label="Lưới — khóa miễn phí, chưa ai học"
-                hint="Không có pricingPhases/originalPrice và không truyền loyaltyPriceVnd → dòng giá để trống thay vì hiện 0₫; enrollmentCount = 0 nên chip số học viên cũng ẩn; không có valuePropositions nên danh sách gạch đầu dòng không render."
-            >
-                <div className="w-80">
-                    <CourseCard course={freeCourse} />
-                </div>
-            </Variant>
-            <Variant
-                label="Hàng ngang (line) — mặc định"
-                hint={"layout=\"line\" cho chế độ xem danh sách của catalog: ảnh thu nhỏ + tiêu đề bên trái, giá + CTA gọn bên phải trên một dòng — dùng khi người dùng bật list-view thay vì grid-view."}
-            >
-                <div className="w-full max-w-2xl">
-                    <CourseCard
-                        course={discountedCourse}
-                        layout="line"
-                        loyaltyPriceVnd={1341000}
-                        loyaltyOriginalVnd={2990000}
-                        action={<Button variant="secondary" className="flex-1">Thêm vào giỏ</Button>}
-                    />
-                </div>
-            </Variant>
-            <Variant
-                label="Hàng ngang (line) — đã đăng ký"
-                hint={"Cùng layout=\"line\" nhưng isEnrolled true: CTA chính là Tiếp tục học, nút phụ Xem khóa học thay cho action — đúng công thức 2 nút như bản grid, chỉ đổi hình hài sang một dòng."}
-            >
-                <div className="w-full max-w-2xl">
-                    <CourseCard course={enrolledCourse} layout="line" />
-                </div>
-            </Variant>
-        </Gallery>
-    ),
+export const GridDiscounted: Story = {
+    render: () =>
+        blockShell(
+            <div className="w-80">
+                <CourseCard
+                    course={discountedCourse}
+                    loyaltyPriceVnd={1341000}
+                    loyaltyOriginalVnd={2990000}
+                    action={<Button variant="secondary" className="flex-1">Thêm vào giỏ</Button>}
+                />
+            </div>,
+            ANATOMY,
+        ),
+}
+
+export const GridEnrolled: Story = {
+    render: () =>
+        blockShell(
+            <div className="w-80">
+                <CourseCard
+                    course={enrolledCourse}
+                    loyaltyPriceVnd={1341000}
+                    loyaltyOriginalVnd={2990000}
+                />
+            </div>,
+            ANATOMY,
+        ),
+}
+
+export const GridNoCover: Story = {
+    render: () =>
+        blockShell(
+            <div className="w-80">
+                <CourseCard course={noCoverCourse} />
+            </div>,
+            ANATOMY,
+        ),
+}
+
+export const GridLoyaltyPending: Story = {
+    render: () =>
+        blockShell(
+            <div className="w-80">
+                <CourseCard course={discountedCourse} loyaltyPending />
+            </div>,
+            ANATOMY,
+        ),
+}
+
+export const GridFree: Story = {
+    render: () =>
+        blockShell(
+            <div className="w-80">
+                <CourseCard course={freeCourse} />
+            </div>,
+            ANATOMY,
+        ),
+}
+
+export const LineDefault: Story = {
+    render: () =>
+        blockShell(
+            <div className="w-full max-w-2xl">
+                <CourseCard
+                    course={discountedCourse}
+                    layout="line"
+                    loyaltyPriceVnd={1341000}
+                    loyaltyOriginalVnd={2990000}
+                    action={<Button variant="secondary" className="flex-1">Thêm vào giỏ</Button>}
+                />
+            </div>,
+            ANATOMY,
+        ),
+}
+
+export const LineEnrolled: Story = {
+    render: () =>
+        blockShell(
+            <div className="w-full max-w-2xl">
+                <CourseCard course={enrolledCourse} layout="line" />
+            </div>,
+            ANATOMY,
+        ),
 }

@@ -1,41 +1,56 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { DiffViewer } from "@/components/blocks/grading/DiffViewer"
-import { Gallery, Variant } from "../../../../story-kit"
-import { sampleHunks } from "./components"
+import { DiffViewer } from "./DiffViewer"
+import type { DiffHunk } from "./DiffViewer"
+import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof DiffViewer> = {
-    title: "Features/Grading/DiffViewer",
+    title: "Block/Grading/DiffViewer",
     component: DiffViewer,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
+
 export default meta
+
 type Story = StoryObj<typeof DiffViewer>
 
-/**
- * Toàn bộ ma trận trạng thái của DiffViewer: layout unified (một cột, +/-
- * kèm màu nền theo token) và layout split (hai cột, file cũ bên trái/file
- * mới bên phải). Dùng để tra khi nào chọn variant nào cho màn chấm bài.
- */
-export const AllVariants: Story = {
-    render: () => (
-        <Gallery>
-            <Variant
-                label="Unified"
-                hint="Dùng cho phản hồi chấm bài — so sánh bài nộp của học viên với bản sửa gợi ý trong một cột duy nhất. Block nhận hunks đã parse sẵn (không tự chạy thuật toán diff); dòng thêm nền success, dòng xoá nền danger, dòng context giữ neutral. Dòng dài tự cuộn ngang trong container riêng."
-            >
-                <DiffViewer filename="src/auth/login.ts" hunks={sampleHunks} />
-            </Variant>
-            <Variant
-                label="Split"
-                hint="Dùng khi cần so sánh file cũ (bên trái) với file mới (bên phải) — dòng xoá chỉ hiện bên trái, dòng thêm chỉ hiện bên phải, dòng context hiện cả hai bên với số dòng riêng từng bên."
-            >
-                <DiffViewer filename="src/auth/login.ts" hunks={sampleHunks} variant="split" />
-            </Variant>
-        </Gallery>
-    ),
-    parameters: {
-        usage:
-            "Toàn bộ ma trận trạng thái của DiffViewer: unified (một cột, +/- kèm màu nền theo " +
-            "token) và split (hai cột, file cũ bên trái/file mới bên phải, số dòng riêng từng bên). " +
-            "Dùng khi cần tra layout nào phù hợp cho phản hồi chấm bài.",
+const ANATOMY = {
+    primitives: [
+        { name: "Typography", role: "tên file trên header bar (HeroUI base)" },
+    ],
+    reason:
+        "Leaf renderer cho diff chấm bài: nhận hunks đã parse sẵn (không tự chạy thuật toán diff) rồi vẽ header tên file + gutter số dòng + nền màu theo token (thêm=success, xoá=danger, context=neutral). Không cấu thành từ Primitives/* — tự vẽ mọi hàng, nên đúng ra là một Primitive hơn là Block (xem FLAGS).",
+}
+
+/** A small pre-parsed hunk: a few context lines, one removed line and two added lines. */
+const sampleHunks: DiffHunk[] = [
+    {
+        header: "@@ -1,5 +1,6 @@ function login(token) {",
+        lines: [
+            { type: "ctx", content: "function login(token) {", oldNumber: 1, newNumber: 1 },
+            { type: "ctx", content: "  const user = findUser()", oldNumber: 2, newNumber: 2 },
+            { type: "del", content: "  return true", oldNumber: 3 },
+            { type: "add", content: "  if (!verify(token)) return false", newNumber: 3 },
+            { type: "add", content: "  return Boolean(user)", newNumber: 4 },
+            { type: "ctx", content: "}", oldNumber: 4, newNumber: 5 },
+        ],
     },
+]
+
+export const Unified: Story = {
+    render: () =>
+        blockShell(
+            <DiffViewer filename="src/auth/login.ts" hunks={sampleHunks} />,
+            ANATOMY,
+        ),
+}
+
+export const Split: Story = {
+    render: () =>
+        blockShell(
+            <DiffViewer filename="src/auth/login.ts" hunks={sampleHunks} variant="split" />,
+            ANATOMY,
+        ),
 }

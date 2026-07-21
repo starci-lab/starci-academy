@@ -1,16 +1,32 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Typography } from "@heroui/react"
-import { TruthList } from "@/components/blocks/marketing/TruthList"
-import { Gallery, Variant } from "../../../../story-kit"
+import { TrayIcon } from "@phosphor-icons/react"
+import { TruthList } from "./TruthList"
+import { blockShell } from "../../../block-anatomy"
+import { EmptyState } from "../../feedback/EmptyState/EmptyState"
+import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 
 const meta: Meta<typeof TruthList> = {
-    title: "Blocks/Marketing/TruthList",
+    title: "Block/Marketing/TruthList",
     component: TruthList,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
 
 export default meta
 
 type Story = StoryObj<typeof TruthList>
+
+const ANATOMY = {
+    primitives: [
+        { name: "Accordion", role: "mỗi sự thật = trigger mở ra câu trả lời" },
+        { name: "Typography", role: "statement (body medium) + fix (body-sm muted) + byline" },
+    ],
+    reason:
+        "Định vị đối đầu, có căn cứ: mỗi sự thật khó chịu của ngành mở ra một câu 'đây là cách tụi mình xử'. Gói accordion + byline vào một surface flush để sự thật là nhân vật chính, tác giả lùi về chữ ký cuối.",
+}
 
 const typicalTruths = [
     {
@@ -31,69 +47,77 @@ const typicalTruths = [
     },
 ]
 
-/**
- * Toàn bộ state của TruthList trong một gallery: rỗng, một sự thật, danh sách
- * điển hình có/không byline, và nội dung dài phải wrap trên khung hẹp.
- */
-export const AllVariants: Story = {
-    parameters: {
-        usage: "Dùng gallery này để so cách TruthList xử lý số lượng sự thật khác nhau và khi có/không có byline chốt cuối, trước khi ghép vào SectionCard trên landing page.",
-    },
-    render: () => (
-        <Gallery>
-            <Variant
-                label="Rỗng"
-                hint="Khi mảng items trống — kiểm tra khung accordion không vỡ layout và không hiện byline khi không truyền."
-            >
-                <TruthList items={[]} />
-            </Variant>
-            <Variant
-                label="Một sự thật"
-                hint="Khi phần chỉ cần nêu đúng một sự thật cốt lõi, không cần cả danh sách dài."
-            >
+export const SingleTruth: Story = {
+    render: () =>
+        blockShell(
+            <TruthList
+                items={[
+                    {
+                        truth: "Bootcamp 3 tháng biến người mới thành senior.",
+                        fix: "→ Senior cần va vấp thật qua nhiều dự án, khoá học chỉ rút ngắn đường đi chứ không rút ngắn số năm.",
+                    },
+                ]}
+            />,
+            ANATOMY,
+        ),
+}
+
+export const TypicalWithByline: Story = {
+    render: () =>
+        blockShell(
+            <TruthList
+                items={typicalTruths}
+                byline={
+                    <Typography type="body-sm" color="muted">
+                        Thầy Long — Founder, StarCi Academy
+                    </Typography>
+                }
+            />,
+            ANATOMY,
+        ),
+}
+
+export const NoByline: Story = {
+    render: () => blockShell(<TruthList items={typicalTruths} />, ANATOMY),
+}
+
+export const LongContentWrap: Story = {
+    render: () =>
+        blockShell(
+            <div className="max-w-[360px]">
                 <TruthList
                     items={[
                         {
-                            truth: "Bootcamp 3 tháng biến người mới thành senior.",
-                            fix: "→ Senior cần va vấp thật qua nhiều dự án, khoá học chỉ rút ngắn đường đi chứ không rút ngắn số năm.",
+                            truth: "Chỉ cần giỏi thuật toán là qua được mọi vòng phỏng vấn hệ thống lớn ở công ty product.",
+                            fix: "→ Vòng system design chấm khả năng đánh đổi giữa chi phí, độ trễ và độ tin cậy — không có sẵn trong leetcode, phải luyện riêng qua case thật.",
                         },
                     ]}
                 />
-            </Variant>
-            <Variant
-                label="Danh sách điển hình, có byline"
-                hint="Trường hợp phổ biến nhất trên landing: 4 sự thật kèm chữ ký người nói, để tăng độ tin của tuyên bố."
-            >
-                <TruthList
-                    items={typicalTruths}
-                    byline={
-                        <Typography type="body-sm" color="muted">
-                            Thầy Long — Founder, StarCi Academy
-                        </Typography>
-                    }
+            </div>,
+            ANATOMY,
+        ),
+}
+
+/** Empty: no truths → the {@link EmptyState} primitive fills the surface instead of a blank accordion. */
+export const Empty: Story = {
+    render: () =>
+        blockShell(
+            <div className="overflow-hidden rounded-3xl bg-surface shadow-surface">
+                <EmptyState
+                    icon={<TrayIcon weight="duotone" />}
+                    title="Chưa có sự thật nào"
+                    description="Các tuyên bố định vị sẽ hiện ở đây."
                 />
-            </Variant>
-            <Variant
-                label="Không byline"
-                hint="Khi tuyên bố tự nó đã đủ nặng, không cần gắn tên người nói ở cuối."
-            >
-                <TruthList items={typicalTruths} />
-            </Variant>
-            <Variant
-                label="Nội dung dài (wrap)"
-                hint="Sự thật và câu trả lời dài trên khung hẹp — kiểm tra Typography xuống dòng, không đẩy vỡ accordion."
-            >
-                <div className="max-w-[360px]">
-                    <TruthList
-                        items={[
-                            {
-                                truth: "Chỉ cần giỏi thuật toán là qua được mọi vòng phỏng vấn hệ thống lớn ở công ty product.",
-                                fix: "→ Vòng system design chấm khả năng đánh đổi giữa chi phí, độ trễ và độ tin cậy — không có sẵn trong leetcode, phải luyện riêng qua case thật.",
-                            },
-                        ]}
-                    />
-                </div>
-            </Variant>
-        </Gallery>
-    ),
+            </div>,
+            ANATOMY,
+        ),
+}
+
+/**
+ * Loading: MIRROR the surface frame — keep the `rounded-3xl bg-surface shadow-surface`
+ * shell + per-item trigger rows/separators, swap only the statement text for `Skeleton`
+ * bars (reuses `Skeleton.Accordion`, sized to the accordion trigger box).
+ */
+export const SkeletonLoading: Story = {
+    render: () => blockShell(<Skeleton.Accordion items={4} />, ANATOMY),
 }

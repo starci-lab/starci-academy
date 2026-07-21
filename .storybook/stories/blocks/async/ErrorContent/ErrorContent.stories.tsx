@@ -1,58 +1,66 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { CloudWarningIcon } from "@phosphor-icons/react"
-import { ErrorContent } from "@/components/blocks/async/ErrorContent"
-import { Gallery, Variant } from "../../../../story-kit"
+import React from "react"
+import { WifiSlashIcon } from "@phosphor-icons/react"
+import { ErrorContent } from "./ErrorContent"
+import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof ErrorContent> = {
-    title: "Blocks/Async/ErrorContent",
+    title: "Block/Async/ErrorContent",
     component: ErrorContent,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
+
 export default meta
+
 type Story = StoryObj<typeof ErrorContent>
 
-/**
- * Toàn bộ biến thể của ErrorContent: mặc định có nút thử lại, không có nút thử
- * lại khi lỗi không thể khắc phục bằng retry, và icon tuỳ chỉnh khi icon cảnh báo
- * mặc định không diễn tả đúng ngữ cảnh lỗi.
- */
-export const AllVariants: Story = {
-    render: () => (
-        <Gallery>
-            <Variant
-                label="Default"
-                hint="A load error that retrying can fix — this is AsyncContent's default errorContent."
-            >
-                <ErrorContent
-                    title="Couldn't load data"
-                    description="Something went wrong, please try again later."
-                    onRetry={() => {}}
-                    retryLabel="Try again"
-                />
-            </Variant>
-            <Variant
-                label="Without retry button"
-                hint="An error that retrying WON'T fix (not found, no permission) — don't invite a tap on a button that can't help."
-            >
-                <ErrorContent title="Content not found" />
-            </Variant>
-            <Variant
-                label="Custom icon"
-                hint="A kind of error an icon states more clearly than the generic warning octagon (maintenance, lost connection)."
-            >
-                <ErrorContent
-                    icon={<CloudWarningIcon aria-hidden focusable="false" weight="duotone" className="size-8 text-foreground" />}
-                    title="Server under maintenance"
-                    description="Please check back in a few minutes."
-                    onRetry={() => {}}
-                    retryLabel="Check again"
-                />
-            </Variant>
-        </Gallery>
-    ),
-    parameters: {
-        usage:
-            "Toàn bộ biến thể của ErrorContent: mặc định có nút thử lại, không có nút thử lại khi lỗi " +
-            "không thể khắc phục bằng retry, và icon tuỳ chỉnh khi icon cảnh báo mặc định không diễn tả " +
-            "đúng ngữ cảnh lỗi.",
-    },
+const ANATOMY = {
+    primitives: [{ name: "ErrorState", role: "khung icon cảnh báo + tiêu đề + mô tả + nút thử lại, canh giữa" }],
+    reason:
+        "Trạng thái lỗi của một vùng dữ liệu async cần đúng anatomy của ErrorState (icon cảnh báo + tiêu đề + mô tả + nút thử lại canh giữa). ErrorContent chỉ thêm icon WarningOctagon mặc định và truyền onRetry/retryLabel xuống nút — nên nó là một lớp mỏng trên ErrorState, không nên tự vẽ lại.",
+}
+
+export const Basic: Story = {
+    render: () => blockShell(<ErrorContent title="Đã có lỗi xảy ra" />, ANATOMY),
+}
+
+export const WithDescription: Story = {
+    render: () =>
+        blockShell(
+            <ErrorContent
+                title="Không tải được dữ liệu"
+                description="Máy chủ tạm thời không phản hồi. Vui lòng thử lại sau."
+            />,
+            ANATOMY,
+        ),
+}
+
+export const WithRetry: Story = {
+    render: () =>
+        blockShell(
+            <ErrorContent
+                title="Không tải được dữ liệu"
+                description="Đã có lỗi xảy ra khi tải nội dung."
+                onRetry={() => {}}
+                retryLabel="Thử lại"
+            />,
+            ANATOMY,
+        ),
+}
+
+export const CustomIcon: Story = {
+    render: () =>
+        blockShell(
+            <ErrorContent
+                icon={<WifiSlashIcon aria-hidden focusable="false" weight="duotone" className="size-8 text-foreground" />}
+                title="Mất kết nối mạng"
+                description="Kiểm tra kết nối rồi thử lại."
+                onRetry={() => {}}
+                retryLabel="Thử lại"
+            />,
+            ANATOMY,
+        ),
 }

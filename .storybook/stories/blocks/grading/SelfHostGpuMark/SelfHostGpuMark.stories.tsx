@@ -1,42 +1,41 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Typography } from "@heroui/react"
-import { SelfHostGpuMark } from "@/components/blocks/grading/SelfHostGpuMark"
-import { Gallery, Variant } from "../../../../story-kit"
+import { SelfHostGpuMark } from "./SelfHostGpuMark"
+import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof SelfHostGpuMark> = {
-    title: "Blocks/Grading/SelfHostGpuMark",
+    title: "Block/Grading/SelfHostGpuMark",
     component: SelfHostGpuMark,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
+
 export default meta
+
 type Story = StoryObj<typeof SelfHostGpuMark>
 
-/**
- * SelfHostGpuMark chỉ có một hình hài — icon GPU kèm tooltip, không có
- * variant/tone/size. Gallery này phủ hai bối cảnh render THẬT của nó: đứng
- * độc lập, và ghép cạnh tên model trong một dòng danh sách (nơi block này
- * thực sự được dùng, trong dropdown chọn model chấm bài).
- */
-export const AllVariants: Story = {
-    parameters: {
-        usage: "Gắn SelfHostGpuMark ngay sau tên model self-host trên hạ tầng của StarCi (ví dụ RTX 5060), để phân biệt với model gọi qua API bên ngoài. Chi tiết nằm trong tooltip khi hover/focus vào icon, không cần thêm chip phụ trên dòng.",
-    },
-    render: () => (
-        <Gallery>
-            <Variant
-                label="Đứng độc lập"
-                hint="Icon trần, dùng khi chỉ cần đánh dấu self-host mà không kèm theo tên model."
-            >
+const ANATOMY = {
+    primitives: [
+        { name: "Tooltip", role: "hover/focus mở giải thích self-host (HeroUI base)" },
+        { name: "CpuIcon", role: "icon GPU accent, đánh dấu model chạy trên hạ tầng nội bộ" },
+    ],
+    reason:
+        "Một dấu hiệu leaf: icon GPU + tooltip đứng cạnh tên model trong dropdown chấm bài để phân biệt model self-host (RTX 5060) với model gọi API bên ngoài. Chi tiết nằm trong tooltip nên dòng không phải gánh thêm chip — chỉ một icon nhỏ.",
+}
+
+export const Standalone: Story = {
+    render: () => blockShell(<SelfHostGpuMark />, ANATOMY),
+}
+
+export const BesideModelName: Story = {
+    render: () =>
+        blockShell(
+            <div className="flex items-center gap-2">
+                <Typography type="body-sm">Qwen2.5-Coder 7B</Typography>
                 <SelfHostGpuMark />
-            </Variant>
-            <Variant
-                label="Ghép cạnh tên model"
-                hint="Bối cảnh dùng thật nhất — trong dropdown chọn model chấm bài, đặt ngay sau tên model self-host trên GPU nội bộ."
-            >
-                <div className="flex items-center gap-2">
-                    <Typography type="body-sm">Qwen2.5-Coder 7B</Typography>
-                    <SelfHostGpuMark />
-                </div>
-            </Variant>
-        </Gallery>
-    ),
+            </div>,
+            ANATOMY,
+        ),
 }

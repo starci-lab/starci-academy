@@ -1,46 +1,89 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { PricingTable } from "@/components/blocks/commerce/PricingTable"
-import { Gallery, Variant } from "../../../../story-kit"
-import { threeTiers } from "./components"
+import { PricingTable, PricingTableTier } from "./PricingTable"
+import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof PricingTable> = {
-    title: "Features/Commerce/PricingTable",
+    title: "Block/Commerce/PricingTable",
     component: PricingTable,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
+
 export default meta
+
 type Story = StoryObj<typeof PricingTable>
 
-/**
- * Toàn bộ ma trận trạng thái của PricingTable: ba plan với plan giữa nổi bật
- * (ribbon "phổ biến" + khung nhấn), và hai plan không plan nào nổi bật (hai cột
- * giãn đều, nút hành động thẳng hàng ở dưới). Dùng để tra khi nào bật
- * isHighlighted và layout xử lý ra sao khi thiếu plan nổi bật.
- */
-export const AllVariants: Story = {
-    render: () => (
-        <Gallery>
-            <Variant
-                label="Ba plan, plan giữa nổi bật"
-                hint="Dùng trên trang giá hoặc bước nâng cấp khi so sánh 2-3 plan cạnh nhau. Mỗi plan giữ sẵn giá đã format dưới dạng string; giữ nhãn feature giống nhau giữa các plan để chúng thẳng hàng. Bật isHighlighted cho plan giữa để có ribbon phổ biến và khung nhấn."
-            >
-                <PricingTable tiers={threeTiers} onSelectTier={() => {}} />
-            </Variant>
-            <Variant
-                label="Hai plan, không nổi bật"
-                hint="Dùng khi chỉ có hai plan và không muốn nhấn plan nào — hai cột vẫn giãn đều, nút hành động thẳng hàng ở dưới. Không có isHighlighted thì không cột nào có ribbon."
-            >
-                <PricingTable
-                    tiers={threeTiers.slice(0, 2).map((tier) => ({ ...tier, isHighlighted: false }))}
-                    onSelectTier={() => {}}
-                />
-            </Variant>
-        </Gallery>
-    ),
-    parameters: {
-        usage:
-            "Toàn bộ ma trận trạng thái của PricingTable: ba plan với plan giữa nổi bật (ribbon " +
-            "\"phổ biến\" + khung nhấn), và hai plan không plan nào nổi bật (hai cột giãn đều, nút " +
-            "hành động thẳng hàng ở dưới). Dùng khi cần so sánh 2-3 plan cạnh nhau trên trang giá hoặc " +
-            "bước nâng cấp, và xác nhận layout vẫn đúng khi không có plan nổi bật.",
+const ANATOMY = {
+    primitives: [
+        { name: "PricingCard", role: "mỗi cột một tier (khung + tên + giá + CTA)" },
+        { name: "CrossListCard", role: "danh sách tính năng — 1 list trộn dòng có (✓ success) và không có (✗ muted)" },
+    ],
+    reason:
+        "So sánh 2–3 gói cạnh nhau cần MỖI gói là một cột đồng nhất (PricingCard) và một danh sách tính năng dùng CHUNG một khung để các dòng thẳng hàng cột-với-cột: có → CrossListItem mark=\"check\" (✓), không có → mark=\"cross\" (✗) — cùng một CrossListCard. Gộp thành một block để trang giá chỉ truyền mảng tiers, không phải tự dựng lại layout so-sánh + logic ✓/✗ ở mỗi nơi.",
+}
+
+/** Three plans sharing one feature set so the labels line up across columns. */
+const threeTiers: PricingTableTier[] = [
+    {
+        id: "free",
+        name: "Free",
+        price: "0₫",
+        description: "Dùng thử và làm quen với nền tảng.",
+        ctaLabel: "Bắt đầu miễn phí",
+        features: [
+            { label: "Truy cập bài học nhập môn", included: true },
+            { label: "Chấm bài với model nội bộ", included: true },
+            { label: "Chấm bài với model premium", included: false },
+            { label: "Phỏng vấn thử không giới hạn", included: false },
+            { label: "Hỗ trợ email ưu tiên", included: false },
+        ],
     },
+    {
+        id: "pro",
+        name: "Professional",
+        price: "299.000₫",
+        period: "/tháng",
+        description: "Cho người học nghiêm túc muốn lên trình nhanh.",
+        ctaLabel: "Chọn Professional",
+        isHighlighted: true,
+        features: [
+            { label: "Truy cập bài học nhập môn", included: true },
+            { label: "Chấm bài với model nội bộ", included: true },
+            { label: "Chấm bài với model premium", included: true },
+            { label: "Phỏng vấn thử không giới hạn", included: true },
+            { label: "Hỗ trợ email ưu tiên", included: false },
+        ],
+    },
+    {
+        id: "team",
+        name: "Team",
+        price: "899.000₫",
+        period: "/tháng",
+        description: "Cho nhóm học hoặc doanh nghiệp nhỏ.",
+        ctaLabel: "Liên hệ sales",
+        features: [
+            { label: "Truy cập bài học nhập môn", included: true },
+            { label: "Chấm bài với model nội bộ", included: true },
+            { label: "Chấm bài với model premium", included: true },
+            { label: "Phỏng vấn thử không giới hạn", included: true },
+            { label: "Hỗ trợ email ưu tiên", included: true },
+        ],
+    },
+]
+
+export const ThreeTiersHighlighted: Story = {
+    render: () => blockShell(<PricingTable tiers={threeTiers} onSelectTier={() => {}} />, ANATOMY),
+}
+
+export const TwoTiersNoHighlight: Story = {
+    render: () =>
+        blockShell(
+            <PricingTable
+                tiers={threeTiers.slice(0, 2).map((tier) => ({ ...tier, isHighlighted: false }))}
+                onSelectTier={() => {}}
+            />,
+            ANATOMY,
+        ),
 }

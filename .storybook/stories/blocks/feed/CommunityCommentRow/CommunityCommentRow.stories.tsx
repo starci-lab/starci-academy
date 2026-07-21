@@ -1,20 +1,49 @@
-import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { CommunityCommentRow } from "@/components/blocks/feed/CommunityCommentRow"
-import { ReactionType } from "@/modules/api/graphql/queries/types/discussion"
-import type { QueryCommunityCommentNode } from "@/modules/api/graphql/queries/types/community-comments"
-import { Gallery, Variant } from "../../../../story-kit"
+import React, { useState } from "react"
+import { CommunityCommentRow, type QueryCommunityCommentNode } from "./CommunityCommentRow"
+import { ReactionType } from "../ReactionBar/ReactionBar"
+import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof CommunityCommentRow> = {
-    title: "Blocks/Feed/CommunityCommentRow",
+    title: "Block/Feed/CommunityCommentRow",
     component: CommunityCommentRow,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
+
 export default meta
+
 type Story = StoryObj<typeof CommunityCommentRow>
 
-const usage = "Một dòng bình luận trong cộng đồng: avatar + tên tác giả (kèm huy hiệu founder nếu có) + thời gian tương đối, phần thân markdown, thanh cảm xúc, và một chỗ trống cho action do feature cha cung cấp (ví dụ nút Trả lời). Block chỉ trình bày dữ liệu — quyền react do cha quyết định qua việc có truyền onReact hay không."
+const ANATOMY = {
+    primitives: [
+        { name: "UserAvatar", role: "avatar tác giả bình luận" },
+        { name: "MarkdownContent", role: "thân bình luận (compact, [&_p]:m-0)" },
+        { name: "ReactionBar", role: "thả cảm xúc cho bình luận" },
+    ],
+    reason:
+        "Một dòng bình luận cộng đồng gói header tác giả + thân markdown + reaction + slot actions vào một block, để CommentThread và các surface bình luận dùng chung một cách trình bày. Quyền react do caller quyết định qua onReact.",
+}
 
-/** Bình luận vừa mới, chưa ai thả cảm xúc, tác giả là học viên thường. */
+/** Wrapper owning local state, simulating the real react flow. */
+const Controlled = ({ initialComment }: { initialComment: QueryCommunityCommentNode }) => {
+    const [comment, setComment] = useState(initialComment)
+    const handleReact = (type: ReactionType | null) => {
+        setComment((previous) => {
+            const hadReaction = previous.reactions.myReaction !== null
+            const hasReaction = type !== null
+            const delta = hasReaction ? (hadReaction ? 0 : 1) : hadReaction ? -1 : 0
+            return {
+                ...previous,
+                reactions: { total: previous.reactions.total + delta, myReaction: type },
+            }
+        })
+    }
+    return <CommunityCommentRow comment={comment} onReact={handleReact} />
+}
+
 const freshComment: QueryCommunityCommentNode = {
     id: "c-fresh",
     body: "Mình vẫn chưa hiểu khi nào nên dùng covering index thay vì index thường, có ai giải thích giúp không?",
@@ -28,7 +57,6 @@ const freshComment: QueryCommunityCommentNode = {
     isFounderAuthor: false,
 }
 
-/** Bình luận đã có nhiều người thả cảm xúc, người xem cũng đã react. */
 const reactedComment: QueryCommunityCommentNode = {
     id: "c-reacted",
     body: "Covering index đã chứa sẵn mọi cột câu truy vấn cần, nên không phải quay lại đọc bảng gốc nữa. Dùng khi truy vấn đó chạy nhiều và ít đổi cấu trúc.",
@@ -42,7 +70,6 @@ const reactedComment: QueryCommunityCommentNode = {
     isFounderAuthor: false,
 }
 
-/** Tác giả là founder — hiện huy hiệu SealCheck cạnh tên. */
 const founderComment: QueryCommunityCommentNode = {
     id: "c-founder",
     body: "Góc nhìn hay đó! Bên mình khuyến nghị đo bằng EXPLAIN ANALYZE thật trước khi thêm index, đừng đoán theo cảm giác.",
@@ -56,7 +83,6 @@ const founderComment: QueryCommunityCommentNode = {
     isFounderAuthor: true,
 }
 
-/** Bình luận dài nhiều đoạn — kiểm phần thân markdown không vỡ layout khi nội dung dài. */
 const longComment: QueryCommunityCommentNode = {
     id: "c-long",
     body: "Mình tổng hợp lại luồng debug hôm nay cho ai chưa theo kịp:\n\n1. Query chậm vì thiếu index trên `order_id`.\n2. Thêm index rồi nhưng planner vẫn seq scan do thống kê cũ.\n3. Chạy `ANALYZE` lại thì planner mới chọn index scan.\n\nKết luận: thêm index xong nhớ `ANALYZE`, đừng chỉ nhìn EXPLAIN cũ mà kết luận index vô dụng.",
@@ -70,26 +96,6 @@ const longComment: QueryCommunityCommentNode = {
     isFounderAuthor: false,
 }
 
-/** Wrapper sở hữu state cục bộ, mô phỏng đúng luồng thật: bấm react cập nhật count + myReaction. */
-const Controlled = ({ initialComment }: { initialComment: QueryCommunityCommentNode }) => {
-    const [comment, setComment] = useState(initialComment)
-
-    const handleReact = (type: ReactionType | null) => {
-        setComment((previous) => {
-            const hadReaction = previous.reactions.myReaction !== null
-            const hasReaction = type !== null
-            const delta = hasReaction ? (hadReaction ? 0 : 1) : hadReaction ? -1 : 0
-            return {
-                ...previous,
-                reactions: { total: previous.reactions.total + delta, myReaction: type },
-            }
-        })
-    }
-
-    return <CommunityCommentRow comment={comment} onReact={handleReact} />
-}
-
-/** Nút "Trả lời" chữ thường, đúng affordance mà CommentThread truyền vào slot actions. */
 const replyAction = (
     <button
         type="button"
@@ -100,51 +106,26 @@ const replyAction = (
     </button>
 )
 
-/**
- * Toàn bộ state của CommunityCommentRow trong một gallery: bình luận mới chưa ai
- * react (có bấm thật), đã có người react, tác giả là founder, thân dài nhiều đoạn,
- * có slot actions, và chế độ chỉ xem khi không được quyền react.
- */
-export const AllVariants: Story = {
-    parameters: { usage },
-    render: () => (
-        <Gallery>
-            <Variant
-                label="Bình luận mới, chưa ai thả cảm xúc"
-                hint="Dùng khi người xem được quyền react lần đầu — chỉ có nút mở picker, chưa có số đếm. Bấm thử để thấy count + myReaction cập nhật."
-            >
-                <Controlled initialComment={freshComment} />
-            </Variant>
-            <Variant
-                label="Đã có người react, người xem cũng đã react"
-                hint="Truyền reactions.total + myReaction đã có sẵn — trigger đổi sang đúng emoji người xem chọn."
-            >
-                <CommunityCommentRow comment={reactedComment} onReact={() => {}} />
-            </Variant>
-            <Variant
-                label="Tác giả là founder"
-                hint="isFounderAuthor=true hiện thêm huy hiệu SealCheck ngay cạnh tên tác giả."
-            >
-                <CommunityCommentRow comment={founderComment} onReact={() => {}} />
-            </Variant>
-            <Variant
-                label="Thân bình luận dài, nhiều đoạn"
-                hint="Markdown nhiều dòng/list — kiểm phần thân không vỡ layout và vẫn căn đều với avatar + thanh cảm xúc bên dưới."
-            >
-                <CommunityCommentRow comment={longComment} onReact={() => {}} />
-            </Variant>
-            <Variant
-                label="Có actions kèm nút Trả lời"
-                hint="Feature cha (ví dụ CommentThread) truyền một nút Trả lời qua slot actions, đặt cạnh thanh cảm xúc."
-            >
-                <CommunityCommentRow comment={reactedComment} onReact={() => {}} actions={replyAction} />
-            </Variant>
-            <Variant
-                label="Chỉ xem, không được react"
-                hint="Bỏ onReact khi người xem không có quyền react (ví dụ đang xem hoạt động của chính mình) — thanh cảm xúc chỉ còn số đếm + emoji đã chọn, không có picker."
-            >
-                <CommunityCommentRow comment={reactedComment} />
-            </Variant>
-        </Gallery>
-    ),
+export const Fresh: Story = {
+    render: () => blockShell(<div className="w-full max-w-xl"><Controlled initialComment={freshComment} /></div>, ANATOMY),
+}
+
+export const Reacted: Story = {
+    render: () => blockShell(<div className="w-full max-w-xl"><CommunityCommentRow comment={reactedComment} onReact={() => {}} /></div>, ANATOMY),
+}
+
+export const FounderAuthor: Story = {
+    render: () => blockShell(<div className="w-full max-w-xl"><CommunityCommentRow comment={founderComment} onReact={() => {}} /></div>, ANATOMY),
+}
+
+export const LongBody: Story = {
+    render: () => blockShell(<div className="w-full max-w-xl"><CommunityCommentRow comment={longComment} onReact={() => {}} /></div>, ANATOMY),
+}
+
+export const WithActions: Story = {
+    render: () => blockShell(<div className="w-full max-w-xl"><CommunityCommentRow comment={reactedComment} onReact={() => {}} actions={replyAction} /></div>, ANATOMY),
+}
+
+export const ReadOnly: Story = {
+    render: () => blockShell(<div className="w-full max-w-xl"><CommunityCommentRow comment={reactedComment} /></div>, ANATOMY),
 }

@@ -5,117 +5,120 @@ import {
     RocketLaunchIcon,
     WarningIcon,
 } from "@phosphor-icons/react"
-import { IconTile } from "@/components/blocks/identity/IconTile"
-import { Gallery, Variant } from "../../../../story-kit"
+import { IconTile } from "./IconTile"
 
 const meta: Meta<typeof IconTile> = {
-    title: "Blocks/Identity/IconTile",
+    title: "Primitives/Identity/IconTile",
     component: IconTile,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
+
 export default meta
+
 type Story = StoryObj<typeof IconTile>
 
-/**
- * Toàn bộ ma trận trạng thái của IconTile: mặc định chỉ-icon, 5 tone theo status
- * (accent/success/warning/danger/neutral), 3 size theo mật độ khu vực (sm/md/lg),
- * và 2 trạng thái cover-image (ảnh thật, ảnh lỗi fallback về icon). Chỉ dùng IconTile
- * khi leading của một row/card đại diện cho MỘT OBJECT có định danh — một bài học,
- * một khoá học, một dự án: thứ người dùng có thể gọi tên và bấm mở. Một icon trần đi
- * kèm chữ thì vẫn để trần, đừng bọc vào tile (icon trần đọc như một CUE PHỤ — trạng
- * thái, độ khó, loại nội dung — không đủ khối lượng để làm avatar; đặt nó ở leading
- * sẽ hạ cấp object thành caption). Nếu chính ẢNH mới là nội dung — cover 16:9 của một
- * course card — dùng CoverImage, không dùng tile vuông.
- */
-export const AllVariants: Story = {
+// Stable local data-URI cover so the image-fill state renders without an external host.
+const COVER =
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23FB59A7'/%3E%3Cstop offset='1' stop-color='%234F46E5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='128' height='128' fill='url(%23g)'/%3E%3C/svg%3E"
+
+export const Default: Story = {
     render: () => (
-        <Gallery>
-            <Variant
-                label="Mặc định (chỉ icon)"
-                hint="Chỉ icon, không có cover image: hình thái phổ biến nhất, vì đa số bài học và challenge không có asset riêng."
-            >
-                <IconTile icon={<BookOpenIcon />} />
-            </Variant>
-            <Variant
-                label="Tone accent"
-                hint="Thứ đang được đẩy lên: item đang làm, thứ vừa mở khoá. Mỗi eyeful tối đa một tile accent — nhiều accent cùng lúc thì không cái nào nổi bật nữa."
-            >
-                <IconTile icon={<RocketLaunchIcon />} tone="accent" />
-            </Variant>
-            <Variant
-                label="Tone success"
-                hint="Object đã xong hoàn toàn, không cần thêm gì nữa: một bài học đã hoàn thành, một challenge đã pass."
-            >
-                <IconTile icon={<CheckCircleIcon />} tone="success" />
-            </Variant>
-            <Variant
-                label="Tone warning"
-                hint="Còn việc chưa xong và có deadline thật: sắp hết hạn, đang chờ nộp lại. Đừng dùng cho thứ đơn giản là chưa bắt đầu."
-            >
-                <IconTile icon={<WarningIcon />} tone="warning" />
-            </Variant>
-            <Variant
-                label="Tone danger"
-                hint="Bị hỏng hoặc thất bại, cần người dùng hành động: một bài nộp fail, một session hết hạn không khôi phục được."
-            >
-                <IconTile icon={<WarningIcon />} tone="danger" />
-            </Variant>
-            <Variant
-                label="Tone neutral"
-                hint="Mặc định khi object không mang status nào: một item trong danh sách để lướt qua. Khi không chắc, chọn cái này — đừng thêm màu chỉ vì cho đẹp."
-            >
-                <IconTile icon={<BookOpenIcon />} tone="neutral" />
-            </Variant>
-            <Variant
-                label="Size sm"
-                hint="Size cho leading của một row trong danh sách dày đặc — lựa chọn mặc định khi tile đứng đầu một row."
-            >
-                <IconTile icon={<BookOpenIcon />} size="sm" />
-            </Variant>
-            <Variant
-                label="Size md"
-                hint="Size cho một card độc lập, nơi mỗi object có khung riêng của nó thay vì đứng chen với cái kế bên."
-            >
-                <IconTile icon={<BookOpenIcon />} size="md" />
-            </Variant>
-            <Variant
-                label="Size lg"
-                hint="Size cho hero block ở đầu trang, nơi object là điểm dẫn của cả surface. Đừng dùng trong danh sách — nó sẽ lấn title của row."
-            >
-                <IconTile icon={<BookOpenIcon />} size="lg" />
-            </Variant>
-            <Variant
-                label="Có cover image"
-                hint="Truyền src khi khoá học hoặc dự án có asset thật; ảnh lấp đầy tile và thay chỗ icon."
-            >
-                <IconTile
-                    icon={<BookOpenIcon />}
-                    src="https://picsum.photos/seed/starci-course/128/128"
-                    alt="Fullstack Mastery track"
-                    size="lg"
-                />
-            </Variant>
-            <Variant
-                label="Ảnh lỗi, fallback về icon"
-                hint="Không phải một lựa chọn mà là điều xảy ra khi URL bị hỏng hoặc CDN chưa sync xong. Đây là lý do luôn phải truyền icon kèm src: bỏ icon thì ô này sẽ thành ô ảnh vỡ."
-            >
-                <IconTile
-                    icon={<BookOpenIcon />}
-                    src="https://invalid.starci.example/not-found.jpg"
-                    alt="Cover image failed to load"
-                    size="lg"
-                    tone="neutral"
-                />
-            </Variant>
-        </Gallery>
+        <div className="p-8">
+            <IconTile icon={<BookOpenIcon />} />
+        </div>
     ),
-    parameters: {
-        usage:
-            "Chỉ dùng IconTile khi leading của một row/card đại diện cho MỘT OBJECT có định danh — một bài " +
-            "học, một khoá học, một dự án: thứ người dùng có thể gọi tên và bấm mở. Đừng dùng cho một icon " +
-            "trần nhỏ đi kèm chữ — icon trần đọc như một CUE PHỤ (status, độ khó, loại nội dung), không đủ " +
-            "khối lượng để làm avatar; đặt nó ở leading sẽ hạ cấp object thành caption. Nếu chính ẢNH mới là " +
-            "nội dung — cover 16:9 của một course card — dùng `CoverImage`, không dùng tile vuông. Luôn " +
-            "truyền `icon` kể cả khi đã set `src`: ảnh lấp đầy tile, nhưng nếu URL hỏng hoặc chưa sync thì " +
-            "tile fallback về icon thay vì hiện glyph ảnh vỡ.",
-    },
+}
+
+export const ToneAccent: Story = {
+    render: () => (
+        <div className="p-8">
+            <IconTile icon={<RocketLaunchIcon />} tone="accent" />
+        </div>
+    ),
+}
+
+export const ToneSuccess: Story = {
+    render: () => (
+        <div className="p-8">
+            <IconTile icon={<CheckCircleIcon />} tone="success" />
+        </div>
+    ),
+}
+
+export const ToneWarning: Story = {
+    render: () => (
+        <div className="p-8">
+            <IconTile icon={<WarningIcon />} tone="warning" />
+        </div>
+    ),
+}
+
+export const ToneDanger: Story = {
+    render: () => (
+        <div className="p-8">
+            <IconTile icon={<WarningIcon />} tone="danger" />
+        </div>
+    ),
+}
+
+export const ToneNeutral: Story = {
+    render: () => (
+        <div className="p-8">
+            <IconTile icon={<BookOpenIcon />} tone="neutral" />
+        </div>
+    ),
+}
+
+export const SizeSm: Story = {
+    render: () => (
+        <div className="p-8">
+            <IconTile icon={<BookOpenIcon />} size="sm" />
+        </div>
+    ),
+}
+
+export const SizeMd: Story = {
+    render: () => (
+        <div className="p-8">
+            <IconTile icon={<BookOpenIcon />} size="md" />
+        </div>
+    ),
+}
+
+export const SizeLg: Story = {
+    render: () => (
+        <div className="p-8">
+            <IconTile icon={<BookOpenIcon />} size="lg" />
+        </div>
+    ),
+}
+
+export const WithCoverImage: Story = {
+    render: () => (
+        <div className="p-8">
+            <IconTile
+                icon={<BookOpenIcon />}
+                src={COVER}
+                alt="Fullstack Mastery track"
+                size="lg"
+            />
+        </div>
+    ),
+}
+
+export const BrokenCoverFallsBackToIcon: Story = {
+    render: () => (
+        <div className="p-8">
+            <IconTile
+                icon={<BookOpenIcon />}
+                src="https://invalid.starci.example/not-found.jpg"
+                alt="Cover image failed to load"
+                size="lg"
+                tone="neutral"
+            />
+        </div>
+    ),
 }

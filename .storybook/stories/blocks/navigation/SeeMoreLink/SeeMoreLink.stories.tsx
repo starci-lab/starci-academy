@@ -1,57 +1,62 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { SeeMoreLink } from "@/components/blocks/navigation/SeeMoreLink"
-import { Gallery, Variant, VariantRow } from "../../../../story-kit"
+import { SeeMoreLink } from "./SeeMoreLink"
 
 const meta: Meta<typeof SeeMoreLink> = {
-    title: "Blocks/Navigation/SeeMoreLink",
+    title: "Primitives/Navigation/SeeMoreLink",
     component: SeeMoreLink,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
+
 export default meta
+
 type Story = StoryObj<typeof SeeMoreLink>
 
-/**
- * Every mode SeeMoreLink can render: a press handler when the feature owns
- * routing itself, an explicit href when the destination is a fixed URL, a
- * decorative span when the parent surface is already the one press target,
- * and the two sizes it can sit next to (a section label vs a small eyebrow).
- */
-export const AllVariants: Story = {
-    parameters: {
-        usage: "Dùng SeeMoreLink cho hành vi \"Xem thêm →\" cuối một khối nội dung — LabeledCard truyền onPress khi feature tự điều hướng, ContinueCard dùng decorative khi cả card đã là target bấm duy nhất.",
-    },
+/** `onPress`: the feature owns routing (e.g. a router push at the end of a list). */
+export const OnPress: Story = {
     render: () => (
-        <Gallery>
-            <Variant
-                label="Bấm hành động (onPress)"
-                hint="Dùng khi feature tự xử lý điều hướng bằng router — ví dụ nút Xem thêm cuối một danh sách bài học rút gọn trên trang chủ."
-            >
-                <SeeMoreLink onPress={() => {}}>Xem thêm</SeeMoreLink>
-            </Variant>
-            <Variant
-                label="Điều hướng URL (href)"
-                hint="Dùng khi đích đến là một URL cố định — href được ưu tiên hơn onPress nên chỉ cần truyền một trong hai."
-            >
-                <SeeMoreLink href="/courses">Xem tất cả khóa học</SeeMoreLink>
-            </Variant>
-            <Variant
-                label="Decorative trong surface cha"
-                hint="Dùng khi cả bề mặt cha (ví dụ ContinueCard) đã là target bấm duy nhất — SeeMoreLink chỉ render span tĩnh, hiệu ứng hover ăn theo class group của cha."
-            >
-                <div className="group w-fit cursor-pointer rounded-lg border border-default-200 p-3">
-                    <SeeMoreLink decorative>Tiếp tục</SeeMoreLink>
-                </div>
-            </Variant>
-            <VariantRow
-                label="Size"
-                hint="sm đứng cạnh nhãn lớn của một section (mặc định), xs đứng cạnh eyebrow nhỏ và tinh giản hơn."
-            >
-                <SeeMoreLink size="sm" onPress={() => {}}>
-                    Xem thêm (sm)
-                </SeeMoreLink>
-                <SeeMoreLink size="xs" onPress={() => {}}>
-                    Xem thêm (xs)
-                </SeeMoreLink>
-            </VariantRow>
-        </Gallery>
+        <div className="p-8">
+            <SeeMoreLink onPress={() => {}}>Xem thêm</SeeMoreLink>
+        </div>
+    ),
+}
+
+/** `href`: the destination is a fixed URL — takes priority over `onPress`. */
+export const WithHref: Story = {
+    render: () => (
+        <div className="p-8">
+            <SeeMoreLink href="/courses">Xem tất cả khóa học</SeeMoreLink>
+        </div>
+    ),
+}
+
+/** `decorative`: the parent surface is the one press target — hover rides its `group` class. */
+export const Decorative: Story = {
+    render: () => (
+        <div className="p-8">
+            <div className="group w-fit cursor-pointer rounded-lg border border-default p-3">
+                <SeeMoreLink decorative>Tiếp tục</SeeMoreLink>
+            </div>
+        </div>
+    ),
+}
+
+/** `size="sm"` (default): sits beside a full section label. */
+export const SizeSmall: Story = {
+    render: () => (
+        <div className="p-8">
+            <SeeMoreLink size="sm" onPress={() => {}}>Xem thêm (sm)</SeeMoreLink>
+        </div>
+    ),
+}
+
+/** `size="xs"`: sits beside a small eyebrow / subtle label. */
+export const SizeExtraSmall: Story = {
+    render: () => (
+        <div className="p-8">
+            <SeeMoreLink size="xs" onPress={() => {}}>Xem thêm (xs)</SeeMoreLink>
+        </div>
     ),
 }

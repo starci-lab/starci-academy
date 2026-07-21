@@ -1,0 +1,116 @@
+import React from "react"
+import type { ReactNode } from "react"
+import { Card, Radio, RadioGroup, cn } from "@heroui/react"
+
+/**
+ * ─────────────────────────────────────────────────────────────────────────────
+ * STORYBOOK-LOCAL DESIGN SPEC — full port of `@/components/blocks/navigation/SelectableCardGroup`.
+ * Authored in Storybook (not `src`); synced to `src` later.
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
+/** One selectable card in a {@link SelectableCardGroup}. */
+export interface SelectableCardItem<T extends string> {
+    /** Value selected when this card is chosen. */
+    value: T
+    /** Primary label (text / icon + text). */
+    label: ReactNode
+    /** Optional secondary line under the label. */
+    description?: ReactNode
+    /** Optional leading icon (rendered decorative). */
+    icon?: ReactNode
+    /** When true the card is dimmed and not selectable. */
+    isDisabled?: boolean
+    /** Optional trailing node (e.g. a "coming soon" tag) shown on the right. */
+    badge?: ReactNode
+}
+
+/** Props for the {@link SelectableCardGroup} block. */
+export interface SelectableCardGroupProps<T extends string> {
+    /** The selectable cards (2+). */
+    items: Array<SelectableCardItem<T>>
+    /** Currently selected value. */
+    value: T
+    /** Fired with the chosen value when a card is selected. */
+    onChange: (value: T) => void
+    /** Accessible label for the group. */
+    ariaLabel: string
+    /** Grid column count. Defaults to `2`. */
+    columns?: 1 | 2 | 3
+    /** Extra classes on the grid. */
+    className?: string
+}
+
+/** Tailwind grid-template class per supported column count. */
+const COLUMNS_CLASS: Record<1 | 2 | 3, string> = {
+    1: "grid-cols-1",
+    2: "grid-cols-2",
+    3: "grid-cols-3",
+}
+
+/**
+ * A single-select group of surface cards: each option is a canonical HeroUI `Card`;
+ * choosing one draws an accent OUTLINE ring around it (never a fill / colour change,
+ * so the card stays neutral `bg-surface`). Built on HeroUI `RadioGroup`/`Radio`
+ * (React Aria) so it is a real radio group — arrow-key roving, single-select
+ * semantics, focus ring — not a hand-rolled toggle-button grid.
+ *
+ * Selection/focus use `outline` (its own CSS property) rather than a Tailwind
+ * `ring-*` — the `.card` base bakes an unlayered `shadow-surface` box-shadow that
+ * would swallow a box-shadow ring, but never touches `outline`. That same shadow is
+ * dropped (`!shadow-none`) while the ring is up so the two don't stack.
+ *
+ * @param props - {@link SelectableCardGroupProps}
+ */
+export const SelectableCardGroup = <T extends string>({
+    items,
+    value,
+    onChange,
+    ariaLabel,
+    columns = 2,
+    className,
+}: SelectableCardGroupProps<T>) => (
+        <RadioGroup
+            aria-label={ariaLabel}
+            value={value}
+            onChange={(next) => onChange(next as T)}
+            className={cn("grid gap-2", COLUMNS_CLASS[columns], className)}
+        >
+            {items.map((item) => (
+                <Radio key={item.value} value={item.value} isDisabled={item.isDisabled} className="w-full">
+                    <Radio.Content className="block w-full">
+                        {({ isSelected, isDisabled, isFocusVisible }) => (
+                            <Card
+                                variant="default"
+                                className={cn(
+                                    "w-full text-sm text-foreground transition-colors",
+                                    // selection & keyboard focus = an accent OUTLINE ring, NO
+                                    // fill / colour change. Drop the card's `shadow-surface`
+                                    // while the ring is up so the two elevations don't stack.
+                                    (isSelected || isFocusVisible) &&
+                                        "outline outline-2 outline-accent outline-offset-0 !shadow-none",
+                                    !isSelected && !isDisabled && "hover:bg-default",
+                                    isDisabled && "opacity-60",
+                                )}
+                            >
+                                <div className="flex w-full items-center gap-2">
+                                    {item.icon ? (
+                                        <span className="shrink-0" aria-hidden>
+                                            {item.icon}
+                                        </span>
+                                    ) : null}
+                                    <span className="flex min-w-0 flex-col">
+                                        <span className="truncate">{item.label}</span>
+                                        {item.description ? (
+                                            <span className="truncate text-xs text-muted">{item.description}</span>
+                                        ) : null}
+                                    </span>
+                                    {item.badge ? <span className="ml-auto shrink-0">{item.badge}</span> : null}
+                                </div>
+                            </Card>
+                        )}
+                    </Radio.Content>
+                </Radio>
+            ))}
+        </RadioGroup>
+    )

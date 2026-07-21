@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Storybook target — story sạch + Overview (Carbon-style)</title>
+<style>
+  :root{
+    --bg:#f6f6f6; --panel:#fff; --ink:#1b1b1f; --muted:#6b6b74; --faint:#9a9aa2;
+    --line:#e6e6ea; --line2:#efeff2; --accent:#e0398a; --accent-soft:#fdeef6; --accent-line:#f5c8de;
+    --sidebar:#fafafa; --sel:#eef2ff; --sel-ink:#2f43d0; --code-bg:#f4f4f7;
+    --ok:#0f9d6b; --warn:#b26a06; --info:#2563eb;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace; --sans:"Segoe UI",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --bg:#0f0f12;--panel:#17171b;--ink:#f0f0f4;--muted:#a0a0aa;--faint:#6a6a74;--line:#28282f;--line2:#202027;
+    --accent:#f472b6;--accent-soft:#2c1420;--accent-line:#552038;--sidebar:#131317;--sel:#1a1f3a;--sel-ink:#aab6ff;--code-bg:#1d1d23;
+  }}
+  :root[data-theme=light]{--bg:#f6f6f6;--panel:#fff;--ink:#1b1b1f;--muted:#6b6b74;--faint:#9a9aa2;--line:#e6e6ea;--line2:#efeff2;--sidebar:#fafafa;--sel:#eef2ff;--sel-ink:#2f43d0;--code-bg:#f4f4f7;}
+  :root[data-theme=dark]{--bg:#0f0f12;--panel:#17171b;--ink:#f0f0f4;--muted:#a0a0aa;--faint:#6a6a74;--line:#28282f;--line2:#202027;--sidebar:#131317;--sel:#1a1f3a;--sel-ink:#aab6ff;--code-bg:#1d1d23;}
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;font-family:var(--sans);font-size:13.5px;color:var(--ink);background:var(--bg);display:flex;flex-direction:column;overflow:hidden}
+  button{font:inherit;cursor:pointer}
+  code,.mono{font-family:var(--mono)}
+
+  /* top bar */
+  .top{flex:0 0 auto;height:44px;display:flex;align-items:center;gap:10px;padding:0 12px;background:var(--panel);border-bottom:1px solid var(--line)}
+  .sb-logo{display:flex;align-items:center;gap:7px;font-weight:700}
+  .sb-logo .m{width:22px;height:22px;border-radius:5px;background:#ff4785;color:#fff;display:grid;place-items:center;font-size:13px}
+  .top .note{font-size:12px;color:var(--muted);border-left:1px solid var(--line);padding-left:10px}
+  .spacer{flex:1}
+  .tbtn{border:1px solid var(--line);background:var(--panel);border-radius:7px;padding:5px 10px;font-size:12px;color:var(--ink)}
+  .tbtn:hover{background:var(--bg)}
+
+  .shell{flex:1;min-height:0;display:grid;grid-template-columns:250px 1fr}
+  @media (max-width:820px){.shell{grid-template-columns:1fr}.side{display:none}}
+
+  /* sidebar */
+  .side{background:var(--sidebar);border-right:1px solid var(--line);overflow-y:auto;padding:8px}
+  .search{display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:8px;padding:6px 9px;margin:4px 4px 10px;color:var(--faint);font-size:12.5px}
+  .tier{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin:12px 8px 4px;font-weight:600}
+  .cat{font-size:12px;color:var(--muted);padding:5px 8px;display:flex;align-items:center;gap:6px;font-weight:600}
+  .cat .fi{opacity:.6}
+  .comp{margin:0 0 1px}
+  .comp>.row{display:flex;align-items:center;gap:7px;padding:5px 8px 5px 20px;border-radius:6px;color:var(--ink);width:100%;border:0;background:transparent;text-align:left;font-size:13px}
+  .comp>.row:hover{background:var(--line2)}
+  .comp>.row .ci{font-size:12px;color:var(--faint)}
+  .leaf{display:flex;align-items:center;gap:7px;padding:4px 8px 4px 40px;border-radius:6px;color:var(--muted);width:100%;border:0;background:transparent;text-align:left;font-size:12.5px}
+  .leaf:hover{background:var(--line2);color:var(--ink)}
+  .leaf.on{background:var(--sel);color:var(--sel-ink);font-weight:600}
+  .leaf .li{font-size:11px;opacity:.7}
+  .leaf.doc .li{color:var(--accent)}
+
+  /* main */
+  .main{min-width:0;display:flex;flex-direction:column;background:var(--panel)}
+  .canvas-toolbar{flex:0 0 auto;height:38px;display:flex;align-items:center;gap:6px;padding:0 12px;border-bottom:1px solid var(--line);background:var(--panel)}
+  .canvas-toolbar .cb{border:1px solid transparent;background:transparent;border-radius:6px;padding:4px 8px;font-size:12px;color:var(--muted)}
+  .canvas-toolbar .cb.on{background:var(--bg);color:var(--ink);border-color:var(--line)}
+  .canvas-toolbar .crumb{font-size:12px;color:var(--muted)}
+  .canvas-toolbar .crumb b{color:var(--ink)}
+
+  .view{flex:1;min-height:0;overflow-y:auto}
+
+  /* STORY view — clean render + controls */
+  .storywrap{display:flex;flex-direction:column;height:100%}
+  .stage{flex:1;min-height:0;display:grid;place-items:center;padding:40px;background:var(--panel)}
+  .controls{flex:0 0 auto;border-top:1px solid var(--line);max-height:42%;overflow:auto}
+  .ctabs{display:flex;gap:2px;padding:6px 12px;border-bottom:1px solid var(--line2);position:sticky;top:0;background:var(--panel)}
+  .ctab{font-size:12px;color:var(--muted);padding:4px 9px;border-radius:6px;border:0;background:transparent}
+  .ctab.on{color:var(--ink);border-bottom:2px solid var(--accent);border-radius:0}
+  table.props{width:100%;border-collapse:collapse;font-size:12.5px}
+  table.props th{text-align:left;font-weight:600;color:var(--muted);padding:8px 12px;border-bottom:1px solid var(--line2);font-size:11px;letter-spacing:.03em;text-transform:uppercase}
+  table.props td{padding:9px 12px;border-bottom:1px solid var(--line2);vertical-align:top}
+  table.props td .nm{font-family:var(--mono);color:var(--ink)}
+  table.props td .req{color:var(--accent);font-weight:700}
+  table.props td .desc{color:var(--muted);max-width:46ch}
+  table.props td .ty{font-family:var(--mono);font-size:11.5px;background:var(--code-bg);border-radius:5px;padding:1px 6px;color:var(--info)}
+  .ctrl{border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:12px;background:var(--panel);color:var(--ink)}
+
+  /* OVERVIEW (Docs / Carbon-style) */
+  .doc{max-width:900px;margin:0 auto;padding:34px 40px 80px}
+  .doc h1{font-size:30px;margin:0 0 10px;letter-spacing:-.02em}
+  .doc .links{display:flex;gap:16px;font-size:13px;margin-bottom:22px}
+  .doc .links a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent}
+  .doc .links a:hover{border-color:var(--accent)}
+  .doc h2{font-size:19px;margin:30px 0 10px;padding-top:10px;letter-spacing:-.01em}
+  .doc h3{font-size:14px;margin:20px 0 8px;color:var(--muted)}
+  .doc p{color:var(--ink);line-height:1.6;margin:0 0 12px;max-width:70ch}
+  .doc p.mut{color:var(--muted)}
+  .toc{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin:0 0 8px}
+  .toc .tt{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--faint);margin-bottom:8px}
+  .toc ul{margin:0;padding-left:18px}
+  .toc li{margin:3px 0;font-size:13px}
+  .toc a{color:var(--accent);text-decoration:none}
+  /* a rendered state block in overview */
+  .state{border:1px solid var(--line);border-radius:10px;margin:0 0 16px;overflow:hidden}
+  .state .sh{display:flex;align-items:center;justify-content:space-between;padding:8px 13px;background:var(--bg);border-bottom:1px solid var(--line);font-size:12.5px}
+  .state .sh .nm{font-weight:600}
+  .state .sh .open{font-size:11.5px;color:var(--accent)}
+  .state .sbody{padding:26px;display:grid;place-items:center;background:var(--panel)}
+
+  /* ==== the DEMO component: SurfaceListCard (mock render) ==== */
+  .slc{width:340px;background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 22px -16px rgba(0,0,0,.2)}
+  .slc .r{display:flex;align-items:center;gap:11px;padding:13px 15px;border-bottom:1px solid var(--line2)}
+  .slc .r:last-child{border-bottom:0}
+  .slc .r:hover{background:var(--bg)}
+  .slc .ic{width:20px;text-align:center;color:var(--muted);flex:0 0 auto}
+  .slc .r .t{flex:1;min-width:0;font-size:14px}
+  .slc .r .t small{display:block;color:var(--muted);font-size:12px}
+  .slc .r.sel{background:var(--accent-soft)}
+  .slc .r .chev{color:var(--faint)}
+  .slc-empty{width:340px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:40px 20px;text-align:center;color:var(--muted)}
+  .slc-empty .e{font-size:28px;opacity:.4;margin-bottom:8px}
+  .sk{height:14px;border-radius:6px;background:linear-gradient(90deg,var(--line2),var(--line),var(--line2));background-size:200% 100%;animation:sh 1.3s infinite}
+  @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+  @media (prefers-reduced-motion:reduce){.sk{animation:none}}
+  .badge{font-size:10.5px;padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-line);font-weight:600}
+
+  .callout{margin:14px 0 0;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:9px;padding:10px 13px;font-size:12.5px;color:var(--ink)}
+  .callout b{color:var(--accent)}
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="sb-logo"><span class="m">S</span> Storybook</div>
+    <span class="note">Prototype MỤC TIÊU — story sạch (không Usage/prose) + trang Overview per-component</span>
+    <span class="spacer"></span>
+    <button class="tbtn" id="theme">◑ Sáng/Tối</button>
+  </div>
+
+  <div class="shell">
+    <aside class="side" id="side"></aside>
+    <main class="main">
+      <div class="canvas-toolbar">
+        <span class="crumb" id="crumb"></span>
+      </div>
+      <div class="view" id="view"></div>
+    </main>
+  </div>
+
+<script>
+/* ---- taxonomy tree (Core/Block per canon) — mỗi component có Overview (doc) + stories sạch ---- */
+const TREE = [
+  { tier:"Core", cats:[
+    { name:"Card", comps:[
+      { name:"SurfaceListCard", stories:["Default","Loading","Empty","Selected"] },
+      { name:"LabeledCard", stories:["Default","WithAction"] },
+      { name:"SectionCard", stories:["Default"] },
+    ]},
+    { name:"Chip", comps:[
+      { name:"EnumChip", stories:["AllTones"] },
+      { name:"StatusChip", stories:["AllStatuses"] },
+    ]},
+    { name:"Async", comps:[ { name:"AsyncContent", stories:["Branches"] } ]},
+    { name:"Feedback", comps:[ { name:"EmptyState", stories:["Default"] }, { name:"Callout", stories:["AllTones"] } ]},
+    { name:"Rendering", comps:[ { name:"MarkdownContent", stories:["Default"] } ]},
+  ]},
+  { tier:"Block", cats:[
+    { name:"Learn", comps:[
+      { name:"LabeledSurfaceListCard ✦mới", stories:["Default","Loading","Empty"] },
+      { name:"ContinueCard", stories:["Default","NearComplete"] },
+    ]},
+  ]},
+];
+
+/* demo render for SurfaceListCard states (mock) */
+const ROWS = [
+  ["📄","REST semantics: HTTP verb và status code","20 phút đọc"],
+  ["📄","Input contract: DTO và validation ở boundary","20 phút đọc"],
+  ["📄","Output contract: envelope và chuẩn hoá exception","20 phút đọc"],
+];
+function slc(state){
+  if(state==="Empty") return `<div class="slc-empty"><div class="e">🗂</div>Chưa có mục nào<br><small>Hoàn thành một bài để thấy ở đây.</small></div>`;
+  if(state==="Loading") return `<div class="slc">${[0,1,2].map(()=>`<div class="r"><span class="ic">▫</span><span class="t"><div class="sk" style="width:80%"></div><div class="sk" style="width:40%;height:10px;margin-top:6px"></div></span></div>`).join("")}</div>`;
+  return `<div class="slc">${ROWS.map((r,i)=>`<div class="r ${state==="Selected"&&i===1?"sel":""}"><span class="ic">${r[0]}</span><span class="t">${r[1]}<small>${r[2]}</small></span><span class="chev">›</span></div>`).join("")}</div>`;
+}
+function renderDemo(comp, story){
+  // only SurfaceListCard is a live mock; others show a labeled placeholder
+  if(comp.startsWith("SurfaceListCard")) return slc(story);
+  if(comp.startsWith("LabeledSurfaceListCard")){
+    const inner = story==="Empty"?slc("Empty"):story==="Loading"?slc("Loading"):slc("Default");
+    return `<div style="display:flex;flex-direction:column;gap:8px;width:340px"><div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:12px;color:var(--muted);font-weight:600">Đi tiếp lộ trình · REST API</span><span style="font-size:11.5px;color:var(--accent)">Xem tất cả</span></div>${inner}</div>`;
+  }
+  return `<div style="padding:30px;border:1px dashed var(--line);border-radius:12px;color:var(--muted);font-size:13px">‹ render sạch của <b style="color:var(--ink)">${comp}</b> — biến thể <b style="color:var(--ink)">${story}</b> ›<div style="font-size:11.5px;margin-top:6px;color:var(--faint)">(prototype: chỉ SurfaceListCard mock sống)</div></div>`;
+}
+
+/* props table (Component API) — SurfaceListCard example */
+const API = [
+  ["items","T[]",true,"Mảng dữ liệu render mỗi hàng. Rỗng + không isLoading → dùng emptyContent."],
+  ["renderItem","(item) => ReactNode",true,"Render 1 hàng. Component KHÔNG tự quyết layout hàng."],
+  ["isLoading","boolean",false,"Lần tải đầu → hiện skeleton thay list."],
+  ["emptyContent","EmptyContentProps",false,"Hiện khi rỗng. Bỏ qua → section tự ẩn (null)."],
+  ["onSelect","(item) => void",false,"Bấm hàng. Có → hàng thành pressable + hover."],
+  ["className","string",false,"WithClassNames — merge vào surface ngoài cùng."],
+];
+
+let active = { comp:"SurfaceListCard", story:"__overview__", cat:"Card", tier:"Core" };
+
+/* ---- build sidebar ---- */
+function buildSide(){
+  const el=document.getElementById("side");
+  let h=`<div class="search">🔎 Find components  <span style="margin-left:auto;opacity:.6">⌘K</span></div>`;
+  TREE.forEach(t=>{
+    h+=`<div class="tier">${t.tier}</div>`;
+    t.cats.forEach(c=>{
+      h+=`<div class="cat"><span class="fi">📁</span>${c.name}</div>`;
+      c.comps.forEach(cp=>{
+        h+=`<div class="comp"><div class="row"><span class="ci">▤</span>${cp.name}</div>`;
+        h+=`<button class="leaf doc" data-comp="${cp.name}" data-cat="${c.name}" data-tier="${t.tier}" data-story="__overview__"><span class="li">📄</span>Overview</button>`;
+        cp.stories.forEach(s=>{
+          h+=`<button class="leaf" data-comp="${cp.name}" data-cat="${c.name}" data-tier="${t.tier}" data-story="${s}"><span class="li">🔖</span>${s}</button>`;
+        });
+        h+=`</div>`;
+      });
+    });
+  });
+  el.innerHTML=h;
+  el.querySelectorAll(".leaf").forEach(b=>b.onclick=()=>{
+    active={comp:b.dataset.comp,story:b.dataset.story,cat:b.dataset.cat,tier:b.dataset.tier}; render();
+  });
+}
+
+/* ---- render main ---- */
+function render(){
+  document.querySelectorAll(".leaf").forEach(b=>b.classList.toggle("on", b.dataset.comp===active.comp && b.dataset.story===active.story));
+  const isDoc = active.story==="__overview__";
+  document.getElementById("crumb").innerHTML = `${active.tier} / ${active.cat} / <b>${active.comp}</b>${isDoc?" / Overview":" / "+active.story}`;
+  const view=document.getElementById("view");
+  view.innerHTML = isDoc ? overviewHTML() : storyHTML();
+  if(!isDoc) wireControls();
+}
+
+/* STORY = clean render + Controls (KHÔNG usage/prose) */
+function storyHTML(){
+  return `<div class="storywrap">
+    <div class="stage">${renderDemo(active.comp, active.story)}</div>
+    <div class="controls">
+      <div class="ctabs"><button class="ctab on">Controls <span style="color:var(--faint)">6</span></button><button class="ctab">Actions</button><button class="ctab">Accessibility</button><button class="ctab">Code</button></div>
+      ${propsTable(true)}
+    </div>
+  </div>`;
+}
+
+/* OVERVIEW = Carbon-style doc: title + links + ToC + states gallery + Component API */
+function overviewHTML(){
+  const comp=active.comp, stories = TREE.flatMap(t=>t.cats).flatMap(c=>c.comps).find(x=>x.name===comp)?.stories||["Default"];
+  const states = stories.map(s=>`
+    <div class="state">
+      <div class="sh"><span class="nm">${s}</span><a class="open" href="#" onclick="active={comp:'${comp}',story:'${s}',cat:'${active.cat}',tier:'${active.tier}'};render();return false">Mở story →</a></div>
+      <div class="sbody">${renderDemo(comp,s)}</div>
+    </div>`).join("");
+  return `<div class="doc">
+    <h1>${comp}</h1>
+    <div class="links"><a>Source code</a> · <a>Usage guidelines</a> · <a>Accessibility</a></div>
+    <div class="toc">
+      <div class="tt">Table of contents</div>
+      <ul>
+        <li><a href="#ov">Overview</a></li>
+        ${stories.map(s=>`<li><a href="#">${s}</a></li>`).join("")}
+        <li><a href="#api">Component API</a></li>
+      </ul>
+    </div>
+    <h2 id="ov">Overview</h2>
+    <p>${comp.startsWith("SurfaceListCard")
+      ? "Surface list-card cơ bản: một khối surface bo góc chứa các hàng phân cách. Component KHÔNG tự quyết nội dung hàng — caller truyền <code>renderItem</code>. Nó lo: khung surface, phân cách, state loading/empty, hành vi pressable khi có <code>onSelect</code>."
+      : "Mô tả ngắn về "+comp+" — nó lo gì, không lo gì (render sạch, đủ state)."}</p>
+    <p class="mut">Overview này Storybook <b>tự sinh</b> qua <code>tags: ['autodocs']</code> — description lấy từ JSDoc component, Component API lấy từ type TS, gallery = chính các story bên dưới. Không viết MDX tay.</p>
+    <h2>Stories &amp; states</h2>
+    ${states}
+    <h2 id="api">Component API</h2>
+    ${propsTable(false)}
+    <div class="callout"><b>Chốt convention:</b> mỗi story chỉ render component + state, KHÔNG Usage-callout, KHÔNG prose/hint. Overview (autodocs) mới là nơi có mô tả + API + ToC.</div>
+  </div>`;
+}
+
+function propsTable(withControl){
+  return `<table class="props"><thead><tr><th>Name</th><th>Description</th><th>Type</th>${withControl?"<th>Control</th>":""}</tr></thead><tbody>${
+    API.map(p=>`<tr>
+      <td><span class="nm">${p[0]}</span>${p[2]?'<span class="req"> *</span>':''}</td>
+      <td><span class="desc">${p[3]}</span></td>
+      <td><span class="ty">${p[1]}</span></td>
+      ${withControl?`<td>${p[1]==="boolean"?'<input type="checkbox">':'<input class="ctrl" placeholder="set '+p[0]+'">'}</td>`:""}
+    </tr>`).join("")
+  }</tbody></table>`;
+}
+function wireControls(){
+  document.querySelectorAll(".ctab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".ctab").forEach(x=>x.classList.remove("on"));t.classList.add("on")});
+}
+
+document.getElementById("theme").onclick=()=>{const r=document.documentElement;const c=r.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");r.setAttribute("data-theme",c==="dark"?"light":"dark")};
+
+buildSide(); render();
+</script>
+</body>
+</html>

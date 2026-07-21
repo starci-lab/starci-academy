@@ -1,55 +1,61 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { EntityLink } from "@/components/blocks/feed/EntityLink"
-import { Gallery, Variant } from "../../../../story-kit"
+import React from "react"
+import { EntityLink } from "./EntityLink"
+import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof EntityLink> = {
-    title: "Blocks/Feed/EntityLink",
+    title: "Block/Feed/EntityLink",
     component: EntityLink,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
+
 export default meta
+
 type Story = StoryObj<typeof EntityLink>
 
-/**
- * Every state an inline entity reference can be in inside a feed sentence:
- * resolvable (bold + clickable), unresolvable (bold plain text, never a dead
- * link), and resolving (clickable but disabled while the feature navigates).
- */
-export const AllVariants: Story = {
-    parameters: {
-        usage: "Dùng EntityLink cho mỗi mốc thực thể (người, bài học, thử thách, khóa học) trong câu activity của feed — feature truyền onPress đã resolve route sẵn, block chỉ lo phần chữ đậm + gạch chân khi hover.",
-    },
-    render: () => (
-        <Gallery>
-            <Variant
-                label="Có thể bấm"
-                hint="Có onPress — feature đã resolve được route đích, ví dụ mở trang cá nhân hoặc trang bài học."
-            >
-                <span>
-                    <EntityLink label="quochuy_backend" onPress={() => {}} />
-                    {" "}đã hoàn thành thử thách{" "}
-                    <EntityLink label="Xử lý luồng bất đồng bộ" onPress={() => {}} />
-                </span>
-            </Variant>
-            <Variant
-                label="Không thể bấm"
-                hint="Bỏ onPress khi feature không resolve được route (thực thể đã bị xoá) — render chữ đậm bình thường, không phải link chết."
-            >
-                <span>
-                    <EntityLink label="minhanh_dev" onPress={() => {}} />
-                    {" "}đã theo dõi{" "}
-                    <EntityLink label="học viên đã xoá tài khoản" />
-                </span>
-            </Variant>
-            <Variant
-                label="Đang resolve/điều hướng"
-                hint="isPending=true trong lúc feature đang resolve route hoặc đang điều hướng — vẫn là link nhưng disable, tránh bấm lại chồng lệnh."
-            >
-                <span>
-                    <EntityLink label="thuha_ux" onPress={() => {}} isPending />
-                    {" "}đã đạt mốc{" "}
-                    <EntityLink label="Thiết kế hệ thống cho ứng dụng doanh nghiệp" onPress={() => {}} isPending />
-                </span>
-            </Variant>
-        </Gallery>
-    ),
+const ANATOMY = {
+    primitives: [
+        { name: "Link", role: "phần chữ đậm bấm được (HeroUI Link)" },
+    ],
+    reason:
+        "Mỗi mốc thực thể (người, bài học, thử thách, khóa học) trong câu activity của feed cần một cách hiển thị nhất quán: chữ đậm + gạch chân khi hover nếu resolve được route, chữ đậm thường nếu không — không bao giờ là link chết. Đây gần như một PRIMITIVE một-phần-tử (xem FLAGS).",
+}
+
+export const Clickable: Story = {
+    render: () =>
+        blockShell(
+            <span>
+                <EntityLink label="quochuy_backend" onPress={() => {}} />
+                {" "}đã hoàn thành thử thách{" "}
+                <EntityLink label="Xử lý luồng bất đồng bộ" onPress={() => {}} />
+            </span>,
+            ANATOMY,
+        ),
+}
+
+export const NotClickable: Story = {
+    render: () =>
+        blockShell(
+            <span>
+                <EntityLink label="minhanh_dev" onPress={() => {}} />
+                {" "}đã theo dõi{" "}
+                <EntityLink label="học viên đã xoá tài khoản" />
+            </span>,
+            ANATOMY,
+        ),
+}
+
+export const Pending: Story = {
+    render: () =>
+        blockShell(
+            <span>
+                <EntityLink label="thuha_ux" onPress={() => {}} isPending />
+                {" "}đã đạt mốc{" "}
+                <EntityLink label="Thiết kế hệ thống cho ứng dụng doanh nghiệp" onPress={() => {}} isPending />
+            </span>,
+            ANATOMY,
+        ),
 }

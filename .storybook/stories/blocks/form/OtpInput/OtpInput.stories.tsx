@@ -1,52 +1,76 @@
+import { useState } from "react"
+import type { ReactNode } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { OtpInput } from "@/components/blocks/form/OtpInput"
-import { Gallery, Variant } from "../../../../story-kit"
-import { Controlled } from "./components"
+import { OtpInput } from "./OtpInput"
 
-/**
- * `OtpInput` — a one-time-code input (2FA / email verification) built on HeroUI
- * `InputOTP`. Controlled: `value` + `onChange` held by the call-site; the block just
- * renders `length` boxes (default 6), a label above and an error line below when
- * `isInvalid`. Tier-3, purely presentational — no store, no fetch.
- */
 const meta: Meta<typeof OtpInput> = {
     title: "Primitives/Form/OtpInput",
     component: OtpInput,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
+
 export default meta
+
 type Story = StoryObj<typeof OtpInput>
 
-/**
- * Toàn bộ trạng thái của OtpInput: mặc định (đang gõ mã, chưa lỗi) và trạng thái
- * lỗi xác thực (viền đỏ + dòng lỗi bên dưới). Dùng để tra khi nào cần kèm Label
- * mô tả nguồn mã và cách viết error message.
- */
-export const AllVariants: Story = {
+/** Local controlled wrapper — holds `value` so the boxes are typeable on the canvas. */
+const Controlled = ({
+    initialValue = "",
+    length = 6,
+    isInvalid,
+    errorMessage,
+    label,
+}: {
+    initialValue?: string
+    length?: number
+    isInvalid?: boolean
+    errorMessage?: ReactNode
+    label?: ReactNode
+}) => {
+    const [value, setValue] = useState(initialValue)
+    return (
+        <OtpInput
+            length={length}
+            value={value}
+            onChange={setValue}
+            isInvalid={isInvalid}
+            errorMessage={errorMessage}
+            label={label}
+        />
+    )
+}
+
+/** Default: code just sent, user typing digit-by-digit — no error yet. */
+export const Default: Story = {
     render: () => (
-        <Gallery>
-            <Variant
-                label="Mặc định"
-                hint="Mã vừa được gửi tới email, người dùng gõ từng số vào các ô — chưa có lỗi."
-            >
-                <Controlled label="Mã xác minh" initialValue="12" />
-            </Variant>
-            <Variant
-                label="Lỗi xác thực"
-                hint="Mã đã nhập không khớp — viền đỏ và dòng thông báo lỗi hiện ngay dưới các ô, nói rõ cách sửa chứ không chỉ báo sai."
-            >
-                <Controlled
-                    label="Mã xác minh"
-                    initialValue="482913"
-                    isInvalid
-                    errorMessage="Mã không đúng — kiểm tra email và nhập lại mã mới nhất."
-                />
-            </Variant>
-        </Gallery>
+        <div className="p-8">
+            <Controlled label="Mã xác minh" initialValue="12" />
+        </div>
     ),
-    parameters: {
-        usage:
-            "Toàn bộ trạng thái của OtpInput: mặc định (đang gõ mã, chưa lỗi) và trạng thái lỗi xác thực " +
-            "(viền đỏ + dòng lỗi bên dưới). Ghép với Label mô tả nguồn mã (\"Mã xác minh\") và error message " +
-            "nói cách sửa (\"nhập lại mã từ email\"), không chỉ báo \"sai\".",
-    },
+}
+
+/** Invalid: the entered code did not match — error border + a fix-it error line below. */
+export const Invalid: Story = {
+    render: () => (
+        <div className="p-8">
+            <Controlled
+                label="Mã xác minh"
+                initialValue="482913"
+                isInvalid
+                errorMessage="Mã không đúng — kiểm tra email và nhập lại mã mới nhất."
+            />
+        </div>
+    ),
+}
+
+/** Bare field: no label above the slots. */
+export const NoLabel: Story = {
+    render: () => (
+        <div className="p-8">
+            <Controlled initialValue="12" />
+        </div>
+    ),
 }

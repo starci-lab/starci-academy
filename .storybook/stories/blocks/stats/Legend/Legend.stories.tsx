@@ -1,70 +1,110 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Legend } from "@/components/blocks/stats/Legend"
-import { Gallery, Variant } from "../../../../story-kit"
+import { Legend } from "./Legend"
 
 const meta: Meta<typeof Legend> = {
-    title: "Blocks/Stats/Legend",
+    title: "Primitives/Stats/Legend",
     component: Legend,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
+
 export default meta
+
 type Story = StoryObj<typeof Legend>
 
-/**
- * Toàn bộ ma trận trạng thái của Legend: vài mục cơ bản, nhiều mục cần wrap khi
- * block hẹp, và label dài để xác nhận chấm màu không co lại theo text. Dùng để
- * tra khi nào legend cần bọc trong khối hẹp và khi nào chấm màu phải giữ kích
- * thước cố định.
- */
-export const AllVariants: Story = {
+export const Basic: Story = {
     render: () => (
-        <Gallery>
-            <Variant
-                label="Legend cơ bản"
-                hint="Dùng khi cần chú giải một vài mức độ cạnh một dải màu phân đoạn — chấm màu + nhãn nằm gọn trên một hàng."
-            >
+        <div className="p-8">
+            <Legend
+                items={[
+                    { key: "easy", label: "Easy", color: "var(--success)" },
+                    { key: "medium", label: "Medium", color: "var(--warning)" },
+                    { key: "hard", label: "Hard", color: "var(--danger)" },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** Many items in a narrow block wrap to a new line instead of overflowing. */
+export const WrapMany: Story = {
+    render: () => (
+        <div className="p-8">
+            <div className="max-w-[220px]">
                 <Legend
                     items={[
-                        { key: "easy", label: "Easy", color: "var(--success)" },
-                        { key: "medium", label: "Medium", color: "var(--warning)" },
-                        { key: "hard", label: "Hard", color: "var(--danger)" },
+                        { key: "javascript", label: "JavaScript", color: "var(--warning)" },
+                        { key: "typescript", label: "TypeScript", color: "var(--accent)" },
+                        { key: "python", label: "Python", color: "var(--success)" },
+                        { key: "go", label: "Go", color: "var(--heat-3)" },
+                        { key: "java", label: "Java", color: "var(--danger)" },
                     ]}
                 />
-            </Variant>
-            <Variant
-                label="Nhiều mục (tràn xuống dòng)"
-                hint="Khi legend cần hiện nhiều nhóm cùng lúc trong một block hẹp, các mục tự xuống dòng mới thay vì tràn ra ngoài block."
-            >
-                <div className="max-w-[220px]">
-                    <Legend
-                        items={[
-                            { key: "javascript", label: "JavaScript", color: "var(--warning)" },
-                            { key: "typescript", label: "TypeScript", color: "var(--accent)" },
-                            { key: "python", label: "Python", color: "var(--success)" },
-                            { key: "go", label: "Go", color: "var(--heat-3)" },
-                            { key: "java", label: "Java", color: "var(--danger)" },
-                        ]}
-                    />
-                </div>
-            </Variant>
-            <Variant
-                label="Nhãn dài"
-                hint="Khi nhãn dài hơn bình thường, chấm màu vẫn giữ kích thước cố định, không co lại theo chiều dài của text."
-            >
-                <div className="max-w-[260px]">
-                    <Legend
-                        items={[
-                            { key: "senior", label: "Senior/Staff — architecture-level system design questions", color: "var(--accent)" },
-                            { key: "junior", label: "Junior — fundamental basics questions", color: "var(--success)" },
-                        ]}
-                    />
-                </div>
-            </Variant>
-        </Gallery>
+            </div>
+        </div>
     ),
-    parameters: {
-        usage:
-            "Toàn bộ ma trận trạng thái của Legend: vài mục cơ bản, nhiều mục cần wrap khi block hẹp, " +
-            "và nhãn dài để xác nhận chấm màu không co lại theo text. Dùng khi cần tra kích thước block " +
-            "phù hợp cho legend và xác nhận hành vi wrap/giữ chấm màu cố định.",
-    },
+}
+
+/** Each entry carries a trailing `suffix` (a `· count` here) printed in the same muted line. */
+export const WithSuffix: Story = {
+    render: () => (
+        <div className="p-8">
+            <Legend
+                items={[
+                    { key: "content", label: "Content", color: "var(--accent)", suffix: <>&nbsp;·&nbsp;12</> },
+                    { key: "challenge", label: "Challenge", color: "var(--success)", suffix: <>&nbsp;·&nbsp;8</> },
+                    { key: "milestone", label: "Milestone", color: "var(--warning)", suffix: <>&nbsp;·&nbsp;3</> },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** `direction="col"` stacks entries vertically instead of wrapping in a row. */
+export const Vertical: Story = {
+    render: () => (
+        <div className="p-8">
+            <Legend
+                direction="col"
+                items={[
+                    { key: "easy", label: "Easy", color: "var(--success)", suffix: <>&nbsp;·&nbsp;24</> },
+                    { key: "medium", label: "Medium", color: "var(--warning)", suffix: <>&nbsp;·&nbsp;11</> },
+                    { key: "hard", label: "Hard", color: "var(--danger)", suffix: <>&nbsp;·&nbsp;5</> },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** `color` also accepts a Tailwind `bg-*` utility class (not only a raw value). */
+export const TailwindClassColors: Story = {
+    render: () => (
+        <div className="p-8">
+            <Legend
+                items={[
+                    { key: "accent", label: "Accent", color: "bg-accent" },
+                    { key: "success", label: "Success", color: "bg-success" },
+                    { key: "danger", label: "Danger", color: "bg-danger" },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** Long labels — the colour dot keeps its fixed size, never shrinking with the text. */
+export const LongLabels: Story = {
+    render: () => (
+        <div className="p-8">
+            <div className="max-w-[260px]">
+                <Legend
+                    items={[
+                        { key: "senior", label: "Senior/Staff — architecture-level system design questions", color: "var(--accent)" },
+                        { key: "junior", label: "Junior — fundamental basics questions", color: "var(--success)" },
+                    ]}
+                />
+            </div>
+        </div>
+    ),
 }

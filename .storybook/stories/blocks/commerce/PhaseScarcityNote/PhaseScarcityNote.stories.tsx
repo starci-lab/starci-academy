@@ -1,78 +1,84 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { PhaseScarcityNote } from "@/components/blocks/commerce/PhaseScarcityNote"
-import { PricingPhase } from "@/modules/types/enums/pricing-phase"
-import { Gallery, Variant } from "../../../../story-kit"
+import { PhaseScarcityNote, PricingPhase } from "./PhaseScarcityNote"
+import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof PhaseScarcityNote> = {
-    title: "Blocks/Commerce/PhaseScarcityNote",
+    title: "Block/Commerce/PhaseScarcityNote",
     component: PhaseScarcityNote,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
 
 export default meta
 
 type Story = StoryObj<typeof PhaseScarcityNote>
 
-/**
- * Toàn bộ trạng thái của dòng cảnh báo khan-hiếm-suất theo phase giá: rỗng (không
- * có seat cap → không render gì), còn nhiều suất, còn ít suất (số nhỏ để tạo cảm
- * giác cấp bách thật, không giả), có/không có giá phase kế tiếp, và đủ 3 phase giá.
- */
-export const AllVariants: Story = {
-    parameters: {
-        usage: "Dựng cạnh nhau mọi trạng thái thật của PhaseScarcityNote để soi bố cục và câu chữ trước khi ghép vào paywall — không phải nơi kiểm tra logic render.",
-    },
-    render: () => (
-        <Gallery>
-            <Variant
-                label="Không có seat cap (unlimited)"
-                hint="seatsRemaining = null → phase này không có trigger khan hiếm thật, block render null, không có gì hiển thị."
-            >
-                <PhaseScarcityNote
-                    currentPhase={PricingPhase.Regular}
-                    seatsRemaining={null}
-                    nextPhasePriceVnd={null}
-                />
-            </Variant>
-            <Variant
-                label="Pioneer · còn nhiều suất · có giá tăng sau đó"
-                hint="Dùng khi phase Pioneer vừa mở, seat cap còn xa mới cạn, cần báo trước giá sẽ tăng lên Early Bird."
-            >
-                <PhaseScarcityNote
-                    currentPhase={PricingPhase.Pioneer}
-                    seatsRemaining={42}
-                    nextPhasePriceVnd={2490000}
-                />
-            </Variant>
-            <Variant
-                label="Early Bird · còn ít suất · sắp tăng giá"
-                hint="Số suất nhỏ (1 chữ số) để tạo cấp bách thật — số này lấy thẳng từ coursePricePreview, không phải số bịa."
-            >
-                <PhaseScarcityNote
-                    currentPhase={PricingPhase.EarlyBird}
-                    seatsRemaining={3}
-                    nextPhasePriceVnd={2990000}
-                />
-            </Variant>
-            <Variant
-                label="Regular · còn suất · không có phase kế tiếp"
-                hint="nextPhasePriceVnd = null → phase Regular là phase cuối, không có giá nào để cảnh báo tăng, chỉ báo số suất còn lại."
-            >
-                <PhaseScarcityNote
-                    currentPhase={PricingPhase.Regular}
-                    seatsRemaining={15}
-                    nextPhasePriceVnd={null}
-                />
-            </Variant>
-            <Variant
-                label="Chỉ còn 1 suất cuối"
-                hint="Trường hợp biên: seatsRemaining = 1, câu chữ số ít (count) phải tự nhiên ở cả vi và en."
-            >
-                <PhaseScarcityNote
-                    currentPhase={PricingPhase.EarlyBird}
-                    seatsRemaining={1}
-                    nextPhasePriceVnd={2990000}
-                />
-            </Variant>
-        </Gallery>
-    ),
+// NOTE: this "block" composes NO primitive — it is a single warning line (icon + text).
+// Flagged as "should be Primitive" (see report). ANATOMY kept honest: empty composition.
+const ANATOMY = {
+    primitives: [] as { name: string; role: string }[],
+    reason:
+        "Dòng cảnh báo khan-hiếm-suất chỉ gồm một icon cảnh báo + một câu chữ — KHÔNG cấu thành từ primitive nào. Thực chất là một atom trình bày, nên bị đánh dấu \"đáng lẽ là Primitive\". Vẫn port ở tier Block để giữ đủ bộ commerce; số suất + giá đều đến từ backend, block không tự bịa scarcity.",
+}
+
+export const ManySeats: Story = {
+    render: () =>
+        blockShell(
+            <PhaseScarcityNote
+                currentPhase={PricingPhase.Pioneer}
+                seatsRemaining={42}
+                nextPhasePriceVnd={2490000}
+            />,
+            ANATOMY,
+        ),
+}
+
+export const FewSeats: Story = {
+    render: () =>
+        blockShell(
+            <PhaseScarcityNote
+                currentPhase={PricingPhase.EarlyBird}
+                seatsRemaining={3}
+                nextPhasePriceVnd={2990000}
+            />,
+            ANATOMY,
+        ),
+}
+
+export const OneSeatLeft: Story = {
+    render: () =>
+        blockShell(
+            <PhaseScarcityNote
+                currentPhase={PricingPhase.EarlyBird}
+                seatsRemaining={1}
+                nextPhasePriceVnd={2990000}
+            />,
+            ANATOMY,
+        ),
+}
+
+export const NoNextPhase: Story = {
+    render: () =>
+        blockShell(
+            <PhaseScarcityNote
+                currentPhase={PricingPhase.Regular}
+                seatsRemaining={15}
+                nextPhasePriceVnd={null}
+            />,
+            ANATOMY,
+        ),
+}
+
+export const Unlimited: Story = {
+    render: () =>
+        blockShell(
+            <PhaseScarcityNote
+                currentPhase={PricingPhase.Regular}
+                seatsRemaining={null}
+                nextPhasePriceVnd={null}
+            />,
+            ANATOMY,
+        ),
 }

@@ -1,13 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { DragScrollArea } from "@/components/blocks/layout/DragScrollArea"
-import { SurfaceListCard, SurfaceListCardRow } from "@/components/blocks/cards/SurfaceListCard"
-import { Gallery, Variant } from "../../../../story-kit"
+import { Typography } from "@heroui/react"
+import { DragScrollArea } from "./DragScrollArea"
 
 const meta: Meta<typeof DragScrollArea> = {
-    title: "Blocks/Layout/DragScrollArea",
+    title: "Primitives/Layout/DragScrollArea",
     component: DragScrollArea,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
 }
+
 export default meta
+
 type Story = StoryObj<typeof DragScrollArea>
 
 const shortLessons = [
@@ -31,58 +36,61 @@ const longLessons = [
     "Buổi 12: Triển khai lên VPS",
 ]
 
+// TODO: swap for SurfaceListCard local when ported — a faithful joined list.
 const LessonList = ({ lessons }: { lessons: Array<string> }) => (
-    <SurfaceListCard>
+    <div className="rounded-3xl bg-surface shadow-surface">
         {lessons.map((lesson, index) => (
-            <SurfaceListCardRow key={lesson} title={lesson} subtitle={`Bài giảng #${index + 1}`} />
+            <div
+                key={lesson}
+                className="flex flex-col gap-1 border-b border-separator px-4 py-3 last:border-b-0"
+            >
+                <Typography type="body-sm">{lesson}</Typography>
+                <Typography type="body-xs" color="muted">{`Bài giảng #${index + 1}`}</Typography>
+            </div>
         ))}
-    </SurfaceListCard>
+    </div>
 )
 
-/**
- * Toàn bộ ma trận trạng thái của DragScrollArea: nội dung tràn cần kéo để xem hết
- * (ẩn scrollbar, mặc định), nội dung ngắn không tràn (không có fade), hiện lại
- * scrollbar gốc (`hideScrollBar={false}`), và tuỳ chỉnh kích thước fade cạnh
- * (`size`) — bốn trạng thái duy nhất mà props thật của block hỗ trợ.
- */
-export const AllVariants: Story = {
-    parameters: {
-        usage: "Bọc quanh danh sách buổi học/khóa học dài hơn khung hiển thị khi muốn ẩn scrollbar nhưng vẫn cho kéo bằng con trỏ (Windows không có trackpad mượt) — đặt `max-h-*` qua `className` để có chiều cao cố định. Nội dung ngắn không tràn thì fade tự tắt. `hideScrollBar={false}` khi muốn giữ thanh cuộn gốc để người dùng biết còn bao nhiêu nội dung. `size` chỉnh độ rộng vùng fade ở hai cạnh trên/dưới.",
-    },
+/** Overflowing content, scrollbar hidden (default): 12 lessons taller than `max-h-64` — drag or wheel; edges fade. */
+export const OverflowHiddenScrollbar: Story = {
     render: () => (
-        <Gallery>
-            <Variant
-                label="Tràn nội dung — ẩn scrollbar (mặc định)"
-                hint="Danh sách 12 buổi học cao hơn khung max-h-64: kéo bằng con trỏ hoặc lăn chuột để xem hết, fade mờ ở cạnh trên/dưới báo còn nội dung."
-            >
-                <DragScrollArea className="max-h-64">
-                    <LessonList lessons={longLessons} />
-                </DragScrollArea>
-            </Variant>
-            <Variant
-                label="Nội dung ngắn — không tràn"
-                hint="Chỉ 3 buổi học, thấp hơn khung max-h-64 nên không cần cuộn — không có fade vì ScrollShadow tự tắt khi nội dung vừa khung."
-            >
-                <DragScrollArea className="max-h-64">
-                    <LessonList lessons={shortLessons} />
-                </DragScrollArea>
-            </Variant>
-            <Variant
-                label="Hiện lại scrollbar gốc"
-                hint="`hideScrollBar={false}` khi cần scrollbar làm mốc trực quan còn bao nhiêu nội dung, ví dụ khu vực quản trị nhiều dữ liệu."
-            >
-                <DragScrollArea className="max-h-64" hideScrollBar={false}>
-                    <LessonList lessons={longLessons} />
-                </DragScrollArea>
-            </Variant>
-            <Variant
-                label="Tuỳ chỉnh vùng fade lớn hơn"
-                hint="`size={80}` cho vùng fade rộng hơn mặc định (40px) — dùng khi khung cuộn cao và muốn dấu hiệu tràn nội dung rõ hơn."
-            >
-                <DragScrollArea className="max-h-64" size={80}>
-                    <LessonList lessons={longLessons} />
-                </DragScrollArea>
-            </Variant>
-        </Gallery>
+        <div className="p-8">
+            <DragScrollArea className="max-h-64">
+                <LessonList lessons={longLessons} />
+            </DragScrollArea>
+        </div>
+    ),
+}
+
+/** Short content, no overflow: 3 lessons fit the frame → no fade (ScrollShadow self-disables when content fits). */
+export const ShortNoOverflow: Story = {
+    render: () => (
+        <div className="p-8">
+            <DragScrollArea className="max-h-64">
+                <LessonList lessons={shortLessons} />
+            </DragScrollArea>
+        </div>
+    ),
+}
+
+/** `hideScrollBar={false}` keeps the native scrollbar as a visual marker of how much content remains. */
+export const NativeScrollbarShown: Story = {
+    render: () => (
+        <div className="p-8">
+            <DragScrollArea className="max-h-64" hideScrollBar={false}>
+                <LessonList lessons={longLessons} />
+            </DragScrollArea>
+        </div>
+    ),
+}
+
+/** `size={80}` widens the edge fade beyond the 40px default — a stronger overflow cue on a tall scroller. */
+export const CustomFadeSize: Story = {
+    render: () => (
+        <div className="p-8">
+            <DragScrollArea className="max-h-64" size={80}>
+                <LessonList lessons={longLessons} />
+            </DragScrollArea>
+        </div>
     ),
 }

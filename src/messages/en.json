@@ -601,6 +601,7 @@
     "dismissHint": "Dismiss tip",
     "new": "New",
     "clearSelection": "Clear selection",
+    "selectionArchivedNote": "This passage-only chat is born archived — it stays out of the default list but is always findable via search.",
     "aboutPassage": "About the passage “{passage}”:",
     "selectionSuggestions": {
       "explain": "Explain this passage",

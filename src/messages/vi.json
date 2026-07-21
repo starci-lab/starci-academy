@@ -601,6 +601,7 @@
     "dismissHint": "Bỏ qua gợi ý",
     "new": "Mới",
     "clearSelection": "Bỏ chọn đoạn",
+    "selectionArchivedNote": "Phiên hỏi riêng đoạn này được lưu trữ sẵn — không nằm ở danh sách thường, nhưng tìm lại được bằng search.",
     "aboutPassage": "Về đoạn “{passage}”:",
     "selectionSuggestions": {
       "explain": "Giải thích đoạn này",

@@ -1227,6 +1227,28 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                 </Link>
             </div>
 
+            {/* selected passage — pinned at the TOP of the rail (the dedicated
+                selection view): the excerpt this side-thread is about, plus the
+                born-archived note. Its quick-asks + input live at the bottom. */}
+            {selection ? (
+                <div className="flex flex-col gap-2 rounded-xl border border-warning bg-warning-soft px-3 py-2">
+                    <div className="flex items-start gap-2">
+                        <QuotesIcon className="size-4 shrink-0 text-warning-soft-foreground" />
+                        <Typography type="body-sm" className="line-clamp-2 flex-1 text-warning-soft-foreground" weight="medium">
+                            {selection}
+                        </Typography>
+                        <CloseButton
+                            aria-label={t("contentAi.clearSelection")}
+                            className="shrink-0 text-warning-soft-foreground hover:bg-warning-soft"
+                            onPress={() => setSelection(null)}
+                        />
+                    </div>
+                    <Typography type="body-xs" color="muted">
+                        {t("contentAi.selectionArchivedNote")}
+                    </Typography>
+                </div>
+            ) : null}
+
             {/* thread — self-bounded scroll region (scroll shadow on the messages,
                 not the popover); composer stays fixed below */}
             <ScrollShadow ref={scrollRef} onScroll={handleThreadScroll} hideScrollBar className="max-h-[55vh] min-h-0 flex-1 overflow-y-auto">
@@ -1312,33 +1334,25 @@ export const ContentAiChat = ({ className }: ContentAiChatProps) => {
                 </div>
             </ScrollShadow>
 
-            {/* selected-passage context — surface-in-surface on popover panel: border only, no stacked fill (elements/card §4) */}
+            {/* selected-passage quick-asks + input (the excerpt itself is pinned at
+                the TOP of the rail). Quick-asks show only before the first turn. */}
             {selection ? (
                 <div className="flex flex-col gap-2 rounded-xl border border-default bg-transparent px-3 py-2 focus-within:ring-2 focus-within:ring-accent">
-                    <div className="flex items-start gap-2">
-                        <QuotesIcon className="size-4 shrink-0 text-muted" />
-                        <Typography type="body-sm" color="muted" className="line-clamp-2 flex-1">
-                            {selection}
-                        </Typography>
-                        <CloseButton
-                            aria-label={t("contentAi.clearSelection")}
-                            className="shrink-0 text-muted hover:bg-default"
-                            onPress={() => setSelection(null)}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        {SELECTION_SUGGESTION_KEYS.map((key) => (
-                            <Button
-                                key={key}
-                                variant="secondary"
-                                size="sm"
-                                className="justify-start text-start"
-                                onPress={() => onSend(t(`contentAi.selectionSuggestions.${key}`))}
-                            >
-                                {t(`contentAi.selectionSuggestions.${key}`)}
-                            </Button>
-                        ))}
-                    </div>
+                    {messages.length === 0 ? (
+                        <div className="flex flex-col gap-2">
+                            {SELECTION_SUGGESTION_KEYS.map((key) => (
+                                <Button
+                                    key={key}
+                                    variant="secondary"
+                                    size="sm"
+                                    className="justify-start text-start"
+                                    onPress={() => onSend(t(`contentAi.selectionSuggestions.${key}`))}
+                                >
+                                    {t(`contentAi.selectionSuggestions.${key}`)}
+                                </Button>
+                            ))}
+                        </div>
+                    ) : null}
                     {chatInputField()}
                 </div>
             ) : null}

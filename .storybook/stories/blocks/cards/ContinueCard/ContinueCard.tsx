@@ -1,10 +1,12 @@
 import React from "react"
 import { Button, Link, Typography, cn } from "@heroui/react"
-import { ArrowRightIcon } from "@phosphor-icons/react"
+import { ArrowRightIcon, ClockCounterClockwiseIcon } from "@phosphor-icons/react"
 import { HighlightCard } from "../HighlightCard/HighlightCard"
 import { SectionCard } from "../SectionCard/SectionCard"
 import { SeeMoreLink } from "../../navigation/SeeMoreLink/SeeMoreLink"
 import { ProgressMeter } from "../../stats/ProgressMeter/ProgressMeter"
+import { MetaRow } from "../../lists/MetaRow/MetaRow"
+import { StatusChip } from "../../chips/StatusChip/StatusChip"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported faithfully from
@@ -74,9 +76,23 @@ export interface ContinueCardProps {
      */
     icon?: React.ReactNode
     /**
-     * Renders `subtitle` in warning tone instead of muted — only for a REAL
-     * time-sensitive fact already present in the subtitle text (e.g. a
-     * server-enforced deadline). Never fabricate a countdown to trigger this.
+     * Neutral meta segments (dot-joined, muted) — rendered via {@link MetaRow}.
+     * The hero variant uses this instead of {@link ContinueCardProps.subtitle}.
+     * Do NOT put a time-remaining fact here — pass it as {@link ContinueCardProps.timeLeft}
+     * so it always reads as the same time chip across scenarios.
+     */
+    meta?: React.ReactNode[]
+    /**
+     * Time-remaining fact (e.g. "40 minutes left") — ALWAYS rendered as a leading
+     * time {@link StatusChip} in {@link MetaRow}, so the same info type reads as the
+     * same element in every scenario. Prominence escalates via {@link ContinueCardProps.urgent}
+     * (tone), NOT by switching element type. Never fabricate a countdown.
+     */
+    timeLeft?: React.ReactNode
+    /**
+     * Escalates the {@link ContinueCardProps.timeLeft} chip to `warning` tone when the
+     * remaining time is genuinely running out; otherwise the chip stays `neutral` (muted).
+     * Tone-only — it never repaints the whole meta line.
      */
     urgent?: boolean
     /**
@@ -108,6 +124,8 @@ export const ContinueCard = ({
     max = 100,
     ctaLabel,
     icon,
+    meta,
+    timeLeft,
     urgent = false,
     onPress,
     href,
@@ -162,15 +180,25 @@ export const ContinueCard = ({
                     <Typography weight="medium" truncate>
                         {title}
                     </Typography>
-                    {subtitle ? (
-                        // Typography's `color` prop has no semantic tones — the warning
-                        // tint has to come through className.
-                        <Typography
-                            type="body-xs"
-                            color={urgent ? undefined : "muted"}
-                            className={cn(urgent && "text-warning-soft-foreground")}
-                            truncate
-                        >
+                    {meta || timeLeft ? (
+                        <MetaRow
+                            items={meta ?? []}
+                            chip={
+                                timeLeft ? (
+                                    // Same info type (time remaining) → same element (a time
+                                    // StatusChip) in EVERY scenario; only the tone escalates:
+                                    // `neutral` (muted) when there's time, `warning` when running out.
+                                    <StatusChip
+                                        tone={urgent ? "warning" : "neutral"}
+                                        icon={<ClockCounterClockwiseIcon weight="fill" />}
+                                    >
+                                        {timeLeft}
+                                    </StatusChip>
+                                ) : undefined
+                            }
+                        />
+                    ) : subtitle ? (
+                        <Typography type="body-xs" color="muted" truncate>
                             {subtitle}
                         </Typography>
                     ) : null}

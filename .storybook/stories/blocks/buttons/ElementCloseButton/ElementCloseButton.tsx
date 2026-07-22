@@ -1,5 +1,7 @@
 import React from "react"
-import { CloseButton, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
+import { X } from "@phosphor-icons/react"
+import { Button } from "../Button/Button"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — the target `ElementCloseButton`. Authored in
@@ -14,10 +16,10 @@ export type ElementCloseButtonTone = "neutral" | "accent" | "success" | "warning
 
 /**
  * Per-tone colour + hover fill (LITERAL classes — Tailwind can't see interpolated
- * ones). The `!` beats HeroUI's UNLAYERED `.close-button--default` base
- * (`bg-default text-muted`), which a plain utility would lose to. This is the SAME
- * "text-<tone> + hover:bg-<tone>/10" treatment `Callout` used ad-hoc, now shared so
- * every close button reads consistently: hover = a tint of its OWN tone.
+ * ones). The `!` beats the base `ghost` variant's own text/hover, which a plain
+ * utility would lose to. This is the SAME "text-<tone> + hover:bg-<tone>/10"
+ * treatment `Callout` used ad-hoc, now shared so every close button reads
+ * consistently: hover = a tint of its OWN tone.
  */
 const TONE: Record<ElementCloseButtonTone, string> = {
     neutral: "!text-muted hover:!bg-default",
@@ -43,8 +45,9 @@ export interface ElementCloseButtonProps {
 }
 
 /**
- * The design-system close/dismiss "×" — a thin wrapper over HeroUI `CloseButton`
- * that bakes the shared look so callers don't re-style it ad-hoc:
+ * The design-system close/dismiss "×" — a THIN semantic "close" wrapper that
+ * COMPOSES the base {@link Button} in `iconOnly` + `ghost` mode (never HeroUI
+ * directly), baking the shared look so callers don't re-style it ad-hoc:
  *
  * - **TRANSPARENT at rest** (icon only, no grey pill) — a fill of its own tone only
  *   on hover, so it never sits as a permanent grey square.
@@ -52,17 +55,20 @@ export interface ElementCloseButtonProps {
  *   colour, matching the surface it dismisses.
  *
  * All styling is per-instance (`!` utilities on THIS element), so it never leaks to
- * close buttons elsewhere (no global `.close-button` override). Use for a Callout
- * dismiss, a removable chip's cancel-X, a dismissible banner, etc.
+ * close buttons elsewhere. Use for a Callout dismiss, a removable chip's cancel-X, a
+ * dismissible banner, etc.
  *
  * @param props - {@link ElementCloseButtonProps}
  */
 export const ElementCloseButton = ({ label, onPress, tone = "neutral", className }: ElementCloseButtonProps) => {
     return (
-        <CloseButton
-            aria-label={label}
+        <Button
+            iconOnly
+            variant="ghost"
+            ariaLabel={label}
+            icon={<X aria-hidden />}
             onPress={onPress}
-            className={cn("!bg-transparent", TONE[tone], className)}
+            className={cn(TONE[tone], className)}
         />
     )
 }

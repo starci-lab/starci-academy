@@ -82,24 +82,8 @@ export default defineConfig([
             "jsx-a11y/no-static-element-interactions": "warn",
             "jsx-a11y/label-has-associated-control": "warn",
             "jsx-a11y/no-redundant-roles": "warn",
-            // L1 · icon @gravity-ui — MIGRATED (60 file → Phosphor 2026-07-14, nợ=0) → error (make-illegal)
-            "no-restricted-imports": [
-                "error",
-                {
-                    paths: [
-                        {
-                            name: "@gravity-ui/icons",
-                            message: "Dùng @phosphor-icons/react thay @gravity-ui (canon trục-1 §Icon · enforcement L1).",
-                        },
-                    ],
-                    patterns: [
-                        {
-                            group: ["@gravity-ui/*"],
-                            message: "Dùng @phosphor-icons/react thay @gravity-ui (canon trục-1 §Icon · enforcement L1).",
-                        },
-                    ],
-                },
-            ],
+            // Icon libs — CHO PHÉP CẢ @phosphor-icons/react LẪN @gravity-ui/icons (thầy chốt 2026-07-22,
+            // gỡ ban gravity 2026-07-14). Chọn icon theo thẩm mỹ; size icon theo TEXT-size (principles §5 icon-size).
         },
     },
 ])

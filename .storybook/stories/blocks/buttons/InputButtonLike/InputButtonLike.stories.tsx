@@ -32,12 +32,12 @@ export const Default: Story = {
     ),
 }
 
-/** Thêm icon kính lúp mờ ở phía trước khi field đóng vai ô tìm kiếm. */
+/** Thêm icon kính lúp mờ ở phía trước khi field đóng vai ô tìm kiếm. Icon truyền TRẦN — block tự ép size + màu. */
 export const WithIcon: Story = {
     render: () => (
         <div className="p-8">
             <InputButtonLike
-                icon={<MagnifyingGlassIcon size={16} className="text-field-placeholder" />}
+                icon={<MagnifyingGlassIcon />}
                 placeholder="Search courses, lessons..."
                 onPress={() => {}}
                 className="w-80"
@@ -51,7 +51,7 @@ export const WithShortcut: Story = {
     render: () => (
         <div className="p-8">
             <InputButtonLike
-                icon={<MagnifyingGlassIcon size={16} className="text-field-placeholder" />}
+                icon={<MagnifyingGlassIcon />}
                 placeholder="Quick search..."
                 suffix={(
                     <Kbd>
@@ -70,10 +70,39 @@ export const TruncatedPlaceholder: Story = {
     render: () => (
         <div className="p-8">
             <InputButtonLike
-                icon={<MagnifyingGlassIcon size={16} className="text-field-placeholder" />}
+                icon={<MagnifyingGlassIcon />}
                 placeholder="Search Fullstack, System Design, DevOps courses and much more..."
                 onPress={() => {}}
                 className="w-64"
+            />
+        </div>
+    ),
+}
+
+/** Ba nấc chiều cao — block tự co icon-size theo `size` (sm/md/lg), story không chỉnh icon. */
+export const Sizes: Story = {
+    render: () => (
+        <div className="flex flex-col gap-4 p-8">
+            <InputButtonLike
+                size="sm"
+                icon={<MagnifyingGlassIcon />}
+                placeholder="Small search..."
+                onPress={() => {}}
+                className="w-80"
+            />
+            <InputButtonLike
+                size="md"
+                icon={<MagnifyingGlassIcon />}
+                placeholder="Medium search..."
+                onPress={() => {}}
+                className="w-80"
+            />
+            <InputButtonLike
+                size="lg"
+                icon={<MagnifyingGlassIcon />}
+                placeholder="Large search..."
+                onPress={() => {}}
+                className="w-80"
             />
         </div>
     ),

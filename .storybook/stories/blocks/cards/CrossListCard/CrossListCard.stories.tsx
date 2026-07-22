@@ -79,3 +79,29 @@ export const Bordered: Story = {
         </div>
     ),
 }
+
+/**
+ * `tone="muted"` — check MỜ đi để chữ dẫn (dùng cho value-props NẰM TRONG card khác, vd CourseCard):
+ * tránh nhiễu sắc khi card đã có điểm nổi khác (giá/CTA). So với `tone="success"` (mặc định, xanh — tín
+ * hiệu "gồm" thật, như PricingTable). Xem `principles.md` §2.
+ */
+export const MutedTone: Story = {
+    render: () => (
+        <div className="flex flex-col gap-6 p-8">
+            <div className="flex flex-col gap-2">
+                <Typography type="body-xs" color="muted">tone="success" (mặc định) — tick xanh, tín hiệu "gồm"</Typography>
+                <CrossListCard bordered>
+                    <CrossListItem mark="check">{row("Xây 3 dự án thực chiến")}</CrossListItem>
+                    <CrossListItem mark="check">{row("Chấm bài bằng AI")}</CrossListItem>
+                </CrossListCard>
+            </div>
+            <div className="flex flex-col gap-2">
+                <Typography type="body-xs" color="muted">tone="muted" — tick mờ, chữ dẫn (value-props trong card)</Typography>
+                <CrossListCard bordered>
+                    <CrossListItem mark="check" tone="muted">{row("Xây 3 dự án thực chiến")}</CrossListItem>
+                    <CrossListItem mark="check" tone="muted">{row("Chấm bài bằng AI")}</CrossListItem>
+                </CrossListCard>
+            </div>
+        </div>
+    ),
+}

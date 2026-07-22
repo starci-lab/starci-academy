@@ -400,11 +400,13 @@ export const CourseCard = ({
                         {course.description}
                     </Typography>
                     {topValueProps.length > 0 ? (
-                        // value-props checklist = the CrossListCard primitive (bordered, mark="check"),
-                        // NOT a hand-rolled CheckCircleIcon list. Bordered = surface-in-surface.
+                        // value-props checklist = the CrossListCard primitive (bordered, mark="check",
+                        // tone="muted"). NOT a hand-rolled list. Muted tick → the TEXT leads, card
+                        // keeps only price-deal + CTA as the nổi points (principles.md §2). Bordered =
+                        // surface-in-surface.
                         <CrossListCard bordered className="mt-1">
                             {topValueProps.map((valueProp, index) => (
-                                <CrossListItem key={index} mark="check">
+                                <CrossListItem key={index} mark="check" tone="muted">
                                     <Typography type="body-sm">{valueProp.text}</Typography>
                                 </CrossListItem>
                             ))}
@@ -412,7 +414,10 @@ export const CourseCard = ({
                     ) : null}
                 </div>
             </Card.Content>
-            <Card.Footer className="mt-auto flex flex-col gap-2">
+            {/* items-start: HeroUI `.card__footer` bakes align-items:center → short lines (USD hint)
+                float to center. Force flush-left (reading-flow: từ trái). w-full children (action row)
+                still stretch. */}
+            <Card.Footer className="mt-auto flex flex-col items-start gap-2">
                 {/* price row (informational) */}
                 <div className="flex items-center gap-2">
                     {loyaltyPending ? (

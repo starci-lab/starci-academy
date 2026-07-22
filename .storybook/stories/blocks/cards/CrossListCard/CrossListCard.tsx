@@ -40,19 +40,39 @@ export const CrossListCard = ({ children, bordered = false, className }: CrossLi
     <ul className={cn("overflow-hidden", surfaceFrame(bordered), className)}>{children}</ul>
 )
 
-const MARK_ICON: Record<ListMark, ReactNode> = {
-    check: <CheckCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-success-soft-foreground" />,
-    cross: <XCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />,
-    none: null,
+/** Tone of a `check` mark: green success signal, or muted (recede). Only affects `mark="check"`. */
+export type MarkTone = "success" | "muted"
+
+const markIcon = (mark: ListMark, tone: MarkTone): ReactNode => {
+    if (mark === "check") {
+        return (
+            <CheckCircleIcon
+                aria-hidden
+                focusable="false"
+                className={cn("size-5 shrink-0", tone === "muted" ? "text-muted" : "text-success-soft-foreground")}
+            />
+        )
+    }
+    if (mark === "cross") {
+        return <XCircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
+    }
+    return null
 }
 
 /** Props for {@link CrossListItem}. */
 export interface CrossListItemProps {
     /**
-     * Leading mark: `"check"` (success ✓, for included/done), `"cross"` (muted ✗, for
-     * excluded/unavailable), or `"none"` (a plain row). Default `"check"`.
+     * Leading mark: `"check"` (✓ included/done), `"cross"` (muted ✗ excluded), or `"none"`
+     * (plain row). Default `"check"`.
      */
     mark?: ListMark
+    /**
+     * Tone of a `check` mark: `"success"` (green ✓, default — a real included/done SIGNAL, e.g.
+     * PricingTable where green-check ↔ muted-cross means got/not-got) or `"muted"` (tick recedes,
+     * the TEXT leads — for value-props INSIDE another card; avoids chromatic overload, see
+     * `principles.md` §2). Ignored for `cross`/`none`.
+     */
+    tone?: MarkTone
     /** Row body — plain text (`<Typography>`) or markdown. */
     children: ReactNode
 }
@@ -63,9 +83,9 @@ export interface CrossListItemProps {
  *
  * @param props - {@link CrossListItemProps}
  */
-export const CrossListItem = ({ mark = "check", children }: CrossListItemProps) => (
+export const CrossListItem = ({ mark = "check", tone = "success", children }: CrossListItemProps) => (
     <li className="relative flex items-start gap-3 p-3 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-[''] last:after:hidden">
-        {MARK_ICON[mark]}
+        {markIcon(mark, tone)}
         <div className="min-w-0 flex-1">{children}</div>
     </li>
 )

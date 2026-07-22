@@ -6,39 +6,51 @@ import { Tooltip } from "@heroui/react"
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL — the anatomy surfacing for a Block story.
  *
- * A Block (tier `Block/*`) is a COMPOSITE built from primitives (tier `Primitives/*`).
- * The canvas stays CLEAN (just the block); its COMPOSITION is revealed on HOVER via a
- * tooltip — which primitives it is made of (+ each one's role) and WHY that composite
- * exists (thầy 2026-07-21: bọc render bằng tooltip để "ra" primitives). A dashed ring on
- * hover signals the block is inspectable.
+ * A Block (tier `Block/*`) is a COMPOSITE built from **sub-blocks + primitives**
+ * (thầy 2026-07-22 — block cấu tạo từ block + primitive khác, không chỉ primitive). The
+ * canvas stays CLEAN (just the block); its COMPOSITION is revealed on HOVER via a tooltip —
+ * a COMPLETE inventory of every part (tier + role) and WHY that composite exists. A dashed
+ * ring on hover signals the block is inspectable.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** One composed primitive: its name (matches a `Primitives/*` leaf) + optional role. */
+/**
+ * One composed PART of a block. A block = **sub-blocks + primitives** (thầy 2026-07-22),
+ * so `tier` distinguishes the two. `name` matches a `Block/*` or `Primitives/*` leaf.
+ */
 export interface BlockPrimitive {
     name: string
     role?: string
+    /** `"block"` (sub-composite, tier `Block/*`) or `"primitive"` (atom, `Primitives/*`). */
+    tier?: "block" | "primitive"
+    /** Only present in ONE state (e.g. `"Đang tải"`) — not a general part. */
+    state?: string
 }
 
 export interface BlockAnatomyProps {
-    /** The primitives this block is composed from (in visual/importance order). */
+    /**
+     * EVERY part this block composes (blocks + primitives, in visual order) — a COMPLETE
+     * inventory, not a sample. Tag each `tier`; flag state-only parts with `state`.
+     */
     primitives: Array<BlockPrimitive | string>
-    /** Why this composite exists — the rationale for combining these primitives. */
+    /** Why this composite exists — the rationale for combining these parts. */
     reason: ReactNode
 }
 
-/** Tooltip body: the composition (primitive chips + roles) + the rationale. */
+/** Tooltip body: the composition (every part + tier + role) + the rationale. */
 const AnatomyContent = ({ primitives, reason }: BlockAnatomyProps) => {
     const items = primitives.map((p) => (typeof p === "string" ? { name: p } : p))
     return (
         <div className="flex max-w-xs flex-col gap-3 p-1">
             <div className="flex flex-col gap-2">
-                <span className="text-xs font-semibold uppercase tracking-wide text-muted">Cấu thành từ primitives</span>
+                <span className="text-xs font-semibold uppercase tracking-wide text-muted">Cấu thành (block + primitive)</span>
                 <div className="flex flex-col gap-1">
                     {items.map((p) => (
                         <span key={p.name} className="text-xs">
                             <span className="font-semibold text-foreground">{p.name}</span>
+                            {p.tier ? <span className="text-muted">{` (${p.tier})`}</span> : null}
                             {p.role ? <span className="text-muted">{` · ${p.role}`}</span> : null}
+                            {p.state ? <span className="text-muted">{` · [chỉ state: ${p.state}]`}</span> : null}
                         </span>
                     ))}
                 </div>

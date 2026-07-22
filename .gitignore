@@ -46,3 +46,8 @@ next-env.d.ts
 .session/
 .starci-prototypes/
 storybook-static/
+
+# generated / local
+debug-storybook.log
+.flowbook/dist/
+.flowbook/tsconfig.tsbuildinfo

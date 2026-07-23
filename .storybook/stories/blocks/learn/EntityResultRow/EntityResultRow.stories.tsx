@@ -4,7 +4,7 @@ import { EntityResultRow, type SearchCourseContentItem } from "./EntityResultRow
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof EntityResultRow> = {
-    title: "Block/Learn/EntityResultRow",
+    title: "Design/Learn/EntityResultRow",
     component: EntityResultRow,
     tags: ["autodocs"],
     parameters: {

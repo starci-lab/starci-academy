@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { SearchBar } from "./SearchBar"
 
 const meta: Meta<typeof SearchBar> = {
-    title: "Primitives/Form/SearchBar",
+    title: "Design/Form/SearchBar",
     component: SearchBar,
     tags: ["autodocs"],
     parameters: {
@@ -37,6 +37,18 @@ export const NarrowFrame: Story = {
             <div className="w-64">
                 <SearchBar className="w-full" />
             </div>
+        </div>
+    ),
+}
+
+/**
+ * Skeleton: `isSkeleton` renders the loading mirror — the same full-width bar
+ * footprint (h-10) as the real field, no popover/filter button ever renders.
+ */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8 max-w-sm">
+            <SearchBar isSkeleton />
         </div>
     ),
 }

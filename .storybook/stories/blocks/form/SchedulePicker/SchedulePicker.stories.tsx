@@ -81,3 +81,18 @@ export const NoSelection: Story = {
         </div>
     ),
 }
+
+/** Skeleton: loading mirror — label bar + date-field skeleton, then label bar + slot-grid skeleton. */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8 max-w-sm">
+            <SchedulePicker
+                isSkeleton
+                dateValue={null}
+                onDateChange={() => {}}
+                availableSlots={[]}
+                onSlotChange={() => {}}
+            />
+        </div>
+    ),
+}

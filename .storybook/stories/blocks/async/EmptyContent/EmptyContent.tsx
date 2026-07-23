@@ -1,9 +1,9 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Button } from "@heroui/react"
 import { TrayIcon } from "@phosphor-icons/react"
 
 import { EmptyState } from "../../feedback/EmptyState/EmptyState"
+import { Button } from "../../buttons/Button/Button"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported from

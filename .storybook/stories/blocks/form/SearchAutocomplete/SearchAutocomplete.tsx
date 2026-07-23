@@ -9,6 +9,7 @@ import {
     Spinner,
     Typography,
 } from "@heroui/react"
+import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -57,6 +58,12 @@ export interface SearchAutocompleteProps {
     isLoading?: boolean
     /** Message shown when there are no suggestions. Defaults to "Không có gợi ý nào". */
     emptyLabel?: string
+    /**
+     * Renders the loading mirror — a field-box skeleton matching the search
+     * field's resting shape (canon §8). The dropdown has no resting shape, so
+     * only the field is mirrored.
+     */
+    isSkeleton?: boolean
     /** Extra classes on the root ComboBox. */
     className?: string
 }
@@ -80,6 +87,7 @@ export const SearchAutocomplete = ({
     placeholder = "Tìm khoá học, chủ đề...",
     isLoading = false,
     emptyLabel = "Không có gợi ý nào",
+    isSkeleton = false,
     className,
 }: SearchAutocompleteProps) => {
     // ComboBox reports the picked key; forward its id to the parent (ignore null,
@@ -88,6 +96,11 @@ export const SearchAutocomplete = ({
         if (key !== null) {
             onSelect(String(key))
         }
+    }
+
+    if (isSkeleton) {
+        // Mirror the search field only — the popover has no resting shape to mirror.
+        return <Skeleton.Input className={cn("w-full @app-sm:max-w-sm", className)} />
     }
 
     return (

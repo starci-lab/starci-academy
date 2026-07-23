@@ -1,8 +1,9 @@
 "use client"
 
 import React from "react"
-import { Chip, cn, Typography } from "@heroui/react"
+import { cn, Typography } from "@heroui/react"
 import { CaretRightIcon, WarningIcon } from "@phosphor-icons/react"
+import { StatusChip } from "../../chips/StatusChip/StatusChip"
 import { motion, useReducedMotion, type Variants } from "framer-motion"
 import type { CSSProperties, ReactNode } from "react"
 
@@ -190,14 +191,15 @@ export const MicroservicesDiagram = ({ caption, className }: MicroservicesDiagra
                         animate={reduce ? undefined : { y: [0, -4, 0] }}
                         transition={reduce ? undefined : { repeat: Infinity, duration: 3 + index * 0.5, ease: "easeInOut" }}
                     >
-                        <Chip size="sm" className="bg-danger-soft text-danger-soft-foreground">
-                            <WarningIcon aria-hidden focusable="false" className="size-4" />
-                            <Chip.Label className="inline-flex items-center gap-1">
+                        {/* NOTE: WarningIcon was size-4 in the raw Chip; StatusChip's `icon` slot
+                            normalizes leading glyphs to size-3 (§4 icon ownership) — intentional. */}
+                        <StatusChip tone="danger" icon={<WarningIcon aria-hidden focusable="false" />}>
+                            <span className="inline-flex items-center gap-1">
                                 {failure.from}
                                 <CaretRightIcon aria-hidden focusable="false" className="size-4" />
                                 {failure.to}
-                            </Chip.Label>
-                        </Chip>
+                            </span>
+                        </StatusChip>
                     </motion.div>
                 ))}
             </motion.div>

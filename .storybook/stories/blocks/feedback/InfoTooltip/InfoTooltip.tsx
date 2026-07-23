@@ -50,7 +50,10 @@ export const InfoTooltip = ({
     return (
         <Tooltip delay={200}>
             <Tooltip.Trigger className={className}>
-                <span className="inline-flex cursor-help">
+                {/* Primitive OWNS the trigger affordance (§4): dotted underline
+                    tone --separator-tertiary + offset-4, semibold foreground text-sm.
+                    Consumer chỉ truyền term/label TRẦN — không tự dựng span underline. */}
+                <span className="inline-flex cursor-help text-sm font-semibold text-foreground underline decoration-dotted decoration-[var(--separator-tertiary)] underline-offset-4">
                     {children}
                 </span>
             </Tooltip.Trigger>

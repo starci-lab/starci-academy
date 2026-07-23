@@ -1,5 +1,7 @@
 import React from "react"
-import { cn, InputOTP, Label, Typography } from "@heroui/react"
+import { cn, InputOTP } from "@heroui/react"
+import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
+import { FieldShell } from "../FieldShell/FieldShell"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -55,6 +57,11 @@ export interface OtpInputProps {
     label?: React.ReactNode
     /** Extra classes on the outer wrapper. */
     className?: string
+    /**
+     * Renders the loading mirror (label bar + {@link length} cell-shaped
+     * squares) instead of the real field. Default `false`.
+     */
+    isSkeleton?: boolean
 }
 
 /**
@@ -75,34 +82,37 @@ export const OtpInput = ({
     autoFocus,
     label,
     className,
-}: OtpInputProps) => {
-    return (
-        <div className={cn("flex flex-col gap-2", className)}>
-            {/* Optional field label above the slots */}
-            {label != null ? <Label>{label}</Label> : null}
-
-            {/* HeroUI InputOTP: `maxLength` = slot count; value/onChange are
-                threaded straight through (controlled). One Slot per index. */}
-            <InputOTP
-                maxLength={length}
-                value={value}
-                onChange={onChange}
-                isInvalid={isInvalid}
-                autoFocus={autoFocus}
-            >
-                <InputOTP.Group>
-                    {Array.from({ length }, (_, index) => (
-                        <InputOTP.Slot key={index} index={index} />
-                    ))}
-                </InputOTP.Group>
-            </InputOTP>
-
-            {/* Error line — only while invalid, mirrors the TextField error slot */}
-            {isInvalid && errorMessage != null ? (
-                <Typography type="body-xs" className="text-danger-soft-foreground">
-                    {errorMessage}
-                </Typography>
-            ) : null}
-        </div>
-    )
-}
+    isSkeleton = false,
+}: OtpInputProps) => (
+    // FieldShell owns the label / error / skeleton column; the OTP cells are
+    // just its `children` (or its `skeletonControl` while loading).
+    <FieldShell
+        label={label}
+        errorMessage={isInvalid ? errorMessage : undefined}
+        isSkeleton={isSkeleton}
+        className={cn(className)}
+        skeletonControl={
+            <div className="flex items-center gap-2">
+                {Array.from({ length }, (_, index) => (
+                    <Skeleton.Input key={index} className="h-10 w-9.5 flex-1 rounded-xl" />
+                ))}
+            </div>
+        }
+    >
+        {/* HeroUI InputOTP: `maxLength` = slot count; value/onChange are
+            threaded straight through (controlled). One Slot per index. */}
+        <InputOTP
+            maxLength={length}
+            value={value}
+            onChange={onChange}
+            isInvalid={isInvalid}
+            autoFocus={autoFocus}
+        >
+            <InputOTP.Group>
+                {Array.from({ length }, (_, index) => (
+                    <InputOTP.Slot key={index} index={index} />
+                ))}
+            </InputOTP.Group>
+        </InputOTP>
+    </FieldShell>
+)

@@ -92,6 +92,11 @@ export const TestCaseResultGrid = ({ cases, labels, className }: TestCaseResultG
             <div className="flex flex-wrap gap-2">
                 {cases.map((testcase, index) => {
                     const isActive = index === Math.min(selected, cases.length - 1)
+                    // NOTE: this pill is a SELECTABLE control (onClick + active ring state) —
+                    // StatusChip has no onPress/selected-state prop (it's presentational,
+                    // only onCancel), so forcing it here would drop the selection affordance.
+                    // Left as hand-rolled pending a port that supports press+active. Visual
+                    // tone (success/danger soft) already matches StatusChip's tone mapping.
                     return (
                         <button
                             key={testcase.key}

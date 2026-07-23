@@ -153,6 +153,12 @@ export const CommunityPostCard = ({
                             myReaction={post.reactions.myReaction}
                             onReact={onReact ? (type) => onReact(post.id, type) : undefined}
                         />
+                        {/* NOTE: left as hand-rolled — Button port's `sm` size is a fixed
+                            h-9/px-3 pill (`.button--sm` in @heroui/styles) and `ghost`'s hover
+                            fill is full-strength `var(--default)`, so composing Button here would
+                            visibly grow this meta affordance and darken its hover tint vs. the
+                            compact `rounded-full px-2 py-0` + `hover:bg-default/40` it needs today.
+                            Matches the same untouched pattern in ReactionBar's own trigger button. */}
                         <button
                             type="button"
                             disabled={!onToggleComments}

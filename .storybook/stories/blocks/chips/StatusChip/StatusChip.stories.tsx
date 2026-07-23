@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react"
+import { CheckCircleIcon } from "@phosphor-icons/react"
 import { StatusChip } from "./StatusChip"
 
 const meta: Meta<typeof StatusChip> = {
@@ -60,32 +60,34 @@ export const Accent: Story = {
     ),
 }
 
-/** Success + icon: a verified result — `CheckCircleIcon` leading, tone success, static. */
-export const SuccessWithIcon: Story = {
+/** Loading: `isSkeleton` mirrors the pill shape (a plain shimmer chip). */
+export const Loading: Story = {
     render: () => (
         <div className="p-8">
-            <StatusChip tone="success" icon={<CheckCircleIcon />}>
-                Verified
-            </StatusChip>
-        </div>
-    ),
-}
-
-/** Error + icon: a failed result — `XCircleIcon` leading, tone danger, static. */
-export const ErrorWithIcon: Story = {
-    render: () => (
-        <div className="p-8">
-            <StatusChip tone="danger" icon={<XCircleIcon />}>
-                Processing error
+            <StatusChip tone="neutral" isSkeleton>
+                Draft
             </StatusChip>
         </div>
     ),
 }
 
 /**
- * Removable: `onCancel` renders a trailing × (the shared `ElementCloseButton`:
- * transparent at rest + tonal hover, like Callout). A removable chip carries a
- * cancel-X and NO leading icon — one or the other, never both.
+ * WithLeadingIcon: `icon` renders a leading glyph before the label — passed
+ * TRẦN (no `size-*`), the chip forces it to `size-3` to match the label scale.
+ */
+export const WithLeadingIcon: Story = {
+    render: () => (
+        <div className="p-8">
+            <StatusChip tone="success" icon={<CheckCircleIcon aria-hidden focusable="false" />}>
+                Verified
+            </StatusChip>
+        </div>
+    ),
+}
+
+/**
+ * Removable: `onCancel` renders a trailing × (chip's own compact scale:
+ * transparent at rest + tonal hover, like Callout's close).
  */
 export const Removable: Story = {
     render: () => (

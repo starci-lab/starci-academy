@@ -3,7 +3,7 @@ import { PhaseScarcityNote, PricingPhase } from "./PhaseScarcityNote"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof PhaseScarcityNote> = {
-    title: "Block/Commerce/PhaseScarcityNote",
+    title: "Design/Commerce/PhaseScarcityNote",
     component: PhaseScarcityNote,
     tags: ["autodocs"],
     parameters: {
@@ -21,6 +21,19 @@ const ANATOMY = {
     primitives: [] as { name: string; role: string }[],
     reason:
         "Dòng cảnh báo khan-hiếm-suất chỉ gồm một icon cảnh báo + một câu chữ — KHÔNG cấu thành từ primitive nào. Thực chất là một atom trình bày, nên bị đánh dấu \"đáng lẽ là Primitive\". Vẫn port ở tier Block để giữ đủ bộ commerce; số suất + giá đều đến từ backend, block không tự bịa scarcity.",
+}
+
+/** Plain baseline: a limited-seat phase with a real next-phase price rise. */
+export const Default: Story = {
+    render: () =>
+        blockShell(
+            <PhaseScarcityNote
+                currentPhase={PricingPhase.Regular}
+                seatsRemaining={20}
+                nextPhasePriceVnd={3490000}
+            />,
+            ANATOMY,
+        ),
 }
 
 export const ManySeats: Story = {

@@ -4,7 +4,7 @@ import { EntityLink } from "./EntityLink"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof EntityLink> = {
-    title: "Block/Feed/EntityLink",
+    title: "Design/Feed/EntityLink",
     component: EntityLink,
     tags: ["autodocs"],
     parameters: {

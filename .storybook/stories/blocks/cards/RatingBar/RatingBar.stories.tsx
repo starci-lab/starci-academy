@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { RatingBar } from "./RatingBar"
 
 const meta: Meta<typeof RatingBar> = {
-    title: "Primitives/Card/RatingBar",
+    title: "Block/Cards/RatingBar",
     component: RatingBar,
     tags: ["autodocs"],
     parameters: {
@@ -74,6 +74,23 @@ export const Pending: Story = {
                 onRate={() => {}}
                 ariaLabel="Chọn mức độ nhớ"
                 isPending
+            />
+        </div>
+    ),
+}
+
+/**
+ * Skeleton mirror (isSkeleton). Bật khi dữ liệu thẻ/khoảng lặp chưa sẵn sàng — giữ
+ * đúng lưới + khung ô, chỉ thay nhãn/chip/hint bằng bar chờ.
+ */
+export const Loading: Story = {
+    render: () => (
+        <div className="p-8">
+            <RatingBar
+                options={gradesWithInterval}
+                onRate={() => {}}
+                ariaLabel="Chọn mức độ nhớ"
+                isSkeleton
             />
         </div>
     ),

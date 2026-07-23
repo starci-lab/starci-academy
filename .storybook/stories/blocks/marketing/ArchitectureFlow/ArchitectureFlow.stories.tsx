@@ -3,7 +3,7 @@ import { ArchitectureFlow } from "./ArchitectureFlow"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof ArchitectureFlow> = {
-    title: "Block/Marketing/ArchitectureFlow",
+    title: "Design/Marketing/ArchitectureFlow",
     component: ArchitectureFlow,
     tags: ["autodocs"],
     parameters: {

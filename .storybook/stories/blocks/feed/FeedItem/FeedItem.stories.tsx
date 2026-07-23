@@ -8,7 +8,7 @@ import { EntityLink } from "../EntityLink/EntityLink"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof FeedItem> = {
-    title: "Block/Feed/FeedItem",
+    title: "Design/Feed/FeedItem",
     component: FeedItem,
     tags: ["autodocs"],
     parameters: {
@@ -74,6 +74,32 @@ export const WithReaction: Story = {
                     <span>
                         <EntityLink label="quochuy_backend" onPress={() => {}} />
                         {" "}đã hoàn thành challenge{" "}
+                        <EntityLink label="Xử lý luồng bất đồng bộ" onPress={() => {}} />
+                    </span>
+                </FeedItem>
+            </div>,
+            ANATOMY,
+        ),
+}
+
+export const ReadOnlyFooter: Story = {
+    render: () =>
+        blockShell(
+            <div className="w-96">
+                <FeedItem
+                    leading={(
+                        <ActivityAvatar
+                            username="minhanh_dev"
+                            avatar="https://i.pravatar.cc/150?img=12"
+                            icon={<UserPlusIcon aria-hidden focusable="false" weight="bold" />}
+                        />
+                    )}
+                    timestamp="1 giờ trước"
+                    footer={<ReactionBar count={5} myReaction={null} />}
+                >
+                    <span>
+                        <EntityLink label="minhanh_dev" onPress={() => {}} />
+                        {" "}đã hoàn thành milestone{" "}
                         <EntityLink label="Xử lý luồng bất đồng bộ" onPress={() => {}} />
                     </span>
                 </FeedItem>

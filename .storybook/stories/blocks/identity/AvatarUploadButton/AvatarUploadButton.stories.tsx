@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { AvatarUploadButton } from "./AvatarUploadButton"
 
 const meta: Meta<typeof AvatarUploadButton> = {
-    title: "Primitives/Identity/AvatarUploadButton",
+    title: "Design/Identity/AvatarUploadButton",
     component: AvatarUploadButton,
     tags: ["autodocs"],
     parameters: {

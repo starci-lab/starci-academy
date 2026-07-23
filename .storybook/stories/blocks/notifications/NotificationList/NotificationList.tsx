@@ -1,10 +1,11 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Button, cn, Typography } from "@heroui/react"
+import { cn, Typography } from "@heroui/react"
 import { ChecksIcon } from "@phosphor-icons/react"
 import { EmptyState } from "../../feedback/EmptyState/EmptyState"
 import { NotificationItem } from "../NotificationItem/NotificationItem"
 import type { NotificationItemProps } from "../NotificationItem/NotificationItem"
+import { Button } from "../../buttons/Button/Button"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported faithfully from
@@ -105,6 +106,9 @@ export const NotificationList = ({
                         {title}
                     </Typography>
                     {onMarkAllRead ? (
+                        // NOTE: port Button's `icon` prop is TRAILING-only (§5b) — this row needs a
+                        // LEADING check icon before the label, so it's composed via `children`
+                        // (not `icon`) to keep the exact leading order/visual.
                         <Button
                             size="sm"
                             variant="tertiary"

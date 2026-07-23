@@ -3,7 +3,7 @@ import { ShowcaseMockup, SHOWCASE_THEMES } from "./ShowcaseMockup"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof ShowcaseMockup> = {
-    title: "Block/Marketing/ShowcaseMockup",
+    title: "Design/Marketing/ShowcaseMockup",
     component: ShowcaseMockup,
     tags: ["autodocs"],
     parameters: {

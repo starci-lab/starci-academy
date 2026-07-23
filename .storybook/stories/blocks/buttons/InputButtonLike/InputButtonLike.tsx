@@ -1,6 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { Button, cn } from "@heroui/react"
+import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — the target `InputButtonLike`. Authored in
@@ -56,6 +57,8 @@ export interface InputButtonLikeProps {
      * Press handler — opens whatever the field stands in for (e.g. a search overlay).
      */
     onPress: () => void
+    /** `true` → skeleton mirror (field-shaped bar, same height per size). */
+    isSkeleton?: boolean
     /** Extra classes on the control (also placement). */
     className?: string
 }
@@ -76,8 +79,24 @@ export const InputButtonLike = ({
     size = "md",
     ariaLabel,
     onPress,
+    isSkeleton = false,
     className,
 }: InputButtonLikeProps) => {
+    if (isSkeleton) {
+        // Skeleton mirror: field-shaped bar, SAME height/rounding as the real control.
+        return <Skeleton className={cn("w-full rounded-field", HEIGHT_CLS[size], className)} />
+    }
+    // NOTE: left as raw HeroUI <Button> (not the Button port,
+    // ../../buttons/Button/Button.tsx) — three real gaps vs the port's API:
+    //  1. `variant="outline"` isn't in the port's ButtonVariant union (only
+    //     primary/secondary/tertiary/ghost/danger) — no value maps onto it.
+    //  2. This control needs a LEADING icon + a separate trailing `suffix`
+    //     section; the port's `icon` slot is trailing-only (single icon next
+    //     to the label), it has no leading-icon or third-slot concept.
+    //  3. The port auto-sizes descendant svgs via §5a (`[&_svg]:size-4/5/6`
+    //     keyed to button `size`), which would override this component's own
+    //     ICON_CLS scale (sm/md→size-4, lg→size-5) at higher CSS specificity.
+    // Deferred — swapping would change rendered variant/icon-size/layout.
     return (
         <Button
             variant="outline"

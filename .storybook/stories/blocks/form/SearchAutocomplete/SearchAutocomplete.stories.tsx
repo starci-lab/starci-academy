@@ -88,6 +88,24 @@ export const Loading: Story = {
 }
 
 /**
+ * Skeleton: the loading mirror — a field-box skeleton matching the search
+ * field's resting shape (no dropdown, canon §8).
+ */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8 max-w-sm">
+            <SearchAutocomplete
+                items={[]}
+                inputValue=""
+                onInputChange={() => undefined}
+                onSelect={() => undefined}
+                isSkeleton
+            />
+        </div>
+    ),
+}
+
+/**
  * NoResults: when `items` is empty and not loading, the dropdown shows
  * `emptyLabel` in place of the suggestion list.
  */

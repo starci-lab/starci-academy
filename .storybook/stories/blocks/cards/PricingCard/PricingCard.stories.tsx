@@ -4,7 +4,7 @@ import { PricingCard } from "./PricingCard"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof PricingCard> = {
-    title: "Block/Cards/PricingCard",
+    title: "Design/Cards/PricingCard",
     component: PricingCard,
     tags: ["autodocs"],
     parameters: {
@@ -90,6 +90,29 @@ export const BadgeHiddenWithoutHighlight: Story = {
                         </ul>
                     }
                     cta={<Button className="w-full" variant="outline">Nâng cấp</Button>}
+                />
+            </div>,
+            ANATOMY,
+        ),
+}
+
+/** Có discount NHƯNG không highlighted — `originalPrice` render độc lập với `highlighted` (khác với badge, chỉ hiện khi `highlighted`). */
+export const DiscountWithoutHighlight: Story = {
+    render: () =>
+        blockShell(
+            <div className="max-w-sm">
+                <PricingCard
+                    name="Basic"
+                    price="99.000đ"
+                    originalPrice="149.000đ"
+                    period="/tháng"
+                    features={
+                        <ul className="flex flex-col gap-2 text-sm text-foreground">
+                            <li>200 tín dụng AI mỗi tháng</li>
+                            <li>Mở 5 khóa học nền tảng</li>
+                        </ul>
+                    }
+                    cta={<Button className="w-full" variant="outline">Chọn Basic</Button>}
                 />
             </div>,
             ANATOMY,

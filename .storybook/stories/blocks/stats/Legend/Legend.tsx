@@ -29,7 +29,7 @@ export interface LegendItem {
     color: string
     /**
      * Optional trailing value printed after the label in the SAME muted line
-     * (e.g. a `· 12` count or a `40%` share). Omit for a bare label.
+     * (e.g. a `·� 12` count or a `40%` share). Omit for a bare label.
      */
     suffix?: ReactNode
 }

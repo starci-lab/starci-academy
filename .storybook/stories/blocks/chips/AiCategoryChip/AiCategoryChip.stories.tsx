@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { AiCategoryChip, AiModelCategory } from "./AiCategoryChip"
 
 const meta: Meta<typeof AiCategoryChip> = {
-    title: "Primitives/Chip/AiCategoryChip",
+    title: "Design/Chip/AiCategoryChip",
     component: AiCategoryChip,
     tags: ["autodocs"],
     parameters: {
@@ -55,6 +55,15 @@ export const Frontier: Story = {
     render: () => (
         <div className="p-8">
             <AiCategoryChip category={AiModelCategory.Frontier} />
+        </div>
+    ),
+}
+
+/** Đang tải: skeleton mirror (chấm tròn + thanh nhãn) thay cho chip thật. */
+export const Loading: Story = {
+    render: () => (
+        <div className="p-8">
+            <AiCategoryChip category={AiModelCategory.Balanced} isSkeleton />
         </div>
     ),
 }

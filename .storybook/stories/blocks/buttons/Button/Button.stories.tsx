@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ArrowRight } from "@gravity-ui/icons"
+import { ArrowRightIcon } from "@phosphor-icons/react"
 import { Button, type ButtonSize, type ButtonVariant } from "./Button"
 
 const meta: Meta<typeof Button> = {
@@ -44,7 +44,7 @@ export const Sizes: Story = {
     render: () => (
         <div className="flex items-center gap-4 p-8">
             {SIZES.map((s) => (
-                <Button key={s} size={s} icon={<ArrowRight aria-hidden />}>
+                <Button key={s} size={s} icon={<ArrowRightIcon aria-hidden />}>
                     Tiếp tục
                 </Button>
             ))}
@@ -62,6 +62,59 @@ export const Loading: Story = {
         <div className="flex items-center gap-4 p-8">
             {SIZES.map((s) => (
                 <Button key={s} size={s} isSkeleton>
+                    Tiếp tục
+                </Button>
+            ))}
+        </div>
+    ),
+}
+
+/** variant `danger` — map THẲNG xuống HeroUI `variant="danger"` (destructive action: xoá, huỷ, disable...). */
+export const Danger: Story = {
+    name: "Danger",
+    parameters: {
+        usage: "`variant=\"danger\"` cho hành động HUỶ/XOÁ không đảo ngược được. Không phải `color` prop — HeroUI fork có variant riêng.",
+    },
+    render: () => (
+        <div className="flex flex-wrap items-center gap-3 p-8">
+            {SIZES.map((s) => (
+                <Button key={s} variant="danger" size={s}>
+                    Xoá
+                </Button>
+            ))}
+            <Button variant="danger" iconOnly ariaLabel="Xoá" icon={<ArrowRightIcon aria-hidden />} />
+        </div>
+    ),
+}
+
+/** STATE `isPending` — Spinner render TAY trước label + khoá press (react-aria `isPending` không tự vẽ spinner). */
+export const Pending: Story = {
+    name: "Pending",
+    parameters: {
+        usage: "Bật `isPending` → Spinner (size=sm, color=current) chèn trước label/icon + nút khoá press. Dùng khi chờ mutation/API.",
+    },
+    render: () => (
+        <div className="flex items-center gap-4 p-8">
+            {SIZES.map((s) => (
+                <Button key={s} size={s} isPending>
+                    Tiếp tục
+                </Button>
+            ))}
+            <Button iconOnly isPending ariaLabel="Đang xử lý" icon={<ArrowRightIcon aria-hidden />} />
+        </div>
+    ),
+}
+
+/** STATE `isDisabled` — forward thẳng xuống HeroUI button, không có Spinner (khác `isPending`). */
+export const Disabled: Story = {
+    name: "Disabled",
+    parameters: {
+        usage: "`isDisabled` khoá nút không kèm Spinner — dùng khi form invalid/chưa đủ điều kiện, khác `isPending` (đang chờ tác vụ).",
+    },
+    render: () => (
+        <div className="flex items-center gap-4 p-8">
+            {SIZES.map((s) => (
+                <Button key={s} size={s} isDisabled>
                     Tiếp tục
                 </Button>
             ))}

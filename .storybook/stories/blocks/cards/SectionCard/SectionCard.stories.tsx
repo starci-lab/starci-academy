@@ -4,7 +4,7 @@ import { LightningIcon } from "@phosphor-icons/react"
 import { SectionCard } from "./SectionCard"
 
 const meta: Meta<typeof SectionCard> = {
-    title: "Primitives/Card/SectionCard",
+    title: "Design/Cards/SectionCard",
     component: SectionCard,
     tags: ["autodocs"],
     parameters: {
@@ -29,7 +29,7 @@ export const Default: Story = {
             <div className="max-w-md">
                 <SectionCard
                     title="Review & practice"
-                    icon={<LightningIcon className="size-5 text-muted" aria-hidden focusable="false" />}
+                    icon={<LightningIcon aria-hidden focusable="false" />}
                     action={<Button variant="tertiary" size="sm">View all</Button>}
                 >
                     {body}
@@ -47,7 +47,23 @@ export const Accent: Story = {
                 <SectionCard
                     accent
                     title="Your profile"
-                    icon={<LightningIcon className="size-5 text-accent" aria-hidden focusable="false" />}
+                    icon={<LightningIcon aria-hidden focusable="false" />}
+                >
+                    {body}
+                </SectionCard>
+            </div>
+        </div>
+    ),
+}
+
+/** `icon` + `title`, KHÔNG `action` — tổ hợp header phổ biến nhất ngoài thực tế (WhoToFollow, UpcomingLivestreamCard, StreakFreezeCard đều dùng đúng tổ hợp này). */
+export const IconTitleNoAction: Story = {
+    render: () => (
+        <div className="p-8">
+            <div className="max-w-md">
+                <SectionCard
+                    title="Ai đó nên follow"
+                    icon={<LightningIcon aria-hidden focusable="false" />}
                 >
                     {body}
                 </SectionCard>
@@ -62,6 +78,24 @@ export const Plain: Story = {
         <div className="p-8">
             <div className="max-w-md">
                 <SectionCard>{body}</SectionCard>
+            </div>
+        </div>
+    ),
+}
+
+/** STATE loading — `isSkeleton` tự vẽ skeleton mirror (icon/title/action bars + body paragraph), KHÔNG skeleton rời. */
+export const Loading: Story = {
+    render: () => (
+        <div className="p-8">
+            <div className="max-w-md">
+                <SectionCard
+                    isSkeleton
+                    title="Review & practice"
+                    icon={<LightningIcon aria-hidden focusable="false" />}
+                    action={<Button variant="tertiary" size="sm">View all</Button>}
+                >
+                    {body}
+                </SectionCard>
             </div>
         </div>
     ),

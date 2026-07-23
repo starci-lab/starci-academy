@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Score } from "./Score"
 
 const meta: Meta<typeof Score> = {
-    title: "Primitives/Stats/Score",
+    title: "Design/Stats/Score",
     component: Score,
     tags: ["autodocs"],
     parameters: {
@@ -13,6 +13,15 @@ const meta: Meta<typeof Score> = {
 export default meta
 
 type Story = StoryObj<typeof Score>
+
+/** Canonical usage — default threshold (0.7), whole-number current/max. */
+export const Default: Story = {
+    render: () => (
+        <div className="p-8">
+            <Score current={70} max={100} />
+        </div>
+    ),
+}
 
 /** Ratio 0.3 < half-threshold (0.35) → danger. */
 export const Danger: Story = {

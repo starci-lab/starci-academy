@@ -4,7 +4,7 @@ import { ReactionBar, ReactionType } from "./ReactionBar"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof ReactionBar> = {
-    title: "Block/Feed/ReactionBar",
+    title: "Design/Feed/ReactionBar",
     component: ReactionBar,
     tags: ["autodocs"],
     parameters: {

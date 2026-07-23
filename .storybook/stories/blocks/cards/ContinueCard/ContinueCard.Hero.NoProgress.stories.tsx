@@ -2,12 +2,14 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ContinueCard } from "./ContinueCard"
 import { SectionCard } from "../SectionCard/SectionCard"
 import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
-import { ErrorState } from "../../feedback/ErrorState/ErrorState"
+import { FireIcon, WarningIcon } from "@phosphor-icons/react"
+import { EmptyState } from "../../feedback/EmptyState/EmptyState"
+import { Button } from "../../buttons/Button/Button"
 import type { BlockAnatomyProps } from "../../../block-anatomy"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof ContinueCard> = {
-    title: "Block/Cards/ContinueCard/Hero/No progress",
+    title: "Design/Cards/ContinueCard/Hero/No progress",
     component: ContinueCard,
     tags: ["autodocs"],
     parameters: {
@@ -53,6 +55,37 @@ export const NotStarted: Story = {
         ),
 }
 
+/**
+ * STATE loaded — `icon` (momentum cue, vd streak) sunk behind nội dung như
+ * watermark. Chỉ hero mới nhận icon — `item` bỏ qua prop này (no-op).
+ */
+export const WithIcon: Story = {
+    name: "Có icon nền (streak)",
+    render: () =>
+        blockShell(
+            <div className="w-96">
+                <ContinueCard {...noProgressBase} icon={<FireIcon weight="duotone" />} />
+            </div>,
+            NO_PROGRESS_ANATOMY,
+        ),
+}
+
+/**
+ * STATE loaded — CTA dạng `Link` (pill) khi có `href`, thay vì `Button
+ * onPress`. Hero điều hướng thẳng bằng URL (vd trang tổng hợp session dùng
+ * SSR link) thay vì tay bắt sự kiện.
+ */
+export const LinkCta: Story = {
+    name: "CTA dạng link (href)",
+    render: () =>
+        blockShell(
+            <div className="w-96">
+                <ContinueCard {...noProgressBase} href="/mock-interview/sessions/abc123" />
+            </div>,
+            NO_PROGRESS_ANATOMY,
+        ),
+}
+
 /** STATE loading — skeleton mirror shape KHÔNG thanh (title · meta · CTA, no bar). */
 export const Loading: Story = {
     name: "Đang tải",
@@ -75,11 +108,16 @@ export const LoadError: Story = {
     render: () => (
         <div className="w-96 p-8">
             <SectionCard>
-                <ErrorState
+                <EmptyState
+                    tone="danger"
+                    icon={<WarningIcon weight="duotone" />}
                     title="Mất kết nối"
                     description="Mạng có vẻ bị rớt. Kiểm tra kết nối rồi thử lại."
-                    retryLabel="Thử lại"
-                    onRetry={() => {}}
+                    action={
+                        <Button variant="secondary" size="sm" onPress={() => {}}>
+                            Thử lại
+                        </Button>
+                    }
                 />
             </SectionCard>
         </div>

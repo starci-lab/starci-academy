@@ -1,5 +1,6 @@
 import React from "react"
-import { Chip, cn, Typography } from "@heroui/react"
+import { cn, Typography } from "@heroui/react"
+import { StatusChip } from "../../chips/StatusChip/StatusChip"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -58,9 +59,7 @@ export const SectionHeading = ({
             )}
         >
             {eyebrow ? (
-                <Chip variant="soft" color="accent" size="sm">
-                    <Chip.Label>{eyebrow}</Chip.Label>
-                </Chip>
+                <StatusChip tone="accent">{eyebrow}</StatusChip>
             ) : null}
             <div className={cn("flex items-center gap-2", centered && "justify-center")}>
                 <Typography.Heading

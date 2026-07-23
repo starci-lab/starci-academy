@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>§7 Press-feedback — review</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#fff; --fg:#111826; --muted:#5b6472; --line:#e5e8ee;
+    --accent:#e5397f; --ok:#188a5a; --okbg:#e7f6ee; --warn:#b7791f; --warnbg:#fdf4e3;
+    --danger:#c02b3a; --code:#0b1020; --codefg:#e7ecf5;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{ --bg:#0f1319; --card:#161b23; --fg:#e8ecf3; --muted:#98a2b3; --line:#252c37;
+      --accent:#ff5c96; --ok:#4cc38a; --okbg:#123023; --warn:#e0a531; --warnbg:#2c230f;
+      --danger:#f0616f; --code:#0a0e14; --codefg:#e7ecf5; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 -apple-system,Segoe UI,Roboto,Inter,sans-serif;padding:32px 20px}
+  .wrap{max-width:960px;margin:0 auto}
+  h1{font-size:26px;margin:0 0 4px;font-weight:650}
+  h2{font-size:18px;margin:28px 0 12px;font-weight:600}
+  .sub{color:var(--muted);margin:0 0 8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin:14px 0}
+  .row{display:flex;gap:16px;flex-wrap:wrap}
+  .row>.card{flex:1;min-width:280px;margin:0}
+  code{background:rgba(127,127,127,.14);padding:1px 6px;border-radius:6px;font:13px ui-monospace,SFMono-Regular,Menlo,monospace}
+  pre{background:var(--code);color:var(--codefg);padding:14px 16px;border-radius:12px;overflow:auto;font:12.5px/1.55 ui-monospace,Menlo,monospace}
+  .pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;white-space:nowrap}
+  .ok{color:var(--ok);background:var(--okbg)}
+  .warn{color:var(--warn);background:var(--warnbg)}
+  .tag{color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,transparent)}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-weight:600;font-size:12.5px;text-transform:uppercase;letter-spacing:.03em}
+  .muted{color:var(--muted)}
+  .before{color:var(--danger)} .after{color:var(--ok)}
+  .demo{display:flex;gap:14px;flex-wrap:wrap;margin-top:6px}
+  .swatch{flex:1;min-width:220px;border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--card)}
+  .pcard{border:1px solid var(--line);border-radius:16px;padding:12px;background:var(--card);display:flex;gap:12px;align-items:center;
+    cursor:pointer;transition:scale .2s cubic-bezier(0,0,.2,1);user-select:none;-webkit-tap-highlight-color:transparent;position:relative;overflow:hidden}
+  .pcard:active{scale:.97}
+  .pcard.nofeedback{cursor:pointer}
+  .pcard.nofeedback:active{scale:1}
+  .pcard.hoverbad:hover{background:color-mix(in srgb,var(--fg) 6%,var(--card))}
+  .av{width:40px;height:40px;border-radius:999px;background:color-mix(in srgb,var(--accent) 22%,var(--card));color:var(--accent);
+    display:flex;align-items:center;justify-content:center;font-weight:650;flex-shrink:0}
+  .t1{font-size:14px;font-weight:600} .t2{font-size:12.5px;color:var(--muted)}
+  .hint{font-size:12px;color:var(--muted);margin-top:8px}
+  footer{color:var(--muted);font-size:12.5px;margin-top:28px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>§7 Press-feedback — cái vừa làm</h1>
+  <p class="sub">Audit + fix làn sóng press-feedback cho họ Card · PORT-only · 2026-07-23</p>
+  <div>
+    <span class="pill ok">tsc 0 lỗi</span>
+    <span class="pill ok">eslint sạch</span>
+    <span class="pill ok">verify sống</span>
+    <span class="pill tag">principles §7 siết STRICT</span>
+  </div>
+
+  <h2>1 · Nguyên tắc chốt: CARD ≠ ROW</h2>
+  <div class="row">
+    <div class="card">
+      <span class="pill tag">CARD / TILE</span>
+      <p style="margin:10px 0 8px">Bấm được → phản hồi bằng <b>press</b>: lún <code>active:scale-[0.97]</code> + ripple. <b>KHÔNG hover</b> (giống HeroUI). Phải là <code>&lt;button&gt;/&lt;a&gt;</code> thật.</p>
+      <div class="demo">
+        <div class="swatch">
+          <div class="pcard"><div class="av">SC</div><div><div class="t1">Nhấn thử tôi</div><div class="t2">lún 97% + không hover</div></div></div>
+          <div class="hint">✅ đúng — nhấn giữ để thấy lún</div>
+        </div>
+        <div class="swatch">
+          <div class="pcard nofeedback hoverbad"><div class="av">✗</div><div><div class="t1">Card hand-roll</div><div class="t2">hover đổi màu, không lún</div></div></div>
+          <div class="hint before">❌ sai — hover-tint + không press</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <span class="pill tag">ROW / NAV-SECTION</span>
+      <p style="margin:10px 0 8px">List-row / section <b>KHÔNG</b> phải card → <b>KHÔNG</b> scale/ripple. Affordance của row: <code>hover:bg</code> hoặc hover-underline <b>hợp lệ</b>. Vẫn phải native <code>&lt;button&gt;/&lt;a&gt;</code> (a11y).</p>
+      <div class="swatch">
+        <div class="pcard nofeedback hoverbad" style="border-radius:10px"><div><div class="t1">Row bấm được</div><div class="t2">hover-tint OK · không lún</div></div></div>
+        <div class="hint">✅ row đúng — hover-tint là affordance, không scale</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>2 · Fix đã áp (3 case)</h2>
+  <div class="card" style="padding:6px 20px">
+  <table>
+    <tr><th>Component</th><th>Loại</th><th>Trước</th><th>Sau</th></tr>
+    <tr>
+      <td><b>MediaCard</b><div class="muted" style="font-size:12px">Pressable / AsLink</div></td>
+      <td><span class="pill tag">CARD</span></td>
+      <td class="before"><code>&lt;a&gt;</code>/<code>&lt;button&gt;</code> trần — không scale, không focus-ring</td>
+      <td class="after">adopt contract: <code>active:scale-[0.97]</code> + <code>transition-[scale]</code> + focus-ring + no-hover</td>
+    </tr>
+    <tr>
+      <td><b>NestedCard</b><div class="muted" style="font-size:12px">NestedCardSection</div></td>
+      <td><span class="pill tag">ROW</span></td>
+      <td class="before"><code>&lt;div cursor-pointer&gt;</code> — ⚠️ không keyboard/focus được (a11y)</td>
+      <td class="after"><code>onPress</code>/<code>href</code> → native <code>&lt;button&gt;/&lt;a&gt;</code> + focus-ring; không scale (row)</td>
+    </tr>
+    <tr>
+      <td><b>SurfaceListCard</b><div class="muted" style="font-size:12px">rows</div></td>
+      <td><span class="pill tag">ROW</span></td>
+      <td class="muted">đã là native button/a + hover-tint</td>
+      <td class="after">giữ nguyên — <b>hợp lệ</b> theo §7b (đính chính: không phải gap)</td>
+    </tr>
+  </table>
+  </div>
+
+  <h2>3 · Vì sao MediaCard bỏ ripple</h2>
+  <div class="card">
+    <p style="margin:0">MediaCard có <code>Card</code> nền đặc + cover full-bleed (<code>overflow-hidden</code>). Ripple đặt sau Card sẽ bị nền che khuất → §7a cho phép adopt-contract <b>không cần ripple</b> (scale là phản hồi chính). Ripple đầy đủ vẫn sống ở <code>PressableCard</code> (biến thể press đơn).</p>
+  </div>
+
+  <h2>4 · Gotcha đã sửa (Tailwind v4)</h2>
+  <div class="card">
+    <p style="margin:0 0 8px">v4: <code>scale-*</code> set property <code>scale:</code> (KHÔNG phải <code>transform:</code>). Nếu transition chỉ liệt kê <code>transform</code> → scale đổi <b>tức thì, giật</b>.</p>
+    <pre>❌ transition-[transform,background-color]   → scale KHÔNG mượt
+✅ transition-[scale] duration-200 ease-out  → lún mượt</pre>
+  </div>
+
+  <footer>Chi tiết: <code>.artifacts/audits/primitives-canon-audit-cards-press-feedback-2026-07-23.md</code> · rule: <code>.claude/fe/principles.md §7</code> · soi thật trên Storybook :6006</footer>
+</div>
+</body>
+</html>

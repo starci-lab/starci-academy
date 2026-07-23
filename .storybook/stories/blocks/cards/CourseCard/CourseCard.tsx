@@ -9,15 +9,15 @@ import {
     UsersIcon,
 } from "@phosphor-icons/react"
 import {
-    Button,
     Card,
-    Chip,
     Popover,
     Typography,
     cn,
 } from "@heroui/react"
 import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 import { CrossListCard, CrossListItem } from "../CrossListCard/CrossListCard"
+import { Button } from "../../buttons/Button/Button"
+import { StatusChip } from "../../chips/StatusChip/StatusChip"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported faithfully from
@@ -92,9 +92,7 @@ const PriceTag = ({
 
     const chip =
         savePercent > 0 ? (
-            <Chip size="sm" variant="soft" color="success">
-                <Chip.Label>{`−${savePercent}%`}</Chip.Label>
-            </Chip>
+            <StatusChip tone="success">{`−${savePercent}%`}</StatusChip>
         ) : null
 
     const breakdownContent = hasSaving ? (
@@ -192,6 +190,14 @@ export interface CourseCardProps {
      */
     layout?: "grid" | "line"
     /**
+     * `true` → self-render a skeleton MIRROR of the card for the current `layout`
+     * (grid mirrors the grid tree, line mirrors the row), keeping the exact
+     * box/radius/padding so the catalog grid never jumps when data resolves.
+     * `course` (and the other data props) are ignored. Replaces the old standalone
+     * `CourseCardSkeleton` — skeleton = a PROP, not a separate component (§6).
+     */
+    isSkeleton?: boolean
+    /**
      * Optional trailing action node (e.g. an "Add to cart" button) rendered beside
      * the View CTA. The block only places it; the caller owns its logic.
      */
@@ -214,6 +220,7 @@ export const CourseCard = ({
     loyaltyOriginalVnd,
     loyaltyPending = false,
     layout = "grid",
+    isSkeleton = false,
     action,
     className,
 }: CourseCardProps) => {
@@ -285,6 +292,81 @@ export const CourseCard = ({
         ? loyaltyOriginalVnd ?? null
         : (course.originalPrice != null ? toVnd(course.originalPrice) : null)
 
+    // loading MIRROR — self-render the skeleton for the current layout (§6: skeleton is
+    // a PROP, not a separate component). Each mirror KEEPS the real box/radius/padding
+    // (same Card frame, same Card.Content/Footer, same CrossListCard bordered surface)
+    // so the grid never jumps when the real card swaps in.
+    if (isSkeleton) {
+        // LINE mirror: horizontal row — thumbnail (16:9, hidden on narrow) · title+meta
+        // + one-line description · price + a two-button action column on the right.
+        if (layout === "line") {
+            return (
+                <Card className={cn("overflow-hidden rounded-3xl", className)}>
+                    <div className="flex items-center gap-3">
+                        {/* thumbnail 16:9 (rounded-2xl media step), hidden on narrow like the real row */}
+                        <div className="relative hidden aspect-video w-36 shrink-0 overflow-hidden rounded-2xl @app-sm:block">
+                            <Skeleton className="size-full" />
+                        </div>
+                        {/* title + users-meta, then a one-line description */}
+                        <div className="flex min-w-0 flex-1 flex-col gap-1">
+                            <div className="flex items-center gap-2">
+                                <Skeleton.Typography type="body" width="1/2" />
+                                <div className="flex shrink-0 items-center gap-1">
+                                    <Skeleton className="size-4 shrink-0 rounded-full" />
+                                    <Skeleton.Typography type="body-xs" width="w-10" />
+                                </div>
+                            </div>
+                            <Skeleton.Typography type="body-sm" width="3/4" />
+                        </div>
+                        {/* price line + a two-button action row (mirrors items-end column) */}
+                        <div className="flex shrink-0 flex-col items-end gap-2">
+                            <Skeleton.Typography type="body" width="w-20" />
+                            <div className="flex w-full items-center gap-2">
+                                <Skeleton.Button width="flex-1" />
+                                <Skeleton.Button width="flex-1" />
+                            </div>
+                        </div>
+                    </div>
+                </Card>
+            )
+        }
+
+        // GRID mirror: cover 16:9 · title+meta · 2 description lines · the bordered
+        // value-props list (CrossListCard self-skeletons its rows) · price · 2-button row.
+        return (
+            <Card className={cn("flex flex-col overflow-hidden rounded-3xl", className)}>
+                <Card.Content className="flex flex-col gap-3">
+                    {/* cover 16:9 (rounded-2xl media step) */}
+                    <Skeleton className="aspect-video w-full rounded-2xl" />
+                    <div className="flex flex-col gap-2">
+                        {/* title + users-meta */}
+                        <div className="flex items-center justify-between gap-2">
+                            <Skeleton.Typography type="h6" width="1/2" />
+                            <div className="flex shrink-0 items-center gap-1">
+                                <Skeleton className="size-4 shrink-0 rounded-full" />
+                                <Skeleton.Typography type="body-xs" width="w-10" />
+                            </div>
+                        </div>
+                        {/* description (line-clamp-2) */}
+                        <Skeleton.Typography type="body-sm" width="full" />
+                        <Skeleton.Typography type="body-sm" width="3/4" />
+                        {/* value-props — same bordered CrossListCard surface, self-skeletoned */}
+                        <CrossListCard bordered isSkeleton className="mt-1" />
+                    </div>
+                </Card.Content>
+                <Card.Footer className="mt-auto flex flex-col items-start gap-2">
+                    {/* price line */}
+                    <Skeleton.Typography type="body" width="1/3" />
+                    {/* action row — primary + secondary button */}
+                    <div className="flex w-full items-center gap-2">
+                        <Skeleton.Button width="flex-1" />
+                        <Skeleton.Button width="flex-1" />
+                    </div>
+                </Card.Footer>
+            </Card>
+        )
+    }
+
     // compact LINE row (catalog list view): thumbnail + title/description, with the
     // price + view CTA on the right — one course per row for fast scanning.
     if (layout === "line") {
@@ -347,9 +429,9 @@ export const CourseCard = ({
                                 variant="primary"
                                 onPress={onView}
                                 className="flex-1"
+                                icon={<ArrowRightIcon aria-hidden focusable="false" />}
                             >
                                 {viewLabel}
-                                <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
                             </Button>
                             {secondaryAction}
                         </div>
@@ -444,9 +526,9 @@ export const CourseCard = ({
                         variant="primary"
                         onPress={onView}
                         className="flex-1"
+                        icon={<ArrowRightIcon aria-hidden focusable="false" />}
                     >
                         {viewLabel}
-                        <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
                     </Button>
                     {secondaryAction}
                 </div>

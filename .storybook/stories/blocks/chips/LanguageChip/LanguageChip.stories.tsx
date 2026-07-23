@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { LanguageChip } from "./LanguageChip"
 
 const meta: Meta<typeof LanguageChip> = {
-    title: "Primitives/Chip/LanguageChip",
+    title: "Design/Chip/LanguageChip",
     component: LanguageChip,
     tags: ["autodocs"],
     parameters: {
@@ -48,6 +48,18 @@ export const Unknown: Story = {
     render: () => (
         <div className="p-8">
             <LanguageChip language="cobol" />
+        </div>
+    ),
+}
+
+/**
+ * Loading: skeleton mirror (dot + label bar) matching the real chip's footprint,
+ * so resolving the language doesn't shift layout.
+ */
+export const Loading: Story = {
+    render: () => (
+        <div className="p-8">
+            <LanguageChip language="typescript" isSkeleton />
         </div>
     ),
 }

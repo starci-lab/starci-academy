@@ -70,12 +70,37 @@ export const NoMark: Story = {
 export const Bordered: Story = {
     render: () => (
         <div className="p-8">
-            <div className="rounded-3xl bg-surface p-4 shadow-surface">
+            <div className="rounded-3xl bg-surface p-3 shadow-surface">
                 <CrossListCard bordered>
                     <CrossListItem mark="check">{row("Gồm: toàn bộ nội dung khoá")}</CrossListItem>
                     <CrossListItem mark="cross">{row("Chưa gồm: mentor 1-1")}</CrossListItem>
                 </CrossListCard>
             </div>
+        </div>
+    ),
+}
+
+/** `isSkeleton` — 3 hàng mirror (chấm tròn + vạch chữ) trong lúc danh sách chưa tải xong. */
+export const Loading: Story = {
+    render: () => (
+        <div className="p-8">
+            <CrossListCard isSkeleton />
+        </div>
+    ),
+}
+
+/**
+ * `tone="danger"` — mark ĐỎ cho hàng tiêu cực CỨNG (mất/chặn/cảnh báo thật), khác cross muted
+ * "chỉ là chưa gồm". Cùng element mark, chỉ leo TONE (§2d) — vd danh sách hậu quả khi huỷ gói.
+ */
+export const DangerTone: Story = {
+    render: () => (
+        <div className="p-8">
+            <CrossListCard>
+                <CrossListItem mark="cross" tone="danger">{row("Mất toàn bộ tiến độ chấm bài bằng AI")}</CrossListItem>
+                <CrossListItem mark="cross" tone="danger">{row("Mất quyền mock interview không giới hạn")}</CrossListItem>
+                <CrossListItem mark="cross">{row("Chưa gồm: mentor 1-1 (như cũ)")}</CrossListItem>
+            </CrossListCard>
         </div>
     ),
 }

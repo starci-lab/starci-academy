@@ -97,7 +97,7 @@ export const StandardPlayer = ({ src, className }: StandardPlayerProps) => {
             onMouseEnter={() => setHideControls(false)}
             onMouseLeave={() => setHideControls(true)}
         >
-            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- click here is a convenience duplicate of the accessible play/pause button in VideoControls, which is already keyboard-operable */}
+            { }
             <video
                 ref={videoRef}
                 className="h-full w-full object-contain"

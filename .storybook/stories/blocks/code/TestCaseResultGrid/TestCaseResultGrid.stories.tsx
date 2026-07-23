@@ -3,7 +3,7 @@ import { TestCaseResultGrid } from "./TestCaseResultGrid"
 import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 
 const meta: Meta<typeof TestCaseResultGrid> = {
-    title: "Primitives/Code/TestCaseResultGrid",
+    title: "Block/Code/TestCaseResultGrid",
     component: TestCaseResultGrid,
     tags: ["autodocs"],
     parameters: {

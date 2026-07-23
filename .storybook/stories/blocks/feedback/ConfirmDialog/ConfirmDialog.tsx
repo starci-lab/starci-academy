@@ -1,5 +1,6 @@
 import React from "react"
-import { AlertDialog, Button, cn, Spinner, Typography } from "@heroui/react"
+import { AlertDialog, cn, Typography } from "@heroui/react"
+import { ButtonGroup } from "../../buttons/ButtonGroup/ButtonGroup"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -91,9 +92,8 @@ export const ConfirmDialog = ({
             <AlertDialog.Backdrop>
                 <AlertDialog.Container size="sm">
                     <AlertDialog.Dialog className={cn(className)}>
+                        {/* No status icon — text-only; layout GIỮ NGUYÊN (heading/body trái, footer phải) — thầy chốt 2026-07-23. */}
                         <AlertDialog.Header>
-                            {/* Icon status mirrors the tone — danger for destructive */}
-                            <AlertDialog.Icon status={isDanger ? "danger" : "default"} />
                             <AlertDialog.Heading>{title}</AlertDialog.Heading>
                         </AlertDialog.Header>
                         {description != null ? (
@@ -103,24 +103,24 @@ export const ConfirmDialog = ({
                                 </Typography>
                             </AlertDialog.Body>
                         ) : null}
-                        <AlertDialog.Footer className="w-full items-center justify-end gap-3">
-                            <Button
-                                variant="tertiary"
-                                isDisabled={isConfirming}
-                                onPress={() => onOpenChange(false)}
-                            >
-                                {cancelLabel}
-                            </Button>
-                            {/* Destructive → danger variant; the spinner is rendered
-                                explicitly because isPending alone shows none. */}
-                            <Button
-                                variant={isDanger ? "danger" : "primary"}
-                                isPending={isConfirming}
-                                onPress={onConfirm}
-                            >
-                                {isConfirming ? <Spinner color="current" size="sm" /> : null}
-                                {confirmLabel}
-                            </Button>
+                        <AlertDialog.Footer className="w-full">
+                            <ButtonGroup
+                                align="end"
+                                actions={[
+                                    {
+                                        label: cancelLabel,
+                                        variant: "tertiary",
+                                        isDisabled: isConfirming,
+                                        onPress: () => onOpenChange(false),
+                                    },
+                                    {
+                                        label: confirmLabel,
+                                        variant: isDanger ? "danger" : "primary",
+                                        isPending: isConfirming,
+                                        onPress: onConfirm,
+                                    },
+                                ]}
+                            />
                         </AlertDialog.Footer>
                     </AlertDialog.Dialog>
                 </AlertDialog.Container>

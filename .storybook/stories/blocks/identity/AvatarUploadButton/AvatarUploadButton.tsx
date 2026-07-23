@@ -1,8 +1,9 @@
 "use client"
 
 import React from "react"
-import { Button, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { CameraIcon } from "@phosphor-icons/react"
+import { Button } from "../../buttons/Button/Button"
 import { UserAvatar } from "../UserAvatar/UserAvatar"
 
 /**
@@ -52,24 +53,31 @@ export const AvatarUploadButton = ({
     className,
 }: AvatarUploadButtonProps) => (
     <Button
-        isIconOnly
+        iconOnly
+        // size="lg" is chosen for its §5a icon-scale (size-6), NOT for footprint —
+        // the explicit `size-20 ... p-0` below overrides the port's own button
+        // dimensions, so this only preserves the camera icon's original size-6.
+        size="lg"
         variant="ghost"
         onPress={onPress}
-        aria-label={label}
+        ariaLabel={label}
+        icon={
+            <>
+                <UserAvatar
+                    username={displayName}
+                    avatar={avatar}
+                    seed={seed}
+                    size="lg"
+                    className="size-20 text-2xl"
+                />
+                <span className="absolute inset-0 flex items-center justify-center rounded-full bg-black/40 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+                    <CameraIcon aria-hidden focusable="false" className="text-white" />
+                </span>
+            </>
+        }
         className={cn(
             "group relative size-20 shrink-0 overflow-hidden rounded-full p-0",
             className,
         )}
-    >
-        <UserAvatar
-            username={displayName}
-            avatar={avatar}
-            seed={seed}
-            size="lg"
-            className="size-20 text-2xl"
-        />
-        <span className="absolute inset-0 flex items-center justify-center rounded-full bg-black/40 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
-            <CameraIcon aria-hidden focusable="false" className="size-6 text-white" />
-        </span>
-    </Button>
+    />
 )

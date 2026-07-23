@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { LanguageDonut } from "./LanguageDonut"
 
 const meta: Meta<typeof LanguageDonut> = {
-    title: "Primitives/Stats/LanguageDonut",
+    title: "Block/Stats/LanguageDonut",
     component: LanguageDonut,
     tags: ["autodocs"],
     parameters: {

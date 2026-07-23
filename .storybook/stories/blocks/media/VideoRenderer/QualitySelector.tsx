@@ -87,6 +87,12 @@ export const QualitySelector = ({
 
     return (
         <Dropdown className={cn(className)}>
+            {/* NOTE: kept as hand-rolled div — Button port's variants have no tone for this
+                control. `ghost`/`tertiary` resolve fg to `--default-foreground` (theme text
+                color) with hover bg `--default`; this trigger must stay a fixed white icon on
+                translucent white hover *regardless of app theme* (it sits on the video overlay,
+                not app chrome). Forcing a port variant would make the icon invisible in light
+                theme — deferred. */}
             <DropdownTrigger aria-label="Quality">
                 <div className="flex h-8 min-w-8 cursor-pointer items-center justify-center rounded-medium border-none text-white hover:bg-white/20">
                     <GearSixIcon className="h-5 w-5" />

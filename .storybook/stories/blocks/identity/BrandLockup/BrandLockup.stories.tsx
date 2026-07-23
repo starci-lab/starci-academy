@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { BrandLockup } from "./BrandLockup"
 
 const meta: Meta<typeof BrandLockup> = {
-    title: "Primitives/Identity/BrandLockup",
+    title: "Design/Identity/BrandLockup",
     component: BrandLockup,
     tags: ["autodocs"],
     parameters: {

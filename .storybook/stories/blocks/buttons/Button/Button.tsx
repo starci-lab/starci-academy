@@ -1,6 +1,6 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Button as HeroUIButton, cn } from "@heroui/react"
+import { Button as HeroUIButton, Spinner, cn } from "@heroui/react"
 import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 
 /**
@@ -14,9 +14,14 @@ import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
  * - **icon-size §5a**: trailing `icon` co theo size nút (sm→size-4 · md→size-5 · lg→size-6).
  * - **§5b**: trailing icon trượt khi hover (`group-hover:translate-x-1`).
  * - **isSkeleton**: tự vẽ `Skeleton.Button` đúng size → consumer chỉ bật cờ.
+ * - **variant `danger`**: map THẲNG xuống HeroUI `variant="danger"` (fork HeroUI có variant
+ *   riêng cho destructive, không phải `color` prop — xem `@heroui/styles` button.styles).
+ * - **isPending**: HeroUI/react-aria `isPending` KHÔNG tự vẽ spinner (chỉ khoá tương tác) —
+ *   primitive render TAY `<Spinner size="sm" color="current">` trước label/icon + khoá press.
+ * - **isDisabled**: forward thẳng xuống HeroUI button (OR với `isPending`).
  */
 
-export type ButtonVariant = "primary" | "secondary" | "tertiary" | "ghost"
+export type ButtonVariant = "primary" | "secondary" | "tertiary" | "ghost" | "danger"
 export type ButtonSize = "sm" | "md" | "lg"
 
 // §5a: icon size ĐỐI CHIẾU text-size của button (sm=text-xs→4 · md=text-sm→5 · lg=text-base→6).
@@ -44,6 +49,10 @@ export interface ButtonProps {
     ariaLabel?: string
     /** `true` → render skeleton mirror (đúng size; VUÔNG nếu iconOnly). Consumer chỉ bật cờ. */
     isSkeleton?: boolean
+    /** `true` → nút BUSY: chèn `<Spinner size="sm" color="current">` trước label/icon + khoá press (react-aria `isPending` không tự vẽ spinner). */
+    isPending?: boolean
+    /** `true` → disable nút (forward xuống HeroUI). */
+    isDisabled?: boolean
     onPress?: () => void
     className?: string
 }
@@ -61,6 +70,8 @@ export const Button = ({
     iconOnly = false,
     ariaLabel,
     isSkeleton = false,
+    isPending = false,
+    isDisabled = false,
     onPress,
     className,
 }: ButtonProps) => {
@@ -72,15 +83,32 @@ export const Button = ({
         )
     }
     if (iconOnly) {
-        // Nút chỉ-icon: icon ép size theo size nút (§5a), a11y qua aria-label.
+        // Nút chỉ-icon: icon ép size theo size nút (§5a), a11y qua aria-label. isPending → Spinner thay icon + khoá press.
         return (
-            <HeroUIButton isIconOnly variant={variant} size={size} aria-label={ariaLabel} onPress={onPress} className={cn(ICON_CLS[size], className)}>
-                {icon}
+            <HeroUIButton
+                isIconOnly
+                variant={variant}
+                size={size}
+                aria-label={ariaLabel}
+                onPress={onPress}
+                isPending={isPending}
+                isDisabled={isDisabled || isPending}
+                className={cn(ICON_CLS[size], className)}
+            >
+                {isPending ? <Spinner size="sm" color="current" /> : icon}
             </HeroUIButton>
         )
     }
     return (
-        <HeroUIButton variant={variant} size={size} onPress={onPress} className={cn("group", className)}>
+        <HeroUIButton
+            variant={variant}
+            size={size}
+            onPress={onPress}
+            isPending={isPending}
+            isDisabled={isDisabled || isPending}
+            className={cn("group", className)}
+        >
+            {isPending ? <Spinner size="sm" color="current" /> : null}
             {children}
             {icon ? (
                 <span className={cn(ICON_CLS[size], "transition-transform group-hover:translate-x-1")}>{icon}</span>

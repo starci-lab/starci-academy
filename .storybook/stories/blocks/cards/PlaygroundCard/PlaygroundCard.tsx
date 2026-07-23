@@ -1,8 +1,6 @@
 import React from "react"
 import {
-    Button,
     Card,
-    Chip,
     Typography,
     cn,
 } from "@heroui/react"
@@ -12,6 +10,8 @@ import {
     TerminalWindowIcon,
 } from "@phosphor-icons/react"
 import { IconTile } from "../../identity/IconTile/IconTile"
+import { Button } from "../../buttons/Button/Button"
+import { StatusChip } from "../../chips/StatusChip/StatusChip"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported faithfully from
@@ -59,18 +59,19 @@ export const PlaygroundCard = ({
                     <Typography type="h6" weight="bold" truncate>
                         {title}
                     </Typography>
-                    <Chip size="sm" variant="secondary" className="w-fit">
-                        <ListChecksIcon aria-hidden focusable="false" className="size-4" />
-                        <Chip.Label>
-                            {stepCountLabel(stepCount)}
-                        </Chip.Label>
-                    </Chip>
+                    <StatusChip tone="neutral" icon={<ListChecksIcon aria-hidden focusable="false" />}>
+                        {stepCountLabel(stepCount)}
+                    </StatusChip>
                 </div>
             </Card.Content>
             <Card.Footer className="mt-auto">
-                <Button variant="primary" className="w-full" onPress={onOpen}>
+                <Button
+                    variant="primary"
+                    className="w-full"
+                    onPress={onOpen}
+                    icon={<ArrowRightIcon aria-hidden focusable="false" />}
+                >
                     {CTA_LABEL}
-                    <ArrowRightIcon aria-hidden focusable="false" className="size-4" />
                 </Button>
             </Card.Footer>
         </Card>

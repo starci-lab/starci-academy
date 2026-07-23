@@ -3,7 +3,7 @@ import { PlaygroundCard } from "./PlaygroundCard"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof PlaygroundCard> = {
-    title: "Block/Cards/PlaygroundCard",
+    title: "Design/Cards/PlaygroundCard",
     component: PlaygroundCard,
     tags: ["autodocs"],
     parameters: {

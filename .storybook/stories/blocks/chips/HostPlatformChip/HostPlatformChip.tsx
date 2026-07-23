@@ -1,13 +1,8 @@
 import React from "react"
 import { cn } from "@heroui/react"
-import {
-    SiGoogledrive,
-    SiYoutube,
-    SiVimeo,
-    SiCloudflare,
-} from "@icons-pack/react-simple-icons"
 import { EnumChip } from "../EnumChip/EnumChip"
 import type { EnumChipEntry } from "../EnumChip/EnumChip"
+import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — the target `HostPlatformChip`. Authored in
@@ -31,22 +26,27 @@ export interface HostPlatformChipProps {
     hostPlatform: VideoHostPlatform
     /** Extra classes on the chip. */
     className?: string
+    /** Renders the loading skeleton mirror instead of the real chip. */
+    isSkeleton?: boolean
 }
 
 /**
- * A chip that displays the host platform of a lesson video (accent, brand icon +
+ * A chip that displays the host platform of a lesson video (accent, text-only
  * label). Thin domain map over the shared `EnumChip` primitive.
  *
  * @param hostPlatform - The host platform of the lesson video.
  */
-export const HostPlatformChip = ({ hostPlatform, className }: HostPlatformChipProps) => {
+export const HostPlatformChip = ({ hostPlatform, className, isSkeleton }: HostPlatformChipProps) => {
+    if (isSkeleton) {
+        return <Skeleton.Chip className={className} />
+    }
     // `Other` is intentionally unhandled — EnumChip throws on it, matching the
     // original switch `default` throw. Hence Partial rather than a full Record.
     const map: Partial<Record<VideoHostPlatform, EnumChipEntry>> = {
-        [VideoHostPlatform.Youtube]: { color: "accent", icon: <SiYoutube size={16} />, label: "YouTube" },
-        [VideoHostPlatform.GoogleDrive]: { color: "accent", icon: <SiGoogledrive size={16} />, label: "Google Drive" },
-        [VideoHostPlatform.Vimeo]: { color: "accent", icon: <SiVimeo size={16} />, label: "Vimeo" },
-        [VideoHostPlatform.CloudflareStream]: { color: "accent", icon: <SiCloudflare size={16} />, label: "Cloudflare Stream" },
+        [VideoHostPlatform.Youtube]: { color: "accent", label: "YouTube" },
+        [VideoHostPlatform.GoogleDrive]: { color: "accent", label: "Google Drive" },
+        [VideoHostPlatform.Vimeo]: { color: "accent", label: "Vimeo" },
+        [VideoHostPlatform.CloudflareStream]: { color: "accent", label: "Cloudflare Stream" },
     }
     return <EnumChip value={hostPlatform} map={map} className={cn(className)} />
 }

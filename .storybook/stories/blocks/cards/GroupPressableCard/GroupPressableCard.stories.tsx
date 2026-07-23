@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Typography } from "@heroui/react"
-import { CaretRightIcon, GearIcon } from "@phosphor-icons/react"
+import { Avatar, AvatarFallback, Typography } from "@heroui/react"
+import { CaretRightIcon } from "@phosphor-icons/react"
 import { GroupPressableCard, type GroupPressableCardItem } from "./GroupPressableCard"
+import type { VerdictBandVariant } from "../verdict-band"
 
 const meta: Meta<typeof GroupPressableCard> = {
     title: "Primitives/Card/GroupPressableCard",
@@ -16,61 +17,79 @@ export default meta
 
 type Story = StoryObj<typeof GroupPressableCard>
 
-const settingsItems: Array<GroupPressableCardItem> = ["Edit profile", "Appearance", "Security", "Notifications"].map((title) => ({
-    key: title,
-    onPress: () => {},
-    className: "flex items-center gap-3",
-    content: (
-        <>
-            <GearIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
-            <Typography type="body-sm" weight="medium" truncate>{title}</Typography>
-        </>
-    ),
-}))
-
-/** SM-2 grade tile content — a value + label + hint, mirroring a flashcard rating option. */
-const rateTile = (grade: number, label: string, hint: string) => (
-    <div className="flex flex-col gap-1 text-center">
-        <span className="text-sm font-semibold text-foreground">{grade + 1}. {label}</span>
-        <span className="text-xs text-muted">{hint}</span>
+/**
+ * Mock-content chuẩn cho MỌI story: khi ô `content` là một card có children bên
+ * trong, đổ bằng ProfileCard — avatar + title + description (fixture chuẩn, neo
+ * `AsyncContent`). Avatar đi TRONG `content` (slot `icon` chỉ cho icon thường).
+ */
+const profileTile = (initials: string, title: string, description: string) => (
+    <div className="flex flex-row items-center gap-3">
+        <Avatar className="size-10 shrink-0">
+            <AvatarFallback>{initials}</AvatarFallback>
+        </Avatar>
+        <div className="flex min-w-0 flex-col">
+            <span className="truncate text-sm font-medium">{title}</span>
+            <span className="truncate text-xs text-muted">{description}</span>
+        </div>
     </div>
 )
 
-const ratingItems: Array<GroupPressableCardItem> = [
-    { grade: 0, label: "Forgot", hint: "Review now" },
-    { grade: 1, label: "Hard", hint: "In 10 minutes" },
-    { grade: 2, label: "Good", hint: "In 1 day" },
-    { grade: 3, label: "Easy", hint: "In 4 days" },
-].map((o) => ({
-    key: o.label,
+const MENTORS = [
+    { initials: "SC", title: "StarCi Academy", description: "Học fullstack, system design và DevOps theo lộ trình phỏng vấn." },
+    { initials: "QN", title: "Thầy Quang", description: "Mentor fullstack — review dự án và mock interview." },
+    { initials: "MM", title: "Mia Mia English", description: "Luyện đề và học cụm từ theo phương pháp SM-2." },
+    { initials: "DV", title: "DevOps Lab", description: "Thực hành 4-cloud với credentials thật." },
+]
+
+const profileItems: Array<GroupPressableCardItem> = MENTORS.map((m) => ({
+    key: m.initials,
     onPress: () => {},
-    label: `${o.label} — ${o.hint}`,
-    content: rateTile(o.grade, o.label, o.hint),
+    label: m.title,
+    content: profileTile(m.initials, m.title, m.description),
 }))
 
-/** Default: each cell opens its own destination; the whole grid is a secondary path on the screen (no shortcut). */
+/** Default: mỗi ô mở một đích riêng; cả grid là đường phụ trên màn hình (không phím tắt). Content = ProfileCard. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
-            <div className="max-w-md">
-                <GroupPressableCard ariaLabel="Settings pages" columns={{ base: 1, sm: 2 }} items={settingsItems} />
+            <div className="max-w-2xl">
+                <GroupPressableCard ariaLabel="Mentors" columns={{ base: 1, sm: 2 }} items={profileItems} />
             </div>
         </div>
     ),
 }
 
 /**
- * `keyboardShortcut` — the group is the screen's PRIMARY action (a flashcard rating bar):
- * number keys 1–N drive it without the mouse. Try pressing 1 to 4.
+ * `item.selected` — grid CHỌN (single-select): ô được chọn có **ring accent** bao quanh
+ * (tương đương dấu check của row). Dùng khi grid là bộ chọn (chọn mentor/gói/avatar…),
+ * không phải grid hành động.
+ */
+export const Selected: Story = {
+    render: () => (
+        <div className="p-8">
+            <div className="max-w-2xl">
+                <GroupPressableCard
+                    ariaLabel="Chọn mentor"
+                    columns={{ base: 1, sm: 2 }}
+                    items={profileItems.map((item, index) => ({ ...item, selected: index === 1 }))}
+                />
+            </div>
+        </div>
+    ),
+}
+
+/**
+ * `keyboardShortcut` — cả group là hành động CHÍNH của màn hình: phím số `1`–`N` chọn ô
+ * không cần chuột. Bấm 1 đến 4 để chọn. Content = ProfileCard (thống nhất mock).
  */
 export const KeyboardShortcut: Story = {
     render: () => (
         <div className="p-8">
-            <div className="max-w-md">
+            <div className="max-w-2xl">
                 <GroupPressableCard
-                    ariaLabel="Rate how well you remembered this card"
-                    columns={{ base: 2, sm: 4 }}
-                    items={ratingItems}
+                    ariaLabel="Chọn mentor bằng phím số"
+                    columns={{ base: 1, sm: 2 }}
+                    items={profileItems}
                     keyboardShortcut
                 />
             </div>
@@ -78,38 +97,38 @@ export const KeyboardShortcut: Story = {
     ),
 }
 
-/** All items `isDisabled` — a submit is in flight: the whole group is locked (and the shortcut stops), options still visible. */
+/** All items `isDisabled` — một submit đang chạy: cả group bị khoá (phím tắt dừng), các ô vẫn hiện. */
 export const Disabled: Story = {
     render: () => (
         <div className="p-8">
-            <div className="max-w-md">
+            <div className="max-w-2xl">
                 <GroupPressableCard
-                    ariaLabel="Settings pages"
+                    ariaLabel="Mentors"
                     columns={{ base: 1, sm: 2 }}
-                    items={settingsItems.map((item) => ({ ...item, isDisabled: true }))}
+                    items={profileItems.map((item) => ({ ...item, isDisabled: true }))}
                 />
             </div>
         </div>
     ),
 }
 
+const VERDICTS: Array<VerdictBandVariant> = ["success", "warning", "danger", "accent"]
+
 /**
- * `withVerdict` per item — a LEFT DATA-signal band on each tile (e.g. the SM-2 recall tier),
- * the same canonical band as `SectionCard`/`SurfaceListCardItem`.
+ * `withVerdict` mỗi ô — một dải TÍN HIỆU DATA bên trái mỗi tile (cùng band canonical với
+ * `SectionCard`/`SurfaceListCardItem`), phủ lên content ProfileCard.
  */
 export const Verdict: Story = {
     render: () => (
         <div className="p-8">
-            <div className="max-w-md">
+            <div className="max-w-2xl">
                 <GroupPressableCard
-                    ariaLabel="Chủ đề theo mức ghi nhớ"
+                    ariaLabel="Mentors theo trạng thái"
                     columns={{ base: 1, sm: 2 }}
-                    items={[
-                        { key: "a", onPress: () => {}, withVerdict: { enable: true, variant: "success" }, content: <Typography type="body-sm" weight="medium">Shell & hệ thống file</Typography> },
-                        { key: "b", onPress: () => {}, withVerdict: { enable: true, variant: "warning" }, content: <Typography type="body-sm" weight="medium">Redirect & pipe</Typography> },
-                        { key: "c", onPress: () => {}, withVerdict: { enable: true, variant: "danger" }, content: <Typography type="body-sm" weight="medium">Quyền file cơ bản</Typography> },
-                        { key: "d", onPress: () => {}, withVerdict: { enable: true, color: "amber-500" }, content: <Typography type="body-sm" weight="medium">Cron & scheduling</Typography> },
-                    ]}
+                    items={profileItems.map((item, index) => ({
+                        ...item,
+                        withVerdict: { enable: true, variant: VERDICTS[index] },
+                    }))}
                 />
             </div>
         </div>
@@ -117,16 +136,15 @@ export const Verdict: Story = {
 }
 
 /**
- * `@sm:col-start-2` — a lone pager card pinned to the right column (previous card missing).
- * Uses the CONTAINER variant at the SAME step the grid actually reaches 2 columns, so it never
- * lands in an implicit, content-sized track. Narrow the window: it stays full-width at 1 column.
+ * `@sm:col-start-2` — một pager card lẻ ghim vào cột phải (card trước bị thiếu). Dùng biến
+ * CONTAINER đúng bước grid đạt 2 cột nên không rơi vào track ẩn. Thu hẹp cửa sổ: nó vẫn full-width ở 1 cột.
  */
 export const PagerPinRight: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
                 <GroupPressableCard
-                    ariaLabel="Go to previous or next content"
+                    ariaLabel="Đi tới nội dung trước hoặc sau"
                     columns={{ base: 1, sm: 2 }}
                     items={[
                         {
@@ -134,13 +152,30 @@ export const PagerPinRight: Story = {
                             href: "#",
                             className: "@sm:col-start-2",
                             content: (
-                                <div className="flex items-center justify-end gap-2">
+                                <div className="flex items-center justify-between gap-3">
                                     <Typography type="body-sm" weight="medium">Next content</Typography>
-                                    <CaretRightIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted" />
+                                    {/* Caret điều hướng: phosphor CaretRightIcon size-3 muted, KHÔNG trượt (§5a/§5b). */}
+                                    <CaretRightIcon className="size-3 shrink-0 text-muted" aria-hidden focusable="false" />
                                 </div>
                             ),
                         },
                     ]}
+                />
+            </div>
+        </div>
+    ),
+}
+
+/** STATE loading — `isSkeleton` tự vẽ mirror grid GENERIC (dot + 1 vạch, không giả định shape content), giữ đúng columns/gap/tile-chrome. Không Skeleton rời ngoài. */
+export const Loading: Story = {
+    render: () => (
+        <div className="p-8">
+            <div className="max-w-2xl">
+                <GroupPressableCard
+                    ariaLabel="Mentors"
+                    columns={{ base: 1, sm: 2 }}
+                    items={profileItems}
+                    isSkeleton
                 />
             </div>
         </div>

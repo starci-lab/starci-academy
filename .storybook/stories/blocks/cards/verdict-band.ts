@@ -43,7 +43,7 @@ const VERDICT_VARIANT_CLASS: Record<VerdictBandVariant, string> = {
  * Resolves a {@link VerdictBand} into a 2px left-edge band, or `undefined` when disabled.
  * The band is an INSET box-shadow (`inset 2px 0 0 0 <colour>`) — it hugs the left edge AND
  * follows the card's `border-radius`, so it CURVES around the top-left / bottom-left corners
- * instead of being cut flat. `pl-4` keeps the content off the bar. Colour: `variant` → a
+ * instead of being cut flat. `pl-3` keeps the content off the bar. Colour: `variant` → a
  * semantic token var; `color` → the raw Tailwind palette var `--color-<name>-<shade>` (v4).
  */
 export const verdictBandClassName = (withVerdict?: VerdictBand): string | undefined => {
@@ -55,5 +55,5 @@ export const verdictBandClassName = (withVerdict?: VerdictBand): string | undefi
         : withVerdict.color
             ? `inset-shadow-[2px_0_0_0_var(--color-${withVerdict.color})]`
             : undefined
-    return cn("pl-4", shadowClass)
+    return cn("pl-3", shadowClass)
 }

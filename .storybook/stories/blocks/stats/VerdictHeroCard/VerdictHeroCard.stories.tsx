@@ -3,7 +3,7 @@ import { Button } from "@heroui/react"
 import { VerdictHeroCard, type VerdictHeroSplit } from "./VerdictHeroCard"
 
 const meta: Meta<typeof VerdictHeroCard> = {
-    title: "Primitives/Stats/VerdictHeroCard",
+    title: "Design/Stats/VerdictHeroCard",
     component: VerdictHeroCard,
     tags: ["autodocs"],
     parameters: {
@@ -21,10 +21,31 @@ const REVIEW_HEALTH_SPLITS: VerdictHeroSplit[] = [
     { label: "Thẻ mới (non)", value: "31%", band: "danger" },
 ]
 
+/** A split whose `band` is omitted stays neutral foreground — not every split is itself good/bad. */
+const NEUTRAL_SPLITS: VerdictHeroSplit[] = [
+    { label: "Câu đã trả lời", value: "18/20" },
+    { label: "Thời gian dùng", value: "42 phút" },
+]
+
 /** The block only renders the slot; the caller owns the click. */
 const PrimaryAction = ({ children }: { children: string }) => (
     <Button variant="primary" size="sm" onPress={() => {}}>{children}</Button>
 )
+
+/** Only the required props (`value` + `band` + `verdict`) — no `unit`, `sub`, `meter`, `splits`, or `action`. The doc comment calls this out explicitly: omit `meter` "when there is no meaningful bar to show (e.g. a pure count)". */
+export const Default: Story = {
+    render: () => (
+        <div className="p-8">
+            <div className="max-w-md">
+                <VerdictHeroCard
+                    value={12}
+                    band="success"
+                    verdict="Đã hoàn thành 12 bài tập tuần này."
+                />
+            </div>
+        </div>
+    ),
+}
 
 /** Full shape: value + verdict + sub + meter with target + 2-up split + action. */
 export const Full: Story = {
@@ -59,6 +80,23 @@ export const MeterOnly: Story = {
                     sub="Pass-bar 70. 3 phiên gần nhất: 58 → 61 → 64 (đang tăng đều)."
                     meter={{ value: 64, max: 100, target: 70 }}
                     action={<PrimaryAction>Luyện 1 phiên nữa →</PrimaryAction>}
+                />
+            </div>
+        </div>
+    ),
+}
+
+/** Splits with `band` omitted stay neutral foreground — not every split is itself good/bad. */
+export const SplitsNeutral: Story = {
+    render: () => (
+        <div className="p-8">
+            <div className="max-w-md">
+                <VerdictHeroCard
+                    value={90}
+                    unit="%"
+                    band="success"
+                    verdict="Đã làm gần hết đề — thời gian dùng vẫn trong định mức."
+                    splits={NEUTRAL_SPLITS}
                 />
             </div>
         </div>

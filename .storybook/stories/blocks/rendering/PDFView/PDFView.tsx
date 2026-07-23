@@ -10,6 +10,7 @@ import React, {
 } from "react"
 import { Document, Page, pdfjs } from "react-pdf"
 import { cn } from "@heroui/react"
+import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -120,10 +121,12 @@ const PdfViewportPage = (props: PdfViewportPageProps) => {
                     />
                 ) : (
                     <div
-                        className="w-full max-w-full rounded-medium bg-default-100/30"
+                        className="w-full max-w-full"
                         style={{ minHeight: placeholderMinH }}
                         aria-hidden
-                    />
+                    >
+                        <Skeleton className="size-full rounded-medium" />
+                    </div>
                 )
             }
         </div>

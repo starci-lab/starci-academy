@@ -1,8 +1,9 @@
 import React from "react"
-import { Button, Checkbox, CheckboxGroup, Radio, RadioGroup, Typography, cn } from "@heroui/react"
+import { Checkbox, CheckboxGroup, Radio, RadioGroup, Typography, cn } from "@heroui/react"
 import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react"
 import { StatusChip } from "../../chips/StatusChip/StatusChip"
 import { SectionCard } from "../../cards/SectionCard/SectionCard"
+import { Button } from "../../buttons/Button/Button"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported faithfully from
@@ -138,7 +139,13 @@ export const QuizCard = ({
                 )}
 
                 {onSubmit && !isSubmitted ? (
-                    <Button variant="primary" size="sm" onPress={onSubmit} isDisabled={selectedIds.length === 0} className="w-fit">
+                    <Button
+                        variant="primary"
+                        size="sm"
+                        onPress={onSubmit}
+                        isDisabled={selectedIds.length === 0}
+                        className="w-fit"
+                    >
                         {submitLabel}
                     </Button>
                 ) : null}

@@ -36,3 +36,14 @@ export const RawHex: Story = {
         </div>
     ),
 }
+
+/** Trạng thái loading: dot + nhãn được thay bằng skeleton khớp hình, không giật layout khi resolve. */
+export const Loading: Story = {
+    render: () => (
+        <div className="flex flex-col gap-2 p-8">
+            <DotChip isSkeleton dotClassName="bg-emerald-500" label="Beginner" />
+            <DotChip isSkeleton dotClassName="bg-amber-500" label="Intermediate" />
+            <DotChip isSkeleton dotClassName="bg-orange-500" label="Advanced" />
+        </div>
+    ),
+}

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { IOExampleCard } from "./IOExampleCard"
 
 const meta: Meta<typeof IOExampleCard> = {
-    title: "Primitives/Code/IOExampleCard",
+    title: "Design/Code/IOExampleCard",
     component: IOExampleCard,
     tags: ["autodocs"],
     parameters: {

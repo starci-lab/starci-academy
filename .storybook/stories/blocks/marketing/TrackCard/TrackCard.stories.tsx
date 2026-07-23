@@ -4,7 +4,7 @@ import { TrackCard } from "./TrackCard"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof TrackCard> = {
-    title: "Block/Marketing/TrackCard",
+    title: "Design/Marketing/TrackCard",
     component: TrackCard,
     tags: ["autodocs"],
     parameters: {

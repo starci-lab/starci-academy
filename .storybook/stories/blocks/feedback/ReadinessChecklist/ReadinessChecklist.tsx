@@ -1,16 +1,16 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { CheckCircleIcon } from "@phosphor-icons/react"
-import { ListRow } from "./ListRow"
-import { IconTile } from "./IconTile"
-import { StatusChip } from "./StatusChip"
+import { ListRow } from "../../lists/ListRow/ListRow"
+import { IconTile } from "../../identity/IconTile/IconTile"
+import { StatusChip } from "../../chips/StatusChip/StatusChip"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/feedback/ReadinessChecklist`. Authored in Storybook (not
  * `src`); synced to `src` later. Its `ListRow`, `IconTile`, and `StatusChip`
- * dependencies are faithful local copies in sibling files (`./ListRow`,
- * `./IconTile`, `./StatusChip`) since no local ports exist elsewhere yet.
+ * dependencies are the real local ports (`../../lists/ListRow/ListRow`,
+ * `../../identity/IconTile/IconTile`, `../../chips/StatusChip/StatusChip`).
  */
 
 /** One row of a {@link ReadinessChecklist}. */

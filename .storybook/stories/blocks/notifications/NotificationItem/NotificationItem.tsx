@@ -1,6 +1,8 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { cn, Typography } from "@heroui/react"
+import { IconTile } from "../../identity/IconTile/IconTile"
+import type { IconTileTone } from "../../identity/IconTile/IconTile"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported faithfully from
@@ -8,9 +10,11 @@ import { cn, Typography } from "@heroui/react"
  * (not `src`); synced to `src` later. The shared `WithClassNames` base is inlined
  * locally to keep the port free of `@/` imports.
  *
- * NOTE: the leading icon tile is hand-rolled inline here (a `size-10 rounded-2xl`
- * span, faithful to src) rather than composing the `IconTile` primitive — see the
- * anatomy flag in the story. Kept as-is to port the exact visual.
+ * The leading icon tile composes the `IconTile` primitive (so a change to the
+ * atom propagates here). `IconTile` has no size preset matching the original
+ * `size-10`/icon-`size-5` footprint, so `size="sm"` is used as the base and the
+ * exact box/icon dimensions are restored via `className` (tailwind-merge drops
+ * the `sm` preset's `size-12`/`[&_svg]:size-6` in favor of these).
  */
 
 /** Local mirror of the shared `WithClassNames` base (avoids a `@/` import). */
@@ -79,14 +83,16 @@ export interface NotificationItemProps extends WithClassNames<undefined> {
 }
 
 /**
- * Maps a {@link NotificationTone} to the leading tile's background + foreground
- * token pair. Soft surface tokens only — never a `bg-<status>/10` overlay.
+ * Maps a {@link NotificationTone} to an `IconTile` tone. `"default"` has no
+ * `IconTileTone` counterpart — it maps to `"neutral"`, which is `bg-default
+ * text-muted` (the hand-rolled original used `text-foreground` for this case;
+ * the other three tones are byte-identical token pairs).
  */
-const TONE_TILE: Record<NotificationTone, string> = {
-    default: "bg-default text-foreground",
-    success: "bg-success-soft text-success-soft-foreground",
-    warning: "bg-warning-soft text-warning-soft-foreground",
-    accent: "bg-accent-soft text-accent-soft-foreground",
+const TONE_TO_ICON_TILE: Record<NotificationTone, IconTileTone> = {
+    default: "neutral",
+    success: "success",
+    warning: "warning",
+    accent: "accent",
 }
 
 /**
@@ -118,14 +124,12 @@ export const NotificationItem = ({
     const content = (
         <>
             {icon ? (
-                <span
-                    className={cn(
-                        "flex size-10 shrink-0 items-center justify-center rounded-2xl [&>svg]:size-5",
-                        TONE_TILE[tone],
-                    )}
-                >
-                    {icon}
-                </span>
+                <IconTile
+                    icon={icon}
+                    tone={TONE_TO_ICON_TILE[tone]}
+                    size="sm"
+                    className="size-10 rounded-2xl [&_svg]:size-5"
+                />
             ) : null}
 
             <div className="flex min-w-0 flex-1 flex-col gap-1">

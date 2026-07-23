@@ -1,12 +1,14 @@
 import React from "react"
 import { Alert, cn } from "@heroui/react"
-import { CheckCircleIcon, InfoIcon, WarningIcon, XCircleIcon } from "@phosphor-icons/react"
-import { ElementCloseButton } from "../../buttons/ElementCloseButton/ElementCloseButton"
+import { CheckCircleIcon, InfoIcon, WarningIcon, XCircleIcon, XIcon } from "@phosphor-icons/react"
+import { Button } from "../../buttons/Button/Button"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/feedback/Callout`. Authored in Storybook (not `src`); synced later.
- * Uses the local `ElementCloseButton` port (composable).
+ * Closes via the base `Button` port directly (`iconOnly` + `ghost`) — the old
+ * `ElementCloseButton` wrapper was folded back in (it added nothing over `Button`
+ * beyond a tone→className map, now inlined below as `STATUS_CLOSE_TONE`).
  */
 
 /** Semantic tone — maps 1:1 to HeroUI `Alert` `status`. */
@@ -39,6 +41,19 @@ export const STATUS_ACTION_CLASS: Record<CalloutStatus, string> = {
     danger: "bg-danger text-danger-foreground",
 }
 
+/**
+ * Close (×) colour + hover tint per status — folded in from the retired
+ * `ElementCloseButton`. The `!` beats the base `ghost` variant's own text/hover
+ * (a plain utility would lose to it). Hover = a tint of the callout's OWN tone.
+ */
+const STATUS_CLOSE_TONE: Record<CalloutStatus, string> = {
+    default: "!text-muted hover:!bg-default",
+    accent: "!text-accent-soft-foreground hover:!bg-accent-soft",
+    success: "!text-success-soft-foreground hover:!bg-success-soft",
+    warning: "!text-warning-soft-foreground hover:!bg-warning-soft",
+    danger: "!text-danger-soft-foreground hover:!bg-danger-soft",
+}
+
 /** Props for {@link Callout}. */
 export interface CalloutProps {
     /** Semantic tone (drives tint + icon/title colour). Default `"default"`. */
@@ -62,8 +77,8 @@ export interface CalloutProps {
 /**
  * A tinted, flat note for use INSIDE a card / surface (surface-in-surface): a thin
  * `bg-<status>-soft` + `shadow-none` highlight strip, so it doesn't read as a
- * card-in-card. Wraps HeroUI `Alert` + the local `ElementCloseButton`. For a standalone
- * alert on the page canvas, use the raw `Alert`.
+ * card-in-card. Wraps HeroUI `Alert` + the base `Button` (iconOnly ghost) for close. For a
+ * standalone alert on the page canvas, use the raw `Alert`.
  *
  * @param props - {@link CalloutProps}
  */
@@ -86,10 +101,13 @@ export const Callout = ({
             </Alert.Content>
             {action}
             {onClose ? (
-                <ElementCloseButton
-                    label={closeAriaLabel ?? ""}
+                <Button
+                    iconOnly
+                    variant="ghost"
+                    ariaLabel={closeAriaLabel ?? ""}
+                    icon={<XIcon aria-hidden />}
                     onPress={onClose}
-                    tone={status === "default" ? "neutral" : status}
+                    className={STATUS_CLOSE_TONE[status]}
                 />
             ) : null}
         </Alert>

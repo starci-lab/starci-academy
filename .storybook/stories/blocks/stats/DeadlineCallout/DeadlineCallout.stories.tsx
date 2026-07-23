@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { DeadlineCallout } from "./DeadlineCallout"
 
 const meta: Meta<typeof DeadlineCallout> = {
-    title: "Primitives/Stats/DeadlineCallout",
+    title: "Design/Stats/DeadlineCallout",
     component: DeadlineCallout,
     tags: ["autodocs"],
     parameters: {

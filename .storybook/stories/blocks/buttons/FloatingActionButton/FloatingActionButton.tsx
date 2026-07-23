@@ -21,6 +21,8 @@ export interface FloatingActionButtonProps {
      * a bare icon, no size class.
      */
     children?: ReactNode
+    /** `true` → skeleton mirror (round FAB box, same placement) while loading. */
+    isSkeleton?: boolean
     /** Extra classes on the button. */
     className?: string
 }
@@ -37,6 +39,7 @@ export const FloatingActionButton = ({
     onPress,
     ariaLabel,
     children,
+    isSkeleton = false,
     className,
 }: FloatingActionButtonProps) => {
     return (
@@ -46,6 +49,7 @@ export const FloatingActionButton = ({
             ariaLabel={ariaLabel}
             onPress={onPress}
             icon={children}
+            isSkeleton={isSkeleton}
             className={cn(
                 "fixed bottom-6 right-[calc(var(--app-rail-w,0px)+1.5rem)] z-40 rounded-full shadow-lg",
                 className,

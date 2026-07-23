@@ -100,6 +100,10 @@ export const ChatToolResult = ({
                         />
                     ))}
                     {onViewAll ? (
+                        // NOTE: port Button has no variant for a full-width, left-aligned plain-text
+                        // footer link (all variants are centered, fixed-padding CTA buttons with their
+                        // own bg/border) — forcing this into the port would fight its base styles and
+                        // change the row's layout/visual. Left as hand-rolled markup — deferred.
                         <button
                             type="button"
                             onClick={onViewAll}

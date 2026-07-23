@@ -17,7 +17,7 @@ export default meta
 
 type Story = StoryObj<typeof ListRow>
 
-const chevron = <CaretRightIcon className="size-4 text-muted" aria-hidden focusable="false" />
+const chevron = <CaretRightIcon className="size-3 text-muted" aria-hidden focusable="false" />
 
 /** The simplest row — just a title. Used when the list has no subtitle, icon, or trailing action. */
 export const TitleOnly: Story = {

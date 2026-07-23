@@ -30,3 +30,14 @@ export const Default: Story = {
         </div>
     ),
 }
+
+/** Trang đang load — bật cờ `isSkeleton`, skeleton tròn giữ NGUYÊN chỗ ghim góc dưới-phải. */
+export const IsSkeleton: Story = {
+    render: () => (
+        <div className="p-8">
+            <FloatingActionButton onPress={() => {}} ariaLabel="Create new" isSkeleton>
+                <PlusIcon />
+            </FloatingActionButton>
+        </div>
+    ),
+}

@@ -4,7 +4,7 @@ import { Typography } from "@heroui/react"
 import { ProgrammingLanguageTabs, ProgrammingLanguageTabsVariant } from "./ProgrammingLanguageTabs"
 
 const meta: Meta<typeof ProgrammingLanguageTabs> = {
-    title: "Primitives/Navigation/ProgrammingLanguageTabs",
+    title: "Design/Navigation/ProgrammingLanguageTabs",
     component: ProgrammingLanguageTabs,
     tags: ["autodocs"],
     parameters: {

@@ -3,7 +3,7 @@ import { UpNextCard } from "./UpNextCard"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof UpNextCard> = {
-    title: "Block/Learn/UpNextCard",
+    title: "Design/Learn/UpNextCard",
     component: UpNextCard,
     tags: ["autodocs"],
     parameters: {

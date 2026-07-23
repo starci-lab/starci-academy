@@ -4,7 +4,7 @@ import { PriceTag } from "./PriceTag"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof PriceTag> = {
-    title: "Block/Commerce/PriceTag",
+    title: "Design/Commerce/PriceTag",
     component: PriceTag,
     tags: ["autodocs"],
     parameters: {
@@ -17,7 +17,7 @@ export default meta
 type Story = StoryObj<typeof PriceTag>
 
 const ANATOMY = {
-    primitives: [{ name: "StatusChip", role: 'nhãn tiết kiệm "−X%" (tone success), mở popover chi tiết' }],
+    primitives: [{ name: "StatusChip", role: "nhãn tiết kiệm \"−X%\" (tone success), mở popover chi tiết" }],
     reason:
         "Một giá hiển thị cần gói NHIỀU tín hiệu vào một chỗ: số tiền phải trả (đậm), giá gốc gạch ngang, và mức tiết kiệm. Mức tiết kiệm dùng StatusChip (soft-success) làm nhãn kiêm nút mở popover phân rã giá (gốc → giai đoạn → thành viên → bạn trả). Gộp lại một block để logic chiết khấu không lệch giữa các chỗ hiển thị giá.",
 }
@@ -80,6 +80,25 @@ export const CurrencyUsd: Story = {
             />,
             ANATOMY,
         ),
+}
+
+/** Discount with `showSavingLine={false}` — dense-card context: chip stays clickable, but the concrete "save N₫" line is hidden. */
+export const NoSavingLine: Story = {
+    render: () =>
+        blockShell(
+            <PriceTag
+                discounted={1290000}
+                original={1990000}
+                showSavingLine={false}
+                breakdown={{ phase: 1590000, phaseLabel: "Early-bird", loyaltyPercent: 15, loyaltyNote: "sở hữu 2 khóa" }}
+            />,
+            ANATOMY,
+        ),
+}
+
+/** Discount WITHOUT a `breakdown` — the chip still opens a popover, but it shows only "giá gốc → bạn trả" (no phase/loyalty rows). */
+export const DiscountWithoutBreakdown: Story = {
+    render: () => blockShell(<PriceTag discounted={1290000} original={1990000} />, ANATOMY),
 }
 
 /** The breakdown Popover shown OPEN — the `play` clicks the `−X%` chip (a button, not a hover tooltip). */

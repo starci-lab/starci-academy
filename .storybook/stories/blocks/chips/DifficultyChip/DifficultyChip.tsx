@@ -1,6 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { DotChip } from "../DotChip/DotChip"
+import { AnatomyOverlay } from "../../layout/AnatomyOverlay/AnatomyOverlay"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — the target `DifficultyChip`. Authored in
@@ -33,6 +34,10 @@ export interface DifficultyChipProps {
     label?: ReactNode
     /** Extra classes on the wrapper. */
     className?: string
+    /** When `true`, renders a skeleton placeholder mirroring this chip's dot+label shape instead of real content. */
+    isSkeleton?: boolean
+    /** Dev/spec: overlay the anatomy annotation on this chip. */
+    showAnatomy?: boolean
 }
 
 /** Title-case a difficulty key for the default label. */
@@ -45,12 +50,19 @@ const capitalize = (value: Difficulty): string => value.charAt(0).toUpperCase() 
  *
  * @param props - {@link DifficultyChipProps}
  */
-export const DifficultyChip = ({ difficulty, label, className }: DifficultyChipProps) => {
-    return (
+export const DifficultyChip = ({ difficulty, label, className, isSkeleton, showAnatomy = false }: DifficultyChipProps) => {
+    const chip = (
         <DotChip
             dotClassName={DIFFICULTY_COLOR[difficulty]}
             label={label ?? capitalize(difficulty)}
             className={className}
+            isSkeleton={isSkeleton}
         />
     )
+    return showAnatomy ? (
+        <span className="relative inline-flex" data-anat>
+            {chip}
+            <AnatomyOverlay label="DifficultyChip" tier="design" href="/?path=/docs/design-chip-difficultychip--docs" />
+        </span>
+    ) : chip
 }

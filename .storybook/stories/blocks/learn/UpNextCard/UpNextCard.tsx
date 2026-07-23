@@ -1,7 +1,8 @@
 import React from "react"
-import { Button, Typography, cn } from "@heroui/react"
+import { Typography, cn } from "@heroui/react"
 import { ArrowRightIcon, CheckCircleIcon } from "@phosphor-icons/react"
 import { SectionCard } from "../../cards/SectionCard/SectionCard"
+import { Button } from "../../buttons/Button/Button"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported from
@@ -106,9 +107,13 @@ export const UpNextCard = ({
 
             {/* one primary CTA (+ optional quiet secondary) */}
             <div className="flex flex-wrap items-center gap-3">
-                <Button variant="primary" size="lg" onPress={onPress}>
+                <Button
+                    variant="primary"
+                    size="lg"
+                    onPress={onPress}
+                    icon={<ArrowRightIcon aria-hidden focusable="false" />}
+                >
                     {ctaLabel}
-                    <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
                 </Button>
                 {secondaryLabel && secondaryOnPress ? (
                     <Button variant="tertiary" onPress={secondaryOnPress}>

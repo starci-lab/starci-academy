@@ -4,7 +4,7 @@ import { ChatBubble } from "./ChatBubble"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof ChatBubble> = {
-    title: "Block/Feed/ChatBubble",
+    title: "Design/Feed/ChatBubble",
     component: ChatBubble,
     tags: ["autodocs"],
     parameters: {
@@ -22,6 +22,17 @@ const ANATOMY = {
     ],
     reason:
         "Mỗi lượt tin trong khung chat (ChatPanel) cần một bong bóng căn lề + tint đúng người nói. Đây là mảnh dựng nền cho ChatPanel — gần một PRIMITIVE một-phần-tử (xem FLAGS), tách ra để mọi surface chat tái dùng.",
+}
+
+/** Plain baseline: a short assistant message. */
+export const Default: Story = {
+    render: () =>
+        blockShell(
+            <div className="w-96">
+                <ChatBubble role="assistant">Chào bạn, mình có thể giúp gì hôm nay?</ChatBubble>
+            </div>,
+            ANATOMY,
+        ),
 }
 
 export const RoleUser: Story = {

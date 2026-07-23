@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { MilestoneRoadmap } from "./MilestoneRoadmap"
 
 const meta: Meta<typeof MilestoneRoadmap> = {
-    title: "Primitives/Stats/MilestoneRoadmap",
+    title: "Block/Stats/MilestoneRoadmap",
     component: MilestoneRoadmap,
     tags: ["autodocs"],
     parameters: {

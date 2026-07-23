@@ -3,7 +3,7 @@ import { SectionHeading } from "./SectionHeading"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof SectionHeading> = {
-    title: "Block/Marketing/SectionHeading",
+    title: "Design/Marketing/SectionHeading",
     component: SectionHeading,
     tags: ["autodocs"],
     parameters: {
@@ -62,4 +62,18 @@ export const WithAnchor: Story = {
 
 export const TitleOnly: Story = {
     render: () => blockShell(<SectionHeading title="Training partners" />, ANATOMY),
+}
+
+/** `level={2}` — moment quy mô hero, dùng khi section cần nổi bật hơn nhịp mặc định (level 3). */
+export const Level2Hero: Story = {
+    render: () =>
+        blockShell(
+            <SectionHeading
+                level={2}
+                eyebrow="Học thật"
+                title="Một lộ trình được thiết kế cho người đi làm"
+                intro="Từ nền tảng đến dự án thực tế, mỗi khóa học gắn với một sản phẩm bạn cầm được trên tay."
+            />,
+            ANATOMY,
+        ),
 }

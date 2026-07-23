@@ -67,6 +67,15 @@ export const Overflow: Story = {
     ),
 }
 
+/** Loading: skeleton mirror — `maxVisible` pill placeholders, same row/gap as the resolved chips. */
+export const Loading: Story = {
+    render: () => (
+        <div className="p-8">
+            <TagChips tags={[]} isSkeleton={true} />
+        </div>
+    ),
+}
+
 /** Custom maxVisible: a roomier area (a big card) → raise maxVisible to 5 before collapsing. */
 export const CustomMaxVisible: Story = {
     render: () => (

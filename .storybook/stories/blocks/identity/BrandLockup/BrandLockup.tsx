@@ -1,11 +1,11 @@
 import React from "react"
 import { cn } from "@heroui/react"
-import { BrandLogo } from "../BrandLogo/BrandLogo"
+import { Logo } from "../Logo/Logo"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/identity/BrandLockup`. Authored in Storybook (not `src`);
- * synced to `src` later. Imports the local {@link BrandLogo} port (sibling
+ * synced to `src` later. Imports the local {@link Logo} port (sibling
  * folder) instead of `@/components`.
  */
 
@@ -19,7 +19,7 @@ interface WithClassNames<T> {
 export type BrandLockupProps = WithClassNames<undefined>
 
 /**
- * BrandLockup — the {@link BrandLogo} icon flush against the "StarCi Academy"
+ * BrandLockup — the brand mark ({@link Logo}) flush against the "StarCi Academy"
  * wordmark (StarCi on top, ACADEMY small-caps muted below). Shared by the
  * navbar and footer so both read the identical mark from one source.
  *
@@ -34,7 +34,7 @@ export type BrandLockupProps = WithClassNames<undefined>
 export const BrandLockup = ({ className }: BrandLockupProps) => {
     return (
         <span className={cn("inline-flex items-center gap-0", className)}>
-            <BrandLogo className="h-10" />
+            <Logo className="h-10 w-auto" />
             <span className="hidden flex-col gap-0 @app-md:flex">
                 <div className="text-sm font-semibold leading-none text-foreground">
                     StarCi

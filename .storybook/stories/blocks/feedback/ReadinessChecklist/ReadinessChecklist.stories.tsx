@@ -4,7 +4,7 @@ import { ReadinessChecklist, type ReadinessChecklistItem } from "./ReadinessChec
 import { SurfaceListCard } from "../../cards/SurfaceListCard/SurfaceListCard"
 
 const meta: Meta<typeof ReadinessChecklist> = {
-    title: "Primitives/Feedback/ReadinessChecklist",
+    title: "Block/Feedback/ReadinessChecklist",
     component: ReadinessChecklist,
     tags: ["autodocs"],
     parameters: {

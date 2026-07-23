@@ -4,7 +4,7 @@ import type { GradeCreditUsage } from "./GradeCreditCaption"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof GradeCreditCaption> = {
-    title: "Block/Grading/GradeCreditCaption",
+    title: "Design/Grading/GradeCreditCaption",
     component: GradeCreditCaption,
     tags: ["autodocs"],
     parameters: {

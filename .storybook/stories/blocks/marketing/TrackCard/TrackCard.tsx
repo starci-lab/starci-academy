@@ -2,6 +2,7 @@ import React from "react"
 import { Card, CardContent, Typography, cn } from "@heroui/react"
 import { ArrowRightIcon } from "@phosphor-icons/react"
 import type { ReactNode } from "react"
+import { IconTile } from "../../identity/IconTile/IconTile"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -43,11 +44,6 @@ export interface TrackCardProps {
 
 const DOT: Record<TrackColor, string> = { accent: "bg-accent", success: "bg-success", warning: "bg-warning" }
 const LINE: Record<TrackColor, string> = { accent: "bg-accent/25", success: "bg-success/25", warning: "bg-warning/25" }
-const TILE: Record<TrackColor, string> = {
-    accent: "bg-accent-soft text-accent-soft-foreground",
-    success: "bg-success-soft text-success-soft-foreground",
-    warning: "bg-warning-soft text-warning-soft-foreground",
-}
 const CTA: Record<TrackColor, string> = { accent: "text-accent-soft-foreground", success: "text-success-soft-foreground", warning: "text-warning-soft-foreground" }
 
 /**
@@ -64,9 +60,8 @@ export const TrackCard = ({ icon, title, meta, color, tiers, viewLabel, onView, 
     <Card className={cn("h-full", className)}>
         <CardContent className="flex h-full flex-col gap-6">
             <div className="flex items-center gap-3">
-                <span className={cn("flex size-10 shrink-0 items-center justify-center rounded-xl [&>svg]:size-5", TILE[color])}>
-                    {icon}
-                </span>
+                {/* IconTile has no 40px step — "sm" (48px) is the closest port size to the original size-10 tile. */}
+                <IconTile icon={icon} tone={color} size="sm" />
                 <div className="flex min-w-0 flex-col">
                     <Typography type="body" weight="semibold" className="truncate">
                         {title}
@@ -96,6 +91,11 @@ export const TrackCard = ({ icon, title, meta, color, tiers, viewLabel, onView, 
                 ))}
             </div>
 
+            {/* NOTE: Button port left as-is — it has no per-track tone/color prop (only
+                fixed variant styles, e.g. `ghost` = default-foreground on transparent)
+                and always carries button chrome (padding/fixed height/hover background),
+                so it can't reproduce this chromeless, per-color text+arrow link CTA
+                (CTA[color] soft-foreground tone) without changing the visual — deferred. */}
             <button
                 type="button"
                 onClick={onView}

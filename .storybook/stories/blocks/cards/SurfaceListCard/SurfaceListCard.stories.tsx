@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Button, Chip, Label, Typography } from "@heroui/react"
+import { Avatar, AvatarFallback, Button, Chip, Label, Typography } from "@heroui/react"
 import {
     CaretRightIcon,
     CheckCircleIcon,
@@ -26,7 +26,25 @@ export default meta
 
 type Story = StoryObj<typeof SurfaceListCard>
 
-const caret = <CaretRightIcon className="size-4 text-muted" aria-hidden focusable="false" />
+const caret = <CaretRightIcon className="size-3 text-muted" aria-hidden focusable="false" />
+
+/**
+ * Mock-content chuẩn (C-fixture) cho ô `children` TỰ DO của `SurfaceListCardItem`:
+ * avatar + title + description. `SurfaceListCardItem` đã LÀ hộp row (padding + hover +
+ * separator riêng) nên KHÔNG bọc thêm `Card` ngoài (tránh card-in-card) — chỉ giữ row
+ * (neo `GroupPressableCard.stories.tsx` `profileTile`, cùng lý do: item đã là shell).
+ */
+const profileRow = (initials: string, title: string, description: string) => (
+    <div className="flex items-center gap-3">
+        <Avatar className="size-10 shrink-0">
+            <AvatarFallback>{initials}</AvatarFallback>
+        </Avatar>
+        <div className="flex min-w-0 flex-col">
+            <span className="truncate text-sm font-medium">{title}</span>
+            <span className="truncate text-xs text-muted">{description}</span>
+        </div>
+    </div>
+)
 
 const rows = (
     <>
@@ -114,7 +132,7 @@ export const Bordered: Story = {
     render: () => (
         <div className="p-8">
             {/* surface-in-surface: nested list delineates with a BORDER (shadow is near-invisible in dark mode). */}
-            <div className="rounded-3xl bg-surface p-4 shadow-surface">
+            <div className="rounded-3xl bg-surface p-3 shadow-surface">
                 <SurfaceListCard label="Phương thức thanh toán" bordered>
                     <SurfaceListCardRow title="MoMo wallet" subtitle="Linked on 12/06/2026" onPress={() => {}} />
                     <SurfaceListCardRow title="Visa card •••• 4242" subtitle="Expires 08/28" onPress={() => {}} selected />
@@ -167,13 +185,14 @@ export const LeadingMeta: Story = {
             <SurfaceListCard>
                 <SurfaceListCardRow
                     leading={
-                        <div className="flex size-10 items-center justify-center rounded-full bg-accent-soft">
-                            <CreditCardIcon className="size-5 text-accent-soft-foreground" aria-hidden focusable="false" />
+                        <div className="flex size-10 items-center justify-center rounded-full bg-default">
+                            <CreditCardIcon className="size-5 text-muted" aria-hidden focusable="false" />
                         </div>
                     }
                     title="One-time payment"
                     subtitle="Pay the full tuition now"
-                    meta={<span className="text-xs text-muted">Save 10%</span>}
+                    meta={<Chip size="sm" variant="soft" color="success" className="shrink-0">Save 10%</Chip>}
+                    selected
                     onPress={() => {}}
                 />
                 <SurfaceListCardRow
@@ -191,32 +210,20 @@ export const LeadingMeta: Story = {
     ),
 }
 
-/** `SurfaceListCardItem` takes arbitrary `children` (e.g. a row with a progress bar) — the free-form branch. */
+/**
+ * `SurfaceListCardItem` takes arbitrary `children` — the free-form branch (no fixed
+ * leading/title/subtitle slots). Content = ProfileCard fixture (C-fixture), row-only
+ * because `SurfaceListCardItem` is already the row shell.
+ */
 export const FreeForm: Story = {
     render: () => (
         <div className="p-8">
             <SurfaceListCard>
                 <SurfaceListCardItem onPress={() => {}}>
-                    <div className="flex items-center justify-between gap-3">
-                        <div className="flex min-w-0 flex-col gap-1">
-                            <span className="truncate text-sm">Introduction to Backend Programming</span>
-                            <div className="h-1.5 w-40 overflow-hidden rounded-full bg-default">
-                                <div className="h-full w-2/3 rounded-full bg-accent" />
-                            </div>
-                        </div>
-                        <span className="shrink-0 text-xs text-muted">65%</span>
-                    </div>
+                    {profileRow("SC", "StarCi Academy", "Học fullstack, system design và DevOps theo lộ trình phỏng vấn.")}
                 </SurfaceListCardItem>
                 <SurfaceListCardItem onPress={() => {}}>
-                    <div className="flex items-center justify-between gap-3">
-                        <div className="flex min-w-0 flex-col gap-1">
-                            <span className="truncate text-sm">Relational databases</span>
-                            <div className="h-1.5 w-40 overflow-hidden rounded-full bg-default">
-                                <div className="h-full w-1/5 rounded-full bg-accent" />
-                            </div>
-                        </div>
-                        <span className="shrink-0 text-xs text-muted">20%</span>
-                    </div>
+                    {profileRow("QN", "Thầy Quang", "Mentor fullstack — review dự án và mock interview.")}
                 </SurfaceListCardItem>
             </SurfaceListCard>
         </div>

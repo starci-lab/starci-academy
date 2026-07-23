@@ -2,7 +2,6 @@ import { CaretDownIcon, LockIcon, SparkleIcon, WarningCircleIcon, WarningIcon } 
 import React, { useMemo, useState } from "react"
 import {
     Button,
-    Chip,
     Dropdown,
     DropdownItem,
     DropdownMenu,
@@ -17,6 +16,7 @@ import {
     cn,
 } from "@heroui/react"
 import { AiCategoryChip, AiModelCategory } from "../../chips/AiCategoryChip/AiCategoryChip"
+import { StatusChip } from "../../chips/StatusChip/StatusChip"
 import { FlexWrapButtonRadio } from "../../navigation/FlexWrapButtonRadio/FlexWrapButtonRadio"
 import { SelfHostGpuMark } from "../SelfHostGpuMark/SelfHostGpuMark"
 
@@ -145,16 +145,12 @@ const TIER_FILTERS: ReadonlyArray<AiModelCategory | "all"> = [
  */
 const ModelHealthChip = ({ ok, latencyMs, errorMessage }: ModelHealth) => {
     const chip = (
-        <Chip
-            color={ok ? "success" : "danger"}
-            variant="soft"
-            size="sm"
+        <StatusChip
+            tone={ok ? "success" : "danger"}
+            icon={<span className={cn("size-1.5 rounded-full", ok ? "bg-success" : "bg-danger")} />}
         >
-            <span className={cn("size-1.5 rounded-full", ok ? "bg-success" : "bg-danger")} />
-            <Chip.Label>
-                {ok ? `${latencyMs}ms` : "Ngưng"}
-            </Chip.Label>
-        </Chip>
+            {ok ? `${latencyMs}ms` : "Ngưng"}
+        </StatusChip>
     )
 
     if (!ok && errorMessage) {

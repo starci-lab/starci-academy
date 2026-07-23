@@ -5,7 +5,7 @@ import { ErrorContent } from "./ErrorContent"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof ErrorContent> = {
-    title: "Block/Async/ErrorContent",
+    title: "Design/Async/ErrorContent",
     component: ErrorContent,
     tags: ["autodocs"],
     parameters: {
@@ -18,9 +18,9 @@ export default meta
 type Story = StoryObj<typeof ErrorContent>
 
 const ANATOMY = {
-    primitives: [{ name: "ErrorState", role: "khung icon cảnh báo + tiêu đề + mô tả + nút thử lại, canh giữa" }],
+    primitives: [{ name: "EmptyState", role: "khung icon cảnh báo + tiêu đề + mô tả + nút thử lại, canh giữa (tone=\"danger\")" }],
     reason:
-        "Trạng thái lỗi của một vùng dữ liệu async cần đúng anatomy của ErrorState (icon cảnh báo + tiêu đề + mô tả + nút thử lại canh giữa). ErrorContent chỉ thêm icon WarningOctagon mặc định và truyền onRetry/retryLabel xuống nút — nên nó là một lớp mỏng trên ErrorState, không nên tự vẽ lại.",
+        "Trạng thái lỗi của một vùng dữ liệu async cần đúng anatomy của EmptyState tone=\"danger\" (icon cảnh báo + tiêu đề + mô tả + nút thử lại canh giữa). ErrorContent chỉ thêm icon WarningOctagon mặc định và truyền onRetry/retryLabel xuống action — nên nó là một lớp mỏng trên EmptyState, không nên tự vẽ lại.",
 }
 
 export const Basic: Story = {

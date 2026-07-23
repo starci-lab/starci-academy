@@ -5,7 +5,7 @@ import { ReactionType } from "../ReactionBar/ReactionBar"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof CommunityCommentRow> = {
-    title: "Block/Feed/CommunityCommentRow",
+    title: "Design/Feed/CommunityCommentRow",
     component: CommunityCommentRow,
     tags: ["autodocs"],
     parameters: {
@@ -96,6 +96,37 @@ const longComment: QueryCommunityCommentNode = {
     isFounderAuthor: false,
 }
 
+const defaultComment: QueryCommunityCommentNode = {
+    id: "c-default",
+    body: "Cảm ơn bạn, giải thích rất dễ hiểu!",
+    isDeleted: false,
+    editedAt: null,
+    createdAt: "2026-07-20T08:00:00.000Z",
+    parentCommentId: null,
+    author: { id: "u-default", username: "an.nguyen", displayName: "An Nguyễn", avatar: null },
+    replyCount: 0,
+    reactions: { total: 2, myReaction: null },
+    isFounderAuthor: false,
+}
+
+const longNameComment: QueryCommunityCommentNode = {
+    id: "c-long-name",
+    body: "Bình luận ngắn nhưng tên tác giả rất dài để test truncate.",
+    isDeleted: false,
+    editedAt: null,
+    createdAt: "2026-07-20T10:00:00.000Z",
+    parentCommentId: null,
+    author: {
+        id: "u-longname",
+        username: "nguyen.thi.minh.hoang.yen.nhi",
+        displayName: "Nguyễn Thị Minh Hoàng Yến Nhi Đặng Gia Bảo Trân",
+        avatar: null,
+    },
+    replyCount: 0,
+    reactions: { total: 1, myReaction: null },
+    isFounderAuthor: false,
+}
+
 const replyAction = (
     <button
         type="button"
@@ -105,6 +136,11 @@ const replyAction = (
         Trả lời
     </button>
 )
+
+/** Plain baseline: a non-founder comment with a couple of reactions, no actions slot. */
+export const Default: Story = {
+    render: () => blockShell(<div className="w-full max-w-xl"><CommunityCommentRow comment={defaultComment} onReact={() => {}} /></div>, ANATOMY),
+}
 
 export const Fresh: Story = {
     render: () => blockShell(<div className="w-full max-w-xl"><Controlled initialComment={freshComment} /></div>, ANATOMY),
@@ -128,4 +164,14 @@ export const WithActions: Story = {
 
 export const ReadOnly: Story = {
     render: () => blockShell(<div className="w-full max-w-xl"><CommunityCommentRow comment={reactedComment} /></div>, ANATOMY),
+}
+
+/** Read-only viewer (no `onReact`) AND zero reactions — `ReactionBar` renders nothing at all. */
+export const ReadOnlyNoReactions: Story = {
+    render: () => blockShell(<div className="w-full max-w-xl"><CommunityCommentRow comment={freshComment} /></div>, ANATOMY),
+}
+
+/** Very long display name — `Typography truncate` clips it instead of wrapping/overflowing. */
+export const LongAuthorName: Story = {
+    render: () => blockShell(<div className="w-72"><CommunityCommentRow comment={longNameComment} onReact={() => {}} /></div>, ANATOMY),
 }

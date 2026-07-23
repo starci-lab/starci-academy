@@ -2,12 +2,14 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ContinueCard } from "./ContinueCard"
 import { SectionCard } from "../SectionCard/SectionCard"
 import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
-import { ErrorState } from "../../feedback/ErrorState/ErrorState"
+import { WarningIcon } from "@phosphor-icons/react"
+import { EmptyState } from "../../feedback/EmptyState/EmptyState"
+import { Button } from "../../buttons/Button/Button"
 import type { BlockAnatomyProps } from "../../../block-anatomy"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof ContinueCard> = {
-    title: "Block/Cards/ContinueCard/Hero/Progress",
+    title: "Design/Cards/ContinueCard/Hero/Progress",
     component: ContinueCard,
     tags: ["autodocs"],
     parameters: {
@@ -28,7 +30,7 @@ const PROGRESS_ANATOMY: BlockAnatomyProps = {
         { name: "ProgressMeter", role: "thanh tiến độ — ĐẶC TRƯNG của shape 'có tiến độ'", tier: "primitive" },
     ],
     reason:
-        "Anatomy của LEAF loaded (Không gấp/Gấp) — CHỈ liệt kê part mà LEAF NÀY dựng nên. urgent/không-gấp cùng bộ part, chỉ khác TONE chip time (neutral ↔ warning). State loading/error là leaf RIÊNG, composition riêng (Skeleton / ErrorState) — KHÔNG kể ở đây.",
+        "Anatomy của LEAF loaded (Không gấp/Gấp) — CHỈ liệt kê part mà LEAF NÀY dựng nên. urgent/không-gấp cùng bộ part, chỉ khác TONE chip time (neutral ↔ warning). State loading/error là leaf RIÊNG, composition riêng (Skeleton / EmptyState) — KHÔNG kể ở đây.",
 }
 
 // scenario base = shape có-tiến-độ, không gấp. Các state nội suy bằng delta.
@@ -88,11 +90,16 @@ export const LoadError: Story = {
     render: () => (
         <div className="w-96 p-8">
             <SectionCard>
-                <ErrorState
+                <EmptyState
+                    tone="danger"
+                    icon={<WarningIcon weight="duotone" />}
                     title="Mất kết nối"
                     description="Mạng có vẻ bị rớt. Kiểm tra kết nối rồi thử lại."
-                    retryLabel="Thử lại"
-                    onRetry={() => {}}
+                    action={
+                        <Button variant="secondary" size="sm" onPress={() => {}}>
+                            Thử lại
+                        </Button>
+                    }
                 />
             </SectionCard>
         </div>

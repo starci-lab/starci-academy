@@ -57,6 +57,8 @@ export interface LanguageChipProps {
     language: string
     /** Extra classes on the wrapper. */
     className?: string
+    /** Renders a skeleton mirror (dot + label bar) in place of the real chip. */
+    isSkeleton?: boolean
 }
 
 /**
@@ -67,6 +69,13 @@ export interface LanguageChipProps {
  *
  * @param props - {@link LanguageChipProps}
  */
-export const LanguageChip = ({ language, className }: LanguageChipProps) => {
-    return <DotChip dotColor={getLanguageColor(language)} label={getLanguageLabel(language)} className={className} />
+export const LanguageChip = ({ language, className, isSkeleton }: LanguageChipProps) => {
+    return (
+        <DotChip
+            dotColor={getLanguageColor(language)}
+            label={getLanguageLabel(language)}
+            className={className}
+            isSkeleton={isSkeleton}
+        />
+    )
 }

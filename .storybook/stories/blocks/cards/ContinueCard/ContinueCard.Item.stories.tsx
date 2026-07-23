@@ -2,11 +2,13 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ContinueCard } from "./ContinueCard"
 import { SectionCard } from "../SectionCard/SectionCard"
 import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
-import { ErrorState } from "../../feedback/ErrorState/ErrorState"
+import { WarningIcon } from "@phosphor-icons/react"
+import { EmptyState } from "../../feedback/EmptyState/EmptyState"
+import { Button } from "../../buttons/Button/Button"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof ContinueCard> = {
-    title: "Block/Cards/ContinueCard/Item",
+    title: "Design/Cards/ContinueCard/Item",
     component: ContinueCard,
     tags: ["autodocs"],
     parameters: {
@@ -23,10 +25,10 @@ const ITEM_ANATOMY = {
         { name: "SectionCard", role: "khung surface tự đóng" },
         { name: "SeeMoreLink", role: "CTA \"Tiếp tục →\" (hover/click trên link)" },
         { name: "Skeleton", role: "state đang tải — mirror LAYOUT item (title·subtitle·link), KHÔNG sweep" },
-        { name: "ErrorState", role: "state mạng rớt — lỗi + Thử lại, trong khung card" },
+        { name: "EmptyState", role: "state mạng rớt — lỗi + Thử lại, trong khung card" },
     ],
     reason:
-        "Biến thể \"item\" (1-trong-N — story trình 1 card đại diện, lưới là việc của consumer). Mỗi state là 1 leaf trong folder: Mục (content, CTA SeeMoreLink) · Đang tải (Skeleton mirror LAYOUT item, KHÔNG progress/sweep) · Lỗi mạng rớt (ErrorState trong SectionCard). Skeleton mirror layout, không nhấn/animation.",
+        "Biến thể \"item\" (1-trong-N — story trình 1 card đại diện, lưới là việc của consumer). Mỗi state là 1 leaf trong folder: Mục (content, CTA SeeMoreLink) · Đang tải (Skeleton mirror LAYOUT item, KHÔNG progress/sweep) · Lỗi mạng rớt (EmptyState tone=\"danger\" trong SectionCard). Skeleton mirror layout, không nhấn/animation.",
 }
 
 /** The loaded item card — one representative (grid is the consumer's concern). */
@@ -63,11 +65,16 @@ export const LoadError: Story = {
     render: () => (
         <div className="w-80 p-8">
             <SectionCard>
-                <ErrorState
+                <EmptyState
+                    tone="danger"
+                    icon={<WarningIcon weight="duotone" />}
                     title="Mất kết nối"
                     description="Mạng có vẻ bị rớt. Kiểm tra kết nối rồi thử lại."
-                    retryLabel="Thử lại"
-                    onRetry={() => {}}
+                    action={
+                        <Button variant="secondary" size="sm" onPress={() => {}}>
+                            Thử lại
+                        </Button>
+                    }
                 />
             </SectionCard>
         </div>

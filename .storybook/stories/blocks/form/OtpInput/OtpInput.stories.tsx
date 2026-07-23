@@ -74,3 +74,12 @@ export const NoLabel: Story = {
         </div>
     ),
 }
+
+/** Loading mirror: label bar + N cell-shaped squares, same footprint as the real field. */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8 max-w-sm">
+            <OtpInput length={6} value="" onChange={() => {}} label="Mã xác minh" isSkeleton />
+        </div>
+    ),
+}

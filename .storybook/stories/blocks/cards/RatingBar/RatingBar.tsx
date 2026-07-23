@@ -1,208 +1,20 @@
 "use client"
 
-import React, { useEffect } from "react"
-import { Chip, Typography, cn } from "@heroui/react"
+import React from "react"
+import { Typography, cn } from "@heroui/react"
 import type { ReactNode } from "react"
+import { GroupPressableCard } from "../GroupPressableCard/GroupPressableCard"
+import { StatusChip } from "../../chips/StatusChip/StatusChip"
+import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — the target `RatingBar`. Authored in Storybook
  * (not `src`); synced to `src` later. NO `@/components` imports.
  *
- * The real `RatingBar` composes `@/components/blocks/cards/GroupPressableCard`
- * (itself over `PressableCard` + the shared `verdict-band`). No local port of that
- * primitive exists yet under `.storybook/stories`, so a faithful minimal copy of
- * the pieces RatingBar actually uses (container-query grid, tile chrome, verdict
- * left-band, pressable surface) is inlined below.
- * TODO: swap the inlined `GroupPressableCard`/`PressableCard`/verdict band for the
- * local ports once the cards category is ported.
+ * Composes the local `GroupPressableCard` port (itself over `PressableCard` +
+ * the shared `verdict-band`) for the tile grid, and `StatusChip` for the
+ * keyboard-shortcut number pill — no more inlined copies of either primitive.
  */
-
-// ── Inlined verdict left-band (from cards/verdict-band) ──────────────────────
-/** Semantic verdict tones with a literal Tailwind class. */
-type VerdictBandVariant = "accent" | "success" | "warning" | "danger"
-
-interface VerdictBand {
-    /** Turn the left band on. */
-    enable: boolean
-    /** Semantic tone — resolves via a literal lookup, no Tailwind safelist needed. */
-    variant?: VerdictBandVariant
-    /** Escape hatch: a raw Tailwind color + shade (e.g. `"amber-500"`). */
-    color?: string
-}
-
-/** Literal per-variant inset-shadow class — MUST stay literal for Tailwind's scanner. */
-const VERDICT_VARIANT_CLASS: Record<VerdictBandVariant, string> = {
-    accent: "inset-shadow-[2px_0_0_0_var(--accent)]",
-    success: "inset-shadow-[2px_0_0_0_var(--success)]",
-    warning: "inset-shadow-[2px_0_0_0_var(--warning)]",
-    danger: "inset-shadow-[2px_0_0_0_var(--danger)]",
-}
-
-/** Resolves a {@link VerdictBand} into a 2px left-edge inset-shadow band, or `undefined`. */
-const verdictBandClassName = (withVerdict?: VerdictBand): string | undefined => {
-    if (!withVerdict?.enable) {
-        return undefined
-    }
-    const shadowClass = withVerdict.variant
-        ? VERDICT_VARIANT_CLASS[withVerdict.variant]
-        : withVerdict.color
-            ? `inset-shadow-[2px_0_0_0_var(--color-${withVerdict.color})]`
-            : undefined
-    return cn("pl-4", shadowClass)
-}
-
-// ── Inlined PressableCard surface (from cards/PressableCard) ──────────────────
-interface PressableCardProps {
-    children: ReactNode
-    onPress?: () => void
-    href?: string
-    isDisabled?: boolean
-    label?: string
-    className?: string
-}
-
-const PressableCard = ({ children, onPress, href, isDisabled = false, label, className }: PressableCardProps) => {
-    const surface = cn(
-        "rounded-3xl bg-surface px-4 py-3 text-left shadow-surface transition-colors hover:bg-surface-secondary",
-        isDisabled && "cursor-not-allowed opacity-60",
-        className,
-    )
-    const base = cn(
-        "block w-full outline-none focus-visible:ring-2 focus-visible:ring-accent",
-        surface,
-    )
-    if (href && !isDisabled) {
-        return (
-            <a href={href} aria-label={label} className={base}>
-                {children}
-            </a>
-        )
-    }
-    return (
-        <button
-            type="button"
-            onClick={onPress}
-            disabled={isDisabled}
-            aria-label={label}
-            className={cn(base, !isDisabled && "cursor-pointer")}
-        >
-            {children}
-        </button>
-    )
-}
-
-// ── Inlined GroupPressableCard (from cards/GroupPressableCard) ────────────────
-interface GroupPressableCardColumns {
-    base?: 1 | 2
-    sm?: 2 | 3 | 4
-}
-
-interface GroupPressableCardItem {
-    key: string
-    content: ReactNode
-    onPress?: () => void
-    isDisabled?: boolean
-    className?: string
-    withVerdict?: VerdictBand
-}
-
-interface GroupPressableCardProps {
-    items: Array<GroupPressableCardItem>
-    ariaLabel: string
-    columns?: GroupPressableCardColumns
-    gap?: 2 | 3
-    keyboardShortcut?: boolean
-    className?: string
-}
-
-// Compact grid cell chrome: one nấc down from PressableCard's rounded-3xl default.
-const TILE_CHROME = "rounded-2xl shadow-field"
-const BASE_COLUMNS_CLASS: Record<1 | 2, string> = {
-    1: "grid-cols-1",
-    2: "grid-cols-2",
-}
-const SM_COLUMNS_CLASS: Record<2 | 3 | 4, string> = {
-    2: "@sm:grid-cols-2",
-    3: "@sm:grid-cols-3",
-    4: "@sm:grid-cols-4",
-}
-const GAP_CLASS: Record<2 | 3, string> = {
-    2: "gap-2",
-    3: "gap-3",
-}
-
-const GroupPressableCard = ({
-    items,
-    ariaLabel,
-    columns = {},
-    gap = 3,
-    keyboardShortcut = false,
-    className,
-}: GroupPressableCardProps) => {
-    const itemsRef = React.useRef(items)
-    useEffect(() => {
-        itemsRef.current = items
-    }, [items])
-
-    useEffect(() => {
-        if (!keyboardShortcut) {
-            return
-        }
-        const onKeyDown = (event: KeyboardEvent) => {
-            const target = event.target as HTMLElement | null
-            if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)) {
-                return
-            }
-            const position = Number(event.key) - 1
-            const current = itemsRef.current
-            if (!Number.isInteger(position) || position < 0 || position >= current.length) {
-                return
-            }
-            const item = current[position]
-            if (item.isDisabled || !item.onPress) {
-                return
-            }
-            event.preventDefault()
-            item.onPress()
-        }
-        window.addEventListener("keydown", onKeyDown)
-        return () => window.removeEventListener("keydown", onKeyDown)
-    }, [keyboardShortcut])
-
-    if (items.length === 0) {
-        return null
-    }
-
-    return (
-        <div className={cn("@container", className)}>
-            <div
-                role="group"
-                aria-label={ariaLabel}
-                className={cn(
-                    "grid",
-                    GAP_CLASS[gap],
-                    BASE_COLUMNS_CLASS[columns.base ?? 1],
-                    columns.sm === undefined ? undefined : SM_COLUMNS_CLASS[columns.sm],
-                )}
-            >
-                {items.map((item) => (
-                    <PressableCard
-                        key={item.key}
-                        onPress={item.onPress}
-                        isDisabled={item.isDisabled}
-                        className={cn(
-                            TILE_CHROME,
-                            verdictBandClassName(item.withVerdict),
-                            item.className,
-                        )}
-                    >
-                        {item.content}
-                    </PressableCard>
-                ))}
-            </div>
-        </div>
-    )
-}
 
 // ── RatingBar ────────────────────────────────────────────────────────────────
 /** One selectable recall grade in a {@link RatingBar}. */
@@ -229,6 +41,12 @@ export interface RatingBarProps {
     ariaLabel: string
     /** Disables every button while a review is in flight. */
     isPending?: boolean
+    /**
+     * `true` → render the skeleton mirror (same grid, same tile chrome, same
+     * per-option hint row) instead of the real pressable tiles. Consumer just
+     * flips the flag while the flashcard/answer data is still loading.
+     */
+    isSkeleton?: boolean
     /** Extra classes on the group. */
     className?: string
 }
@@ -251,7 +69,7 @@ const GRADE_COLOR: Record<number, string> = {
  * / Good / Easy) the learner taps — or presses `1`–`4` — after revealing a
  * flashcard's answer. Each tile carries a tier-colored LEFT BAND (the shared
  * `withVerdict` band, colours from {@link GRADE_COLOR}), a keyboard-key hint (a
- * neutral `Chip`), and an optional next-interval preview.
+ * neutral `StatusChip`), and an optional next-interval preview.
  *
  * The tiles + their grid + the 1–4 shortcut are a `GroupPressableCard`, so this
  * block only owns the tile ANATOMY. Grading is an ACTION — nothing stays selected,
@@ -259,34 +77,66 @@ const GRADE_COLOR: Record<number, string> = {
  *
  * @param props - {@link RatingBarProps}
  */
-export const RatingBar = ({ options, onRate, ariaLabel, isPending = false, className }: RatingBarProps) => (
-    <GroupPressableCard
-        ariaLabel={ariaLabel}
-        columns={{ base: 2, sm: 4 }}
-        gap={3}
-        keyboardShortcut
-        className={className}
-        items={options.map((option, position) => ({
-            key: String(option.grade),
-            onPress: () => onRate(option.grade),
-            isDisabled: isPending,
-            withVerdict: { enable: true, color: GRADE_COLOR[option.grade] },
-            className: "flex flex-col gap-2 py-2 pr-3 pl-4",
-            content: (
-                <>
-                    <span className="flex items-center justify-between gap-2">
-                        <span className="text-sm font-medium text-foreground">{option.label}</span>
-                        <Chip size="sm" variant="soft" color="default">
-                            <Chip.Label>{position + 1}</Chip.Label>
-                        </Chip>
-                    </span>
-                    {option.hint !== undefined ? (
-                        <Typography type="body-xs" color="muted">
-                            {option.hint}
-                        </Typography>
-                    ) : null}
-                </>
-            ),
-        }))}
-    />
-)
+export const RatingBar = ({
+    options,
+    onRate,
+    ariaLabel,
+    isPending = false,
+    isSkeleton = false,
+    className,
+}: RatingBarProps) => {
+    if (isSkeleton) {
+        // Mirrors GroupPressableCard's own grid + tile chrome (`grid-cols-2
+        // @sm:grid-cols-4 gap-3` / `rounded-2xl shadow-field`) literally — this
+        // fixed 2/4-column skeleton isn't the responsive `columns` prop the real
+        // port takes, so there's nothing to compose here, just the same classes —
+        // and swaps only the label/key-chip/hint content for bars, so nothing
+        // shifts once the real grades arrive.
+        return (
+            <div className={cn("@container", className)}>
+                <div className="grid grid-cols-2 gap-3 @sm:grid-cols-4">
+                    {options.map((option) => (
+                        <div key={option.grade} className="flex flex-col gap-2 rounded-2xl py-2 pr-3 pl-3 shadow-field">
+                            <span className="flex items-center justify-between gap-2">
+                                <Skeleton.Typography type="body-sm" width="1/2" />
+                                <Skeleton.Chip className="size-6" />
+                            </span>
+                            {option.hint !== undefined ? (
+                                <Skeleton.Typography type="body-xs" width="1/3" />
+                            ) : null}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        )
+    }
+    return (
+        <GroupPressableCard
+            ariaLabel={ariaLabel}
+            columns={{ base: 2, sm: 4 }}
+            gap={3}
+            keyboardShortcut
+            className={className}
+            items={options.map((option, position) => ({
+                key: String(option.grade),
+                onPress: () => onRate(option.grade),
+                isDisabled: isPending,
+                withVerdict: { enable: true, color: GRADE_COLOR[option.grade] },
+                className: "flex flex-col gap-2 py-2 pr-3 pl-3",
+                content: (
+                    <>
+                        <span className="flex items-center justify-between gap-2">
+                            <span className="text-sm font-medium text-foreground">{option.label}</span>
+                            <StatusChip tone="neutral">{position + 1}</StatusChip>
+                        </span>
+                        {option.hint !== undefined ? (
+                            <Typography type="body-xs" color="muted">
+                                {option.hint}
+                            </Typography>
+                        ) : null}
+                    </>
+                ),
+            }))}
+        />
+    )
+}

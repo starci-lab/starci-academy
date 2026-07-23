@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { RagSourceGraph } from "./RagSourceGraph"
 
 const meta: Meta<typeof RagSourceGraph> = {
-    title: "Primitives/Rendering/RagSourceGraph",
+    title: "Design/Rendering/RagSourceGraph",
     component: RagSourceGraph,
     tags: ["autodocs"],
     parameters: {
@@ -52,6 +52,25 @@ export const SingleSourceNoScore: Story = {
                     {
                         filePath: "src/utils/parse.ts",
                         snippet: "export function parseList(input: string): Array<string> {",
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/** Long file path + long snippet preview — both node lines are `truncate`, so overflow clips with an ellipsis instead of wrapping/breaking the fixed 220px node width. */
+export const LongPathTruncated: Story = {
+    name: "Đường dẫn dài (truncate)",
+    render: () => (
+        <div className="p-8">
+            <RagSourceGraph
+                question="Where is the exponential backoff for failed webhook deliveries configured?"
+                sources={[
+                    {
+                        filePath: "src/modules/notifications/webhooks/delivery/retry-policy-config.ts",
+                        snippet: "export const WEBHOOK_DELIVERY_RETRY_POLICY_DEFAULT_CONFIGURATION = { baseDelayMs: 500 }",
+                        score: 0.87,
                     },
                 ]}
             />

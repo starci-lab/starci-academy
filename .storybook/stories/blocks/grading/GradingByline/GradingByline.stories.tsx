@@ -5,7 +5,7 @@ import { AiModelCategory } from "../../chips/AiCategoryChip/AiCategoryChip"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof ModelByline> = {
-    title: "Block/Grading/GradingByline",
+    title: "Design/Grading/GradingByline",
     component: ModelByline,
     tags: ["autodocs"],
     parameters: {

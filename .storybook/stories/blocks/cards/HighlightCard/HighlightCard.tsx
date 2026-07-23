@@ -13,6 +13,8 @@ import { cn } from "@heroui/react"
 export interface HighlightCardProps {
     /** The wrapped card (e.g. a `SectionCard`/`Card`) — `HighlightCard` only adds the sweeping-light layer, it renders no card chrome of its own. */
     children: React.ReactNode
+    /** `true` → MUTE the sweep layer (no `highlight-card-sweep` behind children). Use while the wrapped content is still loading — a skeleton has no "verdict" yet, so it shouldn't read as emphasized. `children` still renders as passed (e.g. its own skeleton state). */
+    isSkeleton?: boolean
     /** Extra classes on the wrapper. */
     className?: string
 }
@@ -26,9 +28,9 @@ export interface HighlightCardProps {
  *
  * @param props - {@link HighlightCardProps}
  */
-export const HighlightCard = ({ children, className }: HighlightCardProps) => (
+export const HighlightCard = ({ children, isSkeleton = false, className }: HighlightCardProps) => (
     <div className={cn("relative", className)}>
-        <div aria-hidden className="highlight-card-sweep" />
+        {!isSkeleton && <div aria-hidden className="highlight-card-sweep" />}
         {children}
     </div>
 )

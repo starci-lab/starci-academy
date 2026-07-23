@@ -9,7 +9,7 @@ import { ReactionType } from "../ReactionBar/ReactionBar"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof CommunityPostCard> = {
-    title: "Block/Feed/CommunityPostCard",
+    title: "Design/Feed/CommunityPostCard",
     component: CommunityPostCard,
     tags: ["autodocs"],
     parameters: {
@@ -89,6 +89,21 @@ const longBodyPost: QueryCommunityFeedItemData = {
 
 const readOnlyPost: QueryCommunityFeedItemData = { ...defaultPost, id: "post-5" }
 
+const pinnedPost: QueryCommunityFeedItemData = {
+    ...defaultPost,
+    id: "post-6",
+    isPinned: true,
+    isFounderAuthor: false,
+}
+
+const founderAuthorPost: QueryCommunityFeedItemData = {
+    ...defaultPost,
+    id: "post-7",
+    isPinned: false,
+    isFounderAuthor: true,
+    author: { id: "author-2", username: "starci_founder", displayName: "Thầy StarCi", avatar: "https://i.pravatar.cc/150?img=5" },
+}
+
 /** Wrapper holding reaction + comment-thread open state for the interactive story. */
 const Controlled = () => {
     const [myReaction, setMyReaction] = useState<ReactionType | null>(null)
@@ -120,6 +135,14 @@ export const Default: Story = {
 
 export const FounderPinned: Story = {
     render: () => blockShell(<div className="w-full max-w-xl"><CommunityPostCard post={founderPinnedPost} onReact={() => {}} onToggleComments={() => {}} /></div>, ANATOMY),
+}
+
+export const Pinned: Story = {
+    render: () => blockShell(<div className="w-full max-w-xl"><CommunityPostCard post={pinnedPost} onReact={() => {}} onToggleComments={() => {}} /></div>, ANATOMY),
+}
+
+export const FounderAuthor: Story = {
+    render: () => blockShell(<div className="w-full max-w-xl"><CommunityPostCard post={founderAuthorPost} onReact={() => {}} onToggleComments={() => {}} /></div>, ANATOMY),
 }
 
 export const Fresh: Story = {

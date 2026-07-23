@@ -5,7 +5,7 @@ import { CodeConsole } from "./CodeConsole"
 import { IOExampleCard } from "../IOExampleCard/IOExampleCard"
 
 const meta: Meta<typeof CodeConsole> = {
-    title: "Primitives/Code/CodeConsole",
+    title: "Block/Code/CodeConsole",
     component: CodeConsole,
     tags: ["autodocs"],
     parameters: {

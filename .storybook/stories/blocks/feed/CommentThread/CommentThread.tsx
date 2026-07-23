@@ -69,6 +69,10 @@ const CommentThreadItem = ({
     const [replyValue, setReplyValue] = useState("")
 
     // reveal-a-reply-box affordance, handed to the row's actions slot
+    // NOTE: left as hand-rolled — Button port has no plain-text/link variant; every
+    // variant (incl. ghost) carries `.button--sm`'s fixed h-9/px-3 pill chrome, which
+    // would force padding/height onto this bare "Trả lời" text toggle that today has
+    // none. Swapping would visibly change what renders, so it stays a plain button.
     const replyAction = (
         <button
             type="button"

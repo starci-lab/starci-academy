@@ -4,7 +4,7 @@ import { SelfHostGpuMark } from "./SelfHostGpuMark"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof SelfHostGpuMark> = {
-    title: "Block/Grading/SelfHostGpuMark",
+    title: "Design/Grading/SelfHostGpuMark",
     component: SelfHostGpuMark,
     tags: ["autodocs"],
     parameters: {

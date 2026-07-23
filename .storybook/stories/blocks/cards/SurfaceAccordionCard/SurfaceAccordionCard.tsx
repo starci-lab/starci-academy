@@ -2,6 +2,7 @@ import React from "react"
 import type { ReactNode } from "react"
 import { Accordion, Typography, cn } from "@heroui/react"
 import { SurfaceCardHeader, surfaceSectionGap, surfaceFrame, type SurfaceLabelProps } from "../surface-card-header"
+import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — the target `SurfaceAccordionCard` of the
@@ -39,6 +40,12 @@ export interface SurfaceAccordionCardProps extends SurfaceLabelProps {
     emptyState?: ReactNode
     /** Secondary node rendered OUTSIDE (below) the card, `gap-2` — a caption/prompt. */
     description?: ReactNode
+    /**
+     * `true` → self-render a `Skeleton.Accordion` mirror (same surface frame, row
+     * count = `items.length`) INSTEAD of the real accordion. Consumer just passes
+     * the flag — no separate `<Skeleton.Accordion>` outside (mirrors `Button.isSkeleton`).
+     */
+    isSkeleton?: boolean
     /** Extra classes on the outer section / surface. */
     className?: string
 }
@@ -104,10 +111,14 @@ export const SurfaceAccordionCard = ({
     bordered = false,
     emptyState,
     description,
+    isSkeleton = false,
     className,
 }: SurfaceAccordionCardProps) => {
-    // no items → show the empty state in the same bg-surface frame (never a bare, broken accordion)
-    const frame = items.length === 0 && emptyState != null ? (
+    // isSkeleton → self-render the mirror (same frame, items.length rows); never a bare accordion.
+    // else no items → show the empty state in the same bg-surface frame (never a bare, broken accordion)
+    const frame = isSkeleton ? (
+        <Skeleton.Accordion items={items.length > 0 ? items.length : 3} />
+    ) : items.length === 0 && emptyState != null ? (
         <div className={cn("overflow-hidden p-8", surfaceFrame(bordered))}>
             {emptyState}
         </div>

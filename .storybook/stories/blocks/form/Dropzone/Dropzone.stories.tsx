@@ -79,3 +79,19 @@ export const Error: Story = {
         </div>
     ),
 }
+
+/** Skeleton: loading placeholder mirroring the dashed drop box's shape/rounding. */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="p-8">
+            <Dropzone
+                isSkeleton
+                hint={HINT}
+                file={null}
+                acceptedMimeTypes={ACCEPT}
+                maxSizeInBytes={MAX}
+                onChange={() => {}}
+            />
+        </div>
+    ),
+}

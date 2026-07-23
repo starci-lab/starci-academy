@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Button } from "@heroui/react"
-import { RocketLaunchIcon } from "@phosphor-icons/react"
+import { Avatar, AvatarFallback, Button } from "@heroui/react"
 import { PressableCard } from "./PressableCard"
 
 const meta: Meta<typeof PressableCard> = {
@@ -16,24 +15,23 @@ export default meta
 
 type Story = StoryObj<typeof PressableCard>
 
-/** Generic navigation-tile content — a leading icon tile + title + subtitle. */
-const NavTileContent = () => (
+/**
+ * Fixture chuẩn (C-fixture) = ProfileCard (avatar + title + description). LƯU Ý:
+ * `PressableCard` tự vẽ khung card (surface/rounded-3xl/p-3/shadow-surface), nên
+ * ở đây KHÔNG bọc thêm `Card`/`CardContent` ngoài — chỉ giữ row bên trong, tránh
+ * card-in-card.
+ */
+const ProfileRow = () => (
     <div className="flex items-center gap-3">
-        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft">
-            <RocketLaunchIcon className="size-5 text-accent-soft-foreground" aria-hidden focusable="false" />
+        <Avatar className="size-10 shrink-0">
+            <AvatarFallback>SC</AvatarFallback>
+        </Avatar>
+        <div className="flex min-w-0 flex-col">
+            <span className="truncate text-sm font-medium">StarCi Academy</span>
+            <span className="truncate text-xs text-muted">
+                Học fullstack, system design và DevOps theo lộ trình phỏng vấn.
+            </span>
         </div>
-        <div className="flex flex-col">
-            <span className="text-sm font-medium text-foreground">Fullstack Mastery roadmap</span>
-            <span className="text-xs text-muted">12 modules · 48 lessons</span>
-        </div>
-    </div>
-)
-
-/** Generic option-card content — used for "pick a card" demos. */
-const OptionCardContent = ({ label, price }: { label: string; price: string }) => (
-    <div className="flex flex-col gap-1">
-        <span className="text-sm font-semibold text-foreground">{label}</span>
-        <span className="text-xs text-muted">{price}</span>
     </div>
 )
 
@@ -43,7 +41,7 @@ export const Default: Story = {
         <div className="p-8">
             <div className="max-w-md">
                 <PressableCard onPress={() => {}}>
-                    <NavTileContent />
+                    <ProfileRow />
                 </PressableCard>
             </div>
         </div>
@@ -56,7 +54,7 @@ export const AsLink: Story = {
         <div className="p-8">
             <div className="max-w-md">
                 <PressableCard href="#">
-                    <NavTileContent />
+                    <ProfileRow />
                 </PressableCard>
             </div>
         </div>
@@ -73,7 +71,7 @@ export const WithActions: Story = {
             <div className="max-w-md">
                 <PressableCard
                     onPress={() => {}}
-                    label="Open the Fullstack Mastery path"
+                    label="Open the StarCi Academy profile"
                     actions={(
                         <>
                             <Button size="sm" variant="secondary" onPress={() => {}}>Continue</Button>
@@ -81,7 +79,7 @@ export const WithActions: Story = {
                         </>
                     )}
                 >
-                    <NavTileContent />
+                    <ProfileRow />
                 </PressableCard>
             </div>
         </div>
@@ -94,7 +92,20 @@ export const Disabled: Story = {
         <div className="p-8">
             <div className="max-w-md">
                 <PressableCard isDisabled onPress={() => {}}>
-                    <OptionCardContent label="12-month plan (out of slots)" price="3,490,000đ" />
+                    <ProfileRow />
+                </PressableCard>
+            </div>
+        </div>
+    ),
+}
+
+/** Đang tải — `isSkeleton` tự vẽ mirror (khối icon + 2 dòng chữ), không cần Skeleton rời. */
+export const Loading: Story = {
+    render: () => (
+        <div className="p-8">
+            <div className="max-w-md">
+                <PressableCard isSkeleton>
+                    <ProfileRow />
                 </PressableCard>
             </div>
         </div>

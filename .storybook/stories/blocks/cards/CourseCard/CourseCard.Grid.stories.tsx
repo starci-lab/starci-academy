@@ -5,7 +5,7 @@ import { blockShell } from "../../../block-anatomy"
 import { ANATOMY, discountedCourse, enrolledCourse, noCoverCourse, freeCourse } from "./CourseCard.mocks"
 
 const meta: Meta<typeof CourseCard> = {
-    title: "Block/Cards/CourseCard/Grid",
+    title: "Design/Cards/CourseCard/Grid",
     component: CourseCard,
     tags: ["autodocs"],
     parameters: {
@@ -77,6 +77,32 @@ export const Free: Story = {
         blockShell(
             <div className="w-80">
                 <CourseCard course={freeCourse} />
+            </div>,
+            ANATOMY,
+        ),
+}
+
+/** Khung chờ — mirror khung lưới khi card thật đang tải (isSkeleton), `course` bị bỏ qua. */
+export const Skeleton: Story = {
+    name: "Khung chờ",
+    render: () =>
+        blockShell(
+            <div className="w-80">
+                <CourseCard course={discountedCourse} isSkeleton />
+            </div>,
+            ANATOMY,
+        ),
+}
+
+/** Khung chờ · lưới — cả lưới catalog đang tải (tái hiện story skeleton cũ bằng isSkeleton). */
+export const SkeletonGrid: Story = {
+    name: "Khung chờ · lưới",
+    render: () =>
+        blockShell(
+            <div className="grid w-full gap-3 @app-sm:grid-cols-2 @app-lg:grid-cols-3">
+                <CourseCard course={discountedCourse} isSkeleton />
+                <CourseCard course={discountedCourse} isSkeleton />
+                <CourseCard course={discountedCourse} isSkeleton />
             </div>,
             ANATOMY,
         ),

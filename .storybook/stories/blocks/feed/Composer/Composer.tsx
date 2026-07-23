@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react"
-import { Button, Spinner, TextArea, TextField, cn } from "@heroui/react"
+import { Spinner, TextArea, TextField, cn } from "@heroui/react"
 import { PaperPlaneRightIcon } from "@phosphor-icons/react"
+import { Button } from "../../buttons/Button/Button"
 import { UserAvatar } from "../../identity/UserAvatar/UserAvatar"
 
 /**
@@ -111,6 +112,10 @@ export const Composer = ({
             {/* trailing action cluster: optional attach slot, then the primary Send */}
             <div className="flex shrink-0 items-center gap-1">
                 {attachSlot}
+                {/* NOTE: not using Button's `icon`/`isPending` — port renders icon TRAILING and
+                    keeps it alongside isPending's own spinner, but this control needs the
+                    spinner-or-icon LEADING (before the label) with nothing else. Kept as
+                    manual children to preserve that exact layout. */}
                 <Button
                     size="sm"
                     variant="primary"

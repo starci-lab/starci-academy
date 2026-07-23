@@ -1,6 +1,7 @@
 import React from "react"
 import { Card, CardContent, cn } from "@heroui/react"
 import { type VerdictBand, verdictBandClassName } from "../verdict-band"
+import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -8,13 +9,17 @@ import { type VerdictBand, verdictBandClassName } from "../verdict-band"
  * synced back to `src` later.
  */
 
+// §5a: icon size ĐỐI CHIẾU text-size của title ("text-base" → size-6). Primitive sở
+// hữu size + màu (§4) — consumer truyền icon TRẦN, KHÔNG kèm size-*/text-*.
+const ICON_CLS = "[&_svg]:size-6 shrink-0"
+
 /** Props for {@link SectionCard}. */
 export interface SectionCardProps {
     /** Card body. */
     children: React.ReactNode
     /** Optional section title rendered in the header row. */
     title?: React.ReactNode
-    /** Optional leading icon shown before the title. */
+    /** Optional leading icon shown before the title. Truyền TRẦN — primitive tự ép size-6 + màu theo `accent` (§4/§5a). */
     icon?: React.ReactNode
     /** Optional action node pinned to the right of the header (button/link). */
     action?: React.ReactNode
@@ -27,6 +32,8 @@ export interface SectionCardProps {
      * ad-hoc "vùng active" decoration (`card.md` §3g).
      */
     withVerdict?: VerdictBand
+    /** `true` → render skeleton mirror (header icon/title/action bars + body paragraph). Consumer chỉ bật cờ. */
+    isSkeleton?: boolean
     /** Extra classes merged onto the inner content wrapper. */
     contentClassName?: string
     /** Extra classes on the card root. */
@@ -49,6 +56,7 @@ export const SectionCard = ({
     action,
     accent = false,
     withVerdict,
+    isSkeleton = false,
     className,
     contentClassName,
 }: SectionCardProps) => {
@@ -65,17 +73,35 @@ export const SectionCard = ({
                 {hasHeader ? (
                     <div className="flex items-center justify-between gap-3 border-b border-separator pb-3">
                         <div className="flex min-w-0 items-center gap-2">
-                            {icon}
+                            {icon ? (
+                                isSkeleton ? (
+                                    <Skeleton className="size-6 shrink-0 rounded-full" />
+                                ) : (
+                                    <span className={cn(ICON_CLS, accent ? "text-accent" : "text-muted")}>
+                                        {icon}
+                                    </span>
+                                )
+                            ) : null}
                             {title ? (
-                                <span className="truncate text-base font-semibold tracking-tight text-foreground">
-                                    {title}
-                                </span>
+                                isSkeleton ? (
+                                    <Skeleton.Typography type="body" width="1/2" />
+                                ) : (
+                                    <span className="truncate text-base font-semibold tracking-tight text-foreground">
+                                        {title}
+                                    </span>
+                                )
                             ) : null}
                         </div>
-                        {action ? <div className="shrink-0">{action}</div> : null}
+                        {action ? (
+                            isSkeleton ? (
+                                <Skeleton.Button />
+                            ) : (
+                                <div className="shrink-0">{action}</div>
+                            )
+                        ) : null}
                     </div>
                 ) : null}
-                {children}
+                {isSkeleton ? <Skeleton.Paragraph lines={3} /> : children}
             </CardContent>
         </Card>
     )

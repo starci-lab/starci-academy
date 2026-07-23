@@ -316,6 +316,18 @@ html {
     border-bottom-width: 0 !important;
 }
 
+/*
+ * Chip typography (principles §2) — chip là token phụ, chữ KHÔNG đậm: ép
+ * `text-xs` (0.75rem) + `font-normal` (400) cho MỌI chip ở đây thay vì gắn class
+ * `text-xs font-normal` từng call-site. HeroUI `.chip--sm` bake weight nặng hơn
+ * nên cần `!important`. Phần cần NHẤN trong chip (vd HighlightChip `value` =
+ * `.font-medium` đặt trên node CON) vẫn tự thắng — override này chỉ ở `.chip` gốc.
+ */
+.chip {
+    font-size: 0.75rem !important;
+    font-weight: 400 !important;
+}
+
 /* Each tab hugs its label (w-fit) with px-3, so the strip packs to the left
    instead of stretching tabs to equal full width. */
 .extended-tabs .tabs__tab {

@@ -109,6 +109,13 @@ export const FlexWrapButtonRadio = <T extends string>(props: FlexWrapButtonRadio
                     // standalone: selected = filled `tertiary` (neutral, NOT accent —
                     // a facet toggle isn't a CTA), unselected = hollow `ghost` (no
                     // surface of its own — the page/card is the surface).
+                    // NOTE: left as raw HeroUI <Button> (not the Button port) — this
+                    // toggle group's a11y contract is `role="group"` + `aria-pressed`
+                    // per button (see doc comment above); the Button port's props
+                    // (.storybook/stories/blocks/buttons/Button/Button.tsx) don't
+                    // forward arbitrary/native attributes like `aria-pressed` (no
+                    // `...rest` spread), so swapping would silently drop the pressed
+                    // state from assistive tech. Deferred.
                     return (
                         <Button
                             key={item.value}

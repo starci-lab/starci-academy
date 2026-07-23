@@ -5,7 +5,7 @@ import { EmptyContent } from "./EmptyContent"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof EmptyContent> = {
-    title: "Block/Async/EmptyContent",
+    title: "Design/Async/EmptyContent",
     component: EmptyContent,
     tags: ["autodocs"],
     parameters: {

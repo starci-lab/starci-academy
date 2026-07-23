@@ -50,7 +50,7 @@ export const SurfaceCard = ({
         <div
             className={cn(
                 surfaceFrame(bordered),
-                flushContent ? "overflow-hidden" : "p-4",
+                flushContent ? "overflow-hidden" : "p-3",
                 contentClassName,
             )}
         >

@@ -2,6 +2,7 @@
 
 import React, { useMemo, useState } from "react"
 import { Chip, ScrollShadow, Tooltip } from "@heroui/react"
+import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — the target `TagChips`. Authored in Storybook
@@ -28,6 +29,12 @@ export interface TagChipsProps {
         trigger?: string
         content?: string
     }
+    /**
+     * Loading placeholder — renders `maxVisible` `Skeleton.Chip` pills in the same
+     * row instead of the real tags (no tooltip/overflow chip, matching the resting
+     * layout so nothing shifts once data resolves).
+     */
+    isSkeleton?: boolean
 }
 
 /**
@@ -38,9 +45,24 @@ export interface TagChipsProps {
  * @param props.tags — Full list of tag strings.
  * @param props.maxVisible — Cut-off before overflow (default 3).
  */
-export const TagChips = ({ tags, maxVisible = 3, variant = "soft", classNames }: TagChipsProps) => {
+export const TagChips = ({
+    tags,
+    maxVisible = 3,
+    variant = "soft",
+    classNames,
+    isSkeleton,
+}: TagChipsProps) => {
     const [menuOpen, setMenuOpen] = useState(false)
     const visibleTags = useMemo(() => tags.slice(0, maxVisible), [tags, maxVisible])
+    if (isSkeleton) {
+        return (
+            <div className="flex items-center gap-2">
+                {Array.from({ length: maxVisible }).map((_, index) => (
+                    <Skeleton.Chip key={index} />
+                ))}
+            </div>
+        )
+    }
     // Số tag bị gom lại; chỉ khi > 0 mới có "tràn" thật để hiện chip +N (tránh số âm/0 khi rỗng hoặc chưa tràn).
     const overflowCount = Math.max(0, tags.length - maxVisible)
     return (

@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button, Chip } from "@heroui/react"
 import { MediaCard } from "./MediaCard"
-import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
+import { MetaRow } from "../../lists/MetaRow/MetaRow"
 
 const meta: Meta<typeof MediaCard> = {
-    title: "Primitives/Card/MediaCard",
+    title: "Design/Cards/MediaCard",
     component: MediaCard,
     tags: ["autodocs"],
     parameters: {
@@ -16,24 +16,29 @@ export default meta
 
 type Story = StoryObj<typeof MediaCard>
 
-const metaChips = (
-    <>
-        <Chip size="sm">Fullstack</Chip>
-        <Chip size="sm" variant="soft">Intermediate</Chip>
-    </>
+// Cụm meta = MetaRow (1 chip tín hiệu + đoạn muted nối `·`), KHÔNG fragment chip rời.
+const courseMeta = (
+    <MetaRow
+        chip={
+            <Chip size="sm" variant="soft">
+                Intermediate
+            </Chip>
+        }
+        items={["Fullstack", "12 hours"]}
+    />
 )
 
 const DESCRIPTION = "Build a solid foundation from frontend to backend through hands-on projects, graded by AI."
 
-/** With cover — a 16:9 full-bleed image at the top, then title / meta / description / CTA in the padded body. */
+/** Có cover — ảnh 16:9 full-bleed trên đầu, rồi title / meta / description / CTA trong body `p-3`. */
 export const WithCover: Story = {
     render: () => (
         <div className="p-8">
             <div style={{ width: 320 }}>
                 <MediaCard
-                    cover={<img src="https://placehold.co/640x360" alt="Course cover" className="size-full object-cover" />}
+                    cover={<img src="https://placehold.co/640x360" alt="Course cover" />}
                     title="Fullstack Mastery path"
-                    meta={metaChips}
+                    meta={courseMeta}
                     description={DESCRIPTION}
                     footer={<Button size="sm">View course</Button>}
                 />
@@ -42,14 +47,14 @@ export const WithCover: Story = {
     ),
 }
 
-/** No cover — omit `cover` and a 16:9 placeholder fills the slot so a grid stays even instead of leaving a hole. */
+/** Không cover — bỏ `cover`, placeholder 16:9 lấp slot để lưới đều thay vì hụt một ô. */
 export const WithoutCover: Story = {
     render: () => (
         <div className="p-8">
             <div style={{ width: 320 }}>
                 <MediaCard
                     title="Fullstack Mastery path"
-                    meta={metaChips}
+                    meta={courseMeta}
                     description={DESCRIPTION}
                     footer={<Button size="sm">View course</Button>}
                 />
@@ -58,15 +63,15 @@ export const WithoutCover: Story = {
     ),
 }
 
-/** `onPress` — the whole card is a single pressable, keyboard-accessible target (custom handler). */
+/** `onPress` — cả card là MỘT target bấm được, truy cập bằng bàn phím; nhấn LÚN còn 97% (press-scale §7). */
 export const Pressable: Story = {
     render: () => (
         <div className="p-8">
             <div style={{ width: 320 }}>
                 <MediaCard
-                    cover={<img src="https://placehold.co/640x360" alt="Course cover" className="size-full object-cover" />}
+                    cover={<img src="https://placehold.co/640x360" alt="Course cover" />}
                     title="Fullstack Mastery path"
-                    meta={metaChips}
+                    meta={courseMeta}
                     description={DESCRIPTION}
                     onPress={() => {}}
                 />
@@ -75,15 +80,15 @@ export const Pressable: Story = {
     ),
 }
 
-/** `href` — the whole card is one accessible link (navigates on click). */
+/** `href` — cả card là MỘT link truy cập được (điều hướng khi bấm); nhấn LÚN còn 97% (press-scale §7). */
 export const AsLink: Story = {
     render: () => (
         <div className="p-8">
             <div style={{ width: 320 }}>
                 <MediaCard
-                    cover={<img src="https://placehold.co/640x360" alt="Course cover" className="size-full object-cover" />}
+                    cover={<img src="https://placehold.co/640x360" alt="Course cover" />}
                     title="Fullstack Mastery path"
-                    meta={metaChips}
+                    meta={courseMeta}
                     description={DESCRIPTION}
                     href="#"
                 />
@@ -92,27 +97,23 @@ export const AsLink: Story = {
     ),
 }
 
-/**
- * Loading: MIRROR the real card — keep the `Card` frame + the full-bleed 16:9 cover slot,
- * swap the cover image + body text for `Skeleton` bars sized to match (title body, two-line
- * description, a footer button) so the layout never jumps when the entity resolves.
- */
-export const SkeletonLoading: Story = {
+/** Minimal — chỉ có `title`, bỏ `meta`/`description`/`footer` (cover fallback lấp placeholder); kiểm chứng body không vỡ khi mọi slot phụ đều rỗng. */
+export const Minimal: Story = {
     render: () => (
         <div className="p-8">
             <div style={{ width: 320 }}>
-                <MediaCard
-                    cover={<Skeleton className="aspect-video w-full" />}
-                    title={<Skeleton className="h-4 my-2 w-2/3 rounded" />}
-                    meta={<Skeleton.Chip />}
-                    description={
-                        <span className="flex flex-col gap-1">
-                            <Skeleton className="h-3 w-full rounded" />
-                            <Skeleton className="h-3 w-1/2 rounded" />
-                        </span>
-                    }
-                    footer={<Skeleton.Button />}
-                />
+                <MediaCard title="Fullstack Mastery path" />
+            </div>
+        </div>
+    ),
+}
+
+/** Đang tải — bật `isSkeleton`, card TỰ vẽ skeleton mirror (giữ frame + cover slot + body), KHÔNG nhồi Skeleton rời. */
+export const Loading: Story = {
+    render: () => (
+        <div className="p-8">
+            <div style={{ width: 320 }}>
+                <MediaCard isSkeleton title="Fullstack Mastery path" />
             </div>
         </div>
     ),

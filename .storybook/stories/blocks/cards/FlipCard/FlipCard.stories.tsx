@@ -1,11 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { useState } from "react"
 import { Button, Chip, Typography } from "@heroui/react"
-import { LockIcon } from "@phosphor-icons/react"
 import { FlipCard } from "./FlipCard"
 
 const meta: Meta<typeof FlipCard> = {
-    title: "Primitives/Card/FlipCard",
+    title: "Design/Cards/FlipCard",
     component: FlipCard,
     tags: ["autodocs"],
     parameters: {
@@ -119,24 +118,18 @@ export const LongAnswer: Story = {
     ),
 }
 
-/** Locked answer — a premium card the learner hasn't unlocked: `back` is replaced by an unlock prompt, not the real answer. */
+/** Locked answer — a premium card the learner hasn't unlocked: `locked` swaps in the built-in unlock prompt, not a hand-rolled `back`. */
 export const Locked: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
                 <FlipCard
                     revealed
+                    locked
                     questionLabel="Câu hỏi"
                     answerLabel="Đáp án"
                     front={QUESTION}
                     belowFront={CHIPS}
-                    back={(
-                        <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center">
-                            <LockIcon aria-hidden focusable="false" className="size-8 text-muted" />
-                            <Typography type="body-sm" weight="semibold">Thẻ này thuộc gói Premium</Typography>
-                            <Typography type="body-xs" color="muted">Mở khoá khoá học để xem đáp án đầy đủ.</Typography>
-                        </div>
-                    )}
                 />
             </div>
         </div>
@@ -147,7 +140,7 @@ export const Locked: Story = {
 const Controlled = () => {
     const [revealed, setRevealed] = useState(false)
     return (
-        <div className="flex max-w-md flex-col gap-4">
+        <div className="flex max-w-md flex-col gap-3">
             <FlipCard revealed={revealed} questionLabel="Câu hỏi" answerLabel="Đáp án" front={QUESTION} belowFront={CHIPS} back={ANSWER} />
             {!revealed ? (
                 <Button variant="primary" onPress={() => setRevealed(true)}>Xem đáp án</Button>
@@ -163,6 +156,17 @@ export const Interactive: Story = {
     render: () => (
         <div className="p-8">
             <Controlled />
+        </div>
+    ),
+}
+
+/** Đang tải — `isSkeleton` tự vẽ skeleton mirror của cả 2 thẻ (câu hỏi + đáp án), không dựng Skeleton rời. */
+export const Loading: Story = {
+    render: () => (
+        <div className="p-8">
+            <div className="max-w-md">
+                <FlipCard isSkeleton revealed questionLabel="Câu hỏi" answerLabel="Đáp án" front={QUESTION} back={ANSWER} />
+            </div>
         </div>
     ),
 }

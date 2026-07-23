@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import React, { useState } from "react"
 import type { ReactNode } from "react"
 import { Typography } from "@heroui/react"
-import { ChatCircleDotsIcon, StackIcon } from "@phosphor-icons/react"
+import { ChatCircleDotsIcon } from "@phosphor-icons/react"
 import { ChatPanel, type ChatPanelMessage } from "./ChatPanel"
 import { NestedCard, NestedCardSection } from "../../cards/NestedCard/NestedCard"
 import { blockShell } from "../../../block-anatomy"
@@ -41,11 +41,7 @@ const baseMessages: Array<ChatPanelMessage> = [
         role: "assistant",
         content: "Usually when you notice data repeating across many rows, or a column that depends on a non-primary-key column. I found a few sources in the course related to this question.",
         toolResult: (
-            <NestedCard
-                title="Related lessons"
-                bordered
-                icon={<StackIcon aria-hidden focusable="false" className="size-4 text-muted" />}
-            >
+            <NestedCard title="Related lessons" bordered>
                 <NestedCardSection
                     eyebrow="Relational databases"
                     title="Data normalization and the normal forms"

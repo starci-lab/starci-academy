@@ -5,7 +5,7 @@ import { HeroBanner } from "./HeroBanner"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof HeroBanner> = {
-    title: "Block/Marketing/HeroBanner",
+    title: "Design/Marketing/HeroBanner",
     component: HeroBanner,
     tags: ["autodocs"],
     parameters: {

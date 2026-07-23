@@ -1,5 +1,6 @@
 import React from "react"
 import { Chip, cn, Typography } from "@heroui/react"
+import { StatusChip } from "../../chips/StatusChip/StatusChip"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -78,10 +79,9 @@ export const HeroBanner = ({
                 hasVisual ? "flex-1 items-start text-left" : "items-center text-center",
             )}
         >
-            <Chip size="sm" className="bg-accent-soft text-accent-soft-foreground">
-                {eyebrowIcon}
-                <Chip.Label>{eyebrow}</Chip.Label>
-            </Chip>
+            <StatusChip tone="accent" icon={eyebrowIcon}>
+                {eyebrow}
+            </StatusChip>
 
             <Typography.Heading level={1} weight="bold" align={align} className="max-w-4xl">
                 {headline}

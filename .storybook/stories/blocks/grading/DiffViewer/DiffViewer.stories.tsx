@@ -4,7 +4,7 @@ import type { DiffHunk } from "./DiffViewer"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof DiffViewer> = {
-    title: "Block/Grading/DiffViewer",
+    title: "Design/Grading/DiffViewer",
     component: DiffViewer,
     tags: ["autodocs"],
     parameters: {
@@ -51,6 +51,31 @@ export const Split: Story = {
     render: () =>
         blockShell(
             <DiffViewer filename="src/auth/login.ts" hunks={sampleHunks} variant="split" />,
+            ANATOMY,
+        ),
+}
+
+/** `filename` is optional — the header bar is skipped entirely when omitted. */
+export const NoFilename: Story = {
+    render: () => blockShell(<DiffViewer hunks={sampleHunks} />, ANATOMY),
+}
+
+/** A hunk's `header` is optional — no muted separator row is drawn when it's omitted. */
+const hunkWithoutHeader: DiffHunk[] = [
+    {
+        lines: [
+            { type: "ctx", content: "export const clamp = (n) => {", oldNumber: 1, newNumber: 1 },
+            { type: "del", content: "  return Math.min(n, 100)", oldNumber: 2 },
+            { type: "add", content: "  return Math.min(Math.max(n, 0), 100)", newNumber: 2 },
+            { type: "ctx", content: "}", oldNumber: 3, newNumber: 3 },
+        ],
+    },
+]
+
+export const WithoutHunkHeader: Story = {
+    render: () =>
+        blockShell(
+            <DiffViewer filename="src/utils/clamp.ts" hunks={hunkWithoutHeader} />,
             ANATOMY,
         ),
 }

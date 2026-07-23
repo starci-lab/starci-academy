@@ -3,6 +3,7 @@ import { ProgressBar, Typography, cn } from "@heroui/react"
 import type { ReactNode } from "react"
 
 import { ProgressMeterTargetMark } from "./TargetMark"
+import { AnatomyOverlay } from "../../layout/AnatomyOverlay/AnatomyOverlay"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -35,6 +36,8 @@ export interface ProgressMeterProps {
     targetLabel?: ReactNode
     /** Extra classes on the root element. */
     className?: string
+    /** Dev/spec: overlay the anatomy annotation on this meter. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -53,6 +56,7 @@ export const ProgressMeter = ({
     target,
     targetLabel,
     className,
+    showAnatomy = false,
 }: ProgressMeterProps) => {
     const safeMax = max > 0 ? max : 1
     const percent = Math.round((value / safeMax) * 100)
@@ -63,7 +67,8 @@ export const ProgressMeter = ({
         : Math.min(Math.max((target / safeMax) * 100, 0), 100)
 
     return (
-        <div className={cn("flex flex-col gap-2", className)}>
+        <div className={cn("flex flex-col gap-2", showAnatomy && "relative", className)} data-anat={showAnatomy ? "" : undefined}>
+            {showAnatomy ? <AnatomyOverlay label="ProgressMeter" tier="primitive" href="/?path=/docs/primitives-stats-progressmeter--docs" /> : null}
             {hasTopRow ? (
                 <div className="flex items-center justify-between gap-2">
                     <Typography type="body-xs" color="muted" className="min-w-0 truncate">{label}</Typography>

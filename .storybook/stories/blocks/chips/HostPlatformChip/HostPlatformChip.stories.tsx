@@ -49,3 +49,12 @@ export const CloudflareStream: Story = {
         </div>
     ),
 }
+
+/** Đang tải: skeleton mirror pill (h-6) trong lúc chưa xác định host platform. */
+export const Loading: Story = {
+    render: () => (
+        <div className="p-8">
+            <HostPlatformChip hostPlatform={VideoHostPlatform.Youtube} isSkeleton />
+        </div>
+    ),
+}

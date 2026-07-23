@@ -12,7 +12,7 @@ import { ActivityAvatar } from "./ActivityAvatar"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof ActivityAvatar> = {
-    title: "Block/Feed/ActivityAvatar",
+    title: "Design/Feed/ActivityAvatar",
     component: ActivityAvatar,
     tags: ["autodocs"],
     parameters: {
@@ -30,6 +30,19 @@ const ANATOMY = {
     ],
     reason:
         "Một hàng feed cần avatar CÓ dấu hiệu loại hoạt động ngay trên avatar. Gói UserAvatar + badge icon vào một block để mọi loại event (follow, milestone, comment) dùng chung một khung avatar-kèm-badge, feature chỉ đổi icon.",
+}
+
+/** Plain baseline: an uploaded photo + a single activity badge. */
+export const Default: Story = {
+    render: () =>
+        blockShell(
+            <ActivityAvatar
+                username="lananh_pham"
+                avatar="https://i.pravatar.cc/150?img=5"
+                icon={<BookOpenIcon aria-hidden focusable="false" weight="bold" />}
+            />,
+            ANATOMY,
+        ),
 }
 
 export const WithPhoto: Story = {

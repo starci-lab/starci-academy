@@ -1,6 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import Link from "next/link"
+import { CheckCircleIcon } from "@phosphor-icons/react"
 import { Typography, cn } from "@heroui/react"
 import { SurfaceCardHeader, surfaceSectionGap, surfaceFrame, type SurfaceLabelProps } from "../surface-card-header"
 
@@ -40,7 +41,7 @@ const verdictBandClassName = (withVerdict?: VerdictBand): string | undefined => 
         : withVerdict.color
             ? `inset-shadow-[2px_0_0_0_var(--color-${withVerdict.color})]`
             : undefined
-    return cn("pl-4", shadowClass)
+    return cn("pl-3", shadowClass)
 }
 
 /**
@@ -50,18 +51,20 @@ const verdictBandClassName = (withVerdict?: VerdictBand): string | undefined => 
 const RowAnchor = ({
     href,
     onClick,
+    ariaCurrent,
     className,
     children,
 }: {
     href: string
     onClick?: () => void
+    ariaCurrent?: boolean
     className?: string
     children: ReactNode
 }) => {
     if (href.startsWith("/")) {
-        return <Link href={href} onClick={onClick} className={className}>{children}</Link>
+        return <Link href={href} onClick={onClick} aria-current={ariaCurrent ? "true" : undefined} className={className}>{children}</Link>
     }
-    return <a href={href} onClick={onClick} className={className}>{children}</a>
+    return <a href={href} onClick={onClick} aria-current={ariaCurrent ? "true" : undefined} className={className}>{children}</a>
 }
 
 /** Props for the target {@link SurfaceListCard}. */
@@ -152,7 +155,11 @@ export interface SurfaceListCardRowProps {
     onPress?: () => void
     /** Link target → renders an `<a>`/`<Link>` row that navigates on click. */
     href?: string
-    /** Tints the row as the active selection (`bg-accent-soft`). */
+    /**
+     * Marks the row as the CHOSEN option in a single-select group — a trailing
+     * accent `CheckCircleIcon` (NOT a full-row tint). The row keeps its normal
+     * surface so text stays readable and the check is the one clear signal.
+     */
     selected?: boolean
     /** Disables the row (dimmed, non-interactive). */
     isDisabled?: boolean
@@ -197,7 +204,6 @@ export const SurfaceListCardRow = ({
         interactive && (underlineHover ? "group" : "hover:bg-default"),
         interactive && !isDisabled && "cursor-pointer",
         "disabled:cursor-not-allowed disabled:opacity-60",
-        selected && "bg-accent-soft",
         verdictBandClassName(withVerdict),
         withVerdict?.enable && "first:rounded-t-3xl last:rounded-b-3xl",
         className,
@@ -217,21 +223,25 @@ export const SurfaceListCardRow = ({
                     <Typography type="body-xs" color="muted" truncate>{subtitle}</Typography>
                 ) : null}
             </div>
-            {meta || trailing ? (
+            {meta || trailing || selected ? (
                 <div className="ml-auto flex shrink-0 items-center gap-2">
                     {meta}
                     {trailing}
+                    {/* Single-select indicator — trailing accent CheckCircleIcon (B). */}
+                    {selected ? (
+                        <CheckCircleIcon className="size-5 shrink-0 text-accent-soft-foreground" aria-hidden focusable="false" />
+                    ) : null}
                 </div>
             ) : null}
         </>
     )
     if (href) {
-        return <RowAnchor href={href} onClick={onPress} className={rowClassName}>{content}</RowAnchor>
+        return <RowAnchor href={href} onClick={onPress} ariaCurrent={selected} className={rowClassName}>{content}</RowAnchor>
     }
     if (onPress) {
-        return <button type="button" onClick={onPress} disabled={isDisabled} className={rowClassName}>{content}</button>
+        return <button type="button" onClick={onPress} disabled={isDisabled} aria-current={selected ? "true" : undefined} className={rowClassName}>{content}</button>
     }
-    return <div className={rowClassName}>{content}</div>
+    return <div aria-current={selected ? "true" : undefined} className={rowClassName}>{content}</div>
 }
 
 /** Props for {@link SurfaceListCardItem}. */

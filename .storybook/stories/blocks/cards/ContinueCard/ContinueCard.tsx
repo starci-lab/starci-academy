@@ -1,12 +1,13 @@
 import React from "react"
-import { Button, Link, Typography, cn } from "@heroui/react"
-import { ArrowRightIcon, ClockCounterClockwiseIcon } from "@phosphor-icons/react"
+import { Link, Typography, cn } from "@heroui/react"
+import { ArrowRightIcon } from "@phosphor-icons/react"
 import { HighlightCard } from "../HighlightCard/HighlightCard"
 import { SectionCard } from "../SectionCard/SectionCard"
 import { SeeMoreLink } from "../../navigation/SeeMoreLink/SeeMoreLink"
 import { ProgressMeter } from "../../stats/ProgressMeter/ProgressMeter"
 import { MetaRow } from "../../lists/MetaRow/MetaRow"
 import { StatusChip } from "../../chips/StatusChip/StatusChip"
+import { Button } from "../../buttons/Button/Button"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported faithfully from
@@ -139,6 +140,9 @@ export const ContinueCard = ({
     const ctaNode = ctaLabel
         ? isHero
             ? href
+                // NOTE: Button port has NO `href` — it's not a link. This is a hand-rolled
+                // <Link>-as-pill (styled to match the primary Button look); left as-is
+                // (deferred until the Button port grows an `href`/`as` escape hatch).
                 ? (
                     <Link
                         href={href}
@@ -149,9 +153,14 @@ export const ContinueCard = ({
                     </Link>
                 )
                 : (
-                    <Button variant="primary" size="sm" onPress={onPress} className="w-fit shrink-0">
+                    <Button
+                        variant="primary"
+                        size="sm"
+                        onPress={onPress}
+                        className="w-fit shrink-0"
+                        icon={<ArrowRightIcon aria-hidden focusable="false" />}
+                    >
                         {ctaLabel}
-                        <ArrowRightIcon aria-hidden focusable="false" className="size-3.5" />
                     </Button>
                 )
             : (
@@ -188,10 +197,7 @@ export const ContinueCard = ({
                                     // Same info type (time remaining) → same element (a time
                                     // StatusChip) in EVERY scenario; only the tone escalates:
                                     // `neutral` (muted) when there's time, `warning` when running out.
-                                    <StatusChip
-                                        tone={urgent ? "warning" : "neutral"}
-                                        icon={<ClockCounterClockwiseIcon weight="fill" />}
-                                    >
+                                    <StatusChip tone={urgent ? "warning" : "neutral"}>
                                         {timeLeft}
                                     </StatusChip>
                                 ) : undefined

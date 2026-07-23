@@ -3,7 +3,7 @@ import { VideoRenderer } from "./VideoRenderer"
 import { LessonVideoType, VideoHostPlatform, VideoRendererType } from "./enums"
 
 const meta: Meta<typeof VideoRenderer> = {
-    title: "Primitives/Media/VideoRenderer",
+    title: "Design/Media/VideoRenderer",
     component: VideoRenderer,
     tags: ["autodocs"],
     parameters: {
@@ -78,6 +78,24 @@ export const Empty: Story = {
         <div className="p-8">
             <div className="w-96">
                 <VideoRenderer url="" title="Bài học chưa có video" />
+            </div>
+        </div>
+    ),
+}
+
+/** hostPlatform forces the Youtube sub-player, but the URL isn't a parseable
+ * YouTube link — `toYoutubeEmbedUrl` returns null and `YoutubePlayer` shows
+ * its own "Invalid or unsupported YouTube URL." message (distinct from the
+ * top-level "No video URL." empty state above, which only fires on a blank URL). */
+export const YoutubeInvalidUrl: Story = {
+    render: () => (
+        <div className="p-8">
+            <div className="w-96">
+                <VideoRenderer
+                    url="https://storage.starci.org/lessons/broken-link"
+                    hostPlatform={VideoHostPlatform.Youtube}
+                    title="Link YouTube bị lỗi"
+                />
             </div>
         </div>
     ),

@@ -1,6 +1,7 @@
 import React, { type Key, type ReactNode } from "react"
 import { ListBox, Select, Tabs, cn } from "@heroui/react"
 import { ExtendedTabs } from "../ExtendedTabs/ExtendedTabs"
+import { AnatomyOverlay } from "../../layout/AnatomyOverlay/AnatomyOverlay"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -80,6 +81,8 @@ export interface TabsCardProps {
     size?: "sm" | "md"
     /** Extra classes on the toolbar row. */
     className?: string
+    /** Dev/spec: overlay the anatomy annotation on this toolbar. */
+    showAnatomy?: boolean
 }
 
 /** size → extra Tab className override (md = HeroUI's own default, no override). */
@@ -119,6 +122,7 @@ export const TabsCard = ({
     variant = "secondary",
     size = "md",
     className,
+    showAnatomy = false,
 }: TabsCardProps) => {
     /** Render one controlled tab group (`accent` = accent selected chrome, secondary-only). */
     const renderGroup = (group: TabsCardGroup, accent = true): ReactNode => (
@@ -227,7 +231,8 @@ export const TabsCard = ({
     }
 
     return (
-        <div className={cn("flex items-center justify-between gap-3", className)}>
+        <div className={cn("flex items-center justify-between gap-3", showAnatomy && "relative", className)} data-anat={showAnatomy ? "" : undefined}>
+            {showAnatomy ? <AnatomyOverlay label="TabsCard" tier="primitive" href="/?path=/docs/primitives-navigation-tabscard--docs" /> : null}
             {leftEnd ? (
                 <div className="flex min-w-0 items-center gap-1">
                     {renderGroup(leftTabs)}

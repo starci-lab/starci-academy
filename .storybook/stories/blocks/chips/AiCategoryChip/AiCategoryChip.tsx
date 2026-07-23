@@ -47,6 +47,8 @@ export interface AiCategoryChipProps {
     category: AiModelCategory
     /** Extra classes on the wrapper. */
     className?: string
+    /** Renders a skeleton mirror (dot + label bar) in place of the real chip. */
+    isSkeleton?: boolean
 }
 
 /**
@@ -58,12 +60,13 @@ export interface AiCategoryChipProps {
  *
  * @param props - {@link AiCategoryChipProps}
  */
-export const AiCategoryChip = ({ category, className }: AiCategoryChipProps) => {
+export const AiCategoryChip = ({ category, className, isSkeleton }: AiCategoryChipProps) => {
     return (
         <DotChip
             dotClassName={AI_CATEGORY_COLOR[category]}
             label={AI_CATEGORY_LABEL[category]}
             className={className}
+            isSkeleton={isSkeleton}
         />
     )
 }

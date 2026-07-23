@@ -79,6 +79,20 @@ export const TruncatedPlaceholder: Story = {
     ),
 }
 
+/** Đang load (chưa biết placeholder/shortcut) — bật cờ `isSkeleton`, bar giữ đúng chiều cao field theo `size`. */
+export const IsSkeleton: Story = {
+    render: () => (
+        <div className="p-8">
+            <InputButtonLike
+                placeholder="Search courses..."
+                onPress={() => {}}
+                isSkeleton
+                className="w-80"
+            />
+        </div>
+    ),
+}
+
 /** Ba nấc chiều cao — block tự co icon-size theo `size` (sm/md/lg), story không chỉnh icon. */
 export const Sizes: Story = {
     render: () => (

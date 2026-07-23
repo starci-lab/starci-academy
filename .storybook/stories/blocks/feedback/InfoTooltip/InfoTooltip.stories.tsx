@@ -23,7 +23,7 @@ export const TitleAndDescription: Story = {
                 title="Streak"
                 description="Consecutive days studied without a break; miss one day and it resets to 0."
             >
-                <span className="cursor-help underline decoration-dotted">Day streak</span>
+                Day streak
             </InfoTooltip>
         </div>
     ),
@@ -34,7 +34,7 @@ export const DescriptionOnly: Story = {
     render: () => (
         <div className="p-8">
             <InfoTooltip description="Ranked by total XP for the week, refreshed every Monday.">
-                <span className="cursor-help underline decoration-dotted">Weekly leaderboard</span>
+                Weekly leaderboard
             </InfoTooltip>
         </div>
     ),
@@ -61,7 +61,7 @@ export const CustomContent: Story = {
                     </div>
                 }
             >
-                <span className="cursor-help underline decoration-dotted">Task points</span>
+                Task points
             </InfoTooltip>
         </div>
     ),
@@ -72,7 +72,7 @@ export const PlacementTop: Story = {
     render: () => (
         <div className="p-8">
             <InfoTooltip placement="top" title="Top" description="Tooltip anchored to the top.">
-                <span className="cursor-help underline decoration-dotted">Top</span>
+                Top
             </InfoTooltip>
         </div>
     ),
@@ -83,7 +83,7 @@ export const PlacementBottom: Story = {
     render: () => (
         <div className="p-8">
             <InfoTooltip placement="bottom" title="Bottom" description="Tooltip anchored to the bottom.">
-                <span className="cursor-help underline decoration-dotted">Bottom</span>
+                Bottom
             </InfoTooltip>
         </div>
     ),
@@ -94,7 +94,7 @@ export const PlacementLeft: Story = {
     render: () => (
         <div className="p-8">
             <InfoTooltip placement="left" title="Left" description="Tooltip anchored to the left.">
-                <span className="cursor-help underline decoration-dotted">Left</span>
+                Left
             </InfoTooltip>
         </div>
     ),
@@ -105,7 +105,7 @@ export const PlacementRight: Story = {
     render: () => (
         <div className="p-8">
             <InfoTooltip placement="right" title="Right" description="Tooltip anchored to the right.">
-                <span className="cursor-help underline decoration-dotted">Right</span>
+                Right
             </InfoTooltip>
         </div>
     ),

@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Typography } from "@heroui/react"
-import { StackIcon } from "@phosphor-icons/react"
 import { NestedCard, NestedCardSection } from "./NestedCard"
 
 const meta: Meta<typeof NestedCard> = {
@@ -16,7 +15,6 @@ export default meta
 
 type Story = StoryObj<typeof NestedCard>
 
-const stackIcon = <StackIcon aria-hidden focusable="false" className="size-4 shrink-0" />
 
 const relatedSections = (
     <>
@@ -44,7 +42,7 @@ export const Bordered: Story = {
                         </Typography>
                     </div>
                     <div className="max-w-[85%]">
-                        <NestedCard title="Related lessons" icon={stackIcon} bordered>{relatedSections}</NestedCard>
+                        <NestedCard title="Related lessons" bordered>{relatedSections}</NestedCard>
                     </div>
                 </div>
             </div>
@@ -60,7 +58,38 @@ export const OnBackground: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <NestedCard title="Related lessons" icon={stackIcon} bordered={false}>{relatedSections}</NestedCard>
+                <NestedCard title="Related lessons" bordered={false}>{relatedSections}</NestedCard>
+            </div>
+        </div>
+    ),
+}
+
+/**
+ * Interactive sections (ROW ≠ CARD, principles §7b) — pass `onPress` (native `<button>`)
+ * or `href` (native `<a>`). Each row is focusable + keyboard-operable with a
+ * `focus-visible` ring and a hover-underline title (nav-link affordance). NO
+ * press-scale/ripple — those belong to cards, not rows. Tab through to inspect a11y.
+ */
+export const InteractiveSections: Story = {
+    render: () => (
+        <div className="p-8">
+            <div className="max-w-md">
+                <NestedCard title="Related lessons" bordered={false}>
+                    <NestedCardSection
+                        eyebrow="Relational databases"
+                        title="Data normalization and normal forms"
+                        onPress={() => alert("Open: Data normalization")}
+                    >
+                        <Typography type="body-sm" color="muted">
+                            Normalization splits data into multiple tables to reduce redundancy and update anomalies.
+                        </Typography>
+                    </NestedCardSection>
+                    <NestedCardSection
+                        eyebrow="Database review deck"
+                        title="When should you denormalize to optimize reads?"
+                        href="#denormalize"
+                    />
+                </NestedCard>
             </div>
         </div>
     ),

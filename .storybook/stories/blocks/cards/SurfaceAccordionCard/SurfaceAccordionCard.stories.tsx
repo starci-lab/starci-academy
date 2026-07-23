@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Button, Chip, Label, Typography } from "@heroui/react"
+import { Avatar, AvatarFallback, Button, Chip, Label, Typography } from "@heroui/react"
 import { FolderOpenIcon } from "@phosphor-icons/react"
 import { SurfaceAccordionCard } from "./SurfaceAccordionCard"
 import { EmptyState } from "../../feedback/EmptyState/EmptyState"
-import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 
 const meta: Meta<typeof SurfaceAccordionCard> = {
     title: "Primitives/Card/SurfaceAccordionCard",
@@ -18,14 +17,29 @@ export default meta
 
 type Story = StoryObj<typeof SurfaceAccordionCard>
 
-const panel = (text: string) => (
-    <Typography type="body-sm" color="muted">{text}</Typography>
+/**
+ * Mock-content chuẩn (C-fixture) = ProfileCard: avatar + title + description. `items[].body`
+ * mở ra BÊN TRONG accordion frame (đã là 1 `bg-surface`) nên KHÔNG bọc thêm `Card` ngoài —
+ * tránh card-in-card (§1a) — chỉ giữ row avatar+title+desc (neo `AsyncContent`).
+ */
+const panel = () => (
+    <div className="flex flex-row items-center gap-3">
+        <Avatar className="size-10 shrink-0">
+            <AvatarFallback>SC</AvatarFallback>
+        </Avatar>
+        <div className="flex min-w-0 flex-col">
+            <span className="truncate text-sm font-medium">StarCi Academy</span>
+            <span className="truncate text-xs text-muted">
+                Học fullstack, system design và DevOps theo lộ trình phỏng vấn.
+            </span>
+        </div>
+    </div>
 )
 
 const items = [
-    { id: "rest", title: "REST semantics", subtitle: "3 tài nguyên", body: panel("GET là idempotent, POST thì không — đọc kỹ contract của từng verb.") },
-    { id: "input", title: "Input contract", subtitle: "2 tài nguyên", body: panel("Validate ở biên: kiểu, khoảng, bắt buộc — trước khi chạm business logic.") },
-    { id: "error", title: "Error handling", subtitle: "4 tài nguyên", body: panel("Chuẩn hoá lỗi về một shape; đừng để stack trace lọt ra client.") },
+    { id: "rest", title: "REST semantics", subtitle: "3 tài nguyên", body: panel() },
+    { id: "input", title: "Input contract", subtitle: "2 tài nguyên", body: panel() },
+    { id: "error", title: "Error handling", subtitle: "4 tài nguyên", body: panel() },
 ]
 
 export const Default: Story = {
@@ -105,7 +119,7 @@ export const Bordered: Story = {
         <div className="p-8">
             {/* surface-in-surface: the nested accordion delineates with a BORDER, not a
                 shadow that can render invisible against the parent surface (dark mode). */}
-            <div className="rounded-3xl bg-surface p-4 shadow-surface">
+            <div className="rounded-3xl bg-surface p-3 shadow-surface">
                 <SurfaceAccordionCard label="Tài nguyên" bordered items={items} defaultExpandedKeys={new Set(["rest"])} />
             </div>
         </div>
@@ -121,9 +135,9 @@ export const WithTitleEnd: Story = {
                 label="Cột mốc"
                 defaultExpandedKeys={new Set(["m2"])}
                 items={[
-                    { id: "m1", title: "1. Khởi tạo dự án", titleEnd: <Chip size="sm" variant="soft" color="success"><Chip.Label>Xong</Chip.Label></Chip>, body: panel("3/3 nhiệm vụ hoàn thành.") },
-                    { id: "m2", title: "2. Xây API", titleEnd: <Chip size="sm" variant="soft" color="warning"><Chip.Label>Đang làm</Chip.Label></Chip>, body: panel("1/4 nhiệm vụ hoàn thành.") },
-                    { id: "m3", title: "3. Triển khai", titleEnd: <Chip size="sm" variant="soft" color="default"><Chip.Label>Chưa bắt đầu</Chip.Label></Chip>, body: panel("0/2 nhiệm vụ.") },
+                    { id: "m1", title: "1. Khởi tạo dự án", titleEnd: <Chip size="sm" variant="soft" color="success"><Chip.Label>Xong</Chip.Label></Chip>, body: panel() },
+                    { id: "m2", title: "2. Xây API", titleEnd: <Chip size="sm" variant="soft" color="warning"><Chip.Label>Đang làm</Chip.Label></Chip>, body: panel() },
+                    { id: "m3", title: "3. Triển khai", titleEnd: <Chip size="sm" variant="soft" color="default"><Chip.Label>Chưa bắt đầu</Chip.Label></Chip>, body: panel() },
                 ]}
             />
         </div>
@@ -176,11 +190,11 @@ export const Empty: Story = {
     ),
 }
 
-/** Loading: the {@link Skeleton} accordion mirrors the card (keeps the surface shell) while data loads. */
+/** Loading: `isSkeleton` self-renders a `Skeleton.Accordion` mirror (keeps the surface shell) — no separate Skeleton dựng rời. */
 export const SkeletonLoading: Story = {
     render: () => (
         <div className="p-8">
-            <Skeleton.Accordion items={4} />
+            <SurfaceAccordionCard label="Tài nguyên" items={items} isSkeleton />
         </div>
     ),
 }

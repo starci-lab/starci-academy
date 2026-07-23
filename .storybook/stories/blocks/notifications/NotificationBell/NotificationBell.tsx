@@ -1,8 +1,9 @@
 import React from "react"
-import { Badge, Button, cn, Popover, PopoverContent } from "@heroui/react"
+import { Badge, cn, Popover, PopoverContent } from "@heroui/react"
 import { BellIcon } from "@phosphor-icons/react"
 import { NotificationList } from "../NotificationList/NotificationList"
 import type { NotificationGroup } from "../NotificationList/NotificationList"
+import { Button } from "../../buttons/Button/Button"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported faithfully from
@@ -94,22 +95,23 @@ export const NotificationBell = ({
     return (
         <Popover isOpen={isOpen} onOpenChange={onOpenChange}>
             <Button
-                isIconOnly
+                iconOnly
                 variant="tertiary"
                 className={cn("rounded-full", className)}
-                aria-label={ariaLabel}
-            >
-                {unreadCount > 0 ? (
-                    <Badge.Anchor>
+                ariaLabel={ariaLabel}
+                icon={
+                    unreadCount > 0 ? (
+                        <Badge.Anchor>
+                            <BellIcon className="size-5" />
+                            <Badge size="sm" color="danger">
+                                {badgeLabel}
+                            </Badge>
+                        </Badge.Anchor>
+                    ) : (
                         <BellIcon className="size-5" />
-                        <Badge size="sm" color="danger">
-                            {badgeLabel}
-                        </Badge>
-                    </Badge.Anchor>
-                ) : (
-                    <BellIcon className="size-5" />
-                )}
-            </Button>
+                    )
+                }
+            />
             <PopoverContent
                 placement="bottom right"
                 className="w-[360px] overflow-hidden p-1"

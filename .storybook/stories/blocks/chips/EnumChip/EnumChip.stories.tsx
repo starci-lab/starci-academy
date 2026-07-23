@@ -64,3 +64,12 @@ export const Warning: Story = {
         </div>
     ),
 }
+
+/** Loading: `isSkeleton` mirrors the chip as a pill placeholder — không giật layout khi resolve. */
+export const Loading: Story = {
+    render: () => (
+        <div className="p-8">
+            <EnumChip<OrderStatus> value="paid" map={ORDER_STATUS_MAP} isSkeleton />
+        </div>
+    ),
+}

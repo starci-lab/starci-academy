@@ -1,7 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { Link, cn } from "@heroui/react"
-import { CaretRightIcon } from "@phosphor-icons/react"
+import { ArrowRightIcon } from "@phosphor-icons/react"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -34,7 +34,7 @@ export interface SeeMoreLinkProps {
      * When true, render plain markup (no own `<a>`/`<button>`) — for use inside
      * an already-interactive surface (e.g. ContinueCard `item`, where the whole
      * card is the one press target). Hover still rides on a parent `group`
-     * class: opacity fade + caret slide.
+     * class: opacity fade + arrow slide.
      */
     decorative?: boolean
     /** Text size. Defaults to `sm`. */
@@ -52,8 +52,9 @@ const baseClassName = (size: SeeMoreLinkSize, className?: string) =>
     )
 
 /**
- * The shared "Xem thêm →" / "Tiếp tục →" affordance: semibold accent text + a
- * caret that slides right on hover, with an opacity fade (no underline). Used by
+ * The shared "Xem thêm →" / "Tiếp tục →" affordance: semibold accent text + an
+ * ARROW that slides right on hover (§5b — ARROW is the CTA affordance that slides;
+ * a caret would NOT slide), with an opacity fade (no underline). Used by
  * LabeledCard `onSeeMore` and ContinueCard `item` CTA so both read as the same
  * control.
  *
@@ -67,11 +68,10 @@ export const SeeMoreLink = ({
     size = "sm",
     className,
 }: SeeMoreLinkProps) => {
-    const caret = (
-        <CaretRightIcon
+    const arrow = (
+        <ArrowRightIcon
             aria-hidden
             focusable="false"
-            weight="bold"
             className="size-4 shrink-0 transition-transform group-hover:translate-x-1"
         />
     )
@@ -87,7 +87,7 @@ export const SeeMoreLink = ({
                 )}
             >
                 {children}
-                {caret}
+                {arrow}
             </span>
         )
     }
@@ -101,7 +101,7 @@ export const SeeMoreLink = ({
         return (
             <a href={href} className={interactiveClassName}>
                 {children}
-                {caret}
+                {arrow}
             </a>
         )
     }
@@ -109,7 +109,7 @@ export const SeeMoreLink = ({
     return (
         <Link onPress={onPress} className={interactiveClassName}>
             {children}
-            {caret}
+            {arrow}
         </Link>
     )
 }

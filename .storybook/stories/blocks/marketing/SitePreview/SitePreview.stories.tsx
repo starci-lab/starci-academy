@@ -4,7 +4,7 @@ import { ShowcaseMockup } from "../ShowcaseMockup/ShowcaseMockup"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof SitePreview> = {
-    title: "Block/Marketing/SitePreview",
+    title: "Design/Marketing/SitePreview",
     component: SitePreview,
     tags: ["autodocs"],
     parameters: {

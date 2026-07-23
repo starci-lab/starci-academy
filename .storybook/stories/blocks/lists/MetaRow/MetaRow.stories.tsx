@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ClockCounterClockwiseIcon } from "@phosphor-icons/react"
 import { MetaRow } from "./MetaRow"
 import { StatusChip } from "../../chips/StatusChip/StatusChip"
 
@@ -23,7 +22,7 @@ export const WithChip: Story = {
         <div className="w-96 p-8">
             <MetaRow
                 chip={
-                    <StatusChip tone="warning" icon={<ClockCounterClockwiseIcon weight="fill" />}>
+                    <StatusChip tone="warning">
                         2 phút còn lại
                     </StatusChip>
                 }

@@ -1,5 +1,6 @@
 import React from "react"
-import { Button, Typography, cn } from "@heroui/react"
+import { Typography, cn } from "@heroui/react"
+import { Button } from "../../buttons/Button/Button"
 import { SectionCard } from "../../cards/SectionCard/SectionCard"
 import { StatusChip } from "../../chips/StatusChip/StatusChip"
 import { CrossListCard, CrossListItem } from "../../cards/CrossListCard/CrossListCard"
@@ -167,7 +168,10 @@ export const PricingTable = ({
                     }
                     cta={
                         <Button
-                            fullWidth
+                            // port has no `fullWidth` prop — HeroUI's fullWidth is literally
+                            // `w-full` (see button.styles.ts `button--full-width`), so className
+                            // reproduces the identical visual.
+                            className="w-full"
                             variant={tier.isHighlighted ? "primary" : "secondary"}
                             onPress={() => onSelectTier?.(tier.id)}
                         >

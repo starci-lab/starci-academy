@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { DifficultyChip } from "./DifficultyChip"
 
 const meta: Meta<typeof DifficultyChip> = {
-    title: "Primitives/Chip/DifficultyChip",
+    title: "Design/Chip/DifficultyChip",
     component: DifficultyChip,
     tags: ["autodocs"],
     parameters: {
@@ -46,6 +46,15 @@ export const Insane: Story = {
     render: () => (
         <div className="p-8">
             <DifficultyChip difficulty="insane" />
+        </div>
+    ),
+}
+
+/** Đang tải: skeleton mirror dot+nhãn, không giật layout khi dữ liệu về. */
+export const Loading: Story = {
+    render: () => (
+        <div className="p-8">
+            <DifficultyChip difficulty="beginner" isSkeleton />
         </div>
     ),
 }

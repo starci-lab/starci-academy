@@ -1,6 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { Typography, cn } from "@heroui/react"
+import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — the shared `DotChip` primitive. Authored in
@@ -26,6 +27,8 @@ export interface DotChipProps {
     dotColor?: string
     /** Extra classes on the wrapper. */
     className?: string
+    /** Renders a skeleton mirroring the dot + label shape instead of real content. */
+    isSkeleton?: boolean
 }
 
 /**
@@ -36,7 +39,16 @@ export interface DotChipProps {
  *
  * @param props - {@link DotChipProps}
  */
-export const DotChip = ({ label, dotClassName, dotColor, className }: DotChipProps) => {
+export const DotChip = ({ label, dotClassName, dotColor, className, isSkeleton }: DotChipProps) => {
+    if (isSkeleton) {
+        return (
+            <span className={cn("inline-flex items-center gap-2", className)}>
+                <Skeleton className="size-3 shrink-0 rounded-full" />
+                <Skeleton.Typography type="body-xs" width="w-16" />
+            </span>
+        )
+    }
+
     return (
         <span className={cn("inline-flex items-center gap-2", className)}>
             <span

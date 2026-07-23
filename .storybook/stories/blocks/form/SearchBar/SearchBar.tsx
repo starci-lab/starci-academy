@@ -2,7 +2,6 @@ import { SlidersHorizontalIcon } from "@phosphor-icons/react"
 import React, { useMemo } from "react"
 import {
     Autocomplete,
-    Button,
     cn,
     InputGroup,
     Label,
@@ -10,6 +9,8 @@ import {
     SearchField,
     TextField,
 } from "@heroui/react"
+import { Button } from "../../buttons/Button/Button"
+import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -35,6 +36,8 @@ interface SearchSuggestionItem {
 export interface SearchBarProps {
     /** Optional class names on the root `TextField` wrapper. */
     className?: string
+    /** Renders the loading mirror (bar-shaped field box) instead of the real search bar. */
+    isSkeleton?: boolean
 }
 
 /**
@@ -42,8 +45,9 @@ export interface SearchBarProps {
  * and a filters icon button in the suffix (same composition pattern as InputGroup + suffix).
  *
  * @param props.className — Merged onto the root `TextField`.
+ * @param props.isSkeleton — Renders the loading mirror (same outer footprint, no popover).
  */
-export const SearchBar = ({ className }: SearchBarProps) => {
+export const SearchBar = ({ className, isSkeleton = false }: SearchBarProps) => {
     const suggestionItems = useMemo<Array<SearchSuggestionItem>>(
         () => [
             { id: "courses", label: "Khoá học" },
@@ -52,6 +56,15 @@ export const SearchBar = ({ className }: SearchBarProps) => {
         ],
         []
     )
+
+    // loading mirror: same full-width bar footprint as the real field, no popover ever renders
+    if (isSkeleton) {
+        return (
+            <div className={cn("w-full", className)}>
+                <Skeleton.Input className="h-10" />
+            </div>
+        )
+    }
 
     return (
         <TextField className={cn("w-full", className)} fullWidth variant="secondary">
@@ -95,13 +108,12 @@ export const SearchBar = ({ className }: SearchBarProps) => {
                 </div>
                 <InputGroup.Suffix className="pr-0">
                     <Button
-                        aria-label="Bộ lọc"
-                        isIconOnly
+                        ariaLabel="Bộ lọc"
+                        iconOnly
                         size="sm"
                         variant="ghost"
-                    >
-                        <SlidersHorizontalIcon className="size-5" />
-                    </Button>
+                        icon={<SlidersHorizontalIcon />}
+                    />
                 </InputGroup.Suffix>
             </InputGroup>
         </TextField>

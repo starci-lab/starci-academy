@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button } from "@heroui/react"
-import { LightningIcon, ShieldCheckIcon, RocketLaunchIcon } from "@phosphor-icons/react"
+import { LightningIcon, ShieldCheckIcon, RocketLaunchIcon, WarningIcon, StackIcon } from "@phosphor-icons/react"
 import { PitchCard } from "./PitchCard"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof PitchCard> = {
-    title: "Block/Marketing/PitchCard",
+    title: "Design/Marketing/PitchCard",
     component: PitchCard,
     tags: ["autodocs"],
     parameters: {
@@ -63,6 +63,28 @@ export const ToneVariants: Story = {
                 <PitchCard icon={<LightningIcon weight="duotone" />} tone="accent" title="Nhanh" body="Cô đọng, đúng trọng tâm." />
                 <PitchCard icon={<ShieldCheckIcon weight="duotone" />} tone="success" title="Chắc" body="Cam kết đầu ra rõ ràng." />
                 <PitchCard icon={<RocketLaunchIcon weight="duotone" />} tone="warning" title="Xa" body="Nền tảng để đi đường dài." />
+            </div>,
+            ANATOMY,
+        ),
+}
+
+/** `IconTileTone` còn 2 giá trị chưa lên story: `danger` (cảnh báo) và `neutral` (mặc định trung tính). */
+export const RemainingTones: Story = {
+    render: () =>
+        blockShell(
+            <div className="grid max-w-2xl grid-cols-1 gap-3 @app-sm:grid-cols-2">
+                <PitchCard
+                    icon={<WarningIcon weight="duotone" />}
+                    tone="danger"
+                    title="Rủi ro nếu bỏ nền tảng"
+                    body="Học nhảy cóc mà bỏ qua nền tảng thường phải học lại từ đầu khi vào dự án thật."
+                />
+                <PitchCard
+                    icon={<StackIcon weight="duotone" />}
+                    tone="neutral"
+                    title="Tự học theo nhịp riêng"
+                    body="Không ép tiến độ — mỗi module có deadline mềm, học viên tự sắp xếp thời gian."
+                />
             </div>,
             ANATOMY,
         ),

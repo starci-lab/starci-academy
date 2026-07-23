@@ -3,7 +3,7 @@ import { MicroservicesDiagram } from "./MicroservicesDiagram"
 import { blockShell } from "../../../block-anatomy"
 
 const meta: Meta<typeof MicroservicesDiagram> = {
-    title: "Block/Marketing/MicroservicesDiagram",
+    title: "Design/Marketing/MicroservicesDiagram",
     component: MicroservicesDiagram,
     tags: ["autodocs"],
     parameters: {

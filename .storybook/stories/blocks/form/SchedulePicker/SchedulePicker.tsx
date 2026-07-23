@@ -1,13 +1,9 @@
 import React from "react"
-import {
-    Button,
-    Calendar,
-    cn,
-    DateField,
-    DatePicker,
-    Label,
-} from "@heroui/react"
+import { cn, Label } from "@heroui/react"
 import type { DateValue } from "@internationalized/date"
+import { Button } from "../../buttons/Button/Button"
+import { DatePicker } from "../DatePicker/DatePicker"
+import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -62,6 +58,12 @@ export interface SchedulePickerProps {
     minDate?: DateValue
     /** Heading rendered above the time-slot grid. Defaults to "Chọn khung giờ". */
     slotsLabel?: string
+    /**
+     * Renders the loading mirror — label bar + date-field skeleton, then a second
+     * label bar + a grid of field-shaped skeletons standing in for the slot
+     * buttons (canon §8). The real controls are not mounted while loading.
+     */
+    isSkeleton?: boolean
     /** Extra classes on the outer wrapper. */
     className?: string
 }
@@ -82,54 +84,39 @@ export const SchedulePicker = ({
     onSlotChange,
     minDate,
     slotsLabel = "Chọn khung giờ",
+    isSkeleton,
     className,
 }: SchedulePickerProps) => {
+    if (isSkeleton) {
+        return (
+            <div className={cn("flex flex-col gap-6", className)}>
+                {/* DATE half mirror — label bar + date-field skeleton */}
+                <div className="flex flex-col gap-2">
+                    <Skeleton.Typography type="body-sm" width="1/3" />
+                    <Skeleton.Input />
+                </div>
+                {/* TIME-SLOT half mirror — label bar + field-shaped grid, same 2/3-col layout */}
+                <div className="flex flex-col gap-2">
+                    <Skeleton.Typography type="body-sm" width="1/3" />
+                    <div className="grid grid-cols-2 gap-2 @app-sm:grid-cols-3">
+                        {Array.from({ length: 6 }).map((_, index) => (
+                            <Skeleton.Input key={index} />
+                        ))}
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div className={cn("flex flex-col gap-6", className)}>
-            {/* DATE half — canonical HeroUI DatePicker + DateField + Calendar popover */}
+            {/* DATE half — DatePicker port owns the FieldShell label + DateField/Calendar compound */}
             <DatePicker
-                aria-label="Chọn ngày phỏng vấn"
-                minValue={minDate}
+                label="Chọn ngày"
                 value={dateValue}
-                onChange={onDateChange}
-            >
-                <Label>Chọn ngày</Label>
-                <DateField.Group fullWidth variant="secondary">
-                    <DateField.Input>
-                        {(segment) => <DateField.Segment segment={segment} />}
-                    </DateField.Input>
-                    <DateField.Suffix>
-                        <DatePicker.Trigger>
-                            <DatePicker.TriggerIndicator />
-                        </DatePicker.Trigger>
-                    </DateField.Suffix>
-                </DateField.Group>
-                <DatePicker.Popover>
-                    <Calendar aria-label="Lịch chọn ngày phỏng vấn">
-                        <Calendar.Header>
-                            <Calendar.YearPickerTrigger>
-                                <Calendar.YearPickerTriggerHeading />
-                                <Calendar.YearPickerTriggerIndicator />
-                            </Calendar.YearPickerTrigger>
-                            <Calendar.NavButton slot="previous" />
-                            <Calendar.NavButton slot="next" />
-                        </Calendar.Header>
-                        <Calendar.Grid>
-                            <Calendar.GridHeader>
-                                {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
-                            </Calendar.GridHeader>
-                            <Calendar.GridBody>
-                                {(date) => <Calendar.Cell date={date} />}
-                            </Calendar.GridBody>
-                        </Calendar.Grid>
-                        <Calendar.YearPickerGrid>
-                            <Calendar.YearPickerGridBody>
-                                {({ year }) => <Calendar.YearPickerCell year={year} />}
-                            </Calendar.YearPickerGridBody>
-                        </Calendar.YearPickerGrid>
-                    </Calendar>
-                </DatePicker.Popover>
-            </DatePicker>
+                onValueChange={onDateChange}
+                minValue={minDate}
+            />
 
             {/* TIME-SLOT half — single-select grid of toggle buttons */}
             <div className="flex flex-col gap-2">
@@ -142,13 +129,14 @@ export const SchedulePicker = ({
                     {availableSlots.map((slot) => {
                         const selected = slot.id === selectedSlotId
                         return (
+                            // NOTE: Button port has no `aria-pressed` — a11y toggle-state marker
+                            // deferred (port doesn't expose arbitrary aria props).
                             <Button
                                 key={slot.id}
                                 size="sm"
                                 className="w-full justify-center"
                                 variant={selected ? "secondary" : "ghost"}
                                 isDisabled={slot.isDisabled}
-                                aria-pressed={selected}
                                 onPress={() => onSlotChange(slot.id)}
                             >
                                 {slot.label}

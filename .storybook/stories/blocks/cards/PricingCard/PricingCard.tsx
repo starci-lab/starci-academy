@@ -1,6 +1,7 @@
 import React from "react"
-import { cn, Typography, Chip } from "@heroui/react"
+import { cn, Typography } from "@heroui/react"
 import { SectionCard } from "../SectionCard/SectionCard"
+import { StatusChip } from "../../chips/StatusChip/StatusChip"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported faithfully from
@@ -87,9 +88,9 @@ export const PricingCard = ({
                     {name}
                 </Typography>
                 {highlighted && badge ? (
-                    <Chip size="sm" variant="soft" color="accent" className="w-fit shrink-0">
-                        <Chip.Label>{badge}</Chip.Label>
-                    </Chip>
+                    <StatusChip tone="accent" className="shrink-0">
+                        {badge}
+                    </StatusChip>
                 ) : null}
             </div>
 

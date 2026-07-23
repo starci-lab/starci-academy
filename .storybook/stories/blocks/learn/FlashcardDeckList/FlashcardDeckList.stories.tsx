@@ -34,57 +34,120 @@ const DECKS: Array<FlashcardDeckListDeck> = [
 /** Frame each leaf's anatomy panel with breathing room. */
 const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
 
-// The deck-content parts (data + filtered leaves share this composition).
+// The region chrome (search row) — ALWAYS visible; only AsyncContent's body swaps
+// per leaf. The DeckCard grid is the CONTENT branch of AsyncContent, so it nests
+// UNDER AsyncContent.children (not as a sibling). Each DeckCard in turn composes
+// its own title/chips/meter/count/CTA in DOM order.
 const DATA_PARTS: Array<AnatomyNode> = [
     { name: "TextField · Input", tier: "primitive", role: "ô tìm bộ thẻ" },
     { name: "Typography", tier: "primitive", role: 'đếm kết quả ("Tìm thấy N bộ thẻ")' },
     { name: "TabsCard", tier: "primitive", role: "đổi kiểu hiển thị lưới / danh sách" },
-    { name: "AsyncContent", tier: "primitive", role: "switch loading · empty · error · search-empty · content", state: "content" },
     {
-        name: "DeckCard",
-        tier: "design",
-        role: "một bộ thẻ (block con, lặp ×N)",
+        name: "AsyncContent",
+        tier: "primitive",
+        role: "switch error → loading → empty → content",
+        state: "content",
         children: [
-            { name: "StatusChip", tier: "primitive", role: "số thẻ đến hạn ôn", state: "warning" },
-            { name: "DifficultyChip", tier: "design", role: "tầng độ khó" },
-            { name: "ProgressMeter", tier: "primitive", role: "tiến độ đã thuộc" },
+            {
+                name: "DeckCard",
+                tier: "design",
+                role: "một bộ thẻ (block con, lặp ×N trong lưới)",
+                children: [
+                    { name: "Typography", tier: "primitive", role: "tên bộ thẻ (line-clamp 2)" },
+                    { name: "StatusChip", tier: "primitive", role: "số thẻ đến hạn ôn", state: "warning" },
+                    { name: "DifficultyChip", tier: "design", role: "tầng độ khó" },
+                    { name: "Typography", tier: "primitive", role: "mô tả chủ đề (muted, line-clamp 2)" },
+                    { name: "ProgressMeter", tier: "primitive", role: "tiến độ đã thuộc" },
+                    { name: "Typography", tier: "primitive", role: 'tổng số thẻ ("N thẻ", muted)' },
+                    { name: "Button", tier: "primitive", role: 'CTA "Học"' },
+                ],
+            },
         ],
     },
 ]
 
-// search-empty leaf: same chrome, body swaps to a muted "không khớp" Typography (no DeckCard).
+// search-empty leaf: decks.length > 0 so AsyncContent stays on the CONTENT branch,
+// but filteredDecks is empty → the body swaps to a muted "không khớp" Typography
+// (no DeckCard). It is NOT a distinct AsyncContent state — it lives inside content.
 const SEARCH_EMPTY_PARTS: Array<AnatomyNode> = [
     { name: "TextField · Input", tier: "primitive", role: "ô tìm (giữ query)" },
-    { name: "Typography", tier: "primitive", role: 'đếm "0" + dòng "Không tìm thấy…"' },
+    { name: "Typography", tier: "primitive", role: 'đếm "0" ("Tìm thấy 0 bộ thẻ")' },
     { name: "TabsCard", tier: "primitive", role: "toggle lưới / danh sách" },
-    { name: "AsyncContent", tier: "primitive", role: "nhánh content, body rỗng-tìm", state: "search-empty" },
+    {
+        name: "AsyncContent",
+        tier: "primitive",
+        role: "nhánh content — không thẻ nào khớp query",
+        state: "content",
+        children: [
+            { name: "Typography", tier: "primitive", role: 'dòng muted "Không tìm thấy bộ thẻ nào khớp…" (không DeckCard)' },
+        ],
+    },
 ]
 
-// loading leaf: chrome stays, body becomes a skeleton DeckCard grid (same footprint).
+// loading leaf: chrome stays (count slot → Skeleton.Typography), AsyncContent takes
+// its loading branch → the skeleton grid of skeleton DeckCards nested under it.
 const LOADING_PARTS: Array<AnatomyNode> = [
     { name: "TextField · Input", tier: "primitive", role: "ô tìm (vẫn hiện)" },
-    { name: "Typography", tier: "primitive", role: "đếm — skeleton mirror" },
+    { name: "Typography", tier: "primitive", role: "đếm — Skeleton.Typography mirror" },
     { name: "TabsCard", tier: "primitive", role: "toggle (vẫn hiện)" },
-    { name: "AsyncContent", tier: "primitive", role: "nhánh loading → skeleton grid", state: "loading" },
-    { name: "DeckCard", tier: "design", role: "skeleton mirror ×4 (giữ đúng footprint)", state: "skeleton" },
+    {
+        name: "AsyncContent",
+        tier: "primitive",
+        role: "nhánh loading → lưới skeleton",
+        state: "loading",
+        children: [
+            { name: "DeckCard", tier: "design", role: "skeleton mirror ×4 (giữ đúng footprint)", state: "skeleton" },
+        ],
+    },
 ]
 
-// empty leaf: chrome stays, AsyncContent falls to EmptyContent.
+// empty leaf: chrome stays, AsyncContent falls to EmptyContent, which itself
+// composes the EmptyState primitive (TrayIcon + title, no action button).
 const EMPTY_PARTS: Array<AnatomyNode> = [
     { name: "TextField · Input", tier: "primitive", role: "ô tìm" },
-    { name: "Typography", tier: "primitive", role: 'đếm ("0 bộ thẻ")' },
+    { name: "Typography", tier: "primitive", role: 'đếm ("Tìm thấy 0 bộ thẻ")' },
     { name: "TabsCard", tier: "primitive", role: "toggle" },
-    { name: "AsyncContent", tier: "primitive", role: "nhánh empty", state: "empty" },
-    { name: "EmptyContent", tier: "design", role: '"Chưa có bộ thẻ nào"' },
+    {
+        name: "AsyncContent",
+        tier: "primitive",
+        role: "nhánh empty",
+        state: "empty",
+        children: [
+            {
+                name: "EmptyContent",
+                tier: "design",
+                role: "khung rỗng của region",
+                children: [
+                    { name: "EmptyState", tier: "primitive", role: 'TrayIcon + "Chưa có bộ thẻ nào" (không nút)' },
+                ],
+            },
+        ],
+    },
 ]
 
-// error leaf: chrome stays, AsyncContent falls to ErrorContent + retry.
+// error leaf: chrome stays, AsyncContent falls to ErrorContent → EmptyState
+// (tone danger, WarningIcon + title). NOTE: onRetry is passed but retryLabel is
+// NOT, so EmptyState renders NO retry Button — the anatomy reflects that reality.
 const ERROR_PARTS: Array<AnatomyNode> = [
     { name: "TextField · Input", tier: "primitive", role: "ô tìm" },
     { name: "Typography", tier: "primitive", role: "đếm" },
     { name: "TabsCard", tier: "primitive", role: "toggle" },
-    { name: "AsyncContent", tier: "primitive", role: "nhánh error", state: "error" },
-    { name: "ErrorContent", tier: "design", role: '"Không tải được bộ thẻ" + nút thử lại' },
+    {
+        name: "AsyncContent",
+        tier: "primitive",
+        role: "nhánh error",
+        state: "error",
+        children: [
+            {
+                name: "ErrorContent",
+                tier: "design",
+                role: "khung lỗi của region",
+                children: [
+                    { name: "EmptyState", tier: "primitive", role: 'WarningIcon + "Không tải được bộ thẻ" — KHÔNG nút thử lại (thiếu retryLabel)', state: "danger" },
+                ],
+            },
+        ],
+    },
 ]
 
 /** DATA — the real region with decks (grid view, search + count + toggle). */
@@ -176,7 +239,7 @@ export const Error: Story = {
                 tier="block"
                 leaf="Lỗi"
                 parts={ERROR_PARTS}
-                note="Tải hỏng, không cache → AsyncContent rơi về ErrorContent + nút thử lại."
+                note="Tải hỏng, không cache → AsyncContent rơi về ErrorContent → EmptyState (tone danger). Không truyền retryLabel nên KHÔNG có nút thử lại."
             >
                 <FlashcardDeckList decks={[]} error={new globalThis.Error("network")} onRetry={() => {}} showAnatomy onOpenDeck={() => {}} />
             </BlockAnatomy>,

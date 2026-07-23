@@ -33,7 +33,7 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 const BASIC_PARTS: Array<AnatomyNode> = [
     {
         name: "EmptyState",
-        tier: "design",
+        tier: "primitive",
         role: "khung căn giữa cho trạng thái lỗi",
         state: "danger",
         children: [
@@ -47,7 +47,7 @@ const BASIC_PARTS: Array<AnatomyNode> = [
 const DESCRIPTION_PARTS: Array<AnatomyNode> = [
     {
         name: "EmptyState",
-        tier: "design",
+        tier: "primitive",
         role: "khung căn giữa cho trạng thái lỗi",
         state: "danger",
         children: [
@@ -62,7 +62,7 @@ const DESCRIPTION_PARTS: Array<AnatomyNode> = [
 const RETRY_PARTS: Array<AnatomyNode> = [
     {
         name: "EmptyState",
-        tier: "design",
+        tier: "primitive",
         role: "khung căn giữa cho trạng thái lỗi",
         state: "danger",
         children: [
@@ -78,7 +78,7 @@ const RETRY_PARTS: Array<AnatomyNode> = [
 const CUSTOM_ICON_PARTS: Array<AnatomyNode> = [
     {
         name: "EmptyState",
-        tier: "design",
+        tier: "primitive",
         role: "khung căn giữa cho trạng thái lỗi",
         state: "danger",
         children: [

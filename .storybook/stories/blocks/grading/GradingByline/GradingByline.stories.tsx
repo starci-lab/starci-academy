@@ -31,9 +31,17 @@ type Story = StoryObj<typeof ModelByline>
 const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
 // Verdict glyph + label leaf (pass/fail share this composition — only tone/text differ).
+// Real DOM: a flex-row span WRAPS the glyph + label — they are siblings INSIDE it.
 const VERDICT_PARTS: Array<AnatomyNode> = [
-    { name: "VerdictIcon", tier: "primitive", role: "glyph đạt (check xanh) / không đạt (x đỏ)" },
-    { name: "Typography", tier: "primitive", role: "nhãn kết quả đứng cạnh glyph" },
+    {
+        name: "span · dòng verdict",
+        tier: "primitive",
+        role: "hàng inline gom glyph + nhãn kết quả",
+        children: [
+            { name: "VerdictIcon", tier: "primitive", role: "glyph đạt (check xanh) / không đạt (x đỏ)" },
+            { name: "Typography", tier: "primitive", role: "nhãn kết quả đứng cạnh glyph" },
+        ],
+    },
 ]
 
 // Verdict-inside-chip leaf: the glyph + label wrapped in a soft result Chip.
@@ -49,22 +57,59 @@ const VERDICT_CHIP_PARTS: Array<AnatomyNode> = [
     },
 ]
 
-// Full byline leaf: sparkle + plain model name + tier chip (withLabel is text-only, same shape).
+// Full byline leaf: ModelByline emits a fragment — [sparkle + plain model name] grouped in a
+// row span, then AiCategoryChip as a SIBLING beside that span (withLabel is text-only, same shape).
 const BYLINE_PARTS: Array<AnatomyNode> = [
-    { name: "SparkleIcon", tier: "primitive", role: "icon accent mở dòng attribution" },
-    { name: "Model text", tier: "primitive", role: "tên model plain-text (không chip, không mono)" },
-    { name: "AiCategoryChip", tier: "primitive", role: "chip hạng model đứng sau tên" },
+    {
+        name: "ModelByline",
+        tier: "design",
+        role: "nửa attribution của cặp: sparkle + tên model + chip hạng",
+        children: [
+            {
+                name: "span · dòng attribution",
+                tier: "primitive",
+                role: "gom sparkle + tên model plain-text (chip đứng NGOÀI span này)",
+                children: [
+                    { name: "SparkleIcon", tier: "primitive", role: "icon accent mở dòng attribution" },
+                    { name: "Model text", tier: "primitive", role: "tên model plain-text (không chip, không mono)" },
+                ],
+            },
+            { name: "AiCategoryChip", tier: "design", role: "chip hạng model — sibling của dòng text trong fragment" },
+        ],
+    },
 ]
 
 // Byline without tier: no `category` → AiCategoryChip is absent (composition differs).
 const BYLINE_NO_CHIP_PARTS: Array<AnatomyNode> = [
-    { name: "SparkleIcon", tier: "primitive", role: "icon accent mở dòng attribution" },
-    { name: "Model text", tier: "primitive", role: "tên model plain-text (không hạng → không chip)" },
+    {
+        name: "ModelByline",
+        tier: "design",
+        role: "nửa attribution: sparkle + tên model (không hạng)",
+        children: [
+            {
+                name: "span · dòng attribution",
+                tier: "primitive",
+                role: "gom sparkle + tên model plain-text",
+                children: [
+                    { name: "SparkleIcon", tier: "primitive", role: "icon accent mở dòng attribution" },
+                    { name: "Model text", tier: "primitive", role: "tên model plain-text (không hạng → không chip)" },
+                ],
+            },
+        ],
+    },
 ]
 
-// Empty leaf: model=null → ModelByline renders nothing; the frame shows a placeholder line.
+// Empty leaf: model=null → ModelByline renders NOTHING (returns null); the dashed frame holds
+// only a placeholder line. The frame is the real container; ModelByline emits no part.
 const BYLINE_EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "dòng chú thích placeholder — ModelByline trả null khi model=null" },
+    {
+        name: "div · khung gạch",
+        tier: "primitive",
+        role: "frame viền gạch (dashed) chứa dòng placeholder — ModelByline trả null nên không có part",
+        children: [
+            { name: "Typography", tier: "primitive", role: "dòng chú thích placeholder khi model=null" },
+        ],
+    },
 ]
 
 export const VerdictPass: Story = {

@@ -32,26 +32,66 @@ type Story = StoryObj<typeof ChatPanel>
 /** Plain canvas that frames each leaf's anatomy panel. */
 const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
-// Conversation leaf: the real turns — bubbles + a tool-result card + composer.
+// Sticky-bottom composer (own Block story → tier "block"). It OWNS its row: an
+// optional leading avatar, the auto-growing HeroUI field, and the Send button.
+const COMPOSER_PART: AnatomyNode = {
+    name: "Composer",
+    tier: "block",
+    role: "ô soạn tin ghim đáy panel",
+    children: [
+        { name: "UserAvatar", tier: "primitive", role: "avatar người soạn ở đầu hàng (tuỳ chọn)" },
+        { name: "TextField · TextArea", tier: "primitive", role: "ô nhập tự giãn cao (HeroUI field)" },
+        { name: "Button", tier: "primitive", role: "nút Send + spinner khi đang gửi" },
+    ],
+}
+
+// Tool-result row under an assistant turn: the caller-built NestedCard, which
+// CONTAINS its section rows, each holding the eyebrow/title/body Typography.
+const TOOL_RESULT_PART: AnatomyNode = {
+    name: "NestedCard",
+    tier: "design",
+    role: "tool-result gắn dưới lượt trợ lý (nguồn tham khảo)",
+    children: [
+        {
+            name: "NestedCardSection",
+            tier: "design",
+            role: "mỗi nguồn một hàng (eyebrow + tiêu đề + mô tả)",
+            children: [
+                { name: "Typography", tier: "primitive", role: "eyebrow · tiêu đề · mô tả nguồn" },
+            ],
+        },
+    ],
+}
+
+// Conversation leaf: the real turns — bubbles, a tool-result card nested under the
+// assistant turn, and the composer with its own field/avatar/Send inside.
 const CONVERSATION_PARTS: Array<AnatomyNode> = [
     { name: "ChatBubble", tier: "design", role: "mỗi lượt tin theo role (user/assistant)" },
-    { name: "NestedCard", tier: "design", role: "tool-result gắn dưới lượt trợ lý (nguồn tham khảo)" },
-    { name: "Composer", tier: "design", role: "ô soạn tin ghim đáy panel" },
+    TOOL_RESULT_PART,
+    COMPOSER_PART,
 ]
 
 // Typing leaf: same turns + the three-dot indicator standing in for the pending reply.
 const TYPING_PARTS: Array<AnatomyNode> = [
     { name: "ChatBubble", tier: "design", role: "mỗi lượt tin theo role (user/assistant)" },
-    { name: "NestedCard", tier: "design", role: "tool-result gắn dưới lượt trợ lý (nguồn tham khảo)" },
+    TOOL_RESULT_PART,
     { name: "Typing indicator", tier: "primitive", role: "ba chấm nảy phía trợ lý đang gõ", state: "typing" },
-    { name: "Composer", tier: "design", role: "ô soạn tin ghim đáy panel" },
+    COMPOSER_PART,
 ]
 
-// Empty leaf: no turns — the empty-state slot (icon + dòng nhắc) + composer.
+// Empty leaf: no turns — the centered empty-state slot CONTAINS the icon + dòng
+// nhắc; composer still pinned at the bottom.
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "ChatCircleDotsIcon", tier: "primitive", role: "icon minh hoạ hội thoại rỗng" },
-    { name: "Typography", tier: "primitive", role: 'dòng nhắc "No messages yet…"' },
-    { name: "Composer", tier: "design", role: "ô soạn tin ghim đáy (vẫn hiện)" },
+    {
+        name: "Empty state",
+        tier: "primitive",
+        role: "slot canh giữa khi danh sách rỗng",
+        children: [
+            { name: "ChatCircleDotsIcon", tier: "primitive", role: "icon minh hoạ hội thoại rỗng" },
+            { name: "Typography", tier: "primitive", role: 'dòng nhắc "No messages yet…"' },
+        ],
+    },
+    COMPOSER_PART,
 ]
 
 const baseMessages: Array<ChatPanelMessage> = [

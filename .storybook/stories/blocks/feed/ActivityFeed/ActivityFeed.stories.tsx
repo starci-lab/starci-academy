@@ -71,23 +71,53 @@ const Controlled = () => {
     return <ActivityFeed items={items} onResolve={resolveDemo} onReact={onReact} />
 }
 
-// The real feed composition: a per-day surface of FeedItem rows; each row leads
-// with an ActivityAvatar, carries EntityLinks in its sentence, and a ReactionBar
-// footer. Every data/variant leaf shares this composition.
+// The real feed composition, mirroring the DOM ActivityFeed renders per day:
+// DayHeaderSection (eyebrow + frame) → SurfaceListCard → SurfaceListCardItem →
+// FeedItem, whose sentence Typography HOLDS the EntityLinks and whose footer is the
+// ReactionBar. Every data/variant leaf shares this composition.
 const FEED_PARTS: Array<AnatomyNode> = [
     {
-        name: "SurfaceListCard",
+        name: "DayHeaderSection",
         tier: "design",
-        role: "surface gom các hàng của một ngày",
+        role: "khung mỗi ngày — eyebrow ngày (Hôm nay/Hôm qua/ngày cũ) trên nội dung frameless (mirror LabeledCard, chưa port)",
         children: [
             {
-                name: "FeedItem",
-                tier: "design",
-                role: "bố cục từng hàng hoạt động (leading · câu · thời gian · footer)",
+                name: "SurfaceListCard",
+                tier: "primitive",
+                role: "surface gom các hàng của một ngày (shadow, hoặc viền khi bordered)",
                 children: [
-                    { name: "ActivityAvatar", tier: "design", role: "leading mỗi hàng — avatar + badge loại hoạt động" },
-                    { name: "EntityLink", tier: "primitive", role: "actor + target bấm được trong câu" },
-                    { name: "ReactionBar", tier: "design", role: "thả cảm xúc mỗi hàng" },
+                    {
+                        name: "SurfaceListCardItem",
+                        tier: "primitive",
+                        role: "ô chứa một hàng hoạt động, kẻ ngăn giữa các hàng",
+                        children: [
+                            {
+                                name: "FeedItem",
+                                tier: "design",
+                                role: "bố cục từng hàng (leading · câu · thời gian · footer)",
+                                children: [
+                                    {
+                                        name: "ActivityAvatar",
+                                        tier: "design",
+                                        role: "leading — avatar + badge loại hoạt động",
+                                        children: [
+                                            { name: "UserAvatar", tier: "primitive", role: "avatar nền (ảnh/initials)" },
+                                        ],
+                                    },
+                                    {
+                                        name: "Typography",
+                                        tier: "primitive",
+                                        role: "câu actor/hành động/target (body-sm)",
+                                        children: [
+                                            { name: "EntityLink", tier: "design", role: "actor + target bấm được, dựng trong câu (2 thực thể)" },
+                                        ],
+                                    },
+                                    { name: "Typography", tier: "primitive", role: "thời gian tương đối (body-xs, muted)" },
+                                    { name: "ReactionBar", tier: "design", role: "footer — thả cảm xúc mỗi hàng" },
+                                ],
+                            },
+                        ],
+                    },
                 ],
             },
         ],
@@ -95,23 +125,44 @@ const FEED_PARTS: Array<AnatomyNode> = [
 ]
 
 // Empty leaf: the block itself has no empty slot (items=[] renders nothing) — the
-// owning FEATURE renders an EmptyState in the feed's place.
+// owning FEATURE renders an EmptyState in the feed's place. Here size="default", so
+// EmptyState stacks a title Typography + a muted description Typography.
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "EmptyState", tier: "design", role: 'trạng thái rỗng do FEATURE dựng ("Chưa có hoạt động nào")', state: "empty" },
+    {
+        name: "EmptyState",
+        tier: "primitive",
+        role: 'trạng thái rỗng do FEATURE dựng ("Chưa có hoạt động nào")',
+        state: "empty",
+        children: [
+            { name: "Typography", tier: "primitive", role: "tiêu đề rỗng (weight medium)" },
+            { name: "Typography", tier: "primitive", role: "mô tả phụ (body-xs, muted)" },
+        ],
+    },
 ]
 
 // Loading leaf: a skeleton MIRROR of the real layout — a day-header eyebrow over a
-// SurfaceListCard of rows (avatar circle + text bars + footer bar).
+// SurfaceListCard whose SurfaceListCardItem rows mirror each FeedItem (avatar circle
+// + sentence bar + timestamp bar + footer pill). All parts are Skeleton primitives.
 const SKELETON_PARTS: Array<AnatomyNode> = [
     { name: "Skeleton.Typography", tier: "primitive", role: "eyebrow ngày (mirror DayHeaderSection)", state: "skeleton" },
     {
         name: "SurfaceListCard",
-        tier: "design",
+        tier: "primitive",
         role: "surface gom hàng (mirror)",
         state: "skeleton",
         children: [
-            { name: "Skeleton.Avatar", tier: "primitive", role: "mirror ActivityAvatar" },
-            { name: "Skeleton", tier: "primitive", role: "mirror câu · thời gian · footer ReactionBar" },
+            {
+                name: "SurfaceListCardItem",
+                tier: "primitive",
+                role: "ô một hàng (mirror), lặp 3 lần",
+                state: "skeleton",
+                children: [
+                    { name: "Skeleton.Avatar", tier: "primitive", role: "mirror ActivityAvatar/UserAvatar" },
+                    { name: "Skeleton.Typography", tier: "primitive", role: "mirror câu (body-sm)" },
+                    { name: "Skeleton.Typography", tier: "primitive", role: "mirror thời gian (body-xs)" },
+                    { name: "Skeleton", tier: "primitive", role: "mirror footer ReactionBar (pill)" },
+                ],
+            },
         ],
     },
 ]

@@ -33,23 +33,55 @@ type Story = StoryObj<typeof FeedItem>
 const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
 // BASE leaf: leading avatar + entity-link action sentence + muted timestamp (no footer).
+// DOM: ActivityAvatar (leading) · text column = Typography[body-sm] wrapping the EntityLink
+// marker(s) THEN a separate muted Typography[body-xs] for the timestamp.
 const BASE_PARTS: Array<AnatomyNode> = [
-    { name: "ActivityAvatar", tier: "design", role: "slot leading — avatar + badge loại hoạt động" },
-    { name: "EntityLink", tier: "primitive", role: "mốc thực thể bấm được trong câu action" },
-    { name: "Typography", tier: "primitive", role: "câu action + mốc thời gian muted" },
+    {
+        name: "ActivityAvatar",
+        tier: "design",
+        role: "slot leading — avatar + badge loại hoạt động",
+        children: [
+            { name: "UserAvatar", tier: "primitive", role: "avatar nền (ảnh/initials)" },
+        ],
+    },
+    {
+        name: "Typography",
+        tier: "primitive",
+        role: "câu action (body-sm)",
+        children: [
+            { name: "EntityLink", tier: "design", role: "mốc thực thể bấm được, dựng trong câu action" },
+        ],
+    },
+    { name: "Typography", tier: "primitive", role: "mốc thời gian muted (body-xs)" },
 ]
 
-// REACTION leaf: same chrome + a ReactionBar in the footer slot.
+// REACTION leaf: same chrome + a ReactionBar in the footer slot (a sibling of the text column).
 const REACTION_PARTS: Array<AnatomyNode> = [
-    { name: "ActivityAvatar", tier: "design", role: "slot leading — avatar + badge loại hoạt động" },
-    { name: "EntityLink", tier: "primitive", role: "mốc thực thể bấm được trong câu action" },
-    { name: "Typography", tier: "primitive", role: "câu action + mốc thời gian muted" },
+    {
+        name: "ActivityAvatar",
+        tier: "design",
+        role: "slot leading — avatar + badge loại hoạt động",
+        children: [
+            { name: "UserAvatar", tier: "primitive", role: "avatar nền (ảnh/initials)" },
+        ],
+    },
+    {
+        name: "Typography",
+        tier: "primitive",
+        role: "câu action (body-sm)",
+        children: [
+            { name: "EntityLink", tier: "design", role: "mốc thực thể bấm được, dựng trong câu action" },
+        ],
+    },
+    { name: "Typography", tier: "primitive", role: "mốc thời gian muted (body-xs)" },
     { name: "ReactionBar", tier: "design", role: "slot footer — thả cảm xúc" },
 ]
 
-// TEXT-ONLY leaf: no leading, no entity link — just the action text + timestamp.
+// TEXT-ONLY leaf: no leading, no entity link — just the action Typography (plain text) + a
+// separate muted timestamp Typography.
 const TEXT_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "câu action (text thuần) + mốc thời gian muted" },
+    { name: "Typography", tier: "primitive", role: "câu action (text thuần, body-sm)" },
+    { name: "Typography", tier: "primitive", role: "mốc thời gian muted (body-xs)" },
 ]
 
 export const Default: Story = {

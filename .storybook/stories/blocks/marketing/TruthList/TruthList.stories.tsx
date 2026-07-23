@@ -50,39 +50,123 @@ const typicalTruths = [
     },
 ]
 
-// content leaf WITHOUT byline (single or multi truths share this composition).
+// The Accordion subtree, mirrored to the REAL compound nesting the component renders:
+// Accordion → Item (per truth) → Heading → Trigger → Typography(truth); Panel → Body →
+// Typography(fix). Reused by every content leaf (single/multi/wrap share this composition).
+const ACCORDION_NODE: AnatomyNode = {
+    name: "Accordion",
+    tier: "primitive",
+    role: "variant surface, flush (!rounded-none) — KHÔNG Accordion.Indicator (không caret, thầy chốt)",
+    children: [
+        {
+            name: "Accordion.Item",
+            tier: "primitive",
+            role: "một sự thật = một item bấm mở (lặp theo số truths)",
+            children: [
+                {
+                    name: "Accordion.Heading",
+                    tier: "primitive",
+                    role: "hàng tiêu đề bọc trigger",
+                    children: [
+                        {
+                            name: "Accordion.Trigger",
+                            tier: "primitive",
+                            role: "bấm mở/đóng — hover là affordance (không có mũi tên)",
+                            children: [
+                                { name: "Typography · truth", tier: "primitive", role: "câu sự thật (type body, weight medium, text-left)" },
+                            ],
+                        },
+                    ],
+                },
+                {
+                    name: "Accordion.Panel",
+                    tier: "primitive",
+                    role: "vùng mở ra khi item active",
+                    children: [
+                        {
+                            name: "Accordion.Body",
+                            tier: "primitive",
+                            role: "thân câu trả lời",
+                            children: [
+                                { name: "Typography · fix", tier: "primitive", role: "câu trả lời '→ ...' (type body-sm, color muted)" },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        },
+    ],
+}
+
+// content leaf WITHOUT byline (single or multi truths share this composition): the surface
+// frame div CONTAINS the accordion — everything nests under the frame, nothing floats at root.
 const TRUTHLIST_PARTS: Array<AnatomyNode> = [
     {
-        name: "Accordion",
+        name: "Surface frame",
         tier: "primitive",
-        role: "mỗi sự thật = một trigger bấm mở ra câu trả lời (variant surface, flush)",
-        children: [
-            { name: "Typography", tier: "primitive", role: "statement (body medium) trong trigger + fix (body-sm muted) trong body" },
-        ],
+        role: "div khung ngoài (overflow-hidden rounded-3xl bg-surface shadow-surface) — nền + bo góc + đổ bóng cho cả block",
+        children: [ACCORDION_NODE],
     },
 ]
 
-// content leaf WITH byline — same accordion + a signature row closing the surface.
+// content leaf WITH byline — the SAME frame + accordion, plus a signature row that is a SIBLING
+// of the accordion INSIDE the frame (border-t div wrapping the caller-supplied byline node).
 const TRUTHLIST_BYLINE_PARTS: Array<AnatomyNode> = [
     {
-        name: "Accordion",
+        name: "Surface frame",
         tier: "primitive",
-        role: "mỗi sự thật = một trigger bấm mở ra câu trả lời (variant surface, flush)",
+        role: "div khung ngoài (overflow-hidden rounded-3xl bg-surface shadow-surface) — nền + bo góc + đổ bóng cho cả block",
         children: [
-            { name: "Typography", tier: "primitive", role: "statement (body medium) trong trigger + fix (body-sm muted) trong body" },
+            ACCORDION_NODE,
+            {
+                name: "Byline row",
+                tier: "primitive",
+                role: "div chữ ký cuối surface (border-t border-default, px-5 py-4) — chỉ render khi có prop byline",
+                state: "byline",
+                children: [
+                    { name: "Typography · byline", tier: "primitive", role: "chữ ký tác giả do caller truyền qua prop byline (body-sm, color muted)", state: "byline" },
+                ],
+            },
         ],
     },
-    { name: "Typography · byline", tier: "primitive", role: "chữ ký tác giả cuối surface (border-t, body-sm muted)", state: "byline" },
 ]
 
-// empty leaf: no truths → EmptyState fills the surface instead of a blank accordion.
+// empty leaf: the story hand-rolls the surface frame, then EmptyState fills it instead of an
+// accordion. EmptyState (design) itself renders icon + title + description — nested under it.
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "EmptyState", tier: "design", role: '"Chưa có sự thật nào" — icon khay + tiêu đề + mô tả, lấp surface thay accordion trống' },
+    {
+        name: "Surface frame",
+        tier: "primitive",
+        role: "div khung ngoài (overflow-hidden rounded-3xl bg-surface shadow-surface) — lấp bằng EmptyState thay accordion",
+        children: [
+            {
+                name: "EmptyState",
+                tier: "design",
+                role: '"Chưa có sự thật nào" — stack canh giữa lấp surface (size default, không action)',
+                children: [
+                    { name: "TrayIcon", tier: "primitive", role: "icon khay (duotone, ~size-8, text-foreground) phía trên tiêu đề" },
+                    { name: "Typography · title", tier: "primitive", role: "tiêu đề 'Chưa có sự thật nào' (weight medium, align center)" },
+                    { name: "Typography · description", tier: "primitive", role: "mô tả phụ 'Các tuyên bố... hiện ở đây.' (body-xs, muted, align center)" },
+                ],
+            },
+        ],
+    },
 ]
 
-// loading leaf: mirror the surface frame + trigger rows/separators as skeleton bars.
+// loading leaf: Skeleton.Accordion OWNS its own surface frame (rounded-3xl bg-surface
+// shadow-surface) + N trigger rows; per row a title bar + an indicator bar + a separator.
 const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton · Accordion", tier: "primitive", role: "mirror surface frame + 4 trigger rows/separators, chữ statement → thanh skeleton", state: "skeleton" },
+    {
+        name: "Skeleton.Accordion",
+        tier: "primitive",
+        role: "mirror khung surface + 4 hàng trigger h-14, tách nhau bằng separator (hàng cuối không có)",
+        state: "skeleton",
+        children: [
+            { name: "Skeleton · title bar", tier: "primitive", role: "thanh chữ statement giả (glyph body-sm, w-2/5) mỗi hàng", state: "skeleton" },
+            { name: "Skeleton · indicator", tier: "primitive", role: "ô size-4 giả caret — DRIFT: TruthList thật bỏ Indicator, showIndicator mặc định true nên skeleton vẽ dư", state: "skeleton" },
+            { name: "Skeleton · separator", tier: "primitive", role: "vạch h-px giữa các hàng", state: "skeleton" },
+        ],
+    },
 ]
 
 export const SingleTruth: Story = {

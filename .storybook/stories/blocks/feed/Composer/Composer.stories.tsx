@@ -60,20 +60,37 @@ const Controlled = ({
     )
 }
 
-// Base row (no attach slot): avatar + auto-grow field + Send. Shared by the
-// empty draft and the in-flight submit — same parts, only the Send inner state differs.
+// Base row (no attach slot): avatar + auto-grow field + a trailing actions
+// cluster (`div.flex.shrink-0`) that wraps only the Send button. Shared by the
+// empty draft and the in-flight submit — same parts, only the Send inner state
+// (icon → Spinner) differs, which stays folded into the Send button's role.
 const BASE_PARTS: Array<AnatomyNode> = [
     { name: "UserAvatar", tier: "primitive", role: "avatar người soạn ở đầu hàng (tuỳ chọn)" },
     { name: "TextField · TextArea", tier: "primitive", role: "ô nhập tự giãn cao (HeroUI field)" },
-    { name: "Button", tier: "primitive", role: "nút Send + spinner khi đang gửi" },
+    {
+        name: "div · actions",
+        tier: "primitive",
+        role: "cụm hành động cuối hàng (attach tuỳ chọn + Send)",
+        children: [
+            { name: "Button", tier: "primitive", role: "nút Send + spinner khi đang gửi" },
+        ],
+    },
 ]
 
-// Typing row: the feature supplies an attach slot BEFORE Send → one extra Button.
+// Typing row: the feature drops an attach slot INTO the actions cluster, BEFORE
+// Send → the cluster now nests two buttons (attach, then Send).
 const TYPING_PARTS: Array<AnatomyNode> = [
     { name: "UserAvatar", tier: "primitive", role: "avatar người soạn ở đầu hàng (tuỳ chọn)" },
     { name: "TextField · TextArea", tier: "primitive", role: "ô nhập tự giãn cao (HeroUI field)" },
-    { name: "Button · Attach", tier: "primitive", role: "nút đính kèm feature cấp (attach slot)" },
-    { name: "Button", tier: "primitive", role: "nút Send + spinner khi đang gửi" },
+    {
+        name: "div · actions",
+        tier: "primitive",
+        role: "cụm hành động cuối hàng (attach tuỳ chọn + Send)",
+        children: [
+            { name: "Button · Attach", tier: "primitive", role: "nút đính kèm feature cấp (attach slot)" },
+            { name: "Button", tier: "primitive", role: "nút Send + spinner khi đang gửi" },
+        ],
+    },
 ]
 
 export const Empty: Story = {

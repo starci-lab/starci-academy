@@ -28,23 +28,73 @@ type Story = StoryObj<typeof SitePreview>
 /** Plain canvas for each leaf's anatomy panel. */
 const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
-// SitePreview's own composition — nav + filter sidebar + course list.
+// SitePreview's own composition — mirrors the real DOM: a nav bar and a body
+// (sidebar filter + course list). Every node is hand-rolled markup (raw div/span);
+// only `FilterRow` is a named local sub-component.
 const SITE_PREVIEW_PARTS: Array<AnatomyNode> = [
-    { name: "Thanh nav", tier: "design", role: "logo StarCi + menu (Khóa học · Lộ trình · Bảng giá) + nút Đăng ký" },
     {
-        name: "Sidebar bộ lọc",
+        name: "Thanh nav",
         tier: "design",
-        role: "nhóm lọc Chủ đề / Hình thức (ẩn dưới @app-sm)",
+        role: "header trên cùng (border dưới): cụm brand+menu bên trái + nút Đăng ký bên phải",
         children: [
-            { name: "FilterRow", tier: "primitive", role: "1 dòng lọc có ô tick (checked = accent)" },
+            { name: "Brand StarCi", tier: "primitive", role: "chấm accent + chữ StarCi" },
+            { name: "Menu", tier: "primitive", role: "Khóa học · Lộ trình · Bảng giá (ẩn dưới @app-sm)" },
+            { name: "Nút Đăng ký", tier: "primitive", role: "pill accent (span rounded-full, không phải Button thật)" },
         ],
     },
     {
-        name: "List khoá",
+        name: "Body",
         tier: "design",
-        role: "list khoá học minh hoạ",
+        role: "vùng thân (flex-1): bọc chung sidebar lọc + list khoá",
         children: [
-            { name: "Dòng khoá học", tier: "design", role: "tile initial + tên + StarIcon rating · level + giá / khóa" },
+            {
+                name: "Sidebar bộ lọc",
+                tier: "design",
+                role: "cột lọc bên trái (ẩn dưới @app-sm)",
+                children: [
+                    {
+                        name: "Nhóm Chủ đề",
+                        tier: "primitive",
+                        role: "label Chủ đề + 3 FilterRow (Fullstack on)",
+                        children: [
+                            { name: "FilterRow", tier: "primitive", role: "1 dòng lọc: ô tick + nhãn (checked = viền/nền accent + CheckCircleIcon)" },
+                        ],
+                    },
+                    {
+                        name: "Nhóm Hình thức",
+                        tier: "primitive",
+                        role: "label Hình thức + 2 FilterRow (Tự học on)",
+                        children: [
+                            { name: "FilterRow", tier: "primitive", role: "1 dòng lọc: ô tick + nhãn (checked = viền/nền accent + CheckCircleIcon)" },
+                        ],
+                    },
+                ],
+            },
+            {
+                name: "List khoá",
+                tier: "design",
+                role: "list khoá học minh hoạ (3 dòng)",
+                children: [
+                    {
+                        name: "Dòng khoá học",
+                        tier: "design",
+                        role: "1 tile khoá (border rounded): tile initial + cụm thông tin + giá",
+                        children: [
+                            { name: "Tile initial", tier: "primitive", role: "ô vuông chữ viết tắt (tone accent/success/warning)" },
+                            {
+                                name: "Cụm thông tin",
+                                tier: "primitive",
+                                role: "cột giữa: tên khoá + dòng rating/level",
+                                children: [
+                                    { name: "Tên khoá", tier: "primitive", role: "tên + CheckCircleIcon (verified, success)" },
+                                    { name: "Meta rating", tier: "primitive", role: "StarIcon (fill, warning) + rating · level" },
+                                ],
+                            },
+                            { name: "Giá", tier: "primitive", role: "giá + dòng phụ / khóa" },
+                        ],
+                    },
+                ],
+            },
         ],
     },
 ]

@@ -10,23 +10,21 @@ import {
 } from "@phosphor-icons/react"
 import {
     Card,
-    Popover,
     Typography,
     cn,
 } from "@heroui/react"
 import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 import { CrossListCard, CrossListItem } from "../CrossListCard/CrossListCard"
 import { Button } from "../../buttons/Button/Button"
-import { StatusChip } from "../../chips/StatusChip/StatusChip"
+import { PriceTag } from "../../commerce/PriceTag/PriceTag"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported faithfully from
  * `@/components/blocks/cards/CourseCard`. Composed from a HeroUI `Card` frame +
- * the local `Skeleton` primitive (loading price line) + an INLINED faithful copy
- * of the `PriceTag` commerce block (not yet ported to `.storybook`, see the
- * `// TODO: swap` below). The `@/` runtime deps (next-intl, router, env, path
- * builder) are replaced by local stubs so the block renders in isolation.
- * Synced to `src` later.
+ * the local `Skeleton` primitive (loading price line) + the local `PriceTag`
+ * commerce block (`../../commerce/PriceTag`). The `@/` runtime deps (next-intl,
+ * router, env, path builder) are replaced by local stubs so the block renders in
+ * isolation. Synced to `src` later.
  */
 
 // ── inlined `@/` runtime stubs (restored to the real deps on sync to `src`) ──
@@ -41,103 +39,6 @@ const T = {
 
 /** In storybook the catalog price transform is a no-op (`testDivisor === 1`). */
 const PRICING_DIVISOR = 1
-
-// ── inlined faithful copy of `@/components/blocks/commerce/PriceTag` ──
-// TODO: swap for PriceTag local when the commerce category is ported under
-// `.storybook/stories/blocks/commerce/PriceTag`.
-
-/** Inlined VI copy for `priceTag.*`. */
-const PRICE_TAG_T = {
-    breakdownTitle: "Chi tiết giá",
-    listPrice: "Giá gốc",
-    youPay: "Bạn trả",
-    saved: (amount: string) => `Tiết kiệm ${amount}`,
-}
-
-type PriceTagSize = "sm" | "md" | "lg"
-
-const AMOUNT_TYPE: Record<PriceTagSize, "body" | "h4" | "h3"> = {
-    sm: "body",
-    md: "h4",
-    lg: "h3",
-}
-
-const formatVnd = (amount: number): string => `${amount.toLocaleString("vi-VN")}₫`
-
-const savingPercent = (before: number, after: number): number =>
-    before > after ? Math.round((1 - after / before) * 100) : 0
-
-interface PriceTagProps {
-    /** The price the user actually pays. */
-    discounted: number
-    /** The pre-discount (list/MSRP) price; struck through when greater than discounted. */
-    original?: number | null
-    /** Size of the discounted amount. Defaults to "md". */
-    size?: PriceTagSize
-    /** Show the concrete "save N₫" line under the price. Defaults to `true`. */
-    showSavingLine?: boolean
-    className?: string
-}
-
-/** Inlined PriceTag — VND-only slice of the commerce block (breakdown popover minus phase/loyalty rows). */
-const PriceTag = ({
-    discounted,
-    original,
-    size = "md",
-    showSavingLine = true,
-    className,
-}: PriceTagProps) => {
-    const hasSaving = original != null && original > discounted
-    const savePercent = hasSaving ? savingPercent(original, discounted) : 0
-
-    const chip =
-        savePercent > 0 ? (
-            <StatusChip tone="success">{`−${savePercent}%`}</StatusChip>
-        ) : null
-
-    const breakdownContent = hasSaving ? (
-        <div className="flex flex-col gap-1 p-3">
-            <Typography type="body-xs" color="muted">{PRICE_TAG_T.breakdownTitle}</Typography>
-            <div className="flex items-center justify-between gap-3">
-                <Typography type="body-sm">{PRICE_TAG_T.listPrice}</Typography>
-                <Typography type="body-sm">{formatVnd(original ?? discounted)}</Typography>
-            </div>
-            <div className="flex items-center justify-between gap-3 border-t border-default pt-1">
-                <Typography type="body-sm" weight="semibold">{PRICE_TAG_T.youPay}</Typography>
-                <Typography type="body-sm" weight="semibold">{formatVnd(discounted)}</Typography>
-            </div>
-        </div>
-    ) : null
-
-    return (
-        <div className={cn("flex flex-col gap-1", className)}>
-            <div className="flex flex-wrap items-baseline gap-2">
-                <Typography type={AMOUNT_TYPE[size]} weight="bold">{formatVnd(discounted)}</Typography>
-                {hasSaving ? (
-                    <Typography type={size === "sm" ? "body-xs" : "body-sm"} color="muted" className="line-through">
-                        {formatVnd(original)}
-                    </Typography>
-                ) : null}
-                {savePercent > 0 ? (
-                    <Popover>
-                        <Popover.Trigger
-                            aria-label={PRICE_TAG_T.breakdownTitle}
-                            className="cursor-pointer rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                        >
-                            {chip}
-                        </Popover.Trigger>
-                        <Popover.Content className="max-w-xs">{breakdownContent}</Popover.Content>
-                    </Popover>
-                ) : null}
-            </div>
-            {showSavingLine && hasSaving ? (
-                <Typography type="body-xs" color="muted">
-                    {PRICE_TAG_T.saved(formatVnd(original - discounted))}
-                </Typography>
-            ) : null}
-        </div>
-    )
-}
 
 // ── local mirror of the `CourseEntity` fields this card reads ──
 

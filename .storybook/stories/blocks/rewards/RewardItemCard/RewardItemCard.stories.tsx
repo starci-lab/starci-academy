@@ -29,21 +29,34 @@ const ICONS = {
     tshirt: <TShirtIcon aria-hidden focusable="false" />,
 }
 
-// The real composed parts — shared by every content leaf (data · không đủ Coin ·
-// đang đổi · lưới · tiêu đề dài): same Card frame, only prop-driven state differs.
+// ── DOM MIRROR ────────────────────────────────────────────────────────────
+// RewardItemCard renders a raw HeroUI `Card` (= the anatomy ROOT node) that
+// CONTAINS two plain layout rows: a HEADER row (IconTile + a text column holding
+// the title span over the mô tả span) and a FOOTER row (StatusChip + Button).
+// Those rows are plain layout `<div>`s — no component, no tier — so their grouping
+// lives in the ROLE text, not as nodes; DOM order preserves adjacency (same
+// convention as PricingCard/CourseProgressRow). IconTile · StatusChip · Button are
+// `Primitives/*` atoms → tier "primitive", NOT block. Title/mô tả are hand-rolled
+// <span>s, not the Typography port (see the deferred Typography-swap note).
+//
+// Shared by every content leaf (data · không đủ Coin · đang đổi · lưới · tiêu đề
+// dài): same Card frame, only prop-driven state differs.
 const CONTENT_PARTS: Array<AnatomyNode> = [
-    { name: "IconTile", tier: "block", role: "khung icon vuông tinted (tone accent, size sm)" },
-    { name: "Typography (raw span)", tier: "primitive", role: "tiêu đề (semibold, truncate) + mô tả (muted)" },
-    { name: "StatusChip", tier: "block", role: "chip giá Coin (tone accent, soft)" },
-    { name: "Button", tier: "block", role: "CTA đổi thưởng — disabled khi không đủ Coin, isPending khi đang đổi" },
+    { name: "IconTile", tier: "primitive", role: "khung icon vuông tinted (size sm, tone accent) — đầu header row, cạnh cột chữ" },
+    { name: "span · tiêu đề", tier: "primitive", role: "tiêu đề (raw <span> text-sm font-semibold, truncate) — trong cột chữ cạnh IconTile" },
+    { name: "span · mô tả", tier: "primitive", role: "mô tả (raw <span> text-xs, muted) — dưới tiêu đề trong cùng cột chữ" },
+    { name: "StatusChip", tier: "primitive", role: "chip giá Coin (tone accent, soft) — đầu footer row" },
+    { name: "Button", tier: "primitive", role: "CTA đổi thưởng (variant primary, size sm) — isDisabled khi không đủ Coin/đang đổi, isPending khi đang đổi — cuối footer row" },
 ]
 
 // Khung chờ leaf: Skeleton mirror đúng khung Card này (§6/§8: skeleton là PROP).
+// Cùng 2 hàng layout: header (ô icon + 2 vệt chữ) · footer (vệt chip + vệt nút).
 const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton", tier: "primitive", role: "ô icon vuông (mirror IconTile)", state: "skeleton" },
-    { name: "Skeleton.Typography", tier: "primitive", role: "tiêu đề + mô tả (mirror)", state: "skeleton" },
-    { name: "Skeleton.Chip", tier: "primitive", role: "chip giá (mirror StatusChip)", state: "skeleton" },
-    { name: "Skeleton.Button", tier: "primitive", role: "CTA (mirror Button)", state: "skeleton" },
+    { name: "Skeleton · ô icon", tier: "primitive", role: "ô vuông 48px (size-12 rounded-xl) mirror IconTile — đầu header row", state: "skeleton" },
+    { name: "Skeleton.Typography · tiêu đề", tier: "primitive", role: "vệt tiêu đề (body-sm, width 1/2) mirror span tiêu đề", state: "skeleton" },
+    { name: "Skeleton.Typography · mô tả", tier: "primitive", role: "vệt mô tả (body-xs, width full) mirror span mô tả", state: "skeleton" },
+    { name: "Skeleton.Chip", tier: "primitive", role: "vệt chip giá mirror StatusChip — đầu footer row", state: "skeleton" },
+    { name: "Skeleton.Button", tier: "primitive", role: "vệt CTA (width w-20) mirror Button — cuối footer row", state: "skeleton" },
 ]
 
 /** Default — affordable reward, ready to redeem. */

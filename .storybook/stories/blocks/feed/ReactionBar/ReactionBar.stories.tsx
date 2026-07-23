@@ -52,11 +52,27 @@ const Controlled = ({
     )
 }
 
-// Interactive leaves (onReact passed): react trigger + count + emoji picker.
+// Interactive leaves (onReact passed) — mirror the real DOM: root div → { trigger
+// button, picker popover }. The glyph + count live INSIDE the trigger button; the six
+// emoji options live INSIDE the picker.
 const INTERACTIVE_PARTS: Array<AnatomyNode> = [
-    { name: "SmileyIcon", tier: "primitive", role: "icon trigger neutral khi người xem chưa react" },
-    { name: "Typography", tier: "primitive", role: "số đếm reaction (body-xs), ẩn khi count = 0" },
-    { name: "Emoji picker", tier: "design", role: "popover 6 emoji (framer-motion) — chọn / gỡ cảm xúc" },
+    {
+        name: "button · React trigger",
+        tier: "primitive",
+        role: "nút bấm mở/đóng picker; chứa glyph + số đếm",
+        children: [
+            { name: "SmileyIcon", tier: "primitive", role: "glyph neutral khi chưa react — AnimatePresence đổi sang emoji cảm xúc khi đã react" },
+            { name: "Typography", tier: "primitive", role: "số đếm reaction (body-xs), chỉ hiện khi count > 0", state: "ẩn khi count = 0" },
+        ],
+    },
+    {
+        name: "Emoji picker",
+        tier: "design",
+        role: "popover 6 emoji (framer-motion), chỉ hiện khi mở — chọn / gỡ cảm xúc",
+        children: [
+            { name: "button · emoji option", tier: "primitive", role: "6 nút emoji map từ REACTIONS — bấm để chọn / gỡ", state: "×6" },
+        ],
+    },
 ]
 
 // Read-only leaf (onReact omitted, count > 0): just the viewer's emoji + count, no picker.

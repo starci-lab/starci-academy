@@ -98,21 +98,80 @@ const ITEM_OAUTH_CONTENT: SearchCourseContentItem = {
     isLocked: false,
 }
 
-// DATA leaf — the composed list: section label + bordered frame + result rows.
+// DATA leaf — the composed list, mirroring the real DOM nesting:
+//   LabeledCard (frameless section)
+//     ├─ Label          (the section title text)
+//     └─ AsyncContent   (content branch)
+//          └─ SurfaceListCard (bordered frame)
+//               └─ EntityResultRow × N
 // Shared by every "has results" leaf (single · mixed · locked · excluded · limited).
 const DATA_PARTS: Array<AnatomyNode> = [
-    { name: "LabeledCard", tier: "primitive", role: "nhãn section ngoài khung (frameless — nội dung tự là card)" },
-    { name: "AsyncContent", tier: "primitive", role: "switch loading → content (empty/error tự-ẩn ở tầng trên)", state: "content" },
-    { name: "SurfaceListCard", tier: "primitive", role: "khung surface bordered ôm các hàng edge-to-edge" },
-    { name: "EntityResultRow", tier: "design", role: "mỗi hàng kết quả (breadcrumb + tiêu đề, mặc định không chip/snippet)" },
+    {
+        name: "LabeledCard",
+        tier: "primitive",
+        role: "nhãn section ngoài khung (frameless — nội dung tự là card)",
+        children: [
+            { name: "Label", tier: "primitive", role: "text nhãn section phía trên nội dung" },
+            {
+                name: "AsyncContent",
+                tier: "primitive",
+                role: "switch error → loading → empty → content (empty/error tự-ẩn ở tầng trên)",
+                state: "content",
+                children: [
+                    {
+                        name: "SurfaceListCard",
+                        tier: "primitive",
+                        role: "khung surface bordered ôm các hàng edge-to-edge",
+                        children: [
+                            { name: "EntityResultRow", tier: "design", role: "mỗi hàng kết quả (breadcrumb + tiêu đề, mặc định không chip/snippet)" },
+                        ],
+                    },
+                ],
+            },
+        ],
+    },
 ]
 
-// LOADING leaf — chrome stays, body becomes a skeleton row mirror (same footprint, no real rows).
+// LOADING leaf — chrome stays, AsyncContent switches to its loading branch: the same
+// bordered frame, but each row is a SurfaceListCardItem wrapping a 3-line Skeleton mirror.
+//   LabeledCard
+//     ├─ Label
+//     └─ AsyncContent   (loading branch)
+//          └─ SurfaceListCard
+//               └─ SurfaceListCardItem × N
+//                    └─ Skeleton (3 lines)
 const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "LabeledCard", tier: "primitive", role: "nhãn section (vẫn hiện)" },
-    { name: "AsyncContent", tier: "primitive", role: "nhánh loading → skeleton", state: "loading" },
-    { name: "SurfaceListCard", tier: "primitive", role: "khung bordered giữ đúng footprint" },
-    { name: "Skeleton", tier: "primitive", role: "các hàng skeleton mirror (mỗi hàng 3 dòng)", state: "skeleton" },
+    {
+        name: "LabeledCard",
+        tier: "primitive",
+        role: "nhãn section (vẫn hiện)",
+        children: [
+            { name: "Label", tier: "primitive", role: "text nhãn section (vẫn hiện khi tải)" },
+            {
+                name: "AsyncContent",
+                tier: "primitive",
+                role: "nhánh loading → skeleton",
+                state: "loading",
+                children: [
+                    {
+                        name: "SurfaceListCard",
+                        tier: "primitive",
+                        role: "khung bordered giữ đúng footprint",
+                        children: [
+                            {
+                                name: "SurfaceListCardItem",
+                                tier: "primitive",
+                                role: "mỗi hàng skeleton (bọc item edge-to-edge)",
+                                children: [
+                                    { name: "Skeleton", tier: "primitive", role: "3 dòng Skeleton.Typography mirror mỗi hàng", state: "skeleton" },
+                                ],
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
+    },
 ]
 
 // SELF-HIDDEN leaf — query rỗng / rỗng kết quả → block trả null, không dựng gì.

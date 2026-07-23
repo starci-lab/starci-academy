@@ -27,31 +27,44 @@ type Story = StoryObj<typeof SectionHeading>
 /** Frame each leaf's anatomy panel with breathing room. */
 const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
 
-// FULL — eyebrow + title + intro (the default marketing rhythm). Shared by the
-// centered default leaf and the level-2 hero leaf (same shape, bigger scale).
+// The title + optional "#" anchor NEVER sit at the root: the component always
+// wraps them in a flex row `<div>` (the title always mounts inside this row, the
+// anchor mounts beside it as a SIBLING within the same row). So every leaf nests
+// them under this title-row node, mirroring the real DOM containment.
+const titleRow = (withAnchor: boolean): AnatomyNode => ({
+    name: "div · title row",
+    tier: "primitive",
+    role: "hàng flex (items-center gap-2) bọc tiêu đề" + (withAnchor ? ' + anchor "#"' : ""),
+    children: withAnchor
+        ? [
+              { name: "Typography.Heading", tier: "primitive", role: "tiêu đề section (bold)" },
+              { name: "Anchor '#'", tier: "primitive", role: 'deep-link "#" cạnh tiêu đề (→ #anchorId)' },
+          ]
+        : [{ name: "Typography.Heading", tier: "primitive", role: "tiêu đề section (bold)" }],
+})
+
+// FULL — eyebrow + [title row] + intro (the default marketing rhythm). Shared by
+// the centered default leaf and the level-2 hero leaf (same shape, bigger scale).
 const FULL_PARTS: Array<AnatomyNode> = [
     { name: "StatusChip", tier: "primitive", role: "eyebrow soft accent phía trên tiêu đề", state: "accent" },
-    { name: "Typography.Heading", tier: "primitive", role: "tiêu đề section (level 2/3, bold)" },
+    titleRow(false),
     { name: "Typography", tier: "primitive", role: "dòng dẫn mờ dưới tiêu đề (body-sm, muted)" },
 ]
 
-// HEADING + INTRO — no eyebrow: chỉ tiêu đề + dòng dẫn (căn trái).
+// HEADING + INTRO — no eyebrow: [title row] + dòng dẫn (căn trái).
 const HEADING_INTRO_PARTS: Array<AnatomyNode> = [
-    { name: "Typography.Heading", tier: "primitive", role: "tiêu đề section (bold)" },
+    titleRow(false),
     { name: "Typography", tier: "primitive", role: "dòng dẫn mờ (body-sm, muted)" },
 ]
 
-// ANCHORED — tiêu đề kèm deep-link "#", cộng dòng dẫn (không eyebrow).
+// ANCHORED — title row kèm deep-link "#", cộng dòng dẫn (không eyebrow).
 const ANCHORED_PARTS: Array<AnatomyNode> = [
-    { name: "Typography.Heading", tier: "primitive", role: "tiêu đề section (bold)" },
-    { name: "Anchor '#'", tier: "primitive", role: 'deep-link "#" cạnh tiêu đề (→ #anchorId)' },
+    titleRow(true),
     { name: "Typography", tier: "primitive", role: "dòng dẫn mờ (body-sm, muted)" },
 ]
 
-// TITLE ONLY — chỉ còn tiêu đề, không eyebrow / anchor / intro.
-const TITLE_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "Typography.Heading", tier: "primitive", role: "tiêu đề section (bold), đứng một mình" },
-]
+// TITLE ONLY — chỉ còn [title row] bọc tiêu đề, không eyebrow / anchor / intro.
+const TITLE_ONLY_PARTS: Array<AnatomyNode> = [titleRow(false)]
 
 /** DEFAULT — full rhythm: eyebrow → title → intro, căn giữa (nhịp marketing mặc định). */
 export const CenteredDefault: Story = {

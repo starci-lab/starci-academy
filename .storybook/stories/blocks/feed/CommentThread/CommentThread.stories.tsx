@@ -30,27 +30,92 @@ type Story = StoryObj<typeof CommentThread>
 /** Frame each leaf's anatomy panel with breathing room. */
 const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
 
-// content leaf: root Composer + the recursive CommunityCommentRow tree (each node
-// carries its reaction bar, a "Trả lời" affordance, and its own inline reply Composer).
-const DATA_PARTS: Array<AnatomyNode> = [
-    { name: "Composer", tier: "block", role: "ô soạn bình luận gốc (parentId = null)" },
+// Composer's real DOM: leading UserAvatar (when avatarSrc set) + a TextField wrapping
+// the auto-growing TextArea + a trailing Send Button whose child is the paper-plane
+// icon (swapped for a Spinner while submitting). attachSlot is not supplied here → not
+// rendered → omitted. Shared by the root composer AND every inline reply composer.
+const COMPOSER_PARTS: Array<AnatomyNode> = [
+    { name: "UserAvatar", tier: "primitive", role: "ảnh đại diện người xem ở đầu hàng (khi có avatarSrc)" },
     {
-        name: "CommunityCommentRow",
-        tier: "design",
-        role: "mỗi node bình luận trong cây (đệ quy, thụt lề theo depth)",
+        name: "TextField",
+        tier: "primitive",
+        role: "ô nhập (variant secondary) bọc vùng soạn",
         children: [
-            { name: "UserAvatar", tier: "primitive", role: "ảnh đại diện tác giả" },
-            { name: "MarkdownContent", tier: "primitive", role: "nội dung bình luận" },
-            { name: "ReactionBar", tier: "block", role: "cảm xúc + đếm" },
-            { name: "Trả lời", tier: "primitive", role: "affordance mở ô trả lời inline", state: "hand-rolled" },
-            { name: "Composer", tier: "block", role: "ô trả lời inline (ẩn tới khi bấm Trả lời)", state: "reply" },
+            { name: "TextArea", tier: "primitive", role: "vùng gõ tự giãn theo nội dung" },
+        ],
+    },
+    {
+        name: "Button",
+        tier: "primitive",
+        role: "nút Gửi (size sm, primary); disabled khi trống hoặc đang gửi",
+        children: [
+            { name: "PaperPlaneRightIcon", tier: "primitive", role: "icon máy bay giấy đứng trước nhãn (đổi thành Spinner khi đang gửi)" },
         ],
     },
 ]
 
+// One CommunityCommentRow node's real DOM: avatar + (author Typography · founder
+// SealCheckIcon · time Typography) + markdown body + a cluster of ReactionBar and the
+// hand-rolled "Trả lời" toggle (passed in via the row's `actions` slot).
+const COMMENT_ROW: AnatomyNode = {
+    name: "CommunityCommentRow",
+    tier: "block",
+    role: "một node bình luận: avatar + tác giả + thời gian + nội dung + reaction + slot actions",
+    children: [
+        { name: "UserAvatar", tier: "primitive", role: "ảnh đại diện tác giả" },
+        { name: "Typography", tier: "primitive", role: "tên hiển thị tác giả (semibold, truncate)" },
+        { name: "SealCheckIcon", tier: "primitive", role: "huy hiệu founder (chỉ khi isFounderAuthor)", state: "founder" },
+        { name: "Typography", tier: "primitive", role: "thời gian tương đối (muted)" },
+        { name: "MarkdownContent", tier: "primitive", role: "nội dung bình luận (markdown)" },
+        { name: "ReactionBar", tier: "block", role: "cảm xúc + đếm; read-only khi không có onReact" },
+        { name: "Trả lời", tier: "primitive", role: "nút mở/đóng ô trả lời inline (truyền qua slot actions)", state: "hand-rolled" },
+    ],
+}
+
+// The recursive item wrapper: a node's row, then its inline reply Composer (a SIBLING
+// of the row — revealed by "Trả lời", not nested inside it), then the recursively
+// rendered reply subtree. depth 1..4 draws an indent guide rail; deeper renders flush.
+const COMMENT_ITEM: AnatomyNode = {
+    name: "CommentThreadItem",
+    tier: "design",
+    role: "đơn vị đệ quy: một node + ô trả lời inline + cây reply con; thụt lề theo depth qua rail (≤4 cấp)",
+    children: [
+        COMMENT_ROW,
+        {
+            name: "Composer",
+            tier: "block",
+            role: "ô trả lời inline (ẩn tới khi bấm Trả lời) — anh em cạnh row, không nằm trong row",
+            state: "reply",
+            children: COMPOSER_PARTS,
+        },
+        {
+            name: "CommentThreadItem",
+            tier: "design",
+            role: "cây reply con — đệ quy CommentThreadItem, thụt lề sâu hơn một cấp",
+            state: "đệ quy",
+        },
+    ],
+}
+
+// content leaf: root Composer (parentId = null) + the recursive CommentThreadItem tree.
+const DATA_PARTS: Array<AnatomyNode> = [
+    {
+        name: "Composer",
+        tier: "block",
+        role: "ô soạn bình luận gốc (parentId = null)",
+        children: COMPOSER_PARTS,
+    },
+    COMMENT_ITEM,
+]
+
 // empty leaf: no comments → the thread is absent, only the root Composer renders.
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "Composer", tier: "block", role: "ô soạn bình luận gốc — phần duy nhất render khi chưa có bình luận" },
+    {
+        name: "Composer",
+        tier: "block",
+        role: "ô soạn bình luận gốc — phần duy nhất render khi chưa có bình luận",
+        children: COMPOSER_PARTS,
+    },
 ]
 
 const authors: Record<string, CommunityPostAuthor> = {

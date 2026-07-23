@@ -27,36 +27,97 @@ type Story = StoryObj<typeof DeckCard>
 /** Frame each leaf's anatomy panel with breathing room. */
 const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
 
-// FULL composition — due chip + difficulty chip + mastery meter + CTA (Default, long, grid, no-desc).
+// Real DOM: <Card rounded-3xl> → <Card.Content> holds, in order, the header row
+// (title Typography + StatusChip + DifficultyChip), the description Typography, the
+// mastery ProgressMeter, then the footer row (card-count Typography + CTA Button).
+// The flexbox rows are anonymous layout divs (no named port) so they aren't nodes;
+// the Card frame CONTAINS everything → all parts nest under its `children`.
+
+// FULL composition — due chip + difficulty chip + description + mastery meter + CTA (Default, Long, Grid).
 const DECK_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "tiêu đề (clamp-2) · mô tả muted · số thẻ" },
-    { name: "StatusChip", tier: "primitive", role: '"N đến hạn" (warning) — chỉ khi showProgress', state: "warning" },
-    { name: "DifficultyChip", tier: "design", role: "chấm màu theo độ khó (beginner→insane)" },
-    { name: "ProgressMeter", tier: "primitive", role: "thanh mastery% (đã thuộc/tổng) — thay text+Separator cũ" },
-    { name: "Button", tier: "primitive", role: 'CTA "Học" — hành động duy nhất (card không click được)' },
+    {
+        name: "Card",
+        tier: "primitive",
+        role: "khung thẻ (rounded-3xl) bọc toàn bộ nội dung — card không bấm được, CTA là hành động duy nhất",
+        children: [
+            { name: "Typography", tier: "primitive", role: "tiêu đề (body-sm · medium · clamp-2)" },
+            { name: "StatusChip", tier: "primitive", role: '"N đến hạn" (warning) — chỉ khi showProgress && dueCount', state: "warning" },
+            { name: "DifficultyChip", tier: "design", role: "chấm màu theo độ khó (beginner→insane)" },
+            { name: "Typography", tier: "primitive", role: "mô tả chủ đề (body-xs · muted · clamp-2)" },
+            { name: "ProgressMeter", tier: "primitive", role: "thanh mastery% (đã thuộc/tổng) — thay text+Separator cũ" },
+            { name: "Typography", tier: "primitive", role: "số thẻ (body-xs · muted)" },
+            { name: "Button", tier: "primitive", role: 'CTA "Học" — hành động duy nhất (card không click được)' },
+        ],
+    },
 ]
 
 // No due cards — dueCount rỗng nên StatusChip biến mất, meter vẫn còn (NoDue, FullyMastered).
 const NO_DUE_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "tiêu đề (clamp-2) · mô tả muted · số thẻ" },
-    { name: "DifficultyChip", tier: "design", role: "chấm màu theo độ khó (beginner→insane)" },
-    { name: "ProgressMeter", tier: "primitive", role: "thanh mastery% (đã thuộc/tổng)" },
-    { name: "Button", tier: "primitive", role: 'CTA "Học" — hành động duy nhất' },
+    {
+        name: "Card",
+        tier: "primitive",
+        role: "khung thẻ (rounded-3xl) bọc toàn bộ nội dung — card không bấm được, CTA là hành động duy nhất",
+        children: [
+            { name: "Typography", tier: "primitive", role: "tiêu đề (body-sm · medium · clamp-2)" },
+            { name: "DifficultyChip", tier: "design", role: "chấm màu theo độ khó (beginner→insane)" },
+            { name: "Typography", tier: "primitive", role: "mô tả chủ đề (body-xs · muted · clamp-2)" },
+            { name: "ProgressMeter", tier: "primitive", role: "thanh mastery% (đã thuộc/tổng)" },
+            { name: "Typography", tier: "primitive", role: "số thẻ (body-xs · muted)" },
+            { name: "Button", tier: "primitive", role: 'CTA "Học" — hành động duy nhất' },
+        ],
+    },
+]
+
+// No description — StatusChip + meter vẫn còn, chỉ dòng blurb Typography xẹp (NoDescription).
+const NO_DESC_PARTS: Array<AnatomyNode> = [
+    {
+        name: "Card",
+        tier: "primitive",
+        role: "khung thẻ (rounded-3xl) bọc toàn bộ nội dung — card không bấm được, CTA là hành động duy nhất",
+        children: [
+            { name: "Typography", tier: "primitive", role: "tiêu đề (body-sm · medium · clamp-2)" },
+            { name: "StatusChip", tier: "primitive", role: '"N đến hạn" (warning) — chỉ khi showProgress && dueCount', state: "warning" },
+            { name: "DifficultyChip", tier: "design", role: "chấm màu theo độ khó (beginner→insane)" },
+            { name: "ProgressMeter", tier: "primitive", role: "thanh mastery% (đã thuộc/tổng) — thay text+Separator cũ" },
+            { name: "Typography", tier: "primitive", role: "số thẻ (body-xs · muted)" },
+            { name: "Button", tier: "primitive", role: 'CTA "Học" — hành động duy nhất (card không click được)' },
+        ],
+    },
 ]
 
 // Quiz mode — showProgress=false: KHÔNG StatusChip, KHÔNG ProgressMeter, chỉ đổi nhãn CTA.
 const QUIZ_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "tiêu đề (clamp-2) · mô tả muted · số thẻ" },
-    { name: "DifficultyChip", tier: "design", role: "chấm màu theo độ khó (beginner→insane)" },
-    { name: "Button", tier: "primitive", role: "CTA nhãn tuỳ biến (vd 'Hỏi nhanh')" },
+    {
+        name: "Card",
+        tier: "primitive",
+        role: "khung thẻ (rounded-3xl) bọc toàn bộ nội dung — card không bấm được, CTA là hành động duy nhất",
+        children: [
+            { name: "Typography", tier: "primitive", role: "tiêu đề (body-sm · medium · clamp-2)" },
+            { name: "DifficultyChip", tier: "design", role: "chấm màu theo độ khó (beginner→insane)" },
+            { name: "Typography", tier: "primitive", role: "mô tả chủ đề (body-xs · muted · clamp-2)" },
+            { name: "Typography", tier: "primitive", role: "số thẻ (body-xs · muted)" },
+            { name: "Button", tier: "primitive", role: "CTA nhãn tuỳ biến (vd 'Hỏi nhanh')" },
+        ],
+    },
 ]
 
-// Khung chờ — Skeleton mirror đúng footprint của card thật (Skeleton, Khung chờ · lưới).
+// Khung chờ — Skeleton mirror đúng footprint card thật, cùng khung Card (Skeleton, Khung chờ · lưới).
 const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton · Typography", tier: "primitive", role: "khung tiêu đề · mô tả · số thẻ", state: "skeleton" },
-    { name: "Skeleton · Chip", tier: "primitive", role: "khung chip độ khó", state: "skeleton" },
-    { name: "Skeleton · Meter", tier: "primitive", role: "khung thanh mastery", state: "skeleton" },
-    { name: "Skeleton · Button", tier: "primitive", role: "khung CTA", state: "skeleton" },
+    {
+        name: "Card",
+        tier: "primitive",
+        role: "khung thẻ (rounded-3xl) — giữ nguyên footprint khi tải",
+        children: [
+            { name: "Skeleton.Typography", tier: "primitive", role: "khung tiêu đề (body-sm · 1/2)", state: "skeleton" },
+            { name: "Skeleton.Chip", tier: "primitive", role: "khung chip độ khó", state: "skeleton" },
+            { name: "Skeleton.Typography", tier: "primitive", role: "khung mô tả (body-xs · 3/4)", state: "skeleton" },
+            { name: "Skeleton.Typography", tier: "primitive", role: "khung nhãn mastery (body-xs · 1/3)", state: "skeleton" },
+            { name: "Skeleton.Typography", tier: "primitive", role: "khung % mastery (body-xs · w-8)", state: "skeleton" },
+            { name: "Skeleton.Meter", tier: "primitive", role: "khung thanh mastery", state: "skeleton" },
+            { name: "Skeleton.Typography", tier: "primitive", role: "khung số thẻ (body-xs · 1/4)", state: "skeleton" },
+            { name: "Skeleton.Button", tier: "primitive", role: "khung CTA", state: "skeleton" },
+        ],
+    },
 ]
 
 /** Default — a deck with due cards and partial mastery progress. */
@@ -146,8 +207,8 @@ export const NoDescription: Story = {
                 name="DeckCard"
                 tier="design"
                 leaf="Không mô tả"
-                parts={DECK_PARTS}
-                note="Bỏ description → dòng blurb của Typography xẹp gọn, các part còn lại (chip · meter · CTA) giữ nguyên."
+                parts={NO_DESC_PARTS}
+                note="Bỏ description → Typography mô tả biến mất khỏi cây; các part còn lại (chip · meter · CTA) giữ nguyên."
             >
                 <div className="w-80">
                     <DeckCard

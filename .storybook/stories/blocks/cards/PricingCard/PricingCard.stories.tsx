@@ -38,53 +38,50 @@ const FEATURES = (
     </ul>
 )
 
+// ── DOM MIRROR ────────────────────────────────────────────────────────────
+// PricingCard renders ONE SectionCard (the frame) whose CardContent CONTAINS the
+// whole tier: a name row (tên + optional StatusChip), a price row (giá + optional
+// giá gốc + optional period), the features slot, and the CTA. So SectionCard is
+// the ROOT and every content part nests under its `children` in DOM order — a flat
+// sibling list would hide that SectionCard frames all of it. The name/price rows
+// are plain layout divs (no component, no tier), so their grouping is captured in
+// the role text rather than as nodes; adjacency is preserved by DOM order.
+
+/** Wrap a leaf's content parts in the SectionCard frame that actually contains them. */
+const sectionFrame = (children: Array<AnatomyNode>): AnatomyNode => ({
+    name: "SectionCard",
+    tier: "design",
+    role: "khung surface bao TOÀN BỘ nội dung (accent khi highlighted; CardContent xếp dọc gap-6, h-full)",
+    children,
+})
+
+// Content parts (children of SectionCard), gated per shape:
+const NAME: AnatomyNode = { name: "Typography · tên", tier: "primitive", role: "tên tier (Typography body semibold) — cùng dòng với chip" }
+const CHIP: AnatomyNode = { name: "StatusChip", tier: "primitive", role: 'chip "phổ biến nhất" (StatusChip accent soft, w-fit) — cùng dòng với tên, chỉ khi highlighted && badge', state: "accent" }
+const PRICE: AnatomyNode = { name: "Typography · giá", tier: "primitive", role: "giá lớn (Typography h3 semibold) — đầu dòng giá" }
+const ORIGINAL: AnatomyNode = { name: "Typography · giá gốc", tier: "primitive", role: "giá gốc gạch ngang (Typography body-sm muted line-through) — cùng dòng giá" }
+const PERIOD: AnatomyNode = { name: "Typography · period", tier: "primitive", role: "nhãn kỳ hạn (Typography body-xs muted) — cuối dòng giá" }
+const FEATURES_NODE: AnatomyNode = { name: "features", tier: "primitive", role: "danh sách feature (ReactNode <ul> do caller truyền) — bọc div flex-1 giãn đầy chiều cao" }
+const CTA_BUTTON: AnatomyNode = { name: "Button · cta", tier: "primitive", role: "nút hành động (Button HeroUI do caller truyền) — bọc div dính đáy card" }
+
 // BASE shape (BaseTier · BadgeHiddenWithoutHighlight): no chip, no struck price, has period.
-const BASE_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "design", role: "khung surface (accent khi highlighted, contentClassName xếp dọc + h-full)" },
-    { name: "Typography · tên", tier: "primitive", role: "tên tier (body semibold)" },
-    { name: "Typography · giá", tier: "primitive", role: "giá lớn (h3 semibold)" },
-    { name: "Typography · period", tier: "primitive", role: "nhãn kỳ hạn (body-xs muted)" },
-    { name: "features", tier: "primitive", role: "danh sách feature (ReactNode) — giãn flex-1 đầy chiều cao" },
-    { name: "cta", tier: "primitive", role: "nút hành động (Button) — dính đáy card" },
-]
+const BASE_PARTS: Array<AnatomyNode> = [sectionFrame([NAME, PRICE, PERIOD, FEATURES_NODE, CTA_BUTTON])]
 
 // FULL shape (HighlightedWithBadge): highlighted && badge → chip accent hiện + giá gốc gạch ngang.
-const FULL_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "design", role: "khung surface (accent khi highlighted, contentClassName xếp dọc + h-full)" },
-    { name: "Typography · tên", tier: "primitive", role: "tên tier (body semibold)" },
-    { name: "StatusChip", tier: "primitive", role: 'chip "phổ biến nhất" (accent, w-fit) — chỉ khi highlighted && badge', state: "accent" },
-    { name: "Typography · giá", tier: "primitive", role: "giá lớn (h3 semibold)" },
-    { name: "Typography · giá gốc", tier: "primitive", role: "giá gốc gạch ngang (body-sm muted line-through)" },
-    { name: "Typography · period", tier: "primitive", role: "nhãn kỳ hạn (body-xs muted)" },
-    { name: "features", tier: "primitive", role: "danh sách feature (ReactNode) — giãn flex-1 đầy chiều cao" },
-    { name: "cta", tier: "primitive", role: "nút hành động (Button) — dính đáy card" },
-]
+const FULL_PARTS: Array<AnatomyNode> = [sectionFrame([NAME, CHIP, PRICE, ORIGINAL, PERIOD, FEATURES_NODE, CTA_BUTTON])]
 
 // DISCOUNT shape (DiscountWithoutHighlight · LongFeatureList): giá gốc gạch ngang nhưng KHÔNG chip.
-const DISCOUNT_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "design", role: "khung surface (accent khi highlighted, contentClassName xếp dọc + h-full)" },
-    { name: "Typography · tên", tier: "primitive", role: "tên tier (body semibold)" },
-    { name: "Typography · giá", tier: "primitive", role: "giá lớn (h3 semibold)" },
-    { name: "Typography · giá gốc", tier: "primitive", role: "giá gốc gạch ngang (body-sm muted line-through)" },
-    { name: "Typography · period", tier: "primitive", role: "nhãn kỳ hạn (body-xs muted)" },
-    { name: "features", tier: "primitive", role: "danh sách feature (ReactNode) — giãn flex-1 đầy chiều cao" },
-    { name: "cta", tier: "primitive", role: "nút hành động (Button) — dính đáy card" },
-]
+const DISCOUNT_PARTS: Array<AnatomyNode> = [sectionFrame([NAME, PRICE, ORIGINAL, PERIOD, FEATURES_NODE, CTA_BUTTON])]
 
 // NO-PERIOD shape (NoPeriod): dòng giá chỉ còn giá lớn, không period, không giá gốc, không chip.
-const NO_PERIOD_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "design", role: "khung surface (accent khi highlighted, contentClassName xếp dọc + h-full)" },
-    { name: "Typography · tên", tier: "primitive", role: "tên tier (body semibold)" },
-    { name: "Typography · giá", tier: "primitive", role: "giá lớn (h3 semibold) — dòng giá chỉ còn một mình" },
-    { name: "features", tier: "primitive", role: "danh sách feature (ReactNode) — giãn flex-1 đầy chiều cao" },
-    { name: "cta", tier: "primitive", role: "nút hành động (Button) — dính đáy card" },
-]
+const NO_PERIOD_PARTS: Array<AnatomyNode> = [sectionFrame([NAME, PRICE, FEATURES_NODE, CTA_BUTTON])]
 
-// ROW leaf (PricingRow): ba tier xếp lưới items-stretch → cùng chiều cao, gồm cả ba shape.
+// ROW leaf (PricingRow): ba PricingCard xếp lưới items-stretch (grid div = layout, không phải node)
+// → mỗi tier là MỘT sub-block design, nest nguyên cây SectionCard + shape của nó.
 const ROW_PARTS: Array<AnatomyNode> = [
-    { name: "PricingCard · Free", tier: "design", role: "tier cơ bản (không chip, không giá gốc)" },
-    { name: "PricingCard · Pro", tier: "design", role: "tier nổi bật (highlighted → chip accent + giá gốc gạch ngang)", state: "highlighted" },
-    { name: "PricingCard · Enterprise", tier: "design", role: "tier liên hệ (không kỳ hạn)" },
+    { name: "PricingCard · Free", tier: "design", role: "tier cơ bản (không chip, không giá gốc)", children: BASE_PARTS },
+    { name: "PricingCard · Pro", tier: "design", role: "tier nổi bật (highlighted → chip accent + giá gốc gạch ngang)", state: "highlighted", children: FULL_PARTS },
+    { name: "PricingCard · Enterprise", tier: "design", role: "tier liên hệ (không kỳ hạn)", children: NO_PERIOD_PARTS },
 ]
 
 export const BaseTier: Story = {

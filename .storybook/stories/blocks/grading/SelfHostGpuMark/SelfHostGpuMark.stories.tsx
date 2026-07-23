@@ -27,10 +27,34 @@ type Story = StoryObj<typeof SelfHostGpuMark>
 /** Frame each leaf's anatomy panel with breathing room. */
 const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
 
-// The mark's composition — icon + tooltip. Both leaves share this one shape.
+// The mark's composition — mirrors the real DOM: a Tooltip root wrapping a
+// Trigger (which holds the icon) and a Content bubble. Both leaves share this
+// one shape (BesideModelName only adds a Typography OUTSIDE the mark).
 const MARK_PARTS: Array<AnatomyNode> = [
-    { name: "Tooltip", tier: "primitive", role: "hover/focus mở giải thích self-host (HeroUI base)" },
-    { name: "CpuIcon", tier: "primitive", role: "icon GPU accent, đánh dấu model chạy trên hạ tầng nội bộ" },
+    {
+        name: "Tooltip",
+        tier: "primitive",
+        role: "gốc mark — bọc trigger + nội dung, mở giải thích self-host khi hover/focus (HeroUI base)",
+        children: [
+            {
+                name: "Tooltip.Trigger",
+                tier: "primitive",
+                role: "vùng hover/focus inline (aria-label), bọc icon",
+                children: [
+                    {
+                        name: "CpuIcon",
+                        tier: "primitive",
+                        role: "icon GPU accent, đánh dấu model chạy trên hạ tầng nội bộ",
+                    },
+                ],
+            },
+            {
+                name: "Tooltip.Content",
+                tier: "primitive",
+                role: "bong bóng giải thích: model chạy GPU nội bộ StarCi, không gọi API bên ngoài",
+            },
+        ],
+    },
 ]
 
 export const Standalone: Story = {

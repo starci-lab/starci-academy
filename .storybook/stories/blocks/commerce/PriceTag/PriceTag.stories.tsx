@@ -38,17 +38,43 @@ const NO_DISCOUNT_PARTS: Array<AnatomyNode> = [
     },
 ]
 
+// The −X% chip → popover subtree, shared by every on-sale leaf. DOM nesting:
+// Popover WRAPS Popover.Trigger (the react-aria button — role=button,
+// aria-expanded/controls) which WRAPS the StatusChip; Popover.Content holds the
+// breakdown rows. The chip is NOT the button — the Trigger is; the chip is just its
+// soft-success label. So StatusChip nests under Popover.Trigger under Popover, NOT
+// as a sibling of Popover.
+const PRICE_POPOVER_PART: AnatomyNode = {
+    name: "Popover",
+    tier: "primitive",
+    role: "popover phân rã giá — bọc nút mở (Trigger) + nội dung (Content)",
+    children: [
+        {
+            name: "Popover.Trigger",
+            tier: "primitive",
+            role: "nút mở popover (react-aria: role=button, aria-expanded/controls) — đúng MỘT phần tử tương tác, bọc chip −X%",
+            children: [
+                {
+                    name: "StatusChip",
+                    tier: "primitive",
+                    role: 'nhãn tiết kiệm "−X%" (soft-success) — chỉ là nhãn, không tự là nút',
+                    state: "success",
+                },
+            ],
+        },
+        {
+            name: "Popover.Content",
+            tier: "primitive",
+            role: "phân rã giá: gốc → giai đoạn → thành viên → bạn trả (mỗi dòng là Typography)",
+        },
+    ],
+}
+
 // On sale: amount + struck list price + −X% chip (→ popover) + saving line.
 const DISCOUNT_PARTS: Array<AnatomyNode> = [
     { name: "Typography · giá phải trả", tier: "primitive", role: "số tiền phải trả (đậm)" },
     { name: "Typography · giá gốc", tier: "primitive", role: "giá gốc gạch ngang" },
-    {
-        name: "StatusChip",
-        tier: "primitive",
-        role: 'nhãn tiết kiệm "−X%" (soft-success), kiêm nút mở popover chi tiết',
-        state: "success",
-    },
-    { name: "Popover", tier: "primitive", role: "phân rã giá khi bấm chip: gốc → giai đoạn → thành viên → bạn trả" },
+    PRICE_POPOVER_PART,
     { name: "Typography · tiết kiệm", tier: "primitive", role: 'dòng "Tiết kiệm N₫"' },
 ]
 
@@ -56,8 +82,7 @@ const DISCOUNT_PARTS: Array<AnatomyNode> = [
 const NO_SAVING_LINE_PARTS: Array<AnatomyNode> = [
     { name: "Typography · giá phải trả", tier: "primitive", role: "số tiền phải trả (đậm)" },
     { name: "Typography · giá gốc", tier: "primitive", role: "giá gốc gạch ngang" },
-    { name: "StatusChip", tier: "primitive", role: 'nhãn "−X%" (soft-success), kiêm nút mở popover', state: "success" },
-    { name: "Popover", tier: "primitive", role: "phân rã giá khi bấm chip" },
+    PRICE_POPOVER_PART,
 ]
 
 /** No discount — shows the sale price only, no strikethrough or chip. */

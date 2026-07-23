@@ -49,24 +49,67 @@ const emptyUsage: GradeCreditUsage = {
     credit: { remaining5h: 0, remainingWeek: 0, limitWeek: 20 },
 }
 
-// MUTED shape — pressable wraps a plain muted usage line, no warning icon.
-// Shared by every "còn credit / không cảnh báo" leaf that stays interactive.
+// MUTED shape — a native pressable <button> wraps the inline-flex caption <span>,
+// whose only content is the muted "Còn N/M credit tuần này" text (no icon).
+// The text span sits INSIDE the button (not a sibling). Shared by every
+// "còn credit / không cảnh báo" leaf that stays interactive.
 const MUTED_PARTS: Array<AnatomyNode> = [
-    { name: "Pressable · button", tier: "primitive", role: "bọc caption, bấm mở modal chi tiết quota" },
-    { name: "Typography · text", tier: "primitive", role: 'dòng "Còn N/M credit tuần này" (muted)' },
+    {
+        name: "button · pressable",
+        tier: "primitive",
+        role: "native <button> bọc caption, bấm mở modal chi tiết quota",
+        children: [
+            {
+                name: "span · caption",
+                tier: "primitive",
+                role: 'span inline-flex mang dòng "Còn N/M credit tuần này" (muted)',
+            },
+        ],
+    },
 ]
 
-// WARNING shape — same pressable, but body becomes icon + đỏ warning text when
-// the Auto lane can't afford the next run (hết tuần vs dồn hết khung 5h).
+// WARNING shape — same pressable <button>, but the caption <span> turns danger and
+// gains a WarningCircleIcon BEFORE the đỏ text when the Auto lane can't afford the
+// next run (hết tuần vs dồn hết khung 5h). Icon + text live inside the same span.
 const WARNING_PARTS: Array<AnatomyNode> = [
-    { name: "Pressable · button", tier: "primitive", role: "bọc caption, bấm mở modal chi tiết quota" },
-    { name: "WarningCircleIcon", tier: "primitive", role: "icon cảnh báo khi pool không đủ chi trả lượt Auto (phosphor)", state: "warning" },
-    { name: "Typography · text", tier: "primitive", role: "dòng cảnh báo đỏ, nói ĐÚNG lý do (hết tuần / dồn hết khung 5h)", state: "danger" },
+    {
+        name: "button · pressable",
+        tier: "primitive",
+        role: "native <button> bọc caption, bấm mở modal chi tiết quota",
+        children: [
+            {
+                name: "span · caption",
+                tier: "primitive",
+                role: "span inline-flex mang dòng cảnh báo đỏ, nói ĐÚNG lý do (hết tuần / dồn hết khung 5h)",
+                state: "danger",
+                children: [
+                    {
+                        name: "WarningCircleIcon",
+                        tier: "primitive",
+                        role: "icon cảnh báo đứng trước text khi pool không đủ chi trả lượt Auto (phosphor)",
+                        state: "warning",
+                    },
+                ],
+            },
+        ],
+    },
 ]
 
-// STATIC shape — no onOpenDetails → the pressable wrapper drops, just a bare span.
+// STATIC shape — no onOpenDetails → the pressable <button> drops; an outer
+// className <span> wraps the same inline-flex caption <span> (muted, no icon).
 const STATIC_PARTS: Array<AnatomyNode> = [
-    { name: "Typography · text", tier: "primitive", role: 'dòng "Còn N/M credit tuần này" (muted, KHÔNG bọc pressable)' },
+    {
+        name: "span · wrapper",
+        tier: "primitive",
+        role: "span bọc ngoài (nhận className), thay cho lớp <button> khi tĩnh",
+        children: [
+            {
+                name: "span · caption",
+                tier: "primitive",
+                role: 'span inline-flex mang dòng "Còn N/M credit tuần này" (muted)',
+            },
+        ],
+    },
 ]
 
 // LOADING shape — creditUsage null → the caption returns null (renders nothing).
@@ -233,7 +276,7 @@ export const StaticNoDetails: Story = {
                 tier="design"
                 leaf="Tĩnh, không bấm"
                 parts={STATIC_PARTS}
-                note="Không truyền onOpenDetails → bỏ lớp Pressable, chỉ còn span tĩnh; composition khác leaf 'bấm mở chi tiết'."
+                note="Không truyền onOpenDetails → bỏ lớp <button>, còn span-bọc-ngoài + span caption tĩnh; composition khác leaf 'bấm mở chi tiết'."
             >
                 <GradeCreditCaption
                     creditUsage={plentyUsage}

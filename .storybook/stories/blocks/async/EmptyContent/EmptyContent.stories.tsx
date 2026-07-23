@@ -29,21 +29,63 @@ type Story = StoryObj<typeof EmptyContent>
 /** Plain canvas for each leaf's anatomy panel. */
 const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
-// Base composition: EmptyContent is a thin layer that composes the EmptyState
-// primitive (icon + title + description slots, centered). Shared by the leaves
-// that only toggle which text/icon slot is present.
+// EmptyContent is a thin layer that composes the EmptyState primitive. The real
+// DOM under EmptyState (size="default") is a centered stack: an icon span, the
+// title Typography, an optional description Typography, and an optional action.
+// Each leaf mirrors exactly the slots IT fills, so the shapes diverge.
+
+// BASIC — title only: icon + title Typography (no description, no action).
 const BASE_PARTS: Array<AnatomyNode> = [
-    { name: "EmptyState", tier: "primitive", role: "khung icon + tiêu đề + mô tả + action, canh giữa" },
+    {
+        name: "EmptyState",
+        tier: "primitive",
+        role: "khung icon + tiêu đề + mô tả + action, canh giữa",
+        children: [
+            { name: "TrayIcon", tier: "primitive", role: "icon khay mặc định trong slot icon" },
+            { name: "Typography", tier: "primitive", role: "tiêu đề — dòng chính" },
+        ],
+    },
 ]
 
-// Retry leaf: same EmptyState, plus a Button folded into its `action` slot.
+// WITH DESCRIPTION — icon + title + a second description Typography.
+const DESC_PARTS: Array<AnatomyNode> = [
+    {
+        name: "EmptyState",
+        tier: "primitive",
+        role: "khung icon + tiêu đề + mô tả + action, canh giữa",
+        children: [
+            { name: "TrayIcon", tier: "primitive", role: "icon khay mặc định trong slot icon" },
+            { name: "Typography", tier: "primitive", role: "tiêu đề — dòng chính" },
+            { name: "Typography", tier: "primitive", role: "mô tả — dòng phụ dưới tiêu đề" },
+        ],
+    },
+]
+
+// WITH RETRY — icon + title + description + a Button folded into the action slot.
 const RETRY_PARTS: Array<AnatomyNode> = [
     {
         name: "EmptyState",
         tier: "primitive",
         role: "khung icon + tiêu đề + mô tả + action, canh giữa",
         children: [
+            { name: "TrayIcon", tier: "primitive", role: "icon khay mặc định trong slot icon" },
+            { name: "Typography", tier: "primitive", role: "tiêu đề — dòng chính" },
+            { name: "Typography", tier: "primitive", role: "mô tả — dòng phụ dưới tiêu đề" },
             { name: "Button", tier: "primitive", role: "nút thử lại đặt vào slot action", state: "secondary" },
+        ],
+    },
+]
+
+// CUSTOM ICON — same shape as WithDescription but the icon slot is overridden.
+const CUSTOM_ICON_PARTS: Array<AnatomyNode> = [
+    {
+        name: "EmptyState",
+        tier: "primitive",
+        role: "khung icon + tiêu đề + mô tả + action, canh giữa",
+        children: [
+            { name: "MagnifyingGlassIcon", tier: "primitive", role: "icon tuỳ biến truyền vào slot icon" },
+            { name: "Typography", tier: "primitive", role: "tiêu đề — dòng chính" },
+            { name: "Typography", tier: "primitive", role: "mô tả — dòng phụ dưới tiêu đề" },
         ],
     },
 ]
@@ -64,7 +106,7 @@ export const Basic: Story = {
         ),
 }
 
-/** WITH DESCRIPTION — title + supporting line; SAME composition as Basic. */
+/** WITH DESCRIPTION — title + supporting line; adds a second description Typography over Basic. */
 export const WithDescription: Story = {
     render: () =>
         shell(
@@ -72,8 +114,8 @@ export const WithDescription: Story = {
                 name="EmptyContent"
                 tier="design"
                 leaf="Có mô tả"
-                parts={BASE_PARTS}
-                note="Thêm dòng mô tả dưới tiêu đề nhưng CÙNG composition với leaf 'Chỉ tiêu đề' (một EmptyState)."
+                parts={DESC_PARTS}
+                note="Thêm một Typography mô tả dưới tiêu đề — khác leaf 'Chỉ tiêu đề' (leaf đó không có dòng mô tả)."
             >
                 <EmptyContent
                     title="Danh sách trống"
@@ -104,7 +146,7 @@ export const WithRetry: Story = {
         ),
 }
 
-/** CUSTOM ICON — icon slot overridden; SAME composition as Basic. */
+/** CUSTOM ICON — icon slot overridden (MagnifyingGlassIcon); same shape as WithDescription. */
 export const CustomIcon: Story = {
     render: () =>
         shell(
@@ -112,8 +154,8 @@ export const CustomIcon: Story = {
                 name="EmptyContent"
                 tier="design"
                 leaf="Icon tuỳ biến"
-                parts={BASE_PARTS}
-                note="Ghi đè icon mặc định bằng node truyền vào; vẫn CÙNG composition một EmptyState."
+                parts={CUSTOM_ICON_PARTS}
+                note="Ghi đè icon mặc định (TrayIcon → MagnifyingGlassIcon); các slot còn lại cùng shape với leaf 'Có mô tả'."
             >
                 <EmptyContent
                     icon={<MagnifyingGlassIcon aria-hidden focusable="false" weight="duotone" className="size-8 text-foreground" />}

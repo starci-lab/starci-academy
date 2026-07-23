@@ -47,41 +47,88 @@ const SMALL_DATA: ArchitectureSceneData = {
     ],
 }
 
-// The captioned scene composition: a WebGL board (grid + wires + node meshes) with
-// a Typography caption below. Shared by every captioned leaf — the node KINDS differ
-// per leaf (that lives in each leaf's `note`), but the composition is the same.
+// The floating label chip a `Bar` node mounts via drei `<Html>` — a surface chip
+// bordered in the node's own tone, holding name · sub · kind-icon · status. Shared
+// by every leaf's node; the selected variant adds an accent ring (see SELECTED_PARTS).
+const NODE_LABEL_PARTS: Array<AnatomyNode> = [
+    { name: "span · tên", tier: "primitive", role: "tên node, font-mono foreground" },
+    { name: "span · sub", tier: "primitive", role: "sub-label muted lowercase", state: "optional" },
+    { name: "Icon · kind", tier: "primitive", role: "phosphor glyph theo `kind` (Desktop/Cube/Database/Stack/ArrowsSplit/User/Hexagon)" },
+    {
+        name: "span · status",
+        tier: "primitive",
+        role: "dòng status theo tone",
+        state: "optional",
+        children: [
+            { name: "Icon · status", tier: "primitive", role: "phosphor Warning/CheckCircle/Info theo status.tone (danger·warning/success/info)" },
+        ],
+    },
+]
+
+// A directed floor wire (`Edge`): a dashed `Line` plus animated packet spheres —
+// 3 fast dots when `congested`, 1 slow dot when `flow`, none otherwise.
+const EDGE_PARTS: Array<AnatomyNode> = [
+    { name: "Line · dashed", tier: "primitive", role: "đường nối gạch có hướng; độ dày/độ mờ theo congested·eventual" },
+    { name: "Mesh · packet", tier: "primitive", role: "gói cầu chạy dọc dây", state: "×dots (congested 3 · flow 1 · 0)" },
+]
+
+// The captioned scene composition: a WebGL <Canvas> board (auto-fit camera + orbit
+// controls, grid + wires + node meshes) with a Typography caption below. Shared by
+// every captioned leaf — the node KINDS differ per leaf (that lives in each leaf's
+// `note`), but the composition is the same.
 const SCENE_PARTS: Array<AnatomyNode> = [
     {
         name: "Canvas · WebGL",
         tier: "design",
         role: "board 3D flat-isometric (react-three-fiber), tự fit camera theo bounding-box node",
         children: [
+            { name: "CameraFit", tier: "primitive", role: "imperative: reframe camera orthographic theo bounding-box node (không mesh)" },
             { name: "Line · grid", tier: "primitive", role: "sàn iso, lưới trên biên ô cell" },
-            { name: "Edge · wire", tier: "primitive", role: "dây nối có hướng + gói chạy (flow / congested / eventual)", state: "×N" },
+            {
+                name: "Edge · wire",
+                tier: "primitive",
+                role: "dây nối có hướng giữa 2 node (flow / congested / eventual)",
+                state: "×N",
+                children: EDGE_PARTS,
+            },
             {
                 name: "Bar · node",
                 tier: "design",
-                role: "một node đặt trên ô cell (lặp ×N)",
+                role: "một node đặt trên ô cell",
+                state: "×N",
                 children: [
                     { name: "KindMesh", tier: "primitive", role: "khối 3D theo `kind` (container · database · broker · loadBalancer · client · user · pod)" },
-                    { name: "Html · nhãn nổi", tier: "primitive", role: "chip surface: tên · sub · icon kind · dòng status theo tone" },
+                    {
+                        name: "Html · nhãn nổi",
+                        tier: "design",
+                        role: "chip surface nổi trên node (drei Html portal), viền theo tone node",
+                        children: NODE_LABEL_PARTS,
+                    },
                 ],
             },
+            { name: "OrbitControls", tier: "primitive", role: "kéo để xoay board (no zoom/pan/auto-spin), polar bị kẹp; không mesh" },
         ],
     },
     { name: "Typography", tier: "primitive", role: "caption bài học dưới scene", state: "body-sm · muted" },
 ]
 
 // SelectedNode leaf: same scene, but `onSelectNode` makes nodes clickable and
-// `selectedId` adds an accent ring under the chosen node's label.
+// `selectedId` adds an accent ring on the chosen node's label chip.
 const SELECTED_PARTS: Array<AnatomyNode> = [
     {
         name: "Canvas · WebGL",
         tier: "design",
         role: "board 3D flat-isometric, nodes tương tác được",
         children: [
+            { name: "CameraFit", tier: "primitive", role: "imperative: reframe camera orthographic theo bounding-box node (không mesh)" },
             { name: "Line · grid", tier: "primitive", role: "sàn iso, lưới trên biên ô cell" },
-            { name: "Edge · wire", tier: "primitive", role: "dây nối có hướng + gói chạy", state: "×N" },
+            {
+                name: "Edge · wire",
+                tier: "primitive",
+                role: "dây nối có hướng giữa 2 node",
+                state: "×N",
+                children: EDGE_PARTS,
+            },
             {
                 name: "Bar · node",
                 tier: "design",
@@ -89,9 +136,16 @@ const SELECTED_PARTS: Array<AnatomyNode> = [
                 state: "selected · clickable",
                 children: [
                     { name: "KindMesh", tier: "primitive", role: "khối 3D theo `kind`" },
-                    { name: "Html · nhãn nổi", tier: "primitive", role: "chip surface + ring accent khi selectedId khớp" },
+                    {
+                        name: "Html · nhãn nổi",
+                        tier: "design",
+                        role: "chip surface (drei Html portal) + ring accent khi selectedId khớp",
+                        state: "ring khi selected",
+                        children: NODE_LABEL_PARTS,
+                    },
                 ],
             },
+            { name: "OrbitControls", tier: "primitive", role: "kéo để xoay board (no zoom/pan/auto-spin), polar bị kẹp; không mesh" },
         ],
     },
     { name: "Typography", tier: "primitive", role: "caption bài học dưới scene", state: "body-sm · muted" },
@@ -104,17 +158,31 @@ const NO_CAPTION_PARTS: Array<AnatomyNode> = [
         tier: "design",
         role: "board 3D flat-isometric (react-three-fiber), tự fit camera theo bounding-box node",
         children: [
+            { name: "CameraFit", tier: "primitive", role: "imperative: reframe camera orthographic theo bounding-box node (không mesh)" },
             { name: "Line · grid", tier: "primitive", role: "sàn iso, lưới trên biên ô cell" },
-            { name: "Edge · wire", tier: "primitive", role: "dây nối có hướng + gói chạy", state: "×N" },
+            {
+                name: "Edge · wire",
+                tier: "primitive",
+                role: "dây nối có hướng giữa 2 node",
+                state: "×N",
+                children: EDGE_PARTS,
+            },
             {
                 name: "Bar · node",
                 tier: "design",
-                role: "một node đặt trên ô cell (lặp ×N)",
+                role: "một node đặt trên ô cell",
+                state: "×N",
                 children: [
                     { name: "KindMesh", tier: "primitive", role: "khối 3D theo `kind`" },
-                    { name: "Html · nhãn nổi", tier: "primitive", role: "chip surface: tên · sub · icon kind · status" },
+                    {
+                        name: "Html · nhãn nổi",
+                        tier: "design",
+                        role: "chip surface nổi trên node (drei Html portal), viền theo tone node",
+                        children: NODE_LABEL_PARTS,
+                    },
                 ],
             },
+            { name: "OrbitControls", tier: "primitive", role: "kéo để xoay board (no zoom/pan/auto-spin), polar bị kẹp; không mesh" },
         ],
     },
 ]

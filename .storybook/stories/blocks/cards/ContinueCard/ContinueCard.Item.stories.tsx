@@ -33,31 +33,57 @@ type Story = StoryObj<typeof ContinueCard>
 /** Frame each leaf's anatomy panel with breathing room. */
 const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
 
-// Content leaf — the loaded item: SectionCard frame > (title + subtitle), CTA row is a SeeMoreLink. No progress, no icon (item variant).
+// Content leaf — the loaded item: SectionCard frame CONTAINS (title + subtitle) then a
+// SeeMoreLink CTA row. No progress (value undefined), no icon (item variant). Title/subtitle/CTA
+// mount INSIDE SectionCard → they nest under its children, in DOM order.
 const ITEM_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "primitive", role: "khung surface tự đóng" },
-    { name: "Typography · tiêu đề", tier: "primitive", role: "tên mục đang học dở (weight medium, truncate 1 dòng)" },
-    { name: "Typography · phụ đề", tier: "primitive", role: "nhãn phụ muted (body-xs)", state: "muted" },
-    { name: "SeeMoreLink", tier: "primitive", role: 'CTA "Tiếp tục →" trên hàng riêng — hover/click sống trên link' },
+    {
+        name: "SectionCard",
+        tier: "design",
+        role: "khung surface tự đóng — chứa info + hàng CTA",
+        children: [
+            { name: "Typography · tiêu đề", tier: "primitive", role: "tên mục đang học dở (weight medium, truncate 1 dòng)" },
+            { name: "Typography · phụ đề", tier: "primitive", role: "nhãn phụ muted (body-xs, truncate)", state: "muted" },
+            { name: "SeeMoreLink", tier: "primitive", role: 'CTA "Tiếp tục →" trên hàng riêng — hover/click sống trên link' },
+        ],
+    },
 ]
 
 // Loading leaf — Skeleton mirrors the item LAYOUT (title · subtitle · CTA), no progress and no sweep.
+// The three Skeleton lines are rendered INSIDE the SectionCard frame → they nest under its children.
 const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "primitive", role: "khung surface (giữ nguyên footprint)" },
-    { name: "Skeleton.Typography · tiêu đề", tier: "primitive", role: "mirror dòng tiêu đề (width 2/3)", state: "skeleton" },
-    { name: "Skeleton.Typography · phụ đề", tier: "primitive", role: "mirror dòng phụ đề (width 1/3)", state: "skeleton" },
-    { name: "Skeleton.Typography · CTA", tier: "primitive", role: "mirror hàng CTA (width 1/4)", state: "skeleton" },
+    {
+        name: "SectionCard",
+        tier: "design",
+        role: "khung surface (giữ nguyên footprint)",
+        children: [
+            { name: "Skeleton.Typography · tiêu đề", tier: "primitive", role: "mirror dòng tiêu đề (width 2/3)", state: "skeleton" },
+            { name: "Skeleton.Typography · phụ đề", tier: "primitive", role: "mirror dòng phụ đề (width 1/3)", state: "skeleton" },
+            { name: "Skeleton.Typography · CTA", tier: "primitive", role: "mirror hàng CTA (width 1/4)", state: "skeleton" },
+        ],
+    },
 ]
 
 // Error leaf — the error renders INSIDE the card frame (not a blank card): EmptyState danger + retry.
+// EmptyState mounts INSIDE SectionCard; the WarningIcon (icon prop) + retry Button (action prop)
+// mount INSIDE EmptyState → the tree nests SectionCard > EmptyState > (WarningIcon, Button).
 const ERROR_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "primitive", role: "khung surface — lỗi render TRONG khung (không phải card trắng)" },
     {
-        name: "EmptyState",
-        tier: "primitive",
-        role: 'trạng thái "Mất kết nối" — icon cảnh báo + mô tả',
-        state: "danger",
-        children: [{ name: "Button", tier: "primitive", role: '"Thử lại" (secondary, sm)' }],
+        name: "SectionCard",
+        tier: "design",
+        role: "khung surface — lỗi render TRONG khung (không phải card trắng)",
+        children: [
+            {
+                name: "EmptyState",
+                tier: "primitive",
+                role: 'trạng thái "Mất kết nối" — icon cảnh báo + mô tả',
+                state: "danger",
+                children: [
+                    { name: "WarningIcon", tier: "primitive", role: "icon cảnh báo (duotone) — decorative", state: "decorative" },
+                    { name: "Button", tier: "primitive", role: '"Thử lại" (secondary, sm)' },
+                ],
+            },
+        ],
     },
 ]
 

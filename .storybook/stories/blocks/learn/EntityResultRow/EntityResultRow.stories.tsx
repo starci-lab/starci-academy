@@ -90,31 +90,44 @@ const LOCKED_ITEM: SearchCourseContentItem = {
     isLocked: true,
 }
 
-// leaf WITH kind chip: EnumChip replaces the breadcrumb, above the title.
+// leaf WITH kind chip: EnumChip thay breadcrumb, đứng trên tiêu đề. Không snippet, không khoá.
 const KIND_CHIP_PARTS: Array<AnatomyNode> = [
-    { name: "EnumChip", tier: "primitive", role: "nhãn loại kết quả (kind → màu soft): Bài học/Thử thách/Flashcard/Dự án — chỉ khi showKindChip" },
-    { name: "Typography", tier: "primitive", role: "tiêu đề foreground hover-underline" },
+    { name: "EnumChip", tier: "primitive", role: "nhãn loại kết quả (kind → StatusChip màu soft): Bài học/Thử thách/Flashcard/Dự án — chỉ khi showKindChip" },
+    { name: "Typography", tier: "primitive", role: "tiêu đề foreground hover-underline (nav link)" },
 ]
 
-// leaf with breadcrumb (no chip): breadcrumb muted đứng trên tiêu đề.
+// leaf breadcrumb (no chip): breadcrumb muted + tiêu đề = HAI Typography riêng, xếp dọc.
 const BREADCRUMB_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "breadcrumb muted (khi không có chip) · tiêu đề foreground hover-underline" },
+    { name: "Typography", tier: "primitive", role: "breadcrumb muted (khi không có chip) đứng trên tiêu đề" },
+    { name: "Typography", tier: "primitive", role: "tiêu đề foreground hover-underline (nav link)" },
 ]
 
-// leaf chỉ tiêu đề: không chip, breadcrumb null, snippet rỗng.
+// leaf chỉ tiêu đề: không chip, breadcrumb null, snippet rỗng → đúng một Typography.
 const TITLE_ONLY_PARTS: Array<AnatomyNode> = [
     { name: "Typography", tier: "primitive", role: "chỉ tiêu đề foreground hover-underline (không chip, không breadcrumb, không snippet)" },
 ]
 
-// leaf có snippet: breadcrumb · tiêu đề · snippet muted một dòng.
+// leaf có snippet: breadcrumb · tiêu đề · snippet = BA Typography riêng, xếp dọc.
 const SNIPPET_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "breadcrumb muted · tiêu đề foreground hover-underline · snippet muted" },
+    { name: "Typography", tier: "primitive", role: "breadcrumb muted đứng trên tiêu đề" },
+    { name: "Typography", tier: "primitive", role: "tiêu đề foreground hover-underline (nav link)" },
+    { name: "Typography", tier: "primitive", role: "snippet muted một dòng dưới tiêu đề", state: "showSnippet" },
 ]
 
-// leaf khoá: thêm dòng lock "Ghi danh để mở" dưới tiêu đề.
+// leaf khoá: breadcrumb · tiêu đề, rồi cụm lock <span> bọc icon + nhãn "Ghi danh để mở".
 const LOCKED_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "breadcrumb muted · tiêu đề foreground hover-underline" },
-    { name: "LockSimpleIcon", tier: "primitive", role: '"Ghi danh để mở" — gợi ý khoá premium, dòng vẫn navigate', state: "isLocked" },
+    { name: "Typography", tier: "primitive", role: "breadcrumb muted đứng trên tiêu đề" },
+    { name: "Typography", tier: "primitive", role: "tiêu đề foreground hover-underline (nav link)" },
+    {
+        name: "span",
+        tier: "primitive",
+        role: "cụm lock (flex, warning-soft) — gợi ý khoá premium, dòng vẫn navigate",
+        state: "isLocked",
+        children: [
+            { name: "LockSimpleIcon", tier: "primitive", role: "icon khoá dẫn nhãn" },
+            { name: "Typography", tier: "primitive", role: '"Ghi danh để mở"' },
+        ],
+    },
 ]
 
 /** KIND CHIPS — mỗi kind một EnumChip màu soft đứng trên tiêu đề-link. */

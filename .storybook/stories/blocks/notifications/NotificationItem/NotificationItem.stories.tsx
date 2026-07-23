@@ -42,20 +42,21 @@ const FULL_PARTS: Array<AnatomyNode> = [
 // UNREAD — FULL + accent dot cạnh tiêu đề và nền accent-soft cả dòng.
 const UNREAD_PARTS: Array<AnatomyNode> = [
     { name: "IconTile", tier: "primitive", role: "ô icon vuông tô màu theo tone" },
-    { name: "Dot chưa đọc", tier: "primitive", role: "chấm accent cạnh tiêu đề + nền accent-soft cả dòng", state: "unread" },
+    { name: "Dot chưa đọc", tier: "primitive", role: "chấm accent (span) cạnh tiêu đề báo chưa đọc", state: "unread" },
     { name: "Typography · tiêu đề", tier: "primitive", role: "dòng chính medium, clamp 2 dòng" },
     { name: "Typography · nội dung", tier: "primitive", role: "dòng phụ muted, clamp 2 dòng" },
     { name: "Typography · thời gian", tier: "primitive", role: "nhãn thời gian đã format, muted" },
 ]
 
-// ACTION — UNREAD + actionSlot cuối dòng (giữ kích thước riêng, không bóp cột chữ).
+// ACTION — UNREAD + actionSlot cuối dòng; leaf này truyền một Typography ('View')
+// làm node hành động (giữ kích thước riêng, không bóp cột chữ).
 const ACTION_PARTS: Array<AnatomyNode> = [
     { name: "IconTile", tier: "primitive", role: "ô icon vuông tô màu theo tone" },
-    { name: "Dot chưa đọc", tier: "primitive", role: "chấm accent + nền accent-soft báo chưa đọc", state: "unread" },
+    { name: "Dot chưa đọc", tier: "primitive", role: "chấm accent (span) cạnh tiêu đề báo chưa đọc", state: "unread" },
     { name: "Typography · tiêu đề", tier: "primitive", role: "dòng chính medium, clamp 2 dòng" },
     { name: "Typography · nội dung", tier: "primitive", role: "dòng phụ muted, clamp 2 dòng" },
     { name: "Typography · thời gian", tier: "primitive", role: "nhãn thời gian đã format, muted" },
-    { name: "actionSlot", tier: "primitive", role: "node hành động cuối dòng (giữ kích thước riêng)" },
+    { name: "Typography · hành động", tier: "primitive", role: "slot actionSlot cuối dòng — 'View' (body-xs), giữ kích thước riêng" },
 ]
 
 // NO_ICON — text-only row: the leading IconTile is omitted (`icon` not passed).
@@ -68,7 +69,7 @@ const NO_ICON_PARTS: Array<AnatomyNode> = [
 // TITLE_ONLY — icon + unread dot + title + time, body omitted (`body` not passed).
 const TITLE_ONLY_PARTS: Array<AnatomyNode> = [
     { name: "IconTile", tier: "primitive", role: "ô icon vuông tô màu theo tone" },
-    { name: "Dot chưa đọc", tier: "primitive", role: "chấm accent + nền accent-soft báo chưa đọc", state: "unread" },
+    { name: "Dot chưa đọc", tier: "primitive", role: "chấm accent (span) cạnh tiêu đề báo chưa đọc", state: "unread" },
     { name: "Typography · tiêu đề", tier: "primitive", role: "dòng chính medium, clamp 2 dòng" },
     { name: "Typography · thời gian", tier: "primitive", role: "nhãn thời gian đã format, muted" },
 ]

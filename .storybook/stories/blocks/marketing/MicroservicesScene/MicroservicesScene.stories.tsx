@@ -8,9 +8,10 @@ import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockA
  * topology is fixed inside the block; only `caption` is a prop.
  *
  * ANATOMY IS PER-LEAF: each story below is its OWN leaf and carries its OWN
- * BlockAnatomy axis reflecting the parts THAT leaf composes — the caption-less
- * shape has no composed DS part (just the SVG art), the captioned shapes add a
- * `Typography` line. There is no separate consolidated "Anatomy" story.
+ * BlockAnatomy axis reflecting the parts THAT leaf composes — every leaf composes
+ * the isometric `svg` scene (its iso primitives + connectors + labels), and the
+ * captioned shapes add a `Typography` line under it. There is no separate
+ * consolidated "Anatomy" story.
  */
 const meta: Meta<typeof MicroservicesScene> = {
     title: "Design/Marketing/MicroservicesScene",
@@ -28,12 +29,43 @@ type Story = StoryObj<typeof MicroservicesScene>
 /** Plain canvas: each leaf's anatomy panel gets breathing room. */
 const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
-// Caption-less leaf: pure SVG art, no composed DS part.
-const NO_CAPTION_PARTS: Array<AnatomyNode> = []
+// The isometric `svg` scene — a fixed topology drawn in pure SVG: a Service·LB hex
+// in front of a 3-pod deployment (one accent focal pod) all wiring into a single-node
+// datastore (the danger bottleneck), with connectors + a flowing packet, SVG text
+// labels, a failure flag and a legend. Shared by EVERY leaf (topology is fixed art;
+// only `caption` is a prop), so it's the sole part of the caption-less leaf.
+const SCENE_PARTS: Array<AnatomyNode> = [
+    {
+        name: "svg · scene",
+        tier: "design",
+        role: "canvas isometric 'mini infra' — topology cố định, thuần SVG (no image/WebGL)",
+        children: [
+            {
+                name: "g · connectors",
+                tier: "primitive",
+                role: "dây nối svc → 3 pods; dây pods → DB đơn tô đỏ (hot path nghẽn)",
+                children: [
+                    { name: "circle · packet", tier: "primitive", role: "gói chạy dọc dây vào service (animateMotion, CSS)" },
+                ],
+            },
+            { name: "IsoSvc", tier: "primitive", role: "node Service·LB (hex iso) phía trước deployment" },
+            { name: "IsoPod", tier: "primitive", role: "pod cube iso của deployment", state: "×3 · 1 accent focal" },
+            { name: "IsoDb", tier: "primitive", role: "datastore trụ iso, single-node = điểm nghẽn", state: "danger" },
+            { name: "text · nhãn", tier: "primitive", role: "nhãn SVG: Service·LB / Deployment·3 pods / Postgres·1 node", state: "×3" },
+            { name: "g · cờ lỗi", tier: "primitive", role: "cảnh báo ⚠ single DB → bottleneck (tone danger)" },
+            { name: "legend · chú giải", tier: "primitive", role: "2 circle+text rời: focal pod (accent) · where it breaks (danger)" },
+        ],
+    },
+]
 
-// Captioned leaves (short + long-wrap share this): SVG art + a muted caption line.
+// Caption-less leaf: only the isometric scene, no caption line.
+const NO_CAPTION_PARTS: Array<AnatomyNode> = SCENE_PARTS
+
+// Captioned leaves (short + long-wrap share this): the scene + a muted caption line
+// underneath — a Typography sibling of the svg inside the block's root wrapper.
 const CAPTIONED_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "caption bài học dưới minh hoạ", state: "body-sm · muted" },
+    ...SCENE_PARTS,
+    { name: "Typography", tier: "primitive", role: "caption bài học dưới minh hoạ", state: "body-sm · muted · center" },
 ]
 
 /** NO CAPTION — the bare scene: only the isometric SVG, no caption. */

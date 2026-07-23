@@ -55,11 +55,13 @@ const CENTERED_PARTS: Array<AnatomyNode> = [
 ]
 
 // Split leaf: adds a secondary CTA + a `visual` slot → two-column layout.
+// The two CTAs are sibling Buttons inside a bare flex `<div>` (no ButtonGroup primitive).
 const SPLIT_PARTS: Array<AnatomyNode> = [
     { name: "StatusChip", tier: "design", role: "eyebrow gate (tone accent)" },
     { name: "Typography.Heading", tier: "primitive", role: "headline level-1, căn trái" },
     { name: "Typography", tier: "primitive", role: "subline định vị (muted)" },
-    { name: "Button", tier: "primitive", role: "CTA chính + phụ (2 nút qua slot)" },
+    { name: "Button", tier: "primitive", role: "CTA chính (slot `primary`)" },
+    { name: "Button", tier: "primitive", role: "CTA phụ (slot `secondary`)" },
     { name: "VisualPlaceholder", tier: "primitive", role: "cột visual (slot) → bật layout chia đôi", state: "split" },
 ]
 
@@ -73,12 +75,16 @@ const KEYWORDS_PARTS: Array<AnatomyNode> = [
 ]
 
 // Full leaf: secondary CTA + keyword strip WITH a muted label (every slot occupied).
+// Two sibling CTA Buttons (bare flex `<div>`, no ButtonGroup) + the keyword strip's own
+// muted `Typography` label rendered BEFORE the brand Chips.
 const FULL_PARTS: Array<AnatomyNode> = [
     { name: "StatusChip", tier: "design", role: "eyebrow gate (tone accent)" },
     { name: "Typography.Heading", tier: "primitive", role: "headline level-1 dài (max-w-4xl)" },
     { name: "Typography", tier: "primitive", role: "subline định vị (muted)" },
-    { name: "Button", tier: "primitive", role: "CTA chính + phụ (2 nút qua slot)" },
-    { name: "Chip", tier: "primitive", role: "dải keyword màu thương hiệu + label muted đứng trước" },
+    { name: "Button", tier: "primitive", role: "CTA chính (slot `primary`)" },
+    { name: "Button", tier: "primitive", role: "CTA phụ (slot `secondary`)" },
+    { name: "Typography", tier: "primitive", role: "label keyword (body-xs muted) đứng trước dải Chip" },
+    { name: "Chip", tier: "primitive", role: "dải keyword màu thương hiệu (bg/10 + text)" },
 ]
 
 export const CenteredNoVisual: Story = {

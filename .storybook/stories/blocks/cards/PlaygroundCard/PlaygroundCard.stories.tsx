@@ -27,12 +27,36 @@ type Story = StoryObj<typeof PlaygroundCard>
 /** Frame each leaf's anatomy panel with breathing room. */
 const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
 
-// The single composition every leaf renders (only title/stepCount differ).
+// The single composition every leaf renders (only title/stepCount differ). Mirror
+// the real DOM: each phosphor icon mounts INSIDE its primitive (icon prop) → it
+// nests under that primitive's children. The raw HeroUI Card/Card.Content/Card.Footer
+// frame is intentionally not modeled (same house convention as CourseCard).
 const CARD_PARTS: Array<AnatomyNode> = [
-    { name: "IconTile", tier: "primitive", role: "avatar terminal tô nền accent (size lg)" },
-    { name: "Typography", tier: "primitive", role: "tiêu đề (truncate)" },
-    { name: "StatusChip", tier: "primitive", role: 'chip số bước "N bước" (neutral)' },
-    { name: "Button", tier: "primitive", role: 'CTA "Vào playground" — hành động duy nhất' },
+    {
+        name: "IconTile",
+        tier: "primitive",
+        role: "avatar terminal tô nền accent (size lg)",
+        children: [
+            { name: "TerminalWindowIcon", tier: "primitive", role: "icon terminal — nội dung của tile", state: "decorative" },
+        ],
+    },
+    { name: "Typography", tier: "primitive", role: "tiêu đề (h6, bold, truncate 1 dòng)" },
+    {
+        name: "StatusChip",
+        tier: "primitive",
+        role: 'chip số bước "N bước" (neutral) — meta chìm',
+        children: [
+            { name: "ListChecksIcon", tier: "primitive", role: "icon đầu chip — cùng màu nhãn", state: "decorative" },
+        ],
+    },
+    {
+        name: "Button",
+        tier: "primitive",
+        role: 'CTA "Vào playground" — hành động duy nhất (primary, w-full)',
+        children: [
+            { name: "ArrowRightIcon", tier: "primitive", role: "icon mũi tên tiến tới — trailing", state: "decorative" },
+        ],
+    },
 ]
 
 export const Default: Story = {

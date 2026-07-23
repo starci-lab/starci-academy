@@ -70,58 +70,95 @@ const MultipleDemo = () => {
     )
 }
 
-// SINGLE, before submit: chip + question + radio options + submit CTA (answer key hidden).
-const SINGLE_ASK_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "primitive", role: "khung surface tự đóng bao cả câu hỏi" },
-    { name: "StatusChip", tier: "primitive", role: 'nhãn "Câu N"', state: "accent" },
-    { name: "Typography", tier: "primitive", role: "câu hỏi (body semibold)" },
-    { name: "RadioGroup", tier: "primitive", role: "phương án chọn-một; chỉ default/selected trước khi nộp" },
-    { name: "Button", tier: "primitive", role: 'CTA "Kiểm tra đáp án" — chỉ trước khi nộp' },
+// Shared leaf nodes — mọi leaf đều bọc TRONG SectionCard (khung tự đóng). Cây thật:
+// SectionCard > (StatusChip? + Typography câu hỏi) + Radio/CheckboxGroup > rows [> OptionResultIcon] + Button? + khối giải thích?
+
+/** StatusChip "Câu N" — con đầu của SectionCard (chỉ khi có questionIndex). */
+const CHIP_NODE: AnatomyNode = { name: "StatusChip", tier: "primitive", role: 'nhãn "Câu N"', state: "accent" }
+/** Typography câu hỏi — luôn có, ngay sau chip. */
+const QUESTION_NODE: AnatomyNode = { name: "Typography", tier: "primitive", role: "câu hỏi (body semibold)" }
+/** Nút nộp — chỉ dựng khi có onSubmit và chưa nộp. */
+const SUBMIT_NODE: AnatomyNode = {
+    name: "Button",
+    tier: "primitive",
+    role: 'CTA "Kiểm tra đáp án" — chỉ khi có onSubmit và chưa nộp',
+}
+/** Khối giải thích: surface-secondary bao 2 Typography — chỉ khi đã nộp VÀ có explanation. */
+const EXPLANATION_NODE: AnatomyNode = {
+    name: "div · giải thích",
+    tier: "primitive",
+    role: "surface phụ (surface-secondary) — chỉ khi đã nộp VÀ có explanation",
+    state: "revealed",
+    children: [
+        { name: "Typography · nhãn", tier: "primitive", role: '"Giải thích" (body-sm semibold)' },
+        { name: "Typography · nội dung", tier: "primitive", role: "nội dung giải thích (body-sm muted)" },
+    ],
+}
+
+/** Icon ✓/✗ — con của mỗi row, chỉ render sau khi nộp (OptionResultIcon). */
+const RESULT_ICON_NODE: AnatomyNode = {
+    name: "OptionResultIcon",
+    tier: "primitive",
+    role: "icon ✓/✗ lộ đúng/sai từng dòng — chỉ sau khi nộp",
+}
+
+/** Bọc các con trong SectionCard theo đúng thứ tự DOM. */
+const inSection = (children: Array<AnatomyNode>): Array<AnatomyNode> => [
+    { name: "SectionCard", tier: "primitive", role: "khung surface tự đóng bao TOÀN BỘ câu hỏi", children },
 ]
 
-// MULTIPLE, before submit: same chrome nhưng CheckboxGroup thay RadioGroup.
-const MULTIPLE_ASK_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "primitive", role: "khung surface tự đóng bao cả câu hỏi" },
-    { name: "StatusChip", tier: "primitive", role: 'nhãn "Câu N"', state: "accent" },
-    { name: "Typography", tier: "primitive", role: "câu hỏi (body semibold)" },
-    { name: "CheckboxGroup", tier: "primitive", role: "phương án chọn-nhiều; chỉ default/selected trước khi nộp" },
-    { name: "Button", tier: "primitive", role: 'CTA "Kiểm tra đáp án" — chỉ trước khi nộp' },
-]
+/** RadioGroup > Radio row (± OptionResultIcon khi đã nộp). */
+const radioGroup = (revealed: boolean): AnatomyNode => ({
+    name: "RadioGroup",
+    tier: "primitive",
+    role: revealed ? "nhóm phương án chọn-một; lộ đúng/sai sau khi nộp" : "nhóm phương án chọn-một; chỉ default/selected trước khi nộp",
+    ...(revealed ? { state: "revealed" } : {}),
+    children: [
+        {
+            name: "Radio",
+            tier: "primitive",
+            role: revealed ? "mỗi phương án (một dòng); tô đúng/sai sau khi nộp" : "mỗi phương án (một dòng); default/selected",
+            ...(revealed ? { state: "revealed", children: [RESULT_ICON_NODE] } : {}),
+        },
+    ],
+})
 
-// SINGLE, submitted + explanation: options reveal đúng/sai, nút nộp biến mất, thêm khối giải thích.
-const SINGLE_SUBMITTED_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "primitive", role: "khung surface tự đóng bao cả câu hỏi" },
-    { name: "StatusChip", tier: "primitive", role: 'nhãn "Câu N"', state: "accent" },
-    { name: "Typography", tier: "primitive", role: "câu hỏi (body semibold)" },
-    { name: "RadioGroup", tier: "primitive", role: "phương án chọn-một; lộ đúng/sai từng dòng sau khi nộp", state: "revealed" },
-    { name: "Typography · giải thích", tier: "primitive", role: "khối giải thích muted (surface-secondary) — chỉ sau khi nộp" },
-]
+/** CheckboxGroup > Checkbox row (± OptionResultIcon khi đã nộp). */
+const checkboxGroup = (revealed: boolean): AnatomyNode => ({
+    name: "CheckboxGroup",
+    tier: "primitive",
+    role: revealed ? "nhóm phương án chọn-nhiều; mỗi dòng lộ đúng/sai/bỏ sót sau khi nộp" : "nhóm phương án chọn-nhiều; chỉ default/selected trước khi nộp",
+    ...(revealed ? { state: "revealed" } : {}),
+    children: [
+        {
+            name: "Checkbox",
+            tier: "primitive",
+            role: revealed ? "mỗi phương án (một dòng); tô đúng/sai/bỏ sót sau khi nộp" : "mỗi phương án (một dòng); default/selected",
+            ...(revealed ? { state: "revealed", children: [RESULT_ICON_NODE] } : {}),
+        },
+    ],
+})
+
+// SINGLE, before submit: SectionCard bao chip + câu hỏi + RadioGroup(row) + submit CTA (đáp án ẩn).
+const SINGLE_ASK_PARTS: Array<AnatomyNode> = inSection([CHIP_NODE, QUESTION_NODE, radioGroup(false), SUBMIT_NODE])
+
+// MULTIPLE, before submit: y hệt nhưng CheckboxGroup thay RadioGroup.
+const MULTIPLE_ASK_PARTS: Array<AnatomyNode> = inSection([CHIP_NODE, QUESTION_NODE, checkboxGroup(false), SUBMIT_NODE])
+
+// SINGLE, submitted + explanation: rows lộ đúng/sai (OptionResultIcon), nút nộp biến mất, thêm khối giải thích.
+const SINGLE_SUBMITTED_PARTS: Array<AnatomyNode> = inSection([CHIP_NODE, QUESTION_NODE, radioGroup(true), EXPLANATION_NODE])
 
 // MULTIPLE, submitted + explanation: mỗi dòng tự lộ đúng/sai/bỏ sót + khối giải thích.
-const MULTIPLE_SUBMITTED_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "primitive", role: "khung surface tự đóng bao cả câu hỏi" },
-    { name: "StatusChip", tier: "primitive", role: 'nhãn "Câu N"', state: "accent" },
-    { name: "Typography", tier: "primitive", role: "câu hỏi (body semibold)" },
-    { name: "CheckboxGroup", tier: "primitive", role: "phương án chọn-nhiều; mỗi dòng lộ đúng/sai/bỏ sót sau khi nộp", state: "revealed" },
-    { name: "Typography · giải thích", tier: "primitive", role: "khối giải thích muted (surface-secondary) — chỉ sau khi nộp" },
-]
+const MULTIPLE_SUBMITTED_PARTS: Array<AnatomyNode> = inSection([CHIP_NODE, QUESTION_NODE, checkboxGroup(true), EXPLANATION_NODE])
 
-// NO questionIndex: StatusChip "Câu N" biến mất hoàn toàn.
-const NO_INDEX_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "primitive", role: "khung surface tự đóng bao cả câu hỏi" },
-    { name: "Typography", tier: "primitive", role: "câu hỏi (body semibold)" },
-    { name: "RadioGroup", tier: "primitive", role: "phương án chọn-một; chỉ default/selected trước khi nộp" },
-    { name: "Button", tier: "primitive", role: 'CTA "Kiểm tra đáp án" — chỉ trước khi nộp' },
-]
+// NO questionIndex: StatusChip "Câu N" biến mất hoàn toàn (chưa nộp → còn nút nộp).
+const NO_INDEX_PARTS: Array<AnatomyNode> = inSection([QUESTION_NODE, radioGroup(false), SUBMIT_NODE])
 
-// BARE: chip + question + radio, không có submit-button lẫn khối giải thích
-// (đã-nộp-không-giải-thích và xem-trước-read-only cùng composition này).
-const BARE_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "primitive", role: "khung surface tự đóng bao cả câu hỏi" },
-    { name: "StatusChip", tier: "primitive", role: 'nhãn "Câu N"', state: "accent" },
-    { name: "Typography", tier: "primitive", role: "câu hỏi (body semibold)" },
-    { name: "RadioGroup", tier: "primitive", role: "phương án chọn-một" },
-]
+// SUBMITTED, no explanation: đã nộp → rows lộ đúng/sai (OptionResultIcon), KHÔNG nút nộp, KHÔNG khối giải thích.
+const SUBMITTED_NO_EXPLANATION_PARTS: Array<AnatomyNode> = inSection([CHIP_NODE, QUESTION_NODE, radioGroup(true)])
+
+// READ-ONLY preview: chưa nộp + không onSubmit → rows default/selected (KHÔNG OptionResultIcon), không nút, không giải thích.
+const READONLY_PARTS: Array<AnatomyNode> = inSection([CHIP_NODE, QUESTION_NODE, radioGroup(false)])
 
 export const SingleChoice: Story = {
     render: () =>
@@ -272,8 +309,8 @@ export const SubmittedNoExplanation: Story = {
                 name="QuizCard"
                 tier="design"
                 leaf="Đã nộp · không giải thích"
-                parts={BARE_PARTS}
-                note="Đã nộp nhưng không có explanation → khối giải thích bị lược, chỉ còn chip + câu hỏi + phương án đã lộ."
+                parts={SUBMITTED_NO_EXPLANATION_PARTS}
+                note="Đã nộp nhưng không có explanation → khối giải thích bị lược; rows VẪN lộ đúng/sai (OptionResultIcon), chỉ mất khối giải thích + nút nộp."
             >
                 <QuizCard
                     questionIndex={1}
@@ -297,8 +334,8 @@ export const ReadOnlyNoAction: Story = {
                 name="QuizCard"
                 tier="design"
                 leaf="Xem trước (read-only)"
-                parts={BARE_PARTS}
-                note="Không có onSubmit → nút nộp không dựng; xem trước tĩnh chip + câu hỏi + phương án."
+                parts={READONLY_PARTS}
+                note="Không có onSubmit + chưa nộp → nút nộp không dựng, rows chỉ default/selected (KHÔNG OptionResultIcon); xem trước tĩnh chip + câu hỏi + phương án."
             >
                 <QuizCard
                     questionIndex={1}

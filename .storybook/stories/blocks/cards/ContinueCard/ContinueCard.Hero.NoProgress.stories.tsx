@@ -39,72 +39,147 @@ const noProgressBase = {
     onPress: () => {},
 }
 
-// Base hero no-progress composition: frame + accent ring + title + meta(chip) + CTA button, NO bar.
+// Base hero no-progress composition mirrors the REAL DOM: HighlightCard WRAPS
+// SectionCard, which CONTAINS title + MetaRow(chip inside) + CTA Button. NO bar
+// (value undefined → ProgressMeter not rendered).
 const NO_PROGRESS_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "primitive", role: "khung surface (frame chung mọi state)" },
-    { name: "HighlightCard", tier: "primitive", role: "vành arc accent quét quanh hero" },
-    { name: "Typography", tier: "primitive", role: "tiêu đề phiên (weight medium, truncate)" },
     {
-        name: "MetaRow",
+        name: "HighlightCard",
         tier: "primitive",
-        role: "hàng meta: segment muted nối · + chip time",
+        role: "wrapper ngoài cùng — vành arc accent quét quanh hero (chỉ hero)",
         children: [
-            { name: "StatusChip", tier: "primitive", role: "chip time-remaining", state: "neutral" },
+            {
+                name: "SectionCard",
+                tier: "design",
+                role: "khung surface bên trong wrapper (frame chung mọi state)",
+                children: [
+                    { name: "Typography", tier: "primitive", role: "tiêu đề phiên (weight medium, truncate)" },
+                    {
+                        name: "MetaRow",
+                        tier: "primitive",
+                        role: "hàng meta: các segment muted nối · (prop items)",
+                        children: [
+                            { name: "StatusChip", tier: "primitive", role: "chip time-remaining (prop chip → mount TRONG MetaRow)", state: "neutral" },
+                        ],
+                    },
+                    {
+                        name: "Button",
+                        tier: "primitive",
+                        role: "CTA chip (hero, primary, onPress)",
+                        children: [
+                            { name: "Icon (ArrowRight)", tier: "primitive", role: "mũi tên trong nút (prop icon)" },
+                        ],
+                    },
+                ],
+            },
         ],
     },
-    { name: "Button", tier: "primitive", role: "CTA chip (hero, onPress)" },
 ]
 
-// With-icon leaf: same base + a decorative icon sunk behind the content as a watermark.
+// With-icon leaf: same base + a decorative watermark icon as the FIRST child of
+// SectionCard (sunk behind the content).
 const WITH_ICON_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "primitive", role: "khung surface (frame chung mọi state)" },
-    { name: "HighlightCard", tier: "primitive", role: "vành arc accent quét quanh hero" },
-    { name: "Icon (watermark)", tier: "primitive", role: "cue momentum (streak) chìm sau nội dung, chỉ hero" },
-    { name: "Typography", tier: "primitive", role: "tiêu đề phiên (weight medium, truncate)" },
     {
-        name: "MetaRow",
+        name: "HighlightCard",
         tier: "primitive",
-        role: "hàng meta: segment muted nối · + chip time",
+        role: "wrapper ngoài cùng — vành arc accent quét quanh hero (chỉ hero)",
         children: [
-            { name: "StatusChip", tier: "primitive", role: "chip time-remaining", state: "neutral" },
+            {
+                name: "SectionCard",
+                tier: "design",
+                role: "khung surface bên trong wrapper (frame chung mọi state)",
+                children: [
+                    { name: "Icon (watermark)", tier: "primitive", role: "cue momentum (streak) chìm sau nội dung, chỉ hero (con đầu của SectionCard)" },
+                    { name: "Typography", tier: "primitive", role: "tiêu đề phiên (weight medium, truncate)" },
+                    {
+                        name: "MetaRow",
+                        tier: "primitive",
+                        role: "hàng meta: các segment muted nối · (prop items)",
+                        children: [
+                            { name: "StatusChip", tier: "primitive", role: "chip time-remaining (prop chip → mount TRONG MetaRow)", state: "neutral" },
+                        ],
+                    },
+                    {
+                        name: "Button",
+                        tier: "primitive",
+                        role: "CTA chip (hero, primary, onPress)",
+                        children: [
+                            { name: "Icon (ArrowRight)", tier: "primitive", role: "mũi tên trong nút (prop icon)" },
+                        ],
+                    },
+                ],
+            },
         ],
     },
-    { name: "Button", tier: "primitive", role: "CTA chip (hero, onPress)" },
 ]
 
 // Link-CTA leaf: same base but the CTA is a hand-rolled Link-as-pill (href) instead of a Button.
 const LINK_CTA_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "primitive", role: "khung surface (frame chung mọi state)" },
-    { name: "HighlightCard", tier: "primitive", role: "vành arc accent quét quanh hero" },
-    { name: "Typography", tier: "primitive", role: "tiêu đề phiên (weight medium, truncate)" },
     {
-        name: "MetaRow",
+        name: "HighlightCard",
         tier: "primitive",
-        role: "hàng meta: segment muted nối · + chip time",
+        role: "wrapper ngoài cùng — vành arc accent quét quanh hero (chỉ hero)",
         children: [
-            { name: "StatusChip", tier: "primitive", role: "chip time-remaining", state: "neutral" },
+            {
+                name: "SectionCard",
+                tier: "design",
+                role: "khung surface bên trong wrapper (frame chung mọi state)",
+                children: [
+                    { name: "Typography", tier: "primitive", role: "tiêu đề phiên (weight medium, truncate)" },
+                    {
+                        name: "MetaRow",
+                        tier: "primitive",
+                        role: "hàng meta: các segment muted nối · (prop items)",
+                        children: [
+                            { name: "StatusChip", tier: "primitive", role: "chip time-remaining (prop chip → mount TRONG MetaRow)", state: "neutral" },
+                        ],
+                    },
+                    {
+                        name: "Link",
+                        tier: "primitive",
+                        role: "CTA pill dùng href (hand-rolled Link-as-pill)",
+                        children: [
+                            { name: "Icon (ArrowRight)", tier: "primitive", role: "mũi tên trong pill" },
+                        ],
+                    },
+                ],
+            },
         ],
     },
-    { name: "Link", tier: "primitive", role: "CTA pill dùng href (hand-rolled Link-as-pill)" },
 ]
 
-// Loading leaf: skeleton mirror of the no-progress shape (title · meta · CTA, no bar).
+// Loading leaf: NO HighlightCard wrapper — SectionCard CONTAINS a 2-line skeleton
+// (title + meta mirror) + a skeleton CTA. Mirror of the no-progress shape, no bar.
 const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "primitive", role: "khung surface (giữ đúng footprint)" },
-    { name: "Skeleton.Typography", tier: "primitive", role: "mirror title + meta (2 dòng)", state: "skeleton" },
-    { name: "Skeleton.Button", tier: "primitive", role: "mirror CTA chip", state: "skeleton" },
+    {
+        name: "SectionCard",
+        tier: "design",
+        role: "khung surface (giữ đúng footprint)",
+        children: [
+            { name: "Skeleton.Typography", tier: "primitive", role: "mirror tiêu đề (body, 2/3)", state: "skeleton" },
+            { name: "Skeleton.Typography", tier: "primitive", role: "mirror meta (body-xs, 1/2)", state: "skeleton" },
+            { name: "Skeleton.Button", tier: "primitive", role: "mirror CTA chip", state: "skeleton" },
+        ],
+    },
 ]
 
-// Error leaf: frame stays, body swaps to a danger EmptyState + retry (no card content).
+// Error leaf: SectionCard frame CONTAINS a danger EmptyState; the retry Button
+// mounts INSIDE EmptyState via its `action` prop.
 const ERROR_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "primitive", role: "khung surface" },
     {
-        name: "EmptyState",
+        name: "SectionCard",
         tier: "design",
-        role: "trạng thái mất kết nối (tone danger)",
-        state: "danger",
+        role: "khung surface (frame giữ nguyên)",
         children: [
-            { name: "Button", tier: "primitive", role: "nút thử lại (secondary)" },
+            {
+                name: "EmptyState",
+                tier: "primitive",
+                role: "trạng thái mất kết nối (tone danger) — icon + title + description + action",
+                state: "danger",
+                children: [
+                    { name: "Button", tier: "primitive", role: "nút thử lại (secondary, prop action → mount TRONG EmptyState)" },
+                ],
+            },
         ],
     },
 ]

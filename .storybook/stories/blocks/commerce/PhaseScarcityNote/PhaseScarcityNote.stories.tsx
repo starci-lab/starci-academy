@@ -30,11 +30,14 @@ type Story = StoryObj<typeof PhaseScarcityNote>
 /** Plain canvas wrapping each leaf's anatomy panel. */
 const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
-// FULL shape: icon + seat-count line + the "giá tăng lên…" clause (a real next phase).
+// FULL shape — the root flex `div` (= the anatomy root node) holds these FLAT children in
+// DOM order: icon + seat-count span, then a `·` separator span + the price-rise span (both
+// gated by `nextPhasePriceVnd != null`, wrapped in a transparent fragment → NO real nesting).
 const FULL_PARTS: Array<AnatomyNode> = [
     { name: "WarningCircleIcon", tier: "primitive", role: "icon cảnh báo khan hiếm suất", state: "warning" },
-    { name: "Dòng số suất", tier: "primitive", role: 'câu "Còn N suất giá {phase}"' },
-    { name: "Mệnh đề tăng giá", tier: "primitive", role: '"· giá tăng lên {X}₫ sau đó" — chỉ hiện khi có giá kế tiếp' },
+    { name: "Dòng số suất", tier: "primitive", role: 'span "Còn N suất giá {phase}"' },
+    { name: "Dấu ngăn cách", tier: "primitive", role: 'span "·" ngăn cách (aria-hidden, trang trí) — chỉ hiện khi có giá kế tiếp' },
+    { name: "Mệnh đề tăng giá", tier: "primitive", role: 'span "giá tăng lên {X}₫ sau đó" — chỉ hiện khi có giá kế tiếp' },
 ]
 
 // SEATS-ONLY shape: nextPhasePriceVnd null → the price-rise clause is ABSENT.

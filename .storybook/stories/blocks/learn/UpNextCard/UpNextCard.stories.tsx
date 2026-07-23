@@ -28,74 +28,106 @@ type Story = StoryObj<typeof UpNextCard>
 /** Frame each leaf's anatomy panel with breathing room. */
 const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
 
+// ── Anatomy per-leaf — MIRROR the real DOM SectionCard renders ────────────────
+// Cây thật (UpNextCard.tsx): SectionCard (khung, contentClassName gap-3) BAO TẤT
+// CẢ, theo đúng thứ tự DOM:
+//   1. [hàng check+eyebrow] — chỉ khi showCheck || eyebrow (div flex gap-2)
+//        > CheckCircleIcon? + Typography eyebrow?
+//   2. [cụm bước kế] — luôn có (div flex-col gap-2)
+//        > Typography tiêu đề + Typography mô tả?
+//   3. [hàng CTA] — luôn có (div flex-wrap gap-3)
+//        > Button chính + Button phụ?
+// Hai nút KHÔNG bọc ButtonGroup — chỉ là flex-wrap div thuần (xem deferred).
+
+const CHECK_ICON: AnatomyNode = {
+    name: "CheckCircleIcon",
+    tier: "primitive",
+    role: "check hoàn thành — micro-feedback 'vừa xong ✓'",
+    state: "showCheck",
+}
+const EYEBROW: AnatomyNode = {
+    name: "Typography · eyebrow",
+    tier: "primitive",
+    role: "eyebrow muted (body-xs) trên tiêu đề",
+}
+const TITLE: AnatomyNode = {
+    name: "Typography · tiêu đề",
+    tier: "primitive",
+    role: "tiêu đề bước kế (semibold)",
+}
+const DESCRIPTION: AnatomyNode = {
+    name: "Typography · mô tả",
+    tier: "primitive",
+    role: "mô tả hướng outcome (body-sm muted)",
+}
+const PRIMARY_CTA: AnatomyNode = {
+    name: "Button · chính",
+    tier: "primitive",
+    role: "CTA chính (primary, size lg, mũi tên)",
+}
+const SECONDARY_CTA: AnatomyNode = {
+    name: "Button · phụ",
+    tier: "primitive",
+    role: "hành động phụ nhẹ (tertiary)",
+}
+
+/** Build a leaf's real tree: SectionCard BAO các cụm div theo đúng thứ tự DOM. */
+const buildLeaf = (opts: {
+    check?: boolean
+    eyebrow?: boolean
+    description?: boolean
+    secondary?: boolean
+}): Array<AnatomyNode> => {
+    const children: Array<AnatomyNode> = []
+    if (opts.check || opts.eyebrow) {
+        children.push({
+            name: "div · hàng check+eyebrow",
+            tier: "primitive",
+            role: "cụm micro-feedback + eyebrow (flex) — chỉ khi có check hoặc eyebrow",
+            children: [...(opts.check ? [CHECK_ICON] : []), ...(opts.eyebrow ? [EYEBROW] : [])],
+        })
+    }
+    children.push({
+        name: "div · bước kế",
+        tier: "primitive",
+        role: "cụm tiêu đề (+ mô tả) — thân bước tiếp theo",
+        children: [TITLE, ...(opts.description ? [DESCRIPTION] : [])],
+    })
+    children.push({
+        name: "div · hàng CTA",
+        tier: "primitive",
+        role: "hàng hành động (flex-wrap) — CTA chính + hành động phụ tùy chọn",
+        children: [PRIMARY_CTA, ...(opts.secondary ? [SECONDARY_CTA] : [])],
+    })
+    return [
+        {
+            name: "SectionCard",
+            tier: "design",
+            role: "khung viền tự đóng gom khối hoàn thành — BAO toàn bộ",
+            children,
+        },
+    ]
+}
+
 // MINIMAL leaf: bare shape — frame + title + one CTA (no check/eyebrow/description/secondary).
-const MINIMAL_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "design", role: "khung viền tự đóng gom khối hoàn thành" },
-    { name: "Typography", tier: "primitive", role: "tiêu đề bước kế (semibold)" },
-    { name: "Button", tier: "primitive", role: "CTA chính (accent, size lg, mũi tên)" },
-]
+const MINIMAL_PARTS: Array<AnatomyNode> = buildLeaf({})
 
 // CHECK+EYEBROW leaf: adds the completion check + muted eyebrow above the title.
-const CHECK_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "design", role: "khung viền tự đóng gom khối hoàn thành" },
-    {
-        name: "CheckCircleIcon",
-        tier: "primitive",
-        role: "check hoàn thành — micro-feedback 'vừa xong ✓'",
-        state: "showCheck",
-    },
-    { name: "Typography", tier: "primitive", role: "eyebrow muted · tiêu đề bước kế (semibold)" },
-    { name: "Button", tier: "primitive", role: "CTA chính (accent, size lg, mũi tên)" },
-]
+const CHECK_PARTS: Array<AnatomyNode> = buildLeaf({ check: true, eyebrow: true })
 
 // DESCRIPTION leaf: check + eyebrow + an outcome-framed description line under the title.
-const DESCRIPTION_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "design", role: "khung viền tự đóng gom khối hoàn thành" },
-    {
-        name: "CheckCircleIcon",
-        tier: "primitive",
-        role: "check hoàn thành — micro-feedback 'vừa xong ✓'",
-        state: "showCheck",
-    },
-    {
-        name: "Typography",
-        tier: "primitive",
-        role: "eyebrow muted · tiêu đề (semibold) · mô tả hướng outcome",
-    },
-    { name: "Button", tier: "primitive", role: "CTA chính (accent, size lg, mũi tên)" },
-]
+const DESCRIPTION_PARTS: Array<AnatomyNode> = buildLeaf({ check: true, eyebrow: true, description: true })
 
 // SECONDARY leaf: bare shape but the CTA row gains a quiet tertiary secondary action.
-const SECONDARY_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "design", role: "khung viền tự đóng gom khối hoàn thành" },
-    { name: "Typography", tier: "primitive", role: "tiêu đề bước kế (semibold)" },
-    {
-        name: "Button",
-        tier: "primitive",
-        role: "CTA chính (accent, size lg, mũi tên) + hành động phụ nhẹ (tertiary)",
-    },
-]
+const SECONDARY_PARTS: Array<AnatomyNode> = buildLeaf({ secondary: true })
 
 // FULL leaf: every part present — check + eyebrow + description + CTA primary/secondary.
-const FULL_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "design", role: "khung viền tự đóng gom khối hoàn thành" },
-    {
-        name: "CheckCircleIcon",
-        tier: "primitive",
-        role: "check hoàn thành — micro-feedback 'vừa xong ✓'",
-        state: "showCheck",
-    },
-    {
-        name: "Typography",
-        tier: "primitive",
-        role: "eyebrow muted · tiêu đề (semibold) · mô tả hướng outcome",
-    },
-    {
-        name: "Button",
-        tier: "primitive",
-        role: "CTA chính (accent, size lg, mũi tên) + hành động phụ nhẹ (tertiary)",
-    },
-]
+const FULL_PARTS: Array<AnatomyNode> = buildLeaf({
+    check: true,
+    eyebrow: true,
+    description: true,
+    secondary: true,
+})
 
 export const Minimal: Story = {
     render: () =>

@@ -99,40 +99,60 @@ const listFrame = (children: React.ReactNode) => (
     <div className="w-[380px] rounded-2xl border border-separator bg-surface p-1">{children}</div>
 )
 
-// Populated leaf: header (title + mark-all-read) over day-grouped NotificationItem rows.
+// Populated leaf: header (title Typography + mark-all-read Button) over day-grouped
+// NotificationItem rows. Mirrors the real DOM: the Button OWNS its leading ChecksIcon +
+// label Typography (composed via `children`, not a sibling), and each NotificationItem
+// composes an IconTile + the title/body/time Typographys of its text column.
 const POPULATED_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "tiêu đề header (\"Notifications\")" },
-    { name: "Button", tier: "primitive", role: "đánh dấu tất cả đã đọc (icon check dẫn đầu)", state: "tertiary" },
-    { name: "Typography · label", tier: "primitive", role: "nhãn nhóm ngày (\"Today\" / \"Earlier\")" },
+    { name: "Typography · header", tier: "primitive", role: "tiêu đề header (\"Notifications\", body-sm semibold)" },
+    {
+        name: "Button",
+        tier: "primitive",
+        role: "nút đánh dấu tất cả đã đọc (tertiary · sm)",
+        state: "tertiary",
+        children: [
+            { name: "ChecksIcon", tier: "primitive", role: "icon check dẫn đầu (leading, size-4)" },
+            { name: "Typography · nhãn nút", tier: "primitive", role: "nhãn nút mark-all-read (body-xs)" },
+        ],
+    },
+    { name: "Typography · nhãn nhóm", tier: "primitive", role: "nhãn nhóm ngày (\"Today\" / \"Earlier\", body-xs muted)" },
     {
         name: "NotificationItem",
         tier: "design",
-        role: "mỗi dòng thông báo (block con, lặp ×N)",
+        role: "mỗi dòng thông báo (design con, lặp ×N)",
         children: [
-            { name: "IconTile", tier: "primitive", role: "ô icon tô màu theo tone" },
-            { name: "Typography · row", tier: "primitive", role: "title + body + thời gian" },
+            { name: "IconTile", tier: "primitive", role: "ô icon dẫn đầu, tô màu theo tone" },
+            { name: "Typography · dòng-title", tier: "primitive", role: "tiêu đề dòng (title, body-sm medium, clamp 2 dòng)" },
+            { name: "Typography · dòng-body", tier: "primitive", role: "nội dung phụ (body, body-xs muted)" },
+            { name: "Typography · dòng-time", tier: "primitive", role: "nhãn thời gian (timeLabel, body-xs muted)" },
         ],
     },
 ]
 
-// Empty leaf: no header, the list falls to a single EmptyState fallback.
+// Empty leaf: header STILL renders (title="Notifications" is passed) but with no
+// mark-all-read Button (onMarkAllRead omitted); the body falls to a single EmptyState.
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "EmptyState", tier: "design", role: "fallback \"Chưa có thông báo nào\"", state: "empty" },
+    { name: "Typography · header", tier: "primitive", role: "tiêu đề header (\"Notifications\", body-sm semibold)" },
+    { name: "EmptyState", tier: "primitive", role: "fallback \"Chưa có thông báo nào\" (tiêu đề + mô tả)", state: "empty" },
 ]
 
-// Loading leaf: same chrome as populated, every part swaps to a Skeleton mirror.
+// Loading leaf: story-authored skeleton scaffold mirroring the populated chrome —
+// header (Skeleton.Typography + Skeleton.Button), one day group (bare Skeleton label
+// bar) over SkeletonNotificationRow ×3, each mirroring a NotificationItem's tile + bars.
 const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton.Typography", tier: "primitive", role: "tiêu đề header — skeleton mirror", state: "skeleton" },
+    { name: "Skeleton.Typography · header", tier: "primitive", role: "tiêu đề header — skeleton mirror", state: "skeleton" },
     { name: "Skeleton.Button", tier: "primitive", role: "nút mark-all-read — skeleton mirror", state: "skeleton" },
-    { name: "Skeleton · label", tier: "primitive", role: "nhãn nhóm ngày — skeleton mirror", state: "skeleton" },
+    { name: "Skeleton · nhãn nhóm", tier: "primitive", role: "nhãn nhóm ngày — skeleton mirror", state: "skeleton" },
     {
         name: "SkeletonNotificationRow",
         tier: "design",
         role: "mirror NotificationItem ×3 (giữ đúng footprint)",
         state: "skeleton",
         children: [
-            { name: "Skeleton · tile", tier: "primitive", role: "ô icon tone" },
-            { name: "Skeleton · bars", tier: "primitive", role: "thanh title / body / thời gian" },
+            { name: "Skeleton · tile", tier: "primitive", role: "ô icon tone — skeleton mirror", state: "skeleton" },
+            { name: "Skeleton.Typography · title", tier: "primitive", role: "thanh tiêu đề dòng", state: "skeleton" },
+            { name: "Skeleton.Typography · body", tier: "primitive", role: "thanh nội dung phụ", state: "skeleton" },
+            { name: "Skeleton.Typography · time", tier: "primitive", role: "thanh thời gian", state: "skeleton" },
         ],
     },
 ]
@@ -163,7 +183,7 @@ export const Empty: Story = {
                 tier="block"
                 leaf="Rỗng"
                 parts={EMPTY_PARTS}
-                note="Mọi nhóm rỗng → không header, danh sách rơi về EmptyState duy nhất (khác leaf data)."
+                note="Header vẫn render (title được truyền) nhưng KHÔNG có nút mark-all-read (onMarkAllRead bỏ trống); mọi nhóm rỗng → body rơi về EmptyState duy nhất (khác leaf data)."
             >
                 {listFrame(
                     <NotificationList

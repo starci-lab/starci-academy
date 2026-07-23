@@ -30,19 +30,52 @@ type Story = StoryObj<typeof PitchCard>
 /** Frame each leaf's anatomy panel with breathing room. */
 const frame = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
-// The base pitch composition (icon tile + claim + copy) — shared by every leaf without a footer.
-const PITCH_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "primitive", role: "khung surface (h-full để đều hàng)" },
-    { name: "IconTile", tier: "primitive", role: "ô icon tô nền theo tone" },
-    { name: "Typography · h5", tier: "primitive", role: "claim đậm (tiêu đề)" },
-    { name: "Typography · body-sm", tier: "primitive", role: "đoạn giải thích (muted)" },
+// ── Anatomy per-leaf — MIRROR the real DOM PitchCard renders ──────────────────
+// Cây thật (PitchCard.tsx): SectionCard (khung, contentClassName gap-3) BAO TẤT CẢ
+// theo đúng thứ tự DOM — không header (không truyền title/icon/action) nên body là:
+//   1. IconTile — ô icon tinted
+//   2. Typography · h5 — claim
+//   3. Typography · body-sm — copy
+//   4. div › Button — footer CTA (CHỈ khi có prop `footer`)
+// SectionCard KHÔNG phải sibling của các part — nó CHỨA chúng.
+
+const ICON_TILE: AnatomyNode = {
+    name: "IconTile",
+    tier: "primitive",
+    role: "ô icon vuông tô nền theo tone (accent · success · warning · danger · neutral), size md",
+}
+const CLAIM: AnatomyNode = {
+    name: "Typography · h5",
+    tier: "primitive",
+    role: "claim đậm (h5, semibold) — tiêu đề của beat",
+}
+const COPY: AnatomyNode = {
+    name: "Typography · body-sm",
+    tier: "primitive",
+    role: "đoạn giải thích (body-sm, muted, flex-1 để đẩy footer xuống đáy)",
+}
+const FOOTER: AnatomyNode = {
+    name: "div › footer",
+    tier: "primitive",
+    role: "slot CTA tuỳ chọn — bọc footer vào đáy surface (chỉ khi có prop `footer`)",
+    children: [{ name: "Button", tier: "primitive", role: "CTA vào surface liên quan" }],
+}
+
+/** Build a leaf's real tree: SectionCard BAO các part theo đúng thứ tự DOM. */
+const sectionFrame = (children: Array<AnatomyNode>): Array<AnatomyNode> => [
+    {
+        name: "SectionCard",
+        tier: "design",
+        role: "khung viền tự đóng (h-full để đều hàng) — BAO toàn bộ nội dung",
+        children,
+    },
 ]
 
-// With-footer leaf: same base + an optional CTA slot at the bottom.
-const PITCH_FOOTER_PARTS: Array<AnatomyNode> = [
-    ...PITCH_PARTS,
-    { name: "footer › Button", tier: "primitive", role: "slot CTA tuỳ chọn vào surface liên quan" },
-]
+// The base pitch composition (icon tile + claim + copy) — shared by every leaf without a footer.
+const PITCH_PARTS: Array<AnatomyNode> = sectionFrame([ICON_TILE, CLAIM, COPY])
+
+// With-footer leaf: same base + an optional CTA slot (div › Button) at the bottom of the frame.
+const PITCH_FOOTER_PARTS: Array<AnatomyNode> = sectionFrame([ICON_TILE, CLAIM, COPY, FOOTER])
 
 export const Default: Story = {
     render: () =>

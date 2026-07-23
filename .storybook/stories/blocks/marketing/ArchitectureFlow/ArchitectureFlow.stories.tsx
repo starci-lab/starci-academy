@@ -26,15 +26,31 @@ type Story = StoryObj<typeof ArchitectureFlow>
 /** Plain canvas for each leaf's anatomy panel. */
 const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
-// Multi-node flow: node boxes joined by caret connectors (data + wrap share this).
+// Multi-node flow: bordered node-box spans (each WRAPPING a code Typography) joined
+// by caret connectors that sit BETWEEN boxes (data + wrap share this composition).
 const FLOW_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "nhãn node kiểu code (type=code)" },
-    { name: "CaretRightIcon", tier: "primitive", role: "connector nối các node theo hướng luồng" },
+    {
+        name: "span",
+        tier: "primitive",
+        role: "hộp node bo viền (border + bg) — khung mỗi node, chứa nhãn bên trong",
+        children: [
+            { name: "Typography", tier: "primitive", role: "nhãn node kiểu code (type=code) nằm trong hộp" },
+        ],
+    },
+    { name: "CaretRightIcon", tier: "primitive", role: "connector nối các node theo hướng luồng (chỉ hiện giữa 2 node)" },
 ]
 
-// Single node: one box, NO connector (caret only appears between nodes).
+// Single node: one bordered box wrapping its Typography, NO connector (caret only
+// appears between nodes).
 const SINGLE_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "nhãn node kiểu code (type=code) — một hộp, chưa có caret" },
+    {
+        name: "span",
+        tier: "primitive",
+        role: "hộp node bo viền — một hộp đứng một mình, chưa có caret",
+        children: [
+            { name: "Typography", tier: "primitive", role: "nhãn node kiểu code (type=code) nằm trong hộp" },
+        ],
+    },
 ]
 
 // Empty: no node labels → the block renders an empty flex row (no parts composed).

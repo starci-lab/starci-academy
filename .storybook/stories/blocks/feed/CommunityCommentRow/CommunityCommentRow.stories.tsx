@@ -27,36 +27,45 @@ type Story = StoryObj<typeof CommunityCommentRow>
 const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
 // Base composition — the plain comment row (avatar + header + body + reaction bar).
-// Shared by every leaf that renders this exact shape.
+// DOM order: UserAvatar sits beside a content column whose header row stacks the
+// author name + relative-time (two distinct Typography atoms), then the markdown
+// body, then the footer row with the ReactionBar. Shared by every leaf that
+// renders this exact shape. (Layout `div`s carry no component name → not parts.)
 const BASE_PARTS: Array<AnatomyNode> = [
     { name: "UserAvatar", tier: "primitive", role: "avatar tác giả bình luận" },
-    { name: "Typography", tier: "primitive", role: "tên tác giả + thời gian tương đối" },
+    { name: "Typography", tier: "primitive", role: "tên tác giả (body-xs semibold, truncate)" },
+    { name: "Typography", tier: "primitive", role: "thời gian tương đối (body-xs muted)" },
     { name: "MarkdownContent", tier: "primitive", role: "thân bình luận (compact, [&_p]:m-0)" },
-    { name: "ReactionBar", tier: "block", role: "thả cảm xúc cho bình luận" },
+    { name: "ReactionBar", tier: "design", role: "thả cảm xúc cho bình luận" },
 ]
 
-// Founder leaf: base + a founder badge (SealCheckIcon) beside the author name.
+// Founder leaf: base + a founder badge (SealCheckIcon) between the author name
+// and the relative-time, inside the header row.
 const FOUNDER_PARTS: Array<AnatomyNode> = [
     { name: "UserAvatar", tier: "primitive", role: "avatar tác giả bình luận" },
-    { name: "Typography", tier: "primitive", role: "tên tác giả + thời gian tương đối" },
+    { name: "Typography", tier: "primitive", role: "tên tác giả (body-xs semibold, truncate)" },
     { name: "SealCheckIcon", tier: "primitive", role: "huy hiệu founder cạnh tên", state: "founder" },
+    { name: "Typography", tier: "primitive", role: "thời gian tương đối (body-xs muted)" },
     { name: "MarkdownContent", tier: "primitive", role: "thân bình luận (compact, [&_p]:m-0)" },
-    { name: "ReactionBar", tier: "block", role: "thả cảm xúc cho bình luận" },
+    { name: "ReactionBar", tier: "design", role: "thả cảm xúc cho bình luận" },
 ]
 
-// Actions leaf: base + the caller-supplied actions slot beside the reaction bar.
+// Actions leaf: base + the caller-supplied actions slot beside the reaction bar
+// in the footer row.
 const ACTIONS_PARTS: Array<AnatomyNode> = [
     { name: "UserAvatar", tier: "primitive", role: "avatar tác giả bình luận" },
-    { name: "Typography", tier: "primitive", role: "tên tác giả + thời gian tương đối" },
+    { name: "Typography", tier: "primitive", role: "tên tác giả (body-xs semibold, truncate)" },
+    { name: "Typography", tier: "primitive", role: "thời gian tương đối (body-xs muted)" },
     { name: "MarkdownContent", tier: "primitive", role: "thân bình luận (compact, [&_p]:m-0)" },
-    { name: "ReactionBar", tier: "block", role: "thả cảm xúc cho bình luận" },
-    { name: "actions", tier: "primitive", role: "slot hành động do caller cấp (Trả lời)" },
+    { name: "ReactionBar", tier: "design", role: "thả cảm xúc cho bình luận" },
+    { name: "actions", tier: "primitive", role: "slot hành động do caller cấp (nút Trả lời)" },
 ]
 
 // Read-only + zero reactions: ReactionBar returns null, so it drops out entirely.
 const NO_REACTION_PARTS: Array<AnatomyNode> = [
     { name: "UserAvatar", tier: "primitive", role: "avatar tác giả bình luận" },
-    { name: "Typography", tier: "primitive", role: "tên tác giả + thời gian tương đối" },
+    { name: "Typography", tier: "primitive", role: "tên tác giả (body-xs semibold, truncate)" },
+    { name: "Typography", tier: "primitive", role: "thời gian tương đối (body-xs muted)" },
     { name: "MarkdownContent", tier: "primitive", role: "thân bình luận (compact, [&_p]:m-0)" },
 ]
 

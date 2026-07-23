@@ -33,44 +33,81 @@ type Story = StoryObj<typeof CommunityPostCard>
 /** Plain canvas — each leaf wraps its render in its own BlockAnatomy panel. */
 const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
-// Base composition every post leaf renders (author avatar + body + reaction bar).
-const DEFAULT_PARTS: Array<AnatomyNode> = [
-    { name: "UserAvatar", tier: "primitive", role: "avatar tác giả trong header" },
-    { name: "MarkdownContent", tier: "primitive", role: "thân bài markdown (compact)" },
-    { name: "ReactionBar", tier: "design", role: "thả cảm xúc trong footer" },
+// Card → CardContent frame wrapping every post leaf's inner parts, in DOM order.
+// The block renders a HeroUI `Card` > `CardContent` around the whole post, so the
+// composed parts live UNDER that frame, not as siblings of it.
+const framed = (inner: Array<AnatomyNode>): Array<AnatomyNode> => [
+    {
+        name: "Card",
+        tier: "primitive",
+        role: "khung card bao toàn bộ bài đăng",
+        children: [
+            {
+                name: "CardContent",
+                tier: "primitive",
+                role: "vùng nội dung có padding của card",
+                children: inner,
+            },
+        ],
+    },
 ]
 
-// founder leaf: base + huy hiệu SealCheck cạnh tên tác giả.
-const FOUNDER_PARTS: Array<AnatomyNode> = [
-    { name: "UserAvatar", tier: "primitive", role: "avatar tác giả trong header" },
+// Header/body/footer parts every post leaf renders inside CardContent, in DOM order.
+const HEADER_AVATAR: AnatomyNode = { name: "UserAvatar", tier: "primitive", role: "avatar tác giả trong header" }
+const HEADER_TEXT: AnatomyNode = { name: "Typography", tier: "primitive", role: "tên tác giả + @username + thời gian + kênh" }
+const BODY_MARKDOWN: AnatomyNode = { name: "MarkdownContent", tier: "primitive", role: "thân bài markdown (compact, [&_p]:m-0)" }
+const FOOTER_REACTIONS: AnatomyNode = { name: "ReactionBar", tier: "design", role: "thả cảm xúc trong footer" }
+const FOOTER_COMMENT: AnatomyNode = { name: "Bình luận", tier: "primitive", role: "nút mở thread bình luận + đếm ở footer", state: "hand-rolled" }
+
+// Base leaf: avatar + author text header, markdown body, reaction bar + comment button footer.
+const DEFAULT_PARTS: Array<AnatomyNode> = framed([
+    HEADER_AVATAR,
+    HEADER_TEXT,
+    BODY_MARKDOWN,
+    FOOTER_REACTIONS,
+    FOOTER_COMMENT,
+])
+
+// founder leaf: base + huy hiệu SealCheck cạnh tên tác giả trong header.
+const FOUNDER_PARTS: Array<AnatomyNode> = framed([
+    HEADER_AVATAR,
+    HEADER_TEXT,
     { name: "SealCheckIcon", tier: "primitive", role: "huy hiệu founder cạnh tên", state: "founder" },
-    { name: "MarkdownContent", tier: "primitive", role: "thân bài markdown (compact)" },
-    { name: "ReactionBar", tier: "design", role: "thả cảm xúc trong footer" },
-]
+    BODY_MARKDOWN,
+    FOOTER_REACTIONS,
+    FOOTER_COMMENT,
+])
 
 // pinned leaf: base + ghim PushPin ở góc phải header.
-const PINNED_PARTS: Array<AnatomyNode> = [
-    { name: "UserAvatar", tier: "primitive", role: "avatar tác giả trong header" },
+const PINNED_PARTS: Array<AnatomyNode> = framed([
+    HEADER_AVATAR,
+    HEADER_TEXT,
     { name: "PushPinIcon", tier: "primitive", role: "ghim bài ở góc header", state: "pinned" },
-    { name: "MarkdownContent", tier: "primitive", role: "thân bài markdown (compact)" },
-    { name: "ReactionBar", tier: "design", role: "thả cảm xúc trong footer" },
-]
+    BODY_MARKDOWN,
+    FOOTER_REACTIONS,
+    FOOTER_COMMENT,
+])
 
 // founder + pinned leaf: base + cả huy hiệu SealCheck lẫn ghim PushPin.
-const FOUNDER_PINNED_PARTS: Array<AnatomyNode> = [
-    { name: "UserAvatar", tier: "primitive", role: "avatar tác giả trong header" },
+const FOUNDER_PINNED_PARTS: Array<AnatomyNode> = framed([
+    HEADER_AVATAR,
+    HEADER_TEXT,
     { name: "SealCheckIcon", tier: "primitive", role: "huy hiệu founder cạnh tên", state: "founder" },
     { name: "PushPinIcon", tier: "primitive", role: "ghim bài ở góc header", state: "pinned" },
-    { name: "MarkdownContent", tier: "primitive", role: "thân bài markdown (compact)" },
-    { name: "ReactionBar", tier: "design", role: "thả cảm xúc trong footer" },
-]
+    BODY_MARKDOWN,
+    FOOTER_REACTIONS,
+    FOOTER_COMMENT,
+])
 
-// read-only leaf: base composition nhưng ReactionBar mất onReact → không tương tác.
-const READONLY_PARTS: Array<AnatomyNode> = [
-    { name: "UserAvatar", tier: "primitive", role: "avatar tác giả trong header" },
-    { name: "MarkdownContent", tier: "primitive", role: "thân bài markdown (compact)" },
+// read-only leaf: base composition nhưng bỏ onReact + onToggleComments → ReactionBar
+// và nút bình luận chỉ hiển thị, không tương tác.
+const READONLY_PARTS: Array<AnatomyNode> = framed([
+    HEADER_AVATAR,
+    HEADER_TEXT,
+    BODY_MARKDOWN,
     { name: "ReactionBar", tier: "design", role: "hiển thị cảm xúc (chỉ đọc)", state: "read-only" },
-]
+    { name: "Bình luận", tier: "primitive", role: "đếm bình luận tĩnh (nút disabled)", state: "read-only" },
+])
 
 const defaultPost: QueryCommunityFeedItemData = {
     id: "post-1",

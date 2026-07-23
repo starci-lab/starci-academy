@@ -44,34 +44,96 @@ const sampleHunks: DiffHunk[] = [
     },
 ]
 
-// UNIFIED leaf: filename header + hunk-header separator + one-column gutter/rows.
+// ── Shared part nodes (the SAME real component reused across leaves) ──
+// The DiffViewer frame (rounded-xl border bg-surface) is the anatomy ROOT
+// (BlockAnatomy supplies it as the tree root), so `parts` below are its DIRECT
+// children, nested to mirror the real DOM the component hand-draws.
+
+/** Filename header bar — a bordered div that CONTAINS the mono Typography. */
+const FILE_HEADER: AnatomyNode = {
+    name: "Thanh tên file",
+    tier: "design",
+    role: "header bar border-b bg-default px-4 py-2 — chỉ render khi có prop filename",
+    children: [
+        { name: "Typography", tier: "primitive", role: "tên file, font-mono body-sm medium (HeroUI base)" },
+    ],
+}
+
+/** Muted @@ separator row — only drawn when the hunk carries a `header`. */
+const HUNK_HEADER: AnatomyNode = {
+    name: "Thanh header hunk",
+    tier: "design",
+    role: "hàng phân cách muted @@ … @@ (tự vẽ, chỉ khi hunk có header)",
+}
+
+/** One UNIFIED row: a flex div that CONTAINS the two gutter cells, marker và nội dung. */
+const UNIFIED_ROW: AnatomyNode = {
+    name: "UnifiedRow",
+    tier: "design",
+    role: "một hàng diff xếp dọc, nền token thêm=success / xoá=danger / context=neutral (tự vẽ)",
+    children: [
+        { name: "NumberCell", tier: "primitive", role: "ô số dòng cũ + mới (hai ô), right-align tabular-nums, muted (tự vẽ)" },
+        { name: "Marker", tier: "primitive", role: "glyph +/-/khoảng-trắng, cột w-4 canh giữa (tự vẽ)" },
+        { name: "Nội dung dòng", tier: "primitive", role: "text nội dung, whitespace-pre (tự vẽ)" },
+    ],
+}
+
+/** One SPLIT row: a 2-col grid that CONTAINS an old-side and a new-side SplitCell. */
+const SPLIT_ROW: AnatomyNode = {
+    name: "Hàng chia đôi",
+    tier: "design",
+    role: "grid grid-cols-2 divide-x — mỗi dòng chia file cũ trái / file mới phải (tự vẽ)",
+    children: [
+        {
+            name: "SplitCell",
+            tier: "design",
+            role: "bên cũ: số dòng + nội dung; dòng thêm thành ô trống filler (tự vẽ)",
+            children: [
+                { name: "NumberCell", tier: "primitive", role: "số dòng cũ, right-align tabular-nums, muted (tự vẽ)" },
+                { name: "Nội dung dòng", tier: "primitive", role: "text nội dung, whitespace-pre (tự vẽ)" },
+            ],
+        },
+        {
+            name: "SplitCell",
+            tier: "design",
+            role: "bên mới: số dòng + nội dung; dòng xoá thành ô trống filler (tự vẽ)",
+            children: [
+                { name: "NumberCell", tier: "primitive", role: "số dòng mới, right-align tabular-nums, muted (tự vẽ)" },
+                { name: "Nội dung dòng", tier: "primitive", role: "text nội dung, whitespace-pre (tự vẽ)" },
+            ],
+        },
+    ],
+}
+
+/** overflow-x-auto scroll region wrapping the mono code body — CONTAINS hunk rows. */
+const scrollRegion = (children: Array<AnatomyNode>): AnatomyNode => ({
+    name: "Vùng cuộn code",
+    tier: "design",
+    role: "overflow-x-auto bọc thân min-w-fit font-mono text-xs — dòng dài cuộn ngang, không vỡ trang",
+    children,
+})
+
+// UNIFIED leaf: header bar (Typography) + scroll region [hunk header + one-column rows].
 const UNIFIED_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "tên file trên header bar (HeroUI base)" },
-    { name: "Thanh header hunk", tier: "design", role: "hàng phân cách muted @@ … @@ (tự vẽ)" },
-    { name: "Gutter số dòng", tier: "design", role: "cột số dòng cũ + mới, tabular-nums (tự vẽ)" },
-    { name: "Hàng diff", tier: "design", role: "marker +/-/· + nội dung, nền token thêm=success / xoá=danger / context=neutral (tự vẽ)" },
+    FILE_HEADER,
+    scrollRegion([HUNK_HEADER, UNIFIED_ROW]),
 ]
 
-// SPLIT leaf: same parts but the body is a 2-column old/new layout, own gutter each side.
+// SPLIT leaf: same frame, but each row is a 2-column old/new grid with a gutter per side.
 const SPLIT_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "tên file trên header bar (HeroUI base)" },
-    { name: "Thanh header hunk", tier: "design", role: "hàng phân cách muted @@ … @@ (tự vẽ)" },
-    { name: "Gutter số dòng", tier: "design", role: "hai cột: file cũ trái + file mới phải, mỗi bên một số dòng (tự vẽ)" },
-    { name: "Hàng diff", tier: "design", role: "grid 2 cột chia đôi — thêm chỉ hiện bên mới / xoá chỉ bên cũ (tự vẽ)" },
+    FILE_HEADER,
+    scrollRegion([HUNK_HEADER, SPLIT_ROW]),
 ]
 
-// NO-FILENAME leaf: `filename` omitted → header bar (Typography) skipped entirely.
+// NO-FILENAME leaf: `filename` omitted → header bar (+ its Typography) skipped entirely.
 const NO_FILENAME_PARTS: Array<AnatomyNode> = [
-    { name: "Thanh header hunk", tier: "design", role: "hàng phân cách muted @@ … @@ (tự vẽ)" },
-    { name: "Gutter số dòng", tier: "design", role: "cột số dòng cũ + mới, tabular-nums (tự vẽ)" },
-    { name: "Hàng diff", tier: "design", role: "marker +/-/· + nội dung, nền token thêm=success / xoá=danger / context=neutral (tự vẽ)" },
+    scrollRegion([HUNK_HEADER, UNIFIED_ROW]),
 ]
 
 // NO-HUNK-HEADER leaf: hunk has no `header` → the muted separator row is not drawn.
 const NO_HUNK_HEADER_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "tên file trên header bar (HeroUI base)" },
-    { name: "Gutter số dòng", tier: "design", role: "cột số dòng cũ + mới, tabular-nums (tự vẽ)" },
-    { name: "Hàng diff", tier: "design", role: "marker +/-/· + nội dung, nền token thêm=success / xoá=danger / context=neutral (tự vẽ)" },
+    FILE_HEADER,
+    scrollRegion([UNIFIED_ROW]),
 ]
 
 /** UNIFIED (default) — every line stacked in one column with +/-/space markers. */

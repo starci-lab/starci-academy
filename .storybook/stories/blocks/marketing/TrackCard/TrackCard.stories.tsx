@@ -28,12 +28,26 @@ type Story = StoryObj<typeof TrackCard>
 /** Frame each leaf's anatomy panel with breathing room. */
 const frame = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
-// The card's real composition — shared by every leaf (color / rung count / layout
-// differ, but the composed parts stay the same).
+// The card's real DOM tree — shared by every leaf (color / rung count / layout
+// differ, but the composed parts stay the same). Card wraps a single CardContent
+// that stacks three regions: the identity header (IconTile + title/meta), the
+// vertical tier path (each rung = coloured dot•line + eyebrow + topic Typography),
+// and a hand-rolled CTA button (+ ArrowRightIcon) pinned to the bottom.
 const TRACK_PARTS: Array<AnatomyNode> = [
-    { name: "Card", tier: "primitive", role: "khung surface bounded (h-full để đều hàng)" },
-    { name: "IconTile", tier: "primitive", role: "ô icon tô nền theo màu track (đang hand-roll)" },
-    { name: "Typography", tier: "primitive", role: "title / meta / tier label + topic" },
+    {
+        name: "Card", tier: "primitive", role: "khung surface bounded (h-full để đều hàng khi xếp 3)",
+        children: [
+            {
+                name: "CardContent", tier: "primitive", role: "thân thẻ flex-col gap-6: header · path tầng · CTA",
+                children: [
+                    { name: "IconTile", tier: "primitive", role: "header: ô icon tô nền theo màu track (tone=color, size sm)" },
+                    { name: "Typography (tiêu đề + meta)", tier: "primitive", role: "header: tiêu đề (body semibold, truncate) + meta (body-xs muted)" },
+                    { name: "Typography (nhãn tầng + chủ đề)", tier: "primitive", role: "path: mỗi rung = nhãn tầng (body-xs muted) + chủ đề (body-sm), kèm dot•line màu track chỉ dẫn ×N" },
+                    { name: "button (CTA)", tier: "primitive", role: "CTA 'Vào khóa' hand-roll <button> + ArrowRightIcon (mt-auto, tone soft theo màu — chưa dùng Button port)" },
+                ],
+            },
+        ],
+    },
 ]
 
 export const AccentFourTiers: Story = {

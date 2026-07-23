@@ -27,35 +27,94 @@ type Story = StoryObj<typeof NotificationBell>
 /** Plain canvas — each leaf wraps its own BlockAnatomy panel below. */
 const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
-// WITH-BADGE composition (unread > 0): bell trigger + count badge + popover panel.
+// Shared popover panel subtree — identical across every leaf (only the bell
+// trigger's badge differs). `PopoverContent` FRAMES the `NotificationList` block,
+// whose header (title + mark-all-read button) sits above the day-grouped rows.
+// Mirrors the real DOM: PopoverContent → NotificationList → { header parts, rows }.
+const PANEL_PART: AnatomyNode = {
+    name: "PopoverContent",
+    tier: "primitive",
+    role: "panel nổi 360px neo dưới-phải nút chuông",
+    children: [
+        {
+            name: "NotificationList",
+            tier: "block",
+            role: "danh sách gom theo ngày + header đánh dấu đã đọc",
+            children: [
+                { name: "Typography", tier: "primitive", role: 'tiêu đề panel ("Thông báo")' },
+                {
+                    name: "Button · markAllRead",
+                    tier: "primitive",
+                    role: "nút đánh dấu tất cả đã đọc (tertiary, sm)",
+                    children: [
+                        { name: "ChecksIcon", tier: "primitive", role: "icon check dẫn đầu nút" },
+                        { name: "Typography", tier: "primitive", role: 'nhãn "Đánh dấu tất cả đã đọc"' },
+                    ],
+                },
+                {
+                    name: "NotificationItem",
+                    tier: "design",
+                    role: "một dòng thông báo (lặp ×N theo group)",
+                    children: [
+                        { name: "IconTile", tier: "primitive", role: "ô icon dẫn đầu, màu theo tone" },
+                        {
+                            name: "Typography",
+                            tier: "primitive",
+                            role: "cột chữ: tiêu đề · nội dung · nhãn thời gian",
+                        },
+                    ],
+                },
+            ],
+        },
+    ],
+}
+
+// WITH-BADGE composition (unread > 0): the bell trigger carries a count Badge
+// (anchored over the BellIcon via Badge.Anchor) and opens the shared panel.
 const WITH_BADGE_PARTS: Array<AnatomyNode> = [
-    { name: "Button · iconOnly", tier: "primitive", role: "nút chuông mở popover (BellIcon)" },
-    { name: "Badge", tier: "primitive", role: 'đếm chưa đọc, ẩn ở 0, chốt "9+"', state: "danger" },
-    { name: "Popover", tier: "primitive", role: "mở panel thông báo dưới nút" },
     {
-        name: "NotificationList",
-        tier: "block",
-        role: "panel nội dung: danh sách gom theo ngày + header đánh dấu đã đọc",
+        name: "Popover",
+        tier: "primitive",
+        role: "gốc: neo nút chuông với panel nổi, đóng/mở có kiểm soát",
         children: [
-            { name: "Typography", tier: "primitive", role: 'tiêu đề panel ("Thông báo")' },
-            { name: "Button · markAllRead", tier: "primitive", role: "đánh dấu tất cả đã đọc" },
-            { name: "NotificationItem", tier: "design", role: "một dòng thông báo (lặp ×N)" },
+            {
+                name: "Button · iconOnly",
+                tier: "primitive",
+                role: "nút chuông mở popover (tertiary, bo tròn)",
+                children: [
+                    {
+                        name: "Badge.Anchor",
+                        tier: "primitive",
+                        role: "neo badge đếm vào góc chuông",
+                        children: [
+                            { name: "BellIcon", tier: "primitive", role: "biểu tượng chuông" },
+                            { name: "Badge", tier: "primitive", role: 'đếm chưa đọc, chốt "9+"', state: "danger" },
+                        ],
+                    },
+                ],
+            },
+            PANEL_PART,
         ],
     },
 ]
 
-// NO-BADGE composition (unread = 0): same block WITHOUT the count badge.
+// NO-BADGE composition (unread = 0): same tree WITHOUT the Badge — the trigger's
+// icon is a bare BellIcon (no Badge.Anchor wrapper), then the same shared panel.
 const NO_BADGE_PARTS: Array<AnatomyNode> = [
-    { name: "Button · iconOnly", tier: "primitive", role: "nút chuông mở popover (BellIcon) — không badge ở 0" },
-    { name: "Popover", tier: "primitive", role: "mở panel thông báo dưới nút" },
     {
-        name: "NotificationList",
-        tier: "block",
-        role: "panel nội dung: danh sách gom theo ngày + header đánh dấu đã đọc",
+        name: "Popover",
+        tier: "primitive",
+        role: "gốc: neo nút chuông với panel nổi, đóng/mở có kiểm soát",
         children: [
-            { name: "Typography", tier: "primitive", role: 'tiêu đề panel ("Thông báo")' },
-            { name: "Button · markAllRead", tier: "primitive", role: "đánh dấu tất cả đã đọc" },
-            { name: "NotificationItem", tier: "design", role: "một dòng thông báo (lặp ×N)" },
+            {
+                name: "Button · iconOnly",
+                tier: "primitive",
+                role: "nút chuông mở popover (tertiary, bo tròn) — không badge ở 0",
+                children: [
+                    { name: "BellIcon", tier: "primitive", role: "biểu tượng chuông (không badge ở 0)" },
+                ],
+            },
+            PANEL_PART,
         ],
     },
 ]

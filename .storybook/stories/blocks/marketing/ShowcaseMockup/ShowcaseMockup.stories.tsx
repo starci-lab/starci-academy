@@ -40,41 +40,62 @@ const DemoContent = () => (
     </div>
 )
 
-// BASE composition — backdrop layer + fanned card behind + window chrome (dots +
-// URL) + content. Shared by every leaf that keeps both the backdrop and the URL
-// (theme / tilt / backdrop-style / aspect variants only change look, not parts).
+// The foreground window card CONTAINS chrome + content, and it sits INSIDE the
+// `.group` stack next to the card-behind. So the real tree nests: stack → (card
+// sau + window card) → window card → (chrome[URL] + content). The 3 chrome dots
+// are raw aria-hidden decorative <span>s (not primitives) → folded into the chrome
+// role, not modelled as separate leaves.
+
+/** Foreground window card: bg-surface + border + rounded frame that OWNS the chrome
+ *  bar and the content area. `withUrl` toggles the address-bar Typography child. */
+const windowCard = (withUrl: boolean): AnatomyNode => ({
+    name: "Window card",
+    tier: "design",
+    role: "thẻ cửa sổ nền surface, viền default, bo góc 3xl (overflow-hidden) — CHỨA chrome + nội dung",
+    children: [
+        {
+            name: "Window chrome",
+            tier: "design",
+            role: withUrl
+                ? "thanh cửa sổ (border-b): 3 chấm đỏ/vàng/lục + address bar"
+                : "thanh cửa sổ (border-b): chỉ 3 chấm đỏ/vàng/lục, KHÔNG address bar",
+            children: withUrl
+                ? [{ name: "Typography", tier: "primitive", role: "chuỗi URL trên address bar (type=code)" }]
+                : undefined,
+        },
+        { name: "Content", tier: "design", role: "vùng bọc nội dung children (khoá 16:9 khi aspect='video')" },
+    ],
+})
+
+/** The fanned stack (`.group`): the card-behind + the foreground window card, splayed
+ *  in opposite tilts; hover flattens both. */
+const cardStack = (withUrl: boolean): AnatomyNode => ({
+    name: "Khối xoè thẻ",
+    tier: "design",
+    role: "wrapper .group xếp 2 thẻ nghiêng ngược nhau → chiều sâu 'xoè'; hover ép cả 2 phẳng lại",
+    children: [
+        { name: "Card sau", tier: "design", role: "thẻ nền nghiêng NGƯỢC, tô màu theme (KHÔNG viền), aria-hidden → chiều sâu 'xoè'" },
+        windowCard(withUrl),
+    ],
+})
+
+// BASE composition — decorative backdrop (sibling) + the fanned card stack. Shared by
+// every leaf that keeps both the backdrop and the URL (theme / tilt / backdrop-style /
+// aspect variants only change look, not parts).
 const BASE_PARTS: Array<AnatomyNode> = [
-    { name: "Backdrop", tier: "design", role: "lớp trang trí sau thẻ (glow / grid / stars)", state: "glow" },
-    { name: "Card sau", tier: "design", role: "thẻ nền nghiêng NGƯỢC, tô màu theme → chiều sâu 'xoè'" },
-    {
-        name: "Window chrome",
-        tier: "design",
-        role: "thanh cửa sổ: 3 chấm đỏ/vàng/lục + address bar",
-        children: [{ name: "Typography", tier: "primitive", role: "chuỗi URL trên address bar (type=code)" }],
-    },
-    { name: "Content", tier: "design", role: "vùng bọc nội dung children" },
+    { name: "Backdrop", tier: "design", role: "lớp trang trí sau thẻ (glow / grid / stars), aria-hidden", state: "glow" },
+    cardStack(true),
 ]
 
-// NO-BACKDROP leaf: backdrop="none" → the decorative layer is gone; card behind,
-// chrome (+URL) and content stay.
-const NO_BACKDROP_PARTS: Array<AnatomyNode> = [
-    { name: "Card sau", tier: "design", role: "thẻ nền nghiêng NGƯỢC, tô màu theme → chiều sâu 'xoè'" },
-    {
-        name: "Window chrome",
-        tier: "design",
-        role: "thanh cửa sổ: 3 chấm đỏ/vàng/lục + address bar",
-        children: [{ name: "Typography", tier: "primitive", role: "chuỗi URL trên address bar (type=code)" }],
-    },
-    { name: "Content", tier: "design", role: "vùng bọc nội dung children" },
-]
+// NO-BACKDROP leaf: backdrop="none" → the decorative sibling layer is gone; the fanned
+// card stack (card-behind + window card + chrome[URL] + content) stays.
+const NO_BACKDROP_PARTS: Array<AnatomyNode> = [cardStack(true)]
 
-// NO-URL leaf: no `url` → the address-bar Typography is dropped, chrome shows only
-// the 3 dots. Backdrop, card behind and content stay.
+// NO-URL leaf: no `url` → the address-bar Typography is dropped, chrome shows only the
+// 3 dots. Backdrop and the rest of the stack stay.
 const NO_URL_PARTS: Array<AnatomyNode> = [
-    { name: "Backdrop", tier: "design", role: "lớp trang trí sau thẻ (glow)", state: "glow" },
-    { name: "Card sau", tier: "design", role: "thẻ nền nghiêng NGƯỢC, tô màu theme → chiều sâu 'xoè'" },
-    { name: "Window chrome", tier: "design", role: "thanh cửa sổ: chỉ 3 chấm, KHÔNG address bar" },
-    { name: "Content", tier: "design", role: "vùng bọc nội dung children" },
+    { name: "Backdrop", tier: "design", role: "lớp trang trí sau thẻ (glow), aria-hidden", state: "glow" },
+    cardStack(false),
 ]
 
 /** DEFAULT — glow backdrop, tilt-left, URL address bar, sample content. */

@@ -39,26 +39,68 @@ const progressBase = {
 }
 
 // Loaded shape "có tiến độ" — urgent/không-gấp SHARE this composition (chỉ khác TONE chip).
+// DOM thật: HighlightCard (wrapper hero) ⊃ SectionCard (frame) ⊃ title · MetaRow(chip) · CTA · bar.
 const CONTENT_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "primitive", role: "khung surface (frame chung mọi state)" },
-    { name: "HighlightCard", tier: "primitive", role: "vành arc accent quét quanh hero" },
-    { name: "MetaRow", tier: "primitive", role: "hàng meta: chip time + segment muted nối ·" },
-    { name: "StatusChip", tier: "primitive", role: "chip time-remaining, tông neutral↔warning theo urgency", state: "neutral↔warning" },
-    { name: "ProgressMeter", tier: "primitive", role: "thanh tiến độ — ĐẶC TRƯNG của shape 'có tiến độ'" },
+    {
+        name: "HighlightCard",
+        tier: "primitive",
+        role: "wrapper hero — vành arc accent quét quanh thẻ (chỉ hero, bọc NGOÀI SectionCard)",
+        children: [
+            {
+                name: "SectionCard",
+                tier: "primitive",
+                role: "khung surface (frame chung mọi state)",
+                children: [
+                    { name: "Typography", tier: "primitive", role: "tiêu đề phiên (weight medium, truncate)" },
+                    {
+                        name: "MetaRow",
+                        tier: "primitive",
+                        role: "hàng meta: segment muted nối · + chip time",
+                        children: [
+                            { name: "StatusChip", tier: "primitive", role: "chip time-remaining, tông neutral↔warning theo urgency", state: "neutral↔warning" },
+                        ],
+                    },
+                    { name: "Button", tier: "primitive", role: "CTA chip (hero, onPress + icon ArrowRight)" },
+                    { name: "ProgressMeter", tier: "primitive", role: "thanh tiến độ — ĐẶC TRƯNG của shape 'có tiến độ'" },
+                ],
+            },
+        ],
+    },
 ]
 
-// loading leaf: Skeleton mirror shape CÓ thanh (title · meta · CTA · bar).
+// loading leaf: Skeleton mirror shape CÓ thanh (title · meta · CTA · bar), tất cả TRONG SectionCard.
+// KHÔNG HighlightCard: render loading là SectionCard trần (đúng footprint, không quầng accent).
 const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "primitive", role: "khung surface (giữ đúng footprint)" },
-    { name: "Skeleton.Typography", tier: "primitive", role: "mirror tiêu đề + meta (×2)" },
-    { name: "Skeleton.Button", tier: "primitive", role: "mirror CTA" },
-    { name: "Skeleton.ProgressBar", tier: "primitive", role: "mirror thanh tiến độ" },
+    {
+        name: "SectionCard",
+        tier: "primitive",
+        role: "khung surface (giữ đúng footprint)",
+        children: [
+            { name: "Skeleton.Typography", tier: "primitive", role: "mirror tiêu đề + meta (×2)", state: "skeleton" },
+            { name: "Skeleton.Button", tier: "primitive", role: "mirror CTA", state: "skeleton" },
+            { name: "Skeleton.ProgressBar", tier: "primitive", role: "mirror thanh tiến độ", state: "skeleton" },
+        ],
+    },
 ]
 
-// error leaf: network drop → chỉ EmptyState trong khung.
+// error leaf: network drop → EmptyState trong khung, nút Thử lại nằm TRONG EmptyState (prop action).
 const ERROR_PARTS: Array<AnatomyNode> = [
-    { name: "SectionCard", tier: "primitive", role: "khung surface" },
-    { name: "EmptyState", tier: "design", role: "tone danger + icon + mô tả + nút Thử lại", state: "danger" },
+    {
+        name: "SectionCard",
+        tier: "primitive",
+        role: "khung surface",
+        children: [
+            {
+                name: "EmptyState",
+                tier: "design",
+                role: "tone danger + icon + mô tả + nút Thử lại",
+                state: "danger",
+                children: [
+                    { name: "Button", tier: "primitive", role: "nút thử lại (secondary, trong prop action)" },
+                ],
+            },
+        ],
+    },
 ]
 
 /** STATE không gấp — còn nhiều giờ: chip time NEUTRAL + thanh tiến độ. */

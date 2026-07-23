@@ -30,20 +30,55 @@ type Story = StoryObj<typeof TopicLane>
 const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
 
 // The lane-content parts (every row-bearing leaf shares this composition).
+// DOM: header (Icon span + tiêu đề Typography) → list div → mỗi hàng là <button>
+// hand-roll BỌC nhãn + tag Typography bên trong (không phải sibling phẳng).
 const CONTENT_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "tiêu đề lane + nhãn lesson + tag (type=code)" },
-    { name: "ListRow", tier: "primitive", role: "hàng chủ đề bấm được (đang hand-roll button)" },
+    { name: "Icon", tier: "primitive", role: "icon lane (code / hạ tầng) — ReactNode truyền vào, bọc <span> size-4" },
+    { name: "Typography", tier: "primitive", role: "tiêu đề lane (type=body-sm, weight=semibold)" },
+    {
+        name: "button",
+        tier: "primitive",
+        role: "hàng chủ đề bấm được — hand-roll <button> (có port ListRow nhưng chưa dùng)",
+        children: [
+            { name: "Typography · nhãn", tier: "primitive", role: "nhãn lesson (type=body-sm, truncate, hover underline)" },
+            { name: "Typography · tag", tier: "primitive", role: "tag khóa phải (type=code, text-[10px] muted)" },
+        ],
+    },
 ]
 
-// empty leaf: header stays, the row list is replaced by an EmptyState.
+// empty leaf: header (Icon + tiêu đề) vẫn giữ, danh sách hàng đổi sang EmptyState
+// (là sibling của lane trong story); EmptyState tự bọc icon + tiêu đề + mô tả.
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "tiêu đề lane (không còn hàng nào)" },
-    { name: "EmptyState", tier: "primitive", role: '"Chưa có chủ đề nào" thay cho danh sách hàng', state: "empty" },
+    { name: "Icon", tier: "primitive", role: "icon lane — header vẫn giữ" },
+    { name: "Typography", tier: "primitive", role: "tiêu đề lane (type=body-sm, weight=semibold)" },
+    {
+        name: "EmptyState",
+        tier: "primitive",
+        role: '"Chưa có chủ đề nào" thay cho danh sách hàng',
+        state: "empty",
+        children: [
+            { name: "Icon · rỗng", tier: "primitive", role: "icon rỗng (TrayIcon, size-8, muted)" },
+            { name: "Typography · tiêu đề rỗng", tier: "primitive", role: "tiêu đề rỗng (weight=medium, center)" },
+            { name: "Typography · mô tả", tier: "primitive", role: "mô tả (type=body-xs, muted, center)" },
+        ],
+    },
 ]
 
-// loading leaf: chrome mirrored, header + row frames become Skeleton bars (same footprint).
+// loading leaf: chrome mirrored — header Skeleton (icon + tiêu đề) + 3 khung hàng,
+// mỗi khung BỌC 2 Skeleton (nhãn + tag) đúng footprint <button> để không nhảy layout.
 const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton", tier: "primitive", role: "mirror header (icon + tiêu đề) + các hàng — giữ đúng footprint", state: "skeleton" },
+    { name: "Skeleton · icon", tier: "primitive", role: "mirror icon lane (size-4)", state: "skeleton" },
+    { name: "Skeleton · tiêu đề", tier: "primitive", role: "mirror tiêu đề lane (h-[14px] w-20)", state: "skeleton" },
+    {
+        name: "Row frame",
+        tier: "primitive",
+        role: "khung hàng ×3 (div border + surface) — giữ đúng footprint của <button>",
+        state: "skeleton",
+        children: [
+            { name: "Skeleton · nhãn", tier: "primitive", role: "mirror nhãn lesson (h-[14px] w-1/2)", state: "skeleton" },
+            { name: "Skeleton · tag", tier: "primitive", role: "mirror tag (h-3 w-6)", state: "skeleton" },
+        ],
+    },
 ]
 
 export const SingleRow: Story = {

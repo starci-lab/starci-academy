@@ -101,35 +101,69 @@ const MIXED_KIND_ITEMS: Array<SearchCourseContentItem> = [
 
 const SINGLE_ITEM: Array<SearchCourseContentItem> = [FLASHCARD_ITEMS[0]]
 
-// The result-list parts (single-kind and mixed-kind leaves share this composition).
-const RESULT_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "header eyebrow: icon + nhãn loại + số lượng kết quả" },
+// Header eyebrow: the block wraps the caller's label in a muted Typography and, on data
+// leaves, renders a result-count Typography beside it. The leading icon is a caller-passed
+// slot the block renders raw (no block-owned wrapper) → it is NOT an owned part.
+const HEADER_PARTS: Array<AnatomyNode> = [
+    { name: "Typography", tier: "primitive", role: "header eyebrow: nhãn loại (muted, truncate) — icon đứng trước là slot caller truyền" },
+    { name: "Typography", tier: "primitive", role: "số lượng kết quả (chỉ khi không tải + có ≥1 hàng)" },
+]
+
+// A pickable row with NO kind chip / breadcrumb / lock: just the foreground title + snippet.
+// (Flashcard hits carry breadcrumb=null and these leaves pass showKindChip off → neither shows.)
+const SIMPLE_ROW: AnatomyNode = {
+    name: "EntityResultRow",
+    tier: "design",
+    role: "hàng kết quả pickable (lặp ×N) — cả hàng là nav link",
+    children: [
+        { name: "Typography", tier: "primitive", role: "tiêu đề foreground, hover gạch chân (affordance)" },
+        { name: "Typography", tier: "primitive", role: "snippet muted một dòng (khi showSnippet + có snippet)" },
+    ],
+}
+
+// A pickable row in a MIXED-kind list: kind chip on top; a locked hit adds the enrol flag.
+const CHIP_LOCKED_ROW: AnatomyNode = {
+    name: "EntityResultRow",
+    tier: "design",
+    role: "hàng kết quả pickable (lặp ×N)",
+    children: [
+        { name: "EnumChip", tier: "primitive", role: "chip loại (kind → màu soft) khi showKindChip" },
+        { name: "Typography", tier: "primitive", role: "tiêu đề foreground, hover gạch chân" },
+        { name: "Typography", tier: "primitive", role: "snippet muted (khi có snippet)" },
+        { name: "LockSimpleIcon", tier: "primitive", role: "cờ 'Ghi danh để mở' — hàng vẫn navigate", state: "locked" },
+    ],
+}
+
+// Single-kind data leaf (no chip): header + simple rows.
+const SIMPLE_PARTS: Array<AnatomyNode> = [...HEADER_PARTS, SIMPLE_ROW]
+
+// view-all leaf: simple rows + a hand-rolled footer link (see block NOTE: no Button port variant fits).
+const VIEWALL_PARTS: Array<AnatomyNode> = [
+    ...SIMPLE_PARTS,
     {
-        name: "EntityResultRow",
-        tier: "design",
-        role: "mỗi hàng kết quả pickable (lặp ×N)",
-        children: [
-            { name: "EnumChip", tier: "design", role: "chip loại (khi showKindChip) / breadcrumb" },
-            { name: "LockSimpleIcon", tier: "primitive", role: "cờ khoá 'Ghi danh để mở'", state: "locked" },
-        ],
+        name: "button",
+        tier: "primitive",
+        role: "footer link 'xem tất cả' — hand-rolled (port Button không có variant text-trái full-width)",
+        children: [{ name: "ArrowRightIcon", tier: "primitive", role: "mũi tên, dịch nhẹ khi hover" }],
     },
 ]
 
-// view-all leaf: same result list + a footer link opening the full search view.
-const VIEWALL_PARTS: Array<AnatomyNode> = [
-    ...RESULT_PARTS,
-    { name: "Xem tất cả", tier: "primitive", role: "footer link mở toàn bộ kết quả tìm kiếm" },
-]
+// Mixed-kind + locked leaf: header + chip/locked rows (no footer link).
+const MIXED_PARTS: Array<AnatomyNode> = [...HEADER_PARTS, CHIP_LOCKED_ROW]
 
-// loading leaf: header stays, body becomes skeleton row frames mirroring the list shape.
+// loading leaf: header label only (no count) + SurfaceListCardItem skeleton frames mirroring the row shape.
 const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "header eyebrow (không đếm khi đang tải)" },
+    { name: "Typography", tier: "primitive", role: "header eyebrow (không hiện số khi đang tải)" },
     {
         name: "SurfaceListCardItem",
-        tier: "design",
+        tier: "primitive",
         role: "khung hàng skeleton ×2 (giữ đúng footprint hàng thật)",
         state: "skeleton",
-        children: [{ name: "Skeleton", tier: "primitive", role: "thanh chip + tiêu đề + snippet giả (không spinner)" }],
+        children: [
+            { name: "Skeleton.Chip", tier: "primitive", role: "chip loại giả (khi showKindChip)", state: "skeleton" },
+            { name: "Skeleton.Typography", tier: "primitive", role: "thanh tiêu đề giả (3/4)", state: "skeleton" },
+            { name: "Skeleton.Typography", tier: "primitive", role: "thanh snippet giả (full)", state: "skeleton" },
+        ],
     },
 ]
 
@@ -188,7 +222,7 @@ export const MixedKindLocked: Story = {
                 name="ChatToolResult"
                 tier="block"
                 leaf="Nhiều loại + khoá"
-                parts={RESULT_PARTS}
+                parts={MIXED_PARTS}
                 note="Danh sách trộn loại → mỗi EntityResultRow hiện EnumChip loại; hàng bị khoá thêm cờ 'Ghi danh để mở'. Không có footer xem-tất-cả."
             >
                 <ChatWidth>
@@ -211,8 +245,8 @@ export const SingleResult: Story = {
                 name="ChatToolResult"
                 tier="block"
                 leaf="Một kết quả"
-                parts={RESULT_PARTS}
-                note="Chỉ một hàng khớp → CÙNG composition với leaf nhiều loại, chỉ khác số lượng EntityResultRow."
+                parts={SIMPLE_PARTS}
+                note="Chỉ một hàng khớp, không chip loại/không breadcrumb/không khoá → hàng chỉ có tiêu đề + snippet (CÙNG composition với leaf xem-tất-cả, chỉ khác số lượng hàng và không có footer link)."
             >
                 <ChatWidth>
                     <ChatToolResult

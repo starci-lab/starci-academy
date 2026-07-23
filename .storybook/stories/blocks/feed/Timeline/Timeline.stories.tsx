@@ -22,7 +22,9 @@ type Story = StoryObj<typeof Timeline>
 /** Plain canvas for the demo stories — each leaf wraps its own BlockAnatomy. */
 const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
-// The timeline composition: a chain of FeedItem rows, each with an ActivityAvatar leading.
+// The timeline composition: a chain of FeedItem rows. Each FeedItem mounts its
+// `leading` (an ActivityAvatar) then its own text column — the action-text
+// Typography and the muted timestamp Typography, in DOM order.
 const TIMELINE_PARTS: Array<AnatomyNode> = [
     {
         name: "FeedItem",
@@ -30,6 +32,8 @@ const TIMELINE_PARTS: Array<AnatomyNode> = [
         role: "mỗi dòng hoạt động bên cạnh đường nối",
         children: [
             { name: "ActivityAvatar", tier: "block", role: "leading của từng FeedItem" },
+            { name: "Typography", tier: "primitive", role: "nội dung hành động (body-sm)" },
+            { name: "Typography", tier: "primitive", role: "mốc thời gian, muted (body-xs)" },
         ],
     },
 ]

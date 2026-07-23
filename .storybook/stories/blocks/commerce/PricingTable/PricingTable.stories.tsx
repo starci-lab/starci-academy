@@ -76,29 +76,71 @@ const threeTiers: PricingTableTier[] = [
     },
 ]
 
-// Highlighted leaf: at least one tier is nổi bật → its PricingCard carries the StatusChip ribbon.
+// Feature list sub-tree — ONE CrossListCard (bordered) whose rows mix ✓ (check/success)
+// and ✗ (cross/muted); shared by both leaves. Each CrossListItem nests its mark Icon +
+// label Typography, faithfully to CrossListItem's real render (markIcon + children).
+const FEATURE_LIST: AnatomyNode = {
+    name: "CrossListCard",
+    tier: "design",
+    role: "danh sách tính năng — 1 list trộn dòng có (✓) và không có (✗); khung bordered lồng trong thẻ",
+    children: [
+        {
+            name: "CrossListItem",
+            tier: "design",
+            role: "mỗi tính năng một dòng (lặp theo features)",
+            children: [
+                { name: "Icon", tier: "primitive", role: "dấu ✓ check (success, included) hoặc ✗ cross (muted, excluded) theo `included`" },
+                { name: "Typography", tier: "primitive", role: "nhãn tính năng — chìm (muted) khi không included" },
+            ],
+        },
+    ],
+}
+
+// Highlighted leaf: at least one tier is nổi bật → its PricingCard's SectionCard is accent
+// and carries the StatusChip ribbon inline beside the tier name.
 const HIGHLIGHTED_PARTS: Array<AnatomyNode> = [
     {
         name: "PricingCard",
         tier: "design",
-        role: "mỗi cột một tier (khung + tên + giá + CTA)",
+        role: "mỗi cột một tier — composite lồng cả khung + nội dung",
         children: [
-            { name: "StatusChip", tier: "primitive", role: 'nhãn "phổ biến" trên tier nổi bật', state: "accent" },
-            { name: "CrossListCard", tier: "design", role: "danh sách tính năng — 1 list trộn dòng có (✓ success) và không có (✗ muted)" },
-            { name: "Button", tier: "primitive", role: "CTA chọn gói — một hành động duy nhất mỗi cột" },
+            {
+                name: "SectionCard",
+                tier: "design",
+                role: "khung thẻ chứa toàn bộ cột (accent khi tier nổi bật)",
+                children: [
+                    { name: "Typography", tier: "primitive", role: "tên gói — tiêu đề cột" },
+                    { name: "StatusChip", tier: "primitive", role: 'ribbon "phổ biến" cạnh tên — chỉ tier nổi bật', state: "accent" },
+                    { name: "Typography", tier: "primitive", role: "giá + period (period chìm muted)" },
+                    { name: "Typography", tier: "primitive", role: "mô tả gói — chìm (muted)" },
+                    FEATURE_LIST,
+                    { name: "Button", tier: "primitive", role: "CTA chọn gói — một hành động duy nhất mỗi cột" },
+                ],
+            },
         ],
     },
 ]
 
-// Plain leaf: no tier is highlighted → NO StatusChip; every PricingCard is đồng cấp.
+// Plain leaf: no tier is highlighted → SectionCard is not accent and there is NO StatusChip;
+// every PricingCard is đồng cấp. Otherwise the same composition as the highlighted leaf.
 const PLAIN_PARTS: Array<AnatomyNode> = [
     {
         name: "PricingCard",
         tier: "design",
-        role: "mỗi cột một tier (khung + tên + giá + CTA)",
+        role: "mỗi cột một tier — composite lồng cả khung + nội dung",
         children: [
-            { name: "CrossListCard", tier: "design", role: "danh sách tính năng — 1 list trộn dòng có (✓ success) và không có (✗ muted)" },
-            { name: "Button", tier: "primitive", role: "CTA chọn gói — một hành động duy nhất mỗi cột" },
+            {
+                name: "SectionCard",
+                tier: "design",
+                role: "khung thẻ chứa toàn bộ cột (không accent — mọi cột đồng cấp)",
+                children: [
+                    { name: "Typography", tier: "primitive", role: "tên gói — tiêu đề cột" },
+                    { name: "Typography", tier: "primitive", role: "giá + period (period chìm muted)" },
+                    { name: "Typography", tier: "primitive", role: "mô tả gói — chìm (muted)" },
+                    FEATURE_LIST,
+                    { name: "Button", tier: "primitive", role: "CTA chọn gói — một hành động duy nhất mỗi cột" },
+                ],
+            },
         ],
     },
 ]

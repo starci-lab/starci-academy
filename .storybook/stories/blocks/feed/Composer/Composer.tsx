@@ -42,6 +42,10 @@ export interface ComposerProps {
     attachSlot?: React.ReactNode
     /** Extra classes merged onto the root. */
     className?: string
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
+    /** When on, each part emits `data-anat-part` so a BlockAnatomy panel can badge it on-render. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -64,6 +68,8 @@ export const Composer = ({
     submitLabel = "Gửi",
     attachSlot,
     className,
+    anatPart,
+    showAnatomy = false,
 }: ComposerProps) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null)
     // only submit a non-empty draft that is not already in flight
@@ -90,14 +96,23 @@ export const Composer = ({
     }
 
     return (
-        <div className={cn("flex items-end gap-3", className)}>
+        <div className={cn("flex items-end gap-3", className)} data-anat-part={anatPart}>
             {/* optional leading avatar — omitted when no src is supplied */}
             {avatarSrc ? (
-                <UserAvatar size="sm" avatar={avatarSrc} className="mb-1 shrink-0" />
+                <UserAvatar
+                    size="sm"
+                    avatar={avatarSrc}
+                    className="mb-1 shrink-0"
+                    anatPart={showAnatomy ? "UserAvatar" : undefined}
+                />
             ) : null}
 
             {/* auto-growing field */}
-            <TextField variant="secondary" className="min-w-0 flex-1">
+            <TextField
+                variant="secondary"
+                className="min-w-0 flex-1"
+                data-anat-part={showAnatomy ? "TextField · TextArea" : undefined}
+            >
                 <TextArea
                     ref={textareaRef}
                     rows={1}
@@ -110,7 +125,10 @@ export const Composer = ({
             </TextField>
 
             {/* trailing action cluster: optional attach slot, then the primary Send */}
-            <div className="flex shrink-0 items-center gap-1">
+            <div
+                className="flex shrink-0 items-center gap-1"
+                data-anat-part={showAnatomy ? "div · actions" : undefined}
+            >
                 {attachSlot}
                 {/* NOTE: not using Button's `icon`/`isPending` — port renders icon TRAILING and
                     keeps it alongside isPending's own spinner, but this control needs the

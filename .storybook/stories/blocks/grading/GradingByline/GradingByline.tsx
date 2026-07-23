@@ -18,11 +18,11 @@ import { AiCategoryChip, AiModelCategory } from "../../chips/AiCategoryChip/AiCa
  *
  * @param props - whether the attempt passed + an optional className override.
  */
-export const VerdictIcon = ({ pass, className }: { pass: boolean, className?: string }) =>
+export const VerdictIcon = ({ pass, className, showAnatomy }: { pass: boolean, className?: string, showAnatomy?: boolean }) =>
     pass ? (
-        <CheckCircleIcon aria-hidden focusable="false" className={cn("size-4 shrink-0 text-success-soft-foreground", className)} />
+        <CheckCircleIcon aria-hidden focusable="false" className={cn("size-4 shrink-0 text-success-soft-foreground", className)} data-anat-part={showAnatomy ? "VerdictIcon" : undefined} />
     ) : (
-        <XCircleIcon aria-hidden focusable="false" className={cn("size-4 shrink-0 text-danger-soft-foreground", className)} />
+        <XCircleIcon aria-hidden focusable="false" className={cn("size-4 shrink-0 text-danger-soft-foreground", className)} data-anat-part={showAnatomy ? "VerdictIcon" : undefined} />
     )
 
 /**
@@ -38,21 +38,23 @@ export const ModelByline = ({
     model,
     category,
     withLabel = false,
+    showAnatomy = false,
 }: {
     model: string | null
     category?: AiModelCategory
     withLabel?: boolean
+    showAnatomy?: boolean
 }) => {
     if (!model) {
         return null
     }
     return (
         <>
-            <span className="flex items-center gap-2 text-sm text-muted">
-                <SparkleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-accent-soft-foreground" />
+            <span className="flex items-center gap-2 text-sm text-muted" data-anat-part={showAnatomy ? "span · dòng attribution" : undefined}>
+                <SparkleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-accent-soft-foreground" data-anat-part={showAnatomy ? "SparkleIcon" : undefined} />
                 <span>
                     {withLabel ? "Đã chấm bởi " : null}
-                    <span className="text-foreground">{model}</span>
+                    <span className="text-foreground" data-anat-part={showAnatomy ? "Model text" : undefined}>{model}</span>
                 </span>
             </span>
             {category ? <AiCategoryChip category={category} /> : null}

@@ -81,7 +81,7 @@ export const NoCaption: Story = {
                 reason="Value-prop System Design/DevOps thành hình: một 'mini infra' isometric (pod cubes sau một service, một datastore single-node là điểm nghẽn) vẽ thuần SVG. Topology cố định trong block, chỉ `caption` là prop."
             >
                 <div className="max-w-xl">
-                    <MicroservicesScene />
+                    <MicroservicesScene showAnatomy />
                 </div>
             </BlockAnatomy>,
         ),
@@ -99,7 +99,7 @@ export const ShortCaption: Story = {
                 note="Thêm caption Typography (body-sm · muted) dưới minh hoạ — composition khác leaf trần."
             >
                 <div className="max-w-xl">
-                    <MicroservicesScene caption="Một node database duy nhất là điểm nghẽn của toàn hệ thống." />
+                    <MicroservicesScene showAnatomy caption="Một node database duy nhất là điểm nghẽn của toàn hệ thống." />
                 </div>
             </BlockAnatomy>,
         ),
@@ -117,7 +117,7 @@ export const LongCaptionWrap: Story = {
                 note="CÙNG composition với 'Caption ngắn' — chỉ khác độ dài caption + bề rộng khung nên chữ xuống dòng."
             >
                 <div className="max-w-[420px]">
-                    <MicroservicesScene caption="Ba pod chạy song song phía sau service, nhưng cả ba đều ghi vào cùng một Postgres một node — khi lưu lượng tăng, node này nghẽn trước, kéo sập cả cụm dù các pod vẫn khoẻ." />
+                    <MicroservicesScene showAnatomy caption="Ba pod chạy song song phía sau service, nhưng cả ba đều ghi vào cùng một Postgres một node — khi lưu lượng tăng, node này nghẽn trước, kéo sập cả cụm dù các pod vẫn khoẻ." />
                 </div>
             </BlockAnatomy>,
         ),

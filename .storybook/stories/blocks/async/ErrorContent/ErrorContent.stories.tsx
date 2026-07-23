@@ -100,7 +100,7 @@ export const Basic: Story = {
                 parts={BASIC_PARTS}
                 reason={"Trạng thái lỗi của một vùng dữ liệu async cần đúng anatomy của EmptyState tone=\"danger\" (icon cảnh báo + tiêu đề + mô tả + nút thử lại canh giữa). ErrorContent chỉ thêm icon WarningOctagon mặc định và truyền onRetry/retryLabel xuống action — nên nó là một lớp mỏng trên EmptyState, không nên tự vẽ lại."}
             >
-                <ErrorContent title="Đã có lỗi xảy ra" />
+                <ErrorContent title="Đã có lỗi xảy ra" showAnatomy />
             </BlockAnatomy>,
         ),
 }
@@ -118,6 +118,7 @@ export const WithDescription: Story = {
                 <ErrorContent
                     title="Không tải được dữ liệu"
                     description="Máy chủ tạm thời không phản hồi. Vui lòng thử lại sau."
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -138,6 +139,7 @@ export const WithRetry: Story = {
                     description="Đã có lỗi xảy ra khi tải nội dung."
                     onRetry={() => {}}
                     retryLabel="Thử lại"
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -154,11 +156,12 @@ export const CustomIcon: Story = {
                 note="Cùng shape đầy đủ, chỉ thay icon mặc định bằng icon caller truyền vào."
             >
                 <ErrorContent
-                    icon={<WifiSlashIcon aria-hidden focusable="false" weight="duotone" className="size-8 text-foreground" />}
+                    icon={<WifiSlashIcon aria-hidden focusable="false" weight="duotone" className="size-8 text-foreground" data-anat-part="WifiSlashIcon" />}
                     title="Mất kết nối mạng"
                     description="Kiểm tra kết nối rồi thử lại."
                     onRetry={() => {}}
                     retryLabel="Thử lại"
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),

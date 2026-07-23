@@ -79,6 +79,8 @@ export interface SurfaceListCardProps extends SurfaceLabelProps {
     description?: ReactNode
     /** Extra classes on the outer section / surface. */
     className?: string
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
 }
 
 /**
@@ -100,12 +102,14 @@ export const SurfaceListCard = ({
     seeMoreLabel,
     action,
     subtleLabel = false,
+    anatPart,
 }: SurfaceListCardProps) => {
     const isEmpty = React.Children.count(children) === 0
     const inner = isEmpty && emptyState != null ? <div className="p-8">{emptyState}</div> : children
     const bare = label == null && description == null
     const surface = (
         <div
+            data-anat-part={bare ? anatPart : undefined}
             className={cn(
                 "overflow-hidden",
                 surfaceFrame(bordered),
@@ -123,7 +127,7 @@ export const SurfaceListCard = ({
         </div>
     ) : surface
     return (
-        <section className={cn("flex flex-col", surfaceSectionGap(subtleLabel), className)}>
+        <section data-anat-part={anatPart} className={cn("flex flex-col", surfaceSectionGap(subtleLabel), className)}>
             <SurfaceCardHeader
                 label={label}
                 labelEnd={labelEnd}

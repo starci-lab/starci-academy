@@ -101,7 +101,7 @@ export const Basic: Story = {
                 parts={BASE_PARTS}
                 reason="Trạng thái rỗng của một vùng dữ liệu async cần đúng anatomy của EmptyState (icon + tiêu đề + mô tả + action canh giữa). EmptyContent chỉ thêm icon TrayIcon mặc định và gói onRetry/retryLabel thành nút trong slot action — nên nó là một lớp mỏng trên EmptyState, không nên tự vẽ lại."
             >
-                <EmptyContent title="Chưa có dữ liệu" />
+                <EmptyContent title="Chưa có dữ liệu" showAnatomy />
             </BlockAnatomy>,
         ),
 }
@@ -120,6 +120,7 @@ export const WithDescription: Story = {
                 <EmptyContent
                     title="Danh sách trống"
                     description="Bạn chưa lưu mục nào vào danh sách này."
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -141,6 +142,7 @@ export const WithRetry: Story = {
                     description="Thử đổi bộ lọc hoặc tải lại để xem thêm."
                     onRetry={() => {}}
                     retryLabel="Tải lại"
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -158,9 +160,10 @@ export const CustomIcon: Story = {
                 note="Ghi đè icon mặc định (TrayIcon → MagnifyingGlassIcon); các slot còn lại cùng shape với leaf 'Có mô tả'."
             >
                 <EmptyContent
-                    icon={<MagnifyingGlassIcon aria-hidden focusable="false" weight="duotone" className="size-8 text-foreground" />}
+                    icon={<MagnifyingGlassIcon aria-hidden focusable="false" weight="duotone" className="size-8 text-foreground" data-anat-part="MagnifyingGlassIcon" />}
                     title="Không có kết quả khớp"
                     description="Không có mục nào khớp với từ khoá bạn nhập."
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),

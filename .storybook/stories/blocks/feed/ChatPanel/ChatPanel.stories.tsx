@@ -138,10 +138,12 @@ const Controlled = ({
     initialMessages,
     isTyping,
     emptyState,
+    showAnatomy,
 }: {
     initialMessages: Array<ChatPanelMessage>
     isTyping?: boolean
     emptyState?: ReactNode
+    showAnatomy?: boolean
 }) => {
     const [messages, setMessages] = useState(initialMessages)
     const [draft, setDraft] = useState("")
@@ -151,6 +153,7 @@ const Controlled = ({
                 messages={messages}
                 isTyping={isTyping}
                 emptyState={emptyState}
+                showAnatomy={showAnatomy}
                 composer={{
                     value: draft,
                     onChange: setDraft,
@@ -183,7 +186,7 @@ export const Conversation: Story = {
                 parts={CONVERSATION_PARTS}
                 reason="Một surface chat hoàn chỉnh: danh sách tin cuộn được + typing indicator + empty-state + ô soạn ghim đáy, tự cuộn xuống lượt mới nhất. Gói ChatBubble + Composer + auto-scroll vào một block để mọi feature chat props-only là chạy."
             >
-                <Controlled initialMessages={baseMessages} />
+                <Controlled initialMessages={baseMessages} showAnatomy />
             </BlockAnatomy>,
         ),
 }
@@ -200,10 +203,11 @@ export const Empty: Story = {
             >
                 <Controlled
                     initialMessages={[]}
+                    showAnatomy
                     emptyState={(
                         <div className="flex flex-col items-center gap-2 text-center">
-                            <ChatCircleDotsIcon aria-hidden focusable="false" className="size-8 text-muted" />
-                            <Typography type="body-sm" color="muted">
+                            <ChatCircleDotsIcon aria-hidden focusable="false" className="size-8 text-muted" data-anat-part="ChatCircleDotsIcon" />
+                            <Typography type="body-sm" color="muted" data-anat-part="Typography">
                                 No messages yet. Ask the teaching assistant your first question.
                             </Typography>
                         </div>
@@ -223,7 +227,7 @@ export const Typing: Story = {
                 parts={TYPING_PARTS}
                 note="Trợ lý đang soạn → dưới lượt cuối thêm typing indicator ba chấm nảy; phần còn lại cùng composition với leaf 'Có hội thoại'."
             >
-                <Controlled initialMessages={baseMessages.slice(0, 3)} isTyping />
+                <Controlled initialMessages={baseMessages.slice(0, 3)} isTyping showAnatomy />
             </BlockAnatomy>,
         ),
 }

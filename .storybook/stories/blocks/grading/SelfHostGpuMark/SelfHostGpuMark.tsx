@@ -14,6 +14,8 @@ import { CpuIcon } from "@phosphor-icons/react"
 export interface SelfHostGpuMarkProps {
     /** Extra classes on the tooltip trigger. */
     className?: string
+    /** When on, emit `data-anat-part` markers for the anatomy overlay. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -22,16 +24,22 @@ export interface SelfHostGpuMarkProps {
  *
  * @param props - {@link SelfHostGpuMarkProps}
  */
-export const SelfHostGpuMark = ({ className }: SelfHostGpuMarkProps) => {
+export const SelfHostGpuMark = ({ className, showAnatomy }: SelfHostGpuMarkProps) => {
     return (
-        <Tooltip>
+        <Tooltip data-anat-part={showAnatomy ? "Tooltip" : undefined}>
             <Tooltip.Trigger
                 aria-label="Model tự host trên GPU của StarCi"
                 className={cn("inline-flex shrink-0 cursor-default", className)}
+                data-anat-part={showAnatomy ? "Tooltip.Trigger" : undefined}
             >
-                <CpuIcon aria-hidden focusable="false" className="size-4 text-accent-soft-foreground" />
+                <CpuIcon
+                    aria-hidden
+                    focusable="false"
+                    className="size-4 text-accent-soft-foreground"
+                    data-anat-part={showAnatomy ? "CpuIcon" : undefined}
+                />
             </Tooltip.Trigger>
-            <Tooltip.Content>
+            <Tooltip.Content data-anat-part={showAnatomy ? "Tooltip.Content" : undefined}>
                 <span className="text-sm">
                     Model chạy trên hạ tầng GPU nội bộ của StarCi (ví dụ RTX 5060), không gọi API bên ngoài.
                 </span>

@@ -38,6 +38,8 @@ export interface SectionCardProps {
     contentClassName?: string
     /** Extra classes on the card root. */
     className?: string
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
 }
 
 /**
@@ -59,10 +61,12 @@ export const SectionCard = ({
     isSkeleton = false,
     className,
     contentClassName,
+    anatPart,
 }: SectionCardProps) => {
     const hasHeader = Boolean(title || action || icon)
     return (
         <Card
+            data-anat-part={anatPart}
             className={cn(
                 accent && "border-accent",
                 verdictBandClassName(withVerdict),

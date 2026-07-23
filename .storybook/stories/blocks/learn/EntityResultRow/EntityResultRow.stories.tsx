@@ -142,10 +142,10 @@ export const KindChips: Story = {
                 reason="Một kết quả tìm kiếm RAG cần một nhãn LOẠI theo enum (EnumChip: kind → màu) đứng trên tiêu đề-link. Gói nhãn-loại + breadcrumb + tiêu đề (hover-underline, foreground) + snippet + trạng thái khoá vào MỘT dòng pickable dùng chung cho 3 nơi (widget kết quả tool trong chat, danh sách liên quan, view tìm kiếm AI) — mỗi nơi chỉ bật/tắt showKindChip·showSnippet, không dựng lại dòng."
             >
                 <RowFrame>
-                    <EntityResultRow item={CONTENT_ITEM} onSelect={() => {}} showKindChip />
-                    <EntityResultRow item={CHALLENGE_ITEM} onSelect={() => {}} showKindChip />
-                    <EntityResultRow item={FLASHCARD_ITEM} onSelect={() => {}} showKindChip />
-                    <EntityResultRow item={MILESTONE_ITEM} onSelect={() => {}} showKindChip />
+                    <EntityResultRow item={CONTENT_ITEM} onSelect={() => {}} showKindChip showAnatomy />
+                    <EntityResultRow item={CHALLENGE_ITEM} onSelect={() => {}} showKindChip showAnatomy />
+                    <EntityResultRow item={FLASHCARD_ITEM} onSelect={() => {}} showKindChip showAnatomy />
+                    <EntityResultRow item={MILESTONE_ITEM} onSelect={() => {}} showKindChip showAnatomy />
                 </RowFrame>
             </BlockAnatomy>,
         ),
@@ -163,7 +163,7 @@ export const Breadcrumb: Story = {
                 note="Tắt showKindChip → breadcrumb muted thay chip đứng trên tiêu đề."
             >
                 <RowFrame>
-                    <EntityResultRow item={CONTENT_ITEM} onSelect={() => {}} />
+                    <EntityResultRow item={CONTENT_ITEM} onSelect={() => {}} showAnatomy />
                 </RowFrame>
             </BlockAnatomy>,
         ),
@@ -181,7 +181,7 @@ export const NoChipNoBreadcrumb: Story = {
                 note="Không chip, breadcrumb null, snippet rỗng → dòng thu về đúng một Typography tiêu đề."
             >
                 <RowFrame>
-                    <EntityResultRow item={NO_BREADCRUMB_ITEM} onSelect={() => {}} />
+                    <EntityResultRow item={NO_BREADCRUMB_ITEM} onSelect={() => {}} showAnatomy />
                 </RowFrame>
             </BlockAnatomy>,
         ),
@@ -199,7 +199,7 @@ export const WithSnippet: Story = {
                 note="Bật showSnippet → thêm dòng snippet muted làm ngữ cảnh dưới tiêu đề."
             >
                 <RowFrame>
-                    <EntityResultRow item={CONTENT_ITEM} onSelect={() => {}} showSnippet />
+                    <EntityResultRow item={CONTENT_ITEM} onSelect={() => {}} showSnippet showAnatomy />
                 </RowFrame>
             </BlockAnatomy>,
         ),
@@ -217,9 +217,9 @@ export const MultipleRows: Story = {
                 note="Lặp dòng snippet ×N trong một khung — CÙNG composition với leaf 'Có snippet', separator inset giữa các dòng."
             >
                 <RowFrame>
-                    <EntityResultRow item={CONTENT_ITEM} onSelect={() => {}} showSnippet />
-                    <EntityResultRow item={CHALLENGE_ITEM} onSelect={() => {}} showSnippet />
-                    <EntityResultRow item={FLASHCARD_ITEM} onSelect={() => {}} showSnippet />
+                    <EntityResultRow item={CONTENT_ITEM} onSelect={() => {}} showSnippet showAnatomy />
+                    <EntityResultRow item={CHALLENGE_ITEM} onSelect={() => {}} showSnippet showAnatomy />
+                    <EntityResultRow item={FLASHCARD_ITEM} onSelect={() => {}} showSnippet showAnatomy />
                 </RowFrame>
             </BlockAnatomy>,
         ),
@@ -237,7 +237,7 @@ export const Locked: Story = {
                 note="isLocked → thêm LockSimpleIcon + 'Ghi danh để mở', dòng vẫn navigate về gate ghi danh."
             >
                 <RowFrame>
-                    <EntityResultRow item={LOCKED_ITEM} onSelect={() => {}} />
+                    <EntityResultRow item={LOCKED_ITEM} onSelect={() => {}} showAnatomy />
                 </RowFrame>
             </BlockAnatomy>,
         ),

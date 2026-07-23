@@ -52,6 +52,11 @@ export interface DiffViewerProps {
      * `"split"` places the old file on the left and the new file on the right.
      */
     variant?: DiffViewerVariant
+    /**
+     * When on, each rendered part carries a `data-anat-part="<name>"` attribute so
+     * the anatomy panel can draw a numbered on-render badge over it. Dev/spec only.
+     */
+    showAnatomy?: boolean
     /** Extra classes on the outer frame. */
     className?: string
 }
@@ -71,35 +76,66 @@ const LINE_MARKER: Record<DiffLineType, string> = {
 }
 
 /** A monospace line-number cell in the gutter (right-aligned, non-selectable). */
-const NumberCell = ({ value }: { value?: number }) => (
-    <span className="w-10 shrink-0 select-none pr-2 text-right tabular-nums text-muted-foreground">
+const NumberCell = ({ value, anatPart }: { value?: number; anatPart?: string }) => (
+    <span
+        data-anat-part={anatPart}
+        className="w-10 shrink-0 select-none pr-2 text-right tabular-nums text-muted-foreground"
+    >
         {value ?? ""}
     </span>
 )
 
 /** One rendered line in the UNIFIED layout: [old #][new #][marker][content]. */
-const UnifiedRow = ({ line }: { line: DiffLine }) => (
-    <div className={cn("flex items-start", LINE_TONE[line.type])}>
-        <NumberCell value={line.oldNumber} />
-        <NumberCell value={line.newNumber} />
-        <span className="w-4 shrink-0 select-none text-center">
+const UnifiedRow = ({ line, showAnatomy }: { line: DiffLine; showAnatomy?: boolean }) => (
+    <div
+        data-anat-part={showAnatomy ? "UnifiedRow" : undefined}
+        className={cn("flex items-start", LINE_TONE[line.type])}
+    >
+        <NumberCell value={line.oldNumber} anatPart={showAnatomy ? "NumberCell" : undefined} />
+        <NumberCell value={line.newNumber} anatPart={showAnatomy ? "NumberCell" : undefined} />
+        <span
+            data-anat-part={showAnatomy ? "Marker" : undefined}
+            className="w-4 shrink-0 select-none text-center"
+        >
             {LINE_MARKER[line.type]}
         </span>
-        <span className="whitespace-pre pr-4">{line.content}</span>
+        <span
+            data-anat-part={showAnatomy ? "Nội dung dòng" : undefined}
+            className="whitespace-pre pr-4"
+        >
+            {line.content}
+        </span>
     </div>
 )
 
 /** One side of the SPLIT layout: a single line number + content, or a blank filler row. */
-const SplitCell = ({ line, side }: { line: DiffLine | null; side: "old" | "new" }) => (
+const SplitCell = ({
+    line,
+    side,
+    showAnatomy,
+}: {
+    line: DiffLine | null
+    side: "old" | "new"
+    showAnatomy?: boolean
+}) => (
     <div
+        data-anat-part={showAnatomy ? "SplitCell" : undefined}
         className={cn(
             "flex items-start",
             // A filler cell (no line on this side) stays neutral; a real line gets its tone.
             line ? LINE_TONE[line.type] : "text-foreground",
         )}
     >
-        <NumberCell value={side === "old" ? line?.oldNumber : line?.newNumber} />
-        <span className="whitespace-pre pr-4">{line ? line.content : ""}</span>
+        <NumberCell
+            value={side === "old" ? line?.oldNumber : line?.newNumber}
+            anatPart={showAnatomy ? "NumberCell" : undefined}
+        />
+        <span
+            data-anat-part={showAnatomy ? "Nội dung dòng" : undefined}
+            className="whitespace-pre pr-4"
+        >
+            {line ? line.content : ""}
+        </span>
     </div>
 )
 
@@ -123,6 +159,7 @@ export const DiffViewer = ({
     filename,
     hunks,
     variant = "unified",
+    showAnatomy,
     className,
 }: DiffViewerProps) => {
     return (
@@ -134,21 +171,35 @@ export const DiffViewer = ({
         >
             {/* Filename header bar — sits above the scrollable code area */}
             {filename ? (
-                <div className="border-b border-default bg-default px-4 py-2">
-                    <Typography type="body-sm" weight="medium" className="font-mono">
+                <div
+                    data-anat-part={showAnatomy ? "Thanh tên file" : undefined}
+                    className="border-b border-default bg-default px-4 py-2"
+                >
+                    <Typography
+                        type="body-sm"
+                        weight="medium"
+                        className="font-mono"
+                        data-anat-part={showAnatomy ? "Typography" : undefined}
+                    >
                         {filename}
                     </Typography>
                 </div>
             ) : null}
 
             {/* Horizontal-scroll container so long lines never break the page */}
-            <div className="overflow-x-auto">
+            <div
+                data-anat-part={showAnatomy ? "Vùng cuộn code" : undefined}
+                className="overflow-x-auto"
+            >
                 <div className="min-w-fit py-1 font-mono text-xs leading-relaxed">
                     {hunks.map((hunk, hunkIndex) => (
                         <div key={hunkIndex}>
                             {/* Optional hunk header — muted separator row */}
                             {hunk.header ? (
-                                <div className="whitespace-pre bg-default px-4 py-1 text-muted-foreground">
+                                <div
+                                    data-anat-part={showAnatomy ? "Thanh header hunk" : undefined}
+                                    className="whitespace-pre bg-default px-4 py-1 text-muted-foreground"
+                                >
                                     {hunk.header}
                                 </div>
                             ) : null}
@@ -157,21 +208,28 @@ export const DiffViewer = ({
                                 ? hunk.lines.map((line, lineIndex) => (
                                     <div
                                         key={lineIndex}
+                                        data-anat-part={showAnatomy ? "Hàng chia đôi" : undefined}
                                         className="grid grid-cols-2 divide-x divide-default"
                                     >
                                         {/* Old side hides pure additions; new side hides pure deletions */}
                                         <SplitCell
                                             line={line.type === "add" ? null : line}
                                             side="old"
+                                            showAnatomy={showAnatomy}
                                         />
                                         <SplitCell
                                             line={line.type === "del" ? null : line}
                                             side="new"
+                                            showAnatomy={showAnatomy}
                                         />
                                     </div>
                                 ))
                                 : hunk.lines.map((line, lineIndex) => (
-                                    <UnifiedRow key={lineIndex} line={line} />
+                                    <UnifiedRow
+                                        key={lineIndex}
+                                        line={line}
+                                        showAnatomy={showAnatomy}
+                                    />
                                 ))}
                         </div>
                     ))}

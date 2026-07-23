@@ -29,6 +29,8 @@ export interface EmptyContentProps {
     retryLabel?: ReactNode
     /** Extra classes on the wrapper. */
     className?: string
+    /** When on, emit `data-anat-part` on this block's parts for a BlockAnatomy panel to badge on-render. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -46,11 +48,13 @@ export const EmptyContent = ({
     onRetry,
     retryLabel,
     className,
+    showAnatomy,
 }: EmptyContentProps) => {
     return (
         <EmptyState
+            anatPart={showAnatomy ? "EmptyState" : undefined}
             className={className}
-            icon={icon ?? <TrayIcon aria-hidden focusable="false" weight="duotone" />}
+            icon={icon ?? <TrayIcon aria-hidden focusable="false" weight="duotone" data-anat-part={showAnatomy ? "TrayIcon" : undefined} />}
             title={title}
             description={description}
             action={

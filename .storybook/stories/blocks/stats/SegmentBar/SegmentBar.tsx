@@ -45,6 +45,8 @@ export interface SegmentBarProps {
     caption?: ReactNode
     /** Extra classes on the root element. */
     className?: string
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
 }
 
 /** Default slice colours (semantic tokens) when a segment has no explicit `color`. */
@@ -73,6 +75,7 @@ export const SegmentBar = ({
     inlineLabels,
     caption,
     className,
+    anatPart,
 }: SegmentBarProps) => {
     const total = max ?? (segments.reduce((acc, segment) => acc + segment.value, 0) || 1)
     const colored = segments.map((segment, index) => ({
@@ -84,7 +87,7 @@ export const SegmentBar = ({
     const remainder = Math.max(0, total - filledSum)
 
     return (
-        <div className={cn("flex flex-col gap-2", className)}>
+        <div className={cn("flex flex-col gap-2", className)} data-anat-part={anatPart}>
             <div
                 role="img"
                 aria-label={ariaLabel}

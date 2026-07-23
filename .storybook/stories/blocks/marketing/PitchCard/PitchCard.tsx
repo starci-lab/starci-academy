@@ -24,6 +24,8 @@ export interface PitchCardProps {
     footer?: React.ReactNode
     /** Extra classes on the card. */
     className?: string
+    /** When on, emit `data-anat-part` markers on the block's parts (Storybook anatomy). */
+    showAnatomy?: boolean
 }
 
 /**
@@ -33,13 +35,17 @@ export interface PitchCardProps {
  *
  * @param props - {@link PitchCardProps}
  */
-export const PitchCard = ({ icon, tone = "accent", title, body, footer, className }: PitchCardProps) => {
+export const PitchCard = ({ icon, tone = "accent", title, body, footer, className, showAnatomy }: PitchCardProps) => {
     return (
-        <SectionCard className={cn("h-full", className)} contentClassName="flex h-full flex-col gap-3">
-            <IconTile icon={icon} tone={tone} size="md" />
-            <Typography type="h5" weight="semibold">{title}</Typography>
-            <Typography type="body-sm" color="muted" className="flex-1">{body}</Typography>
-            {footer ? <div>{footer}</div> : null}
+        <SectionCard
+            className={cn("h-full", className)}
+            contentClassName="flex h-full flex-col gap-3"
+            anatPart={showAnatomy ? "SectionCard" : undefined}
+        >
+            <IconTile icon={icon} tone={tone} size="md" anatPart={showAnatomy ? "IconTile" : undefined} />
+            <Typography type="h5" weight="semibold" data-anat-part={showAnatomy ? "Typography · h5" : undefined}>{title}</Typography>
+            <Typography type="body-sm" color="muted" className="flex-1" data-anat-part={showAnatomy ? "Typography · body-sm" : undefined}>{body}</Typography>
+            {footer ? <div data-anat-part={showAnatomy ? "div › footer" : undefined}>{footer}</div> : null}
         </SectionCard>
     )
 }

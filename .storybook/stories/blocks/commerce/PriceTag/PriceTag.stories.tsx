@@ -96,7 +96,7 @@ export const Default: Story = {
                 parts={NO_DISCOUNT_PARTS}
                 reason="Một giá hiển thị cần gói NHIỀU tín hiệu vào một chỗ: số tiền phải trả (đậm), giá gốc gạch ngang, và mức tiết kiệm. Mức tiết kiệm dùng StatusChip (soft-success) làm nhãn kiêm nút mở popover phân rã giá (gốc → giai đoạn → thành viên → bạn trả). Gộp lại một block để logic chiết khấu không lệch giữa các chỗ hiển thị giá."
             >
-                <PriceTag discounted={1990000} />
+                <PriceTag discounted={1990000} showAnatomy />
             </BlockAnatomy>,
         ),
 }
@@ -116,6 +116,7 @@ export const WithDiscount: Story = {
                     discounted={1290000}
                     original={1990000}
                     breakdown={{ phase: 1590000, phaseLabel: "Early-bird", loyaltyPercent: 15, loyaltyNote: "sở hữu 2 khóa" }}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -138,18 +139,21 @@ export const Sizes: Story = {
                         original={1990000}
                         size="sm"
                         breakdown={{ phase: 1690000, phaseLabel: "Early-bird", loyaltyPercent: 12 }}
+                        showAnatomy
                     />
                     <PriceTag
                         discounted={1490000}
                         original={1990000}
                         size="md"
                         breakdown={{ phase: 1690000, phaseLabel: "Early-bird", loyaltyPercent: 12 }}
+                        showAnatomy
                     />
                     <PriceTag
                         discounted={1490000}
                         original={1990000}
                         size="lg"
                         breakdown={{ phase: 1690000, phaseLabel: "Early-bird", loyaltyPercent: 12 }}
+                        showAnatomy
                     />
                 </div>
             </BlockAnatomy>,
@@ -172,6 +176,7 @@ export const CurrencyUsd: Story = {
                     original={129}
                     currency="USD"
                     breakdown={{ phase: 99, phaseLabel: "Early-bird", loyaltyPercent: 20 }}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -193,6 +198,7 @@ export const NoSavingLine: Story = {
                     original={1990000}
                     showSavingLine={false}
                     breakdown={{ phase: 1590000, phaseLabel: "Early-bird", loyaltyPercent: 15, loyaltyNote: "sở hữu 2 khóa" }}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -209,7 +215,7 @@ export const DiscountWithoutBreakdown: Story = {
                 parts={DISCOUNT_PARTS}
                 note="Không truyền breakdown → popover chỉ có 'giá gốc → bạn trả'; composition vẫn như leaf 'Đang giảm giá'."
             >
-                <PriceTag discounted={1290000} original={1990000} />
+                <PriceTag discounted={1290000} original={1990000} showAnatomy />
             </BlockAnatomy>,
         ),
 }
@@ -229,6 +235,7 @@ export const BreakdownOpen: Story = {
                     discounted={1290000}
                     original={1990000}
                     breakdown={{ phase: 1590000, phaseLabel: "Early-bird", loyaltyPercent: 15, loyaltyNote: "sở hữu 2 khóa" }}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),

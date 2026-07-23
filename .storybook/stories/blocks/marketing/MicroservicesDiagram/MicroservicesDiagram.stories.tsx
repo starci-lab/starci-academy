@@ -107,7 +107,7 @@ export const WithCaption: Story = {
                 reason="Minh hoạ hero bằng code: topology microservices trên nền dot-grid blueprint, node focal accent + các điểm hỏng trôi cạnh vùng chúng đe doạ. Topology + failures là dữ liệu cố định trong block (chỉ `caption` là prop) — kể một câu chuyện 'v2 ngây thơ này sập ở đâu'."
             >
                 <div className="max-w-xl">
-                    <MicroservicesDiagram caption="Một node Postgres, một luồng đồng bộ tới Payment — đây là công thức cho một sự cố dây chuyền." />
+                    <MicroservicesDiagram showAnatomy caption="Một node Postgres, một luồng đồng bộ tới Payment — đây là công thức cho một sự cố dây chuyền." />
                 </div>
             </BlockAnatomy>,
         ),
@@ -124,7 +124,7 @@ export const NoCaption: Story = {
                 note="Không truyền `caption` → dòng Typography dưới sơ đồ biến mất, chỉ còn topology + chip điểm hỏng."
             >
                 <div className="max-w-xl">
-                    <MicroservicesDiagram />
+                    <MicroservicesDiagram showAnatomy />
                 </div>
             </BlockAnatomy>,
         ),
@@ -141,7 +141,7 @@ export const NarrowWrap: Story = {
                 note="Trên màn hẹp các node xuống dòng nhưng CÙNG composition với leaf 'Có caption'."
             >
                 <div className="max-w-[320px]">
-                    <MicroservicesDiagram caption="Trên màn hẹp, các node vẫn giữ đúng thứ tự tier dù phải xuống dòng." />
+                    <MicroservicesDiagram showAnatomy caption="Trên màn hẹp, các node vẫn giữ đúng thứ tự tier dù phải xuống dòng." />
                 </div>
             </BlockAnatomy>,
         ),

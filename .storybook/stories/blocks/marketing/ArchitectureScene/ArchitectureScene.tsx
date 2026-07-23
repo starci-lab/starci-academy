@@ -545,13 +545,14 @@ const KIND_ICON: Record<NodeKind, Icon> = {
  *
  *  Optionally clickable (`onClick`) with a `selected` ring under the label — both opt-in so a
  *  purely-decorative scene (the default) renders exactly as before. */
-const Bar = ({ node, cell, shade, reduce, selected, onClick }: {
+const Bar = ({ node, cell, shade, reduce, selected, onClick, showAnatomy }: {
     node: ArchitectureNode
     cell: number
     shade: Shade
     reduce: boolean
     selected?: boolean
     onClick?: () => void
+    showAnatomy?: boolean
 }) => {
     const [cx, cz] = node.cell
     const group = React.useRef<THREE.Group>(null)
@@ -601,13 +602,14 @@ const Bar = ({ node, cell, shade, reduce, selected, onClick }: {
                         selected && "ring-2 ring-accent ring-offset-1 ring-offset-transparent",
                     )}
                     style={{ backgroundColor: "var(--surface)", borderColor: shade.tint }}
+                    data-anat-part={showAnatomy ? "Html · nhãn nổi" : undefined}
                 >
-                    <span className="font-mono text-[11px] font-medium leading-tight text-foreground">{node.name}</span>
-                    {node.sub ? <span className="font-mono text-[9px] lowercase leading-tight text-muted">{node.sub}</span> : null}
-                    <TypeIcon className="size-3 text-muted" aria-hidden />
+                    <span className="font-mono text-[11px] font-medium leading-tight text-foreground" data-anat-part={showAnatomy ? "span · tên" : undefined}>{node.name}</span>
+                    {node.sub ? <span className="font-mono text-[9px] lowercase leading-tight text-muted" data-anat-part={showAnatomy ? "span · sub" : undefined}>{node.sub}</span> : null}
+                    <TypeIcon className="size-3 text-muted" aria-hidden data-anat-part={showAnatomy ? "Icon · kind" : undefined} />
                     {node.status && StatusIcon ? (
-                        <span className={cn("mt-0 flex items-center gap-1 font-mono text-[9px] leading-tight", STATUS_CLASS[node.status.tone])}>
-                            <StatusIcon className="size-3 shrink-0" aria-hidden />
+                        <span className={cn("mt-0 flex items-center gap-1 font-mono text-[9px] leading-tight", STATUS_CLASS[node.status.tone])} data-anat-part={showAnatomy ? "span · status" : undefined}>
+                            <StatusIcon className="size-3 shrink-0" aria-hidden data-anat-part={showAnatomy ? "Icon · status" : undefined} />
                             {node.status.text}
                         </span>
                     ) : null}
@@ -660,12 +662,13 @@ const Edge = ({ edge, centres, color, reduce }: { edge: ArchitectureEdge; centre
 }
 
 /** Whole scene (inside the Canvas). The camera orbits via OrbitControls, so no group drift here. */
-const Scene = ({ data, palette, reduce, selectedId, onSelectNode }: {
+const Scene = ({ data, palette, reduce, selectedId, onSelectNode, showAnatomy }: {
     data: ArchitectureSceneData
     palette: Palette
     reduce: boolean
     selectedId?: string
     onSelectNode?: (id: string) => void
+    showAnatomy?: boolean
 }) => {
     const centres = React.useMemo(() => buildCentres(data.nodes, data.board.cell), [data])
     const grid = React.useMemo(() => buildGrid(data.board), [data.board])
@@ -694,6 +697,7 @@ const Scene = ({ data, palette, reduce, selectedId, onSelectNode }: {
                     reduce={reduce}
                     selected={selectedId === node.id}
                     onClick={onSelectNode ? () => onSelectNode(node.id) : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ))}
         </group>
@@ -716,6 +720,14 @@ export interface ArchitectureSceneProps extends WithClassNames<undefined> {
      * with the clicked node's id — lets a caller sync the map ⇄ a rail/panel.
      */
     onSelectNode?: (id: string) => void
+    /**
+     * When on, emit `data-anat-part` on this block's DOM parts for a BlockAnatomy
+     * panel to badge on-render. Only the real-DOM parts can be anchored — the
+     * floating `<Html>` node label (chip + name/sub/kind-icon/status) and the
+     * caption `Typography`; the WebGL board/meshes/wires carry no DOM, so they
+     * stay represented in the Sơ đồ + legend only.
+     */
+    showAnatomy?: boolean
 }
 
 /**
@@ -725,7 +737,7 @@ export interface ArchitectureSceneProps extends WithClassNames<undefined> {
  *
  * @param props - {@link ArchitectureSceneProps}
  */
-export const ArchitectureScene = ({ data = DEFAULT_DATA, caption, className, selectedId, onSelectNode }: ArchitectureSceneProps) => {
+export const ArchitectureScene = ({ data = DEFAULT_DATA, caption, className, selectedId, onSelectNode, showAnatomy }: ArchitectureSceneProps) => {
     const reduce = Boolean(useReducedMotion())
     const palette = usePalette()
     return (
@@ -739,7 +751,7 @@ export const ArchitectureScene = ({ data = DEFAULT_DATA, caption, className, sel
                     style={{ background: "transparent" }}
                     dpr={[2, 3]}
                 >
-                    <Scene data={data} palette={palette} reduce={reduce} selectedId={selectedId} onSelectNode={onSelectNode} />
+                    <Scene data={data} palette={palette} reduce={reduce} selectedId={selectedId} onSelectNode={onSelectNode} showAnatomy={showAnatomy} />
                     {/* drag to orbit (no zoom/pan, no auto-spin — keeps the labels in a stable
                         order). Polar clamped so the camera can't dip under the floor or top-down. */}
                     <OrbitControls
@@ -753,7 +765,7 @@ export const ArchitectureScene = ({ data = DEFAULT_DATA, caption, className, sel
                 </Canvas>
             </div>
             {caption ? (
-                <Typography type="body-sm" color="muted" align="center" className="px-5">
+                <Typography type="body-sm" color="muted" align="center" className="px-5" data-anat-part={showAnatomy ? "Typography" : undefined}>
                     {caption}
                 </Typography>
             ) : null}

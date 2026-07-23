@@ -46,6 +46,7 @@ const SingleDemo = () => {
             selectedIds={ids}
             onSelectionChange={setIds}
             onSubmit={() => {}}
+            showAnatomy
         />
     )
 }
@@ -66,6 +67,7 @@ const MultipleDemo = () => {
             selectedIds={ids}
             onSelectionChange={setIds}
             onSubmit={() => {}}
+            showAnatomy
         />
     )
 }
@@ -209,6 +211,7 @@ export const SubmittedCorrect: Story = {
                     onSelectionChange={() => {}}
                     isSubmitted
                     explanation="404 Not Found: server hiểu request nhưng không có tài nguyên khớp URI."
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -233,6 +236,7 @@ export const SubmittedIncorrect: Story = {
                     onSelectionChange={() => {}}
                     isSubmitted
                     explanation="200 OK báo thành công — không phải lỗi thiếu tài nguyên. Đáp án đúng là 404."
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -264,6 +268,7 @@ export const MultipleSubmitted: Story = {
                     onSelectionChange={() => {}}
                     isSubmitted
                     explanation="GET, PUT, DELETE đều idempotent (gọi lặp lại cho cùng kết quả). POST thì không."
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -283,6 +288,7 @@ export const NoQuestionIndex: Story = {
                     selectedIds={ids}
                     onSelectionChange={setIds}
                     onSubmit={() => {}}
+                    showAnatomy
                 />
             )
         }
@@ -320,6 +326,7 @@ export const SubmittedNoExplanation: Story = {
                     selectedIds={["b"]}
                     onSelectionChange={() => {}}
                     isSubmitted
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -344,6 +351,7 @@ export const ReadOnlyNoAction: Story = {
                     selectionMode="single"
                     selectedIds={["b"]}
                     onSelectionChange={() => {}}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),

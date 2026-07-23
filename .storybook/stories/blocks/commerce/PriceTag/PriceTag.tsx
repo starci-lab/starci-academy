@@ -53,6 +53,10 @@ export interface PriceTagProps {
     showSavingLine?: boolean
     /** Extra classes on the root. */
     className?: string
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
+    /** When on, emit `data-anat-part` on each composed part so a BlockAnatomy panel can badge it on-render. */
+    showAnatomy?: boolean
 }
 
 /** size → discounted-amount type. */
@@ -90,6 +94,8 @@ export const PriceTag = ({
     breakdown,
     showSavingLine = true,
     className,
+    anatPart,
+    showAnatomy,
 }: PriceTagProps) => {
     const hasSaving = original != null && original > discounted
     const savePercent = hasSaving ? savingPercent(original, discounted) : 0
@@ -99,7 +105,12 @@ export const PriceTag = ({
     // The pressable/focusable button role lives on the canonical `Popover.Trigger`
     // wrapper (react-aria: role=button, aria-expanded/controls, tabindex), so there is
     // exactly ONE interactive element. No caret; the whole chip is the affordance.
-    const chip = savePercent > 0 ? <StatusChip tone="success">{`−${savePercent}%`}</StatusChip> : null
+    const chip =
+        savePercent > 0 ? (
+            <StatusChip tone="success" anatPart={showAnatomy ? "StatusChip" : undefined}>
+                {`−${savePercent}%`}
+            </StatusChip>
+        ) : null
 
     // phase saving = list → phase ; loyalty saving = phase → charge
     const phaseSave = original != null ? savingPercent(original, breakdown?.phase ?? discounted) : 0
@@ -143,13 +154,24 @@ export const PriceTag = ({
     ) : null
 
     return (
-        <div className={cn("flex flex-col gap-1", className)}>
+        <div className={cn("flex flex-col gap-1", className)} data-anat-part={anatPart}>
             <div className="flex flex-wrap items-baseline gap-2">
-                <Typography type={AMOUNT_TYPE[size]} weight="bold">
+                <Typography
+                    type={AMOUNT_TYPE[size]}
+                    weight="bold"
+                    data-anat-part={
+                        showAnatomy ? (hasSaving ? "Typography · giá phải trả" : "Typography") : undefined
+                    }
+                >
                     {formatPrice(discounted, currency)}
                 </Typography>
                 {hasSaving ? (
-                    <Typography type={size === "sm" ? "body-xs" : "body-sm"} color="muted" className="line-through">
+                    <Typography
+                        type={size === "sm" ? "body-xs" : "body-sm"}
+                        color="muted"
+                        className="line-through"
+                        data-anat-part={showAnatomy ? "Typography · giá gốc" : undefined}
+                    >
                         {formatPrice(original, currency)}
                     </Typography>
                 ) : null}
@@ -158,15 +180,25 @@ export const PriceTag = ({
                         <Popover.Trigger
                             aria-label="Chi tiết giá"
                             className="cursor-pointer rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                            data-anat-part={showAnatomy ? "Popover.Trigger" : undefined}
                         >
                             {chip}
                         </Popover.Trigger>
-                        <Popover.Content className="max-w-xs">{breakdownContent}</Popover.Content>
+                        <Popover.Content
+                            className="max-w-xs"
+                            data-anat-part={showAnatomy ? "Popover.Content" : undefined}
+                        >
+                            {breakdownContent}
+                        </Popover.Content>
                     </Popover>
                 ) : null}
             </div>
             {showSavingLine && hasSaving ? (
-                <Typography type="body-xs" color="muted">
+                <Typography
+                    type="body-xs"
+                    color="muted"
+                    data-anat-part={showAnatomy ? "Typography · tiết kiệm" : undefined}
+                >
                     {`Tiết kiệm ${formatPrice(original - discounted, currency)}`}
                 </Typography>
             ) : null}

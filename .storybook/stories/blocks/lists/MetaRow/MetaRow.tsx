@@ -24,6 +24,8 @@ export interface MetaRowProps {
      */
     items: ReactNode[]
     className?: string
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
 }
 
 /**
@@ -31,8 +33,8 @@ export interface MetaRowProps {
  * @param props - {@link MetaRowProps}
  * @see Story: .storybook/stories/blocks/lists/MetaRow/MetaRow.stories
  */
-export const MetaRow = ({ chip, items, className }: MetaRowProps) => (
-    <div className={cn("flex min-w-0 items-center gap-2", className)}>
+export const MetaRow = ({ chip, items, className, anatPart }: MetaRowProps) => (
+    <div className={cn("flex min-w-0 items-center gap-2", className)} data-anat-part={anatPart}>
         {chip ? <span className="shrink-0">{chip}</span> : null}
         {items.length > 0 ? (
             <Typography type="body-xs" color="muted" truncate className="min-w-0">

@@ -81,6 +81,7 @@ export const CenteredDefault: Story = {
                     eyebrow="Real learning"
                     title="A learning path designed for working professionals"
                     intro="From fundamentals to hands-on projects, every course is tied to a tangible product you can hold."
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -100,6 +101,7 @@ export const AlignStart: Story = {
                     align="start"
                     title="Frequently asked questions"
                     intro="The most common questions before you enroll in a course."
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -119,6 +121,7 @@ export const WithAnchor: Story = {
                     title="Tuition and offers"
                     intro="See the full details of tuition plans, installment options, and current offers."
                     anchorId="hoc-phi"
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -134,7 +137,7 @@ export const TitleOnly: Story = {
                 parts={TITLE_ONLY_PARTS}
                 note="Không eyebrow / anchor / intro → chỉ còn một Typography.Heading."
             >
-                <SectionHeading title="Training partners" />
+                <SectionHeading title="Training partners" showAnatomy />
             </BlockAnatomy>,
         ),
 }
@@ -155,6 +158,7 @@ export const Level2Hero: Story = {
                     eyebrow="Học thật"
                     title="Một lộ trình được thiết kế cho người đi làm"
                     intro="Từ nền tảng đến dự án thực tế, mỗi khóa học gắn với một sản phẩm bạn cầm được trên tay."
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),

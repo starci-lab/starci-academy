@@ -38,6 +38,8 @@ export interface DifficultyChipProps {
     isSkeleton?: boolean
     /** Dev/spec: overlay the anatomy annotation on this chip. */
     showAnatomy?: boolean
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
 }
 
 /** Title-case a difficulty key for the default label. */
@@ -50,7 +52,7 @@ const capitalize = (value: Difficulty): string => value.charAt(0).toUpperCase() 
  *
  * @param props - {@link DifficultyChipProps}
  */
-export const DifficultyChip = ({ difficulty, label, className, isSkeleton, showAnatomy = false }: DifficultyChipProps) => {
+export const DifficultyChip = ({ difficulty, label, className, isSkeleton, showAnatomy = false, anatPart }: DifficultyChipProps) => {
     const chip = (
         <DotChip
             dotClassName={DIFFICULTY_COLOR[difficulty]}
@@ -60,7 +62,7 @@ export const DifficultyChip = ({ difficulty, label, className, isSkeleton, showA
         />
     )
     return showAnatomy ? (
-        <span className="relative inline-flex" data-anat>
+        <span className="relative inline-flex" data-anat data-anat-part={anatPart}>
             {chip}
             <AnatomyOverlay label="DifficultyChip" tier="design" href="/?path=/docs/design-chip-difficultychip--docs" />
         </span>

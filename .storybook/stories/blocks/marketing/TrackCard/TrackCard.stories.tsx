@@ -74,6 +74,7 @@ export const AccentFourTiers: Story = {
                         ]}
                         viewLabel="Vào khóa"
                         onView={() => {}}
+                        showAnatomy
                     />
                 </div>
             </BlockAnatomy>,
@@ -104,6 +105,7 @@ export const SuccessFourTiers: Story = {
                         ]}
                         viewLabel="Vào khóa"
                         onView={() => {}}
+                        showAnatomy
                     />
                 </div>
             </BlockAnatomy>,
@@ -129,6 +131,7 @@ export const WarningSingleTier: Story = {
                         tiers={[{ label: "Nhập môn", topic: "Docker, CI/CD, giám sát hệ thống" }]}
                         viewLabel="Vào khóa"
                         onView={() => {}}
+                        showAnatomy
                     />
                 </div>
             </BlockAnatomy>,
@@ -157,6 +160,7 @@ export const LongTitleTruncate: Story = {
                         ]}
                         viewLabel="Vào khóa"
                         onView={() => {}}
+                        showAnatomy
                     />
                 </div>
             </BlockAnatomy>,
@@ -187,6 +191,7 @@ export const ThreeTracksLayout: Story = {
                         ]}
                         viewLabel="Vào khóa"
                         onView={() => {}}
+                        showAnatomy
                     />
                     <TrackCard
                         icon={<TreeStructureIcon />}
@@ -201,6 +206,7 @@ export const ThreeTracksLayout: Story = {
                         ]}
                         viewLabel="Vào khóa"
                         onView={() => {}}
+                        showAnatomy
                     />
                     <TrackCard
                         icon={<CloudIcon />}
@@ -215,6 +221,7 @@ export const ThreeTracksLayout: Story = {
                         ]}
                         viewLabel="Vào khóa"
                         onView={() => {}}
+                        showAnatomy
                     />
                 </div>
             </BlockAnatomy>,

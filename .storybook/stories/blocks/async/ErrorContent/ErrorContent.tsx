@@ -32,6 +32,8 @@ export interface ErrorContentProps {
     retryLabel?: ReactNode
     /** Extra classes on the wrapper. */
     className?: string
+    /** When on, emit `data-anat-part` badges for this block's parts (Storybook anatomy). */
+    showAnatomy?: boolean
 }
 
 /**
@@ -49,12 +51,13 @@ export const ErrorContent = ({
     onRetry,
     retryLabel,
     className,
+    showAnatomy,
 }: ErrorContentProps) => {
     return (
         <EmptyState
             className={className}
             tone="danger"
-            icon={icon ?? <WarningIcon weight="duotone" />}
+            icon={icon ?? <WarningIcon weight="duotone" data-anat-part={showAnatomy ? "WarningIcon" : undefined} />}
             title={title}
             description={description}
             action={
@@ -64,6 +67,7 @@ export const ErrorContent = ({
                     </Button>
                 ) : null
             }
+            anatPart={showAnatomy ? "EmptyState" : undefined}
         />
     )
 }

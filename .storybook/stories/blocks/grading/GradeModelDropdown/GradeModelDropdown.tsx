@@ -202,6 +202,7 @@ const ModelRowLayout = ({
     isSelected,
     muted,
     trailing,
+    anatPart,
 }: {
     leading?: React.ReactNode
     name: string
@@ -209,8 +210,11 @@ const ModelRowLayout = ({
     isSelected?: boolean
     muted?: boolean
     trailing: React.ReactNode
+    /** Anatomy anchor — set to `"ModelRowLayout"` (via `showAnatomy`) so BlockAnatomy can badge this row on-render. */
+    anatPart?: string
 }) => (
     <div
+        data-anat-part={anatPart}
         className={cn(
             "grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-2",
             muted && "text-muted",
@@ -279,6 +283,8 @@ export interface GradeModelDropdownProps {
      * container instead of hugging its label content.
      */
     isButtonFullWidth?: boolean
+    /** When on, each part emits `data-anat-part` so a BlockAnatomy panel can badge it on-render. */
+    showAnatomy?: boolean
     /** Fired with the new selection when the user picks an option. */
     onSelect: (selection: GradeModelSelection) => void
     /** Fired when a locked (unlock-required) model is pressed — route to plans. */
@@ -311,6 +317,7 @@ export const GradeModelDropdown = ({
     isDropdown,
     isButton = false,
     isButtonFullWidth = false,
+    showAnatomy = false,
     onSelect,
     onUpgrade,
     className,
@@ -376,9 +383,15 @@ export const GradeModelDropdown = ({
             {isButton ? (
                 <DropdownTrigger
                     isDisabled={isDisabled}
+                    data-anat-part={showAnatomy ? "DropdownTrigger" : undefined}
                     className={cn("cursor-pointer", isButtonFullWidth && "block w-full", className)}
                 >
-                    <Button variant="tertiary" size="sm" fullWidth={isButtonFullWidth}>
+                    <Button
+                        variant="tertiary"
+                        size="sm"
+                        fullWidth={isButtonFullWidth}
+                        data-anat-part={showAnatomy ? "Button" : undefined}
+                    >
                         <SparkleIcon aria-hidden className="size-4 shrink-0" />
                         <span className={cn("truncate", isButtonFullWidth ? "min-w-0 flex-1 text-left" : "max-w-40")}>
                             {triggerLabel}
@@ -394,6 +407,7 @@ export const GradeModelDropdown = ({
                 // hover. Hover is wired on BOTH `hover:` and `data-[hovered=true]:`.
                 <DropdownTrigger
                     isDisabled={isDisabled}
+                    data-anat-part={showAnatomy ? "DropdownTrigger" : undefined}
                     className={cn(
                         "relative flex! min-h-9 w-full cursor-pointer items-center rounded-field border border-[color:var(--field-border)] bg-field py-2 pe-7 ps-3 text-sm text-field-foreground shadow-field transform-none!",
                         "hover:bg-field-hover hover:border-[color:var(--field-border-hover)]",
@@ -418,6 +432,7 @@ export const GradeModelDropdown = ({
             ) : (
                 <DropdownTrigger
                     isDisabled={isDisabled}
+                    data-anat-part={showAnatomy ? "DropdownTrigger" : undefined}
                     className={cn("min-w-0 max-w-full cursor-pointer", className)}
                 >
                     <div className="flex w-full min-w-0 items-center justify-between gap-2">
@@ -431,17 +446,22 @@ export const GradeModelDropdown = ({
             )}
             <DropdownPopover
                 placement={placement}
+                data-anat-part={showAnatomy ? "DropdownPopover" : undefined}
                 className={DROPDOWN_POPOVER_CLASS}
             >
                 <div className="flex w-full min-w-0 flex-col">
                     {/* Auto lane — above search + scroll so the default is always one click away. */}
                     {showAutoLane ? (
                         <>
-                            <DropdownMenu aria-label="Tự động">
-                                <DropdownSection>
+                            <DropdownMenu
+                                aria-label="Tự động"
+                                data-anat-part={showAnatomy ? "DropdownMenu · Tự động" : undefined}
+                            >
+                                <DropdownSection data-anat-part={showAnatomy ? "DropdownSection" : undefined}>
                                     <DropdownItem
                                         key="auto"
                                         textValue="Tự động"
+                                        data-anat-part={showAnatomy ? "DropdownItem · Tự động" : undefined}
                                         onPress={() => {
                                             onSelect({
                                                 model: null,
@@ -456,12 +476,15 @@ export const GradeModelDropdown = ({
                                                 !selection.model && "text-accent-soft-foreground",
                                             )}
                                         >
-                                            <SparkleIcon className="size-4 shrink-0" />
-                                            <span>Tự động</span>
+                                            <SparkleIcon
+                                                className="size-4 shrink-0"
+                                                data-anat-part={showAnatomy ? "SparkleIcon" : undefined}
+                                            />
+                                            <span data-anat-part={showAnatomy ? "span · nhãn" : undefined}>Tự động</span>
                                         </div>
                                     </DropdownItem>
                                 </DropdownSection>
-                                <Separator />
+                                <Separator data-anat-part={showAnatomy ? "Separator" : undefined} />
                             </DropdownMenu>
                         </>
                     ) : null}
@@ -474,6 +497,7 @@ export const GradeModelDropdown = ({
                         <SearchField
                             variant="secondary"
                             aria-label="Tìm model"
+                            data-anat-part={showAnatomy ? "SearchField" : undefined}
                         >
                             <SearchField.Group>
                                 <SearchField.SearchIcon />
@@ -507,21 +531,29 @@ export const GradeModelDropdown = ({
                     <ScrollShadow
                         hideScrollBar
                         className="max-h-72 w-full min-w-0"
+                        data-anat-part={showAnatomy ? "ScrollShadow" : undefined}
                     >
                         <DropdownMenu
                             aria-label="Chọn model"
                             className="w-full min-w-0"
+                            data-anat-part={showAnatomy ? "DropdownMenu · Chọn model" : undefined}
                         >
                             {/* One entry per catalog model. Below-floor = warning (selectable,
                         risky); Balanced/Premium/Frontier = locked without an unlock. */}
-                            <DropdownSection>
+                            <DropdownSection data-anat-part={showAnatomy ? "DropdownSection" : undefined}>
                                 {visibleModels.length === 0 ? (
                                     <DropdownItem
                                         key="no-results"
                                         textValue="Không có model khớp"
+                                        data-anat-part={showAnatomy ? "DropdownItem · rỗng" : undefined}
                                         onPress={() => undefined}
                                     >
-                                        <span className="text-muted">Không có model khớp</span>
+                                        <span
+                                            className="text-muted"
+                                            data-anat-part={showAnatomy ? "span · muted" : undefined}
+                                        >
+                                            Không có model khớp
+                                        </span>
                                     </DropdownItem>
                                 ) : null}
                                 {visibleModels.map((model) => {
@@ -577,19 +609,24 @@ export const GradeModelDropdown = ({
                                                 key={key}
                                                 textValue={model.model}
                                                 className={DROPDOWN_ITEM_ROW_CLASS}
+                                                data-anat-part={showAnatomy ? "DropdownItem · khoá" : undefined}
                                                 onPress={onUpgrade}
                                             >
                                                 <Tooltip>
-                                                    <Tooltip.Trigger className={MODEL_ROW_TRIGGER_CLASS}>
+                                                    <Tooltip.Trigger
+                                                        className={MODEL_ROW_TRIGGER_CLASS}
+                                                        data-anat-part={showAnatomy ? "Tooltip.Trigger" : undefined}
+                                                    >
                                                         <ModelRowLayout
                                                             muted
+                                                            anatPart={showAnatomy ? "ModelRowLayout" : undefined}
                                                             name={model.model}
                                                             nameSuffix={selfHostMark}
-                                                            leading={<LockIcon className="size-5 shrink-0" />}
+                                                            leading={<LockIcon className="size-5 shrink-0" data-anat-part={showAnatomy ? "LockIcon" : undefined} />}
                                                             trailing={<>{healthChip}{categoryChip}</>}
                                                         />
                                                     </Tooltip.Trigger>
-                                                    <Tooltip.Content>
+                                                    <Tooltip.Content data-anat-part={showAnatomy ? "Tooltip.Content" : undefined}>
                                                         <Typography type="body-sm">Nâng gói hoặc enroll khoá để mở model này</Typography>
                                                     </Tooltip.Content>
                                                 </Tooltip>
@@ -604,22 +641,27 @@ export const GradeModelDropdown = ({
                                                 key={key}
                                                 textValue={model.model}
                                                 className={DROPDOWN_ITEM_ROW_CLASS}
+                                                data-anat-part={showAnatomy ? "DropdownItem · cảnh báo" : undefined}
                                                 onPress={() => onSelect({
                                                     model: model.model,
                                                     provider: model.provider,
                                                 })}
                                             >
                                                 <Tooltip>
-                                                    <Tooltip.Trigger className={MODEL_ROW_TRIGGER_CLASS}>
+                                                    <Tooltip.Trigger
+                                                        className={MODEL_ROW_TRIGGER_CLASS}
+                                                        data-anat-part={showAnatomy ? "Tooltip.Trigger" : undefined}
+                                                    >
                                                         <ModelRowLayout
                                                             isSelected={isSelected}
+                                                            anatPart={showAnatomy ? "ModelRowLayout" : undefined}
                                                             name={model.model}
                                                             nameSuffix={selfHostMark}
-                                                            leading={<WarningIcon className="size-5 shrink-0 text-warning-soft-foreground" />}
+                                                            leading={<WarningIcon className="size-5 shrink-0 text-warning-soft-foreground" data-anat-part={showAnatomy ? "WarningIcon" : undefined} />}
                                                             trailing={<>{healthChip}{categoryChip}</>}
                                                         />
                                                     </Tooltip.Trigger>
-                                                    <Tooltip.Content>
+                                                    <Tooltip.Content data-anat-part={showAnatomy ? "Tooltip.Content" : undefined}>
                                                         <Typography type="body-sm" className="text-warning-soft-foreground">
                                                             {belowFloor
                                                                 ? "Model dưới mức khuyến nghị — kết quả chấm có thể kém chính xác"
@@ -635,6 +677,7 @@ export const GradeModelDropdown = ({
                                             key={key}
                                             textValue={model.model}
                                             className={DROPDOWN_ITEM_ROW_CLASS}
+                                            data-anat-part={showAnatomy ? "DropdownItem" : undefined}
                                             onPress={() => onSelect({
                                                 model: model.model,
                                                 provider: model.provider,
@@ -642,6 +685,7 @@ export const GradeModelDropdown = ({
                                         >
                                             <ModelRowLayout
                                                 isSelected={isSelected}
+                                                anatPart={showAnatomy ? "ModelRowLayout" : undefined}
                                                 name={model.model}
                                                 nameSuffix={selfHostMark}
                                                 trailing={<>{healthChip}{categoryChip}</>}
@@ -657,6 +701,7 @@ export const GradeModelDropdown = ({
                         <button
                             type="button"
                             onClick={() => setShowHidden((open) => !open)}
+                            data-anat-part={showAnatomy ? "button · Hiện N ẩn" : undefined}
                             className="cursor-pointer px-3 pb-2 pt-1 text-start text-xs text-muted transition-colors hover:text-foreground"
                         >
                             {showHidden

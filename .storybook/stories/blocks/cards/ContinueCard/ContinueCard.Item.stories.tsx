@@ -102,7 +102,7 @@ export const Content: Story = {
                 }
             >
                 <div className="w-80">
-                    <ContinueCard variant="item" title="Building a RESTful API with NestJS" subtitle="Reading" ctaLabel="Continue" href="/courses/nestjs-api/lessons/5" />
+                    <ContinueCard variant="item" title="Building a RESTful API with NestJS" subtitle="Reading" ctaLabel="Continue" href="/courses/nestjs-api/lessons/5" showAnatomy />
                 </div>
             </BlockAnatomy>,
         ),

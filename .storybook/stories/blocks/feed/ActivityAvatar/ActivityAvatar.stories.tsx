@@ -66,6 +66,7 @@ export const Default: Story = {
                     username="lananh_pham"
                     avatar="https://i.pravatar.cc/150?img=5"
                     icon={<BookOpenIcon aria-hidden focusable="false" weight="bold" />}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -85,6 +86,7 @@ export const WithPhoto: Story = {
                     username="minhanh_dev"
                     avatar="https://i.pravatar.cc/150?img=12"
                     icon={<UserPlusIcon aria-hidden focusable="false" weight="bold" />}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -104,6 +106,7 @@ export const GeneratedFallback: Story = {
                     username="quochuy_backend"
                     avatar={null}
                     icon={<GraduationCapIcon aria-hidden focusable="false" weight="bold" />}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -124,21 +127,25 @@ export const ActivityIconTypes: Story = {
                         username="thuha_ux"
                         avatar="https://i.pravatar.cc/150?img=45"
                         icon={<BookOpenIcon aria-hidden focusable="false" weight="bold" />}
+                        showAnatomy
                     />
                     <ActivityAvatar
                         username="quochuy_backend"
                         avatar="https://i.pravatar.cc/150?img=33"
                         icon={<FlagIcon aria-hidden focusable="false" weight="bold" />}
+                        showAnatomy
                     />
                     <ActivityAvatar
                         username="lananh_pham"
                         avatar={null}
                         icon={<SparkleIcon aria-hidden focusable="false" weight="bold" />}
+                        showAnatomy
                     />
                     <ActivityAvatar
                         username="minhanh_dev"
                         avatar="https://i.pravatar.cc/150?img=12"
                         icon={<ChatCircleIcon aria-hidden focusable="false" weight="bold" />}
+                        showAnatomy
                     />
                 </div>
             </BlockAnatomy>,

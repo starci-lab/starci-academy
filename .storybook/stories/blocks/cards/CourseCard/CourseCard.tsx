@@ -105,6 +105,11 @@ export interface CourseCardProps {
     action?: React.ReactNode
     /** Extra classes on the card root. */
     className?: string
+    /**
+     * `true` → each part this card renders carries a `data-anat-part="<name>"`
+     * attribute so a BlockAnatomy panel can badge it on-render. Off in production.
+     */
+    showAnatomy?: boolean
 }
 
 /**
@@ -124,6 +129,7 @@ export const CourseCard = ({
     isSkeleton = false,
     action,
     className,
+    showAnatomy = false,
 }: CourseCardProps) => {
     const [coverFailed, setCoverFailed] = useState(false)
 
@@ -235,8 +241,8 @@ export const CourseCard = ({
         // GRID mirror: cover 16:9 · title+meta · 2 description lines · the bordered
         // value-props list (CrossListCard self-skeletons its rows) · price · 2-button row.
         return (
-            <Card className={cn("flex flex-col overflow-hidden rounded-3xl", className)}>
-                <Card.Content className="flex flex-col gap-3">
+            <Card className={cn("flex flex-col overflow-hidden rounded-3xl", className)} data-anat-part={showAnatomy ? "Card" : undefined}>
+                <Card.Content className="flex flex-col gap-3" data-anat-part={showAnatomy ? "Card.Content" : undefined}>
                     {/* cover 16:9 (rounded-2xl media step) */}
                     <Skeleton className="aspect-video w-full rounded-2xl" />
                     <div className="flex flex-col gap-2">
@@ -252,10 +258,10 @@ export const CourseCard = ({
                         <Skeleton.Typography type="body-sm" width="full" />
                         <Skeleton.Typography type="body-sm" width="3/4" />
                         {/* value-props — same bordered CrossListCard surface, self-skeletoned */}
-                        <CrossListCard bordered isSkeleton className="mt-1" />
+                        <CrossListCard bordered isSkeleton className="mt-1" anatPart={showAnatomy ? "CrossListCard" : undefined} />
                     </div>
                 </Card.Content>
-                <Card.Footer className="mt-auto flex flex-col items-start gap-2">
+                <Card.Footer className="mt-auto flex flex-col items-start gap-2" data-anat-part={showAnatomy ? "Card.Footer" : undefined}>
                     {/* price line */}
                     <Skeleton.Typography type="body" width="1/3" />
                     {/* action row — primary + secondary button */}
@@ -279,7 +285,7 @@ export const CourseCard = ({
                 <div className="flex items-center gap-3">
                     {/* thumbnail 16:9 (branded fallback); hidden on the narrowest screens.
                         rounded-2xl = the "inner" step under the card's rounded-3xl. */}
-                    <div className="relative hidden aspect-video w-36 shrink-0 overflow-hidden rounded-2xl bg-surface @app-sm:block">
+                    <div className="relative hidden aspect-video w-36 shrink-0 overflow-hidden rounded-2xl bg-surface @app-sm:block" data-anat-part={showAnatomy ? "Cover (img / gradient)" : undefined}>
                         {showCover ? (
                             <img
                                 src={course.coverImageUrl ?? undefined}
@@ -296,11 +302,11 @@ export const CourseCard = ({
                     {/* title + one-line description */}
                     <div className="flex min-w-0 flex-1 flex-col gap-1">
                         <div className="flex items-center gap-2">
-                            <Typography type="body" weight="bold" truncate>
+                            <Typography type="body" weight="bold" truncate data-anat-part={showAnatomy ? "Typography · tiêu đề" : undefined}>
                                 {course.title}
                             </Typography>
                             {course.enrollmentCount > 0 ? (
-                                <div className="flex shrink-0 items-center gap-1 text-muted">
+                                <div className="flex shrink-0 items-center gap-1 text-muted" data-anat-part={showAnatomy ? "Typography muted + UsersIcon" : undefined}>
                                     <UsersIcon aria-hidden className="size-4" />
                                     <Typography type="body-xs" color="muted">
                                         {T.learners(course.enrollmentCount)}
@@ -308,7 +314,7 @@ export const CourseCard = ({
                                 </div>
                             ) : null}
                         </div>
-                        <Typography type="body-sm" color="muted" className="line-clamp-1">
+                        <Typography type="body-sm" color="muted" className="line-clamp-1" data-anat-part={showAnatomy ? "Typography · mô tả" : undefined}>
                             {course.description}
                         </Typography>
                     </div>
@@ -323,6 +329,7 @@ export const CourseCard = ({
                                 discounted={displayPrice}
                                 original={displayOriginal}
                                 size="sm"
+                                anatPart={showAnatomy ? "PriceTag" : undefined}
                             />
                         ) : null}
                         <div className="flex w-full items-center gap-2">
@@ -343,11 +350,11 @@ export const CourseCard = ({
     }
 
     return (
-        <Card className={cn("flex flex-col overflow-hidden rounded-3xl", className)}>
-            <Card.Content className="flex flex-col gap-3">
+        <Card className={cn("flex flex-col overflow-hidden rounded-3xl", className)} data-anat-part={showAnatomy ? "Card" : undefined}>
+            <Card.Content className="flex flex-col gap-3" data-anat-part={showAnatomy ? "Card.Content" : undefined}>
                 {/* cover 16:9 — rounded-2xl = the "inner" step under the card's rounded-3xl;
                     branded gradient fallback when missing/broken */}
-                <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-surface">
+                <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-surface" data-anat-part={showAnatomy ? "Cover (img / gradient)" : undefined}>
                     {showCover ? (
                         <img
                             src={course.coverImageUrl ?? undefined}
@@ -367,11 +374,11 @@ export const CourseCard = ({
 
                 <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between gap-2">
-                        <Typography type="h6" weight="bold" truncate>
+                        <Typography type="h6" weight="bold" truncate data-anat-part={showAnatomy ? "Typography" : undefined}>
                             {course.title}
                         </Typography>
                         {course.enrollmentCount > 0 ? (
-                            <div className="flex shrink-0 items-center gap-1 text-muted">
+                            <div className="flex shrink-0 items-center gap-1 text-muted" data-anat-part={showAnatomy ? "Typography muted + UsersIcon" : undefined}>
                                 <UsersIcon aria-hidden className="size-4" />
                                 <Typography type="body-xs" color="muted">
                                     {T.learners(course.enrollmentCount)}
@@ -379,7 +386,7 @@ export const CourseCard = ({
                             </div>
                         ) : null}
                     </div>
-                    <Typography type="body-sm" color="muted" className="line-clamp-2">
+                    <Typography type="body-sm" color="muted" className="line-clamp-2" data-anat-part={showAnatomy ? "Typography" : undefined}>
                         {course.description}
                     </Typography>
                     {topValueProps.length > 0 ? (
@@ -387,10 +394,10 @@ export const CourseCard = ({
                         // tone="muted"). NOT a hand-rolled list. Muted tick → the TEXT leads, card
                         // keeps only price-deal + CTA as the nổi points (principles.md §2). Bordered =
                         // surface-in-surface.
-                        <CrossListCard bordered className="mt-1">
+                        <CrossListCard bordered className="mt-1" anatPart={showAnatomy ? "CrossListCard" : undefined}>
                             {topValueProps.map((valueProp, index) => (
                                 <CrossListItem key={index} mark="check" tone="muted">
-                                    <Typography type="body-sm">{valueProp.text}</Typography>
+                                    <Typography type="body-sm" data-anat-part={showAnatomy ? "Typography" : undefined}>{valueProp.text}</Typography>
                                 </CrossListItem>
                             ))}
                         </CrossListCard>
@@ -400,7 +407,7 @@ export const CourseCard = ({
             {/* items-start: HeroUI `.card__footer` bakes align-items:center → short lines (USD hint)
                 float to center. Force flush-left (reading-flow: từ trái). w-full children (action row)
                 still stretch. */}
-            <Card.Footer className="mt-auto flex flex-col items-start gap-2">
+            <Card.Footer className="mt-auto flex flex-col items-start gap-2" data-anat-part={showAnatomy ? "Card.Footer" : undefined}>
                 {/* price row (informational) */}
                 <div className="flex items-center gap-2">
                     {loyaltyPending ? (
@@ -410,13 +417,14 @@ export const CourseCard = ({
                             discounted={displayPrice}
                             original={displayOriginal}
                             size="sm"
+                            anatPart={showAnatomy ? "PriceTag" : undefined}
                         />
                     ) : (
                         <span />
                     )}
                 </div>
                 {formattedPriceUsd != null ? (
-                    <Typography type="body-xs" color="muted">
+                    <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography muted (USD hint)" : undefined}>
                         {T.priceUsdHint(formattedPriceUsd)}
                     </Typography>
                 ) : null}

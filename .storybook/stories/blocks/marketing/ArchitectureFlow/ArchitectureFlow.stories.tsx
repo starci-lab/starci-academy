@@ -67,7 +67,7 @@ export const SingleNode: Story = {
                 parts={SINGLE_PARTS}
                 note="Chỉ một node → hộp Typography đứng một mình, KHÔNG có CaretRightIcon (connector chỉ hiện giữa các node)."
             >
-                <ArchitectureFlow nodes={["Client"]} />
+                <ArchitectureFlow nodes={["Client"]} showAnatomy />
             </BlockAnatomy>,
         ),
 }
@@ -83,7 +83,7 @@ export const TypicalFlow: Story = {
                 parts={FLOW_PARTS}
                 reason="Minh hoạ một luồng kiến trúc thật (Client → Gateway → Cache → DB) chỉ bằng CSS, không cần ảnh chụp. Gói các hộp node + caret vào một block để feature chỉ truyền mảng tên node — tự wrap khi khung hẹp, dùng lại ở mọi section 'hệ thống bạn xây'."
             >
-                <ArchitectureFlow nodes={["Client", "API Gateway", "Cache", "PostgreSQL"]} />
+                <ArchitectureFlow nodes={["Client", "API Gateway", "Cache", "PostgreSQL"]} showAnatomy />
             </BlockAnatomy>,
         ),
 }
@@ -108,6 +108,7 @@ export const LongLabelsWrap: Story = {
                             "Kafka Event Bus",
                             "PostgreSQL Primary + Replica",
                         ]}
+                        showAnatomy
                     />
                 </div>
             </BlockAnatomy>,
@@ -126,7 +127,7 @@ export const Empty: Story = {
                 note="Mảng node rỗng → không hộp, không caret; block chỉ còn hàng flex trống (ở đây bọc trong khung dashed để thấy)."
             >
                 <div className="rounded-md border border-dashed border-default px-4 py-3">
-                    <ArchitectureFlow nodes={[]} />
+                    <ArchitectureFlow nodes={[]} showAnatomy />
                 </div>
             </BlockAnatomy>,
         ),

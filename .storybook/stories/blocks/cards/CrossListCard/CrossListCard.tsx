@@ -32,6 +32,8 @@ export interface CrossListCardProps {
     skeletonRows?: number
     /** Extra classes on the list root. */
     className?: string
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
 }
 
 /**
@@ -50,8 +52,9 @@ export const CrossListCard = ({
     isSkeleton = false,
     skeletonRows = 3,
     className,
+    anatPart,
 }: CrossListCardProps) => (
-    <ul className={cn("overflow-hidden", surfaceFrame(bordered), className)}>
+    <ul className={cn("overflow-hidden", surfaceFrame(bordered), className)} data-anat-part={anatPart}>
         {isSkeleton
             ? Array.from({ length: skeletonRows }).map((_, index) => <CrossListItem key={index} isSkeleton />)
             : children}

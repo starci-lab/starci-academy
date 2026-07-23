@@ -35,6 +35,8 @@ export interface PlaygroundCardProps {
     onOpen: () => void
     /** Extra classes on the card root. */
     className?: string
+    /** When on, emit `data-anat-part` on each anatomy part for the anatomy panel. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -50,16 +52,26 @@ export const PlaygroundCard = ({
     stepCount,
     onOpen,
     className,
+    showAnatomy,
 }: PlaygroundCardProps) => {
     return (
         <Card className={cn("flex flex-col overflow-hidden rounded-3xl", className)}>
             <Card.Content className="flex flex-col gap-3">
-                <IconTile icon={<TerminalWindowIcon aria-hidden focusable="false" />} tone="accent" size="lg" />
+                <IconTile
+                    icon={<TerminalWindowIcon aria-hidden focusable="false" data-anat-part={showAnatomy ? "TerminalWindowIcon" : undefined} />}
+                    tone="accent"
+                    size="lg"
+                    anatPart={showAnatomy ? "IconTile" : undefined}
+                />
                 <div className="flex flex-col gap-1">
-                    <Typography type="h6" weight="bold" truncate>
+                    <Typography type="h6" weight="bold" truncate data-anat-part={showAnatomy ? "Typography" : undefined}>
                         {title}
                     </Typography>
-                    <StatusChip tone="neutral" icon={<ListChecksIcon aria-hidden focusable="false" />}>
+                    <StatusChip
+                        tone="neutral"
+                        icon={<ListChecksIcon aria-hidden focusable="false" data-anat-part={showAnatomy ? "ListChecksIcon" : undefined} />}
+                        anatPart={showAnatomy ? "StatusChip" : undefined}
+                    >
                         {stepCountLabel(stepCount)}
                     </StatusChip>
                 </div>
@@ -69,7 +81,7 @@ export const PlaygroundCard = ({
                     variant="primary"
                     className="w-full"
                     onPress={onOpen}
-                    icon={<ArrowRightIcon aria-hidden focusable="false" />}
+                    icon={<ArrowRightIcon aria-hidden focusable="false" data-anat-part={showAnatomy ? "ArrowRightIcon" : undefined} />}
                 >
                     {CTA_LABEL}
                 </Button>

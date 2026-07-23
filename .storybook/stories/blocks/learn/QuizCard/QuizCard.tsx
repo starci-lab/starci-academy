@@ -31,6 +31,8 @@ export interface QuizCardProps {
     explanation?: React.ReactNode
     questionIndex?: number
     className?: string
+    /** Dev/spec: emit `data-anat-part` on each part so a BlockAnatomy panel can badge it on-render. */
+    showAnatomy?: boolean
 }
 
 type OptionVisualState = "default" | "selected" | "correct" | "incorrect" | "correctUnselected"
@@ -49,12 +51,12 @@ const resolveOptionState = (option: QuizOption, isSelected: boolean, isSubmitted
     return isSelected ? "incorrect" : "default"
 }
 
-const OptionResultIcon = ({ state }: { state: OptionVisualState }) => {
+const OptionResultIcon = ({ state, anatPart }: { state: OptionVisualState; anatPart?: string }) => {
     if (state === "correct" || state === "correctUnselected") {
-        return <CheckCircleIcon aria-hidden focusable="false" weight="fill" className="size-5 shrink-0 text-success-soft-foreground" />
+        return <CheckCircleIcon data-anat-part={anatPart} aria-hidden focusable="false" weight="fill" className="size-5 shrink-0 text-success-soft-foreground" />
     }
     if (state === "incorrect") {
-        return <XCircleIcon aria-hidden focusable="false" weight="fill" className="size-5 shrink-0 text-danger-soft-foreground" />
+        return <XCircleIcon data-anat-part={anatPart} aria-hidden focusable="false" weight="fill" className="size-5 shrink-0 text-danger-soft-foreground" />
     }
     return null
 }
@@ -81,19 +83,21 @@ export const QuizCard = ({
     explanation,
     questionIndex,
     className,
+    showAnatomy = false,
 }: QuizCardProps) => {
     return (
-        <SectionCard className={cn(className)}>
+        <SectionCard anatPart={showAnatomy ? "SectionCard" : undefined} className={cn(className)}>
             <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-2">
                     {typeof questionIndex === "number" ? (
-                        <StatusChip tone="accent">{`Câu ${questionIndex}`}</StatusChip>
+                        <StatusChip anatPart={showAnatomy ? "StatusChip" : undefined} tone="accent">{`Câu ${questionIndex}`}</StatusChip>
                     ) : null}
-                    <Typography type="body" weight="semibold">{question}</Typography>
+                    <Typography data-anat-part={showAnatomy ? "Typography" : undefined} type="body" weight="semibold">{question}</Typography>
                 </div>
 
                 {selectionMode === "single" ? (
                     <RadioGroup
+                        data-anat-part={showAnatomy ? "RadioGroup" : undefined}
                         aria-label="Các phương án trả lời"
                         value={selectedIds[0] ?? ""}
                         onChange={(value) => onSelectionChange(value ? [value] : [])}
@@ -104,11 +108,11 @@ export const QuizCard = ({
                             const isSelected = selectedIds.includes(option.id)
                             const state = resolveOptionState(option, isSelected, isSubmitted)
                             return (
-                                <Radio key={option.id} value={option.id} className={cn(ROW_BASE, ROW_CLASSES[state])}>
+                                <Radio data-anat-part={showAnatomy ? "Radio" : undefined} key={option.id} value={option.id} className={cn(ROW_BASE, ROW_CLASSES[state])}>
                                     <Radio.Content className="w-full">
                                         <Radio.Control><Radio.Indicator /></Radio.Control>
                                         <span className="min-w-0 flex-1">{option.label}</span>
-                                        <OptionResultIcon state={state} />
+                                        <OptionResultIcon state={state} anatPart={showAnatomy ? "OptionResultIcon" : undefined} />
                                     </Radio.Content>
                                 </Radio>
                             )
@@ -116,6 +120,7 @@ export const QuizCard = ({
                     </RadioGroup>
                 ) : (
                     <CheckboxGroup
+                        data-anat-part={showAnatomy ? "CheckboxGroup" : undefined}
                         aria-label="Các phương án trả lời"
                         value={selectedIds}
                         onChange={onSelectionChange}
@@ -126,11 +131,11 @@ export const QuizCard = ({
                             const isSelected = selectedIds.includes(option.id)
                             const state = resolveOptionState(option, isSelected, isSubmitted)
                             return (
-                                <Checkbox key={option.id} value={option.id} className={cn(ROW_BASE, ROW_CLASSES[state])}>
+                                <Checkbox data-anat-part={showAnatomy ? "Checkbox" : undefined} key={option.id} value={option.id} className={cn(ROW_BASE, ROW_CLASSES[state])}>
                                     <Checkbox.Content className="w-full">
                                         <Checkbox.Control><Checkbox.Indicator /></Checkbox.Control>
                                         <span className="min-w-0 flex-1">{option.label}</span>
-                                        <OptionResultIcon state={state} />
+                                        <OptionResultIcon state={state} anatPart={showAnatomy ? "OptionResultIcon" : undefined} />
                                     </Checkbox.Content>
                                 </Checkbox>
                             )
@@ -151,9 +156,9 @@ export const QuizCard = ({
                 ) : null}
 
                 {isSubmitted && explanation ? (
-                    <div className="flex flex-col gap-1 rounded-2xl bg-surface-secondary px-4 py-3">
-                        <Typography type="body-sm" weight="semibold">Giải thích</Typography>
-                        <Typography type="body-sm" color="muted">{explanation}</Typography>
+                    <div data-anat-part={showAnatomy ? "div · giải thích" : undefined} className="flex flex-col gap-1 rounded-2xl bg-surface-secondary px-4 py-3">
+                        <Typography data-anat-part={showAnatomy ? "Typography · nhãn" : undefined} type="body-sm" weight="semibold">Giải thích</Typography>
+                        <Typography data-anat-part={showAnatomy ? "Typography · nội dung" : undefined} type="body-sm" color="muted">{explanation}</Typography>
                     </div>
                 ) : null}
             </div>

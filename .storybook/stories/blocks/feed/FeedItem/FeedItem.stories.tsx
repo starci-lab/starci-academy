@@ -96,8 +96,11 @@ export const Default: Story = {
             >
                 <div className="w-96">
                     <FeedItem
+                        showAnatomy
                         leading={(
                             <ActivityAvatar
+                                anatPart="ActivityAvatar"
+                                showAnatomy
                                 username="minhanh_dev"
                                 avatar="https://i.pravatar.cc/150?img=12"
                                 icon={<UserPlusIcon aria-hidden focusable="false" weight="bold" />}
@@ -128,15 +131,18 @@ export const WithReaction: Story = {
             >
                 <div className="w-96">
                     <FeedItem
+                        showAnatomy
                         leading={(
                             <ActivityAvatar
+                                anatPart="ActivityAvatar"
+                                showAnatomy
                                 username="quochuy_backend"
                                 avatar="https://i.pravatar.cc/150?img=33"
                                 icon={<UserPlusIcon aria-hidden focusable="false" weight="bold" />}
                             />
                         )}
                         timestamp="15 phút trước"
-                        footer={<ReactionBar count={8} myReaction={ReactionType.Like} onReact={() => {}} />}
+                        footer={<ReactionBar anatPart="ReactionBar" count={8} myReaction={ReactionType.Like} onReact={() => {}} />}
                     >
                         <span>
                             <EntityLink label="quochuy_backend" onPress={() => {}} />
@@ -161,15 +167,18 @@ export const ReadOnlyFooter: Story = {
             >
                 <div className="w-96">
                     <FeedItem
+                        showAnatomy
                         leading={(
                             <ActivityAvatar
+                                anatPart="ActivityAvatar"
+                                showAnatomy
                                 username="minhanh_dev"
                                 avatar="https://i.pravatar.cc/150?img=12"
                                 icon={<UserPlusIcon aria-hidden focusable="false" weight="bold" />}
                             />
                         )}
                         timestamp="1 giờ trước"
-                        footer={<ReactionBar count={5} myReaction={null} />}
+                        footer={<ReactionBar anatPart="ReactionBar" count={5} myReaction={null} />}
                     >
                         <span>
                             <EntityLink label="minhanh_dev" onPress={() => {}} />
@@ -193,7 +202,7 @@ export const NoLeading: Story = {
                 note="Bỏ slot leading + không mốc thực thể → chỉ còn cột text thuần + timestamp (composition tối giản nhất)."
             >
                 <div className="w-96">
-                    <FeedItem timestamp="Hôm qua lúc 21:40">
+                    <FeedItem showAnatomy timestamp="Hôm qua lúc 21:40">
                         Hệ thống đã tự động backup tiến độ khóa học của bạn
                     </FeedItem>
                 </div>
@@ -213,8 +222,11 @@ export const LongText: Story = {
             >
                 <div className="w-72">
                     <FeedItem
+                        showAnatomy
                         leading={(
                             <ActivityAvatar
+                                anatPart="ActivityAvatar"
+                                showAnatomy
                                 username="thuha_ux"
                                 avatar="https://i.pravatar.cc/150?img=45"
                                 icon={<UserPlusIcon aria-hidden focusable="false" weight="bold" />}

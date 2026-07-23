@@ -33,6 +33,8 @@ export interface TopicLaneProps extends WithClassNames<undefined> {
     title: string
     /** The topic rows in this lane. */
     items: ReadonlyArray<TopicLaneItem>
+    /** When on, emit `data-anat-part` tags on each part so a BlockAnatomy panel can badge them on-render. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -43,12 +45,12 @@ export interface TopicLaneProps extends WithClassNames<undefined> {
  *
  * @param props - {@link TopicLaneProps}
  */
-export const TopicLane = ({ icon, title, items, className }: TopicLaneProps) => {
+export const TopicLane = ({ icon, title, items, className, showAnatomy }: TopicLaneProps) => {
     return (
         <div className={cn("flex flex-col gap-3", className)}>
             <div className="flex items-center gap-2">
-                <span className="text-accent-soft-foreground [&>svg]:size-4">{icon}</span>
-                <Typography type="body-sm" weight="semibold">
+                <span className="text-accent-soft-foreground [&>svg]:size-4" data-anat-part={showAnatomy ? "Icon" : undefined}>{icon}</span>
+                <Typography type="body-sm" weight="semibold" data-anat-part={showAnatomy ? "Typography" : undefined}>
                     {title}
                 </Typography>
             </div>
@@ -58,12 +60,13 @@ export const TopicLane = ({ icon, title, items, className }: TopicLaneProps) => 
                         key={`${item.label}-${index}`}
                         type="button"
                         onClick={item.onPress}
+                        data-anat-part={showAnatomy ? "button" : undefined}
                         className="group flex w-full cursor-pointer items-center justify-between gap-3 rounded-xl border border-default bg-surface px-3 py-2 text-left outline-none transition-colors focus-visible:ring-2 focus-visible:ring-accent"
                     >
-                        <Typography type="body-sm" className="min-w-0 truncate underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
+                        <Typography type="body-sm" data-anat-part={showAnatomy ? "Typography · nhãn" : undefined} className="min-w-0 truncate underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
                             {item.label}
                         </Typography>
-                        <Typography type="code" className="shrink-0 text-[10px] text-muted">
+                        <Typography type="code" data-anat-part={showAnatomy ? "Typography · tag" : undefined} className="shrink-0 text-[10px] text-muted">
                             {item.tag}
                         </Typography>
                     </button>

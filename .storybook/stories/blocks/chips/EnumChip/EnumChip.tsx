@@ -41,6 +41,8 @@ export interface EnumChipProps<E extends string> {
     className?: string
     /** When `true`, renders the skeleton placeholder (a chip-shaped pill) instead of the real chip. */
     isSkeleton?: boolean
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
 }
 
 /**
@@ -51,7 +53,7 @@ export interface EnumChipProps<E extends string> {
  *
  * @param props - {@link EnumChipProps}
  */
-export const EnumChip = <E extends string>({ value, map, className, isSkeleton }: EnumChipProps<E>) => {
+export const EnumChip = <E extends string>({ value, map, className, isSkeleton, anatPart }: EnumChipProps<E>) => {
     if (isSkeleton) {
         return <Skeleton.Chip className={className} />
     }
@@ -60,7 +62,7 @@ export const EnumChip = <E extends string>({ value, map, className, isSkeleton }
         throw new Error(`EnumChip: no map entry for value "${value}"`)
     }
     const chip = (
-        <StatusChip tone={entry.color ? COLOR_TO_TONE[entry.color] : "neutral"} className={className}>
+        <StatusChip tone={entry.color ? COLOR_TO_TONE[entry.color] : "neutral"} className={className} anatPart={anatPart}>
             {entry.label}
         </StatusChip>
     )

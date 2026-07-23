@@ -135,6 +135,7 @@ export const Loading: Story = {
                         hasPinnedModel={false}
                         autoCreditCost={10}
                         onOpenDetails={() => {}}
+                        showAnatomy
                     />
                 </div>
             </BlockAnatomy>,
@@ -157,6 +158,7 @@ export const PlentyCredit: Story = {
                     hasPinnedModel={false}
                     autoCreditCost={5}
                     onOpenDetails={() => {}}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -178,6 +180,7 @@ export const BlockedByWeek: Story = {
                     hasPinnedModel={false}
                     autoCreditCost={5}
                     onOpenDetails={() => {}}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -199,6 +202,7 @@ export const BlockedByBurst: Story = {
                     hasPinnedModel={false}
                     autoCreditCost={5}
                     onOpenDetails={() => {}}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -220,6 +224,7 @@ export const PinnedModelNoWarning: Story = {
                     hasPinnedModel
                     autoCreditCost={5}
                     onOpenDetails={() => {}}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -241,6 +246,7 @@ export const UnknownAutoCost: Story = {
                     hasPinnedModel={false}
                     autoCreditCost={undefined}
                     onOpenDetails={() => {}}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -262,6 +268,7 @@ export const Interactive: Story = {
                     hasPinnedModel={false}
                     autoCreditCost={5}
                     onOpenDetails={() => {}}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -282,6 +289,7 @@ export const StaticNoDetails: Story = {
                     creditUsage={plentyUsage}
                     hasPinnedModel={false}
                     autoCreditCost={5}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),

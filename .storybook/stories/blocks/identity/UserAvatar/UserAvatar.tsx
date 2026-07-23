@@ -37,6 +37,8 @@ export interface UserAvatarProps extends WithClassNames<undefined> {
     seed?: string | null
     /** HeroUI avatar size preset. */
     size?: "sm" | "md" | "lg"
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
 }
 
 /**
@@ -51,7 +53,7 @@ export interface UserAvatarProps extends WithClassNames<undefined> {
  *
  * @param props - {@link UserAvatarProps}
  */
-export const UserAvatar = ({ username, avatar, seed, size, className }: UserAvatarProps) => {
+export const UserAvatar = ({ username, avatar, seed, size, className, anatPart }: UserAvatarProps) => {
     // last-resort fallback if even the generated image fails to load
     const initials = (username ?? "").slice(0, 2).toUpperCase()
     // ordered image candidates: uploaded first, then the stable generated default
@@ -69,7 +71,7 @@ export const UserAvatar = ({ username, avatar, seed, size, className }: UserAvat
     const src = candidates[index]
 
     return (
-        <Avatar size={size} className={cn("rounded-full", className)}>
+        <Avatar size={size} className={cn("rounded-full", className)} data-anat-part={anatPart}>
             {/*
               Radix only mounts the <img> once it has loaded, so a broken src never
               fires onError on the element — it reports failure via onLoadingStatusChange.

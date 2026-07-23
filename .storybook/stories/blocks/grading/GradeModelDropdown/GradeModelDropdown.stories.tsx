@@ -18,8 +18,10 @@ import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockA
  * BlockAnatomy axis (Sơ đồ + Cây) reflecting the parts THAT leaf composes — the
  * trigger shape (inline · field · button) and the popover shape (full · no-auto ·
  * locked · warning · empty). There is no separate consolidated "Anatomy" story.
- * This block emits no on-render anchors, so `Sơ đồ` renders clean + a numbered
- * legend (no `showAnatomy`).
+ * Each leaf passes `showAnatomy` (via `Controlled`) so the block emits
+ * `data-anat-part` anchors and `Sơ đồ` badges the parts on-render (a few
+ * cross-file atoms — AiCategoryChip, SelfHostGpuMark, FlexWrapButtonRadio — stay
+ * legend-only since tagging them would need editing another primitive).
  */
 const meta: Meta<typeof GradeModelDropdown> = {
     title: "Block/Grading/GradeModelDropdown",
@@ -93,6 +95,7 @@ const Controlled = ({
     isDropdown,
     isButton = false,
     isButtonFullWidth = false,
+    showAnatomy = true,
 }: {
     models: Array<AiGradableModel>
     initialSelection: GradeModelSelection
@@ -104,6 +107,7 @@ const Controlled = ({
     isDropdown?: boolean
     isButton?: boolean
     isButtonFullWidth?: boolean
+    showAnatomy?: boolean
 }) => {
     const [selection, setSelection] = React.useState<GradeModelSelection>(initialSelection)
     return (
@@ -118,6 +122,7 @@ const Controlled = ({
             isDropdown={isDropdown}
             isButton={isButton}
             isButtonFullWidth={isButtonFullWidth}
+            showAnatomy={showAnatomy}
             onSelect={setSelection}
             onUpgrade={() => {}}
         />

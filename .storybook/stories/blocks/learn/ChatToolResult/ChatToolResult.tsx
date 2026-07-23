@@ -32,6 +32,8 @@ export interface ChatToolResultProps {
     viewAllLabel?: React.ReactNode
     /** Extra classes on the outer card. */
     className?: string
+    /** When on, emit `data-anat-part` on each part so a {@link BlockAnatomy} panel can badge them on-render. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -55,18 +57,19 @@ export const ChatToolResult = ({
     onViewAll,
     viewAllLabel,
     className,
+    showAnatomy = false,
 }: ChatToolResultProps) => {
     return (
         <div className={cn("overflow-hidden rounded-xl border border-default bg-transparent", className)}>
             <div className="flex items-center justify-between gap-2 border-b border-default px-3 py-2">
                 <span className="flex min-w-0 items-center gap-2 text-muted">
                     {icon}
-                    <Typography type="body-xs" color="muted" truncate>
+                    <Typography type="body-xs" color="muted" truncate data-anat-part={showAnatomy ? "Typography" : undefined}>
                         {label}
                     </Typography>
                 </span>
                 {!isLoading && items.length > 0 ? (
-                    <Typography type="body-xs" color="muted" className="shrink-0">
+                    <Typography type="body-xs" color="muted" className="shrink-0" data-anat-part={showAnatomy ? "Typography" : undefined}>
                         {items.length}
                     </Typography>
                 ) : null}
@@ -97,6 +100,8 @@ export const ChatToolResult = ({
                             onSelect={onSelect}
                             showKindChip={showKindChip}
                             showSnippet
+                            anatPart={showAnatomy ? "EntityResultRow" : undefined}
+                            showAnatomy={showAnatomy}
                         />
                     ))}
                     {onViewAll ? (
@@ -107,12 +112,14 @@ export const ChatToolResult = ({
                         <button
                             type="button"
                             onClick={onViewAll}
+                            data-anat-part={showAnatomy ? "button" : undefined}
                             className="group flex w-full cursor-pointer items-center gap-1 px-4 py-2 text-left text-sm font-medium text-accent-soft-foreground"
                         >
                             {viewAllLabel}
                             <ArrowRightIcon
                                 aria-hidden
                                 focusable="false"
+                                data-anat-part={showAnatomy ? "ArrowRightIcon" : undefined}
                                 className="size-4 transition-transform group-hover:translate-x-0.5"
                             />
                         </button>

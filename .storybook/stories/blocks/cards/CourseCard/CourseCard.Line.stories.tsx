@@ -113,6 +113,7 @@ export const Default: Story = {
                         loyaltyPriceVnd={1341000}
                         loyaltyOriginalVnd={2990000}
                         action={<Button variant="secondary" className="flex-1">Thêm vào giỏ</Button>}
+                        showAnatomy
                     />
                 </div>
             </BlockAnatomy>,
@@ -132,7 +133,7 @@ export const Enrolled: Story = {
                 note="CÙNG composition với leaf 'Có dữ liệu' — chỉ đổi nhãn: primary 'Tiếp tục học' + secondary 'Xem khóa học' thay cho action."
             >
                 <div className="w-full max-w-2xl">
-                    <CourseCard course={enrolledCourse} layout="line" />
+                    <CourseCard course={enrolledCourse} layout="line" showAnatomy />
                 </div>
             </BlockAnatomy>,
         ),
@@ -151,7 +152,7 @@ export const NoCover: Story = {
                 note="Thiếu coverImageUrl → phần cover đổi sang gradient + BookOpenIcon; không action → chỉ 1 nút primary."
             >
                 <div className="w-full max-w-2xl">
-                    <CourseCard course={noCoverCourse} layout="line" />
+                    <CourseCard course={noCoverCourse} layout="line" showAnatomy />
                 </div>
             </BlockAnatomy>,
         ),
@@ -170,7 +171,7 @@ export const Loading: Story = {
                 note="loyaltyPending → CHỈ dòng giá là Skeleton, phần còn lại render thật (khác leaf 'Khung chờ' mirror cả hàng)."
             >
                 <div className="w-full max-w-2xl">
-                    <CourseCard course={discountedCourse} layout="line" loyaltyPending />
+                    <CourseCard course={discountedCourse} layout="line" loyaltyPending showAnatomy />
                 </div>
             </BlockAnatomy>,
         ),
@@ -189,7 +190,7 @@ export const Free: Story = {
                 note="Không giá (PriceTag vắng) và enrollmentCount=0 (meta số học viên vắng) → composition gọn còn cover + title + 1 nút."
             >
                 <div className="w-full max-w-2xl">
-                    <CourseCard course={freeCourse} layout="line" />
+                    <CourseCard course={freeCourse} layout="line" showAnatomy />
                 </div>
             </BlockAnatomy>,
         ),
@@ -208,7 +209,7 @@ export const Skeleton: Story = {
                 note="isSkeleton → tự dựng mirror cả hàng (mọi part skeleton), giữ nguyên box/radius/padding để lưới không nhảy."
             >
                 <div className="w-full max-w-2xl">
-                    <CourseCard course={discountedCourse} layout="line" isSkeleton />
+                    <CourseCard course={discountedCourse} layout="line" isSkeleton showAnatomy />
                 </div>
             </BlockAnatomy>,
         ),

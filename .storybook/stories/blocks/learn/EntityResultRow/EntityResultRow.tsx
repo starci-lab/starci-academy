@@ -67,6 +67,8 @@ export interface EntityResultRowProps {
     className?: string
     /** Anatomy tag: names this row's part so a {@link BlockAnatomy} panel can badge it. */
     anatPart?: string
+    /** When on, emit `data-anat-part` on each inner part so a {@link BlockAnatomy} panel can badge them. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -88,6 +90,7 @@ export const EntityResultRow = ({
     showSnippet = false,
     className,
     anatPart,
+    showAnatomy = false,
 }: EntityResultRowProps) => {
     const kind = resolveKind(item.kind)
     return (
@@ -101,9 +104,9 @@ export const EntityResultRow = ({
             )}
         >
             {showKindChip ? (
-                <EnumChip value={kind} map={KIND_META} className="w-fit" />
+                <EnumChip value={kind} map={KIND_META} className="w-fit" anatPart={showAnatomy ? "EnumChip" : undefined} />
             ) : item.breadcrumb ? (
-                <Typography type="body-xs" color="muted" truncate>
+                <Typography type="body-xs" color="muted" truncate data-anat-part={showAnatomy ? "Typography" : undefined}>
                     {item.breadcrumb}
                 </Typography>
             ) : null}
@@ -113,12 +116,13 @@ export const EntityResultRow = ({
                 type="body-sm"
                 weight="medium"
                 truncate
+                data-anat-part={showAnatomy ? "Typography" : undefined}
                 className="text-foreground underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline"
             >
                 {item.title}
             </Typography>
             {showSnippet && item.snippet ? (
-                <Typography type="body-xs" color="muted" truncate>
+                <Typography type="body-xs" color="muted" truncate data-anat-part={showAnatomy ? "Typography" : undefined}>
                     {item.snippet}
                 </Typography>
             ) : null}
@@ -126,9 +130,21 @@ export const EntityResultRow = ({
                 The row still NAVIGATES — landing on the surface's own enrol gate is the
                 funnel; this only sets the expectation first. */}
             {item.isLocked ? (
-                <span className="flex items-center gap-1 text-warning-soft-foreground">
-                    <LockSimpleIcon aria-hidden focusable="false" className="size-3.5 shrink-0" />
-                    <Typography type="body-xs" className="text-warning-soft-foreground">
+                <span
+                    data-anat-part={showAnatomy ? "span" : undefined}
+                    className="flex items-center gap-1 text-warning-soft-foreground"
+                >
+                    <LockSimpleIcon
+                        aria-hidden
+                        focusable="false"
+                        data-anat-part={showAnatomy ? "LockSimpleIcon" : undefined}
+                        className="size-3.5 shrink-0"
+                    />
+                    <Typography
+                        type="body-xs"
+                        data-anat-part={showAnatomy ? "Typography" : undefined}
+                        className="text-warning-soft-foreground"
+                    >
                         {STRINGS.enrollToOpen}
                     </Typography>
                 </span>

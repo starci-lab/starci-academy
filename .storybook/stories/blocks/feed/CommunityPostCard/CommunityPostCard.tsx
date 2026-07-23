@@ -83,6 +83,8 @@ export interface CommunityPostCardProps {
     children?: React.ReactNode
     /** Extra classes merged onto the card. */
     className?: string
+    /** When on, emit `data-anat-part` on composed parts for the anatomy panel. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -100,58 +102,62 @@ export const CommunityPostCard = ({
     onToggleComments,
     children,
     className,
+    showAnatomy,
 }: CommunityPostCardProps) => {
     // resolve the display name, falling back to the username when unset
     const displayName = post.author.displayName || post.author.username
 
     return (
-        <Card className={className}>
-            <CardContent>
+        <Card className={className} data-anat-part={showAnatomy ? "Card" : undefined}>
+            <CardContent data-anat-part={showAnatomy ? "CardContent" : undefined}>
                 <div className="flex flex-col gap-3">
                     <div className="flex items-center gap-3">
                         <UserAvatar
                             username={post.author.username}
                             avatar={post.author.avatar}
+                            anatPart={showAnatomy ? "UserAvatar" : undefined}
                         />
                         <div className="flex min-w-0 flex-1 flex-col">
                             <div className="flex items-center gap-1">
-                                <Typography type="body-sm" weight="semibold" truncate>
+                                <Typography type="body-sm" weight="semibold" truncate data-anat-part={showAnatomy ? "Typography" : undefined}>
                                     {displayName}
                                 </Typography>
                                 {post.isFounderAuthor ? (
                                     <SealCheckIcon
                                         weight="fill"
                                         className="size-4 shrink-0 text-accent-soft-foreground"
+                                        data-anat-part={showAnatomy ? "SealCheckIcon" : undefined}
                                     />
                                 ) : null}
                             </div>
                             <div className="flex items-center gap-2">
-                                <Typography type="body-xs" color="muted" truncate>
+                                <Typography type="body-xs" color="muted" truncate data-anat-part={showAnatomy ? "Typography" : undefined}>
                                     {`@${post.author.username}`}
                                 </Typography>
-                                <Typography type="body-xs" color="muted">
+                                <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography" : undefined}>
                                     {"·"}
                                 </Typography>
-                                <Typography type="body-xs" color="muted">
+                                <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography" : undefined}>
                                     {timeAgo(post.createdAt)}
                                 </Typography>
-                                <Typography type="body-xs" className="text-accent-soft-foreground">
+                                <Typography type="body-xs" className="text-accent-soft-foreground" data-anat-part={showAnatomy ? "Typography" : undefined}>
                                     {CHANNEL_LABEL[post.channel]}
                                 </Typography>
                             </div>
                         </div>
                         {post.isPinned ? (
-                            <PushPinIcon weight="fill" className="size-4 shrink-0 text-accent-soft-foreground" />
+                            <PushPinIcon weight="fill" className="size-4 shrink-0 text-accent-soft-foreground" data-anat-part={showAnatomy ? "PushPinIcon" : undefined} />
                         ) : null}
                     </div>
 
-                    <MarkdownContent markdown={post.body} className="[&_p]:m-0" />
+                    <MarkdownContent markdown={post.body} className="[&_p]:m-0" anatPart={showAnatomy ? "MarkdownContent" : undefined} />
 
                     <div className="flex items-center gap-6">
                         <ReactionBar
                             count={post.reactions.total}
                             myReaction={post.reactions.myReaction}
                             onReact={onReact ? (type) => onReact(post.id, type) : undefined}
+                            anatPart={showAnatomy ? "ReactionBar" : undefined}
                         />
                         {/* NOTE: left as hand-rolled — Button port's `sm` size is a fixed
                             h-9/px-3 pill (`.button--sm` in @heroui/styles) and `ghost`'s hover
@@ -164,6 +170,7 @@ export const CommunityPostCard = ({
                             disabled={!onToggleComments}
                             onClick={onToggleComments}
                             className="flex items-center gap-1 rounded-full px-2 py-0 text-muted transition-colors hover:bg-default/40 disabled:cursor-default disabled:hover:bg-transparent"
+                            data-anat-part={showAnatomy ? "Bình luận" : undefined}
                         >
                             <ChatCircleIcon className="size-4 shrink-0" />
                             <Typography type="body-xs" color="muted">

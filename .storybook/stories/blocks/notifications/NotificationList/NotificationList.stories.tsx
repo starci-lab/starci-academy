@@ -169,7 +169,12 @@ export const Populated: Story = {
                 reason="Gom nhiều NotificationItem thành một danh sách cuộn có header (tiêu đề + đánh dấu đã đọc hết) và nhãn gom theo ngày; khi rỗng thì tự rơi về EmptyState thay vì một khối trống. Feature chỉ gom dữ liệu theo ngày và truyền các dòng đã format — không phải tự dựng lại header, nhóm, và trạng thái rỗng ở mỗi nơi. Khi tải: Skeleton mirror đúng khung này."
             >
                 {listFrame(
-                    <NotificationList title="Notifications" onMarkAllRead={() => {}} groups={SAMPLE_GROUPS} />,
+                    <NotificationList
+                        title="Notifications"
+                        onMarkAllRead={() => {}}
+                        groups={SAMPLE_GROUPS}
+                        showAnatomy
+                    />,
                 )}
             </BlockAnatomy>,
         ),
@@ -189,10 +194,12 @@ export const Empty: Story = {
                     <NotificationList
                         title="Notifications"
                         groups={[{ items: [] }]}
+                        showAnatomy
                         emptyState={
                             <EmptyState
                                 title="Chưa có thông báo nào"
                                 description="Khi có hoạt động mới trên khoá học của bạn, thông báo sẽ xuất hiện ở đây."
+                                anatPart="EmptyState"
                             />
                         }
                     />,
@@ -203,7 +210,10 @@ export const Empty: Story = {
 
 /** One skeleton notification row — mirrors NotificationItem: tone tile + title/body/time text bars. */
 const SkeletonNotificationRow = () => (
-    <div className="flex w-full items-start gap-3 rounded-2xl p-3">
+    <div
+        className="flex w-full items-start gap-3 rounded-2xl p-3"
+        data-anat-part="SkeletonNotificationRow"
+    >
         <Skeleton className="size-10 shrink-0 rounded-2xl" />
         <div className="flex min-w-0 flex-1 flex-col gap-1">
             <Skeleton.Typography type="body-sm" width="3/4" />

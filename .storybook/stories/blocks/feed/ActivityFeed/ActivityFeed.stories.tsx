@@ -68,7 +68,7 @@ const Controlled = () => {
             return { ...item, reactionCount: item.reactionCount + delta, myReaction: type }
         }))
     }
-    return <ActivityFeed items={items} onResolve={resolveDemo} onReact={onReact} />
+    return <ActivityFeed items={items} onResolve={resolveDemo} onReact={onReact} showAnatomy />
 }
 
 // The real feed composition, mirroring the DOM ActivityFeed renders per day:
@@ -178,7 +178,7 @@ export const SingleItem: Story = {
                 parts={FEED_PARTS}
                 note="Một hàng duy nhất, nhưng CÙNG composition với feed nhiều ngày."
             >
-                <div className="w-full max-w-xl"><ActivityFeed items={singleItem} onResolve={resolveDemo} onReact={() => {}} /></div>
+                <div className="w-full max-w-xl"><ActivityFeed items={singleItem} onResolve={resolveDemo} onReact={() => {}} showAnatomy /></div>
             </BlockAnatomy>,
         ),
 }
@@ -194,7 +194,7 @@ export const RichMultiDay: Story = {
                 parts={FEED_PARTS}
                 reason="Feed hoạt động dùng chung cho trang chủ và tab Hoạt động: mỗi hàng là avatar-kèm-badge + câu actor/hành động/target + thời gian, gộp theo ngày (Hôm nay/Hôm qua/ngày cũ). Gộp milestone liên tiếp thành một dòng, null target rơi về câu generic — không để trống. Props-only nên một chỗ dựng, nhiều feature dùng."
             >
-                <div className="w-full max-w-xl"><ActivityFeed items={richItems} onResolve={resolveDemo} onReact={() => {}} /></div>
+                <div className="w-full max-w-xl"><ActivityFeed items={richItems} onResolve={resolveDemo} onReact={() => {}} showAnatomy /></div>
             </BlockAnatomy>,
         ),
 }
@@ -210,7 +210,7 @@ export const OwnActivity: Story = {
                 parts={FEED_PARTS}
                 note="Hàng của chính bạn (isMine) → ReactionBar chuyển chỉ-đọc, nhưng vẫn đủ các part."
             >
-                <div className="w-full max-w-xl"><ActivityFeed items={ownActivityItems} onResolve={resolveDemo} onReact={() => {}} /></div>
+                <div className="w-full max-w-xl"><ActivityFeed items={ownActivityItems} onResolve={resolveDemo} onReact={() => {}} showAnatomy /></div>
             </BlockAnatomy>,
         ),
 }
@@ -226,7 +226,7 @@ export const ReadOnly: Story = {
                 parts={FEED_PARTS}
                 note="Bỏ onReact → toàn bộ ReactionBar chỉ hiển thị số, composition không đổi."
             >
-                <div className="w-full max-w-xl"><ActivityFeed items={richItems} onResolve={resolveDemo} /></div>
+                <div className="w-full max-w-xl"><ActivityFeed items={richItems} onResolve={resolveDemo} showAnatomy /></div>
             </BlockAnatomy>,
         ),
 }
@@ -242,7 +242,7 @@ export const Bordered: Story = {
                 parts={FEED_PARTS}
                 note="SurfaceListCard đổi shadow → viền khi feed lồng trong surface khác; cùng các part."
             >
-                <div className="w-full max-w-xl"><ActivityFeed items={singleItem} onResolve={resolveDemo} onReact={() => {}} bordered /></div>
+                <div className="w-full max-w-xl"><ActivityFeed items={singleItem} onResolve={resolveDemo} onReact={() => {}} bordered showAnatomy /></div>
             </BlockAnatomy>,
         ),
 }
@@ -279,8 +279,8 @@ export const Empty: Story = {
                 note="Block không có slot rỗng — items=[] render trống; FEATURE dựng EmptyState thay chỗ."
             >
                 <div className="w-full max-w-xl">
-                    <EmptyState title="Chưa có hoạt động nào" description="Hoạt động của bạn và người bạn theo dõi sẽ xuất hiện ở đây." />
-                    <ActivityFeed items={[]} onResolve={resolveDemo} onReact={() => {}} />
+                    <EmptyState title="Chưa có hoạt động nào" description="Hoạt động của bạn và người bạn theo dõi sẽ xuất hiện ở đây." anatPart="EmptyState" />
+                    <ActivityFeed items={[]} onResolve={resolveDemo} onReact={() => {}} showAnatomy />
                 </div>
             </BlockAnatomy>,
         ),
@@ -304,7 +304,7 @@ export const SkeletonLoading: Story = {
                 <div className="flex w-full max-w-xl flex-col gap-6">
                     <section className="flex flex-col gap-2">
                         <Skeleton.Typography type="body-xs" width="1/4" />
-                        <SurfaceListCard>
+                        <SurfaceListCard anatPart="SurfaceListCard">
                             {[0, 1, 2].map((row) => (
                                 <SurfaceListCardItem key={row}>
                                     <div className="flex items-start gap-2">

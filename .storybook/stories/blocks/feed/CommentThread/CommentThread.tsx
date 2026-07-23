@@ -43,6 +43,11 @@ export interface CommentThreadProps {
     avatarSrc?: string
     /** Extra classes merged onto the root. */
     className?: string
+    /**
+     * When on, each composed part emits `data-anat-part` so a BlockAnatomy panel can
+     * badge it on-render. Cascades into every recursive {@link CommentThreadItem}.
+     */
+    showAnatomy?: boolean
 }
 
 /** Props for the recursive {@link CommentThreadItem}. */
@@ -52,6 +57,8 @@ interface CommentThreadItemProps {
     onReply: (parentId: string | null, text: string) => void
     onReact?: (commentId: string, type: ReactionType | null) => void
     avatarSrc?: string
+    /** Threaded from {@link CommentThread}; tags this item + its inline reply composer. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -64,6 +71,7 @@ const CommentThreadItem = ({
     onReply,
     onReact,
     avatarSrc,
+    showAnatomy,
 }: CommentThreadItemProps) => {
     const [replying, setReplying] = useState(false)
     const [replyValue, setReplyValue] = useState("")
@@ -103,6 +111,7 @@ const CommentThreadItem = ({
                 // indent nested replies with a guide rail, capped so deep threads stay readable
                 depth > 0 && depth <= MAX_INDENT_DEPTH ? "border-l border-default pl-3 @app-sm:pl-4" : undefined,
             )}
+            data-anat-part={showAnatomy ? "CommentThreadItem" : undefined}
         >
             <CommunityCommentRow
                 comment={node}
@@ -120,6 +129,7 @@ const CommentThreadItem = ({
                     placeholder="Viết câu trả lời..."
                     submitLabel="Trả lời"
                     className="pl-9"
+                    anatPart={showAnatomy ? "Composer" : undefined}
                 />
             ) : null}
 
@@ -134,6 +144,7 @@ const CommentThreadItem = ({
                             onReply={onReply}
                             onReact={onReact}
                             avatarSrc={avatarSrc}
+                            showAnatomy={showAnatomy}
                         />
                     ))}
                 </div>
@@ -161,6 +172,7 @@ export const CommentThread = ({
     onReact,
     avatarSrc,
     className,
+    showAnatomy,
 }: CommentThreadProps) => {
     const [rootValue, setRootValue] = useState("")
 
@@ -183,6 +195,7 @@ export const CommentThread = ({
                 onSubmit={submitRoot}
                 avatarSrc={avatarSrc}
                 placeholder="Viết bình luận..."
+                anatPart={showAnatomy ? "Composer" : undefined}
             />
 
             {/* the thread */}
@@ -196,6 +209,7 @@ export const CommentThread = ({
                             onReply={onReply}
                             onReact={onReact}
                             avatarSrc={avatarSrc}
+                            showAnatomy={showAnatomy}
                         />
                     ))}
                 </div>

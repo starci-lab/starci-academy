@@ -53,6 +53,8 @@ export interface StatusChipProps {
     icon?: ReactNode
     /** Dev/spec: overlay the anatomy annotation on this chip. */
     showAnatomy?: boolean
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
 }
 
 /**
@@ -82,12 +84,14 @@ export const StatusChip = ({
     isSkeleton = false,
     icon,
     showAnatomy = false,
+    anatPart,
 }: StatusChipProps) => {
     if (isSkeleton) {
         return <Skeleton.Chip className={className} />
     }
     const chip = (
         <Chip
+            data-anat-part={anatPart}
             color={toneToColor[tone]}
             variant="soft"
             size="sm"

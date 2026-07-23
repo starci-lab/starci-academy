@@ -34,9 +34,11 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 const Controlled = ({
     initialCount,
     initialReaction,
+    showAnatomy,
 }: {
     initialCount: number
     initialReaction: ReactionType | null
+    showAnatomy?: boolean
 }) => {
     const [count, setCount] = useState(initialCount)
     const [myReaction, setMyReaction] = useState<ReactionType | null>(initialReaction)
@@ -44,6 +46,7 @@ const Controlled = ({
         <ReactionBar
             count={count}
             myReaction={myReaction}
+            showAnatomy={showAnatomy}
             onReact={(type) => {
                 setCount((previous) => previous + (type ? (myReaction ? 0 : 1) : -1))
                 setMyReaction(type)
@@ -98,7 +101,7 @@ export const NoInteraction: Story = {
                 note="Người xem chưa react → trigger là SmileyIcon neutral, count = 0 nên Typography số đếm ẩn."
                 reason="Leaf feed block: gói trigger react + picker 6 emoji + số đếm vào một đơn vị, để mọi surface cộng đồng (post, comment, activity) dùng chung một cách thả cảm xúc. Quyền react do caller quyết định qua có truyền onReact hay không — không có prop readOnly riêng."
             >
-                <Controlled initialCount={0} initialReaction={null} />
+                <Controlled initialCount={0} initialReaction={null} showAnatomy />
             </BlockAnatomy>,
         ),
 }
@@ -114,7 +117,7 @@ export const Reacted: Story = {
                 parts={INTERACTIVE_PARTS}
                 note="Đã react → trigger đổi SmileyIcon sang emoji cảm xúc, Typography số đếm hiện (accent). CÙNG composition với leaf 'Chưa react'."
             >
-                <Controlled initialCount={12} initialReaction={ReactionType.Love} />
+                <Controlled initialCount={12} initialReaction={ReactionType.Love} showAnatomy />
             </BlockAnatomy>,
         ),
 }
@@ -130,7 +133,7 @@ export const ReadOnly: Story = {
                 parts={READONLY_PARTS}
                 note="Không truyền onReact → bỏ nút trigger + picker, chỉ còn emoji người xem + số đếm."
             >
-                <ReactionBar count={7} myReaction={ReactionType.Like} />
+                <ReactionBar count={7} myReaction={ReactionType.Like} showAnatomy />
             </BlockAnatomy>,
         ),
 }
@@ -147,7 +150,7 @@ export const ReadOnlyEmpty: Story = {
                 note="Chỉ-đọc + count 0 → ReactionBar trả về null (khác leaf 'Chỉ đọc'), không chiếm chỗ trong hàng meta."
             >
                 <div className="flex items-center gap-2">
-                    <ReactionBar count={0} myReaction={null} />
+                    <ReactionBar count={0} myReaction={null} showAnatomy />
                     <span className="text-xs text-muted">(bar trả về null — không để lại khoảng trống)</span>
                 </div>
             </BlockAnatomy>,

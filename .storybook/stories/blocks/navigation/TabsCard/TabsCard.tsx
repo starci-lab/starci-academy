@@ -83,6 +83,8 @@ export interface TabsCardProps {
     className?: string
     /** Dev/spec: overlay the anatomy annotation on this toolbar. */
     showAnatomy?: boolean
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
 }
 
 /** size → extra Tab className override (md = HeroUI's own default, no override). */
@@ -123,6 +125,7 @@ export const TabsCard = ({
     size = "md",
     className,
     showAnatomy = false,
+    anatPart,
 }: TabsCardProps) => {
     /** Render one controlled tab group (`accent` = accent selected chrome, secondary-only). */
     const renderGroup = (group: TabsCardGroup, accent = true): ReactNode => (
@@ -231,7 +234,7 @@ export const TabsCard = ({
     }
 
     return (
-        <div className={cn("flex items-center justify-between gap-3", showAnatomy && "relative", className)} data-anat={showAnatomy ? "" : undefined}>
+        <div className={cn("flex items-center justify-between gap-3", showAnatomy && "relative", className)} data-anat={showAnatomy ? "" : undefined} data-anat-part={anatPart}>
             {showAnatomy ? <AnatomyOverlay label="TabsCard" tier="primitive" href="/?path=/docs/primitives-navigation-tabscard--docs" /> : null}
             {leftEnd ? (
                 <div className="flex min-w-0 items-center gap-1">

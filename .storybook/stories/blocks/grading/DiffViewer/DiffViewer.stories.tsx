@@ -10,8 +10,9 @@ import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockA
  *
  * ANATOMY IS PER-LEAF: each story below is its OWN leaf and carries its OWN
  * BlockAnatomy axis (Sơ đồ + Cây) reflecting the parts THAT leaf composes — there
- * is no separate consolidated "Anatomy" story. DiffViewer emits no anchors (it
- * hand-draws every row), so no `showAnatomy` — Sơ đồ is a clean render + legend.
+ * is no separate consolidated "Anatomy" story. DiffViewer hand-draws every row,
+ * but with `showAnatomy` on it tags each part with `data-anat-part` so the Sơ đồ
+ * view can draw numbered on-render badges over the live render.
  */
 const meta: Meta<typeof DiffViewer> = {
     title: "Design/Grading/DiffViewer",
@@ -147,7 +148,7 @@ export const Unified: Story = {
                 parts={UNIFIED_PARTS}
                 reason="Leaf renderer cho diff chấm bài: nhận hunks đã parse sẵn (không tự chạy thuật toán diff) rồi vẽ header tên file + gutter số dòng + nền màu theo token (thêm=success, xoá=danger, context=neutral). Không cấu thành từ Primitives/* — tự vẽ mọi hàng, nên đúng ra là một Primitive hơn là Block (xem FLAGS)."
             >
-                <DiffViewer filename="src/auth/login.ts" hunks={sampleHunks} />
+                <DiffViewer filename="src/auth/login.ts" hunks={sampleHunks} showAnatomy />
             </BlockAnatomy>,
         ),
 }
@@ -163,7 +164,7 @@ export const Split: Story = {
                 parts={SPLIT_PARTS}
                 note="Cùng thành phần nhưng bố cục chia đôi: file cũ bên trái, file mới bên phải; context hiện cả hai bên."
             >
-                <DiffViewer filename="src/auth/login.ts" hunks={sampleHunks} variant="split" />
+                <DiffViewer filename="src/auth/login.ts" hunks={sampleHunks} variant="split" showAnatomy />
             </BlockAnatomy>,
         ),
 }
@@ -179,7 +180,7 @@ export const NoFilename: Story = {
                 parts={NO_FILENAME_PARTS}
                 note="filename bỏ trống → header bar bị bỏ HẲN (không Typography), phần code giữ nguyên."
             >
-                <DiffViewer hunks={sampleHunks} />
+                <DiffViewer hunks={sampleHunks} showAnatomy />
             </BlockAnatomy>,
         ),
 }
@@ -206,7 +207,7 @@ export const WithoutHunkHeader: Story = {
                 parts={NO_HUNK_HEADER_PARTS}
                 note="hunk không có header → không vẽ hàng phân cách muted; các hàng diff nối liền nhau."
             >
-                <DiffViewer filename="src/utils/clamp.ts" hunks={hunkWithoutHeader} />
+                <DiffViewer filename="src/utils/clamp.ts" hunks={hunkWithoutHeader} showAnatomy />
             </BlockAnatomy>,
         ),
 }

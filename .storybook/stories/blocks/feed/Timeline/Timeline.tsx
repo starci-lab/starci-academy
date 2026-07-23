@@ -18,6 +18,8 @@ export interface TimelineProps {
     children: ReactNode
     /** Extra classes merged onto the root. */
     className?: string
+    /** When on, cascade the flag into each row block so its anatomy parts emit `data-anat-part`. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -30,7 +32,19 @@ export interface TimelineProps {
  *
  * @param props - {@link TimelineProps}
  */
-export const Timeline = ({ children, className }: TimelineProps) => {
+export const Timeline = ({ children, className, showAnatomy }: TimelineProps) => {
+    // Timeline draws no part of its own — in anatomy mode it just cascades the flag
+    // into each row block (e.g. FeedItem) so their parts light up. Off by default →
+    // children pass through untouched, no behaviour change.
+    const rows = showAnatomy
+        ? React.Children.map(children, (child) =>
+              React.isValidElement(child)
+                  ? React.cloneElement(child as React.ReactElement<{ showAnatomy?: boolean }>, {
+                        showAnatomy: true,
+                    })
+                  : child,
+          )
+        : children
     return (
         <div
             className={cn(
@@ -40,7 +54,7 @@ export const Timeline = ({ children, className }: TimelineProps) => {
                 className,
             )}
         >
-            {children}
+            {rows}
         </div>
     )
 }

@@ -49,10 +49,12 @@ export const ActivitySequence: Story = {
                 reason="Bọc một chuỗi FeedItem để nối chúng bằng một đường kẻ dọc bên trái, cho thấy chúng thuộc cùng một mạch thời gian. Timeline chỉ vẽ đường nối + thụt lề; nội dung từng dòng do FeedItem đảm nhiệm."
             >
                 <div className="w-[360px]">
-                    <Timeline>
+                    <Timeline showAnatomy>
                         <FeedItem
                             leading={(
                                 <ActivityAvatar
+                                    anatPart="ActivityAvatar"
+                                    showAnatomy
                                     username="minhanh_dev"
                                     avatar="https://i.pravatar.cc/150?img=12"
                                     icon={<TrophyIcon aria-hidden focusable="false" weight="bold" />}
@@ -65,6 +67,8 @@ export const ActivitySequence: Story = {
                         <FeedItem
                             leading={(
                                 <ActivityAvatar
+                                    anatPart="ActivityAvatar"
+                                    showAnatomy
                                     username="minhanh_dev"
                                     avatar="https://i.pravatar.cc/150?img=12"
                                     icon={<TrophyIcon aria-hidden focusable="false" weight="bold" />}
@@ -77,6 +81,8 @@ export const ActivitySequence: Story = {
                         <FeedItem
                             leading={(
                                 <ActivityAvatar
+                                    anatPart="ActivityAvatar"
+                                    showAnatomy
                                     username="minhanh_dev"
                                     avatar="https://i.pravatar.cc/150?img=12"
                                     icon={<TrophyIcon aria-hidden focusable="false" weight="bold" />}

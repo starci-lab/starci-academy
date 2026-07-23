@@ -71,6 +71,8 @@ export interface CommunityCommentRowProps {
     actions?: React.ReactNode
     /** Extra classes merged onto the root. */
     className?: string
+    /** When on, each composed part emits `data-anat-part` for the anatomy panel. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -85,6 +87,7 @@ export const CommunityCommentRow = ({
     onReact,
     actions,
     className,
+    showAnatomy,
 }: CommunityCommentRowProps) => {
     // resolve the display name, falling back to the username when unset
     const displayName = comment.author.displayName || comment.author.username
@@ -95,28 +98,44 @@ export const CommunityCommentRow = ({
                 <UserAvatar
                     username={comment.author.username}
                     avatar={comment.author.avatar}
+                    anatPart={showAnatomy ? "UserAvatar" : undefined}
                 />
                 <div className="flex min-w-0 flex-1 flex-col gap-1">
                     <div className="flex items-center gap-1">
-                        <Typography type="body-xs" weight="semibold" truncate>
+                        <Typography
+                            type="body-xs"
+                            weight="semibold"
+                            truncate
+                            data-anat-part={showAnatomy ? "Typography" : undefined}
+                        >
                             {displayName}
                         </Typography>
                         {comment.isFounderAuthor ? (
                             <SealCheckIcon
                                 weight="fill"
                                 className="size-3.5 shrink-0 text-accent-soft-foreground"
+                                data-anat-part={showAnatomy ? "SealCheckIcon" : undefined}
                             />
                         ) : null}
-                        <Typography type="body-xs" color="muted">
+                        <Typography
+                            type="body-xs"
+                            color="muted"
+                            data-anat-part={showAnatomy ? "Typography" : undefined}
+                        >
                             {timeAgo(comment.createdAt)}
                         </Typography>
                     </div>
-                    <MarkdownContent markdown={comment.body} className="[&_p]:m-0" />
+                    <MarkdownContent
+                        markdown={comment.body}
+                        className="[&_p]:m-0"
+                        anatPart={showAnatomy ? "MarkdownContent" : undefined}
+                    />
                     <div className="flex items-center gap-3">
                         <ReactionBar
                             count={comment.reactions.total}
                             myReaction={comment.reactions.myReaction}
                             onReact={onReact}
+                            anatPart={showAnatomy ? "ReactionBar" : undefined}
                         />
                         {actions}
                     </div>

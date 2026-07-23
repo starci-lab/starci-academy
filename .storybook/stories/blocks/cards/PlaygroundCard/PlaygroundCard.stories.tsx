@@ -74,6 +74,7 @@ export const Default: Story = {
                         title="Triển khai container Nginx đầu tiên"
                         stepCount={5}
                         onOpen={() => {}}
+                        showAnatomy
                     />
                 </div>
             </BlockAnatomy>,
@@ -95,6 +96,7 @@ export const SingleStep: Story = {
                         title="Kiểm tra phiên bản Docker"
                         stepCount={1}
                         onOpen={() => {}}
+                        showAnatomy
                     />
                 </div>
             </BlockAnatomy>,
@@ -116,6 +118,7 @@ export const ManySteps: Story = {
                         title="Dựng cluster Kubernetes nhiều node"
                         stepCount={12}
                         onOpen={() => {}}
+                        showAnatomy
                     />
                 </div>
             </BlockAnatomy>,
@@ -137,6 +140,7 @@ export const LongTitleTruncate: Story = {
                         title="Triển khai hệ thống microservices với Docker Compose và Kubernetes trên nhiều môi trường"
                         stepCount={8}
                         onOpen={() => {}}
+                        showAnatomy
                     />
                 </div>
             </BlockAnatomy>,

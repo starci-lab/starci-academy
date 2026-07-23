@@ -39,6 +39,8 @@ export interface ChatPanelProps {
     heightClassName?: string
     /** Extra classes merged onto the root. */
     className?: string
+    /** When on, each part emits `data-anat-part` so a BlockAnatomy panel can badge it on-render. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -58,6 +60,7 @@ export const ChatPanel = ({
     emptyState,
     heightClassName = "h-[32rem]",
     className,
+    showAnatomy = false,
 }: ChatPanelProps) => {
     const listRef = useRef<HTMLDivElement>(null)
 
@@ -83,7 +86,10 @@ export const ChatPanel = ({
             {/* scrollable message list */}
             <div ref={listRef} className="flex-1 overflow-y-auto p-4">
                 {isEmpty ? (
-                    <div className="flex h-full items-center justify-center">
+                    <div
+                        className="flex h-full items-center justify-center"
+                        data-anat-part={showAnatomy ? "Empty state" : undefined}
+                    >
                         {emptyState}
                     </div>
                 ) : (
@@ -107,7 +113,10 @@ export const ChatPanel = ({
                         {/* three-dot typing indicator on the assistant side */}
                         {isTyping ? (
                             <div className="flex justify-start">
-                                <div className="flex items-center gap-1 rounded-2xl bg-surface-secondary px-3 py-3">
+                                <div
+                                    className="flex items-center gap-1 rounded-2xl bg-surface-secondary px-3 py-3"
+                                    data-anat-part={showAnatomy ? "Typing indicator" : undefined}
+                                >
                                     {[0, 1, 2].map((dot) => (
                                         <span
                                             key={dot}
@@ -124,7 +133,11 @@ export const ChatPanel = ({
 
             {/* sticky-bottom composer */}
             <div className="border-t border-default p-3">
-                <Composer {...composer} />
+                <Composer
+                    {...composer}
+                    anatPart={showAnatomy ? "Composer" : undefined}
+                    showAnatomy={showAnatomy}
+                />
             </div>
         </div>
     )

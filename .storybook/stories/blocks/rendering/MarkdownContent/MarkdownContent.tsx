@@ -371,6 +371,8 @@ export interface MarkdownContentProps extends WithClassNames<undefined> {
      * recessed wells (`bg-background`). Opt-in for markdown on the bare page CANVAS. Off by default.
      */
     codeElevated?: boolean
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
 }
 
 /**
@@ -389,7 +391,7 @@ const stripClozeMarkers = (markdown: string): string =>
  * client-side markdown rendering.
  * @param props - {@link MarkdownContentProps}
  */
-export const MarkdownContent = ({ markdown, reading = false, arcSections = false, plain = false, codeElevated = false, className }: MarkdownContentProps) => {
+export const MarkdownContent = ({ markdown, reading = false, arcSections = false, plain = false, codeElevated = false, className, anatPart }: MarkdownContentProps) => {
     const theme = useTheme()
     const t = useTranslations()
     // hold back an unterminated trailing mermaid fence FIRST (see helper JSDoc).
@@ -420,6 +422,7 @@ export const MarkdownContent = ({ markdown, reading = false, arcSections = false
     )
     return (
         <div
+            data-anat-part={anatPart}
             className={cn(
                 "min-w-0 text-foreground",
                 // Reading lessons: NO uniform space-y — each block renderer carries its own margin.

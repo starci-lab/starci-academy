@@ -71,6 +71,10 @@ export interface ReactionBarProps {
     onReact?: (type: ReactionType | null) => void
     /** Extra classes merged onto the root. */
     className?: string
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
+    /** When on, the block emits `data-anat-part` on its inner parts for the anatomy panel. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -87,6 +91,8 @@ export const ReactionBar = ({
     myReaction,
     onReact,
     className,
+    anatPart,
+    showAnatomy,
 }: ReactionBarProps) => {
     const [open, setOpen] = useState(false)
     const rootRef = useRef<HTMLDivElement>(null)
@@ -125,9 +131,9 @@ export const ReactionBar = ({
             return null
         }
         return (
-            <div className={cn("flex items-center gap-1", className)}>
-                {myReaction ? <span aria-hidden>{EMOJI[myReaction]}</span> : null}
-                <Typography type="body-xs" color="muted">{count}</Typography>
+            <div className={cn("flex items-center gap-1", className)} data-anat-part={anatPart}>
+                {myReaction ? <span aria-hidden data-anat-part={showAnatomy ? "Emoji" : undefined}>{EMOJI[myReaction]}</span> : null}
+                <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography" : undefined}>{count}</Typography>
             </div>
         )
     }
@@ -142,6 +148,7 @@ export const ReactionBar = ({
         <div
             ref={rootRef}
             className={cn("relative flex items-center gap-2", className)}
+            data-anat-part={anatPart}
         >
             <button
                 type="button"
@@ -149,6 +156,7 @@ export const ReactionBar = ({
                 aria-expanded={open}
                 onClick={() => setOpen((previous) => !previous)}
                 className="flex items-center gap-1 rounded-full px-2 py-0 text-muted transition-colors hover:bg-default/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                data-anat-part={showAnatomy ? "button · React trigger" : undefined}
             >
                 <AnimatePresence mode="popLayout" initial={false}>
                     {myReaction ? (
@@ -170,12 +178,12 @@ export const ReactionBar = ({
                             animate={{ scale: 1 }}
                             className="flex"
                         >
-                            <SmileyIcon aria-hidden focusable="false" className="size-4" />
+                            <SmileyIcon aria-hidden focusable="false" className="size-4" data-anat-part={showAnatomy ? "SmileyIcon" : undefined} />
                         </motion.span>
                     )}
                 </AnimatePresence>
                 {count > 0 ? (
-                    <Typography type="body-xs" className={cn(myReaction ? "text-accent-soft-foreground" : "text-muted")}>
+                    <Typography type="body-xs" className={cn(myReaction ? "text-accent-soft-foreground" : "text-muted")} data-anat-part={showAnatomy ? "Typography" : undefined}>
                         {count}
                     </Typography>
                 ) : null}
@@ -190,6 +198,7 @@ export const ReactionBar = ({
                         exit="exit"
                         style={{ transformOrigin: "bottom left" }}
                         className="absolute bottom-full left-0 z-10 mb-1 flex items-center gap-1 rounded-full bg-surface p-1 ring-1 ring-separator"
+                        data-anat-part={showAnatomy ? "Emoji picker" : undefined}
                     >
                         {REACTIONS.map((reaction) => (
                             <motion.button
@@ -205,6 +214,7 @@ export const ReactionBar = ({
                                     "flex size-7 items-center justify-center rounded-full text-base leading-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent",
                                     myReaction === reaction.type && "bg-accent-soft",
                                 )}
+                                data-anat-part={showAnatomy ? "button · emoji option" : undefined}
                             >
                                 <span aria-hidden>{reaction.emoji}</span>
                             </motion.button>

@@ -83,7 +83,7 @@ const Controlled = ({ initialComment }: { initialComment: QueryCommunityCommentN
             }
         })
     }
-    return <CommunityCommentRow comment={comment} onReact={handleReact} />
+    return <CommunityCommentRow comment={comment} onReact={handleReact} showAnatomy />
 }
 
 const freshComment: QueryCommunityCommentNode = {
@@ -190,7 +190,7 @@ export const Default: Story = {
                 parts={BASE_PARTS}
                 reason="Một dòng bình luận cộng đồng gói header tác giả + thân markdown + reaction + slot actions vào một block, để CommentThread và các surface bình luận dùng chung một cách trình bày. Quyền react do caller quyết định qua onReact."
             >
-                <div className="w-full max-w-xl"><CommunityCommentRow comment={defaultComment} onReact={() => {}} /></div>
+                <div className="w-full max-w-xl"><CommunityCommentRow comment={defaultComment} onReact={() => {}} showAnatomy /></div>
             </BlockAnatomy>,
         ),
 }
@@ -220,7 +220,7 @@ export const Reacted: Story = {
                 parts={BASE_PARTS}
                 note="9 cảm xúc + myReaction Love → ReactionBar hiện số và emoji, composition không đổi."
             >
-                <div className="w-full max-w-xl"><CommunityCommentRow comment={reactedComment} onReact={() => {}} /></div>
+                <div className="w-full max-w-xl"><CommunityCommentRow comment={reactedComment} onReact={() => {}} showAnatomy /></div>
             </BlockAnatomy>,
         ),
 }
@@ -235,7 +235,7 @@ export const FounderAuthor: Story = {
                 parts={FOUNDER_PARTS}
                 note="isFounderAuthor → thêm huy hiệu SealCheckIcon cạnh tên (part chỉ leaf này có)."
             >
-                <div className="w-full max-w-xl"><CommunityCommentRow comment={founderComment} onReact={() => {}} /></div>
+                <div className="w-full max-w-xl"><CommunityCommentRow comment={founderComment} onReact={() => {}} showAnatomy /></div>
             </BlockAnatomy>,
         ),
 }
@@ -250,7 +250,7 @@ export const LongBody: Story = {
                 parts={BASE_PARTS}
                 note="Thân markdown nhiều dòng → MarkdownContent giãn cao, composition không đổi."
             >
-                <div className="w-full max-w-xl"><CommunityCommentRow comment={longComment} onReact={() => {}} /></div>
+                <div className="w-full max-w-xl"><CommunityCommentRow comment={longComment} onReact={() => {}} showAnatomy /></div>
             </BlockAnatomy>,
         ),
 }
@@ -265,7 +265,7 @@ export const WithActions: Story = {
                 parts={ACTIONS_PARTS}
                 note="Caller truyền actions → thêm slot 'Trả lời' cạnh ReactionBar (part chỉ leaf này có)."
             >
-                <div className="w-full max-w-xl"><CommunityCommentRow comment={reactedComment} onReact={() => {}} actions={replyAction} /></div>
+                <div className="w-full max-w-xl"><CommunityCommentRow comment={reactedComment} onReact={() => {}} actions={replyAction} showAnatomy /></div>
             </BlockAnatomy>,
         ),
 }
@@ -280,7 +280,7 @@ export const ReadOnly: Story = {
                 parts={BASE_PARTS}
                 note="Không onReact + có cảm xúc → ReactionBar rơi về hiển thị số + emoji (không picker), vẫn cùng composition."
             >
-                <div className="w-full max-w-xl"><CommunityCommentRow comment={reactedComment} /></div>
+                <div className="w-full max-w-xl"><CommunityCommentRow comment={reactedComment} showAnatomy /></div>
             </BlockAnatomy>,
         ),
 }
@@ -296,7 +296,7 @@ export const ReadOnlyNoReactions: Story = {
                 parts={NO_REACTION_PARTS}
                 note="Không onReact VÀ 0 cảm xúc → ReactionBar render null, biến mất khỏi composition."
             >
-                <div className="w-full max-w-xl"><CommunityCommentRow comment={freshComment} /></div>
+                <div className="w-full max-w-xl"><CommunityCommentRow comment={freshComment} showAnatomy /></div>
             </BlockAnatomy>,
         ),
 }
@@ -312,7 +312,7 @@ export const LongAuthorName: Story = {
                 parts={BASE_PARTS}
                 note="Tên rất dài → Typography truncate cắt bớt thay vì wrap/tràn, composition không đổi."
             >
-                <div className="w-72"><CommunityCommentRow comment={longNameComment} onReact={() => {}} /></div>
+                <div className="w-72"><CommunityCommentRow comment={longNameComment} onReact={() => {}} showAnatomy /></div>
             </BlockAnatomy>,
         ),
 }

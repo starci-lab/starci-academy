@@ -30,6 +30,8 @@ export interface FeedItemProps {
     footer?: ReactNode
     /** Extra classes merged onto the root. */
     className?: string
+    /** When on, emit `data-anat-part` on each anatomy part for the BlockAnatomy panel. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -43,14 +45,14 @@ export interface FeedItemProps {
  *
  * @param props - {@link FeedItemProps}
  */
-export const FeedItem = ({ leading, children, timestamp, footer, className }: FeedItemProps) => {
+export const FeedItem = ({ leading, children, timestamp, footer, className, showAnatomy }: FeedItemProps) => {
     return (
         <div className={cn("flex items-start gap-2", className)}>
             {leading ? <div className="shrink-0">{leading}</div> : null}
             <div className="flex flex-col gap-1 min-w-0">
                 <div className="flex flex-col gap-0">
-                    <Typography type="body-sm">{children}</Typography>
-                    <Typography type="body-xs" color="muted">{timestamp}</Typography>
+                    <Typography type="body-sm" data-anat-part={showAnatomy ? "Typography" : undefined}>{children}</Typography>
+                    <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography" : undefined}>{timestamp}</Typography>
                 </div>
                 {footer ? <div>{footer}</div> : null}
             </div>

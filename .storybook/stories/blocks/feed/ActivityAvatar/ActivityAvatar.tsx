@@ -19,6 +19,10 @@ export interface ActivityAvatarProps {
     icon: ReactNode
     /** Extra classes merged onto the root. */
     className?: string
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
+    /** When on, emit `data-anat-part` on each anatomy part for the BlockAnatomy panel. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -35,21 +39,31 @@ export const ActivityAvatar = ({
     avatar,
     icon,
     className,
+    anatPart,
+    showAnatomy,
 }: ActivityAvatarProps) => {
+    const taggedIcon =
+        showAnatomy && React.isValidElement(icon)
+            ? React.cloneElement(icon as React.ReactElement<Record<string, unknown>>, {
+                  "data-anat-part": "Icon",
+              })
+            : icon
     return (
-        <div className={cn("relative shrink-0", className)}>
+        <div className={cn("relative shrink-0", className)} data-anat-part={anatPart}>
             <UserAvatar
                 className="size-9"
                 username={username}
                 avatar={avatar ?? undefined}
                 seed={username}
+                anatPart={showAnatomy ? "UserAvatar" : undefined}
             />
             <span
                 aria-hidden
                 className="absolute -bottom-1 -right-1 flex size-5 items-center justify-center rounded-full bg-surface ring-2 ring-surface"
+                data-anat-part={showAnatomy ? "Activity badge" : undefined}
             >
                 <span className="flex size-full items-center justify-center rounded-full bg-accent-soft text-accent-soft-foreground [&_svg]:size-3">
-                    {icon}
+                    {taggedIcon}
                 </span>
             </span>
         </div>

@@ -55,6 +55,7 @@ const Controlled = ({
                 avatarSrc={avatarSrc}
                 isSubmitting={isSubmitting}
                 attachSlot={attachSlot}
+                showAnatomy
             />
         </div>
     )
@@ -121,7 +122,13 @@ export const Typing: Story = {
                 <Controlled
                     initialValue={"I have a question about the data denormalization part of this week's lesson.\nI'm not sure when I should split the table out."}
                     attachSlot={(
-                        <Button size="sm" variant="tertiary" isIconOnly aria-label="Attach">
+                        <Button
+                            size="sm"
+                            variant="tertiary"
+                            isIconOnly
+                            aria-label="Attach"
+                            data-anat-part="Button · Attach"
+                        >
                             <PaperclipIcon aria-hidden focusable="false" className="size-4" />
                         </Button>
                     )}

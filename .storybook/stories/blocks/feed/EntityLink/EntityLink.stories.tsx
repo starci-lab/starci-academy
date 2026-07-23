@@ -51,9 +51,9 @@ export const Clickable: Story = {
                 reason="Mỗi mốc thực thể (người, bài học, thử thách, khóa học) trong câu activity của feed cần một cách hiển thị nhất quán: chữ đậm + gạch chân khi hover nếu resolve được route, chữ đậm thường nếu không — không bao giờ là link chết. Đây gần như một PRIMITIVE một-phần-tử (xem FLAGS)."
             >
                 <span>
-                    <EntityLink label="quochuy_backend" onPress={() => {}} />
+                    <EntityLink label="quochuy_backend" onPress={() => {}} showAnatomy />
                     {" "}đã hoàn thành thử thách{" "}
-                    <EntityLink label="Xử lý luồng bất đồng bộ" onPress={() => {}} />
+                    <EntityLink label="Xử lý luồng bất đồng bộ" onPress={() => {}} showAnatomy />
                 </span>
             </BlockAnatomy>,
         ),
@@ -70,9 +70,9 @@ export const NotClickable: Story = {
                 note="Thiếu onPress → mốc rơi về span chữ đậm thường (mục tiêu đã xoá / không resolve), khác composition với leaf bấm được."
             >
                 <span>
-                    <EntityLink label="minhanh_dev" onPress={() => {}} />
+                    <EntityLink label="minhanh_dev" onPress={() => {}} showAnatomy />
                     {" "}đã theo dõi{" "}
-                    <EntityLink label="học viên đã xoá tài khoản" />
+                    <EntityLink label="học viên đã xoá tài khoản" showAnatomy />
                 </span>
             </BlockAnatomy>,
         ),
@@ -89,9 +89,9 @@ export const Pending: Story = {
                 note="Đang resolve/navigate → Link bị disable nhưng CÙNG composition với leaf bấm được."
             >
                 <span>
-                    <EntityLink label="thuha_ux" onPress={() => {}} isPending />
+                    <EntityLink label="thuha_ux" onPress={() => {}} isPending showAnatomy />
                     {" "}đã đạt mốc{" "}
-                    <EntityLink label="Thiết kế hệ thống cho ứng dụng doanh nghiệp" onPress={() => {}} isPending />
+                    <EntityLink label="Thiết kế hệ thống cho ứng dụng doanh nghiệp" onPress={() => {}} isPending showAnatomy />
                 </span>
             </BlockAnatomy>,
         ),

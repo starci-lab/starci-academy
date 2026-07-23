@@ -39,6 +39,8 @@ export interface IconTileProps extends WithClassNames<undefined> {
     tone?: IconTileTone
     /** Tile size. Defaults to "md" (64px). */
     size?: IconTileSize
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
 }
 
 /** tone → tinted background + icon colour. */
@@ -72,6 +74,7 @@ export const IconTile = ({
     tone = "accent",
     size = "md",
     className,
+    anatPart,
 }: IconTileProps) => {
     // a broken cover URL (404 / unsynced asset) falls back to the icon instead of a
     // broken-image glyph; reset when the src changes.
@@ -82,6 +85,7 @@ export const IconTile = ({
     return (
         <div
             aria-hidden
+            data-anat-part={anatPart}
             className={cn(
                 "flex shrink-0 items-center justify-center overflow-hidden",
                 SIZE[size],

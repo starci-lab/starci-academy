@@ -67,7 +67,7 @@ export const Standalone: Story = {
                 parts={MARK_PARTS}
                 reason="Một dấu hiệu leaf: icon GPU + tooltip đứng cạnh tên model trong dropdown chấm bài để phân biệt model self-host (RTX 5060) với model gọi API bên ngoài. Chi tiết nằm trong tooltip nên dòng không phải gánh thêm chip — chỉ một icon nhỏ."
             >
-                <SelfHostGpuMark />
+                <SelfHostGpuMark showAnatomy />
             </BlockAnatomy>,
         ),
 }
@@ -84,7 +84,7 @@ export const BesideModelName: Story = {
             >
                 <div className="flex items-center gap-2">
                     <Typography type="body-sm">Qwen2.5-Coder 7B</Typography>
-                    <SelfHostGpuMark />
+                    <SelfHostGpuMark showAnatomy />
                 </div>
             </BlockAnatomy>,
         ),

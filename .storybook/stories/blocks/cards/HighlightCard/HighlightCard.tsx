@@ -17,6 +17,8 @@ export interface HighlightCardProps {
     isSkeleton?: boolean
     /** Extra classes on the wrapper. */
     className?: string
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
 }
 
 /**
@@ -28,8 +30,8 @@ export interface HighlightCardProps {
  *
  * @param props - {@link HighlightCardProps}
  */
-export const HighlightCard = ({ children, isSkeleton = false, className }: HighlightCardProps) => (
-    <div className={cn("relative", className)}>
+export const HighlightCard = ({ children, isSkeleton = false, className, anatPart }: HighlightCardProps) => (
+    <div className={cn("relative", className)} data-anat-part={anatPart}>
         {!isSkeleton && <div aria-hidden className="highlight-card-sweep" />}
         {children}
     </div>

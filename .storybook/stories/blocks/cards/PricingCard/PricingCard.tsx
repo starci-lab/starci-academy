@@ -52,6 +52,11 @@ export interface PricingCardProps {
     highlighted?: boolean
     /** Extra classes on the card root. */
     className?: string
+    /**
+     * Storybook-only: when true the block emits `data-anat-part` markers on each
+     * anatomy part so the anatomy panel can anchor badges. No effect on layout.
+     */
+    showAnatomy?: boolean
 }
 
 /**
@@ -74,6 +79,7 @@ export const PricingCard = ({
     badge,
     highlighted = false,
     className,
+    showAnatomy = false,
 }: PricingCardProps) => {
     return (
         // Use SectionCard's accent variant for the highlighted (recommended) tier
@@ -81,14 +87,15 @@ export const PricingCard = ({
             accent={highlighted}
             className={cn("flex flex-col", className)}
             contentClassName="flex flex-col gap-6 h-full"
+            anatPart={showAnatomy ? "SectionCard" : undefined}
         >
             {/* Name (+ optional popular chip inline — chip is w-fit, never full-width) */}
             <div className="flex flex-wrap items-center gap-2">
-                <Typography type="body" weight="semibold">
+                <Typography type="body" weight="semibold" data-anat-part={showAnatomy ? "Typography · tên" : undefined}>
                     {name}
                 </Typography>
                 {highlighted && badge ? (
-                    <StatusChip tone="accent" className="shrink-0">
+                    <StatusChip tone="accent" className="shrink-0" anatPart={showAnatomy ? "StatusChip" : undefined}>
                         {badge}
                     </StatusChip>
                 ) : null}
@@ -97,30 +104,30 @@ export const PricingCard = ({
             {/* Price row: big price + optional struck original + muted period */}
             <div className="flex flex-wrap items-baseline gap-2">
                 {/* Main price — h3 size, semibold, prominent */}
-                <Typography type="h3" weight="semibold">
+                <Typography type="h3" weight="semibold" data-anat-part={showAnatomy ? "Typography · giá" : undefined}>
                     {price}
                 </Typography>
 
                 {/* Strike-through original price — line-through is text-decoration, allowed as className */}
                 {originalPrice ? (
-                    <Typography type="body-sm" color="muted" className="line-through">
+                    <Typography type="body-sm" color="muted" className="line-through" data-anat-part={showAnatomy ? "Typography · giá gốc" : undefined}>
                         {originalPrice}
                     </Typography>
                 ) : null}
 
                 {/* Billing period label — smallest muted text */}
                 {period ? (
-                    <Typography type="body-xs" color="muted">
+                    <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography · period" : undefined}>
                         {period}
                     </Typography>
                 ) : null}
             </div>
 
             {/* Feature list — grows to fill available vertical space; caller controls markup */}
-            <div className="flex-1">{features}</div>
+            <div className="flex-1" data-anat-part={showAnatomy ? "features" : undefined}>{features}</div>
 
             {/* CTA pinned to the bottom of the card */}
-            <div>{cta}</div>
+            <div data-anat-part={showAnatomy ? "Button · cta" : undefined}>{cta}</div>
         </SectionCard>
     )
 }

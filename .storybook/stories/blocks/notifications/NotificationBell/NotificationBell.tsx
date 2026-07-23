@@ -63,6 +63,15 @@ export interface NotificationBellProps extends WithClassNames<undefined> {
      * trigger or an outside interaction toggles the popover.
      */
     onOpenChange?: (isOpen: boolean) => void
+    /**
+     * Dev-only: when set, each part this block owns emits a `data-anat-part`
+     * attribute so the Storybook anatomy overlay can anchor a numbered badge to
+     * it. Off in production. Parts living in child blocks (`NotificationList`) or
+     * the shared `Button` are tagged in their own files, not here. The `Popover`
+     * root is a context provider (react-aria `DialogTrigger`) that renders no DOM
+     * node, so it cannot carry the attribute either.
+     */
+    showAnatomy?: boolean
 }
 
 /**
@@ -88,6 +97,7 @@ export const NotificationBell = ({
     isOpen,
     onOpenChange,
     className,
+    showAnatomy,
 }: NotificationBellProps) => {
     /** Badge label, capped at {@link MAX_BADGE} (e.g. "9+"). */
     const badgeLabel = unreadCount > MAX_BADGE ? `${MAX_BADGE}+` : `${unreadCount}`
@@ -101,20 +111,31 @@ export const NotificationBell = ({
                 ariaLabel={ariaLabel}
                 icon={
                     unreadCount > 0 ? (
-                        <Badge.Anchor>
-                            <BellIcon className="size-5" />
-                            <Badge size="sm" color="danger">
+                        <Badge.Anchor data-anat-part={showAnatomy ? "Badge.Anchor" : undefined}>
+                            <BellIcon
+                                className="size-5"
+                                data-anat-part={showAnatomy ? "BellIcon" : undefined}
+                            />
+                            <Badge
+                                size="sm"
+                                color="danger"
+                                data-anat-part={showAnatomy ? "Badge" : undefined}
+                            >
                                 {badgeLabel}
                             </Badge>
                         </Badge.Anchor>
                     ) : (
-                        <BellIcon className="size-5" />
+                        <BellIcon
+                            className="size-5"
+                            data-anat-part={showAnatomy ? "BellIcon" : undefined}
+                        />
                     )
                 }
             />
             <PopoverContent
                 placement="bottom right"
                 className="w-[360px] overflow-hidden p-1"
+                data-anat-part={showAnatomy ? "PopoverContent" : undefined}
             >
                 <NotificationList
                     title={title}

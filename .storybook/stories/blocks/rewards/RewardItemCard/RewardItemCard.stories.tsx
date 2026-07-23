@@ -72,6 +72,7 @@ export const Default: Story = {
             >
                 <div className="w-72">
                     <RewardItemCard
+                        showAnatomy
                         icon={ICONS.streakFreeze}
                         title="Streak Freeze"
                         description="Bảo toàn chuỗi ngày học nếu lỡ một ngày."
@@ -97,6 +98,7 @@ export const CannotAfford: Story = {
             >
                 <div className="w-72">
                     <RewardItemCard
+                        showAnatomy
                         icon={ICONS.aiCreditBoost}
                         title="AI Credit Boost"
                         description="Cộng thêm lượt chấm bài AI trong tuần."
@@ -123,6 +125,7 @@ export const Redeeming: Story = {
             >
                 <div className="w-72">
                     <RewardItemCard
+                        showAnatomy
                         icon={ICONS.tshirt}
                         title="Áo thun StarCi"
                         description="Áo thun cotton in logo StarCi Academy, giao tận nhà."
@@ -149,6 +152,7 @@ export const Grid: Story = {
             >
                 <div className="grid w-full max-w-3xl grid-cols-1 gap-3 @app-sm:grid-cols-2">
                     <RewardItemCard
+                        showAnatomy
                         icon={ICONS.streakFreeze}
                         title="Streak Freeze"
                         description="Bảo toàn chuỗi ngày học nếu lỡ một ngày."
@@ -156,6 +160,7 @@ export const Grid: Story = {
                         onRedeem={() => {}}
                     />
                     <RewardItemCard
+                        showAnatomy
                         icon={ICONS.aiCreditBoost}
                         title="AI Credit Boost"
                         description="Cộng thêm lượt chấm bài AI trong tuần."
@@ -182,6 +187,7 @@ export const LongTitle: Story = {
             >
                 <div className="w-72">
                     <RewardItemCard
+                        showAnatomy
                         icon={ICONS.tshirt}
                         title="Áo thun StarCi Academy phiên bản giới hạn kỷ niệm 5 năm thành lập"
                         description="Áo thun cotton in logo StarCi Academy, giao tận nhà."
@@ -206,8 +212,8 @@ export const Skeleton: Story = {
                 note="isSkeleton → Skeleton mirror đúng khung Card (icon · 2 dòng chữ · chip · nút), không phần thật nào — giữ lưới catalog khỏi nhảy khi tải."
             >
                 <div className="grid w-full max-w-3xl grid-cols-1 gap-3 @app-sm:grid-cols-2">
-                    <RewardItemCard isSkeleton icon={null} title="" description="" cost={0} onRedeem={() => {}} />
-                    <RewardItemCard isSkeleton icon={null} title="" description="" cost={0} onRedeem={() => {}} />
+                    <RewardItemCard showAnatomy isSkeleton icon={null} title="" description="" cost={0} onRedeem={() => {}} />
+                    <RewardItemCard showAnatomy isSkeleton icon={null} title="" description="" cost={0} onRedeem={() => {}} />
                 </div>
             </BlockAnatomy>,
         ),

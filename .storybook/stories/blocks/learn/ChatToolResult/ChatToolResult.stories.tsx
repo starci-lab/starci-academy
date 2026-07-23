@@ -185,6 +185,7 @@ export const Loading: Story = {
                         isLoading
                         showKindChip
                         onSelect={() => {}}
+                        showAnatomy
                     />
                 </ChatWidth>
             </BlockAnatomy>,
@@ -209,6 +210,7 @@ export const SingleKindWithViewAll: Story = {
                         onSelect={() => {}}
                         onViewAll={() => {}}
                         viewAllLabel="Xem tất cả kết quả"
+                        showAnatomy
                     />
                 </ChatWidth>
             </BlockAnatomy>,
@@ -232,6 +234,7 @@ export const MixedKindLocked: Story = {
                         icon={<MagnifyingGlassIcon aria-hidden focusable="false" className="size-4" />}
                         showKindChip
                         onSelect={() => {}}
+                        showAnatomy
                     />
                 </ChatWidth>
             </BlockAnatomy>,
@@ -254,6 +257,7 @@ export const SingleResult: Story = {
                         label="Flashcard liên quan"
                         icon={<CardsIcon aria-hidden focusable="false" className="size-4" />}
                         onSelect={() => {}}
+                        showAnatomy
                     />
                 </ChatWidth>
             </BlockAnatomy>,

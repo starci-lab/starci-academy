@@ -70,6 +70,8 @@ const FAILURES: ReadonlyArray<{ from: string; to: string; pos: string }> = [
 export interface MicroservicesDiagramProps extends WithClassNames<undefined> {
     /** Caption under the diagram (i18n string from the feature). */
     caption?: ReactNode
+    /** Storybook-only: emit `data-anat-part` on each anatomy part for the BlockAnatomy panel. */
+    showAnatomy?: boolean
 }
 
 /** Node card class by tone — normal surface card; `backdrop-blur` so the slightly-transparent
@@ -103,7 +105,7 @@ const nodeStyle = (tone: DiagramNode["tone"]): CSSProperties => {
  *
  * @param props - {@link MicroservicesDiagramProps}
  */
-export const MicroservicesDiagram = ({ caption, className }: MicroservicesDiagramProps) => {
+export const MicroservicesDiagram = ({ caption, className, showAnatomy }: MicroservicesDiagramProps) => {
     const reduce = useReducedMotion()
 
     // node entrance: stagger fade-rise (no transform when reduced motion is preferred)
@@ -120,6 +122,7 @@ export const MicroservicesDiagram = ({ caption, className }: MicroservicesDiagra
         <div className={cn("relative w-full", className)}>
             <div
                 aria-hidden
+                data-anat-part={showAnatomy ? "div · glow" : undefined}
                 className="pointer-events-none absolute inset-0 -z-10"
                 style={{
                     transform: "scale(1.1)",
@@ -133,6 +136,7 @@ export const MicroservicesDiagram = ({ caption, className }: MicroservicesDiagra
             />
             {/* content over a faint blueprint dot-grid; relative so failure chips can float */}
             <motion.div
+                data-anat-part={showAnatomy ? "motion.div · canvas" : undefined}
                 className="relative flex flex-col items-center gap-2 p-5"
                 style={{
                     backgroundImage: "radial-gradient(color-mix(in oklch, var(--foreground) 7%, transparent) 1px, transparent 1px)",
@@ -151,9 +155,11 @@ export const MicroservicesDiagram = ({ caption, className }: MicroservicesDiagra
                             // traffic spike pouring in that overloads the edge.
                             <span
                                 aria-hidden
+                                data-anat-part={showAnatomy ? "span · wire" : undefined}
                                 className={cn("relative h-6 w-px", index === 1 ? "bg-danger/25" : "bg-foreground/12")}
                             >
                                 <span
+                                    data-anat-part={showAnatomy ? "span · packet" : undefined}
                                     className={cn(
                                         "absolute left-1/2 top-0 rounded-full",
                                         index === 1
@@ -169,13 +175,14 @@ export const MicroservicesDiagram = ({ caption, className }: MicroservicesDiagra
                                 <motion.div
                                     key={node.name}
                                     variants={nodeVariants}
+                                    data-anat-part={showAnatomy ? "motion.div · node" : undefined}
                                     className={cn("relative", nodeClass(node.tone))}
                                     style={nodeStyle(node.tone)}
                                 >
                                     {/* plain spans in the body sans font (Open Sans) — NOT
                                         Typography type="code", whose `bg-default` adds a pill */}
-                                    <span className="text-xs font-medium text-foreground">{node.name}</span>
-                                    <span className="text-[10px] text-muted">{node.sub}</span>
+                                    <span data-anat-part={showAnatomy ? "span · tên" : undefined} className="text-xs font-medium text-foreground">{node.name}</span>
+                                    <span data-anat-part={showAnatomy ? "span · sub" : undefined} className="text-[10px] text-muted">{node.sub}</span>
                                 </motion.div>
                             ))}
                         </div>
@@ -193,10 +200,14 @@ export const MicroservicesDiagram = ({ caption, className }: MicroservicesDiagra
                     >
                         {/* NOTE: WarningIcon was size-4 in the raw Chip; StatusChip's `icon` slot
                             normalizes leading glyphs to size-3 (§4 icon ownership) — intentional. */}
-                        <StatusChip tone="danger" icon={<WarningIcon aria-hidden focusable="false" />}>
-                            <span className="inline-flex items-center gap-1">
+                        <StatusChip
+                            tone="danger"
+                            anatPart={showAnatomy ? "StatusChip" : undefined}
+                            icon={<WarningIcon aria-hidden focusable="false" data-anat-part={showAnatomy ? "WarningIcon" : undefined} />}
+                        >
+                            <span data-anat-part={showAnatomy ? "span · nhãn" : undefined} className="inline-flex items-center gap-1">
                                 {failure.from}
-                                <CaretRightIcon aria-hidden focusable="false" className="size-4" />
+                                <CaretRightIcon aria-hidden focusable="false" data-anat-part={showAnatomy ? "CaretRightIcon" : undefined} className="size-4" />
                                 {failure.to}
                             </span>
                         </StatusChip>
@@ -205,7 +216,7 @@ export const MicroservicesDiagram = ({ caption, className }: MicroservicesDiagra
             </motion.div>
 
             {caption ? (
-                <Typography type="body-sm" color="muted" align="center" className="px-5 pb-5">
+                <Typography type="body-sm" color="muted" align="center" data-anat-part={showAnatomy ? "Typography" : undefined} className="px-5 pb-5">
                     {caption}
                 </Typography>
             ) : null}

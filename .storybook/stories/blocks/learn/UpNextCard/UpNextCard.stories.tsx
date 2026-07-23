@@ -140,6 +140,7 @@ export const Minimal: Story = {
                 note="Chỉ khung + tiêu đề + ĐÚNG MỘT CTA — không check/eyebrow/mô tả/hành động phụ."
             >
                 <UpNextCard
+                    showAnatomy
                     title="Làm 2 thử thách của bài này"
                     ctaLabel="Bắt đầu"
                     onPress={() => {}}
@@ -159,6 +160,7 @@ export const CheckAndEyebrow: Story = {
                 note="Thêm check hoàn thành + eyebrow muted trên tiêu đề — CTA đọc như đang cưỡi đà 'vừa xong'."
             >
                 <UpNextCard
+                    showAnatomy
                     showCheck
                     eyebrow="Đã xong · Tiếp theo"
                     title="Ôn lại cụm từ vừa học bằng flashcard"
@@ -180,6 +182,7 @@ export const WithDescription: Story = {
                 note="Thêm một dòng mô tả hướng outcome dưới tiêu đề — nói rõ 'làm xong để tiến tới đâu'."
             >
                 <UpNextCard
+                    showAnatomy
                     showCheck
                     eyebrow="Đã xong · Tiếp theo"
                     title="Làm bài kiểm tra cuối chương 3"
@@ -202,6 +205,7 @@ export const WithSecondaryAction: Story = {
                 note="Hàng CTA có thêm một hành động phụ nhẹ (tertiary) cạnh CTA chính — vẫn giữ MỘT hành động nổi."
             >
                 <UpNextCard
+                    showAnatomy
                     title="Làm 2 thử thách của bài này"
                     ctaLabel="Bắt đầu"
                     onPress={() => {}}
@@ -223,6 +227,7 @@ export const Full: Story = {
                 reason="Điểm hoàn thành một bề mặt học cần MỘT surface tự đóng khung (SectionCard) gom lại: micro-feedback 'vừa xong ✓' + eyebrow, bước tiếp theo (title + outcome), và ĐÚNG MỘT CTA chính (accent, size lg, mũi tên) + một hành động phụ nhẹ. Gói vào một block để mỗi màn hoàn thành chỉ truyền bước kế + handler điều hướng — không dựng lại khung, thứ tự nhấn, và cặp CTA chính/phụ."
             >
                 <UpNextCard
+                    showAnatomy
                     showCheck
                     eyebrow="Đã xong · Tiếp theo"
                     title="Làm dự án cá nhân: API giỏ hàng có phân trang"
@@ -247,6 +252,7 @@ export const LongContent: Story = {
                 note="Cùng composition với leaf 'Đầy đủ' — chỉ tiêu đề/mô tả/nhãn dài hơn để soi cách chữ xuống dòng."
             >
                 <UpNextCard
+                    showAnatomy
                     showCheck
                     eyebrow="Đã xong · Tiếp theo"
                     title="Xây dựng hệ thống thông báo realtime dùng WebSocket kết hợp hàng đợi tin nhắn để xử lý lượng lớn kết nối đồng thời"

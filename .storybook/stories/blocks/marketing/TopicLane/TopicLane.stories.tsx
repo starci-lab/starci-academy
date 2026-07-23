@@ -93,6 +93,7 @@ export const SingleRow: Story = {
             >
                 <div className="max-w-[320px]">
                     <TopicLane
+                        showAnatomy
                         icon={<CodeIcon />}
                         title="Code"
                         items={[{ label: "React Server Components", tag: "FS", onPress: () => {} }]}
@@ -114,6 +115,7 @@ export const TypicalList: Story = {
             >
                 <div className="max-w-[320px]">
                     <TopicLane
+                        showAnatomy
                         icon={<CodeIcon />}
                         title="Code"
                         items={[
@@ -140,6 +142,7 @@ export const LongLabelTruncate: Story = {
             >
                 <div className="max-w-[320px]">
                     <TopicLane
+                        showAnatomy
                         icon={<StackIcon />}
                         title="Infrastructure"
                         items={[
@@ -164,6 +167,7 @@ export const StaticRows: Story = {
             >
                 <div className="max-w-[320px]">
                     <TopicLane
+                        showAnatomy
                         icon={<StackIcon />}
                         title="Infrastructure"
                         items={[
@@ -188,9 +192,10 @@ export const Empty: Story = {
                 note="Không có chủ đề → header giữ nguyên, danh sách hàng đổi sang EmptyState (khác leaf có dữ liệu)."
             >
                 <div className="max-w-[320px]">
-                    <TopicLane icon={<CodeIcon />} title="Code" items={[]} />
+                    <TopicLane showAnatomy icon={<CodeIcon />} title="Code" items={[]} />
                     <EmptyState
-                        icon={<TrayIcon weight="duotone" />}
+                        anatPart="EmptyState"
+                        icon={<TrayIcon weight="duotone" data-anat-part="Icon · rỗng" />}
                         title="Chưa có chủ đề nào"
                         description="Các chủ đề tiêu biểu của lộ trình sẽ hiện ở đây."
                     />
@@ -220,7 +225,7 @@ export const SkeletonLoading: Story = {
                     </div>
                     <div className="flex flex-col gap-2">
                         {[0, 1, 2].map((i) => (
-                            <div key={i} className="flex items-center justify-between gap-3 rounded-xl border border-default bg-surface px-3 py-2">
+                            <div key={i} data-anat-part="Row frame" className="flex items-center justify-between gap-3 rounded-xl border border-default bg-surface px-3 py-2">
                                 <Skeleton className="my-[5px] h-[14px] w-1/2 rounded" />
                                 <Skeleton className="h-3 w-6 shrink-0 rounded" />
                             </div>

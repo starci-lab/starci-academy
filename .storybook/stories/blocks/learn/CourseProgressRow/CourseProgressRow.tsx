@@ -61,6 +61,8 @@ export interface CourseProgressRowProps {
     withTrialChip?: boolean
     /** Skeleton-only: reserve a line for the meta placeholder. Defaults to `false`. */
     withMeta?: boolean
+    /** Storybook anatomy: emit `data-anat-part` on each part so the anatomy panel can anchor badges. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -88,6 +90,7 @@ export const CourseProgressRow = ({
     isSkeleton = false,
     withTrialChip = false,
     withMeta = false,
+    showAnatomy = false,
 }: CourseProgressRowProps) => {
     if (isSkeleton) {
         return (
@@ -111,7 +114,7 @@ export const CourseProgressRow = ({
 
     const content = (
         <>
-            <IconTile size="sm" icon={icon} src={src} alt={alt} tone={tone} />
+            <IconTile size="sm" icon={icon} src={src} alt={alt} tone={tone} anatPart={showAnatomy ? "IconTile" : undefined} />
             <div className="flex min-w-0 flex-1 flex-col gap-2">
                 <div className="flex items-center justify-between gap-2">
                     <Typography
@@ -122,24 +125,26 @@ export const CourseProgressRow = ({
                             "min-w-0 flex-1",
                             interactive && "underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline",
                         )}
+                        data-anat-part={showAnatomy ? "Typography · title" : undefined}
                     >
                         {title}
                     </Typography>
-                    {trialLabel ? <StatusChip tone="warning">{trialLabel}</StatusChip> : null}
-                    <Typography type="body-xs" color="muted" className="shrink-0">
+                    {trialLabel ? <StatusChip tone="warning" anatPart={showAnatomy ? "StatusChip" : undefined}>{trialLabel}</StatusChip> : null}
+                    <Typography type="body-xs" color="muted" className="shrink-0" data-anat-part={showAnatomy ? "Typography · percent" : undefined}>
                         {clamped}%
                     </Typography>
                 </div>
                 <SegmentBar
                     hideLegend
                     ariaLabel={ariaLabel ?? `${clamped}% completed`}
+                    anatPart={showAnatomy ? "SegmentBar" : undefined}
                     segments={[
                         { key: "done", label: "Done", value: clamped, color: "var(--success)" },
                         { key: "remaining", label: "Remaining", value: 100 - clamped, color: "var(--default)" },
                     ]}
                 />
                 {meta ? (
-                    <Typography type="body-xs" color="muted">
+                    <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography · meta" : undefined}>
                         {meta}
                     </Typography>
                 ) : null}

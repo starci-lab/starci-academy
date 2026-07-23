@@ -45,6 +45,8 @@ export interface HeroBannerProps extends WithClassNames<undefined> {
      * fabricated visual).
      */
     visual?: React.ReactNode
+    /** Dev/spec: tag each rendered part with `data-anat-part` so a BlockAnatomy panel can badge it on-render. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -68,6 +70,7 @@ export const HeroBanner = ({
     keywordsLabel,
     visual,
     className,
+    showAnatomy,
 }: HeroBannerProps) => {
     const hasVisual = Boolean(visual)
     const align = hasVisual ? "start" : "center"
@@ -79,15 +82,27 @@ export const HeroBanner = ({
                 hasVisual ? "flex-1 items-start text-left" : "items-center text-center",
             )}
         >
-            <StatusChip tone="accent" icon={eyebrowIcon}>
+            <StatusChip tone="accent" icon={eyebrowIcon} anatPart={showAnatomy ? "StatusChip" : undefined}>
                 {eyebrow}
             </StatusChip>
 
-            <Typography.Heading level={1} weight="bold" align={align} className="max-w-4xl">
+            <Typography.Heading
+                level={1}
+                weight="bold"
+                align={align}
+                className="max-w-4xl"
+                data-anat-part={showAnatomy ? "Typography.Heading" : undefined}
+            >
                 {headline}
             </Typography.Heading>
 
-            <Typography type="body" color="muted" align={align} className="max-w-2xl whitespace-pre-line">
+            <Typography
+                type="body"
+                color="muted"
+                align={align}
+                className="max-w-2xl whitespace-pre-line"
+                data-anat-part={showAnatomy ? "Typography" : undefined}
+            >
                 {subline}
             </Typography>
 
@@ -109,13 +124,18 @@ export const HeroBanner = ({
                     )}
                 >
                     {keywordsLabel ? (
-                        <Typography type="body-xs" color="muted">
+                        <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography" : undefined}>
                             {keywordsLabel}
                         </Typography>
                     ) : null}
                     {keywords.map((lang) => (
                         // brand-coloured chip — the language's official colour as a bg/10 + text tint
-                        <Chip key={lang.label} size="sm" className={lang.className}>
+                        <Chip
+                            key={lang.label}
+                            size="sm"
+                            className={lang.className}
+                            data-anat-part={showAnatomy ? "Chip" : undefined}
+                        >
                             <Chip.Label>{lang.label}</Chip.Label>
                         </Chip>
                     ))}

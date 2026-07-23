@@ -106,6 +106,11 @@ export interface ContinueCardProps {
     href?: string
     /** Extra classes on the card root. */
     className?: string
+    /**
+     * When `true`, each composed part emits `data-anat-part="<name>"` so a
+     * BlockAnatomy panel can badge it on-render. Off by default (production).
+     */
+    showAnatomy?: boolean
 }
 
 /**
@@ -131,6 +136,7 @@ export const ContinueCard = ({
     onPress,
     href,
     className,
+    showAnatomy = false,
 }: ContinueCardProps) => {
     const isHero = variant === "hero"
     // Item CTA is a real SeeMoreLink (own hover + click). Never wrap the card —
@@ -146,10 +152,16 @@ export const ContinueCard = ({
                 ? (
                     <Link
                         href={href}
+                        data-anat-part={showAnatomy ? "Link" : undefined}
                         className="inline-flex w-fit shrink-0 items-center gap-2 whitespace-nowrap rounded-3xl bg-accent px-4 py-2 text-sm font-medium text-accent-foreground no-underline"
                     >
                         {ctaLabel}
-                        <ArrowRightIcon aria-hidden focusable="false" className="size-3.5" />
+                        <ArrowRightIcon
+                            aria-hidden
+                            focusable="false"
+                            data-anat-part={showAnatomy ? "Icon (ArrowRight)" : undefined}
+                            className="size-3.5"
+                        />
                     </Link>
                 )
                 : (
@@ -158,13 +170,19 @@ export const ContinueCard = ({
                         size="sm"
                         onPress={onPress}
                         className="w-fit shrink-0"
-                        icon={<ArrowRightIcon aria-hidden focusable="false" />}
+                        icon={
+                            <ArrowRightIcon
+                                aria-hidden
+                                focusable="false"
+                                data-anat-part={showAnatomy ? "Icon (ArrowRight)" : undefined}
+                            />
+                        }
                     >
                         {ctaLabel}
                     </Button>
                 )
             : (
-                <SeeMoreLink href={href} onPress={onPress}>
+                <SeeMoreLink href={href} onPress={onPress} anatPart={showAnatomy ? "SeeMoreLink" : undefined}>
                     {ctaLabel}
                 </SeeMoreLink>
             )
@@ -172,12 +190,14 @@ export const ContinueCard = ({
 
     const cardNode = (
         <SectionCard
+            anatPart={showAnatomy ? "SectionCard" : undefined}
             className={cn("relative flex flex-col overflow-hidden", className)}
             contentClassName="flex flex-col gap-3"
         >
             {isHero && icon ? (
                 <div
                     aria-hidden
+                    data-anat-part={showAnatomy ? "Icon (watermark)" : undefined}
                     className="pointer-events-none absolute -bottom-6 -right-6 text-accent-soft-foreground opacity-40 [&_svg]:size-32"
                 >
                     {icon}
@@ -186,25 +206,40 @@ export const ContinueCard = ({
 
             <div className="relative flex items-center gap-3">
                 <div className="flex min-w-0 flex-1 flex-col gap-2">
-                    <Typography weight="medium" truncate>
+                    <Typography
+                        weight="medium"
+                        truncate
+                        data-anat-part={
+                            showAnatomy ? (isHero ? "Typography" : "Typography · tiêu đề") : undefined
+                        }
+                    >
                         {title}
                     </Typography>
                     {meta || timeLeft ? (
                         <MetaRow
                             items={meta ?? []}
+                            anatPart={showAnatomy ? "MetaRow" : undefined}
                             chip={
                                 timeLeft ? (
                                     // Same info type (time remaining) → same element (a time
                                     // StatusChip) in EVERY scenario; only the tone escalates:
                                     // `neutral` (muted) when there's time, `warning` when running out.
-                                    <StatusChip tone={urgent ? "warning" : "neutral"}>
+                                    <StatusChip
+                                        tone={urgent ? "warning" : "neutral"}
+                                        anatPart={showAnatomy ? "StatusChip" : undefined}
+                                    >
                                         {timeLeft}
                                     </StatusChip>
                                 ) : undefined
                             }
                         />
                     ) : subtitle ? (
-                        <Typography type="body-xs" color="muted" truncate>
+                        <Typography
+                            type="body-xs"
+                            color="muted"
+                            truncate
+                            data-anat-part={showAnatomy ? "Typography · phụ đề" : undefined}
+                        >
                             {subtitle}
                         </Typography>
                     ) : null}
@@ -213,12 +248,18 @@ export const ContinueCard = ({
 
             {ctaNode ? <div className="relative">{ctaNode}</div> : null}
 
-            {value === undefined ? null : <ProgressMeter value={value} max={max} />}
+            {value === undefined ? null : (
+                <ProgressMeter value={value} max={max} anatPart={showAnatomy ? "ProgressMeter" : undefined} />
+            )}
         </SectionCard>
     )
 
     // `hero` = the ONE "tiếp tục phiên đang dở" standout on its surface — the
     // canonical `HighlightCard` case (`card.md` §3j). `item` stays a static frame
     // (N of them together — a highlighted card would just fight the others).
-    return isHero ? <HighlightCard>{cardNode}</HighlightCard> : cardNode
+    return isHero ? (
+        <HighlightCard anatPart={showAnatomy ? "HighlightCard" : undefined}>{cardNode}</HighlightCard>
+    ) : (
+        cardNode
+    )
 }

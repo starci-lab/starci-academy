@@ -37,6 +37,8 @@ export interface PhaseScarcityNoteProps {
     nextPhasePriceVnd: number | null
     /** Extra classes on the root. */
     className?: string
+    /** Storybook-only: emit `data-anat-part` on each anatomy part for the anatomy panel. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -54,6 +56,7 @@ export const PhaseScarcityNote = ({
     seatsRemaining,
     nextPhasePriceVnd,
     className,
+    showAnatomy,
 }: PhaseScarcityNoteProps) => {
     // no seat cap on this phase → no honest scarcity trigger → render nothing
     if (seatsRemaining == null) {
@@ -64,14 +67,19 @@ export const PhaseScarcityNote = ({
 
     return (
         <div className={cn("flex flex-wrap items-center gap-2 text-warning-soft-foreground", className)}>
-            <WarningCircleIcon aria-hidden focusable="false" className="size-4 shrink-0" />
-            <span className="text-sm font-medium">
+            <WarningCircleIcon
+                aria-hidden
+                focusable="false"
+                className="size-4 shrink-0"
+                data-anat-part={showAnatomy ? "WarningCircleIcon" : undefined}
+            />
+            <span className="text-sm font-medium" data-anat-part={showAnatomy ? "Dòng số suất" : undefined}>
                 {`Còn ${seatsRemaining} suất giá ${phaseLabel}`}
             </span>
             {nextPhasePriceVnd != null ? (
                 <>
-                    <span aria-hidden className="text-sm">·</span>
-                    <span className="text-sm">
+                    <span aria-hidden className="text-sm" data-anat-part={showAnatomy ? "Dấu ngăn cách" : undefined}>·</span>
+                    <span className="text-sm" data-anat-part={showAnatomy ? "Mệnh đề tăng giá" : undefined}>
                         {`giá tăng lên ${nextPhasePriceVnd.toLocaleString("vi-VN")}₫ sau đó`}
                     </span>
                 </>

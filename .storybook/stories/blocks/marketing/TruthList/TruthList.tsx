@@ -28,6 +28,8 @@ export interface TruthListProps extends WithClassNames<undefined> {
     items: Array<TruthListItem>
     /** Optional signature footer (who is saying this) — e.g. a founder byline. */
     byline?: React.ReactNode
+    /** Storybook-only: emit `data-anat-part` markers on each anatomy part. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -39,30 +41,47 @@ export interface TruthListProps extends WithClassNames<undefined> {
  *
  * @param props - {@link TruthListProps}
  */
-export const TruthList = ({ items, byline, className }: TruthListProps) => {
+export const TruthList = ({ items, byline, className, showAnatomy }: TruthListProps) => {
     return (
-        <div className={cn("overflow-hidden rounded-3xl bg-surface shadow-surface", className)}>
+        <div
+            className={cn("overflow-hidden rounded-3xl bg-surface shadow-surface", className)}
+            data-anat-part={showAnatomy ? "Surface frame" : undefined}
+        >
             {/* Accordion Card: khung p-0 flush, accordion surface tự lo nền + separator + bo góc.
                 Mỗi sự thật = trigger (statement) bấm mở ra phần giải. KHÔNG Accordion.Indicator
                 → không caret (thầy chốt); hover trigger là affordance. */}
-            <Accordion variant="surface" className="!rounded-none [&_*]:!rounded-none">
+            <Accordion
+                variant="surface"
+                className="!rounded-none [&_*]:!rounded-none"
+                data-anat-part={showAnatomy ? "Accordion" : undefined}
+            >
                 {/* accordion vuông toàn bộ → khung ngoài (overflow-hidden rounded-3xl) lo bo góc;
                     item cuối flush phẳng với byline, không bo lòi khi hover. */}
                 {items.map((item, index) => (
                     <Accordion.Item
                         key={index}
                         aria-label={typeof item.truth === "string" ? item.truth : `truth-${index}`}
+                        data-anat-part={showAnatomy ? "Accordion.Item" : undefined}
                     >
-                        <Accordion.Heading>
-                            <Accordion.Trigger>
-                                <Typography type="body" weight="medium" className="text-left">
+                        <Accordion.Heading data-anat-part={showAnatomy ? "Accordion.Heading" : undefined}>
+                            <Accordion.Trigger data-anat-part={showAnatomy ? "Accordion.Trigger" : undefined}>
+                                <Typography
+                                    type="body"
+                                    weight="medium"
+                                    className="text-left"
+                                    data-anat-part={showAnatomy ? "Typography · truth" : undefined}
+                                >
                                     {item.truth}
                                 </Typography>
                             </Accordion.Trigger>
                         </Accordion.Heading>
-                        <Accordion.Panel>
-                            <Accordion.Body>
-                                <Typography type="body-sm" color="muted">
+                        <Accordion.Panel data-anat-part={showAnatomy ? "Accordion.Panel" : undefined}>
+                            <Accordion.Body data-anat-part={showAnatomy ? "Accordion.Body" : undefined}>
+                                <Typography
+                                    type="body-sm"
+                                    color="muted"
+                                    data-anat-part={showAnatomy ? "Typography · fix" : undefined}
+                                >
                                     {item.fix}
                                 </Typography>
                             </Accordion.Body>
@@ -71,7 +90,10 @@ export const TruthList = ({ items, byline, className }: TruthListProps) => {
                 ))}
             </Accordion>
             {byline ? (
-                <div className="flex flex-wrap items-center gap-3 border-t border-default px-5 py-4">
+                <div
+                    className="flex flex-wrap items-center gap-3 border-t border-default px-5 py-4"
+                    data-anat-part={showAnatomy ? "Byline row" : undefined}
+                >
                     {byline}
                 </div>
             ) : null}

@@ -36,6 +36,7 @@ const progressBase = {
     timeLeft: "40 minutes left",
     ctaLabel: "Continue",
     onPress: () => {},
+    showAnatomy: true,
 }
 
 // Loaded shape "có tiến độ" — urgent/không-gấp SHARE this composition (chỉ khác TONE chip).

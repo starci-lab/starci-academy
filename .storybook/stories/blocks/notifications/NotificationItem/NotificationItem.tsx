@@ -80,6 +80,11 @@ export interface NotificationItemProps extends WithClassNames<undefined> {
      * size and never compresses the text column.
      */
     actionSlot?: ReactNode
+    /**
+     * Storybook-only: when true, each composed part emits a `data-anat-part`
+     * attribute so the anatomy overlay can anchor badges. No visual effect.
+     */
+    showAnatomy?: boolean
 }
 
 /**
@@ -117,6 +122,7 @@ export const NotificationItem = ({
     isUnread = false,
     onPress,
     actionSlot,
+    showAnatomy = false,
     className,
 }: NotificationItemProps) => {
     const isPressable = Boolean(onPress)
@@ -129,6 +135,7 @@ export const NotificationItem = ({
                     tone={TONE_TO_ICON_TILE[tone]}
                     size="sm"
                     className="size-10 rounded-2xl [&_svg]:size-5"
+                    anatPart={showAnatomy ? "IconTile" : undefined}
                 />
             ) : null}
 
@@ -136,23 +143,47 @@ export const NotificationItem = ({
                 <div className="flex min-w-0 items-start gap-2">
                     {isUnread ? (
                         // accent dot — the primary unread signal beside the title
-                        <span className="mt-2 size-2 shrink-0 rounded-full bg-accent" />
+                        <span
+                            className="mt-2 size-2 shrink-0 rounded-full bg-accent"
+                            data-anat-part={showAnatomy ? "Dot chưa đọc" : undefined}
+                        />
                     ) : null}
-                    <Typography type="body-sm" weight="medium" className="line-clamp-2">
+                    <Typography
+                        type="body-sm"
+                        weight="medium"
+                        className="line-clamp-2"
+                        data-anat-part={showAnatomy ? "Typography · tiêu đề" : undefined}
+                    >
                         {title}
                     </Typography>
                 </div>
                 {body ? (
-                    <Typography type="body-xs" color="muted" className="line-clamp-2">
+                    <Typography
+                        type="body-xs"
+                        color="muted"
+                        className="line-clamp-2"
+                        data-anat-part={showAnatomy ? "Typography · nội dung" : undefined}
+                    >
                         {body}
                     </Typography>
                 ) : null}
-                <Typography type="body-xs" color="muted">
+                <Typography
+                    type="body-xs"
+                    color="muted"
+                    data-anat-part={showAnatomy ? "Typography · thời gian" : undefined}
+                >
                     {timeLabel}
                 </Typography>
             </div>
 
-            {actionSlot ? <div className="shrink-0">{actionSlot}</div> : null}
+            {actionSlot ? (
+                <div
+                    className="shrink-0"
+                    data-anat-part={showAnatomy ? "Typography · hành động" : undefined}
+                >
+                    {actionSlot}
+                </div>
+            ) : null}
         </>
     )
 

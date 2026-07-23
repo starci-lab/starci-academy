@@ -98,6 +98,7 @@ export const Default: Story = {
                 <div className="w-full max-w-md">
                     <CourseProgressRow
                         icon={<BookOpenIcon aria-hidden focusable="false" />}
+                        showAnatomy
                         title="Fullstack Mastery"
                         percent={62}
                     />
@@ -120,6 +121,7 @@ export const Trial: Story = {
                 <div className="w-full max-w-md">
                     <CourseProgressRow
                         icon={<BookOpenIcon aria-hidden focusable="false" />}
+                        showAnatomy
                         title="System Design Mastery"
                         trialLabel="Học thử"
                         percent={8}
@@ -143,6 +145,7 @@ export const WithMeta: Story = {
                 <div className="w-full max-w-md">
                     <CourseProgressRow
                         icon={<BookOpenIcon aria-hidden focusable="false" />}
+                        showAnatomy
                         title="DevOps Mastery"
                         percent={34}
                         meta="41/120 mục · cập nhật 2 ngày trước"
@@ -166,6 +169,7 @@ export const Interactive: Story = {
                 <div className="w-full max-w-md">
                     <CourseProgressRow
                         icon={<BookOpenIcon aria-hidden focusable="false" />}
+                        showAnatomy
                         title="Fullstack Mastery"
                         percent={62}
                         onPress={() => {}}
@@ -189,6 +193,7 @@ export const WithCoverImage: Story = {
                 <div className="w-full max-w-md">
                     <CourseProgressRow
                         icon={<BookOpenIcon aria-hidden focusable="false" />}
+                        showAnatomy
                         src="https://placehold.co/96x96/png"
                         alt="Fullstack Mastery cover"
                         title="Fullstack Mastery"
@@ -213,6 +218,7 @@ export const Empty: Story = {
                 <div className="w-full max-w-md">
                     <CourseProgressRow
                         icon={<BookOpenIcon aria-hidden focusable="false" />}
+                        showAnatomy
                         title="Nhập môn Git"
                         trialLabel="Học thử"
                         percent={0}
@@ -236,6 +242,7 @@ export const Complete: Story = {
                 <div className="w-full max-w-md">
                     <CourseProgressRow
                         icon={<BookOpenIcon aria-hidden focusable="false" />}
+                        showAnatomy
                         title="Nhập môn Git"
                         percent={100}
                     />
@@ -258,12 +265,14 @@ export const List: Story = {
                 <div className="flex w-full max-w-md flex-col rounded-3xl bg-surface shadow-surface">
                     <CourseProgressRow
                         icon={<BookOpenIcon aria-hidden focusable="false" />}
+                        showAnatomy
                         title="Fullstack Mastery"
                         percent={62}
                         onPress={() => {}}
                     />
                     <CourseProgressRow
                         icon={<BookOpenIcon aria-hidden focusable="false" />}
+                        showAnatomy
                         title="System Design Mastery"
                         trialLabel="Học thử"
                         percent={8}
@@ -271,6 +280,7 @@ export const List: Story = {
                     />
                     <CourseProgressRow
                         icon={<BookOpenIcon aria-hidden focusable="false" />}
+                        showAnatomy
                         title="DevOps Mastery"
                         percent={100}
                         onPress={() => {}}
@@ -294,6 +304,7 @@ export const Skeleton: Story = {
                 <div className="w-full max-w-md">
                     <CourseProgressRow
                         icon={<BookOpenIcon aria-hidden focusable="false" />}
+                        showAnatomy
                         title="Fullstack Mastery"
                         percent={62}
                         isSkeleton
@@ -317,6 +328,7 @@ export const SkeletonWithTrialAndMeta: Story = {
                 <div className="w-full max-w-md">
                     <CourseProgressRow
                         icon={<BookOpenIcon aria-hidden focusable="false" />}
+                        showAnatomy
                         title="System Design Mastery"
                         percent={8}
                         isSkeleton

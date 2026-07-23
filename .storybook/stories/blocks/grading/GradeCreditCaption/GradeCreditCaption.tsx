@@ -43,6 +43,8 @@ export interface GradeCreditCaptionProps {
     onOpenDetails?: () => void
     /** Extra classes on the wrapper. */
     className?: string
+    /** Storybook-only: emit `data-anat-part` anchors on each part for the anatomy panel. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -65,6 +67,7 @@ export const GradeCreditCaption = ({
     autoCreditCost,
     onOpenDetails,
     className,
+    showAnatomy,
 }: GradeCreditCaptionProps) => {
     // no snapshot yet (loading) → render nothing.
     if (!creditUsage) {
@@ -91,12 +94,14 @@ export const GradeCreditCaption = ({
         : `Còn ${creditUsage.credit.remainingWeek}/${creditUsage.credit.limitWeek} credit tuần này`
 
     const content = (
-        <span className={cn(
-            "inline-flex items-center gap-1 text-sm",
-            blocked ? "font-medium text-danger-soft-foreground" : "text-muted",
-        )}
+        <span
+            data-anat-part={showAnatomy ? "span · caption" : undefined}
+            className={cn(
+                "inline-flex items-center gap-1 text-sm",
+                blocked ? "font-medium text-danger-soft-foreground" : "text-muted",
+            )}
         >
-            {blocked ? <WarningCircleIcon aria-hidden className="size-4 shrink-0" /> : null}
+            {blocked ? <WarningCircleIcon aria-hidden data-anat-part={showAnatomy ? "WarningCircleIcon" : undefined} className="size-4 shrink-0" /> : null}
             {text}
         </span>
     )
@@ -106,6 +111,7 @@ export const GradeCreditCaption = ({
             <button
                 type="button"
                 onClick={onOpenDetails}
+                data-anat-part={showAnatomy ? "button · pressable" : undefined}
                 className={cn("w-fit cursor-pointer outline-none transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-accent", className)}
             >
                 {content}
@@ -113,5 +119,5 @@ export const GradeCreditCaption = ({
         )
     }
 
-    return <span className={cn(className)}>{content}</span>
+    return <span data-anat-part={showAnatomy ? "span · wrapper" : undefined} className={cn(className)}>{content}</span>
 }

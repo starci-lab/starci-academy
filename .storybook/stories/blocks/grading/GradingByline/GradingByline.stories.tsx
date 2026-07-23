@@ -122,9 +122,9 @@ export const VerdictPass: Story = {
                 parts={VERDICT_PARTS}
                 note="Glyph check xanh + nhãn 'Đạt' — leaf verdict tối giản dùng lại ở dòng lịch sử."
             >
-                <span className="flex items-center gap-2">
-                    <VerdictIcon pass />
-                    <Typography type="body-sm">Đạt</Typography>
+                <span className="flex items-center gap-2" data-anat-part="span · dòng verdict">
+                    <VerdictIcon pass showAnatomy />
+                    <Typography type="body-sm" data-anat-part="Typography">Đạt</Typography>
                 </span>
             </BlockAnatomy>,
         ),
@@ -140,9 +140,9 @@ export const VerdictFail: Story = {
                 parts={VERDICT_PARTS}
                 note="Cùng composition với leaf 'Đạt', chỉ đổi tone glyph (x đỏ) + nhãn 'Không đạt'."
             >
-                <span className="flex items-center gap-2">
-                    <VerdictIcon pass={false} />
-                    <Typography type="body-sm">Không đạt</Typography>
+                <span className="flex items-center gap-2" data-anat-part="span · dòng verdict">
+                    <VerdictIcon pass={false} showAnatomy />
+                    <Typography type="body-sm" data-anat-part="Typography">Không đạt</Typography>
                 </span>
             </BlockAnatomy>,
         ),
@@ -158,9 +158,9 @@ export const VerdictInChipPass: Story = {
                 parts={VERDICT_CHIP_PARTS}
                 note="Glyph + nhãn bọc trong Chip soft — leaf khác 'Đạt' vì thêm vỏ Chip + Chip.Label."
             >
-                <Chip color="success" variant="soft" size="sm">
-                    <VerdictIcon pass />
-                    <Chip.Label>Đạt</Chip.Label>
+                <Chip color="success" variant="soft" size="sm" data-anat-part="Chip">
+                    <VerdictIcon pass showAnatomy />
+                    <Chip.Label data-anat-part="Chip.Label">Đạt</Chip.Label>
                 </Chip>
             </BlockAnatomy>,
         ),
@@ -176,9 +176,9 @@ export const VerdictInChipFail: Story = {
                 parts={VERDICT_CHIP_PARTS}
                 note="Cùng composition với 'Chip đạt', đổi màu Chip sang danger + nhãn 'Không đạt'."
             >
-                <Chip color="danger" variant="soft" size="sm">
-                    <VerdictIcon pass={false} />
-                    <Chip.Label>Không đạt</Chip.Label>
+                <Chip color="danger" variant="soft" size="sm" data-anat-part="Chip">
+                    <VerdictIcon pass={false} showAnatomy />
+                    <Chip.Label data-anat-part="Chip.Label">Không đạt</Chip.Label>
                 </Chip>
             </BlockAnatomy>,
         ),
@@ -195,7 +195,7 @@ export const BylineWithLabel: Story = {
                 reason="Gom hai mảnh attribution chấm bài dùng lại khắp result card / drawer / dòng lịch sử: ModelByline (sparkle + tên model plain-text + AiCategoryChip theo hạng) và VerdictIcon (đạt/không đạt). Quy tắc 'text rồi chip bên cạnh' được gói sẵn để mọi surface hiển thị model đã chấm nhất quán, không tự ghép lại chip-cạnh-chip."
             >
                 <div className="flex flex-wrap items-center gap-2">
-                    <ModelByline model="qwen2.5-coder-32b" category={AiModelCategory.Balanced} withLabel />
+                    <ModelByline model="qwen2.5-coder-32b" category={AiModelCategory.Balanced} withLabel showAnatomy />
                 </div>
             </BlockAnatomy>,
         ),
@@ -212,7 +212,7 @@ export const BylineNoLabel: Story = {
                 note="Bỏ tiền tố 'Đã chấm bởi' — chỉ khác nội dung text, CÙNG composition với leaf 'Có nhãn + hạng'."
             >
                 <div className="flex flex-wrap items-center gap-2">
-                    <ModelByline model="claude-sonnet-4-5" category={AiModelCategory.Frontier} />
+                    <ModelByline model="claude-sonnet-4-5" category={AiModelCategory.Frontier} showAnatomy />
                 </div>
             </BlockAnatomy>,
         ),
@@ -229,7 +229,7 @@ export const BylineNoTierChip: Story = {
                 note="Không truyền `category` → AiCategoryChip vắng mặt, composition thiếu chip hạng."
             >
                 <div className="flex flex-wrap items-center gap-2">
-                    <ModelByline model="llama-3.1-8b-instruct" />
+                    <ModelByline model="llama-3.1-8b-instruct" showAnatomy />
                 </div>
             </BlockAnatomy>,
         ),
@@ -245,11 +245,11 @@ export const BylineEmpty: Story = {
                 parts={BYLINE_EMPTY_PARTS}
                 note="model=null → ModelByline không render gì; khung chấm gạch chỉ chứa dòng chú thích placeholder."
             >
-                <div className="flex min-h-6 items-center gap-2 rounded-lg border border-dashed border-default px-3">
-                    <Typography type="body-xs" color="muted">
+                <div className="flex min-h-6 items-center gap-2 rounded-lg border border-dashed border-default px-3" data-anat-part="div · khung gạch">
+                    <Typography type="body-xs" color="muted" data-anat-part="Typography">
                         (không render gì — model=null)
                     </Typography>
-                    <ModelByline model={null} category={AiModelCategory.Economy} withLabel />
+                    <ModelByline model={null} category={AiModelCategory.Economy} withLabel showAnatomy />
                 </div>
             </BlockAnatomy>,
         ),

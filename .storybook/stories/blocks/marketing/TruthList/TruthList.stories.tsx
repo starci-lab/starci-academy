@@ -180,6 +180,7 @@ export const SingleTruth: Story = {
                 note="Một item duy nhất, không byline — CÙNG composition với leaf nhiều sự thật, chỉ khác số lượng trigger."
             >
                 <TruthList
+                    showAnatomy
                     items={[
                         {
                             truth: "Bootcamp 3 tháng biến người mới thành senior.",
@@ -202,9 +203,10 @@ export const TypicalWithByline: Story = {
                 reason="Định vị đối đầu, có căn cứ: mỗi sự thật khó chịu của ngành mở ra một câu 'đây là cách tụi mình xử'. Gói accordion + byline vào một surface flush để sự thật là nhân vật chính, tác giả lùi về chữ ký cuối."
             >
                 <TruthList
+                    showAnatomy
                     items={typicalTruths}
                     byline={
-                        <Typography type="body-sm" color="muted">
+                        <Typography type="body-sm" color="muted" data-anat-part="Typography · byline">
                             Thầy Long — Founder, StarCi Academy
                         </Typography>
                     }
@@ -223,7 +225,7 @@ export const NoByline: Story = {
                 parts={TRUTHLIST_PARTS}
                 note="Bỏ byline → accordion flush đứng một mình, không có hàng chữ ký cuối surface."
             >
-                <TruthList items={typicalTruths} />
+                <TruthList showAnatomy items={typicalTruths} />
             </BlockAnatomy>,
         ),
 }
@@ -240,6 +242,7 @@ export const LongContentWrap: Story = {
             >
                 <div className="max-w-[360px]">
                     <TruthList
+                        showAnatomy
                         items={[
                             {
                                 truth: "Chỉ cần giỏi thuật toán là qua được mọi vòng phỏng vấn hệ thống lớn ở công ty product.",
@@ -263,9 +266,13 @@ export const Empty: Story = {
                 parts={EMPTY_PARTS}
                 note="Không có sự thật nào → EmptyState lấp surface, composition khác leaf data (không Accordion)."
             >
-                <div className="overflow-hidden rounded-3xl bg-surface shadow-surface">
+                <div
+                    className="overflow-hidden rounded-3xl bg-surface shadow-surface"
+                    data-anat-part="Surface frame"
+                >
                     <EmptyState
-                        icon={<TrayIcon weight="duotone" />}
+                        anatPart="EmptyState"
+                        icon={<TrayIcon weight="duotone" data-anat-part="TrayIcon" />}
                         title="Chưa có sự thật nào"
                         description="Các tuyên bố định vị sẽ hiện ở đây."
                     />

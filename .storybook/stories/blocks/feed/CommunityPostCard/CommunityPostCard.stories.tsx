@@ -196,6 +196,7 @@ const Controlled = () => {
                 post={post}
                 onReact={(_postId, type) => setMyReaction(type)}
                 onToggleComments={() => setCommentsOpen((open) => !open)}
+                showAnatomy
             >
                 {commentsOpen ? (
                     <div className="rounded-2xl bg-default/40 p-3 text-sm text-muted">
@@ -217,7 +218,7 @@ export const Default: Story = {
                 parts={DEFAULT_PARTS}
                 reason="Một bài đăng cộng đồng gói header tác giả (avatar + tên + thời gian + kênh + huy hiệu) + thân markdown + footer reaction/bình luận vào một card. Feature chỉ truyền post + handler; block tự dựng khung Card và bố cục."
             >
-                <div className="w-full max-w-xl"><CommunityPostCard post={defaultPost} onReact={() => {}} onToggleComments={() => {}} /></div>
+                <div className="w-full max-w-xl"><CommunityPostCard post={defaultPost} onReact={() => {}} onToggleComments={() => {}} showAnatomy /></div>
             </BlockAnatomy>,
         ),
 }
@@ -232,7 +233,7 @@ export const FounderPinned: Story = {
                 parts={FOUNDER_PINNED_PARTS}
                 note="Founder + đã ghim → hiện cả huy hiệu SealCheck lẫn ghim PushPin trên cùng base composition."
             >
-                <div className="w-full max-w-xl"><CommunityPostCard post={founderPinnedPost} onReact={() => {}} onToggleComments={() => {}} /></div>
+                <div className="w-full max-w-xl"><CommunityPostCard post={founderPinnedPost} onReact={() => {}} onToggleComments={() => {}} showAnatomy /></div>
             </BlockAnatomy>,
         ),
 }
@@ -247,7 +248,7 @@ export const Pinned: Story = {
                 parts={PINNED_PARTS}
                 note="isPinned → thêm ghim PushPin ở góc header, phần còn lại như leaf 'Có dữ liệu'."
             >
-                <div className="w-full max-w-xl"><CommunityPostCard post={pinnedPost} onReact={() => {}} onToggleComments={() => {}} /></div>
+                <div className="w-full max-w-xl"><CommunityPostCard post={pinnedPost} onReact={() => {}} onToggleComments={() => {}} showAnatomy /></div>
             </BlockAnatomy>,
         ),
 }
@@ -262,7 +263,7 @@ export const FounderAuthor: Story = {
                 parts={FOUNDER_PARTS}
                 note="isFounderAuthor → thêm huy hiệu SealCheck cạnh tên, phần còn lại như leaf 'Có dữ liệu'."
             >
-                <div className="w-full max-w-xl"><CommunityPostCard post={founderAuthorPost} onReact={() => {}} onToggleComments={() => {}} /></div>
+                <div className="w-full max-w-xl"><CommunityPostCard post={founderAuthorPost} onReact={() => {}} onToggleComments={() => {}} showAnatomy /></div>
             </BlockAnatomy>,
         ),
 }
@@ -277,7 +278,7 @@ export const Fresh: Story = {
                 parts={DEFAULT_PARTS}
                 note="Bài mới đăng (0 reaction, 0 bình luận) — CÙNG composition với leaf 'Có dữ liệu', chỉ đổi dữ liệu đếm."
             >
-                <div className="w-full max-w-xl"><CommunityPostCard post={freshPost} onReact={() => {}} onToggleComments={() => {}} /></div>
+                <div className="w-full max-w-xl"><CommunityPostCard post={freshPost} onReact={() => {}} onToggleComments={() => {}} showAnatomy /></div>
             </BlockAnatomy>,
         ),
 }
@@ -292,7 +293,7 @@ export const LongBody: Story = {
                 parts={DEFAULT_PARTS}
                 note="Thân markdown dài + đã sửa — CÙNG composition, MarkdownContent tự giãn chiều cao."
             >
-                <div className="w-full max-w-xl"><CommunityPostCard post={longBodyPost} onReact={() => {}} onToggleComments={() => {}} /></div>
+                <div className="w-full max-w-xl"><CommunityPostCard post={longBodyPost} onReact={() => {}} onToggleComments={() => {}} showAnatomy /></div>
             </BlockAnatomy>,
         ),
 }
@@ -307,7 +308,7 @@ export const ReadOnly: Story = {
                 parts={READONLY_PARTS}
                 note="Không truyền onReact/onToggleComments → ReactionBar chỉ đọc, đếm bình luận tĩnh."
             >
-                <div className="w-full max-w-xl"><CommunityPostCard post={readOnlyPost} /></div>
+                <div className="w-full max-w-xl"><CommunityPostCard post={readOnlyPost} showAnatomy /></div>
             </BlockAnatomy>,
         ),
 }

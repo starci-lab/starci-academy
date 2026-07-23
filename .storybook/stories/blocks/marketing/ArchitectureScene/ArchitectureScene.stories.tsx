@@ -10,9 +10,10 @@ import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockA
  *
  * ANATOMY IS PER-LEAF: each story below is its OWN leaf and carries its OWN
  * BlockAnatomy axis (Sơ đồ + Cây) reflecting the parts THAT leaf composes — there
- * is no separate consolidated "Anatomy" story. The scene emits no anchors (it does
- * not import AnatomyOverlay / take `showAnatomy`), so `Sơ đồ` is a clean render +
- * numbered legend.
+ * is no separate consolidated "Anatomy" story. The scene takes `showAnatomy` and
+ * emits `data-anat-part` anchors on its REAL-DOM parts only — the floating `<Html>`
+ * node label (chip + name/sub/kind-icon/status) and the caption `Typography`; the
+ * WebGL board/meshes/wires carry no DOM, so those parts live in the `Sơ đồ` + legend.
  */
 const meta: Meta<typeof ArchitectureScene> = {
     title: "Design/Marketing/ArchitectureScene",
@@ -198,7 +199,7 @@ export const DefaultScene: Story = {
                 reason="Hero kiến trúc dạng 3D thật (WebGL, flat-isometric tiles-on-a-grid), driven hoàn toàn bằng JSON `data` + 3 tone token (normal/success/danger). Đổi `data` là render bất kỳ sơ đồ/sự cố nào — mặc định là backend StarCi (CQRS/CDC)."
             >
                 <div className="w-[720px] max-w-full">
-                    <ArchitectureScene caption="Write and read paths decoupled through CDC — the failure it teaches: CDC lag → reading stale data." />
+                    <ArchitectureScene caption="Write and read paths decoupled through CDC — the failure it teaches: CDC lag → reading stale data." showAnatomy />
                 </div>
             </BlockAnatomy>,
         ),
@@ -215,7 +216,7 @@ export const CustomData: Story = {
                 note="Cùng composition với leaf mặc định; `data` nhỏ hơn (client → LB → API → PostgreSQL), node `api` tone danger + status 'overloaded'."
             >
                 <div className="w-[720px] max-w-full">
-                    <ArchitectureScene data={SMALL_DATA} caption="The load balancer is funneling traffic and overloading the API service." />
+                    <ArchitectureScene data={SMALL_DATA} caption="The load balancer is funneling traffic and overloading the API service." showAnatomy />
                 </div>
             </BlockAnatomy>,
         ),
@@ -240,6 +241,7 @@ export const SelectedNode: Story = {
                         caption="Node được chọn (selectedId) nổi viền accent quanh nhãn."
                         selectedId="api"
                         onSelectNode={() => {}}
+                        showAnatomy
                     />
                 </div>
             </BlockAnatomy>,
@@ -258,7 +260,7 @@ export const NoCaption: Story = {
                 note="Bỏ `caption` → KHÔNG render Typography, chỉ còn Canvas (khác các leaf khác đúng một part)."
             >
                 <div className="w-[720px] max-w-full">
-                    <ArchitectureScene data={SMALL_DATA} />
+                    <ArchitectureScene data={SMALL_DATA} showAnatomy />
                 </div>
             </BlockAnatomy>,
         ),
@@ -308,6 +310,7 @@ export const PodAndUserKinds: Story = {
                     <ArchitectureScene
                         data={POD_USER_DATA}
                         caption="Kind `pod` (nhóm chức năng, drill-down) + `user` (đầu người dùng) — cạnh `eventual` mờ hơn; status `warning`/`info`."
+                        showAnatomy
                     />
                 </div>
             </BlockAnatomy>,

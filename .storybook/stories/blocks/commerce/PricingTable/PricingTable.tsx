@@ -31,6 +31,8 @@ interface PricingCardProps {
     badge?: React.ReactNode
     highlighted?: boolean
     className?: string
+    /** When true, emit `data-anat-part` on each part so a BlockAnatomy panel can badge it on-render. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -48,17 +50,18 @@ const PricingCard = ({
     badge,
     highlighted = false,
     className,
+    showAnatomy = false,
 }: PricingCardProps) => (
-    <SectionCard accent={highlighted} className={cn("flex flex-col", className)} contentClassName="flex flex-col gap-6 h-full">
+    <SectionCard accent={highlighted} anatPart={showAnatomy ? "SectionCard" : undefined} className={cn("flex flex-col", className)} contentClassName="flex flex-col gap-6 h-full">
         {/* Name (+ optional popular chip inline — chip is w-fit, never full-width) */}
         <div className="flex flex-wrap items-center gap-2">
-            <Typography type="body" weight="semibold">{name}</Typography>
-            {highlighted && badge ? <StatusChip tone="accent">{badge}</StatusChip> : null}
+            <Typography type="body" weight="semibold" data-anat-part={showAnatomy ? "Typography" : undefined}>{name}</Typography>
+            {highlighted && badge ? <StatusChip tone="accent" anatPart={showAnatomy ? "StatusChip" : undefined}>{badge}</StatusChip> : null}
         </div>
 
         {/* Price row: big price + optional struck original + muted period */}
         <div className="flex flex-wrap items-baseline gap-2">
-            <Typography type="h3" weight="semibold">{price}</Typography>
+            <Typography type="h3" weight="semibold" data-anat-part={showAnatomy ? "Typography" : undefined}>{price}</Typography>
             {originalPrice ? (
                 <Typography type="body-sm" color="muted" className="line-through">{originalPrice}</Typography>
             ) : null}
@@ -116,6 +119,8 @@ export interface PricingTableProps {
     onSelectTier?: (id: string) => void
     /** Extra classes on the root. */
     className?: string
+    /** When true, emit `data-anat-part` on each part so a BlockAnatomy panel can badge it on-render. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -135,6 +140,7 @@ export const PricingTable = ({
     highlightLabel = "Phổ biến",
     onSelectTier,
     className,
+    showAnatomy = false,
 }: PricingTableProps) => {
     return (
         // Responsive tier comparison: stacked on mobile, columns from md up. items-stretch
@@ -144,6 +150,7 @@ export const PricingTable = ({
                 <PricingCard
                     key={tier.id}
                     className="flex-1"
+                    showAnatomy={showAnatomy}
                     name={tier.name}
                     price={tier.price}
                     period={tier.period}
@@ -152,15 +159,15 @@ export const PricingTable = ({
                     features={
                         <div className="flex flex-col gap-4">
                             {tier.description ? (
-                                <Typography type="body-sm" color="muted">{tier.description}</Typography>
+                                <Typography type="body-sm" color="muted" data-anat-part={showAnatomy ? "Typography" : undefined}>{tier.description}</Typography>
                             ) : null}
 
                             {/* Feature rows in ONE CrossListCard: included → mark="check" (✓),
                                 excluded → mark="cross" (✗). Bordered = surface-in-surface. */}
-                            <CrossListCard bordered>
+                            <CrossListCard bordered anatPart={showAnatomy ? "CrossListCard" : undefined}>
                                 {tier.features.map((feature, index) => (
                                     <CrossListItem key={`${tier.id}-${index}`} mark={feature.included ? "check" : "cross"}>
-                                        <Typography type="body-sm" color={feature.included ? undefined : "muted"}>{feature.label}</Typography>
+                                        <Typography type="body-sm" color={feature.included ? undefined : "muted"} data-anat-part={showAnatomy ? "Typography" : undefined}>{feature.label}</Typography>
                                     </CrossListItem>
                                 ))}
                             </CrossListCard>

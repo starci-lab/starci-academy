@@ -51,6 +51,8 @@ export interface EmptyStateProps {
     size?: "default" | "compact" | "page"
     /** Extra classes on the wrapper. */
     className?: string
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
 }
 
 /**
@@ -71,10 +73,11 @@ export const EmptyState = ({
     tone = "neutral",
     size = "default",
     className,
+    anatPart,
 }: EmptyStateProps) => {
     if (size === "compact") {
         return (
-            <Typography type="body-sm" color="muted" className={className}>
+            <Typography type="body-sm" color="muted" className={className} data-anat-part={anatPart}>
                 {title}
             </Typography>
         )
@@ -84,6 +87,7 @@ export const EmptyState = ({
 
     return (
         <div
+            data-anat-part={anatPart}
             className={cn(
                 isPage
                     ? "mx-auto flex min-h-[70vh] max-w-xl flex-col items-center justify-center gap-6 px-6 py-16 text-center"

@@ -40,6 +40,8 @@ export interface TrackCardProps {
     onView: () => void
     /** Class on the outer card (sizing / placement). */
     className?: string
+    /** When on, emit `data-anat-part` markers for the anatomy panel. */
+    showAnatomy?: boolean
 }
 
 const DOT: Record<TrackColor, string> = { accent: "bg-accent", success: "bg-success", warning: "bg-warning" }
@@ -56,17 +58,17 @@ const CTA: Record<TrackColor, string> = { accent: "text-accent-soft-foreground",
  *
  * @param props - {@link TrackCardProps}
  */
-export const TrackCard = ({ icon, title, meta, color, tiers, viewLabel, onView, className }: TrackCardProps) => (
-    <Card className={cn("h-full", className)}>
-        <CardContent className="flex h-full flex-col gap-6">
+export const TrackCard = ({ icon, title, meta, color, tiers, viewLabel, onView, className, showAnatomy }: TrackCardProps) => (
+    <Card className={cn("h-full", className)} data-anat-part={showAnatomy ? "Card" : undefined}>
+        <CardContent className="flex h-full flex-col gap-6" data-anat-part={showAnatomy ? "CardContent" : undefined}>
             <div className="flex items-center gap-3">
                 {/* IconTile has no 40px step — "sm" (48px) is the closest port size to the original size-10 tile. */}
-                <IconTile icon={icon} tone={color} size="sm" />
+                <IconTile icon={icon} tone={color} size="sm" anatPart={showAnatomy ? "IconTile" : undefined} />
                 <div className="flex min-w-0 flex-col">
-                    <Typography type="body" weight="semibold" className="truncate">
+                    <Typography type="body" weight="semibold" className="truncate" data-anat-part={showAnatomy ? "Typography (tiêu đề + meta)" : undefined}>
                         {title}
                     </Typography>
-                    <Typography type="body-xs" color="muted">
+                    <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography (tiêu đề + meta)" : undefined}>
                         {meta}
                     </Typography>
                 </div>
@@ -80,10 +82,10 @@ export const TrackCard = ({ icon, title, meta, color, tiers, viewLabel, onView, 
                             {index < tiers.length - 1 ? <span className={cn("my-1 w-px flex-1", LINE[color])} /> : null}
                         </div>
                         <div className={cn("flex flex-col gap-0", index < tiers.length - 1 && "pb-4")}>
-                            <Typography type="body-xs" color="muted">
+                            <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography (nhãn tầng + chủ đề)" : undefined}>
                                 {tier.label}
                             </Typography>
-                            <Typography type="body-sm">
+                            <Typography type="body-sm" data-anat-part={showAnatomy ? "Typography (nhãn tầng + chủ đề)" : undefined}>
                                 {tier.topic}
                             </Typography>
                         </div>
@@ -100,6 +102,7 @@ export const TrackCard = ({ icon, title, meta, color, tiers, viewLabel, onView, 
                 type="button"
                 onClick={onView}
                 className={cn("group mt-auto inline-flex cursor-pointer items-center gap-1 self-start text-sm font-medium", CTA[color])}
+                data-anat-part={showAnatomy ? "button (CTA)" : undefined}
             >
                 {viewLabel}
                 <ArrowRightIcon aria-hidden focusable="false" className="size-4 transition-transform group-hover:translate-x-0.5" />

@@ -90,6 +90,7 @@ export const Default: Story = {
                     title="A new lesson was published in your course"
                     body="System Design Mastery — module 4, lesson 3 is now available."
                     timeLabel="3 days ago"
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -113,6 +114,7 @@ export const Unread: Story = {
                     timeLabel="2 hours ago"
                     isUnread
                     onPress={() => {}}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -135,6 +137,7 @@ export const Read: Story = {
                     body="Study one more lesson today to keep your streak going."
                     timeLabel="Yesterday"
                     onPress={() => {}}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -163,6 +166,7 @@ export const WithAction: Story = {
                         </Typography>
                     }
                     onPress={() => {}}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -185,6 +189,7 @@ export const TextOnly: Story = {
                     body="Visa ending in 4242 is now your default payment method."
                     timeLabel="1 day ago"
                     onPress={() => {}}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -209,6 +214,7 @@ export const TitleOnly: Story = {
                     timeLabel="Just now"
                     isUnread
                     onPress={() => {}}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -234,6 +240,7 @@ export const LongText: Story = {
                         body="Study one more lesson today to keep your streak going, otherwise your progress resets back down to zero and you will have to start building it up again from scratch"
                         timeLabel="6 hours ago"
                         onPress={() => {}}
+                        showAnatomy
                     />
                 </div>
             </BlockAnatomy>,

@@ -56,6 +56,8 @@ export interface ShowcaseMockupProps {
     className?: string
     /** Class on the content area (padding / inner background). */
     contentClassName?: string
+    /** Storybook-only: emit `data-anat-part` markers on each anatomy part. */
+    showAnatomy?: boolean
 }
 
 /** Tilt presets — a perspective turn + a visible 2D slant (so it reads clearly as
@@ -95,6 +97,7 @@ export const ShowcaseMockup = ({
     children,
     className,
     contentClassName,
+    showAnatomy,
 }: ShowcaseMockupProps) => (
     <div
         className={cn("relative w-full", className)}
@@ -104,6 +107,7 @@ export const ShowcaseMockup = ({
         {backdrop === "glow" ? (
             <div
                 aria-hidden
+                data-anat-part={showAnatomy ? "Backdrop" : undefined}
                 className="pointer-events-none absolute inset-0 -z-10"
                 style={{
                     transform: "scale(1.15)",
@@ -119,6 +123,7 @@ export const ShowcaseMockup = ({
         {backdrop === "grid" ? (
             <div
                 aria-hidden
+                data-anat-part={showAnatomy ? "Backdrop" : undefined}
                 className="pointer-events-none absolute inset-0 -z-10"
                 style={{
                     backgroundImage: "radial-gradient(color-mix(in oklch, var(--foreground) 7%, transparent) 1px, transparent 1px)",
@@ -127,7 +132,11 @@ export const ShowcaseMockup = ({
             />
         ) : null}
         {backdrop === "stars" ? (
-            <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+            <div
+                aria-hidden
+                data-anat-part={showAnatomy ? "Backdrop" : undefined}
+                className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+            >
                 {[
                     "left-[8%] top-[14%]", "right-[12%] top-[8%]", "left-[22%] bottom-[12%]",
                     "right-[20%] bottom-[18%]", "left-[46%] top-[6%]", "right-[6%] top-[52%]",
@@ -143,12 +152,13 @@ export const ShowcaseMockup = ({
 
         {/* the window card + a second card stacked BEHIND it. `group` so hovering
             anywhere flattens both cards together. */}
-        <div className="group relative">
+        <div className="group relative" data-anat-part={showAnatomy ? "Khối xoè thẻ" : undefined}>
             {/* the card BEHIND — a bit TALLER (peeks top + bottom), a surface tinted by the
                 theme colour (NO border), tilted the OPPOSITE way so the two cards splay in
                 two directions (a "fanned" depth, not a flat overlap). */}
             <div
                 aria-hidden
+                data-anat-part={showAnatomy ? "Card sau" : undefined}
                 className={cn(
                     "absolute -inset-y-4 inset-x-8 -z-10 origin-center rounded-3xl transition-transform duration-500 ease-out @app-md:group-hover:[transform:none]",
                     TILT[OPPOSITE[tilt]],
@@ -158,24 +168,37 @@ export const ShowcaseMockup = ({
 
             {/* the foreground window card — surface follows light/dark tokens, its own tilt */}
             <div
+                data-anat-part={showAnatomy ? "Window card" : undefined}
                 className={cn(
                     "relative w-full origin-center overflow-hidden rounded-3xl border border-default bg-surface transition-transform duration-500 ease-out @app-md:group-hover:[transform:none]",
                     TILT[tilt],
                 )}
             >
                 {/* window chrome */}
-                <div className="flex items-center gap-2 border-b border-default px-4 py-2">
+                <div
+                    data-anat-part={showAnatomy ? "Window chrome" : undefined}
+                    className="flex items-center gap-2 border-b border-default px-4 py-2"
+                >
                     <span aria-hidden className="size-2.5 rounded-full bg-danger" />
                     <span aria-hidden className="size-2.5 rounded-full bg-warning" />
                     <span aria-hidden className="size-2.5 rounded-full bg-success" />
                     {url ? (
-                        <Typography type="code" className="ml-2 truncate text-xs text-muted">
+                        <Typography
+                            type="code"
+                            data-anat-part={showAnatomy ? "Typography" : undefined}
+                            className="ml-2 truncate text-xs text-muted"
+                        >
                             {url}
                         </Typography>
                     ) : null}
                 </div>
 
-                <div className={cn("relative", aspect === "video" && "aspect-video overflow-hidden", contentClassName)}>{children}</div>
+                <div
+                    data-anat-part={showAnatomy ? "Content" : undefined}
+                    className={cn("relative", aspect === "video" && "aspect-video overflow-hidden", contentClassName)}
+                >
+                    {children}
+                </div>
             </div>
         </div>
     </div>

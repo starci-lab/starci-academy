@@ -158,7 +158,7 @@ export const ThreeTiersHighlighted: Story = {
                     "So sánh 2–3 gói cạnh nhau cần MỖI gói là một cột đồng nhất (PricingCard) và một danh sách tính năng dùng CHUNG một khung để các dòng thẳng hàng cột-với-cột: có → CrossListItem mark=\"check\" (✓), không có → mark=\"cross\" (✗) — cùng một CrossListCard. Gộp thành một block để trang giá chỉ truyền mảng tiers, không phải tự dựng lại layout so-sánh + logic ✓/✗ ở mỗi nơi."
                 }
             >
-                <PricingTable tiers={threeTiers} onSelectTier={() => {}} />
+                <PricingTable tiers={threeTiers} onSelectTier={() => {}} showAnatomy />
             </BlockAnatomy>,
         ),
 }
@@ -177,6 +177,7 @@ export const TwoTiersNoHighlight: Story = {
                 <PricingTable
                     tiers={threeTiers.slice(0, 2).map((tier) => ({ ...tier, isHighlighted: false }))}
                     onSelectTier={() => {}}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),

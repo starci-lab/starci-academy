@@ -66,13 +66,19 @@ export interface NotificationListProps extends WithClassNames<undefined> {
      * built-in {@link EmptyState} ("Chưa có thông báo nào") when omitted.
      */
     emptyState?: ReactNode
+    /**
+     * Storybook-only: when true, each composed part emits a `data-anat-part`
+     * attribute so the anatomy overlay can anchor badges. No visual effect.
+     */
+    showAnatomy?: boolean
 }
 
 /** Built-in fallback empty state shown when no groups carry any items. */
-const DefaultEmptyState = (
+const DefaultEmptyState = (anatPart?: string) => (
     <EmptyState
         title="Chưa có thông báo nào"
         description="Khi có hoạt động mới trên khoá học của bạn, thông báo sẽ xuất hiện ở đây."
+        anatPart={anatPart}
     />
 )
 
@@ -94,6 +100,7 @@ export const NotificationList = ({
     onMarkAllRead,
     markAllReadLabel = "Đánh dấu tất cả đã đọc",
     emptyState,
+    showAnatomy = false,
     className,
 }: NotificationListProps) => {
     const isEmpty = groups.every((group) => group.items.length === 0)
@@ -102,7 +109,11 @@ export const NotificationList = ({
         <div className={cn("flex flex-col", className)}>
             {title ? (
                 <div className="flex items-center justify-between gap-3 px-3 py-2">
-                    <Typography type="body-sm" weight="semibold">
+                    <Typography
+                        type="body-sm"
+                        weight="semibold"
+                        data-anat-part={showAnatomy ? "Typography · header" : undefined}
+                    >
                         {title}
                     </Typography>
                     {onMarkAllRead ? (
@@ -115,15 +126,23 @@ export const NotificationList = ({
                             onPress={onMarkAllRead}
                             className="gap-2"
                         >
-                            <ChecksIcon className="size-4" />
-                            <Typography type="body-xs">{markAllReadLabel}</Typography>
+                            <ChecksIcon
+                                className="size-4"
+                                data-anat-part={showAnatomy ? "ChecksIcon" : undefined}
+                            />
+                            <Typography
+                                type="body-xs"
+                                data-anat-part={showAnatomy ? "Typography · nhãn nút" : undefined}
+                            >
+                                {markAllReadLabel}
+                            </Typography>
                         </Button>
                     ) : null}
                 </div>
             ) : null}
 
             {isEmpty ? (
-                emptyState ?? DefaultEmptyState
+                emptyState ?? DefaultEmptyState(showAnatomy ? "EmptyState" : undefined)
             ) : (
                 <div className="flex max-h-[420px] flex-col gap-3 overflow-y-auto p-1">
                     {groups.map((group, groupIndex) =>
@@ -135,12 +154,19 @@ export const NotificationList = ({
                                         color="muted"
                                         weight="medium"
                                         className="px-3 pt-1"
+                                        data-anat-part={
+                                            showAnatomy ? "Typography · nhãn nhóm" : undefined
+                                        }
                                     >
                                         {group.label}
                                     </Typography>
                                 ) : null}
                                 {group.items.map((item, itemIndex) => (
-                                    <NotificationItem key={itemIndex} {...item} />
+                                    <NotificationItem
+                                        key={itemIndex}
+                                        {...item}
+                                        showAnatomy={showAnatomy}
+                                    />
                                 ))}
                             </div>
                         ) : null,

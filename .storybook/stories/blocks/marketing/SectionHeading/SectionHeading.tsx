@@ -30,6 +30,8 @@ export interface SectionHeadingProps extends WithClassNames<undefined> {
     /** When set, renders a "#" deep-link next to the title (→ `#${anchorId}`) so each
      * section is referenceable. The section wrapper must carry that `id` + a `scroll-mt-*`. */
     anchorId?: string
+    /** Storybook anatomy: when on, each part emits `data-anat-part` for the badge panel. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -47,6 +49,7 @@ export const SectionHeading = ({
     level = 3,
     align = "center",
     anchorId,
+    showAnatomy,
     className,
 }: SectionHeadingProps) => {
     const centered = align === "center"
@@ -59,13 +62,17 @@ export const SectionHeading = ({
             )}
         >
             {eyebrow ? (
-                <StatusChip tone="accent">{eyebrow}</StatusChip>
+                <StatusChip tone="accent" anatPart={showAnatomy ? "StatusChip" : undefined}>{eyebrow}</StatusChip>
             ) : null}
-            <div className={cn("flex items-center gap-2", centered && "justify-center")}>
+            <div
+                className={cn("flex items-center gap-2", centered && "justify-center")}
+                data-anat-part={showAnatomy ? "div · title row" : undefined}
+            >
                 <Typography.Heading
                     level={level}
                     weight="bold"
                     align={centered ? "center" : "start"}
+                    data-anat-part={showAnatomy ? "Typography.Heading" : undefined}
                 >
                     {title}
                 </Typography.Heading>
@@ -75,6 +82,7 @@ export const SectionHeading = ({
                         href={`#${anchorId}`}
                         aria-label={`#${anchorId}`}
                         className="text-xl leading-none text-muted opacity-50 transition hover:text-accent-soft-foreground hover:opacity-100"
+                        data-anat-part={showAnatomy ? "Anchor '#'" : undefined}
                     >
                         #
                     </a>
@@ -86,6 +94,7 @@ export const SectionHeading = ({
                     color="muted"
                     align={centered ? "center" : "start"}
                     className="max-w-2xl"
+                    data-anat-part={showAnatomy ? "Typography" : undefined}
                 >
                     {intro}
                 </Typography>

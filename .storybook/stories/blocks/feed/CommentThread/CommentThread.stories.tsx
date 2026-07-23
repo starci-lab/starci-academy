@@ -214,6 +214,7 @@ const Controlled = ({ initialComments }: { initialComments: Array<CommentThreadN
                 onReply={addReply}
                 onReact={() => {}}
                 avatarSrc="https://i.pravatar.cc/80?img=32"
+                showAnatomy
             />
         </div>
     )

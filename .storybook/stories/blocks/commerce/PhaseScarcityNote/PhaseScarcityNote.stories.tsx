@@ -64,6 +64,7 @@ export const Default: Story = {
                     currentPhase={PricingPhase.Regular}
                     seatsRemaining={20}
                     nextPhasePriceVnd={3490000}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -84,6 +85,7 @@ export const ManySeats: Story = {
                     currentPhase={PricingPhase.Pioneer}
                     seatsRemaining={42}
                     nextPhasePriceVnd={2490000}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -104,6 +106,7 @@ export const FewSeats: Story = {
                     currentPhase={PricingPhase.EarlyBird}
                     seatsRemaining={3}
                     nextPhasePriceVnd={2990000}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -124,6 +127,7 @@ export const OneSeatLeft: Story = {
                     currentPhase={PricingPhase.EarlyBird}
                     seatsRemaining={1}
                     nextPhasePriceVnd={2990000}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -144,6 +148,7 @@ export const NoNextPhase: Story = {
                     currentPhase={PricingPhase.Regular}
                     seatsRemaining={15}
                     nextPhasePriceVnd={null}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),
@@ -164,6 +169,7 @@ export const Unlimited: Story = {
                     currentPhase={PricingPhase.Regular}
                     seatsRemaining={null}
                     nextPhasePriceVnd={null}
+                    showAnatomy
                 />
             </BlockAnatomy>,
         ),

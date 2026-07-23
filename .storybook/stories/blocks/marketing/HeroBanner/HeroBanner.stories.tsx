@@ -38,7 +38,10 @@ const languageKeywords = [
 
 /** Placeholder standing in for a real `visual` (diagram / image / 3D scene). */
 const VisualPlaceholder = ({ caption }: { caption: string }) => (
-    <div className="flex aspect-square w-full max-w-md flex-col items-center justify-center gap-3 rounded-3xl border border-dashed border-default bg-accent-soft/40 p-8">
+    <div
+        data-anat-part="VisualPlaceholder"
+        className="flex aspect-square w-full max-w-md flex-col items-center justify-center gap-3 rounded-3xl border border-dashed border-default bg-accent-soft/40 p-8"
+    >
         <RocketLaunchIcon aria-hidden focusable="false" className="size-10 text-accent-soft-foreground" />
         <Typography type="body-sm" color="muted" align="center">
             {caption}
@@ -98,12 +101,13 @@ export const CenteredNoVisual: Story = {
                 reason="Màn mở đầu landing gói eyebrow + headline + subline + CTA + dải ngôn ngữ vào một block. `visual` bật layout chia đôi; không có visual thì giữ một cột căn giữa (không bịa ảnh). Feature chỉ truyền chữ và Button đã cấu hình."
             >
                 <HeroBanner
+                    showAnatomy
                     eyebrow="Học lập trình thực chiến"
                     eyebrowIcon={<CubeIcon aria-hidden focusable="false" className="size-3" />}
                     headline="Trở thành kỹ sư phần mềm sẵn sàng đi làm"
                     subline="Từ nền tảng đến dự án thực tế, mỗi khóa học gắn với một sản phẩm bạn cầm được trên tay."
                     primary={
-                        <Button variant="primary" size="lg">
+                        <Button variant="primary" size="lg" data-anat-part="Button">
                             Xem các khóa học
                             <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
                         </Button>
@@ -124,18 +128,19 @@ export const SplitWithVisual: Story = {
                 note="`visual` có mặt → layout chia đôi (chữ trái, ảnh phải) + thêm CTA phụ; composition khác leaf căn-giữa."
             >
                 <HeroBanner
+                    showAnatomy
                     eyebrow="System Design Mastery"
                     eyebrowIcon={<CubeIcon aria-hidden focusable="false" className="size-3" />}
                     headline="Thiết kế hệ thống chịu được triệu người dùng"
                     subline="Học qua kiến trúc backend thật của StarCi — không phải sơ đồ vẽ trên giấy."
                     primary={
-                        <Button variant="primary" size="lg">
+                        <Button variant="primary" size="lg" data-anat-part="Button">
                             Bắt đầu học
                             <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
                         </Button>
                     }
                     secondary={
-                        <Button variant="secondary" size="lg">
+                        <Button variant="secondary" size="lg" data-anat-part="Button">
                             Xem chương trình học
                         </Button>
                     }
@@ -156,11 +161,12 @@ export const PrimaryCtaOnly: Story = {
                 note="Không icon eyebrow, không CTA phụ — CÙNG composition với leaf căn-giữa (chỉ khác nội dung)."
             >
                 <HeroBanner
+                    showAnatomy
                     eyebrow="Sắp ra mắt"
                     headline="Khóa AI Engineering đang được hoàn thiện"
                     subline="Đăng ký để nhận thông báo ngay khi khóa học mở đăng ký sớm."
                     primary={
-                        <Button variant="primary" size="lg">
+                        <Button variant="primary" size="lg" data-anat-part="Button">
                             Đăng ký nhận tin
                         </Button>
                     }
@@ -180,11 +186,12 @@ export const KeywordsNoLabel: Story = {
                 note="Thêm dải Chip màu thương hiệu dưới CTA (không label) → composition có thêm phần keyword."
             >
                 <HeroBanner
+                    showAnatomy
                     eyebrow="Fullstack Mastery"
                     headline="Chấm bài bằng AI trên đúng ngôn ngữ bạn chọn"
                     subline="Nộp bài bằng bất kỳ ngôn ngữ nào trong danh sách, AI chấm điểm và phản hồi ngay."
                     primary={
-                        <Button variant="primary" size="lg">
+                        <Button variant="primary" size="lg" data-anat-part="Button">
                             Xem lộ trình
                         </Button>
                     }
@@ -205,18 +212,19 @@ export const LongHeadline: Story = {
                 note="Headline dài xuống dòng + CTA phụ + dải keyword CÓ label — mọi slot lấp đầy trong một cột căn giữa."
             >
                 <HeroBanner
+                    showAnatomy
                     eyebrow="DevOps Mastery"
                     eyebrowIcon={<CubeIcon aria-hidden focusable="false" className="size-3" />}
                     headline="Tự tay dựng pipeline CI/CD, container hóa và vận hành hệ thống trên nhiều cloud thật"
                     subline="Không học lý thuyết suông — mọi bài lab đều triển khai trên hạ tầng thật, có log và metric thật để soi."
                     primary={
-                        <Button variant="primary" size="lg">
+                        <Button variant="primary" size="lg" data-anat-part="Button">
                             Vào khóa DevOps
                             <ArrowRightIcon aria-hidden focusable="false" className="size-5" />
                         </Button>
                     }
                     secondary={
-                        <Button variant="secondary" size="lg">
+                        <Button variant="secondary" size="lg" data-anat-part="Button">
                             Xem lịch khai giảng
                         </Button>
                     }

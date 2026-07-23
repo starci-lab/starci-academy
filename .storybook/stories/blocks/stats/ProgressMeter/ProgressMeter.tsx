@@ -38,6 +38,8 @@ export interface ProgressMeterProps {
     className?: string
     /** Dev/spec: overlay the anatomy annotation on this meter. */
     showAnatomy?: boolean
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
 }
 
 /**
@@ -57,6 +59,7 @@ export const ProgressMeter = ({
     targetLabel,
     className,
     showAnatomy = false,
+    anatPart,
 }: ProgressMeterProps) => {
     const safeMax = max > 0 ? max : 1
     const percent = Math.round((value / safeMax) * 100)
@@ -67,7 +70,7 @@ export const ProgressMeter = ({
         : Math.min(Math.max((target / safeMax) * 100, 0), 100)
 
     return (
-        <div className={cn("flex flex-col gap-2", showAnatomy && "relative", className)} data-anat={showAnatomy ? "" : undefined}>
+        <div className={cn("flex flex-col gap-2", showAnatomy && "relative", className)} data-anat={showAnatomy ? "" : undefined} data-anat-part={anatPart}>
             {showAnatomy ? <AnatomyOverlay label="ProgressMeter" tier="primitive" href="/?path=/docs/primitives-stats-progressmeter--docs" /> : null}
             {hasTopRow ? (
                 <div className="flex items-center justify-between gap-2">

@@ -49,6 +49,8 @@ export interface UpNextCardProps {
     secondaryOnPress?: () => void
     /** Extra classes on the card root. */
     className?: string
+    /** When true, emit `data-anat-part` on each part so a BlockAnatomy panel can badge it on-render. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -71,24 +73,34 @@ export const UpNextCard = ({
     secondaryLabel,
     secondaryOnPress,
     className,
+    showAnatomy,
 }: UpNextCardProps) => {
     return (
         <SectionCard
             className={cn("flex flex-col", className)}
             contentClassName="flex flex-col gap-3"
+            anatPart={showAnatomy ? "SectionCard" : undefined}
         >
             {/* completion micro-feedback + "next" eyebrow */}
             {eyebrow || showCheck ? (
-                <div className="flex items-center gap-2">
+                <div
+                    className="flex items-center gap-2"
+                    data-anat-part={showAnatomy ? "div · hàng check+eyebrow" : undefined}
+                >
                     {showCheck ? (
                         <CheckCircleIcon
                             aria-hidden
                             focusable="false"
                             className="size-5 shrink-0 text-success-soft-foreground"
+                            data-anat-part={showAnatomy ? "CheckCircleIcon" : undefined}
                         />
                     ) : null}
                     {eyebrow ? (
-                        <Typography type="body-xs" color="muted">
+                        <Typography
+                            type="body-xs"
+                            color="muted"
+                            data-anat-part={showAnatomy ? "Typography · eyebrow" : undefined}
+                        >
                             {eyebrow}
                         </Typography>
                     ) : null}
@@ -96,17 +108,32 @@ export const UpNextCard = ({
             ) : null}
 
             {/* the next rung */}
-            <div className="flex flex-col gap-2">
-                <Typography weight="semibold">{title}</Typography>
+            <div
+                className="flex flex-col gap-2"
+                data-anat-part={showAnatomy ? "div · bước kế" : undefined}
+            >
+                <Typography
+                    weight="semibold"
+                    data-anat-part={showAnatomy ? "Typography · tiêu đề" : undefined}
+                >
+                    {title}
+                </Typography>
                 {description ? (
-                    <Typography type="body-sm" color="muted">
+                    <Typography
+                        type="body-sm"
+                        color="muted"
+                        data-anat-part={showAnatomy ? "Typography · mô tả" : undefined}
+                    >
                         {description}
                     </Typography>
                 ) : null}
             </div>
 
             {/* one primary CTA (+ optional quiet secondary) */}
-            <div className="flex flex-wrap items-center gap-3">
+            <div
+                className="flex flex-wrap items-center gap-3"
+                data-anat-part={showAnatomy ? "div · hàng CTA" : undefined}
+            >
                 <Button
                     variant="primary"
                     size="lg"

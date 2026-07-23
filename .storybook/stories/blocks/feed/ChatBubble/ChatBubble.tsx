@@ -19,6 +19,8 @@ export interface ChatBubbleProps {
     children: ReactNode
     /** Extra classes merged onto the row. */
     className?: string
+    /** When on, emit `data-anat-part` markers for the anatomy overlay. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -28,15 +30,19 @@ export interface ChatBubbleProps {
  *
  * @param props - {@link ChatBubbleProps}
  */
-export const ChatBubble = ({ role, children, className }: ChatBubbleProps) => {
+export const ChatBubble = ({ role, children, className, showAnatomy }: ChatBubbleProps) => {
     const isUser = role === "user"
     return (
-        <div className={cn("flex", isUser ? "justify-end" : "justify-start", className)}>
+        <div
+            className={cn("flex", isUser ? "justify-end" : "justify-start", className)}
+            data-anat-part={showAnatomy ? "div · row" : undefined}
+        >
             <div
                 className={cn(
                     "max-w-[85%] rounded-2xl px-3 py-2",
                     isUser ? "bg-accent-soft" : "bg-surface-secondary",
                 )}
+                data-anat-part={showAnatomy ? "div · bubble" : undefined}
             >
                 {children}
             </div>

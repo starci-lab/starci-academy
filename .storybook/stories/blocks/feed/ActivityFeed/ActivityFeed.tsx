@@ -158,8 +158,8 @@ const startOfDayMs = (date: Date): number =>
  * `.storybook/stories` yet — swap for the local LabeledCard block once it exists.
  */
 // TODO: swap for LabeledCard local when ported
-const DayHeaderSection = ({ label, children }: { label: ReactNode, children: ReactNode }) => (
-    <section className="flex flex-col gap-2">
+const DayHeaderSection = ({ label, children, anatPart }: { label: ReactNode, children: ReactNode, anatPart?: string }) => (
+    <section className="flex flex-col gap-2" data-anat-part={anatPart}>
         <div className="flex items-center justify-between gap-3">
             <div className="flex min-w-0 items-center gap-2">
                 <span className="truncate text-xs text-muted">{label}</span>
@@ -191,6 +191,8 @@ export interface ActivityFeedProps {
     bordered?: boolean
     /** Extra classes merged onto the root. */
     className?: string
+    /** When on, emit `data-anat-part` on each anatomy part for the BlockAnatomy panel. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -210,6 +212,7 @@ export const ActivityFeed = ({
     onReact,
     bordered = false,
     className,
+    showAnatomy,
 }: ActivityFeedProps) => {
     // roll up consecutive same-actor milestone passes, then bucket rows by day
     const dayGroups = useMemo<Array<DayGroup>>(
@@ -295,6 +298,8 @@ export const ActivityFeed = ({
                         username={avatarUsername}
                         avatar={avatarUrl}
                         icon={<Icon aria-hidden focusable="false" weight="bold" />}
+                        anatPart={showAnatomy ? "ActivityAvatar" : undefined}
+                        showAnatomy={showAnatomy}
                     />
                 )}
                 timestamp={timeAgo(head.at)}
@@ -302,6 +307,7 @@ export const ActivityFeed = ({
                     <ReactionBar
                         count={head.reactionCount}
                         myReaction={head.myReaction}
+                        anatPart={showAnatomy ? "ReactionBar" : undefined}
                         // can't react to your own activity → read-only on own items
                         onReact={onReact && !head.isMine
                             ? (type) => onReact(head.id, type)
@@ -317,8 +323,8 @@ export const ActivityFeed = ({
     return (
         <div className={cn("flex flex-col gap-6", className)}>
             {dayGroups.map((group) => (
-                <DayHeaderSection key={group.key} label={group.label}>
-                    <SurfaceListCard bordered={bordered}>
+                <DayHeaderSection key={group.key} label={group.label} anatPart={showAnatomy ? "DayHeaderSection" : undefined}>
+                    <SurfaceListCard bordered={bordered} anatPart={showAnatomy ? "SurfaceListCard" : undefined}>
                         {group.rows.map((row, index) => (
                             <SurfaceListCardItem key={`${row.head.actorGlobalId}-${row.head.at}-${index}`}>
                                 {renderRow(row)}

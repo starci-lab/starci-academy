@@ -37,6 +37,7 @@ const noProgressBase = {
     timeLeft: "40 minutes left",
     ctaLabel: "Continue",
     onPress: () => {},
+    showAnatomy: true,
 }
 
 // Base hero no-progress composition mirrors the REAL DOM: HighlightCard WRAPS

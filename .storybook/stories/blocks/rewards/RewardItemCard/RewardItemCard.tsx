@@ -46,6 +46,8 @@ export interface RewardItemCardProps {
      * ignored (§6/§8: skeleton is a PROP, not a separate component).
      */
     isSkeleton?: boolean
+    /** `true` → emit `data-anat-part` on each anatomy part (Storybook `BlockAnatomy` overlay). */
+    showAnatomy?: boolean
     /** Extra classes on the card root. */
     className?: string
 }
@@ -69,6 +71,7 @@ export const RewardItemCard = ({
     disabled = false,
     isRedeeming = false,
     isSkeleton = false,
+    showAnatomy = false,
     className,
 }: RewardItemCardProps) => {
     if (isSkeleton) {
@@ -92,19 +95,25 @@ export const RewardItemCard = ({
     return (
         <Card className={cn("flex flex-col gap-3", className)}>
             <div className="flex items-start gap-3">
-                <IconTile size="sm" tone="accent" icon={icon} />
+                <IconTile size="sm" tone="accent" icon={icon} anatPart={showAnatomy ? "IconTile" : undefined} />
                 <div className="flex min-w-0 flex-1 flex-col gap-0">
-                    <span className="truncate text-sm font-semibold text-foreground">
+                    <span
+                        className="truncate text-sm font-semibold text-foreground"
+                        data-anat-part={showAnatomy ? "span · tiêu đề" : undefined}
+                    >
                         {title}
                     </span>
-                    <span className="text-xs text-muted">
+                    <span
+                        className="text-xs text-muted"
+                        data-anat-part={showAnatomy ? "span · mô tả" : undefined}
+                    >
                         {description}
                     </span>
                 </div>
             </div>
 
             <div className="flex items-center justify-between gap-3">
-                <StatusChip tone="accent">{formatCost(cost)}</StatusChip>
+                <StatusChip tone="accent" anatPart={showAnatomy ? "StatusChip" : undefined}>{formatCost(cost)}</StatusChip>
                 <Button
                     variant="primary"
                     size="sm"

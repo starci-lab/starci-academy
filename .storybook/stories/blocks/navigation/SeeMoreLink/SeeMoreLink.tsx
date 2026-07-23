@@ -41,6 +41,8 @@ export interface SeeMoreLinkProps {
     size?: SeeMoreLinkSize
     /** Extra classes on the link. */
     className?: string
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
 }
 
 /** Shared look — semibold accent text (matches LabeledCard "Xem thêm"). */
@@ -67,6 +69,7 @@ export const SeeMoreLink = ({
     decorative = false,
     size = "sm",
     className,
+    anatPart,
 }: SeeMoreLinkProps) => {
     const arrow = (
         <ArrowRightIcon
@@ -81,6 +84,7 @@ export const SeeMoreLink = ({
         // anywhere on that surface, not a hover zone of this span alone.
         return (
             <span
+                data-anat-part={anatPart}
                 className={cn(
                     baseClassName(size, className),
                     "transition-opacity group-hover:opacity-60",
@@ -99,7 +103,7 @@ export const SeeMoreLink = ({
 
     if (href) {
         return (
-            <a href={href} className={interactiveClassName}>
+            <a data-anat-part={anatPart} href={href} className={interactiveClassName}>
                 {children}
                 {arrow}
             </a>
@@ -107,7 +111,7 @@ export const SeeMoreLink = ({
     }
 
     return (
-        <Link onPress={onPress} className={interactiveClassName}>
+        <Link data-anat-part={anatPart} onPress={onPress} className={interactiveClassName}>
             {children}
             {arrow}
         </Link>

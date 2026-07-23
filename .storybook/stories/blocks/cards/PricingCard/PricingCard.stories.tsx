@@ -96,6 +96,7 @@ export const BaseTier: Story = {
             >
                 <div className="max-w-sm">
                     <PricingCard
+                        showAnatomy
                         name="Free"
                         price="0đ"
                         period="/tháng"
@@ -125,6 +126,7 @@ export const HighlightedWithBadge: Story = {
             >
                 <div className="max-w-sm">
                     <PricingCard
+                        showAnatomy
                         name="Pro"
                         price="199.000đ"
                         originalPrice="399.000đ"
@@ -151,6 +153,7 @@ export const BadgeHiddenWithoutHighlight: Story = {
             >
                 <div className="max-w-sm">
                     <PricingCard
+                        showAnatomy
                         name="Pro"
                         price="199.000đ"
                         period="/tháng"
@@ -181,6 +184,7 @@ export const DiscountWithoutHighlight: Story = {
             >
                 <div className="max-w-sm">
                     <PricingCard
+                        showAnatomy
                         name="Basic"
                         price="99.000đ"
                         originalPrice="149.000đ"
@@ -210,6 +214,7 @@ export const NoPeriod: Story = {
             >
                 <div className="max-w-sm">
                     <PricingCard
+                        showAnatomy
                         name="Enterprise"
                         price="Liên hệ"
                         features={
@@ -238,6 +243,7 @@ export const LongFeatureList: Story = {
             >
                 <div className="max-w-sm">
                     <PricingCard
+                        showAnatomy
                         name="Pro Plus"
                         price="349.000đ"
                         originalPrice="599.000đ"
@@ -272,6 +278,7 @@ export const PricingRow: Story = {
             >
                 <div className="grid max-w-4xl grid-cols-1 items-stretch gap-6 @app-md:grid-cols-3">
                     <PricingCard
+                        showAnatomy
                         name="Free"
                         price="0đ"
                         period="/tháng"
@@ -284,6 +291,7 @@ export const PricingRow: Story = {
                         cta={<Button className="w-full" variant="outline">Bắt đầu miễn phí</Button>}
                     />
                     <PricingCard
+                        showAnatomy
                         name="Pro"
                         price="199.000đ"
                         originalPrice="399.000đ"
@@ -294,6 +302,7 @@ export const PricingRow: Story = {
                         cta={<Button className="w-full" variant="primary">Nâng cấp ngay</Button>}
                     />
                     <PricingCard
+                        showAnatomy
                         name="Enterprise"
                         price="Liên hệ"
                         features={

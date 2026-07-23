@@ -110,7 +110,7 @@ export const Default: Story = {
                 reason="Khung cửa sổ trình duyệt tái dùng (3 chấm + address bar) bọc bất kỳ nội dung nào, nghiêng 3D + quầng sáng màu — cái look hero StarCi/Uni-Education gói thành một block. Feature chỉ đổi theme/tilt/backdrop/url + children; surface card luôn theo token light/dark."
             >
                 <div className="max-w-lg">
-                    <ShowcaseMockup url="starci.edu.vn/khoa-hoc">
+                    <ShowcaseMockup url="starci.edu.vn/khoa-hoc" showAnatomy>
                         <DemoContent />
                     </ShowcaseMockup>
                 </div>
@@ -130,7 +130,7 @@ export const ThemeStarci: Story = {
                 note="Chỉ đổi màu quầng sáng (theme) → CÙNG composition với leaf 'Mặc định'."
             >
                 <div className="max-w-lg">
-                    <ShowcaseMockup url="starci.edu.vn/kien-truc" theme={SHOWCASE_THEMES.starci}>
+                    <ShowcaseMockup url="starci.edu.vn/kien-truc" theme={SHOWCASE_THEMES.starci} showAnatomy>
                         <DemoContent />
                     </ShowcaseMockup>
                 </div>
@@ -150,7 +150,7 @@ export const ThemeAqua: Story = {
                 note="Chỉ đổi màu quầng sáng (theme) → CÙNG composition với leaf 'Mặc định'."
             >
                 <div className="max-w-lg">
-                    <ShowcaseMockup url="uni-education.vn/demo" theme={SHOWCASE_THEMES.aqua}>
+                    <ShowcaseMockup url="uni-education.vn/demo" theme={SHOWCASE_THEMES.aqua} showAnatomy>
                         <DemoContent />
                     </ShowcaseMockup>
                 </div>
@@ -170,7 +170,7 @@ export const TiltRight: Story = {
                 note="Chỉ đổi hướng nghiêng 3D → CÙNG composition với leaf 'Mặc định'."
             >
                 <div className="max-w-lg">
-                    <ShowcaseMockup url="starci.edu.vn/lo-trinh" tilt="right">
+                    <ShowcaseMockup url="starci.edu.vn/lo-trinh" tilt="right" showAnatomy>
                         <DemoContent />
                     </ShowcaseMockup>
                 </div>
@@ -190,7 +190,7 @@ export const TiltNone: Story = {
                 note="Tắt nghiêng 3D nhưng thẻ-sau VẪN dựng → CÙNG composition với leaf 'Mặc định'."
             >
                 <div className="max-w-lg">
-                    <ShowcaseMockup url="starci.edu.vn/gia" tilt="none">
+                    <ShowcaseMockup url="starci.edu.vn/gia" tilt="none" showAnatomy>
                         <DemoContent />
                     </ShowcaseMockup>
                 </div>
@@ -210,7 +210,7 @@ export const BackdropGrid: Story = {
                 note="Lớp Backdrop đổi sang lưới chấm → vẫn CÙNG composition với leaf 'Mặc định'."
             >
                 <div className="max-w-lg">
-                    <ShowcaseMockup url="starci.edu.vn/tai-lieu" backdrop="grid">
+                    <ShowcaseMockup url="starci.edu.vn/tai-lieu" backdrop="grid" showAnatomy>
                         <DemoContent />
                     </ShowcaseMockup>
                 </div>
@@ -230,7 +230,7 @@ export const BackdropStars: Story = {
                 note="Lớp Backdrop đổi sang các chấm sao → vẫn CÙNG composition với leaf 'Mặc định'."
             >
                 <div className="max-w-lg">
-                    <ShowcaseMockup url="starci.edu.vn/cong-dong" backdrop="stars">
+                    <ShowcaseMockup url="starci.edu.vn/cong-dong" backdrop="stars" showAnatomy>
                         <DemoContent />
                     </ShowcaseMockup>
                 </div>
@@ -250,7 +250,7 @@ export const BackdropNone: Story = {
                 note="backdrop='none' → BỎ hẳn lớp Backdrop, khác leaf 'Mặc định' (thiếu một part)."
             >
                 <div className="max-w-lg">
-                    <ShowcaseMockup url="starci.edu.vn/lien-he" backdrop="none">
+                    <ShowcaseMockup url="starci.edu.vn/lien-he" backdrop="none" showAnatomy>
                         <DemoContent />
                     </ShowcaseMockup>
                 </div>
@@ -270,7 +270,7 @@ export const AspectVideo: Story = {
                 note="Vùng Content khoá tỉ lệ 16:9 (ảnh chụp toàn trang) → parts giữ nguyên như leaf 'Mặc định'."
             >
                 <div className="max-w-lg">
-                    <ShowcaseMockup url="starci.edu.vn/preview" aspect="video">
+                    <ShowcaseMockup url="starci.edu.vn/preview" aspect="video" showAnatomy>
                         <div className="flex size-full items-center justify-center bg-surface-2 text-xs text-muted">
                             Ảnh chụp toàn trang web
                         </div>
@@ -292,7 +292,7 @@ export const NoAddressBar: Story = {
                 note="Bỏ prop url → BỎ Typography address bar, chrome chỉ còn 3 chấm (khác leaf 'Mặc định')."
             >
                 <div className="max-w-lg">
-                    <ShowcaseMockup>
+                    <ShowcaseMockup showAnatomy>
                         <DemoContent />
                     </ShowcaseMockup>
                 </div>

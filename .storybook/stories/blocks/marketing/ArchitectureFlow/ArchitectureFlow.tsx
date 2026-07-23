@@ -19,6 +19,8 @@ interface WithClassNames<T> {
 export interface ArchitectureFlowProps extends WithClassNames<undefined> {
     /** Ordered node labels rendered as boxes joined by caret connectors (left → right). */
     nodes: ReadonlyArray<string>
+    /** When on, parts emit `data-anat-part` for the anatomy panel to anchor badges. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -29,16 +31,28 @@ export interface ArchitectureFlowProps extends WithClassNames<undefined> {
  *
  * @param props - {@link ArchitectureFlowProps}
  */
-export const ArchitectureFlow = ({ nodes, className }: ArchitectureFlowProps) => {
+export const ArchitectureFlow = ({ nodes, className, showAnatomy }: ArchitectureFlowProps) => {
     return (
         <div className={cn("flex flex-wrap items-center gap-2", className)}>
             {nodes.map((node, index) => (
                 <React.Fragment key={`${node}-${index}`}>
                     {index > 0 ? (
-                        <CaretRightIcon aria-hidden focusable="false" className="size-3 shrink-0 text-muted" />
+                        <CaretRightIcon
+                            aria-hidden
+                            focusable="false"
+                            className="size-3 shrink-0 text-muted"
+                            data-anat-part={showAnatomy ? "CaretRightIcon" : undefined}
+                        />
                     ) : null}
-                    <span className="rounded-md border border-default bg-default px-2 py-1">
-                        <Typography type="code" className="text-xs">
+                    <span
+                        className="rounded-md border border-default bg-default px-2 py-1"
+                        data-anat-part={showAnatomy ? "span" : undefined}
+                    >
+                        <Typography
+                            type="code"
+                            className="text-xs"
+                            data-anat-part={showAnatomy ? "Typography" : undefined}
+                        >
                             {node}
                         </Typography>
                     </span>

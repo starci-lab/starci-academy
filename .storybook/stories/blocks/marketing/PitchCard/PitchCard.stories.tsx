@@ -89,6 +89,7 @@ export const Default: Story = {
             >
                 <div className="max-w-sm">
                     <PitchCard
+                        showAnatomy
                         icon={<LightningIcon weight="duotone" />}
                         title="Học nhanh gấp đôi"
                         body="Lộ trình cô đọng, mỗi tuần một chủ đề với bài tập tự chấm — không lan man."
@@ -110,6 +111,7 @@ export const WithFooter: Story = {
             >
                 <div className="max-w-sm">
                     <PitchCard
+                        showAnatomy
                         icon={<ShieldCheckIcon weight="duotone" />}
                         tone="success"
                         title="Cam kết đầu ra"
@@ -132,9 +134,9 @@ export const ToneVariants: Story = {
                 note="Ba thẻ CÙNG composition base, chỉ đổi tone của IconTile (accent · success · warning)."
             >
                 <div className="grid max-w-3xl grid-cols-1 gap-3 @app-md:grid-cols-3">
-                    <PitchCard icon={<LightningIcon weight="duotone" />} tone="accent" title="Nhanh" body="Cô đọng, đúng trọng tâm." />
-                    <PitchCard icon={<ShieldCheckIcon weight="duotone" />} tone="success" title="Chắc" body="Cam kết đầu ra rõ ràng." />
-                    <PitchCard icon={<RocketLaunchIcon weight="duotone" />} tone="warning" title="Xa" body="Nền tảng để đi đường dài." />
+                    <PitchCard showAnatomy icon={<LightningIcon weight="duotone" />} tone="accent" title="Nhanh" body="Cô đọng, đúng trọng tâm." />
+                    <PitchCard showAnatomy icon={<ShieldCheckIcon weight="duotone" />} tone="success" title="Chắc" body="Cam kết đầu ra rõ ràng." />
+                    <PitchCard showAnatomy icon={<RocketLaunchIcon weight="duotone" />} tone="warning" title="Xa" body="Nền tảng để đi đường dài." />
                 </div>
             </BlockAnatomy>,
         ),
@@ -153,12 +155,14 @@ export const RemainingTones: Story = {
             >
                 <div className="grid max-w-2xl grid-cols-1 gap-3 @app-sm:grid-cols-2">
                     <PitchCard
+                        showAnatomy
                         icon={<WarningIcon weight="duotone" />}
                         tone="danger"
                         title="Rủi ro nếu bỏ nền tảng"
                         body="Học nhảy cóc mà bỏ qua nền tảng thường phải học lại từ đầu khi vào dự án thật."
                     />
                     <PitchCard
+                        showAnatomy
                         icon={<StackIcon weight="duotone" />}
                         tone="neutral"
                         title="Tự học theo nhịp riêng"

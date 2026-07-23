@@ -195,6 +195,7 @@ const NotificationBellDemo = ({
                 onMarkAllRead={() => {}}
                 isOpen={isOpen}
                 onOpenChange={setOpen}
+                showAnatomy
             />
         </div>
     )

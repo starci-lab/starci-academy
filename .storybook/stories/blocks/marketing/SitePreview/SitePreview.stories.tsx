@@ -120,7 +120,7 @@ export const Standalone: Story = {
                 reason="Nội dung minh hoạ cố định (nav + sidebar lọc + list khoá) để nhét vào ShowcaseMockup — cho thấy sản phẩm trông thế nào mà không cần ảnh chụp thật. Tự lấp đầy chiều cao cha nên phải bọc trong khung có chiều cao xác định."
             >
                 <div className="h-[360px] w-full max-w-3xl overflow-hidden rounded-3xl border border-default">
-                    <SitePreview />
+                    <SitePreview showAnatomy />
                 </div>
             </BlockAnatomy>,
         ),
@@ -137,7 +137,7 @@ export const InShowcaseMockup: Story = {
                 note="Bối cảnh thật: cùng SitePreview nhưng bọc trong khung cửa sổ trình duyệt ShowcaseMockup (thêm 1 lớp frame ngoài)."
             >
                 <ShowcaseMockup url="starci.vn/khoa-hoc" aspect="video" className="max-w-3xl">
-                    <SitePreview />
+                    <SitePreview showAnatomy />
                 </ShowcaseMockup>
             </BlockAnatomy>,
         ),

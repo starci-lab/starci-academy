@@ -1,11 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { FlashcardDeckList, type FlashcardDeckListDeck } from "./FlashcardDeckList"
+import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * BLOCK — the flashcard-deck browse REGION (search + count + grid/line toggle +
  * the deck grid), not a lone card. It owns the real states through `AsyncContent`:
  * loading (skeleton grid) · empty (no decks) · error · search-empty · data. The
  * grid composes the `DeckCard` item.
+ *
+ * ANATOMY IS PER-LEAF: each state below is its OWN leaf and carries its OWN
+ * BlockAnatomy axis (Sơ đồ + Cây) reflecting the parts THAT leaf composes — there
+ * is no separate consolidated "Anatomy" story.
  */
 const meta: Meta<typeof FlashcardDeckList> = {
     title: "Block/Learn/FlashcardDeckList",
@@ -26,43 +31,154 @@ const DECKS: Array<FlashcardDeckListDeck> = [
     { id: "6", title: "Module 5: Xử lý nền & Messaging", description: "Câu hỏi phỏng vấn về những ý tưởng nền tảng đằng sau mọi hệ job-queue / message-broker.", difficulty: "advanced", dueCount: 20, masteredCount: 5, cardCount: 20 },
 ]
 
-const shell = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
+/** Frame each leaf's anatomy panel with breathing room. */
+const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
+
+// The deck-content parts (data + filtered leaves share this composition).
+const DATA_PARTS: Array<AnatomyNode> = [
+    { name: "TextField · Input", tier: "primitive", role: "ô tìm bộ thẻ" },
+    { name: "Typography", tier: "primitive", role: 'đếm kết quả ("Tìm thấy N bộ thẻ")' },
+    { name: "TabsCard", tier: "primitive", role: "đổi kiểu hiển thị lưới / danh sách" },
+    { name: "AsyncContent", tier: "primitive", role: "switch loading · empty · error · search-empty · content", state: "content" },
+    {
+        name: "DeckCard",
+        tier: "design",
+        role: "một bộ thẻ (block con, lặp ×N)",
+        children: [
+            { name: "StatusChip", tier: "primitive", role: "số thẻ đến hạn ôn", state: "warning" },
+            { name: "DifficultyChip", tier: "design", role: "tầng độ khó" },
+            { name: "ProgressMeter", tier: "primitive", role: "tiến độ đã thuộc" },
+        ],
+    },
+]
+
+// search-empty leaf: same chrome, body swaps to a muted "không khớp" Typography (no DeckCard).
+const SEARCH_EMPTY_PARTS: Array<AnatomyNode> = [
+    { name: "TextField · Input", tier: "primitive", role: "ô tìm (giữ query)" },
+    { name: "Typography", tier: "primitive", role: 'đếm "0" + dòng "Không tìm thấy…"' },
+    { name: "TabsCard", tier: "primitive", role: "toggle lưới / danh sách" },
+    { name: "AsyncContent", tier: "primitive", role: "nhánh content, body rỗng-tìm", state: "search-empty" },
+]
+
+// loading leaf: chrome stays, body becomes a skeleton DeckCard grid (same footprint).
+const LOADING_PARTS: Array<AnatomyNode> = [
+    { name: "TextField · Input", tier: "primitive", role: "ô tìm (vẫn hiện)" },
+    { name: "Typography", tier: "primitive", role: "đếm — skeleton mirror" },
+    { name: "TabsCard", tier: "primitive", role: "toggle (vẫn hiện)" },
+    { name: "AsyncContent", tier: "primitive", role: "nhánh loading → skeleton grid", state: "loading" },
+    { name: "DeckCard", tier: "design", role: "skeleton mirror ×4 (giữ đúng footprint)", state: "skeleton" },
+]
+
+// empty leaf: chrome stays, AsyncContent falls to EmptyContent.
+const EMPTY_PARTS: Array<AnatomyNode> = [
+    { name: "TextField · Input", tier: "primitive", role: "ô tìm" },
+    { name: "Typography", tier: "primitive", role: 'đếm ("0 bộ thẻ")' },
+    { name: "TabsCard", tier: "primitive", role: "toggle" },
+    { name: "AsyncContent", tier: "primitive", role: "nhánh empty", state: "empty" },
+    { name: "EmptyContent", tier: "design", role: '"Chưa có bộ thẻ nào"' },
+]
+
+// error leaf: chrome stays, AsyncContent falls to ErrorContent + retry.
+const ERROR_PARTS: Array<AnatomyNode> = [
+    { name: "TextField · Input", tier: "primitive", role: "ô tìm" },
+    { name: "Typography", tier: "primitive", role: "đếm" },
+    { name: "TabsCard", tier: "primitive", role: "toggle" },
+    { name: "AsyncContent", tier: "primitive", role: "nhánh error", state: "error" },
+    { name: "ErrorContent", tier: "design", role: '"Không tải được bộ thẻ" + nút thử lại' },
+]
 
 /** DATA — the real region with decks (grid view, search + count + toggle). */
 export const Default: Story = {
-    render: () => shell(<FlashcardDeckList decks={DECKS} onOpenDeck={() => {}} />),
+    render: () =>
+        frame(
+            <BlockAnatomy
+                name="FlashcardDeckList"
+                tier="block"
+                leaf="Có dữ liệu"
+                parts={DATA_PARTS}
+                reason="Gộp search + đếm kết quả + toggle lưới/danh sách + lưới thẻ vào MỘT region, để AsyncContent cầm mọi state (loading · empty · error · search-empty · content) tại một chỗ; mỗi thẻ tái dùng block con DeckCard thay vì dựng lại tay."
+            >
+                <FlashcardDeckList decks={DECKS.slice(0, 2)} showAnatomy onOpenDeck={() => {}} />
+            </BlockAnatomy>,
+        ),
 }
 
-/**
- * ANATOMY — the composition tree made visible: the block (amber) frames the
- * region; inside, primitives (accent) — TextField/Input · Typography · TabsCard ·
- * AsyncContent — and the DeckCard design (green) are each tagged.
- */
-export const Anatomy: Story = {
-    render: () => shell(<FlashcardDeckList decks={DECKS.slice(0, 2)} showAnatomy onOpenDeck={() => {}} />),
+/** SEARCH (filtered) — a query that narrows the grid; SAME composition as data. */
+export const SearchFiltered: Story = {
+    render: () =>
+        frame(
+            <BlockAnatomy
+                name="FlashcardDeckList"
+                tier="block"
+                leaf="Tìm có kết quả"
+                parts={DATA_PARTS}
+                note="Lọc query → lưới thu hẹp nhưng CÙNG composition với leaf 'Có dữ liệu'."
+            >
+                <FlashcardDeckList decks={DECKS} defaultQuery="API" showAnatomy onOpenDeck={() => {}} />
+            </BlockAnatomy>,
+        ),
 }
 
 /** SEARCH (no result) — a query that matches nothing → the search-empty line. */
 export const SearchNoResult: Story = {
-    render: () => shell(<FlashcardDeckList decks={DECKS} defaultQuery="zzz-không-khớp" onOpenDeck={() => {}} />),
-}
-
-/** SEARCH (filtered) — a query that narrows the grid. */
-export const SearchFiltered: Story = {
-    render: () => shell(<FlashcardDeckList decks={DECKS} defaultQuery="API" onOpenDeck={() => {}} />),
+    render: () =>
+        frame(
+            <BlockAnatomy
+                name="FlashcardDeckList"
+                tier="block"
+                leaf="Tìm rỗng"
+                parts={SEARCH_EMPTY_PARTS}
+                note="Query không khớp → body đổi sang dòng muted 'Không tìm thấy…', KHÔNG có DeckCard (khác leaf data)."
+            >
+                <FlashcardDeckList decks={DECKS} defaultQuery="zzz-không-khớp" showAnatomy onOpenDeck={() => {}} />
+            </BlockAnatomy>,
+        ),
 }
 
 /** LOADING — no decks yet + isLoading → skeleton deck grid (same footprint). */
 export const Loading: Story = {
-    render: () => shell(<FlashcardDeckList decks={[]} isLoading onOpenDeck={() => {}} />),
+    render: () =>
+        frame(
+            <BlockAnatomy
+                name="FlashcardDeckList"
+                tier="block"
+                leaf="Đang tải"
+                parts={LOADING_PARTS}
+                note="AsyncContent nhánh loading → lưới DeckCard skeleton mirror, composition khác leaf data (không thẻ thật)."
+            >
+                <FlashcardDeckList decks={[]} isLoading showAnatomy onOpenDeck={() => {}} />
+            </BlockAnatomy>,
+        ),
 }
 
 /** EMPTY — loaded, zero decks → EmptyContent. */
 export const Empty: Story = {
-    render: () => shell(<FlashcardDeckList decks={[]} onOpenDeck={() => {}} />),
+    render: () =>
+        frame(
+            <BlockAnatomy
+                name="FlashcardDeckList"
+                tier="block"
+                leaf="Rỗng"
+                parts={EMPTY_PARTS}
+                note="Không có bộ thẻ → AsyncContent rơi về EmptyContent trong khung region."
+            >
+                <FlashcardDeckList decks={[]} showAnatomy onOpenDeck={() => {}} />
+            </BlockAnatomy>,
+        ),
 }
 
 /** ERROR — load failed with no cached decks → ErrorContent + retry. */
 export const Error: Story = {
-    render: () => shell(<FlashcardDeckList decks={[]} error={new globalThis.Error("network")} onRetry={() => {}} onOpenDeck={() => {}} />),
+    render: () =>
+        frame(
+            <BlockAnatomy
+                name="FlashcardDeckList"
+                tier="block"
+                leaf="Lỗi"
+                parts={ERROR_PARTS}
+                note="Tải hỏng, không cache → AsyncContent rơi về ErrorContent + nút thử lại."
+            >
+                <FlashcardDeckList decks={[]} error={new globalThis.Error("network")} onRetry={() => {}} showAnatomy onOpenDeck={() => {}} />
+            </BlockAnatomy>,
+        ),
 }

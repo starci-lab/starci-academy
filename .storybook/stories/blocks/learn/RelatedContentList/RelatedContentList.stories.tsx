@@ -1,8 +1,19 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { RelatedContentList } from "./RelatedContentList"
 import type { SearchCourseContentItem } from "../EntityResultRow/EntityResultRow"
-import { blockShell } from "../../../block-anatomy"
+import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
 
+/**
+ * BLOCK — a passive, self-hiding "related content" list at the tail of a learning
+ * surface. It owns the real states: self-hidden (blank/empty query → null) ·
+ * loading (skeleton rows) · data (result rows). The list composes the
+ * `EntityResultRow` sub-block inside a bordered `SurfaceListCard` under a
+ * frameless `LabeledCard` section label.
+ *
+ * ANATOMY IS PER-LEAF: each state below is its OWN leaf and carries its OWN
+ * BlockAnatomy axis (Sơ đồ + Cây) reflecting the parts THAT leaf composes — there
+ * is no separate consolidated "Anatomy" story.
+ */
 const meta: Meta<typeof RelatedContentList> = {
     title: "Block/Learn/RelatedContentList",
     component: RelatedContentList,
@@ -16,16 +27,8 @@ export default meta
 
 type Story = StoryObj<typeof RelatedContentList>
 
-const ANATOMY = {
-    primitives: [
-        { name: "LabeledCard", role: "nhãn section ngoài khung (frameless — nội dung tự là card)" },
-        { name: "SurfaceListCard", role: "khung surface bordered ôm các hàng edge-to-edge" },
-        { name: "EntityResultRow", role: "mỗi hàng kết quả (breadcrumb + tiêu đề, mặc định không chip/snippet)" },
-        { name: "Skeleton", role: "bars mirror hàng lúc đang tải" },
-    ],
-    reason:
-        "Gợi ý nội dung liên quan cuối một bề mặt học cần một nhãn section (LabeledCard) trên một khung list bordered (SurfaceListCard) chứa các EntityResultRow dùng chung. Gói nhãn + khung + danh sách + skeleton + logic tự-ẩn (query rỗng / rỗng kết quả → null) + lọc excludeId + limit vào một block, để mỗi bề mặt chỉ truyền query ngữ cảnh — không dựng lại khung và cơ chế tự-ẩn.",
-}
+/** Frame each leaf's anatomy panel with breathing room. */
+const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
 const LABEL = "Nội dung liên quan"
 const QUERY = "Access token JWT hết hạn thì xử lý thế nào"
@@ -95,92 +98,168 @@ const ITEM_OAUTH_CONTENT: SearchCourseContentItem = {
     isLocked: false,
 }
 
-/** query="" → block self-hides (renders null); empty/error results self-hide identically. */
+// DATA leaf — the composed list: section label + bordered frame + result rows.
+// Shared by every "has results" leaf (single · mixed · locked · excluded · limited).
+const DATA_PARTS: Array<AnatomyNode> = [
+    { name: "LabeledCard", tier: "primitive", role: "nhãn section ngoài khung (frameless — nội dung tự là card)" },
+    { name: "AsyncContent", tier: "primitive", role: "switch loading → content (empty/error tự-ẩn ở tầng trên)", state: "content" },
+    { name: "SurfaceListCard", tier: "primitive", role: "khung surface bordered ôm các hàng edge-to-edge" },
+    { name: "EntityResultRow", tier: "design", role: "mỗi hàng kết quả (breadcrumb + tiêu đề, mặc định không chip/snippet)" },
+]
+
+// LOADING leaf — chrome stays, body becomes a skeleton row mirror (same footprint, no real rows).
+const LOADING_PARTS: Array<AnatomyNode> = [
+    { name: "LabeledCard", tier: "primitive", role: "nhãn section (vẫn hiện)" },
+    { name: "AsyncContent", tier: "primitive", role: "nhánh loading → skeleton", state: "loading" },
+    { name: "SurfaceListCard", tier: "primitive", role: "khung bordered giữ đúng footprint" },
+    { name: "Skeleton", tier: "primitive", role: "các hàng skeleton mirror (mỗi hàng 3 dòng)", state: "skeleton" },
+]
+
+// SELF-HIDDEN leaf — query rỗng / rỗng kết quả → block trả null, không dựng gì.
+const SELF_HIDDEN_PARTS: Array<AnatomyNode> = []
+
+/** SELF-HIDDEN — query="" → block self-hides (renders null); empty/error results self-hide identically. */
 export const SelfHidden: Story = {
     render: () =>
-        blockShell(
-            <RelatedContentList results={[]} query="" label={LABEL} className="w-full max-w-xl" />,
-            ANATOMY,
+        shell(
+            <BlockAnatomy
+                name="RelatedContentList"
+                tier="block"
+                leaf="Tự ẩn"
+                parts={SELF_HIDDEN_PARTS}
+                note="Query rỗng (hoặc rỗng kết quả) → block trả null: không nhãn, không khung, không dựng gì — một aid im lặng không chiếm chỗ."
+            >
+                <RelatedContentList results={[]} query="" label={LABEL} showAnatomy
+                    className="w-full max-w-xl" />
+            </BlockAnatomy>,
         ),
 }
 
 export const Loading: Story = {
     render: () =>
-        blockShell(
-            <RelatedContentList results={[]} query={QUERY} label={LABEL} isLoading className="w-full max-w-xl" />,
-            ANATOMY,
+        shell(
+            <BlockAnatomy
+                name="RelatedContentList"
+                tier="block"
+                leaf="Đang tải"
+                parts={LOADING_PARTS}
+                note="isLoading → thân đổi sang hàng Skeleton mirror trong cùng khung bordered, composition khác leaf data (không EntityResultRow thật)."
+            >
+                <RelatedContentList results={[]} query={QUERY} label={LABEL} isLoading showAnatomy
+                    className="w-full max-w-xl" />
+            </BlockAnatomy>,
         ),
 }
 
 export const SingleResult: Story = {
     render: () =>
-        blockShell(
-            <RelatedContentList
-                results={[ITEM_PROACTIVE_REFRESH_CHALLENGE]}
-                query={QUERY}
-                label={LABEL}
-                className="w-full max-w-xl"
-            />,
-            ANATOMY,
+        shell(
+            <BlockAnatomy
+                name="RelatedContentList"
+                tier="block"
+                leaf="Một kết quả"
+                parts={DATA_PARTS}
+                note="Một EntityResultRow trong khung — CÙNG composition với leaf nhiều kết quả, chỉ khác số hàng."
+            >
+                <RelatedContentList
+                    results={[ITEM_PROACTIVE_REFRESH_CHALLENGE]}
+                    query={QUERY}
+                    label={LABEL}
+                    showAnatomy
+                    className="w-full max-w-xl"
+                />
+            </BlockAnatomy>,
         ),
 }
 
 export const MultipleMixed: Story = {
     render: () =>
-        blockShell(
-            <RelatedContentList
-                results={[ITEM_REFRESH_TOKEN, ITEM_PROACTIVE_REFRESH_CHALLENGE, ITEM_JWT_FLASHCARD]}
-                query={QUERY}
-                label={LABEL}
-                className="w-full max-w-xl"
-            />,
-            ANATOMY,
+        shell(
+            <BlockAnatomy
+                name="RelatedContentList"
+                tier="block"
+                leaf="Nhiều kết quả"
+                parts={DATA_PARTS}
+                reason="Gợi ý nội dung liên quan cuối một bề mặt học cần một nhãn section (LabeledCard) trên một khung list bordered (SurfaceListCard) chứa các EntityResultRow dùng chung. Gói nhãn + khung + danh sách + skeleton + logic tự-ẩn (query rỗng / rỗng kết quả → null) + lọc excludeId + limit vào một block, để mỗi bề mặt chỉ truyền query ngữ cảnh — không dựng lại khung và cơ chế tự-ẩn."
+            >
+                <RelatedContentList
+                    results={[ITEM_REFRESH_TOKEN, ITEM_PROACTIVE_REFRESH_CHALLENGE, ITEM_JWT_FLASHCARD]}
+                    query={QUERY}
+                    label={LABEL}
+                    showAnatomy
+                    className="w-full max-w-xl"
+                />
+            </BlockAnatomy>,
         ),
 }
 
 export const WithLockedRow: Story = {
     render: () =>
-        blockShell(
-            <RelatedContentList
-                results={[ITEM_PROACTIVE_REFRESH_CHALLENGE, ITEM_SSO_MILESTONE_LOCKED]}
-                query={QUERY}
-                label={LABEL}
-                className="w-full max-w-xl"
-            />,
-            ANATOMY,
+        shell(
+            <BlockAnatomy
+                name="RelatedContentList"
+                tier="block"
+                leaf="Có hàng khoá"
+                parts={DATA_PARTS}
+                note="Một EntityResultRow ở trạng thái khoá (milestone chưa mở) — CÙNG composition, chỉ khác tone của hàng."
+            >
+                <RelatedContentList
+                    results={[ITEM_PROACTIVE_REFRESH_CHALLENGE, ITEM_SSO_MILESTONE_LOCKED]}
+                    query={QUERY}
+                    label={LABEL}
+                    showAnatomy
+                    className="w-full max-w-xl"
+                />
+            </BlockAnatomy>,
         ),
 }
 
 export const ExcludeCurrentSource: Story = {
     render: () =>
-        blockShell(
-            <RelatedContentList
-                results={[ITEM_REFRESH_TOKEN, ITEM_PROACTIVE_REFRESH_CHALLENGE, ITEM_JWT_FLASHCARD]}
-                query={QUERY}
-                label={LABEL}
-                excludeId="content-refresh-token"
-                className="w-full max-w-xl"
-            />,
-            ANATOMY,
+        shell(
+            <BlockAnatomy
+                name="RelatedContentList"
+                tier="block"
+                leaf="Loại nguồn hiện tại"
+                parts={DATA_PARTS}
+                note="excludeId lọc bỏ nguồn đang xem trước khi render — CÙNG composition, chỉ ít đi một hàng."
+            >
+                <RelatedContentList
+                    results={[ITEM_REFRESH_TOKEN, ITEM_PROACTIVE_REFRESH_CHALLENGE, ITEM_JWT_FLASHCARD]}
+                    query={QUERY}
+                    label={LABEL}
+                    excludeId="content-refresh-token"
+                    showAnatomy
+                    className="w-full max-w-xl"
+                />
+            </BlockAnatomy>,
         ),
 }
 
 export const LimitedRows: Story = {
     render: () =>
-        blockShell(
-            <RelatedContentList
-                results={[
-                    ITEM_REFRESH_TOKEN,
-                    ITEM_PROACTIVE_REFRESH_CHALLENGE,
-                    ITEM_JWT_FLASHCARD,
-                    ITEM_SSO_MILESTONE_LOCKED,
-                    ITEM_OAUTH_CONTENT,
-                ]}
-                query={QUERY}
-                label={LABEL}
-                limit={2}
-                className="w-full max-w-xl"
-            />,
-            ANATOMY,
+        shell(
+            <BlockAnatomy
+                name="RelatedContentList"
+                tier="block"
+                leaf="Giới hạn số hàng"
+                parts={DATA_PARTS}
+                note="limit cắt danh sách xuống N hàng — CÙNG composition, chỉ khác số EntityResultRow hiển thị."
+            >
+                <RelatedContentList
+                    results={[
+                        ITEM_REFRESH_TOKEN,
+                        ITEM_PROACTIVE_REFRESH_CHALLENGE,
+                        ITEM_JWT_FLASHCARD,
+                        ITEM_SSO_MILESTONE_LOCKED,
+                        ITEM_OAUTH_CONTENT,
+                    ]}
+                    query={QUERY}
+                    label={LABEL}
+                    limit={2}
+                    showAnatomy
+                    className="w-full max-w-xl"
+                />
+            </BlockAnatomy>,
         ),
 }

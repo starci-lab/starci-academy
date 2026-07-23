@@ -2,26 +2,31 @@
 
 import React, { useEffect } from "react"
 import { cn } from "@heroui/react"
+import { useAnatomyPanel, type AnatomyTier } from "./anatomy-context"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — AnatomyOverlay: an ABSOLUTE annotation drawn ON
- * TOP of a component (a dashed outline + a corner tag naming it), so it never
- * touches the component's layout. Drop it as a child of a `position: relative`
- * root that ALSO carries `data-anat` (the hover target). Colour = TIER
- * (accent=primitive · green=design · amber=block).
+ * TOP of a component, so it never touches the component's layout. Drop it as a
+ * child of a `position: relative` root that ALSO carries `data-anat` (the hover
+ * target). Colour = TIER (accent=primitive · green=design · amber=block).
+ *
+ * TWO renders, chosen automatically:
+ * - Inside a {@link BlockAnatomy} panel (context present) → a tiny NUMBERED anchor
+ *   at the corner; the panel's legend/tree decodes the number. Labels never
+ *   overlap content (the fix for the old cluttered "pill soup").
+ * - Standalone (no panel) → the LEGACY dashed outline + corner tag, so blocks not
+ *   yet migrated keep working unchanged.
  *
  * Interactions (via injected CSS, keyed on `data-anat`):
- * - HOVER a component → its NESTED overlays fade out (peel one layer), so you can
- *   read that level cleanly; the hovered box keeps its own tag.
- * - CLICK a tag with `href` → opens that component's own story (target="_top").
+ * - HOVER a component → its NESTED overlays fade out (peel one layer).
+ * - CLICK a tag with `href` (legacy mode) → opens that component's story.
  *
  * A dev/spec tool, never production UI. NO `@/components` imports.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** Which tier the annotated component is — drives the tag/outline colour. */
-export type AnatomyTier = "primitive" | "design" | "block"
+export type { AnatomyTier }
 
 const TIER: Record<AnatomyTier, { outline: string; tag: string }> = {
     primitive: { outline: "border-accent", tag: "bg-accent text-accent-foreground" },
@@ -69,7 +74,16 @@ export interface AnatomyOverlayProps {
  */
 export const AnatomyOverlay = ({ label, tier = "primitive", href }: AnatomyOverlayProps) => {
     useAnatomyCss()
+    const panel = useAnatomyPanel()
     const t = TIER[tier]
+
+    // Panel mode: emit an invisible inset-0 MARKER tagged with this part's name. The
+    // enclosing BlockAnatomy panel MEASURES the marker (→ badge at the part's corner)
+    // and drives the spotlight hover on the marker's parent. No badge drawn here.
+    if (panel) {
+        return <span aria-hidden data-anat-part={label} data-anat-marker="" className="pointer-events-none absolute inset-0" />
+    }
+
     return (
         <>
             <span

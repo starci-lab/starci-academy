@@ -6,8 +6,17 @@ import {
     type QueryCommunityFeedItemData,
 } from "./CommunityPostCard"
 import { ReactionType } from "../ReactionBar/ReactionBar"
-import { blockShell } from "../../../block-anatomy"
+import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
 
+/**
+ * DESIGN — one community feed post: author header + markdown body + reaction/
+ * comment footer, framed by a Card.
+ *
+ * ANATOMY IS PER-LEAF: each story below is its OWN leaf and carries its OWN
+ * BlockAnatomy axis (Sơ đồ + Cây) reflecting the parts THAT leaf composes — the
+ * founder badge and pinned pin are present/absent parts, so those variants get
+ * their own PARTS. There is no separate consolidated "Anatomy" story.
+ */
 const meta: Meta<typeof CommunityPostCard> = {
     title: "Design/Feed/CommunityPostCard",
     component: CommunityPostCard,
@@ -21,15 +30,47 @@ export default meta
 
 type Story = StoryObj<typeof CommunityPostCard>
 
-const ANATOMY = {
-    primitives: [
-        { name: "UserAvatar", role: "avatar tác giả trong header" },
-        { name: "MarkdownContent", role: "thân bài markdown (compact)" },
-        { name: "ReactionBar", role: "thả cảm xúc trong footer" },
-    ],
-    reason:
-        "Một bài đăng cộng đồng gói header tác giả (avatar + tên + thời gian + kênh + huy hiệu) + thân markdown + footer reaction/bình luận vào một card. Feature chỉ truyền post + handler; block tự dựng khung Card và bố cục.",
-}
+/** Plain canvas — each leaf wraps its render in its own BlockAnatomy panel. */
+const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
+
+// Base composition every post leaf renders (author avatar + body + reaction bar).
+const DEFAULT_PARTS: Array<AnatomyNode> = [
+    { name: "UserAvatar", tier: "primitive", role: "avatar tác giả trong header" },
+    { name: "MarkdownContent", tier: "primitive", role: "thân bài markdown (compact)" },
+    { name: "ReactionBar", tier: "design", role: "thả cảm xúc trong footer" },
+]
+
+// founder leaf: base + huy hiệu SealCheck cạnh tên tác giả.
+const FOUNDER_PARTS: Array<AnatomyNode> = [
+    { name: "UserAvatar", tier: "primitive", role: "avatar tác giả trong header" },
+    { name: "SealCheckIcon", tier: "primitive", role: "huy hiệu founder cạnh tên", state: "founder" },
+    { name: "MarkdownContent", tier: "primitive", role: "thân bài markdown (compact)" },
+    { name: "ReactionBar", tier: "design", role: "thả cảm xúc trong footer" },
+]
+
+// pinned leaf: base + ghim PushPin ở góc phải header.
+const PINNED_PARTS: Array<AnatomyNode> = [
+    { name: "UserAvatar", tier: "primitive", role: "avatar tác giả trong header" },
+    { name: "PushPinIcon", tier: "primitive", role: "ghim bài ở góc header", state: "pinned" },
+    { name: "MarkdownContent", tier: "primitive", role: "thân bài markdown (compact)" },
+    { name: "ReactionBar", tier: "design", role: "thả cảm xúc trong footer" },
+]
+
+// founder + pinned leaf: base + cả huy hiệu SealCheck lẫn ghim PushPin.
+const FOUNDER_PINNED_PARTS: Array<AnatomyNode> = [
+    { name: "UserAvatar", tier: "primitive", role: "avatar tác giả trong header" },
+    { name: "SealCheckIcon", tier: "primitive", role: "huy hiệu founder cạnh tên", state: "founder" },
+    { name: "PushPinIcon", tier: "primitive", role: "ghim bài ở góc header", state: "pinned" },
+    { name: "MarkdownContent", tier: "primitive", role: "thân bài markdown (compact)" },
+    { name: "ReactionBar", tier: "design", role: "thả cảm xúc trong footer" },
+]
+
+// read-only leaf: base composition nhưng ReactionBar mất onReact → không tương tác.
+const READONLY_PARTS: Array<AnatomyNode> = [
+    { name: "UserAvatar", tier: "primitive", role: "avatar tác giả trong header" },
+    { name: "MarkdownContent", tier: "primitive", role: "thân bài markdown (compact)" },
+    { name: "ReactionBar", tier: "design", role: "hiển thị cảm xúc (chỉ đọc)", state: "read-only" },
+]
 
 const defaultPost: QueryCommunityFeedItemData = {
     id: "post-1",
@@ -130,33 +171,121 @@ const Controlled = () => {
 }
 
 export const Default: Story = {
-    render: () => blockShell(<div className="w-full max-w-xl"><CommunityPostCard post={defaultPost} onReact={() => {}} onToggleComments={() => {}} /></div>, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="CommunityPostCard"
+                tier="design"
+                leaf="Có dữ liệu"
+                parts={DEFAULT_PARTS}
+                reason="Một bài đăng cộng đồng gói header tác giả (avatar + tên + thời gian + kênh + huy hiệu) + thân markdown + footer reaction/bình luận vào một card. Feature chỉ truyền post + handler; block tự dựng khung Card và bố cục."
+            >
+                <div className="w-full max-w-xl"><CommunityPostCard post={defaultPost} onReact={() => {}} onToggleComments={() => {}} /></div>
+            </BlockAnatomy>,
+        ),
 }
 
 export const FounderPinned: Story = {
-    render: () => blockShell(<div className="w-full max-w-xl"><CommunityPostCard post={founderPinnedPost} onReact={() => {}} onToggleComments={() => {}} /></div>, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="CommunityPostCard"
+                tier="design"
+                leaf="Founder + ghim"
+                parts={FOUNDER_PINNED_PARTS}
+                note="Founder + đã ghim → hiện cả huy hiệu SealCheck lẫn ghim PushPin trên cùng base composition."
+            >
+                <div className="w-full max-w-xl"><CommunityPostCard post={founderPinnedPost} onReact={() => {}} onToggleComments={() => {}} /></div>
+            </BlockAnatomy>,
+        ),
 }
 
 export const Pinned: Story = {
-    render: () => blockShell(<div className="w-full max-w-xl"><CommunityPostCard post={pinnedPost} onReact={() => {}} onToggleComments={() => {}} /></div>, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="CommunityPostCard"
+                tier="design"
+                leaf="Đã ghim"
+                parts={PINNED_PARTS}
+                note="isPinned → thêm ghim PushPin ở góc header, phần còn lại như leaf 'Có dữ liệu'."
+            >
+                <div className="w-full max-w-xl"><CommunityPostCard post={pinnedPost} onReact={() => {}} onToggleComments={() => {}} /></div>
+            </BlockAnatomy>,
+        ),
 }
 
 export const FounderAuthor: Story = {
-    render: () => blockShell(<div className="w-full max-w-xl"><CommunityPostCard post={founderAuthorPost} onReact={() => {}} onToggleComments={() => {}} /></div>, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="CommunityPostCard"
+                tier="design"
+                leaf="Tác giả founder"
+                parts={FOUNDER_PARTS}
+                note="isFounderAuthor → thêm huy hiệu SealCheck cạnh tên, phần còn lại như leaf 'Có dữ liệu'."
+            >
+                <div className="w-full max-w-xl"><CommunityPostCard post={founderAuthorPost} onReact={() => {}} onToggleComments={() => {}} /></div>
+            </BlockAnatomy>,
+        ),
 }
 
 export const Fresh: Story = {
-    render: () => blockShell(<div className="w-full max-w-xl"><CommunityPostCard post={freshPost} onReact={() => {}} onToggleComments={() => {}} /></div>, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="CommunityPostCard"
+                tier="design"
+                leaf="Bài mới"
+                parts={DEFAULT_PARTS}
+                note="Bài mới đăng (0 reaction, 0 bình luận) — CÙNG composition với leaf 'Có dữ liệu', chỉ đổi dữ liệu đếm."
+            >
+                <div className="w-full max-w-xl"><CommunityPostCard post={freshPost} onReact={() => {}} onToggleComments={() => {}} /></div>
+            </BlockAnatomy>,
+        ),
 }
 
 export const LongBody: Story = {
-    render: () => blockShell(<div className="w-full max-w-xl"><CommunityPostCard post={longBodyPost} onReact={() => {}} onToggleComments={() => {}} /></div>, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="CommunityPostCard"
+                tier="design"
+                leaf="Thân bài dài"
+                parts={DEFAULT_PARTS}
+                note="Thân markdown dài + đã sửa — CÙNG composition, MarkdownContent tự giãn chiều cao."
+            >
+                <div className="w-full max-w-xl"><CommunityPostCard post={longBodyPost} onReact={() => {}} onToggleComments={() => {}} /></div>
+            </BlockAnatomy>,
+        ),
 }
 
 export const ReadOnly: Story = {
-    render: () => blockShell(<div className="w-full max-w-xl"><CommunityPostCard post={readOnlyPost} /></div>, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="CommunityPostCard"
+                tier="design"
+                leaf="Chỉ đọc"
+                parts={READONLY_PARTS}
+                note="Không truyền onReact/onToggleComments → ReactionBar chỉ đọc, đếm bình luận tĩnh."
+            >
+                <div className="w-full max-w-xl"><CommunityPostCard post={readOnlyPost} /></div>
+            </BlockAnatomy>,
+        ),
 }
 
 export const Interactive: Story = {
-    render: () => blockShell(<Controlled />, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="CommunityPostCard"
+                tier="design"
+                leaf="Tương tác"
+                parts={DEFAULT_PARTS}
+                note="Có onReact + onToggleComments → bấm cảm xúc cập nhật state, mở thread bình luận qua children; base composition không đổi."
+            >
+                <Controlled />
+            </BlockAnatomy>,
+        ),
 }

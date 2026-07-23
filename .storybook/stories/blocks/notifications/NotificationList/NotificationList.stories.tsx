@@ -11,8 +11,17 @@ import { NotificationList } from "./NotificationList"
 import type { NotificationGroup } from "./NotificationList"
 import { EmptyState } from "../../feedback/EmptyState/EmptyState"
 import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
-import { blockShell } from "../../../block-anatomy"
+import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
 
+/**
+ * BLOCK — the notification list REGION in the bell popover: an optional header
+ * (title + mark-all-read) over day-grouped `NotificationItem` rows, falling to an
+ * `EmptyState` when nothing is present.
+ *
+ * ANATOMY IS PER-LEAF: each state below is its OWN leaf and carries its OWN
+ * BlockAnatomy axis (Sơ đồ + Cây) reflecting the parts THAT leaf composes — there
+ * is no separate consolidated "Anatomy" story.
+ */
 const meta: Meta<typeof NotificationList> = {
     title: "Block/Notifications/NotificationList",
     component: NotificationList,
@@ -26,14 +35,8 @@ export default meta
 
 type Story = StoryObj<typeof NotificationList>
 
-const ANATOMY = {
-    primitives: [
-        { name: "NotificationItem", role: "mỗi dòng thông báo (icon tone + title/body + thời gian + unread)" },
-        { name: "EmptyState", role: "fallback khi không có thông báo nào" },
-    ],
-    reason:
-        "Gom nhiều NotificationItem thành một danh sách cuộn có header (tiêu đề + đánh dấu đã đọc hết) và nhãn gom theo ngày; khi rỗng thì tự rơi về EmptyState thay vì một khối trống. Feature chỉ gom dữ liệu theo ngày và truyền các dòng đã format — không phải tự dựng lại header, nhóm, và trạng thái rỗng ở mỗi nơi.",
-}
+/** Plain canvas for each leaf's anatomy panel. */
+const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
 /** Date-based groups ("Today" / "Earlier") with real learning data and pre-formatted times. */
 const SAMPLE_GROUPS: NotificationGroup[] = [
@@ -96,30 +99,85 @@ const listFrame = (children: React.ReactNode) => (
     <div className="w-[380px] rounded-2xl border border-separator bg-surface p-1">{children}</div>
 )
 
+// Populated leaf: header (title + mark-all-read) over day-grouped NotificationItem rows.
+const POPULATED_PARTS: Array<AnatomyNode> = [
+    { name: "Typography", tier: "primitive", role: "tiêu đề header (\"Notifications\")" },
+    { name: "Button", tier: "primitive", role: "đánh dấu tất cả đã đọc (icon check dẫn đầu)", state: "tertiary" },
+    { name: "Typography · label", tier: "primitive", role: "nhãn nhóm ngày (\"Today\" / \"Earlier\")" },
+    {
+        name: "NotificationItem",
+        tier: "design",
+        role: "mỗi dòng thông báo (block con, lặp ×N)",
+        children: [
+            { name: "IconTile", tier: "primitive", role: "ô icon tô màu theo tone" },
+            { name: "Typography · row", tier: "primitive", role: "title + body + thời gian" },
+        ],
+    },
+]
+
+// Empty leaf: no header, the list falls to a single EmptyState fallback.
+const EMPTY_PARTS: Array<AnatomyNode> = [
+    { name: "EmptyState", tier: "design", role: "fallback \"Chưa có thông báo nào\"", state: "empty" },
+]
+
+// Loading leaf: same chrome as populated, every part swaps to a Skeleton mirror.
+const LOADING_PARTS: Array<AnatomyNode> = [
+    { name: "Skeleton.Typography", tier: "primitive", role: "tiêu đề header — skeleton mirror", state: "skeleton" },
+    { name: "Skeleton.Button", tier: "primitive", role: "nút mark-all-read — skeleton mirror", state: "skeleton" },
+    { name: "Skeleton · label", tier: "primitive", role: "nhãn nhóm ngày — skeleton mirror", state: "skeleton" },
+    {
+        name: "SkeletonNotificationRow",
+        tier: "design",
+        role: "mirror NotificationItem ×3 (giữ đúng footprint)",
+        state: "skeleton",
+        children: [
+            { name: "Skeleton · tile", tier: "primitive", role: "ô icon tone" },
+            { name: "Skeleton · bars", tier: "primitive", role: "thanh title / body / thời gian" },
+        ],
+    },
+]
+
+/** DATA — day-based groups with real learning data and pre-formatted times. */
 export const Populated: Story = {
     render: () =>
-        blockShell(
-            listFrame(<NotificationList title="Notifications" onMarkAllRead={() => {}} groups={SAMPLE_GROUPS} />),
-            ANATOMY,
+        shell(
+            <BlockAnatomy
+                name="NotificationList"
+                tier="block"
+                leaf="Có dữ liệu"
+                parts={POPULATED_PARTS}
+                reason="Gom nhiều NotificationItem thành một danh sách cuộn có header (tiêu đề + đánh dấu đã đọc hết) và nhãn gom theo ngày; khi rỗng thì tự rơi về EmptyState thay vì một khối trống. Feature chỉ gom dữ liệu theo ngày và truyền các dòng đã format — không phải tự dựng lại header, nhóm, và trạng thái rỗng ở mỗi nơi. Khi tải: Skeleton mirror đúng khung này."
+            >
+                {listFrame(
+                    <NotificationList title="Notifications" onMarkAllRead={() => {}} groups={SAMPLE_GROUPS} />,
+                )}
+            </BlockAnatomy>,
         ),
 }
 
 export const Empty: Story = {
     render: () =>
-        blockShell(
-            listFrame(
-                <NotificationList
-                    title="Notifications"
-                    groups={[{ items: [] }]}
-                    emptyState={
-                        <EmptyState
-                            title="Chưa có thông báo nào"
-                            description="Khi có hoạt động mới trên khoá học của bạn, thông báo sẽ xuất hiện ở đây."
-                        />
-                    }
-                />,
-            ),
-            ANATOMY,
+        shell(
+            <BlockAnatomy
+                name="NotificationList"
+                tier="block"
+                leaf="Rỗng"
+                parts={EMPTY_PARTS}
+                note="Mọi nhóm rỗng → không header, danh sách rơi về EmptyState duy nhất (khác leaf data)."
+            >
+                {listFrame(
+                    <NotificationList
+                        title="Notifications"
+                        groups={[{ items: [] }]}
+                        emptyState={
+                            <EmptyState
+                                title="Chưa có thông báo nào"
+                                description="Khi có hoạt động mới trên khoá học của bạn, thông báo sẽ xuất hiện ở đây."
+                            />
+                        }
+                    />,
+                )}
+            </BlockAnatomy>,
         ),
 }
 
@@ -137,25 +195,32 @@ const SkeletonNotificationRow = () => (
 
 export const SkeletonLoading: Story = {
     render: () =>
-        blockShell(
-            listFrame(
-                <div className="flex flex-col">
-                    {/* header: title + mark-all-read button */}
-                    <div className="flex items-center justify-between gap-3 px-3 py-2">
-                        <Skeleton.Typography type="body-sm" width="1/3" />
-                        <Skeleton.Button width="w-28" />
-                    </div>
-                    {/* one day group: label + rows */}
-                    <div className="flex max-h-[420px] flex-col gap-3 p-1">
-                        <div className="flex flex-col gap-1">
-                            <Skeleton className="mx-3 mt-1 h-3 w-16 rounded" />
-                            <SkeletonNotificationRow />
-                            <SkeletonNotificationRow />
-                            <SkeletonNotificationRow />
+        shell(
+            <BlockAnatomy
+                name="NotificationList"
+                tier="block"
+                leaf="Đang tải"
+                parts={LOADING_PARTS}
+                note="Chrome giữ nguyên, mọi phần đổi sang Skeleton mirror đúng footprint của leaf data (không dòng thật)."
+            >
+                {listFrame(
+                    <div className="flex flex-col">
+                        {/* header: title + mark-all-read button */}
+                        <div className="flex items-center justify-between gap-3 px-3 py-2">
+                            <Skeleton.Typography type="body-sm" width="1/3" />
+                            <Skeleton.Button width="w-28" />
                         </div>
-                    </div>
-                </div>,
-            ),
-            ANATOMY,
+                        {/* one day group: label + rows */}
+                        <div className="flex max-h-[420px] flex-col gap-3 p-1">
+                            <div className="flex flex-col gap-1">
+                                <Skeleton className="mx-3 mt-1 h-3 w-16 rounded" />
+                                <SkeletonNotificationRow />
+                                <SkeletonNotificationRow />
+                                <SkeletonNotificationRow />
+                            </div>
+                        </div>
+                    </div>,
+                )}
+            </BlockAnatomy>,
         ),
 }

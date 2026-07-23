@@ -5,8 +5,20 @@ import { ReactionType } from "../ReactionBar/ReactionBar"
 import { SurfaceListCard, SurfaceListCardItem } from "../../cards/SurfaceListCard/SurfaceListCard"
 import { EmptyState } from "../../feedback/EmptyState/EmptyState"
 import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
-import { blockShell } from "../../../block-anatomy"
+import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
 
+/**
+ * BLOCK — the shared activity feed: rows grouped under relative day headers, each
+ * row = an avatar-with-type-badge + a clickable actor/action/target sentence +
+ * relative time + a reaction bar. Props-only; the owning FEATURE fetches items and
+ * supplies the route resolver.
+ *
+ * ANATOMY IS PER-LEAF: each story below is its OWN leaf and carries its OWN
+ * BlockAnatomy axis (Sơ đồ + Cây) reflecting the parts THAT leaf composes — the
+ * data leaves share one FEED_PARTS composition, while `Rỗng` (EmptyState from the
+ * feature) and `Đang tải` (skeleton mirror) each swap composition. There is no
+ * separate consolidated "Anatomy" story.
+ */
 const meta: Meta<typeof ActivityFeed> = {
     title: "Block/Feed/ActivityFeed",
     component: ActivityFeed,
@@ -20,17 +32,8 @@ export default meta
 
 type Story = StoryObj<typeof ActivityFeed>
 
-const ANATOMY = {
-    primitives: [
-        { name: "ActivityAvatar", role: "leading mỗi hàng — avatar + badge loại hoạt động" },
-        { name: "EntityLink", role: "actor + target bấm được trong câu" },
-        { name: "FeedItem", role: "bố cục từng hàng hoạt động" },
-        { name: "ReactionBar", role: "thả cảm xúc mỗi hàng" },
-        { name: "SurfaceListCard", role: "surface gom các hàng của một ngày" },
-    ],
-    reason:
-        "Feed hoạt động dùng chung cho trang chủ và tab Hoạt động: mỗi hàng là avatar-kèm-badge + câu actor/hành động/target + thời gian, gộp theo ngày (Hôm nay/Hôm qua/ngày cũ). Gộp milestone liên tiếp thành một dòng, null target rơi về câu generic — không để trống. Props-only nên một chỗ dựng, nhiều feature dùng.",
-}
+/** Plain canvas wrapping each leaf's anatomy panel. */
+const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
 /** No-op route resolver: every entity routable except a null id. */
 const resolveDemo = (globalId: string | null | undefined): (() => void) | undefined =>
@@ -68,28 +71,145 @@ const Controlled = () => {
     return <ActivityFeed items={items} onResolve={resolveDemo} onReact={onReact} />
 }
 
+// The real feed composition: a per-day surface of FeedItem rows; each row leads
+// with an ActivityAvatar, carries EntityLinks in its sentence, and a ReactionBar
+// footer. Every data/variant leaf shares this composition.
+const FEED_PARTS: Array<AnatomyNode> = [
+    {
+        name: "SurfaceListCard",
+        tier: "design",
+        role: "surface gom các hàng của một ngày",
+        children: [
+            {
+                name: "FeedItem",
+                tier: "design",
+                role: "bố cục từng hàng hoạt động (leading · câu · thời gian · footer)",
+                children: [
+                    { name: "ActivityAvatar", tier: "design", role: "leading mỗi hàng — avatar + badge loại hoạt động" },
+                    { name: "EntityLink", tier: "primitive", role: "actor + target bấm được trong câu" },
+                    { name: "ReactionBar", tier: "design", role: "thả cảm xúc mỗi hàng" },
+                ],
+            },
+        ],
+    },
+]
+
+// Empty leaf: the block itself has no empty slot (items=[] renders nothing) — the
+// owning FEATURE renders an EmptyState in the feed's place.
+const EMPTY_PARTS: Array<AnatomyNode> = [
+    { name: "EmptyState", tier: "design", role: 'trạng thái rỗng do FEATURE dựng ("Chưa có hoạt động nào")', state: "empty" },
+]
+
+// Loading leaf: a skeleton MIRROR of the real layout — a day-header eyebrow over a
+// SurfaceListCard of rows (avatar circle + text bars + footer bar).
+const SKELETON_PARTS: Array<AnatomyNode> = [
+    { name: "Skeleton.Typography", tier: "primitive", role: "eyebrow ngày (mirror DayHeaderSection)", state: "skeleton" },
+    {
+        name: "SurfaceListCard",
+        tier: "design",
+        role: "surface gom hàng (mirror)",
+        state: "skeleton",
+        children: [
+            { name: "Skeleton.Avatar", tier: "primitive", role: "mirror ActivityAvatar" },
+            { name: "Skeleton", tier: "primitive", role: "mirror câu · thời gian · footer ReactionBar" },
+        ],
+    },
+]
+
+/** ONE ITEM — a single-row feed; the full composition on the smallest input. */
 export const SingleItem: Story = {
-    render: () => blockShell(<div className="w-full max-w-xl"><ActivityFeed items={singleItem} onResolve={resolveDemo} onReact={() => {}} /></div>, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="ActivityFeed"
+                tier="block"
+                leaf="Một hoạt động"
+                parts={FEED_PARTS}
+                note="Một hàng duy nhất, nhưng CÙNG composition với feed nhiều ngày."
+            >
+                <div className="w-full max-w-xl"><ActivityFeed items={singleItem} onResolve={resolveDemo} onReact={() => {}} /></div>
+            </BlockAnatomy>,
+        ),
 }
 
+/** RICH — the full feed across multiple days, with milestone roll-up + null-target fallback. */
 export const RichMultiDay: Story = {
-    render: () => blockShell(<div className="w-full max-w-xl"><ActivityFeed items={richItems} onResolve={resolveDemo} onReact={() => {}} /></div>, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="ActivityFeed"
+                tier="block"
+                leaf="Nhiều ngày"
+                parts={FEED_PARTS}
+                reason="Feed hoạt động dùng chung cho trang chủ và tab Hoạt động: mỗi hàng là avatar-kèm-badge + câu actor/hành động/target + thời gian, gộp theo ngày (Hôm nay/Hôm qua/ngày cũ). Gộp milestone liên tiếp thành một dòng, null target rơi về câu generic — không để trống. Props-only nên một chỗ dựng, nhiều feature dùng."
+            >
+                <div className="w-full max-w-xl"><ActivityFeed items={richItems} onResolve={resolveDemo} onReact={() => {}} /></div>
+            </BlockAnatomy>,
+        ),
 }
 
+/** OWN ACTIVITY — the viewer's own row: ReactionBar auto-suppresses (can't react to yourself). */
 export const OwnActivity: Story = {
-    render: () => blockShell(<div className="w-full max-w-xl"><ActivityFeed items={ownActivityItems} onResolve={resolveDemo} onReact={() => {}} /></div>, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="ActivityFeed"
+                tier="block"
+                leaf="Hoạt động của bạn"
+                parts={FEED_PARTS}
+                note="Hàng của chính bạn (isMine) → ReactionBar chuyển chỉ-đọc, nhưng vẫn đủ các part."
+            >
+                <div className="w-full max-w-xl"><ActivityFeed items={ownActivityItems} onResolve={resolveDemo} onReact={() => {}} /></div>
+            </BlockAnatomy>,
+        ),
 }
 
+/** READ-ONLY — no `onReact` → every ReactionBar is display-only. Same composition. */
 export const ReadOnly: Story = {
-    render: () => blockShell(<div className="w-full max-w-xl"><ActivityFeed items={richItems} onResolve={resolveDemo} /></div>, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="ActivityFeed"
+                tier="block"
+                leaf="Chỉ đọc"
+                parts={FEED_PARTS}
+                note="Bỏ onReact → toàn bộ ReactionBar chỉ hiển thị số, composition không đổi."
+            >
+                <div className="w-full max-w-xl"><ActivityFeed items={richItems} onResolve={resolveDemo} /></div>
+            </BlockAnatomy>,
+        ),
 }
 
+/** BORDERED — the per-day SurfaceListCard uses a border instead of a shadow (nested-surface). */
 export const Bordered: Story = {
-    render: () => blockShell(<div className="w-full max-w-xl"><ActivityFeed items={singleItem} onResolve={resolveDemo} onReact={() => {}} bordered /></div>, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="ActivityFeed"
+                tier="block"
+                leaf="Viền"
+                parts={FEED_PARTS}
+                note="SurfaceListCard đổi shadow → viền khi feed lồng trong surface khác; cùng các part."
+            >
+                <div className="w-full max-w-xl"><ActivityFeed items={singleItem} onResolve={resolveDemo} onReact={() => {}} bordered /></div>
+            </BlockAnatomy>,
+        ),
 }
 
+/** INTERACTIVE — a stateful wrapper so reacting updates the count/myReaction live. */
 export const InteractiveReactions: Story = {
-    render: () => blockShell(<div className="w-full max-w-xl"><Controlled /></div>, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="ActivityFeed"
+                tier="block"
+                leaf="Thả cảm xúc"
+                parts={FEED_PARTS}
+                note="Wrapper cầm state → bấm ReactionBar cập nhật count/myReaction; composition như leaf dữ liệu."
+            >
+                <div className="w-full max-w-xl"><Controlled /></div>
+            </BlockAnatomy>,
+        ),
 }
 
 /**
@@ -99,12 +219,19 @@ export const InteractiveReactions: Story = {
  */
 export const Empty: Story = {
     render: () =>
-        blockShell(
-            <div className="w-full max-w-xl">
-                <EmptyState title="Chưa có hoạt động nào" description="Hoạt động của bạn và người bạn theo dõi sẽ xuất hiện ở đây." />
-                <ActivityFeed items={[]} onResolve={resolveDemo} onReact={() => {}} />
-            </div>,
-            ANATOMY,
+        shell(
+            <BlockAnatomy
+                name="ActivityFeed"
+                tier="block"
+                leaf="Rỗng"
+                parts={EMPTY_PARTS}
+                note="Block không có slot rỗng — items=[] render trống; FEATURE dựng EmptyState thay chỗ."
+            >
+                <div className="w-full max-w-xl">
+                    <EmptyState title="Chưa có hoạt động nào" description="Hoạt động của bạn và người bạn theo dõi sẽ xuất hiện ở đây." />
+                    <ActivityFeed items={[]} onResolve={resolveDemo} onReact={() => {}} />
+                </div>
+            </BlockAnatomy>,
         ),
 }
 
@@ -115,28 +242,35 @@ export const Empty: Story = {
  */
 export const SkeletonLoading: Story = {
     render: () =>
-        blockShell(
-            <div className="flex w-full max-w-xl flex-col gap-6">
-                <section className="flex flex-col gap-2">
-                    <Skeleton.Typography type="body-xs" width="1/4" />
-                    <SurfaceListCard>
-                        {[0, 1, 2].map((row) => (
-                            <SurfaceListCardItem key={row}>
-                                <div className="flex items-start gap-2">
-                                    <Skeleton.Avatar size="sm" />
-                                    <div className="flex min-w-0 flex-1 flex-col gap-1">
-                                        <div className="flex flex-col gap-1">
-                                            <Skeleton.Typography type="body-sm" width="3/4" />
-                                            <Skeleton.Typography type="body-xs" width="1/4" />
+        shell(
+            <BlockAnatomy
+                name="ActivityFeed"
+                tier="block"
+                leaf="Đang tải"
+                parts={SKELETON_PARTS}
+                note="Skeleton mirror giữ đúng footprint feed thật (eyebrow ngày + surface hàng), không có part thật."
+            >
+                <div className="flex w-full max-w-xl flex-col gap-6">
+                    <section className="flex flex-col gap-2">
+                        <Skeleton.Typography type="body-xs" width="1/4" />
+                        <SurfaceListCard>
+                            {[0, 1, 2].map((row) => (
+                                <SurfaceListCardItem key={row}>
+                                    <div className="flex items-start gap-2">
+                                        <Skeleton.Avatar size="sm" />
+                                        <div className="flex min-w-0 flex-1 flex-col gap-1">
+                                            <div className="flex flex-col gap-1">
+                                                <Skeleton.Typography type="body-sm" width="3/4" />
+                                                <Skeleton.Typography type="body-xs" width="1/4" />
+                                            </div>
+                                            <Skeleton className="h-4 w-12 rounded-full" />
                                         </div>
-                                        <Skeleton className="h-4 w-12 rounded-full" />
                                     </div>
-                                </div>
-                            </SurfaceListCardItem>
-                        ))}
-                    </SurfaceListCard>
-                </section>
-            </div>,
-            ANATOMY,
+                                </SurfaceListCardItem>
+                            ))}
+                        </SurfaceListCard>
+                    </section>
+                </div>
+            </BlockAnatomy>,
         ),
 }

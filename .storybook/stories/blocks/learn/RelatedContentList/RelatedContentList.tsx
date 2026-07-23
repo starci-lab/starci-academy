@@ -3,6 +3,7 @@ import type { ReactNode } from "react"
 import { Label, cn } from "@heroui/react"
 import { SurfaceListCard, SurfaceListCardItem } from "../../cards/SurfaceListCard/SurfaceListCard"
 import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
+import { AsyncContent } from "../../async/AsyncContent/AsyncContent"
 import { EntityResultRow, type SearchCourseContentItem } from "../EntityResultRow/EntityResultRow"
 
 /**
@@ -25,12 +26,14 @@ const LabeledCardFrameless = ({
     label,
     children,
     className,
+    showAnatomy = false,
 }: {
     label: ReactNode
     children: ReactNode
     className?: string
+    showAnatomy?: boolean
 }) => (
-    <section className={cn("flex flex-col gap-3", className)}>
+    <section data-anat-part={showAnatomy ? "LabeledCard" : undefined} className={cn("flex flex-col gap-3", className)}>
         <div className="flex items-center justify-between gap-3">
             <div className="flex min-w-0 items-center gap-2">
                 <Label>{label}</Label>
@@ -39,21 +42,6 @@ const LabeledCardFrameless = ({
         <div>{children}</div>
     </section>
 )
-
-// TODO: swap for AsyncContent local when the async/AsyncContent block is ported.
-/** Minimal faithful copy of `AsyncContent` — the loading → content branch (error/empty self-hide upstream). */
-const AsyncContent = ({
-    isLoading,
-    skeleton,
-    children,
-}: {
-    isLoading: boolean
-    skeleton: ReactNode
-    children: ReactNode
-}) => {
-    if (isLoading) return <>{skeleton}</>
-    return <>{children}</>
-}
 
 /** Props for the {@link RelatedContentList} block (storybook-local, props-only). */
 export interface RelatedContentListProps {
@@ -83,6 +71,8 @@ export interface RelatedContentListProps {
     onSelect?: (item: SearchCourseContentItem) => void
     /** Extra classes on the section. */
     className?: string
+    /** Dev/spec: tag each composed part so a {@link BlockAnatomy} panel can badge it. */
+    showAnatomy?: boolean
 }
 
 /**
@@ -104,6 +94,7 @@ export const RelatedContentList = ({
     limit = 3,
     onSelect,
     className,
+    showAnatomy = false,
 }: RelatedContentListProps) => {
     // drop the current surface's own source — a title-derived query always returns
     // itself as the top hit, and suggesting the page you're on reads as a bug.
@@ -117,32 +108,38 @@ export const RelatedContentList = ({
     }
 
     return (
-        <LabeledCardFrameless label={label} className={cn(className)}>
+        <LabeledCardFrameless label={label} className={cn(className)} showAnatomy={showAnatomy}>
             <AsyncContent
                 isLoading={isLoading}
+                showAnatomy={showAnatomy}
                 skeleton={
-                    <SurfaceListCard bordered>
-                        {Array.from({ length: Math.min(limit, 2) }).map((_, index) => (
-                            <SurfaceListCardItem key={index}>
-                                <div className="flex flex-col gap-2">
-                                    <Skeleton.Typography type="body-xs" width="1/3" />
-                                    <Skeleton.Typography type="body-sm" width="3/4" />
-                                    <Skeleton.Typography type="body-xs" width="full" />
-                                </div>
-                            </SurfaceListCardItem>
-                        ))}
-                    </SurfaceListCard>
+                    <div data-anat-part={showAnatomy ? "SurfaceListCard" : undefined}>
+                        <SurfaceListCard bordered>
+                            {Array.from({ length: Math.min(limit, 2) }).map((_, index) => (
+                                <SurfaceListCardItem key={index}>
+                                    <div data-anat-part={showAnatomy ? "Skeleton" : undefined} className="flex flex-col gap-2">
+                                        <Skeleton.Typography type="body-xs" width="1/3" />
+                                        <Skeleton.Typography type="body-sm" width="3/4" />
+                                        <Skeleton.Typography type="body-xs" width="full" />
+                                    </div>
+                                </SurfaceListCardItem>
+                            ))}
+                        </SurfaceListCard>
+                    </div>
                 }
             >
-                <SurfaceListCard bordered>
-                    {filtered.map((item, index) => (
-                        <EntityResultRow
-                            key={`${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`}
-                            item={item}
-                            onSelect={(picked) => onSelect?.(picked)}
-                        />
-                    ))}
-                </SurfaceListCard>
+                <div data-anat-part={showAnatomy ? "SurfaceListCard" : undefined}>
+                    <SurfaceListCard bordered>
+                        {filtered.map((item, index) => (
+                            <EntityResultRow
+                                key={`${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`}
+                                item={item}
+                                anatPart={showAnatomy ? "EntityResultRow" : undefined}
+                                onSelect={(picked) => onSelect?.(picked)}
+                            />
+                        ))}
+                    </SurfaceListCard>
+                </div>
             </AsyncContent>
         </LabeledCardFrameless>
     )

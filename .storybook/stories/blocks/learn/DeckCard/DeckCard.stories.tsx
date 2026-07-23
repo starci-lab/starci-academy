@@ -1,7 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { DeckCard } from "./DeckCard"
-import { blockShell } from "../../../block-anatomy"
+import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
 
+/**
+ * DESIGN — a single flashcard-deck picker card (title + due/difficulty chips, an
+ * optional blurb, a per-viewer mastery meter, card count, and one "Học" CTA). The
+ * card itself is not pressable — the CTA is the only action.
+ *
+ * ANATOMY IS PER-LEAF: each story below is its OWN leaf and carries its OWN
+ * BlockAnatomy axis (Sơ đồ + Cây) reflecting the parts THAT leaf composes — there
+ * is no separate consolidated "Anatomy" story.
+ */
 const meta: Meta<typeof DeckCard> = {
     title: "Design/Learn/DeckCard",
     component: DeckCard,
@@ -15,170 +24,247 @@ export default meta
 
 type Story = StoryObj<typeof DeckCard>
 
-const ANATOMY = {
-    primitives: [
-        { name: "DifficultyChip", tier: "primitive" as const, role: "chấm màu theo độ khó (thang beginner→insane)" },
-        { name: "StatusChip", tier: "primitive" as const, role: "nhãn \"N đến hạn\" (tone warning) — chỉ khi showProgress" },
-        { name: "ProgressMeter", tier: "primitive" as const, role: "thanh mastery% (đã thuộc/tổng) — thay text+Separator cũ" },
-        { name: "Button", tier: "primitive" as const, role: "CTA \"Học\" — hành động duy nhất trên card (card không click được)" },
-        { name: "Typography", tier: "primitive" as const, role: "tiêu đề (clamp-2) + mô tả muted (clamp-2) + số thẻ" },
-        { name: "Skeleton", tier: "primitive" as const, state: "Khung chờ", role: "mirror đúng khung khi isSkeleton" },
-    ],
-    reason:
-        "Một ô bộ thẻ trong lưới chọn chủ đề gom chip trạng thái (đến hạn + độ khó), thanh mastery trực quan thay vì dòng chữ, và một CTA duy nhất — để feature (FlashcardDeckList) chỉ lặp `map` truyền dữ liệu, không tự dựng lại khung/chip/thanh tiến độ mỗi nơi dùng.",
-}
+/** Frame each leaf's anatomy panel with breathing room. */
+const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
+
+// FULL composition — due chip + difficulty chip + mastery meter + CTA (Default, long, grid, no-desc).
+const DECK_PARTS: Array<AnatomyNode> = [
+    { name: "Typography", tier: "primitive", role: "tiêu đề (clamp-2) · mô tả muted · số thẻ" },
+    { name: "StatusChip", tier: "primitive", role: '"N đến hạn" (warning) — chỉ khi showProgress', state: "warning" },
+    { name: "DifficultyChip", tier: "design", role: "chấm màu theo độ khó (beginner→insane)" },
+    { name: "ProgressMeter", tier: "primitive", role: "thanh mastery% (đã thuộc/tổng) — thay text+Separator cũ" },
+    { name: "Button", tier: "primitive", role: 'CTA "Học" — hành động duy nhất (card không click được)' },
+]
+
+// No due cards — dueCount rỗng nên StatusChip biến mất, meter vẫn còn (NoDue, FullyMastered).
+const NO_DUE_PARTS: Array<AnatomyNode> = [
+    { name: "Typography", tier: "primitive", role: "tiêu đề (clamp-2) · mô tả muted · số thẻ" },
+    { name: "DifficultyChip", tier: "design", role: "chấm màu theo độ khó (beginner→insane)" },
+    { name: "ProgressMeter", tier: "primitive", role: "thanh mastery% (đã thuộc/tổng)" },
+    { name: "Button", tier: "primitive", role: 'CTA "Học" — hành động duy nhất' },
+]
+
+// Quiz mode — showProgress=false: KHÔNG StatusChip, KHÔNG ProgressMeter, chỉ đổi nhãn CTA.
+const QUIZ_PARTS: Array<AnatomyNode> = [
+    { name: "Typography", tier: "primitive", role: "tiêu đề (clamp-2) · mô tả muted · số thẻ" },
+    { name: "DifficultyChip", tier: "design", role: "chấm màu theo độ khó (beginner→insane)" },
+    { name: "Button", tier: "primitive", role: "CTA nhãn tuỳ biến (vd 'Hỏi nhanh')" },
+]
+
+// Khung chờ — Skeleton mirror đúng footprint của card thật (Skeleton, Khung chờ · lưới).
+const SKELETON_PARTS: Array<AnatomyNode> = [
+    { name: "Skeleton · Typography", tier: "primitive", role: "khung tiêu đề · mô tả · số thẻ", state: "skeleton" },
+    { name: "Skeleton · Chip", tier: "primitive", role: "khung chip độ khó", state: "skeleton" },
+    { name: "Skeleton · Meter", tier: "primitive", role: "khung thanh mastery", state: "skeleton" },
+    { name: "Skeleton · Button", tier: "primitive", role: "khung CTA", state: "skeleton" },
+]
 
 /** Default — a deck with due cards and partial mastery progress. */
 export const Default: Story = {
     render: () =>
-        blockShell(
-            <div className="w-80">
-                <DeckCard
-                    title="React Hooks nâng cao"
-                    description="useEffect, useMemo, useCallback và các bẫy dependency thường gặp."
-                    difficulty="intermediate"
-                    dueCount={6}
-                    masteredCount={18}
-                    cardCount={40}
-                    onOpen={() => {}}
-                />
-            </div>,
-            ANATOMY,
+        frame(
+            <BlockAnatomy
+                name="DeckCard"
+                tier="design"
+                leaf="Đầy đủ"
+                parts={DECK_PARTS}
+                reason="Gom chip trạng thái (đến hạn + độ khó), thanh mastery trực quan thay dòng chữ, và MỘT CTA duy nhất vào một ô — để feature (FlashcardDeckList) chỉ lặp map truyền dữ liệu, không dựng lại khung/chip/thanh mỗi nơi. Khi tải: Skeleton mirror đúng khung này."
+            >
+                <div className="w-80">
+                    <DeckCard
+                        title="React Hooks nâng cao"
+                        description="useEffect, useMemo, useCallback và các bẫy dependency thường gặp."
+                        difficulty="intermediate"
+                        dueCount={6}
+                        masteredCount={18}
+                        cardCount={40}
+                        showAnatomy
+                        onOpen={() => {}}
+                    />
+                </div>
+            </BlockAnatomy>,
         ),
 }
 
 /** No due cards — the due chip disappears, only difficulty remains. */
 export const NoDue: Story = {
     render: () =>
-        blockShell(
-            <div className="w-80">
-                <DeckCard
-                    title="CSS Flexbox căn bản"
-                    description="Các thuộc tính container và item cốt lõi khi dựng layout."
-                    difficulty="beginner"
-                    masteredCount={12}
-                    cardCount={12}
-                    onOpen={() => {}}
-                />
-            </div>,
-            ANATOMY,
+        frame(
+            <BlockAnatomy
+                name="DeckCard"
+                tier="design"
+                leaf="Không đến hạn"
+                parts={NO_DUE_PARTS}
+                note="dueCount rỗng → StatusChip 'đến hạn' biến mất, chỉ còn DifficultyChip; meter vẫn hiện."
+            >
+                <div className="w-80">
+                    <DeckCard
+                        title="CSS Flexbox căn bản"
+                        description="Các thuộc tính container và item cốt lõi khi dựng layout."
+                        difficulty="beginner"
+                        masteredCount={12}
+                        cardCount={12}
+                        showAnatomy
+                        onOpen={() => {}}
+                    />
+                </div>
+            </BlockAnatomy>,
         ),
 }
 
 /** Fully mastered — the meter fills to 100%. */
 export const FullyMastered: Story = {
     render: () =>
-        blockShell(
-            <div className="w-80">
-                <DeckCard
-                    title="Git — nhánh & rebase"
-                    description="Tạo nhánh, merge, rebase và xử lý conflict cơ bản."
-                    difficulty="advanced"
-                    masteredCount={25}
-                    cardCount={25}
-                    onOpen={() => {}}
-                />
-            </div>,
-            ANATOMY,
+        frame(
+            <BlockAnatomy
+                name="DeckCard"
+                tier="design"
+                leaf="Thuộc hết"
+                parts={NO_DUE_PARTS}
+                note="Không đến hạn → không StatusChip; ProgressMeter đầy 100% (đã thuộc = tổng)."
+            >
+                <div className="w-80">
+                    <DeckCard
+                        title="Git — nhánh & rebase"
+                        description="Tạo nhánh, merge, rebase và xử lý conflict cơ bản."
+                        difficulty="advanced"
+                        masteredCount={25}
+                        cardCount={25}
+                        showAnatomy
+                        onOpen={() => {}}
+                    />
+                </div>
+            </BlockAnatomy>,
         ),
 }
 
 /** No description — the blurb row collapses cleanly. */
 export const NoDescription: Story = {
     render: () =>
-        blockShell(
-            <div className="w-80">
-                <DeckCard
-                    title="Thuật toán sắp xếp"
-                    difficulty="insane"
-                    dueCount={3}
-                    masteredCount={4}
-                    cardCount={30}
-                    onOpen={() => {}}
-                />
-            </div>,
-            ANATOMY,
+        frame(
+            <BlockAnatomy
+                name="DeckCard"
+                tier="design"
+                leaf="Không mô tả"
+                parts={DECK_PARTS}
+                note="Bỏ description → dòng blurb của Typography xẹp gọn, các part còn lại (chip · meter · CTA) giữ nguyên."
+            >
+                <div className="w-80">
+                    <DeckCard
+                        title="Thuật toán sắp xếp"
+                        difficulty="insane"
+                        dueCount={3}
+                        masteredCount={4}
+                        cardCount={30}
+                        showAnatomy
+                        onOpen={() => {}}
+                    />
+                </div>
+            </BlockAnatomy>,
         ),
 }
 
 /** Long title/description — both `line-clamp-2`, so overflow truncates instead of stretching the card. */
 export const LongTitleAndDescription: Story = {
     render: () =>
-        blockShell(
-            <div className="w-80">
-                <DeckCard
-                    title="Cấu trúc dữ liệu và giải thuật nâng cao cho phỏng vấn hệ thống phân tán quy mô lớn"
-                    description="Bao gồm cây, đồ thị, quy hoạch động, chia để trị, và các kỹ thuật tối ưu độ phức tạp thời gian lẫn không gian thường gặp trong vòng phỏng vấn hệ thống."
-                    difficulty="advanced"
-                    dueCount={12}
-                    masteredCount={30}
-                    cardCount={80}
-                    onOpen={() => {}}
-                />
-            </div>,
-            ANATOMY,
+        frame(
+            <BlockAnatomy
+                name="DeckCard"
+                tier="design"
+                leaf="Nội dung dài"
+                parts={DECK_PARTS}
+                note="Tiêu đề + mô tả dài đều clamp-2 → tràn thì cắt, không kéo dài card; composition y hệt leaf 'Đầy đủ'."
+            >
+                <div className="w-80">
+                    <DeckCard
+                        title="Cấu trúc dữ liệu và giải thuật nâng cao cho phỏng vấn hệ thống phân tán quy mô lớn"
+                        description="Bao gồm cây, đồ thị, quy hoạch động, chia để trị, và các kỹ thuật tối ưu độ phức tạp thời gian lẫn không gian thường gặp trong vòng phỏng vấn hệ thống."
+                        difficulty="advanced"
+                        dueCount={12}
+                        masteredCount={30}
+                        cardCount={80}
+                        showAnatomy
+                        onOpen={() => {}}
+                    />
+                </div>
+            </BlockAnatomy>,
         ),
 }
 
 /** Quiz-mode reuse (`showProgress={false}`) — no due chip, no mastery meter, only the CTA label differs. */
 export const QuizModeNoProgress: Story = {
     render: () =>
-        blockShell(
-            <div className="w-80">
-                <DeckCard
-                    title="React Hooks nâng cao"
-                    description="useEffect, useMemo, useCallback và các bẫy dependency thường gặp."
-                    difficulty="intermediate"
-                    cardCount={40}
-                    showProgress={false}
-                    ctaLabel="Hỏi nhanh"
-                    onOpen={() => {}}
-                />
-            </div>,
-            ANATOMY,
+        frame(
+            <BlockAnatomy
+                name="DeckCard"
+                tier="design"
+                leaf="Chế độ quiz"
+                parts={QUIZ_PARTS}
+                note="showProgress=false → bỏ cả StatusChip lẫn ProgressMeter (SR không liên quan khi chỉ chọn chủ đề để hỏi); chỉ còn tiêu đề · chip độ khó · CTA đổi nhãn."
+            >
+                <div className="w-80">
+                    <DeckCard
+                        title="React Hooks nâng cao"
+                        description="useEffect, useMemo, useCallback và các bẫy dependency thường gặp."
+                        difficulty="intermediate"
+                        cardCount={40}
+                        showProgress={false}
+                        ctaLabel="Hỏi nhanh"
+                        showAnatomy
+                        onOpen={() => {}}
+                    />
+                </div>
+            </BlockAnatomy>,
         ),
 }
 
 /** Grid of cards — how the deck picker actually repeats this card. */
 export const Grid: Story = {
     render: () =>
-        blockShell(
-            <div className="grid w-full max-w-3xl gap-3 @app-sm:grid-cols-2">
-                <DeckCard
-                    title="React Hooks nâng cao"
-                    description="useEffect, useMemo, useCallback và các bẫy dependency thường gặp."
-                    difficulty="intermediate"
-                    dueCount={6}
-                    masteredCount={18}
-                    cardCount={40}
-                    onOpen={() => {}}
-                />
-                <DeckCard
-                    title="CSS Flexbox căn bản"
-                    description="Các thuộc tính container và item cốt lõi khi dựng layout."
-                    difficulty="beginner"
-                    masteredCount={12}
-                    cardCount={12}
-                    onOpen={() => {}}
-                />
-                <DeckCard
-                    title="Thuật toán sắp xếp"
-                    difficulty="insane"
-                    dueCount={3}
-                    masteredCount={4}
-                    cardCount={30}
-                    onOpen={() => {}}
-                />
-                <DeckCard
-                    title="Git — nhánh & rebase"
-                    description="Tạo nhánh, merge, rebase và xử lý conflict cơ bản."
-                    difficulty="advanced"
-                    masteredCount={25}
-                    cardCount={25}
-                    onOpen={() => {}}
-                />
-            </div>,
-            ANATOMY,
+        frame(
+            <BlockAnatomy
+                name="DeckCard"
+                tier="design"
+                leaf="Lưới"
+                parts={DECK_PARTS}
+                note="Lưới deck picker chỉ lặp CÙNG card ×N (mỗi ô tự phân giải chip/meter theo dữ liệu) — không dựng lại khung mỗi nơi."
+            >
+                <div className="grid w-full max-w-3xl gap-3 @app-sm:grid-cols-2">
+                    <DeckCard
+                        title="React Hooks nâng cao"
+                        description="useEffect, useMemo, useCallback và các bẫy dependency thường gặp."
+                        difficulty="intermediate"
+                        dueCount={6}
+                        masteredCount={18}
+                        cardCount={40}
+                        onOpen={() => {}}
+                    />
+                    <DeckCard
+                        title="CSS Flexbox căn bản"
+                        description="Các thuộc tính container và item cốt lõi khi dựng layout."
+                        difficulty="beginner"
+                        masteredCount={12}
+                        cardCount={12}
+                        onOpen={() => {}}
+                    />
+                    <DeckCard
+                        title="Thuật toán sắp xếp"
+                        difficulty="insane"
+                        dueCount={3}
+                        masteredCount={4}
+                        cardCount={30}
+                        onOpen={() => {}}
+                    />
+                    <DeckCard
+                        title="Git — nhánh & rebase"
+                        description="Tạo nhánh, merge, rebase và xử lý conflict cơ bản."
+                        difficulty="advanced"
+                        masteredCount={25}
+                        cardCount={25}
+                        onOpen={() => {}}
+                    />
+                </div>
+            </BlockAnatomy>,
         ),
 }
 
@@ -186,17 +272,18 @@ export const Grid: Story = {
 export const Skeleton: Story = {
     name: "Khung chờ",
     render: () =>
-        blockShell(
-            <div className="w-80">
-                <DeckCard
-                    title=""
-                    difficulty="beginner"
-                    cardCount={0}
-                    onOpen={() => {}}
-                    isSkeleton
-                />
-            </div>,
-            ANATOMY,
+        frame(
+            <BlockAnatomy
+                name="DeckCard"
+                tier="design"
+                leaf="Khung chờ"
+                parts={SKELETON_PARTS}
+                note="isSkeleton → mỗi part thật đổi sang Skeleton tương ứng, giữ đúng footprint card (mọi prop dữ liệu bị bỏ qua)."
+            >
+                <div className="w-80">
+                    <DeckCard title="" difficulty="beginner" cardCount={0} onOpen={() => {}} isSkeleton />
+                </div>
+            </BlockAnatomy>,
         ),
 }
 
@@ -204,13 +291,20 @@ export const Skeleton: Story = {
 export const SkeletonGrid: Story = {
     name: "Khung chờ · lưới",
     render: () =>
-        blockShell(
-            <div className="grid w-full max-w-3xl gap-3 @app-sm:grid-cols-2">
-                <DeckCard title="" difficulty="beginner" cardCount={0} onOpen={() => {}} isSkeleton />
-                <DeckCard title="" difficulty="beginner" cardCount={0} onOpen={() => {}} isSkeleton />
-                <DeckCard title="" difficulty="beginner" cardCount={0} onOpen={() => {}} isSkeleton />
-                <DeckCard title="" difficulty="beginner" cardCount={0} onOpen={() => {}} isSkeleton />
-            </div>,
-            ANATOMY,
+        frame(
+            <BlockAnatomy
+                name="DeckCard"
+                tier="design"
+                leaf="Khung chờ · lưới"
+                parts={SKELETON_PARTS}
+                note="Cả lưới deck picker đang tải cùng lúc — Skeleton mirror ×4, giữ nguyên footprint lưới thật."
+            >
+                <div className="grid w-full max-w-3xl gap-3 @app-sm:grid-cols-2">
+                    <DeckCard title="" difficulty="beginner" cardCount={0} onOpen={() => {}} isSkeleton />
+                    <DeckCard title="" difficulty="beginner" cardCount={0} onOpen={() => {}} isSkeleton />
+                    <DeckCard title="" difficulty="beginner" cardCount={0} onOpen={() => {}} isSkeleton />
+                    <DeckCard title="" difficulty="beginner" cardCount={0} onOpen={() => {}} isSkeleton />
+                </div>
+            </BlockAnatomy>,
         ),
 }

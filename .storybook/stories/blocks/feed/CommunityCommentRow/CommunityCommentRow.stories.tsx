@@ -2,8 +2,14 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import React, { useState } from "react"
 import { CommunityCommentRow, type QueryCommunityCommentNode } from "./CommunityCommentRow"
 import { ReactionType } from "../ReactionBar/ReactionBar"
-import { blockShell } from "../../../block-anatomy"
+import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
 
+/**
+ * ANATOMY IS PER-LEAF: each story below is its OWN leaf and wraps its render in its
+ * OWN BlockAnatomy axis (Sơ đồ + Cây) reflecting the parts THAT leaf composes —
+ * there is no separate consolidated "Anatomy" story. This block emits no anchors,
+ * so `Sơ đồ` shows a clean render + a numbered legend.
+ */
 const meta: Meta<typeof CommunityCommentRow> = {
     title: "Design/Feed/CommunityCommentRow",
     component: CommunityCommentRow,
@@ -17,15 +23,42 @@ export default meta
 
 type Story = StoryObj<typeof CommunityCommentRow>
 
-const ANATOMY = {
-    primitives: [
-        { name: "UserAvatar", role: "avatar tác giả bình luận" },
-        { name: "MarkdownContent", role: "thân bình luận (compact, [&_p]:m-0)" },
-        { name: "ReactionBar", role: "thả cảm xúc cho bình luận" },
-    ],
-    reason:
-        "Một dòng bình luận cộng đồng gói header tác giả + thân markdown + reaction + slot actions vào một block, để CommentThread và các surface bình luận dùng chung một cách trình bày. Quyền react do caller quyết định qua onReact.",
-}
+/** Plain canvas wrapping each leaf's BlockAnatomy panel. */
+const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
+
+// Base composition — the plain comment row (avatar + header + body + reaction bar).
+// Shared by every leaf that renders this exact shape.
+const BASE_PARTS: Array<AnatomyNode> = [
+    { name: "UserAvatar", tier: "primitive", role: "avatar tác giả bình luận" },
+    { name: "Typography", tier: "primitive", role: "tên tác giả + thời gian tương đối" },
+    { name: "MarkdownContent", tier: "primitive", role: "thân bình luận (compact, [&_p]:m-0)" },
+    { name: "ReactionBar", tier: "block", role: "thả cảm xúc cho bình luận" },
+]
+
+// Founder leaf: base + a founder badge (SealCheckIcon) beside the author name.
+const FOUNDER_PARTS: Array<AnatomyNode> = [
+    { name: "UserAvatar", tier: "primitive", role: "avatar tác giả bình luận" },
+    { name: "Typography", tier: "primitive", role: "tên tác giả + thời gian tương đối" },
+    { name: "SealCheckIcon", tier: "primitive", role: "huy hiệu founder cạnh tên", state: "founder" },
+    { name: "MarkdownContent", tier: "primitive", role: "thân bình luận (compact, [&_p]:m-0)" },
+    { name: "ReactionBar", tier: "block", role: "thả cảm xúc cho bình luận" },
+]
+
+// Actions leaf: base + the caller-supplied actions slot beside the reaction bar.
+const ACTIONS_PARTS: Array<AnatomyNode> = [
+    { name: "UserAvatar", tier: "primitive", role: "avatar tác giả bình luận" },
+    { name: "Typography", tier: "primitive", role: "tên tác giả + thời gian tương đối" },
+    { name: "MarkdownContent", tier: "primitive", role: "thân bình luận (compact, [&_p]:m-0)" },
+    { name: "ReactionBar", tier: "block", role: "thả cảm xúc cho bình luận" },
+    { name: "actions", tier: "primitive", role: "slot hành động do caller cấp (Trả lời)" },
+]
+
+// Read-only + zero reactions: ReactionBar returns null, so it drops out entirely.
+const NO_REACTION_PARTS: Array<AnatomyNode> = [
+    { name: "UserAvatar", tier: "primitive", role: "avatar tác giả bình luận" },
+    { name: "Typography", tier: "primitive", role: "tên tác giả + thời gian tương đối" },
+    { name: "MarkdownContent", tier: "primitive", role: "thân bình luận (compact, [&_p]:m-0)" },
+]
 
 /** Wrapper owning local state, simulating the real react flow. */
 const Controlled = ({ initialComment }: { initialComment: QueryCommunityCommentNode }) => {
@@ -139,39 +172,138 @@ const replyAction = (
 
 /** Plain baseline: a non-founder comment with a couple of reactions, no actions slot. */
 export const Default: Story = {
-    render: () => blockShell(<div className="w-full max-w-xl"><CommunityCommentRow comment={defaultComment} onReact={() => {}} /></div>, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="CommunityCommentRow"
+                tier="design"
+                leaf="Mặc định"
+                parts={BASE_PARTS}
+                reason="Một dòng bình luận cộng đồng gói header tác giả + thân markdown + reaction + slot actions vào một block, để CommentThread và các surface bình luận dùng chung một cách trình bày. Quyền react do caller quyết định qua onReact."
+            >
+                <div className="w-full max-w-xl"><CommunityCommentRow comment={defaultComment} onReact={() => {}} /></div>
+            </BlockAnatomy>,
+        ),
 }
 
 export const Fresh: Story = {
-    render: () => blockShell(<div className="w-full max-w-xl"><Controlled initialComment={freshComment} /></div>, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="CommunityCommentRow"
+                tier="design"
+                leaf="Chưa có cảm xúc"
+                parts={BASE_PARTS}
+                note="onReact có mặt nên bar tương tác vẫn hiện (chỉ số 0 ẩn) — CÙNG composition với leaf mặc định."
+            >
+                <div className="w-full max-w-xl"><Controlled initialComment={freshComment} /></div>
+            </BlockAnatomy>,
+        ),
 }
 
 export const Reacted: Story = {
-    render: () => blockShell(<div className="w-full max-w-xl"><CommunityCommentRow comment={reactedComment} onReact={() => {}} /></div>, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="CommunityCommentRow"
+                tier="design"
+                leaf="Đã thả cảm xúc"
+                parts={BASE_PARTS}
+                note="9 cảm xúc + myReaction Love → ReactionBar hiện số và emoji, composition không đổi."
+            >
+                <div className="w-full max-w-xl"><CommunityCommentRow comment={reactedComment} onReact={() => {}} /></div>
+            </BlockAnatomy>,
+        ),
 }
 
 export const FounderAuthor: Story = {
-    render: () => blockShell(<div className="w-full max-w-xl"><CommunityCommentRow comment={founderComment} onReact={() => {}} /></div>, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="CommunityCommentRow"
+                tier="design"
+                leaf="Tác giả founder"
+                parts={FOUNDER_PARTS}
+                note="isFounderAuthor → thêm huy hiệu SealCheckIcon cạnh tên (part chỉ leaf này có)."
+            >
+                <div className="w-full max-w-xl"><CommunityCommentRow comment={founderComment} onReact={() => {}} /></div>
+            </BlockAnatomy>,
+        ),
 }
 
 export const LongBody: Story = {
-    render: () => blockShell(<div className="w-full max-w-xl"><CommunityCommentRow comment={longComment} onReact={() => {}} /></div>, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="CommunityCommentRow"
+                tier="design"
+                leaf="Thân dài"
+                parts={BASE_PARTS}
+                note="Thân markdown nhiều dòng → MarkdownContent giãn cao, composition không đổi."
+            >
+                <div className="w-full max-w-xl"><CommunityCommentRow comment={longComment} onReact={() => {}} /></div>
+            </BlockAnatomy>,
+        ),
 }
 
 export const WithActions: Story = {
-    render: () => blockShell(<div className="w-full max-w-xl"><CommunityCommentRow comment={reactedComment} onReact={() => {}} actions={replyAction} /></div>, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="CommunityCommentRow"
+                tier="design"
+                leaf="Có slot hành động"
+                parts={ACTIONS_PARTS}
+                note="Caller truyền actions → thêm slot 'Trả lời' cạnh ReactionBar (part chỉ leaf này có)."
+            >
+                <div className="w-full max-w-xl"><CommunityCommentRow comment={reactedComment} onReact={() => {}} actions={replyAction} /></div>
+            </BlockAnatomy>,
+        ),
 }
 
 export const ReadOnly: Story = {
-    render: () => blockShell(<div className="w-full max-w-xl"><CommunityCommentRow comment={reactedComment} /></div>, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="CommunityCommentRow"
+                tier="design"
+                leaf="Chỉ đọc"
+                parts={BASE_PARTS}
+                note="Không onReact + có cảm xúc → ReactionBar rơi về hiển thị số + emoji (không picker), vẫn cùng composition."
+            >
+                <div className="w-full max-w-xl"><CommunityCommentRow comment={reactedComment} /></div>
+            </BlockAnatomy>,
+        ),
 }
 
 /** Read-only viewer (no `onReact`) AND zero reactions — `ReactionBar` renders nothing at all. */
 export const ReadOnlyNoReactions: Story = {
-    render: () => blockShell(<div className="w-full max-w-xl"><CommunityCommentRow comment={freshComment} /></div>, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="CommunityCommentRow"
+                tier="design"
+                leaf="Chỉ đọc, không cảm xúc"
+                parts={NO_REACTION_PARTS}
+                note="Không onReact VÀ 0 cảm xúc → ReactionBar render null, biến mất khỏi composition."
+            >
+                <div className="w-full max-w-xl"><CommunityCommentRow comment={freshComment} /></div>
+            </BlockAnatomy>,
+        ),
 }
 
 /** Very long display name — `Typography truncate` clips it instead of wrapping/overflowing. */
 export const LongAuthorName: Story = {
-    render: () => blockShell(<div className="w-72"><CommunityCommentRow comment={longNameComment} onReact={() => {}} /></div>, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="CommunityCommentRow"
+                tier="design"
+                leaf="Tên tác giả dài"
+                parts={BASE_PARTS}
+                note="Tên rất dài → Typography truncate cắt bớt thay vì wrap/tràn, composition không đổi."
+            >
+                <div className="w-72"><CommunityCommentRow comment={longNameComment} onReact={() => {}} /></div>
+            </BlockAnatomy>,
+        ),
 }

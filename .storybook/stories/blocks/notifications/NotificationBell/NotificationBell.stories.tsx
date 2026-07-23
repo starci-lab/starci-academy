@@ -9,7 +9,7 @@ import {
 } from "@phosphor-icons/react"
 import { NotificationBell } from "./NotificationBell"
 import type { NotificationGroup } from "../NotificationList/NotificationList"
-import { blockShell } from "../../../block-anatomy"
+import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof NotificationBell> = {
     title: "Block/Notifications/NotificationBell",
@@ -24,13 +24,41 @@ export default meta
 
 type Story = StoryObj<typeof NotificationBell>
 
-const ANATOMY = {
-    primitives: [
-        { name: "NotificationList", role: "nội dung panel: danh sách thông báo gom theo ngày + header đánh dấu đã đọc" },
-    ],
-    reason:
-        "Nút chuông ở navbar gộp badge đếm chưa đọc (ẩn ở 0, chốt '9+') với một Popover mở ra NotificationList. Đóng gói cả affordance điểm-vào lẫn panel nội dung vào một block, để navbar chỉ truyền unreadCount + groups mà không phải tự nối badge, popover, và list.",
-}
+/** Plain canvas — each leaf wraps its own BlockAnatomy panel below. */
+const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
+
+// WITH-BADGE composition (unread > 0): bell trigger + count badge + popover panel.
+const WITH_BADGE_PARTS: Array<AnatomyNode> = [
+    { name: "Button · iconOnly", tier: "primitive", role: "nút chuông mở popover (BellIcon)" },
+    { name: "Badge", tier: "primitive", role: 'đếm chưa đọc, ẩn ở 0, chốt "9+"', state: "danger" },
+    { name: "Popover", tier: "primitive", role: "mở panel thông báo dưới nút" },
+    {
+        name: "NotificationList",
+        tier: "block",
+        role: "panel nội dung: danh sách gom theo ngày + header đánh dấu đã đọc",
+        children: [
+            { name: "Typography", tier: "primitive", role: 'tiêu đề panel ("Thông báo")' },
+            { name: "Button · markAllRead", tier: "primitive", role: "đánh dấu tất cả đã đọc" },
+            { name: "NotificationItem", tier: "design", role: "một dòng thông báo (lặp ×N)" },
+        ],
+    },
+]
+
+// NO-BADGE composition (unread = 0): same block WITHOUT the count badge.
+const NO_BADGE_PARTS: Array<AnatomyNode> = [
+    { name: "Button · iconOnly", tier: "primitive", role: "nút chuông mở popover (BellIcon) — không badge ở 0" },
+    { name: "Popover", tier: "primitive", role: "mở panel thông báo dưới nút" },
+    {
+        name: "NotificationList",
+        tier: "block",
+        role: "panel nội dung: danh sách gom theo ngày + header đánh dấu đã đọc",
+        children: [
+            { name: "Typography", tier: "primitive", role: 'tiêu đề panel ("Thông báo")' },
+            { name: "Button · markAllRead", tier: "primitive", role: "đánh dấu tất cả đã đọc" },
+            { name: "NotificationItem", tier: "design", role: "một dòng thông báo (lặp ×N)" },
+        ],
+    },
+]
 
 /** Date-based groups ("Today" / "Earlier") with real learning data and pre-formatted times. */
 const SAMPLE_GROUPS: NotificationGroup[] = [
@@ -113,14 +141,50 @@ const NotificationBellDemo = ({
     )
 }
 
+/** WITH UNREAD — badge shows the count and the popover is open over NotificationList. */
 export const WithUnread: Story = {
-    render: () => blockShell(<NotificationBellDemo unreadCount={3} defaultOpen />, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="NotificationBell"
+                tier="block"
+                leaf="Có chưa đọc"
+                parts={WITH_BADGE_PARTS}
+                reason="Nút chuông ở navbar gộp badge đếm chưa đọc (ẩn ở 0, chốt '9+') với một Popover mở ra NotificationList. Đóng gói cả affordance điểm-vào lẫn panel nội dung vào một block, để navbar chỉ truyền unreadCount + groups mà không phải tự nối badge, popover, và list."
+            >
+                <NotificationBellDemo unreadCount={3} defaultOpen />
+            </BlockAnatomy>,
+        ),
 }
 
+/** NO UNREAD — count is zero → the badge is hidden entirely (bell only). */
 export const NoUnread: Story = {
-    render: () => blockShell(<NotificationBellDemo unreadCount={0} defaultOpen={false} />, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="NotificationBell"
+                tier="block"
+                leaf="Đã đọc hết"
+                parts={NO_BADGE_PARTS}
+                note="unreadCount = 0 → Badge biến mất hoàn toàn, chỉ còn nút chuông; composition khác leaf 'Có chưa đọc'."
+            >
+                <NotificationBellDemo unreadCount={0} defaultOpen={false} />
+            </BlockAnatomy>,
+        ),
 }
 
+/** OVER CAP — count above the threshold → the badge caps at "9+". Same composition as WithUnread. */
 export const OverCap: Story = {
-    render: () => blockShell(<NotificationBellDemo unreadCount={15} defaultOpen={false} />, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="NotificationBell"
+                tier="block"
+                leaf="Vượt ngưỡng"
+                parts={WITH_BADGE_PARTS}
+                note='unreadCount > 9 → Badge chốt nhãn "9+" nhưng CÙNG composition với leaf "Có chưa đọc".'
+            >
+                <NotificationBellDemo unreadCount={15} defaultOpen={false} />
+            </BlockAnatomy>,
+        ),
 }

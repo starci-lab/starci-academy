@@ -5,8 +5,17 @@ import { Typography } from "@heroui/react"
 import { ChatCircleDotsIcon } from "@phosphor-icons/react"
 import { ChatPanel, type ChatPanelMessage } from "./ChatPanel"
 import { NestedCard, NestedCardSection } from "../../cards/NestedCard/NestedCard"
-import { blockShell } from "../../../block-anatomy"
+import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
 
+/**
+ * BLOCK — a complete chat surface: a scrollable list of turns (with tool-result
+ * rows under assistant turns), an optional typing indicator, an empty-state slot,
+ * and a sticky-bottom composer that auto-scrolls to the newest turn.
+ *
+ * ANATOMY IS PER-LEAF: each story below is its OWN leaf and wraps its render in
+ * its OWN BlockAnatomy reflecting the parts THAT leaf composes — there is no
+ * separate consolidated "Anatomy" story.
+ */
 const meta: Meta<typeof ChatPanel> = {
     title: "Block/Feed/ChatPanel",
     component: ChatPanel,
@@ -20,15 +29,30 @@ export default meta
 
 type Story = StoryObj<typeof ChatPanel>
 
-const ANATOMY = {
-    primitives: [
-        { name: "ChatBubble", role: "mỗi lượt tin theo role (user/assistant)" },
-        { name: "Composer", role: "ô soạn tin ghim đáy panel" },
-        { name: "NestedCard", role: "tool-result gắn dưới lượt trợ lý (nguồn tham khảo)" },
-    ],
-    reason:
-        "Một surface chat hoàn chỉnh: danh sách tin cuộn được + typing indicator + empty-state + ô soạn ghim đáy, tự cuộn xuống lượt mới nhất. Gói ChatBubble + Composer + auto-scroll vào một block để mọi feature chat props-only là chạy.",
-}
+/** Plain canvas that frames each leaf's anatomy panel. */
+const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
+
+// Conversation leaf: the real turns — bubbles + a tool-result card + composer.
+const CONVERSATION_PARTS: Array<AnatomyNode> = [
+    { name: "ChatBubble", tier: "design", role: "mỗi lượt tin theo role (user/assistant)" },
+    { name: "NestedCard", tier: "design", role: "tool-result gắn dưới lượt trợ lý (nguồn tham khảo)" },
+    { name: "Composer", tier: "design", role: "ô soạn tin ghim đáy panel" },
+]
+
+// Typing leaf: same turns + the three-dot indicator standing in for the pending reply.
+const TYPING_PARTS: Array<AnatomyNode> = [
+    { name: "ChatBubble", tier: "design", role: "mỗi lượt tin theo role (user/assistant)" },
+    { name: "NestedCard", tier: "design", role: "tool-result gắn dưới lượt trợ lý (nguồn tham khảo)" },
+    { name: "Typing indicator", tier: "primitive", role: "ba chấm nảy phía trợ lý đang gõ", state: "typing" },
+    { name: "Composer", tier: "design", role: "ô soạn tin ghim đáy panel" },
+]
+
+// Empty leaf: no turns — the empty-state slot (icon + dòng nhắc) + composer.
+const EMPTY_PARTS: Array<AnatomyNode> = [
+    { name: "ChatCircleDotsIcon", tier: "primitive", role: "icon minh hoạ hội thoại rỗng" },
+    { name: "Typography", tier: "primitive", role: 'dòng nhắc "No messages yet…"' },
+    { name: "Composer", tier: "design", role: "ô soạn tin ghim đáy (vẫn hiện)" },
+]
 
 const baseMessages: Array<ChatPanelMessage> = [
     {
@@ -110,27 +134,56 @@ const Controlled = ({
 }
 
 export const Conversation: Story = {
-    render: () => blockShell(<Controlled initialMessages={baseMessages} />, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="ChatPanel"
+                tier="block"
+                leaf="Có hội thoại"
+                parts={CONVERSATION_PARTS}
+                reason="Một surface chat hoàn chỉnh: danh sách tin cuộn được + typing indicator + empty-state + ô soạn ghim đáy, tự cuộn xuống lượt mới nhất. Gói ChatBubble + Composer + auto-scroll vào một block để mọi feature chat props-only là chạy."
+            >
+                <Controlled initialMessages={baseMessages} />
+            </BlockAnatomy>,
+        ),
 }
 
 export const Empty: Story = {
     render: () =>
-        blockShell(
-            <Controlled
-                initialMessages={[]}
-                emptyState={(
-                    <div className="flex flex-col items-center gap-2 text-center">
-                        <ChatCircleDotsIcon aria-hidden focusable="false" className="size-8 text-muted" />
-                        <Typography type="body-sm" color="muted">
-                            No messages yet. Ask the teaching assistant your first question.
-                        </Typography>
-                    </div>
-                )}
-            />,
-            ANATOMY,
+        shell(
+            <BlockAnatomy
+                name="ChatPanel"
+                tier="block"
+                leaf="Rỗng"
+                parts={EMPTY_PARTS}
+                note="Không có lượt tin → danh sách nhường chỗ cho empty-state slot (icon + dòng nhắc), KHÔNG có ChatBubble; composer vẫn ghim đáy."
+            >
+                <Controlled
+                    initialMessages={[]}
+                    emptyState={(
+                        <div className="flex flex-col items-center gap-2 text-center">
+                            <ChatCircleDotsIcon aria-hidden focusable="false" className="size-8 text-muted" />
+                            <Typography type="body-sm" color="muted">
+                                No messages yet. Ask the teaching assistant your first question.
+                            </Typography>
+                        </div>
+                    )}
+                />
+            </BlockAnatomy>,
         ),
 }
 
 export const Typing: Story = {
-    render: () => blockShell(<Controlled initialMessages={baseMessages.slice(0, 3)} isTyping />, ANATOMY),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="ChatPanel"
+                tier="block"
+                leaf="Đang gõ"
+                parts={TYPING_PARTS}
+                note="Trợ lý đang soạn → dưới lượt cuối thêm typing indicator ba chấm nảy; phần còn lại cùng composition với leaf 'Có hội thoại'."
+            >
+                <Controlled initialMessages={baseMessages.slice(0, 3)} isTyping />
+            </BlockAnatomy>,
+        ),
 }

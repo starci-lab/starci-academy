@@ -1,8 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { DiffViewer } from "./DiffViewer"
 import type { DiffHunk } from "./DiffViewer"
-import { blockShell } from "../../../block-anatomy"
+import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
 
+/**
+ * DESIGN — a leaf renderer for grading diffs (student code vs a suggested fix).
+ * It takes PRE-PARSED hunks (no diff algorithm) and self-draws every row: a
+ * filename header bar, a line-number gutter, and token-colored line backgrounds.
+ *
+ * ANATOMY IS PER-LEAF: each story below is its OWN leaf and carries its OWN
+ * BlockAnatomy axis (Sơ đồ + Cây) reflecting the parts THAT leaf composes — there
+ * is no separate consolidated "Anatomy" story. DiffViewer emits no anchors (it
+ * hand-draws every row), so no `showAnatomy` — Sơ đồ is a clean render + legend.
+ */
 const meta: Meta<typeof DiffViewer> = {
     title: "Design/Grading/DiffViewer",
     component: DiffViewer,
@@ -16,13 +26,8 @@ export default meta
 
 type Story = StoryObj<typeof DiffViewer>
 
-const ANATOMY = {
-    primitives: [
-        { name: "Typography", role: "tên file trên header bar (HeroUI base)" },
-    ],
-    reason:
-        "Leaf renderer cho diff chấm bài: nhận hunks đã parse sẵn (không tự chạy thuật toán diff) rồi vẽ header tên file + gutter số dòng + nền màu theo token (thêm=success, xoá=danger, context=neutral). Không cấu thành từ Primitives/* — tự vẽ mọi hàng, nên đúng ra là một Primitive hơn là Block (xem FLAGS).",
-}
+/** Frame each leaf's anatomy panel with breathing room. */
+const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
 
 /** A small pre-parsed hunk: a few context lines, one removed line and two added lines. */
 const sampleHunks: DiffHunk[] = [
@@ -39,25 +44,82 @@ const sampleHunks: DiffHunk[] = [
     },
 ]
 
+// UNIFIED leaf: filename header + hunk-header separator + one-column gutter/rows.
+const UNIFIED_PARTS: Array<AnatomyNode> = [
+    { name: "Typography", tier: "primitive", role: "tên file trên header bar (HeroUI base)" },
+    { name: "Thanh header hunk", tier: "design", role: "hàng phân cách muted @@ … @@ (tự vẽ)" },
+    { name: "Gutter số dòng", tier: "design", role: "cột số dòng cũ + mới, tabular-nums (tự vẽ)" },
+    { name: "Hàng diff", tier: "design", role: "marker +/-/· + nội dung, nền token thêm=success / xoá=danger / context=neutral (tự vẽ)" },
+]
+
+// SPLIT leaf: same parts but the body is a 2-column old/new layout, own gutter each side.
+const SPLIT_PARTS: Array<AnatomyNode> = [
+    { name: "Typography", tier: "primitive", role: "tên file trên header bar (HeroUI base)" },
+    { name: "Thanh header hunk", tier: "design", role: "hàng phân cách muted @@ … @@ (tự vẽ)" },
+    { name: "Gutter số dòng", tier: "design", role: "hai cột: file cũ trái + file mới phải, mỗi bên một số dòng (tự vẽ)" },
+    { name: "Hàng diff", tier: "design", role: "grid 2 cột chia đôi — thêm chỉ hiện bên mới / xoá chỉ bên cũ (tự vẽ)" },
+]
+
+// NO-FILENAME leaf: `filename` omitted → header bar (Typography) skipped entirely.
+const NO_FILENAME_PARTS: Array<AnatomyNode> = [
+    { name: "Thanh header hunk", tier: "design", role: "hàng phân cách muted @@ … @@ (tự vẽ)" },
+    { name: "Gutter số dòng", tier: "design", role: "cột số dòng cũ + mới, tabular-nums (tự vẽ)" },
+    { name: "Hàng diff", tier: "design", role: "marker +/-/· + nội dung, nền token thêm=success / xoá=danger / context=neutral (tự vẽ)" },
+]
+
+// NO-HUNK-HEADER leaf: hunk has no `header` → the muted separator row is not drawn.
+const NO_HUNK_HEADER_PARTS: Array<AnatomyNode> = [
+    { name: "Typography", tier: "primitive", role: "tên file trên header bar (HeroUI base)" },
+    { name: "Gutter số dòng", tier: "design", role: "cột số dòng cũ + mới, tabular-nums (tự vẽ)" },
+    { name: "Hàng diff", tier: "design", role: "marker +/-/· + nội dung, nền token thêm=success / xoá=danger / context=neutral (tự vẽ)" },
+]
+
+/** UNIFIED (default) — every line stacked in one column with +/-/space markers. */
 export const Unified: Story = {
     render: () =>
-        blockShell(
-            <DiffViewer filename="src/auth/login.ts" hunks={sampleHunks} />,
-            ANATOMY,
+        frame(
+            <BlockAnatomy
+                name="DiffViewer"
+                tier="design"
+                leaf="Hợp nhất"
+                parts={UNIFIED_PARTS}
+                reason="Leaf renderer cho diff chấm bài: nhận hunks đã parse sẵn (không tự chạy thuật toán diff) rồi vẽ header tên file + gutter số dòng + nền màu theo token (thêm=success, xoá=danger, context=neutral). Không cấu thành từ Primitives/* — tự vẽ mọi hàng, nên đúng ra là một Primitive hơn là Block (xem FLAGS)."
+            >
+                <DiffViewer filename="src/auth/login.ts" hunks={sampleHunks} />
+            </BlockAnatomy>,
         ),
 }
 
+/** SPLIT — SAME parts, but the body switches to a 2-column old/new layout. */
 export const Split: Story = {
     render: () =>
-        blockShell(
-            <DiffViewer filename="src/auth/login.ts" hunks={sampleHunks} variant="split" />,
-            ANATOMY,
+        frame(
+            <BlockAnatomy
+                name="DiffViewer"
+                tier="design"
+                leaf="Chia đôi"
+                parts={SPLIT_PARTS}
+                note="Cùng thành phần nhưng bố cục chia đôi: file cũ bên trái, file mới bên phải; context hiện cả hai bên."
+            >
+                <DiffViewer filename="src/auth/login.ts" hunks={sampleHunks} variant="split" />
+            </BlockAnatomy>,
         ),
 }
 
 /** `filename` is optional — the header bar is skipped entirely when omitted. */
 export const NoFilename: Story = {
-    render: () => blockShell(<DiffViewer hunks={sampleHunks} />, ANATOMY),
+    render: () =>
+        frame(
+            <BlockAnatomy
+                name="DiffViewer"
+                tier="design"
+                leaf="Không tên file"
+                parts={NO_FILENAME_PARTS}
+                note="filename bỏ trống → header bar bị bỏ HẲN (không Typography), phần code giữ nguyên."
+            >
+                <DiffViewer hunks={sampleHunks} />
+            </BlockAnatomy>,
+        ),
 }
 
 /** A hunk's `header` is optional — no muted separator row is drawn when it's omitted. */
@@ -74,8 +136,15 @@ const hunkWithoutHeader: DiffHunk[] = [
 
 export const WithoutHunkHeader: Story = {
     render: () =>
-        blockShell(
-            <DiffViewer filename="src/utils/clamp.ts" hunks={hunkWithoutHeader} />,
-            ANATOMY,
+        frame(
+            <BlockAnatomy
+                name="DiffViewer"
+                tier="design"
+                leaf="Không header hunk"
+                parts={NO_HUNK_HEADER_PARTS}
+                note="hunk không có header → không vẽ hàng phân cách muted; các hàng diff nối liền nhau."
+            >
+                <DiffViewer filename="src/utils/clamp.ts" hunks={hunkWithoutHeader} />
+            </BlockAnatomy>,
         ),
 }

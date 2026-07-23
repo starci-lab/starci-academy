@@ -65,6 +65,8 @@ export interface EntityResultRowProps {
     showSnippet?: boolean
     /** Extra classes on the row. */
     className?: string
+    /** Anatomy tag: names this row's part so a {@link BlockAnatomy} panel can badge it. */
+    anatPart?: string
 }
 
 /**
@@ -85,11 +87,13 @@ export const EntityResultRow = ({
     showKindChip = false,
     showSnippet = false,
     className,
+    anatPart,
 }: EntityResultRowProps) => {
     const kind = resolveKind(item.kind)
     return (
         <button
             type="button"
+            data-anat-part={anatPart}
             onClick={() => onSelect(item)}
             className={cn(
                 "group relative flex w-full cursor-pointer flex-col gap-2 px-4 py-3 text-left after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-[''] last:after:hidden",

@@ -1,7 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { PlaygroundCard } from "./PlaygroundCard"
-import { blockShell } from "../../../block-anatomy"
+import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
 
+/**
+ * DESIGN — one exercise cell in the Playground hub grid: icon tile + title +
+ * step-count chip + a single CTA.
+ *
+ * ANATOMY IS PER-LEAF: each story below is its OWN leaf and carries its OWN
+ * BlockAnatomy axis (Sơ đồ + Cây) reflecting the parts THAT leaf composes — there
+ * is no separate consolidated "Anatomy" story. Every leaf here shares the same
+ * composition (only title/stepCount vary), so they reuse one PARTS constant.
+ */
 const meta: Meta<typeof PlaygroundCard> = {
     title: "Design/Cards/PlaygroundCard",
     component: PlaygroundCard,
@@ -15,66 +24,97 @@ export default meta
 
 type Story = StoryObj<typeof PlaygroundCard>
 
-const ANATOMY = {
-    primitives: [
-        { name: "IconTile", role: "avatar terminal tô nền accent (size lg)" },
-    ],
-    reason:
-        "Một ô bài thực hành trong lưới hub Playground cần MỘT nhận diện hình ảnh nhất quán (IconTile terminal) + tiêu đề + chip số bước + một CTA vào phòng lab. Gói vào một block để mọi ô trong lưới (Docker/Kubernetes) cùng một khuôn — feature chỉ truyền title/stepCount/onOpen, không dựng lại icon-tile và CTA ở mỗi ô.",
-}
+/** Frame each leaf's anatomy panel with breathing room. */
+const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
+
+// The single composition every leaf renders (only title/stepCount differ).
+const CARD_PARTS: Array<AnatomyNode> = [
+    { name: "IconTile", tier: "primitive", role: "avatar terminal tô nền accent (size lg)" },
+    { name: "Typography", tier: "primitive", role: "tiêu đề (truncate)" },
+    { name: "StatusChip", tier: "primitive", role: 'chip số bước "N bước" (neutral)' },
+    { name: "Button", tier: "primitive", role: 'CTA "Vào playground" — hành động duy nhất' },
+]
 
 export const Default: Story = {
     render: () =>
-        blockShell(
-            <div className="w-64">
-                <PlaygroundCard
-                    title="Triển khai container Nginx đầu tiên"
-                    stepCount={5}
-                    onOpen={() => {}}
-                />
-            </div>,
-            ANATOMY,
+        frame(
+            <BlockAnatomy
+                name="PlaygroundCard"
+                tier="design"
+                leaf="Có dữ liệu"
+                parts={CARD_PARTS}
+                reason="Một ô bài thực hành trong lưới hub Playground cần MỘT nhận diện hình ảnh nhất quán (IconTile terminal) + tiêu đề + chip số bước + một CTA vào phòng lab. Gói vào một block để mọi ô trong lưới (Docker/Kubernetes) cùng một khuôn — feature chỉ truyền title/stepCount/onOpen, không dựng lại icon-tile và CTA ở mỗi ô."
+            >
+                <div className="w-64">
+                    <PlaygroundCard
+                        title="Triển khai container Nginx đầu tiên"
+                        stepCount={5}
+                        onOpen={() => {}}
+                    />
+                </div>
+            </BlockAnatomy>,
         ),
 }
 
 export const SingleStep: Story = {
     render: () =>
-        blockShell(
-            <div className="w-64">
-                <PlaygroundCard
-                    title="Kiểm tra phiên bản Docker"
-                    stepCount={1}
-                    onOpen={() => {}}
-                />
-            </div>,
-            ANATOMY,
+        frame(
+            <BlockAnatomy
+                name="PlaygroundCard"
+                tier="design"
+                leaf="Một bước"
+                parts={CARD_PARTS}
+                note="stepCount = 1 → chip chỉ hiện '1 bước', CÙNG composition với leaf 'Có dữ liệu'."
+            >
+                <div className="w-64">
+                    <PlaygroundCard
+                        title="Kiểm tra phiên bản Docker"
+                        stepCount={1}
+                        onOpen={() => {}}
+                    />
+                </div>
+            </BlockAnatomy>,
         ),
 }
 
 export const ManySteps: Story = {
     render: () =>
-        blockShell(
-            <div className="w-64">
-                <PlaygroundCard
-                    title="Dựng cluster Kubernetes nhiều node"
-                    stepCount={12}
-                    onOpen={() => {}}
-                />
-            </div>,
-            ANATOMY,
+        frame(
+            <BlockAnatomy
+                name="PlaygroundCard"
+                tier="design"
+                leaf="Nhiều bước"
+                parts={CARD_PARTS}
+                note="stepCount lớn → chip '12 bước', composition không đổi."
+            >
+                <div className="w-64">
+                    <PlaygroundCard
+                        title="Dựng cluster Kubernetes nhiều node"
+                        stepCount={12}
+                        onOpen={() => {}}
+                    />
+                </div>
+            </BlockAnatomy>,
         ),
 }
 
 export const LongTitleTruncate: Story = {
     render: () =>
-        blockShell(
-            <div className="w-64">
-                <PlaygroundCard
-                    title="Triển khai hệ thống microservices với Docker Compose và Kubernetes trên nhiều môi trường"
-                    stepCount={8}
-                    onOpen={() => {}}
-                />
-            </div>,
-            ANATOMY,
+        frame(
+            <BlockAnatomy
+                name="PlaygroundCard"
+                tier="design"
+                leaf="Tiêu đề dài"
+                parts={CARD_PARTS}
+                note="Tiêu đề dài → Typography truncate giữ một dòng; composition vẫn y hệt."
+            >
+                <div className="w-64">
+                    <PlaygroundCard
+                        title="Triển khai hệ thống microservices với Docker Compose và Kubernetes trên nhiều môi trường"
+                        stepCount={8}
+                        onOpen={() => {}}
+                    />
+                </div>
+            </BlockAnatomy>,
         ),
 }

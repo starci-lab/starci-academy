@@ -1,7 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ShowcaseMockup, SHOWCASE_THEMES } from "./ShowcaseMockup"
-import { blockShell } from "../../../block-anatomy"
+import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
 
+/**
+ * DESIGN — a reusable "browser window" showcase frame: window chrome (3 dots +
+ * address bar) + a fanned card behind + a coloured backdrop, holding any content.
+ *
+ * ANATOMY IS PER-LEAF: each story below is its OWN leaf and carries its OWN
+ * BlockAnatomy axis (Sơ đồ + Cây) reflecting the parts THAT leaf composes — there
+ * is no separate consolidated "Anatomy" story. Most leaves share the base
+ * composition; `Không nền` drops the backdrop layer and `Không address bar` drops
+ * the URL. This block emits NO anchors → parts are decoded by number in the legend.
+ */
 const meta: Meta<typeof ShowcaseMockup> = {
     title: "Design/Marketing/ShowcaseMockup",
     component: ShowcaseMockup,
@@ -15,13 +25,8 @@ export default meta
 
 type Story = StoryObj<typeof ShowcaseMockup>
 
-const ANATOMY = {
-    primitives: [
-        { name: "Typography", role: "chuỗi URL trên thanh address (type=code)" },
-    ],
-    reason:
-        "Khung cửa sổ trình duyệt tái dùng (3 chấm + address bar) bọc bất kỳ nội dung nào, nghiêng 3D + quầng sáng màu — cái look hero StarCi/Uni-Education gói thành một block. Feature chỉ đổi theme/tilt/backdrop/url + children; surface card luôn theo token light/dark.",
-}
+/** Plain canvas — each story wraps its render in its own BlockAnatomy panel. */
+const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
 /** Sample content inside the mockup — a condensed course list. */
 const DemoContent = () => (
@@ -35,124 +40,241 @@ const DemoContent = () => (
     </div>
 )
 
+// BASE composition — backdrop layer + fanned card behind + window chrome (dots +
+// URL) + content. Shared by every leaf that keeps both the backdrop and the URL
+// (theme / tilt / backdrop-style / aspect variants only change look, not parts).
+const BASE_PARTS: Array<AnatomyNode> = [
+    { name: "Backdrop", tier: "design", role: "lớp trang trí sau thẻ (glow / grid / stars)", state: "glow" },
+    { name: "Card sau", tier: "design", role: "thẻ nền nghiêng NGƯỢC, tô màu theme → chiều sâu 'xoè'" },
+    {
+        name: "Window chrome",
+        tier: "design",
+        role: "thanh cửa sổ: 3 chấm đỏ/vàng/lục + address bar",
+        children: [{ name: "Typography", tier: "primitive", role: "chuỗi URL trên address bar (type=code)" }],
+    },
+    { name: "Content", tier: "design", role: "vùng bọc nội dung children" },
+]
+
+// NO-BACKDROP leaf: backdrop="none" → the decorative layer is gone; card behind,
+// chrome (+URL) and content stay.
+const NO_BACKDROP_PARTS: Array<AnatomyNode> = [
+    { name: "Card sau", tier: "design", role: "thẻ nền nghiêng NGƯỢC, tô màu theme → chiều sâu 'xoè'" },
+    {
+        name: "Window chrome",
+        tier: "design",
+        role: "thanh cửa sổ: 3 chấm đỏ/vàng/lục + address bar",
+        children: [{ name: "Typography", tier: "primitive", role: "chuỗi URL trên address bar (type=code)" }],
+    },
+    { name: "Content", tier: "design", role: "vùng bọc nội dung children" },
+]
+
+// NO-URL leaf: no `url` → the address-bar Typography is dropped, chrome shows only
+// the 3 dots. Backdrop, card behind and content stay.
+const NO_URL_PARTS: Array<AnatomyNode> = [
+    { name: "Backdrop", tier: "design", role: "lớp trang trí sau thẻ (glow)", state: "glow" },
+    { name: "Card sau", tier: "design", role: "thẻ nền nghiêng NGƯỢC, tô màu theme → chiều sâu 'xoè'" },
+    { name: "Window chrome", tier: "design", role: "thanh cửa sổ: chỉ 3 chấm, KHÔNG address bar" },
+    { name: "Content", tier: "design", role: "vùng bọc nội dung children" },
+]
+
+/** DEFAULT — glow backdrop, tilt-left, URL address bar, sample content. */
 export const Default: Story = {
     render: () =>
-        blockShell(
-            <div className="max-w-lg">
-                <ShowcaseMockup url="starci.edu.vn/khoa-hoc">
-                    <DemoContent />
-                </ShowcaseMockup>
-            </div>,
-            ANATOMY,
+        shell(
+            <BlockAnatomy
+                name="ShowcaseMockup"
+                tier="design"
+                leaf="Mặc định"
+                parts={BASE_PARTS}
+                reason="Khung cửa sổ trình duyệt tái dùng (3 chấm + address bar) bọc bất kỳ nội dung nào, nghiêng 3D + quầng sáng màu — cái look hero StarCi/Uni-Education gói thành một block. Feature chỉ đổi theme/tilt/backdrop/url + children; surface card luôn theo token light/dark."
+            >
+                <div className="max-w-lg">
+                    <ShowcaseMockup url="starci.edu.vn/khoa-hoc">
+                        <DemoContent />
+                    </ShowcaseMockup>
+                </div>
+            </BlockAnatomy>,
         ),
 }
 
+/** THEME StarCi — pink · amber · teal glow triad; SAME composition as mặc định. */
 export const ThemeStarci: Story = {
     render: () =>
-        blockShell(
-            <div className="max-w-lg">
-                <ShowcaseMockup url="starci.edu.vn/kien-truc" theme={SHOWCASE_THEMES.starci}>
-                    <DemoContent />
-                </ShowcaseMockup>
-            </div>,
-            ANATOMY,
+        shell(
+            <BlockAnatomy
+                name="ShowcaseMockup"
+                tier="design"
+                leaf="Theme StarCi"
+                parts={BASE_PARTS}
+                note="Chỉ đổi màu quầng sáng (theme) → CÙNG composition với leaf 'Mặc định'."
+            >
+                <div className="max-w-lg">
+                    <ShowcaseMockup url="starci.edu.vn/kien-truc" theme={SHOWCASE_THEMES.starci}>
+                        <DemoContent />
+                    </ShowcaseMockup>
+                </div>
+            </BlockAnatomy>,
         ),
 }
 
+/** THEME Aqua — blue · teal · violet glow triad; SAME composition as mặc định. */
 export const ThemeAqua: Story = {
     render: () =>
-        blockShell(
-            <div className="max-w-lg">
-                <ShowcaseMockup url="uni-education.vn/demo" theme={SHOWCASE_THEMES.aqua}>
-                    <DemoContent />
-                </ShowcaseMockup>
-            </div>,
-            ANATOMY,
+        shell(
+            <BlockAnatomy
+                name="ShowcaseMockup"
+                tier="design"
+                leaf="Theme Aqua"
+                parts={BASE_PARTS}
+                note="Chỉ đổi màu quầng sáng (theme) → CÙNG composition với leaf 'Mặc định'."
+            >
+                <div className="max-w-lg">
+                    <ShowcaseMockup url="uni-education.vn/demo" theme={SHOWCASE_THEMES.aqua}>
+                        <DemoContent />
+                    </ShowcaseMockup>
+                </div>
+            </BlockAnatomy>,
         ),
 }
 
+/** TILT right — the card + card-behind splay the other way; SAME composition. */
 export const TiltRight: Story = {
     render: () =>
-        blockShell(
-            <div className="max-w-lg">
-                <ShowcaseMockup url="starci.edu.vn/lo-trinh" tilt="right">
-                    <DemoContent />
-                </ShowcaseMockup>
-            </div>,
-            ANATOMY,
+        shell(
+            <BlockAnatomy
+                name="ShowcaseMockup"
+                tier="design"
+                leaf="Nghiêng phải"
+                parts={BASE_PARTS}
+                note="Chỉ đổi hướng nghiêng 3D → CÙNG composition với leaf 'Mặc định'."
+            >
+                <div className="max-w-lg">
+                    <ShowcaseMockup url="starci.edu.vn/lo-trinh" tilt="right">
+                        <DemoContent />
+                    </ShowcaseMockup>
+                </div>
+            </BlockAnatomy>,
         ),
 }
 
+/** TILT none — card sits flat (card-behind still rendered); SAME composition. */
 export const TiltNone: Story = {
     render: () =>
-        blockShell(
-            <div className="max-w-lg">
-                <ShowcaseMockup url="starci.edu.vn/gia" tilt="none">
-                    <DemoContent />
-                </ShowcaseMockup>
-            </div>,
-            ANATOMY,
+        shell(
+            <BlockAnatomy
+                name="ShowcaseMockup"
+                tier="design"
+                leaf="Không nghiêng"
+                parts={BASE_PARTS}
+                note="Tắt nghiêng 3D nhưng thẻ-sau VẪN dựng → CÙNG composition với leaf 'Mặc định'."
+            >
+                <div className="max-w-lg">
+                    <ShowcaseMockup url="starci.edu.vn/gia" tilt="none">
+                        <DemoContent />
+                    </ShowcaseMockup>
+                </div>
+            </BlockAnatomy>,
         ),
 }
 
+/** BACKDROP grid — dotted-grid decorative layer; SAME parts, backdrop restyled. */
 export const BackdropGrid: Story = {
     render: () =>
-        blockShell(
-            <div className="max-w-lg">
-                <ShowcaseMockup url="starci.edu.vn/tai-lieu" backdrop="grid">
-                    <DemoContent />
-                </ShowcaseMockup>
-            </div>,
-            ANATOMY,
+        shell(
+            <BlockAnatomy
+                name="ShowcaseMockup"
+                tier="design"
+                leaf="Nền lưới"
+                parts={BASE_PARTS}
+                note="Lớp Backdrop đổi sang lưới chấm → vẫn CÙNG composition với leaf 'Mặc định'."
+            >
+                <div className="max-w-lg">
+                    <ShowcaseMockup url="starci.edu.vn/tai-lieu" backdrop="grid">
+                        <DemoContent />
+                    </ShowcaseMockup>
+                </div>
+            </BlockAnatomy>,
         ),
 }
 
+/** BACKDROP stars — scattered star dots; SAME parts, backdrop restyled. */
 export const BackdropStars: Story = {
     render: () =>
-        blockShell(
-            <div className="max-w-lg">
-                <ShowcaseMockup url="starci.edu.vn/cong-dong" backdrop="stars">
-                    <DemoContent />
-                </ShowcaseMockup>
-            </div>,
-            ANATOMY,
+        shell(
+            <BlockAnatomy
+                name="ShowcaseMockup"
+                tier="design"
+                leaf="Nền sao"
+                parts={BASE_PARTS}
+                note="Lớp Backdrop đổi sang các chấm sao → vẫn CÙNG composition với leaf 'Mặc định'."
+            >
+                <div className="max-w-lg">
+                    <ShowcaseMockup url="starci.edu.vn/cong-dong" backdrop="stars">
+                        <DemoContent />
+                    </ShowcaseMockup>
+                </div>
+            </BlockAnatomy>,
         ),
 }
 
+/** BACKDROP none — the decorative layer is dropped entirely (distinct composition). */
 export const BackdropNone: Story = {
     render: () =>
-        blockShell(
-            <div className="max-w-lg">
-                <ShowcaseMockup url="starci.edu.vn/lien-he" backdrop="none">
-                    <DemoContent />
-                </ShowcaseMockup>
-            </div>,
-            ANATOMY,
+        shell(
+            <BlockAnatomy
+                name="ShowcaseMockup"
+                tier="design"
+                leaf="Không nền"
+                parts={NO_BACKDROP_PARTS}
+                note="backdrop='none' → BỎ hẳn lớp Backdrop, khác leaf 'Mặc định' (thiếu một part)."
+            >
+                <div className="max-w-lg">
+                    <ShowcaseMockup url="starci.edu.vn/lien-he" backdrop="none">
+                        <DemoContent />
+                    </ShowcaseMockup>
+                </div>
+            </BlockAnatomy>,
         ),
 }
 
+/** ASPECT video — content locked to 16:9 (a full-page screenshot); SAME parts. */
 export const AspectVideo: Story = {
     render: () =>
-        blockShell(
-            <div className="max-w-lg">
-                <ShowcaseMockup url="starci.edu.vn/preview" aspect="video">
-                    <div className="flex size-full items-center justify-center bg-surface-2 text-xs text-muted">
-                        Ảnh chụp toàn trang web
-                    </div>
-                </ShowcaseMockup>
-            </div>,
-            ANATOMY,
+        shell(
+            <BlockAnatomy
+                name="ShowcaseMockup"
+                tier="design"
+                leaf="Tỉ lệ 16:9"
+                parts={BASE_PARTS}
+                note="Vùng Content khoá tỉ lệ 16:9 (ảnh chụp toàn trang) → parts giữ nguyên như leaf 'Mặc định'."
+            >
+                <div className="max-w-lg">
+                    <ShowcaseMockup url="starci.edu.vn/preview" aspect="video">
+                        <div className="flex size-full items-center justify-center bg-surface-2 text-xs text-muted">
+                            Ảnh chụp toàn trang web
+                        </div>
+                    </ShowcaseMockup>
+                </div>
+            </BlockAnatomy>,
         ),
 }
 
+/** NO address bar — `url` omitted → chrome shows only the 3 dots (distinct composition). */
 export const NoAddressBar: Story = {
     render: () =>
-        blockShell(
-            <div className="max-w-lg">
-                <ShowcaseMockup>
-                    <DemoContent />
-                </ShowcaseMockup>
-            </div>,
-            ANATOMY,
+        shell(
+            <BlockAnatomy
+                name="ShowcaseMockup"
+                tier="design"
+                leaf="Không address bar"
+                parts={NO_URL_PARTS}
+                note="Bỏ prop url → BỎ Typography address bar, chrome chỉ còn 3 chấm (khác leaf 'Mặc định')."
+            >
+                <div className="max-w-lg">
+                    <ShowcaseMockup>
+                        <DemoContent />
+                    </ShowcaseMockup>
+                </div>
+            </BlockAnatomy>,
         ),
 }

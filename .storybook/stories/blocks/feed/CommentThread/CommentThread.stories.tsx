@@ -3,8 +3,17 @@ import React, { useState } from "react"
 import { CommentThread, type CommentThreadNode } from "./CommentThread"
 import { ReactionType } from "../ReactionBar/ReactionBar"
 import type { CommunityPostAuthor } from "../CommunityCommentRow/CommunityCommentRow"
-import { blockShell } from "../../../block-anatomy"
+import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
 
+/**
+ * BLOCK — a nested discussion thread: a root Composer for a top-level comment, a
+ * recursive tree of CommunityCommentRow nodes, and an inline reply Composer under
+ * each node. It owns only the transient draft/reveal state; posting is delegated.
+ *
+ * ANATOMY IS PER-LEAF: each story below is its OWN leaf and carries its OWN
+ * BlockAnatomy axis (Sơ đồ + Cây) reflecting the parts THAT leaf composes — there
+ * is no separate consolidated "Anatomy" story.
+ */
 const meta: Meta<typeof CommentThread> = {
     title: "Block/Feed/CommentThread",
     component: CommentThread,
@@ -18,14 +27,31 @@ export default meta
 
 type Story = StoryObj<typeof CommentThread>
 
-const ANATOMY = {
-    primitives: [
-        { name: "CommunityCommentRow", role: "mỗi node bình luận trong cây" },
-        { name: "Composer", role: "ô soạn gốc + ô trả lời inline mỗi node" },
-    ],
-    reason:
-        "Một luồng thảo luận lồng nhau: mỗi node là CommunityCommentRow, mỗi node có nút Trả lời mở Composer inline, reply thụt lề theo guide rail có giới hạn độ sâu, và một Composer gốc thêm bình luận cấp cao nhất. Gói toàn bộ đệ quy + state draft/reveal vào một block.",
-}
+/** Frame each leaf's anatomy panel with breathing room. */
+const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
+
+// content leaf: root Composer + the recursive CommunityCommentRow tree (each node
+// carries its reaction bar, a "Trả lời" affordance, and its own inline reply Composer).
+const DATA_PARTS: Array<AnatomyNode> = [
+    { name: "Composer", tier: "block", role: "ô soạn bình luận gốc (parentId = null)" },
+    {
+        name: "CommunityCommentRow",
+        tier: "design",
+        role: "mỗi node bình luận trong cây (đệ quy, thụt lề theo depth)",
+        children: [
+            { name: "UserAvatar", tier: "primitive", role: "ảnh đại diện tác giả" },
+            { name: "MarkdownContent", tier: "primitive", role: "nội dung bình luận" },
+            { name: "ReactionBar", tier: "block", role: "cảm xúc + đếm" },
+            { name: "Trả lời", tier: "primitive", role: "affordance mở ô trả lời inline", state: "hand-rolled" },
+            { name: "Composer", tier: "block", role: "ô trả lời inline (ẩn tới khi bấm Trả lời)", state: "reply" },
+        ],
+    },
+]
+
+// empty leaf: no comments → the thread is absent, only the root Composer renders.
+const EMPTY_PARTS: Array<AnatomyNode> = [
+    { name: "Composer", tier: "block", role: "ô soạn bình luận gốc — phần duy nhất render khi chưa có bình luận" },
+]
 
 const authors: Record<string, CommunityPostAuthor> = {
     lan: { id: "u-lan", username: "lan.pham", displayName: "Lena Pham", avatar: null },
@@ -128,10 +154,34 @@ const Controlled = ({ initialComments }: { initialComments: Array<CommentThreadN
     )
 }
 
+/** DATA — a populated thread: root composer + nested comment tree with inline replies. */
 export const Nested: Story = {
-    render: () => blockShell(<Controlled initialComments={baseComments} />, ANATOMY),
+    render: () =>
+        frame(
+            <BlockAnatomy
+                name="CommentThread"
+                tier="block"
+                leaf="Có dữ liệu"
+                parts={DATA_PARTS}
+                reason="Một luồng thảo luận lồng nhau: mỗi node là CommunityCommentRow, mỗi node có nút Trả lời mở Composer inline, reply thụt lề theo guide rail có giới hạn độ sâu, và một Composer gốc thêm bình luận cấp cao nhất. Gói toàn bộ đệ quy + state draft/reveal vào một block."
+            >
+                <Controlled initialComments={baseComments} />
+            </BlockAnatomy>,
+        ),
 }
 
+/** EMPTY — no comments yet → the thread is absent, only the root Composer renders. */
 export const Empty: Story = {
-    render: () => blockShell(<Controlled initialComments={[]} />, ANATOMY),
+    render: () =>
+        frame(
+            <BlockAnatomy
+                name="CommentThread"
+                tier="block"
+                leaf="Rỗng"
+                parts={EMPTY_PARTS}
+                note="Chưa có bình luận → cây node biến mất, chỉ còn Composer gốc để mở luồng (khác leaf 'Có dữ liệu')."
+            >
+                <Controlled initialComments={[]} />
+            </BlockAnatomy>,
+        ),
 }

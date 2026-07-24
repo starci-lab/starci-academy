@@ -22,6 +22,11 @@ export interface EntityLinkProps {
     isPending?: boolean
     /** Extra classes merged onto the link/span. */
     className?: string
+    /**
+     * Anatomy tag: overrides the default `Link`/`span` marker name when a
+     * composing parent's tree names this node something else (e.g. `"EntityLink"`).
+     */
+    anatPart?: string
     /** Storybook-only: emit `data-anat-part` markers for anatomy overlays. */
     showAnatomy?: boolean
 }
@@ -35,11 +40,11 @@ export interface EntityLinkProps {
  *
  * @param props - {@link EntityLinkProps}
  */
-export const EntityLink = ({ label, onPress, isPending, className, showAnatomy }: EntityLinkProps) => {
+export const EntityLink = ({ label, onPress, isPending, className, anatPart, showAnatomy }: EntityLinkProps) => {
     if (!onPress) {
         return (
             <span
-                data-anat-part={showAnatomy ? "span" : undefined}
+                data-anat-part={anatPart ?? (showAnatomy ? "span" : undefined)}
                 className={cn("font-semibold text-foreground", className)}
             >
                 {label}
@@ -50,7 +55,7 @@ export const EntityLink = ({ label, onPress, isPending, className, showAnatomy }
         <Link
             onPress={onPress}
             isDisabled={isPending}
-            data-anat-part={showAnatomy ? "Link" : undefined}
+            data-anat-part={anatPart ?? (showAnatomy ? "Link" : undefined)}
             className={cn("inline cursor-pointer font-semibold text-foreground hover:underline underline-offset-4 decoration-[var(--separator-tertiary)]", className)}
         >
             {label}

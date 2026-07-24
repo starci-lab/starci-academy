@@ -119,7 +119,12 @@ export const CommunityPostCard = ({
                         />
                         <div className="flex min-w-0 flex-1 flex-col">
                             <div className="flex items-center gap-1">
-                                <Typography type="body-sm" weight="semibold" truncate data-anat-part={showAnatomy ? "Typography" : undefined}>
+                                <Typography
+                                    type="body-sm"
+                                    weight="semibold"
+                                    truncate
+                                    data-anat-part={showAnatomy ? "Typography" : undefined}
+                                >
                                     {displayName}
                                 </Typography>
                                 {post.isFounderAuthor ? (
@@ -131,7 +136,12 @@ export const CommunityPostCard = ({
                                 ) : null}
                             </div>
                             <div className="flex items-center gap-2">
-                                <Typography type="body-xs" color="muted" truncate data-anat-part={showAnatomy ? "Typography" : undefined}>
+                                <Typography
+                                    type="body-xs"
+                                    color="muted"
+                                    truncate
+                                    data-anat-part={showAnatomy ? "Typography" : undefined}
+                                >
                                     {`@${post.author.username}`}
                                 </Typography>
                                 <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography" : undefined}>
@@ -140,13 +150,21 @@ export const CommunityPostCard = ({
                                 <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography" : undefined}>
                                     {timeAgo(post.createdAt)}
                                 </Typography>
-                                <Typography type="body-xs" className="text-accent-soft-foreground" data-anat-part={showAnatomy ? "Typography" : undefined}>
+                                <Typography
+                                    type="body-xs"
+                                    className="text-accent-soft-foreground"
+                                    data-anat-part={showAnatomy ? "Typography" : undefined}
+                                >
                                     {CHANNEL_LABEL[post.channel]}
                                 </Typography>
                             </div>
                         </div>
                         {post.isPinned ? (
-                            <PushPinIcon weight="fill" className="size-4 shrink-0 text-accent-soft-foreground" data-anat-part={showAnatomy ? "PushPinIcon" : undefined} />
+                            <PushPinIcon
+                                weight="fill"
+                                className="size-4 shrink-0 text-accent-soft-foreground"
+                                data-anat-part={showAnatomy ? "PushPinIcon" : undefined}
+                            />
                         ) : null}
                     </div>
 

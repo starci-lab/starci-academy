@@ -1,15 +1,21 @@
 import React from "react"
-import { Typography, cn } from "@heroui/react"
-import { ArrowRightIcon } from "@phosphor-icons/react"
+import { Typography } from "@heroui/react"
 import { EntityResultRow, type SearchCourseContentItem } from "../EntityResultRow/EntityResultRow"
 import { SurfaceListCardItem } from "../../cards/SurfaceListCard/SurfaceListCard"
 import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
+import { NestedCard } from "../../cards/NestedCard/NestedCard"
+import { SeeMoreLink } from "../../navigation/SeeMoreLink/SeeMoreLink"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported from
- * `@/components/blocks/learn/ChatToolResult`. Composes the local primitives
- * {@link EntityResultRow} (the pickable rows), `SurfaceListCardItem` (skeleton row
- * frame) + `Skeleton` (loading bars). Authored in Storybook (not `src`); synced later.
+ * `@/components/blocks/learn/ChatToolResult`. Authored in Storybook (not `src`); synced later.
+ *
+ * SHAPE = a {@link NestedCard} (border-only nested container + quiet eyebrow header
+ * with a leading icon + trailing count + a footer slot) whose sections are shared
+ * {@link EntityResultRow}s. The "Xem tất cả" footer is a {@link SeeMoreLink} (it OWNS
+ * the arrow + hover-slide, §5b) — NOT a hand-rolled button+arrow. Loading mirrors the
+ * row shape with skeletons; the caller renders a text fallback (not an empty card)
+ * when nothing matched, so this block never renders an empty state itself.
  */
 
 /** Props for the {@link ChatToolResult} block. */
@@ -32,18 +38,21 @@ export interface ChatToolResultProps {
     viewAllLabel?: React.ReactNode
     /** Extra classes on the outer card. */
     className?: string
+    /**
+     * Anatomy tag for the ROOT — lets a PARENT block badge this whole ChatToolResult as
+     * ONE opaque node (drill into its own story for internals). Overrides the self-anatomy root tag.
+     */
+    anatPart?: string
     /** When on, emit `data-anat-part` on each part so a {@link BlockAnatomy} panel can badge them on-render. */
     showAnatomy?: boolean
 }
 
 /**
  * In-chat tool-result widget — a labeled, pickable list of RAG hits rendered
- * INLINE inside an assistant ChatBubble (generative-UI message part). Surface-in-
- * surface on the chat popover: a border-only card (no stacked fill), a quiet
- * header (eyebrow icon + kind label + count), then shared {@link EntityResultRow}s.
- * Loading mirrors the row shape with skeletons; the caller renders a text fallback
- * (not an empty card) when nothing matched — so this block never renders an empty
- * state itself.
+ * INLINE inside an assistant ChatBubble (generative-UI message part). Composes a
+ * `compact bordered` {@link NestedCard} (surface-in-surface on the chat bubble) with
+ * a leading kind icon + count in the header, shared {@link EntityResultRow}s as its
+ * sections, and a {@link SeeMoreLink} footer.
  *
  * @param props - {@link ChatToolResultProps}
  */
@@ -57,75 +66,57 @@ export const ChatToolResult = ({
     onViewAll,
     viewAllLabel,
     className,
+    anatPart,
     showAnatomy = false,
 }: ChatToolResultProps) => {
-    return (
-        <div className={cn("overflow-hidden rounded-xl border border-default bg-transparent", className)}>
-            <div className="flex items-center justify-between gap-2 border-b border-default px-3 py-2">
-                <span className="flex min-w-0 items-center gap-2 text-muted">
-                    {icon}
-                    <Typography type="body-xs" color="muted" truncate data-anat-part={showAnatomy ? "Typography" : undefined}>
-                        {label}
-                    </Typography>
-                </span>
-                {!isLoading && items.length > 0 ? (
-                    <Typography type="body-xs" color="muted" className="shrink-0" data-anat-part={showAnatomy ? "Typography" : undefined}>
-                        {items.length}
-                    </Typography>
-                ) : null}
-            </div>
+    const rows = isLoading
+        ? [0, 1].map((row) => (
+            <SurfaceListCardItem key={row} anatPart={showAnatomy ? "SurfaceListCardItem" : undefined}>
+                <div className="flex flex-col gap-2">
+                    {showKindChip ? (
+                        <Skeleton.Chip />
+                    ) : (
+                        <Skeleton.Typography type="body-xs" width="1/3" />
+                    )}
+                    <Skeleton.Typography type="body-sm" width="3/4" />
+                    <Skeleton.Typography type="body-xs" width="full" />
+                </div>
+            </SurfaceListCardItem>
+        ))
+        : items.map((item, index) => (
+            <EntityResultRow
+                key={`${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`}
+                item={item}
+                onSelect={onSelect}
+                showKindChip={showKindChip}
+                showSnippet
+                anatPart={showAnatomy ? "EntityResultRow" : undefined}
+                showAnatomy={showAnatomy}
+            />
+        ))
 
-            {isLoading ? (
-                <>
-                    {[0, 1].map((row) => (
-                        <SurfaceListCardItem key={row}>
-                            <div className="flex flex-col gap-2">
-                                {showKindChip ? (
-                                    <Skeleton.Chip />
-                                ) : (
-                                    <Skeleton.Typography type="body-xs" width="1/3" />
-                                )}
-                                <Skeleton.Typography type="body-sm" width="3/4" />
-                                <Skeleton.Typography type="body-xs" width="full" />
-                            </div>
-                        </SurfaceListCardItem>
-                    ))}
-                </>
-            ) : (
-                <>
-                    {items.map((item, index) => (
-                        <EntityResultRow
-                            key={`${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`}
-                            item={item}
-                            onSelect={onSelect}
-                            showKindChip={showKindChip}
-                            showSnippet
-                            anatPart={showAnatomy ? "EntityResultRow" : undefined}
-                            showAnatomy={showAnatomy}
-                        />
-                    ))}
-                    {onViewAll ? (
-                        // NOTE: port Button has no variant for a full-width, left-aligned plain-text
-                        // footer link (all variants are centered, fixed-padding CTA buttons with their
-                        // own bg/border) — forcing this into the port would fight its base styles and
-                        // change the row's layout/visual. Left as hand-rolled markup — deferred.
-                        <button
-                            type="button"
-                            onClick={onViewAll}
-                            data-anat-part={showAnatomy ? "button" : undefined}
-                            className="group flex w-full cursor-pointer items-center gap-1 px-4 py-2 text-left text-sm font-medium text-accent-soft-foreground"
-                        >
-                            {viewAllLabel}
-                            <ArrowRightIcon
-                                aria-hidden
-                                focusable="false"
-                                data-anat-part={showAnatomy ? "ArrowRightIcon" : undefined}
-                                className="size-4 transition-transform group-hover:translate-x-0.5"
-                            />
-                        </button>
-                    ) : null}
-                </>
-            )}
-        </div>
+    return (
+        <NestedCard
+            compact
+            bordered
+            title={label}
+            icon={icon}
+            meta={
+                !isLoading && items.length > 0 ? (
+                    <Typography type="body-xs" color="muted">{items.length}</Typography>
+                ) : undefined
+            }
+            footer={
+                !isLoading && onViewAll ? (
+                    <SeeMoreLink size="xs" onPress={onViewAll} anatPart={showAnatomy ? "SeeMoreLink" : undefined}>
+                        {viewAllLabel}
+                    </SeeMoreLink>
+                ) : undefined
+            }
+            className={className}
+            anatPart={anatPart ?? (showAnatomy ? "NestedCard" : undefined)}
+        >
+            {rows}
+        </NestedCard>
     )
 }

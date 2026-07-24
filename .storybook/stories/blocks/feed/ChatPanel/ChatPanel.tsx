@@ -96,7 +96,10 @@ export const ChatPanel = ({
                     <div className="flex flex-col gap-3">
                         {messages.map((message) => (
                             <div key={message.id} className="flex flex-col gap-2">
-                                <ChatBubble role={message.role}>
+                                <ChatBubble
+                                    role={message.role}
+                                    anatPart={showAnatomy ? "ChatBubble" : undefined}
+                                >
                                     {message.content}
                                 </ChatBubble>
                                 {/* optional tool-result row, assistant-aligned under the bubble */}

@@ -101,70 +101,81 @@ const MIXED_KIND_ITEMS: Array<SearchCourseContentItem> = [
 
 const SINGLE_ITEM: Array<SearchCourseContentItem> = [FLASHCARD_ITEMS[0]]
 
-// Header eyebrow: the block wraps the caller's label in a muted Typography and, on data
-// leaves, renders a result-count Typography beside it. The leading icon is a caller-passed
-// slot the block renders raw (no block-owned wrapper) → it is NOT an owned part.
-const HEADER_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "header eyebrow: nhãn loại (muted, truncate) — icon đứng trước là slot caller truyền" },
-    { name: "Typography", tier: "primitive", role: "số lượng kết quả (chỉ khi không tải + có ≥1 hàng)" },
-]
+// The frame + header is now ONE NestedCard (primitive = leaf: its header icon/label/count
+// are NestedCard's own internals, drill into NestedCard's story — NOT badged here). What
+// ChatToolResult composes INTO NestedCard's slots (rows + footer link) are the nodes.
+const nestedCard = (children: Array<AnatomyNode>): AnatomyNode => ({
+    name: "NestedCard",
+    tier: "primitive",
+    role: "khung compact bordered (surface-in-surface) + header eyebrow (icon loại + nhãn + số lượng) + slot footer",
+    children,
+})
 
-// A pickable row with NO kind chip / breadcrumb / lock: just the foreground title + snippet.
+// The "Xem tất cả" footer = SeeMoreLink (it OWNS the arrow + hover-slide, §5b) — no longer a
+// hand-rolled button+ArrowRightIcon.
+const SEE_MORE: AnatomyNode = {
+    name: "SeeMoreLink",
+    tier: "primitive",
+    role: "footer 'xem tất cả' — text accent + mũi tên trượt khi hover (§5b), sở hữu bởi primitive",
+}
+
+// A pickable row with NO kind chip / breadcrumb / lock: title + snippet are Typography
+// rendering EntityResultRow's OWN `item.title`/`item.snippet` props → not separate nodes
+// (mirrors EntityResultRow's own granularity fix); the row itself has no child nodes here.
 // (Flashcard hits carry breadcrumb=null and these leaves pass showKindChip off → neither shows.)
 const SIMPLE_ROW: AnatomyNode = {
     name: "EntityResultRow",
     tier: "design",
     role: "hàng kết quả pickable (lặp ×N) — cả hàng là nav link",
-    children: [
-        { name: "Typography", tier: "primitive", role: "tiêu đề foreground, hover gạch chân (affordance)" },
-        { name: "Typography", tier: "primitive", role: "snippet muted một dòng (khi showSnippet + có snippet)" },
-    ],
 }
 
 // A pickable row in a MIXED-kind list: kind chip on top; a locked hit adds the enrol flag.
+// Title/snippet are EntityResultRow's own prop-render Typography → not nodes; EnumChip
+// (real component) and the lock <span> cluster (fixed icon+label, not prop-driven) stay.
 const CHIP_LOCKED_ROW: AnatomyNode = {
     name: "EntityResultRow",
     tier: "design",
     role: "hàng kết quả pickable (lặp ×N)",
     children: [
         { name: "EnumChip", tier: "primitive", role: "chip loại (kind → màu soft) khi showKindChip" },
-        { name: "Typography", tier: "primitive", role: "tiêu đề foreground, hover gạch chân" },
-        { name: "Typography", tier: "primitive", role: "snippet muted (khi có snippet)" },
-        { name: "LockSimpleIcon", tier: "primitive", role: "cờ 'Ghi danh để mở' — hàng vẫn navigate", state: "locked" },
+        {
+            name: "span",
+            tier: "primitive",
+            role: "khung bọc cờ khoá 'Ghi danh để mở' — icon + nhãn",
+            state: "locked",
+            children: [
+                { name: "LockSimpleIcon", tier: "primitive", role: "cờ 'Ghi danh để mở' — hàng vẫn navigate" },
+                { name: "Typography", tier: "primitive", role: "nhãn 'Ghi danh để mở'" },
+            ],
+        },
     ],
 }
 
-// Single-kind data leaf (no chip): header + simple rows.
-const SIMPLE_PARTS: Array<AnatomyNode> = [...HEADER_PARTS, SIMPLE_ROW]
+// Single-kind data leaf (no chip): NestedCard wrapping simple rows.
+const SIMPLE_PARTS: Array<AnatomyNode> = [nestedCard([SIMPLE_ROW])]
 
-// view-all leaf: simple rows + a hand-rolled footer link (see block NOTE: no Button port variant fits).
-const VIEWALL_PARTS: Array<AnatomyNode> = [
-    ...SIMPLE_PARTS,
-    {
-        name: "button",
-        tier: "primitive",
-        role: "footer link 'xem tất cả' — hand-rolled (port Button không có variant text-trái full-width)",
-        children: [{ name: "ArrowRightIcon", tier: "primitive", role: "mũi tên, dịch nhẹ khi hover" }],
-    },
-]
+// view-all leaf: NestedCard wrapping rows + a SeeMoreLink footer (composed into NestedCard's footer slot).
+const VIEWALL_PARTS: Array<AnatomyNode> = [nestedCard([SIMPLE_ROW, SEE_MORE])]
 
-// Mixed-kind + locked leaf: header + chip/locked rows (no footer link).
-const MIXED_PARTS: Array<AnatomyNode> = [...HEADER_PARTS, CHIP_LOCKED_ROW]
+// Mixed-kind + locked leaf: NestedCard wrapping chip/locked rows (no footer link).
+const MIXED_PARTS: Array<AnatomyNode> = [nestedCard([CHIP_LOCKED_ROW])]
 
-// loading leaf: header label only (no count) + SurfaceListCardItem skeleton frames mirroring the row shape.
+// loading leaf: NestedCard (header label still shows, only the count is suppressed) wrapping
+// SurfaceListCardItem skeleton frames mirroring the row shape.
 const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "header eyebrow (không hiện số khi đang tải)" },
-    {
-        name: "SurfaceListCardItem",
-        tier: "primitive",
-        role: "khung hàng skeleton ×2 (giữ đúng footprint hàng thật)",
-        state: "skeleton",
-        children: [
-            { name: "Skeleton.Chip", tier: "primitive", role: "chip loại giả (khi showKindChip)", state: "skeleton" },
-            { name: "Skeleton.Typography", tier: "primitive", role: "thanh tiêu đề giả (3/4)", state: "skeleton" },
-            { name: "Skeleton.Typography", tier: "primitive", role: "thanh snippet giả (full)", state: "skeleton" },
-        ],
-    },
+    nestedCard([
+        {
+            name: "SurfaceListCardItem",
+            tier: "primitive",
+            role: "khung hàng skeleton ×2 (giữ đúng footprint hàng thật)",
+            state: "skeleton",
+            children: [
+                { name: "Skeleton.Chip", tier: "primitive", role: "chip loại giả (khi showKindChip)", state: "skeleton" },
+                { name: "Skeleton.Typography", tier: "primitive", role: "thanh tiêu đề giả (3/4)", state: "skeleton" },
+                { name: "Skeleton.Typography", tier: "primitive", role: "thanh snippet giả (full)", state: "skeleton" },
+            ],
+        },
+    ]),
 ]
 
 export const Loading: Story = {

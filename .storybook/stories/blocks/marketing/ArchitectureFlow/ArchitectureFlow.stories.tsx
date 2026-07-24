@@ -28,29 +28,18 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
 // Multi-node flow: bordered node-box spans (each WRAPPING a code Typography) joined
 // by caret connectors that sit BETWEEN boxes (data + wrap share this composition).
+// The span (node box) and CaretRightIcon (connector) are bare chrome — plain HTML /
+// a decorative glyph, not registered components — so neither gets a node. The node
+// LABEL is a Typography ArchitectureFlow renders directly → ONE node representing
+// the repeated per-node label (mirrors how a repeated design/primitive is one node).
 const FLOW_PARTS: Array<AnatomyNode> = [
-    {
-        name: "span",
-        tier: "primitive",
-        role: "hộp node bo viền (border + bg) — khung mỗi node, chứa nhãn bên trong",
-        children: [
-            { name: "Typography", tier: "primitive", role: "nhãn node kiểu code (type=code) nằm trong hộp" },
-        ],
-    },
-    { name: "CaretRightIcon", tier: "primitive", role: "connector nối các node theo hướng luồng (chỉ hiện giữa 2 node)" },
+    { name: "Typography", tier: "primitive", role: "nhãn mỗi node (style \"code\"), lặp theo mảng nodes" },
 ]
 
 // Single node: one bordered box wrapping its Typography, NO connector (caret only
-// appears between nodes).
+// appears between nodes) — same composition as FLOW_PARTS minus the connector.
 const SINGLE_PARTS: Array<AnatomyNode> = [
-    {
-        name: "span",
-        tier: "primitive",
-        role: "hộp node bo viền — một hộp đứng một mình, chưa có caret",
-        children: [
-            { name: "Typography", tier: "primitive", role: "nhãn node kiểu code (type=code) nằm trong hộp" },
-        ],
-    },
+    { name: "Typography", tier: "primitive", role: "nhãn node duy nhất (style \"code\")" },
 ]
 
 // Empty: no node labels → the block renders an empty flex row (no parts composed).

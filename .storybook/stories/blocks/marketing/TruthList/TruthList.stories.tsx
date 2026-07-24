@@ -51,8 +51,11 @@ const typicalTruths = [
 ]
 
 // The Accordion subtree, mirrored to the REAL compound nesting the component renders:
-// Accordion → Item (per truth) → Heading → Trigger → Typography(truth); Panel → Body →
-// Typography(fix). Reused by every content leaf (single/multi/wrap share this composition).
+// Accordion → Item (per truth) → Heading → Trigger; Panel → Body. The truth/fix strings
+// are rendered by a Typography INSIDE Trigger/Body purely to display the item's own
+// `truth`/`fix` text (a prop value, not a composed sub-component) — folded into
+// Trigger/Body rather than kept as separate nodes (§ granularity: cut element-render-prop).
+// Reused by every content leaf (single/multi/wrap share this composition).
 const ACCORDION_NODE: AnatomyNode = {
     name: "Accordion",
     tier: "primitive",
@@ -71,10 +74,7 @@ const ACCORDION_NODE: AnatomyNode = {
                         {
                             name: "Accordion.Trigger",
                             tier: "primitive",
-                            role: "bấm mở/đóng — hover là affordance (không có mũi tên)",
-                            children: [
-                                { name: "Typography · truth", tier: "primitive", role: "câu sự thật (type body, weight medium, text-left)" },
-                            ],
+                            role: "bấm mở/đóng — hiện câu sự thật (item.truth, type body, weight medium) — hover là affordance (không có mũi tên)",
                         },
                     ],
                 },
@@ -86,10 +86,7 @@ const ACCORDION_NODE: AnatomyNode = {
                         {
                             name: "Accordion.Body",
                             tier: "primitive",
-                            role: "thân câu trả lời",
-                            children: [
-                                { name: "Typography · fix", tier: "primitive", role: "câu trả lời '→ ...' (type body-sm, color muted)" },
-                            ],
+                            role: "thân câu trả lời — hiện câu trả lời (item.fix, '→ ...', type body-sm, color muted)",
                         },
                     ],
                 },
@@ -121,18 +118,16 @@ const TRUTHLIST_BYLINE_PARTS: Array<AnatomyNode> = [
             {
                 name: "Byline row",
                 tier: "primitive",
-                role: "div chữ ký cuối surface (border-t border-default, px-5 py-4) — chỉ render khi có prop byline",
+                role: "div chữ ký cuối surface (border-t border-default, px-5 py-4) — hiện chữ ký tác giả do caller truyền qua prop byline (body-sm, color muted) — chỉ render khi có prop byline",
                 state: "byline",
-                children: [
-                    { name: "Typography · byline", tier: "primitive", role: "chữ ký tác giả do caller truyền qua prop byline (body-sm, color muted)", state: "byline" },
-                ],
             },
         ],
     },
 ]
 
 // empty leaf: the story hand-rolls the surface frame, then EmptyState fills it instead of an
-// accordion. EmptyState (design) itself renders icon + title + description — nested under it.
+// accordion. EmptyState (design) renders its own icon/title/description via props — those are
+// cut from the tree (§ granularity), so EmptyState is a leaf node with no children here.
 const EMPTY_PARTS: Array<AnatomyNode> = [
     {
         name: "Surface frame",
@@ -142,12 +137,7 @@ const EMPTY_PARTS: Array<AnatomyNode> = [
             {
                 name: "EmptyState",
                 tier: "design",
-                role: '"Chưa có sự thật nào" — stack canh giữa lấp surface (size default, không action)',
-                children: [
-                    { name: "TrayIcon", tier: "primitive", role: "icon khay (duotone, ~size-8, text-foreground) phía trên tiêu đề" },
-                    { name: "Typography · title", tier: "primitive", role: "tiêu đề 'Chưa có sự thật nào' (weight medium, align center)" },
-                    { name: "Typography · description", tier: "primitive", role: "mô tả phụ 'Các tuyên bố... hiện ở đây.' (body-xs, muted, align center)" },
-                ],
+                role: "\"Chưa có sự thật nào\" — stack canh giữa lấp surface (size default, không action) — tự hiện icon khay + tiêu đề + mô tả phụ qua prop icon/title/description",
             },
         ],
     },
@@ -206,7 +196,7 @@ export const TypicalWithByline: Story = {
                     showAnatomy
                     items={typicalTruths}
                     byline={
-                        <Typography type="body-sm" color="muted" data-anat-part="Typography · byline">
+                        <Typography type="body-sm" color="muted">
                             Thầy Long — Founder, StarCi Academy
                         </Typography>
                     }
@@ -272,7 +262,7 @@ export const Empty: Story = {
                 >
                     <EmptyState
                         anatPart="EmptyState"
-                        icon={<TrayIcon weight="duotone" data-anat-part="TrayIcon" />}
+                        icon={<TrayIcon weight="duotone" />}
                         title="Chưa có sự thật nào"
                         description="Các tuyên bố định vị sẽ hiện ở đây."
                     />
@@ -296,7 +286,13 @@ export const SkeletonLoading: Story = {
                 parts={LOADING_PARTS}
                 note="Skeleton.Accordion mirror khung surface + 4 trigger rows, composition khác leaf data (chưa có chữ thật)."
             >
-                <Skeleton.Accordion items={4} />
+                <Skeleton.Accordion
+                    items={4}
+                    anatPart="Skeleton.Accordion"
+                    titleAnatPart="Skeleton · title bar"
+                    indicatorAnatPart="Skeleton · indicator"
+                    separatorAnatPart="Skeleton · separator"
+                />
             </BlockAnatomy>,
         ),
 }

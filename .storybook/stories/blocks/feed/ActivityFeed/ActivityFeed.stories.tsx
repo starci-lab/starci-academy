@@ -73,8 +73,13 @@ const Controlled = () => {
 
 // The real feed composition, mirroring the DOM ActivityFeed renders per day:
 // DayHeaderSection (eyebrow + frame) → SurfaceListCard → SurfaceListCardItem →
-// FeedItem, whose sentence Typography HOLDS the EntityLinks and whose footer is the
-// ReactionBar. Every data/variant leaf shares this composition.
+// FeedItem. FeedItem's own sentence/timestamp Typography are ELEMENT-RENDER-PROPS
+// (they just display the `children`/`timestamp` values FeedItem is handed — and
+// ActivityFeed never even threads `showAnatomy` into FeedItem, so they emit no
+// anchor here) — cut per canon granularity; FeedItem absorbs them as ONE node.
+// EntityLink is a REAL composed sub-component (actor + target, tagged directly by
+// ActivityFeed) so it stays, nested straight under FeedItem. Every data/variant
+// leaf shares this composition.
 const FEED_PARTS: Array<AnatomyNode> = [
     {
         name: "DayHeaderSection",
@@ -94,7 +99,7 @@ const FEED_PARTS: Array<AnatomyNode> = [
                             {
                                 name: "FeedItem",
                                 tier: "design",
-                                role: "bố cục từng hàng (leading · câu · thời gian · footer)",
+                                role: "bố cục từng hàng (leading · câu/thời gian nội bộ · footer)",
                                 children: [
                                     {
                                         name: "ActivityAvatar",
@@ -104,15 +109,7 @@ const FEED_PARTS: Array<AnatomyNode> = [
                                             { name: "UserAvatar", tier: "primitive", role: "avatar nền (ảnh/initials)" },
                                         ],
                                     },
-                                    {
-                                        name: "Typography",
-                                        tier: "primitive",
-                                        role: "câu actor/hành động/target (body-sm)",
-                                        children: [
-                                            { name: "EntityLink", tier: "design", role: "actor + target bấm được, dựng trong câu (2 thực thể)" },
-                                        ],
-                                    },
-                                    { name: "Typography", tier: "primitive", role: "thời gian tương đối (body-xs, muted)" },
+                                    { name: "EntityLink", tier: "design", role: "actor + target bấm được, dựng trong câu (2 thực thể)" },
                                     { name: "ReactionBar", tier: "design", role: "footer — thả cảm xúc mỗi hàng" },
                                 ],
                             },
@@ -125,18 +122,16 @@ const FEED_PARTS: Array<AnatomyNode> = [
 ]
 
 // Empty leaf: the block itself has no empty slot (items=[] renders nothing) — the
-// owning FEATURE renders an EmptyState in the feed's place. Here size="default", so
-// EmptyState stacks a title Typography + a muted description Typography.
+// owning FEATURE renders an EmptyState in the feed's place. Its title/description
+// are element-render-props of EmptyState itself (it displays whatever ReactNode the
+// caller hands its `title`/`description` props) — cut per canon granularity;
+// EmptyState absorbs them as ONE node.
 const EMPTY_PARTS: Array<AnatomyNode> = [
     {
         name: "EmptyState",
         tier: "primitive",
-        role: 'trạng thái rỗng do FEATURE dựng ("Chưa có hoạt động nào")',
+        role: "trạng thái rỗng do FEATURE dựng (\"Chưa có hoạt động nào\")",
         state: "empty",
-        children: [
-            { name: "Typography", tier: "primitive", role: "tiêu đề rỗng (weight medium)" },
-            { name: "Typography", tier: "primitive", role: "mô tả phụ (body-xs, muted)" },
-        ],
     },
 ]
 
@@ -279,7 +274,11 @@ export const Empty: Story = {
                 note="Block không có slot rỗng — items=[] render trống; FEATURE dựng EmptyState thay chỗ."
             >
                 <div className="w-full max-w-xl">
-                    <EmptyState title="Chưa có hoạt động nào" description="Hoạt động của bạn và người bạn theo dõi sẽ xuất hiện ở đây." anatPart="EmptyState" />
+                    <EmptyState
+                        title="Chưa có hoạt động nào"
+                        description="Hoạt động của bạn và người bạn theo dõi sẽ xuất hiện ở đây."
+                        anatPart="EmptyState"
+                    />
                     <ActivityFeed items={[]} onResolve={resolveDemo} onReact={() => {}} showAnatomy />
                 </div>
             </BlockAnatomy>,
@@ -303,18 +302,18 @@ export const SkeletonLoading: Story = {
             >
                 <div className="flex w-full max-w-xl flex-col gap-6">
                     <section className="flex flex-col gap-2">
-                        <Skeleton.Typography type="body-xs" width="1/4" />
+                        <Skeleton.Typography type="body-xs" width="1/4" anatPart="Skeleton.Typography" />
                         <SurfaceListCard anatPart="SurfaceListCard">
                             {[0, 1, 2].map((row) => (
-                                <SurfaceListCardItem key={row}>
+                                <SurfaceListCardItem key={row} anatPart="SurfaceListCardItem">
                                     <div className="flex items-start gap-2">
-                                        <Skeleton.Avatar size="sm" />
+                                        <Skeleton.Avatar size="sm" anatPart="Skeleton.Avatar" />
                                         <div className="flex min-w-0 flex-1 flex-col gap-1">
                                             <div className="flex flex-col gap-1">
-                                                <Skeleton.Typography type="body-sm" width="3/4" />
-                                                <Skeleton.Typography type="body-xs" width="1/4" />
+                                                <Skeleton.Typography type="body-sm" width="3/4" anatPart="Skeleton.Typography" />
+                                                <Skeleton.Typography type="body-xs" width="1/4" anatPart="Skeleton.Typography" />
                                             </div>
-                                            <Skeleton className="h-4 w-12 rounded-full" />
+                                            <Skeleton className="h-4 w-12 rounded-full" anatPart="Skeleton" />
                                         </div>
                                     </div>
                                 </SurfaceListCardItem>

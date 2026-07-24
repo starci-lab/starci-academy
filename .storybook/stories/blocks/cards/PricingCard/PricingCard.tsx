@@ -2,6 +2,7 @@ import React from "react"
 import { cn, Typography } from "@heroui/react"
 import { SectionCard } from "../SectionCard/SectionCard"
 import { StatusChip } from "../../chips/StatusChip/StatusChip"
+import { PricePoint } from "../../commerce/PricePoint/PricePoint"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported faithfully from
@@ -89,45 +90,37 @@ export const PricingCard = ({
             contentClassName="flex flex-col gap-6 h-full"
             anatPart={showAnatomy ? "SectionCard" : undefined}
         >
-            {/* Name (+ optional popular chip inline — chip is w-fit, never full-width) */}
-            <div className="flex flex-wrap items-center gap-2">
-                <Typography type="body" weight="semibold" data-anat-part={showAnatomy ? "Typography · tên" : undefined}>
-                    {name}
-                </Typography>
-                {highlighted && badge ? (
-                    <StatusChip tone="accent" className="shrink-0" anatPart={showAnatomy ? "StatusChip" : undefined}>
-                        {badge}
-                    </StatusChip>
-                ) : null}
-            </div>
-
-            {/* Price row: big price + optional struck original + muted period */}
-            <div className="flex flex-wrap items-baseline gap-2">
-                {/* Main price — h3 size, semibold, prominent */}
-                <Typography type="h3" weight="semibold" data-anat-part={showAnatomy ? "Typography · giá" : undefined}>
-                    {price}
-                </Typography>
-
-                {/* Strike-through original price — line-through is text-decoration, allowed as className */}
-                {originalPrice ? (
-                    <Typography type="body-sm" color="muted" className="line-through" data-anat-part={showAnatomy ? "Typography · giá gốc" : undefined}>
-                        {originalPrice}
+            {/* PLAN-IDENTITY CLUSTER — name + price belong together (vertical rhythm:
+                related = tight `gap-2`, distinct sections = the outer `gap-6`). Grouping
+                them stops the name floating a full section-gap away from its price. */}
+            <div className="flex flex-col gap-2">
+                {/* Name (+ optional popular chip inline — chip is w-fit, never full-width) */}
+                <div className="flex flex-wrap items-center gap-2">
+                    <Typography type="body" weight="semibold" data-anat-part={showAnatomy ? "Typography · tên" : undefined}>
+                        {name}
                     </Typography>
-                ) : null}
+                    {highlighted && badge ? (
+                        <StatusChip tone="accent" className="shrink-0" anatPart={showAnatomy ? "StatusChip" : undefined}>
+                            {badge}
+                        </StatusChip>
+                    ) : null}
+                </div>
 
-                {/* Billing period label — smallest muted text */}
-                {period ? (
-                    <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography · period" : undefined}>
-                        {period}
-                    </Typography>
-                ) : null}
+                {/* Price = ONE PricePoint primitive (amount + struck original + period) —
+                    a price is a semantic unit, so it is one node, not 3 raw Typography. */}
+                <PricePoint
+                    amount={price}
+                    original={originalPrice}
+                    period={period}
+                    anatPart={showAnatomy ? "PricePoint" : undefined}
+                />
             </div>
 
             {/* Feature list — grows to fill available vertical space; caller controls markup */}
-            <div className="flex-1" data-anat-part={showAnatomy ? "features" : undefined}>{features}</div>
+            <div className="flex-1">{features}</div>
 
             {/* CTA pinned to the bottom of the card */}
-            <div data-anat-part={showAnatomy ? "Button · cta" : undefined}>{cta}</div>
+            <div>{cta}</div>
         </SectionCard>
     )
 }

@@ -42,7 +42,7 @@ export const Sizes: Story = {
         usage: "`size` ép cả nút + icon: sm→icon size-4 · md→size-5 · lg→size-6 (§5a, primitive sở hữu). Trailing icon trượt phải khi hover (§5b).",
     },
     render: () => (
-        <div className="flex items-center gap-4 p-8">
+        <div className="flex items-center gap-3 p-8">
             {SIZES.map((s) => (
                 <Button key={s} size={s} icon={<ArrowRightIcon aria-hidden />}>
                     Tiếp tục
@@ -59,7 +59,7 @@ export const Loading: Story = {
         usage: "Bật `isSkeleton` → base Button tự render skeleton mirror đúng size. Consumer/ButtonGroup chỉ pass cờ xuống.",
     },
     render: () => (
-        <div className="flex items-center gap-4 p-8">
+        <div className="flex items-center gap-3 p-8">
             {SIZES.map((s) => (
                 <Button key={s} size={s} isSkeleton>
                     Tiếp tục
@@ -94,7 +94,7 @@ export const Pending: Story = {
         usage: "Bật `isPending` → Spinner (size=sm, color=current) chèn trước label/icon + nút khoá press. Dùng khi chờ mutation/API.",
     },
     render: () => (
-        <div className="flex items-center gap-4 p-8">
+        <div className="flex items-center gap-3 p-8">
             {SIZES.map((s) => (
                 <Button key={s} size={s} isPending>
                     Tiếp tục
@@ -112,7 +112,7 @@ export const Disabled: Story = {
         usage: "`isDisabled` khoá nút không kèm Spinner — dùng khi form invalid/chưa đủ điều kiện, khác `isPending` (đang chờ tác vụ).",
     },
     render: () => (
-        <div className="flex items-center gap-4 p-8">
+        <div className="flex items-center gap-3 p-8">
             {SIZES.map((s) => (
                 <Button key={s} size={s} isDisabled>
                     Tiếp tục

@@ -34,59 +34,46 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 // title Typography, an optional description Typography, and an optional action.
 // Each leaf mirrors exactly the slots IT fills, so the shapes diverge.
 
-// BASIC — title only: icon + title Typography (no description, no action).
+// BASIC — title only (no description, no action). TrayIcon + title Typography are
+// CUT from the tree: both are elements rendering VALUES passed into EmptyState
+// (the `icon` and `title` props) — EmptyState itself is the node that composes them.
 const BASE_PARTS: Array<AnatomyNode> = [
     {
         name: "EmptyState",
         tier: "primitive",
         role: "khung icon + tiêu đề + mô tả + action, canh giữa",
-        children: [
-            { name: "TrayIcon", tier: "primitive", role: "icon khay mặc định trong slot icon" },
-            { name: "Typography", tier: "primitive", role: "tiêu đề — dòng chính" },
-        ],
     },
 ]
 
-// WITH DESCRIPTION — icon + title + a second description Typography.
+// WITH DESCRIPTION — same EmptyState node; `description` is likewise a value passed
+// into its `description` prop, not a separate composed part.
 const DESC_PARTS: Array<AnatomyNode> = [
     {
         name: "EmptyState",
         tier: "primitive",
         role: "khung icon + tiêu đề + mô tả + action, canh giữa",
-        children: [
-            { name: "TrayIcon", tier: "primitive", role: "icon khay mặc định trong slot icon" },
-            { name: "Typography", tier: "primitive", role: "tiêu đề — dòng chính" },
-            { name: "Typography", tier: "primitive", role: "mô tả — dòng phụ dưới tiêu đề" },
-        ],
     },
 ]
 
-// WITH RETRY — icon + title + description + a Button folded into the action slot.
+// WITH RETRY — adds a real Button composed into EmptyState's action slot.
 const RETRY_PARTS: Array<AnatomyNode> = [
     {
         name: "EmptyState",
         tier: "primitive",
         role: "khung icon + tiêu đề + mô tả + action, canh giữa",
         children: [
-            { name: "TrayIcon", tier: "primitive", role: "icon khay mặc định trong slot icon" },
-            { name: "Typography", tier: "primitive", role: "tiêu đề — dòng chính" },
-            { name: "Typography", tier: "primitive", role: "mô tả — dòng phụ dưới tiêu đề" },
             { name: "Button", tier: "primitive", role: "nút thử lại đặt vào slot action", state: "secondary" },
         ],
     },
 ]
 
-// CUSTOM ICON — same shape as WithDescription but the icon slot is overridden.
+// CUSTOM ICON — same shape as WithDescription; the overridden icon is still just a
+// value in the `icon` prop, so it carries no node of its own.
 const CUSTOM_ICON_PARTS: Array<AnatomyNode> = [
     {
         name: "EmptyState",
         tier: "primitive",
         role: "khung icon + tiêu đề + mô tả + action, canh giữa",
-        children: [
-            { name: "MagnifyingGlassIcon", tier: "primitive", role: "icon tuỳ biến truyền vào slot icon" },
-            { name: "Typography", tier: "primitive", role: "tiêu đề — dòng chính" },
-            { name: "Typography", tier: "primitive", role: "mô tả — dòng phụ dưới tiêu đề" },
-        ],
     },
 ]
 
@@ -160,7 +147,7 @@ export const CustomIcon: Story = {
                 note="Ghi đè icon mặc định (TrayIcon → MagnifyingGlassIcon); các slot còn lại cùng shape với leaf 'Có mô tả'."
             >
                 <EmptyContent
-                    icon={<MagnifyingGlassIcon aria-hidden focusable="false" weight="duotone" className="size-8 text-foreground" data-anat-part="MagnifyingGlassIcon" />}
+                    icon={<MagnifyingGlassIcon aria-hidden focusable="false" weight="duotone" className="size-8 text-foreground" />}
                     title="Không có kết quả khớp"
                     description="Không có mục nào khớp với từ khoá bạn nhập."
                     showAnatomy

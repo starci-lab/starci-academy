@@ -54,12 +54,17 @@ export const EmptyContent = ({
         <EmptyState
             anatPart={showAnatomy ? "EmptyState" : undefined}
             className={className}
-            icon={icon ?? <TrayIcon aria-hidden focusable="false" weight="duotone" data-anat-part={showAnatomy ? "TrayIcon" : undefined} />}
+            icon={icon ?? <TrayIcon aria-hidden focusable="false" weight="duotone" />}
             title={title}
             description={description}
             action={
                 onRetry && retryLabel ? (
-                    <Button variant="secondary" size="sm" onPress={onRetry}>
+                    <Button
+                        variant="secondary"
+                        size="sm"
+                        onPress={onRetry}
+                        anatPart={showAnatomy ? "Button" : undefined}
+                    >
                         {retryLabel}
                     </Button>
                 ) : undefined

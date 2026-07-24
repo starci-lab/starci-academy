@@ -51,12 +51,15 @@ const resolveOptionState = (option: QuizOption, isSelected: boolean, isSubmitted
     return isSelected ? "incorrect" : "default"
 }
 
-const OptionResultIcon = ({ state, anatPart }: { state: OptionVisualState; anatPart?: string }) => {
+// The ✓/✗ result icon is Radio/Checkbox's OWN reveal-state marker (rendered as
+// a row's children, like CrossListItem's `mark`) — not a separately tracked
+// anatomy part; the row (Radio/Checkbox) is the node.
+const OptionResultIcon = ({ state }: { state: OptionVisualState }) => {
     if (state === "correct" || state === "correctUnselected") {
-        return <CheckCircleIcon data-anat-part={anatPart} aria-hidden focusable="false" weight="fill" className="size-5 shrink-0 text-success-soft-foreground" />
+        return <CheckCircleIcon aria-hidden focusable="false" weight="fill" className="size-5 shrink-0 text-success-soft-foreground" />
     }
     if (state === "incorrect") {
-        return <XCircleIcon data-anat-part={anatPart} aria-hidden focusable="false" weight="fill" className="size-5 shrink-0 text-danger-soft-foreground" />
+        return <XCircleIcon aria-hidden focusable="false" weight="fill" className="size-5 shrink-0 text-danger-soft-foreground" />
     }
     return null
 }
@@ -87,12 +90,12 @@ export const QuizCard = ({
 }: QuizCardProps) => {
     return (
         <SectionCard anatPart={showAnatomy ? "SectionCard" : undefined} className={cn(className)}>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-2">
                     {typeof questionIndex === "number" ? (
                         <StatusChip anatPart={showAnatomy ? "StatusChip" : undefined} tone="accent">{`Câu ${questionIndex}`}</StatusChip>
                     ) : null}
-                    <Typography data-anat-part={showAnatomy ? "Typography" : undefined} type="body" weight="semibold">{question}</Typography>
+                    <Typography type="body" weight="semibold" data-anat-part={showAnatomy ? "Typography" : undefined}>{question}</Typography>
                 </div>
 
                 {selectionMode === "single" ? (
@@ -112,7 +115,7 @@ export const QuizCard = ({
                                     <Radio.Content className="w-full">
                                         <Radio.Control><Radio.Indicator /></Radio.Control>
                                         <span className="min-w-0 flex-1">{option.label}</span>
-                                        <OptionResultIcon state={state} anatPart={showAnatomy ? "OptionResultIcon" : undefined} />
+                                        <OptionResultIcon state={state} />
                                     </Radio.Content>
                                 </Radio>
                             )
@@ -135,7 +138,7 @@ export const QuizCard = ({
                                     <Checkbox.Content className="w-full">
                                         <Checkbox.Control><Checkbox.Indicator /></Checkbox.Control>
                                         <span className="min-w-0 flex-1">{option.label}</span>
-                                        <OptionResultIcon state={state} anatPart={showAnatomy ? "OptionResultIcon" : undefined} />
+                                        <OptionResultIcon state={state} />
                                     </Checkbox.Content>
                                 </Checkbox>
                             )
@@ -145,6 +148,7 @@ export const QuizCard = ({
 
                 {onSubmit && !isSubmitted ? (
                     <Button
+                        anatPart={showAnatomy ? "Button" : undefined}
                         variant="primary"
                         size="sm"
                         onPress={onSubmit}
@@ -156,9 +160,9 @@ export const QuizCard = ({
                 ) : null}
 
                 {isSubmitted && explanation ? (
-                    <div data-anat-part={showAnatomy ? "div · giải thích" : undefined} className="flex flex-col gap-1 rounded-2xl bg-surface-secondary px-4 py-3">
-                        <Typography data-anat-part={showAnatomy ? "Typography · nhãn" : undefined} type="body-sm" weight="semibold">Giải thích</Typography>
-                        <Typography data-anat-part={showAnatomy ? "Typography · nội dung" : undefined} type="body-sm" color="muted">{explanation}</Typography>
+                    <div className="flex flex-col gap-1 rounded-2xl bg-surface-secondary px-4 py-3">
+                        <Typography type="body-sm" weight="semibold" data-anat-part={showAnatomy ? "Typography" : undefined}>Giải thích</Typography>
+                        <Typography type="body-sm" color="muted" data-anat-part={showAnatomy ? "Typography" : undefined}>{explanation}</Typography>
                     </div>
                 ) : null}
             </div>

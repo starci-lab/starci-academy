@@ -49,6 +49,8 @@ export interface AiCategoryChipProps {
     className?: string
     /** Renders a skeleton mirror (dot + label bar) in place of the real chip. */
     isSkeleton?: boolean
+    /** BlockAnatomy marker name for the root — set by the caller to expose this part. */
+    anatPart?: string
 }
 
 /**
@@ -60,13 +62,14 @@ export interface AiCategoryChipProps {
  *
  * @param props - {@link AiCategoryChipProps}
  */
-export const AiCategoryChip = ({ category, className, isSkeleton }: AiCategoryChipProps) => {
+export const AiCategoryChip = ({ category, className, isSkeleton, anatPart }: AiCategoryChipProps) => {
     return (
         <DotChip
             dotClassName={AI_CATEGORY_COLOR[category]}
             label={AI_CATEGORY_LABEL[category]}
             className={className}
             isSkeleton={isSkeleton}
+            anatPart={anatPart}
         />
     )
 }

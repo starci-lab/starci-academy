@@ -10,8 +10,7 @@ import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockA
  *
  * ANATOMY IS PER-LEAF: each story below is its OWN leaf and carries its OWN
  * BlockAnatomy axis (Sơ đồ + Cây) reflecting the parts THAT leaf composes — there
- * is no separate consolidated "Anatomy" story. The component emits no anchors, so
- * Sơ đồ is a clean render + numbered legend.
+ * is no separate consolidated "Anatomy" story.
  */
 const meta: Meta<typeof PricingCard> = {
     title: "Design/Cards/PricingCard",
@@ -55,26 +54,31 @@ const sectionFrame = (children: Array<AnatomyNode>): AnatomyNode => ({
     children,
 })
 
-// Content parts (children of SectionCard), gated per shape:
+// Content parts (children of SectionCard), gated per shape. PricingCard DIRECTLY
+// renders each of these — Typography instances it instantiates itself with its
+// own `type`/`weight`/`color` (name/price/originalPrice/period), plus the
+// imported StatusChip — so every one is a badged node. `features` and `cta`
+// stay collapsed: they're opaque ReactNode SLOTS the CALLER builds (a Button
+// element, a `<ul>`) — PricingCard never imports Button or a list component,
+// it just positions whatever came in via a plain wrapper div.
 const NAME: AnatomyNode = { name: "Typography · tên", tier: "primitive", role: "tên tier (Typography body semibold) — cùng dòng với chip" }
-const CHIP: AnatomyNode = { name: "StatusChip", tier: "primitive", role: 'chip "phổ biến nhất" (StatusChip accent soft, w-fit) — cùng dòng với tên, chỉ khi highlighted && badge', state: "accent" }
-const PRICE: AnatomyNode = { name: "Typography · giá", tier: "primitive", role: "giá lớn (Typography h3 semibold) — đầu dòng giá" }
-const ORIGINAL: AnatomyNode = { name: "Typography · giá gốc", tier: "primitive", role: "giá gốc gạch ngang (Typography body-sm muted line-through) — cùng dòng giá" }
-const PERIOD: AnatomyNode = { name: "Typography · period", tier: "primitive", role: "nhãn kỳ hạn (Typography body-xs muted) — cuối dòng giá" }
-const FEATURES_NODE: AnatomyNode = { name: "features", tier: "primitive", role: "danh sách feature (ReactNode <ul> do caller truyền) — bọc div flex-1 giãn đầy chiều cao" }
-const CTA_BUTTON: AnatomyNode = { name: "Button · cta", tier: "primitive", role: "nút hành động (Button HeroUI do caller truyền) — bọc div dính đáy card" }
+const CHIP: AnatomyNode = { name: "StatusChip", tier: "primitive", role: "chip \"phổ biến nhất\" (StatusChip accent soft, w-fit) — cùng dòng với tên, chỉ khi highlighted && badge", state: "accent" }
+// Price = ONE PricePoint primitive (amount + struck original + period). It is a
+// primitive → ONE node; its internal amount/original/period Typography are its OWN
+// anatomy (drill into PricePoint's story), NOT badged here.
+const PRICE_POINT: AnatomyNode = { name: "PricePoint", tier: "primitive", role: "giá gói: số lớn + giá gốc gạch ngang (khi có) + kỳ hạn — 1 đơn vị" }
 
-// BASE shape (BaseTier · BadgeHiddenWithoutHighlight): no chip, no struck price, has period.
-const BASE_PARTS: Array<AnatomyNode> = [sectionFrame([NAME, PRICE, PERIOD, FEATURES_NODE, CTA_BUTTON])]
+// BASE shape (BaseTier · BadgeHiddenWithoutHighlight): tên + PricePoint, không chip.
+const BASE_PARTS: Array<AnatomyNode> = [sectionFrame([NAME, PRICE_POINT])]
 
-// FULL shape (HighlightedWithBadge): highlighted && badge → chip accent hiện + giá gốc gạch ngang.
-const FULL_PARTS: Array<AnatomyNode> = [sectionFrame([NAME, CHIP, PRICE, ORIGINAL, PERIOD, FEATURES_NODE, CTA_BUTTON])]
+// FULL shape (HighlightedWithBadge): highlighted && badge → chip accent + PricePoint (có giá gốc).
+const FULL_PARTS: Array<AnatomyNode> = [sectionFrame([NAME, CHIP, PRICE_POINT])]
 
-// DISCOUNT shape (DiscountWithoutHighlight · LongFeatureList): giá gốc gạch ngang nhưng KHÔNG chip.
-const DISCOUNT_PARTS: Array<AnatomyNode> = [sectionFrame([NAME, PRICE, ORIGINAL, PERIOD, FEATURES_NODE, CTA_BUTTON])]
+// DISCOUNT shape (DiscountWithoutHighlight · LongFeatureList): PricePoint có giá gốc, KHÔNG chip.
+const DISCOUNT_PARTS: Array<AnatomyNode> = [sectionFrame([NAME, PRICE_POINT])]
 
-// NO-PERIOD shape (NoPeriod): dòng giá chỉ còn giá lớn, không period, không giá gốc, không chip.
-const NO_PERIOD_PARTS: Array<AnatomyNode> = [sectionFrame([NAME, PRICE, FEATURES_NODE, CTA_BUTTON])]
+// NO-PERIOD shape (NoPeriod): PricePoint chỉ còn số lớn, không period/giá gốc/chip.
+const NO_PERIOD_PARTS: Array<AnatomyNode> = [sectionFrame([NAME, PRICE_POINT])]
 
 // ROW leaf (PricingRow): ba PricingCard xếp lưới items-stretch (grid div = layout, không phải node)
 // → mỗi tier là MỘT sub-block design, nest nguyên cây SectionCard + shape của nó.

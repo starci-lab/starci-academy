@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Button } from "@heroui/react"
 import { LightningIcon, ShieldCheckIcon, RocketLaunchIcon, WarningIcon, StackIcon } from "@phosphor-icons/react"
 import { PitchCard } from "./PitchCard"
+import { Button } from "../../buttons/Button/Button"
 import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -32,33 +32,32 @@ const frame = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
 // ── Anatomy per-leaf — MIRROR the real DOM PitchCard renders ──────────────────
 // Cây thật (PitchCard.tsx): SectionCard (khung, contentClassName gap-3) BAO TẤT CẢ
-// theo đúng thứ tự DOM — không header (không truyền title/icon/action) nên body là:
-//   1. IconTile — ô icon tinted
-//   2. Typography · h5 — claim
-//   3. Typography · body-sm — copy
-//   4. div › Button — footer CTA (CHỈ khi có prop `footer`)
-// SectionCard KHÔNG phải sibling của các part — nó CHỨA chúng.
+// theo đúng thứ tự DOM: IconTile → Typography (title) → Typography (body) → footer
+// slot. `title`/`body` render qua Typography là PitchCard TỰ RENDER trực tiếp —
+// dù là prop-render, MỖI Typography vẫn là 1 node riêng có anchor (§ granularity).
+// Footer chỉ là <div> slot trong suốt bọc `footer` — KHÔNG phải node riêng (cùng
+// quy tắc với dải CTA của HeroBanner); Button bên trong mới là node (composed bởi
+// caller). SectionCard KHÔNG phải sibling của các part — nó CHỨA chúng.
 
 const ICON_TILE: AnatomyNode = {
     name: "IconTile",
     tier: "primitive",
     role: "ô icon vuông tô nền theo tone (accent · success · warning · danger · neutral), size md",
 }
-const CLAIM: AnatomyNode = {
-    name: "Typography · h5",
+const TITLE_TYPOGRAPHY: AnatomyNode = {
+    name: "Typography",
     tier: "primitive",
-    role: "claim đậm (h5, semibold) — tiêu đề của beat",
+    role: "tiêu đề claim (h5, semibold) — PitchCard tự render prop `title`",
 }
-const COPY: AnatomyNode = {
-    name: "Typography · body-sm",
+const BODY_TYPOGRAPHY: AnatomyNode = {
+    name: "Typography",
     tier: "primitive",
-    role: "đoạn giải thích (body-sm, muted, flex-1 để đẩy footer xuống đáy)",
+    role: "đoạn giải thích (body-sm, muted) — PitchCard tự render prop `body`",
 }
-const FOOTER: AnatomyNode = {
-    name: "div › footer",
+const FOOTER_BUTTON: AnatomyNode = {
+    name: "Button",
     tier: "primitive",
-    role: "slot CTA tuỳ chọn — bọc footer vào đáy surface (chỉ khi có prop `footer`)",
-    children: [{ name: "Button", tier: "primitive", role: "CTA vào surface liên quan" }],
+    role: "CTA vào surface liên quan (slot `footer`, chỉ khi truyền prop này)",
 }
 
 /** Build a leaf's real tree: SectionCard BAO các part theo đúng thứ tự DOM. */
@@ -71,11 +70,11 @@ const sectionFrame = (children: Array<AnatomyNode>): Array<AnatomyNode> => [
     },
 ]
 
-// The base pitch composition (icon tile + claim + copy) — shared by every leaf without a footer.
-const PITCH_PARTS: Array<AnatomyNode> = sectionFrame([ICON_TILE, CLAIM, COPY])
+// The base pitch composition (icon tile + title + body).
+const PITCH_PARTS: Array<AnatomyNode> = sectionFrame([ICON_TILE, TITLE_TYPOGRAPHY, BODY_TYPOGRAPHY])
 
-// With-footer leaf: same base + an optional CTA slot (div › Button) at the bottom of the frame.
-const PITCH_FOOTER_PARTS: Array<AnatomyNode> = sectionFrame([ICON_TILE, CLAIM, COPY, FOOTER])
+// With-footer leaf: same base + an optional CTA Button at the bottom of the frame.
+const PITCH_FOOTER_PARTS: Array<AnatomyNode> = sectionFrame([ICON_TILE, TITLE_TYPOGRAPHY, BODY_TYPOGRAPHY, FOOTER_BUTTON])
 
 export const Default: Story = {
     render: () =>
@@ -116,7 +115,7 @@ export const WithFooter: Story = {
                         tone="success"
                         title="Cam kết đầu ra"
                         body="Hoàn thành dự án cuối là có sản phẩm bỏ thẳng vào CV."
-                        footer={<Button variant="secondary" size="sm">Xem lộ trình</Button>}
+                        footer={<Button variant="secondary" size="sm" anatPart="Button">Xem lộ trình</Button>}
                     />
                 </div>
             </BlockAnatomy>,

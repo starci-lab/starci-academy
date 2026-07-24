@@ -69,7 +69,6 @@ export const TruthList = ({ items, byline, className, showAnatomy }: TruthListPr
                                     type="body"
                                     weight="medium"
                                     className="text-left"
-                                    data-anat-part={showAnatomy ? "Typography · truth" : undefined}
                                 >
                                     {item.truth}
                                 </Typography>
@@ -80,7 +79,6 @@ export const TruthList = ({ items, byline, className, showAnatomy }: TruthListPr
                                 <Typography
                                     type="body-sm"
                                     color="muted"
-                                    data-anat-part={showAnatomy ? "Typography · fix" : undefined}
                                 >
                                     {item.fix}
                                 </Typography>

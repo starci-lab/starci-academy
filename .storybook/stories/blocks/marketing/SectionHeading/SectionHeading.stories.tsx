@@ -31,15 +31,21 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 // wraps them in a flex row `<div>` (the title always mounts inside this row, the
 // anchor mounts beside it as a SIBLING within the same row). So every leaf nests
 // them under this title-row node, mirroring the real DOM containment.
+//
+// GRANULARITY (2026-07-23, revised): SectionHeading DIRECTLY renders `Typography.Heading`
+// (its `title` prop) and `Typography` (its `intro` prop) — both are direct-composed
+// elements of THIS block (not content sitting inside another primitive's slot), so each
+// gets its own node + `data-anat-part` emitter. `Anchor '#'` stays for the same reason:
+// a distinct element the block renders directly.
 const titleRow = (withAnchor: boolean): AnatomyNode => ({
     name: "div · title row",
     tier: "primitive",
-    role: "hàng flex (items-center gap-2) bọc tiêu đề" + (withAnchor ? ' + anchor "#"' : ""),
+    role: "hàng flex (items-center gap-2) bọc tiêu đề" + (withAnchor ? " + anchor \"#\"" : ""),
     children: withAnchor
         ? [
-              { name: "Typography.Heading", tier: "primitive", role: "tiêu đề section (bold)" },
-              { name: "Anchor '#'", tier: "primitive", role: 'deep-link "#" cạnh tiêu đề (→ #anchorId)' },
-          ]
+            { name: "Typography.Heading", tier: "primitive", role: "tiêu đề section (bold)" },
+            { name: "Anchor '#'", tier: "primitive", role: "deep-link \"#\" cạnh tiêu đề (→ #anchorId)" },
+        ]
         : [{ name: "Typography.Heading", tier: "primitive", role: "tiêu đề section (bold)" }],
 })
 
@@ -135,7 +141,7 @@ export const TitleOnly: Story = {
                 tier="design"
                 leaf="Chỉ tiêu đề"
                 parts={TITLE_ONLY_PARTS}
-                note="Không eyebrow / anchor / intro → chỉ còn một Typography.Heading."
+                note="Không eyebrow / anchor / intro → chỉ còn title row (tiêu đề)."
             >
                 <SectionHeading title="Training partners" showAnatomy />
             </BlockAnatomy>,

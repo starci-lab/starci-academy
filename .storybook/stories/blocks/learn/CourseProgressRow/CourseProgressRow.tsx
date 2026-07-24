@@ -95,15 +95,15 @@ export const CourseProgressRow = ({
     if (isSkeleton) {
         return (
             <div className={cn("flex w-full items-center gap-3 p-3", className)}>
-                <Skeleton className="size-12 shrink-0 rounded-xl" />
+                <Skeleton className="size-12 shrink-0 rounded-xl" anatPart={showAnatomy ? "Skeleton · tile" : undefined} />
                 <div className="flex min-w-0 flex-1 flex-col gap-2">
                     <div className="flex items-center justify-between gap-2">
-                        <Skeleton.Typography type="body-sm" width="1/2" />
-                        {withTrialChip ? <Skeleton.Chip className="h-6 w-14 shrink-0" /> : null}
-                        <Skeleton className="h-3 w-8 shrink-0 rounded" />
+                        <Skeleton.Typography type="body-sm" width="1/2" anatPart={showAnatomy ? "Skeleton.Typography · title" : undefined} />
+                        {withTrialChip ? <Skeleton.Chip className="h-6 w-14 shrink-0" anatPart={showAnatomy ? "Skeleton.Chip" : undefined} /> : null}
+                        <Skeleton className="h-3 w-8 shrink-0 rounded" anatPart={showAnatomy ? "Skeleton · percent" : undefined} />
                     </div>
-                    <Skeleton.ProgressBar className="h-1" />
-                    {withMeta ? <Skeleton.Typography type="body-xs" width="1/3" /> : null}
+                    <Skeleton.ProgressBar className="h-1" anatPart={showAnatomy ? "Skeleton.ProgressBar" : undefined} />
+                    {withMeta ? <Skeleton.Typography type="body-xs" width="1/3" anatPart={showAnatomy ? "Skeleton.Typography · meta" : undefined} /> : null}
                 </div>
             </div>
         )
@@ -125,12 +125,17 @@ export const CourseProgressRow = ({
                             "min-w-0 flex-1",
                             interactive && "underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline",
                         )}
-                        data-anat-part={showAnatomy ? "Typography · title" : undefined}
+                        data-anat-part={showAnatomy ? "Typography" : undefined}
                     >
                         {title}
                     </Typography>
                     {trialLabel ? <StatusChip tone="warning" anatPart={showAnatomy ? "StatusChip" : undefined}>{trialLabel}</StatusChip> : null}
-                    <Typography type="body-xs" color="muted" className="shrink-0" data-anat-part={showAnatomy ? "Typography · percent" : undefined}>
+                    <Typography
+                        type="body-xs"
+                        color="muted"
+                        className="shrink-0"
+                        data-anat-part={showAnatomy ? "Typography" : undefined}
+                    >
                         {clamped}%
                     </Typography>
                 </div>
@@ -144,7 +149,7 @@ export const CourseProgressRow = ({
                     ]}
                 />
                 {meta ? (
-                    <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography · meta" : undefined}>
+                    <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography" : undefined}>
                         {meta}
                     </Typography>
                 ) : null}
@@ -163,10 +168,14 @@ export const CourseProgressRow = ({
 
     if (onPress) {
         return (
-            <button type="button" onClick={onPress} className={rowClassName}>
+            <button type="button" onClick={onPress} className={rowClassName} data-anat-part={showAnatomy ? "CourseProgressRow" : undefined}>
                 {content}
             </button>
         )
     }
-    return <div className={rowClassName}>{content}</div>
+    return (
+        <div className={rowClassName} data-anat-part={showAnatomy ? "CourseProgressRow" : undefined}>
+            {content}
+        </div>
+    )
 }

@@ -153,7 +153,7 @@ export const HeroBanner = ({
     }
 
     return (
-        <section className={cn("flex flex-col items-center gap-10 @app-lg:flex-row @app-lg:gap-12", className)}>
+        <section className={cn("flex flex-col items-center gap-8 @app-lg:flex-row @app-lg:gap-8", className)}>
             {textColumn}
             <div className="flex w-full max-w-md shrink-0 items-center justify-center @app-lg:max-w-none @app-lg:flex-1">
                 {visual}

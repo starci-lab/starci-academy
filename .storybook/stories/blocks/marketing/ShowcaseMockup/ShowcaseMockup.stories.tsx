@@ -45,9 +45,14 @@ const DemoContent = () => (
 // sau + window card) → window card → (chrome[URL] + content). The 3 chrome dots
 // are raw aria-hidden decorative <span>s (not primitives) → folded into the chrome
 // role, not modelled as separate leaves.
+//
+// GRANULARITY (2026-07-23, revised): the address-bar `Typography` renders the
+// `url` prop DIRECTLY inside "Window chrome" (not inside another primitive's
+// slot) → it's a direct-composed element of this block, so it gets its own
+// child node + `data-anat-part` emitter, present only when `withUrl`.
 
 /** Foreground window card: bg-surface + border + rounded frame that OWNS the chrome
- *  bar and the content area. `withUrl` toggles the address-bar Typography child. */
+ *  bar and the content area. `withUrl` toggles whether the chrome shows the address bar. */
 const windowCard = (withUrl: boolean): AnatomyNode => ({
     name: "Window card",
     tier: "design",
@@ -60,7 +65,7 @@ const windowCard = (withUrl: boolean): AnatomyNode => ({
                 ? "thanh cửa sổ (border-b): 3 chấm đỏ/vàng/lục + address bar"
                 : "thanh cửa sổ (border-b): chỉ 3 chấm đỏ/vàng/lục, KHÔNG address bar",
             children: withUrl
-                ? [{ name: "Typography", tier: "primitive", role: "chuỗi URL trên address bar (type=code)" }]
+                ? [{ name: "Typography", tier: "primitive", role: "chuỗi URL address bar (type=code, render trực tiếp prop url)" }]
                 : undefined,
         },
         { name: "Content", tier: "design", role: "vùng bọc nội dung children (khoá 16:9 khi aspect='video')" },
@@ -289,7 +294,7 @@ export const NoAddressBar: Story = {
                 tier="design"
                 leaf="Không address bar"
                 parts={NO_URL_PARTS}
-                note="Bỏ prop url → BỎ Typography address bar, chrome chỉ còn 3 chấm (khác leaf 'Mặc định')."
+                note="Bỏ prop url → BỎ address bar, chrome chỉ còn 3 chấm (khác leaf 'Mặc định')."
             >
                 <div className="max-w-lg">
                     <ShowcaseMockup showAnatomy>

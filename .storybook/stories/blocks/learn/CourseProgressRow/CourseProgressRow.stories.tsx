@@ -29,29 +29,33 @@ type Story = StoryObj<typeof CourseProgressRow>
 const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
 
 // Base row (no trial chip, no meta) — the norm: Default · Interactive · WithCoverImage · Complete.
+// Title/percent are Typography CourseProgressRow TỰ render (hiện `title`/`clamped percent` props
+// trực tiếp) → mỗi occurrence là 1 node "Typography" (2026-07-23 granularity ruling: block trực
+// tiếp render Typography luôn có node). IconTile + SegmentBar are composed sub-components with
+// their own identity, kept as single leaf nodes (not drilled further here).
 const ROW_PARTS: Array<AnatomyNode> = [
     { name: "IconTile", tier: "primitive", role: "tile 48px (size sm) — icon fallback, hoặc ảnh bìa khi có src" },
-    { name: "Typography · title", tier: "primitive", role: "tiêu đề khóa học (body-sm, medium, truncate)" },
-    { name: "Typography · percent", tier: "primitive", role: "% hoàn tất (body-xs, muted)" },
+    { name: "Typography", tier: "primitive", role: "tiêu đề khoá học (title)" },
+    { name: "Typography", tier: "primitive", role: "% hoàn thành (clamped percent)" },
     { name: "SegmentBar", tier: "primitive", role: "track 2 sắc (đã xong / còn lại), hideLegend" },
 ]
 
 // Trial shape — trialLabel adds a warning StatusChip beside the title (Trial · Empty).
 const TRIAL_PARTS: Array<AnatomyNode> = [
     { name: "IconTile", tier: "primitive", role: "tile 48px (size sm) — icon fallback" },
-    { name: "Typography · title", tier: "primitive", role: "tiêu đề khóa học (body-sm, medium, truncate)" },
+    { name: "Typography", tier: "primitive", role: "tiêu đề khoá học (title)" },
     { name: "StatusChip", tier: "primitive", role: "chip 'Học thử' — CHỈ khi trialLabel được truyền", state: "warning" },
-    { name: "Typography · percent", tier: "primitive", role: "% hoàn tất (body-xs, muted)" },
+    { name: "Typography", tier: "primitive", role: "% hoàn thành (clamped percent)" },
     { name: "SegmentBar", tier: "primitive", role: "track 2 sắc (đã xong / còn lại), hideLegend" },
 ]
 
 // Meta shape — an extra muted line under the bar (WithMeta).
 const META_PARTS: Array<AnatomyNode> = [
     { name: "IconTile", tier: "primitive", role: "tile 48px (size sm) — icon fallback" },
-    { name: "Typography · title", tier: "primitive", role: "tiêu đề khóa học (body-sm, medium, truncate)" },
-    { name: "Typography · percent", tier: "primitive", role: "% hoàn tất (body-xs, muted)" },
+    { name: "Typography", tier: "primitive", role: "tiêu đề khoá học (title)" },
+    { name: "Typography", tier: "primitive", role: "% hoàn thành (clamped percent)" },
     { name: "SegmentBar", tier: "primitive", role: "track 2 sắc (đã xong / còn lại), hideLegend" },
-    { name: "Typography · meta", tier: "primitive", role: "dòng phụ dưới bar (đếm mục / cập nhật), muted" },
+    { name: "Typography", tier: "primitive", role: "dòng meta muted dưới bar (meta)" },
 ]
 
 // List shape — several rows stacked in a consumer-owned surface frame.
@@ -262,7 +266,7 @@ export const List: Story = {
                 parts={LIST_PARTS}
                 note="×3 xếp chồng trong khung surface (consumer sở hữu, KHÔNG thuộc block); mỗi hàng là 1 CourseProgressRow — base · học thử · hoàn tất."
             >
-                <div className="flex w-full max-w-md flex-col rounded-3xl bg-surface shadow-surface">
+                <div data-anat-part="Khung list (surface)" className="flex w-full max-w-md flex-col rounded-3xl bg-surface shadow-surface">
                     <CourseProgressRow
                         icon={<BookOpenIcon aria-hidden focusable="false" />}
                         showAnatomy

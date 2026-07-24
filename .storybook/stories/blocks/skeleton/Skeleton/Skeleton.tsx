@@ -18,7 +18,9 @@ import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react"
  */
 
 /** Raw shimmer bar — size it via `className` (e.g. `h-12 w-full rounded-xl`). */
-const SkeletonBar = ({ className }: { className?: string }) => <HeroSkeleton className={cn(className)} />
+const SkeletonBar = ({ className, anatPart }: { className?: string; anatPart?: string }) => (
+    <HeroSkeleton className={cn(className)} data-anat-part={anatPart} />
+)
 
 /** Typography variants whose glyph box the skeleton mirrors. */
 export type SkeletonTypographyType =
@@ -61,12 +63,19 @@ const SkeletonTypography = ({
     type = "body-sm",
     width = "full",
     className,
+    anatPart,
 }: {
     type?: SkeletonTypographyType
     /** A width token (`"full"`, `"1/2"`, …) OR an arbitrary Tailwind width class (`"w-5/6"`). */
     width?: SkeletonTypographyWidth | (string & {})
     className?: string
-}) => <HeroSkeleton className={cn("rounded", TYPE_TO_BAR[type], resolveWidth(width), className)} />
+    anatPart?: string
+}) => (
+    <HeroSkeleton
+        className={cn("rounded", TYPE_TO_BAR[type], resolveWidth(width), className)}
+        data-anat-part={anatPart}
+    />
+)
 
 /**
  * Stepped decreasing widths cycled across paragraph lines (100% → 75% → 50%) so a
@@ -90,6 +99,7 @@ const SkeletonParagraph = ({
     type,
     stepped = false,
     className,
+    anatPart,
 }: {
     lines?: number
     /** Glyph-height token per line; defaults to prose (leading-7, `h-4 my-[6px]`). */
@@ -97,12 +107,13 @@ const SkeletonParagraph = ({
     /** Use stepped decreasing widths (`w-full → w-3/4 → w-1/2`) instead of only shortening the last line. */
     stepped?: boolean
     className?: string
+    anatPart?: string
 }) => {
     const count = Math.max(1, lines)
     // Prose default keeps the tight leading-7 box; `type` swaps in the token's glyph height.
     const barHeight = type ? TYPE_TO_BAR[type] : "h-4 my-[6px]"
     return (
-        <div className={cn("flex flex-col", className)}>
+        <div className={cn("flex flex-col", className)} data-anat-part={anatPart}>
             {Array.from({ length: count }).map((_, index) => {
                 const isLast = index === count - 1
                 const width = stepped
@@ -123,8 +134,8 @@ const SkeletonParagraph = ({
  * (TextField/SearchField/NumberField/InputGroup).
  * Field box = min-h-9 (36px) + rounded-field (0.75rem = rounded-xl).
  */
-const SkeletonInput = ({ className }: { className?: string }) => (
-    <HeroSkeleton className={cn("h-9 w-full rounded-xl", className)} />
+const SkeletonInput = ({ className, anatPart }: { className?: string; anatPart?: string }) => (
+    <HeroSkeleton className={cn("h-9 w-full rounded-xl", className)} data-anat-part={anatPart} />
 )
 
 /**
@@ -133,8 +144,20 @@ const SkeletonInput = ({ className }: { className?: string }) => (
  * to the field footprint (rounded-field = rounded-xl), height derived from `rows`
  * — not stacked text bars (that would read as pre-filled content).
  */
-const SkeletonTextArea = ({ rows = 3, className }: { rows?: number; className?: string }) => (
-    <div className={cn("w-full", className)} style={{ height: `${rows * 20 + 16}px` }}>
+const SkeletonTextArea = ({
+    rows = 3,
+    className,
+    anatPart,
+}: {
+    rows?: number
+    className?: string
+    anatPart?: string
+}) => (
+    <div
+        className={cn("w-full", className)}
+        style={{ height: `${rows * 20 + 16}px` }}
+        data-anat-part={anatPart}
+    >
         <HeroSkeleton className="h-full w-full rounded-xl" />
     </div>
 )
@@ -145,8 +168,8 @@ const SkeletonTextArea = ({ rows = 3, className }: { rows?: number; className?: 
  * the trailing chevron indicator. We render the field bar plus a small square
  * block on the trailing edge to mirror the chevron footprint.
  */
-const SkeletonSelect = ({ className }: { className?: string }) => (
-    <div className={cn("relative w-full", className)}>
+const SkeletonSelect = ({ className, anatPart }: { className?: string; anatPart?: string }) => (
+    <div className={cn("relative w-full", className)} data-anat-part={anatPart}>
         <HeroSkeleton className="h-9 w-full rounded-xl" />
         <HeroSkeleton className="absolute end-3 top-1/2 size-4 -translate-y-1/2 rounded" />
     </div>
@@ -156,8 +179,16 @@ const SkeletonSelect = ({ className }: { className?: string }) => (
  * Skeleton matching a HeroUI <Button/> box.
  * Button is h-10 on mobile / @app-md:h-9 (36px) with rounded-3xl — a full pill at this height.
  */
-const SkeletonButton = ({ className, width = "w-24" }: { className?: string; width?: string }) => (
-    <HeroSkeleton className={cn("h-10 @app-md:h-9 rounded-full", width, className)} />
+const SkeletonButton = ({
+    className,
+    width = "w-24",
+    anatPart,
+}: {
+    className?: string
+    width?: string
+    anatPart?: string
+}) => (
+    <HeroSkeleton className={cn("h-10 @app-md:h-9 rounded-full", width, className)} data-anat-part={anatPart} />
 )
 
 /**
@@ -165,8 +196,8 @@ const SkeletonButton = ({ className, width = "w-24" }: { className?: string; wid
  * The app globals.css override sizes the track to 2.25rem (h-9) × 4rem (w-16),
  * a fully rounded pill matching the navbar icon buttons (36px tall).
  */
-const SkeletonSwitch = ({ className }: { className?: string }) => (
-    <HeroSkeleton className={cn("h-9 w-16 rounded-full", className)} />
+const SkeletonSwitch = ({ className, anatPart }: { className?: string; anatPart?: string }) => (
+    <HeroSkeleton className={cn("h-9 w-16 rounded-full", className)} data-anat-part={anatPart} />
 )
 
 /**
@@ -179,12 +210,14 @@ const SkeletonCheckbox = ({
     className,
     withLabel = true,
     labelWidth = "w-32",
+    anatPart,
 }: {
     className?: string
     withLabel?: boolean
     labelWidth?: string
+    anatPart?: string
 }) => (
-    <div className={cn("flex items-center gap-3", className)}>
+    <div className={cn("flex items-center gap-3", className)} data-anat-part={anatPart}>
         <HeroSkeleton className="size-4 shrink-0 rounded-md" />
         {withLabel && <HeroSkeleton className={cn("h-[14px] my-[5px] rounded", labelWidth)} />}
     </div>
@@ -201,12 +234,14 @@ const SkeletonRadioGroup = ({
     className,
     items = 3,
     labelWidth = "w-32",
+    anatPart,
 }: {
     className?: string
     items?: number
     labelWidth?: string
+    anatPart?: string
 }) => (
-    <div className={cn("flex flex-col gap-2", className)}>
+    <div className={cn("flex flex-col gap-2", className)} data-anat-part={anatPart}>
         {Array.from({ length: items }).map((_, index) => (
             <div key={index} className="flex items-center gap-3">
                 <HeroSkeleton className="size-4 shrink-0 rounded-full" />
@@ -221,8 +256,8 @@ const SkeletonRadioGroup = ({
  * The track row is h-5 (rounded-xl). The thumb is a 5×5 (w-5 h-5) rounded handle
  * sitting on the track; here it is parked at the start to suggest the control.
  */
-const SkeletonSlider = ({ className }: { className?: string }) => (
-    <div className={cn("relative h-5 w-full", className)}>
+const SkeletonSlider = ({ className, anatPart }: { className?: string; anatPart?: string }) => (
+    <div className={cn("relative h-5 w-full", className)} data-anat-part={anatPart}>
         <HeroSkeleton className="absolute inset-0 h-5 w-full rounded-xl" />
         <HeroSkeleton className="absolute top-0 left-0 size-5 rounded-xl" />
     </div>
@@ -238,40 +273,48 @@ const AVATAR_SIZE_CLASS: Record<SkeletonAvatarSize, string> = {
 }
 
 /** Skeleton matching a HeroUI <Avatar/> box (square, circular shape). */
-const SkeletonAvatar = ({ size = "md", className }: { size?: SkeletonAvatarSize; className?: string }) => (
-    <HeroSkeleton className={cn("rounded-full", AVATAR_SIZE_CLASS[size], className)} />
+const SkeletonAvatar = ({
+    size = "md",
+    className,
+    anatPart,
+}: {
+    size?: SkeletonAvatarSize
+    className?: string
+    anatPart?: string
+}) => (
+    <HeroSkeleton className={cn("rounded-full", AVATAR_SIZE_CLASS[size], className)} data-anat-part={anatPart} />
 )
 
 /**
  * Skeleton matching a HeroUI <Chip/> box.
  * Chip: py-0.5 (4px) + text-xs leading-5 (20px) = 24px tall → h-6, pill shape.
  */
-const SkeletonChip = ({ className }: { className?: string }) => (
-    <HeroSkeleton className={cn("h-6 w-16 rounded-full", className)} />
+const SkeletonChip = ({ className, anatPart }: { className?: string; anatPart?: string }) => (
+    <HeroSkeleton className={cn("h-6 w-16 rounded-full", className)} data-anat-part={anatPart} />
 )
 
 /**
  * Skeleton matching a HeroUI <Badge/> box (small size).
  * Badge --sm: min-h-4 min-w-4 → 16px square, circular shape.
  */
-const SkeletonBadge = ({ className }: { className?: string }) => (
-    <HeroSkeleton className={cn("size-4 rounded-full", className)} />
+const SkeletonBadge = ({ className, anatPart }: { className?: string; anatPart?: string }) => (
+    <HeroSkeleton className={cn("size-4 rounded-full", className)} data-anat-part={anatPart} />
 )
 
 /**
  * Skeleton matching a HeroUI <Kbd/> box.
  * Kbd: h-6 rounded-lg px-2.
  */
-const SkeletonKbd = ({ className }: { className?: string }) => (
-    <HeroSkeleton className={cn("h-6 w-10 rounded-lg", className)} />
+const SkeletonKbd = ({ className, anatPart }: { className?: string; anatPart?: string }) => (
+    <HeroSkeleton className={cn("h-6 w-10 rounded-lg", className)} data-anat-part={anatPart} />
 )
 
 /**
  * Skeleton matching a HeroUI <ProgressBar/> track.
  * ProgressBar track: h-2, full-width bar.
  */
-const SkeletonProgressBar = ({ className }: { className?: string }) => (
-    <HeroSkeleton className={cn("h-2 w-full rounded-full", className)} />
+const SkeletonProgressBar = ({ className, anatPart }: { className?: string; anatPart?: string }) => (
+    <HeroSkeleton className={cn("h-2 w-full rounded-full", className)} data-anat-part={anatPart} />
 )
 
 /**
@@ -280,8 +323,16 @@ const SkeletonProgressBar = ({ className }: { className?: string }) => (
  * the loading state doesn't jump when the real distribution arrives. Pass
  * `legendItems` to match the expected slice count.
  */
-const SkeletonSegmentBar = ({ legendItems = 3, className }: { legendItems?: number; className?: string }) => (
-    <div className={cn("flex flex-col gap-2", className)}>
+const SkeletonSegmentBar = ({
+    legendItems = 3,
+    className,
+    anatPart,
+}: {
+    legendItems?: number
+    className?: string
+    anatPart?: string
+}) => (
+    <div className={cn("flex flex-col gap-2", className)} data-anat-part={anatPart}>
         {/* the proportion track */}
         <HeroSkeleton className="h-2 w-full rounded-full" />
         {/* legend: dot + label per slice */}
@@ -300,8 +351,8 @@ const SkeletonSegmentBar = ({ legendItems = 3, className }: { legendItems?: numb
  * Skeleton matching a HeroUI <Meter/> track.
  * Meter track: h-2, full-width bar (same box as ProgressBar).
  */
-const SkeletonMeter = ({ className }: { className?: string }) => (
-    <HeroSkeleton className={cn("h-2 w-full rounded-full", className)} />
+const SkeletonMeter = ({ className, anatPart }: { className?: string; anatPart?: string }) => (
+    <HeroSkeleton className={cn("h-2 w-full rounded-full", className)} data-anat-part={anatPart} />
 )
 
 /**
@@ -309,8 +360,16 @@ const SkeletonMeter = ({ className }: { className?: string }) => (
  * frame (border/radius/padding baked in) wrapping a title bar (body-sm 14px) over
  * body lines (body-xs 12px), so the loading box shares the card's exact footprint.
  */
-const SkeletonCard = ({ className, lines = 3 }: { className?: string; lines?: number }) => (
-    <Card className={className}>
+const SkeletonCard = ({
+    className,
+    lines = 3,
+    anatPart,
+}: {
+    className?: string
+    lines?: number
+    anatPart?: string
+}) => (
+    <Card className={className} data-anat-part={anatPart}>
         <CardContent className="flex flex-col gap-2">
             {/* Title (body-sm) */}
             <HeroSkeleton className="my-[5px] h-[14px] w-1/2 rounded" />
@@ -329,8 +388,8 @@ const SkeletonCard = ({ className, lines = 3 }: { className?: string; lines?: nu
  * Skeleton matching a HeroUI <Disclosure/> trigger row: an inline label bar
  * (text-sm/leading-5 -> h-[14px] my-[3px]) with a trailing size-4 indicator.
  */
-const SkeletonDisclosure = ({ className }: { className?: string }) => (
-    <div className={cn("relative flex items-center gap-2", className)}>
+const SkeletonDisclosure = ({ className, anatPart }: { className?: string; anatPart?: string }) => (
+    <div className={cn("relative flex items-center gap-2", className)} data-anat-part={anatPart}>
         <HeroSkeleton className="my-[3px] h-[14px] w-2/5 rounded" />
         <HeroSkeleton className="ml-auto size-4 shrink-0 rounded" />
     </div>
@@ -369,16 +428,30 @@ const SkeletonAccordion = ({
     items = 3,
     renderExpandedBody,
     className,
+    anatPart,
+    titleAnatPart,
+    indicatorAnatPart,
+    separatorAnatPart,
 }: {
     items?: number | Array<SkeletonAccordionItem>
     renderExpandedBody?: (index: number) => React.ReactNode
     className?: string
+    anatPart?: string
+    /** Anatomy tag for each row's title bar (repeated per row — mirrors `Accordion.Item` repeating per real item). */
+    titleAnatPart?: string
+    /** Anatomy tag for each row's trailing indicator placeholder. */
+    indicatorAnatPart?: string
+    /** Anatomy tag for each row separator (the last row has none). */
+    separatorAnatPart?: string
 }) => {
     // Normalise: a number → that many default rows; an array → per-item config.
     const rows: Array<SkeletonAccordionItem> =
         typeof items === "number" ? Array.from({ length: Math.max(0, items) }, () => ({})) : items
     return (
-        <div className={cn("w-full overflow-hidden rounded-3xl bg-surface shadow-surface", className)}>
+        <div
+            className={cn("w-full overflow-hidden rounded-3xl bg-surface shadow-surface", className)}
+            data-anat-part={anatPart}
+        >
             {rows.map((item, index) => {
                 const showIndicator = item.showIndicator !== false
                 const titleSize = item.titleSize ?? "body-sm"
@@ -386,13 +459,20 @@ const SkeletonAccordion = ({
                 return (
                     <div key={index} className="relative" aria-label={item.ariaLabel}>
                         <div className="flex h-14 items-center justify-between px-4">
-                            <HeroSkeleton className={cn("rounded", TYPE_TO_BAR[titleSize], titleWidth)} />
-                            {showIndicator ? <HeroSkeleton className="size-4 rounded" /> : null}
+                            <HeroSkeleton
+                                className={cn("rounded", TYPE_TO_BAR[titleSize], titleWidth)}
+                                data-anat-part={titleAnatPart}
+                            />
+                            {showIndicator ? (
+                                <HeroSkeleton className="size-4 rounded" data-anat-part={indicatorAnatPart} />
+                            ) : null}
                         </div>
                         {item.expanded && renderExpandedBody ? (
                             <div className="px-4 pb-4">{renderExpandedBody(index)}</div>
                         ) : null}
-                        {index < rows.length - 1 && <HeroSkeleton className="h-px w-full rounded-xs" />}
+                        {index < rows.length - 1 && (
+                            <HeroSkeleton className="h-px w-full rounded-xs" data-anat-part={separatorAnatPart} />
+                        )}
                     </div>
                 )
             })}
@@ -405,12 +485,21 @@ const SkeletonAccordion = ({
  * holding count tab bars, each h-8 (rounded-3xl pill). The container box is
  * 32 + 8 = 40px tall, matching the real tab list.
  */
-const SkeletonTabs = ({ className, count = 3 }: { className?: string; count?: number }) => (
+const SkeletonTabs = ({
+    className,
+    count = 3,
+    anatPart,
+}: {
+    className?: string
+    count?: number
+    anatPart?: string
+}) => (
     <div
         className={cn(
             "inline-flex gap-2 rounded-[calc(var(--radius)*2.5)] bg-default p-1",
             className,
         )}
+        data-anat-part={anatPart}
     >
         {Array.from({ length: count }).map((_, index) => (
             <HeroSkeleton key={index} className="h-8 w-20 rounded-3xl" />
@@ -423,8 +512,16 @@ const SkeletonTabs = ({ className, count = 3 }: { className?: string; count?: nu
  * (link text-sm/leading-5 -> h-[14px] my-[3px]) interleaved with size-3
  * separator icons.
  */
-const SkeletonBreadcrumbs = ({ className, count = 3 }: { className?: string; count?: number }) => (
-    <div className={cn("flex items-center", className)}>
+const SkeletonBreadcrumbs = ({
+    className,
+    count = 3,
+    anatPart,
+}: {
+    className?: string
+    count?: number
+    anatPart?: string
+}) => (
+    <div className={cn("flex items-center", className)} data-anat-part={anatPart}>
         {Array.from({ length: count }).map((_, index) => (
             <React.Fragment key={index}>
                 {/* Crumb item wrapper */}
@@ -454,12 +551,17 @@ const SkeletonPagination = ({
     className,
     count = 3,
     center = false,
+    anatPart,
 }: {
     className?: string
     count?: number
     center?: boolean
+    anatPart?: string
 }) => (
-    <div className={cn("flex items-center gap-1", center && "w-full justify-center", className)}>
+    <div
+        className={cn("flex items-center gap-1", center && "w-full justify-center", className)}
+        data-anat-part={anatPart}
+    >
         <div className={PAGINATION_ARROW_SLOT}>
             <CaretLeftIcon weight="bold" className="size-4 text-muted" aria-hidden focusable="false" />
         </div>
@@ -478,8 +580,18 @@ const SkeletonPagination = ({
  * in the skeleton, only cell content becomes bars) with a `body-sm` glyph bar
  * (`h-[14px]` centered `my-[5px]`) in each header column + body cell.
  */
-const SkeletonTable = ({ rows = 3, cols = 3, className }: { rows?: number; cols?: number; className?: string }) => (
-    <Table variant="primary" aria-label="Đang tải bảng" className={className}>
+const SkeletonTable = ({
+    rows = 3,
+    cols = 3,
+    className,
+    anatPart,
+}: {
+    rows?: number
+    cols?: number
+    className?: string
+    anatPart?: string
+}) => (
+    <Table variant="primary" aria-label="Đang tải bảng" className={className} data-anat-part={anatPart}>
         <Table.ScrollContainer>
             <Table.Content aria-label="Đang tải bảng">
                 <Table.Header>
@@ -514,8 +626,16 @@ const LISTBOX_OPTION_WIDTHS = ["w-3/5", "w-2/5", "w-4/5", "w-1/2", "w-2/3"]
  * glyph bar sized to the LABEL width (varying, not `w-full`) so it reads as a
  * text option rather than a solid block.
  */
-const SkeletonListBox = ({ items = 4, className }: { items?: number; className?: string }) => (
-    <div className={cn("flex w-full flex-col gap-1 p-1", className)}>
+const SkeletonListBox = ({
+    items = 4,
+    className,
+    anatPart,
+}: {
+    items?: number
+    className?: string
+    anatPart?: string
+}) => (
+    <div className={cn("flex w-full flex-col gap-1 p-1", className)} data-anat-part={anatPart}>
         {Array.from({ length: items }).map((_, index) => (
             <div key={index} className="rounded-xl px-3 py-2">
                 <HeroSkeleton
@@ -532,13 +652,15 @@ const SkeletonListRow = ({
     withLeading = true,
     withTrailing = false,
     className,
+    anatPart,
 }: {
     withSubtitle?: boolean
     withLeading?: boolean
     withTrailing?: boolean
     className?: string
+    anatPart?: string
 }) => (
-    <div className={cn("flex min-w-0 items-center gap-3 py-2", className)}>
+    <div className={cn("flex min-w-0 items-center gap-3 py-2", className)} data-anat-part={anatPart}>
         {withLeading ? <HeroSkeleton className="size-8 shrink-0 rounded-full" /> : null}
         <div className="flex min-w-0 flex-1 flex-col gap-0">
             <HeroSkeleton className="my-[5px] h-[14px] w-1/2 rounded" />
@@ -554,8 +676,16 @@ const SkeletonListRow = ({
  * with a leading `size-5` icon and a single `body-sm` label. Mirrors exactly
  * that — a round `size-5` icon placeholder + ONE short text bar per row.
  */
-const SkeletonMenu = ({ items = 4, className }: { items?: number; className?: string }) => (
-    <div className={cn("flex w-full flex-col gap-1 p-1", className)}>
+const SkeletonMenu = ({
+    items = 4,
+    className,
+    anatPart,
+}: {
+    items?: number
+    className?: string
+    anatPart?: string
+}) => (
+    <div className={cn("flex w-full flex-col gap-1 p-1", className)} data-anat-part={anatPart}>
         {Array.from({ length: items }).map((_, index) => (
             <div key={index} className="flex items-center gap-2 px-2 py-2">
                 <HeroSkeleton className="size-5 shrink-0 rounded-full" />
@@ -574,8 +704,16 @@ const SkeletonMenu = ({ items = 4, className }: { items?: number; className?: st
  * - Name bar: `h-3 w-24` in a 20px box (`my-1`) — matches name `leading-5`.
  * - Handle bar: `h-3 w-16` in a 16px box (`my-0`) — matches handle `leading-4`.
  */
-const SkeletonUserCell = ({ withHandle = true, className }: { withHandle?: boolean; className?: string }) => (
-    <div className={cn("flex min-w-0 items-center gap-2", className)}>
+const SkeletonUserCell = ({
+    withHandle = true,
+    className,
+    anatPart,
+}: {
+    withHandle?: boolean
+    className?: string
+    anatPart?: string
+}) => (
+    <div className={cn("flex min-w-0 items-center gap-2", className)} data-anat-part={anatPart}>
         <HeroSkeleton className="size-9 shrink-0 rounded-full" />
         <div className="flex min-w-0 flex-col gap-0">
             <HeroSkeleton className="my-1 h-3 w-24 rounded" />
@@ -590,8 +728,8 @@ const SkeletonUserCell = ({ withHandle = true, className }: { withHandle?: boole
  * bar (h4), a label bar (body-sm) and a hint bar (body-xs), so `<Skeleton.Metric/>`
  * shares MetricCard's exact box.
  */
-const SkeletonMetric = ({ className }: { className?: string }) => (
-    <Card className={className}>
+const SkeletonMetric = ({ className, anatPart }: { className?: string; anatPart?: string }) => (
+    <Card className={className} data-anat-part={anatPart}>
         <CardContent>
             <div className="flex flex-col gap-2">
                 {/* Value (h4) */}

@@ -74,12 +74,13 @@ const TONE_CLS: Record<MarkTone, string> = {
     danger: "text-danger-soft-foreground",
 }
 
-const markIcon = (mark: ListMark, tone: MarkTone | undefined): ReactNode => {
+const markIcon = (mark: ListMark, tone: MarkTone | undefined, anatPart: string | undefined): ReactNode => {
     if (mark === "check") {
         return (
             <CheckCircleIcon
                 aria-hidden
                 focusable="false"
+                data-anat-part={anatPart}
                 className={cn("size-5 shrink-0", TONE_CLS[tone ?? "success"])}
             />
         )
@@ -89,6 +90,7 @@ const markIcon = (mark: ListMark, tone: MarkTone | undefined): ReactNode => {
             <XCircleIcon
                 aria-hidden
                 focusable="false"
+                data-anat-part={anatPart}
                 className={cn("size-5 shrink-0", TONE_CLS[tone ?? "muted"])}
             />
         )
@@ -115,6 +117,10 @@ export interface CrossListItemProps {
     children?: ReactNode
     /** `true` → render a skeleton mirror row (mark-sized dot + text bar) instead of `mark`/`children`. */
     isSkeleton?: boolean
+    /** Anatomy tag: names this row so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
+    /** Anatomy tag for the leading mark ICON slot (per-slot — the icon is internal, not a `children` prop). */
+    markAnatPart?: string
 }
 
 /**
@@ -126,8 +132,18 @@ export interface CrossListItemProps {
  *
  * @param props - {@link CrossListItemProps}
  */
-export const CrossListItem = ({ mark = "check", tone, children, isSkeleton = false }: CrossListItemProps) => (
-    <li className="relative flex items-start gap-3 p-3 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-[''] last:after:hidden">
+export const CrossListItem = ({
+    mark = "check",
+    tone,
+    children,
+    isSkeleton = false,
+    anatPart,
+    markAnatPart,
+}: CrossListItemProps) => (
+    <li
+        className="relative flex items-start gap-3 p-3 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-surface-foreground/6 after:content-[''] last:after:hidden"
+        data-anat-part={anatPart}
+    >
         {isSkeleton ? (
             <>
                 <Skeleton className="size-5 shrink-0 rounded-full" />
@@ -137,7 +153,7 @@ export const CrossListItem = ({ mark = "check", tone, children, isSkeleton = fal
             </>
         ) : (
             <>
-                {markIcon(mark, tone)}
+                {markIcon(mark, tone, markAnatPart)}
                 <div className="min-w-0 flex-1">{children}</div>
             </>
         )}

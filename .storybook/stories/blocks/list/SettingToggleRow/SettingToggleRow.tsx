@@ -1,6 +1,7 @@
 import React from "react"
-import { Switch, Typography, cn } from "@heroui/react"
+import { Switch, cn } from "@heroui/react"
 import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
+import { TitledText } from "../../text/TitledText/TitledText"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -68,26 +69,16 @@ export const SettingToggleRow = ({
     if (isSkeleton) {
         return (
             <div className={cn("flex items-center gap-3", className)}>
-                <div className="flex min-w-0 flex-1 flex-col gap-0">
-                    <Skeleton.Typography type="body-sm" width="1/2" />
-                    {description ? <Skeleton.Typography type="body-xs" width="2/3" /> : null}
-                </div>
+                {/* title↔description stack = TitledText (skeleton mirror delegated) */}
+                <TitledText title={label} subtitle={description} isSkeleton className="flex-1" />
                 <Skeleton.Switch className="shrink-0" />
             </div>
         )
     }
     return (
         <div className={cn("flex items-center gap-3", isDisabled && "opacity-50", className)}>
-            <div className="flex min-w-0 flex-1 flex-col gap-0">
-                <Typography type="body-sm" weight="medium">
-                    {label}
-                </Typography>
-                {description ? (
-                    <Typography type="body-xs" color="muted">
-                        {description}
-                    </Typography>
-                ) : null}
-            </div>
+            {/* label (body-sm medium) + muted description = one TitledText row */}
+            <TitledText title={label} subtitle={description} className="flex-1" />
             <Switch
                 className="shrink-0"
                 isSelected={checked}

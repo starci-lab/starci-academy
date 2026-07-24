@@ -56,6 +56,9 @@ export interface ShowcaseMockupProps {
     className?: string
     /** Class on the content area (padding / inner background). */
     contentClassName?: string
+    /** Storybook-only: `data-anat-part` marker on the ROOT wrapper (set by the parent
+     *  composing this block — matches the parent's own anatomy tree node name). */
+    anatPart?: string
     /** Storybook-only: emit `data-anat-part` markers on each anatomy part. */
     showAnatomy?: boolean
 }
@@ -97,9 +100,11 @@ export const ShowcaseMockup = ({
     children,
     className,
     contentClassName,
+    anatPart,
     showAnatomy,
 }: ShowcaseMockupProps) => (
     <div
+        data-anat-part={anatPart}
         className={cn("relative w-full", className)}
         style={{ "--sc-1": theme.c1, "--sc-2": theme.c2, "--sc-3": theme.c3 } as CSSProperties}
     >
@@ -185,8 +190,8 @@ export const ShowcaseMockup = ({
                     {url ? (
                         <Typography
                             type="code"
-                            data-anat-part={showAnatomy ? "Typography" : undefined}
                             className="ml-2 truncate text-xs text-muted"
+                            data-anat-part={showAnatomy ? "Typography" : undefined}
                         >
                             {url}
                         </Typography>

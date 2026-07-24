@@ -58,18 +58,23 @@ export const PlaygroundCard = ({
         <Card className={cn("flex flex-col overflow-hidden rounded-3xl", className)}>
             <Card.Content className="flex flex-col gap-3">
                 <IconTile
-                    icon={<TerminalWindowIcon aria-hidden focusable="false" data-anat-part={showAnatomy ? "TerminalWindowIcon" : undefined} />}
+                    icon={<TerminalWindowIcon aria-hidden focusable="false" />}
                     tone="accent"
                     size="lg"
                     anatPart={showAnatomy ? "IconTile" : undefined}
                 />
                 <div className="flex flex-col gap-1">
-                    <Typography type="h6" weight="bold" truncate data-anat-part={showAnatomy ? "Typography" : undefined}>
+                    <Typography
+                        type="h6"
+                        weight="bold"
+                        truncate
+                        data-anat-part={showAnatomy ? "Typography" : undefined}
+                    >
                         {title}
                     </Typography>
                     <StatusChip
                         tone="neutral"
-                        icon={<ListChecksIcon aria-hidden focusable="false" data-anat-part={showAnatomy ? "ListChecksIcon" : undefined} />}
+                        icon={<ListChecksIcon aria-hidden focusable="false" />}
                         anatPart={showAnatomy ? "StatusChip" : undefined}
                     >
                         {stepCountLabel(stepCount)}
@@ -81,7 +86,8 @@ export const PlaygroundCard = ({
                     variant="primary"
                     className="w-full"
                     onPress={onOpen}
-                    icon={<ArrowRightIcon aria-hidden focusable="false" data-anat-part={showAnatomy ? "ArrowRightIcon" : undefined} />}
+                    anatPart={showAnatomy ? "Button" : undefined}
+                    icon={<ArrowRightIcon aria-hidden focusable="false" />}
                 >
                     {CTA_LABEL}
                 </Button>

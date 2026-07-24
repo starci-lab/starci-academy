@@ -100,31 +100,36 @@ const listFrame = (children: React.ReactNode) => (
 )
 
 // Populated leaf: header (title Typography + mark-all-read Button) over day-grouped
-// NotificationItem rows. Mirrors the real DOM: the Button OWNS its leading ChecksIcon +
-// label Typography (composed via `children`, not a sibling), and each NotificationItem
-// composes an IconTile + the title/body/time Typographys of its text column.
+// NotificationItem rows, each day group prefixed by its own label Typography. The header
+// title and each group's label are Typography THIS list renders DIRECTLY (not inside
+// another primitive's slot) → each gets its own node. The Button OWNS its leading
+// ChecksIcon (kept) but its label Typography renders `markAllReadLabel` INSIDE the
+// Button's own children slot → collapsed (granularity: content in a primitive's slot).
+// Each NotificationItem composes an IconTile + (when unread) the Dot indicator + its own
+// title/body/time Typography — mirrored byte-identical to `NotificationItem.stories.tsx`'s
+// own tree for this same composition.
 const POPULATED_PARTS: Array<AnatomyNode> = [
-    { name: "Typography · header", tier: "primitive", role: "tiêu đề header (\"Notifications\", body-sm semibold)" },
+    { name: "Typography · header", tier: "primitive", role: "tiêu đề panel (\"Notifications\") — hiện prop title" },
     {
         name: "Button",
         tier: "primitive",
-        role: "nút đánh dấu tất cả đã đọc (tertiary · sm)",
+        role: "nút đánh dấu tất cả đã đọc (tertiary · sm) — nhãn mark-all-read hiện qua children",
         state: "tertiary",
         children: [
             { name: "ChecksIcon", tier: "primitive", role: "icon check dẫn đầu (leading, size-4)" },
-            { name: "Typography · nhãn nút", tier: "primitive", role: "nhãn nút mark-all-read (body-xs)" },
         ],
     },
-    { name: "Typography · nhãn nhóm", tier: "primitive", role: "nhãn nhóm ngày (\"Today\" / \"Earlier\", body-xs muted)" },
+    { name: "Typography · nhãn nhóm", tier: "primitive", role: "nhãn nhóm ngày (\"Today\"/\"Earlier\") — hiện prop group.label" },
     {
         name: "NotificationItem",
         tier: "design",
         role: "mỗi dòng thông báo (design con, lặp ×N)",
         children: [
             { name: "IconTile", tier: "primitive", role: "ô icon dẫn đầu, tô màu theo tone" },
-            { name: "Typography · dòng-title", tier: "primitive", role: "tiêu đề dòng (title, body-sm medium, clamp 2 dòng)" },
-            { name: "Typography · dòng-body", tier: "primitive", role: "nội dung phụ (body, body-xs muted)" },
-            { name: "Typography · dòng-time", tier: "primitive", role: "nhãn thời gian (timeLabel, body-xs muted)" },
+            { name: "Dot chưa đọc", tier: "primitive", role: "chấm accent cạnh tiêu đề báo chưa đọc (2/5 dòng mẫu)", state: "unread" },
+            { name: "Typography · title", tier: "primitive", role: "tiêu đề dòng" },
+            { name: "Typography · body", tier: "primitive", role: "chi tiết phụ dòng" },
+            { name: "Typography · time", tier: "primitive", role: "nhãn thời gian dòng" },
         ],
     },
 ]
@@ -132,7 +137,7 @@ const POPULATED_PARTS: Array<AnatomyNode> = [
 // Empty leaf: header STILL renders (title="Notifications" is passed) but with no
 // mark-all-read Button (onMarkAllRead omitted); the body falls to a single EmptyState.
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "Typography · header", tier: "primitive", role: "tiêu đề header (\"Notifications\", body-sm semibold)" },
+    { name: "Typography · header", tier: "primitive", role: "tiêu đề panel (\"Notifications\") — hiện prop title, không có Button (onMarkAllRead bỏ trống)" },
     { name: "EmptyState", tier: "primitive", role: "fallback \"Chưa có thông báo nào\" (tiêu đề + mô tả)", state: "empty" },
 ]
 
@@ -214,11 +219,11 @@ const SkeletonNotificationRow = () => (
         className="flex w-full items-start gap-3 rounded-2xl p-3"
         data-anat-part="SkeletonNotificationRow"
     >
-        <Skeleton className="size-10 shrink-0 rounded-2xl" />
+        <Skeleton className="size-10 shrink-0 rounded-2xl" anatPart="Skeleton · tile" />
         <div className="flex min-w-0 flex-1 flex-col gap-1">
-            <Skeleton.Typography type="body-sm" width="3/4" />
-            <Skeleton.Typography type="body-xs" width="full" />
-            <Skeleton.Typography type="body-xs" width="1/3" />
+            <Skeleton.Typography type="body-sm" width="3/4" anatPart="Skeleton.Typography · title" />
+            <Skeleton.Typography type="body-xs" width="full" anatPart="Skeleton.Typography · body" />
+            <Skeleton.Typography type="body-xs" width="1/3" anatPart="Skeleton.Typography · time" />
         </div>
     </div>
 )
@@ -237,13 +242,20 @@ export const SkeletonLoading: Story = {
                     <div className="flex flex-col">
                         {/* header: title + mark-all-read button */}
                         <div className="flex items-center justify-between gap-3 px-3 py-2">
-                            <Skeleton.Typography type="body-sm" width="1/3" />
-                            <Skeleton.Button width="w-28" />
+                            <Skeleton.Typography
+                                type="body-sm"
+                                width="1/3"
+                                anatPart="Skeleton.Typography · header"
+                            />
+                            <Skeleton.Button width="w-28" anatPart="Skeleton.Button" />
                         </div>
                         {/* one day group: label + rows */}
                         <div className="flex max-h-[420px] flex-col gap-3 p-1">
                             <div className="flex flex-col gap-1">
-                                <Skeleton className="mx-3 mt-1 h-3 w-16 rounded" />
+                                <Skeleton
+                                    className="mx-3 mt-1 h-3 w-16 rounded"
+                                    anatPart="Skeleton · nhãn nhóm"
+                                />
                                 <SkeletonNotificationRow />
                                 <SkeletonNotificationRow />
                                 <SkeletonNotificationRow />

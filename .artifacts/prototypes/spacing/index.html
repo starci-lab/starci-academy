@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spacing Canon · theo tier</title>
+<style>
+  :root{
+    --bg:#0b0d10; --surface:#14171c; --surface-2:#1a1e24; --surface-3:#20252c; --border:#262b33;
+    --fg:#e8eaed; --muted:#8b929c; --faint:#5c636e;
+    --accent:#7cc4ff; --accent-soft:#8fd0ff; --prim:#8fe0a8; --design:#ffcf7a; --block:#e0a8ff;
+    --danger:#ff8a8a;
+    --radius:14px; --mono:'SFMono-Regular',ui-monospace,Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.5;font-size:14px}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 24px 96px}
+  h1{font-size:22px;font-weight:700;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:22px}
+  h2.sec{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);margin:34px 0 14px;font-weight:700;border-bottom:1px solid var(--border);padding-bottom:8px}
+  code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);padding:1px 5px;border-radius:5px}
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:14px}
+
+  /* principle cards */
+  .princ{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:8px}
+  @media(max-width:800px){.princ{grid-template-columns:1fr}}
+  .pc{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+  .pc .pt{font-family:var(--mono);font-weight:700;font-size:14px;margin-bottom:4px}
+  .pc.pad .pt{color:var(--accent-soft)} .pc.gap .pt{color:var(--prim)} .pc.mar .pt{color:var(--danger)}
+  .pc .pd{color:var(--muted);font-size:12.5px}
+  .pc .own{font-size:11px;margin-top:8px;color:var(--faint)}
+  .pc .own b{color:var(--fg)}
+
+  /* tier ladder — rhythm grows by tier */
+  .ladder{display:flex;flex-direction:column;gap:0}
+  .rung{display:flex;align-items:stretch;border-bottom:1px solid var(--border)}
+  .rung:last-child{border-bottom:0}
+  .rung .tier{width:120px;flex:0 0 120px;display:flex;align-items:center;gap:8px;padding:14px 12px;font-family:var(--mono);font-size:12px;font-weight:700}
+  .rung .demo{flex:1;padding:14px 16px;display:flex;align-items:center}
+  .rung .meta{width:180px;flex:0 0 180px;padding:14px 12px;font-size:11.5px;color:var(--muted);border-left:1px solid var(--border)}
+  .swatch{display:inline-block;width:11px;height:11px;border-radius:3px}
+  .s-prim{background:var(--prim)} .s-design{background:var(--design)} .s-block{background:var(--block)}
+  .blk{background:#3a4655;border-radius:3px;height:16px;width:34px}
+  .blk.tall{height:26px}
+  .row-demo{display:flex;align-items:center}
+  .col-demo{display:flex;flex-direction:column;align-items:flex-start}
+  .box{border:1px dashed var(--faint);border-radius:8px;display:flex}
+
+  /* matrix table */
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:10px 11px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--faint);font-weight:700}
+  .seam{font-weight:600;color:var(--fg)}
+  .tok{font-family:var(--mono);font-weight:700;color:var(--prim)}
+  .raw{font-family:var(--mono);color:var(--muted);font-size:12px}
+  .owner{font-family:var(--mono);font-size:11.5px;color:var(--accent-soft)}
+  tr.grp-prim td:first-child{border-left:3px solid var(--prim)}
+  tr.grp-design td:first-child{border-left:3px solid var(--design)}
+  tr.grp-block td:first-child{border-left:3px solid var(--block)}
+
+  .note{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .q{background:#12303f22;border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;margin:10px 0;font-size:13px}
+  .q b{color:var(--accent-soft)}
+  .ban{color:var(--danger);font-weight:600}
+  .ok{color:var(--prim)}
+  .ev{font-size:12px;color:var(--faint);font-family:var(--mono)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Spacing Canon — gap · padding · margin theo tier</h1>
+  <div class="sub">Luật spacing tại MỖI seam của cây <b>primitive → design → block → page</b>: token nào, ai sở hữu. Grounded: scan 443 gap component + rule <code>p-3</code> card sẵn có.</div>
+
+  <!-- ============ NGUYÊN TẮC GỐC ============ -->
+  <h2 class="sec">Nguyên tắc gốc — 1 seam = 1 chủ</h2>
+  <div class="princ">
+    <div class="pc pad">
+      <div class="pt">padding</div>
+      <div class="pd">Khoảng TRONG một surface/container tới nội dung. Container tự inset.</div>
+      <div class="own">Chủ: <b>CONTAINER</b> (card·section·field). Con nhận, không tự thêm.</div>
+    </div>
+    <div class="pc gap">
+      <div class="pt">gap</div>
+      <div class="pd">Khoảng GIỮA các con anh-em (flex/grid). Một nguồn duy nhất cho cả hàng/cột.</div>
+      <div class="own">Chủ: <b>PARENT</b> (người compose). Con không biết khoảng của mình.</div>
+    </div>
+    <div class="pc mar">
+      <div class="pt">margin ✕</div>
+      <div class="pd">Con TỰ đẩy khoảng của mình. → 2 nơi cùng quyết 1 khoảng = drift + margin-collapse.</div>
+      <div class="own">Chủ: <span class="ban">CẤM</span> (trừ ngoại lệ: mt-auto đẩy footer, -mx bleed mép).</div>
+    </div>
+  </div>
+  <div class="panel" style="padding:12px 16px">
+    <div class="note"><b class="ok">Hệ quả:</b> mọi khoảng đến từ <b>padding của container</b> HOẶC <b>gap của parent</b> — không bao giờ margin của con. Đổi nhịp = đổi ở 1 chủ, cả cây theo. Đây là "spacing sở hữu bởi primitive/block" thầy nói.</div>
+  </div>
+
+  <!-- ============ NHỊP GIÃN THEO TIER ============ -->
+  <h2 class="sec">Nhịp giãn dần theo tier — càng lên cao càng rộng</h2>
+  <div class="panel" style="padding:0">
+    <div class="ladder">
+      <div class="rung">
+        <div class="tier"><span class="swatch s-prim"></span>primitive<br>NỘI BỘ</div>
+        <div class="demo">
+          <div class="box" style="padding:4px;gap:2px"><div class="blk" style="width:60px"></div></div>
+          <div class="row-demo" style="gap:4px;margin-left:24px"><div class="blk" style="width:16px;height:16px;border-radius:999px"></div><div class="blk" style="width:44px"></div></div>
+        </div>
+        <div class="meta">Primitive TỰ lo: <code>p-3</code> (card) · <code>flush 0</code> (TitledText) · <code>tight 1</code> (InlineIconLabel)</div>
+      </div>
+      <div class="rung">
+        <div class="tier"><span class="swatch s-design"></span>primitive<br>↔ primitive</div>
+        <div class="demo">
+          <div class="row-demo" style="gap:8px"><div class="blk"></div><div class="blk"></div><div class="blk"></div><span class="ev" style="margin-left:8px">related · gap-2</span></div>
+          <div class="col-demo" style="gap:12px;margin-left:36px"><div class="blk"></div><div class="blk"></div><span class="ev">grouped · gap-3</span></div>
+        </div>
+        <div class="meta">DESIGN sở hữu: cụm ngang = <code>related 2</code> · hàng dọc = <code>grouped 3</code></div>
+      </div>
+      <div class="rung">
+        <div class="tier"><span class="swatch s-design"></span>trong<br>DESIGN</div>
+        <div class="demo">
+          <div class="box" style="padding:12px;flex-direction:column;gap:12px;width:220px"><div class="blk" style="width:100%"></div><div class="blk" style="width:100%;height:22px"></div><div class="blk" style="width:70px"></div></div>
+        </div>
+        <div class="meta">1 card/component: padding <code>p-3</code>, nội dung xếp <code>grouped 3</code></div>
+      </div>
+      <div class="rung">
+        <div class="tier"><span class="swatch s-block"></span>design ↔<br>design</div>
+        <div class="demo">
+          <div class="col-demo" style="gap:24px"><div class="blk tall" style="width:180px"></div><div class="blk tall" style="width:180px"></div><span class="ev">section · gap-6</span></div>
+        </div>
+        <div class="meta">BLOCK sở hữu: vùng khác nhau (header↔body↔footer, design↔design) = <code>section 6</code></div>
+      </div>
+      <div class="rung">
+        <div class="tier"><span class="swatch s-block"></span>block ↔<br>block</div>
+        <div class="demo">
+          <div class="col-demo" style="gap:32px"><div class="blk tall" style="width:220px"></div><div class="blk tall" style="width:220px"></div><span class="ev">page · gap-8</span></div>
+        </div>
+        <div class="meta">PAGE sở hữu: khoảng giữa các block trong trang = <code>section 6</code> / <code>page 8</code> + padding trang</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MA TRẬN LUẬT ============ -->
+  <h2 class="sec">Ma trận luật — mỗi seam: token + property + chủ</h2>
+  <div class="panel" style="padding:0;overflow:hidden">
+    <table>
+      <thead><tr><th style="width:210px">Seam</th><th>Token</th><th>Property</th><th>Chủ sở hữu</th><th>Ví dụ</th></tr></thead>
+      <tbody>
+        <tr class="grp-prim">
+          <td class="seam">Trong primitive</td>
+          <td><span class="tok">flush 0</span> / <span class="tok">tight 1</span> + <span class="raw">p-3</span></td>
+          <td>padding + gap nội bộ</td>
+          <td class="owner">primitive</td>
+          <td class="ev">Card p-3 · TitledText gap-0 · InlineIconLabel gap-1</td>
+        </tr>
+        <tr class="grp-design">
+          <td class="seam">primitive ↔ primitive<br><span class="ev">(cụm ngang)</span></td>
+          <td><span class="tok">related</span> <span class="raw">gap-2</span></td>
+          <td>gap</td>
+          <td class="owner">design (parent)</td>
+          <td class="ev">chip row · meta · nút cạnh nút</td>
+        </tr>
+        <tr class="grp-design">
+          <td class="seam">primitive ↔ primitive<br><span class="ev">(hàng dọc)</span></td>
+          <td><span class="tok">grouped</span> <span class="raw">gap-3</span></td>
+          <td>gap</td>
+          <td class="owner">design (parent)</td>
+          <td class="ev">list rows · card content stack</td>
+        </tr>
+        <tr class="grp-block">
+          <td class="seam">design ↔ design<br><span class="ev">(trong block)</span></td>
+          <td><span class="tok">section</span> <span class="raw">gap-6</span></td>
+          <td>gap</td>
+          <td class="owner">block (parent)</td>
+          <td class="ev">header ↔ body ↔ footer · design ↔ design</td>
+        </tr>
+        <tr class="grp-block">
+          <td class="seam">block ↔ block<br><span class="ev">(page level)</span></td>
+          <td><span class="tok">section</span> <span class="raw">gap-6</span> / <span class="tok">page</span> <span class="raw">gap-8</span></td>
+          <td>gap + padding trang</td>
+          <td class="owner">page / PageContainer</td>
+          <td class="ev">các section của 1 route</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note">→ Thang cuối: <b>0 · 1 · 2 · 3 · 6 · 8</b> = <code>flush · tight · related · grouped · section · page</code>. Xoá off-scale (gap-4→grouped/section, gap-10/12→page). Lint chặn mọi gap/padding ngoài thang này.</div>
+
+  <!-- ============ CHỐT ============ -->
+  <h2 class="sec">Cần thầy chốt</h2>
+  <div class="q"><b>Q1 · Nguyên tắc margin-cấm:</b> đồng ý "mọi khoảng = padding container HOẶC gap parent, margin cấm (trừ mt-auto / -bleed)"? Đây là trụ của cả hệ.</div>
+  <div class="q"><b>Q2 · Ma trận 5 seam</b> ở trên đúng cây thầy hình dung chưa? (primitive nội bộ · prim↔prim cụm/hàng · design↔design · block↔block)</div>
+  <div class="q"><b>Q3 · related(gap-2) vs grouped(gap-3):</b> giữ 2 bậc phân biệt cụm-ngang vs hàng-dọc, hay 1 bậc chung? — <i>nghiêng: giữ 2, luật sắc theo hướng trục.</i></div>
+  <div class="q"><b>Q4 · Vehicle:</b> codify thành (a) <b>canon doc</b> <code>.claude/fe/foundations/spacing.md</code> + lint rule, và/hoặc (b) primitive <code>Stack</code>/<code>Row</code> sở hữu gap? — <i>nghiêng: cả 2 — doc là luật, Stack là công cụ ép luật ở seam prim↔prim & design↔design.</i></div>
+</div>
+</body>
+</html>

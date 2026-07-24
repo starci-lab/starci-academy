@@ -1,5 +1,9 @@
 "use client"
 
+/* eslint-disable starci-fe/no-fractional-spacing -- dev/spec panel: the dense
+   anatomy tree + legend + numbered badges intentionally use sub-scale spacing
+   (gap-0.5 / px-1.5 / pl-3.5) for a compact inspector UI, not app surface. */
+
 import React, { useEffect, useMemo, useRef, useState } from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
@@ -209,7 +213,7 @@ export const BlockAnatomy = ({ name, tier, parts, children, leaf, note, reason }
             items.forEach(({ el, n, nm, target }) => {
                 const r = el.getBoundingClientRect()
                 let left = r.left - b.left - 9
-                let top = r.top - b.top - 9
+                const top = r.top - b.top - 9
                 while (placed.some((p) => Math.abs(p.left - left) < 20 && Math.abs(p.top - top) < 20)) {
                     left += 20
                 }
@@ -264,7 +268,7 @@ export const BlockAnatomy = ({ name, tier, parts, children, leaf, note, reason }
         )
 
     return (
-        <div className="flex flex-col gap-4 rounded-2xl border border-default-200 p-4">
+        <div className="flex flex-col gap-3 rounded-2xl border border-default-200 p-4">
             {/* TOOLBAR — mode toggle + which leaf of which block. */}
             <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="inline-flex overflow-hidden rounded-lg border border-default-200">

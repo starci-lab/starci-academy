@@ -31,8 +31,10 @@ type Story = StoryObj<typeof CommentThread>
 const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
 
 // Composer's real DOM: leading UserAvatar (when avatarSrc set) + a TextField wrapping
-// the auto-growing TextArea + a trailing Send Button whose child is the paper-plane
-// icon (swapped for a Spinner while submitting). attachSlot is not supplied here → not
+// the auto-growing TextArea + a trailing Send Button. The paper-plane icon (swapped
+// for a Spinner while submitting) is manually-composed children of Button, not a
+// prop Button renders — same call as ChatPanel's copy of this composition — so
+// Button stays ONE opaque node, no icon child. attachSlot is not supplied here → not
 // rendered → omitted. Shared by the root composer AND every inline reply composer.
 const COMPOSER_PARTS: Array<AnatomyNode> = [
     { name: "UserAvatar", tier: "primitive", role: "ảnh đại diện người xem ở đầu hàng (khi có avatarSrc)" },
@@ -44,28 +46,23 @@ const COMPOSER_PARTS: Array<AnatomyNode> = [
             { name: "TextArea", tier: "primitive", role: "vùng gõ tự giãn theo nội dung" },
         ],
     },
-    {
-        name: "Button",
-        tier: "primitive",
-        role: "nút Gửi (size sm, primary); disabled khi trống hoặc đang gửi",
-        children: [
-            { name: "PaperPlaneRightIcon", tier: "primitive", role: "icon máy bay giấy đứng trước nhãn (đổi thành Spinner khi đang gửi)" },
-        ],
-    },
+    { name: "Button", tier: "primitive", role: "nút Gửi (size sm, primary); disabled khi trống hoặc đang gửi" },
 ]
 
-// One CommunityCommentRow node's real DOM: avatar + (author Typography · founder
-// SealCheckIcon · time Typography) + markdown body + a cluster of ReactionBar and the
-// hand-rolled "Trả lời" toggle (passed in via the row's `actions` slot).
+// One CommunityCommentRow node's real DOM: avatar + author-name/time Typography it
+// renders directly + markdown body + a cluster of ReactionBar and the hand-rolled
+// "Trả lời" toggle (passed in via the row's `actions` slot). The founder
+// SealCheckIcon badge between the two Typography stays untagged — a bare
+// decorative phosphor icon, not a named component — mirroring CommunityCommentRow's
+// own story (see its BASE_PARTS).
 const COMMENT_ROW: AnatomyNode = {
     name: "CommunityCommentRow",
     tier: "block",
-    role: "một node bình luận: avatar + tác giả + thời gian + nội dung + reaction + slot actions",
+    role: "một node bình luận: avatar + tác giả/thời gian + nội dung + reaction + slot actions",
     children: [
         { name: "UserAvatar", tier: "primitive", role: "ảnh đại diện tác giả" },
-        { name: "Typography", tier: "primitive", role: "tên hiển thị tác giả (semibold, truncate)" },
-        { name: "SealCheckIcon", tier: "primitive", role: "huy hiệu founder (chỉ khi isFounderAuthor)", state: "founder" },
-        { name: "Typography", tier: "primitive", role: "thời gian tương đối (muted)" },
+        { name: "Typography · tên", tier: "primitive", role: "tên hiển thị tác giả (truncate)" },
+        { name: "Typography · thời gian", tier: "primitive", role: "thời gian tương đối, muted" },
         { name: "MarkdownContent", tier: "primitive", role: "nội dung bình luận (markdown)" },
         { name: "ReactionBar", tier: "block", role: "cảm xúc + đếm; read-only khi không có onReact" },
         { name: "Trả lời", tier: "primitive", role: "nút mở/đóng ô trả lời inline (truyền qua slot actions)", state: "hand-rolled" },

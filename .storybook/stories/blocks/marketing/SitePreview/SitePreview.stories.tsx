@@ -136,7 +136,12 @@ export const InShowcaseMockup: Story = {
                 parts={MOCKUP_PARTS}
                 note="Bối cảnh thật: cùng SitePreview nhưng bọc trong khung cửa sổ trình duyệt ShowcaseMockup (thêm 1 lớp frame ngoài)."
             >
-                <ShowcaseMockup url="starci.vn/khoa-hoc" aspect="video" className="max-w-3xl">
+                <ShowcaseMockup
+                    url="starci.vn/khoa-hoc"
+                    aspect="video"
+                    className="max-w-3xl"
+                    anatPart="ShowcaseMockup"
+                >
                     <SitePreview showAnatomy />
                 </ShowcaseMockup>
             </BlockAnatomy>,

@@ -4,6 +4,7 @@ import { Button } from "../../buttons/Button/Button"
 import { SectionCard } from "../../cards/SectionCard/SectionCard"
 import { StatusChip } from "../../chips/StatusChip/StatusChip"
 import { CrossListCard, CrossListItem } from "../../cards/CrossListCard/CrossListCard"
+import { PricePoint } from "../PricePoint/PricePoint"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK ported faithfully from
@@ -52,20 +53,27 @@ const PricingCard = ({
     className,
     showAnatomy = false,
 }: PricingCardProps) => (
-    <SectionCard accent={highlighted} anatPart={showAnatomy ? "SectionCard" : undefined} className={cn("flex flex-col", className)} contentClassName="flex flex-col gap-6 h-full">
-        {/* Name (+ optional popular chip inline — chip is w-fit, never full-width) */}
-        <div className="flex flex-wrap items-center gap-2">
-            <Typography type="body" weight="semibold" data-anat-part={showAnatomy ? "Typography" : undefined}>{name}</Typography>
-            {highlighted && badge ? <StatusChip tone="accent" anatPart={showAnatomy ? "StatusChip" : undefined}>{badge}</StatusChip> : null}
-        </div>
+    // NOTE: PricingCard has no wrapper of its own — SectionCard IS its DOM root, so the
+    // anatomy marker here is "PricingCard" (the composite's name), not "SectionCard"
+    // (the frame it happens to be built on has no separate element to tag).
+    <SectionCard accent={highlighted} anatPart={showAnatomy ? "PricingCard" : undefined} className={cn("flex flex-col", className)} contentClassName="flex flex-col gap-6 h-full">
+        {/* PLAN-IDENTITY CLUSTER — name + price belong together (vertical rhythm:
+            related = tight gap-2, distinct sections = the outer gap-6). */}
+        <div className="flex flex-col gap-2">
+            {/* Name (+ optional popular chip inline — chip is w-fit, never full-width) */}
+            <div className="flex flex-wrap items-center gap-2">
+                <Typography type="body" weight="semibold" data-anat-part={showAnatomy ? "Typography · tên" : undefined}>{name}</Typography>
+                {highlighted && badge ? <StatusChip tone="accent" anatPart={showAnatomy ? "StatusChip" : undefined}>{badge}</StatusChip> : null}
+            </div>
 
-        {/* Price row: big price + optional struck original + muted period */}
-        <div className="flex flex-wrap items-baseline gap-2">
-            <Typography type="h3" weight="semibold" data-anat-part={showAnatomy ? "Typography" : undefined}>{price}</Typography>
-            {originalPrice ? (
-                <Typography type="body-sm" color="muted" className="line-through">{originalPrice}</Typography>
-            ) : null}
-            {period ? <Typography type="body-xs" color="muted">{period}</Typography> : null}
+            {/* Price = ONE PricePoint primitive (amount + struck original + period) —
+                a price is a semantic unit, so one node, not 3 raw Typography. */}
+            <PricePoint
+                amount={price}
+                original={originalPrice}
+                period={period}
+                anatPart={showAnatomy ? "PricePoint" : undefined}
+            />
         </div>
 
         {/* Feature list — grows to fill available vertical space; caller controls markup */}
@@ -157,17 +165,30 @@ export const PricingTable = ({
                     badge={tier.isHighlighted ? highlightLabel : undefined}
                     highlighted={tier.isHighlighted}
                     features={
-                        <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-3">
                             {tier.description ? (
-                                <Typography type="body-sm" color="muted" data-anat-part={showAnatomy ? "Typography" : undefined}>{tier.description}</Typography>
+                                <Typography
+                                    type="body-sm"
+                                    color="muted"
+                                    data-anat-part={showAnatomy ? "Typography · mô tả" : undefined}
+                                >
+                                    {tier.description}
+                                </Typography>
                             ) : null}
 
                             {/* Feature rows in ONE CrossListCard: included → mark="check" (✓),
                                 excluded → mark="cross" (✗). Bordered = surface-in-surface. */}
                             <CrossListCard bordered anatPart={showAnatomy ? "CrossListCard" : undefined}>
                                 {tier.features.map((feature, index) => (
-                                    <CrossListItem key={`${tier.id}-${index}`} mark={feature.included ? "check" : "cross"}>
-                                        <Typography type="body-sm" color={feature.included ? undefined : "muted"} data-anat-part={showAnatomy ? "Typography" : undefined}>{feature.label}</Typography>
+                                    <CrossListItem
+                                        key={`${tier.id}-${index}`}
+                                        mark={feature.included ? "check" : "cross"}
+                                        anatPart={showAnatomy ? "CrossListItem" : undefined}
+                                    >
+                                        {/* mark icon + label are CrossListItem's OWN internals (its `mark`
+                                            prop + `children`) — one node here; drill into CrossListItem's
+                                            own story for its anatomy. No child data-anat-part. */}
+                                        <Typography type="body-sm" color={feature.included ? undefined : "muted"}>{feature.label}</Typography>
                                     </CrossListItem>
                                 ))}
                             </CrossListCard>
@@ -181,6 +202,7 @@ export const PricingTable = ({
                             className="w-full"
                             variant={tier.isHighlighted ? "primary" : "secondary"}
                             onPress={() => onSelectTier?.(tier.id)}
+                            anatPart={showAnatomy ? "Button" : undefined}
                         >
                             {tier.ctaLabel}
                         </Button>

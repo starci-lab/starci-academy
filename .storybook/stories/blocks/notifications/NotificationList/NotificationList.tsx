@@ -71,6 +71,11 @@ export interface NotificationListProps extends WithClassNames<undefined> {
      * attribute so the anatomy overlay can anchor badges. No visual effect.
      */
     showAnatomy?: boolean
+    /**
+     * Anatomy tag for this list's own root (set by a parent block composing it
+     * as a sub-node, e.g. `NotificationBell` passing `"NotificationList"`).
+     */
+    anatPart?: string
 }
 
 /** Built-in fallback empty state shown when no groups carry any items. */
@@ -101,12 +106,13 @@ export const NotificationList = ({
     markAllReadLabel = "Đánh dấu tất cả đã đọc",
     emptyState,
     showAnatomy = false,
+    anatPart,
     className,
 }: NotificationListProps) => {
     const isEmpty = groups.every((group) => group.items.length === 0)
 
     return (
-        <div className={cn("flex flex-col", className)}>
+        <div className={cn("flex flex-col", className)} data-anat-part={anatPart}>
             {title ? (
                 <div className="flex items-center justify-between gap-3 px-3 py-2">
                     <Typography
@@ -125,15 +131,13 @@ export const NotificationList = ({
                             variant="tertiary"
                             onPress={onMarkAllRead}
                             className="gap-2"
+                            anatPart={showAnatomy ? "Button" : undefined}
                         >
                             <ChecksIcon
                                 className="size-4"
                                 data-anat-part={showAnatomy ? "ChecksIcon" : undefined}
                             />
-                            <Typography
-                                type="body-xs"
-                                data-anat-part={showAnatomy ? "Typography · nhãn nút" : undefined}
-                            >
+                            <Typography type="body-xs">
                                 {markAllReadLabel}
                             </Typography>
                         </Button>
@@ -154,9 +158,7 @@ export const NotificationList = ({
                                         color="muted"
                                         weight="medium"
                                         className="px-3 pt-1"
-                                        data-anat-part={
-                                            showAnatomy ? "Typography · nhãn nhóm" : undefined
-                                        }
+                                        data-anat-part={showAnatomy ? "Typography · nhãn nhóm" : undefined}
                                     >
                                         {group.label}
                                     </Typography>
@@ -166,6 +168,7 @@ export const NotificationList = ({
                                         key={itemIndex}
                                         {...item}
                                         showAnatomy={showAnatomy}
+                                        anatPart={showAnatomy ? "NotificationItem" : undefined}
                                     />
                                 ))}
                             </div>

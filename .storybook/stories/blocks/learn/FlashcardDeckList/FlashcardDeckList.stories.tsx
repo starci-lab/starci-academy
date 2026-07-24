@@ -40,7 +40,7 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 // its own title/chips/meter/count/CTA in DOM order.
 const DATA_PARTS: Array<AnatomyNode> = [
     { name: "TextField · Input", tier: "primitive", role: "ô tìm bộ thẻ" },
-    { name: "Typography", tier: "primitive", role: 'đếm kết quả ("Tìm thấy N bộ thẻ")' },
+    { name: "Typography", tier: "primitive", role: "đếm kết quả (\"Tìm thấy N bộ thẻ\")" },
     { name: "TabsCard", tier: "primitive", role: "đổi kiểu hiển thị lưới / danh sách" },
     {
         name: "AsyncContent",
@@ -58,8 +58,8 @@ const DATA_PARTS: Array<AnatomyNode> = [
                     { name: "DifficultyChip", tier: "design", role: "tầng độ khó" },
                     { name: "Typography", tier: "primitive", role: "mô tả chủ đề (muted, line-clamp 2)" },
                     { name: "ProgressMeter", tier: "primitive", role: "tiến độ đã thuộc" },
-                    { name: "Typography", tier: "primitive", role: 'tổng số thẻ ("N thẻ", muted)' },
-                    { name: "Button", tier: "primitive", role: 'CTA "Học"' },
+                    { name: "Typography", tier: "primitive", role: "tổng số thẻ (\"N thẻ\", muted)" },
+                    { name: "Button", tier: "primitive", role: "CTA \"Học\"" },
                 ],
             },
         ],
@@ -71,15 +71,15 @@ const DATA_PARTS: Array<AnatomyNode> = [
 // (no DeckCard). It is NOT a distinct AsyncContent state — it lives inside content.
 const SEARCH_EMPTY_PARTS: Array<AnatomyNode> = [
     { name: "TextField · Input", tier: "primitive", role: "ô tìm (giữ query)" },
-    { name: "Typography", tier: "primitive", role: 'đếm "0" ("Tìm thấy 0 bộ thẻ")' },
+    { name: "Typography", tier: "primitive", role: "đếm kết quả (\"Tìm thấy 0 bộ thẻ\")" },
     { name: "TabsCard", tier: "primitive", role: "toggle lưới / danh sách" },
     {
         name: "AsyncContent",
         tier: "primitive",
-        role: "nhánh content — không thẻ nào khớp query",
+        role: "nhánh content — body đổi sang Typography muted \"Không tìm thấy bộ thẻ nào khớp…\" thay cho lưới DeckCard",
         state: "content",
         children: [
-            { name: "Typography", tier: "primitive", role: 'dòng muted "Không tìm thấy bộ thẻ nào khớp…" (không DeckCard)' },
+            { name: "Typography", tier: "primitive", role: "thông báo không khớp query (thay cho lưới DeckCard)" },
         ],
     },
 ]
@@ -105,7 +105,7 @@ const LOADING_PARTS: Array<AnatomyNode> = [
 // composes the EmptyState primitive (TrayIcon + title, no action button).
 const EMPTY_PARTS: Array<AnatomyNode> = [
     { name: "TextField · Input", tier: "primitive", role: "ô tìm" },
-    { name: "Typography", tier: "primitive", role: 'đếm ("Tìm thấy 0 bộ thẻ")' },
+    { name: "Typography", tier: "primitive", role: "đếm kết quả (\"Tìm thấy 0 bộ thẻ\")" },
     { name: "TabsCard", tier: "primitive", role: "toggle" },
     {
         name: "AsyncContent",
@@ -118,7 +118,7 @@ const EMPTY_PARTS: Array<AnatomyNode> = [
                 tier: "design",
                 role: "khung rỗng của region",
                 children: [
-                    { name: "EmptyState", tier: "primitive", role: 'TrayIcon + "Chưa có bộ thẻ nào" (không nút)' },
+                    { name: "EmptyState", tier: "primitive", role: "TrayIcon + \"Chưa có bộ thẻ nào\" (không nút)" },
                 ],
             },
         ],
@@ -130,7 +130,7 @@ const EMPTY_PARTS: Array<AnatomyNode> = [
 // NOT, so EmptyState renders NO retry Button — the anatomy reflects that reality.
 const ERROR_PARTS: Array<AnatomyNode> = [
     { name: "TextField · Input", tier: "primitive", role: "ô tìm" },
-    { name: "Typography", tier: "primitive", role: "đếm" },
+    { name: "Typography", tier: "primitive", role: "đếm kết quả (\"Tìm thấy 0 bộ thẻ\")" },
     { name: "TabsCard", tier: "primitive", role: "toggle" },
     {
         name: "AsyncContent",
@@ -143,7 +143,7 @@ const ERROR_PARTS: Array<AnatomyNode> = [
                 tier: "design",
                 role: "khung lỗi của region",
                 children: [
-                    { name: "EmptyState", tier: "primitive", role: 'WarningIcon + "Không tải được bộ thẻ" — KHÔNG nút thử lại (thiếu retryLabel)', state: "danger" },
+                    { name: "EmptyState", tier: "primitive", role: "WarningIcon + \"Không tải được bộ thẻ\" — KHÔNG nút thử lại (thiếu retryLabel)", state: "danger" },
                 ],
             },
         ],

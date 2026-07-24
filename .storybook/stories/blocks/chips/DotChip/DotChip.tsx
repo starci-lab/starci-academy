@@ -29,6 +29,8 @@ export interface DotChipProps {
     className?: string
     /** Renders a skeleton mirroring the dot + label shape instead of real content. */
     isSkeleton?: boolean
+    /** BlockAnatomy marker name for the root — set by the caller to expose this part. */
+    anatPart?: string
 }
 
 /**
@@ -39,10 +41,10 @@ export interface DotChipProps {
  *
  * @param props - {@link DotChipProps}
  */
-export const DotChip = ({ label, dotClassName, dotColor, className, isSkeleton }: DotChipProps) => {
+export const DotChip = ({ label, dotClassName, dotColor, className, isSkeleton, anatPart }: DotChipProps) => {
     if (isSkeleton) {
         return (
-            <span className={cn("inline-flex items-center gap-2", className)}>
+            <span className={cn("inline-flex items-center gap-2", className)} data-anat-part={anatPart}>
                 <Skeleton className="size-3 shrink-0 rounded-full" />
                 <Skeleton.Typography type="body-xs" width="w-16" />
             </span>
@@ -50,7 +52,7 @@ export const DotChip = ({ label, dotClassName, dotColor, className, isSkeleton }
     }
 
     return (
-        <span className={cn("inline-flex items-center gap-2", className)}>
+        <span className={cn("inline-flex items-center gap-2", className)} data-anat-part={anatPart}>
             <span
                 aria-hidden
                 className={cn("size-3 shrink-0 rounded-full", dotClassName)}

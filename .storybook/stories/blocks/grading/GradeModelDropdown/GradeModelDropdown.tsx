@@ -476,11 +476,8 @@ export const GradeModelDropdown = ({
                                                 !selection.model && "text-accent-soft-foreground",
                                             )}
                                         >
-                                            <SparkleIcon
-                                                className="size-4 shrink-0"
-                                                data-anat-part={showAnatomy ? "SparkleIcon" : undefined}
-                                            />
-                                            <span data-anat-part={showAnatomy ? "span · nhãn" : undefined}>Tự động</span>
+                                            <SparkleIcon className="size-4 shrink-0" />
+                                            <span>Tự động</span>
                                         </div>
                                     </DropdownItem>
                                 </DropdownSection>
@@ -548,10 +545,7 @@ export const GradeModelDropdown = ({
                                         data-anat-part={showAnatomy ? "DropdownItem · rỗng" : undefined}
                                         onPress={() => undefined}
                                     >
-                                        <span
-                                            className="text-muted"
-                                            data-anat-part={showAnatomy ? "span · muted" : undefined}
-                                        >
+                                        <span className="text-muted">
                                             Không có model khớp
                                         </span>
                                     </DropdownItem>
@@ -585,19 +579,24 @@ export const GradeModelDropdown = ({
                                                 key={key}
                                                 textValue={model.model}
                                                 className={DROPDOWN_ITEM_ROW_CLASS}
+                                                data-anat-part={showAnatomy ? "DropdownItem · không khả dụng" : undefined}
                                                 onPress={() => undefined}
                                             >
                                                 <Tooltip>
-                                                    <Tooltip.Trigger className={MODEL_ROW_TRIGGER_CLASS}>
+                                                    <Tooltip.Trigger
+                                                        className={MODEL_ROW_TRIGGER_CLASS}
+                                                        data-anat-part={showAnatomy ? "Tooltip.Trigger" : undefined}
+                                                    >
                                                         <ModelRowLayout
                                                             muted
+                                                            anatPart={showAnatomy ? "ModelRowLayout" : undefined}
                                                             name={model.model}
                                                             nameSuffix={selfHostMark}
                                                             leading={<WarningCircleIcon className="size-5 shrink-0" />}
                                                             trailing={<>{healthChip}{categoryChip}</>}
                                                         />
                                                     </Tooltip.Trigger>
-                                                    <Tooltip.Content>Model tạm không khả dụng</Tooltip.Content>
+                                                    <Tooltip.Content data-anat-part={showAnatomy ? "Tooltip.Content" : undefined}>Model tạm không khả dụng</Tooltip.Content>
                                                 </Tooltip>
                                             </DropdownItem>
                                         )
@@ -622,7 +621,7 @@ export const GradeModelDropdown = ({
                                                             anatPart={showAnatomy ? "ModelRowLayout" : undefined}
                                                             name={model.model}
                                                             nameSuffix={selfHostMark}
-                                                            leading={<LockIcon className="size-5 shrink-0" data-anat-part={showAnatomy ? "LockIcon" : undefined} />}
+                                                            leading={<LockIcon className="size-5 shrink-0" />}
                                                             trailing={<>{healthChip}{categoryChip}</>}
                                                         />
                                                     </Tooltip.Trigger>
@@ -657,7 +656,7 @@ export const GradeModelDropdown = ({
                                                             anatPart={showAnatomy ? "ModelRowLayout" : undefined}
                                                             name={model.model}
                                                             nameSuffix={selfHostMark}
-                                                            leading={<WarningIcon className="size-5 shrink-0 text-warning-soft-foreground" data-anat-part={showAnatomy ? "WarningIcon" : undefined} />}
+                                                            leading={<WarningIcon className="size-5 shrink-0 text-warning-soft-foreground" />}
                                                             trailing={<>{healthChip}{categoryChip}</>}
                                                         />
                                                     </Tooltip.Trigger>

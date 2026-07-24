@@ -279,10 +279,18 @@ export const ActivityFeed = ({
         const noTarget = head.targetLabel == null
 
         const actorEl = (
-            <EntityLink label={head.actorUsername} onPress={onResolve(head.actorGlobalId)} />
+            <EntityLink
+                label={head.actorUsername}
+                onPress={onResolve(head.actorGlobalId)}
+                anatPart={showAnatomy ? "EntityLink" : undefined}
+            />
         )
         const targetEl = (
-            <EntityLink label={head.targetLabel ?? ""} onPress={onResolve(head.targetGlobalId)} />
+            <EntityLink
+                label={head.targetLabel ?? ""}
+                onPress={onResolve(head.targetGlobalId)}
+                anatPart={showAnatomy ? "EntityLink" : undefined}
+            />
         )
         // pick the phrasing: grouped roll-up · generic-noun fallback · normal
         const sentence = grouped
@@ -293,6 +301,7 @@ export const ActivityFeed = ({
 
         return (
             <FeedItem
+                anatPart={showAnatomy ? "FeedItem" : undefined}
                 leading={(
                     <ActivityAvatar
                         username={avatarUsername}
@@ -326,7 +335,10 @@ export const ActivityFeed = ({
                 <DayHeaderSection key={group.key} label={group.label} anatPart={showAnatomy ? "DayHeaderSection" : undefined}>
                     <SurfaceListCard bordered={bordered} anatPart={showAnatomy ? "SurfaceListCard" : undefined}>
                         {group.rows.map((row, index) => (
-                            <SurfaceListCardItem key={`${row.head.actorGlobalId}-${row.head.at}-${index}`}>
+                            <SurfaceListCardItem
+                                key={`${row.head.actorGlobalId}-${row.head.at}-${index}`}
+                                anatPart={showAnatomy ? "SurfaceListCardItem" : undefined}
+                            >
                                 {renderRow(row)}
                             </SurfaceListCardItem>
                         ))}

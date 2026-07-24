@@ -33,18 +33,20 @@ type Story = StoryObj<typeof ContinueCard>
 /** Frame each leaf's anatomy panel with breathing room. */
 const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
 
-// Content leaf — the loaded item: SectionCard frame CONTAINS (title + subtitle) then a
-// SeeMoreLink CTA row. No progress (value undefined), no icon (item variant). Title/subtitle/CTA
-// mount INSIDE SectionCard → they nest under its children, in DOM order.
+// Content leaf — the loaded item: SectionCard frame CONTAINS the title Typography,
+// the subtitle Typography (only when there's no meta/timeLeft — this leaf has
+// neither), and a SeeMoreLink CTA row. Title/subtitle ARE composed nodes: ContinueCard
+// writes both `<Typography>` elements itself (not values folded into another
+// primitive's slot), so each badges as its own leaf per the granularity rule.
 const ITEM_PARTS: Array<AnatomyNode> = [
     {
         name: "SectionCard",
         tier: "design",
         role: "khung surface tự đóng — chứa info + hàng CTA",
         children: [
-            { name: "Typography · tiêu đề", tier: "primitive", role: "tên mục đang học dở (weight medium, truncate 1 dòng)" },
-            { name: "Typography · phụ đề", tier: "primitive", role: "nhãn phụ muted (body-xs, truncate)", state: "muted" },
-            { name: "SeeMoreLink", tier: "primitive", role: 'CTA "Tiếp tục →" trên hàng riêng — hover/click sống trên link' },
+            { name: "Typography · tiêu đề", tier: "primitive", role: "tên mục (title, weight medium, truncate)" },
+            { name: "Typography · phụ đề", tier: "primitive", role: "phụ đề (subtitle, muted, truncate) — chỉ khi không có meta/timeLeft" },
+            { name: "SeeMoreLink", tier: "primitive", role: "CTA \"Tiếp tục →\" trên hàng riêng — hover/click sống trên link" },
         ],
     },
 ]
@@ -65,8 +67,9 @@ const LOADING_PARTS: Array<AnatomyNode> = [
 ]
 
 // Error leaf — the error renders INSIDE the card frame (not a blank card): EmptyState danger + retry.
-// EmptyState mounts INSIDE SectionCard; the WarningIcon (icon prop) + retry Button (action prop)
-// mount INSIDE EmptyState → the tree nests SectionCard > EmptyState > (WarningIcon, Button).
+// EmptyState mounts INSIDE SectionCard; the retry Button (action prop) mounts INSIDE
+// EmptyState → the tree nests SectionCard > EmptyState > Button. WarningIcon is CUT —
+// it's just the value passed into EmptyState's `icon` prop, not a composed part.
 const ERROR_PARTS: Array<AnatomyNode> = [
     {
         name: "SectionCard",
@@ -76,11 +79,10 @@ const ERROR_PARTS: Array<AnatomyNode> = [
             {
                 name: "EmptyState",
                 tier: "primitive",
-                role: 'trạng thái "Mất kết nối" — icon cảnh báo + mô tả',
+                role: "trạng thái \"Mất kết nối\" — icon cảnh báo + mô tả",
                 state: "danger",
                 children: [
-                    { name: "WarningIcon", tier: "primitive", role: "icon cảnh báo (duotone) — decorative", state: "decorative" },
-                    { name: "Button", tier: "primitive", role: '"Thử lại" (secondary, sm)' },
+                    { name: "Button", tier: "primitive", role: "\"Thử lại\" (secondary, sm)" },
                 ],
             },
         ],
@@ -121,12 +123,12 @@ export const Loading: Story = {
                 note="Skeleton mirror LAYOUT của item (tiêu đề · phụ đề · CTA), KHÔNG progress và KHÔNG sweep — composition khác leaf content (không nội dung thật)."
             >
                 <div className="w-80">
-                    <SectionCard contentClassName="flex flex-col gap-3">
+                    <SectionCard anatPart="SectionCard" contentClassName="flex flex-col gap-3">
                         <div className="flex flex-col gap-2">
-                            <Skeleton.Typography type="body" width="2/3" />
-                            <Skeleton.Typography type="body-xs" width="1/3" />
+                            <Skeleton.Typography type="body" width="2/3" anatPart="Skeleton.Typography · tiêu đề" />
+                            <Skeleton.Typography type="body-xs" width="1/3" anatPart="Skeleton.Typography · phụ đề" />
                         </div>
-                        <Skeleton.Typography type="body-sm" width="1/4" />
+                        <Skeleton.Typography type="body-sm" width="1/4" anatPart="Skeleton.Typography · CTA" />
                     </SectionCard>
                 </div>
             </BlockAnatomy>,
@@ -143,17 +145,18 @@ export const LoadError: Story = {
                 tier="design"
                 leaf="Lỗi tải (mạng rớt)"
                 parts={ERROR_PARTS}
-                note={'Mạng rớt → EmptyState tone="danger" + nút Thử lại render TRONG SectionCard, không để lại card trắng.'}
+                note={"Mạng rớt → EmptyState tone=\"danger\" + nút Thử lại render TRONG SectionCard, không để lại card trắng."}
             >
                 <div className="w-80">
-                    <SectionCard>
+                    <SectionCard anatPart="SectionCard">
                         <EmptyState
+                            anatPart="EmptyState"
                             tone="danger"
                             icon={<WarningIcon weight="duotone" />}
                             title="Mất kết nối"
                             description="Mạng có vẻ bị rớt. Kiểm tra kết nối rồi thử lại."
                             action={
-                                <Button variant="secondary" size="sm" onPress={() => {}}>
+                                <Button variant="secondary" size="sm" onPress={() => {}} anatPart="Button">
                                     Thử lại
                                 </Button>
                             }

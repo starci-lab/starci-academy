@@ -139,8 +139,6 @@ const Controlled = ({
 // NOTE: the storybook `useAiModelLatency` stub returns an empty map, so the health
 // StatusChip is NEVER mounted here — it is intentionally absent from these parts.
 
-// The sparkle glyph reused on the trigger + the Auto lane.
-const SPARKLE: AnatomyNode = { name: "SparkleIcon", tier: "primitive", role: "icon lấp lánh AI" }
 // Chips/marks pinned inside a model row (right = category chip; name-suffix = self-host).
 const CATEGORY_CHIP: AnatomyNode = { name: "AiCategoryChip", tier: "design", role: "chip hạng (tier) tô màu ghim cuối hàng (trailing)" }
 const SELF_HOST_MARK: AnatomyNode = { name: "SelfHostGpuMark", tier: "design", role: "dấu GPU self-host — CHỈ hàng model chạy hạ tầng nội bộ (nameSuffix)", state: "self-host" }
@@ -160,7 +158,11 @@ const NORMAL_ROW: AnatomyNode = {
     ],
 }
 
-// Locked row — tier cao chưa mở gói: DropdownItem > Tooltip(Trigger > row + Content).
+// Locked row — tier cao chưa mở gói: DropdownItem > Tooltip.Trigger(row) + Tooltip.Content.
+// NOTE: the outer `<Tooltip>` (HeroUI TooltipRoot) is CUT from the tree — it delegates to
+// react-aria's `TooltipTrigger` primitive, a context-only wrapper that never renders a DOM
+// node, so `data-anat-part` passed to it lands nowhere; Tooltip.Trigger + Tooltip.Content are
+// the real emitters (each forwards props onto an actual DOM element) and are direct children here.
 const LOCKED_ROW: AnatomyNode = {
     name: "DropdownItem · khoá",
     tier: "primitive",
@@ -168,33 +170,23 @@ const LOCKED_ROW: AnatomyNode = {
     state: "locked",
     children: [
         {
-            name: "Tooltip",
+            name: "Tooltip.Trigger",
             tier: "primitive",
-            role: "giải thích vì sao khoá",
+            role: "vùng hover bọc hàng — giải thích vì sao khoá",
             children: [
                 {
-                    name: "Tooltip.Trigger",
-                    tier: "primitive",
-                    role: "vùng hover bọc hàng",
-                    children: [
-                        {
-                            name: "ModelRowLayout",
-                            tier: "design",
-                            role: "layout hàng — muted, không chọn được",
-                            children: [
-                                { name: "LockIcon", tier: "primitive", role: "dấu khoá đầu hàng chưa mở gói (leading)" },
-                                CATEGORY_CHIP,
-                            ],
-                        },
-                    ],
+                    name: "ModelRowLayout",
+                    tier: "design",
+                    role: "layout hàng — muted, không chọn được; tự hiện dấu khoá đầu hàng (leading)",
+                    children: [CATEGORY_CHIP],
                 },
-                { name: "Tooltip.Content", tier: "primitive", role: "'Nâng gói hoặc enroll khoá để mở model này'" },
             ],
         },
+        { name: "Tooltip.Content", tier: "primitive", role: "'Nâng gói hoặc enroll khoá để mở model này'" },
     ],
 }
 
-// Below-floor row — vẫn chọn được nhưng cảnh báo: cùng Tooltip shape, icon amber.
+// Below-floor row — vẫn chọn được nhưng cảnh báo: cùng shape, icon amber. (Tooltip root cut — see LOCKED_ROW note.)
 const WARN_ROW: AnatomyNode = {
     name: "DropdownItem · cảnh báo",
     tier: "primitive",
@@ -202,30 +194,46 @@ const WARN_ROW: AnatomyNode = {
     state: "warning",
     children: [
         {
-            name: "Tooltip",
+            name: "Tooltip.Trigger",
             tier: "primitive",
-            role: "giải thích cảnh báo",
+            role: "vùng hover bọc hàng — giải thích cảnh báo",
             children: [
                 {
-                    name: "Tooltip.Trigger",
-                    tier: "primitive",
-                    role: "vùng hover bọc hàng",
-                    children: [
-                        {
-                            name: "ModelRowLayout",
-                            tier: "design",
-                            role: "layout hàng — vẫn chọn được",
-                            children: [
-                                { name: "WarningIcon", tier: "primitive", role: "dấu cảnh báo model dưới mức khuyến nghị (leading)" },
-                                SELF_HOST_MARK,
-                                CATEGORY_CHIP,
-                            ],
-                        },
-                    ],
+                    name: "ModelRowLayout",
+                    tier: "design",
+                    role: "layout hàng — vẫn chọn được; tự hiện dấu cảnh báo model dưới mức khuyến nghị (leading)",
+                    children: [SELF_HOST_MARK, CATEGORY_CHIP],
                 },
-                { name: "Tooltip.Content", tier: "primitive", role: "'Model dưới mức khuyến nghị — kết quả có thể kém chính xác'" },
             ],
         },
+        { name: "Tooltip.Content", tier: "primitive", role: "'Model dưới mức khuyến nghị — kết quả có thể kém chính xác'" },
+    ],
+}
+
+// Disabled/down row — provider tạm mất kết nối (key lỗi / down): HIDDEN by default (folds
+// into hiddenCount), only reachable after pressing REVEAL_HIDDEN ("Hiện N ẩn"). Same shape as
+// LOCKED/WARN (Tooltip root cut — see LOCKED_ROW note). FULL_CATALOG's gpt-4o is this row's
+// real instance (not self-host) so no SELF_HOST_MARK child here.
+const DISABLED_ROW: AnatomyNode = {
+    name: "DropdownItem · không khả dụng",
+    tier: "primitive",
+    role: "model tạm mất kết nối (key lỗi / provider down) — không chọn được — ẨN mặc định, hiện qua REVEAL_HIDDEN",
+    state: "disabled",
+    children: [
+        {
+            name: "Tooltip.Trigger",
+            tier: "primitive",
+            role: "vùng hover bọc hàng — giải thích vì sao không khả dụng",
+            children: [
+                {
+                    name: "ModelRowLayout",
+                    tier: "design",
+                    role: "layout hàng — muted, không chọn được; tự hiện dấu cảnh báo model tạm mất kết nối (leading)",
+                    children: [CATEGORY_CHIP],
+                },
+            ],
+        },
+        { name: "Tooltip.Content", tier: "primitive", role: "'Model tạm không khả dụng'" },
     ],
 }
 
@@ -233,11 +241,8 @@ const WARN_ROW: AnatomyNode = {
 const EMPTY_ROW: AnatomyNode = {
     name: "DropdownItem · rỗng",
     tier: "primitive",
-    role: "dòng rỗng khi danh sách trống",
+    role: "dòng rỗng khi danh sách trống — tự hiện 'Không có model khớp' (muted)",
     state: "empty",
-    children: [
-        { name: "span · muted", tier: "primitive", role: "'Không có model khớp'" },
-    ],
 }
 
 // Auto lane pinned atop the popover — its own DropdownMenu/Section/Item + Separator.
@@ -254,8 +259,7 @@ const AUTO_LANE: AnatomyNode = {
                 {
                     name: "DropdownItem · Tự động",
                     tier: "primitive",
-                    role: "lane 'Tự động' — balancer tự chọn model",
-                    children: [SPARKLE, { name: "span · nhãn", tier: "primitive", role: "text nhãn ('Tự động')" }],
+                    role: "lane 'Tự động' — balancer tự chọn model; tự hiện SparkleIcon + nhãn 'Tự động'",
                 },
             ],
         },
@@ -314,37 +318,37 @@ const TRIGGER_BUTTON: AnatomyNode = {
 // has 1 unavailable model → hiddenCount=1 → the reveal-hidden button renders.
 const INLINE_PARTS: Array<AnatomyNode> = [
     TRIGGER_INLINE,
-    popover([AUTO_LANE, SEARCH_NODE, TIER_FILTER_NODE, listMenu([NORMAL_ROW]), REVEAL_HIDDEN]),
+    popover([AUTO_LANE, SEARCH_NODE, TIER_FILTER_NODE, listMenu([NORMAL_ROW, DISABLED_ROW]), REVEAL_HIDDEN]),
 ]
 
 // field-style trigger — same popover, trigger swapped to match Select fields beside it.
 const FIELD_PARTS: Array<AnatomyNode> = [
     TRIGGER_FIELD,
-    popover([AUTO_LANE, SEARCH_NODE, TIER_FILTER_NODE, listMenu([NORMAL_ROW]), REVEAL_HIDDEN]),
+    popover([AUTO_LANE, SEARCH_NODE, TIER_FILTER_NODE, listMenu([NORMAL_ROW, DISABLED_ROW]), REVEAL_HIDDEN]),
 ]
 
 // button trigger — same popover, trigger is DropdownTrigger > Button (tertiary).
 const BUTTON_PARTS: Array<AnatomyNode> = [
     TRIGGER_BUTTON,
-    popover([AUTO_LANE, SEARCH_NODE, TIER_FILTER_NODE, listMenu([NORMAL_ROW]), REVEAL_HIDDEN]),
+    popover([AUTO_LANE, SEARCH_NODE, TIER_FILTER_NODE, listMenu([NORMAL_ROW, DISABLED_ROW]), REVEAL_HIDDEN]),
 ]
 
 // no auto lane — trigger ghim model cụ thể, popover bỏ lane "Tự động".
 const NO_AUTO_PARTS: Array<AnatomyNode> = [
     TRIGGER_INLINE,
-    popover([SEARCH_NODE, TIER_FILTER_NODE, listMenu([NORMAL_ROW]), REVEAL_HIDDEN]),
+    popover([SEARCH_NODE, TIER_FILTER_NODE, listMenu([NORMAL_ROW, DISABLED_ROW]), REVEAL_HIDDEN]),
 ]
 
 // locked — canPremium=false: Free/Economy stay normal, Balanced/Frontier turn LOCKED.
 const LOCKED_PARTS: Array<AnatomyNode> = [
     TRIGGER_INLINE,
-    popover([AUTO_LANE, SEARCH_NODE, TIER_FILTER_NODE, listMenu([NORMAL_ROW, LOCKED_ROW]), REVEAL_HIDDEN]),
+    popover([AUTO_LANE, SEARCH_NODE, TIER_FILTER_NODE, listMenu([NORMAL_ROW, LOCKED_ROW, DISABLED_ROW]), REVEAL_HIDDEN]),
 ]
 
 // below-floor — floor=Economy: the Free (self-host) row turns WARNING, rest stay normal.
 const WARN_PARTS: Array<AnatomyNode> = [
     TRIGGER_INLINE,
-    popover([AUTO_LANE, SEARCH_NODE, TIER_FILTER_NODE, listMenu([WARN_ROW, NORMAL_ROW]), REVEAL_HIDDEN]),
+    popover([AUTO_LANE, SEARCH_NODE, TIER_FILTER_NODE, listMenu([WARN_ROW, NORMAL_ROW, DISABLED_ROW]), REVEAL_HIDDEN]),
 ]
 
 // empty catalog — models=[]: no tier filter (< 2 bucket), no reveal (hiddenCount=0),

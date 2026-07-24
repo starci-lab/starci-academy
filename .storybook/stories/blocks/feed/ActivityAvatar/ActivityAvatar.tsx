@@ -1,4 +1,3 @@
-import React from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { UserAvatar } from "../../identity/UserAvatar/UserAvatar"
@@ -42,12 +41,6 @@ export const ActivityAvatar = ({
     anatPart,
     showAnatomy,
 }: ActivityAvatarProps) => {
-    const taggedIcon =
-        showAnatomy && React.isValidElement(icon)
-            ? React.cloneElement(icon as React.ReactElement<Record<string, unknown>>, {
-                  "data-anat-part": "Icon",
-              })
-            : icon
     return (
         <div className={cn("relative shrink-0", className)} data-anat-part={anatPart}>
             <UserAvatar
@@ -63,7 +56,7 @@ export const ActivityAvatar = ({
                 data-anat-part={showAnatomy ? "Activity badge" : undefined}
             >
                 <span className="flex size-full items-center justify-center rounded-full bg-accent-soft text-accent-soft-foreground [&_svg]:size-3">
-                    {taggedIcon}
+                    {icon}
                 </span>
             </span>
         </div>

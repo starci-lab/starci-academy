@@ -5,6 +5,7 @@ import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 import { Button } from "../../buttons/Button/Button"
 import { StatusChip } from "../../chips/StatusChip/StatusChip"
 import { IconTile } from "../../identity/IconTile/IconTile"
+import { TitledText } from "../../text/TitledText/TitledText"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from the per-reward `Card`
@@ -78,15 +79,25 @@ export const RewardItemCard = ({
         return (
             <Card className={cn("flex flex-col gap-3", className)}>
                 <div className="flex items-start gap-3">
-                    <Skeleton className="size-12 shrink-0 rounded-xl" />
-                    <div className="flex min-w-0 flex-1 flex-col gap-0">
-                        <Skeleton.Typography type="body-sm" width="1/2" />
-                        <Skeleton.Typography type="body-xs" width="full" />
-                    </div>
+                    <Skeleton
+                        className="size-12 shrink-0 rounded-xl"
+                        anatPart={showAnatomy ? "Skeleton · ô icon" : undefined}
+                    />
+                    {/* title↔description stack = TitledText (skeleton mirror delegated) */}
+                    <TitledText
+                        title=""
+                        subtitle="x"
+                        isSkeleton
+                        className="flex-1"
+                        anatPart={showAnatomy ? "TitledText" : undefined}
+                    />
                 </div>
                 <div className="flex items-center justify-between gap-3">
-                    <Skeleton.Chip />
-                    <Skeleton.Button width="w-20" />
+                    <Skeleton.Chip anatPart={showAnatomy ? "Skeleton.Chip" : undefined} />
+                    <Skeleton.Button
+                        width="w-20"
+                        anatPart={showAnatomy ? "Skeleton.Button" : undefined}
+                    />
                 </div>
             </Card>
         )
@@ -96,20 +107,16 @@ export const RewardItemCard = ({
         <Card className={cn("flex flex-col gap-3", className)}>
             <div className="flex items-start gap-3">
                 <IconTile size="sm" tone="accent" icon={icon} anatPart={showAnatomy ? "IconTile" : undefined} />
-                <div className="flex min-w-0 flex-1 flex-col gap-0">
-                    <span
-                        className="truncate text-sm font-semibold text-foreground"
-                        data-anat-part={showAnatomy ? "span · tiêu đề" : undefined}
-                    >
-                        {title}
-                    </span>
-                    <span
-                        className="text-xs text-muted"
-                        data-anat-part={showAnatomy ? "span · mô tả" : undefined}
-                    >
-                        {description}
-                    </span>
-                </div>
+                {/* title (body-sm semibold) + muted description = one TitledText (was 2 raw
+                    spans — §9 fix: font now flows through Typography via the primitive) */}
+                <TitledText
+                    title={title}
+                    subtitle={description}
+                    weight="semibold"
+                    truncate
+                    className="flex-1"
+                    anatPart={showAnatomy ? "TitledText" : undefined}
+                />
             </div>
 
             <div className="flex items-center justify-between gap-3">
@@ -120,6 +127,7 @@ export const RewardItemCard = ({
                     isDisabled={disabled || isRedeeming}
                     isPending={isRedeeming}
                     onPress={onRedeem}
+                    anatPart={showAnatomy ? "Button" : undefined}
                 >
                     {disabled ? cannotAffordLabel : redeemLabel}
                 </Button>

@@ -38,12 +38,12 @@ export const Timeline = ({ children, className, showAnatomy }: TimelineProps) =>
     // children pass through untouched, no behaviour change.
     const rows = showAnatomy
         ? React.Children.map(children, (child) =>
-              React.isValidElement(child)
-                  ? React.cloneElement(child as React.ReactElement<{ showAnatomy?: boolean }>, {
-                        showAnatomy: true,
-                    })
-                  : child,
-          )
+            React.isValidElement(child)
+                ? React.cloneElement(child as React.ReactElement<{ showAnatomy?: boolean }>, {
+                    showAnatomy: true,
+                })
+                : child,
+        )
         : children
     return (
         <div

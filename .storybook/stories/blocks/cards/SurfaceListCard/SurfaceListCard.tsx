@@ -54,17 +54,19 @@ const RowAnchor = ({
     ariaCurrent,
     className,
     children,
+    anatPart,
 }: {
     href: string
     onClick?: () => void
     ariaCurrent?: boolean
     className?: string
     children: ReactNode
+    anatPart?: string
 }) => {
     if (href.startsWith("/")) {
-        return <Link href={href} onClick={onClick} aria-current={ariaCurrent ? "true" : undefined} className={className}>{children}</Link>
+        return <Link href={href} onClick={onClick} aria-current={ariaCurrent ? "true" : undefined} className={className} data-anat-part={anatPart}>{children}</Link>
     }
-    return <a href={href} onClick={onClick} aria-current={ariaCurrent ? "true" : undefined} className={className}>{children}</a>
+    return <a href={href} onClick={onClick} aria-current={ariaCurrent ? "true" : undefined} className={className} data-anat-part={anatPart}>{children}</a>
 }
 
 /** Props for the target {@link SurfaceListCard}. */
@@ -264,6 +266,8 @@ export interface SurfaceListCardItemProps {
     withVerdict?: VerdictBand
     /** Extra classes on the item. */
     className?: string
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
 }
 
 /**
@@ -281,6 +285,7 @@ export const SurfaceListCardItem = ({
     hover = "fill",
     withVerdict,
     className,
+    anatPart,
 }: SurfaceListCardItemProps) => {
     const interactive = Boolean(onPress || href)
     const itemClassName = cn(
@@ -296,10 +301,10 @@ export const SurfaceListCardItem = ({
         className,
     )
     if (href) {
-        return <RowAnchor href={href} onClick={onPress} className={itemClassName}>{children}</RowAnchor>
+        return <RowAnchor href={href} onClick={onPress} className={itemClassName} anatPart={anatPart}>{children}</RowAnchor>
     }
     if (onPress) {
-        return <button type="button" onClick={onPress} disabled={isDisabled} className={itemClassName}>{children}</button>
+        return <button type="button" onClick={onPress} disabled={isDisabled} className={itemClassName} data-anat-part={anatPart}>{children}</button>
     }
-    return <div className={itemClassName}>{children}</div>
+    return <div className={itemClassName} data-anat-part={anatPart}>{children}</div>
 }

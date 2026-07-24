@@ -116,8 +116,8 @@ export const EntityResultRow = ({
                 type="body-sm"
                 weight="medium"
                 truncate
-                data-anat-part={showAnatomy ? "Typography" : undefined}
                 className="text-foreground underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline"
+                data-anat-part={showAnatomy ? "Typography" : undefined}
             >
                 {item.title}
             </Typography>

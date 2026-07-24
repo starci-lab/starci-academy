@@ -27,36 +27,18 @@ type Story = StoryObj<typeof PlaygroundCard>
 /** Frame each leaf's anatomy panel with breathing room. */
 const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
 
-// The single composition every leaf renders (only title/stepCount differ). Mirror
-// the real DOM: each phosphor icon mounts INSIDE its primitive (icon prop) → it
-// nests under that primitive's children. The raw HeroUI Card/Card.Content/Card.Footer
-// frame is intentionally not modeled (same house convention as CourseCard).
+// The single composition every leaf renders (only title/stepCount differ). The raw
+// HeroUI Card/Card.Content/Card.Footer frame is intentionally not modeled (same
+// house convention as CourseCard). TerminalWindowIcon / ListChecksIcon / ArrowRightIcon
+// stay CUT — each is just the value passed into its wrapping component's `icon` prop
+// (IconTile's icon, StatusChip's icon, Button's icon). The title Typography is NOT
+// cut: PlaygroundCard writes `<Typography>{title}</Typography>` itself (not a value
+// folded into another primitive's slot), so it badges like any other directly-composed part.
 const CARD_PARTS: Array<AnatomyNode> = [
-    {
-        name: "IconTile",
-        tier: "primitive",
-        role: "avatar terminal tô nền accent (size lg)",
-        children: [
-            { name: "TerminalWindowIcon", tier: "primitive", role: "icon terminal — nội dung của tile", state: "decorative" },
-        ],
-    },
-    { name: "Typography", tier: "primitive", role: "tiêu đề (h6, bold, truncate 1 dòng)" },
-    {
-        name: "StatusChip",
-        tier: "primitive",
-        role: 'chip số bước "N bước" (neutral) — meta chìm',
-        children: [
-            { name: "ListChecksIcon", tier: "primitive", role: "icon đầu chip — cùng màu nhãn", state: "decorative" },
-        ],
-    },
-    {
-        name: "Button",
-        tier: "primitive",
-        role: 'CTA "Vào playground" — hành động duy nhất (primary, w-full)',
-        children: [
-            { name: "ArrowRightIcon", tier: "primitive", role: "icon mũi tên tiến tới — trailing", state: "decorative" },
-        ],
-    },
+    { name: "IconTile", tier: "primitive", role: "avatar terminal tô nền accent (size lg)" },
+    { name: "Typography", tier: "primitive", role: "tiêu đề bài thực hành (h6, bold, truncate)" },
+    { name: "StatusChip", tier: "primitive", role: "chip số bước \"N bước\" (neutral) — meta chìm" },
+    { name: "Button", tier: "primitive", role: "CTA \"Vào playground\" — hành động duy nhất (primary, w-full)" },
 ]
 
 export const Default: Story = {

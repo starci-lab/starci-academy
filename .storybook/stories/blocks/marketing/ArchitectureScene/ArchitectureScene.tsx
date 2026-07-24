@@ -604,12 +604,12 @@ const Bar = ({ node, cell, shade, reduce, selected, onClick, showAnatomy }: {
                     style={{ backgroundColor: "var(--surface)", borderColor: shade.tint }}
                     data-anat-part={showAnatomy ? "Html · nhãn nổi" : undefined}
                 >
-                    <span className="font-mono text-[11px] font-medium leading-tight text-foreground" data-anat-part={showAnatomy ? "span · tên" : undefined}>{node.name}</span>
-                    {node.sub ? <span className="font-mono text-[9px] lowercase leading-tight text-muted" data-anat-part={showAnatomy ? "span · sub" : undefined}>{node.sub}</span> : null}
-                    <TypeIcon className="size-3 text-muted" aria-hidden data-anat-part={showAnatomy ? "Icon · kind" : undefined} />
+                    <span className="font-mono text-[11px] font-medium leading-tight text-foreground">{node.name}</span>
+                    {node.sub ? <span className="font-mono text-[9px] lowercase leading-tight text-muted">{node.sub}</span> : null}
+                    <TypeIcon className="size-3 text-muted" aria-hidden />
                     {node.status && StatusIcon ? (
-                        <span className={cn("mt-0 flex items-center gap-1 font-mono text-[9px] leading-tight", STATUS_CLASS[node.status.tone])} data-anat-part={showAnatomy ? "span · status" : undefined}>
-                            <StatusIcon className="size-3 shrink-0" aria-hidden data-anat-part={showAnatomy ? "Icon · status" : undefined} />
+                        <span className={cn("mt-0 flex items-center gap-1 font-mono text-[9px] leading-tight", STATUS_CLASS[node.status.tone])}>
+                            <StatusIcon className="size-3 shrink-0" aria-hidden />
                             {node.status.text}
                         </span>
                     ) : null}

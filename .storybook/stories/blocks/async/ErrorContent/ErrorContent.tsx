@@ -57,12 +57,17 @@ export const ErrorContent = ({
         <EmptyState
             className={className}
             tone="danger"
-            icon={icon ?? <WarningIcon weight="duotone" data-anat-part={showAnatomy ? "WarningIcon" : undefined} />}
+            icon={icon ?? <WarningIcon weight="duotone" />}
             title={title}
             description={description}
             action={
                 onRetry && retryLabel ? (
-                    <Button variant="secondary" size="sm" onPress={onRetry}>
+                    <Button
+                        variant="secondary"
+                        size="sm"
+                        onPress={onRetry}
+                        anatPart={showAnatomy ? "Button" : undefined}
+                    >
                         {retryLabel}
                     </Button>
                 ) : null

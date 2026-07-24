@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Button } from "@heroui/react"
+import { Button } from "../../buttons/Button/Button"
 import { CourseCard } from "./CourseCard"
 import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
 import { discountedCourse, enrolledCourse, freeCourse, noCoverCourse } from "./CourseCard.mocks"
@@ -35,51 +35,58 @@ const PRICE_TAG_CHILDREN: Array<AnatomyNode> = [
     { name: "Typography · giá phải trả", tier: "primitive", role: "số tiền phải trả (đậm)" },
     { name: "Typography · giá gốc", tier: "primitive", role: "giá gốc gạch ngang (khi có giảm)" },
     { name: "StatusChip", tier: "primitive", role: "nhãn −X% (soft-success), kiêm nút mở popover chi tiết", state: "success" },
-    { name: "Popover", tier: "primitive", role: "phân rã giá khi bấm chip: gốc → bạn trả" },
+    // PriceTag thật gắn 2 marker riêng (Popover.Trigger bọc chip · Popover.Content chứa phần
+    // phân rã) — không có 1 marker "Popover" gộp, nên cây khai ĐÚNG 2 tên đó (name-mismatch fix).
+    { name: "Popover.Trigger", tier: "primitive", role: "bọc chip −X%, mở popover khi bấm/chạm" },
+    { name: "Popover.Content", tier: "primitive", role: "phân rã giá khi mở: gốc → bạn trả" },
     { name: "Typography · tiết kiệm", tier: "primitive", role: "dòng Tiết kiệm N₫" },
 ]
 
-// content leaf (Default · Enrolled) — the full line row: cover + title/meta/description
-// + a price column (PriceTag + a two-button action row). Enrolled reuses this: same
-// composition, only the button LABELS differ (both keep 2 buttons + a discounted PriceTag).
+// content leaf (Default · Enrolled) — the full line row: title + learners-meta +
+// description Typography (CourseCard writes each directly), then a price column
+// (PriceTag + a two-button action row). The cover image itself stays CUT (a plain
+// element rendering the `coverImageUrl` VALUE, not a composed part). Enrolled reuses
+// this: same composition, only the button LABELS differ (both keep 2 buttons + a
+// discounted PriceTag).
 const CONTENT_PARTS: Array<AnatomyNode> = [
-    { name: "Cover (img / gradient)", tier: "primitive", role: "thumbnail 16:9 rounded-2xl (ẩn dưới @app-sm); có ảnh → <img>, thiếu → gradient + BookOpenIcon" },
-    { name: "Typography · tiêu đề", tier: "primitive", role: "tiêu đề khóa học (body bold, truncate)" },
-    { name: "Typography muted + UsersIcon", tier: "primitive", role: "số học viên — meta-count muted (icon cùng màu label, KHÔNG bọc Chip)" },
-    { name: "Typography · mô tả", tier: "primitive", role: "mô tả một dòng (body-sm muted line-clamp-1)" },
+    { name: "Typography · tiêu đề", tier: "primitive", role: "tiêu đề khóa học (body, bold, truncate)" },
+    { name: "Typography · số học viên", tier: "primitive", role: "số học viên — meta-count muted" },
+    { name: "Typography · mô tả", tier: "primitive", role: "mô tả một dòng (body-sm, muted, line-clamp-1)" },
     { name: "PriceTag", tier: "design", role: "giá VND (size sm): số phải trả + gốc gạch ngang + chip −% (popover) + dòng tiết kiệm", children: PRICE_TAG_CHILDREN },
     { name: "Button · primary", tier: "primitive", role: "CTA chính (mũi tên): Xem khóa học / Tiếp tục học (đã đăng ký)" },
     { name: "Button · secondary", tier: "primitive", role: "nút phụ (flex-1, cùng hàng): Thêm vào giỏ (action) / Xem khóa học (đã đăng ký)" },
 ]
 
-// no-cover leaf: cover rơi về fallback gradient; no `action` prop + chưa đăng ký →
-// CHỈ 1 nút primary (nút phụ vắng mặt). Giá phase hiện tại vẫn có giảm → PriceTag đầy đủ.
+// no-cover leaf: cover rơi về fallback gradient (still a CUT prop-value element — the
+// LINE fallback has no title duplicate, unlike the grid layout); title/meta/description
+// Typography still render the same as the content leaf. No `action` prop + chưa đăng ký
+// → CHỈ 1 nút primary (nút phụ vắng mặt). Giá phase hiện tại vẫn có giảm → PriceTag đầy đủ.
 const NO_COVER_PARTS: Array<AnatomyNode> = [
-    { name: "Cover (img / gradient)", tier: "primitive", role: "thiếu ảnh → gradient + BookOpenIcon (fallback)", state: "fallback" },
-    { name: "Typography · tiêu đề", tier: "primitive", role: "tiêu đề khóa học (body bold, truncate)" },
-    { name: "Typography muted + UsersIcon", tier: "primitive", role: "số học viên — meta-count muted" },
-    { name: "Typography · mô tả", tier: "primitive", role: "mô tả một dòng (body-sm muted line-clamp-1)" },
+    { name: "Typography · tiêu đề", tier: "primitive", role: "tiêu đề khóa học (body, bold, truncate)" },
+    { name: "Typography · số học viên", tier: "primitive", role: "số học viên — meta-count muted" },
+    { name: "Typography · mô tả", tier: "primitive", role: "mô tả một dòng (body-sm, muted, line-clamp-1)" },
     { name: "PriceTag", tier: "design", role: "giá phase hiện tại (size sm): số phải trả + gốc gạch ngang + chip −% (popover) + dòng tiết kiệm", children: PRICE_TAG_CHILDREN },
     { name: "Button · primary", tier: "primitive", role: "CHỈ CTA chính (Xem khóa học) — không action → không nút phụ" },
 ]
 
-// loading leaf: dòng giá riêng lẻ là Skeleton.Typography khi loyalty preview đang resolve;
-// các part khác vẫn hiện thật (KHÔNG mirror cả hàng). PriceTag vắng mặt ở leaf này.
+// loading leaf: dòng giá riêng lẻ là Skeleton.Typography khi loyalty preview đang resolve
+// (skeleton axis, left as-is). Title/meta/description Typography still render for real
+// (không phụ thuộc loyaltyPending). Cover image stays CUT (prop-value element, see
+// CONTENT_PARTS). PriceTag vắng mặt ở leaf này.
 const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "Cover (img / gradient)", tier: "primitive", role: "thumbnail 16:9 (vẫn hiện thật)" },
-    { name: "Typography · tiêu đề", tier: "primitive", role: "tiêu đề (vẫn hiện thật)" },
-    { name: "Typography muted + UsersIcon", tier: "primitive", role: "số học viên (vẫn hiện thật)" },
-    { name: "Typography · mô tả", tier: "primitive", role: "mô tả một dòng (vẫn hiện thật)" },
+    { name: "Typography · tiêu đề", tier: "primitive", role: "tiêu đề khóa học (body, bold, truncate)" },
+    { name: "Typography · số học viên", tier: "primitive", role: "số học viên — meta-count muted" },
+    { name: "Typography · mô tả", tier: "primitive", role: "mô tả một dòng (body-sm, muted, line-clamp-1)" },
     { name: "Skeleton.Typography", tier: "primitive", role: "CHỈ dòng giá là skeleton khi loyaltyPending — thay chỗ PriceTag, không nhảy số", state: "loading" },
     { name: "Button · primary", tier: "primitive", role: "CTA chính (không action → 1 nút)" },
 ]
 
-// free leaf: không giá (displayPrice null → PriceTag vắng) và enrollmentCount=0 → meta số
-// học viên cũng vắng; chỉ còn cover + title + mô tả + 1 nút.
+// free leaf: không giá (displayPrice null → PriceTag vắng) và enrollmentCount=0 → meta
+// số học viên cũng vắng; cover image stays CUT (prop-value element); title/description
+// Typography vẫn render (luôn có) → chỉ còn 2 Typography + 1 nút.
 const FREE_PARTS: Array<AnatomyNode> = [
-    { name: "Cover (img / gradient)", tier: "primitive", role: "thumbnail 16:9 (có ảnh bìa)" },
-    { name: "Typography · tiêu đề", tier: "primitive", role: "tiêu đề khóa học (body bold, truncate)" },
-    { name: "Typography · mô tả", tier: "primitive", role: "mô tả một dòng (body-sm muted line-clamp-1)" },
+    { name: "Typography · tiêu đề", tier: "primitive", role: "tiêu đề khóa học (body, bold, truncate)" },
+    { name: "Typography · mô tả", tier: "primitive", role: "mô tả một dòng (body-sm, muted, line-clamp-1)" },
     { name: "Button · primary", tier: "primitive", role: "CHỈ CTA chính — miễn phí nên không khối giá; count 0 nên không meta số học viên" },
 ]
 
@@ -112,7 +119,7 @@ export const Default: Story = {
                         layout="line"
                         loyaltyPriceVnd={1341000}
                         loyaltyOriginalVnd={2990000}
-                        action={<Button variant="secondary" className="flex-1">Thêm vào giỏ</Button>}
+                        action={<Button variant="secondary" className="flex-1" anatPart="Button · secondary">Thêm vào giỏ</Button>}
                         showAnatomy
                     />
                 </div>

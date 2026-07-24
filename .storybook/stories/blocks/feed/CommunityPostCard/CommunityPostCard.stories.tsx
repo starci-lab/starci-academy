@@ -53,47 +53,75 @@ const framed = (inner: Array<AnatomyNode>): Array<AnatomyNode> => [
 ]
 
 // Header/body/footer parts every post leaf renders inside CardContent, in DOM order.
+// The author name/@username/time/channel Typography ARE CommunityPostCard's OWN
+// direct renders (§ granularity — every Typography a block/design writes itself is
+// its own "Typography" node, same as DeckCard's title/description/count), so each
+// gets its own part below. The founder/pinned badges are real icon components
+// (SealCheckIcon/PushPinIcon) CommunityPostCard renders directly and conditionally —
+// also their own nodes. Only the "Bình luận" hand-rolled trigger stays a single
+// leaf: its inner icon + count Typography are folded into ITS OWN affordance (same
+// pattern as ReactionBar's own trigger button), not drilled into separately.
 const HEADER_AVATAR: AnatomyNode = { name: "UserAvatar", tier: "primitive", role: "avatar tác giả trong header" }
-const HEADER_TEXT: AnatomyNode = { name: "Typography", tier: "primitive", role: "tên tác giả + @username + thời gian + kênh" }
 const BODY_MARKDOWN: AnatomyNode = { name: "MarkdownContent", tier: "primitive", role: "thân bài markdown (compact, [&_p]:m-0)" }
 const FOOTER_REACTIONS: AnatomyNode = { name: "ReactionBar", tier: "design", role: "thả cảm xúc trong footer" }
 const FOOTER_COMMENT: AnatomyNode = { name: "Bình luận", tier: "primitive", role: "nút mở thread bình luận + đếm ở footer", state: "hand-rolled" }
 
-// Base leaf: avatar + author text header, markdown body, reaction bar + comment button footer.
+// Header text row every leaf renders: display name, then @username · time · kênh.
+const HEADER_TEXT: Array<AnatomyNode> = [
+    { name: "Typography", tier: "primitive", role: "tên hiển thị tác giả" },
+    { name: "Typography", tier: "primitive", role: "@username" },
+    { name: "Typography", tier: "primitive", role: "dấu · phân cách" },
+    { name: "Typography", tier: "primitive", role: "thời gian tương đối" },
+    { name: "Typography", tier: "primitive", role: "nhãn kênh" },
+]
+
+// Same header text row, with the founder badge icon inserted right after the name
+// (isFounderAuthor → SealCheckIcon renders beside the display name Typography).
+const HEADER_TEXT_FOUNDER: Array<AnatomyNode> = [
+    { name: "Typography", tier: "primitive", role: "tên hiển thị tác giả" },
+    { name: "SealCheckIcon", tier: "primitive", role: "huy hiệu founder cạnh tên — chỉ khi isFounderAuthor" },
+    { name: "Typography", tier: "primitive", role: "@username" },
+    { name: "Typography", tier: "primitive", role: "dấu · phân cách" },
+    { name: "Typography", tier: "primitive", role: "thời gian tương đối" },
+    { name: "Typography", tier: "primitive", role: "nhãn kênh" },
+]
+
+// Pin icon at the header's trailing edge — only when isPinned.
+const PINNED_ICON: AnatomyNode = { name: "PushPinIcon", tier: "primitive", role: "ghim ở góc header — chỉ khi isPinned" }
+
+// Base leaf: avatar, header text, markdown body, reaction bar + comment button footer.
 const DEFAULT_PARTS: Array<AnatomyNode> = framed([
     HEADER_AVATAR,
-    HEADER_TEXT,
+    ...HEADER_TEXT,
     BODY_MARKDOWN,
     FOOTER_REACTIONS,
     FOOTER_COMMENT,
 ])
 
-// founder leaf: base + huy hiệu SealCheck cạnh tên tác giả trong header.
+// founder leaf: SAME shape as the base leaf, plus the SealCheckIcon badge beside the name.
 const FOUNDER_PARTS: Array<AnatomyNode> = framed([
     HEADER_AVATAR,
-    HEADER_TEXT,
-    { name: "SealCheckIcon", tier: "primitive", role: "huy hiệu founder cạnh tên", state: "founder" },
+    ...HEADER_TEXT_FOUNDER,
     BODY_MARKDOWN,
     FOOTER_REACTIONS,
     FOOTER_COMMENT,
 ])
 
-// pinned leaf: base + ghim PushPin ở góc phải header.
+// pinned leaf: SAME shape as the base leaf, plus the PushPinIcon at the header's trailing edge.
 const PINNED_PARTS: Array<AnatomyNode> = framed([
     HEADER_AVATAR,
-    HEADER_TEXT,
-    { name: "PushPinIcon", tier: "primitive", role: "ghim bài ở góc header", state: "pinned" },
+    ...HEADER_TEXT,
+    PINNED_ICON,
     BODY_MARKDOWN,
     FOOTER_REACTIONS,
     FOOTER_COMMENT,
 ])
 
-// founder + pinned leaf: base + cả huy hiệu SealCheck lẫn ghim PushPin.
+// founder + pinned leaf: both badges present together.
 const FOUNDER_PINNED_PARTS: Array<AnatomyNode> = framed([
     HEADER_AVATAR,
-    HEADER_TEXT,
-    { name: "SealCheckIcon", tier: "primitive", role: "huy hiệu founder cạnh tên", state: "founder" },
-    { name: "PushPinIcon", tier: "primitive", role: "ghim bài ở góc header", state: "pinned" },
+    ...HEADER_TEXT_FOUNDER,
+    PINNED_ICON,
     BODY_MARKDOWN,
     FOOTER_REACTIONS,
     FOOTER_COMMENT,
@@ -103,7 +131,7 @@ const FOUNDER_PINNED_PARTS: Array<AnatomyNode> = framed([
 // và nút bình luận chỉ hiển thị, không tương tác.
 const READONLY_PARTS: Array<AnatomyNode> = framed([
     HEADER_AVATAR,
-    HEADER_TEXT,
+    ...HEADER_TEXT,
     BODY_MARKDOWN,
     { name: "ReactionBar", tier: "design", role: "hiển thị cảm xúc (chỉ đọc)", state: "read-only" },
     { name: "Bình luận", tier: "primitive", role: "đếm bình luận tĩnh (nút disabled)", state: "read-only" },
@@ -216,7 +244,7 @@ export const Default: Story = {
                 tier="design"
                 leaf="Có dữ liệu"
                 parts={DEFAULT_PARTS}
-                reason="Một bài đăng cộng đồng gói header tác giả (avatar + tên + thời gian + kênh + huy hiệu) + thân markdown + footer reaction/bình luận vào một card. Feature chỉ truyền post + handler; block tự dựng khung Card và bố cục."
+                reason="Một bài đăng cộng đồng gói header tác giả (avatar + tên + thời gian + kênh + huy hiệu) + thân markdown + footer reaction/bình luận vào một card. Feature chỉ truyền post + handler; block tự dựng khung Card và bố cục. Tên/@username/thời gian/kênh render qua Typography riêng CommunityPostCard tự viết — mỗi cái một node (§ granularity), như DeckCard."
             >
                 <div className="w-full max-w-xl"><CommunityPostCard post={defaultPost} onReact={() => {}} onToggleComments={() => {}} showAnatomy /></div>
             </BlockAnatomy>,
@@ -231,7 +259,7 @@ export const FounderPinned: Story = {
                 tier="design"
                 leaf="Founder + ghim"
                 parts={FOUNDER_PINNED_PARTS}
-                note="Founder + đã ghim → hiện cả huy hiệu SealCheck lẫn ghim PushPin trên cùng base composition."
+                note="Founder + đã ghim → thêm SealCheckIcon cạnh tên + PushPinIcon ở góc header so với leaf 'Có dữ liệu', mỗi icon một node riêng (block tự render trực tiếp)."
             >
                 <div className="w-full max-w-xl"><CommunityPostCard post={founderPinnedPost} onReact={() => {}} onToggleComments={() => {}} showAnatomy /></div>
             </BlockAnatomy>,
@@ -246,7 +274,7 @@ export const Pinned: Story = {
                 tier="design"
                 leaf="Đã ghim"
                 parts={PINNED_PARTS}
-                note="isPinned → thêm ghim PushPin ở góc header, phần còn lại như leaf 'Có dữ liệu'."
+                note="isPinned → thêm PushPinIcon ở góc header so với leaf 'Có dữ liệu' — node riêng, block tự render trực tiếp."
             >
                 <div className="w-full max-w-xl"><CommunityPostCard post={pinnedPost} onReact={() => {}} onToggleComments={() => {}} showAnatomy /></div>
             </BlockAnatomy>,
@@ -261,7 +289,7 @@ export const FounderAuthor: Story = {
                 tier="design"
                 leaf="Tác giả founder"
                 parts={FOUNDER_PARTS}
-                note="isFounderAuthor → thêm huy hiệu SealCheck cạnh tên, phần còn lại như leaf 'Có dữ liệu'."
+                note="isFounderAuthor → thêm SealCheckIcon cạnh tên so với leaf 'Có dữ liệu' — node riêng, block tự render trực tiếp."
             >
                 <div className="w-full max-w-xl"><CommunityPostCard post={founderAuthorPost} onReact={() => {}} onToggleComments={() => {}} showAnatomy /></div>
             </BlockAnatomy>,

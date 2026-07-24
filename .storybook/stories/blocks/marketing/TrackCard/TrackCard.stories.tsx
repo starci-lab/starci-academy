@@ -33,6 +33,14 @@ const frame = (node: React.ReactNode) => <div className="p-8">{node}</div>
 // that stacks three regions: the identity header (IconTile + title/meta), the
 // vertical tier path (each rung = coloured dot•line + eyebrow + topic Typography),
 // and a hand-rolled CTA button (+ ArrowRightIcon) pinned to the bottom.
+//
+// GRANULARITY (2026-07-23, revised): the header's "Typography (tiêu đề + meta)" and
+// the path's "Typography (nhãn tầng + chủ đề)" are DIRECT-composed elements of
+// TrackCard itself (they render `title`/`meta`/`tier.label`/`tier.topic` straight
+// inside plain wrapping `<div>`s, not inside another primitive's slot) → each gets
+// its own child node. `IconTile` and `button (CTA)` stay as before: real compose
+// identities (IconTile is a named sub-component; the CTA is a distinct label+arrow
+// link affordance, the same role as `SeeMoreLink`).
 const TRACK_PARTS: Array<AnatomyNode> = [
     {
         name: "Card", tier: "primitive", role: "khung surface bounded (h-full để đều hàng khi xếp 3)",

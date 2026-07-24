@@ -29,61 +29,51 @@ type Story = StoryObj<typeof PriceTag>
 /** Plain canvas for each leaf's anatomy panel. */
 const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
-// No saving: only the bold amount — no strikethrough, chip, popover, or saving line.
-const NO_DISCOUNT_PARTS: Array<AnatomyNode> = [
+// No saving: only the bold amount — PriceTag directly renders this Typography
+// itself (own `type`/`weight`), so it's a badged node even with no other parts.
+const AMOUNT: AnatomyNode = { name: "Typography", tier: "primitive", role: "số tiền phải trả (đậm) — không có giảm giá" }
+const NO_DISCOUNT_PARTS: Array<AnatomyNode> = [AMOUNT]
+
+// The −X% chip → popover subtree, shared by every on-sale leaf. NOTE: the "Popover"
+// wrapper itself is CUT from the tree — HeroUI's `PopoverRoot` is just a context
+// provider around react-aria's `DialogTrigger`, which renders NO DOM element of its
+// own (state-only, clones its children), so there is nothing to tag with
+// `data-anat-part="Popover"`. Only its two DOM-bearing children remain, as SIBLINGS:
+// `Popover.Trigger` (the actual clickable div — role=button, aria-expanded/controls —
+// wrapping the StatusChip; the chip is NOT the button, just its soft-success label)
+// and `Popover.Content` (the breakdown rows).
+const PRICE_POPOVER_PARTS: Array<AnatomyNode> = [
     {
-        name: "Typography",
+        name: "Popover.Trigger",
         tier: "primitive",
-        role: "số tiền phải trả (đậm) — không giảm nên chỉ một số, không gạch ngang / chip / dòng tiết kiệm",
+        role: "nút mở popover (react-aria: role=button, aria-expanded/controls) — đúng MỘT phần tử tương tác, bọc chip −X%",
+        children: [
+            {
+                name: "StatusChip",
+                tier: "primitive",
+                role: "nhãn tiết kiệm \"−X%\" (soft-success) — chỉ là nhãn, không tự là nút",
+                state: "success",
+            },
+        ],
+    },
+    {
+        name: "Popover.Content",
+        tier: "primitive",
+        role: "phân rã giá: gốc → giai đoạn → thành viên → bạn trả (mỗi dòng là Typography)",
     },
 ]
 
-// The −X% chip → popover subtree, shared by every on-sale leaf. DOM nesting:
-// Popover WRAPS Popover.Trigger (the react-aria button — role=button,
-// aria-expanded/controls) which WRAPS the StatusChip; Popover.Content holds the
-// breakdown rows. The chip is NOT the button — the Trigger is; the chip is just its
-// soft-success label. So StatusChip nests under Popover.Trigger under Popover, NOT
-// as a sibling of Popover.
-const PRICE_POPOVER_PART: AnatomyNode = {
-    name: "Popover",
-    tier: "primitive",
-    role: "popover phân rã giá — bọc nút mở (Trigger) + nội dung (Content)",
-    children: [
-        {
-            name: "Popover.Trigger",
-            tier: "primitive",
-            role: "nút mở popover (react-aria: role=button, aria-expanded/controls) — đúng MỘT phần tử tương tác, bọc chip −X%",
-            children: [
-                {
-                    name: "StatusChip",
-                    tier: "primitive",
-                    role: 'nhãn tiết kiệm "−X%" (soft-success) — chỉ là nhãn, không tự là nút',
-                    state: "success",
-                },
-            ],
-        },
-        {
-            name: "Popover.Content",
-            tier: "primitive",
-            role: "phân rã giá: gốc → giai đoạn → thành viên → bạn trả (mỗi dòng là Typography)",
-        },
-    ],
-}
+// On sale: amount (renamed "· giá phải trả" once there's a saving to distinguish
+// it from the struck original) + struck list price + −X% chip → popover + a
+// saving line — PriceTag directly renders every one of these Typography itself.
+const AMOUNT_WITH_SAVING: AnatomyNode = { name: "Typography · giá phải trả", tier: "primitive", role: "số tiền phải trả (đậm)" }
+const ORIGINAL: AnatomyNode = { name: "Typography · giá gốc", tier: "primitive", role: "giá gốc gạch ngang (muted, line-through)" }
+const SAVING_LINE: AnatomyNode = { name: "Typography · tiết kiệm", tier: "primitive", role: "dòng \"Tiết kiệm N₫\" cụ thể (muted)" }
 
-// On sale: amount + struck list price + −X% chip (→ popover) + saving line.
-const DISCOUNT_PARTS: Array<AnatomyNode> = [
-    { name: "Typography · giá phải trả", tier: "primitive", role: "số tiền phải trả (đậm)" },
-    { name: "Typography · giá gốc", tier: "primitive", role: "giá gốc gạch ngang" },
-    PRICE_POPOVER_PART,
-    { name: "Typography · tiết kiệm", tier: "primitive", role: 'dòng "Tiết kiệm N₫"' },
-]
+const DISCOUNT_PARTS: Array<AnatomyNode> = [AMOUNT_WITH_SAVING, ORIGINAL, ...PRICE_POPOVER_PARTS, SAVING_LINE]
 
-// On sale with showSavingLine={false}: same chrome but the "Tiết kiệm N₫" line is dropped.
-const NO_SAVING_LINE_PARTS: Array<AnatomyNode> = [
-    { name: "Typography · giá phải trả", tier: "primitive", role: "số tiền phải trả (đậm)" },
-    { name: "Typography · giá gốc", tier: "primitive", role: "giá gốc gạch ngang" },
-    PRICE_POPOVER_PART,
-]
+// On sale with showSavingLine={false}: same composed chrome minus the saving line node.
+const NO_SAVING_LINE_PARTS: Array<AnatomyNode> = [AMOUNT_WITH_SAVING, ORIGINAL, ...PRICE_POPOVER_PARTS]
 
 /** No discount — shows the sale price only, no strikethrough or chip. */
 export const Default: Story = {

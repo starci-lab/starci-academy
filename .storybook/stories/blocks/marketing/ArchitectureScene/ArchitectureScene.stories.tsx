@@ -12,8 +12,11 @@ import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockA
  * BlockAnatomy axis (Sơ đồ + Cây) reflecting the parts THAT leaf composes — there
  * is no separate consolidated "Anatomy" story. The scene takes `showAnatomy` and
  * emits `data-anat-part` anchors on its REAL-DOM parts only — the floating `<Html>`
- * node label (chip + name/sub/kind-icon/status) and the caption `Typography`; the
- * WebGL board/meshes/wires carry no DOM, so those parts live in the `Sơ đồ` + legend.
+ * node label (a chip surface node; its inner name/sub/kind-icon/status are its OWN
+ * rendered fields, not separate composed nodes); the caption `Typography` is a
+ * direct-rendered part too (its own anchor + node — it just shows the `caption`
+ * prop) and the WebGL board/meshes/wires carry no DOM, so those parts live in the
+ * `Sơ đồ` + legend.
  */
 const meta: Meta<typeof ArchitectureScene> = {
     title: "Design/Marketing/ArchitectureScene",
@@ -47,24 +50,6 @@ const SMALL_DATA: ArchitectureSceneData = {
         { from: "api", to: "db", tone: "success" },
     ],
 }
-
-// The floating label chip a `Bar` node mounts via drei `<Html>` — a surface chip
-// bordered in the node's own tone, holding name · sub · kind-icon · status. Shared
-// by every leaf's node; the selected variant adds an accent ring (see SELECTED_PARTS).
-const NODE_LABEL_PARTS: Array<AnatomyNode> = [
-    { name: "span · tên", tier: "primitive", role: "tên node, font-mono foreground" },
-    { name: "span · sub", tier: "primitive", role: "sub-label muted lowercase", state: "optional" },
-    { name: "Icon · kind", tier: "primitive", role: "phosphor glyph theo `kind` (Desktop/Cube/Database/Stack/ArrowsSplit/User/Hexagon)" },
-    {
-        name: "span · status",
-        tier: "primitive",
-        role: "dòng status theo tone",
-        state: "optional",
-        children: [
-            { name: "Icon · status", tier: "primitive", role: "phosphor Warning/CheckCircle/Info theo status.tone (danger·warning/success/info)" },
-        ],
-    },
-]
 
 // A directed floor wire (`Edge`): a dashed `Line` plus animated packet spheres —
 // 3 fast dots when `congested`, 1 slow dot when `flow`, none otherwise.
@@ -102,15 +87,14 @@ const SCENE_PARTS: Array<AnatomyNode> = [
                     {
                         name: "Html · nhãn nổi",
                         tier: "design",
-                        role: "chip surface nổi trên node (drei Html portal), viền theo tone node",
-                        children: NODE_LABEL_PARTS,
+                        role: "chip surface nổi trên node (drei Html portal), viền theo tone node — hiện tên · sub · kind-icon · status",
                     },
                 ],
             },
             { name: "OrbitControls", tier: "primitive", role: "kéo để xoay board (no zoom/pan/auto-spin), polar bị kẹp; không mesh" },
         ],
     },
-    { name: "Typography", tier: "primitive", role: "caption bài học dưới scene", state: "body-sm · muted" },
+    { name: "Typography", tier: "primitive", role: "caption dưới scene — ArchitectureScene tự render prop `caption`" },
 ]
 
 // SelectedNode leaf: same scene, but `onSelectNode` makes nodes clickable and
@@ -140,16 +124,15 @@ const SELECTED_PARTS: Array<AnatomyNode> = [
                     {
                         name: "Html · nhãn nổi",
                         tier: "design",
-                        role: "chip surface (drei Html portal) + ring accent khi selectedId khớp",
+                        role: "chip surface (drei Html portal) + ring accent khi selectedId khớp — hiện tên · sub · kind-icon · status",
                         state: "ring khi selected",
-                        children: NODE_LABEL_PARTS,
                     },
                 ],
             },
             { name: "OrbitControls", tier: "primitive", role: "kéo để xoay board (no zoom/pan/auto-spin), polar bị kẹp; không mesh" },
         ],
     },
-    { name: "Typography", tier: "primitive", role: "caption bài học dưới scene", state: "body-sm · muted" },
+    { name: "Typography", tier: "primitive", role: "caption dưới scene — ArchitectureScene tự render prop `caption`" },
 ]
 
 // NoCaption leaf: same board, but `caption` omitted → the Typography line drops.
@@ -178,8 +161,7 @@ const NO_CAPTION_PARTS: Array<AnatomyNode> = [
                     {
                         name: "Html · nhãn nổi",
                         tier: "design",
-                        role: "chip surface nổi trên node (drei Html portal), viền theo tone node",
-                        children: NODE_LABEL_PARTS,
+                        role: "chip surface nổi trên node (drei Html portal), viền theo tone node — hiện tên · sub · kind-icon · status",
                     },
                 ],
             },

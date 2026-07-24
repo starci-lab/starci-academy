@@ -159,7 +159,6 @@ export const ContinueCard = ({
                         <ArrowRightIcon
                             aria-hidden
                             focusable="false"
-                            data-anat-part={showAnatomy ? "Icon (ArrowRight)" : undefined}
                             className="size-3.5"
                         />
                     </Link>
@@ -169,12 +168,12 @@ export const ContinueCard = ({
                         variant="primary"
                         size="sm"
                         onPress={onPress}
+                        anatPart={showAnatomy ? "Button" : undefined}
                         className="w-fit shrink-0"
                         icon={
                             <ArrowRightIcon
                                 aria-hidden
                                 focusable="false"
-                                data-anat-part={showAnatomy ? "Icon (ArrowRight)" : undefined}
                             />
                         }
                     >
@@ -197,7 +196,6 @@ export const ContinueCard = ({
             {isHero && icon ? (
                 <div
                     aria-hidden
-                    data-anat-part={showAnatomy ? "Icon (watermark)" : undefined}
                     className="pointer-events-none absolute -bottom-6 -right-6 text-accent-soft-foreground opacity-40 [&_svg]:size-32"
                 >
                     {icon}
@@ -209,9 +207,7 @@ export const ContinueCard = ({
                     <Typography
                         weight="medium"
                         truncate
-                        data-anat-part={
-                            showAnatomy ? (isHero ? "Typography" : "Typography · tiêu đề") : undefined
-                        }
+                        data-anat-part={showAnatomy ? "Typography · tiêu đề" : undefined}
                     >
                         {title}
                     </Typography>

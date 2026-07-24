@@ -38,7 +38,7 @@ const PriceTag = ({ discounted, original }: { discounted: number; original: numb
 const Screen = ({ bar }: { bar: ReactNode }) => (
     <div className="relative h-[28rem] w-96 overflow-hidden bg-background">
         <div className="h-full overflow-y-auto px-4 pb-24 pt-4">
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3">
                 <Typography type="h3">Fullstack Mastery</Typography>
                 <Typography type="body-sm" color="muted">
                     A path from fundamentals to shipping a real product. Scroll down to see the bottom bar stay pinned — the exact behavior on mobile when enrolling / accepting cookies.

@@ -45,13 +45,11 @@ const CANVAS_PART: AnatomyNode = {
     role: "canvas dot-grid blueprint — chứa toàn bộ topology, wire nối tier & chip điểm hỏng",
     children: [
         {
+            // name/sub are this node card's OWN prop-render (plain spans showing the topology
+            // data's `name`/`sub` fields) — folded into the card, not separate composed nodes.
             name: "motion.div · node",
             tier: "primitive",
-            role: "thẻ node topology (glass) — tone accent = node focal, danger = điểm hỏng, còn lại neutral; lặp theo từng tier",
-            children: [
-                { name: "span · tên", tier: "primitive", role: "tên node (Open Sans, text-xs)" },
-                { name: "span · sub", tier: "primitive", role: "tech tag phụ (text-muted, 10px)" },
-            ],
+            role: "thẻ node topology (glass) — tone accent = node focal, danger = điểm hỏng, còn lại neutral; lặp theo từng tier; hiện tên + tech tag",
         },
         {
             name: "span · wire",
@@ -63,38 +61,26 @@ const CANVAS_PART: AnatomyNode = {
             ],
         },
         {
+            // icon + label ("from → to") are StatusChip's OWN slot/children props — folded into
+            // the chip, not separate composed nodes (same rule as StatusChip elsewhere).
             name: "StatusChip",
             tier: "primitive",
-            role: "chip điểm hỏng trôi cạnh tier nó đe doạ (overload / cascade / bottleneck)",
+            role: "chip điểm hỏng trôi cạnh tier nó đe doạ (overload / cascade / bottleneck) — icon cảnh báo + nhãn 'from → to'",
             state: "danger",
-            children: [
-                { name: "WarningIcon", tier: "primitive", role: "glyph cảnh báo ở slot icon của chip (chip ép về size-3, §4)" },
-                {
-                    name: "span · nhãn",
-                    tier: "primitive",
-                    role: "nhãn 'from → to' truyền vào children của chip",
-                    children: [
-                        { name: "CaretRightIcon", tier: "primitive", role: "mũi tên nối from → to trong nhãn" },
-                    ],
-                },
-            ],
         },
     ],
 }
 
-// The caption line under the diagram — a ROOT-level sibling of the canvas (only when `caption` is passed).
-const CAPTION_PART: AnatomyNode = {
-    name: "Typography",
-    tier: "primitive",
-    role: "caption bài học dưới sơ đồ (body-sm · muted · center)",
-    state: "body-sm · muted",
-}
+// Bare leaf (no caption): glow backdrop + the dot-grid canvas (topology + wires + failure chips).
+const PARTS: Array<AnatomyNode> = [GLOW_PART, CANVAS_PART]
 
-// leaf WITH caption: glow backdrop + the dot-grid canvas (topology + wires + failure chips) + the caption line.
-const WITH_CAPTION_PARTS: Array<AnatomyNode> = [GLOW_PART, CANVAS_PART, CAPTION_PART]
-
-// leaf WITHOUT caption: same glow + canvas, but the caption Typography is absent.
-const NO_CAPTION_PARTS: Array<AnatomyNode> = [GLOW_PART, CANVAS_PART]
+// leaf WITH caption: same glow + canvas, PLUS a root-level Typography — MicroservicesDiagram
+// directly renders its own `caption` prop through it, so it's its own badged node/anchor.
+const CAPTION_PARTS: Array<AnatomyNode> = [
+    GLOW_PART,
+    CANVAS_PART,
+    { name: "Typography", tier: "primitive", role: "caption dưới sơ đồ — MicroservicesDiagram tự render prop `caption`" },
+]
 
 export const WithCaption: Story = {
     render: () =>
@@ -103,7 +89,7 @@ export const WithCaption: Story = {
                 name="MicroservicesDiagram"
                 tier="design"
                 leaf="Có caption"
-                parts={WITH_CAPTION_PARTS}
+                parts={CAPTION_PARTS}
                 reason="Minh hoạ hero bằng code: topology microservices trên nền dot-grid blueprint, node focal accent + các điểm hỏng trôi cạnh vùng chúng đe doạ. Topology + failures là dữ liệu cố định trong block (chỉ `caption` là prop) — kể một câu chuyện 'v2 ngây thơ này sập ở đâu'."
             >
                 <div className="max-w-xl">
@@ -120,8 +106,8 @@ export const NoCaption: Story = {
                 name="MicroservicesDiagram"
                 tier="design"
                 leaf="Không caption"
-                parts={NO_CAPTION_PARTS}
-                note="Không truyền `caption` → dòng Typography dưới sơ đồ biến mất, chỉ còn topology + chip điểm hỏng."
+                parts={PARTS}
+                note="Không truyền `caption` → Typography dưới sơ đồ biến mất khỏi cây, chỉ còn topology + chip điểm hỏng."
             >
                 <div className="max-w-xl">
                     <MicroservicesDiagram showAnatomy />
@@ -137,7 +123,7 @@ export const NarrowWrap: Story = {
                 name="MicroservicesDiagram"
                 tier="design"
                 leaf="Màn hẹp"
-                parts={WITH_CAPTION_PARTS}
+                parts={CAPTION_PARTS}
                 note="Trên màn hẹp các node xuống dòng nhưng CÙNG composition với leaf 'Có caption'."
             >
                 <div className="max-w-[320px]">

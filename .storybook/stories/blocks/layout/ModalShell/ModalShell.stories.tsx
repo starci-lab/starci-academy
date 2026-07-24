@@ -140,10 +140,10 @@ export const Default: Story = {
             <ControlledModal
                 label="Title + description"
                 trigger="Open modal"
-                hint="header→plain = gap-4. Title + description rendered by the block in the header (pr-8); body holds only the CTA."
+                hint="header→plain = gap-3. Title + description rendered by the block in the header (pr-8); body holds only the CTA."
                 title="Confirm unenrollment"
                 description="You will lose all your learning progress for this course. This action cannot be undone."
-                bodyClassName="flex flex-col gap-4"
+                bodyClassName="flex flex-col gap-3"
             >
                 <div className="flex justify-end gap-2">
                     <Button variant="secondary" size="sm">Close</Button>
@@ -213,7 +213,7 @@ export const WithLeadingTabs: Story = {
                 hint="Fixed Tabs (no scroll). The panel at h-72: long content scrolls, short still fills the frame."
                 title="Notification settings"
                 bodyStartsWithTabs
-                bodyClassName="flex flex-col gap-4"
+                bodyClassName="flex flex-col gap-3"
             >
                 <LeadingTabsDemo />
             </ControlledModal>
@@ -221,18 +221,18 @@ export const WithLeadingTabs: Story = {
     ),
 }
 
-/** Plain body clusters: header→body gap-4; inside — cluster gap-3 + footer/CTA gap-4. Nested list is bordered. */
+/** Plain body clusters: header→body gap-3; inside — cluster gap-3 + footer/CTA gap-3. Nested list is bordered. */
 export const PlainFormClusters: Story = {
     render: () => (
         <div className="p-8">
             <ControlledModal
-                label="Cluster gap-3 + CTA gap-4"
+                label="Body grouped (gap-3) · cluster related (gap-2)"
                 trigger="Open cluster form modal"
                 hint="Description in the header; body holds only the list + CTA. Surface-in-surface: label outside + bordered check list."
                 title="Unlock the course"
                 description="Buy once to unlock every lesson, exercise, and support in the course."
             >
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-3">
                     <div className="flex flex-col gap-2">
                         <Label>Included</Label>
                         <CheckList items={["The full learning path", "AI grading", "Course community"]} />

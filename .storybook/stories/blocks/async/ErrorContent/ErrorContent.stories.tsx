@@ -29,36 +29,29 @@ type Story = StoryObj<typeof ErrorContent>
 /** Frame each leaf's anatomy panel with breathing room. */
 const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
 
-// title-only leaf: EmptyState danger with just icon + title (no description, no action).
+// title-only leaf: EmptyState danger. WarningIcon + the title Typography are CUT —
+// both are elements rendering VALUES passed into EmptyState's `icon`/`title` props;
+// EmptyState itself is the node that composes them.
 const BASIC_PARTS: Array<AnatomyNode> = [
     {
         name: "EmptyState",
         tier: "primitive",
         role: "khung căn giữa cho trạng thái lỗi",
         state: "danger",
-        children: [
-            { name: "WarningIcon", tier: "primitive", role: "icon cảnh báo duotone mặc định" },
-            { name: "Typography · title", tier: "primitive", role: "dòng lỗi chính" },
-        ],
     },
 ]
 
-// +description leaf: same chrome, adds the supporting muted line (still no action).
+// +description leaf: same EmptyState node; `description` is likewise a prop value.
 const DESCRIPTION_PARTS: Array<AnatomyNode> = [
     {
         name: "EmptyState",
         tier: "primitive",
         role: "khung căn giữa cho trạng thái lỗi",
         state: "danger",
-        children: [
-            { name: "WarningIcon", tier: "primitive", role: "icon cảnh báo duotone mặc định" },
-            { name: "Typography · title", tier: "primitive", role: "dòng lỗi chính" },
-            { name: "Typography · description", tier: "primitive", role: "dòng phụ giải thích / hướng dẫn" },
-        ],
     },
 ]
 
-// +retry leaf: adds a Button into the action slot (onRetry + retryLabel).
+// +retry leaf: adds a real Button composed into the action slot (onRetry + retryLabel).
 const RETRY_PARTS: Array<AnatomyNode> = [
     {
         name: "EmptyState",
@@ -66,15 +59,13 @@ const RETRY_PARTS: Array<AnatomyNode> = [
         role: "khung căn giữa cho trạng thái lỗi",
         state: "danger",
         children: [
-            { name: "WarningIcon", tier: "primitive", role: "icon cảnh báo duotone mặc định" },
-            { name: "Typography · title", tier: "primitive", role: "dòng lỗi chính" },
-            { name: "Typography · description", tier: "primitive", role: "dòng phụ giải thích / hướng dẫn" },
             { name: "Button", tier: "primitive", role: "nút thử lại (onRetry + retryLabel)", state: "secondary" },
         ],
     },
 ]
 
-// custom-icon leaf: same full shape, default WarningIcon swapped for a caller icon.
+// custom-icon leaf: same shape; the overridden icon is still just a prop value, so
+// it carries no node of its own (WifiSlashIcon cut, same as WarningIcon above).
 const CUSTOM_ICON_PARTS: Array<AnatomyNode> = [
     {
         name: "EmptyState",
@@ -82,9 +73,6 @@ const CUSTOM_ICON_PARTS: Array<AnatomyNode> = [
         role: "khung căn giữa cho trạng thái lỗi",
         state: "danger",
         children: [
-            { name: "WifiSlashIcon", tier: "primitive", role: "icon do caller truyền (override mặc định)" },
-            { name: "Typography · title", tier: "primitive", role: "dòng lỗi chính" },
-            { name: "Typography · description", tier: "primitive", role: "dòng phụ giải thích / hướng dẫn" },
             { name: "Button", tier: "primitive", role: "nút thử lại (onRetry + retryLabel)", state: "secondary" },
         ],
     },
@@ -156,7 +144,7 @@ export const CustomIcon: Story = {
                 note="Cùng shape đầy đủ, chỉ thay icon mặc định bằng icon caller truyền vào."
             >
                 <ErrorContent
-                    icon={<WifiSlashIcon aria-hidden focusable="false" weight="duotone" className="size-8 text-foreground" data-anat-part="WifiSlashIcon" />}
+                    icon={<WifiSlashIcon aria-hidden focusable="false" weight="duotone" className="size-8 text-foreground" />}
                     title="Mất kết nối mạng"
                     description="Kiểm tra kết nối rồi thử lại."
                     onRetry={() => {}}

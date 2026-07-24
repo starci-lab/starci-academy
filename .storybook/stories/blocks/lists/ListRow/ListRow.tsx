@@ -1,6 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { cn, Typography } from "@heroui/react"
+import { cn } from "@heroui/react"
+import { TitledText } from "../../text/TitledText/TitledText"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -85,16 +86,8 @@ export const ListRow = ({
     const content = (
         <>
             {leading ? <div className="shrink-0">{leading}</div> : null}
-            <div className="flex min-w-0 flex-col gap-0">
-                <Typography type="body-sm" weight="medium" truncate>
-                    {title}
-                </Typography>
-                {subtitle ? (
-                    <Typography type="body-xs" color="muted" truncate>
-                        {subtitle}
-                    </Typography>
-                ) : null}
-            </div>
+            {/* title (body-sm medium) + muted subtitle = one TitledText, truncated */}
+            <TitledText title={title} subtitle={subtitle} truncate />
             {meta || trailing ? (
                 <div className="ml-auto flex shrink-0 items-center gap-2">
                     {meta}

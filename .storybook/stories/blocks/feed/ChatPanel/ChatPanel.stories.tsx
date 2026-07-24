@@ -46,20 +46,15 @@ const COMPOSER_PART: AnatomyNode = {
 }
 
 // Tool-result row under an assistant turn: the caller-built NestedCard, which
-// CONTAINS its section rows, each holding the eyebrow/title/body Typography.
+// CONTAINS its section rows. NestedCardSection's eyebrow/title are its own props
+// (rendered internally, untaggable) and its body is an element-render-prop of
+// `children` — cut per canon granularity; NestedCardSection absorbs them as ONE node.
 const TOOL_RESULT_PART: AnatomyNode = {
     name: "NestedCard",
     tier: "design",
     role: "tool-result gắn dưới lượt trợ lý (nguồn tham khảo)",
     children: [
-        {
-            name: "NestedCardSection",
-            tier: "design",
-            role: "mỗi nguồn một hàng (eyebrow + tiêu đề + mô tả)",
-            children: [
-                { name: "Typography", tier: "primitive", role: "eyebrow · tiêu đề · mô tả nguồn" },
-            ],
-        },
+        { name: "NestedCardSection", tier: "design", role: "mỗi nguồn một hàng (eyebrow + tiêu đề + mô tả)" },
     ],
 }
 
@@ -79,18 +74,12 @@ const TYPING_PARTS: Array<AnatomyNode> = [
     COMPOSER_PART,
 ]
 
-// Empty leaf: no turns — the centered empty-state slot CONTAINS the icon + dòng
-// nhắc; composer still pinned at the bottom.
+// Empty leaf: no turns — the centered empty-state slot is a caller-filled SLOT
+// (its icon + dòng nhắc are element-render-props of whatever ReactNode the FEATURE
+// hands `emptyState`) — cut per canon granularity; the slot absorbs them as ONE
+// node. Composer still pinned at the bottom.
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    {
-        name: "Empty state",
-        tier: "primitive",
-        role: "slot canh giữa khi danh sách rỗng",
-        children: [
-            { name: "ChatCircleDotsIcon", tier: "primitive", role: "icon minh hoạ hội thoại rỗng" },
-            { name: "Typography", tier: "primitive", role: 'dòng nhắc "No messages yet…"' },
-        ],
-    },
+    { name: "Empty state", tier: "primitive", role: "slot canh giữa khi danh sách rỗng (icon + dòng nhắc do feature cấp)" },
     COMPOSER_PART,
 ]
 
@@ -105,10 +94,11 @@ const baseMessages: Array<ChatPanelMessage> = [
         role: "assistant",
         content: "Usually when you notice data repeating across many rows, or a column that depends on a non-primary-key column. I found a few sources in the course related to this question.",
         toolResult: (
-            <NestedCard title="Related lessons" bordered>
+            <NestedCard title="Related lessons" bordered anatPart="NestedCard">
                 <NestedCardSection
                     eyebrow="Relational databases"
                     title="Data normalization and the normal forms"
+                    anatPart="NestedCardSection"
                 >
                     <Typography type="body-sm" color="muted">
                         Normalization splits data across multiple tables to reduce duplication and update anomalies.
@@ -117,6 +107,7 @@ const baseMessages: Array<ChatPanelMessage> = [
                 <NestedCardSection
                     eyebrow="Database review flashcard deck"
                     title="When should you denormalize to optimize reads?"
+                    anatPart="NestedCardSection"
                 />
             </NestedCard>
         ),
@@ -206,8 +197,8 @@ export const Empty: Story = {
                     showAnatomy
                     emptyState={(
                         <div className="flex flex-col items-center gap-2 text-center">
-                            <ChatCircleDotsIcon aria-hidden focusable="false" className="size-8 text-muted" data-anat-part="ChatCircleDotsIcon" />
-                            <Typography type="body-sm" color="muted" data-anat-part="Typography">
+                            <ChatCircleDotsIcon aria-hidden focusable="false" className="size-8 text-muted" />
+                            <Typography type="body-sm" color="muted">
                                 No messages yet. Ask the teaching assistant your first question.
                             </Typography>
                         </div>

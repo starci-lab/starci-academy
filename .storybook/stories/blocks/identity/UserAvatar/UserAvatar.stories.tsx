@@ -37,7 +37,7 @@ export const UploadedImage: Story = {
 export const Sizes: Story = {
     render: () => (
         <div className="p-8">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
                 <UserAvatar username="Anna" seed="an@example.com" size="sm" />
                 <UserAvatar username="Ben" seed="binh@example.com" size="md" />
                 <UserAvatar username="Chris" seed="cuong@example.com" size="lg" />

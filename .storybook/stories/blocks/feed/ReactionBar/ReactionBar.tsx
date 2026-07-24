@@ -132,8 +132,14 @@ export const ReactionBar = ({
         }
         return (
             <div className={cn("flex items-center gap-1", className)} data-anat-part={anatPart}>
-                {myReaction ? <span aria-hidden data-anat-part={showAnatomy ? "Emoji" : undefined}>{EMOJI[myReaction]}</span> : null}
-                <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography" : undefined}>{count}</Typography>
+                {myReaction ? (
+                    <span aria-hidden data-anat-part={showAnatomy ? "span · emoji người xem" : undefined}>
+                        {EMOJI[myReaction]}
+                    </span>
+                ) : null}
+                <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography" : undefined}>
+                    {count}
+                </Typography>
             </div>
         )
     }
@@ -178,12 +184,12 @@ export const ReactionBar = ({
                             animate={{ scale: 1 }}
                             className="flex"
                         >
-                            <SmileyIcon aria-hidden focusable="false" className="size-4" data-anat-part={showAnatomy ? "SmileyIcon" : undefined} />
+                            <SmileyIcon aria-hidden focusable="false" className="size-4" />
                         </motion.span>
                     )}
                 </AnimatePresence>
                 {count > 0 ? (
-                    <Typography type="body-xs" className={cn(myReaction ? "text-accent-soft-foreground" : "text-muted")} data-anat-part={showAnatomy ? "Typography" : undefined}>
+                    <Typography type="body-xs" className={cn(myReaction ? "text-accent-soft-foreground" : "text-muted")}>
                         {count}
                     </Typography>
                 ) : null}

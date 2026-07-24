@@ -32,8 +32,6 @@ const TIMELINE_PARTS: Array<AnatomyNode> = [
         role: "mỗi dòng hoạt động bên cạnh đường nối",
         children: [
             { name: "ActivityAvatar", tier: "block", role: "leading của từng FeedItem" },
-            { name: "Typography", tier: "primitive", role: "nội dung hành động (body-sm)" },
-            { name: "Typography", tier: "primitive", role: "mốc thời gian, muted (body-xs)" },
         ],
     },
 ]
@@ -51,6 +49,7 @@ export const ActivitySequence: Story = {
                 <div className="w-[360px]">
                     <Timeline showAnatomy>
                         <FeedItem
+                            anatPart="FeedItem"
                             leading={(
                                 <ActivityAvatar
                                     anatPart="ActivityAvatar"
@@ -65,6 +64,7 @@ export const ActivitySequence: Story = {
                             Nộp bài tập Module 3
                         </FeedItem>
                         <FeedItem
+                            anatPart="FeedItem"
                             leading={(
                                 <ActivityAvatar
                                     anatPart="ActivityAvatar"
@@ -79,6 +79,7 @@ export const ActivitySequence: Story = {
                             Hoàn thành bài quiz
                         </FeedItem>
                         <FeedItem
+                            anatPart="FeedItem"
                             leading={(
                                 <ActivityAvatar
                                     anatPart="ActivityAvatar"

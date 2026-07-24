@@ -95,13 +95,12 @@ export const GradeCreditCaption = ({
 
     const content = (
         <span
-            data-anat-part={showAnatomy ? "span · caption" : undefined}
             className={cn(
                 "inline-flex items-center gap-1 text-sm",
                 blocked ? "font-medium text-danger-soft-foreground" : "text-muted",
             )}
         >
-            {blocked ? <WarningCircleIcon aria-hidden data-anat-part={showAnatomy ? "WarningCircleIcon" : undefined} className="size-4 shrink-0" /> : null}
+            {blocked ? <WarningCircleIcon aria-hidden className="size-4 shrink-0" /> : null}
             {text}
         </span>
     )

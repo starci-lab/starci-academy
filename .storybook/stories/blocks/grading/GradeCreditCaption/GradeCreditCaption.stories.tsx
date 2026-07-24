@@ -57,14 +57,7 @@ const MUTED_PARTS: Array<AnatomyNode> = [
     {
         name: "button · pressable",
         tier: "primitive",
-        role: "native <button> bọc caption, bấm mở modal chi tiết quota",
-        children: [
-            {
-                name: "span · caption",
-                tier: "primitive",
-                role: 'span inline-flex mang dòng "Còn N/M credit tuần này" (muted)',
-            },
-        ],
+        role: "native <button> bọc caption, bấm mở modal chi tiết quota; tự hiện dòng \"Còn N/M credit tuần này\" (muted)",
     },
 ]
 
@@ -75,23 +68,8 @@ const WARNING_PARTS: Array<AnatomyNode> = [
     {
         name: "button · pressable",
         tier: "primitive",
-        role: "native <button> bọc caption, bấm mở modal chi tiết quota",
-        children: [
-            {
-                name: "span · caption",
-                tier: "primitive",
-                role: "span inline-flex mang dòng cảnh báo đỏ, nói ĐÚNG lý do (hết tuần / dồn hết khung 5h)",
-                state: "danger",
-                children: [
-                    {
-                        name: "WarningCircleIcon",
-                        tier: "primitive",
-                        role: "icon cảnh báo đứng trước text khi pool không đủ chi trả lượt Auto (phosphor)",
-                        state: "warning",
-                    },
-                ],
-            },
-        ],
+        role: "native <button> bọc caption, bấm mở modal chi tiết quota; tự hiện dòng cảnh báo đỏ + icon cảnh báo trước text, nói ĐÚNG lý do (hết tuần / dồn hết khung 5h)",
+        state: "danger",
     },
 ]
 
@@ -101,14 +79,7 @@ const STATIC_PARTS: Array<AnatomyNode> = [
     {
         name: "span · wrapper",
         tier: "primitive",
-        role: "span bọc ngoài (nhận className), thay cho lớp <button> khi tĩnh",
-        children: [
-            {
-                name: "span · caption",
-                tier: "primitive",
-                role: 'span inline-flex mang dòng "Còn N/M credit tuần này" (muted)',
-            },
-        ],
+        role: "span bọc ngoài (nhận className), thay cho lớp <button> khi tĩnh; tự hiện dòng \"Còn N/M credit tuần này\" (muted)",
     },
 ]
 

@@ -37,17 +37,16 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
 // Every leaf composes the SAME parts: the base avatar + the activity badge that
 // WRAPS the passed-in icon. avatar-vs-initials is internal to UserAvatar, not a
-// different part. The badge is a raw soft-accent disc (span) whose only child is
-// the phosphor icon → the icon nests INSIDE the badge, it is not a sibling.
+// different part. The badge is a self-placed structural disc (span) with its own
+// distinct role (soft-accent, ring-cut corner marker) — a real node. The phosphor
+// icon inside it is just the badge presenting its `icon` prop (like CrossListItem's
+// mark), no identity of its own → CUT, folded into "Activity badge".
 const AVATAR_PARTS: Array<AnatomyNode> = [
     { name: "UserAvatar", tier: "primitive", role: "avatar nền (ảnh thật / initials sinh theo username)" },
     {
         name: "Activity badge",
         tier: "primitive",
-        role: "đĩa soft-accent ở góc dưới-phải (span bg-surface + ring surface, bọc span bg-accent-soft)",
-        children: [
-            { name: "Icon", tier: "primitive", role: "icon phosphor loại hoạt động (đọc · follow · mốc · bình luận), accent size-3" },
-        ],
+        role: "đĩa soft-accent ở góc dưới-phải (span bg-surface + ring surface, bọc span bg-accent-soft) — tự hiện icon loại hoạt động bên trong",
     },
 ]
 

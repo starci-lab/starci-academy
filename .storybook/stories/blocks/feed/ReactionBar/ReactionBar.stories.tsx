@@ -56,17 +56,16 @@ const Controlled = ({
 }
 
 // Interactive leaves (onReact passed) — mirror the real DOM: root div → { trigger
-// button, picker popover }. The glyph + count live INSIDE the trigger button; the six
-// emoji options live INSIDE the picker.
+// button, picker popover }. The glyph icon + count Typography INSIDE the trigger
+// button are ELEMENTS rendering the trigger's own state (current glyph, `count`
+// prop) — folded into the "button · React trigger" node itself, not tracked as
+// separate parts (same as "count" in the CẮT rule's example list). The six emoji
+// options live INSIDE the picker as their own real button controls.
 const INTERACTIVE_PARTS: Array<AnatomyNode> = [
     {
         name: "button · React trigger",
         tier: "primitive",
-        role: "nút bấm mở/đóng picker; chứa glyph + số đếm",
-        children: [
-            { name: "SmileyIcon", tier: "primitive", role: "glyph neutral khi chưa react — AnimatePresence đổi sang emoji cảm xúc khi đã react" },
-            { name: "Typography", tier: "primitive", role: "số đếm reaction (body-xs), chỉ hiện khi count > 0", state: "ẩn khi count = 0" },
-        ],
+        role: "nút bấm mở/đóng picker; hiển thị glyph hiện tại (neutral/emoji cảm xúc) + số đếm",
     },
     {
         name: "Emoji picker",
@@ -78,10 +77,13 @@ const INTERACTIVE_PARTS: Array<AnatomyNode> = [
     },
 ]
 
-// Read-only leaf (onReact omitted, count > 0): just the viewer's emoji + count, no picker.
+// Read-only leaf (onReact omitted, count > 0): the viewer's emoji span + the count
+// Typography are ReactionBar's OWN direct renders at the root (no wrapping button
+// control here, unlike the interactive trigger) — each gets its own node
+// (§ granularity, same as DeckCard's title/description/count Typography).
 const READONLY_PARTS: Array<AnatomyNode> = [
-    { name: "Emoji", tier: "primitive", role: "emoji cảm xúc của người xem (span)" },
-    { name: "Typography", tier: "primitive", role: "số đếm reaction (body-xs, muted)" },
+    { name: "span · emoji người xem", tier: "primitive", role: "emoji người xem đã chọn trước đó — chỉ khi có myReaction", state: "tuỳ chọn" },
+    { name: "Typography", tier: "primitive", role: "số đếm cảm xúc" },
 ]
 
 // Read-only + count 0 leaf: the bar returns null, leaving no gap.
@@ -98,7 +100,7 @@ export const NoInteraction: Story = {
                 tier="design"
                 leaf="Chưa react"
                 parts={INTERACTIVE_PARTS}
-                note="Người xem chưa react → trigger là SmileyIcon neutral, count = 0 nên Typography số đếm ẩn."
+                note="Người xem chưa react → nút trigger hiện glyph neutral, ẩn số đếm vì count = 0 (cả hai đều là giá trị inline trong nút trigger, không phải part riêng)."
                 reason="Leaf feed block: gói trigger react + picker 6 emoji + số đếm vào một đơn vị, để mọi surface cộng đồng (post, comment, activity) dùng chung một cách thả cảm xúc. Quyền react do caller quyết định qua có truyền onReact hay không — không có prop readOnly riêng."
             >
                 <Controlled initialCount={0} initialReaction={null} showAnatomy />
@@ -115,7 +117,7 @@ export const Reacted: Story = {
                 tier="design"
                 leaf="Đã react"
                 parts={INTERACTIVE_PARTS}
-                note="Đã react → trigger đổi SmileyIcon sang emoji cảm xúc, Typography số đếm hiện (accent). CÙNG composition với leaf 'Chưa react'."
+                note="Đã react → nút trigger đổi glyph sang emoji cảm xúc, số đếm hiện (accent) — CÙNG composition với leaf 'Chưa react'."
             >
                 <Controlled initialCount={12} initialReaction={ReactionType.Love} showAnatomy />
             </BlockAnatomy>,
@@ -131,7 +133,7 @@ export const ReadOnly: Story = {
                 tier="design"
                 leaf="Chỉ đọc"
                 parts={READONLY_PARTS}
-                note="Không truyền onReact → bỏ nút trigger + picker, chỉ còn emoji người xem + số đếm."
+                note="Không truyền onReact → bỏ nút trigger + picker; emoji người xem + số đếm render trực tiếp trên root, mỗi cái một node riêng (không còn gói trong nút trigger)."
             >
                 <ReactionBar count={7} myReaction={ReactionType.Like} showAnatomy />
             </BlockAnatomy>,

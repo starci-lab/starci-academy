@@ -50,13 +50,13 @@ const sampleHunks: DiffHunk[] = [
 // (BlockAnatomy supplies it as the tree root), so `parts` below are its DIRECT
 // children, nested to mirror the real DOM the component hand-draws.
 
-/** Filename header bar — a bordered div that CONTAINS the mono Typography. */
+/** Filename header bar — a bordered div showing the mono filename text directly. */
 const FILE_HEADER: AnatomyNode = {
     name: "Thanh tên file",
     tier: "design",
     role: "header bar border-b bg-default px-4 py-2 — chỉ render khi có prop filename",
     children: [
-        { name: "Typography", tier: "primitive", role: "tên file, font-mono body-sm medium (HeroUI base)" },
+        { name: "Typography · tên file", tier: "primitive", role: "tên file (font-mono body-sm medium)" },
     ],
 }
 
@@ -67,16 +67,11 @@ const HUNK_HEADER: AnatomyNode = {
     role: "hàng phân cách muted @@ … @@ (tự vẽ, chỉ khi hunk có header)",
 }
 
-/** One UNIFIED row: a flex div that CONTAINS the two gutter cells, marker và nội dung. */
+/** One UNIFIED row: a flex div that self-draws the two gutter cells, marker và nội dung. */
 const UNIFIED_ROW: AnatomyNode = {
     name: "UnifiedRow",
     tier: "design",
-    role: "một hàng diff xếp dọc, nền token thêm=success / xoá=danger / context=neutral (tự vẽ)",
-    children: [
-        { name: "NumberCell", tier: "primitive", role: "ô số dòng cũ + mới (hai ô), right-align tabular-nums, muted (tự vẽ)" },
-        { name: "Marker", tier: "primitive", role: "glyph +/-/khoảng-trắng, cột w-4 canh giữa (tự vẽ)" },
-        { name: "Nội dung dòng", tier: "primitive", role: "text nội dung, whitespace-pre (tự vẽ)" },
-    ],
+    role: "một hàng diff xếp dọc, nền token thêm=success / xoá=danger / context=neutral; tự hiện số dòng cũ+mới, glyph +/-/khoảng-trắng và nội dung dòng (tự vẽ)",
 }
 
 /** One SPLIT row: a 2-col grid that CONTAINS an old-side and a new-side SplitCell. */
@@ -88,20 +83,12 @@ const SPLIT_ROW: AnatomyNode = {
         {
             name: "SplitCell",
             tier: "design",
-            role: "bên cũ: số dòng + nội dung; dòng thêm thành ô trống filler (tự vẽ)",
-            children: [
-                { name: "NumberCell", tier: "primitive", role: "số dòng cũ, right-align tabular-nums, muted (tự vẽ)" },
-                { name: "Nội dung dòng", tier: "primitive", role: "text nội dung, whitespace-pre (tự vẽ)" },
-            ],
+            role: "bên cũ: tự hiện số dòng + nội dung; dòng thêm thành ô trống filler (tự vẽ)",
         },
         {
             name: "SplitCell",
             tier: "design",
-            role: "bên mới: số dòng + nội dung; dòng xoá thành ô trống filler (tự vẽ)",
-            children: [
-                { name: "NumberCell", tier: "primitive", role: "số dòng mới, right-align tabular-nums, muted (tự vẽ)" },
-                { name: "Nội dung dòng", tier: "primitive", role: "text nội dung, whitespace-pre (tự vẽ)" },
-            ],
+            role: "bên mới: tự hiện số dòng + nội dung; dòng xoá thành ô trống filler (tự vẽ)",
         },
     ],
 }

@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Composite → Primitive · Nhận định</title>
+<style>
+  :root{
+    --bg:#0b0d10; --surface:#14171c; --surface-2:#1a1e24; --border:#262b33;
+    --fg:#e8eaed; --muted:#8b929c; --faint:#5c636e;
+    --accent:#7cc4ff; --accent-soft:#8fd0ff;
+    --danger:#ff8a8a; --warning:#ffcf7a; --success:#8fe0a8;
+    --danger-bg:#2a1618; --warning-bg:#2a2416; --success-bg:#16261c;
+    --radius:14px; --radius-sm:10px;
+    --mono:'SFMono-Regular',ui-monospace,Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.5;font-size:14px}
+  .wrap{max-width:1120px;margin:0 auto;padding:32px 24px 96px}
+  header.top{margin-bottom:8px}
+  h1{font-size:22px;font-weight:700;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:24px}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:28px;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+  .legend b{color:var(--fg)}
+
+  section.cand{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:20px;overflow:hidden}
+  section.cand.lever{border-color:#3a5a72;box-shadow:0 0 0 1px #3a5a7255}
+  .chead{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+  .num{font-size:12px;font-weight:700;color:var(--faint);font-family:var(--mono)}
+  .pname{font-size:16px;font-weight:700;font-family:var(--mono);color:var(--accent-soft)}
+  .badge{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 8px;border-radius:999px}
+  .b-prim{background:#12303f;color:var(--accent-soft)}
+  .b-lever{background:#1d3a4d;color:#a9daff}
+  .b-rec{background:var(--surface-2);color:var(--muted);border:1px solid var(--border);font-family:var(--mono)}
+  .concept{padding:0 20px;color:var(--muted);font-size:13px;margin:14px 0}
+  .concept b{color:var(--fg)}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}}
+  .cell{padding:18px 20px}
+  .cell + .cell{border-left:1px solid var(--border)}
+  @media(max-width:820px){.cell + .cell{border-left:0;border-top:1px solid var(--border)}}
+  .cell h4{margin:0 0 12px;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--faint);font-weight:700}
+
+  /* rendered mock stage */
+  .stage{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;display:flex;flex-direction:column;gap:14px}
+  .stage .row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .vlabel{font-size:10px;color:var(--faint);font-family:var(--mono);min-width:60px}
+
+  /* primitive visual atoms */
+  .t-title{font-weight:500;color:var(--fg)}
+  .t-title.semibold{font-weight:600}
+  .t-sub{color:var(--muted)}
+  .sz-row .t-title{font-size:14px}.sz-row .t-sub{font-size:12px}
+  .sz-hdr .t-title{font-size:20px;font-weight:700}.sz-hdr .t-sub{font-size:13px}
+  .sz-stat .t-title{font-size:26px;font-weight:700;line-height:1.1}.sz-stat .t-sub{font-size:13px;font-weight:500;color:var(--fg)}.sz-stat .t-hint{font-size:12px;color:var(--muted)}
+  .stack{display:flex;flex-direction:column}
+  .stack.g0{gap:0}
+
+  .icl{display:inline-flex;align-items:center;gap:6px}
+  .icl.muted{color:var(--muted)}
+  .icl svg{width:16px;height:16px;flex:0 0 auto}
+  .icl .txt{font-size:13px}
+  .icl.xs .txt{font-size:12px}
+
+  .li-row{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px}
+  .li-row.total{border-top:1px solid var(--border);padding-top:6px;font-weight:600}
+  .li-row .lbl{color:var(--fg)}.li-row .lbl.muted{color:var(--muted)}
+  .li-row .val.success{color:var(--success)}
+
+  .tsv{display:flex;align-items:baseline;gap:6px}
+  .tsv .num2{font-size:34px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+  .tsv .unit{font-size:13px;color:var(--muted)}
+  .tsv.danger .num2{color:var(--danger)}.tsv.warning .num2{color:var(--warning)}.tsv.success .num2{color:var(--success)}
+
+  .vbar{background:#000;border-radius:10px;padding:8px 10px;display:flex;align-items:center;gap:6px}
+  .vbtn{width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;color:#fff;cursor:pointer}
+  .vbtn:hover{background:#ffffff22}
+  .vbtn svg{width:20px;height:20px}
+  .vbar .spacer{flex:1}
+  .vtime{color:#fff;font-size:12px;font-family:var(--mono);opacity:.85}
+
+  .sk{background:linear-gradient(90deg,#20252c,#2b323b,#20252c);background-size:200% 100%;animation:sh 1.4s infinite;border-radius:6px}
+  @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+  .sk.chip{height:18px;width:64px;border-radius:999px}
+  .sk.line{height:12px}
+  .sk.av{width:40px;height:40px;border-radius:999px;flex:0 0 auto}
+
+  pre{margin:0;font-family:var(--mono);font-size:11.5px;line-height:1.6;white-space:pre-wrap;color:#c9cdd4}
+  .ba{display:flex;flex-direction:column;gap:10px}
+  .ba .lab{font-size:10px;font-family:var(--mono);letter-spacing:.04em}
+  .before .lab{color:var(--danger)}.after .lab{color:var(--success)}
+  .code{background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;overflow-x:auto}
+  .before .code{border-color:#3a2224}.after .code{border-color:#22331f}
+  .tok-tag{color:#79c0ff}.tok-attr{color:#d2a8ff}.tok-str{color:#a5d6a2}.tok-cmp{color:#ffa657}.tok-mut{color:var(--muted)}
+
+  .occ{padding:14px 20px;border-top:1px solid var(--border)}
+  .occ h4{margin:0 0 8px;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--faint)}
+  .occ ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px}
+  .occ li{font-size:12px;font-family:var(--mono);color:var(--muted)}
+  .occ li b{color:#c9cdd4;font-weight:600}
+  .rationale{padding:0 20px 16px;font-size:12.5px;color:var(--muted)}
+  .rationale::before{content:"⛏ ";color:var(--faint)}
+
+  h2.tier{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);margin:36px 0 14px;font-weight:700}
+  .med{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;margin-bottom:10px}
+  .med .mh{display:flex;align-items:center;gap:10px;margin-bottom:4px;flex-wrap:wrap}
+  .med .mn{font-family:var(--mono);font-weight:700;color:#cdd3db;font-size:13px}
+  .med .md{color:var(--muted);font-size:12.5px}
+  .med .note{color:var(--faint);font-size:12px;margin-top:4px}
+  .rej{display:flex;gap:10px;font-size:12.5px;color:var(--muted);padding:8px 0;border-bottom:1px solid var(--border)}
+  .rej:last-child{border-bottom:0}
+  .rej .rn{font-family:var(--mono);color:#9aa1ab;min-width:180px;text-decoration:line-through;text-decoration-color:var(--faint)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>Composite → Primitive — nhận định trước khi gom</h1>
+    <div class="sub">Scan toàn Storybook (180 file) · 24 ứng viên thô → dedupe cross-lane · mỗi thẻ = API đề xuất + mock render + before/after + call-site thật.</div>
+  </header>
+
+  <div class="legend">
+    <span><b>Luật:</b> composite lặp (cụm ≥2 primitive = 1 khái niệm, hand-roll rải) → gom 1 primitive có tên.</span>
+    <span><span class="badge b-lever">đòn bẩy</span> phủ chéo nhiều lô, recurrence cao nhất.</span>
+    <span><span class="badge b-rec">×N</span> số call-site hand-roll.</span>
+  </div>
+
+  <!-- ============ #1 TitledText ============ -->
+  <section class="cand lever">
+    <div class="chead">
+      <span class="num">#1</span>
+      <span class="pname">TitledText</span>
+      <span class="badge b-prim">primitive</span>
+      <span class="badge b-lever">đòn bẩy</span>
+      <span class="badge b-rec">×16 · ≥6 lô</span>
+    </div>
+    <p class="concept"><b>Title (foreground, medium/semibold) + optional subtitle muted</b>, xếp dọc. Prop <code>size</code> chọn thang (row / header / stat) để mỗi call-site không rải 2 Typography.</p>
+    <div class="grid">
+      <div class="cell">
+        <h4>Mock render</h4>
+        <div class="stage">
+          <div class="row"><span class="vlabel">row</span>
+            <div class="stack g0 sz-row"><span class="t-title">Chấm bài với model premium</span><span class="t-sub">Mở khoá khi nâng cấp gói</span></div>
+          </div>
+          <div class="row"><span class="vlabel">header</span>
+            <div class="stack g0 sz-hdr"><span class="t-title">Khoá học DevOps</span><span class="t-sub">12 mô-đun · cập nhật 2 ngày trước</span></div>
+          </div>
+          <div class="row"><span class="vlabel">stat</span>
+            <div class="stack g0 sz-stat"><span class="t-title">1.284</span><span class="t-sub">Học viên</span><span class="t-hint">+12% so với tháng trước</span></div>
+          </div>
+          <div class="row"><span class="vlabel">skeleton</span>
+            <div class="stack g0" style="gap:6px;flex:1;max-width:220px"><div class="sk line" style="width:40%"></div><div class="sk line" style="width:66%"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="cell">
+        <h4>API đề xuất</h4>
+        <div class="code"><pre><span class="tok-attr">interface</span> TitledTextProps {
+  title: ReactNode
+  subtitle?: ReactNode
+  size?: <span class="tok-str">"row"</span> | <span class="tok-str">"header"</span> | <span class="tok-str">"stat"</span>  <span class="tok-mut">// row=body-sm</span>
+  weight?: <span class="tok-str">"medium"</span> | <span class="tok-str">"semibold"</span>
+  hint?: ReactNode          <span class="tok-mut">// dòng 3 (stat)</span>
+  truncate?: boolean
+  isSkeleton?: boolean      <span class="tok-mut">// mirror sẵn</span>
+  anatPart?: string
+}</pre></div>
+        <div class="ba" style="margin-top:14px">
+          <div class="before"><div class="lab">TRƯỚC · RewardItemCard (raw span, vi phạm §9)</div>
+            <div class="code"><pre><span class="tok-tag">&lt;span</span> <span class="tok-attr">className</span>=<span class="tok-str">"text-sm font-medium"</span><span class="tok-tag">&gt;</span>{name}<span class="tok-tag">&lt;/span&gt;</span>
+<span class="tok-tag">&lt;span</span> <span class="tok-attr">className</span>=<span class="tok-str">"text-xs text-muted"</span><span class="tok-tag">&gt;</span>{cost}<span class="tok-tag">&lt;/span&gt;</span></pre></div></div>
+          <div class="after"><div class="lab">SAU</div>
+            <div class="code"><pre><span class="tok-tag">&lt;<span class="tok-cmp">TitledText</span></span> <span class="tok-attr">title</span>={name} <span class="tok-attr">subtitle</span>={cost} <span class="tok-tag">/&gt;</span></pre></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="occ"><h4>Call-site (16)</h4>
+      <ul>
+        <li><b>list/SettingToggleRow</b> L81-90 · label+description muted</li>
+        <li><b>lists/ListRow</b> L88-97 · title+subtitle (đã nội bộ hoá 1 phần)</li>
+        <li><b>navigation/Stepper</b> 113-131/186-214 · lặp 3 nhánh theo state</li>
+        <li><b>layout/PageHeader</b> 86-98 · title+description (size=compact rẽ nhánh)</li>
+        <li><b>feedback/EmptyState</b> 121-134 · lặp cả 2 nhánh isPage</li>
+        <li><b>rewards/RewardItemCard</b> 113-126 · <span style="color:var(--danger)">raw span — drift tệ nhất</span></li>
+      </ul>
+    </div>
+    <p class="rationale">Cùng 1 khái niệm title↔subtitle hand-roll độc lập ≥6 lô/16 call-site (skeleton mirror cũng lặp), có nơi bỏ Typography dùng raw span — prop <code>size</code> để mỗi nơi chọn thang thay vì rải 2 Typography.</p>
+  </section>
+
+  <!-- ============ #2 InlineIconLabel ============ -->
+  <section class="cand lever">
+    <div class="chead">
+      <span class="num">#2</span>
+      <span class="pname">InlineIconLabel</span>
+      <span class="badge b-prim">primitive</span>
+      <span class="badge b-lever">đòn bẩy</span>
+      <span class="badge b-rec">×15 · 5 lô</span>
+    </div>
+    <p class="concept"><b>Leading icon size-4 shrink-0 + text inline.</b> Primitive <b>SỞ HỮU cỡ icon</b> (§5 icon-ownership) thay vì mỗi call-site tự set size-4/size-5. Flavor: count / eyebrow / tab / caption+tone.</p>
+    <div class="grid">
+      <div class="cell">
+        <h4>Mock render</h4>
+        <div class="stage">
+          <div class="row"><span class="vlabel">count</span>
+            <span class="icl muted xs"><svg viewBox="0 0 256 256" fill="currentColor"><path d="M164 96a36 36 0 1 0-36 36 36 36 0 0 0 36-36Zm-56 96a52 52 0 0 1 104 0 8 8 0 0 1-8 8H116a8 8 0 0 1-8-8Z"/></svg><span class="txt">1.284 học viên</span></span>
+          </div>
+          <div class="row"><span class="vlabel">eyebrow</span>
+            <span class="icl muted xs"><svg viewBox="0 0 256 256" fill="currentColor"><path d="m208 144-40-24 40-24a8 8 0 0 0-8-14l-48 28V56a8 8 0 0 0-16 0v54l-48-28a8 8 0 0 0-8 14l40 24-40 24a8 8 0 0 0 8 14l48-28v54a8 8 0 0 0 16 0v-54l48 28a8 8 0 0 0 8-14Z"/></svg><span class="txt">Chấm bằng AI</span></span>
+          </div>
+          <div class="row"><span class="vlabel">caption</span>
+            <span class="icl xs" style="color:var(--warning)"><svg viewBox="0 0 256 256" fill="currentColor"><path d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24Zm-8 56a8 8 0 0 1 16 0v56a8 8 0 0 1-16 0Zm8 104a12 12 0 1 1 12-12 12 12 0 0 1-12 12Z"/></svg><span class="txt">Còn 3 suất — giá sắp tăng</span></span>
+          </div>
+          <div class="row"><span class="vlabel">skeleton</span>
+            <span class="icl xs"><span class="sk" style="width:16px;height:16px;border-radius:999px"></span><span class="sk line" style="width:70px"></span></span>
+          </div>
+        </div>
+      </div>
+      <div class="cell">
+        <h4>API đề xuất</h4>
+        <div class="code"><pre><span class="tok-attr">interface</span> InlineIconLabelProps {
+  icon: ReactNode
+  children: ReactNode
+  tone?: <span class="tok-str">"muted"</span> | <span class="tok-str">"warning"</span> | <span class="tok-str">"danger"</span> | <span class="tok-str">"success"</span>
+  size?: <span class="tok-str">"xs"</span> | <span class="tok-str">"sm"</span>   <span class="tok-mut">// icon theo text (§5)</span>
+  truncate?: boolean
+  isSkeleton?: boolean
+  anatPart?: string
+}</pre></div>
+        <div class="ba" style="margin-top:14px">
+          <div class="before"><div class="lab">TRƯỚC · CourseCard (lặp 4× real+skeleton)</div>
+            <div class="code"><pre><span class="tok-tag">&lt;div</span> <span class="tok-attr">className</span>=<span class="tok-str">"flex items-center gap-1 text-muted"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;<span class="tok-cmp">UsersIcon</span></span> <span class="tok-attr">className</span>=<span class="tok-str">"size-4"</span> <span class="tok-tag">/&gt;</span>
+  <span class="tok-tag">&lt;<span class="tok-cmp">Typography</span></span> <span class="tok-attr">type</span>=<span class="tok-str">"body-xs"</span> <span class="tok-attr">color</span>=<span class="tok-str">"muted"</span><span class="tok-tag">&gt;</span>{n}<span class="tok-tag">&lt;/&gt;</span>
+<span class="tok-tag">&lt;/div&gt;</span></pre></div></div>
+          <div class="after"><div class="lab">SAU</div>
+            <div class="code"><pre><span class="tok-tag">&lt;<span class="tok-cmp">InlineIconLabel</span></span> <span class="tok-attr">icon</span>={<span class="tok-tag">&lt;<span class="tok-cmp">UsersIcon</span>/&gt;</span>} <span class="tok-attr">tone</span>=<span class="tok-str">"muted"</span><span class="tok-tag">&gt;</span>{n}<span class="tok-tag">&lt;/&gt;</span></pre></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="occ"><h4>Call-site (15)</h4>
+      <ul>
+        <li><b>grading/GradeModelDropdown</b> 395-481 · <span style="color:var(--warning)">lặp 4 nhánh trigger/item</span></li>
+        <li><b>grading/GradingByline</b> 53-59 · SparkleIcon accent + caption</li>
+        <li><b>grading/GradeCreditCaption</b> 96-105 · WarningCircle + caption</li>
+        <li><b>cards/CourseCard</b> 318-423 + 226-260 · <span style="color:var(--warning)">4× real+skeleton</span></li>
+        <li><b>navigation/TabsCard</b> 151-227 · icon+label tab (ProgrammingLanguageTabs tự set size-5)</li>
+        <li><b>learn/ChatToolResult · UpNextCard</b> · eyebrow icon+nhãn muted</li>
+      </ul>
+    </div>
+    <p class="rationale">Pervasive 5 lô/15 call-site, mỗi nơi tự lo cỡ icon → gom để chuẩn hoá icon-ownership + xoá drift. <b>NoticeLine (PhaseScarcityNote)</b> = biến thể <code>tone</code> của primitive này, không tách riêng.</p>
+  </section>
+
+  <!-- ============ #3 LineItemRow ============ -->
+  <section class="cand">
+    <div class="chead">
+      <span class="num">#3</span><span class="pname">LineItemRow</span>
+      <span class="badge b-prim">primitive</span><span class="badge b-rec">×4</span>
+    </div>
+    <p class="concept"><b>Nhãn trái · giá trị phải</b> (justify-between). Biến thể border-t cho dòng tổng + tone cho dòng giảm giá. Khác StatPair (dọc) & MetaRow (middot).</p>
+    <div class="grid">
+      <div class="cell"><h4>Mock render</h4>
+        <div class="stage" style="max-width:340px">
+          <div class="li-row"><span class="lbl">Giá gốc</span><span class="val">1.200.000₫</span></div>
+          <div class="li-row"><span class="lbl muted">Ưu đãi giai đoạn</span><span class="val success">−300.000₫ (−25%)</span></div>
+          <div class="li-row"><span class="lbl muted">Điểm thân thiết</span><span class="val success">−50.000₫</span></div>
+          <div class="li-row total"><span class="lbl">Bạn trả</span><span class="val">850.000₫</span></div>
+        </div>
+      </div>
+      <div class="cell"><h4>API + before/after</h4>
+        <div class="code"><pre><span class="tok-attr">interface</span> LineItemRowProps {
+  label: ReactNode; value: ReactNode
+  tone?: <span class="tok-str">"success"</span> | <span class="tok-str">"muted"</span>
+  emphasized?: boolean; divider?: boolean
+}</pre></div>
+        <div class="ba" style="margin-top:12px"><div class="after"><div class="lab">SAU</div>
+          <div class="code"><pre><span class="tok-tag">&lt;<span class="tok-cmp">LineItemRow</span></span> <span class="tok-attr">label</span>=<span class="tok-str">"Bạn trả"</span> <span class="tok-attr">value</span>={total} <span class="tok-attr">divider</span> <span class="tok-attr">emphasized</span> <span class="tok-tag">/&gt;</span></pre></div></div></div>
+      </div>
+    </div>
+    <div class="occ"><h4>Call-site (4)</h4><ul><li><b>commerce/PriceTag</b> 125-152 · 4 dòng popover breakdown lặp y hệt (giá gốc / giảm phase / loyalty / tổng)</li></ul></div>
+    <p class="rationale">4 call-site liên tiếp lặp wrapper flex + 2 Typography, chỉ khác nhãn/giá trị/tone — dùng lại cho mọi bảng breakdown/hoá đơn.</p>
+  </section>
+
+  <!-- ============ #4 ToneStatValue ============ -->
+  <section class="cand">
+    <div class="chead">
+      <span class="num">#4</span><span class="pname">ToneStatValue</span>
+      <span class="badge b-prim">primitive</span><span class="badge b-rec">×4</span>
+    </div>
+    <p class="concept"><b>Số lớn tô màu theo band ngữ nghĩa</b> (danger/warning/success → *-soft-foreground) + unit muted. Hiện map tone bị <b>khai báo lại verbatim</b> ở từng file.</p>
+    <div class="grid">
+      <div class="cell"><h4>Mock render</h4>
+        <div class="stage"><div class="row" style="gap:28px">
+          <div class="tsv danger"><span class="num2">42</span><span class="unit">/100</span></div>
+          <div class="tsv warning"><span class="num2">3</span><span class="unit">ngày</span></div>
+          <div class="tsv success"><span class="num2">96</span><span class="unit">%</span></div>
+        </div></div>
+      </div>
+      <div class="cell"><h4>API + drift</h4>
+        <div class="code"><pre><span class="tok-attr">interface</span> ToneStatValueProps {
+  value: ReactNode
+  band: <span class="tok-str">"danger"</span> | <span class="tok-str">"warning"</span> | <span class="tok-str">"success"</span>
+  unit?: ReactNode
+  size?: <span class="tok-str">"lg"</span> | <span class="tok-str">"md"</span>
+}</pre></div>
+        <div class="rationale" style="padding:12px 0 0">VerdictHeroCard tự ghi comment <i>"Same tone pairing the Score block uses"</i> — map band-color copy verbatim 3 file.</div>
+      </div>
+    </div>
+    <div class="occ"><h4>Call-site (4)</h4><ul>
+      <li><b>stats/Score</b> 20-24 + 84-95 · toneTextClass map</li>
+      <li><b>stats/VerdictHeroCard</b> 70-141 · BAND_TEXT map (2 nơi)</li>
+      <li><b>stats/DeadlineCallout</b> 58-60 · count h3 warning</li>
+    </ul></div>
+  </section>
+
+  <!-- ============ #5 VideoControlButton ============ -->
+  <section class="cand">
+    <div class="chead">
+      <span class="num">#5</span><span class="pname">VideoControlButton</span>
+      <span class="badge b-prim">primitive</span><span class="badge b-rec">×4</span>
+    </div>
+    <p class="concept"><b>Nút icon overlay video</b> (trắng, hover translucent, ô 8×8/icon-5). classString lặp verbatim 3× + <b>QualitySelector phải hand-roll <code>&lt;div&gt;</code></b> vì Button port thiếu tone overlay.</p>
+    <div class="grid">
+      <div class="cell"><h4>Mock render</h4>
+        <div class="stage">
+          <div class="vbar">
+            <span class="vbtn"><svg viewBox="0 0 256 256" fill="currentColor"><path d="M232 128a15.76 15.76 0 0 1-7.83 13.62l-144 83.65A15.83 15.83 0 0 1 56 211.65V44.35a15.83 15.83 0 0 1 24.17-13.62l144 83.65A15.76 15.76 0 0 1 232 128Z"/></svg></span>
+            <span class="vtime">1:24 / 4:00</span>
+            <span class="spacer"></span>
+            <span class="vbtn"><svg viewBox="0 0 256 256" fill="currentColor"><path d="M155.51 24.81a8 8 0 0 0-8.42.88L77.25 80H32a16 16 0 0 0-16 16v64a16 16 0 0 0 16 16h45.25l69.84 54.31A8 8 0 0 0 160 224V32a8 8 0 0 0-4.49-7.19Z"/></svg></span>
+            <span class="vbtn"><svg viewBox="0 0 256 256" fill="currentColor"><path d="M215.4 96.53 152.66 40.7A16 16 0 0 0 128 54.06v13.57L48.66 40.7A16 16 0 0 0 24 54.06v147.88A16 16 0 0 0 48.66 215.3L128 188.37v13.57a16 16 0 0 0 24.66 13.36l62.74-55.83a16 16 0 0 0 0-22.94Z"/></svg></span>
+            <span class="vbtn"><svg viewBox="0 0 256 256" fill="currentColor"><path d="M208 32h-40a8 8 0 0 0 0 16h24v24a8 8 0 0 0 16 0V40a8 8 0 0 0-8-8ZM80 208H56v-24a8 8 0 0 0-16 0v32a8 8 0 0 0 8 8h32a8 8 0 0 0 0-16Z"/></svg></span>
+          </div>
+        </div>
+      </div>
+      <div class="cell"><h4>API</h4>
+        <div class="code"><pre><span class="tok-attr">interface</span> VideoControlButtonProps {
+  icon: ReactNode
+  <span class="tok-str">"aria-label"</span>: string
+  onPress?: () => void
+}
+<span class="tok-mut">// tone overlay cố-định-trắng, isIconOnly,</span>
+<span class="tok-mut">// 8×8 / icon-5 — bỏ div ngoại lệ QualitySelector</span></pre></div>
+      </div>
+    </div>
+    <div class="occ"><h4>Call-site (4)</h4><ul><li><b>media/VideoRenderer</b> · FullscreenButton · PlayPauseButton · VolumeControl · <span style="color:var(--danger)">QualitySelector (hand-roll div)</span></li></ul></div>
+  </section>
+
+  <!-- ============ #6 EntityResultRow isSkeleton ============ -->
+  <section class="cand">
+    <div class="chead">
+      <span class="num">#6</span><span class="pname">EntityResultRow · isSkeleton</span>
+      <span class="badge b-prim">§6b</span><span class="badge b-rec">×2</span>
+    </div>
+    <p class="concept"><b>Skeleton mirror 3-thanh</b> (kind/breadcrumb + title + snippet) bị hand-roll rời ở mỗi consumer thay vì sống cạnh EntityResultRow. Không tạo primitive mới — thêm <code>isSkeleton</code> vào EntityResultRow sẵn có.</p>
+    <div class="grid">
+      <div class="cell"><h4>Mock render (isSkeleton)</h4>
+        <div class="stage"><div class="stack" style="gap:8px;max-width:300px">
+          <div class="sk chip"></div>
+          <div class="sk line" style="width:75%"></div>
+          <div class="sk line" style="width:100%"></div>
+        </div></div>
+      </div>
+      <div class="cell"><h4>Fix</h4>
+        <div class="ba">
+          <div class="before"><div class="lab">TRƯỚC · 2 consumer tự dựng mirror</div>
+            <div class="code"><pre><span class="tok-tag">&lt;<span class="tok-cmp">SurfaceListCardItem</span>&gt;</span><span class="tok-tag">&lt;div</span> <span class="tok-attr">className</span>=<span class="tok-str">"flex flex-col gap-2"</span><span class="tok-tag">&gt;</span>
+  <span class="tok-tag">&lt;<span class="tok-cmp">Skeleton.Typography</span></span> <span class="tok-attr">width</span>=<span class="tok-str">"1/3"</span><span class="tok-tag">/&gt;</span> ...×3
+<span class="tok-tag">&lt;/div&gt;&lt;/&gt;</span></pre></div></div>
+          <div class="after"><div class="lab">SAU</div>
+            <div class="code"><pre><span class="tok-tag">&lt;<span class="tok-cmp">EntityResultRow</span></span> <span class="tok-attr">isSkeleton</span> <span class="tok-attr">showKindChip</span> <span class="tok-tag">/&gt;</span></pre></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="occ"><h4>Call-site (2)</h4><ul>
+      <li><b>learn/ChatToolResult</b> L86-108 · mirror 3-thanh (showKindChip)</li>
+      <li><b>learn/RelatedContentList</b> L119-125 · cùng mirror</li>
+    </ul></div>
+    <p class="rationale">Thêm dòng vào EntityResultRow phải nhớ sửa 2 skeleton — bẫy "đổi 1 = đổi hết". §6b: skeleton = sibling/isSkeleton, không rải.</p>
+  </section>
+
+  <!-- ============ MEDIUM ============ -->
+  <h2 class="tier">Medium — recurrence 2, chờ thầy chốt tầng trừu-tượng</h2>
+  <div class="med"><div class="mh"><span class="mn">MediaCell</span><span class="badge b-rec">×4</span></div>
+    <div class="md">Leading media (avatar/icon-tile) + title + meta — <b>sibling non-person của UserCell</b>.</div>
+    <div class="note">feed (avatar+name+founder+time) + marketing (icon-tile+title+meta); UserCell bị bó cứng person-semantics. Compose TitledText #1.</div></div>
+  <div class="med"><div class="mh"><span class="mn">OptionRow</span><span class="badge b-rec">×2</span></div>
+    <div class="md">Option 2 dòng trong dropdown (label + desc muted).</div>
+    <div class="note">SearchAutocomplete + MultiSelect · <b>compose TitledText #1</b> + wiring ListBoxItem → gom #1 trước thì nhẹ.</div></div>
+  <div class="med"><div class="mh"><span class="mn">MetaCountButton</span><span class="badge b-rec">×2</span></div>
+    <div class="md">Pill count nén interactive (icon + số, hover muted).</div>
+    <div class="note">CommunityPostCard + ReactionBar · <b>in-source NOTE tự nhận trùng</b>; né Button vì sm quá nặng.</div></div>
+  <div class="med"><div class="mh"><span class="mn">ListboxStatus</span><span class="badge b-rec">×2</span></div>
+    <div class="md">Trạng thái popover rỗng/loading (text muted center + spinner). <span style="color:var(--faint)">Đối chiếu EmptyState trước.</span></div></div>
+  <div class="med"><div class="mh"><span class="mn">InputLeadingIcon</span><span class="badge b-rec">×2</span></div>
+    <div class="md">Input có leading icon absolute + pl-9. TextField + SearchAutocomplete.</div></div>
+  <div class="med"><div class="mh"><span class="mn">MediaPlaceholderFrame</span><span class="badge b-rec">×2</span></div>
+    <div class="md">Khung dashed center + text muted (media empty/invalid). <span style="color:var(--faint)">Đối chiếu EmptyState/CoverImage trước.</span></div></div>
+
+  <!-- ============ REJECTED ============ -->
+  <h2 class="tier">Rejected — loại (đã có primitive / one-off / gộp lên strong)</h2>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:6px 18px">
+    <div class="rej"><span class="rn">SectionHeading</span><span>ĐÃ là primitive — reuse-gap ở HeroBanner (thêm prop level+eyebrow rồi compose).</span></div>
+    <div class="rej"><span class="rn">DistributionLegendRow</span><span>one-off (chỉ LanguageDonut) + đã có Legend — mở rộng Legend thêm cột value/share.</span></div>
+    <div class="rej"><span class="rn">StatText</span><span>gộp vào <b>TitledText #1</b> (biến thể size lớn nhất); standalone one-off.</span></div>
+    <div class="rej"><span class="rn">NoticeLine</span><span>biến thể <code>tone</code> của <b>InlineIconLabel #2</b>; standalone recurrence 1 (PhaseScarcityNote).</span></div>
+    <div class="rej"><span class="rn">StackedTextLabel</span><span>wordmark BrandLockup one-off (small-caps riêng) — để atom.</span></div>
+  </div>
+
+</div>
+</body>
+</html>

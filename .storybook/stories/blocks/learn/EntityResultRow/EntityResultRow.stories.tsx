@@ -91,33 +91,39 @@ const LOCKED_ITEM: SearchCourseContentItem = {
 }
 
 // leaf WITH kind chip: EnumChip thay breadcrumb, đứng trên tiêu đề. Không snippet, không khoá.
+// Tiêu đề là Typography EntityResultRow TỰ render (hiện prop `item.title` trực tiếp) → vẫn
+// được badge (2026-07-23 granularity ruling: primitive block/design trực tiếp render luôn có
+// node, kể cả khi chỉ hiện prop) — cùng tên "Typography" với breadcrumb/snippet ở các leaf khác.
 const KIND_CHIP_PARTS: Array<AnatomyNode> = [
     { name: "EnumChip", tier: "primitive", role: "nhãn loại kết quả (kind → StatusChip màu soft): Bài học/Thử thách/Flashcard/Dự án — chỉ khi showKindChip" },
-    { name: "Typography", tier: "primitive", role: "tiêu đề foreground hover-underline (nav link)" },
+    { name: "Typography", tier: "primitive", role: "tiêu đề kết quả (item.title, hover-underline)" },
 ]
 
-// leaf breadcrumb (no chip): breadcrumb muted + tiêu đề = HAI Typography riêng, xếp dọc.
+// leaf breadcrumb (no chip): breadcrumb + tiêu đề đều là Typography EntityResultRow tự render
+// (item.breadcrumb / item.title) → mỗi occurrence là 1 node "Typography".
 const BREADCRUMB_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "breadcrumb muted (khi không có chip) đứng trên tiêu đề" },
-    { name: "Typography", tier: "primitive", role: "tiêu đề foreground hover-underline (nav link)" },
+    { name: "Typography", tier: "primitive", role: "breadcrumb (item.breadcrumb, muted) — khi không showKindChip" },
+    { name: "Typography", tier: "primitive", role: "tiêu đề kết quả (item.title, hover-underline)" },
 ]
 
-// leaf chỉ tiêu đề: không chip, breadcrumb null, snippet rỗng → đúng một Typography.
+// leaf chỉ tiêu đề: không chip, breadcrumb null, snippet rỗng → chỉ còn Typography tiêu đề.
 const TITLE_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "chỉ tiêu đề foreground hover-underline (không chip, không breadcrumb, không snippet)" },
+    { name: "Typography", tier: "primitive", role: "tiêu đề kết quả (item.title, hover-underline)" },
 ]
 
-// leaf có snippet: breadcrumb · tiêu đề · snippet = BA Typography riêng, xếp dọc.
+// leaf có snippet: breadcrumb · tiêu đề · snippet đều là Typography (khác composition với leaf
+// có EnumChip/khoá — cả 3 dòng cùng lúc).
 const SNIPPET_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "breadcrumb muted đứng trên tiêu đề" },
-    { name: "Typography", tier: "primitive", role: "tiêu đề foreground hover-underline (nav link)" },
-    { name: "Typography", tier: "primitive", role: "snippet muted một dòng dưới tiêu đề", state: "showSnippet" },
+    { name: "Typography", tier: "primitive", role: "breadcrumb (item.breadcrumb, muted)" },
+    { name: "Typography", tier: "primitive", role: "tiêu đề kết quả (item.title, hover-underline)" },
+    { name: "Typography", tier: "primitive", role: "snippet (item.snippet, muted) — showSnippet" },
 ]
 
-// leaf khoá: breadcrumb · tiêu đề, rồi cụm lock <span> bọc icon + nhãn "Ghi danh để mở".
+// leaf khoá: breadcrumb · tiêu đề vẫn là Typography (badge như các leaf khác); cụm lock <span> là
+// vai cấu trúc riêng biệt CỐ ĐỊNH (icon + nhãn "Ghi danh để mở" không đổi theo prop nào) → GIỮ nguyên span + con.
 const LOCKED_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "breadcrumb muted đứng trên tiêu đề" },
-    { name: "Typography", tier: "primitive", role: "tiêu đề foreground hover-underline (nav link)" },
+    { name: "Typography", tier: "primitive", role: "breadcrumb (item.breadcrumb, muted)" },
+    { name: "Typography", tier: "primitive", role: "tiêu đề kết quả (item.title, hover-underline)" },
     {
         name: "span",
         tier: "primitive",
@@ -125,7 +131,7 @@ const LOCKED_PARTS: Array<AnatomyNode> = [
         state: "isLocked",
         children: [
             { name: "LockSimpleIcon", tier: "primitive", role: "icon khoá dẫn nhãn" },
-            { name: "Typography", tier: "primitive", role: '"Ghi danh để mở"' },
+            { name: "Typography", tier: "primitive", role: "\"Ghi danh để mở\"" },
         ],
     },
 ]

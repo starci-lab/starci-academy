@@ -121,6 +121,7 @@ export const Composer = ({
                     onKeyDown={handleKeyDown}
                     placeholder={placeholder}
                     className="max-h-40 resize-none"
+                    data-anat-part={showAnatomy ? "TextField · TextArea" : undefined}
                 />
             </TextField>
 
@@ -139,11 +140,16 @@ export const Composer = ({
                     variant="primary"
                     onPress={onSubmit}
                     isDisabled={!canSubmit}
+                    anatPart={showAnatomy ? "Button" : undefined}
                 >
                     {isSubmitting ? (
                         <Spinner size="sm" color="current" />
                     ) : (
-                        <PaperPlaneRightIcon aria-hidden focusable="false" className="size-4" />
+                        <PaperPlaneRightIcon
+                            aria-hidden
+                            focusable="false"
+                            className="size-4"
+                        />
                     )}
                     {submitLabel}
                 </Button>

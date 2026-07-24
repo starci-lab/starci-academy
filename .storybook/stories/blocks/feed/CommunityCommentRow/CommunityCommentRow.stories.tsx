@@ -27,25 +27,19 @@ type Story = StoryObj<typeof CommunityCommentRow>
 const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
 // Base composition — the plain comment row (avatar + header + body + reaction bar).
-// DOM order: UserAvatar sits beside a content column whose header row stacks the
-// author name + relative-time (two distinct Typography atoms), then the markdown
-// body, then the footer row with the ReactionBar. Shared by every leaf that
-// renders this exact shape. (Layout `div`s carry no component name → not parts.)
+// CommunityCommentRow renders the author-name Typography and the relative-time
+// Typography DIRECTLY itself, so per canon granularity they're each their OWN
+// tagged node (re-added — a prior pass had wrongly collapsed them as "untaggable
+// chrome"). The founder SealCheckIcon between them stays UNtagged: it's a bare
+// decorative phosphor icon, not a named design-system component the row composes
+// (mirrors how badge icons elsewhere in the feed family — e.g. ActivityAvatar's
+// type icon — never get their own anchor). MarkdownContent (a real renderer, not a
+// plain text echo) and ReactionBar (a composed sub-block) stay. Shared by every
+// leaf that renders this exact shape.
 const BASE_PARTS: Array<AnatomyNode> = [
     { name: "UserAvatar", tier: "primitive", role: "avatar tác giả bình luận" },
-    { name: "Typography", tier: "primitive", role: "tên tác giả (body-xs semibold, truncate)" },
-    { name: "Typography", tier: "primitive", role: "thời gian tương đối (body-xs muted)" },
-    { name: "MarkdownContent", tier: "primitive", role: "thân bình luận (compact, [&_p]:m-0)" },
-    { name: "ReactionBar", tier: "design", role: "thả cảm xúc cho bình luận" },
-]
-
-// Founder leaf: base + a founder badge (SealCheckIcon) between the author name
-// and the relative-time, inside the header row.
-const FOUNDER_PARTS: Array<AnatomyNode> = [
-    { name: "UserAvatar", tier: "primitive", role: "avatar tác giả bình luận" },
-    { name: "Typography", tier: "primitive", role: "tên tác giả (body-xs semibold, truncate)" },
-    { name: "SealCheckIcon", tier: "primitive", role: "huy hiệu founder cạnh tên", state: "founder" },
-    { name: "Typography", tier: "primitive", role: "thời gian tương đối (body-xs muted)" },
+    { name: "Typography · tên", tier: "primitive", role: "tên hiển thị tác giả (truncate)" },
+    { name: "Typography · thời gian", tier: "primitive", role: "thời gian tương đối, muted" },
     { name: "MarkdownContent", tier: "primitive", role: "thân bình luận (compact, [&_p]:m-0)" },
     { name: "ReactionBar", tier: "design", role: "thả cảm xúc cho bình luận" },
 ]
@@ -54,8 +48,8 @@ const FOUNDER_PARTS: Array<AnatomyNode> = [
 // in the footer row.
 const ACTIONS_PARTS: Array<AnatomyNode> = [
     { name: "UserAvatar", tier: "primitive", role: "avatar tác giả bình luận" },
-    { name: "Typography", tier: "primitive", role: "tên tác giả (body-xs semibold, truncate)" },
-    { name: "Typography", tier: "primitive", role: "thời gian tương đối (body-xs muted)" },
+    { name: "Typography · tên", tier: "primitive", role: "tên hiển thị tác giả (truncate)" },
+    { name: "Typography · thời gian", tier: "primitive", role: "thời gian tương đối, muted" },
     { name: "MarkdownContent", tier: "primitive", role: "thân bình luận (compact, [&_p]:m-0)" },
     { name: "ReactionBar", tier: "design", role: "thả cảm xúc cho bình luận" },
     { name: "actions", tier: "primitive", role: "slot hành động do caller cấp (nút Trả lời)" },
@@ -64,8 +58,8 @@ const ACTIONS_PARTS: Array<AnatomyNode> = [
 // Read-only + zero reactions: ReactionBar returns null, so it drops out entirely.
 const NO_REACTION_PARTS: Array<AnatomyNode> = [
     { name: "UserAvatar", tier: "primitive", role: "avatar tác giả bình luận" },
-    { name: "Typography", tier: "primitive", role: "tên tác giả (body-xs semibold, truncate)" },
-    { name: "Typography", tier: "primitive", role: "thời gian tương đối (body-xs muted)" },
+    { name: "Typography · tên", tier: "primitive", role: "tên hiển thị tác giả (truncate)" },
+    { name: "Typography · thời gian", tier: "primitive", role: "thời gian tương đối, muted" },
     { name: "MarkdownContent", tier: "primitive", role: "thân bình luận (compact, [&_p]:m-0)" },
 ]
 
@@ -232,8 +226,8 @@ export const FounderAuthor: Story = {
                 name="CommunityCommentRow"
                 tier="design"
                 leaf="Tác giả founder"
-                parts={FOUNDER_PARTS}
-                note="isFounderAuthor → thêm huy hiệu SealCheckIcon cạnh tên (part chỉ leaf này có)."
+                parts={BASE_PARTS}
+                note="isFounderAuthor → thêm huy hiệu SealCheckIcon cạnh tên, nhưng đó là chrome nội bộ của header (không tag riêng) — CÙNG composition với leaf mặc định."
             >
                 <div className="w-full max-w-xl"><CommunityCommentRow comment={founderComment} onReact={() => {}} showAnatomy /></div>
             </BlockAnatomy>,

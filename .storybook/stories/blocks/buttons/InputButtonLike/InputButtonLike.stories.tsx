@@ -96,7 +96,7 @@ export const IsSkeleton: Story = {
 /** Ba nấc chiều cao — block tự co icon-size theo `size` (sm/md/lg), story không chỉnh icon. */
 export const Sizes: Story = {
     render: () => (
-        <div className="flex flex-col gap-4 p-8">
+        <div className="flex flex-col gap-3 p-8">
             <InputButtonLike
                 size="sm"
                 icon={<MagnifyingGlassIcon />}

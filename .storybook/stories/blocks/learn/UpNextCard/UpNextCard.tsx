@@ -81,49 +81,35 @@ export const UpNextCard = ({
             contentClassName="flex flex-col gap-3"
             anatPart={showAnatomy ? "SectionCard" : undefined}
         >
-            {/* completion micro-feedback + "next" eyebrow */}
+            {/* completion micro-feedback + "next" eyebrow — CheckCircleIcon is a bare
+                decorative glyph (internal showCheck state, not a compose-worthy
+                component) and stays untagged; the eyebrow Typography IS a component
+                UpNextCard renders directly, so it gets its own anatomy tag. */}
             {eyebrow || showCheck ? (
-                <div
-                    className="flex items-center gap-2"
-                    data-anat-part={showAnatomy ? "div · hàng check+eyebrow" : undefined}
-                >
+                <div className="flex items-center gap-2">
                     {showCheck ? (
                         <CheckCircleIcon
                             aria-hidden
                             focusable="false"
                             className="size-5 shrink-0 text-success-soft-foreground"
-                            data-anat-part={showAnatomy ? "CheckCircleIcon" : undefined}
                         />
                     ) : null}
                     {eyebrow ? (
-                        <Typography
-                            type="body-xs"
-                            color="muted"
-                            data-anat-part={showAnatomy ? "Typography · eyebrow" : undefined}
-                        >
+                        <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography" : undefined}>
                             {eyebrow}
                         </Typography>
                     ) : null}
                 </div>
             ) : null}
 
-            {/* the next rung */}
-            <div
-                className="flex flex-col gap-2"
-                data-anat-part={showAnatomy ? "div · bước kế" : undefined}
-            >
-                <Typography
-                    weight="semibold"
-                    data-anat-part={showAnatomy ? "Typography · tiêu đề" : undefined}
-                >
+            {/* the next rung — title/description are Typography UpNextCard renders
+                directly, so each gets its own anatomy tag. */}
+            <div className="flex flex-col gap-2">
+                <Typography weight="semibold" data-anat-part={showAnatomy ? "Typography" : undefined}>
                     {title}
                 </Typography>
                 {description ? (
-                    <Typography
-                        type="body-sm"
-                        color="muted"
-                        data-anat-part={showAnatomy ? "Typography · mô tả" : undefined}
-                    >
+                    <Typography type="body-sm" color="muted" data-anat-part={showAnatomy ? "Typography" : undefined}>
                         {description}
                     </Typography>
                 ) : null}
@@ -139,11 +125,16 @@ export const UpNextCard = ({
                     size="lg"
                     onPress={onPress}
                     icon={<ArrowRightIcon aria-hidden focusable="false" />}
+                    anatPart={showAnatomy ? "Button · chính" : undefined}
                 >
                     {ctaLabel}
                 </Button>
                 {secondaryLabel && secondaryOnPress ? (
-                    <Button variant="tertiary" onPress={secondaryOnPress}>
+                    <Button
+                        variant="tertiary"
+                        onPress={secondaryOnPress}
+                        anatPart={showAnatomy ? "Button · phụ" : undefined}
+                    >
                         {secondaryLabel}
                     </Button>
                 ) : null}

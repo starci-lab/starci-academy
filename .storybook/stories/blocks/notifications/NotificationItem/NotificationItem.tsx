@@ -85,6 +85,11 @@ export interface NotificationItemProps extends WithClassNames<undefined> {
      * attribute so the anatomy overlay can anchor badges. No visual effect.
      */
     showAnatomy?: boolean
+    /**
+     * Anatomy tag for the row's own root (set by a parent block composing this
+     * as a sub-node, e.g. `NotificationList` passing `"NotificationItem"`).
+     */
+    anatPart?: string
 }
 
 /**
@@ -123,6 +128,7 @@ export const NotificationItem = ({
     onPress,
     actionSlot,
     showAnatomy = false,
+    anatPart,
     className,
 }: NotificationItemProps) => {
     const isPressable = Boolean(onPress)
@@ -152,7 +158,7 @@ export const NotificationItem = ({
                         type="body-sm"
                         weight="medium"
                         className="line-clamp-2"
-                        data-anat-part={showAnatomy ? "Typography · tiêu đề" : undefined}
+                        data-anat-part={showAnatomy ? "Typography · title" : undefined}
                     >
                         {title}
                     </Typography>
@@ -162,7 +168,7 @@ export const NotificationItem = ({
                         type="body-xs"
                         color="muted"
                         className="line-clamp-2"
-                        data-anat-part={showAnatomy ? "Typography · nội dung" : undefined}
+                        data-anat-part={showAnatomy ? "Typography · body" : undefined}
                     >
                         {body}
                     </Typography>
@@ -170,17 +176,14 @@ export const NotificationItem = ({
                 <Typography
                     type="body-xs"
                     color="muted"
-                    data-anat-part={showAnatomy ? "Typography · thời gian" : undefined}
+                    data-anat-part={showAnatomy ? "Typography · time" : undefined}
                 >
                     {timeLabel}
                 </Typography>
             </div>
 
             {actionSlot ? (
-                <div
-                    className="shrink-0"
-                    data-anat-part={showAnatomy ? "Typography · hành động" : undefined}
-                >
+                <div className="shrink-0">
                     {actionSlot}
                 </div>
             ) : null}
@@ -209,11 +212,16 @@ export const NotificationItem = ({
                     }
                 }}
                 className={cn(baseClassName, "cursor-pointer")}
+                data-anat-part={anatPart}
             >
                 {content}
             </div>
         )
     }
 
-    return <div className={baseClassName}>{content}</div>
+    return (
+        <div className={baseClassName} data-anat-part={anatPart}>
+            {content}
+        </div>
+    )
 }

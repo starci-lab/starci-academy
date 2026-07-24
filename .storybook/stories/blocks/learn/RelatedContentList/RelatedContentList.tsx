@@ -36,6 +36,7 @@ const LabeledCardFrameless = ({
     <section data-anat-part={showAnatomy ? "LabeledCard" : undefined} className={cn("flex flex-col gap-3", className)}>
         <div className="flex items-center justify-between gap-3">
             <div className="flex min-w-0 items-center gap-2">
+                {/* literal display of the `label` prop — folded into LabeledCard's own node */}
                 <Label>{label}</Label>
             </div>
         </div>
@@ -113,33 +114,29 @@ export const RelatedContentList = ({
                 isLoading={isLoading}
                 showAnatomy={showAnatomy}
                 skeleton={
-                    <div data-anat-part={showAnatomy ? "SurfaceListCard" : undefined}>
-                        <SurfaceListCard bordered>
-                            {Array.from({ length: Math.min(limit, 2) }).map((_, index) => (
-                                <SurfaceListCardItem key={index}>
-                                    <div data-anat-part={showAnatomy ? "Skeleton" : undefined} className="flex flex-col gap-2">
-                                        <Skeleton.Typography type="body-xs" width="1/3" />
-                                        <Skeleton.Typography type="body-sm" width="3/4" />
-                                        <Skeleton.Typography type="body-xs" width="full" />
-                                    </div>
-                                </SurfaceListCardItem>
-                            ))}
-                        </SurfaceListCard>
-                    </div>
-                }
-            >
-                <div data-anat-part={showAnatomy ? "SurfaceListCard" : undefined}>
-                    <SurfaceListCard bordered>
-                        {filtered.map((item, index) => (
-                            <EntityResultRow
-                                key={`${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`}
-                                item={item}
-                                anatPart={showAnatomy ? "EntityResultRow" : undefined}
-                                onSelect={(picked) => onSelect?.(picked)}
-                            />
+                    <SurfaceListCard bordered anatPart={showAnatomy ? "SurfaceListCard" : undefined}>
+                        {Array.from({ length: Math.min(limit, 2) }).map((_, index) => (
+                            <SurfaceListCardItem key={index} anatPart={showAnatomy ? "SurfaceListCardItem" : undefined}>
+                                <div data-anat-part={showAnatomy ? "Skeleton" : undefined} className="flex flex-col gap-2">
+                                    <Skeleton.Typography type="body-xs" width="1/3" />
+                                    <Skeleton.Typography type="body-sm" width="3/4" />
+                                    <Skeleton.Typography type="body-xs" width="full" />
+                                </div>
+                            </SurfaceListCardItem>
                         ))}
                     </SurfaceListCard>
-                </div>
+                }
+            >
+                <SurfaceListCard bordered anatPart={showAnatomy ? "SurfaceListCard" : undefined}>
+                    {filtered.map((item, index) => (
+                        <EntityResultRow
+                            key={`${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`}
+                            item={item}
+                            anatPart={showAnatomy ? "EntityResultRow" : undefined}
+                            onSelect={(picked) => onSelect?.(picked)}
+                        />
+                    ))}
+                </SurfaceListCard>
             </AsyncContent>
         </LabeledCardFrameless>
     )

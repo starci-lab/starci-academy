@@ -66,10 +66,12 @@ export interface NotificationBellProps extends WithClassNames<undefined> {
     /**
      * Dev-only: when set, each part this block owns emits a `data-anat-part`
      * attribute so the Storybook anatomy overlay can anchor a numbered badge to
-     * it. Off in production. Parts living in child blocks (`NotificationList`) or
-     * the shared `Button` are tagged in their own files, not here. The `Popover`
-     * root is a context provider (react-aria `DialogTrigger`) that renders no DOM
-     * node, so it cannot carry the attribute either.
+     * it. Off in production. Forwarded to the `Button` trigger (`anatPart`) and
+     * cascaded into `NotificationList` (`showAnatomy` + `anatPart`), which in
+     * turn cascades into its own children. The `Popover` root is a context
+     * provider (react-aria `DialogTrigger`) that renders no DOM node, so it
+     * cannot carry the attribute — it is not represented as a node in this
+     * leaf's anatomy tree either.
      */
     showAnatomy?: boolean
 }
@@ -109,6 +111,7 @@ export const NotificationBell = ({
                 variant="tertiary"
                 className={cn("rounded-full", className)}
                 ariaLabel={ariaLabel}
+                anatPart={showAnatomy ? "Button · iconOnly" : undefined}
                 icon={
                     unreadCount > 0 ? (
                         <Badge.Anchor data-anat-part={showAnatomy ? "Badge.Anchor" : undefined}>
@@ -142,6 +145,8 @@ export const NotificationBell = ({
                     groups={groups}
                     onMarkAllRead={onMarkAllRead}
                     emptyState={emptyState}
+                    showAnatomy={showAnatomy}
+                    anatPart={showAnatomy ? "NotificationList" : undefined}
                 />
             </PopoverContent>
         </Popover>

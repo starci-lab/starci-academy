@@ -55,6 +55,8 @@ export interface ButtonProps {
     isDisabled?: boolean
     onPress?: () => void
     className?: string
+    /** Anatomy marker (BlockAnatomy): set → emit `data-anat-part` trên root HeroUI button. */
+    anatPart?: string
 }
 
 /**
@@ -74,6 +76,7 @@ export const Button = ({
     isDisabled = false,
     onPress,
     className,
+    anatPart,
 }: ButtonProps) => {
     if (isSkeleton) {
         return iconOnly ? (
@@ -94,6 +97,7 @@ export const Button = ({
                 isPending={isPending}
                 isDisabled={isDisabled || isPending}
                 className={cn(ICON_CLS[size], className)}
+                data-anat-part={anatPart}
             >
                 {isPending ? <Spinner size="sm" color="current" /> : icon}
             </HeroUIButton>
@@ -107,6 +111,7 @@ export const Button = ({
             isPending={isPending}
             isDisabled={isDisabled || isPending}
             className={cn("group", className)}
+            data-anat-part={anatPart}
         >
             {isPending ? <Spinner size="sm" color="current" /> : null}
             {children}

@@ -35,15 +35,15 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 // gated by `nextPhasePriceVnd != null`, wrapped in a transparent fragment → NO real nesting).
 const FULL_PARTS: Array<AnatomyNode> = [
     { name: "WarningCircleIcon", tier: "primitive", role: "icon cảnh báo khan hiếm suất", state: "warning" },
-    { name: "Dòng số suất", tier: "primitive", role: 'span "Còn N suất giá {phase}"' },
-    { name: "Dấu ngăn cách", tier: "primitive", role: 'span "·" ngăn cách (aria-hidden, trang trí) — chỉ hiện khi có giá kế tiếp' },
-    { name: "Mệnh đề tăng giá", tier: "primitive", role: 'span "giá tăng lên {X}₫ sau đó" — chỉ hiện khi có giá kế tiếp' },
+    { name: "Dòng số suất", tier: "primitive", role: "span \"Còn N suất giá {phase}\"" },
+    { name: "Dấu ngăn cách", tier: "primitive", role: "span \"·\" ngăn cách (aria-hidden, trang trí) — chỉ hiện khi có giá kế tiếp" },
+    { name: "Mệnh đề tăng giá", tier: "primitive", role: "span \"giá tăng lên {X}₫ sau đó\" — chỉ hiện khi có giá kế tiếp" },
 ]
 
 // SEATS-ONLY shape: nextPhasePriceVnd null → the price-rise clause is ABSENT.
 const SEATS_ONLY_PARTS: Array<AnatomyNode> = [
     { name: "WarningCircleIcon", tier: "primitive", role: "icon cảnh báo khan hiếm suất", state: "warning" },
-    { name: "Dòng số suất", tier: "primitive", role: 'câu "Còn N suất giá {phase}"' },
+    { name: "Dòng số suất", tier: "primitive", role: "câu \"Còn N suất giá {phase}\"" },
 ]
 
 // UNLIMITED shape: seatsRemaining null → no honest scarcity trigger → renders nothing.

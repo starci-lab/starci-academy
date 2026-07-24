@@ -60,7 +60,7 @@ export const StatRibbon = ({
                 top+bottom border = FULL-HEIGHT. Cells carry their own padding instead. The
                 divider is a per-cell `border-l` (Tailwind v4 here emits no `divide-*` rule).
                 Mobile keeps the padded 2-col grid (no dividers there). */}
-            <div className="grid grid-cols-2 gap-4 @app-sm:-m-3 @app-sm:flex @app-sm:items-stretch @app-sm:gap-0">
+            <div className="grid grid-cols-2 gap-3 @app-sm:-m-3 @app-sm:flex @app-sm:items-stretch @app-sm:gap-0">
                 {items.map((item, index) => (
                     <div
                         key={item.key}

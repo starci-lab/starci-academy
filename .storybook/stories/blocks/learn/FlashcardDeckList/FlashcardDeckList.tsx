@@ -83,16 +83,6 @@ export const FlashcardDeckList = ({
     const [query, setQuery] = useState(defaultQuery)
     const [view, setView] = useState<DeckView>("grid")
 
-    // Annotate a RAW (non-port) atom with an absolute overlay when showAnatomy —
-    // wrapper is relative-only (no padding/border) so layout is unchanged.
-    const annotate = (label: string, href: string, node: React.ReactNode, wrapClass = "relative inline-flex") =>
-        showAnatomy ? (
-            <span className={wrapClass} data-anat>
-                {node}
-                <AnatomyOverlay label={label} tier="primitive" href={href} />
-            </span>
-        ) : node
-
     // case-insensitive filter over title + description
     const filteredDecks = useMemo(() => {
         const q = query.trim().toLowerCase()
@@ -113,14 +103,21 @@ export const FlashcardDeckList = ({
                     difficulty="intermediate"
                     cardCount={0}
                     onOpen={() => {}}
+                    showAnatomy={showAnatomy}
                 />
             ))}
         </div>
     )
 
-    // The list body: search-empty message OR the grid/line of decks.
+    // The list body: search-empty message OR the grid/line of decks. The muted
+    // line is a Typography FlashcardDeckList renders directly (inside AsyncContent's
+    // content branch), so it still gets its own anatomy tag.
     const listBody = filteredDecks.length === 0 ? (
-        <Typography type="body-sm" color="muted">
+        <Typography
+            type="body-sm"
+            color="muted"
+            data-anat-part={showAnatomy ? "Typography" : undefined}
+        >
             {`Không tìm thấy bộ thẻ nào khớp "${query.trim()}".`}
         </Typography>
     ) : (
@@ -153,31 +150,35 @@ export const FlashcardDeckList = ({
             {showAnatomy ? <AnatomyOverlay label="FlashcardDeckList" tier="block" href="/?path=/docs/block-learn-flashcarddecklist--docs" /> : null}
             {/* SEARCH ROW — region chrome; ALWAYS visible, only the LIST swaps state. */}
             <div className="flex flex-wrap items-center justify-between gap-3">
-                {annotate(
-                    "TextField · Input",
-                    "/?path=/docs/primitives-form-textfield--docs",
-                    <TextField className="w-full @app-sm:max-w-sm">
-                        <Input
-                            type="search"
-                            aria-label="Tìm bộ flashcard"
-                            placeholder="Tìm bộ flashcard..."
-                            value={query}
-                            onChange={(event) => setQuery(event.target.value)}
-                        />
-                    </TextField>,
-                    "relative block w-full @app-sm:max-w-sm",
-                )}
+                <TextField
+                    className="w-full @app-sm:max-w-sm"
+                    data-anat-part={showAnatomy ? "TextField · Input" : undefined}
+                >
+                    <Input
+                        type="search"
+                        aria-label="Tìm bộ flashcard"
+                        placeholder="Tìm bộ flashcard..."
+                        value={query}
+                        onChange={(event) => setQuery(event.target.value)}
+                    />
+                </TextField>
                 <div className="flex shrink-0 items-center gap-3">
-                    {annotate(
-                        "Typography",
-                        "/?path=/docs/primitives-typography-typography--docs",
-                        isLoading && decks.length === 0 ? (
-                            <Skeleton.Typography type="body-sm" width="w-24" />
-                        ) : (
-                            <Typography type="body-sm" color="muted">
-                                {`Tìm thấy ${filteredDecks.length} bộ thẻ`}
-                            </Typography>
-                        ),
+                    {isLoading && decks.length === 0 ? (
+                        <Skeleton.Typography
+                            type="body-sm"
+                            width="w-24"
+                            anatPart={showAnatomy ? "Typography" : undefined}
+                        />
+                    ) : (
+                        // Result-count Typography FlashcardDeckList renders directly —
+                        // tagged like the loading Skeleton.Typography it mirrors above.
+                        <Typography
+                            type="body-sm"
+                            color="muted"
+                            data-anat-part={showAnatomy ? "Typography" : undefined}
+                        >
+                            {`Tìm thấy ${filteredDecks.length} bộ thẻ`}
+                        </Typography>
                     )}
                     <TabsCard
                         variant="primary"
@@ -200,9 +201,9 @@ export const FlashcardDeckList = ({
                 isLoading={isLoading && decks.length === 0}
                 skeleton={skeletonGrid}
                 isEmpty={decks.length === 0}
-                emptyContent={{ title: "Chưa có bộ thẻ nào" }}
+                emptyContent={{ title: "Chưa có bộ thẻ nào", showAnatomy }}
                 error={decks.length === 0 ? error : undefined}
-                errorContent={{ title: "Không tải được bộ thẻ", onRetry }}
+                errorContent={{ title: "Không tải được bộ thẻ", onRetry, showAnatomy }}
                 showAnatomy={showAnatomy}
             >
                 {listBody}

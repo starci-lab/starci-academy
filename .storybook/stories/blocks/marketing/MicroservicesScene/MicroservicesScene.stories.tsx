@@ -9,8 +9,10 @@ import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockA
  *
  * ANATOMY IS PER-LEAF: each story below is its OWN leaf and carries its OWN
  * BlockAnatomy axis reflecting the parts THAT leaf composes — every leaf composes
- * the isometric `svg` scene (its iso primitives + connectors + labels), and the
- * captioned shapes add a `Typography` line under it. There is no separate
+ * the isometric `svg` scene (its iso primitives + connectors + labels). The
+ * optional caption renders via its own badged `Typography` node (the block
+ * directly composing it to show the `caption` prop still gets an anchor) — so a
+ * captioned leaf has one more part than the bare leaf. There is no separate
  * consolidated "Anatomy" story.
  */
 const meta: Meta<typeof MicroservicesScene> = {
@@ -58,14 +60,12 @@ const SCENE_PARTS: Array<AnatomyNode> = [
     },
 ]
 
-// Caption-less leaf: only the isometric scene, no caption line.
-const NO_CAPTION_PARTS: Array<AnatomyNode> = SCENE_PARTS
-
-// Captioned leaves (short + long-wrap share this): the scene + a muted caption line
-// underneath — a Typography sibling of the svg inside the block's root wrapper.
-const CAPTIONED_PARTS: Array<AnatomyNode> = [
+// leaf WITH caption: same isometric svg scene, PLUS a root-level Typography —
+// MicroservicesScene directly renders its own `caption` prop through it, so it's
+// its own badged node/anchor (not folded into the block).
+const CAPTION_PARTS: Array<AnatomyNode> = [
     ...SCENE_PARTS,
-    { name: "Typography", tier: "primitive", role: "caption bài học dưới minh hoạ", state: "body-sm · muted · center" },
+    { name: "Typography", tier: "primitive", role: "caption dưới scene — MicroservicesScene tự render prop `caption`" },
 ]
 
 /** NO CAPTION — the bare scene: only the isometric SVG, no caption. */
@@ -76,8 +76,8 @@ export const NoCaption: Story = {
                 name="MicroservicesScene"
                 tier="design"
                 leaf="Không caption"
-                parts={NO_CAPTION_PARTS}
-                note="Chỉ minh hoạ SVG isometric, KHÔNG có caption Typography — composition trần của scene."
+                parts={SCENE_PARTS}
+                note="Chỉ minh hoạ SVG isometric, KHÔNG có caption — composition trần của scene."
                 reason="Value-prop System Design/DevOps thành hình: một 'mini infra' isometric (pod cubes sau một service, một datastore single-node là điểm nghẽn) vẽ thuần SVG. Topology cố định trong block, chỉ `caption` là prop."
             >
                 <div className="max-w-xl">
@@ -95,8 +95,8 @@ export const ShortCaption: Story = {
                 name="MicroservicesScene"
                 tier="design"
                 leaf="Caption ngắn"
-                parts={CAPTIONED_PARTS}
-                note="Thêm caption Typography (body-sm · muted) dưới minh hoạ — composition khác leaf trần."
+                parts={CAPTION_PARTS}
+                note="Thêm caption dưới minh hoạ (Typography riêng, có anchor) — thêm 1 node so với leaf trần."
             >
                 <div className="max-w-xl">
                     <MicroservicesScene showAnatomy caption="Một node database duy nhất là điểm nghẽn của toàn hệ thống." />
@@ -113,7 +113,7 @@ export const LongCaptionWrap: Story = {
                 name="MicroservicesScene"
                 tier="design"
                 leaf="Caption dài (wrap)"
-                parts={CAPTIONED_PARTS}
+                parts={CAPTION_PARTS}
                 note="CÙNG composition với 'Caption ngắn' — chỉ khác độ dài caption + bề rộng khung nên chữ xuống dòng."
             >
                 <div className="max-w-[420px]">

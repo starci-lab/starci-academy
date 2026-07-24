@@ -43,9 +43,9 @@ export const PitchCard = ({ icon, tone = "accent", title, body, footer, classNam
             anatPart={showAnatomy ? "SectionCard" : undefined}
         >
             <IconTile icon={icon} tone={tone} size="md" anatPart={showAnatomy ? "IconTile" : undefined} />
-            <Typography type="h5" weight="semibold" data-anat-part={showAnatomy ? "Typography · h5" : undefined}>{title}</Typography>
-            <Typography type="body-sm" color="muted" className="flex-1" data-anat-part={showAnatomy ? "Typography · body-sm" : undefined}>{body}</Typography>
-            {footer ? <div data-anat-part={showAnatomy ? "div › footer" : undefined}>{footer}</div> : null}
+            <Typography type="h5" weight="semibold" data-anat-part={showAnatomy ? "Typography" : undefined}>{title}</Typography>
+            <Typography type="body-sm" color="muted" className="flex-1" data-anat-part={showAnatomy ? "Typography" : undefined}>{body}</Typography>
+            {footer ? <div>{footer}</div> : null}
         </SectionCard>
     )
 }

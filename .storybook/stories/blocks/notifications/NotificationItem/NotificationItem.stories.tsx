@@ -30,48 +30,54 @@ type Story = StoryObj<typeof NotificationItem>
 /** Frame each leaf's anatomy panel with breathing room. */
 const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
 
+// title/body/time are Typography elements this row renders DIRECTLY (not inside another
+// primitive's slot) → each is its OWN node (granularity: direct-render, badge it). IconTile
+// (component) and the unread Dot (a distinct structural indicator) are the other direct
+// parts. `actionSlot`'s CONTENT is caller-supplied (arbitrary ReactNode the row does not
+// own) so it stays out of the tree, same treatment as `TruthList`'s caller-supplied `byline`.
+
 // FULL — icon + title + body + time, already read (no unread dot, no action).
 // Shared by the default, read and long-text leaves (same composition).
 const FULL_PARTS: Array<AnatomyNode> = [
-    { name: "IconTile", tier: "primitive", role: "ô icon vuông tô màu theo tone (default/success/warning/accent)" },
-    { name: "Typography · tiêu đề", tier: "primitive", role: "dòng chính medium, clamp 2 dòng" },
-    { name: "Typography · nội dung", tier: "primitive", role: "dòng phụ muted, clamp 2 dòng" },
-    { name: "Typography · thời gian", tier: "primitive", role: "nhãn thời gian đã format, muted" },
+    { name: "IconTile", tier: "primitive", role: "ô icon vuông tô màu theo tone (default/success/warning/accent) — đầu hàng" },
+    { name: "Typography · title", tier: "primitive", role: "tiêu đề dòng (body-sm, weight medium, clamp-2) — hiện prop title" },
+    { name: "Typography · body", tier: "primitive", role: "chi tiết phụ (body-xs, muted, clamp-2) — hiện prop body" },
+    { name: "Typography · time", tier: "primitive", role: "nhãn thời gian đã format (body-xs, muted) — hiện prop timeLabel" },
 ]
 
 // UNREAD — FULL + accent dot cạnh tiêu đề và nền accent-soft cả dòng.
 const UNREAD_PARTS: Array<AnatomyNode> = [
     { name: "IconTile", tier: "primitive", role: "ô icon vuông tô màu theo tone" },
     { name: "Dot chưa đọc", tier: "primitive", role: "chấm accent (span) cạnh tiêu đề báo chưa đọc", state: "unread" },
-    { name: "Typography · tiêu đề", tier: "primitive", role: "dòng chính medium, clamp 2 dòng" },
-    { name: "Typography · nội dung", tier: "primitive", role: "dòng phụ muted, clamp 2 dòng" },
-    { name: "Typography · thời gian", tier: "primitive", role: "nhãn thời gian đã format, muted" },
+    { name: "Typography · title", tier: "primitive", role: "tiêu đề dòng (body-sm, weight medium, clamp-2)" },
+    { name: "Typography · body", tier: "primitive", role: "chi tiết phụ (body-xs, muted, clamp-2)" },
+    { name: "Typography · time", tier: "primitive", role: "nhãn thời gian đã format (body-xs, muted)" },
 ]
 
-// ACTION — UNREAD + actionSlot cuối dòng; leaf này truyền một Typography ('View')
-// làm node hành động (giữ kích thước riêng, không bóp cột chữ).
+// ACTION — UNREAD + actionSlot cuối dòng (slot giữ kích thước riêng, không bóp cột chữ —
+// nội dung actionSlot do caller truyền, không phải node riêng của NotificationItem).
 const ACTION_PARTS: Array<AnatomyNode> = [
     { name: "IconTile", tier: "primitive", role: "ô icon vuông tô màu theo tone" },
     { name: "Dot chưa đọc", tier: "primitive", role: "chấm accent (span) cạnh tiêu đề báo chưa đọc", state: "unread" },
-    { name: "Typography · tiêu đề", tier: "primitive", role: "dòng chính medium, clamp 2 dòng" },
-    { name: "Typography · nội dung", tier: "primitive", role: "dòng phụ muted, clamp 2 dòng" },
-    { name: "Typography · thời gian", tier: "primitive", role: "nhãn thời gian đã format, muted" },
-    { name: "Typography · hành động", tier: "primitive", role: "slot actionSlot cuối dòng — 'View' (body-xs), giữ kích thước riêng" },
+    { name: "Typography · title", tier: "primitive", role: "tiêu đề dòng (body-sm, weight medium, clamp-2)" },
+    { name: "Typography · body", tier: "primitive", role: "chi tiết phụ (body-xs, muted, clamp-2)" },
+    { name: "Typography · time", tier: "primitive", role: "nhãn thời gian đã format (body-xs, muted)" },
 ]
 
-// NO_ICON — text-only row: the leading IconTile is omitted (`icon` not passed).
+// NO_ICON — text-only row: the leading IconTile is omitted (`icon` not passed) — only the
+// row's own title/body/time text remains.
 const NO_ICON_PARTS: Array<AnatomyNode> = [
-    { name: "Typography · tiêu đề", tier: "primitive", role: "dòng chính medium, clamp 2 dòng" },
-    { name: "Typography · nội dung", tier: "primitive", role: "dòng phụ muted, clamp 2 dòng" },
-    { name: "Typography · thời gian", tier: "primitive", role: "nhãn thời gian đã format, muted" },
+    { name: "Typography · title", tier: "primitive", role: "tiêu đề dòng (body-sm, weight medium, clamp-2)" },
+    { name: "Typography · body", tier: "primitive", role: "chi tiết phụ (body-xs, muted, clamp-2)" },
+    { name: "Typography · time", tier: "primitive", role: "nhãn thời gian đã format (body-xs, muted)" },
 ]
 
-// TITLE_ONLY — icon + unread dot + title + time, body omitted (`body` not passed).
+// TITLE_ONLY — icon + unread dot, body omitted (`body` not passed).
 const TITLE_ONLY_PARTS: Array<AnatomyNode> = [
     { name: "IconTile", tier: "primitive", role: "ô icon vuông tô màu theo tone" },
     { name: "Dot chưa đọc", tier: "primitive", role: "chấm accent (span) cạnh tiêu đề báo chưa đọc", state: "unread" },
-    { name: "Typography · tiêu đề", tier: "primitive", role: "dòng chính medium, clamp 2 dòng" },
-    { name: "Typography · thời gian", tier: "primitive", role: "nhãn thời gian đã format, muted" },
+    { name: "Typography · title", tier: "primitive", role: "tiêu đề dòng (body-sm, weight medium, clamp-2)" },
+    { name: "Typography · time", tier: "primitive", role: "nhãn thời gian đã format (body-xs, muted)" },
 ]
 
 /** Default — neutral `tone="default"`, already read, no `onPress` (static row, not interactive). */

@@ -29,6 +29,9 @@ type Story = StoryObj<typeof ContinueCard>
 const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
 // scenario base = shape có-tiến-độ, không gấp. Các state nội suy bằng delta.
+// NOTE: the title Typography IS a composed node in the trees below — ContinueCard
+// writes `<Typography>{title}</Typography>` itself (not a value folded into another
+// primitive's slot), so it badges like any other directly-composed part.
 const progressBase = {
     variant: "hero" as const,
     title: "Mock interview: Design a rate limiter",
@@ -52,7 +55,7 @@ const CONTENT_PARTS: Array<AnatomyNode> = [
                 tier: "primitive",
                 role: "khung surface (frame chung mọi state)",
                 children: [
-                    { name: "Typography", tier: "primitive", role: "tiêu đề phiên (weight medium, truncate)" },
+                    { name: "Typography · tiêu đề", tier: "primitive", role: "tên phiên đang tiếp tục (title, weight medium, truncate)" },
                     {
                         name: "MetaRow",
                         tier: "primitive",
@@ -155,13 +158,13 @@ export const Loading: Story = {
                 note="Skeleton mirror shape CÓ thanh — composition khác hẳn leaf loaded (không part thật)."
             >
                 <div className="w-96">
-                    <SectionCard contentClassName="flex flex-col gap-3">
+                    <SectionCard anatPart="SectionCard" contentClassName="flex flex-col gap-3">
                         <div className="flex flex-col gap-2">
-                            <Skeleton.Typography type="body" width="2/3" />
-                            <Skeleton.Typography type="body-xs" width="1/2" />
+                            <Skeleton.Typography type="body" width="2/3" anatPart="Skeleton.Typography" />
+                            <Skeleton.Typography type="body-xs" width="1/2" anatPart="Skeleton.Typography" />
                         </div>
-                        <Skeleton.Button width="w-28" />
-                        <Skeleton.ProgressBar />
+                        <Skeleton.Button width="w-28" anatPart="Skeleton.Button" />
+                        <Skeleton.ProgressBar anatPart="Skeleton.ProgressBar" />
                     </SectionCard>
                 </div>
             </BlockAnatomy>,
@@ -181,14 +184,15 @@ export const LoadError: Story = {
                 note="Mạng rớt → chỉ EmptyState trong khung; KHÔNG phải part của leaf loaded."
             >
                 <div className="w-96">
-                    <SectionCard>
+                    <SectionCard anatPart="SectionCard">
                         <EmptyState
+                            anatPart="EmptyState"
                             tone="danger"
                             icon={<WarningIcon weight="duotone" />}
                             title="Mất kết nối"
                             description="Mạng có vẻ bị rớt. Kiểm tra kết nối rồi thử lại."
                             action={
-                                <Button variant="secondary" size="sm" onPress={() => {}}>
+                                <Button variant="secondary" size="sm" onPress={() => {}} anatPart="Button">
                                     Thử lại
                                 </Button>
                             }

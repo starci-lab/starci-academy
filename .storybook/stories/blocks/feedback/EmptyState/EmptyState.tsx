@@ -53,6 +53,14 @@ export interface EmptyStateProps {
     className?: string
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
+    /** Anatomy tag for the icon wrapper (`size="compact"` renders no icon, so this is ignored there). */
+    iconAnatPart?: string
+    /** Anatomy tag for the title. */
+    titleAnatPart?: string
+    /** Anatomy tag for the description (`size="compact"` renders no description, so this is ignored there). */
+    descriptionAnatPart?: string
+    /** Anatomy tag for the action wrapper (`size="compact"` renders no action, so this is ignored there). */
+    actionAnatPart?: string
 }
 
 /**
@@ -74,6 +82,10 @@ export const EmptyState = ({
     size = "default",
     className,
     anatPart,
+    iconAnatPart,
+    titleAnatPart,
+    descriptionAnatPart,
+    actionAnatPart,
 }: EmptyStateProps) => {
     if (size === "compact") {
         return (
@@ -99,25 +111,34 @@ export const EmptyState = ({
                 <Typography type="h1" weight="bold" color="muted">{code}</Typography>
             ) : null}
             {icon ? (
-                <span className={cn("[&>svg]:size-8", tone === "danger" ? "text-danger" : "text-foreground")}>{icon}</span>
+                <span
+                    data-anat-part={iconAnatPart}
+                    className={cn("[&>svg]:size-8", tone === "danger" ? "text-danger" : "text-foreground")}
+                >
+                    {icon}
+                </span>
             ) : null}
             {isPage ? (
                 <div className="flex flex-col gap-2">
-                    <Typography type="h4" weight="semibold" align="center">{title}</Typography>
+                    <Typography type="h4" weight="semibold" align="center" data-anat-part={titleAnatPart}>{title}</Typography>
                     {description ? (
-                        <Typography type="body-sm" color="muted" align="center">{description}</Typography>
+                        <Typography type="body-sm" color="muted" align="center" data-anat-part={descriptionAnatPart}>{description}</Typography>
                     ) : null}
                 </div>
             ) : (
                 <>
-                    <Typography weight="medium" align="center">{title}</Typography>
+                    <Typography weight="medium" align="center" data-anat-part={titleAnatPart}>{title}</Typography>
                     {description ? (
-                        <Typography type="body-xs" color="muted" align="center">{description}</Typography>
+                        <Typography type="body-xs" color="muted" align="center" data-anat-part={descriptionAnatPart}>{description}</Typography>
                     ) : null}
                 </>
             )}
             {action ? (
-                isPage ? <div className="flex flex-wrap items-center justify-center gap-3">{action}</div> : action
+                isPage ? (
+                    <div data-anat-part={actionAnatPart} className="flex flex-wrap items-center justify-center gap-3">{action}</div>
+                ) : (
+                    <div data-anat-part={actionAnatPart}>{action}</div>
+                )
             ) : null}
         </div>
     )

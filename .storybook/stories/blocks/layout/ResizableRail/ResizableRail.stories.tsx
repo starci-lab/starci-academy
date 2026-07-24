@@ -135,7 +135,7 @@ const PracticeShellDemo = ({
         </ResizableRail>
 
         <div className="min-h-0 min-w-0 flex-1 overflow-y-auto p-6">
-            <div className="mx-auto flex max-w-5xl flex-col gap-10">
+            <div className="mx-auto flex max-w-5xl flex-col gap-8">
                 <PageHeader
                     title="Luyện tập coding"
                     description="Chọn một chủ đề ở bên trái để bắt đầu luyện các bài tập tương ứng."

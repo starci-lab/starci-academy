@@ -181,8 +181,8 @@ export const MicroservicesDiagram = ({ caption, className, showAnatomy }: Micros
                                 >
                                     {/* plain spans in the body sans font (Open Sans) — NOT
                                         Typography type="code", whose `bg-default` adds a pill */}
-                                    <span data-anat-part={showAnatomy ? "span · tên" : undefined} className="text-xs font-medium text-foreground">{node.name}</span>
-                                    <span data-anat-part={showAnatomy ? "span · sub" : undefined} className="text-[10px] text-muted">{node.sub}</span>
+                                    <span className="text-xs font-medium text-foreground">{node.name}</span>
+                                    <span className="text-[10px] text-muted">{node.sub}</span>
                                 </motion.div>
                             ))}
                         </div>
@@ -203,11 +203,11 @@ export const MicroservicesDiagram = ({ caption, className, showAnatomy }: Micros
                         <StatusChip
                             tone="danger"
                             anatPart={showAnatomy ? "StatusChip" : undefined}
-                            icon={<WarningIcon aria-hidden focusable="false" data-anat-part={showAnatomy ? "WarningIcon" : undefined} />}
+                            icon={<WarningIcon aria-hidden focusable="false" />}
                         >
-                            <span data-anat-part={showAnatomy ? "span · nhãn" : undefined} className="inline-flex items-center gap-1">
+                            <span className="inline-flex items-center gap-1">
                                 {failure.from}
-                                <CaretRightIcon aria-hidden focusable="false" data-anat-part={showAnatomy ? "CaretRightIcon" : undefined} className="size-4" />
+                                <CaretRightIcon aria-hidden focusable="false" className="size-4" />
                                 {failure.to}
                             </span>
                         </StatusChip>
@@ -216,7 +216,7 @@ export const MicroservicesDiagram = ({ caption, className, showAnatomy }: Micros
             </motion.div>
 
             {caption ? (
-                <Typography type="body-sm" color="muted" align="center" data-anat-part={showAnatomy ? "Typography" : undefined} className="px-5 pb-5">
+                <Typography type="body-sm" color="muted" align="center" className="px-5 pb-5" data-anat-part={showAnatomy ? "Typography" : undefined}>
                     {caption}
                 </Typography>
             ) : null}

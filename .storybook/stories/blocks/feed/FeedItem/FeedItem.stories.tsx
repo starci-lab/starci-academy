@@ -32,9 +32,12 @@ type Story = StoryObj<typeof FeedItem>
 /** Frame each leaf's anatomy panel with breathing room. */
 const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
-// BASE leaf: leading avatar + entity-link action sentence + muted timestamp (no footer).
-// DOM: ActivityAvatar (leading) · text column = Typography[body-sm] wrapping the EntityLink
-// marker(s) THEN a separate muted Typography[body-xs] for the timestamp.
+// BASE leaf: leading avatar + the action Typography (wrapping EntityLink(s) in the
+// sentence) + the timestamp Typography. Both Typography ARE FeedItem's OWN direct
+// renders (§ granularity — every Typography a block writes itself is its own node,
+// same as DeckCard's title/description/count) → each gets its own "Typography" part.
+// EntityLink (a real composed component, not plain text) nests inside the action
+// Typography's own node since that's where it visually renders.
 const BASE_PARTS: Array<AnatomyNode> = [
     {
         name: "ActivityAvatar",
@@ -47,12 +50,12 @@ const BASE_PARTS: Array<AnatomyNode> = [
     {
         name: "Typography",
         tier: "primitive",
-        role: "câu action (body-sm)",
+        role: "câu action — bọc children",
         children: [
             { name: "EntityLink", tier: "design", role: "mốc thực thể bấm được, dựng trong câu action" },
         ],
     },
-    { name: "Typography", tier: "primitive", role: "mốc thời gian muted (body-xs)" },
+    { name: "Typography", tier: "primitive", role: "timestamp muted" },
 ]
 
 // REACTION leaf: same chrome + a ReactionBar in the footer slot (a sibling of the text column).
@@ -68,20 +71,21 @@ const REACTION_PARTS: Array<AnatomyNode> = [
     {
         name: "Typography",
         tier: "primitive",
-        role: "câu action (body-sm)",
+        role: "câu action — bọc children",
         children: [
             { name: "EntityLink", tier: "design", role: "mốc thực thể bấm được, dựng trong câu action" },
         ],
     },
-    { name: "Typography", tier: "primitive", role: "mốc thời gian muted (body-xs)" },
+    { name: "Typography", tier: "primitive", role: "timestamp muted" },
     { name: "ReactionBar", tier: "design", role: "slot footer — thả cảm xúc" },
 ]
 
-// TEXT-ONLY leaf: no leading, no entity link — just the action Typography (plain text) + a
-// separate muted timestamp Typography.
+// TEXT-ONLY leaf: no leading, no entity link — the action sentence is plain text.
+// FeedItem STILL directly renders its own two Typography (action + timestamp); only
+// the leading slot and the nested EntityLink are absent for this leaf.
 const TEXT_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "câu action (text thuần, body-sm)" },
-    { name: "Typography", tier: "primitive", role: "mốc thời gian muted (body-xs)" },
+    { name: "Typography", tier: "primitive", role: "câu action — text thuần, không mốc thực thể" },
+    { name: "Typography", tier: "primitive", role: "timestamp muted" },
 ]
 
 export const Default: Story = {
@@ -109,9 +113,9 @@ export const Default: Story = {
                         timestamp="2 giờ trước"
                     >
                         <span>
-                            <EntityLink label="minhanh_dev" onPress={() => {}} />
+                            <EntityLink anatPart="EntityLink" label="minhanh_dev" onPress={() => {}} />
                             {" "}đã follow{" "}
-                            <EntityLink label="quochuy_backend" onPress={() => {}} />
+                            <EntityLink anatPart="EntityLink" label="quochuy_backend" onPress={() => {}} />
                         </span>
                     </FeedItem>
                 </div>
@@ -145,9 +149,9 @@ export const WithReaction: Story = {
                         footer={<ReactionBar anatPart="ReactionBar" count={8} myReaction={ReactionType.Like} onReact={() => {}} />}
                     >
                         <span>
-                            <EntityLink label="quochuy_backend" onPress={() => {}} />
+                            <EntityLink anatPart="EntityLink" label="quochuy_backend" onPress={() => {}} />
                             {" "}đã hoàn thành challenge{" "}
-                            <EntityLink label="Xử lý luồng bất đồng bộ" onPress={() => {}} />
+                            <EntityLink anatPart="EntityLink" label="Xử lý luồng bất đồng bộ" onPress={() => {}} />
                         </span>
                     </FeedItem>
                 </div>
@@ -181,9 +185,9 @@ export const ReadOnlyFooter: Story = {
                         footer={<ReactionBar anatPart="ReactionBar" count={5} myReaction={null} />}
                     >
                         <span>
-                            <EntityLink label="minhanh_dev" onPress={() => {}} />
+                            <EntityLink anatPart="EntityLink" label="minhanh_dev" onPress={() => {}} />
                             {" "}đã hoàn thành milestone{" "}
-                            <EntityLink label="Xử lý luồng bất đồng bộ" onPress={() => {}} />
+                            <EntityLink anatPart="EntityLink" label="Xử lý luồng bất đồng bộ" onPress={() => {}} />
                         </span>
                     </FeedItem>
                 </div>
@@ -235,11 +239,11 @@ export const LongText: Story = {
                         timestamp="3 ngày trước"
                     >
                         <span>
-                            <EntityLink label="thuha_ux" onPress={() => {}} />
+                            <EntityLink anatPart="EntityLink" label="thuha_ux" onPress={() => {}} />
                             {" "}đã hoàn thành milestone{" "}
-                            <EntityLink label="Building a scalable design system for enterprise applications" onPress={() => {}} />
+                            <EntityLink anatPart="EntityLink" label="Building a scalable design system for enterprise applications" onPress={() => {}} />
                             {" "}trong khóa{" "}
-                            <EntityLink label="System Design Mastery" onPress={() => {}} />
+                            <EntityLink anatPart="EntityLink" label="System Design Mastery" onPress={() => {}} />
                         </span>
                     </FeedItem>
                 </div>

@@ -91,16 +91,14 @@ const UnifiedRow = ({ line, showAnatomy }: { line: DiffLine; showAnatomy?: boole
         data-anat-part={showAnatomy ? "UnifiedRow" : undefined}
         className={cn("flex items-start", LINE_TONE[line.type])}
     >
-        <NumberCell value={line.oldNumber} anatPart={showAnatomy ? "NumberCell" : undefined} />
-        <NumberCell value={line.newNumber} anatPart={showAnatomy ? "NumberCell" : undefined} />
+        <NumberCell value={line.oldNumber} />
+        <NumberCell value={line.newNumber} />
         <span
-            data-anat-part={showAnatomy ? "Marker" : undefined}
             className="w-4 shrink-0 select-none text-center"
         >
             {LINE_MARKER[line.type]}
         </span>
         <span
-            data-anat-part={showAnatomy ? "Nội dung dòng" : undefined}
             className="whitespace-pre pr-4"
         >
             {line.content}
@@ -128,10 +126,8 @@ const SplitCell = ({
     >
         <NumberCell
             value={side === "old" ? line?.oldNumber : line?.newNumber}
-            anatPart={showAnatomy ? "NumberCell" : undefined}
         />
         <span
-            data-anat-part={showAnatomy ? "Nội dung dòng" : undefined}
             className="whitespace-pre pr-4"
         >
             {line ? line.content : ""}
@@ -179,7 +175,7 @@ export const DiffViewer = ({
                         type="body-sm"
                         weight="medium"
                         className="font-mono"
-                        data-anat-part={showAnatomy ? "Typography" : undefined}
+                        data-anat-part={showAnatomy ? "Typography · tên file" : undefined}
                     >
                         {filename}
                     </Typography>

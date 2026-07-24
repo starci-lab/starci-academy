@@ -86,6 +86,7 @@ const CommentThreadItem = ({
             type="button"
             onClick={() => setReplying((previous) => !previous)}
             className="cursor-pointer text-xs font-medium text-muted transition-colors hover:text-foreground"
+            data-anat-part={showAnatomy ? "Trả lời" : undefined}
         >
             Trả lời
         </button>
@@ -117,6 +118,8 @@ const CommentThreadItem = ({
                 comment={node}
                 onReact={onReact ? (type) => onReact(node.id, type) : undefined}
                 actions={replyAction}
+                anatPart={showAnatomy ? "CommunityCommentRow" : undefined}
+                showAnatomy={showAnatomy}
             />
 
             {/* inline reply composer, revealed by the "Trả lời" affordance */}
@@ -130,6 +133,7 @@ const CommentThreadItem = ({
                     submitLabel="Trả lời"
                     className="pl-9"
                     anatPart={showAnatomy ? "Composer" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
 
@@ -187,7 +191,7 @@ export const CommentThread = ({
     }
 
     return (
-        <div className={cn("flex flex-col gap-4", className)}>
+        <div className={cn("flex flex-col gap-3", className)}>
             {/* top-level composer for a new root comment */}
             <Composer
                 value={rootValue}
@@ -196,6 +200,7 @@ export const CommentThread = ({
                 avatarSrc={avatarSrc}
                 placeholder="Viết bình luận..."
                 anatPart={showAnatomy ? "Composer" : undefined}
+                showAnatomy={showAnatomy}
             />
 
             {/* the thread */}

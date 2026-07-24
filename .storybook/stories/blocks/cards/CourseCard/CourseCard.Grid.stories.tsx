@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Button } from "@heroui/react"
+import { Button } from "../../buttons/Button/Button"
 import { CourseCard } from "./CourseCard"
 import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
 import { discountedCourse, enrolledCourse, noCoverCourse, freeCourse } from "./CourseCard.mocks"
@@ -31,9 +31,15 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 
 // DATA — the full composed card. The real DOM is a HeroUI `Card` frame that splits
 // into `Card.Content` (cover · title/desc · learners meta · value-props) and
-// `Card.Footer` (price · USD hint · CTA row). The `−%` StatusChip mounts INSIDE
-// PriceTag; the value-prop rows mount INSIDE CrossListCard. Discounted & Enrolled
-// share this composition (Enrolled only relabels: primary "Tiếp tục học" + a
+// `Card.Footer` (price · USD hint · CTA row). Cover image itself stays CUT (a plain
+// `<img>`/gradient fallback rendering the `coverImageUrl` VALUE, not a composed
+// sub-part) — but title / description / the learners meta-count / the USD hint ARE
+// composed nodes: CourseCard writes each `<Typography>` itself (not values folded
+// into another primitive's slot), so every one badges per the granularity rule.
+// CrossListItem takes a real `anatPart` (and StatusChip mounts INSIDE PriceTag) so
+// both stay as proper composed nodes; the value-prop TEXT inside each CrossListItem
+// stays collapsed (it's content in that primitive's own children slot). Discounted &
+// Enrolled share this composition (Enrolled only relabels: primary "Tiếp tục học" + a
 // secondary "Xem khóa học" in the same secondary-Button slot).
 const DATA_PARTS: Array<AnatomyNode> = [
     {
@@ -42,18 +48,13 @@ const DATA_PARTS: Array<AnatomyNode> = [
             {
                 name: "Card.Content", tier: "primitive", role: "vùng trên: cover + tiêu đề/mô tả + value-props (gap-3)",
                 children: [
-                    { name: "Cover (img / gradient)", tier: "primitive", role: "ảnh bìa 16:9 rounded-2xl; thiếu → gradient + BookOpenIcon" },
-                    { name: "Typography", tier: "primitive", role: "tiêu đề (h6 bold) + mô tả (muted line-clamp-2)" },
-                    { name: "Typography muted + UsersIcon", tier: "primitive", role: "số học viên — meta-count text muted (KHÔNG bọc Chip)" },
+                    { name: "Typography (tiêu đề)", tier: "primitive", role: "tiêu đề khóa học (h6, bold, truncate)" },
+                    { name: "Typography (số học viên)", tier: "primitive", role: "số học viên — meta-count muted (KHÔNG bọc chip)" },
+                    { name: "Typography (mô tả)", tier: "primitive", role: "mô tả khóa học (body-sm, muted, line-clamp-2)" },
                     {
                         name: "CrossListCard", tier: "block", role: "value-props (bordered) — tick CHÌM để chữ dẫn (§2)",
                         children: [
-                            {
-                                name: "CrossListItem", tier: "design", role: "hàng value-prop (mark=check, tone=muted) ×3",
-                                children: [
-                                    { name: "Typography", tier: "primitive", role: "nội dung value-prop (body-sm)" },
-                                ],
-                            },
+                            { name: "CrossListItem", tier: "primitive", role: "hàng value-prop ×3, mark=check/tone=muted" },
                         ],
                     },
                 ],
@@ -67,7 +68,7 @@ const DATA_PARTS: Array<AnatomyNode> = [
                             { name: "StatusChip", tier: "design", role: "chip −% — Popover.Trigger mở breakdown giá" },
                         ],
                     },
-                    { name: "Typography muted (USD hint)", tier: "primitive", role: "dòng ≈ giá USD khi thanh toán quốc tế" },
+                    { name: "Typography (USD)", tier: "primitive", role: "gợi ý giá quy đổi USD (khi thanh toán quốc tế)" },
                     { name: "Button (primary)", tier: "primitive", role: "CTA chính primary + mũi tên (Xem khóa học / Tiếp tục học)" },
                     { name: "Button (secondary)", tier: "primitive", role: "CTA phụ secondary (Thêm vào giỏ / Xem khóa học) — KHÔNG mũi tên" },
                 ],
@@ -76,9 +77,11 @@ const DATA_PARTS: Array<AnatomyNode> = [
     },
 ]
 
-// NO-COVER — same tree as DATA, but the cover is the branded gradient fallback and,
-// with no `action` on a not-enrolled card, only the single primary CTA renders (no
-// secondary Button). Value-props · learners · USD hint · discounted PriceTag all stay.
+// NO-COVER — same tree as DATA, but the cover is the branded gradient fallback — which
+// ADDS an extra fallback-title Typography inside the cover area (only rendered when
+// there's no cover image) — and, with no `action` on a not-enrolled card, only the
+// single primary CTA renders (no secondary Button). Value-props · discounted PriceTag
+// stay; the cover image itself is CUT (prop-value element, see DATA_PARTS).
 const NO_COVER_PARTS: Array<AnatomyNode> = [
     {
         name: "Card", tier: "primitive", role: "khung thẻ rounded-3xl, flex-col",
@@ -86,18 +89,14 @@ const NO_COVER_PARTS: Array<AnatomyNode> = [
             {
                 name: "Card.Content", tier: "primitive", role: "vùng trên: cover + tiêu đề/mô tả + value-props",
                 children: [
-                    { name: "Cover (img / gradient)", tier: "primitive", role: "thiếu ảnh → gradient + BookOpenIcon + tiêu đề", state: "fallback" },
-                    { name: "Typography", tier: "primitive", role: "tiêu đề (h6 bold) + mô tả (muted line-clamp-2)" },
-                    { name: "Typography muted + UsersIcon", tier: "primitive", role: "số học viên — meta-count text muted" },
+                    { name: "Typography (tiêu đề dự phòng)", tier: "primitive", role: "tiêu đề lặp lại TRONG khối gradient dự phòng (không ảnh bìa)" },
+                    { name: "Typography (tiêu đề)", tier: "primitive", role: "tiêu đề khóa học (h6, bold, truncate)" },
+                    { name: "Typography (số học viên)", tier: "primitive", role: "số học viên — meta-count muted" },
+                    { name: "Typography (mô tả)", tier: "primitive", role: "mô tả khóa học (body-sm, muted, line-clamp-2)" },
                     {
                         name: "CrossListCard", tier: "block", role: "value-props (bordered, tick chìm §2)",
                         children: [
-                            {
-                                name: "CrossListItem", tier: "design", role: "hàng value-prop (mark=check, tone=muted) ×3",
-                                children: [
-                                    { name: "Typography", tier: "primitive", role: "nội dung value-prop (body-sm)" },
-                                ],
-                            },
+                            { name: "CrossListItem", tier: "primitive", role: "hàng value-prop ×3, mark=check/tone=muted" },
                         ],
                     },
                 ],
@@ -111,7 +110,7 @@ const NO_COVER_PARTS: Array<AnatomyNode> = [
                             { name: "StatusChip", tier: "design", role: "chip −% — Popover.Trigger mở breakdown giá" },
                         ],
                     },
-                    { name: "Typography muted (USD hint)", tier: "primitive", role: "dòng ≈ giá USD khi thanh toán quốc tế" },
+                    { name: "Typography (USD)", tier: "primitive", role: "gợi ý giá quy đổi USD" },
                     { name: "Button (primary)", tier: "primitive", role: "CTA chính primary (chưa đăng ký, không action → 1 nút)" },
                 ],
             },
@@ -120,9 +119,10 @@ const NO_COVER_PARTS: Array<AnatomyNode> = [
 ]
 
 // LOADING — loyalty price still resolving → the price line becomes a
-// `Skeleton.Typography` in place of PriceTag (the rest of the footprint is
-// unchanged; the USD hint does NOT depend on loyalty so it still renders). Not
-// enrolled + no action → single primary CTA.
+// `Skeleton.Typography` in place of PriceTag (skeleton axis, left as-is). Title/
+// description/learners/USD-hint Typography still render for real (they don't depend
+// on `loyaltyPending`). Not enrolled + no action → single primary CTA. Cover image
+// stays CUT (prop-value element, see DATA_PARTS).
 const LOADING_PARTS: Array<AnatomyNode> = [
     {
         name: "Card", tier: "primitive", role: "khung thẻ rounded-3xl, flex-col",
@@ -130,18 +130,13 @@ const LOADING_PARTS: Array<AnatomyNode> = [
             {
                 name: "Card.Content", tier: "primitive", role: "vùng trên: cover + tiêu đề/mô tả + value-props",
                 children: [
-                    { name: "Cover (img / gradient)", tier: "primitive", role: "ảnh bìa 16:9 rounded-2xl" },
-                    { name: "Typography", tier: "primitive", role: "tiêu đề (h6 bold) + mô tả (muted line-clamp-2)" },
-                    { name: "Typography muted + UsersIcon", tier: "primitive", role: "số học viên — meta-count text muted" },
+                    { name: "Typography (tiêu đề)", tier: "primitive", role: "tiêu đề khóa học (h6, bold, truncate)" },
+                    { name: "Typography (số học viên)", tier: "primitive", role: "số học viên — meta-count muted" },
+                    { name: "Typography (mô tả)", tier: "primitive", role: "mô tả khóa học (body-sm, muted, line-clamp-2)" },
                     {
                         name: "CrossListCard", tier: "block", role: "value-props (bordered, tick chìm §2)",
                         children: [
-                            {
-                                name: "CrossListItem", tier: "design", role: "hàng value-prop (mark=check, tone=muted) ×3",
-                                children: [
-                                    { name: "Typography", tier: "primitive", role: "nội dung value-prop (body-sm)" },
-                                ],
-                            },
+                            { name: "CrossListItem", tier: "primitive", role: "hàng value-prop ×3, mark=check/tone=muted" },
                         ],
                     },
                 ],
@@ -150,7 +145,7 @@ const LOADING_PARTS: Array<AnatomyNode> = [
                 name: "Card.Footer", tier: "primitive", role: "vùng dưới: giá(skeleton) + USD hint + CTA",
                 children: [
                     { name: "Skeleton.Typography (giá)", tier: "primitive", role: "dòng giá khi loyalty preview đang tải (loyaltyPending) — thay chỗ PriceTag", state: "loading" },
-                    { name: "Typography muted (USD hint)", tier: "primitive", role: "dòng ≈ giá USD (không phụ thuộc loyalty)" },
+                    { name: "Typography (USD)", tier: "primitive", role: "gợi ý giá quy đổi USD (không phụ thuộc loyaltyPending)" },
                     { name: "Button (primary)", tier: "primitive", role: "CTA chính primary (không action → 1 nút)" },
                 ],
             },
@@ -158,9 +153,11 @@ const LOADING_PARTS: Array<AnatomyNode> = [
     },
 ]
 
-// FREE — no price / value-props / learners count / USD hint → the body collapses to
-// Card.Content(cover + title/desc) + Card.Footer(single primary CTA). The price row
-// resolves to an empty `<span/>` (no PriceTag) so it carries no part.
+// FREE — no price / value-props / learners count (enrollmentCount=0) / USD hint (no
+// USD price on this course) → the body collapses to Card.Content(title + description)
+// + Card.Footer(single primary CTA). The price row resolves to an empty `<span/>` (no
+// PriceTag) so it carries no part. Cover image stays CUT (prop-value element, see
+// DATA_PARTS); title/description ARE composed Typography nodes (always render).
 const FREE_PARTS: Array<AnatomyNode> = [
     {
         name: "Card", tier: "primitive", role: "khung thẻ rounded-3xl, flex-col",
@@ -168,8 +165,8 @@ const FREE_PARTS: Array<AnatomyNode> = [
             {
                 name: "Card.Content", tier: "primitive", role: "vùng trên (thu gọn: chỉ cover + tiêu đề/mô tả)",
                 children: [
-                    { name: "Cover (img / gradient)", tier: "primitive", role: "ảnh bìa 16:9 rounded-2xl" },
-                    { name: "Typography", tier: "primitive", role: "tiêu đề (h6 bold) + mô tả (muted line-clamp-2)" },
+                    { name: "Typography (tiêu đề)", tier: "primitive", role: "tiêu đề khóa học (h6, bold, truncate)" },
+                    { name: "Typography (mô tả)", tier: "primitive", role: "mô tả khóa học (body-sm, muted, line-clamp-2)" },
                 ],
             },
             {
@@ -227,7 +224,7 @@ export const Discounted: Story = {
                         course={discountedCourse}
                         loyaltyPriceVnd={1341000}
                         loyaltyOriginalVnd={2990000}
-                        action={<Button variant="secondary" className="flex-1">Thêm vào giỏ</Button>}
+                        action={<Button variant="secondary" className="flex-1" anatPart="Button (secondary)">Thêm vào giỏ</Button>}
                         showAnatomy
                     />
                 </div>

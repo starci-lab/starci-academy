@@ -29,8 +29,15 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
 // Shared popover panel subtree — identical across every leaf (only the bell
 // trigger's badge differs). `PopoverContent` FRAMES the `NotificationList` block,
-// whose header (title + mark-all-read button) sits above the day-grouped rows.
-// Mirrors the real DOM: PopoverContent → NotificationList → { header parts, rows }.
+// whose header (title Typography + mark-all-read button) sits above the
+// day-grouped rows. Mirrors the real DOM: PopoverContent → NotificationList →
+// { header parts, group label, rows }. Node names below are the GROUND-TRUTH
+// `data-anat-part` strings each component emits — kept byte-identical to
+// `NotificationList.stories.tsx` / `NotificationItem.stories.tsx`'s own trees for
+// these same components, not free-form labels (a mismatched name here silently
+// drops the badge). Only content INSIDE a primitive's own slot (e.g. Button's
+// `markAllReadLabel` children) stays collapsed — every Typography the list/item
+// renders directly is its own node.
 const PANEL_PART: AnatomyNode = {
     name: "PopoverContent",
     tier: "primitive",
@@ -41,27 +48,26 @@ const PANEL_PART: AnatomyNode = {
             tier: "block",
             role: "danh sách gom theo ngày + header đánh dấu đã đọc",
             children: [
-                { name: "Typography", tier: "primitive", role: 'tiêu đề panel ("Thông báo")' },
+                { name: "Typography · header", tier: "primitive", role: "tiêu đề panel (\"Thông báo\") — hiện prop title" },
                 {
-                    name: "Button · markAllRead",
+                    name: "Button",
                     tier: "primitive",
-                    role: "nút đánh dấu tất cả đã đọc (tertiary, sm)",
+                    role: "nút đánh dấu tất cả đã đọc (tertiary, sm) — nhãn hiện qua children",
                     children: [
                         { name: "ChecksIcon", tier: "primitive", role: "icon check dẫn đầu nút" },
-                        { name: "Typography", tier: "primitive", role: 'nhãn "Đánh dấu tất cả đã đọc"' },
                     ],
                 },
+                { name: "Typography · nhãn nhóm", tier: "primitive", role: "nhãn nhóm ngày (\"Today\"/\"Earlier\") — hiện prop group.label" },
                 {
                     name: "NotificationItem",
                     tier: "design",
                     role: "một dòng thông báo (lặp ×N theo group)",
                     children: [
                         { name: "IconTile", tier: "primitive", role: "ô icon dẫn đầu, màu theo tone" },
-                        {
-                            name: "Typography",
-                            tier: "primitive",
-                            role: "cột chữ: tiêu đề · nội dung · nhãn thời gian",
-                        },
+                        { name: "Dot chưa đọc", tier: "primitive", role: "chấm accent cạnh tiêu đề (dòng chưa đọc)", state: "unread" },
+                        { name: "Typography · title", tier: "primitive", role: "tiêu đề dòng" },
+                        { name: "Typography · body", tier: "primitive", role: "chi tiết phụ dòng" },
+                        { name: "Typography · time", tier: "primitive", role: "nhãn thời gian dòng" },
                     ],
                 },
             ],
@@ -71,52 +77,43 @@ const PANEL_PART: AnatomyNode = {
 
 // WITH-BADGE composition (unread > 0): the bell trigger carries a count Badge
 // (anchored over the BellIcon via Badge.Anchor) and opens the shared panel.
+// NOTE: `Popover` (react-aria `DialogTrigger`) renders no DOM node of its own —
+// it cannot carry `data-anat-part`, so it is NOT a node in this tree; its two
+// real children (the trigger `Button` and the `PopoverContent` panel) sit at
+// the top level instead.
 const WITH_BADGE_PARTS: Array<AnatomyNode> = [
     {
-        name: "Popover",
+        name: "Button · iconOnly",
         tier: "primitive",
-        role: "gốc: neo nút chuông với panel nổi, đóng/mở có kiểm soát",
+        role: "nút chuông mở popover (tertiary, bo tròn)",
         children: [
             {
-                name: "Button · iconOnly",
+                name: "Badge.Anchor",
                 tier: "primitive",
-                role: "nút chuông mở popover (tertiary, bo tròn)",
+                role: "neo badge đếm vào góc chuông",
                 children: [
-                    {
-                        name: "Badge.Anchor",
-                        tier: "primitive",
-                        role: "neo badge đếm vào góc chuông",
-                        children: [
-                            { name: "BellIcon", tier: "primitive", role: "biểu tượng chuông" },
-                            { name: "Badge", tier: "primitive", role: 'đếm chưa đọc, chốt "9+"', state: "danger" },
-                        ],
-                    },
+                    { name: "BellIcon", tier: "primitive", role: "biểu tượng chuông" },
+                    { name: "Badge", tier: "primitive", role: "đếm chưa đọc, chốt \"9+\"", state: "danger" },
                 ],
             },
-            PANEL_PART,
         ],
     },
+    PANEL_PART,
 ]
 
 // NO-BADGE composition (unread = 0): same tree WITHOUT the Badge — the trigger's
 // icon is a bare BellIcon (no Badge.Anchor wrapper), then the same shared panel.
+// `Popover` omitted from the tree for the same reason as above.
 const NO_BADGE_PARTS: Array<AnatomyNode> = [
     {
-        name: "Popover",
+        name: "Button · iconOnly",
         tier: "primitive",
-        role: "gốc: neo nút chuông với panel nổi, đóng/mở có kiểm soát",
+        role: "nút chuông mở popover (tertiary, bo tròn) — không badge ở 0",
         children: [
-            {
-                name: "Button · iconOnly",
-                tier: "primitive",
-                role: "nút chuông mở popover (tertiary, bo tròn) — không badge ở 0",
-                children: [
-                    { name: "BellIcon", tier: "primitive", role: "biểu tượng chuông (không badge ở 0)" },
-                ],
-            },
-            PANEL_PART,
+            { name: "BellIcon", tier: "primitive", role: "biểu tượng chuông (không badge ở 0)" },
         ],
     },
+    PANEL_PART,
 ]
 
 /** Date-based groups ("Today" / "Earlier") with real learning data and pre-formatted times. */

@@ -19,8 +19,15 @@ export interface ChatBubbleProps {
     children: ReactNode
     /** Extra classes merged onto the row. */
     className?: string
-    /** When on, emit `data-anat-part` markers for the anatomy overlay. */
-    showAnatomy?: boolean
+    /**
+     * Anatomy tag: names the ROOT so a PARENT's BlockAnatomy panel can badge this
+     * whole bubble as one opaque node (e.g. `"ChatBubble"` from `ChatPanel`).
+     * ChatBubble composes no sub-components — its row/bubble divs are plain
+     * alignment + tint chrome around `children`, not composed parts — so there is
+     * no separate internal marker to fall back to; per canon granularity this is
+     * ONE atomic node.
+     */
+    anatPart?: string
 }
 
 /**
@@ -30,19 +37,18 @@ export interface ChatBubbleProps {
  *
  * @param props - {@link ChatBubbleProps}
  */
-export const ChatBubble = ({ role, children, className, showAnatomy }: ChatBubbleProps) => {
+export const ChatBubble = ({ role, children, className, anatPart }: ChatBubbleProps) => {
     const isUser = role === "user"
     return (
         <div
             className={cn("flex", isUser ? "justify-end" : "justify-start", className)}
-            data-anat-part={showAnatomy ? "div · row" : undefined}
+            data-anat-part={anatPart}
         >
             <div
                 className={cn(
                     "max-w-[85%] rounded-2xl px-3 py-2",
                     isUser ? "bg-accent-soft" : "bg-surface-secondary",
                 )}
-                data-anat-part={showAnatomy ? "div · bubble" : undefined}
             >
                 {children}
             </div>

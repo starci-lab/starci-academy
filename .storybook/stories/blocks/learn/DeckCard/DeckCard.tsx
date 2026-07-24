@@ -81,28 +81,28 @@ export const DeckCard = ({
 }: DeckCardProps) => {
     if (isSkeleton) {
         return (
-            <Card className={cn("rounded-3xl", className)}>
+            <Card className={cn("rounded-3xl", className)} data-anat-part={showAnatomy ? "Card" : undefined}>
                 <Card.Content className="flex h-full flex-col gap-2">
                     {/* title + difficulty chip */}
                     <div className="flex items-start justify-between gap-2">
-                        <Skeleton.Typography type="body-sm" width="1/2" />
-                        <Skeleton.Chip />
+                        <Skeleton.Typography type="body-sm" width="1/2" anatPart={showAnatomy ? "Skeleton.Typography" : undefined} />
+                        <Skeleton.Chip anatPart={showAnatomy ? "Skeleton.Chip" : undefined} />
                     </div>
                     {/* description preview */}
-                    <Skeleton.Typography type="body-xs" width="3/4" />
+                    <Skeleton.Typography type="body-xs" width="3/4" anatPart={showAnatomy ? "Skeleton.Typography" : undefined} />
                     {showProgress ? (
                         <div className="mt-auto flex flex-col gap-2">
                             <div className="flex items-center justify-between gap-2">
-                                <Skeleton.Typography type="body-xs" width="1/3" />
-                                <Skeleton.Typography type="body-xs" width="w-8" />
+                                <Skeleton.Typography type="body-xs" width="1/3" anatPart={showAnatomy ? "Skeleton.Typography" : undefined} />
+                                <Skeleton.Typography type="body-xs" width="w-8" anatPart={showAnatomy ? "Skeleton.Typography" : undefined} />
                             </div>
-                            <Skeleton.Meter />
+                            <Skeleton.Meter anatPart={showAnatomy ? "Skeleton.Meter" : undefined} />
                         </div>
                     ) : null}
                     {/* card count + CTA */}
                     <div className="flex items-center justify-between gap-2 pt-1">
-                        <Skeleton.Typography type="body-xs" width="1/4" />
-                        <Skeleton.Button />
+                        <Skeleton.Typography type="body-xs" width="1/4" anatPart={showAnatomy ? "Skeleton.Typography" : undefined} />
+                        <Skeleton.Button anatPart={showAnatomy ? "Skeleton.Button" : undefined} />
                     </div>
                 </Card.Content>
             </Card>
@@ -112,11 +112,20 @@ export const DeckCard = ({
     const showMeter = showProgress && cardCount > 0
 
     return (
-        <Card className={cn("rounded-3xl", showAnatomy && "relative", className)} data-anat={showAnatomy ? "" : undefined}>
+        <Card
+            className={cn("rounded-3xl", showAnatomy && "relative", className)}
+            data-anat={showAnatomy ? "" : undefined}
+            data-anat-part={showAnatomy ? "Card" : undefined}
+        >
             {showAnatomy ? <AnatomyOverlay label="DeckCard" tier="design" href="/?path=/docs/design-learn-deckcard--docs" /> : null}
             <Card.Content className="flex h-full flex-col gap-2">
                 <div className="flex items-start justify-between gap-2">
-                    <Typography type="body-sm" weight="medium" className="line-clamp-2">
+                    <Typography
+                        type="body-sm"
+                        weight="medium"
+                        className="line-clamp-2"
+                        data-anat-part={showAnatomy ? "Typography" : undefined}
+                    >
                         {title}
                     </Typography>
                     <div className="flex shrink-0 items-center gap-2">
@@ -127,7 +136,12 @@ export const DeckCard = ({
                     </div>
                 </div>
                 {description ? (
-                    <Typography type="body-xs" color="muted" className="line-clamp-2">
+                    <Typography
+                        type="body-xs"
+                        color="muted"
+                        className="line-clamp-2"
+                        data-anat-part={showAnatomy ? "Typography" : undefined}
+                    >
                         {description}
                     </Typography>
                 ) : null}
@@ -145,10 +159,16 @@ export const DeckCard = ({
                     />
                 ) : null}
                 <div className="flex items-center justify-between gap-2 pt-1">
-                    <Typography type="body-xs" color="muted">
+                    <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography" : undefined}>
                         {`${cardCount} thẻ`}
                     </Typography>
-                    <Button variant="primary" size="sm" onPress={onOpen} className="shrink-0">
+                    <Button
+                        variant="primary"
+                        size="sm"
+                        onPress={onOpen}
+                        className="shrink-0"
+                        anatPart={showAnatomy ? "Button" : undefined}
+                    >
                         {ctaLabel}
                     </Button>
                 </div>

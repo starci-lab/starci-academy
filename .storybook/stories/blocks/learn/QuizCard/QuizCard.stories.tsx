@@ -73,43 +73,36 @@ const MultipleDemo = () => {
 }
 
 // Shared leaf nodes — mọi leaf đều bọc TRONG SectionCard (khung tự đóng). Cây thật:
-// SectionCard > (StatusChip? + Typography câu hỏi) + Radio/CheckboxGroup > rows [> OptionResultIcon] + Button? + khối giải thích?
+// SectionCard > StatusChip? + Radio/CheckboxGroup > rows + Button?
+// (câu hỏi + khối giải thích là text/prop nội tại SectionCard/QuizCard — không
+// tách node; icon ✓/✗ là mark nội tại mỗi row — gộp vào Radio/Checkbox.)
 
 /** StatusChip "Câu N" — con đầu của SectionCard (chỉ khi có questionIndex). */
-const CHIP_NODE: AnatomyNode = { name: "StatusChip", tier: "primitive", role: 'nhãn "Câu N"', state: "accent" }
-/** Typography câu hỏi — luôn có, ngay sau chip. */
-const QUESTION_NODE: AnatomyNode = { name: "Typography", tier: "primitive", role: "câu hỏi (body semibold)" }
+const CHIP_NODE: AnatomyNode = { name: "StatusChip", tier: "primitive", role: "nhãn \"Câu N\"", state: "accent" }
+/** Typography hiển thị prop `question` — QuizCard tự render trực tiếp. */
+const QUESTION_NODE: AnatomyNode = { name: "Typography", tier: "primitive", role: "nội dung câu hỏi" }
 /** Nút nộp — chỉ dựng khi có onSubmit và chưa nộp. */
 const SUBMIT_NODE: AnatomyNode = {
     name: "Button",
     tier: "primitive",
-    role: 'CTA "Kiểm tra đáp án" — chỉ khi có onSubmit và chưa nộp',
+    role: "CTA \"Kiểm tra đáp án\" — chỉ khi có onSubmit và chưa nộp",
 }
-/** Khối giải thích: surface-secondary bao 2 Typography — chỉ khi đã nộp VÀ có explanation. */
-const EXPLANATION_NODE: AnatomyNode = {
-    name: "div · giải thích",
-    tier: "primitive",
-    role: "surface phụ (surface-secondary) — chỉ khi đã nộp VÀ có explanation",
-    state: "revealed",
-    children: [
-        { name: "Typography · nhãn", tier: "primitive", role: '"Giải thích" (body-sm semibold)' },
-        { name: "Typography · nội dung", tier: "primitive", role: "nội dung giải thích (body-sm muted)" },
-    ],
-}
+/** Khối giải thích — chỉ dựng khi đã nộp VÀ có `explanation`; 2 Typography riêng (nhãn tĩnh + nội dung). */
+const EXPLANATION_LABEL_NODE: AnatomyNode = { name: "Typography", tier: "primitive", role: "nhãn tĩnh \"Giải thích\"" }
+const EXPLANATION_BODY_NODE: AnatomyNode = { name: "Typography", tier: "primitive", role: "nội dung giải thích (muted)" }
 
-/** Icon ✓/✗ — con của mỗi row, chỉ render sau khi nộp (OptionResultIcon). */
-const RESULT_ICON_NODE: AnatomyNode = {
-    name: "OptionResultIcon",
-    tier: "primitive",
-    role: "icon ✓/✗ lộ đúng/sai từng dòng — chỉ sau khi nộp",
-}
+// Câu hỏi + khối giải thích đều là Typography QuizCard TỰ RENDER trực tiếp (dù
+// nằm trong children của SectionCard) → MỖI Typography là 1 node riêng, có
+// data-anat-part. Icon ✓/✗ (OptionResultIcon) thì khác: nó là mark truyền vào
+// SLOT children của Radio/Checkbox (một primitive) — gộp vào node "Radio"/
+// "Checkbox", không tách node riêng.
 
 /** Bọc các con trong SectionCard theo đúng thứ tự DOM. */
 const inSection = (children: Array<AnatomyNode>): Array<AnatomyNode> => [
-    { name: "SectionCard", tier: "primitive", role: "khung surface tự đóng bao TOÀN BỘ câu hỏi", children },
+    { name: "SectionCard", tier: "primitive", role: "khung surface tự đóng bao TOÀN BỘ câu hỏi (câu hỏi là text nội tại)", children },
 ]
 
-/** RadioGroup > Radio row (± OptionResultIcon khi đã nộp). */
+/** RadioGroup > Radio row (đúng/sai lộ ra sau khi nộp qua chính Radio, không tách node icon). */
 const radioGroup = (revealed: boolean): AnatomyNode => ({
     name: "RadioGroup",
     tier: "primitive",
@@ -119,13 +112,13 @@ const radioGroup = (revealed: boolean): AnatomyNode => ({
         {
             name: "Radio",
             tier: "primitive",
-            role: revealed ? "mỗi phương án (một dòng); tô đúng/sai sau khi nộp" : "mỗi phương án (một dòng); default/selected",
-            ...(revealed ? { state: "revealed", children: [RESULT_ICON_NODE] } : {}),
+            role: revealed ? "mỗi phương án (một dòng); tô + icon ✓/✗ đúng/sai sau khi nộp" : "mỗi phương án (một dòng); default/selected",
+            ...(revealed ? { state: "revealed" } : {}),
         },
     ],
 })
 
-/** CheckboxGroup > Checkbox row (± OptionResultIcon khi đã nộp). */
+/** CheckboxGroup > Checkbox row (đúng/sai/bỏ sót lộ ra qua chính Checkbox, không tách node icon). */
 const checkboxGroup = (revealed: boolean): AnatomyNode => ({
     name: "CheckboxGroup",
     tier: "primitive",
@@ -135,8 +128,8 @@ const checkboxGroup = (revealed: boolean): AnatomyNode => ({
         {
             name: "Checkbox",
             tier: "primitive",
-            role: revealed ? "mỗi phương án (một dòng); tô đúng/sai/bỏ sót sau khi nộp" : "mỗi phương án (một dòng); default/selected",
-            ...(revealed ? { state: "revealed", children: [RESULT_ICON_NODE] } : {}),
+            role: revealed ? "mỗi phương án (một dòng); tô + icon ✓/✗ đúng/sai/bỏ sót sau khi nộp" : "mỗi phương án (một dòng); default/selected",
+            ...(revealed ? { state: "revealed" } : {}),
         },
     ],
 })
@@ -147,19 +140,19 @@ const SINGLE_ASK_PARTS: Array<AnatomyNode> = inSection([CHIP_NODE, QUESTION_NODE
 // MULTIPLE, before submit: y hệt nhưng CheckboxGroup thay RadioGroup.
 const MULTIPLE_ASK_PARTS: Array<AnatomyNode> = inSection([CHIP_NODE, QUESTION_NODE, checkboxGroup(false), SUBMIT_NODE])
 
-// SINGLE, submitted + explanation: rows lộ đúng/sai (OptionResultIcon), nút nộp biến mất, thêm khối giải thích.
-const SINGLE_SUBMITTED_PARTS: Array<AnatomyNode> = inSection([CHIP_NODE, QUESTION_NODE, radioGroup(true), EXPLANATION_NODE])
+// SINGLE, submitted + explanation: rows lộ đúng/sai, nút nộp biến mất, thêm khối giải thích (2 Typography riêng).
+const SINGLE_SUBMITTED_PARTS: Array<AnatomyNode> = inSection([CHIP_NODE, QUESTION_NODE, radioGroup(true), EXPLANATION_LABEL_NODE, EXPLANATION_BODY_NODE])
 
-// MULTIPLE, submitted + explanation: mỗi dòng tự lộ đúng/sai/bỏ sót + khối giải thích.
-const MULTIPLE_SUBMITTED_PARTS: Array<AnatomyNode> = inSection([CHIP_NODE, QUESTION_NODE, checkboxGroup(true), EXPLANATION_NODE])
+// MULTIPLE, submitted + explanation: mỗi dòng tự lộ đúng/sai/bỏ sót + khối giải thích (2 Typography riêng).
+const MULTIPLE_SUBMITTED_PARTS: Array<AnatomyNode> = inSection([CHIP_NODE, QUESTION_NODE, checkboxGroup(true), EXPLANATION_LABEL_NODE, EXPLANATION_BODY_NODE])
 
 // NO questionIndex: StatusChip "Câu N" biến mất hoàn toàn (chưa nộp → còn nút nộp).
 const NO_INDEX_PARTS: Array<AnatomyNode> = inSection([QUESTION_NODE, radioGroup(false), SUBMIT_NODE])
 
-// SUBMITTED, no explanation: đã nộp → rows lộ đúng/sai (OptionResultIcon), KHÔNG nút nộp, KHÔNG khối giải thích.
+// SUBMITTED, no explanation: đã nộp → rows lộ đúng/sai, KHÔNG nút nộp, KHÔNG khối giải thích.
 const SUBMITTED_NO_EXPLANATION_PARTS: Array<AnatomyNode> = inSection([CHIP_NODE, QUESTION_NODE, radioGroup(true)])
 
-// READ-ONLY preview: chưa nộp + không onSubmit → rows default/selected (KHÔNG OptionResultIcon), không nút, không giải thích.
+// READ-ONLY preview: chưa nộp + không onSubmit → rows default/selected, không nút, không giải thích.
 const READONLY_PARTS: Array<AnatomyNode> = inSection([CHIP_NODE, QUESTION_NODE, radioGroup(false)])
 
 export const SingleChoice: Story = {

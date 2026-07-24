@@ -50,11 +50,11 @@ export const CustomContent: Story = {
                         <Typography type="body-sm">
                             Task points
                         </Typography>
-                        <div className="flex items-center justify-between gap-4">
+                        <div className="flex items-center justify-between gap-3">
                             <Typography type="body-xs" color="muted">Coding exercise</Typography>
                             <Typography type="body-xs">+10</Typography>
                         </div>
-                        <div className="flex items-center justify-between gap-4">
+                        <div className="flex items-center justify-between gap-3">
                             <Typography type="body-xs" color="muted">Mock interview</Typography>
                             <Typography type="body-xs">+25</Typography>
                         </div>

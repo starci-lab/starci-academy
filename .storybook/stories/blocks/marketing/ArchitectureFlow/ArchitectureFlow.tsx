@@ -32,27 +32,19 @@ export interface ArchitectureFlowProps extends WithClassNames<undefined> {
  * @param props - {@link ArchitectureFlowProps}
  */
 export const ArchitectureFlow = ({ nodes, className, showAnatomy }: ArchitectureFlowProps) => {
+    // The node box (span) + the connector (CaretRightIcon) are bare chrome — plain
+    // HTML / a decorative glyph, not registered design-system components — so
+    // neither gets an anatomy tag. The node LABEL is a Typography ArchitectureFlow
+    // renders directly for its own `nodes` prop, so it DOES get one.
     return (
         <div className={cn("flex flex-wrap items-center gap-2", className)}>
             {nodes.map((node, index) => (
                 <React.Fragment key={`${node}-${index}`}>
                     {index > 0 ? (
-                        <CaretRightIcon
-                            aria-hidden
-                            focusable="false"
-                            className="size-3 shrink-0 text-muted"
-                            data-anat-part={showAnatomy ? "CaretRightIcon" : undefined}
-                        />
+                        <CaretRightIcon aria-hidden focusable="false" className="size-3 shrink-0 text-muted" />
                     ) : null}
-                    <span
-                        className="rounded-md border border-default bg-default px-2 py-1"
-                        data-anat-part={showAnatomy ? "span" : undefined}
-                    >
-                        <Typography
-                            type="code"
-                            className="text-xs"
-                            data-anat-part={showAnatomy ? "Typography" : undefined}
-                        >
+                    <span className="rounded-md border border-default bg-default px-2 py-1">
+                        <Typography type="code" className="text-xs" data-anat-part={showAnatomy ? "Typography" : undefined}>
                             {node}
                         </Typography>
                     </span>

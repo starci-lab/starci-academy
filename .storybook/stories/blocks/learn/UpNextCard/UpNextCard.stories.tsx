@@ -31,35 +31,17 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 // ── Anatomy per-leaf — MIRROR the real DOM SectionCard renders ────────────────
 // Cây thật (UpNextCard.tsx): SectionCard (khung, contentClassName gap-3) BAO TẤT
 // CẢ, theo đúng thứ tự DOM:
-//   1. [hàng check+eyebrow] — chỉ khi showCheck || eyebrow (div flex gap-2)
-//        > CheckCircleIcon? + Typography eyebrow?
-//   2. [cụm bước kế] — luôn có (div flex-col gap-2)
-//        > Typography tiêu đề + Typography mô tả?
-//   3. [hàng CTA] — luôn có (div flex-wrap gap-3)
-//        > Button chính + Button phụ?
+//   1. [hàng check+eyebrow] — chỉ khi showCheck || eyebrow (div flex gap-2):
+//        CheckCircleIcon là glyph trang trí nội tại (state showCheck) — KHÔNG
+//        tách node; Typography eyebrow LÀ component UpNextCard tự render trực
+//        tiếp — CÓ node + tag riêng (chỉ khi opts.eyebrow).
+//   2. [cụm bước kế] — luôn có (div flex-col gap-2): Typography tiêu đề (luôn
+//        có) + Typography mô tả (tuỳ opts.description) đều tự render trực tiếp
+//        — MỖI CÁI có node + tag riêng.
+//   3. [hàng CTA] — luôn có (div flex-wrap gap-3) > Button chính + Button phụ?
+//        (2 component compose thật — GIỮ node, giữ div làm vai hàng hành động.)
 // Hai nút KHÔNG bọc ButtonGroup — chỉ là flex-wrap div thuần (xem deferred).
 
-const CHECK_ICON: AnatomyNode = {
-    name: "CheckCircleIcon",
-    tier: "primitive",
-    role: "check hoàn thành — micro-feedback 'vừa xong ✓'",
-    state: "showCheck",
-}
-const EYEBROW: AnatomyNode = {
-    name: "Typography · eyebrow",
-    tier: "primitive",
-    role: "eyebrow muted (body-xs) trên tiêu đề",
-}
-const TITLE: AnatomyNode = {
-    name: "Typography · tiêu đề",
-    tier: "primitive",
-    role: "tiêu đề bước kế (semibold)",
-}
-const DESCRIPTION: AnatomyNode = {
-    name: "Typography · mô tả",
-    tier: "primitive",
-    role: "mô tả hướng outcome (body-sm muted)",
-}
 const PRIMARY_CTA: AnatomyNode = {
     name: "Button · chính",
     tier: "primitive",
@@ -70,6 +52,9 @@ const SECONDARY_CTA: AnatomyNode = {
     tier: "primitive",
     role: "hành động phụ nhẹ (tertiary)",
 }
+const EYEBROW_TYPOGRAPHY: AnatomyNode = { name: "Typography", tier: "primitive", role: "eyebrow muted (\"Đã xong · Tiếp theo\")" }
+const TITLE_TYPOGRAPHY: AnatomyNode = { name: "Typography", tier: "primitive", role: "tiêu đề bước kế tiếp" }
+const DESCRIPTION_TYPOGRAPHY: AnatomyNode = { name: "Typography", tier: "primitive", role: "mô tả outcome (muted)" }
 
 /** Build a leaf's real tree: SectionCard BAO các cụm div theo đúng thứ tự DOM. */
 const buildLeaf = (opts: {
@@ -79,20 +64,13 @@ const buildLeaf = (opts: {
     secondary?: boolean
 }): Array<AnatomyNode> => {
     const children: Array<AnatomyNode> = []
-    if (opts.check || opts.eyebrow) {
-        children.push({
-            name: "div · hàng check+eyebrow",
-            tier: "primitive",
-            role: "cụm micro-feedback + eyebrow (flex) — chỉ khi có check hoặc eyebrow",
-            children: [...(opts.check ? [CHECK_ICON] : []), ...(opts.eyebrow ? [EYEBROW] : [])],
-        })
+    if (opts.eyebrow) {
+        children.push(EYEBROW_TYPOGRAPHY)
     }
-    children.push({
-        name: "div · bước kế",
-        tier: "primitive",
-        role: "cụm tiêu đề (+ mô tả) — thân bước tiếp theo",
-        children: [TITLE, ...(opts.description ? [DESCRIPTION] : [])],
-    })
+    children.push(TITLE_TYPOGRAPHY)
+    if (opts.description) {
+        children.push(DESCRIPTION_TYPOGRAPHY)
+    }
     children.push({
         name: "div · hàng CTA",
         tier: "primitive",
@@ -103,7 +81,12 @@ const buildLeaf = (opts: {
         {
             name: "SectionCard",
             tier: "design",
-            role: "khung viền tự đóng gom khối hoàn thành — BAO toàn bộ",
+            // check là glyph nội tại (không node); eyebrow/title/description giờ là
+            // node Typography riêng trong `children` — role ở đây chỉ mô tả khung.
+            role: [
+                "khung viền tự đóng gom khối hoàn thành — BAO toàn bộ",
+                opts.check ? "có check ✓ (glyph nội tại)" : null,
+            ].filter(Boolean).join(" · "),
             children,
         },
     ]

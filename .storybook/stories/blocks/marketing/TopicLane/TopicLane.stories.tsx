@@ -32,6 +32,12 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 // The lane-content parts (every row-bearing leaf shares this composition).
 // DOM: header (Icon span + tiêu đề Typography) → list div → mỗi hàng là <button>
 // hand-roll BỌC nhãn + tag Typography bên trong (không phải sibling phẳng).
+//
+// GRANULARITY (2026-07-23, revised): the header's icon `span` and title `Typography`
+// are DIRECT-composed elements of TopicLane itself → each gets its own node. `button`
+// is hand-rolled markup, NOT an imported primitive with its own slots, so its label/tag
+// `Typography` children are ALSO direct-composed (not "inside a primitive's slot") →
+// they get their own nodes, nested under `button` (real DOM containment).
 const CONTENT_PARTS: Array<AnatomyNode> = [
     { name: "Icon", tier: "primitive", role: "icon lane (code / hạ tầng) — ReactNode truyền vào, bọc <span> size-4" },
     { name: "Typography", tier: "primitive", role: "tiêu đề lane (type=body-sm, weight=semibold)" },
@@ -46,22 +52,14 @@ const CONTENT_PARTS: Array<AnatomyNode> = [
     },
 ]
 
-// empty leaf: header (Icon + tiêu đề) vẫn giữ, danh sách hàng đổi sang EmptyState
-// (là sibling của lane trong story); EmptyState tự bọc icon + tiêu đề + mô tả.
+// empty leaf: header (Icon + tiêu đề) vẫn giữ (2 node riêng, cùng lý do trên); danh
+// sách hàng đổi sang EmptyState — EmptyState LÀ một primitive thật (import riêng, có
+// anatomy của chính nó) → giữ NGUYÊN 1 node, KHÔNG đào vào con của nó (icon/tiêu đề/
+// mô tả rỗng nằm TRONG slot của EmptyState, không badge riêng).
 const EMPTY_PARTS: Array<AnatomyNode> = [
     { name: "Icon", tier: "primitive", role: "icon lane — header vẫn giữ" },
     { name: "Typography", tier: "primitive", role: "tiêu đề lane (type=body-sm, weight=semibold)" },
-    {
-        name: "EmptyState",
-        tier: "primitive",
-        role: '"Chưa có chủ đề nào" thay cho danh sách hàng',
-        state: "empty",
-        children: [
-            { name: "Icon · rỗng", tier: "primitive", role: "icon rỗng (TrayIcon, size-8, muted)" },
-            { name: "Typography · tiêu đề rỗng", tier: "primitive", role: "tiêu đề rỗng (weight=medium, center)" },
-            { name: "Typography · mô tả", tier: "primitive", role: "mô tả (type=body-xs, muted, center)" },
-        ],
-    },
+    { name: "EmptyState", tier: "primitive", role: "\"Chưa có chủ đề nào\" thay cho danh sách hàng", state: "empty" },
 ]
 
 // loading leaf: chrome mirrored — header Skeleton (icon + tiêu đề) + 3 khung hàng,
@@ -163,7 +161,7 @@ export const StaticRows: Story = {
                 tier="block"
                 leaf="Hàng tĩnh"
                 parts={CONTENT_PARTS}
-                note="Bỏ onPress → hàng không bấm được (chỉ trưng bày), nhưng vẫn CÙNG composition Typography + ListRow."
+                note="Bỏ onPress → hàng không bấm được (chỉ trưng bày), nhưng vẫn CÙNG composition Typography + button."
             >
                 <div className="max-w-[320px]">
                     <TopicLane
@@ -195,7 +193,7 @@ export const Empty: Story = {
                     <TopicLane showAnatomy icon={<CodeIcon />} title="Code" items={[]} />
                     <EmptyState
                         anatPart="EmptyState"
-                        icon={<TrayIcon weight="duotone" data-anat-part="Icon · rỗng" />}
+                        icon={<TrayIcon weight="duotone" />}
                         title="Chưa có chủ đề nào"
                         description="Các chủ đề tiêu biểu của lộ trình sẽ hiện ở đây."
                     />
@@ -220,14 +218,14 @@ export const SkeletonLoading: Story = {
             >
                 <div className="flex max-w-[320px] flex-col gap-3">
                     <div className="flex items-center gap-2">
-                        <Skeleton className="size-4 shrink-0 rounded" />
-                        <Skeleton className="my-[5px] h-[14px] w-20 rounded" />
+                        <Skeleton className="size-4 shrink-0 rounded" anatPart="Skeleton · icon" />
+                        <Skeleton className="my-[5px] h-[14px] w-20 rounded" anatPart="Skeleton · tiêu đề" />
                     </div>
                     <div className="flex flex-col gap-2">
                         {[0, 1, 2].map((i) => (
                             <div key={i} data-anat-part="Row frame" className="flex items-center justify-between gap-3 rounded-xl border border-default bg-surface px-3 py-2">
-                                <Skeleton className="my-[5px] h-[14px] w-1/2 rounded" />
-                                <Skeleton className="h-3 w-6 shrink-0 rounded" />
+                                <Skeleton className="my-[5px] h-[14px] w-1/2 rounded" anatPart="Skeleton · nhãn" />
+                                <Skeleton className="h-3 w-6 shrink-0 rounded" anatPart="Skeleton · tag" />
                             </div>
                         ))}
                     </div>

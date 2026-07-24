@@ -41,8 +41,10 @@ const noProgressBase = {
 }
 
 // Base hero no-progress composition mirrors the REAL DOM: HighlightCard WRAPS
-// SectionCard, which CONTAINS title + MetaRow(chip inside) + CTA Button. NO bar
-// (value undefined → ProgressMeter not rendered).
+// SectionCard, which CONTAINS the title Typography + MetaRow(chip inside) + CTA
+// Button. NO bar (value undefined → ProgressMeter not rendered). The title
+// Typography IS a composed node — ContinueCard writes it directly; only the CTA's
+// arrow icon stays CUT (a value passed into Button's `icon` prop).
 const NO_PROGRESS_PARTS: Array<AnatomyNode> = [
     {
         name: "HighlightCard",
@@ -54,7 +56,7 @@ const NO_PROGRESS_PARTS: Array<AnatomyNode> = [
                 tier: "design",
                 role: "khung surface bên trong wrapper (frame chung mọi state)",
                 children: [
-                    { name: "Typography", tier: "primitive", role: "tiêu đề phiên (weight medium, truncate)" },
+                    { name: "Typography · tiêu đề", tier: "primitive", role: "tên phiên đang tiếp tục (title, weight medium, truncate)" },
                     {
                         name: "MetaRow",
                         tier: "primitive",
@@ -63,14 +65,7 @@ const NO_PROGRESS_PARTS: Array<AnatomyNode> = [
                             { name: "StatusChip", tier: "primitive", role: "chip time-remaining (prop chip → mount TRONG MetaRow)", state: "neutral" },
                         ],
                     },
-                    {
-                        name: "Button",
-                        tier: "primitive",
-                        role: "CTA chip (hero, primary, onPress)",
-                        children: [
-                            { name: "Icon (ArrowRight)", tier: "primitive", role: "mũi tên trong nút (prop icon)" },
-                        ],
-                    },
+                    { name: "Button", tier: "primitive", role: "CTA chip (hero, primary, onPress)" },
                 ],
             },
         ],
@@ -78,7 +73,8 @@ const NO_PROGRESS_PARTS: Array<AnatomyNode> = [
 ]
 
 // With-icon leaf: same base + a decorative watermark icon as the FIRST child of
-// SectionCard (sunk behind the content).
+// SectionCard (sunk behind the content). The watermark stays CUT — it's just the
+// value passed into ContinueCard's `icon` prop, rendered by a plain decorative div.
 const WITH_ICON_PARTS: Array<AnatomyNode> = [
     {
         name: "HighlightCard",
@@ -90,8 +86,7 @@ const WITH_ICON_PARTS: Array<AnatomyNode> = [
                 tier: "design",
                 role: "khung surface bên trong wrapper (frame chung mọi state)",
                 children: [
-                    { name: "Icon (watermark)", tier: "primitive", role: "cue momentum (streak) chìm sau nội dung, chỉ hero (con đầu của SectionCard)" },
-                    { name: "Typography", tier: "primitive", role: "tiêu đề phiên (weight medium, truncate)" },
+                    { name: "Typography · tiêu đề", tier: "primitive", role: "tên phiên đang tiếp tục (title, weight medium, truncate)" },
                     {
                         name: "MetaRow",
                         tier: "primitive",
@@ -100,14 +95,7 @@ const WITH_ICON_PARTS: Array<AnatomyNode> = [
                             { name: "StatusChip", tier: "primitive", role: "chip time-remaining (prop chip → mount TRONG MetaRow)", state: "neutral" },
                         ],
                     },
-                    {
-                        name: "Button",
-                        tier: "primitive",
-                        role: "CTA chip (hero, primary, onPress)",
-                        children: [
-                            { name: "Icon (ArrowRight)", tier: "primitive", role: "mũi tên trong nút (prop icon)" },
-                        ],
-                    },
+                    { name: "Button", tier: "primitive", role: "CTA chip (hero, primary, onPress)" },
                 ],
             },
         ],
@@ -126,7 +114,7 @@ const LINK_CTA_PARTS: Array<AnatomyNode> = [
                 tier: "design",
                 role: "khung surface bên trong wrapper (frame chung mọi state)",
                 children: [
-                    { name: "Typography", tier: "primitive", role: "tiêu đề phiên (weight medium, truncate)" },
+                    { name: "Typography · tiêu đề", tier: "primitive", role: "tên phiên đang tiếp tục (title, weight medium, truncate)" },
                     {
                         name: "MetaRow",
                         tier: "primitive",
@@ -135,14 +123,7 @@ const LINK_CTA_PARTS: Array<AnatomyNode> = [
                             { name: "StatusChip", tier: "primitive", role: "chip time-remaining (prop chip → mount TRONG MetaRow)", state: "neutral" },
                         ],
                     },
-                    {
-                        name: "Link",
-                        tier: "primitive",
-                        role: "CTA pill dùng href (hand-rolled Link-as-pill)",
-                        children: [
-                            { name: "Icon (ArrowRight)", tier: "primitive", role: "mũi tên trong pill" },
-                        ],
-                    },
+                    { name: "Link", tier: "primitive", role: "CTA pill dùng href (hand-rolled Link-as-pill)" },
                 ],
             },
         ],
@@ -262,12 +243,12 @@ export const Loading: Story = {
                 note="Skeleton mirror đúng footprint no-progress (title · meta · CTA), KHÔNG thanh — composition khác leaf data."
             >
                 <div className="w-96 p-8">
-                    <SectionCard contentClassName="flex flex-col gap-3">
+                    <SectionCard anatPart="SectionCard" contentClassName="flex flex-col gap-3">
                         <div className="flex flex-col gap-2">
-                            <Skeleton.Typography type="body" width="2/3" />
-                            <Skeleton.Typography type="body-xs" width="1/2" />
+                            <Skeleton.Typography type="body" width="2/3" anatPart="Skeleton.Typography" />
+                            <Skeleton.Typography type="body-xs" width="1/2" anatPart="Skeleton.Typography" />
                         </div>
-                        <Skeleton.Button width="w-28" />
+                        <Skeleton.Button width="w-28" anatPart="Skeleton.Button" />
                     </SectionCard>
                 </div>
             </BlockAnatomy>,
@@ -287,14 +268,15 @@ export const LoadError: Story = {
                 note="Mạng rớt → khung SectionCard giữ nguyên, thân đổi sang EmptyState tone danger + nút thử lại (không nội dung thẻ)."
             >
                 <div className="w-96 p-8">
-                    <SectionCard>
+                    <SectionCard anatPart="SectionCard">
                         <EmptyState
+                            anatPart="EmptyState"
                             tone="danger"
                             icon={<WarningIcon weight="duotone" />}
                             title="Mất kết nối"
                             description="Mạng có vẻ bị rớt. Kiểm tra kết nối rồi thử lại."
                             action={
-                                <Button variant="secondary" size="sm" onPress={() => {}}>
+                                <Button variant="secondary" size="sm" onPress={() => {}} anatPart="Button">
                                     Thử lại
                                 </Button>
                             }

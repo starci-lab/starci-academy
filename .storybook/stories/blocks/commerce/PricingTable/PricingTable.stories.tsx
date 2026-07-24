@@ -77,8 +77,10 @@ const threeTiers: PricingTableTier[] = [
 ]
 
 // Feature list sub-tree — ONE CrossListCard (bordered) whose rows mix ✓ (check/success)
-// and ✗ (cross/muted); shared by both leaves. Each CrossListItem nests its mark Icon +
-// label Typography, faithfully to CrossListItem's real render (markIcon + children).
+// and ✗ (cross/muted); shared by both leaves. CrossListItem takes `mark` + `children`
+// (label) as props and renders its OWN internal Icon/Typography — those are CrossListItem
+// presenting its own props, not sub-components PricingTable composes, so they are CUT here
+// (no child nodes; drill into CrossListItem's own story for that anatomy).
 const FEATURE_LIST: AnatomyNode = {
     name: "CrossListCard",
     tier: "design",
@@ -87,60 +89,57 @@ const FEATURE_LIST: AnatomyNode = {
         {
             name: "CrossListItem",
             tier: "design",
-            role: "mỗi tính năng một dòng (lặp theo features)",
-            children: [
-                { name: "Icon", tier: "primitive", role: "dấu ✓ check (success, included) hoặc ✗ cross (muted, excluded) theo `included`" },
-                { name: "Typography", tier: "primitive", role: "nhãn tính năng — chìm (muted) khi không included" },
-            ],
+            role: "mỗi tính năng một dòng (lặp theo features) — mark (✓/✗) + nhãn tự hiện nội bộ",
         },
     ],
 }
 
-// Highlighted leaf: at least one tier is nổi bật → its PricingCard's SectionCard is accent
-// and carries the StatusChip ribbon inline beside the tier name.
+// Content Typography that the inlined PricingCard DIRECTLY renders (its own `type`/
+// `weight`/`color`, echoing tier data) — each is a badged node, same standard as the
+// standalone `cards/PricingCard` block.
+const NAME: AnatomyNode = { name: "Typography · tên", tier: "primitive", role: "tên gói — tiêu đề cột" }
+// Price = ONE PricePoint primitive (số lớn + period). Its internal Typography are
+// PricePoint's OWN anatomy (drill into PricePoint's story), NOT badged here.
+const PRICE_POINT: AnatomyNode = { name: "PricePoint", tier: "primitive", role: "giá gói: số lớn + kỳ hạn (khi có) — 1 đơn vị" }
+const DESC: AnatomyNode = { name: "Typography · mô tả", tier: "primitive", role: "mô tả gói — chìm (muted), chỉ tier có description" }
+
+// Highlighted leaf: at least one tier is nổi bật → PricingCard's frame is accent and
+// carries the StatusChip ribbon inline beside the tier name.
+//
+// NOTE (reconcile 2026-07-23): "SectionCard" is CUT from this tree — PricingCard has no
+// wrapper of its own, its DOM root IS the SectionCard element (see PricingTable.tsx), so
+// two tree nodes would collide on ONE emitter. Kept "PricingCard" (the composite's real
+// name) as the single frame marker instead of the primitive it happens to be built on.
 const HIGHLIGHTED_PARTS: Array<AnatomyNode> = [
     {
         name: "PricingCard",
         tier: "design",
-        role: "mỗi cột một tier — composite lồng cả khung + nội dung",
+        role: "mỗi cột một tier — khung (accent khi tier nổi bật)",
         children: [
-            {
-                name: "SectionCard",
-                tier: "design",
-                role: "khung thẻ chứa toàn bộ cột (accent khi tier nổi bật)",
-                children: [
-                    { name: "Typography", tier: "primitive", role: "tên gói — tiêu đề cột" },
-                    { name: "StatusChip", tier: "primitive", role: 'ribbon "phổ biến" cạnh tên — chỉ tier nổi bật', state: "accent" },
-                    { name: "Typography", tier: "primitive", role: "giá + period (period chìm muted)" },
-                    { name: "Typography", tier: "primitive", role: "mô tả gói — chìm (muted)" },
-                    FEATURE_LIST,
-                    { name: "Button", tier: "primitive", role: "CTA chọn gói — một hành động duy nhất mỗi cột" },
-                ],
-            },
+            NAME,
+            { name: "StatusChip", tier: "primitive", role: "ribbon \"phổ biến\" cạnh tên — chỉ tier nổi bật", state: "accent" },
+            PRICE_POINT,
+            DESC,
+            FEATURE_LIST,
+            { name: "Button", tier: "primitive", role: "CTA chọn gói — một hành động duy nhất mỗi cột" },
         ],
     },
 ]
 
-// Plain leaf: no tier is highlighted → SectionCard is not accent and there is NO StatusChip;
-// every PricingCard is đồng cấp. Otherwise the same composition as the highlighted leaf.
+// Plain leaf: no tier is highlighted → PricingCard's frame is not accent and there is NO
+// StatusChip; every PricingCard is đồng cấp. Otherwise the same composition as the
+// highlighted leaf. (Same "SectionCard cut" note as HIGHLIGHTED_PARTS above.)
 const PLAIN_PARTS: Array<AnatomyNode> = [
     {
         name: "PricingCard",
         tier: "design",
-        role: "mỗi cột một tier — composite lồng cả khung + nội dung",
+        role: "mỗi cột một tier — khung (không accent — mọi cột đồng cấp)",
         children: [
-            {
-                name: "SectionCard",
-                tier: "design",
-                role: "khung thẻ chứa toàn bộ cột (không accent — mọi cột đồng cấp)",
-                children: [
-                    { name: "Typography", tier: "primitive", role: "tên gói — tiêu đề cột" },
-                    { name: "Typography", tier: "primitive", role: "giá + period (period chìm muted)" },
-                    { name: "Typography", tier: "primitive", role: "mô tả gói — chìm (muted)" },
-                    FEATURE_LIST,
-                    { name: "Button", tier: "primitive", role: "CTA chọn gói — một hành động duy nhất mỗi cột" },
-                ],
-            },
+            NAME,
+            PRICE_POINT,
+            DESC,
+            FEATURE_LIST,
+            { name: "Button", tier: "primitive", role: "CTA chọn gói — một hành động duy nhất mỗi cột" },
         ],
     },
 ]

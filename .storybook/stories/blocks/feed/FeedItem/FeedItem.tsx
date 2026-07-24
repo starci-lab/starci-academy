@@ -30,7 +30,16 @@ export interface FeedItemProps {
     footer?: ReactNode
     /** Extra classes merged onto the root. */
     className?: string
-    /** When on, emit `data-anat-part` on each anatomy part for the BlockAnatomy panel. */
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
+    /**
+     * When on, FeedItem emits `data-anat-part="Typography"` on the two Typography
+     * elements it renders directly (the action text, the timestamp) so a
+     * BlockAnatomy panel can badge them (§ granularity — every Typography a block
+     * writes itself is its own node). `leading`/`footer` slot content (e.g.
+     * ActivityAvatar, ReactionBar) takes its own `showAnatomy`/`anatPart` directly
+     * from the caller — FeedItem doesn't know what's inside those slots.
+     */
     showAnatomy?: boolean
 }
 
@@ -45,9 +54,9 @@ export interface FeedItemProps {
  *
  * @param props - {@link FeedItemProps}
  */
-export const FeedItem = ({ leading, children, timestamp, footer, className, showAnatomy }: FeedItemProps) => {
+export const FeedItem = ({ leading, children, timestamp, footer, className, anatPart, showAnatomy }: FeedItemProps) => {
     return (
-        <div className={cn("flex items-start gap-2", className)}>
+        <div className={cn("flex items-start gap-2", className)} data-anat-part={anatPart}>
             {leading ? <div className="shrink-0">{leading}</div> : null}
             <div className="flex flex-col gap-1 min-w-0">
                 <div className="flex flex-col gap-0">

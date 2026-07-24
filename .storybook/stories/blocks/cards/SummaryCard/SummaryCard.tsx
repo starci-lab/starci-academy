@@ -3,6 +3,7 @@ import { cn } from "@heroui/react"
 import { CaretRightIcon } from "@phosphor-icons/react"
 import { PressableCard } from "../PressableCard/PressableCard"
 import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
+import { TitledText } from "../../text/TitledText/TitledText"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -68,11 +69,8 @@ const SummaryCardBase = ({
                     <Skeleton className="size-6 rounded-lg" />
                     <Skeleton className="size-5 rounded" />
                 </div>
-                <div className="flex flex-col gap-0">
-                    <Skeleton.Typography type="h3" width="1/3" />
-                    <Skeleton.Typography type="body-sm" width="2/3" />
-                    {hint ? <Skeleton.Typography type="body-xs" width="1/2" /> : null}
-                </div>
+                {/* value · label · hint stat stack = TitledText (skeleton mirror delegated) */}
+                <TitledText size="stat" title="" subtitle="x" hint={hint} isSkeleton />
             </div>
         )
     }
@@ -86,11 +84,9 @@ const SummaryCardBase = ({
                 <span className="text-accent-soft-foreground [&_svg]:size-6">{icon}</span>
                 <CaretRightIcon className="size-3 shrink-0 text-muted" aria-hidden focusable="false" />
             </div>
-            <div className="flex flex-col gap-0">
-                <span className="text-2xl font-bold leading-tight text-foreground">{value}</span>
-                <span className="text-sm font-medium text-foreground">{label}</span>
-                {hint ? <span className="text-xs text-muted">{hint}</span> : null}
-            </div>
+            {/* big value + label + optional hint = one TitledText (size=stat) — was 3 raw
+                spans (§9 fix: value/label/hint font now flows through Typography). */}
+            <TitledText size="stat" title={value} subtitle={label} hint={hint} />
         </PressableCard>
     )
 }

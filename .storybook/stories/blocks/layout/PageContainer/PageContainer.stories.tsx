@@ -3,7 +3,7 @@ import { Typography } from "@heroui/react"
 import { PageContainer } from "./PageContainer"
 
 const meta: Meta<typeof PageContainer> = {
-    title: "Primitives/Layout/PageContainer",
+    title: "Primitives/Layouts/PageContainer",
     component: PageContainer,
     tags: ["autodocs"],
     parameters: {

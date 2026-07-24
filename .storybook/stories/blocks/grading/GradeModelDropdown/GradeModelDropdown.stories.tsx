@@ -164,7 +164,7 @@ const NORMAL_ROW: AnatomyNode = {
 // node, so `data-anat-part` passed to it lands nowhere; Tooltip.Trigger + Tooltip.Content are
 // the real emitters (each forwards props onto an actual DOM element) and are direct children here.
 const LOCKED_ROW: AnatomyNode = {
-    name: "DropdownItem · khoá",
+    name: "DropdownItem.Locked",
     tier: "primitive",
     role: "hàng tier cao — không chọn được, bấm → nâng gói",
     state: "locked",
@@ -188,7 +188,7 @@ const LOCKED_ROW: AnatomyNode = {
 
 // Below-floor row — vẫn chọn được nhưng cảnh báo: cùng shape, icon amber. (Tooltip root cut — see LOCKED_ROW note.)
 const WARN_ROW: AnatomyNode = {
-    name: "DropdownItem · cảnh báo",
+    name: "DropdownItem.Warning",
     tier: "primitive",
     role: "hàng dưới floor — vẫn chọn được nhưng có thể kém chính xác",
     state: "warning",
@@ -215,7 +215,7 @@ const WARN_ROW: AnatomyNode = {
 // LOCKED/WARN (Tooltip root cut — see LOCKED_ROW note). FULL_CATALOG's gpt-4o is this row's
 // real instance (not self-host) so no SELF_HOST_MARK child here.
 const DISABLED_ROW: AnatomyNode = {
-    name: "DropdownItem · không khả dụng",
+    name: "DropdownItem.Disabled",
     tier: "primitive",
     role: "model tạm mất kết nối (key lỗi / provider down) — không chọn được — ẨN mặc định, hiện qua REVEAL_HIDDEN",
     state: "disabled",
@@ -239,7 +239,7 @@ const DISABLED_ROW: AnatomyNode = {
 
 // Empty catalog row — DropdownItem wrapping a muted text span.
 const EMPTY_ROW: AnatomyNode = {
-    name: "DropdownItem · rỗng",
+    name: "DropdownItem.Empty",
     tier: "primitive",
     role: "dòng rỗng khi danh sách trống — tự hiện 'Không có model khớp' (muted)",
     state: "empty",
@@ -247,7 +247,7 @@ const EMPTY_ROW: AnatomyNode = {
 
 // Auto lane pinned atop the popover — its own DropdownMenu/Section/Item + Separator.
 const AUTO_LANE: AnatomyNode = {
-    name: "DropdownMenu · Tự động",
+    name: "DropdownMenu.Auto",
     tier: "primitive",
     role: "menu ghim lane 'Tự động' đầu popover",
     children: [
@@ -257,7 +257,7 @@ const AUTO_LANE: AnatomyNode = {
             role: "nhóm mục trong menu",
             children: [
                 {
-                    name: "DropdownItem · Tự động",
+                    name: "DropdownItem.Auto",
                     tier: "primitive",
                     role: "lane 'Tự động' — balancer tự chọn model; tự hiện SparkleIcon + nhãn 'Tự động'",
                 },
@@ -269,7 +269,7 @@ const AUTO_LANE: AnatomyNode = {
 
 const SEARCH_NODE: AnatomyNode = { name: "SearchField", tier: "primitive", role: "ô tìm model trong popover" }
 const TIER_FILTER_NODE: AnatomyNode = { name: "FlexWrapButtonRadio", tier: "primitive", role: "cụm pill lọc theo hạng (tier) — ẩn khi < 2 bucket" }
-const REVEAL_HIDDEN: AnatomyNode = { name: "button · Hiện N ẩn", tier: "primitive", role: "nút lộ model đang ẩn (down / off-task) — CHỈ khi hiddenCount > 0" }
+const REVEAL_HIDDEN: AnatomyNode = { name: "Button.RevealHidden", tier: "primitive", role: "nút lộ model đang ẩn (down / off-task) — CHỈ khi hiddenCount > 0" }
 
 // list = ScrollShadow > DropdownMenu > DropdownSection > rows.
 const listMenu = (rows: Array<AnatomyNode>): AnatomyNode => ({
@@ -278,7 +278,7 @@ const listMenu = (rows: Array<AnatomyNode>): AnatomyNode => ({
     role: "vùng cuộn danh sách model (max-h-72)",
     children: [
         {
-            name: "DropdownMenu · Chọn model",
+            name: "DropdownMenu.ModelList",
             tier: "primitive",
             role: "menu danh sách model",
             children: [
@@ -365,7 +365,7 @@ export const DefaultTrigger: Story = {
             <BlockAnatomy
                 name="GradeModelDropdown"
                 tier="block"
-                leaf="Trigger inline"
+                leaf="InlineTrigger"
                 parts={INLINE_PARTS}
                 reason="Picker lane + model dùng chung cho mọi surface AI (chấm bài, AI lab). Gói search + lọc theo hạng (FlexWrapButtonRadio) + mỗi hàng model có chip hạng (AiCategoryChip), dấu self-host (SelfHostGpuMark), badge health, và các trạng thái disabled/locked/warning vào MỘT block — feature chỉ truyền catalog + selection, không phải tự dựng lại toàn bộ logic khoá gói / dưới-floor / hợp-tác-vụ ở mỗi màn."
             >
@@ -385,7 +385,7 @@ export const FieldTrigger: Story = {
             <BlockAnatomy
                 name="GradeModelDropdown"
                 tier="block"
-                leaf="Trigger field"
+                leaf="FieldTrigger"
                 parts={FIELD_PARTS}
                 note="Trigger đổi sang field-style (viền + nền field) để khớp Select cạnh nó — popover giữ nguyên composition."
             >
@@ -406,7 +406,7 @@ export const ButtonTrigger: Story = {
             <BlockAnatomy
                 name="GradeModelDropdown"
                 tier="block"
-                leaf="Trigger button"
+                leaf="ButtonTrigger"
                 parts={BUTTON_PARTS}
                 note="Trigger là Button tertiary để hoà vào cụm nút cạnh nó — popover giữ nguyên composition."
             >
@@ -427,7 +427,7 @@ export const ButtonFullWidth: Story = {
             <BlockAnatomy
                 name="GradeModelDropdown"
                 tier="block"
-                leaf="Trigger button full-width"
+                leaf="ButtonFullWidth"
                 parts={BUTTON_PARTS}
                 note="CÙNG composition với 'Trigger button' — Button chỉ giãn full-width theo container (w-64)."
             >
@@ -451,7 +451,7 @@ export const NoAutoLanePinned: Story = {
             <BlockAnatomy
                 name="GradeModelDropdown"
                 tier="block"
-                leaf="Không auto — đã ghim"
+                leaf="NoAutoLanePinned"
                 parts={NO_AUTO_PARTS}
                 note="showAutoLane=false → popover BỎ lane 'Tự động'; trigger hiện tên model đã ghim thay vì 'Tự động'."
             >
@@ -472,7 +472,7 @@ export const LockedModels: Story = {
             <BlockAnatomy
                 name="GradeModelDropdown"
                 tier="block"
-                leaf="Khoá gói"
+                leaf="LockedModels"
                 parts={LOCKED_PARTS}
                 note="Chưa mở gói → hàng Balanced/Premium/Frontier thêm LockIcon, không chọn được, bấm → nâng gói."
             >
@@ -492,7 +492,7 @@ export const BelowFloorWarning: Story = {
             <BlockAnatomy
                 name="GradeModelDropdown"
                 tier="block"
-                leaf="Cảnh báo dưới floor"
+                leaf="BelowFloorWarning"
                 parts={WARN_PARTS}
                 note="floor=Economy → model dưới mức thêm WarningIcon: vẫn chọn được nhưng cảnh báo có thể kém chính xác."
             >
@@ -513,7 +513,7 @@ export const EmptyCatalog: Story = {
             <BlockAnatomy
                 name="GradeModelDropdown"
                 tier="block"
-                leaf="Catalog rỗng"
+                leaf="EmptyCatalog"
                 parts={EMPTY_PARTS}
                 note="models=[] → pill lọc theo hạng biến mất (không đủ bucket), danh sách rơi về dòng 'Không có model khớp'."
             >
@@ -533,7 +533,7 @@ export const DisabledControl: Story = {
             <BlockAnatomy
                 name="GradeModelDropdown"
                 tier="block"
-                leaf="Vô hiệu hoá"
+                leaf="DisabledControl"
                 parts={INLINE_PARTS}
                 note="CÙNG composition với 'Trigger inline' — isDisabled chỉ khoá tương tác (popover không mở), trigger giữ model đã ghim."
             >

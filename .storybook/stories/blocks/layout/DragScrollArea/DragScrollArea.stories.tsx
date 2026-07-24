@@ -3,7 +3,7 @@ import { Typography } from "@heroui/react"
 import { DragScrollArea } from "./DragScrollArea"
 
 const meta: Meta<typeof DragScrollArea> = {
-    title: "Primitives/Layout/DragScrollArea",
+    title: "Primitives/Layouts/DragScrollArea",
     component: DragScrollArea,
     tags: ["autodocs"],
     parameters: {

@@ -3,7 +3,7 @@ import { Typography } from "@heroui/react"
 import { NestedCard, NestedCardSection } from "./NestedCard"
 
 const meta: Meta<typeof NestedCard> = {
-    title: "Primitives/Card/NestedCard",
+    title: "Primitives/Cards/NestedCard",
     component: NestedCard,
     tags: ["autodocs"],
     parameters: {

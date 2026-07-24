@@ -172,11 +172,11 @@ const AssistantBody = ({
                     icon={<WarningCircleIcon aria-hidden focusable="false" />}
                     tone="danger"
                     size="sm"
-                    anatPart={showAnatomy ? "InlineIconLabel · lỗi" : undefined}
+                    anatPart={showAnatomy ? "InlineIconLabel.Error" : undefined}
                 >
                     {errorLabel}
                 </InlineIconLabel>
-                <Button variant="secondary" size="sm" onPress={onRetry} anatPart={showAnatomy ? "Button · thử lại" : undefined}>
+                <Button variant="secondary" size="sm" onPress={onRetry} anatPart={showAnatomy ? "Button.Retry" : undefined}>
                     <ArrowClockwiseIcon aria-hidden focusable="false" />
                     {retryLabel}
                 </Button>
@@ -203,13 +203,13 @@ const AssistantBody = ({
         )
     }
     if (message.content === "") {
-        return <Typography type="body-sm" color="muted" data-anat-part={showAnatomy ? "Typography · đang soạn" : undefined}>{thinkingLabel}</Typography>
+        return <Typography type="body-sm" color="muted" data-anat-part={showAnatomy ? "Typography.Thinking" : undefined}>{thinkingLabel}</Typography>
     }
     if (message.isQuotaError) {
         return (
             <div className="flex flex-col gap-2">
                 <MarkdownContent markdown={message.content} anatPart={showAnatomy ? "MarkdownContent" : undefined} />
-                <Button variant="primary" size="sm" onPress={onUpgrade} anatPart={showAnatomy ? "Button · nâng cấp" : undefined}>
+                <Button variant="primary" size="sm" onPress={onUpgrade} anatPart={showAnatomy ? "Button.Upgrade" : undefined}>
                     {upgradeLabel}
                     <ArrowRightIcon aria-hidden focusable="false" />
                 </Button>
@@ -249,10 +249,10 @@ export const ChatThread = ({
             {isLoading ? (
                 // Skeleton mirror — a short user bubble + a taller assistant bubble.
                 <>
-                    <ChatBubble role="user" anatPart={showAnatomy ? "ChatBubble · skeleton" : undefined}>
+                    <ChatBubble role="user" anatPart={showAnatomy ? "ChatBubble.Skeleton" : undefined}>
                         <Skeleton.Typography type="body-sm" width="w-40" />
                     </ChatBubble>
-                    <ChatBubble role="assistant" anatPart={showAnatomy ? "ChatBubble · skeleton" : undefined}>
+                    <ChatBubble role="assistant" anatPart={showAnatomy ? "ChatBubble.Skeleton" : undefined}>
                         <div className="flex w-56 flex-col gap-1">
                             <Skeleton.Typography type="body-sm" width="full" />
                             <Skeleton.Typography type="body-sm" width="3/4" />
@@ -267,7 +267,7 @@ export const ChatThread = ({
                 hasSelection ? null : scope ? (
                     <>
                         {emptyHint ? (
-                            <Typography type="body-sm" color="muted" data-anat-part={showAnatomy ? "Typography · gợi ý" : undefined}>
+                            <Typography type="body-sm" color="muted" data-anat-part={showAnatomy ? "Typography.Suggestion" : undefined}>
                                 {emptyHint}
                             </Typography>
                         ) : null}
@@ -278,7 +278,7 @@ export const ChatThread = ({
                             <ChipButtonList
                                 items={suggestions.map((s, index) => ({ id: `suggestion-${index}`, label: s.label, icon: s.icon, onPress: s.onPress }))}
                                 direction="wrap"
-                                anatPart={showAnatomy ? "ChipButtonList · gợi ý" : undefined}
+                                anatPart={showAnatomy ? "ChipButtonList.Suggestion" : undefined}
                                 showAnatomy={showAnatomy}
                             />
                         ) : null}
@@ -286,7 +286,7 @@ export const ChatThread = ({
                             <ChipButtonList
                                 items={skills.map((s, index) => ({ id: `skill-${index}`, label: s.label, icon: s.icon, onPress: s.onPress }))}
                                 direction="wrap"
-                                anatPart={showAnatomy ? "ChipButtonList · kỹ năng" : undefined}
+                                anatPart={showAnatomy ? "ChipButtonList.Skill" : undefined}
                                 showAnatomy={showAnatomy}
                             />
                         ) : null}
@@ -294,7 +294,7 @@ export const ChatThread = ({
                 ) : (
                     <>
                         {emptyHint ? (
-                            <Typography type="body-sm" color="muted" data-anat-part={showAnatomy ? "Typography · gợi ý" : undefined}>
+                            <Typography type="body-sm" color="muted" data-anat-part={showAnatomy ? "Typography.Suggestion" : undefined}>
                                 {emptyHint}
                             </Typography>
                         ) : null}
@@ -306,7 +306,7 @@ export const ChatThread = ({
                                         variant="secondary"
                                         size="sm"
                                         onPress={s.onPress}
-                                        anatPart={showAnatomy ? "Button · gợi ý" : undefined}
+                                        anatPart={showAnatomy ? "Button.Suggestion" : undefined}
                                     >
                                         {s.icon}
                                         {s.label}
@@ -319,11 +319,11 @@ export const ChatThread = ({
             ) : (
                 messages.map((message) =>
                     message.role === "user" ? (
-                        <ChatBubble key={message.id} role="user" anatPart={showAnatomy ? "ChatBubble · user" : undefined}>
+                        <ChatBubble key={message.id} role="user" anatPart={showAnatomy ? "ChatBubble.User" : undefined}>
                             <Typography type="body-sm">{message.content}</Typography>
                         </ChatBubble>
                     ) : (
-                        <ChatBubble key={message.id} role="assistant" anatPart={showAnatomy ? "ChatBubble · assistant" : undefined}>
+                        <ChatBubble key={message.id} role="assistant" anatPart={showAnatomy ? "ChatBubble.Assistant" : undefined}>
                             <AssistantBody
                                 message={message}
                                 onSelectHit={onSelectHit}

@@ -52,7 +52,7 @@ export const SingleNode: Story = {
             <BlockAnatomy
                 name="ArchitectureFlow"
                 tier="design"
-                leaf="Một node"
+                leaf="SingleNode"
                 parts={SINGLE_PARTS}
                 note="Chỉ một node → hộp Typography đứng một mình, KHÔNG có CaretRightIcon (connector chỉ hiện giữa các node)."
             >
@@ -68,7 +68,7 @@ export const TypicalFlow: Story = {
             <BlockAnatomy
                 name="ArchitectureFlow"
                 tier="design"
-                leaf="Luồng điển hình"
+                leaf="TypicalFlow"
                 parts={FLOW_PARTS}
                 reason="Minh hoạ một luồng kiến trúc thật (Client → Gateway → Cache → DB) chỉ bằng CSS, không cần ảnh chụp. Gói các hộp node + caret vào một block để feature chỉ truyền mảng tên node — tự wrap khi khung hẹp, dùng lại ở mọi section 'hệ thống bạn xây'."
             >
@@ -84,7 +84,7 @@ export const LongLabelsWrap: Story = {
             <BlockAnatomy
                 name="ArchitectureFlow"
                 tier="design"
-                leaf="Nhãn dài wrap"
+                leaf="LongLabelsWrap"
                 parts={FLOW_PARTS}
                 note="Khung hẹp + nhãn dài → hàng tự xuống dòng nhưng CÙNG composition với leaf 'Luồng điển hình'."
             >
@@ -111,7 +111,7 @@ export const Empty: Story = {
             <BlockAnatomy
                 name="ArchitectureFlow"
                 tier="design"
-                leaf="Rỗng"
+                leaf="Empty"
                 parts={EMPTY_PARTS}
                 note="Mảng node rỗng → không hộp, không caret; block chỉ còn hàng flex trống (ở đây bọc trong khung dashed để thấy)."
             >

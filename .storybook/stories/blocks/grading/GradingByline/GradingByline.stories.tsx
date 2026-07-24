@@ -34,12 +34,12 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 // Real DOM: a flex-row span WRAPS the glyph + label — they are siblings INSIDE it.
 const VERDICT_PARTS: Array<AnatomyNode> = [
     {
-        name: "span · dòng verdict",
+        name: "Span.VerdictRow",
         tier: "primitive",
         role: "hàng inline gom glyph + nhãn kết quả",
         children: [
             { name: "VerdictIcon", tier: "primitive", role: "glyph đạt (check xanh) / không đạt (x đỏ)" },
-            { name: "Typography · nhãn kết quả", tier: "primitive", role: "nhãn kết quả (Đạt / Không đạt) đứng cạnh glyph" },
+            { name: "Typography.VerdictLabel", tier: "primitive", role: "nhãn kết quả (Đạt / Không đạt) đứng cạnh glyph" },
         ],
     },
 ]
@@ -66,7 +66,7 @@ const BYLINE_PARTS: Array<AnatomyNode> = [
         role: "nửa attribution của cặp: sparkle + tên model + chip hạng",
         children: [
             {
-                name: "span · dòng attribution",
+                name: "Span.AttributionRow",
                 tier: "primitive",
                 role: "gom sparkle + tên model plain-text (chip đứng NGOÀI span này); tự hiện SparkleIcon + tên model plain-text (không chip, không mono)",
             },
@@ -83,7 +83,7 @@ const BYLINE_NO_CHIP_PARTS: Array<AnatomyNode> = [
         role: "nửa attribution: sparkle + tên model (không hạng)",
         children: [
             {
-                name: "span · dòng attribution",
+                name: "Span.AttributionRow",
                 tier: "primitive",
                 role: "gom sparkle + tên model plain-text; tự hiện SparkleIcon + tên model plain-text (không hạng → không chip)",
             },
@@ -95,11 +95,11 @@ const BYLINE_NO_CHIP_PARTS: Array<AnatomyNode> = [
 // only a placeholder line. The frame is the real container; ModelByline emits no part.
 const BYLINE_EMPTY_PARTS: Array<AnatomyNode> = [
     {
-        name: "div · khung gạch",
+        name: "Div.DashedFrame",
         tier: "primitive",
         role: "frame viền gạch (dashed) — ModelByline trả null nên không có part",
         children: [
-            { name: "Typography · chú thích", tier: "primitive", role: "dòng chú thích placeholder (muted, body-xs)" },
+            { name: "Typography.Caption", tier: "primitive", role: "dòng chú thích placeholder (muted, body-xs)" },
         ],
     },
 ]
@@ -110,13 +110,13 @@ export const VerdictPass: Story = {
             <BlockAnatomy
                 name="GradingByline"
                 tier="design"
-                leaf="Đạt"
+                leaf="Pass"
                 parts={VERDICT_PARTS}
                 note="Glyph check xanh + nhãn 'Đạt' — leaf verdict tối giản dùng lại ở dòng lịch sử."
             >
-                <span className="flex items-center gap-2" data-anat-part="span · dòng verdict">
+                <span className="flex items-center gap-2" data-anat-part="Span.VerdictRow">
                     <VerdictIcon pass showAnatomy />
-                    <Typography type="body-sm" data-anat-part="Typography · nhãn kết quả">Đạt</Typography>
+                    <Typography type="body-sm" data-anat-part="Typography.VerdictLabel">Đạt</Typography>
                 </span>
             </BlockAnatomy>,
         ),
@@ -128,13 +128,13 @@ export const VerdictFail: Story = {
             <BlockAnatomy
                 name="GradingByline"
                 tier="design"
-                leaf="Không đạt"
+                leaf="Fail"
                 parts={VERDICT_PARTS}
                 note="Cùng composition với leaf 'Đạt', chỉ đổi tone glyph (x đỏ) + nhãn 'Không đạt'."
             >
-                <span className="flex items-center gap-2" data-anat-part="span · dòng verdict">
+                <span className="flex items-center gap-2" data-anat-part="Span.VerdictRow">
                     <VerdictIcon pass={false} showAnatomy />
-                    <Typography type="body-sm" data-anat-part="Typography · nhãn kết quả">Không đạt</Typography>
+                    <Typography type="body-sm" data-anat-part="Typography.VerdictLabel">Không đạt</Typography>
                 </span>
             </BlockAnatomy>,
         ),
@@ -146,7 +146,7 @@ export const VerdictInChipPass: Story = {
             <BlockAnatomy
                 name="GradingByline"
                 tier="design"
-                leaf="Chip đạt"
+                leaf="ChipPass"
                 parts={VERDICT_CHIP_PARTS}
                 note="Glyph + nhãn bọc trong Chip soft — leaf khác 'Đạt' vì thêm vỏ Chip + Chip.Label."
             >
@@ -164,7 +164,7 @@ export const VerdictInChipFail: Story = {
             <BlockAnatomy
                 name="GradingByline"
                 tier="design"
-                leaf="Chip không đạt"
+                leaf="ChipFail"
                 parts={VERDICT_CHIP_PARTS}
                 note="Cùng composition với 'Chip đạt', đổi màu Chip sang danger + nhãn 'Không đạt'."
             >
@@ -182,7 +182,7 @@ export const BylineWithLabel: Story = {
             <BlockAnatomy
                 name="GradingByline"
                 tier="design"
-                leaf="Có nhãn + hạng"
+                leaf="WithLabel"
                 parts={BYLINE_PARTS}
                 reason="Gom hai mảnh attribution chấm bài dùng lại khắp result card / drawer / dòng lịch sử: ModelByline (sparkle + tên model plain-text + AiCategoryChip theo hạng) và VerdictIcon (đạt/không đạt). Quy tắc 'text rồi chip bên cạnh' được gói sẵn để mọi surface hiển thị model đã chấm nhất quán, không tự ghép lại chip-cạnh-chip."
             >
@@ -199,7 +199,7 @@ export const BylineNoLabel: Story = {
             <BlockAnatomy
                 name="GradingByline"
                 tier="design"
-                leaf="Không nhãn + hạng"
+                leaf="NoLabel"
                 parts={BYLINE_PARTS}
                 note="Bỏ tiền tố 'Đã chấm bởi' — chỉ khác nội dung text, CÙNG composition với leaf 'Có nhãn + hạng'."
             >
@@ -216,7 +216,7 @@ export const BylineNoTierChip: Story = {
             <BlockAnatomy
                 name="GradingByline"
                 tier="design"
-                leaf="Không chip hạng"
+                leaf="NoTierChip"
                 parts={BYLINE_NO_CHIP_PARTS}
                 note="Không truyền `category` → AiCategoryChip vắng mặt, composition thiếu chip hạng."
             >
@@ -233,12 +233,12 @@ export const BylineEmpty: Story = {
             <BlockAnatomy
                 name="GradingByline"
                 tier="design"
-                leaf="Rỗng (model=null)"
+                leaf="Empty"
                 parts={BYLINE_EMPTY_PARTS}
                 note="model=null → ModelByline không render gì; khung chấm gạch chỉ chứa dòng chú thích placeholder."
             >
-                <div className="flex min-h-6 items-center gap-2 rounded-lg border border-dashed border-default px-3" data-anat-part="div · khung gạch">
-                    <Typography type="body-xs" color="muted" data-anat-part="Typography · chú thích">
+                <div className="flex min-h-6 items-center gap-2 rounded-lg border border-dashed border-default px-3" data-anat-part="Div.DashedFrame">
+                    <Typography type="body-xs" color="muted" data-anat-part="Typography.Caption">
                         (không render gì — model=null)
                     </Typography>
                     <ModelByline model={null} category={AiModelCategory.Economy} withLabel showAnatomy />

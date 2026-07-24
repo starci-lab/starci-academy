@@ -122,7 +122,7 @@ export const MicroservicesDiagram = ({ caption, className, showAnatomy }: Micros
         <div className={cn("relative w-full", className)}>
             <div
                 aria-hidden
-                data-anat-part={showAnatomy ? "div · glow" : undefined}
+                data-anat-part={showAnatomy ? "Div.Glow" : undefined}
                 className="pointer-events-none absolute inset-0 -z-10"
                 style={{
                     transform: "scale(1.1)",
@@ -136,7 +136,7 @@ export const MicroservicesDiagram = ({ caption, className, showAnatomy }: Micros
             />
             {/* content over a faint blueprint dot-grid; relative so failure chips can float */}
             <motion.div
-                data-anat-part={showAnatomy ? "motion.div · canvas" : undefined}
+                data-anat-part={showAnatomy ? "MotionDiv.Canvas" : undefined}
                 className="relative flex flex-col items-center gap-2 p-5"
                 style={{
                     backgroundImage: "radial-gradient(color-mix(in oklch, var(--foreground) 7%, transparent) 1px, transparent 1px)",
@@ -155,11 +155,11 @@ export const MicroservicesDiagram = ({ caption, className, showAnatomy }: Micros
                             // traffic spike pouring in that overloads the edge.
                             <span
                                 aria-hidden
-                                data-anat-part={showAnatomy ? "span · wire" : undefined}
+                                data-anat-part={showAnatomy ? "Span.Wire" : undefined}
                                 className={cn("relative h-6 w-px", index === 1 ? "bg-danger/25" : "bg-foreground/12")}
                             >
                                 <span
-                                    data-anat-part={showAnatomy ? "span · packet" : undefined}
+                                    data-anat-part={showAnatomy ? "Span.Packet" : undefined}
                                     className={cn(
                                         "absolute left-1/2 top-0 rounded-full",
                                         index === 1
@@ -175,7 +175,7 @@ export const MicroservicesDiagram = ({ caption, className, showAnatomy }: Micros
                                 <motion.div
                                     key={node.name}
                                     variants={nodeVariants}
-                                    data-anat-part={showAnatomy ? "motion.div · node" : undefined}
+                                    data-anat-part={showAnatomy ? "MotionDiv.Node" : undefined}
                                     className={cn("relative", nodeClass(node.tone))}
                                     style={nodeStyle(node.tone)}
                                 >

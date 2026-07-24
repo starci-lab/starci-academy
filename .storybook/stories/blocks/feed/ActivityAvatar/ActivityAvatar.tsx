@@ -53,7 +53,7 @@ export const ActivityAvatar = ({
             <span
                 aria-hidden
                 className="absolute -bottom-1 -right-1 flex size-5 items-center justify-center rounded-full bg-surface ring-2 ring-surface"
-                data-anat-part={showAnatomy ? "Activity badge" : undefined}
+                data-anat-part={showAnatomy ? "ActivityBadge" : undefined}
             >
                 <span className="flex size-full items-center justify-center rounded-full bg-accent-soft text-accent-soft-foreground [&_svg]:size-3">
                     {icon}

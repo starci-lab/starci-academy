@@ -5,7 +5,7 @@ import { GroupPressableCard, type GroupPressableCardItem } from "./GroupPressabl
 import type { VerdictBandVariant } from "../verdict-band"
 
 const meta: Meta<typeof GroupPressableCard> = {
-    title: "Primitives/Card/GroupPressableCard",
+    title: "Primitives/Cards/GroupPressableCard",
     component: GroupPressableCard,
     tags: ["autodocs"],
     parameters: {

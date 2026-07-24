@@ -45,7 +45,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="ChatBubble"
                 tier="design"
-                leaf="Assistant · ngắn"
+                leaf="Default"
                 parts={CHAT_BUBBLE_PARTS}
                 reason="Mỗi lượt tin trong khung chat (ChatPanel) cần một bong bóng căn lề + tint đúng người nói. Đây là mảnh dựng nền cho ChatPanel — gần một PRIMITIVE một-phần-tử (xem FLAGS), tách ra để mọi surface chat tái dùng."
             >
@@ -62,7 +62,7 @@ export const RoleUser: Story = {
             <BlockAnatomy
                 name="ChatBubble"
                 tier="design"
-                leaf="Người dùng"
+                leaf="RoleUser"
                 parts={CHAT_BUBBLE_PARTS}
                 note="Role user → row căn phải, bubble đổi sang accent-soft; CÙNG composition."
             >
@@ -79,7 +79,7 @@ export const RoleAssistant: Story = {
             <BlockAnatomy
                 name="ChatBubble"
                 tier="design"
-                leaf="Trợ lý"
+                leaf="RoleAssistant"
                 parts={CHAT_BUBBLE_PARTS}
                 note="Role assistant → row căn trái, bubble surface-secondary; CÙNG composition."
             >
@@ -98,7 +98,7 @@ export const DataOverflow: Story = {
             <BlockAnatomy
                 name="ChatBubble"
                 tier="design"
-                leaf="Nội dung dài"
+                leaf="DataOverflow"
                 parts={CHAT_BUBBLE_PARTS}
                 note="Text dài → bubble bị chặn max-w-[85%] và xuống dòng; composition không đổi."
             >
@@ -121,7 +121,7 @@ export const RichNode: Story = {
             <BlockAnatomy
                 name="ChatBubble"
                 tier="design"
-                leaf="Nội dung cấu trúc"
+                leaf="RichNode"
                 parts={CHAT_BUBBLE_PARTS}
                 note="children là node cấu trúc (list nhiều dòng) thay cho chuỗi; bubble vẫn là cùng khung."
             >

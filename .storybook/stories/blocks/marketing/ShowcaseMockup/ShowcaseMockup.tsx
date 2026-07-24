@@ -157,13 +157,13 @@ export const ShowcaseMockup = ({
 
         {/* the window card + a second card stacked BEHIND it. `group` so hovering
             anywhere flattens both cards together. */}
-        <div className="group relative" data-anat-part={showAnatomy ? "Khối xoè thẻ" : undefined}>
+        <div className="group relative" data-anat-part={showAnatomy ? "FanStack" : undefined}>
             {/* the card BEHIND — a bit TALLER (peeks top + bottom), a surface tinted by the
                 theme colour (NO border), tilted the OPPOSITE way so the two cards splay in
                 two directions (a "fanned" depth, not a flat overlap). */}
             <div
                 aria-hidden
-                data-anat-part={showAnatomy ? "Card sau" : undefined}
+                data-anat-part={showAnatomy ? "CardBehind" : undefined}
                 className={cn(
                     "absolute -inset-y-4 inset-x-8 -z-10 origin-center rounded-3xl transition-transform duration-500 ease-out @app-md:group-hover:[transform:none]",
                     TILT[OPPOSITE[tilt]],
@@ -173,7 +173,7 @@ export const ShowcaseMockup = ({
 
             {/* the foreground window card — surface follows light/dark tokens, its own tilt */}
             <div
-                data-anat-part={showAnatomy ? "Window card" : undefined}
+                data-anat-part={showAnatomy ? "WindowCard" : undefined}
                 className={cn(
                     "relative w-full origin-center overflow-hidden rounded-3xl border border-default bg-surface transition-transform duration-500 ease-out @app-md:group-hover:[transform:none]",
                     TILT[tilt],
@@ -181,7 +181,7 @@ export const ShowcaseMockup = ({
             >
                 {/* window chrome */}
                 <div
-                    data-anat-part={showAnatomy ? "Window chrome" : undefined}
+                    data-anat-part={showAnatomy ? "WindowChrome" : undefined}
                     className="flex items-center gap-2 border-b border-default px-4 py-2"
                 >
                     <span aria-hidden className="size-2.5 rounded-full bg-danger" />

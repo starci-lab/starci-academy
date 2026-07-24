@@ -5,7 +5,7 @@ import { SurfaceAccordionCard } from "./SurfaceAccordionCard"
 import { EmptyState } from "../../feedback/EmptyState/EmptyState"
 
 const meta: Meta<typeof SurfaceAccordionCard> = {
-    title: "Primitives/Card/SurfaceAccordionCard",
+    title: "Primitives/Cards/SurfaceAccordionCard",
     component: SurfaceAccordionCard,
     tags: ["autodocs"],
     parameters: {

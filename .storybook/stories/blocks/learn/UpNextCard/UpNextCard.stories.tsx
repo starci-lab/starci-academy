@@ -43,12 +43,12 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 // Hai nút KHÔNG bọc ButtonGroup — chỉ là flex-wrap div thuần (xem deferred).
 
 const PRIMARY_CTA: AnatomyNode = {
-    name: "Button · chính",
+    name: "Button.Primary",
     tier: "primitive",
     role: "CTA chính (primary, size lg, mũi tên)",
 }
 const SECONDARY_CTA: AnatomyNode = {
-    name: "Button · phụ",
+    name: "Button.Secondary",
     tier: "primitive",
     role: "hành động phụ nhẹ (tertiary)",
 }
@@ -72,7 +72,7 @@ const buildLeaf = (opts: {
         children.push(DESCRIPTION_TYPOGRAPHY)
     }
     children.push({
-        name: "div · hàng CTA",
+        name: "Div.CtaRow",
         tier: "primitive",
         role: "hàng hành động (flex-wrap) — CTA chính + hành động phụ tùy chọn",
         children: [PRIMARY_CTA, ...(opts.secondary ? [SECONDARY_CTA] : [])],
@@ -118,7 +118,7 @@ export const Minimal: Story = {
             <BlockAnatomy
                 name="UpNextCard"
                 tier="design"
-                leaf="Tối giản"
+                leaf="Minimal"
                 parts={MINIMAL_PARTS}
                 note="Chỉ khung + tiêu đề + ĐÚNG MỘT CTA — không check/eyebrow/mô tả/hành động phụ."
             >
@@ -138,7 +138,7 @@ export const CheckAndEyebrow: Story = {
             <BlockAnatomy
                 name="UpNextCard"
                 tier="design"
-                leaf="Check + eyebrow"
+                leaf="CheckAndEyebrow"
                 parts={CHECK_PARTS}
                 note="Thêm check hoàn thành + eyebrow muted trên tiêu đề — CTA đọc như đang cưỡi đà 'vừa xong'."
             >
@@ -160,7 +160,7 @@ export const WithDescription: Story = {
             <BlockAnatomy
                 name="UpNextCard"
                 tier="design"
-                leaf="Có mô tả"
+                leaf="WithDescription"
                 parts={DESCRIPTION_PARTS}
                 note="Thêm một dòng mô tả hướng outcome dưới tiêu đề — nói rõ 'làm xong để tiến tới đâu'."
             >
@@ -183,7 +183,7 @@ export const WithSecondaryAction: Story = {
             <BlockAnatomy
                 name="UpNextCard"
                 tier="design"
-                leaf="Có hành động phụ"
+                leaf="WithSecondaryAction"
                 parts={SECONDARY_PARTS}
                 note="Hàng CTA có thêm một hành động phụ nhẹ (tertiary) cạnh CTA chính — vẫn giữ MỘT hành động nổi."
             >
@@ -205,7 +205,7 @@ export const Full: Story = {
             <BlockAnatomy
                 name="UpNextCard"
                 tier="design"
-                leaf="Đầy đủ"
+                leaf="Full"
                 parts={FULL_PARTS}
                 reason="Điểm hoàn thành một bề mặt học cần MỘT surface tự đóng khung (SectionCard) gom lại: micro-feedback 'vừa xong ✓' + eyebrow, bước tiếp theo (title + outcome), và ĐÚNG MỘT CTA chính (accent, size lg, mũi tên) + một hành động phụ nhẹ. Gói vào một block để mỗi màn hoàn thành chỉ truyền bước kế + handler điều hướng — không dựng lại khung, thứ tự nhấn, và cặp CTA chính/phụ."
             >
@@ -230,7 +230,7 @@ export const LongContent: Story = {
             <BlockAnatomy
                 name="UpNextCard"
                 tier="design"
-                leaf="Nội dung dài"
+                leaf="LongContent"
                 parts={FULL_PARTS}
                 note="Cùng composition với leaf 'Đầy đủ' — chỉ tiêu đề/mô tả/nhãn dài hơn để soi cách chữ xuống dòng."
             >

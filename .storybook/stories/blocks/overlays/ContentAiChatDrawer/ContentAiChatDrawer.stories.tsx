@@ -78,7 +78,7 @@ const TOOL_ITEMS: Array<SearchCourseContentItem> = [
 
 /** Header primitives shared by every leaf. */
 const HEADER_PARTS: Array<AnatomyNode> = [
-    { name: "Typography · tiêu đề", tier: "primitive", role: "tên bài học — tiêu đề drawer" },
+    { name: "Typography.Title", tier: "primitive", role: "tên bài học — tiêu đề drawer" },
     { name: "ModeSwitch", tier: "design", role: "chuyển hiển thị rail ⇄ drawer (segmented, 2 icon)" },
 ]
 
@@ -93,13 +93,13 @@ const NORMAL_PARTS: Array<AnatomyNode> = [
 ]
 
 export const ChatThuong: Story = {
-    name: "Chat thường",
+    name: "Default",
     render: () =>
         frame(
             <BlockAnatomy
                 name="ContentAiChatDrawer"
                 tier="block"
-                leaf="Chat thường"
+                leaf="Default"
                 parts={NORMAL_PARTS}
                 reason="Leaf gốc: KHÔNG có đoạn bôi đen — composer là MỘT hộp (input + action row liền nhau), không tách hộp quick-ask. Đây là cấu trúc mặc định khi mở drawer từ trong bài học."
             >
@@ -148,13 +148,13 @@ const SELECTION_PARTS: Array<AnatomyNode> = [
 ]
 
 export const ChatBoiDen: Story = {
-    name: "Chat có bôi đen",
+    name: "WithSelection",
     render: () =>
         frame(
             <BlockAnatomy
                 name="ContentAiChatDrawer"
                 tier="block"
-                leaf="Chat có bôi đen"
+                leaf="WithSelection"
                 parts={SELECTION_PARTS}
                 note="Khác leaf 1 ở CẤU TRÚC: xuất hiện thêm SelectionBanner phía trên thread, và ChatComposer đổi hình dạng — input rời khỏi hộp composer chính, chuyển sang một hộp quick-ask riêng (kèm chip gợi ý) ngay dưới thread."
             >
@@ -194,13 +194,13 @@ const HISTORY_PARTS: Array<AnatomyNode> = [
 ]
 
 export const LichSuPhien: Story = {
-    name: "Lịch sử phiên",
+    name: "History",
     render: () =>
         frame(
             <BlockAnatomy
                 name="ContentAiChatDrawer"
                 tier="block"
-                leaf="Lịch sử phiên"
+                leaf="History"
                 parts={HISTORY_PARTS}
                 note="Khác hẳn 2 leaf chat ở CẤU TRÚC: ChatThread/SelectionBanner/ChatComposer biến mất hoàn toàn, HistoryLink được thay bằng BackLink (đi ngược), và toàn drawer là MỘT block quản lý phiên (ConversationList) — hoàn toàn KHÔNG có composer."
             >
@@ -229,13 +229,13 @@ const CONTENT_SEARCH_PARTS: Array<AnatomyNode> = [
 ]
 
 export const TimNoiDungKhoa: Story = {
-    name: "Tìm nội dung khoá",
+    name: "ContentSearch",
     render: () =>
         frame(
             <BlockAnatomy
                 name="ContentAiChatDrawer"
                 tier="block"
-                leaf="Tìm nội dung khoá"
+                leaf="ContentSearch"
                 parts={CONTENT_SEARCH_PARTS}
                 note="Cùng họ với leaf 'Lịch sử phiên' (BackLink, không composer) nhưng KHÁC block chức năng: ContentSearchList thay ConversationList — tìm nội dung khoá học (bài/flashcard/thử thách) thay vì tìm phiên chat cũ."
             >

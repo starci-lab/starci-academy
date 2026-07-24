@@ -66,7 +66,7 @@ export const SectionHeading = ({
             ) : null}
             <div
                 className={cn("flex items-center gap-2", centered && "justify-center")}
-                data-anat-part={showAnatomy ? "div · title row" : undefined}
+                data-anat-part={showAnatomy ? "TitleRow" : undefined}
             >
                 <Typography.Heading
                     level={level}

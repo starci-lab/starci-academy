@@ -11,7 +11,7 @@ import type { MultiSelectOption } from "./MultiSelect"
  * appends its id to the controlled `value` array and clears the search text.
  */
 const meta: Meta<typeof MultiSelect> = {
-    title: "Primitives/Form/MultiSelect",
+    title: "Primitives/Forms/MultiSelect",
     component: MultiSelect,
     tags: ["autodocs"],
     parameters: {

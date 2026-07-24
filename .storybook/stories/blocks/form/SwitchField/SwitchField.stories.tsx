@@ -10,7 +10,7 @@ import { SwitchField } from "./SwitchField"
  * in, all field scaffolding owned by the component.
  */
 const meta: Meta<typeof SwitchField> = {
-    title: "Primitives/Form/SwitchField",
+    title: "Primitives/Forms/SwitchField",
     component: SwitchField,
     tags: ["autodocs"],
     parameters: {

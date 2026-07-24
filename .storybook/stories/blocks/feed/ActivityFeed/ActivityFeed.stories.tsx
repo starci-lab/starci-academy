@@ -169,7 +169,7 @@ export const SingleItem: Story = {
             <BlockAnatomy
                 name="ActivityFeed"
                 tier="block"
-                leaf="Một hoạt động"
+                leaf="SingleItem"
                 parts={FEED_PARTS}
                 note="Một hàng duy nhất, nhưng CÙNG composition với feed nhiều ngày."
             >
@@ -185,7 +185,7 @@ export const RichMultiDay: Story = {
             <BlockAnatomy
                 name="ActivityFeed"
                 tier="block"
-                leaf="Nhiều ngày"
+                leaf="RichMultiDay"
                 parts={FEED_PARTS}
                 reason="Feed hoạt động dùng chung cho trang chủ và tab Hoạt động: mỗi hàng là avatar-kèm-badge + câu actor/hành động/target + thời gian, gộp theo ngày (Hôm nay/Hôm qua/ngày cũ). Gộp milestone liên tiếp thành một dòng, null target rơi về câu generic — không để trống. Props-only nên một chỗ dựng, nhiều feature dùng."
             >
@@ -201,7 +201,7 @@ export const OwnActivity: Story = {
             <BlockAnatomy
                 name="ActivityFeed"
                 tier="block"
-                leaf="Hoạt động của bạn"
+                leaf="OwnActivity"
                 parts={FEED_PARTS}
                 note="Hàng của chính bạn (isMine) → ReactionBar chuyển chỉ-đọc, nhưng vẫn đủ các part."
             >
@@ -217,7 +217,7 @@ export const ReadOnly: Story = {
             <BlockAnatomy
                 name="ActivityFeed"
                 tier="block"
-                leaf="Chỉ đọc"
+                leaf="ReadOnly"
                 parts={FEED_PARTS}
                 note="Bỏ onReact → toàn bộ ReactionBar chỉ hiển thị số, composition không đổi."
             >
@@ -233,7 +233,7 @@ export const Bordered: Story = {
             <BlockAnatomy
                 name="ActivityFeed"
                 tier="block"
-                leaf="Viền"
+                leaf="Bordered"
                 parts={FEED_PARTS}
                 note="SurfaceListCard đổi shadow → viền khi feed lồng trong surface khác; cùng các part."
             >
@@ -249,7 +249,7 @@ export const InteractiveReactions: Story = {
             <BlockAnatomy
                 name="ActivityFeed"
                 tier="block"
-                leaf="Thả cảm xúc"
+                leaf="InteractiveReactions"
                 parts={FEED_PARTS}
                 note="Wrapper cầm state → bấm ReactionBar cập nhật count/myReaction; composition như leaf dữ liệu."
             >
@@ -269,7 +269,7 @@ export const Empty: Story = {
             <BlockAnatomy
                 name="ActivityFeed"
                 tier="block"
-                leaf="Rỗng"
+                leaf="Empty"
                 parts={EMPTY_PARTS}
                 note="Block không có slot rỗng — items=[] render trống; FEATURE dựng EmptyState thay chỗ."
             >
@@ -296,7 +296,7 @@ export const SkeletonLoading: Story = {
             <BlockAnatomy
                 name="ActivityFeed"
                 tier="block"
-                leaf="Đang tải"
+                leaf="SkeletonLoading"
                 parts={SKELETON_PARTS}
                 note="Skeleton mirror giữ đúng footprint feed thật (eyebrow ngày + surface hàng), không có part thật."
             >

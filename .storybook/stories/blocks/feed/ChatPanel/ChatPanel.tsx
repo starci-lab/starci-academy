@@ -88,7 +88,7 @@ export const ChatPanel = ({
                 {isEmpty ? (
                     <div
                         className="flex h-full items-center justify-center"
-                        data-anat-part={showAnatomy ? "Empty state" : undefined}
+                        data-anat-part={showAnatomy ? "EmptyState" : undefined}
                     >
                         {emptyState}
                     </div>
@@ -118,7 +118,7 @@ export const ChatPanel = ({
                             <div className="flex justify-start">
                                 <div
                                     className="flex items-center gap-1 rounded-2xl bg-surface-secondary px-3 py-3"
-                                    data-anat-part={showAnatomy ? "Typing indicator" : undefined}
+                                    data-anat-part={showAnatomy ? "TypingIndicator" : undefined}
                                 >
                                     {[0, 1, 2].map((dot) => (
                                         <span

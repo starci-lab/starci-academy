@@ -11,7 +11,7 @@ import { TextField } from "./TextField"
  * in, all field scaffolding owned by the component.
  */
 const meta: Meta<typeof TextField> = {
-    title: "Primitives/Form/TextField",
+    title: "Primitives/Forms/TextField",
     component: TextField,
     tags: ["autodocs"],
     parameters: {

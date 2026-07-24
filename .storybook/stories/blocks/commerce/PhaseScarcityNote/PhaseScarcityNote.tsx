@@ -73,13 +73,13 @@ export const PhaseScarcityNote = ({
                 className="size-4 shrink-0"
                 data-anat-part={showAnatomy ? "WarningCircleIcon" : undefined}
             />
-            <span className="text-sm font-medium" data-anat-part={showAnatomy ? "Dòng số suất" : undefined}>
+            <span className="text-sm font-medium" data-anat-part={showAnatomy ? "SeatCountLine" : undefined}>
                 {`Còn ${seatsRemaining} suất giá ${phaseLabel}`}
             </span>
             {nextPhasePriceVnd != null ? (
                 <>
-                    <span aria-hidden className="text-sm" data-anat-part={showAnatomy ? "Dấu ngăn cách" : undefined}>·</span>
-                    <span className="text-sm" data-anat-part={showAnatomy ? "Mệnh đề tăng giá" : undefined}>
+                    <span aria-hidden className="text-sm" data-anat-part={showAnatomy ? "Separator" : undefined}>·</span>
+                    <span className="text-sm" data-anat-part={showAnatomy ? "PriceRiseClause" : undefined}>
                         {`giá tăng lên ${nextPhasePriceVnd.toLocaleString("vi-VN")}₫ sau đó`}
                     </span>
                 </>

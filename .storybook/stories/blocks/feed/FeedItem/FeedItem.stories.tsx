@@ -94,7 +94,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="FeedItem"
                 tier="design"
-                leaf="Có avatar"
+                leaf="Default"
                 parts={BASE_PARTS}
                 reason="Một hàng thuật lại một SỰ KIỆN đã xảy ra (ai làm gì, khi nào) — chỉ đọc, khác ListRow bấm được. Bố cục leading + cột text + footer để feature ghép avatar/câu/reaction vào đúng chỗ mà không tự dựng lại layout hàng."
             >
@@ -129,7 +129,7 @@ export const WithReaction: Story = {
             <BlockAnatomy
                 name="FeedItem"
                 tier="design"
-                leaf="Có reaction"
+                leaf="WithReaction"
                 parts={REACTION_PARTS}
                 note="Thêm ReactionBar vào slot footer (thả cảm xúc được) — composition khác leaf 'Có avatar'."
             >
@@ -165,7 +165,7 @@ export const ReadOnlyFooter: Story = {
             <BlockAnatomy
                 name="FeedItem"
                 tier="design"
-                leaf="Footer chỉ đọc"
+                leaf="ReadOnlyFooter"
                 parts={REACTION_PARTS}
                 note="CÙNG composition với leaf 'Có reaction' — nhưng ReactionBar không có onReact nên chỉ đọc số cảm xúc."
             >
@@ -201,7 +201,7 @@ export const NoLeading: Story = {
             <BlockAnatomy
                 name="FeedItem"
                 tier="design"
-                leaf="Không avatar"
+                leaf="NoLeading"
                 parts={TEXT_ONLY_PARTS}
                 note="Bỏ slot leading + không mốc thực thể → chỉ còn cột text thuần + timestamp (composition tối giản nhất)."
             >
@@ -220,7 +220,7 @@ export const LongText: Story = {
             <BlockAnatomy
                 name="FeedItem"
                 tier="design"
-                leaf="Text dài"
+                leaf="LongText"
                 parts={BASE_PARTS}
                 note="CÙNG composition với leaf 'Có avatar' — chỉ khác câu action dài + khung hẹp để soi wrap."
             >

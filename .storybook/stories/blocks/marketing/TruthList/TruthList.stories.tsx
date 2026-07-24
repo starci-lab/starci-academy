@@ -152,9 +152,9 @@ const LOADING_PARTS: Array<AnatomyNode> = [
         role: "mirror khung surface + 4 hàng trigger h-14, tách nhau bằng separator (hàng cuối không có)",
         state: "skeleton",
         children: [
-            { name: "Skeleton · title bar", tier: "primitive", role: "thanh chữ statement giả (glyph body-sm, w-2/5) mỗi hàng", state: "skeleton" },
-            { name: "Skeleton · indicator", tier: "primitive", role: "ô size-4 giả caret — DRIFT: TruthList thật bỏ Indicator, showIndicator mặc định true nên skeleton vẽ dư", state: "skeleton" },
-            { name: "Skeleton · separator", tier: "primitive", role: "vạch h-px giữa các hàng", state: "skeleton" },
+            { name: "Skeleton.TitleBar", tier: "primitive", role: "thanh chữ statement giả (glyph body-sm, w-2/5) mỗi hàng", state: "skeleton" },
+            { name: "Skeleton.Indicator", tier: "primitive", role: "ô size-4 giả caret — DRIFT: TruthList thật bỏ Indicator, showIndicator mặc định true nên skeleton vẽ dư", state: "skeleton" },
+            { name: "Skeleton.Separator", tier: "primitive", role: "vạch h-px giữa các hàng", state: "skeleton" },
         ],
     },
 ]
@@ -165,7 +165,7 @@ export const SingleTruth: Story = {
             <BlockAnatomy
                 name="TruthList"
                 tier="block"
-                leaf="Một sự thật"
+                leaf="SingleTruth"
                 parts={TRUTHLIST_PARTS}
                 note="Một item duy nhất, không byline — CÙNG composition với leaf nhiều sự thật, chỉ khác số lượng trigger."
             >
@@ -188,7 +188,7 @@ export const TypicalWithByline: Story = {
             <BlockAnatomy
                 name="TruthList"
                 tier="block"
-                leaf="Có byline"
+                leaf="WithByline"
                 parts={TRUTHLIST_BYLINE_PARTS}
                 reason="Định vị đối đầu, có căn cứ: mỗi sự thật khó chịu của ngành mở ra một câu 'đây là cách tụi mình xử'. Gói accordion + byline vào một surface flush để sự thật là nhân vật chính, tác giả lùi về chữ ký cuối."
             >
@@ -211,7 +211,7 @@ export const NoByline: Story = {
             <BlockAnatomy
                 name="TruthList"
                 tier="block"
-                leaf="Không byline"
+                leaf="NoByline"
                 parts={TRUTHLIST_PARTS}
                 note="Bỏ byline → accordion flush đứng một mình, không có hàng chữ ký cuối surface."
             >
@@ -226,7 +226,7 @@ export const LongContentWrap: Story = {
             <BlockAnatomy
                 name="TruthList"
                 tier="block"
-                leaf="Nội dung dài xuống dòng"
+                leaf="LongContentWrap"
                 parts={TRUTHLIST_PARTS}
                 note="Khung hẹp (max-w-[360px]) → statement + fix xuống nhiều dòng, CÙNG composition không byline."
             >
@@ -252,7 +252,7 @@ export const Empty: Story = {
             <BlockAnatomy
                 name="TruthList"
                 tier="block"
-                leaf="Rỗng"
+                leaf="Empty"
                 parts={EMPTY_PARTS}
                 note="Không có sự thật nào → EmptyState lấp surface, composition khác leaf data (không Accordion)."
             >
@@ -282,16 +282,16 @@ export const SkeletonLoading: Story = {
             <BlockAnatomy
                 name="TruthList"
                 tier="block"
-                leaf="Đang tải"
+                leaf="Loading"
                 parts={LOADING_PARTS}
                 note="Skeleton.Accordion mirror khung surface + 4 trigger rows, composition khác leaf data (chưa có chữ thật)."
             >
                 <Skeleton.Accordion
                     items={4}
                     anatPart="Skeleton.Accordion"
-                    titleAnatPart="Skeleton · title bar"
-                    indicatorAnatPart="Skeleton · indicator"
-                    separatorAnatPart="Skeleton · separator"
+                    titleAnatPart="Skeleton.TitleBar"
+                    indicatorAnatPart="Skeleton.Indicator"
+                    separatorAnatPart="Skeleton.Separator"
                 />
             </BlockAnatomy>,
         ),

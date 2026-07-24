@@ -5,7 +5,7 @@ import { CheckIcon } from "@phosphor-icons/react"
 import { ModalShell } from "./ModalShell"
 
 const meta: Meta<typeof ModalShell> = {
-    title: "Primitives/Layout/ModalShell",
+    title: "Primitives/Layouts/ModalShell",
     component: ModalShell,
     tags: ["autodocs"],
     parameters: {

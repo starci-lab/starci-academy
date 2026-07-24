@@ -32,14 +32,14 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 // amount, the struck list price, the −X% chip that opens the breakdown popover, and
 // the "save N₫" line. Nested under the PriceTag node so the tree shows containment.
 const PRICE_TAG_CHILDREN: Array<AnatomyNode> = [
-    { name: "Typography · giá phải trả", tier: "primitive", role: "số tiền phải trả (đậm)" },
-    { name: "Typography · giá gốc", tier: "primitive", role: "giá gốc gạch ngang (khi có giảm)" },
+    { name: "Typography.Paid", tier: "primitive", role: "số tiền phải trả (đậm)" },
+    { name: "Typography.Original", tier: "primitive", role: "giá gốc gạch ngang (khi có giảm)" },
     { name: "StatusChip", tier: "primitive", role: "nhãn −X% (soft-success), kiêm nút mở popover chi tiết", state: "success" },
     // PriceTag thật gắn 2 marker riêng (Popover.Trigger bọc chip · Popover.Content chứa phần
     // phân rã) — không có 1 marker "Popover" gộp, nên cây khai ĐÚNG 2 tên đó (name-mismatch fix).
     { name: "Popover.Trigger", tier: "primitive", role: "bọc chip −X%, mở popover khi bấm/chạm" },
     { name: "Popover.Content", tier: "primitive", role: "phân rã giá khi mở: gốc → bạn trả" },
-    { name: "Typography · tiết kiệm", tier: "primitive", role: "dòng Tiết kiệm N₫" },
+    { name: "Typography.Savings", tier: "primitive", role: "dòng Tiết kiệm N₫" },
 ]
 
 // content leaf (Default · Enrolled) — the full line row: title + learners-meta +
@@ -49,12 +49,12 @@ const PRICE_TAG_CHILDREN: Array<AnatomyNode> = [
 // this: same composition, only the button LABELS differ (both keep 2 buttons + a
 // discounted PriceTag).
 const CONTENT_PARTS: Array<AnatomyNode> = [
-    { name: "Typography · tiêu đề", tier: "primitive", role: "tiêu đề khóa học (body, bold, truncate)" },
-    { name: "Typography · số học viên", tier: "primitive", role: "số học viên — meta-count muted" },
-    { name: "Typography · mô tả", tier: "primitive", role: "mô tả một dòng (body-sm, muted, line-clamp-1)" },
+    { name: "Typography.Title", tier: "primitive", role: "tiêu đề khóa học (body, bold, truncate)" },
+    { name: "Typography.Learners", tier: "primitive", role: "số học viên — meta-count muted" },
+    { name: "Typography.Description", tier: "primitive", role: "mô tả một dòng (body-sm, muted, line-clamp-1)" },
     { name: "PriceTag", tier: "design", role: "giá VND (size sm): số phải trả + gốc gạch ngang + chip −% (popover) + dòng tiết kiệm", children: PRICE_TAG_CHILDREN },
-    { name: "Button · primary", tier: "primitive", role: "CTA chính (mũi tên): Xem khóa học / Tiếp tục học (đã đăng ký)" },
-    { name: "Button · secondary", tier: "primitive", role: "nút phụ (flex-1, cùng hàng): Thêm vào giỏ (action) / Xem khóa học (đã đăng ký)" },
+    { name: "Button.Primary", tier: "primitive", role: "CTA chính (mũi tên): Xem khóa học / Tiếp tục học (đã đăng ký)" },
+    { name: "Button.Secondary", tier: "primitive", role: "nút phụ (flex-1, cùng hàng): Thêm vào giỏ (action) / Xem khóa học (đã đăng ký)" },
 ]
 
 // no-cover leaf: cover rơi về fallback gradient (still a CUT prop-value element — the
@@ -62,11 +62,11 @@ const CONTENT_PARTS: Array<AnatomyNode> = [
 // Typography still render the same as the content leaf. No `action` prop + chưa đăng ký
 // → CHỈ 1 nút primary (nút phụ vắng mặt). Giá phase hiện tại vẫn có giảm → PriceTag đầy đủ.
 const NO_COVER_PARTS: Array<AnatomyNode> = [
-    { name: "Typography · tiêu đề", tier: "primitive", role: "tiêu đề khóa học (body, bold, truncate)" },
-    { name: "Typography · số học viên", tier: "primitive", role: "số học viên — meta-count muted" },
-    { name: "Typography · mô tả", tier: "primitive", role: "mô tả một dòng (body-sm, muted, line-clamp-1)" },
+    { name: "Typography.Title", tier: "primitive", role: "tiêu đề khóa học (body, bold, truncate)" },
+    { name: "Typography.Learners", tier: "primitive", role: "số học viên — meta-count muted" },
+    { name: "Typography.Description", tier: "primitive", role: "mô tả một dòng (body-sm, muted, line-clamp-1)" },
     { name: "PriceTag", tier: "design", role: "giá phase hiện tại (size sm): số phải trả + gốc gạch ngang + chip −% (popover) + dòng tiết kiệm", children: PRICE_TAG_CHILDREN },
-    { name: "Button · primary", tier: "primitive", role: "CHỈ CTA chính (Xem khóa học) — không action → không nút phụ" },
+    { name: "Button.Primary", tier: "primitive", role: "CHỈ CTA chính (Xem khóa học) — không action → không nút phụ" },
 ]
 
 // loading leaf: dòng giá riêng lẻ là Skeleton.Typography khi loyalty preview đang resolve
@@ -74,42 +74,41 @@ const NO_COVER_PARTS: Array<AnatomyNode> = [
 // (không phụ thuộc loyaltyPending). Cover image stays CUT (prop-value element, see
 // CONTENT_PARTS). PriceTag vắng mặt ở leaf này.
 const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "Typography · tiêu đề", tier: "primitive", role: "tiêu đề khóa học (body, bold, truncate)" },
-    { name: "Typography · số học viên", tier: "primitive", role: "số học viên — meta-count muted" },
-    { name: "Typography · mô tả", tier: "primitive", role: "mô tả một dòng (body-sm, muted, line-clamp-1)" },
+    { name: "Typography.Title", tier: "primitive", role: "tiêu đề khóa học (body, bold, truncate)" },
+    { name: "Typography.Learners", tier: "primitive", role: "số học viên — meta-count muted" },
+    { name: "Typography.Description", tier: "primitive", role: "mô tả một dòng (body-sm, muted, line-clamp-1)" },
     { name: "Skeleton.Typography", tier: "primitive", role: "CHỈ dòng giá là skeleton khi loyaltyPending — thay chỗ PriceTag, không nhảy số", state: "loading" },
-    { name: "Button · primary", tier: "primitive", role: "CTA chính (không action → 1 nút)" },
+    { name: "Button.Primary", tier: "primitive", role: "CTA chính (không action → 1 nút)" },
 ]
 
 // free leaf: không giá (displayPrice null → PriceTag vắng) và enrollmentCount=0 → meta
 // số học viên cũng vắng; cover image stays CUT (prop-value element); title/description
 // Typography vẫn render (luôn có) → chỉ còn 2 Typography + 1 nút.
 const FREE_PARTS: Array<AnatomyNode> = [
-    { name: "Typography · tiêu đề", tier: "primitive", role: "tiêu đề khóa học (body, bold, truncate)" },
-    { name: "Typography · mô tả", tier: "primitive", role: "mô tả một dòng (body-sm, muted, line-clamp-1)" },
-    { name: "Button · primary", tier: "primitive", role: "CHỈ CTA chính — miễn phí nên không khối giá; count 0 nên không meta số học viên" },
+    { name: "Typography.Title", tier: "primitive", role: "tiêu đề khóa học (body, bold, truncate)" },
+    { name: "Typography.Description", tier: "primitive", role: "mô tả một dòng (body-sm, muted, line-clamp-1)" },
+    { name: "Button.Primary", tier: "primitive", role: "CHỈ CTA chính — miễn phí nên không khối giá; count 0 nên không meta số học viên" },
 ]
 
 // skeleton leaf: isSkeleton tự dựng MIRROR của hàng ngang bằng các primitive Skeleton —
 // mọi part là skeleton (KHÔNG có PriceTag/Button thật), giữ nguyên box/radius/padding.
 const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton · cover", tier: "primitive", role: "thumbnail 16:9 skeleton (giữ đúng footprint)", state: "skeleton" },
-    { name: "Skeleton.Typography · tiêu đề", tier: "primitive", role: "tiêu đề mirror", state: "skeleton" },
-    { name: "Skeleton · số học viên", tier: "primitive", role: "cụm icon tròn + đếm số học viên mirror", state: "skeleton" },
-    { name: "Skeleton.Typography · mô tả", tier: "primitive", role: "mô tả một dòng mirror", state: "skeleton" },
-    { name: "Skeleton.Typography · giá", tier: "primitive", role: "dòng giá mirror", state: "skeleton" },
+    { name: "Skeleton.Cover", tier: "primitive", role: "thumbnail 16:9 skeleton (giữ đúng footprint)", state: "skeleton" },
+    { name: "Skeleton.Typography.Title", tier: "primitive", role: "tiêu đề mirror", state: "skeleton" },
+    { name: "Skeleton.Learners", tier: "primitive", role: "cụm icon tròn + đếm số học viên mirror", state: "skeleton" },
+    { name: "Skeleton.Typography.Description", tier: "primitive", role: "mô tả một dòng mirror", state: "skeleton" },
+    { name: "Skeleton.Typography.Price", tier: "primitive", role: "dòng giá mirror", state: "skeleton" },
     { name: "Skeleton.Button", tier: "primitive", role: "hàng 2 nút mirror (primary + phụ, mỗi nút flex-1)", state: "skeleton" },
 ]
 
 /** Default (discounted) — horizontal row layout: cover · title+meta · price+CTA. */
 export const Default: Story = {
-    name: "Default",
     render: () =>
         shell(
             <BlockAnatomy
                 name="CourseCard"
                 tier="design"
-                leaf="Có dữ liệu"
+                leaf="Default"
                 parts={CONTENT_PARTS}
                 reason="Một ô khóa học trong catalog gom BLOCK con (CrossListCard value-props · PriceTag giá) + PRIMITIVE (cover · 2 Button CTA · Typography tiêu đề/mô tả · Typography+UsersIcon số học viên; Skeleton chỉ khi đang tải giá). Đóng gói 2 layout grid/line, 2 nút khi đã đăng ký, để feature chỉ truyền `course`."
             >
@@ -119,7 +118,7 @@ export const Default: Story = {
                         layout="line"
                         loyaltyPriceVnd={1341000}
                         loyaltyOriginalVnd={2990000}
-                        action={<Button variant="secondary" className="flex-1" anatPart="Button · secondary">Thêm vào giỏ</Button>}
+                        action={<Button variant="secondary" className="flex-1" anatPart="Button.Secondary">Thêm vào giỏ</Button>}
                         showAnatomy
                     />
                 </div>
@@ -129,13 +128,12 @@ export const Default: Story = {
 
 /** Enrolled — line layout, no cart action. */
 export const Enrolled: Story = {
-    name: "Enrolled",
     render: () =>
         shell(
             <BlockAnatomy
                 name="CourseCard"
                 tier="design"
-                leaf="Đã đăng ký"
+                leaf="Enrolled"
                 parts={CONTENT_PARTS}
                 note="CÙNG composition với leaf 'Có dữ liệu' — chỉ đổi nhãn: primary 'Tiếp tục học' + secondary 'Xem khóa học' thay cho action."
             >
@@ -148,13 +146,12 @@ export const Enrolled: Story = {
 
 /** No cover — hàng ngang, thumbnail rơi về fallback gradient + BookOpenIcon (ẩn dưới @app-sm). */
 export const NoCover: Story = {
-    name: "No Cover",
     render: () =>
         shell(
             <BlockAnatomy
                 name="CourseCard"
                 tier="design"
-                leaf="Không ảnh bìa"
+                leaf="NoCover"
                 parts={NO_COVER_PARTS}
                 note="Thiếu coverImageUrl → phần cover đổi sang gradient + BookOpenIcon; không action → chỉ 1 nút primary."
             >
@@ -167,13 +164,12 @@ export const NoCover: Story = {
 
 /** Loading — loyalty price đang resolve → dòng giá là Skeleton (chỉ dòng giá, không mirror cả hàng). */
 export const Loading: Story = {
-    name: "Đang tải",
     render: () =>
         shell(
             <BlockAnatomy
                 name="CourseCard"
                 tier="design"
-                leaf="Đang tải"
+                leaf="Loading"
                 parts={LOADING_PARTS}
                 note="loyaltyPending → CHỈ dòng giá là Skeleton, phần còn lại render thật (khác leaf 'Khung chờ' mirror cả hàng)."
             >
@@ -186,13 +182,12 @@ export const Loading: Story = {
 
 /** Free — hàng ngang không giá / không số học viên (enrollmentCount=0 ẩn meta). */
 export const Free: Story = {
-    name: "Free",
     render: () =>
         shell(
             <BlockAnatomy
                 name="CourseCard"
                 tier="design"
-                leaf="Miễn phí"
+                leaf="Free"
                 parts={FREE_PARTS}
                 note="Không giá (PriceTag vắng) và enrollmentCount=0 (meta số học viên vắng) → composition gọn còn cover + title + 1 nút."
             >
@@ -205,13 +200,12 @@ export const Free: Story = {
 
 /** Khung chờ — mirror hàng ngang khi card thật đang tải (isSkeleton), `course` bị bỏ qua. */
 export const Skeleton: Story = {
-    name: "Khung chờ",
     render: () =>
         shell(
             <BlockAnatomy
                 name="CourseCard"
                 tier="design"
-                leaf="Khung chờ"
+                leaf="Skeleton"
                 parts={SKELETON_PARTS}
                 note="isSkeleton → tự dựng mirror cả hàng (mọi part skeleton), giữ nguyên box/radius/padding để lưới không nhảy."
             >

@@ -99,7 +99,7 @@ export const CenteredNoVisual: Story = {
             <BlockAnatomy
                 name="HeroBanner"
                 tier="design"
-                leaf="Căn giữa, không ảnh"
+                leaf="CenteredNoVisual"
                 parts={CENTERED_PARTS}
                 reason="Màn mở đầu landing gói eyebrow + headline + subline + CTA + dải ngôn ngữ vào một block. `visual` bật layout chia đôi; không có visual thì giữ một cột căn giữa (không bịa ảnh). Feature chỉ truyền chữ và Button đã cấu hình."
             >
@@ -126,7 +126,7 @@ export const SplitWithVisual: Story = {
             <BlockAnatomy
                 name="HeroBanner"
                 tier="design"
-                leaf="Chia đôi có ảnh"
+                leaf="SplitWithVisual"
                 parts={SPLIT_PARTS}
                 note="`visual` có mặt → layout chia đôi (chữ trái, ảnh phải) + thêm CTA phụ; composition khác leaf căn-giữa."
             >
@@ -159,7 +159,7 @@ export const PrimaryCtaOnly: Story = {
             <BlockAnatomy
                 name="HeroBanner"
                 tier="design"
-                leaf="Chỉ CTA chính"
+                leaf="PrimaryCtaOnly"
                 parts={CENTERED_PARTS}
                 note="Không icon eyebrow, không CTA phụ — CÙNG composition với leaf căn-giữa (chỉ khác nội dung)."
             >
@@ -184,7 +184,7 @@ export const KeywordsNoLabel: Story = {
             <BlockAnatomy
                 name="HeroBanner"
                 tier="design"
-                leaf="Dải keyword"
+                leaf="KeywordsNoLabel"
                 parts={KEYWORDS_PARTS}
                 note="Thêm dải Chip màu thương hiệu dưới CTA (không label) → composition có thêm phần keyword."
             >
@@ -210,7 +210,7 @@ export const LongHeadline: Story = {
             <BlockAnatomy
                 name="HeroBanner"
                 tier="design"
-                leaf="Headline dài + đủ slot"
+                leaf="LongHeadline"
                 parts={FULL_PARTS}
                 note="Headline dài xuống dòng + CTA phụ + dải keyword CÓ label — mọi slot lấp đầy trong một cột căn giữa."
             >

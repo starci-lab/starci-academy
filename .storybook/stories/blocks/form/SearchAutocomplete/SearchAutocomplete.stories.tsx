@@ -5,7 +5,7 @@ import { SearchAutocomplete } from "./SearchAutocomplete"
 import type { SearchAutocompleteItem } from "./SearchAutocomplete"
 
 const meta: Meta<typeof SearchAutocomplete> = {
-    title: "Primitives/Form/SearchAutocomplete",
+    title: "Primitives/Forms/SearchAutocomplete",
     component: SearchAutocomplete,
     tags: ["autodocs"],
     parameters: {

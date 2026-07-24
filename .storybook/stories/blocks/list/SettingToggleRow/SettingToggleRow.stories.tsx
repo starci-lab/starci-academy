@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { SettingToggleRow } from "./SettingToggleRow"
 
 const meta: Meta<typeof SettingToggleRow> = {
-    title: "Primitives/List/SettingToggleRow",
+    title: "Primitives/Lists/SettingToggleRow",
     component: SettingToggleRow,
     tags: ["autodocs"],
     parameters: {

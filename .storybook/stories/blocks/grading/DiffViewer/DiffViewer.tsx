@@ -168,14 +168,14 @@ export const DiffViewer = ({
             {/* Filename header bar — sits above the scrollable code area */}
             {filename ? (
                 <div
-                    data-anat-part={showAnatomy ? "Thanh tên file" : undefined}
+                    data-anat-part={showAnatomy ? "FileHeader" : undefined}
                     className="border-b border-default bg-default px-4 py-2"
                 >
                     <Typography
                         type="body-sm"
                         weight="medium"
                         className="font-mono"
-                        data-anat-part={showAnatomy ? "Typography · tên file" : undefined}
+                        data-anat-part={showAnatomy ? "Typography.FileName" : undefined}
                     >
                         {filename}
                     </Typography>
@@ -184,7 +184,7 @@ export const DiffViewer = ({
 
             {/* Horizontal-scroll container so long lines never break the page */}
             <div
-                data-anat-part={showAnatomy ? "Vùng cuộn code" : undefined}
+                data-anat-part={showAnatomy ? "ScrollRegion" : undefined}
                 className="overflow-x-auto"
             >
                 <div className="min-w-fit py-1 font-mono text-xs leading-relaxed">
@@ -193,7 +193,7 @@ export const DiffViewer = ({
                             {/* Optional hunk header — muted separator row */}
                             {hunk.header ? (
                                 <div
-                                    data-anat-part={showAnatomy ? "Thanh header hunk" : undefined}
+                                    data-anat-part={showAnatomy ? "HunkHeader" : undefined}
                                     className="whitespace-pre bg-default px-4 py-1 text-muted-foreground"
                                 >
                                     {hunk.header}
@@ -204,7 +204,7 @@ export const DiffViewer = ({
                                 ? hunk.lines.map((line, lineIndex) => (
                                     <div
                                         key={lineIndex}
-                                        data-anat-part={showAnatomy ? "Hàng chia đôi" : undefined}
+                                        data-anat-part={showAnatomy ? "SplitRow" : undefined}
                                         className="grid grid-cols-2 divide-x divide-default"
                                     >
                                         {/* Old side hides pure additions; new side hides pure deletions */}

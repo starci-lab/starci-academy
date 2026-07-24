@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button } from "@heroui/react"
+import { GithubLogoIcon } from "@phosphor-icons/react"
 import { Callout } from "./Callout"
 
 const meta: Meta<typeof Callout> = {
@@ -55,6 +56,26 @@ export const WithAction: Story = {
                 title="Nâng cấp để mở khoá AI"
                 description="Gói trả phí cho phép chấm nâng cao."
                 action={<Button variant="secondary" size="sm">Nâng cấp</Button>}
+            />
+        </div>
+    ),
+}
+
+/**
+ * GithubTeamGate's persistent learn-page banner — REUSE of `Callout`, not a new
+ * block (see `src/components/features/auth/GithubTeamGate/index.tsx`): custom
+ * `icon` (Phosphor `GithubLogoIcon`, swapping the hand-rolled SVG) + `action`
+ * (the "Vào team" CTA that opens the guided join modal).
+ */
+export const GithubTeamGateWarning: Story = {
+    render: () => (
+        <div className="p-8">
+            <Callout
+                status="warning"
+                icon={<GithubLogoIcon />}
+                title="Bạn chưa vào team GitHub của khóa"
+                description="Nội dung premium nằm trong repo GitHub của khóa, nên bạn cần vào team mới mở được."
+                action={<Button variant="secondary" size="sm">Vào team</Button>}
             />
         </div>
     ),

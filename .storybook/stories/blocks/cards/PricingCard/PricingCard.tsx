@@ -96,7 +96,7 @@ export const PricingCard = ({
             <div className="flex flex-col gap-2">
                 {/* Name (+ optional popular chip inline — chip is w-fit, never full-width) */}
                 <div className="flex flex-wrap items-center gap-2">
-                    <Typography type="body" weight="semibold" data-anat-part={showAnatomy ? "Typography · tên" : undefined}>
+                    <Typography type="body" weight="semibold" data-anat-part={showAnatomy ? "Typography.Name" : undefined}>
                         {name}
                     </Typography>
                     {highlighted && badge ? (

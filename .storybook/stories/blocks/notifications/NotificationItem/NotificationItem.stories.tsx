@@ -40,44 +40,44 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 // Shared by the default, read and long-text leaves (same composition).
 const FULL_PARTS: Array<AnatomyNode> = [
     { name: "IconTile", tier: "primitive", role: "ô icon vuông tô màu theo tone (default/success/warning/accent) — đầu hàng" },
-    { name: "Typography · title", tier: "primitive", role: "tiêu đề dòng (body-sm, weight medium, clamp-2) — hiện prop title" },
-    { name: "Typography · body", tier: "primitive", role: "chi tiết phụ (body-xs, muted, clamp-2) — hiện prop body" },
-    { name: "Typography · time", tier: "primitive", role: "nhãn thời gian đã format (body-xs, muted) — hiện prop timeLabel" },
+    { name: "Typography.Title", tier: "primitive", role: "tiêu đề dòng (body-sm, weight medium, clamp-2) — hiện prop title" },
+    { name: "Typography.Body", tier: "primitive", role: "chi tiết phụ (body-xs, muted, clamp-2) — hiện prop body" },
+    { name: "Typography.Time", tier: "primitive", role: "nhãn thời gian đã format (body-xs, muted) — hiện prop timeLabel" },
 ]
 
 // UNREAD — FULL + accent dot cạnh tiêu đề và nền accent-soft cả dòng.
 const UNREAD_PARTS: Array<AnatomyNode> = [
     { name: "IconTile", tier: "primitive", role: "ô icon vuông tô màu theo tone" },
-    { name: "Dot chưa đọc", tier: "primitive", role: "chấm accent (span) cạnh tiêu đề báo chưa đọc", state: "unread" },
-    { name: "Typography · title", tier: "primitive", role: "tiêu đề dòng (body-sm, weight medium, clamp-2)" },
-    { name: "Typography · body", tier: "primitive", role: "chi tiết phụ (body-xs, muted, clamp-2)" },
-    { name: "Typography · time", tier: "primitive", role: "nhãn thời gian đã format (body-xs, muted)" },
+    { name: "Dot", tier: "primitive", role: "chấm accent (span) cạnh tiêu đề báo chưa đọc", state: "unread" },
+    { name: "Typography.Title", tier: "primitive", role: "tiêu đề dòng (body-sm, weight medium, clamp-2)" },
+    { name: "Typography.Body", tier: "primitive", role: "chi tiết phụ (body-xs, muted, clamp-2)" },
+    { name: "Typography.Time", tier: "primitive", role: "nhãn thời gian đã format (body-xs, muted)" },
 ]
 
 // ACTION — UNREAD + actionSlot cuối dòng (slot giữ kích thước riêng, không bóp cột chữ —
 // nội dung actionSlot do caller truyền, không phải node riêng của NotificationItem).
 const ACTION_PARTS: Array<AnatomyNode> = [
     { name: "IconTile", tier: "primitive", role: "ô icon vuông tô màu theo tone" },
-    { name: "Dot chưa đọc", tier: "primitive", role: "chấm accent (span) cạnh tiêu đề báo chưa đọc", state: "unread" },
-    { name: "Typography · title", tier: "primitive", role: "tiêu đề dòng (body-sm, weight medium, clamp-2)" },
-    { name: "Typography · body", tier: "primitive", role: "chi tiết phụ (body-xs, muted, clamp-2)" },
-    { name: "Typography · time", tier: "primitive", role: "nhãn thời gian đã format (body-xs, muted)" },
+    { name: "Dot", tier: "primitive", role: "chấm accent (span) cạnh tiêu đề báo chưa đọc", state: "unread" },
+    { name: "Typography.Title", tier: "primitive", role: "tiêu đề dòng (body-sm, weight medium, clamp-2)" },
+    { name: "Typography.Body", tier: "primitive", role: "chi tiết phụ (body-xs, muted, clamp-2)" },
+    { name: "Typography.Time", tier: "primitive", role: "nhãn thời gian đã format (body-xs, muted)" },
 ]
 
 // NO_ICON — text-only row: the leading IconTile is omitted (`icon` not passed) — only the
 // row's own title/body/time text remains.
 const NO_ICON_PARTS: Array<AnatomyNode> = [
-    { name: "Typography · title", tier: "primitive", role: "tiêu đề dòng (body-sm, weight medium, clamp-2)" },
-    { name: "Typography · body", tier: "primitive", role: "chi tiết phụ (body-xs, muted, clamp-2)" },
-    { name: "Typography · time", tier: "primitive", role: "nhãn thời gian đã format (body-xs, muted)" },
+    { name: "Typography.Title", tier: "primitive", role: "tiêu đề dòng (body-sm, weight medium, clamp-2)" },
+    { name: "Typography.Body", tier: "primitive", role: "chi tiết phụ (body-xs, muted, clamp-2)" },
+    { name: "Typography.Time", tier: "primitive", role: "nhãn thời gian đã format (body-xs, muted)" },
 ]
 
 // TITLE_ONLY — icon + unread dot, body omitted (`body` not passed).
 const TITLE_ONLY_PARTS: Array<AnatomyNode> = [
     { name: "IconTile", tier: "primitive", role: "ô icon vuông tô màu theo tone" },
-    { name: "Dot chưa đọc", tier: "primitive", role: "chấm accent (span) cạnh tiêu đề báo chưa đọc", state: "unread" },
-    { name: "Typography · title", tier: "primitive", role: "tiêu đề dòng (body-sm, weight medium, clamp-2)" },
-    { name: "Typography · time", tier: "primitive", role: "nhãn thời gian đã format (body-xs, muted)" },
+    { name: "Dot", tier: "primitive", role: "chấm accent (span) cạnh tiêu đề báo chưa đọc", state: "unread" },
+    { name: "Typography.Title", tier: "primitive", role: "tiêu đề dòng (body-sm, weight medium, clamp-2)" },
+    { name: "Typography.Time", tier: "primitive", role: "nhãn thời gian đã format (body-xs, muted)" },
 ]
 
 /** Default — neutral `tone="default"`, already read, no `onPress` (static row, not interactive). */
@@ -87,7 +87,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="NotificationItem"
                 tier="design"
-                leaf="Mặc định"
+                leaf="Default"
                 parts={FULL_PARTS}
                 reason="Một dòng thông báo gộp ô icon theo tone + cột title/body + nhãn thời gian đã format + tín hiệu unread (dot accent + nền accent nhạt) + action slot cuối dòng, để feature chỉ ánh xạ kind → icon/tone và truyền copy đã dịch. Cả dòng bấm được khi có onPress."
             >
@@ -108,7 +108,7 @@ export const Unread: Story = {
             <BlockAnatomy
                 name="NotificationItem"
                 tier="design"
-                leaf="Chưa đọc"
+                leaf="Unread"
                 parts={UNREAD_PARTS}
                 note="Thêm chấm accent cạnh tiêu đề + nền accent-soft báo chưa đọc; cả dòng bấm được (onPress)."
             >
@@ -132,7 +132,7 @@ export const Read: Story = {
             <BlockAnatomy
                 name="NotificationItem"
                 tier="design"
-                leaf="Đã đọc"
+                leaf="Read"
                 parts={FULL_PARTS}
                 note="Đã đọc — không chấm/không nền accent; CÙNG composition với leaf mặc định, cả dòng bấm được."
             >
@@ -155,7 +155,7 @@ export const WithAction: Story = {
             <BlockAnatomy
                 name="NotificationItem"
                 tier="design"
-                leaf="Có nút hành động"
+                leaf="WithAction"
                 parts={ACTION_PARTS}
                 note="Thêm actionSlot cuối dòng ('View') cạnh trạng thái chưa đọc; slot giữ kích thước riêng, không bóp cột chữ."
             >
@@ -180,13 +180,13 @@ export const WithAction: Story = {
 
 /** No icon — a text-only row; the leading icon tile is omitted entirely (`icon` not passed). */
 export const TextOnly: Story = {
-    name: "Không icon",
+    name: "NoIcon",
     render: () =>
         frame(
             <BlockAnatomy
                 name="NotificationItem"
                 tier="design"
-                leaf="Không icon"
+                leaf="NoIcon"
                 parts={NO_ICON_PARTS}
                 note="Bỏ IconTile → hàng chỉ chữ (không truyền `icon`), cột title/body/time tràn hết bề ngang."
             >
@@ -203,13 +203,12 @@ export const TextOnly: Story = {
 
 /** No body — title-only row, the optional secondary detail line is omitted. */
 export const TitleOnly: Story = {
-    name: "Chỉ tiêu đề",
     render: () =>
         frame(
             <BlockAnatomy
                 name="NotificationItem"
                 tier="design"
-                leaf="Chỉ tiêu đề"
+                leaf="TitleOnly"
                 parts={TITLE_ONLY_PARTS}
                 note="Bỏ body → hàng chỉ tiêu đề + thời gian (không truyền `body`)."
             >
@@ -228,13 +227,13 @@ export const TitleOnly: Story = {
 
 /** Long title + body — both `line-clamp-2`, so overflow clips to two lines instead of pushing the row taller. */
 export const LongText: Story = {
-    name: "Chữ dài (clamp 2 dòng)",
+    name: "LongTextClamped",
     render: () =>
         frame(
             <BlockAnatomy
                 name="NotificationItem"
                 tier="design"
-                leaf="Chữ dài (clamp 2 dòng)"
+                leaf="LongTextClamped"
                 parts={FULL_PARTS}
                 note="CÙNG composition leaf mặc định; title/body clamp 2 dòng nên tràn thì cắt, không đẩy hàng cao."
             >

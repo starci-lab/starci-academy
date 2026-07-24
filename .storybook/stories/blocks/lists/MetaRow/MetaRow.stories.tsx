@@ -3,7 +3,7 @@ import { MetaRow } from "./MetaRow"
 import { StatusChip } from "../../chips/StatusChip/StatusChip"
 
 const meta: Meta<typeof MetaRow> = {
-    title: "Primitives/List/MetaRow",
+    title: "Primitives/Lists/MetaRow",
     component: MetaRow,
     tags: ["autodocs", "news"],
     parameters: {
@@ -17,7 +17,6 @@ type Story = StoryObj<typeof MetaRow>
 
 /** Leading warning `StatusChip` (the one signal) + dot-joined muted meta segments. */
 export const WithChip: Story = {
-    name: "Có chip signal",
     render: () => (
         <div className="w-96 p-8">
             <MetaRow
@@ -34,7 +33,6 @@ export const WithChip: Story = {
 
 /** No chip — a plain muted dot-joined meta line. */
 export const MetaOnly: Story = {
-    name: "Chỉ meta (không chip)",
     render: () => (
         <div className="w-96 p-8">
             <MetaRow items={["Question 2 / 8", "Middle", "40 minutes left"]} />
@@ -44,7 +42,6 @@ export const MetaOnly: Story = {
 
 /** Narrow container — the muted meta line truncates instead of wrapping/overflowing. */
 export const Overflow: Story = {
-    name: "Tràn — truncate",
     render: () => (
         <div className="w-64 p-8">
             <MetaRow items={["Building a scalable distributed rate limiter", "Middle", "40 minutes left"]} />

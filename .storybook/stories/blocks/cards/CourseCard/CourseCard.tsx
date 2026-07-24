@@ -176,9 +176,9 @@ export const CourseCard = ({
     const onViewDetail = useCallback(() => {}, [])
     const viewLabel = isEnrolled ? T.continueLearning : T.viewCourse
     // anatomy name for the secondary-slot Button DIFFERS by layout tree (Grid names
-    // it "Button (secondary)", Line "Button · secondary") — this one Button element
+    // it "Button.Secondary", Line "Button.Secondary") — this one Button element
     // is shared by both render branches below, so the name is picked by `layout`.
-    const secondaryButtonAnatPart = layout === "line" ? "Button · secondary" : "Button (secondary)"
+    const secondaryButtonAnatPart = layout === "line" ? "Button.Secondary" : "Button.Secondary"
     // not enrolled → the feature-owned `action` slot; enrolled → a secondary
     // "Xem khóa học" button (view the marketing page) replaces it.
     const secondaryAction = isEnrolled ? (
@@ -217,22 +217,22 @@ export const CourseCard = ({
                     <div className="flex items-center gap-3">
                         {/* thumbnail 16:9 (rounded-2xl media step), hidden on narrow like the real row */}
                         <div className="relative hidden aspect-video w-36 shrink-0 overflow-hidden rounded-2xl @app-sm:block">
-                            <Skeleton className="size-full" anatPart={showAnatomy ? "Skeleton · cover" : undefined} />
+                            <Skeleton className="size-full" anatPart={showAnatomy ? "Skeleton.Cover" : undefined} />
                         </div>
                         {/* title + users-meta, then a one-line description */}
                         <div className="flex min-w-0 flex-1 flex-col gap-1">
                             <div className="flex items-center gap-2">
-                                <Skeleton.Typography type="body" width="1/2" anatPart={showAnatomy ? "Skeleton.Typography · tiêu đề" : undefined} />
-                                <div className="flex shrink-0 items-center gap-1" data-anat-part={showAnatomy ? "Skeleton · số học viên" : undefined}>
+                                <Skeleton.Typography type="body" width="1/2" anatPart={showAnatomy ? "Skeleton.Typography.Title" : undefined} />
+                                <div className="flex shrink-0 items-center gap-1" data-anat-part={showAnatomy ? "Skeleton.Learners" : undefined}>
                                     <Skeleton className="size-4 shrink-0 rounded-full" />
                                     <Skeleton.Typography type="body-xs" width="w-10" />
                                 </div>
                             </div>
-                            <Skeleton.Typography type="body-sm" width="3/4" anatPart={showAnatomy ? "Skeleton.Typography · mô tả" : undefined} />
+                            <Skeleton.Typography type="body-sm" width="3/4" anatPart={showAnatomy ? "Skeleton.Typography.Description" : undefined} />
                         </div>
                         {/* price line + a two-button action row (mirrors items-end column) */}
                         <div className="flex shrink-0 flex-col items-end gap-2">
-                            <Skeleton.Typography type="body" width="w-20" anatPart={showAnatomy ? "Skeleton.Typography · giá" : undefined} />
+                            <Skeleton.Typography type="body" width="w-20" anatPart={showAnatomy ? "Skeleton.Typography.Price" : undefined} />
                             <div className="flex w-full items-center gap-2">
                                 <Skeleton.Button width="flex-1" anatPart={showAnatomy ? "Skeleton.Button" : undefined} />
                                 <Skeleton.Button width="flex-1" anatPart={showAnatomy ? "Skeleton.Button" : undefined} />
@@ -249,26 +249,26 @@ export const CourseCard = ({
             <Card className={cn("flex flex-col overflow-hidden rounded-3xl", className)} data-anat-part={showAnatomy ? "Card" : undefined}>
                 <Card.Content className="flex flex-col gap-3" data-anat-part={showAnatomy ? "Card.Content" : undefined}>
                     {/* cover 16:9 (rounded-2xl media step) */}
-                    <Skeleton className="aspect-video w-full rounded-2xl" anatPart={showAnatomy ? "Skeleton (cover)" : undefined} />
+                    <Skeleton className="aspect-video w-full rounded-2xl" anatPart={showAnatomy ? "Skeleton.Cover" : undefined} />
                     <div className="flex flex-col gap-2">
                         {/* title + users-meta */}
                         <div className="flex items-center justify-between gap-2">
-                            <Skeleton.Typography type="h6" width="1/2" anatPart={showAnatomy ? "Skeleton.Typography (tiêu đề)" : undefined} />
-                            <div className="flex shrink-0 items-center gap-1" data-anat-part={showAnatomy ? "Skeleton + Skeleton.Typography (học viên)" : undefined}>
+                            <Skeleton.Typography type="h6" width="1/2" anatPart={showAnatomy ? "Skeleton.Typography.Title" : undefined} />
+                            <div className="flex shrink-0 items-center gap-1" data-anat-part={showAnatomy ? "Skeleton.Learners" : undefined}>
                                 <Skeleton className="size-4 shrink-0 rounded-full" />
                                 <Skeleton.Typography type="body-xs" width="w-10" />
                             </div>
                         </div>
                         {/* description (line-clamp-2) */}
-                        <Skeleton.Typography type="body-sm" width="full" anatPart={showAnatomy ? "Skeleton.Typography (mô tả)" : undefined} />
-                        <Skeleton.Typography type="body-sm" width="3/4" anatPart={showAnatomy ? "Skeleton.Typography (mô tả)" : undefined} />
+                        <Skeleton.Typography type="body-sm" width="full" anatPart={showAnatomy ? "Skeleton.Typography.Description" : undefined} />
+                        <Skeleton.Typography type="body-sm" width="3/4" anatPart={showAnatomy ? "Skeleton.Typography.Description" : undefined} />
                         {/* value-props — same bordered CrossListCard surface, self-skeletoned */}
                         <CrossListCard bordered isSkeleton className="mt-1" anatPart={showAnatomy ? "CrossListCard" : undefined} />
                     </div>
                 </Card.Content>
                 <Card.Footer className="mt-auto flex flex-col items-start gap-2" data-anat-part={showAnatomy ? "Card.Footer" : undefined}>
                     {/* price line */}
-                    <Skeleton.Typography type="body" width="1/3" anatPart={showAnatomy ? "Skeleton.Typography (giá)" : undefined} />
+                    <Skeleton.Typography type="body" width="1/3" anatPart={showAnatomy ? "Skeleton.Typography.Price" : undefined} />
                     {/* action row — primary + secondary button */}
                     <div className="flex w-full items-center gap-2">
                         <Skeleton.Button width="flex-1" anatPart={showAnatomy ? "Skeleton.Button" : undefined} />
@@ -311,7 +311,7 @@ export const CourseCard = ({
                                 type="body"
                                 weight="bold"
                                 truncate
-                                data-anat-part={showAnatomy ? "Typography · tiêu đề" : undefined}
+                                data-anat-part={showAnatomy ? "Typography.Title" : undefined}
                             >
                                 {course.title}
                             </Typography>
@@ -321,7 +321,7 @@ export const CourseCard = ({
                                     <Typography
                                         type="body-xs"
                                         color="muted"
-                                        data-anat-part={showAnatomy ? "Typography · số học viên" : undefined}
+                                        data-anat-part={showAnatomy ? "Typography.Learners" : undefined}
                                     >
                                         {T.learners(course.enrollmentCount)}
                                     </Typography>
@@ -332,7 +332,7 @@ export const CourseCard = ({
                             type="body-sm"
                             color="muted"
                             className="line-clamp-1"
-                            data-anat-part={showAnatomy ? "Typography · mô tả" : undefined}
+                            data-anat-part={showAnatomy ? "Typography.Description" : undefined}
                         >
                             {course.description}
                         </Typography>
@@ -358,7 +358,7 @@ export const CourseCard = ({
                                 onPress={onView}
                                 className="flex-1"
                                 icon={<ArrowRightIcon aria-hidden focusable="false" />}
-                                anatPart={showAnatomy ? "Button · primary" : undefined}
+                                anatPart={showAnatomy ? "Button.Primary" : undefined}
                             >
                                 {viewLabel}
                             </Button>
@@ -391,7 +391,7 @@ export const CourseCard = ({
                                 weight="semibold"
                                 align="center"
                                 className="ml-2"
-                                data-anat-part={showAnatomy ? "Typography (tiêu đề dự phòng)" : undefined}
+                                data-anat-part={showAnatomy ? "Typography.FallbackTitle" : undefined}
                             >
                                 {course.title}
                             </Typography>
@@ -405,7 +405,7 @@ export const CourseCard = ({
                             type="h6"
                             weight="bold"
                             truncate
-                            data-anat-part={showAnatomy ? "Typography (tiêu đề)" : undefined}
+                            data-anat-part={showAnatomy ? "Typography.Title" : undefined}
                         >
                             {course.title}
                         </Typography>
@@ -415,7 +415,7 @@ export const CourseCard = ({
                                 <Typography
                                     type="body-xs"
                                     color="muted"
-                                    data-anat-part={showAnatomy ? "Typography (số học viên)" : undefined}
+                                    data-anat-part={showAnatomy ? "Typography.Learners" : undefined}
                                 >
                                     {T.learners(course.enrollmentCount)}
                                 </Typography>
@@ -426,7 +426,7 @@ export const CourseCard = ({
                         type="body-sm"
                         color="muted"
                         className="line-clamp-2"
-                        data-anat-part={showAnatomy ? "Typography (mô tả)" : undefined}
+                        data-anat-part={showAnatomy ? "Typography.Description" : undefined}
                     >
                         {course.description}
                     </Typography>
@@ -457,7 +457,7 @@ export const CourseCard = ({
                 {/* price row (informational) */}
                 <div className="flex items-center gap-2">
                     {loyaltyPending ? (
-                        <Skeleton.Typography type="body-sm" width="1/2" anatPart={showAnatomy ? "Skeleton.Typography (giá)" : undefined} />
+                        <Skeleton.Typography type="body-sm" width="1/2" anatPart={showAnatomy ? "Skeleton.Typography.Price" : undefined} />
                     ) : displayPrice != null ? (
                         <PriceTag
                             discounted={displayPrice}
@@ -474,7 +474,7 @@ export const CourseCard = ({
                     <Typography
                         type="body-xs"
                         color="muted"
-                        data-anat-part={showAnatomy ? "Typography (USD)" : undefined}
+                        data-anat-part={showAnatomy ? "Typography.Usd" : undefined}
                     >
                         {T.priceUsdHint(formattedPriceUsd)}
                     </Typography>
@@ -487,7 +487,7 @@ export const CourseCard = ({
                         onPress={onView}
                         className="flex-1"
                         icon={<ArrowRightIcon aria-hidden focusable="false" />}
-                        anatPart={showAnatomy ? "Button (primary)" : undefined}
+                        anatPart={showAnatomy ? "Button.Primary" : undefined}
                     >
                         {viewLabel}
                     </Button>

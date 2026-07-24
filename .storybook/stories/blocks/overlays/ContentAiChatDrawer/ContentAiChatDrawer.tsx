@@ -426,7 +426,7 @@ export const ContentAiChatDrawer = ({
                 weight="bold"
                 truncate
                 className="min-w-0 flex-1"
-                data-anat-part={showAnatomy ? "Typography · tiêu đề" : undefined}
+                data-anat-part={showAnatomy ? "Typography.Title" : undefined}
             >
                 {title}
             </Typography>

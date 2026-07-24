@@ -14,7 +14,7 @@ import { ResizableRail } from "./ResizableRail"
 import { PageHeader } from "../PageHeader/PageHeader"
 
 const meta: Meta<typeof ResizableRail> = {
-    title: "Primitives/Layout/ResizableRail",
+    title: "Primitives/Layouts/ResizableRail",
     component: ResizableRail,
     tags: ["autodocs"],
     parameters: {

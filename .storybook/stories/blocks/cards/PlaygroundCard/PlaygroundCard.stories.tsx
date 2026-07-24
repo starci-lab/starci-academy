@@ -47,7 +47,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="PlaygroundCard"
                 tier="design"
-                leaf="Có dữ liệu"
+                leaf="Default"
                 parts={CARD_PARTS}
                 reason="Một ô bài thực hành trong lưới hub Playground cần MỘT nhận diện hình ảnh nhất quán (IconTile terminal) + tiêu đề + chip số bước + một CTA vào phòng lab. Gói vào một block để mọi ô trong lưới (Docker/Kubernetes) cùng một khuôn — feature chỉ truyền title/stepCount/onOpen, không dựng lại icon-tile và CTA ở mỗi ô."
             >
@@ -69,7 +69,7 @@ export const SingleStep: Story = {
             <BlockAnatomy
                 name="PlaygroundCard"
                 tier="design"
-                leaf="Một bước"
+                leaf="SingleStep"
                 parts={CARD_PARTS}
                 note="stepCount = 1 → chip chỉ hiện '1 bước', CÙNG composition với leaf 'Có dữ liệu'."
             >
@@ -91,7 +91,7 @@ export const ManySteps: Story = {
             <BlockAnatomy
                 name="PlaygroundCard"
                 tier="design"
-                leaf="Nhiều bước"
+                leaf="ManySteps"
                 parts={CARD_PARTS}
                 note="stepCount lớn → chip '12 bước', composition không đổi."
             >
@@ -113,7 +113,7 @@ export const LongTitleTruncate: Story = {
             <BlockAnatomy
                 name="PlaygroundCard"
                 tier="design"
-                leaf="Tiêu đề dài"
+                leaf="LongTitleTruncate"
                 parts={CARD_PARTS}
                 note="Tiêu đề dài → Typography truncate giữ một dòng; composition vẫn y hệt."
             >

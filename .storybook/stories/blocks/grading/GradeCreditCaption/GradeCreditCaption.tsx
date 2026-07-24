@@ -110,7 +110,7 @@ export const GradeCreditCaption = ({
             <button
                 type="button"
                 onClick={onOpenDetails}
-                data-anat-part={showAnatomy ? "button · pressable" : undefined}
+                data-anat-part={showAnatomy ? "Button.Pressable" : undefined}
                 className={cn("w-fit cursor-pointer outline-none transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-accent", className)}
             >
                 {content}
@@ -118,5 +118,5 @@ export const GradeCreditCaption = ({
         )
     }
 
-    return <span data-anat-part={showAnatomy ? "span · wrapper" : undefined} className={cn(className)}>{content}</span>
+    return <span data-anat-part={showAnatomy ? "Span.Wrapper" : undefined} className={cn(className)}>{content}</span>
 }

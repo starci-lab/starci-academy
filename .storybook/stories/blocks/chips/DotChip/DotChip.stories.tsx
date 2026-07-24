@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { DotChip } from "./DotChip"
 
 const meta: Meta<typeof DotChip> = {
-    title: "Primitives/Chip/DotChip",
+    title: "Primitives/Chips/DotChip",
     component: DotChip,
     tags: ["autodocs"],
     parameters: {

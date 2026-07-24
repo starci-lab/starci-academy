@@ -6,7 +6,7 @@ import { EmptyState } from "../../feedback/EmptyState/EmptyState"
 import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 
 const meta: Meta<typeof LabeledList> = {
-    title: "Primitives/List/LabeledList",
+    title: "Primitives/Lists/LabeledList",
     component: LabeledList,
     tags: ["autodocs"],
     parameters: {

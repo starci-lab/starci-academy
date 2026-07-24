@@ -54,8 +54,8 @@ const SMALL_DATA: ArchitectureSceneData = {
 // A directed floor wire (`Edge`): a dashed `Line` plus animated packet spheres —
 // 3 fast dots when `congested`, 1 slow dot when `flow`, none otherwise.
 const EDGE_PARTS: Array<AnatomyNode> = [
-    { name: "Line · dashed", tier: "primitive", role: "đường nối gạch có hướng; độ dày/độ mờ theo congested·eventual" },
-    { name: "Mesh · packet", tier: "primitive", role: "gói cầu chạy dọc dây", state: "×dots (congested 3 · flow 1 · 0)" },
+    { name: "Line.Dashed", tier: "primitive", role: "đường nối gạch có hướng; độ dày/độ mờ theo congested·eventual" },
+    { name: "Mesh.Packet", tier: "primitive", role: "gói cầu chạy dọc dây", state: "×dots (congested 3 · flow 1 · 0)" },
 ]
 
 // The captioned scene composition: a WebGL <Canvas> board (auto-fit camera + orbit
@@ -64,28 +64,28 @@ const EDGE_PARTS: Array<AnatomyNode> = [
 // `note`), but the composition is the same.
 const SCENE_PARTS: Array<AnatomyNode> = [
     {
-        name: "Canvas · WebGL",
+        name: "Canvas.WebGL",
         tier: "design",
         role: "board 3D flat-isometric (react-three-fiber), tự fit camera theo bounding-box node",
         children: [
             { name: "CameraFit", tier: "primitive", role: "imperative: reframe camera orthographic theo bounding-box node (không mesh)" },
-            { name: "Line · grid", tier: "primitive", role: "sàn iso, lưới trên biên ô cell" },
+            { name: "Line.Grid", tier: "primitive", role: "sàn iso, lưới trên biên ô cell" },
             {
-                name: "Edge · wire",
+                name: "Edge.Wire",
                 tier: "primitive",
                 role: "dây nối có hướng giữa 2 node (flow / congested / eventual)",
                 state: "×N",
                 children: EDGE_PARTS,
             },
             {
-                name: "Bar · node",
+                name: "Bar.Node",
                 tier: "design",
                 role: "một node đặt trên ô cell",
                 state: "×N",
                 children: [
                     { name: "KindMesh", tier: "primitive", role: "khối 3D theo `kind` (container · database · broker · loadBalancer · client · user · pod)" },
                     {
-                        name: "Html · nhãn nổi",
+                        name: "Html.FloatingLabel",
                         tier: "design",
                         role: "chip surface nổi trên node (drei Html portal), viền theo tone node — hiện tên · sub · kind-icon · status",
                     },
@@ -101,28 +101,28 @@ const SCENE_PARTS: Array<AnatomyNode> = [
 // `selectedId` adds an accent ring on the chosen node's label chip.
 const SELECTED_PARTS: Array<AnatomyNode> = [
     {
-        name: "Canvas · WebGL",
+        name: "Canvas.WebGL",
         tier: "design",
         role: "board 3D flat-isometric, nodes tương tác được",
         children: [
             { name: "CameraFit", tier: "primitive", role: "imperative: reframe camera orthographic theo bounding-box node (không mesh)" },
-            { name: "Line · grid", tier: "primitive", role: "sàn iso, lưới trên biên ô cell" },
+            { name: "Line.Grid", tier: "primitive", role: "sàn iso, lưới trên biên ô cell" },
             {
-                name: "Edge · wire",
+                name: "Edge.Wire",
                 tier: "primitive",
                 role: "dây nối có hướng giữa 2 node",
                 state: "×N",
                 children: EDGE_PARTS,
             },
             {
-                name: "Bar · node",
+                name: "Bar.Node",
                 tier: "design",
                 role: "node bấm được (onSelectNode); node đang chọn thêm ring accent",
                 state: "selected · clickable",
                 children: [
                     { name: "KindMesh", tier: "primitive", role: "khối 3D theo `kind`" },
                     {
-                        name: "Html · nhãn nổi",
+                        name: "Html.FloatingLabel",
                         tier: "design",
                         role: "chip surface (drei Html portal) + ring accent khi selectedId khớp — hiện tên · sub · kind-icon · status",
                         state: "ring khi selected",
@@ -138,28 +138,28 @@ const SELECTED_PARTS: Array<AnatomyNode> = [
 // NoCaption leaf: same board, but `caption` omitted → the Typography line drops.
 const NO_CAPTION_PARTS: Array<AnatomyNode> = [
     {
-        name: "Canvas · WebGL",
+        name: "Canvas.WebGL",
         tier: "design",
         role: "board 3D flat-isometric (react-three-fiber), tự fit camera theo bounding-box node",
         children: [
             { name: "CameraFit", tier: "primitive", role: "imperative: reframe camera orthographic theo bounding-box node (không mesh)" },
-            { name: "Line · grid", tier: "primitive", role: "sàn iso, lưới trên biên ô cell" },
+            { name: "Line.Grid", tier: "primitive", role: "sàn iso, lưới trên biên ô cell" },
             {
-                name: "Edge · wire",
+                name: "Edge.Wire",
                 tier: "primitive",
                 role: "dây nối có hướng giữa 2 node",
                 state: "×N",
                 children: EDGE_PARTS,
             },
             {
-                name: "Bar · node",
+                name: "Bar.Node",
                 tier: "design",
                 role: "một node đặt trên ô cell",
                 state: "×N",
                 children: [
                     { name: "KindMesh", tier: "primitive", role: "khối 3D theo `kind`" },
                     {
-                        name: "Html · nhãn nổi",
+                        name: "Html.FloatingLabel",
                         tier: "design",
                         role: "chip surface nổi trên node (drei Html portal), viền theo tone node — hiện tên · sub · kind-icon · status",
                     },
@@ -176,7 +176,7 @@ export const DefaultScene: Story = {
             <BlockAnatomy
                 name="ArchitectureScene"
                 tier="design"
-                leaf="Mặc định · backend StarCi"
+                leaf="DefaultScene"
                 parts={SCENE_PARTS}
                 reason="Hero kiến trúc dạng 3D thật (WebGL, flat-isometric tiles-on-a-grid), driven hoàn toàn bằng JSON `data` + 3 tone token (normal/success/danger). Đổi `data` là render bất kỳ sơ đồ/sự cố nào — mặc định là backend StarCi (CQRS/CDC)."
             >
@@ -193,7 +193,7 @@ export const CustomData: Story = {
             <BlockAnatomy
                 name="ArchitectureScene"
                 tier="design"
-                leaf="Data tuỳ biến"
+                leaf="CustomData"
                 parts={SCENE_PARTS}
                 note="Cùng composition với leaf mặc định; `data` nhỏ hơn (client → LB → API → PostgreSQL), node `api` tone danger + status 'overloaded'."
             >
@@ -213,7 +213,7 @@ export const SelectedNode: Story = {
             <BlockAnatomy
                 name="ArchitectureScene"
                 tier="design"
-                leaf="Node được chọn"
+                leaf="SelectedNode"
                 parts={SELECTED_PARTS}
                 note="onSelectNode bật → node bấm được; selectedId='api' thêm ring accent quanh nhãn (khác leaf data ở tính tương tác)."
             >
@@ -237,7 +237,7 @@ export const NoCaption: Story = {
             <BlockAnatomy
                 name="ArchitectureScene"
                 tier="design"
-                leaf="Không caption"
+                leaf="NoCaption"
                 parts={NO_CAPTION_PARTS}
                 note="Bỏ `caption` → KHÔNG render Typography, chỉ còn Canvas (khác các leaf khác đúng một part)."
             >
@@ -284,7 +284,7 @@ export const PodAndUserKinds: Story = {
             <BlockAnatomy
                 name="ArchitectureScene"
                 tier="design"
-                leaf="Kind pod + user"
+                leaf="PodAndUserKinds"
                 parts={SCENE_PARTS}
                 note="Cùng composition; KindMesh lần này là `pod` + `user` + `loadBalancer`, cạnh `eventual` mờ hơn, status warning/info."
             >

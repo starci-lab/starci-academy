@@ -60,24 +60,24 @@ const ANSWER_MD =
     "**Closure** là hàm “nhớ” được scope nơi nó sinh ra — nó giữ tham chiếu tới biến ngoài ngay cả sau khi hàm cha đã `return`.\n\nMemory leak xảy ra khi closure giữ tham chiếu **sống lâu hơn cần thiết** (ví dụ một listener quên gỡ)."
 
 // ── Anatomy trees per state ──────────────────────────────────────────────────
-const USER_BUBBLE: AnatomyNode = { name: "ChatBubble · user", tier: "primitive", role: "tin nhắn người dùng — canh phải, nền accent-soft" }
+const USER_BUBBLE: AnatomyNode = { name: "ChatBubble.User", tier: "primitive", role: "tin nhắn người dùng — canh phải, nền accent-soft" }
 
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "Typography · gợi ý", tier: "primitive", role: "dòng gợi ý khi thread rỗng (muted)" },
-    { name: "Button · gợi ý", tier: "primitive", role: "nút gợi ý / kỹ năng truy hồi (lặp ×N)" },
+    { name: "Typography.Suggestion", tier: "primitive", role: "dòng gợi ý khi thread rỗng (muted)" },
+    { name: "Button.Suggestion", tier: "primitive", role: "nút gợi ý / kỹ năng truy hồi (lặp ×N)" },
 ]
 
 /** Rỗng — scope="content" (bài học đang mở): hint + cụm 3 nút gợi ý + cụm 2 nút kỹ năng. */
 const EMPTY_CONTENT_SCOPE_PARTS: Array<AnatomyNode> = [
-    { name: "Typography · gợi ý", tier: "primitive", role: "dòng hint scope bài học (muted) — 'Hỏi bất cứ điều gì về nội dung này.'" },
+    { name: "Typography.Suggestion", tier: "primitive", role: "dòng hint scope bài học (muted) — 'Hỏi bất cứ điều gì về nội dung này.'" },
     {
-        name: "ChipButtonList · gợi ý",
+        name: "ChipButtonList.Suggestion",
         tier: "primitive",
         role: "cụm 3 nút câu hỏi mẫu (tóm tắt / khó nhất / ví dụ) — chỉ hiện khi scope=\"content\", vì chỉ lesson mới có 'bài này' để tóm tắt",
         children: [{ name: "Button", tier: "primitive", role: "nút gợi ý (lặp ×3)" }],
     },
     {
-        name: "ChipButtonList · kỹ năng",
+        name: "ChipButtonList.Skill",
         tier: "primitive",
         role: "cụm 2 nút kỹ năng truy hồi (tìm challenges của bài · tìm thẻ ôn của bài)",
         children: [{ name: "Button", tier: "primitive", role: "nút kỹ năng (lặp ×2)" }],
@@ -86,9 +86,9 @@ const EMPTY_CONTENT_SCOPE_PARTS: Array<AnatomyNode> = [
 
 /** Rỗng — scope="course" (chưa mở bài nào): hint khác + KHÔNG có cụm gợi ý + cụm 3 nút kỹ năng. */
 const EMPTY_COURSE_SCOPE_PARTS: Array<AnatomyNode> = [
-    { name: "Typography · gợi ý", tier: "primitive", role: "dòng hint scope khoá (muted) — 'Bạn chưa mở bài nào. Cứ hỏi bất cứ điều gì về cả khoá này.'" },
+    { name: "Typography.Suggestion", tier: "primitive", role: "dòng hint scope khoá (muted) — 'Bạn chưa mở bài nào. Cứ hỏi bất cứ điều gì về cả khoá này.'" },
     {
-        name: "ChipButtonList · kỹ năng",
+        name: "ChipButtonList.Skill",
         tier: "primitive",
         role: "cụm 3 nút kỹ năng (tìm bài học · tìm challenges · tìm thẻ ôn trong khoá) — KHÔNG có cụm gợi ý vì course không có 'bài này' để tóm tắt",
         children: [{ name: "Button", tier: "primitive", role: "nút kỹ năng (lặp ×3)" }],
@@ -101,7 +101,7 @@ const EMPTY_SELECTION_PARTS: Array<AnatomyNode> = []
 const SESSION_ERROR_PARTS: Array<AnatomyNode> = [
     USER_BUBBLE,
     {
-        name: "ChatBubble · assistant",
+        name: "ChatBubble.Assistant",
         tier: "primitive",
         role: "tin nhắn trợ lý báo tạo phiên thất bại — text THƯỜNG, không phải quota/error state",
         children: [{ name: "MarkdownContent", tier: "block", role: "'⚠️ Không gửi được — không tạo được hội thoại…' render như markdown thường, KHÔNG có CTA nâng cấp hay nút thử lại" }],
@@ -111,7 +111,7 @@ const SESSION_ERROR_PARTS: Array<AnatomyNode> = [
 const CONVERSATION_PARTS: Array<AnatomyNode> = [
     USER_BUBBLE,
     {
-        name: "ChatBubble · assistant",
+        name: "ChatBubble.Assistant",
         tier: "primitive",
         role: "tin nhắn trợ lý — canh trái",
         children: [{ name: "MarkdownContent", tier: "block", role: "câu trả lời render markdown (đậm/xuống dòng/code)" }],
@@ -121,7 +121,7 @@ const CONVERSATION_PARTS: Array<AnatomyNode> = [
 const TOOLRESULT_PARTS: Array<AnatomyNode> = [
     USER_BUBBLE,
     {
-        name: "ChatBubble · assistant",
+        name: "ChatBubble.Assistant",
         tier: "primitive",
         role: "tin nhắn trợ lý ôm kết quả RAG",
         children: [{ name: "ChatToolResult", tier: "block", role: "kết quả RAG — 1 block (NestedCard + EntityResultRow + SeeMoreLink)" }],
@@ -131,29 +131,29 @@ const TOOLRESULT_PARTS: Array<AnatomyNode> = [
 const THINKING_PARTS: Array<AnatomyNode> = [
     USER_BUBBLE,
     {
-        name: "ChatBubble · assistant",
+        name: "ChatBubble.Assistant",
         tier: "primitive",
         role: "tin nhắn trợ lý đang stream",
-        children: [{ name: "Typography · đang soạn", tier: "primitive", role: "dòng 'Đang soạn…' (muted) khi content rỗng" }],
+        children: [{ name: "Typography.Thinking", tier: "primitive", role: "dòng 'Đang soạn…' (muted) khi content rỗng" }],
     },
 ]
 
 const QUOTA_PARTS: Array<AnatomyNode> = [
     USER_BUBBLE,
     {
-        name: "ChatBubble · assistant",
+        name: "ChatBubble.Assistant",
         tier: "primitive",
         role: "tin nhắn trợ lý báo hết quota",
         children: [
             { name: "MarkdownContent", tier: "block", role: "thông báo hết credit (markdown)" },
-            { name: "Button · nâng cấp", tier: "primitive", role: "CTA nâng cấp gói AI (primary sm + mũi tên)" },
+            { name: "Button.Upgrade", tier: "primitive", role: "CTA nâng cấp gói AI (primary sm + mũi tên)" },
         ],
     },
 ]
 
 const SKELETON_PARTS: Array<AnatomyNode> = [
     {
-        name: "ChatBubble · skeleton",
+        name: "ChatBubble.Skeleton",
         tier: "primitive",
         role: "bubble giả mirror hình dạng tin nhắn (user ngắn + assistant nhiều dòng) — lặp khi tải",
         state: "skeleton",
@@ -163,13 +163,13 @@ const SKELETON_PARTS: Array<AnatomyNode> = [
 const ERROR_PARTS: Array<AnatomyNode> = [
     USER_BUBBLE,
     {
-        name: "ChatBubble · assistant",
+        name: "ChatBubble.Assistant",
         tier: "primitive",
         role: "tin nhắn trợ lý gặp lỗi — không trả lời được",
         state: "error",
         children: [
-            { name: "InlineIconLabel · lỗi", tier: "primitive", role: "dòng lỗi (icon cảnh báo + text tone danger)" },
-            { name: "Button · thử lại", tier: "primitive", role: "CTA thử lại (secondary sm + icon xoay)" },
+            { name: "InlineIconLabel.Error", tier: "primitive", role: "dòng lỗi (icon cảnh báo + text tone danger)" },
+            { name: "Button.Retry", tier: "primitive", role: "CTA thử lại (secondary sm + icon xoay)" },
         ],
     },
 ]
@@ -181,7 +181,7 @@ export const Empty: Story = {
             <BlockAnatomy
                 name="ChatThread"
                 tier="block"
-                leaf="Rỗng + gợi ý"
+                leaf="Empty"
                 parts={EMPTY_PARTS}
                 reason="Thread rỗng cần mời người học bắt đầu: 1 dòng gợi ý + các nút câu hỏi mẫu / kỹ năng truy hồi. Không có ChatBubble nào."
             >
@@ -206,7 +206,7 @@ export const Conversation: Story = {
             <BlockAnatomy
                 name="ChatThread"
                 tier="block"
-                leaf="Có tin nhắn"
+                leaf="Conversation"
                 parts={CONVERSATION_PARTS}
                 note="Một lượt hỏi–đáp: bubble user (text) + bubble trợ lý render câu trả lời qua MarkdownContent."
             >
@@ -222,7 +222,7 @@ export const WithToolResult: Story = {
             <BlockAnatomy
                 name="ChatThread"
                 tier="block"
-                leaf="Có kết quả RAG"
+                leaf="WithToolResult"
                 parts={TOOLRESULT_PARTS}
                 note="Lượt trợ lý mang toolResult → intro ngắn + ChatToolResult (danh sách flashcard) ngay trong bubble."
             >
@@ -257,7 +257,7 @@ export const Thinking: Story = {
             <BlockAnatomy
                 name="ChatThread"
                 tier="block"
-                leaf="Đang soạn"
+                leaf="Thinking"
                 parts={THINKING_PARTS}
                 note="Trợ lý đang stream (content rỗng) → bubble chỉ có dòng 'Đang soạn…' (muted), chưa có nội dung."
             >
@@ -273,7 +273,7 @@ export const Skeleton: Story = {
             <BlockAnatomy
                 name="ChatThread"
                 tier="block"
-                leaf="Skeleton đang tải"
+                leaf="Skeleton"
                 parts={SKELETON_PARTS}
                 note="Đang tải lịch sử tin nhắn → bubble giả (Skeleton.Typography) giữ đúng hình dạng thread, không giật khi resolve."
             >
@@ -289,7 +289,7 @@ export const Error: Story = {
             <BlockAnatomy
                 name="ChatThread"
                 tier="block"
-                leaf="Lỗi không chat được"
+                leaf="Error"
                 parts={ERROR_PARTS}
                 note="Yêu cầu thất bại (mạng/dịch vụ) → lượt trợ lý hiện dòng lỗi (InlineIconLabel tone danger) + nút thử lại, thay cho câu trả lời."
             >
@@ -309,7 +309,7 @@ export const QuotaError: Story = {
             <BlockAnatomy
                 name="ChatThread"
                 tier="block"
-                leaf="Hết quota"
+                leaf="QuotaError"
                 parts={QUOTA_PARTS}
                 note="Lượt trợ lý gặp giới hạn AI → MarkdownContent báo hết credit + nút nâng cấp (thay cho câu trả lời)."
             >
@@ -337,7 +337,7 @@ export const EmptyContentScope: Story = {
             <BlockAnatomy
                 name="ChatThread"
                 tier="block"
-                leaf="Rỗng — phạm vi bài học"
+                leaf="EmptyContentScope"
                 parts={EMPTY_CONTENT_SCOPE_PARTS}
                 note={"scope=\"content\" (đang mở 1 bài) → hint riêng + cụm gợi ý (3 nút, chỉ scope này có) + cụm kỹ năng (2 nút)."}
                 reason="Chỉ lesson mới có 'bài này' để tóm tắt/hỏi khó nhất/xin ví dụ — course hay task/challenge/foundation không có, nên cụm gợi ý CHỈ hiện ở scope content (source isContentScope gate, index.tsx:1329)."
@@ -368,7 +368,7 @@ export const EmptyCourseScope: Story = {
             <BlockAnatomy
                 name="ChatThread"
                 tier="block"
-                leaf="Rỗng — phạm vi khoá"
+                leaf="EmptyCourseScope"
                 parts={EMPTY_COURSE_SCOPE_PARTS}
                 note={"scope=\"course\" (chưa mở bài nào) → hint khác + KHÔNG có cụm gợi ý (0 nút) + cụm kỹ năng dẫn đầu bằng 'tìm bài học' (3 nút)."}
                 reason="Course-wide không có 'bài này' để tóm tắt, nên cụm gợi ý biến mất hoàn toàn (không phải rỗng-ẩn, mà KHÔNG render); cụm kỹ năng thêm 'tìm bài học' lên đầu vì việc hữu ích đầu tiên khi chưa ở trong bài nào là tìm một bài (source EMPTY_STATE_SKILLS, index.tsx:138-147)."
@@ -395,7 +395,7 @@ export const EmptySelection: Story = {
             <BlockAnatomy
                 name="ChatThread"
                 tier="block"
-                leaf="Rỗng — đang bôi đen (không render gì)"
+                leaf="EmptySelection"
                 parts={EMPTY_SELECTION_PARTS}
                 note="Có đoạn được bôi đen (selection) NHƯNG chưa có lượt hỏi nào → thread rỗng HOÀN TOÀN: không hint, không nút."
                 reason="Đây là GAP có chủ đích của source (gate `messages.length === 0 && !selection`, index.tsx:1319): khi có selection, đoạn được chọn + quick-asks của riêng nó đã hiện Ở TRÊN (trong rail, ngoài block này) — nên bản thân vùng thread không cần lặp lại hint/gợi ý, chấp nhận trống."
@@ -412,7 +412,7 @@ export const SessionCreateError: Story = {
             <BlockAnatomy
                 name="ChatThread"
                 tier="block"
-                leaf="Lỗi tạo phiên"
+                leaf="SessionCreateError"
                 parts={SESSION_ERROR_PARTS}
                 note="Gửi câu hỏi đầu tiên nhưng tạo phiên (conversation) thất bại → lượt trợ lý hiện thông điệp '⚠️ gửi thất bại' như MỘT CÂU TRẢ LỜI THƯỜNG (MarkdownContent), KHÔNG phải trạng thái isError hay isQuotaError."
                 reason="Phân biệt với leaf Error (InlineIconLabel tone danger + nút thử lại) và leaf QuotaError (CTA nâng cấp): ở đây source chỉ push một tin nhắn assistant có content bắt đầu bằng '⚠️' rồi return — không gắn cờ isError/isQuotaError, không có CTA nào (source :744-749)."

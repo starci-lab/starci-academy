@@ -14,7 +14,7 @@ import { EmptyState } from "../../feedback/EmptyState/EmptyState"
 import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 
 const meta: Meta<typeof SurfaceListCard> = {
-    title: "Primitives/Card/SurfaceListCard",
+    title: "Primitives/Cards/SurfaceListCard",
     component: SurfaceListCard,
     tags: ["autodocs"],
     parameters: {

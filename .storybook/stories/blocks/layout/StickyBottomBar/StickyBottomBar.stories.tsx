@@ -4,7 +4,7 @@ import { Button, Typography } from "@heroui/react"
 import { StickyBottomBar } from "./StickyBottomBar"
 
 const meta: Meta<typeof StickyBottomBar> = {
-    title: "Primitives/Layout/StickyBottomBar",
+    title: "Primitives/Layouts/StickyBottomBar",
     component: StickyBottomBar,
     tags: ["autodocs"],
     parameters: {

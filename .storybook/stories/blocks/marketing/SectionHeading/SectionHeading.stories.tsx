@@ -38,7 +38,7 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 // gets its own node + `data-anat-part` emitter. `Anchor '#'` stays for the same reason:
 // a distinct element the block renders directly.
 const titleRow = (withAnchor: boolean): AnatomyNode => ({
-    name: "div · title row",
+    name: "TitleRow",
     tier: "primitive",
     role: "hàng flex (items-center gap-2) bọc tiêu đề" + (withAnchor ? " + anchor \"#\"" : ""),
     children: withAnchor
@@ -79,7 +79,7 @@ export const CenteredDefault: Story = {
             <BlockAnatomy
                 name="SectionHeading"
                 tier="design"
-                leaf="Đầy đủ, căn giữa"
+                leaf="CenteredDefault"
                 parts={FULL_PARTS}
                 reason="Mọi section marketing lặp lại đúng nhịp: eyebrow màu → tiêu đề đậm → một dòng dẫn mờ. Gói vào một block để mọi section dùng cùng type-scale + spacing, feature chỉ truyền chữ; anchorId thêm '#' deep-link để mục lục/menu tham chiếu trực tiếp."
             >
@@ -99,7 +99,7 @@ export const AlignStart: Story = {
             <BlockAnatomy
                 name="SectionHeading"
                 tier="design"
-                leaf="Căn trái, không eyebrow"
+                leaf="AlignStart"
                 parts={HEADING_INTRO_PARTS}
                 note="Bỏ eyebrow, căn trái (FAQ) → chỉ còn tiêu đề + dòng dẫn, không StatusChip."
             >
@@ -119,7 +119,7 @@ export const WithAnchor: Story = {
             <BlockAnatomy
                 name="SectionHeading"
                 tier="design"
-                leaf='Có anchor "#"'
+                leaf="WithAnchor"
                 parts={ANCHORED_PARTS}
                 note='anchorId → thêm link "#" cạnh tiêu đề để deep-link section (composition khác leaf mặc định).'
             >
@@ -139,7 +139,7 @@ export const TitleOnly: Story = {
             <BlockAnatomy
                 name="SectionHeading"
                 tier="design"
-                leaf="Chỉ tiêu đề"
+                leaf="TitleOnly"
                 parts={TITLE_ONLY_PARTS}
                 note="Không eyebrow / anchor / intro → chỉ còn title row (tiêu đề)."
             >
@@ -155,7 +155,7 @@ export const Level2Hero: Story = {
             <BlockAnatomy
                 name="SectionHeading"
                 tier="design"
-                leaf="Hero level 2"
+                leaf="Level2Hero"
                 parts={FULL_PARTS}
                 note="CÙNG composition với leaf mặc định (eyebrow + tiêu đề + dẫn), chỉ nâng level 3 → 2 cho hero-scale."
             >

@@ -48,7 +48,7 @@ const PANEL_PART: AnatomyNode = {
             tier: "block",
             role: "danh sách gom theo ngày + header đánh dấu đã đọc",
             children: [
-                { name: "Typography · header", tier: "primitive", role: "tiêu đề panel (\"Thông báo\") — hiện prop title" },
+                { name: "Typography.Header", tier: "primitive", role: "tiêu đề panel (\"Thông báo\") — hiện prop title" },
                 {
                     name: "Button",
                     tier: "primitive",
@@ -57,17 +57,17 @@ const PANEL_PART: AnatomyNode = {
                         { name: "ChecksIcon", tier: "primitive", role: "icon check dẫn đầu nút" },
                     ],
                 },
-                { name: "Typography · nhãn nhóm", tier: "primitive", role: "nhãn nhóm ngày (\"Today\"/\"Earlier\") — hiện prop group.label" },
+                { name: "Typography.GroupLabel", tier: "primitive", role: "nhãn nhóm ngày (\"Today\"/\"Earlier\") — hiện prop group.label" },
                 {
                     name: "NotificationItem",
                     tier: "design",
                     role: "một dòng thông báo (lặp ×N theo group)",
                     children: [
                         { name: "IconTile", tier: "primitive", role: "ô icon dẫn đầu, màu theo tone" },
-                        { name: "Dot chưa đọc", tier: "primitive", role: "chấm accent cạnh tiêu đề (dòng chưa đọc)", state: "unread" },
-                        { name: "Typography · title", tier: "primitive", role: "tiêu đề dòng" },
-                        { name: "Typography · body", tier: "primitive", role: "chi tiết phụ dòng" },
-                        { name: "Typography · time", tier: "primitive", role: "nhãn thời gian dòng" },
+                        { name: "Dot", tier: "primitive", role: "chấm accent cạnh tiêu đề (dòng chưa đọc)", state: "unread" },
+                        { name: "Typography.Title", tier: "primitive", role: "tiêu đề dòng" },
+                        { name: "Typography.Body", tier: "primitive", role: "chi tiết phụ dòng" },
+                        { name: "Typography.Time", tier: "primitive", role: "nhãn thời gian dòng" },
                     ],
                 },
             ],
@@ -83,7 +83,7 @@ const PANEL_PART: AnatomyNode = {
 // the top level instead.
 const WITH_BADGE_PARTS: Array<AnatomyNode> = [
     {
-        name: "Button · iconOnly",
+        name: "Button.IconOnly",
         tier: "primitive",
         role: "nút chuông mở popover (tertiary, bo tròn)",
         children: [
@@ -106,7 +106,7 @@ const WITH_BADGE_PARTS: Array<AnatomyNode> = [
 // `Popover` omitted from the tree for the same reason as above.
 const NO_BADGE_PARTS: Array<AnatomyNode> = [
     {
-        name: "Button · iconOnly",
+        name: "Button.IconOnly",
         tier: "primitive",
         role: "nút chuông mở popover (tertiary, bo tròn) — không badge ở 0",
         children: [
@@ -205,7 +205,7 @@ export const WithUnread: Story = {
             <BlockAnatomy
                 name="NotificationBell"
                 tier="block"
-                leaf="Có chưa đọc"
+                leaf="WithUnread"
                 parts={WITH_BADGE_PARTS}
                 reason="Nút chuông ở navbar gộp badge đếm chưa đọc (ẩn ở 0, chốt '9+') với một Popover mở ra NotificationList. Đóng gói cả affordance điểm-vào lẫn panel nội dung vào một block, để navbar chỉ truyền unreadCount + groups mà không phải tự nối badge, popover, và list."
             >
@@ -221,7 +221,7 @@ export const NoUnread: Story = {
             <BlockAnatomy
                 name="NotificationBell"
                 tier="block"
-                leaf="Đã đọc hết"
+                leaf="NoUnread"
                 parts={NO_BADGE_PARTS}
                 note="unreadCount = 0 → Badge biến mất hoàn toàn, chỉ còn nút chuông; composition khác leaf 'Có chưa đọc'."
             >
@@ -237,7 +237,7 @@ export const OverCap: Story = {
             <BlockAnatomy
                 name="NotificationBell"
                 tier="block"
-                leaf="Vượt ngưỡng"
+                leaf="OverCap"
                 parts={WITH_BADGE_PARTS}
                 note='unreadCount > 9 → Badge chốt nhãn "9+" nhưng CÙNG composition với leaf "Có chưa đọc".'
             >

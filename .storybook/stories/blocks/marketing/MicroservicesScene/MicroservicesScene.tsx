@@ -87,44 +87,44 @@ export const MicroservicesScene = ({ caption, className, showAnatomy }: Microser
                 width="100%"
                 role="img"
                 aria-label="Isometric mini infrastructure"
-                data-anat-part={showAnatomy ? "svg · scene" : undefined}
+                data-anat-part={showAnatomy ? "Svg.Scene" : undefined}
             >
                 {/* connectors (svc → pods → DB) */}
-                <g fill="none" strokeLinecap="round" data-anat-part={showAnatomy ? "g · connectors" : undefined}>
+                <g fill="none" strokeLinecap="round" data-anat-part={showAnatomy ? "G.Connectors" : undefined}>
                     <path d="M340,150 L250,200" stroke="#5b6473" strokeWidth="1.5" />
                     <path d="M340,150 L340,212" stroke="#5b6473" strokeWidth="1.5" />
                     <path d="M340,150 L440,200" stroke="#5b6473" strokeWidth="1.5" />
                     {/* pods → single DB (the hot path that bottlenecks) */}
                     <path d="M340,300 L520,300" stroke="#b23e3e" strokeWidth="1.8" />
                     {/* flowing packet down the entry wire */}
-                    <circle r="3.5" fill="#e873a3" data-anat-part={showAnatomy ? "circle · packet" : undefined}>
+                    <circle r="3.5" fill="#e873a3" data-anat-part={showAnatomy ? "Circle.Packet" : undefined}>
                         <animateMotion dur="2.2s" repeatCount="indefinite" path="M340,118 L340,150" />
                     </circle>
                 </g>
 
                 {/* ingress / service in front of the deployment */}
                 <IsoSvc x={340} y={128} tone="neutral" anatPart={showAnatomy ? "IsoSvc" : undefined} />
-                <text x={364} y={132} fontFamily="sans-serif" fontSize="12" fill="#cbd5e1" data-anat-part={showAnatomy ? "text · nhãn" : undefined}>Service · LB</text>
+                <text x={364} y={132} fontFamily="sans-serif" fontSize="12" fill="#cbd5e1" data-anat-part={showAnatomy ? "Text.Label" : undefined}>Service · LB</text>
 
                 {/* the deployment: 3 pods (one is the focal/accent gateway pod) */}
                 <IsoPod x={250} y={210} tone="neutral" anatPart={showAnatomy ? "IsoPod" : undefined} />
                 <IsoPod x={340} y={232} tone="accent" anatPart={showAnatomy ? "IsoPod" : undefined} />
                 <IsoPod x={440} y={210} tone="neutral" anatPart={showAnatomy ? "IsoPod" : undefined} />
-                <text x={300} y={300} fontFamily="sans-serif" fontSize="12" fill="#f4a9c7" data-anat-part={showAnatomy ? "text · nhãn" : undefined}>Deployment · 3 pods</text>
+                <text x={300} y={300} fontFamily="sans-serif" fontSize="12" fill="#f4a9c7" data-anat-part={showAnatomy ? "Text.Label" : undefined}>Deployment · 3 pods</text>
 
                 {/* single-node datastore = the bottleneck */}
                 <IsoDb x={550} y={262} tone="danger" anatPart={showAnatomy ? "IsoDb" : undefined} />
-                <text x={512} y={330} fontFamily="sans-serif" fontSize="11" fill="#fca5a5" data-anat-part={showAnatomy ? "text · nhãn" : undefined}>Postgres · 1 node</text>
+                <text x={512} y={330} fontFamily="sans-serif" fontSize="11" fill="#fca5a5" data-anat-part={showAnatomy ? "Text.Label" : undefined}>Postgres · 1 node</text>
 
                 {/* failure flag */}
-                <g transform="translate(470 250)" data-anat-part={showAnatomy ? "g · cờ lỗi" : undefined}>
+                <g transform="translate(470 250)" data-anat-part={showAnatomy ? "G.ErrorFlag" : undefined}>
                     <text x={0} y={0} fontFamily="sans-serif" fontSize="11" fill="#e2605f">⚠ single DB → bottleneck</text>
                 </g>
 
                 {/* legend */}
-                <circle cx="232" cy="420" r="5" fill="#e873a3" data-anat-part={showAnatomy ? "legend · chú giải" : undefined} />
+                <circle cx="232" cy="420" r="5" fill="#e873a3" data-anat-part={showAnatomy ? "Legend" : undefined} />
                 <text x="242" y="424" fontFamily="sans-serif" fontSize="11" fill="#94a3b8">focal pod</text>
-                <circle cx="334" cy="420" r="5" fill="#e2605f" data-anat-part={showAnatomy ? "legend · chú giải" : undefined} />
+                <circle cx="334" cy="420" r="5" fill="#e2605f" data-anat-part={showAnatomy ? "Legend" : undefined} />
                 <text x="344" y="424" fontFamily="sans-serif" fontSize="11" fill="#94a3b8">where it breaks</text>
             </svg>
             {caption ? (

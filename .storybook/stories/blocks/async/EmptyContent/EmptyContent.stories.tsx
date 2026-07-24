@@ -84,7 +84,7 @@ export const Basic: Story = {
             <BlockAnatomy
                 name="EmptyContent"
                 tier="design"
-                leaf="Chỉ tiêu đề"
+                leaf="Basic"
                 parts={BASE_PARTS}
                 reason="Trạng thái rỗng của một vùng dữ liệu async cần đúng anatomy của EmptyState (icon + tiêu đề + mô tả + action canh giữa). EmptyContent chỉ thêm icon TrayIcon mặc định và gói onRetry/retryLabel thành nút trong slot action — nên nó là một lớp mỏng trên EmptyState, không nên tự vẽ lại."
             >
@@ -100,7 +100,7 @@ export const WithDescription: Story = {
             <BlockAnatomy
                 name="EmptyContent"
                 tier="design"
-                leaf="Có mô tả"
+                leaf="WithDescription"
                 parts={DESC_PARTS}
                 note="Thêm một Typography mô tả dưới tiêu đề — khác leaf 'Chỉ tiêu đề' (leaf đó không có dòng mô tả)."
             >
@@ -120,7 +120,7 @@ export const WithRetry: Story = {
             <BlockAnatomy
                 name="EmptyContent"
                 tier="design"
-                leaf="Có nút thử lại"
+                leaf="WithRetry"
                 parts={RETRY_PARTS}
                 note="onRetry + retryLabel → thêm Button vào slot action của EmptyState (composition khác các leaf không nút)."
             >
@@ -142,7 +142,7 @@ export const CustomIcon: Story = {
             <BlockAnatomy
                 name="EmptyContent"
                 tier="design"
-                leaf="Icon tuỳ biến"
+                leaf="CustomIcon"
                 parts={CUSTOM_ICON_PARTS}
                 note="Ghi đè icon mặc định (TrayIcon → MagnifyingGlassIcon); các slot còn lại cùng shape với leaf 'Có mô tả'."
             >

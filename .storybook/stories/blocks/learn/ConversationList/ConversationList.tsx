@@ -111,11 +111,11 @@ const ConversationSkeletonRow = ({ showAnatomy }: { showAnatomy?: boolean }) => 
     <SurfaceListCardItem>
         <div className="flex items-center gap-2">
             <div className="flex min-w-0 flex-1 flex-col gap-0">
-                <Skeleton.Typography type="body-sm" width="2/3" anatPart={showAnatomy ? "Skeleton.Typography · tiêu đề" : undefined} />
-                <Skeleton.Typography type="body-xs" width="1/2" anatPart={showAnatomy ? "Skeleton.Typography · phụ đề" : undefined} />
+                <Skeleton.Typography type="body-sm" width="2/3" anatPart={showAnatomy ? "Skeleton.Typography.Title" : undefined} />
+                <Skeleton.Typography type="body-xs" width="1/2" anatPart={showAnatomy ? "Skeleton.Typography.Subtitle" : undefined} />
             </div>
             {/* mirrors the row's ⋯ overflow-menu trigger (size-sm icon button) — source :1057 */}
-            <Skeleton className="size-8 shrink-0 rounded-xl" anatPart={showAnatomy ? "Skeleton · nút ⋯" : undefined} />
+            <Skeleton className="size-8 shrink-0 rounded-xl" anatPart={showAnatomy ? "Skeleton.Menu" : undefined} />
         </div>
     </SurfaceListCardItem>
 )
@@ -184,7 +184,7 @@ export const ConversationList = ({
                                             "group flex items-center gap-2",
                                             item.isActive && "text-accent-soft-foreground",
                                         )}
-                                        data-anat-part={showAnatomy && item.isActive ? "row · đang mở" : undefined}
+                                        data-anat-part={showAnatomy && item.isActive ? "Row.Active" : undefined}
                                     >
                                         {isRenaming ? (
                                             // inline rename — replaces the title row while editing;
@@ -207,7 +207,7 @@ export const ConversationList = ({
                                                         onRenameCancel()
                                                     }
                                                 }}
-                                                data-anat-part={showAnatomy ? "input · đổi tên" : undefined}
+                                                data-anat-part={showAnatomy ? "Input.Rename" : undefined}
                                             />
                                         ) : (
                                             <button
@@ -235,7 +235,7 @@ export const ConversationList = ({
                                                         size="sm"
                                                         variant="tertiary"
                                                         ariaLabel="Tuỳ chọn cuộc trò chuyện"
-                                                        anatPart={showAnatomy ? "Button · ⋯" : undefined}
+                                                        anatPart={showAnatomy ? "Button.Menu" : undefined}
                                                     >
                                                         <DotsThreeVerticalIcon weight="bold" />
                                                     </Button>
@@ -253,7 +253,7 @@ export const ConversationList = ({
                                                             <DropdownItem
                                                                 key="rename"
                                                                 onPress={() => onRenameStart(item.id, item.title)}
-                                                                data-anat-part={showAnatomy ? "DropdownItem · Đổi tên" : undefined}
+                                                                data-anat-part={showAnatomy ? "DropdownItem.Rename" : undefined}
                                                             >
                                                                 <div className="flex items-center gap-2">
                                                                     <PencilSimpleIcon className="size-4 shrink-0" />
@@ -263,7 +263,7 @@ export const ConversationList = ({
                                                             <DropdownItem
                                                                 key="archive"
                                                                 onPress={() => onArchive(item.id)}
-                                                                data-anat-part={showAnatomy ? "DropdownItem · Lưu trữ" : undefined}
+                                                                data-anat-part={showAnatomy ? "DropdownItem.Archive" : undefined}
                                                             >
                                                                 <div className="flex items-center gap-2">
                                                                     <ArchiveIcon className="size-4 shrink-0" />
@@ -274,7 +274,7 @@ export const ConversationList = ({
                                                                 key="delete"
                                                                 className="text-danger-soft-foreground"
                                                                 onPress={() => onDelete(item.id)}
-                                                                data-anat-part={showAnatomy ? "DropdownItem · Xoá" : undefined}
+                                                                data-anat-part={showAnatomy ? "DropdownItem.Delete" : undefined}
                                                             >
                                                                 <div className="flex items-center gap-2">
                                                                     <TrashIcon className="size-4 shrink-0" />

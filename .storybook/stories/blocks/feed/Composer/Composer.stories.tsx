@@ -67,9 +67,9 @@ const Controlled = ({
 // (icon → Spinner) differs, which stays folded into the Send button's role.
 const BASE_PARTS: Array<AnatomyNode> = [
     { name: "UserAvatar", tier: "primitive", role: "avatar người soạn ở đầu hàng (tuỳ chọn)" },
-    { name: "TextField · TextArea", tier: "primitive", role: "ô nhập tự giãn cao (HeroUI field)" },
+    { name: "TextField.TextArea", tier: "primitive", role: "ô nhập tự giãn cao (HeroUI field)" },
     {
-        name: "div · actions",
+        name: "Div.Actions",
         tier: "primitive",
         role: "cụm hành động cuối hàng (attach tuỳ chọn + Send)",
         children: [
@@ -82,13 +82,13 @@ const BASE_PARTS: Array<AnatomyNode> = [
 // Send → the cluster now nests two buttons (attach, then Send).
 const TYPING_PARTS: Array<AnatomyNode> = [
     { name: "UserAvatar", tier: "primitive", role: "avatar người soạn ở đầu hàng (tuỳ chọn)" },
-    { name: "TextField · TextArea", tier: "primitive", role: "ô nhập tự giãn cao (HeroUI field)" },
+    { name: "TextField.TextArea", tier: "primitive", role: "ô nhập tự giãn cao (HeroUI field)" },
     {
-        name: "div · actions",
+        name: "Div.Actions",
         tier: "primitive",
         role: "cụm hành động cuối hàng (attach tuỳ chọn + Send)",
         children: [
-            { name: "Button · Attach", tier: "primitive", role: "nút đính kèm feature cấp (attach slot)" },
+            { name: "Button.Attach", tier: "primitive", role: "nút đính kèm feature cấp (attach slot)" },
             { name: "Button", tier: "primitive", role: "nút Send + spinner khi đang gửi" },
         ],
     },
@@ -100,7 +100,7 @@ export const Empty: Story = {
             <BlockAnatomy
                 name="Composer"
                 tier="block"
-                leaf="Rỗng"
+                leaf="Empty"
                 parts={BASE_PARTS}
                 reason="Một hàng nhập tin nhắn dùng chung cho mọi surface (chat, bình luận, trả lời): avatar + ô tự giãn + Send. Gói logic can-submit + auto-grow + phím tắt Ctrl/Cmd+Enter vào một block controlled, feature chỉ giữ draft."
             >
@@ -115,7 +115,7 @@ export const Typing: Story = {
             <BlockAnatomy
                 name="Composer"
                 tier="block"
-                leaf="Đang soạn"
+                leaf="Typing"
                 parts={TYPING_PARTS}
                 note="Feature cấp attach slot → thêm một Button trước Send; draft có chữ nên Send bật."
             >
@@ -127,7 +127,7 @@ export const Typing: Story = {
                             variant="tertiary"
                             isIconOnly
                             aria-label="Attach"
-                            data-anat-part="Button · Attach"
+                            data-anat-part="Button.Attach"
                         >
                             <PaperclipIcon aria-hidden focusable="false" className="size-4" />
                         </Button>
@@ -143,7 +143,7 @@ export const Submitting: Story = {
             <BlockAnatomy
                 name="Composer"
                 tier="block"
-                leaf="Đang gửi"
+                leaf="Submitting"
                 parts={BASE_PARTS}
                 note="Submit đang bay → Send đổi icon sang Spinner và khoá; CÙNG composition với leaf 'Rỗng' (không attach)."
             >

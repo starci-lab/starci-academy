@@ -152,7 +152,7 @@ export const FlashcardDeckList = ({
             <div className="flex flex-wrap items-center justify-between gap-3">
                 <TextField
                     className="w-full @app-sm:max-w-sm"
-                    data-anat-part={showAnatomy ? "TextField · Input" : undefined}
+                    data-anat-part={showAnatomy ? "TextField.Input" : undefined}
                 >
                     <Input
                         type="search"

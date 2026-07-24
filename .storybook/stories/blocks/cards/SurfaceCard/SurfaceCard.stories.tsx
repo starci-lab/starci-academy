@@ -4,7 +4,7 @@ import { SurfaceCard } from "./SurfaceCard"
 import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 
 const meta: Meta<typeof SurfaceCard> = {
-    title: "Primitives/Card/SurfaceCard",
+    title: "Primitives/Cards/SurfaceCard",
     component: SurfaceCard,
     tags: ["autodocs"],
     parameters: {

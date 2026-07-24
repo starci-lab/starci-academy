@@ -49,7 +49,7 @@ const modelPickerStandIn = (showAnatomy: boolean) => (
         variant="tertiary"
         size="sm"
         className="max-w-40"
-        anatPart={showAnatomy ? "Button · model-picker" : undefined}
+        anatPart={showAnatomy ? "Button.ModelPicker" : undefined}
     >
         <SparkleIcon aria-hidden focusable="false" />
         Tự động
@@ -73,12 +73,12 @@ const QUICK_ASKS: Array<ChipButtonItem> = [
 
 // ── Anatomy trees per state ──────────────────────────────────────────────────
 const MODEL_PICKER_NODE: AnatomyNode = {
-    name: "Button · model-picker",
+    name: "Button.ModelPicker",
     tier: "block",
     role: "slot picker model — trong app thật là GradeModelDropdown (task=\"chatting\", placement=\"top start\")",
 }
-const TOGGLE_NODE: AnatomyNode = { name: "Button · toggle-skill", tier: "primitive", role: "mở/đóng skill-menu (kính lúp, iconOnly tertiary)" }
-const SEND_NODE: AnatomyNode = { name: "Button · send", tier: "primitive", role: "gửi câu hỏi (iconOnly primary, PaperPlaneTiltIcon)" }
+const TOGGLE_NODE: AnatomyNode = { name: "Button.ToggleSkill", tier: "primitive", role: "mở/đóng skill-menu (kính lúp, iconOnly tertiary)" }
+const SEND_NODE: AnatomyNode = { name: "Button.Send", tier: "primitive", role: "gửi câu hỏi (iconOnly primary, PaperPlaneTiltIcon)" }
 const INPUT_NODE: AnatomyNode = { name: "input", tier: "primitive", role: "ô gõ trần — Enter gửi, Escape đóng skill-menu" }
 
 const NORMAL_PARTS: Array<AnatomyNode> = [INPUT_NODE, MODEL_PICKER_NODE, TOGGLE_NODE, SEND_NODE]
@@ -91,8 +91,8 @@ const SENDING_PARTS: Array<AnatomyNode> = [
 ]
 
 const SKILL_MENU_PARTS: Array<AnatomyNode> = [
-    { name: "Typography · hint", tier: "primitive", role: "dòng hint đầu skill-menu (muted, body-xs)" },
-    { name: "ChipButtonList · skills", tier: "primitive", role: "4 hàng kỹ năng truy hồi — challenges/flashcards/lessons/related" },
+    { name: "Typography.Hint", tier: "primitive", role: "dòng hint đầu skill-menu (muted, body-xs)" },
+    { name: "ChipButtonList.Skills", tier: "primitive", role: "4 hàng kỹ năng truy hồi — challenges/flashcards/lessons/related" },
     INPUT_NODE,
     MODEL_PICKER_NODE,
     { ...TOGGLE_NODE, role: "đang MỞ menu", state: "mở" },
@@ -100,7 +100,7 @@ const SKILL_MENU_PARTS: Array<AnatomyNode> = [
 ]
 
 const SELECTION_NO_MSG_PARTS: Array<AnatomyNode> = [
-    { name: "ChipButtonList · quick-ask", tier: "primitive", role: "3 nút hỏi nhanh (giải thích/ví dụ/diễn giải) — chỉ hiện khi CHƯA có tin nhắn nào" },
+    { name: "ChipButtonList.QuickAsk", tier: "primitive", role: "3 nút hỏi nhanh (giải thích/ví dụ/diễn giải) — chỉ hiện khi CHƯA có tin nhắn nào" },
     { ...INPUT_NODE, role: "RỜI khỏi composer sang hộp trích đoạn (border riêng)" },
     MODEL_PICKER_NODE,
     TOGGLE_NODE,
@@ -128,7 +128,7 @@ export const Normal: Story = {
             <BlockAnatomy
                 name="ChatComposer"
                 tier="block"
-                leaf="Thường"
+                leaf="Normal"
                 parts={NORMAL_PARTS}
                 reason="Composer mặc định: input trần + hàng action (model picker trái · skill-menu toggle + gửi phải). Input KHÔNG dùng field HeroUI để khỏi lồng 2 viền trong ring của composer."
             >
@@ -153,7 +153,7 @@ export const Sending: Story = {
             <BlockAnatomy
                 name="ChatComposer"
                 tier="block"
-                leaf="Đang gửi"
+                leaf="Sending"
                 parts={SENDING_PARTS}
                 note="isStreaming=true → nút gửi chuyển isPending (Button primitive tự vẽ Spinner thay PaperPlaneTiltIcon + khoá press)."
             >
@@ -179,7 +179,7 @@ export const SkillMenuOpen: Story = {
             <BlockAnatomy
                 name="ChatComposer"
                 tier="block"
-                leaf="Skill-menu mở"
+                leaf="SkillMenuOpen"
                 parts={SKILL_MENU_PARTS}
                 note={"Nút kính lúp toggle một region role=\"listbox\" IN-FLOW ngay trên composer — không phải popover — nên nó ĐẨY composer xuống, không che gì."}
                 reason="Thay grammar '/' cũ: tappable trên phone, mở được GIỮA cuộc hội thoại (không chỉ lúc rỗng)."
@@ -205,7 +205,7 @@ export const SelectionNoMessages: Story = {
             <BlockAnatomy
                 name="ChatComposer"
                 tier="block"
-                leaf="Selection · chưa có tin"
+                leaf="SelectionNoMessages"
                 parts={SELECTION_NO_MSG_PARTS}
                 note="Có đoạn bôi đen VÀ thread rỗng → input rời khỏi composer sang hộp riêng (border, ring riêng) kèm 3 nút hỏi nhanh; composer chỉ còn hàng action."
                 reason="Quick-ask chỉ có ý nghĩa TRƯỚC lượt hỏi đầu — sau đó excerpt đã có ngữ cảnh trong thread, gợi ý lặp lại là thừa."
@@ -232,7 +232,7 @@ export const SelectionWithMessages: Story = {
             <BlockAnatomy
                 name="ChatComposer"
                 tier="block"
-                leaf="Selection · đã có tin"
+                leaf="SelectionWithMessages"
                 parts={SELECTION_WITH_MSG_PARTS}
                 note="Vẫn đang chọn đoạn, nhưng đã có ít nhất 1 lượt hỏi–đáp → quick-ask biến mất, hộp trích đoạn chỉ còn input."
             >
@@ -258,7 +258,7 @@ export const EmptyDisabled: Story = {
             <BlockAnatomy
                 name="ChatComposer"
                 tier="block"
-                leaf="Rỗng / disabled"
+                leaf="EmptyDisabled"
                 parts={DISABLED_EMPTY_PARTS}
                 note="isDisabled=true khoá toàn bộ composer (input + cả 2 nút) — vd. khi chưa xác định được scope (contentId/courseId…) để gắn câu hỏi vào."
             >

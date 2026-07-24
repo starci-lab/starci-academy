@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { OtpInput } from "./OtpInput"
 
 const meta: Meta<typeof OtpInput> = {
-    title: "Primitives/Form/OtpInput",
+    title: "Primitives/Forms/OtpInput",
     component: OtpInput,
     tags: ["autodocs"],
     parameters: {

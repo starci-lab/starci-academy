@@ -112,7 +112,7 @@ export const WrapWithIcon: Story = {
             <BlockAnatomy
                 name="ChipButtonList"
                 tier="block"
-                leaf="Cụm chip có icon"
+                leaf="WrapWithIcon"
                 parts={WRAP_ICON_PARTS}
                 reason="4 nơi trong ContentAiChat (gợi ý rỗng-state, kỹ năng truy hồi, quick-ask khi bôi đen, menu kỹ năng) đều hand-roll MỘT danh sách secondary/ghost Button giống hệt nhau (leading icon trần + nhãn, justify-start text-start). Gom vào một primitive dùng chung để icon-size + layout sống ở một nơi, không lặp lại 4 lần."
             >
@@ -128,7 +128,7 @@ export const WrapPlain: Story = {
             <BlockAnatomy
                 name="ChipButtonList"
                 tier="block"
-                leaf="Cụm chip không icon"
+                leaf="WrapPlain"
                 parts={WRAP_PLAIN_PARTS}
                 note="items không truyền `icon` → mỗi Button chỉ còn nhãn trần (children trực tiếp), không Typography — giống cách base Button tự hiện nhãn của nó."
             >
@@ -144,7 +144,7 @@ export const ColumnMenu: Story = {
             <BlockAnatomy
                 name="ChipButtonList"
                 tier="block"
-                leaf="Menu kỹ năng (cột)"
+                leaf="ColumnMenu"
                 parts={COLUMN_PARTS}
                 note={"direction=\"column\" → variant mặc định đổi sang ghost, mỗi hàng full-width; nhãn qua Typography (weight medium, truncate) thay vì className text-sm font-medium text-foreground tay ở bản gốc."}
             >
@@ -162,7 +162,7 @@ export const WithDisabledItem: Story = {
             <BlockAnatomy
                 name="ChipButtonList"
                 tier="block"
-                leaf="Có item disabled"
+                leaf="WithDisabledItem"
                 parts={DISABLED_PARTS}
                 note="`item.isDisabled` forward xuống Button.isDisabled — chip vẫn HIỆN (không ẩn), chỉ khoá tương tác, giữ nguyên vị trí trong cụm."
             >
@@ -178,7 +178,7 @@ export const Loading: Story = {
             <BlockAnatomy
                 name="ChipButtonList"
                 tier="block"
-                leaf="Đang tải"
+                leaf="Loading"
                 parts={SKELETON_PARTS}
                 note="Bật `isSkeleton` (không cần `items`) → container tự vẽ `skeletonCount` pill Skeleton.Button, đúng gap/layout của cụm chip thật."
             >
@@ -194,7 +194,7 @@ export const SingleItem: Story = {
             <BlockAnatomy
                 name="ChipButtonList"
                 tier="block"
-                leaf="Một item (biên)"
+                leaf="SingleItem"
                 parts={SINGLE_PARTS}
                 note="`items` chỉ 1 phần tử vẫn render đúng — không có ràng buộc tối thiểu về số lượng."
             >

@@ -34,7 +34,6 @@ export const Default: Story = {
 
 /** No related course — feedback not tied to any course (e.g. a CV review). */
 export const NoCourse: Story = {
-    name: "No course",
     render: () => (
         <div className="p-8">
             <div className="w-full max-w-2xl">
@@ -52,7 +51,6 @@ export const NoCourse: Story = {
 
 /** Task-sourced feedback — warning tone. */
 export const TaskSource: Story = {
-    name: "Task source",
     render: () => (
         <div className="p-8">
             <div className="w-full max-w-2xl">
@@ -104,7 +102,7 @@ export const List: Story = {
 
 /** Khung chờ — mirror while `myLearningFeedbacks` resolves (`isSkeleton`); other props ignored. */
 export const SkeletonState: Story = {
-    name: "Khung chờ",
+    name: "Loading",
     render: () => (
         <div className="p-8">
             <div className="flex w-full max-w-2xl flex-col gap-3">

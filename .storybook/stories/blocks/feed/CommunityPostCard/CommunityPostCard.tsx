@@ -188,7 +188,7 @@ export const CommunityPostCard = ({
                             disabled={!onToggleComments}
                             onClick={onToggleComments}
                             className="flex items-center gap-1 rounded-full px-2 py-0 text-muted transition-colors hover:bg-default/40 disabled:cursor-default disabled:hover:bg-transparent"
-                            data-anat-part={showAnatomy ? "Bình luận" : undefined}
+                            data-anat-part={showAnatomy ? "CommentButton" : undefined}
                         >
                             <ChatCircleIcon className="size-4 shrink-0" />
                             <Typography type="body-xs" color="muted">

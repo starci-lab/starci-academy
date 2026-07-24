@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Naming convention · Storybook</title>
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+  :root{
+    --bg:#0b0e14; --panel:#111725; --panel2:#151c2b; --ink:#e7edf5; --muted:#8b98a9; --line:#233049;
+    --accent:#8b7bff; --success:#38d39f; --warn:#f5a524; --danger:#f31260;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.55 ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif;padding:28px}
+  .wrap{max-width:1000px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+  h1{font-size:20px;margin:0}
+  h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:6px 0 10px;border-top:1px solid var(--line);padding-top:16px}
+  .sub{color:var(--muted);margin:0}
+  code,.mono{font-family:ui-monospace,monospace}
+  .path{font-family:ui-monospace,monospace;font-size:14px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .seg{padding:3px 9px;border-radius:7px;font-size:12.5px}
+  .seg.t1{background:color-mix(in srgb,var(--accent) 20%,transparent);color:var(--accent)}
+  .seg.t2{background:color-mix(in srgb,var(--warn) 20%,transparent);color:var(--warn)}
+  .seg.t3{background:color-mix(in srgb,var(--success) 18%,transparent);color:var(--success)}
+  .seg.t4{background:#20293d;color:var(--muted)}
+  .sep{color:var(--muted)}
+  table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
+  th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 12px;background:var(--panel2);border-bottom:1px solid var(--line)}
+  th:first-child{border-top-left-radius:10px}th:last-child{border-top-right-radius:10px}
+  td{padding:8px 12px;border-bottom:1px solid #1b2436;vertical-align:top}
+  tr:hover td{background:color-mix(in srgb,var(--accent) 5%,transparent)}
+  .before{color:var(--muted);font-family:ui-monospace,monospace}
+  .before s{color:#6b7688}
+  .after{color:var(--ink);font-family:ui-monospace,monospace}
+  .after b{color:var(--success)}
+  .arrow{color:var(--muted);text-align:center;width:34px}
+  .tag{font-size:10.5px;border-radius:6px;padding:1px 7px}
+  .tag.plural{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+  .tag.en{background:color-mix(in srgb,var(--success) 16%,transparent);color:var(--success)}
+  .tag.dedupe{background:color-mix(in srgb,var(--danger) 16%,transparent);color:var(--danger)}
+  .rules{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .rules li{margin:5px 0;color:var(--muted)}
+  .rules b{color:var(--ink)}
+  .note{font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Naming convention — cách trò sẽ làm</h1>
+  <p class="sub">Full English · Family số nhiều · giữ pattern <code>Component · descriptor</code>. Scan ~130 story.</p>
+
+  <h2>1. Cấu trúc title path</h2>
+  <div class="path">
+    <span class="seg t1">Tier</span><span class="sep">/</span>
+    <span class="seg t2">Family</span><span class="sep">/</span>
+    <span class="seg t3">Component</span><span class="sep">/</span>
+    <span class="seg t4">Variant</span>
+  </div>
+  <div class="rules">
+    <ul style="margin:0;padding-left:18px">
+      <li><b>Tier-1</b> (5 cố định): <code>Primitives · Design · Block · Layouts · Overlays</code></li>
+      <li><b>Family</b> = <b>số NHIỀU</b> cho họ component-type (<code>Cards·Buttons·Chips·Lists·Forms·Stats·Texts</code>); domain-noun giữ English (<code>Learn·Feed·Commerce·Grading…</code>)</li>
+      <li><b>Component / Variant</b> = PascalCase English (giữ nguyên — đã ổn)</li>
+    </ul>
+    <p class="note" style="margin:8px 0 0">Ví dụ: <code>Design/Cards/ContinueCard/Plain</code> · <code>Primitives/Buttons/Button</code> · <code>Layouts/CourseContents</code></p>
+  </div>
+
+  <h2>2. Family lệch dạng số → số nhiều <span class="tag plural">plural</span></h2>
+  <table>
+    <thead><tr><th>Hiện tại</th><th class="arrow"></th><th>Đích</th><th>Chỗ</th></tr></thead>
+    <tbody>
+      <tr><td class="before">Primitives/<s>Card</s></td><td class="arrow">→</td><td class="after">Primitives/<b>Cards</b></td><td class="note">SurfaceListCard, NestedCard…</td></tr>
+      <tr><td class="before">Primitives/<s>Button</s></td><td class="arrow">→</td><td class="after">Primitives/<b>Buttons</b></td><td class="note">Button, InputButtonLike</td></tr>
+      <tr><td class="before"><s>*/Chip</s></td><td class="arrow">→</td><td class="after">*/<b>Chips</b></td><td class="note">HighlightChip, StatusChip…</td></tr>
+      <tr><td class="before"><s>Primitives/List</s></td><td class="arrow">→</td><td class="after">Primitives/<b>Lists</b></td><td class="note">ListRow</td></tr>
+      <tr><td class="before"><s>*/Form</s></td><td class="arrow">→</td><td class="after">*/<b>Forms</b></td><td class="note">SearchBar…</td></tr>
+      <tr><td class="before"><s>Primitives/Text</s></td><td class="arrow">→</td><td class="after">Primitives/<b>Texts</b></td><td class="note">TitledText, InlineIconLabel</td></tr>
+      <tr><td class="before"><s>Primitives/Skeleton</s></td><td class="arrow">→</td><td class="after">Primitives/<b>Skeletons</b></td><td class="note">Skeleton</td></tr>
+      <tr><td class="before">Cards · Buttons · Stats · Notifications</td><td class="arrow">✓</td><td class="after">giữ</td><td class="note">đã plural đúng</td></tr>
+    </tbody>
+  </table>
+  <p class="note">⚠️ <code>Primitives/Layout</code> → <code>Layouts</code> đụng khái niệm tier-1 <code>Layouts</code> (khác cấp path nên không lỗi) — hoặc đổi họ thành <code>Structures</code>. Chờ thầy chốt.</p>
+
+  <h2>3. Display name = kiểu COMPONENT-IDENTIFIER <span class="tag en">full english</span></h2>
+  <div class="rules" style="margin-bottom:12px">
+    <b>Không prose, không <code>·</code>, không tiếng Việt.</b> Viết như tên component:
+    <ul style="margin:6px 0 0;padding-left:18px">
+      <li><b>Standalone</b> = PascalCase: <code>NoNeedToShow</code> · <code>TitleOnly</code> · <code>WithProgress</code></li>
+      <li><b>Compound / variant</b> = dot notation <code>Parent.Variant</code> (thay <code>·</code>): <code>Skeleton.ABC</code> · <code>Button.Primary</code> · <code>DropdownItem.Delete</code></li>
+      <li>Descriptor khớp prop/state code (<code>Primary·Loading·Empty·Skeleton</code>), PascalCase từng từ</li>
+    </ul>
+  </div>
+  <table>
+    <thead><tr><th>Hiện (VN / lẫn)</th><th class="arrow"></th><th>Đích (identifier)</th></tr></thead>
+    <tbody>
+      <tr><td class="before">Chat thường</td><td class="arrow">→</td><td class="after"><b>Default</b></td></tr>
+      <tr><td class="before">Chat có bôi đen</td><td class="arrow">→</td><td class="after"><b>WithSelection</b></td></tr>
+      <tr><td class="before">Có tiến độ</td><td class="arrow">→</td><td class="after"><b>WithProgress</b></td></tr>
+      <tr><td class="before">Chưa có tiến độ</td><td class="arrow">→</td><td class="after"><b>NoProgress</b></td></tr>
+      <tr><td class="before">Chỉ tiêu đề</td><td class="arrow">→</td><td class="after"><b>TitleOnly</b></td></tr>
+      <tr><td class="before">Chỉ meta (không chip)</td><td class="arrow">→</td><td class="after"><b>MetaOnly</b></td></tr>
+      <tr><td class="before">Chữ dài (clamp 2 dòng)</td><td class="arrow">→</td><td class="after"><b>LongTextClamped</b></td></tr>
+      <tr><td class="before">Content home · trial</td><td class="arrow">→</td><td class="after"><b>ContentHome.Trial</b></td></tr>
+      <tr><td class="before">Content home · paid (strip tự ẩn)</td><td class="arrow">→</td><td class="after"><b>ContentHome.Paid</b></td></tr>
+      <tr><td class="before">Skeleton · ABC</td><td class="arrow">→</td><td class="after"><b>Skeleton.ABC</b></td></tr>
+      <tr><td class="before">Button · nâng cấp</td><td class="arrow">→</td><td class="after"><b>Button.Upgrade</b></td></tr>
+      <tr><td class="before">Button · thử lại</td><td class="arrow">→</td><td class="after"><b>Button.Retry</b></td></tr>
+      <tr><td class="before">DropdownItem · Xoá</td><td class="arrow">→</td><td class="after"><b>DropdownItem.Delete</b></td></tr>
+      <tr><td class="before">DropdownItem · Đổi tên</td><td class="arrow">→</td><td class="after"><b>DropdownItem.Rename</b></td></tr>
+      <tr><td class="before">ChipButtonList · kỹ năng</td><td class="arrow">→</td><td class="after"><b>ChipButtonList.Skills</b></td></tr>
+      <tr><td class="before">Chưa biết chi phí Auto</td><td class="arrow">→</td><td class="after"><b>UnknownAutoCost</b></td></tr>
+      <tr><td class="before">Chặn: hết tuần</td><td class="arrow">→</td><td class="after"><b>BlockedWeekEnded</b></td></tr>
+      <tr><td class="before">Dọc (full-width)</td><td class="arrow">→</td><td class="after"><b>VerticalFullWidth</b></td></tr>
+      <tr><td class="before">Dấu ngăn cách</td><td class="arrow">→</td><td class="after"><b>Separator</b></td></tr>
+    </tbody>
+  </table>
+  <p class="note">Trùng khớp <code>name:</code> ≈ <code>export const</code> (đã PascalCase) → nhiều chỗ chỉ cần bỏ <code>name:</code> prose, để Storybook tự lấy tên export.</p>
+
+  <h2>4. Dedupe khi gặp trùng <span class="tag dedupe">dedupe</span></h2>
+  <table>
+    <thead><tr><th>Trùng VN + EN cùng component</th><th class="arrow"></th><th>Giữ 1</th></tr></thead>
+    <tbody>
+      <tr><td class="before">Button · <s>chính</s> &nbsp;+&nbsp; Button · primary</td><td class="arrow">→</td><td class="after"><b>Button.Primary</b></td></tr>
+      <tr><td class="before">Button · <s>phụ</s> &nbsp;+&nbsp; Button · secondary</td><td class="arrow">→</td><td class="after"><b>Button.Secondary</b></td></tr>
+    </tbody>
+  </table>
+  <p class="note">Component có sẵn tên EN song song tên VN → gộp về bản identifier, xoá bản VN trùng.</p>
+</div>
+</body>
+</html>

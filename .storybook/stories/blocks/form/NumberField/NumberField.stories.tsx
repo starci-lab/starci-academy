@@ -11,7 +11,7 @@ import { NumberField } from "./NumberField"
  * scaffolding owned by the component.
  */
 const meta: Meta<typeof NumberField> = {
-    title: "Primitives/Form/NumberField",
+    title: "Primitives/Forms/NumberField",
     component: NumberField,
     tags: ["autodocs"],
     parameters: {

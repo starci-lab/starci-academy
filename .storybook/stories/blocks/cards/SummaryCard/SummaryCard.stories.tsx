@@ -17,7 +17,6 @@ type Story = StoryObj<typeof SummaryCard>
 
 /** With hint — a short gloss line under the label (e.g. the most recent milestone). */
 export const WithHint: Story = {
-    name: "Có hint",
     parameters: {
         usage:
             "Dùng khi value + label chưa đủ ngữ cảnh — thêm 1 dòng `hint` chìm (mốc gần nhất, phạm vi tính). " +
@@ -38,7 +37,6 @@ export const WithHint: Story = {
 
 /** No hint — value + label already explain themselves (e.g. a learning streak). */
 export const NoHint: Story = {
-    name: "Không hint",
     parameters: {
         usage: "Bỏ `hint` khi value + label đã đủ nghĩa (streak, số đếm trực tiếp) — tránh dòng meta thừa.",
     },
@@ -56,7 +54,6 @@ export const NoHint: Story = {
 
 /** Long content — label / hint longer than usual: the card keeps a fixed width and wraps, never truncates. */
 export const LongContent: Story = {
-    name: "Nội dung dài",
     parameters: {
         usage: "Kiểm chứng label/hint dài: card giữ chiều rộng cố định và WRAP (không cắt cụt) — không cần prop riêng.",
     },
@@ -75,7 +72,6 @@ export const LongContent: Story = {
 
 /** Group — the real usage: a cluster of metric cards via `SummaryCard.Group`, each linking to a tab. */
 export const Group: Story = {
-    name: "Cụm (Group)",
     parameters: {
         usage:
             "Dùng `SummaryCard.Group` khi có ≥2 card cùng vai (overview) — group tự lo `gap-3` + width đều + wrap, " +
@@ -110,7 +106,6 @@ export const Group: Story = {
 
 /** Loading — `isSkeleton` self-renders the skeleton mirror (icon · value · label · hint), no loose Skeleton. */
 export const Loading: Story = {
-    name: "Đang tải",
     parameters: {
         usage: "Truyền `isSkeleton` khi số liệu đang tải — card (và `SummaryCard.Group`) tự vẽ skeleton mirror đúng layout. Không dựng Skeleton rời ngoài.",
     },

@@ -35,15 +35,15 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 // gated by `nextPhasePriceVnd != null`, wrapped in a transparent fragment → NO real nesting).
 const FULL_PARTS: Array<AnatomyNode> = [
     { name: "WarningCircleIcon", tier: "primitive", role: "icon cảnh báo khan hiếm suất", state: "warning" },
-    { name: "Dòng số suất", tier: "primitive", role: "span \"Còn N suất giá {phase}\"" },
-    { name: "Dấu ngăn cách", tier: "primitive", role: "span \"·\" ngăn cách (aria-hidden, trang trí) — chỉ hiện khi có giá kế tiếp" },
-    { name: "Mệnh đề tăng giá", tier: "primitive", role: "span \"giá tăng lên {X}₫ sau đó\" — chỉ hiện khi có giá kế tiếp" },
+    { name: "SeatCountLine", tier: "primitive", role: "span \"Còn N suất giá {phase}\"" },
+    { name: "Separator", tier: "primitive", role: "span \"·\" ngăn cách (aria-hidden, trang trí) — chỉ hiện khi có giá kế tiếp" },
+    { name: "PriceRiseClause", tier: "primitive", role: "span \"giá tăng lên {X}₫ sau đó\" — chỉ hiện khi có giá kế tiếp" },
 ]
 
 // SEATS-ONLY shape: nextPhasePriceVnd null → the price-rise clause is ABSENT.
 const SEATS_ONLY_PARTS: Array<AnatomyNode> = [
     { name: "WarningCircleIcon", tier: "primitive", role: "icon cảnh báo khan hiếm suất", state: "warning" },
-    { name: "Dòng số suất", tier: "primitive", role: "câu \"Còn N suất giá {phase}\"" },
+    { name: "SeatCountLine", tier: "primitive", role: "câu \"Còn N suất giá {phase}\"" },
 ]
 
 // UNLIMITED shape: seatsRemaining null → no honest scarcity trigger → renders nothing.
@@ -56,7 +56,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="PhaseScarcityNote"
                 tier="design"
-                leaf="Có tăng giá"
+                leaf="Default"
                 parts={FULL_PARTS}
                 reason="Dòng cảnh báo khan-hiếm-suất chỉ gồm một icon cảnh báo + một câu chữ — KHÔNG cấu thành từ primitive nào. Thực chất là một atom trình bày, nên bị đánh dấu &quot;đáng lẽ là Primitive&quot;. Vẫn port ở tier Block để giữ đủ bộ commerce; số suất + giá đều đến từ backend, block không tự bịa scarcity."
             >
@@ -77,7 +77,7 @@ export const ManySeats: Story = {
             <BlockAnatomy
                 name="PhaseScarcityNote"
                 tier="design"
-                leaf="Nhiều suất"
+                leaf="ManySeats"
                 parts={FULL_PARTS}
                 note="Còn nhiều suất (42) — CÙNG composition với leaf 'Có tăng giá', chỉ khác con số."
             >
@@ -98,7 +98,7 @@ export const FewSeats: Story = {
             <BlockAnatomy
                 name="PhaseScarcityNote"
                 tier="design"
-                leaf="Ít suất"
+                leaf="FewSeats"
                 parts={FULL_PARTS}
                 note="Ít suất (3) — sức ép khan hiếm cao hơn nhưng CÙNG composition (icon + suất + tăng giá)."
             >
@@ -119,7 +119,7 @@ export const OneSeatLeft: Story = {
             <BlockAnatomy
                 name="PhaseScarcityNote"
                 tier="design"
-                leaf="Còn 1 suất"
+                leaf="OneSeatLeft"
                 parts={FULL_PARTS}
                 note="Suất cuối (1) — vẫn CÙNG composition, con số ở ngưỡng gấp nhất."
             >
@@ -140,7 +140,7 @@ export const NoNextPhase: Story = {
             <BlockAnatomy
                 name="PhaseScarcityNote"
                 tier="design"
-                leaf="Không có giá kế tiếp"
+                leaf="NoNextPhase"
                 parts={SEATS_ONLY_PARTS}
                 note="nextPhasePriceVnd = null → mệnh đề 'giá tăng lên…' VẮNG, chỉ còn icon + dòng số suất."
             >
@@ -161,7 +161,7 @@ export const Unlimited: Story = {
             <BlockAnatomy
                 name="PhaseScarcityNote"
                 tier="design"
-                leaf="Không giới hạn"
+                leaf="Unlimited"
                 parts={UNLIMITED_PARTS}
                 note="seatsRemaining = null → không có trigger khan hiếm trung thực → block render RỖNG (null)."
             >

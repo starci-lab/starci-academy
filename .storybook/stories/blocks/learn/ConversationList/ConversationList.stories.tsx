@@ -59,10 +59,10 @@ const DATA_PARTS: Array<AnatomyNode> = [
                                 tier: "primitive",
                                 role: "menu ⋯ ẩn khi đang đổi tên",
                                 children: [
-                                    { name: "Button · ⋯", tier: "primitive", role: "nút kích hoạt menu (size-sm, icon tự ép cỡ)" },
-                                    { name: "DropdownItem · Đổi tên", tier: "primitive", role: "vào chế độ sửa tên" },
-                                    { name: "DropdownItem · Lưu trữ", tier: "primitive", role: "lưu trữ phiên" },
-                                    { name: "DropdownItem · Xoá", tier: "primitive", role: "xoá phiên (tô danger)", state: "danger" },
+                                    { name: "Button.Menu", tier: "primitive", role: "nút kích hoạt menu (size-sm, icon tự ép cỡ)" },
+                                    { name: "DropdownItem.Rename", tier: "primitive", role: "vào chế độ sửa tên" },
+                                    { name: "DropdownItem.Archive", tier: "primitive", role: "lưu trữ phiên" },
+                                    { name: "DropdownItem.Delete", tier: "primitive", role: "xoá phiên (tô danger)", state: "danger" },
                                 ],
                             },
                         ],
@@ -93,9 +93,9 @@ const LOADING_PARTS: Array<AnatomyNode> = [
                         tier: "design",
                         role: "hàng skeleton ×3 (source :1049 `[0, 1, 2]`)",
                         children: [
-                            { name: "Skeleton.Typography · tiêu đề", tier: "primitive", role: "mirror body-sm, rộng 2/3" },
-                            { name: "Skeleton.Typography · phụ đề", tier: "primitive", role: "mirror body-xs, rộng 1/2" },
-                            { name: "Skeleton · nút ⋯", tier: "primitive", role: "mirror size-8 rounded-xl" },
+                            { name: "Skeleton.Typography.Title", tier: "primitive", role: "mirror body-sm, rộng 2/3" },
+                            { name: "Skeleton.Typography.Subtitle", tier: "primitive", role: "mirror body-xs, rộng 1/2" },
+                            { name: "Skeleton.Menu", tier: "primitive", role: "mirror size-8 rounded-xl" },
                         ],
                     },
                 ],
@@ -170,7 +170,7 @@ const ACTIVE_PARTS: Array<AnatomyNode> = [
                         role: "phiên ĐANG MỞ",
                         children: [
                             {
-                                name: "row · đang mở",
+                                name: "Row.Active",
                                 tier: "design",
                                 role: "bọc `text-accent-soft-foreground` (source :1078) — Typography vẫn giữ màu prop riêng, xem note file header",
                                 state: "accent",
@@ -207,7 +207,7 @@ const RENAMING_PARTS: Array<AnatomyNode> = [
                         tier: "design",
                         role: "phiên ĐANG ĐỔI TÊN — cột title/subtitle rút còn 1 input, KHÔNG có menu ⋯",
                         children: [
-                            { name: "input · đổi tên", tier: "primitive", role: "input trần, autoFocus; Enter/blur lưu, Escape huỷ" },
+                            { name: "Input.Rename", tier: "primitive", role: "input trần, autoFocus; Enter/blur lưu, Escape huỷ" },
                         ],
                     },
                 ],
@@ -234,14 +234,14 @@ const PAGINATING_PARTS: Array<AnatomyNode> = [
                 children: [
                     { name: "SurfaceListCardItem", tier: "design", role: "các phiên đã tải" },
                     {
-                        name: "SurfaceListCardItem · đang tải thêm",
+                        name: "SurfaceListCardItem.Loading",
                         tier: "design",
                         role: "hàng skeleton mirror NỐI THÊM cuối danh sách — cải thiện so với source (dòng chữ trần)",
                         state: "loading",
                         children: [
-                            { name: "Skeleton.Typography · tiêu đề", tier: "primitive", role: "mirror body-sm" },
-                            { name: "Skeleton.Typography · phụ đề", tier: "primitive", role: "mirror body-xs" },
-                            { name: "Skeleton · nút ⋯", tier: "primitive", role: "mirror size-8" },
+                            { name: "Skeleton.Typography.Title", tier: "primitive", role: "mirror body-sm" },
+                            { name: "Skeleton.Typography.Subtitle", tier: "primitive", role: "mirror body-xs" },
+                            { name: "Skeleton.Menu", tier: "primitive", role: "mirror size-8" },
                         ],
                     },
                 ],
@@ -261,7 +261,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="ConversationList"
                 tier="block"
-                leaf="Danh sách"
+                leaf="Default"
                 parts={DATA_PARTS}
                 reason="Gộp ScrollShadow (tự giới hạn 55vh) + AsyncContent (error/loading/empty/content) + SurfaceListCard vào MỘT region, mỗi phiên là 1 SurfaceListCardItem tái dùng TitledText cho cụm tiêu đề/phụ đề thay vì rải Typography tay."
             >
@@ -287,7 +287,7 @@ export const Skeleton: Story = {
             <BlockAnatomy
                 name="ConversationList"
                 tier="block"
-                leaf="Đang tải"
+                leaf="Skeleton"
                 parts={LOADING_PARTS}
                 note="AsyncContent nhánh loading → 3 hàng skeleton mirror đúng footprint hàng thật (source :1047-1062)."
             >
@@ -314,7 +314,7 @@ export const Empty: Story = {
             <BlockAnatomy
                 name="ConversationList"
                 tier="block"
-                leaf="Rỗng"
+                leaf="Empty"
                 parts={EMPTY_PARTS}
                 note="Không có phiên nào → AsyncContent rơi về EmptyContent, câu 'Chưa có cuộc trò chuyện', KHÔNG nút thử lại (source :1063-1066)."
             >
@@ -341,7 +341,7 @@ export const ErrorState: Story = {
             <BlockAnatomy
                 name="ConversationList"
                 tier="block"
-                leaf="Lỗi"
+                leaf="Error"
                 parts={ERROR_PARTS}
                 note="Tải hỏng, không cache → AsyncContent rơi về ErrorContent → EmptyState tone danger, nhưng dùng CÙNG câu 'Chưa có cuộc trò chuyện' với Empty và KHÔNG có nút thử lại — port trung thực source :1067-1070 (không phải audit ẩu, đây thực sự là 1 gap của source)."
             >
@@ -368,7 +368,7 @@ export const ActiveRow: Story = {
             <BlockAnatomy
                 name="ConversationList"
                 tier="block"
-                leaf="Có hàng đang mở"
+                leaf="ActiveRow"
                 parts={ACTIVE_PARTS}
                 note="Phiên #1 isActive=true → wrapper của hàng đó nhận text-accent-soft-foreground (source :1078). Typography bên trong (qua TitledText) KHÔNG override màu — xem note ở đầu file ConversationList.tsx về việc Typography luôn tự set màu explicit, nên tint này port ĐÚNG vị trí source đặt (wrapper), không đặt lên Typography (cấm theo canon §1)."
             >
@@ -394,7 +394,7 @@ export const Renaming: Story = {
             <BlockAnatomy
                 name="ConversationList"
                 tier="block"
-                leaf="Đang đổi tên"
+                leaf="Renaming"
                 parts={RENAMING_PARTS}
                 note="renamingId khớp phiên #2 → cột title/subtitle rút thành 1 input trần (autoFocus), menu ⋯ ẩn hoàn toàn (source :1081-1102, :1135)."
             >
@@ -422,7 +422,7 @@ export const Paginating: Story = {
             <BlockAnatomy
                 name="ConversationList"
                 tier="block"
-                leaf="Đang tải thêm"
+                leaf="Paginating"
                 parts={PAGINATING_PARTS}
                 note="CẢI THIỆN so với source (:1189-1197 chỉ có dòng chữ 'đang tải' trần, không giữ layout): ở đây nối thêm 1 hàng skeleton mirror cuối danh sách — cùng footprint hàng thật nên không giật khi trang kế tới."
             >
@@ -449,7 +449,7 @@ export const SubtitleVariants: Story = {
             <BlockAnatomy
                 name="ConversationList"
                 tier="block"
-                leaf="Subtitle biến thể"
+                leaf="SubtitleVariants"
                 parts={SUBTITLE_VARIANTS_PARTS}
                 note="Subtitle đến từ 4 nhánh nguồn (source :1123-1129): snippet khi đang search · 'tên bài · N lượt' · 'Cả khoá · N lượt' · chỉ 'N lượt' (không có nguồn). ConversationList CHỈ render chuỗi đã resolve — logic rẽ nhánh thuộc về caller."
             >

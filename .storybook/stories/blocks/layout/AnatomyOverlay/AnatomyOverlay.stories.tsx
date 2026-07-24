@@ -10,7 +10,7 @@ import { AnatomyOverlay } from "./AnatomyOverlay"
  * down their composition tree (see `Block/Learn/FlashcardDeckList` → Anatomy).
  */
 const meta: Meta<typeof AnatomyOverlay> = {
-    title: "Primitives/Layout/AnatomyOverlay",
+    title: "Primitives/Layouts/AnatomyOverlay",
     component: AnatomyOverlay,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },

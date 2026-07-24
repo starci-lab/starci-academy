@@ -56,7 +56,7 @@ const NO_PROGRESS_PARTS: Array<AnatomyNode> = [
                 tier: "design",
                 role: "khung surface bên trong wrapper (frame chung mọi state)",
                 children: [
-                    { name: "Typography · tiêu đề", tier: "primitive", role: "tên phiên đang tiếp tục (title, weight medium, truncate)" },
+                    { name: "Typography.Title", tier: "primitive", role: "tên phiên đang tiếp tục (title, weight medium, truncate)" },
                     {
                         name: "MetaRow",
                         tier: "primitive",
@@ -86,7 +86,7 @@ const WITH_ICON_PARTS: Array<AnatomyNode> = [
                 tier: "design",
                 role: "khung surface bên trong wrapper (frame chung mọi state)",
                 children: [
-                    { name: "Typography · tiêu đề", tier: "primitive", role: "tên phiên đang tiếp tục (title, weight medium, truncate)" },
+                    { name: "Typography.Title", tier: "primitive", role: "tên phiên đang tiếp tục (title, weight medium, truncate)" },
                     {
                         name: "MetaRow",
                         tier: "primitive",
@@ -114,7 +114,7 @@ const LINK_CTA_PARTS: Array<AnatomyNode> = [
                 tier: "design",
                 role: "khung surface bên trong wrapper (frame chung mọi state)",
                 children: [
-                    { name: "Typography · tiêu đề", tier: "primitive", role: "tên phiên đang tiếp tục (title, weight medium, truncate)" },
+                    { name: "Typography.Title", tier: "primitive", role: "tên phiên đang tiếp tục (title, weight medium, truncate)" },
                     {
                         name: "MetaRow",
                         tier: "primitive",
@@ -168,13 +168,12 @@ const ERROR_PARTS: Array<AnatomyNode> = [
 
 /** STATE loaded — chưa có tiến độ: chip time neutral, KHÔNG thanh (bỏ value). */
 export const NotStarted: Story = {
-    name: "Chưa có tiến độ",
     render: () =>
         shell(
             <BlockAnatomy
                 name="ContinueCard"
                 tier="design"
-                leaf="Chưa có tiến độ"
+                leaf="NotStarted"
                 parts={NO_PROGRESS_PARTS}
                 reason="Anatomy của LEAF loaded 'Chưa có tiến độ' — CHỈ part mà leaf này dựng (KHÔNG ProgressMeter: đó là điểm SHAPE khác 'Progress'). Loading/error là leaf RIÊNG, composition riêng — KHÔNG kể ở đây."
             >
@@ -190,13 +189,12 @@ export const NotStarted: Story = {
  * watermark. Chỉ hero mới nhận icon — `item` bỏ qua prop này (no-op).
  */
 export const WithIcon: Story = {
-    name: "Có icon nền (streak)",
     render: () =>
         shell(
             <BlockAnatomy
                 name="ContinueCard"
                 tier="design"
-                leaf="Có icon nền (streak)"
+                leaf="WithIcon"
                 parts={WITH_ICON_PARTS}
                 note="Thêm icon watermark chìm sau nội dung — composition khác leaf base ở đúng part icon này (chỉ hero)."
             >
@@ -213,13 +211,12 @@ export const WithIcon: Story = {
  * SSR link) thay vì tay bắt sự kiện.
  */
 export const LinkCta: Story = {
-    name: "CTA dạng link (href)",
     render: () =>
         shell(
             <BlockAnatomy
                 name="ContinueCard"
                 tier="design"
-                leaf="CTA dạng link (href)"
+                leaf="LinkCta"
                 parts={LINK_CTA_PARTS}
                 note="Có href → CTA đổi từ Button sang Link-as-pill; phần còn lại giữ nguyên composition base."
             >
@@ -232,13 +229,12 @@ export const LinkCta: Story = {
 
 /** STATE loading — skeleton mirror shape KHÔNG thanh (title · meta · CTA, no bar). */
 export const Loading: Story = {
-    name: "Đang tải",
     render: () =>
         shell(
             <BlockAnatomy
                 name="ContinueCard"
                 tier="design"
-                leaf="Đang tải"
+                leaf="Loading"
                 parts={LOADING_PARTS}
                 note="Skeleton mirror đúng footprint no-progress (title · meta · CTA), KHÔNG thanh — composition khác leaf data."
             >
@@ -257,13 +253,12 @@ export const Loading: Story = {
 
 /** STATE error — network drop rendered INSIDE the card frame. */
 export const LoadError: Story = {
-    name: "Lỗi tải (mạng rớt)",
     render: () =>
         shell(
             <BlockAnatomy
                 name="ContinueCard"
                 tier="design"
-                leaf="Lỗi tải (mạng rớt)"
+                leaf="LoadError"
                 parts={ERROR_PARTS}
                 note="Mạng rớt → khung SectionCard giữ nguyên, thân đổi sang EmptyState tone danger + nút thử lại (không nội dung thẻ)."
             >

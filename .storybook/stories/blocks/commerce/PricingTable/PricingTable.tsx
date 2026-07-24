@@ -62,7 +62,7 @@ const PricingCard = ({
         <div className="flex flex-col gap-2">
             {/* Name (+ optional popular chip inline — chip is w-fit, never full-width) */}
             <div className="flex flex-wrap items-center gap-2">
-                <Typography type="body" weight="semibold" data-anat-part={showAnatomy ? "Typography · tên" : undefined}>{name}</Typography>
+                <Typography type="body" weight="semibold" data-anat-part={showAnatomy ? "Typography.Name" : undefined}>{name}</Typography>
                 {highlighted && badge ? <StatusChip tone="accent" anatPart={showAnatomy ? "StatusChip" : undefined}>{badge}</StatusChip> : null}
             </div>
 
@@ -170,7 +170,7 @@ export const PricingTable = ({
                                 <Typography
                                     type="body-sm"
                                     color="muted"
-                                    data-anat-part={showAnatomy ? "Typography · mô tả" : undefined}
+                                    data-anat-part={showAnatomy ? "Typography.Description" : undefined}
                                 >
                                     {tier.description}
                                 </Typography>

@@ -6,7 +6,7 @@ import { SchedulePicker } from "./SchedulePicker"
 import type { SchedulePickerSlot } from "./SchedulePicker"
 
 const meta: Meta<typeof SchedulePicker> = {
-    title: "Primitives/Form/SchedulePicker",
+    title: "Primitives/Forms/SchedulePicker",
     component: SchedulePicker,
     tags: ["autodocs"],
     parameters: {

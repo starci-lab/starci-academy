@@ -9,7 +9,7 @@ import { FieldShell } from "./FieldShell"
  * simple bordered placeholder control.
  */
 const meta: Meta<typeof FieldShell> = {
-    title: "Primitives/Form/FieldShell",
+    title: "Primitives/Forms/FieldShell",
     component: FieldShell,
     tags: ["autodocs"],
     parameters: {

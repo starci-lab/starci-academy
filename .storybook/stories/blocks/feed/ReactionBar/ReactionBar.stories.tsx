@@ -63,16 +63,16 @@ const Controlled = ({
 // options live INSIDE the picker as their own real button controls.
 const INTERACTIVE_PARTS: Array<AnatomyNode> = [
     {
-        name: "button · React trigger",
+        name: "Button.ReactTrigger",
         tier: "primitive",
         role: "nút bấm mở/đóng picker; hiển thị glyph hiện tại (neutral/emoji cảm xúc) + số đếm",
     },
     {
-        name: "Emoji picker",
+        name: "EmojiPicker",
         tier: "design",
         role: "popover 6 emoji (framer-motion), chỉ hiện khi mở — chọn / gỡ cảm xúc",
         children: [
-            { name: "button · emoji option", tier: "primitive", role: "6 nút emoji map từ REACTIONS — bấm để chọn / gỡ", state: "×6" },
+            { name: "Button.EmojiOption", tier: "primitive", role: "6 nút emoji map từ REACTIONS — bấm để chọn / gỡ", state: "×6" },
         ],
     },
 ]
@@ -82,7 +82,7 @@ const INTERACTIVE_PARTS: Array<AnatomyNode> = [
 // control here, unlike the interactive trigger) — each gets its own node
 // (§ granularity, same as DeckCard's title/description/count Typography).
 const READONLY_PARTS: Array<AnatomyNode> = [
-    { name: "span · emoji người xem", tier: "primitive", role: "emoji người xem đã chọn trước đó — chỉ khi có myReaction", state: "tuỳ chọn" },
+    { name: "Span.ViewerEmoji", tier: "primitive", role: "emoji người xem đã chọn trước đó — chỉ khi có myReaction", state: "tuỳ chọn" },
     { name: "Typography", tier: "primitive", role: "số đếm cảm xúc" },
 ]
 
@@ -98,7 +98,7 @@ export const NoInteraction: Story = {
             <BlockAnatomy
                 name="ReactionBar"
                 tier="design"
-                leaf="Chưa react"
+                leaf="NoInteraction"
                 parts={INTERACTIVE_PARTS}
                 note="Người xem chưa react → nút trigger hiện glyph neutral, ẩn số đếm vì count = 0 (cả hai đều là giá trị inline trong nút trigger, không phải part riêng)."
                 reason="Leaf feed block: gói trigger react + picker 6 emoji + số đếm vào một đơn vị, để mọi surface cộng đồng (post, comment, activity) dùng chung một cách thả cảm xúc. Quyền react do caller quyết định qua có truyền onReact hay không — không có prop readOnly riêng."
@@ -115,7 +115,7 @@ export const Reacted: Story = {
             <BlockAnatomy
                 name="ReactionBar"
                 tier="design"
-                leaf="Đã react"
+                leaf="Reacted"
                 parts={INTERACTIVE_PARTS}
                 note="Đã react → nút trigger đổi glyph sang emoji cảm xúc, số đếm hiện (accent) — CÙNG composition với leaf 'Chưa react'."
             >
@@ -131,7 +131,7 @@ export const ReadOnly: Story = {
             <BlockAnatomy
                 name="ReactionBar"
                 tier="design"
-                leaf="Chỉ đọc"
+                leaf="ReadOnly"
                 parts={READONLY_PARTS}
                 note="Không truyền onReact → bỏ nút trigger + picker; emoji người xem + số đếm render trực tiếp trên root, mỗi cái một node riêng (không còn gói trong nút trigger)."
             >
@@ -147,7 +147,7 @@ export const ReadOnlyEmpty: Story = {
             <BlockAnatomy
                 name="ReactionBar"
                 tier="design"
-                leaf="Chỉ đọc, rỗng"
+                leaf="ReadOnlyEmpty"
                 parts={EMPTY_PARTS}
                 note="Chỉ-đọc + count 0 → ReactionBar trả về null (khác leaf 'Chỉ đọc'), không chiếm chỗ trong hàng meta."
             >

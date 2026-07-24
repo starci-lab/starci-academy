@@ -55,7 +55,7 @@ const CONTENT_PARTS: Array<AnatomyNode> = [
                 tier: "primitive",
                 role: "khung surface (frame chung mọi state)",
                 children: [
-                    { name: "Typography · tiêu đề", tier: "primitive", role: "tên phiên đang tiếp tục (title, weight medium, truncate)" },
+                    { name: "Typography.Title", tier: "primitive", role: "tên phiên đang tiếp tục (title, weight medium, truncate)" },
                     {
                         name: "MetaRow",
                         tier: "primitive",
@@ -109,13 +109,12 @@ const ERROR_PARTS: Array<AnatomyNode> = [
 
 /** STATE không gấp — còn nhiều giờ: chip time NEUTRAL + thanh tiến độ. */
 export const NotUrgent: Story = {
-    name: "Không gấp",
     render: () =>
         shell(
             <BlockAnatomy
                 name="ContinueCard"
                 tier="design"
-                leaf="Không gấp"
+                leaf="NotUrgent"
                 parts={CONTENT_PARTS}
                 reason="Thẻ tiếp tục phiên đang dở. Mỗi LEAF composition khác nhau: leaf loaded gom hero chrome + ProgressMeter; loading swap sang Skeleton mirror đúng footprint; error rơi về EmptyState trong khung. Nhờ SectionCard làm frame chung, khung không nhảy khi đổi state."
             >
@@ -128,13 +127,12 @@ export const NotUrgent: Story = {
 
 /** STATE gấp — sắp hết giờ: CÙNG chip time nhưng leo tông WARNING + thanh gần đầy. */
 export const Urgent: Story = {
-    name: "Gấp",
     render: () =>
         shell(
             <BlockAnatomy
                 name="ContinueCard"
                 tier="design"
-                leaf="Gấp"
+                leaf="Urgent"
                 parts={CONTENT_PARTS}
                 note="urgent/không-gấp CÙNG bộ part — chỉ khác TONE chip time (neutral → warning) + thanh gần đầy."
             >
@@ -147,13 +145,12 @@ export const Urgent: Story = {
 
 /** STATE loading — skeleton mirror shape CÓ thanh (title · meta · CTA · bar). */
 export const Loading: Story = {
-    name: "Đang tải",
     render: () =>
         shell(
             <BlockAnatomy
                 name="ContinueCard"
                 tier="design"
-                leaf="Đang tải"
+                leaf="Loading"
                 parts={LOADING_PARTS}
                 note="Skeleton mirror shape CÓ thanh — composition khác hẳn leaf loaded (không part thật)."
             >
@@ -173,13 +170,12 @@ export const Loading: Story = {
 
 /** STATE error — network drop rendered INSIDE the card frame. */
 export const LoadError: Story = {
-    name: "Lỗi tải (mạng rớt)",
     render: () =>
         shell(
             <BlockAnatomy
                 name="ContinueCard"
                 tier="design"
-                leaf="Lỗi"
+                leaf="LoadError"
                 parts={ERROR_PARTS}
                 note="Mạng rớt → chỉ EmptyState trong khung; KHÔNG phải part của leaf loaded."
             >

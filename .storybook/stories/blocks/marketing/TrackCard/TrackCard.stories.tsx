@@ -49,9 +49,9 @@ const TRACK_PARTS: Array<AnatomyNode> = [
                 name: "CardContent", tier: "primitive", role: "thân thẻ flex-col gap-6: header · path tầng · CTA",
                 children: [
                     { name: "IconTile", tier: "primitive", role: "header: ô icon tô nền theo màu track (tone=color, size sm)" },
-                    { name: "Typography (tiêu đề + meta)", tier: "primitive", role: "header: tiêu đề (body semibold, truncate) + meta (body-xs muted)" },
-                    { name: "Typography (nhãn tầng + chủ đề)", tier: "primitive", role: "path: mỗi rung = nhãn tầng (body-xs muted) + chủ đề (body-sm), kèm dot•line màu track chỉ dẫn ×N" },
-                    { name: "button (CTA)", tier: "primitive", role: "CTA 'Vào khóa' hand-roll <button> + ArrowRightIcon (mt-auto, tone soft theo màu — chưa dùng Button port)" },
+                    { name: "Typography.HeaderMeta", tier: "primitive", role: "header: tiêu đề (body semibold, truncate) + meta (body-xs muted)" },
+                    { name: "Typography.TierPath", tier: "primitive", role: "path: mỗi rung = nhãn tầng (body-xs muted) + chủ đề (body-sm), kèm dot•line màu track chỉ dẫn ×N" },
+                    { name: "Button.Cta", tier: "primitive", role: "CTA 'Vào khóa' hand-roll <button> + ArrowRightIcon (mt-auto, tone soft theo màu — chưa dùng Button port)" },
                 ],
             },
         ],
@@ -64,7 +64,7 @@ export const AccentFourTiers: Story = {
             <BlockAnatomy
                 name="TrackCard"
                 tier="design"
-                leaf="Accent · 4 tầng"
+                leaf="AccentFourTiers"
                 parts={TRACK_PARTS}
                 reason="Một 'lộ trình' cần một khối tự chứa: header định danh (icon + tên + meta) trên một đường 4 rung foundation → application, chốt bằng CTA vào khóa. Gói vào một block để xếp 3 track cạnh nhau so sánh ngay, màu chỉ đổi qua một token TrackColor."
             >
@@ -95,7 +95,7 @@ export const SuccessFourTiers: Story = {
             <BlockAnatomy
                 name="TrackCard"
                 tier="design"
-                leaf="Success · 4 tầng"
+                leaf="SuccessFourTiers"
                 parts={TRACK_PARTS}
                 note="Đổi màu track qua token TrackColor 'success' — CÙNG composition với leaf accent."
             >
@@ -126,7 +126,7 @@ export const WarningSingleTier: Story = {
             <BlockAnatomy
                 name="TrackCard"
                 tier="design"
-                leaf="Warning · 1 tầng"
+                leaf="WarningSingleTier"
                 parts={TRACK_PARTS}
                 note="Chỉ một rung → đường path co lại nhưng CÙNG composition (không có node đường nối giữa các rung)."
             >
@@ -152,7 +152,7 @@ export const LongTitleTruncate: Story = {
             <BlockAnatomy
                 name="TrackCard"
                 tier="design"
-                leaf="Tiêu đề dài (cắt)"
+                leaf="LongTitleTruncate"
                 parts={TRACK_PARTS}
                 note="Khung hẹp + tiêu đề/meta dài → Typography truncate, composition không đổi."
             >
@@ -181,7 +181,7 @@ export const ThreeTracksLayout: Story = {
             <BlockAnatomy
                 name="TrackCard"
                 tier="design"
-                leaf="Ba track cạnh nhau"
+                leaf="ThreeTracksLayout"
                 parts={TRACK_PARTS}
                 note="Xếp 3 TrackCard trong lưới @app-md:grid-cols-3 để so sánh — mỗi ô vẫn là CÙNG composition."
             >

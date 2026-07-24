@@ -44,7 +44,7 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 const AVATAR_PARTS: Array<AnatomyNode> = [
     { name: "UserAvatar", tier: "primitive", role: "avatar nền (ảnh thật / initials sinh theo username)" },
     {
-        name: "Activity badge",
+        name: "ActivityBadge",
         tier: "primitive",
         role: "đĩa soft-accent ở góc dưới-phải (span bg-surface + ring surface, bọc span bg-accent-soft) — tự hiện icon loại hoạt động bên trong",
     },
@@ -57,7 +57,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="ActivityAvatar"
                 tier="design"
-                leaf="Có ảnh"
+                leaf="Default"
                 parts={AVATAR_PARTS}
                 reason="Một hàng feed cần avatar CÓ dấu hiệu loại hoạt động ngay trên avatar. Gói UserAvatar + badge icon vào một block để mọi loại event (follow, milestone, comment) dùng chung một khung avatar-kèm-badge, feature chỉ đổi icon."
             >
@@ -77,7 +77,7 @@ export const WithPhoto: Story = {
             <BlockAnatomy
                 name="ActivityAvatar"
                 tier="design"
-                leaf="Ảnh thật · follow"
+                leaf="WithPhoto"
                 parts={AVATAR_PARTS}
                 note="Ảnh upload + badge follow — CÙNG composition với leaf 'Có ảnh', chỉ khác icon."
             >
@@ -97,7 +97,7 @@ export const GeneratedFallback: Story = {
             <BlockAnatomy
                 name="ActivityAvatar"
                 tier="design"
-                leaf="Không ảnh (initials)"
+                leaf="GeneratedFallback"
                 parts={AVATAR_PARTS}
                 note="avatar=null → UserAvatar rơi về initials sinh theo username; badge vẫn nguyên, composition không đổi."
             >
@@ -117,7 +117,7 @@ export const ActivityIconTypes: Story = {
             <BlockAnatomy
                 name="ActivityAvatar"
                 tier="design"
-                leaf="Các loại icon"
+                leaf="ActivityIconTypes"
                 parts={AVATAR_PARTS}
                 note="Cùng khung avatar-kèm-badge, chỉ đổi icon theo loại event (đọc · mốc · sinh · bình luận)."
             >

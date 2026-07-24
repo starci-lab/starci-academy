@@ -233,7 +233,7 @@ export const Idle: Story = {
             <BlockAnatomy
                 name="ContentSearchList"
                 tier="block"
-                leaf="Chưa gõ (idle)"
+                leaf="Idle"
                 parts={IDLE_PARTS}
                 note="query rỗng → nhánh content của AsyncContent chỉ render MỘT dòng Typography gợi ý, không khung/không hàng nào cả."
             >
@@ -248,7 +248,7 @@ export const Skeleton: Story = {
             <BlockAnatomy
                 name="ContentSearchList"
                 tier="block"
-                leaf="Đang tải"
+                leaf="Skeleton"
                 parts={LOADING_PARTS}
                 note="isLoading → AsyncContent đổi sang khung SurfaceListCard bordered với 3 hàng SurfaceListCardItem mirror Skeleton — CÙNG khung với leaf có kết quả (khác leaf idle: khung đã dựng sẵn dù chưa có dữ liệu)."
             >
@@ -263,7 +263,7 @@ export const Empty: Story = {
             <BlockAnatomy
                 name="ContentSearchList"
                 tier="block"
-                leaf="Rỗng (gõ nhưng không thấy)"
+                leaf="Empty"
                 parts={EMPTY_PARTS}
                 note="query không rỗng nhưng isEmpty=true → AsyncContent nhánh empty; câu hiện ra GIỐNG HỆT leaf lỗi (nguồn dùng chung một i18n key cho cả hai)."
             >
@@ -278,7 +278,7 @@ export const ErrorState: Story = {
             <BlockAnatomy
                 name="ContentSearchList"
                 tier="block"
-                leaf="Lỗi"
+                leaf="Error"
                 parts={ERROR_PARTS}
                 note="hasError=true → AsyncContent ưu tiên nhánh error trước cả loading/empty; câu hiện ra GIỐNG HỆT leaf rỗng (nguồn dùng chung một i18n key)."
             >
@@ -293,7 +293,7 @@ export const WithResults: Story = {
             <BlockAnatomy
                 name="ContentSearchList"
                 tier="block"
-                leaf="Có kết quả"
+                leaf="WithResults"
                 parts={DATA_PARTS}
                 reason="View 'Tìm nội dung khóa' trong chatbox cần MỘT vùng cuộn tự giới hạn chạy đúng chuỗi trạng thái error→loading→empty→content chuẩn (AsyncContent), cộng một gợi ý khi chưa gõ gì. Gói vùng cuộn + AsyncContent + khung kết quả + logic lọc bỏ milestone vào một block để bề mặt chat chỉ truyền items/query/isLoading/isEmpty/hasError — không dựng lại 4 nhánh trạng thái ở mỗi nơi cần tìm nội dung."
             >
@@ -313,7 +313,7 @@ export const WithLockedRow: Story = {
             <BlockAnatomy
                 name="ContentSearchList"
                 tier="block"
-                leaf="Có hàng bị khoá"
+                leaf="WithLockedRow"
                 parts={LOCKED_PARTS}
                 note="Một EntityResultRow ở trạng thái isLocked (chưa ghi danh) — CÙNG composition với leaf 'Có kết quả', chỉ khác tone của một hàng (tự thêm cụm khoá bên trong EntityResultRow, không phải node riêng ở tầng này)."
             >

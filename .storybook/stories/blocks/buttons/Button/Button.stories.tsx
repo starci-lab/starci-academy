@@ -3,7 +3,7 @@ import { ArrowRightIcon } from "@phosphor-icons/react"
 import { Button, type ButtonSize, type ButtonVariant } from "./Button"
 
 const meta: Meta<typeof Button> = {
-    title: "Primitives/Button/Button",
+    title: "Primitives/Buttons/Button",
     component: Button,
     tags: ["autodocs", "news"],
     parameters: {
@@ -20,7 +20,6 @@ const SIZES: ButtonSize[] = ["sm", "md", "lg"]
 
 /** 4 variant theo VAI (primary CTA chính · secondary phụ · tertiary đứng-1-mình · ghost nhẹ). */
 export const Variants: Story = {
-    name: "Variants",
     parameters: {
         usage: "Chọn variant theo VAI, không theo màu: primary = CTA chính (≤1/surface) · secondary = phụ đi kèm primary · tertiary = phụ đứng một mình · ghost = nhẹ nhất.",
     },
@@ -37,7 +36,6 @@ export const Variants: Story = {
 
 /** 3 size — icon TRAILING co theo size nút (§5a: sm→size-4 · md→size-5 · lg→size-6). */
 export const Sizes: Story = {
-    name: "Kích thước + icon",
     parameters: {
         usage: "`size` ép cả nút + icon: sm→icon size-4 · md→size-5 · lg→size-6 (§5a, primitive sở hữu). Trailing icon trượt phải khi hover (§5b).",
     },
@@ -54,7 +52,6 @@ export const Sizes: Story = {
 
 /** STATE loading — `isSkeleton` (if-else) tự vẽ Skeleton.Button đúng size, KHÔNG skeleton rời. */
 export const Loading: Story = {
-    name: "Đang tải",
     parameters: {
         usage: "Bật `isSkeleton` → base Button tự render skeleton mirror đúng size. Consumer/ButtonGroup chỉ pass cờ xuống.",
     },
@@ -71,7 +68,6 @@ export const Loading: Story = {
 
 /** variant `danger` — map THẲNG xuống HeroUI `variant="danger"` (destructive action: xoá, huỷ, disable...). */
 export const Danger: Story = {
-    name: "Danger",
     parameters: {
         usage: "`variant=\"danger\"` cho hành động HUỶ/XOÁ không đảo ngược được. Không phải `color` prop — HeroUI fork có variant riêng.",
     },
@@ -89,7 +85,6 @@ export const Danger: Story = {
 
 /** STATE `isPending` — Spinner render TAY trước label + khoá press (react-aria `isPending` không tự vẽ spinner). */
 export const Pending: Story = {
-    name: "Pending",
     parameters: {
         usage: "Bật `isPending` → Spinner (size=sm, color=current) chèn trước label/icon + nút khoá press. Dùng khi chờ mutation/API.",
     },
@@ -107,7 +102,6 @@ export const Pending: Story = {
 
 /** STATE `isDisabled` — forward thẳng xuống HeroUI button, không có Spinner (khác `isPending`). */
 export const Disabled: Story = {
-    name: "Disabled",
     parameters: {
         usage: "`isDisabled` khoá nút không kèm Spinner — dùng khi form invalid/chưa đủ điều kiện, khác `isPending` (đang chờ tác vụ).",
     },

@@ -44,8 +44,8 @@ const ITEM_PARTS: Array<AnatomyNode> = [
         tier: "design",
         role: "khung surface tự đóng — chứa info + hàng CTA",
         children: [
-            { name: "Typography · tiêu đề", tier: "primitive", role: "tên mục (title, weight medium, truncate)" },
-            { name: "Typography · phụ đề", tier: "primitive", role: "phụ đề (subtitle, muted, truncate) — chỉ khi không có meta/timeLeft" },
+            { name: "Typography.Title", tier: "primitive", role: "tên mục (title, weight medium, truncate)" },
+            { name: "Typography.Subtitle", tier: "primitive", role: "phụ đề (subtitle, muted, truncate) — chỉ khi không có meta/timeLeft" },
             { name: "SeeMoreLink", tier: "primitive", role: "CTA \"Tiếp tục →\" trên hàng riêng — hover/click sống trên link" },
         ],
     },
@@ -59,9 +59,9 @@ const LOADING_PARTS: Array<AnatomyNode> = [
         tier: "design",
         role: "khung surface (giữ nguyên footprint)",
         children: [
-            { name: "Skeleton.Typography · tiêu đề", tier: "primitive", role: "mirror dòng tiêu đề (width 2/3)", state: "skeleton" },
-            { name: "Skeleton.Typography · phụ đề", tier: "primitive", role: "mirror dòng phụ đề (width 1/3)", state: "skeleton" },
-            { name: "Skeleton.Typography · CTA", tier: "primitive", role: "mirror hàng CTA (width 1/4)", state: "skeleton" },
+            { name: "Skeleton.Typography.Title", tier: "primitive", role: "mirror dòng tiêu đề (width 2/3)", state: "skeleton" },
+            { name: "Skeleton.Typography.Subtitle", tier: "primitive", role: "mirror dòng phụ đề (width 1/3)", state: "skeleton" },
+            { name: "Skeleton.Typography.Cta", tier: "primitive", role: "mirror hàng CTA (width 1/4)", state: "skeleton" },
         ],
     },
 ]
@@ -91,13 +91,12 @@ const ERROR_PARTS: Array<AnatomyNode> = [
 
 /** The loaded item card — one representative (grid is the consumer's concern). */
 export const Content: Story = {
-    name: "Mục",
     render: () =>
         frame(
             <BlockAnatomy
                 name="ContinueCard"
                 tier="design"
-                leaf="Mục"
+                leaf="Content"
                 parts={ITEM_PARTS}
                 reason={
                     "Biến thể \"item\" (1-trong-N — story trình 1 card đại diện, lưới là việc của consumer). Mỗi state là 1 leaf trong folder: Mục (content, CTA SeeMoreLink) · Đang tải (Skeleton mirror LAYOUT item, KHÔNG progress/sweep) · Lỗi mạng rớt (EmptyState tone=\"danger\" trong SectionCard). Skeleton mirror layout, không nhấn/animation."
@@ -112,23 +111,22 @@ export const Content: Story = {
 
 /** Loading — skeleton mirrors the item LAYOUT (title · subtitle · CTA link; no progress, no sweep). */
 export const Loading: Story = {
-    name: "Đang tải",
     render: () =>
         frame(
             <BlockAnatomy
                 name="ContinueCard"
                 tier="design"
-                leaf="Đang tải"
+                leaf="Loading"
                 parts={LOADING_PARTS}
                 note="Skeleton mirror LAYOUT của item (tiêu đề · phụ đề · CTA), KHÔNG progress và KHÔNG sweep — composition khác leaf content (không nội dung thật)."
             >
                 <div className="w-80">
                     <SectionCard anatPart="SectionCard" contentClassName="flex flex-col gap-3">
                         <div className="flex flex-col gap-2">
-                            <Skeleton.Typography type="body" width="2/3" anatPart="Skeleton.Typography · tiêu đề" />
-                            <Skeleton.Typography type="body-xs" width="1/3" anatPart="Skeleton.Typography · phụ đề" />
+                            <Skeleton.Typography type="body" width="2/3" anatPart="Skeleton.Typography.Title" />
+                            <Skeleton.Typography type="body-xs" width="1/3" anatPart="Skeleton.Typography.Subtitle" />
                         </div>
-                        <Skeleton.Typography type="body-sm" width="1/4" anatPart="Skeleton.Typography · CTA" />
+                        <Skeleton.Typography type="body-sm" width="1/4" anatPart="Skeleton.Typography.Cta" />
                     </SectionCard>
                 </div>
             </BlockAnatomy>,
@@ -137,13 +135,12 @@ export const Loading: Story = {
 
 /** Network drop — error rendered INSIDE the card frame (not a blank card). */
 export const LoadError: Story = {
-    name: "Lỗi tải (mạng rớt)",
     render: () =>
         frame(
             <BlockAnatomy
                 name="ContinueCard"
                 tier="design"
-                leaf="Lỗi tải (mạng rớt)"
+                leaf="LoadError"
                 parts={ERROR_PARTS}
                 note={"Mạng rớt → EmptyState tone=\"danger\" + nút Thử lại render TRONG SectionCard, không để lại card trắng."}
             >

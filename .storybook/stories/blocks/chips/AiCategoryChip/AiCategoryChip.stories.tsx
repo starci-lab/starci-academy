@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { AiCategoryChip, AiModelCategory } from "./AiCategoryChip"
 
 const meta: Meta<typeof AiCategoryChip> = {
-    title: "Design/Chip/AiCategoryChip",
+    title: "Design/Chips/AiCategoryChip",
     component: AiCategoryChip,
     tags: ["autodocs"],
     parameters: {

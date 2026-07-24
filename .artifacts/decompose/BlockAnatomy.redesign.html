@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Redesign · BlockAnatomy (HeroUI)</title>
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+  :root{
+    --bg:#0b0e14; --panel:#111725; --panel2:#151c2b; --ink:#e7edf5; --muted:#8b98a9; --line:#233049; --line2:#1b2436;
+    --accent:#8b7bff; --success:#38d39f; --warning:#f5a524; --danger:#f31260;
+    --accent-soft:#241f45; --success-soft:#12261f; --warning-soft:#2a2210;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif;padding:28px}
+  .wrap{max-width:920px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+  .h{font-size:19px;margin:0}
+  .note{color:var(--muted);font-size:13px;margin:0}
+  .cmp{display:flex;flex-wrap:wrap;gap:8px;font-size:12px;color:var(--muted)}
+  .cmp b{color:var(--ink)}
+
+  /* ── HeroUI-flavored panel ── */
+  .panel{border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:18px;display:flex;flex-direction:column;gap:16px}
+
+  /* Tabs (HeroUI: List + Indicator underline) */
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .tabs{display:inline-flex;gap:4px;position:relative;border-bottom:1px solid var(--line2)}
+  .tab{display:inline-flex;align-items:center;gap:7px;padding:8px 14px 12px;font-size:13px;color:var(--muted);cursor:pointer;position:relative;background:none;border:none}
+  .tab i{font-size:16px}
+  .tab.on{color:var(--ink);font-weight:500}
+  .tab.on::after{content:"";position:absolute;left:10px;right:10px;bottom:-1px;height:2px;border-radius:2px;background:var(--accent)}
+  .crumb{font-family:ui-monospace,monospace;font-size:12px;color:var(--muted)}
+
+  /* Chip (tier key) */
+  .keys{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:3px 10px;font-size:11.5px;font-weight:500;border:1px solid transparent}
+  .chip.block{background:var(--warning-soft);color:var(--warning);border-color:color-mix(in srgb,var(--warning) 30%,transparent)}
+  .chip.design{background:var(--success-soft);color:var(--success);border-color:color-mix(in srgb,var(--success) 30%,transparent)}
+  .chip.primitive{background:var(--accent-soft);color:var(--accent);border-color:color-mix(in srgb,var(--accent) 30%,transparent)}
+  .chip i{font-size:12px}
+
+  /* render box with numbered Chip badges */
+  .render{position:relative;border:1px dashed var(--line);border-radius:14px;padding:18px;background:#0c111b;min-height:150px}
+  .numbadge{position:absolute;display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;border-radius:999px;font:600 11px/1 ui-monospace,monospace;padding:0 5px;box-shadow:0 1px 4px rgba(0,0,0,.4);cursor:pointer;transition:transform .12s}
+  .numbadge:hover{transform:scale(1.12)}
+  .numbadge.block{background:var(--warning);color:#3a2a00}
+  .numbadge.design{background:var(--success);color:#052b1f}
+  .numbadge.primitive{background:var(--accent);color:#160f3d}
+  .rbox{border:1px solid var(--line2);border-radius:11px;padding:12px;margin-bottom:10px;color:var(--muted);font-size:12.5px;background:var(--panel)}
+  .rbox .t{color:var(--ink);font-weight:600;font-size:13px;margin-bottom:2px}
+  .rrow{display:flex;gap:8px}
+
+  /* HeroUI Table legend */
+  .tbl{width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px}
+  .tbl thead th{text-align:left;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 12px;background:var(--panel2);border-bottom:1px solid var(--line2)}
+  .tbl thead th:first-child{border-top-left-radius:10px}
+  .tbl thead th:last-child{border-top-right-radius:10px}
+  .tbl tbody td{padding:9px 12px;border-bottom:1px solid var(--line2)}
+  .tbl tbody tr:hover td{background:color-mix(in srgb,var(--accent) 6%,transparent)}
+  .tbl .mono{font-family:ui-monospace,monospace;color:var(--ink)}
+  .tbl .role{color:var(--muted)}
+  .tbl .tier{font-weight:600}
+  .tbl .tier.block{color:var(--warning)}.tbl .tier.design{color:var(--success)}.tbl .tier.primitive{color:var(--accent)}
+  .nbchip{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;border-radius:999px;font:600 11px/1 ui-monospace,monospace;padding:0 5px}
+  .nbchip.block{background:var(--warning);color:#3a2a00}.nbchip.design{background:var(--success);color:#052b1f}.nbchip.primitive{background:var(--accent);color:#160f3d}
+
+  .rationale{border-top:1px solid var(--line2);padding-top:12px;font-size:12px;color:var(--muted)}
+  .rationale b{color:var(--ink)}
+  .side{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:720px){.side{grid-template-columns:1fr}}
+  .cap{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+  .before{opacity:.75}
+  .before .tabseg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .before .tabseg button{background:none;border:none;color:var(--muted);font-size:12px;padding:6px 12px;border-right:1px solid var(--line)}
+  .before .tabseg button.on{background:#1a2333;color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1 class="h">Redesign · BlockAnatomy → HeroUI</h1>
+  <p class="note">Mockup 8080 TRƯỚC khi rewrite <code>.tsx</code> thật. HeroUI v3.2.1 · icon Phosphor · badge = Chip · tabs = Tabs(Indicator) · legend = Table.</p>
+  <p class="cmp">Đổi: <b>Tabs HeroUI</b> (thay segmented div) · <b>Chip</b> cho badge số & tier-key (thay span thủ công) · <b>Table HeroUI</b> cho legend (thay div-rows) · icon <b>Phosphor</b> (đã có).</p>
+
+  <!-- REDESIGNED PANEL -->
+  <div class="panel">
+    <div class="bar">
+      <div class="tabs">
+        <button class="tab on"><i class="ph ph-squares-four"></i> Sơ đồ</button>
+        <button class="tab"><i class="ph ph-tree-structure"></i> Cây</button>
+      </div>
+      <span class="crumb">CourseContents · Content home</span>
+    </div>
+
+    <div class="keys">
+      <span class="chip block"><i class="ph ph-circle-fill"></i> block</span>
+      <span class="chip design"><i class="ph ph-circle-fill"></i> design</span>
+      <span class="chip primitive"><i class="ph ph-circle-fill"></i> primitive</span>
+    </div>
+
+    <div class="render">
+      <span class="numbadge block" style="top:8px;left:8px">1</span>
+      <div class="rbox" style="margin-left:8px;margin-top:8px">
+        <span class="numbadge design" style="top:-9px;left:14px">2</span>
+        <span class="numbadge design" style="top:-9px;left:44px">3</span>
+        <div class="t">DevOps Mastery</div>
+        Khoá học › DevOps Mastery · 8 chương · ~14 giờ · 2,481 học viên
+      </div>
+      <div class="rbox" style="position:relative">
+        <span class="numbadge block" style="top:-9px;left:14px">4</span>
+        ⚠ Bạn chưa vào GitHub team của khoá — bấm để tham gia
+      </div>
+      <div class="rbox" style="position:relative">
+        <span class="numbadge block" style="top:-9px;left:14px">5</span>
+        Học thử — mở khoá · 1.990.000đ · còn 14 suất
+      </div>
+      <div class="rbox" style="position:relative">
+        <span class="numbadge design" style="top:-9px;left:14px">6</span>
+        <div class="t">Tiếp tục học · Bài 4 · Viết Dockerfile tối ưu</div>
+        34% · Đã đọc 8/23 bài
+      </div>
+    </div>
+
+    <table class="tbl">
+      <thead><tr><th style="width:44px">#</th><th style="width:170px">Part</th><th>Vai trò</th><th style="width:90px">Tier</th></tr></thead>
+      <tbody>
+        <tr><td><span class="nbchip block">1</span></td><td class="mono">PageHeader</td><td class="role">breadcrumb + tiêu đề + meta chips</td><td class="tier block">block</td></tr>
+        <tr><td><span class="nbchip design">2</span></td><td class="mono">Breadcrumb</td><td class="role">đường dẫn khoá</td><td class="tier design">design</td></tr>
+        <tr><td><span class="nbchip design">3</span></td><td class="mono">HighlightChips</td><td class="role">chương · giờ · học viên</td><td class="tier design">design</td></tr>
+        <tr><td><span class="nbchip block">4</span></td><td class="mono">Callout</td><td class="role">cảnh báo GitHub-team</td><td class="tier block">block</td></tr>
+        <tr><td><span class="nbchip block">5</span></td><td class="mono">TrialConversionStrip</td><td class="role">strip đổi trial→enroll</td><td class="tier block">block</td></tr>
+        <tr><td><span class="nbchip design">6</span></td><td class="mono">ContinueCard</td><td class="role">tiếp tục + progress + CTA (plain)</td><td class="tier design">design</td></tr>
+        <tr><td><span class="nbchip block">7</span></td><td class="mono">LearnNudges</td><td class="role">thẻ · phỏng vấn · hạng</td><td class="tier block">block</td></tr>
+        <tr><td><span class="nbchip block">8</span></td><td class="mono">KeepGoingPath</td><td class="role">bài module hiện tại</td><td class="tier block">block</td></tr>
+      </tbody>
+    </table>
+
+    <div class="rationale"><b>Vì sao composite này: </b>leaf DUY NHẤT của trang — không view-switch; trial hiện gate+strip (STATE), paid tự ẩn.</div>
+  </div>
+
+  <!-- BEFORE vs AFTER note -->
+  <div class="side">
+    <div>
+      <div class="cap">Trước (hiện tại)</div>
+      <div class="panel before" style="gap:10px">
+        <div class="tabseg"><button class="on">▦ Sơ đồ</button><button>⋔ Cây</button></div>
+        <div style="font-size:11px;color:var(--muted)">badge = span thủ công · legend = div-rows border-top · tabs = 2 button bo góc</div>
+      </div>
+    </div>
+    <div>
+      <div class="cap">Sau (HeroUI)</div>
+      <div class="panel" style="gap:10px">
+        <div class="tabs" style="align-self:flex-start"><button class="tab on"><i class="ph ph-squares-four"></i> Sơ đồ</button><button class="tab"><i class="ph ph-tree-structure"></i> Cây</button></div>
+        <div style="font-size:11px;color:var(--muted)">badge = <b style="color:var(--ink)">Chip</b> · legend = <b style="color:var(--ink)">Table</b> · tabs = <b style="color:var(--ink)">Tabs + Indicator</b></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

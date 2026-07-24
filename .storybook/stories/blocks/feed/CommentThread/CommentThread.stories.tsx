@@ -61,11 +61,11 @@ const COMMENT_ROW: AnatomyNode = {
     role: "một node bình luận: avatar + tác giả/thời gian + nội dung + reaction + slot actions",
     children: [
         { name: "UserAvatar", tier: "primitive", role: "ảnh đại diện tác giả" },
-        { name: "Typography · tên", tier: "primitive", role: "tên hiển thị tác giả (truncate)" },
-        { name: "Typography · thời gian", tier: "primitive", role: "thời gian tương đối, muted" },
+        { name: "Typography.Name", tier: "primitive", role: "tên hiển thị tác giả (truncate)" },
+        { name: "Typography.Time", tier: "primitive", role: "thời gian tương đối, muted" },
         { name: "MarkdownContent", tier: "primitive", role: "nội dung bình luận (markdown)" },
         { name: "ReactionBar", tier: "block", role: "cảm xúc + đếm; read-only khi không có onReact" },
-        { name: "Trả lời", tier: "primitive", role: "nút mở/đóng ô trả lời inline (truyền qua slot actions)", state: "hand-rolled" },
+        { name: "Reply", tier: "primitive", role: "nút mở/đóng ô trả lời inline (truyền qua slot actions)", state: "hand-rolled" },
     ],
 }
 
@@ -224,7 +224,7 @@ export const Nested: Story = {
             <BlockAnatomy
                 name="CommentThread"
                 tier="block"
-                leaf="Có dữ liệu"
+                leaf="Nested"
                 parts={DATA_PARTS}
                 reason="Một luồng thảo luận lồng nhau: mỗi node là CommunityCommentRow, mỗi node có nút Trả lời mở Composer inline, reply thụt lề theo guide rail có giới hạn độ sâu, và một Composer gốc thêm bình luận cấp cao nhất. Gói toàn bộ đệ quy + state draft/reveal vào một block."
             >
@@ -240,7 +240,7 @@ export const Empty: Story = {
             <BlockAnatomy
                 name="CommentThread"
                 tier="block"
-                leaf="Rỗng"
+                leaf="Empty"
                 parts={EMPTY_PARTS}
                 note="Chưa có bình luận → cây node biến mất, chỉ còn Composer gốc để mở luồng (khác leaf 'Có dữ liệu')."
             >

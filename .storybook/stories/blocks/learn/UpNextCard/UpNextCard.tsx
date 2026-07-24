@@ -118,14 +118,14 @@ export const UpNextCard = ({
             {/* one primary CTA (+ optional quiet secondary) */}
             <div
                 className="flex flex-wrap items-center gap-3"
-                data-anat-part={showAnatomy ? "div · hàng CTA" : undefined}
+                data-anat-part={showAnatomy ? "Div.CtaRow" : undefined}
             >
                 <Button
                     variant="primary"
                     size="lg"
                     onPress={onPress}
                     icon={<ArrowRightIcon aria-hidden focusable="false" />}
-                    anatPart={showAnatomy ? "Button · chính" : undefined}
+                    anatPart={showAnatomy ? "Button.Primary" : undefined}
                 >
                     {ctaLabel}
                 </Button>
@@ -133,7 +133,7 @@ export const UpNextCard = ({
                     <Button
                         variant="tertiary"
                         onPress={secondaryOnPress}
-                        anatPart={showAnatomy ? "Button · phụ" : undefined}
+                        anatPart={showAnatomy ? "Button.Secondary" : undefined}
                     >
                         {secondaryLabel}
                     </Button>

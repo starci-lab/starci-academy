@@ -3,7 +3,7 @@ import { Breadcrumbs, Chip, Typography } from "@heroui/react"
 import { PageHeader } from "./PageHeader"
 
 const meta: Meta<typeof PageHeader> = {
-    title: "Primitives/Layout/PageHeader",
+    title: "Primitives/Layouts/PageHeader",
     component: PageHeader,
     tags: ["autodocs"],
     parameters: {

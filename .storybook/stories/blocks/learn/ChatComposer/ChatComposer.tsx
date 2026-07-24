@@ -155,7 +155,7 @@ export const ChatComposer = ({
                             items={selection?.quickAsks ?? []}
                             direction="column"
                             variant="secondary"
-                            anatPart={showAnatomy ? "ChipButtonList · quick-ask" : undefined}
+                            anatPart={showAnatomy ? "ChipButtonList.QuickAsk" : undefined}
                             showAnatomy={showAnatomy}
                         />
                     ) : null}
@@ -175,7 +175,7 @@ export const ChatComposer = ({
                         <Typography
                             type="body-xs"
                             color="muted"
-                            data-anat-part={showAnatomy ? "Typography · hint" : undefined}
+                            data-anat-part={showAnatomy ? "Typography.Hint" : undefined}
                         >
                             {skillMenuHint}
                         </Typography>
@@ -185,7 +185,7 @@ export const ChatComposer = ({
                             items={skills}
                             direction="column"
                             variant="ghost"
-                            anatPart={showAnatomy ? "ChipButtonList · skills" : undefined}
+                            anatPart={showAnatomy ? "ChipButtonList.Skills" : undefined}
                             showAnatomy={showAnatomy}
                         />
                     </ScrollShadow>
@@ -212,7 +212,7 @@ export const ChatComposer = ({
                             isDisabled={isDisabled}
                             onPress={onToggleSkillMenu}
                             icon={<MagnifyingGlassIcon aria-hidden focusable="false" />}
-                            anatPart={showAnatomy ? "Button · toggle-skill" : undefined}
+                            anatPart={showAnatomy ? "Button.ToggleSkill" : undefined}
                         />
                         <Button
                             iconOnly
@@ -223,7 +223,7 @@ export const ChatComposer = ({
                             ariaLabel={sendAriaLabel}
                             onPress={onSubmit}
                             icon={<PaperPlaneTiltIcon aria-hidden focusable="false" />}
-                            anatPart={showAnatomy ? "Button · send" : undefined}
+                            anatPart={showAnatomy ? "Button.Send" : undefined}
                         />
                     </div>
                 </div>

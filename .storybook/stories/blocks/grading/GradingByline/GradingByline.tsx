@@ -50,7 +50,7 @@ export const ModelByline = ({
     }
     return (
         <>
-            <span className="flex items-center gap-2 text-sm text-muted" data-anat-part={showAnatomy ? "span · dòng attribution" : undefined}>
+            <span className="flex items-center gap-2 text-sm text-muted" data-anat-part={showAnatomy ? "Span.AttributionRow" : undefined}>
                 <SparkleIcon aria-hidden focusable="false" className="size-4 shrink-0 text-accent-soft-foreground" />
                 <span>
                     {withLabel ? "Đã chấm bởi " : null}

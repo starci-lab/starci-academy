@@ -4,7 +4,7 @@ import { FilePlusIcon } from "@phosphor-icons/react"
 import { DashedPlaceholderCard } from "./DashedPlaceholderCard"
 
 const meta: Meta<typeof DashedPlaceholderCard> = {
-    title: "Primitives/Card/DashedPlaceholderCard",
+    title: "Primitives/Cards/DashedPlaceholderCard",
     component: DashedPlaceholderCard,
     tags: ["autodocs"],
     parameters: {

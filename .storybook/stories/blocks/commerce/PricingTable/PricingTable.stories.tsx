@@ -97,11 +97,11 @@ const FEATURE_LIST: AnatomyNode = {
 // Content Typography that the inlined PricingCard DIRECTLY renders (its own `type`/
 // `weight`/`color`, echoing tier data) — each is a badged node, same standard as the
 // standalone `cards/PricingCard` block.
-const NAME: AnatomyNode = { name: "Typography · tên", tier: "primitive", role: "tên gói — tiêu đề cột" }
+const NAME: AnatomyNode = { name: "Typography.Name", tier: "primitive", role: "tên gói — tiêu đề cột" }
 // Price = ONE PricePoint primitive (số lớn + period). Its internal Typography are
 // PricePoint's OWN anatomy (drill into PricePoint's story), NOT badged here.
 const PRICE_POINT: AnatomyNode = { name: "PricePoint", tier: "primitive", role: "giá gói: số lớn + kỳ hạn (khi có) — 1 đơn vị" }
-const DESC: AnatomyNode = { name: "Typography · mô tả", tier: "primitive", role: "mô tả gói — chìm (muted), chỉ tier có description" }
+const DESC: AnatomyNode = { name: "Typography.Description", tier: "primitive", role: "mô tả gói — chìm (muted), chỉ tier có description" }
 
 // Highlighted leaf: at least one tier is nổi bật → PricingCard's frame is accent and
 // carries the StatusChip ribbon inline beside the tier name.
@@ -151,7 +151,7 @@ export const ThreeTiersHighlighted: Story = {
             <BlockAnatomy
                 name="PricingTable"
                 tier="block"
-                leaf="Có gói nổi bật"
+                leaf="Highlighted"
                 parts={HIGHLIGHTED_PARTS}
                 reason={
                     "So sánh 2–3 gói cạnh nhau cần MỖI gói là một cột đồng nhất (PricingCard) và một danh sách tính năng dùng CHUNG một khung để các dòng thẳng hàng cột-với-cột: có → CrossListItem mark=\"check\" (✓), không có → mark=\"cross\" (✗) — cùng một CrossListCard. Gộp thành một block để trang giá chỉ truyền mảng tiers, không phải tự dựng lại layout so-sánh + logic ✓/✗ ở mỗi nơi."
@@ -169,7 +169,7 @@ export const TwoTiersNoHighlight: Story = {
             <BlockAnatomy
                 name="PricingTable"
                 tier="block"
-                leaf="Không gói nổi bật"
+                leaf="NoHighlight"
                 parts={PLAIN_PARTS}
                 note="Không tier nào isHighlighted → mọi PricingCard đồng cấp, bỏ ribbon StatusChip (khác leaf 'Có gói nổi bật')."
             >

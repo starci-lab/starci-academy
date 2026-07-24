@@ -38,8 +38,8 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 // leaf that renders this exact shape.
 const BASE_PARTS: Array<AnatomyNode> = [
     { name: "UserAvatar", tier: "primitive", role: "avatar tác giả bình luận" },
-    { name: "Typography · tên", tier: "primitive", role: "tên hiển thị tác giả (truncate)" },
-    { name: "Typography · thời gian", tier: "primitive", role: "thời gian tương đối, muted" },
+    { name: "Typography.Name", tier: "primitive", role: "tên hiển thị tác giả (truncate)" },
+    { name: "Typography.Time", tier: "primitive", role: "thời gian tương đối, muted" },
     { name: "MarkdownContent", tier: "primitive", role: "thân bình luận (compact, [&_p]:m-0)" },
     { name: "ReactionBar", tier: "design", role: "thả cảm xúc cho bình luận" },
 ]
@@ -48,8 +48,8 @@ const BASE_PARTS: Array<AnatomyNode> = [
 // in the footer row.
 const ACTIONS_PARTS: Array<AnatomyNode> = [
     { name: "UserAvatar", tier: "primitive", role: "avatar tác giả bình luận" },
-    { name: "Typography · tên", tier: "primitive", role: "tên hiển thị tác giả (truncate)" },
-    { name: "Typography · thời gian", tier: "primitive", role: "thời gian tương đối, muted" },
+    { name: "Typography.Name", tier: "primitive", role: "tên hiển thị tác giả (truncate)" },
+    { name: "Typography.Time", tier: "primitive", role: "thời gian tương đối, muted" },
     { name: "MarkdownContent", tier: "primitive", role: "thân bình luận (compact, [&_p]:m-0)" },
     { name: "ReactionBar", tier: "design", role: "thả cảm xúc cho bình luận" },
     { name: "actions", tier: "primitive", role: "slot hành động do caller cấp (nút Trả lời)" },
@@ -58,8 +58,8 @@ const ACTIONS_PARTS: Array<AnatomyNode> = [
 // Read-only + zero reactions: ReactionBar returns null, so it drops out entirely.
 const NO_REACTION_PARTS: Array<AnatomyNode> = [
     { name: "UserAvatar", tier: "primitive", role: "avatar tác giả bình luận" },
-    { name: "Typography · tên", tier: "primitive", role: "tên hiển thị tác giả (truncate)" },
-    { name: "Typography · thời gian", tier: "primitive", role: "thời gian tương đối, muted" },
+    { name: "Typography.Name", tier: "primitive", role: "tên hiển thị tác giả (truncate)" },
+    { name: "Typography.Time", tier: "primitive", role: "thời gian tương đối, muted" },
     { name: "MarkdownContent", tier: "primitive", role: "thân bình luận (compact, [&_p]:m-0)" },
 ]
 
@@ -180,7 +180,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="CommunityCommentRow"
                 tier="design"
-                leaf="Mặc định"
+                leaf="Default"
                 parts={BASE_PARTS}
                 reason="Một dòng bình luận cộng đồng gói header tác giả + thân markdown + reaction + slot actions vào một block, để CommentThread và các surface bình luận dùng chung một cách trình bày. Quyền react do caller quyết định qua onReact."
             >
@@ -195,7 +195,7 @@ export const Fresh: Story = {
             <BlockAnatomy
                 name="CommunityCommentRow"
                 tier="design"
-                leaf="Chưa có cảm xúc"
+                leaf="Fresh"
                 parts={BASE_PARTS}
                 note="onReact có mặt nên bar tương tác vẫn hiện (chỉ số 0 ẩn) — CÙNG composition với leaf mặc định."
             >
@@ -210,7 +210,7 @@ export const Reacted: Story = {
             <BlockAnatomy
                 name="CommunityCommentRow"
                 tier="design"
-                leaf="Đã thả cảm xúc"
+                leaf="Reacted"
                 parts={BASE_PARTS}
                 note="9 cảm xúc + myReaction Love → ReactionBar hiện số và emoji, composition không đổi."
             >
@@ -225,7 +225,7 @@ export const FounderAuthor: Story = {
             <BlockAnatomy
                 name="CommunityCommentRow"
                 tier="design"
-                leaf="Tác giả founder"
+                leaf="FounderAuthor"
                 parts={BASE_PARTS}
                 note="isFounderAuthor → thêm huy hiệu SealCheckIcon cạnh tên, nhưng đó là chrome nội bộ của header (không tag riêng) — CÙNG composition với leaf mặc định."
             >
@@ -240,7 +240,7 @@ export const LongBody: Story = {
             <BlockAnatomy
                 name="CommunityCommentRow"
                 tier="design"
-                leaf="Thân dài"
+                leaf="LongBody"
                 parts={BASE_PARTS}
                 note="Thân markdown nhiều dòng → MarkdownContent giãn cao, composition không đổi."
             >
@@ -255,7 +255,7 @@ export const WithActions: Story = {
             <BlockAnatomy
                 name="CommunityCommentRow"
                 tier="design"
-                leaf="Có slot hành động"
+                leaf="WithActions"
                 parts={ACTIONS_PARTS}
                 note="Caller truyền actions → thêm slot 'Trả lời' cạnh ReactionBar (part chỉ leaf này có)."
             >
@@ -270,7 +270,7 @@ export const ReadOnly: Story = {
             <BlockAnatomy
                 name="CommunityCommentRow"
                 tier="design"
-                leaf="Chỉ đọc"
+                leaf="ReadOnly"
                 parts={BASE_PARTS}
                 note="Không onReact + có cảm xúc → ReactionBar rơi về hiển thị số + emoji (không picker), vẫn cùng composition."
             >
@@ -286,7 +286,7 @@ export const ReadOnlyNoReactions: Story = {
             <BlockAnatomy
                 name="CommunityCommentRow"
                 tier="design"
-                leaf="Chỉ đọc, không cảm xúc"
+                leaf="ReadOnlyNoReactions"
                 parts={NO_REACTION_PARTS}
                 note="Không onReact VÀ 0 cảm xúc → ReactionBar render null, biến mất khỏi composition."
             >
@@ -302,7 +302,7 @@ export const LongAuthorName: Story = {
             <BlockAnatomy
                 name="CommunityCommentRow"
                 tier="design"
-                leaf="Tên tác giả dài"
+                leaf="LongAuthorName"
                 parts={BASE_PARTS}
                 note="Tên rất dài → Typography truncate cắt bớt thay vì wrap/tràn, composition không đổi."
             >

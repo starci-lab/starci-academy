@@ -602,7 +602,7 @@ const Bar = ({ node, cell, shade, reduce, selected, onClick, showAnatomy }: {
                         selected && "ring-2 ring-accent ring-offset-1 ring-offset-transparent",
                     )}
                     style={{ backgroundColor: "var(--surface)", borderColor: shade.tint }}
-                    data-anat-part={showAnatomy ? "Html · nhãn nổi" : undefined}
+                    data-anat-part={showAnatomy ? "Html.FloatingLabel" : undefined}
                 >
                     <span className="font-mono text-[11px] font-medium leading-tight text-foreground">{node.name}</span>
                     {node.sub ? <span className="font-mono text-[9px] lowercase leading-tight text-muted">{node.sub}</span> : null}

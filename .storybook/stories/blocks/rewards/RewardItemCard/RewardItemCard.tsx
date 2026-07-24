@@ -81,7 +81,7 @@ export const RewardItemCard = ({
                 <div className="flex items-start gap-3">
                     <Skeleton
                         className="size-12 shrink-0 rounded-xl"
-                        anatPart={showAnatomy ? "Skeleton · ô icon" : undefined}
+                        anatPart={showAnatomy ? "Skeleton.Icon" : undefined}
                     />
                     {/* title↔description stack = TitledText (skeleton mirror delegated) */}
                     <TitledText

@@ -180,7 +180,7 @@ export const SelfHidden: Story = {
             <BlockAnatomy
                 name="RelatedContentList"
                 tier="block"
-                leaf="Tự ẩn"
+                leaf="SelfHidden"
                 parts={SELF_HIDDEN_PARTS}
                 note="Query rỗng (hoặc rỗng kết quả) → block trả null: không nhãn, không khung, không dựng gì — một aid im lặng không chiếm chỗ."
             >
@@ -196,7 +196,7 @@ export const Loading: Story = {
             <BlockAnatomy
                 name="RelatedContentList"
                 tier="block"
-                leaf="Đang tải"
+                leaf="Loading"
                 parts={LOADING_PARTS}
                 note="isLoading → thân đổi sang hàng Skeleton mirror trong cùng khung bordered, composition khác leaf data (không EntityResultRow thật)."
             >
@@ -212,7 +212,7 @@ export const SingleResult: Story = {
             <BlockAnatomy
                 name="RelatedContentList"
                 tier="block"
-                leaf="Một kết quả"
+                leaf="SingleResult"
                 parts={DATA_PARTS}
                 note="Một EntityResultRow trong khung — CÙNG composition với leaf nhiều kết quả, chỉ khác số hàng."
             >
@@ -233,7 +233,7 @@ export const MultipleMixed: Story = {
             <BlockAnatomy
                 name="RelatedContentList"
                 tier="block"
-                leaf="Nhiều kết quả"
+                leaf="MultipleMixed"
                 parts={DATA_PARTS}
                 reason="Gợi ý nội dung liên quan cuối một bề mặt học cần một nhãn section (LabeledCard) trên một khung list bordered (SurfaceListCard) chứa các EntityResultRow dùng chung. Gói nhãn + khung + danh sách + skeleton + logic tự-ẩn (query rỗng / rỗng kết quả → null) + lọc excludeId + limit vào một block, để mỗi bề mặt chỉ truyền query ngữ cảnh — không dựng lại khung và cơ chế tự-ẩn."
             >
@@ -254,7 +254,7 @@ export const WithLockedRow: Story = {
             <BlockAnatomy
                 name="RelatedContentList"
                 tier="block"
-                leaf="Có hàng khoá"
+                leaf="WithLockedRow"
                 parts={DATA_PARTS}
                 note="Một EntityResultRow ở trạng thái khoá (milestone chưa mở) — CÙNG composition, chỉ khác tone của hàng."
             >
@@ -275,7 +275,7 @@ export const ExcludeCurrentSource: Story = {
             <BlockAnatomy
                 name="RelatedContentList"
                 tier="block"
-                leaf="Loại nguồn hiện tại"
+                leaf="ExcludeCurrentSource"
                 parts={DATA_PARTS}
                 note="excludeId lọc bỏ nguồn đang xem trước khi render — CÙNG composition, chỉ ít đi một hàng."
             >
@@ -297,7 +297,7 @@ export const LimitedRows: Story = {
             <BlockAnatomy
                 name="RelatedContentList"
                 tier="block"
-                leaf="Giới hạn số hàng"
+                leaf="LimitedRows"
                 parts={DATA_PARTS}
                 note="limit cắt danh sách xuống N hàng — CÙNG composition, chỉ khác số EntityResultRow hiển thị."
             >

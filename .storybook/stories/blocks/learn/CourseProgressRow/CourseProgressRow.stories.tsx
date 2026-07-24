@@ -61,7 +61,7 @@ const META_PARTS: Array<AnatomyNode> = [
 // List shape — several rows stacked in a consumer-owned surface frame.
 const LIST_PARTS: Array<AnatomyNode> = [
     {
-        name: "Khung list (surface)",
+        name: "SurfaceFrame",
         tier: "block",
         role: "khung bo góc + shadow-surface — CONSUMER bọc, KHÔNG thuộc block",
         children: [
@@ -72,20 +72,20 @@ const LIST_PARTS: Array<AnatomyNode> = [
 
 // Loading (basic) — skeleton mirror of the base row (Skeleton).
 const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton · tile", tier: "primitive", role: "ô 48px thay IconTile" },
-    { name: "Skeleton.Typography · title", tier: "primitive", role: "vệt tiêu đề (1/2)" },
-    { name: "Skeleton · percent", tier: "primitive", role: "vệt % (w-8)" },
+    { name: "Skeleton.Tile", tier: "primitive", role: "ô 48px thay IconTile" },
+    { name: "Skeleton.Typography.Title", tier: "primitive", role: "vệt tiêu đề (1/2)" },
+    { name: "Skeleton.Percent", tier: "primitive", role: "vệt % (w-8)" },
     { name: "Skeleton.ProgressBar", tier: "primitive", role: "vệt track (h-1)" },
 ]
 
 // Loading (full) — reserves the trial-chip + meta placeholders too (SkeletonWithTrialAndMeta).
 const SKELETON_FULL_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton · tile", tier: "primitive", role: "ô 48px thay IconTile" },
-    { name: "Skeleton.Typography · title", tier: "primitive", role: "vệt tiêu đề (1/2)" },
+    { name: "Skeleton.Tile", tier: "primitive", role: "ô 48px thay IconTile" },
+    { name: "Skeleton.Typography.Title", tier: "primitive", role: "vệt tiêu đề (1/2)" },
     { name: "Skeleton.Chip", tier: "primitive", role: "vệt chip học thử (withTrialChip)" },
-    { name: "Skeleton · percent", tier: "primitive", role: "vệt % (w-8)" },
+    { name: "Skeleton.Percent", tier: "primitive", role: "vệt % (w-8)" },
     { name: "Skeleton.ProgressBar", tier: "primitive", role: "vệt track (h-1)" },
-    { name: "Skeleton.Typography · meta", tier: "primitive", role: "vệt dòng meta (withMeta)" },
+    { name: "Skeleton.Typography.Meta", tier: "primitive", role: "vệt dòng meta (withMeta)" },
 ]
 
 /** Default — enrolled course, no trial chip (the norm; mirrors `CourseTrialChip` self-hiding). */
@@ -95,7 +95,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="CourseProgressRow"
                 tier="design"
-                leaf="Có tiến độ"
+                leaf="WithProgress"
                 parts={ROW_PARTS}
                 reason="Một hàng tiến độ khóa học trong danh sách 'hub' (dashboard/settings/profile) cần gộp NHIỀU tín hiệu (tile · tiêu đề · trạng thái học thử · % · bar) thành MỘT khối để feature chỉ truyền dữ liệu — khung hàng bấm được (SurfaceListCard/SurfaceListCardItem) vẫn là mối quan tâm RIÊNG, consumer bọc block này vào. Khi tải: Skeleton mirror đúng khung này (isSkeleton là prop, §6)."
             >
@@ -118,7 +118,7 @@ export const Trial: Story = {
             <BlockAnatomy
                 name="CourseProgressRow"
                 tier="design"
-                leaf="Học thử"
+                leaf="Trial"
                 parts={TRIAL_PARTS}
                 note="trialLabel được truyền → thêm StatusChip warning cạnh tiêu đề (khác leaf base)."
             >
@@ -142,7 +142,7 @@ export const WithMeta: Story = {
             <BlockAnatomy
                 name="CourseProgressRow"
                 tier="design"
-                leaf="Có dòng meta"
+                leaf="WithMeta"
                 parts={META_PARTS}
                 note="meta được truyền → thêm 1 dòng Typography muted dưới bar (khác leaf base)."
             >
@@ -166,7 +166,7 @@ export const Interactive: Story = {
             <BlockAnatomy
                 name="CourseProgressRow"
                 tier="design"
-                leaf="Bấm được"
+                leaf="Interactive"
                 parts={ROW_PARTS}
                 note="onPress → row là <button>, hover gạch chân tiêu đề (không tô nền); parts giống leaf base."
             >
@@ -190,7 +190,7 @@ export const WithCoverImage: Story = {
             <BlockAnatomy
                 name="CourseProgressRow"
                 tier="design"
-                leaf="Có ảnh bìa"
+                leaf="WithCoverImage"
                 parts={ROW_PARTS}
                 note="src được truyền → IconTile hiện ảnh bìa thay icon fallback; parts giống leaf base."
             >
@@ -215,7 +215,7 @@ export const Empty: Story = {
             <BlockAnatomy
                 name="CourseProgressRow"
                 tier="design"
-                leaf="Chưa bắt đầu"
+                leaf="Empty"
                 parts={TRIAL_PARTS}
                 note="0% + học thử — bar rỗng hoàn toàn; composition như leaf 'Học thử' (có chip)."
             >
@@ -239,7 +239,7 @@ export const Complete: Story = {
             <BlockAnatomy
                 name="CourseProgressRow"
                 tier="design"
-                leaf="Hoàn tất (100%)"
+                leaf="Complete"
                 parts={ROW_PARTS}
                 note="100% — bar đầy, không còn sliver còn-lại; parts giống leaf base."
             >
@@ -262,11 +262,11 @@ export const List: Story = {
             <BlockAnatomy
                 name="CourseProgressRow"
                 tier="design"
-                leaf="Danh sách hub"
+                leaf="List"
                 parts={LIST_PARTS}
                 note="×3 xếp chồng trong khung surface (consumer sở hữu, KHÔNG thuộc block); mỗi hàng là 1 CourseProgressRow — base · học thử · hoàn tất."
             >
-                <div data-anat-part="Khung list (surface)" className="flex w-full max-w-md flex-col rounded-3xl bg-surface shadow-surface">
+                <div data-anat-part="SurfaceFrame" className="flex w-full max-w-md flex-col rounded-3xl bg-surface shadow-surface">
                     <CourseProgressRow
                         icon={<BookOpenIcon aria-hidden focusable="false" />}
                         showAnatomy
@@ -301,7 +301,7 @@ export const Skeleton: Story = {
             <BlockAnatomy
                 name="CourseProgressRow"
                 tier="design"
-                leaf="Đang tải"
+                leaf="Skeleton"
                 parts={SKELETON_PARTS}
                 note="isSkeleton → mirror cơ bản (tile + tiêu đề + % + bar); chip/meta KHÔNG giữ chỗ."
             >
@@ -325,7 +325,7 @@ export const SkeletonWithTrialAndMeta: Story = {
             <BlockAnatomy
                 name="CourseProgressRow"
                 tier="design"
-                leaf="Đang tải (đủ chỗ)"
+                leaf="SkeletonWithTrialAndMeta"
                 parts={SKELETON_FULL_PARTS}
                 note="isSkeleton + withTrialChip + withMeta → giữ chỗ thêm vệt chip và dòng meta."
             >

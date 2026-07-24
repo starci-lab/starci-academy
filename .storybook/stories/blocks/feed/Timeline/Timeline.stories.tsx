@@ -42,7 +42,7 @@ export const ActivitySequence: Story = {
             <BlockAnatomy
                 name="Timeline"
                 tier="block"
-                leaf="Chuỗi hoạt động"
+                leaf="ActivitySequence"
                 parts={TIMELINE_PARTS}
                 reason="Bọc một chuỗi FeedItem để nối chúng bằng một đường kẻ dọc bên trái, cho thấy chúng thuộc cùng một mạch thời gian. Timeline chỉ vẽ đường nối + thụt lề; nội dung từng dòng do FeedItem đảm nhiệm."
             >

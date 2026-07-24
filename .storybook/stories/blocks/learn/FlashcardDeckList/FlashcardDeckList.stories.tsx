@@ -39,7 +39,7 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 // UNDER AsyncContent.children (not as a sibling). Each DeckCard in turn composes
 // its own title/chips/meter/count/CTA in DOM order.
 const DATA_PARTS: Array<AnatomyNode> = [
-    { name: "TextField · Input", tier: "primitive", role: "ô tìm bộ thẻ" },
+    { name: "TextField.Input", tier: "primitive", role: "ô tìm bộ thẻ" },
     { name: "Typography", tier: "primitive", role: "đếm kết quả (\"Tìm thấy N bộ thẻ\")" },
     { name: "TabsCard", tier: "primitive", role: "đổi kiểu hiển thị lưới / danh sách" },
     {
@@ -70,7 +70,7 @@ const DATA_PARTS: Array<AnatomyNode> = [
 // but filteredDecks is empty → the body swaps to a muted "không khớp" Typography
 // (no DeckCard). It is NOT a distinct AsyncContent state — it lives inside content.
 const SEARCH_EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "TextField · Input", tier: "primitive", role: "ô tìm (giữ query)" },
+    { name: "TextField.Input", tier: "primitive", role: "ô tìm (giữ query)" },
     { name: "Typography", tier: "primitive", role: "đếm kết quả (\"Tìm thấy 0 bộ thẻ\")" },
     { name: "TabsCard", tier: "primitive", role: "toggle lưới / danh sách" },
     {
@@ -87,7 +87,7 @@ const SEARCH_EMPTY_PARTS: Array<AnatomyNode> = [
 // loading leaf: chrome stays (count slot → Skeleton.Typography), AsyncContent takes
 // its loading branch → the skeleton grid of skeleton DeckCards nested under it.
 const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "TextField · Input", tier: "primitive", role: "ô tìm (vẫn hiện)" },
+    { name: "TextField.Input", tier: "primitive", role: "ô tìm (vẫn hiện)" },
     { name: "Typography", tier: "primitive", role: "đếm — Skeleton.Typography mirror" },
     { name: "TabsCard", tier: "primitive", role: "toggle (vẫn hiện)" },
     {
@@ -104,7 +104,7 @@ const LOADING_PARTS: Array<AnatomyNode> = [
 // empty leaf: chrome stays, AsyncContent falls to EmptyContent, which itself
 // composes the EmptyState primitive (TrayIcon + title, no action button).
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "TextField · Input", tier: "primitive", role: "ô tìm" },
+    { name: "TextField.Input", tier: "primitive", role: "ô tìm" },
     { name: "Typography", tier: "primitive", role: "đếm kết quả (\"Tìm thấy 0 bộ thẻ\")" },
     { name: "TabsCard", tier: "primitive", role: "toggle" },
     {
@@ -129,7 +129,7 @@ const EMPTY_PARTS: Array<AnatomyNode> = [
 // (tone danger, WarningIcon + title). NOTE: onRetry is passed but retryLabel is
 // NOT, so EmptyState renders NO retry Button — the anatomy reflects that reality.
 const ERROR_PARTS: Array<AnatomyNode> = [
-    { name: "TextField · Input", tier: "primitive", role: "ô tìm" },
+    { name: "TextField.Input", tier: "primitive", role: "ô tìm" },
     { name: "Typography", tier: "primitive", role: "đếm kết quả (\"Tìm thấy 0 bộ thẻ\")" },
     { name: "TabsCard", tier: "primitive", role: "toggle" },
     {
@@ -157,7 +157,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="FlashcardDeckList"
                 tier="block"
-                leaf="Có dữ liệu"
+                leaf="Default"
                 parts={DATA_PARTS}
                 reason="Gộp search + đếm kết quả + toggle lưới/danh sách + lưới thẻ vào MỘT region, để AsyncContent cầm mọi state (loading · empty · error · search-empty · content) tại một chỗ; mỗi thẻ tái dùng block con DeckCard thay vì dựng lại tay."
             >
@@ -173,7 +173,7 @@ export const SearchFiltered: Story = {
             <BlockAnatomy
                 name="FlashcardDeckList"
                 tier="block"
-                leaf="Tìm có kết quả"
+                leaf="SearchFiltered"
                 parts={DATA_PARTS}
                 note="Lọc query → lưới thu hẹp nhưng CÙNG composition với leaf 'Có dữ liệu'."
             >
@@ -189,7 +189,7 @@ export const SearchNoResult: Story = {
             <BlockAnatomy
                 name="FlashcardDeckList"
                 tier="block"
-                leaf="Tìm rỗng"
+                leaf="SearchNoResult"
                 parts={SEARCH_EMPTY_PARTS}
                 note="Query không khớp → body đổi sang dòng muted 'Không tìm thấy…', KHÔNG có DeckCard (khác leaf data)."
             >
@@ -205,7 +205,7 @@ export const Loading: Story = {
             <BlockAnatomy
                 name="FlashcardDeckList"
                 tier="block"
-                leaf="Đang tải"
+                leaf="Loading"
                 parts={LOADING_PARTS}
                 note="AsyncContent nhánh loading → lưới DeckCard skeleton mirror, composition khác leaf data (không thẻ thật)."
             >
@@ -221,7 +221,7 @@ export const Empty: Story = {
             <BlockAnatomy
                 name="FlashcardDeckList"
                 tier="block"
-                leaf="Rỗng"
+                leaf="Empty"
                 parts={EMPTY_PARTS}
                 note="Không có bộ thẻ → AsyncContent rơi về EmptyContent trong khung region."
             >
@@ -237,7 +237,7 @@ export const Error: Story = {
             <BlockAnatomy
                 name="FlashcardDeckList"
                 tier="block"
-                leaf="Lỗi"
+                leaf="Error"
                 parts={ERROR_PARTS}
                 note="Tải hỏng, không cache → AsyncContent rơi về ErrorContent → EmptyState (tone danger). Không truyền retryLabel nên KHÔNG có nút thử lại."
             >

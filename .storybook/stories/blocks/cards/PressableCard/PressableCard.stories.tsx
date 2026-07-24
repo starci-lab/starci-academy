@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, Button } from "@heroui/react"
 import { PressableCard } from "./PressableCard"
 
 const meta: Meta<typeof PressableCard> = {
-    title: "Primitives/Card/PressableCard",
+    title: "Primitives/Cards/PressableCard",
     component: PressableCard,
     tags: ["autodocs"],
     parameters: {

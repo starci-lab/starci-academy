@@ -54,12 +54,12 @@ const DemoContent = () => (
 /** Foreground window card: bg-surface + border + rounded frame that OWNS the chrome
  *  bar and the content area. `withUrl` toggles whether the chrome shows the address bar. */
 const windowCard = (withUrl: boolean): AnatomyNode => ({
-    name: "Window card",
+    name: "WindowCard",
     tier: "design",
     role: "thẻ cửa sổ nền surface, viền default, bo góc 3xl (overflow-hidden) — CHỨA chrome + nội dung",
     children: [
         {
-            name: "Window chrome",
+            name: "WindowChrome",
             tier: "design",
             role: withUrl
                 ? "thanh cửa sổ (border-b): 3 chấm đỏ/vàng/lục + address bar"
@@ -75,11 +75,11 @@ const windowCard = (withUrl: boolean): AnatomyNode => ({
 /** The fanned stack (`.group`): the card-behind + the foreground window card, splayed
  *  in opposite tilts; hover flattens both. */
 const cardStack = (withUrl: boolean): AnatomyNode => ({
-    name: "Khối xoè thẻ",
+    name: "FanStack",
     tier: "design",
     role: "wrapper .group xếp 2 thẻ nghiêng ngược nhau → chiều sâu 'xoè'; hover ép cả 2 phẳng lại",
     children: [
-        { name: "Card sau", tier: "design", role: "thẻ nền nghiêng NGƯỢC, tô màu theme (KHÔNG viền), aria-hidden → chiều sâu 'xoè'" },
+        { name: "CardBehind", tier: "design", role: "thẻ nền nghiêng NGƯỢC, tô màu theme (KHÔNG viền), aria-hidden → chiều sâu 'xoè'" },
         windowCard(withUrl),
     ],
 })
@@ -110,7 +110,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="ShowcaseMockup"
                 tier="design"
-                leaf="Mặc định"
+                leaf="Default"
                 parts={BASE_PARTS}
                 reason="Khung cửa sổ trình duyệt tái dùng (3 chấm + address bar) bọc bất kỳ nội dung nào, nghiêng 3D + quầng sáng màu — cái look hero StarCi/Uni-Education gói thành một block. Feature chỉ đổi theme/tilt/backdrop/url + children; surface card luôn theo token light/dark."
             >
@@ -130,7 +130,7 @@ export const ThemeStarci: Story = {
             <BlockAnatomy
                 name="ShowcaseMockup"
                 tier="design"
-                leaf="Theme StarCi"
+                leaf="ThemeStarci"
                 parts={BASE_PARTS}
                 note="Chỉ đổi màu quầng sáng (theme) → CÙNG composition với leaf 'Mặc định'."
             >
@@ -150,7 +150,7 @@ export const ThemeAqua: Story = {
             <BlockAnatomy
                 name="ShowcaseMockup"
                 tier="design"
-                leaf="Theme Aqua"
+                leaf="ThemeAqua"
                 parts={BASE_PARTS}
                 note="Chỉ đổi màu quầng sáng (theme) → CÙNG composition với leaf 'Mặc định'."
             >
@@ -170,7 +170,7 @@ export const TiltRight: Story = {
             <BlockAnatomy
                 name="ShowcaseMockup"
                 tier="design"
-                leaf="Nghiêng phải"
+                leaf="TiltRight"
                 parts={BASE_PARTS}
                 note="Chỉ đổi hướng nghiêng 3D → CÙNG composition với leaf 'Mặc định'."
             >
@@ -190,7 +190,7 @@ export const TiltNone: Story = {
             <BlockAnatomy
                 name="ShowcaseMockup"
                 tier="design"
-                leaf="Không nghiêng"
+                leaf="TiltNone"
                 parts={BASE_PARTS}
                 note="Tắt nghiêng 3D nhưng thẻ-sau VẪN dựng → CÙNG composition với leaf 'Mặc định'."
             >
@@ -210,7 +210,7 @@ export const BackdropGrid: Story = {
             <BlockAnatomy
                 name="ShowcaseMockup"
                 tier="design"
-                leaf="Nền lưới"
+                leaf="BackdropGrid"
                 parts={BASE_PARTS}
                 note="Lớp Backdrop đổi sang lưới chấm → vẫn CÙNG composition với leaf 'Mặc định'."
             >
@@ -230,7 +230,7 @@ export const BackdropStars: Story = {
             <BlockAnatomy
                 name="ShowcaseMockup"
                 tier="design"
-                leaf="Nền sao"
+                leaf="BackdropStars"
                 parts={BASE_PARTS}
                 note="Lớp Backdrop đổi sang các chấm sao → vẫn CÙNG composition với leaf 'Mặc định'."
             >
@@ -250,7 +250,7 @@ export const BackdropNone: Story = {
             <BlockAnatomy
                 name="ShowcaseMockup"
                 tier="design"
-                leaf="Không nền"
+                leaf="BackdropNone"
                 parts={NO_BACKDROP_PARTS}
                 note="backdrop='none' → BỎ hẳn lớp Backdrop, khác leaf 'Mặc định' (thiếu một part)."
             >
@@ -270,7 +270,7 @@ export const AspectVideo: Story = {
             <BlockAnatomy
                 name="ShowcaseMockup"
                 tier="design"
-                leaf="Tỉ lệ 16:9"
+                leaf="AspectVideo"
                 parts={BASE_PARTS}
                 note="Vùng Content khoá tỉ lệ 16:9 (ảnh chụp toàn trang) → parts giữ nguyên như leaf 'Mặc định'."
             >
@@ -292,7 +292,7 @@ export const NoAddressBar: Story = {
             <BlockAnatomy
                 name="ShowcaseMockup"
                 tier="design"
-                leaf="Không address bar"
+                leaf="NoAddressBar"
                 parts={NO_URL_PARTS}
                 note="Bỏ prop url → BỎ address bar, chrome chỉ còn 3 chấm (khác leaf 'Mặc định')."
             >

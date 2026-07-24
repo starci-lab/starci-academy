@@ -118,7 +118,7 @@ export const NotificationList = ({
                     <Typography
                         type="body-sm"
                         weight="semibold"
-                        data-anat-part={showAnatomy ? "Typography · header" : undefined}
+                        data-anat-part={showAnatomy ? "Typography.Header" : undefined}
                     >
                         {title}
                     </Typography>
@@ -158,7 +158,7 @@ export const NotificationList = ({
                                         color="muted"
                                         weight="medium"
                                         className="px-3 pt-1"
-                                        data-anat-part={showAnatomy ? "Typography · nhãn nhóm" : undefined}
+                                        data-anat-part={showAnatomy ? "Typography.GroupLabel" : undefined}
                                     >
                                         {group.label}
                                     </Typography>

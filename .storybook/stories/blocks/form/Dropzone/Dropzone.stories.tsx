@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Dropzone } from "./Dropzone"
 
 const meta: Meta<typeof Dropzone> = {
-    title: "Primitives/Form/Dropzone",
+    title: "Primitives/Forms/Dropzone",
     component: Dropzone,
     tags: ["autodocs"],
     parameters: {

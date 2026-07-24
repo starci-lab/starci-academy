@@ -61,7 +61,6 @@ export const SingleSourceNoScore: Story = {
 
 /** Long file path + long snippet preview — both node lines are `truncate`, so overflow clips with an ellipsis instead of wrapping/breaking the fixed 220px node width. */
 export const LongPathTruncated: Story = {
-    name: "Đường dẫn dài (truncate)",
     render: () => (
         <div className="p-8">
             <RagSourceGraph

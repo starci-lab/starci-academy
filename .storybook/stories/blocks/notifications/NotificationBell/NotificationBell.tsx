@@ -111,7 +111,7 @@ export const NotificationBell = ({
                 variant="tertiary"
                 className={cn("rounded-full", className)}
                 ariaLabel={ariaLabel}
-                anatPart={showAnatomy ? "Button · iconOnly" : undefined}
+                anatPart={showAnatomy ? "Button.IconOnly" : undefined}
                 icon={
                     unreadCount > 0 ? (
                         <Badge.Anchor data-anat-part={showAnatomy ? "Badge.Anchor" : undefined}>

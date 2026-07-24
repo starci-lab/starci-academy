@@ -61,7 +61,7 @@ const sectionFrame = (children: Array<AnatomyNode>): AnatomyNode => ({
 // stay collapsed: they're opaque ReactNode SLOTS the CALLER builds (a Button
 // element, a `<ul>`) — PricingCard never imports Button or a list component,
 // it just positions whatever came in via a plain wrapper div.
-const NAME: AnatomyNode = { name: "Typography · tên", tier: "primitive", role: "tên tier (Typography body semibold) — cùng dòng với chip" }
+const NAME: AnatomyNode = { name: "Typography.Name", tier: "primitive", role: "tên tier (Typography body semibold) — cùng dòng với chip" }
 const CHIP: AnatomyNode = { name: "StatusChip", tier: "primitive", role: "chip \"phổ biến nhất\" (StatusChip accent soft, w-fit) — cùng dòng với tên, chỉ khi highlighted && badge", state: "accent" }
 // Price = ONE PricePoint primitive (amount + struck original + period). It is a
 // primitive → ONE node; its internal amount/original/period Typography are its OWN
@@ -83,9 +83,9 @@ const NO_PERIOD_PARTS: Array<AnatomyNode> = [sectionFrame([NAME, PRICE_POINT])]
 // ROW leaf (PricingRow): ba PricingCard xếp lưới items-stretch (grid div = layout, không phải node)
 // → mỗi tier là MỘT sub-block design, nest nguyên cây SectionCard + shape của nó.
 const ROW_PARTS: Array<AnatomyNode> = [
-    { name: "PricingCard · Free", tier: "design", role: "tier cơ bản (không chip, không giá gốc)", children: BASE_PARTS },
-    { name: "PricingCard · Pro", tier: "design", role: "tier nổi bật (highlighted → chip accent + giá gốc gạch ngang)", state: "highlighted", children: FULL_PARTS },
-    { name: "PricingCard · Enterprise", tier: "design", role: "tier liên hệ (không kỳ hạn)", children: NO_PERIOD_PARTS },
+    { name: "PricingCard.Free", tier: "design", role: "tier cơ bản (không chip, không giá gốc)", children: BASE_PARTS },
+    { name: "PricingCard.Pro", tier: "design", role: "tier nổi bật (highlighted → chip accent + giá gốc gạch ngang)", state: "highlighted", children: FULL_PARTS },
+    { name: "PricingCard.Enterprise", tier: "design", role: "tier liên hệ (không kỳ hạn)", children: NO_PERIOD_PARTS },
 ]
 
 export const BaseTier: Story = {
@@ -94,7 +94,7 @@ export const BaseTier: Story = {
             <BlockAnatomy
                 name="PricingCard"
                 tier="design"
-                leaf="Tier cơ bản"
+                leaf="BaseTier"
                 parts={BASE_PARTS}
                 reason="Một tier bảng giá là MỘT surface tự đóng khung (SectionCard) với công thức cố định: tên + chip nổi bật, dòng giá lớn kèm giá gốc gạch ngang, danh sách feature giãn đầy chiều cao, và CTA dính đáy. Gói vào một block để mọi tier trong bảng giá đều một khuôn, bằng chiều cao khi xếp lưới — feature chỉ đổi nội dung ReactNode."
             >
@@ -124,7 +124,7 @@ export const HighlightedWithBadge: Story = {
             <BlockAnatomy
                 name="PricingCard"
                 tier="design"
-                leaf="Nổi bật có badge"
+                leaf="HighlightedWithBadge"
                 parts={FULL_PARTS}
                 note="highlighted && badge → chip accent hiện + giá gốc gạch ngang; composition ĐẦY ĐỦ."
             >
@@ -151,7 +151,7 @@ export const BadgeHiddenWithoutHighlight: Story = {
             <BlockAnatomy
                 name="PricingCard"
                 tier="design"
-                leaf="Badge ẩn khi không nổi bật"
+                leaf="BadgeHiddenWithoutHighlight"
                 parts={BASE_PARTS}
                 note="badge truyền vào NHƯNG không highlighted → StatusChip ẩn; cùng composition với tier cơ bản."
             >
@@ -182,7 +182,7 @@ export const DiscountWithoutHighlight: Story = {
             <BlockAnatomy
                 name="PricingCard"
                 tier="design"
-                leaf="Giảm giá không nổi bật"
+                leaf="DiscountWithoutHighlight"
                 parts={DISCOUNT_PARTS}
                 note="originalPrice hiện độc lập với highlighted (khác chip) → giá gốc gạch ngang có mặt nhưng KHÔNG có StatusChip."
             >
@@ -212,7 +212,7 @@ export const NoPeriod: Story = {
             <BlockAnatomy
                 name="PricingCard"
                 tier="design"
-                leaf="Không kỳ hạn"
+                leaf="NoPeriod"
                 parts={NO_PERIOD_PARTS}
                 note="bỏ period → dòng giá chỉ còn giá lớn; không chip, không giá gốc."
             >
@@ -241,7 +241,7 @@ export const LongFeatureList: Story = {
             <BlockAnatomy
                 name="PricingCard"
                 tier="design"
-                leaf="Danh sách feature dài"
+                leaf="LongFeatureList"
                 parts={DISCOUNT_PARTS}
                 note="features dài giãn flex-1 đẩy CTA xuống đáy; có giá gốc, cùng composition với leaf giảm giá."
             >
@@ -276,7 +276,7 @@ export const PricingRow: Story = {
             <BlockAnatomy
                 name="PricingCard"
                 tier="design"
-                leaf="Hàng bảng giá"
+                leaf="PricingRow"
                 parts={ROW_PARTS}
                 note="ba tier xếp lưới items-stretch → cùng chiều cao; gồm cả ba shape (cơ bản · nổi bật · không kỳ hạn)."
             >

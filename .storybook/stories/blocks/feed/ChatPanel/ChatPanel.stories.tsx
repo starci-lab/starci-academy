@@ -40,7 +40,7 @@ const COMPOSER_PART: AnatomyNode = {
     role: "ô soạn tin ghim đáy panel",
     children: [
         { name: "UserAvatar", tier: "primitive", role: "avatar người soạn ở đầu hàng (tuỳ chọn)" },
-        { name: "TextField · TextArea", tier: "primitive", role: "ô nhập tự giãn cao (HeroUI field)" },
+        { name: "TextField.TextArea", tier: "primitive", role: "ô nhập tự giãn cao (HeroUI field)" },
         { name: "Button", tier: "primitive", role: "nút Send + spinner khi đang gửi" },
     ],
 }
@@ -70,7 +70,7 @@ const CONVERSATION_PARTS: Array<AnatomyNode> = [
 const TYPING_PARTS: Array<AnatomyNode> = [
     { name: "ChatBubble", tier: "design", role: "mỗi lượt tin theo role (user/assistant)" },
     TOOL_RESULT_PART,
-    { name: "Typing indicator", tier: "primitive", role: "ba chấm nảy phía trợ lý đang gõ", state: "typing" },
+    { name: "TypingIndicator", tier: "primitive", role: "ba chấm nảy phía trợ lý đang gõ", state: "typing" },
     COMPOSER_PART,
 ]
 
@@ -79,7 +79,7 @@ const TYPING_PARTS: Array<AnatomyNode> = [
 // hands `emptyState`) — cut per canon granularity; the slot absorbs them as ONE
 // node. Composer still pinned at the bottom.
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "Empty state", tier: "primitive", role: "slot canh giữa khi danh sách rỗng (icon + dòng nhắc do feature cấp)" },
+    { name: "EmptyState", tier: "primitive", role: "slot canh giữa khi danh sách rỗng (icon + dòng nhắc do feature cấp)" },
     COMPOSER_PART,
 ]
 
@@ -173,7 +173,7 @@ export const Conversation: Story = {
             <BlockAnatomy
                 name="ChatPanel"
                 tier="block"
-                leaf="Có hội thoại"
+                leaf="Conversation"
                 parts={CONVERSATION_PARTS}
                 reason="Một surface chat hoàn chỉnh: danh sách tin cuộn được + typing indicator + empty-state + ô soạn ghim đáy, tự cuộn xuống lượt mới nhất. Gói ChatBubble + Composer + auto-scroll vào một block để mọi feature chat props-only là chạy."
             >
@@ -188,7 +188,7 @@ export const Empty: Story = {
             <BlockAnatomy
                 name="ChatPanel"
                 tier="block"
-                leaf="Rỗng"
+                leaf="Empty"
                 parts={EMPTY_PARTS}
                 note="Không có lượt tin → danh sách nhường chỗ cho empty-state slot (icon + dòng nhắc), KHÔNG có ChatBubble; composer vẫn ghim đáy."
             >
@@ -214,7 +214,7 @@ export const Typing: Story = {
             <BlockAnatomy
                 name="ChatPanel"
                 tier="block"
-                leaf="Đang gõ"
+                leaf="Typing"
                 parts={TYPING_PARTS}
                 note="Trợ lý đang soạn → dưới lượt cuối thêm typing indicator ba chấm nảy; phần còn lại cùng composition với leaf 'Có hội thoại'."
             >

@@ -64,7 +64,7 @@ const framed = (inner: Array<AnatomyNode>): Array<AnatomyNode> => [
 const HEADER_AVATAR: AnatomyNode = { name: "UserAvatar", tier: "primitive", role: "avatar tác giả trong header" }
 const BODY_MARKDOWN: AnatomyNode = { name: "MarkdownContent", tier: "primitive", role: "thân bài markdown (compact, [&_p]:m-0)" }
 const FOOTER_REACTIONS: AnatomyNode = { name: "ReactionBar", tier: "design", role: "thả cảm xúc trong footer" }
-const FOOTER_COMMENT: AnatomyNode = { name: "Bình luận", tier: "primitive", role: "nút mở thread bình luận + đếm ở footer", state: "hand-rolled" }
+const FOOTER_COMMENT: AnatomyNode = { name: "CommentButton", tier: "primitive", role: "nút mở thread bình luận + đếm ở footer", state: "hand-rolled" }
 
 // Header text row every leaf renders: display name, then @username · time · kênh.
 const HEADER_TEXT: Array<AnatomyNode> = [
@@ -134,7 +134,7 @@ const READONLY_PARTS: Array<AnatomyNode> = framed([
     ...HEADER_TEXT,
     BODY_MARKDOWN,
     { name: "ReactionBar", tier: "design", role: "hiển thị cảm xúc (chỉ đọc)", state: "read-only" },
-    { name: "Bình luận", tier: "primitive", role: "đếm bình luận tĩnh (nút disabled)", state: "read-only" },
+    { name: "CommentButton", tier: "primitive", role: "đếm bình luận tĩnh (nút disabled)", state: "read-only" },
 ])
 
 const defaultPost: QueryCommunityFeedItemData = {
@@ -242,7 +242,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="CommunityPostCard"
                 tier="design"
-                leaf="Có dữ liệu"
+                leaf="Default"
                 parts={DEFAULT_PARTS}
                 reason="Một bài đăng cộng đồng gói header tác giả (avatar + tên + thời gian + kênh + huy hiệu) + thân markdown + footer reaction/bình luận vào một card. Feature chỉ truyền post + handler; block tự dựng khung Card và bố cục. Tên/@username/thời gian/kênh render qua Typography riêng CommunityPostCard tự viết — mỗi cái một node (§ granularity), như DeckCard."
             >
@@ -257,7 +257,7 @@ export const FounderPinned: Story = {
             <BlockAnatomy
                 name="CommunityPostCard"
                 tier="design"
-                leaf="Founder + ghim"
+                leaf="FounderPinned"
                 parts={FOUNDER_PINNED_PARTS}
                 note="Founder + đã ghim → thêm SealCheckIcon cạnh tên + PushPinIcon ở góc header so với leaf 'Có dữ liệu', mỗi icon một node riêng (block tự render trực tiếp)."
             >
@@ -272,7 +272,7 @@ export const Pinned: Story = {
             <BlockAnatomy
                 name="CommunityPostCard"
                 tier="design"
-                leaf="Đã ghim"
+                leaf="Pinned"
                 parts={PINNED_PARTS}
                 note="isPinned → thêm PushPinIcon ở góc header so với leaf 'Có dữ liệu' — node riêng, block tự render trực tiếp."
             >
@@ -287,7 +287,7 @@ export const FounderAuthor: Story = {
             <BlockAnatomy
                 name="CommunityPostCard"
                 tier="design"
-                leaf="Tác giả founder"
+                leaf="FounderAuthor"
                 parts={FOUNDER_PARTS}
                 note="isFounderAuthor → thêm SealCheckIcon cạnh tên so với leaf 'Có dữ liệu' — node riêng, block tự render trực tiếp."
             >
@@ -302,7 +302,7 @@ export const Fresh: Story = {
             <BlockAnatomy
                 name="CommunityPostCard"
                 tier="design"
-                leaf="Bài mới"
+                leaf="Fresh"
                 parts={DEFAULT_PARTS}
                 note="Bài mới đăng (0 reaction, 0 bình luận) — CÙNG composition với leaf 'Có dữ liệu', chỉ đổi dữ liệu đếm."
             >
@@ -317,7 +317,7 @@ export const LongBody: Story = {
             <BlockAnatomy
                 name="CommunityPostCard"
                 tier="design"
-                leaf="Thân bài dài"
+                leaf="LongBody"
                 parts={DEFAULT_PARTS}
                 note="Thân markdown dài + đã sửa — CÙNG composition, MarkdownContent tự giãn chiều cao."
             >
@@ -332,7 +332,7 @@ export const ReadOnly: Story = {
             <BlockAnatomy
                 name="CommunityPostCard"
                 tier="design"
-                leaf="Chỉ đọc"
+                leaf="ReadOnly"
                 parts={READONLY_PARTS}
                 note="Không truyền onReact/onToggleComments → ReactionBar chỉ đọc, đếm bình luận tĩnh."
             >
@@ -347,7 +347,7 @@ export const Interactive: Story = {
             <BlockAnatomy
                 name="CommunityPostCard"
                 tier="design"
-                leaf="Tương tác"
+                leaf="Interactive"
                 parts={DEFAULT_PARTS}
                 note="Có onReact + onToggleComments → bấm cảm xúc cập nhật state, mở thread bình luận qua children; base composition không đổi."
             >

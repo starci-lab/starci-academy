@@ -3,7 +3,7 @@ import { EnumChip } from "./EnumChip"
 import type { EnumChipEntry } from "./EnumChip"
 
 const meta: Meta<typeof EnumChip> = {
-    title: "Primitives/Chip/EnumChip",
+    title: "Primitives/Chips/EnumChip",
     component: EnumChip,
     tags: ["autodocs"],
     parameters: {

@@ -111,7 +111,7 @@ export const Composer = ({
             <TextField
                 variant="secondary"
                 className="min-w-0 flex-1"
-                data-anat-part={showAnatomy ? "TextField · TextArea" : undefined}
+                data-anat-part={showAnatomy ? "TextField.TextArea" : undefined}
             >
                 <TextArea
                     ref={textareaRef}
@@ -121,14 +121,14 @@ export const Composer = ({
                     onKeyDown={handleKeyDown}
                     placeholder={placeholder}
                     className="max-h-40 resize-none"
-                    data-anat-part={showAnatomy ? "TextField · TextArea" : undefined}
+                    data-anat-part={showAnatomy ? "TextField.TextArea" : undefined}
                 />
             </TextField>
 
             {/* trailing action cluster: optional attach slot, then the primary Send */}
             <div
                 className="flex shrink-0 items-center gap-1"
-                data-anat-part={showAnatomy ? "div · actions" : undefined}
+                data-anat-part={showAnatomy ? "Div.Actions" : undefined}
             >
                 {attachSlot}
                 {/* NOTE: not using Button's `icon`/`isPending` — port renders icon TRAILING and

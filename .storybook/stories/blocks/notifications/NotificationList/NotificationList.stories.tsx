@@ -109,7 +109,7 @@ const listFrame = (children: React.ReactNode) => (
 // title/body/time Typography — mirrored byte-identical to `NotificationItem.stories.tsx`'s
 // own tree for this same composition.
 const POPULATED_PARTS: Array<AnatomyNode> = [
-    { name: "Typography · header", tier: "primitive", role: "tiêu đề panel (\"Notifications\") — hiện prop title" },
+    { name: "Typography.Header", tier: "primitive", role: "tiêu đề panel (\"Notifications\") — hiện prop title" },
     {
         name: "Button",
         tier: "primitive",
@@ -119,17 +119,17 @@ const POPULATED_PARTS: Array<AnatomyNode> = [
             { name: "ChecksIcon", tier: "primitive", role: "icon check dẫn đầu (leading, size-4)" },
         ],
     },
-    { name: "Typography · nhãn nhóm", tier: "primitive", role: "nhãn nhóm ngày (\"Today\"/\"Earlier\") — hiện prop group.label" },
+    { name: "Typography.GroupLabel", tier: "primitive", role: "nhãn nhóm ngày (\"Today\"/\"Earlier\") — hiện prop group.label" },
     {
         name: "NotificationItem",
         tier: "design",
         role: "mỗi dòng thông báo (design con, lặp ×N)",
         children: [
             { name: "IconTile", tier: "primitive", role: "ô icon dẫn đầu, tô màu theo tone" },
-            { name: "Dot chưa đọc", tier: "primitive", role: "chấm accent cạnh tiêu đề báo chưa đọc (2/5 dòng mẫu)", state: "unread" },
-            { name: "Typography · title", tier: "primitive", role: "tiêu đề dòng" },
-            { name: "Typography · body", tier: "primitive", role: "chi tiết phụ dòng" },
-            { name: "Typography · time", tier: "primitive", role: "nhãn thời gian dòng" },
+            { name: "Dot", tier: "primitive", role: "chấm accent cạnh tiêu đề báo chưa đọc (2/5 dòng mẫu)", state: "unread" },
+            { name: "Typography.Title", tier: "primitive", role: "tiêu đề dòng" },
+            { name: "Typography.Body", tier: "primitive", role: "chi tiết phụ dòng" },
+            { name: "Typography.Time", tier: "primitive", role: "nhãn thời gian dòng" },
         ],
     },
 ]
@@ -137,7 +137,7 @@ const POPULATED_PARTS: Array<AnatomyNode> = [
 // Empty leaf: header STILL renders (title="Notifications" is passed) but with no
 // mark-all-read Button (onMarkAllRead omitted); the body falls to a single EmptyState.
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "Typography · header", tier: "primitive", role: "tiêu đề panel (\"Notifications\") — hiện prop title, không có Button (onMarkAllRead bỏ trống)" },
+    { name: "Typography.Header", tier: "primitive", role: "tiêu đề panel (\"Notifications\") — hiện prop title, không có Button (onMarkAllRead bỏ trống)" },
     { name: "EmptyState", tier: "primitive", role: "fallback \"Chưa có thông báo nào\" (tiêu đề + mô tả)", state: "empty" },
 ]
 
@@ -145,19 +145,19 @@ const EMPTY_PARTS: Array<AnatomyNode> = [
 // header (Skeleton.Typography + Skeleton.Button), one day group (bare Skeleton label
 // bar) over SkeletonNotificationRow ×3, each mirroring a NotificationItem's tile + bars.
 const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton.Typography · header", tier: "primitive", role: "tiêu đề header — skeleton mirror", state: "skeleton" },
+    { name: "Skeleton.Typography.Header", tier: "primitive", role: "tiêu đề header — skeleton mirror", state: "skeleton" },
     { name: "Skeleton.Button", tier: "primitive", role: "nút mark-all-read — skeleton mirror", state: "skeleton" },
-    { name: "Skeleton · nhãn nhóm", tier: "primitive", role: "nhãn nhóm ngày — skeleton mirror", state: "skeleton" },
+    { name: "Skeleton.GroupLabel", tier: "primitive", role: "nhãn nhóm ngày — skeleton mirror", state: "skeleton" },
     {
         name: "SkeletonNotificationRow",
         tier: "design",
         role: "mirror NotificationItem ×3 (giữ đúng footprint)",
         state: "skeleton",
         children: [
-            { name: "Skeleton · tile", tier: "primitive", role: "ô icon tone — skeleton mirror", state: "skeleton" },
-            { name: "Skeleton.Typography · title", tier: "primitive", role: "thanh tiêu đề dòng", state: "skeleton" },
-            { name: "Skeleton.Typography · body", tier: "primitive", role: "thanh nội dung phụ", state: "skeleton" },
-            { name: "Skeleton.Typography · time", tier: "primitive", role: "thanh thời gian", state: "skeleton" },
+            { name: "Skeleton.Tile", tier: "primitive", role: "ô icon tone — skeleton mirror", state: "skeleton" },
+            { name: "Skeleton.Typography.Title", tier: "primitive", role: "thanh tiêu đề dòng", state: "skeleton" },
+            { name: "Skeleton.Typography.Body", tier: "primitive", role: "thanh nội dung phụ", state: "skeleton" },
+            { name: "Skeleton.Typography.Time", tier: "primitive", role: "thanh thời gian", state: "skeleton" },
         ],
     },
 ]
@@ -169,7 +169,7 @@ export const Populated: Story = {
             <BlockAnatomy
                 name="NotificationList"
                 tier="block"
-                leaf="Có dữ liệu"
+                leaf="Populated"
                 parts={POPULATED_PARTS}
                 reason="Gom nhiều NotificationItem thành một danh sách cuộn có header (tiêu đề + đánh dấu đã đọc hết) và nhãn gom theo ngày; khi rỗng thì tự rơi về EmptyState thay vì một khối trống. Feature chỉ gom dữ liệu theo ngày và truyền các dòng đã format — không phải tự dựng lại header, nhóm, và trạng thái rỗng ở mỗi nơi. Khi tải: Skeleton mirror đúng khung này."
             >
@@ -191,7 +191,7 @@ export const Empty: Story = {
             <BlockAnatomy
                 name="NotificationList"
                 tier="block"
-                leaf="Rỗng"
+                leaf="Empty"
                 parts={EMPTY_PARTS}
                 note="Header vẫn render (title được truyền) nhưng KHÔNG có nút mark-all-read (onMarkAllRead bỏ trống); mọi nhóm rỗng → body rơi về EmptyState duy nhất (khác leaf data)."
             >
@@ -219,11 +219,11 @@ const SkeletonNotificationRow = () => (
         className="flex w-full items-start gap-3 rounded-2xl p-3"
         data-anat-part="SkeletonNotificationRow"
     >
-        <Skeleton className="size-10 shrink-0 rounded-2xl" anatPart="Skeleton · tile" />
+        <Skeleton className="size-10 shrink-0 rounded-2xl" anatPart="Skeleton.Tile" />
         <div className="flex min-w-0 flex-1 flex-col gap-1">
-            <Skeleton.Typography type="body-sm" width="3/4" anatPart="Skeleton.Typography · title" />
-            <Skeleton.Typography type="body-xs" width="full" anatPart="Skeleton.Typography · body" />
-            <Skeleton.Typography type="body-xs" width="1/3" anatPart="Skeleton.Typography · time" />
+            <Skeleton.Typography type="body-sm" width="3/4" anatPart="Skeleton.Typography.Title" />
+            <Skeleton.Typography type="body-xs" width="full" anatPart="Skeleton.Typography.Body" />
+            <Skeleton.Typography type="body-xs" width="1/3" anatPart="Skeleton.Typography.Time" />
         </div>
     </div>
 )
@@ -234,7 +234,7 @@ export const SkeletonLoading: Story = {
             <BlockAnatomy
                 name="NotificationList"
                 tier="block"
-                leaf="Đang tải"
+                leaf="SkeletonLoading"
                 parts={LOADING_PARTS}
                 note="Chrome giữ nguyên, mọi phần đổi sang Skeleton mirror đúng footprint của leaf data (không dòng thật)."
             >
@@ -245,7 +245,7 @@ export const SkeletonLoading: Story = {
                             <Skeleton.Typography
                                 type="body-sm"
                                 width="1/3"
-                                anatPart="Skeleton.Typography · header"
+                                anatPart="Skeleton.Typography.Header"
                             />
                             <Skeleton.Button width="w-28" anatPart="Skeleton.Button" />
                         </div>
@@ -254,7 +254,7 @@ export const SkeletonLoading: Story = {
                             <div className="flex flex-col gap-1">
                                 <Skeleton
                                     className="mx-3 mt-1 h-3 w-16 rounded"
-                                    anatPart="Skeleton · nhãn nhóm"
+                                    anatPart="Skeleton.GroupLabel"
                                 />
                                 <SkeletonNotificationRow />
                                 <SkeletonNotificationRow />

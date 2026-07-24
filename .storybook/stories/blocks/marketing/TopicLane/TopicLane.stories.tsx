@@ -46,8 +46,8 @@ const CONTENT_PARTS: Array<AnatomyNode> = [
         tier: "primitive",
         role: "hàng chủ đề bấm được — hand-roll <button> (có port ListRow nhưng chưa dùng)",
         children: [
-            { name: "Typography · nhãn", tier: "primitive", role: "nhãn lesson (type=body-sm, truncate, hover underline)" },
-            { name: "Typography · tag", tier: "primitive", role: "tag khóa phải (type=code, text-[10px] muted)" },
+            { name: "Typography.Label", tier: "primitive", role: "nhãn lesson (type=body-sm, truncate, hover underline)" },
+            { name: "Typography.Tag", tier: "primitive", role: "tag khóa phải (type=code, text-[10px] muted)" },
         ],
     },
 ]
@@ -65,16 +65,16 @@ const EMPTY_PARTS: Array<AnatomyNode> = [
 // loading leaf: chrome mirrored — header Skeleton (icon + tiêu đề) + 3 khung hàng,
 // mỗi khung BỌC 2 Skeleton (nhãn + tag) đúng footprint <button> để không nhảy layout.
 const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton · icon", tier: "primitive", role: "mirror icon lane (size-4)", state: "skeleton" },
-    { name: "Skeleton · tiêu đề", tier: "primitive", role: "mirror tiêu đề lane (h-[14px] w-20)", state: "skeleton" },
+    { name: "Skeleton.Icon", tier: "primitive", role: "mirror icon lane (size-4)", state: "skeleton" },
+    { name: "Skeleton.Title", tier: "primitive", role: "mirror tiêu đề lane (h-[14px] w-20)", state: "skeleton" },
     {
         name: "Row frame",
         tier: "primitive",
         role: "khung hàng ×3 (div border + surface) — giữ đúng footprint của <button>",
         state: "skeleton",
         children: [
-            { name: "Skeleton · nhãn", tier: "primitive", role: "mirror nhãn lesson (h-[14px] w-1/2)", state: "skeleton" },
-            { name: "Skeleton · tag", tier: "primitive", role: "mirror tag (h-3 w-6)", state: "skeleton" },
+            { name: "Skeleton.Label", tier: "primitive", role: "mirror nhãn lesson (h-[14px] w-1/2)", state: "skeleton" },
+            { name: "Skeleton.Tag", tier: "primitive", role: "mirror tag (h-3 w-6)", state: "skeleton" },
         ],
     },
 ]
@@ -85,7 +85,7 @@ export const SingleRow: Story = {
             <BlockAnatomy
                 name="TopicLane"
                 tier="block"
-                leaf="Một hàng"
+                leaf="SingleRow"
                 parts={CONTENT_PARTS}
                 note="Lane tối giản: header + đúng một hàng chủ đề bấm được — cùng composition với danh sách đầy."
             >
@@ -107,7 +107,7 @@ export const TypicalList: Story = {
             <BlockAnatomy
                 name="TopicLane"
                 tier="block"
-                leaf="Danh sách thường"
+                leaf="TypicalList"
                 parts={CONTENT_PARTS}
                 reason="Khoe chiều sâu chương trình bằng một lane đặt tên: mỗi hàng là một lesson thật bấm được, tag khóa bên phải. Gói header + list row vào một block để feature chỉ truyền data + handler; xếp 2 lane (code / hạ tầng) cạnh nhau là thấy độ phủ."
             >
@@ -134,7 +134,7 @@ export const LongLabelTruncate: Story = {
             <BlockAnatomy
                 name="TopicLane"
                 tier="block"
-                leaf="Nhãn dài cắt bớt"
+                leaf="LongLabelTruncate"
                 parts={CONTENT_PARTS}
                 note="Nhãn quá dài → Typography truncate, tag vẫn khóa phải; CÙNG composition với danh sách thường."
             >
@@ -159,7 +159,7 @@ export const StaticRows: Story = {
             <BlockAnatomy
                 name="TopicLane"
                 tier="block"
-                leaf="Hàng tĩnh"
+                leaf="StaticRows"
                 parts={CONTENT_PARTS}
                 note="Bỏ onPress → hàng không bấm được (chỉ trưng bày), nhưng vẫn CÙNG composition Typography + button."
             >
@@ -185,7 +185,7 @@ export const Empty: Story = {
             <BlockAnatomy
                 name="TopicLane"
                 tier="block"
-                leaf="Rỗng"
+                leaf="Empty"
                 parts={EMPTY_PARTS}
                 note="Không có chủ đề → header giữ nguyên, danh sách hàng đổi sang EmptyState (khác leaf có dữ liệu)."
             >
@@ -212,20 +212,20 @@ export const SkeletonLoading: Story = {
             <BlockAnatomy
                 name="TopicLane"
                 tier="block"
-                leaf="Đang tải"
+                leaf="Loading"
                 parts={LOADING_PARTS}
                 note="Skeleton mirror header + hàng — giữ đúng footprint để không nhảy khi data về (khác leaf có dữ liệu)."
             >
                 <div className="flex max-w-[320px] flex-col gap-3">
                     <div className="flex items-center gap-2">
-                        <Skeleton className="size-4 shrink-0 rounded" anatPart="Skeleton · icon" />
-                        <Skeleton className="my-[5px] h-[14px] w-20 rounded" anatPart="Skeleton · tiêu đề" />
+                        <Skeleton className="size-4 shrink-0 rounded" anatPart="Skeleton.Icon" />
+                        <Skeleton className="my-[5px] h-[14px] w-20 rounded" anatPart="Skeleton.Title" />
                     </div>
                     <div className="flex flex-col gap-2">
                         {[0, 1, 2].map((i) => (
                             <div key={i} data-anat-part="Row frame" className="flex items-center justify-between gap-3 rounded-xl border border-default bg-surface px-3 py-2">
-                                <Skeleton className="my-[5px] h-[14px] w-1/2 rounded" anatPart="Skeleton · nhãn" />
-                                <Skeleton className="h-3 w-6 shrink-0 rounded" anatPart="Skeleton · tag" />
+                                <Skeleton className="my-[5px] h-[14px] w-1/2 rounded" anatPart="Skeleton.Label" />
+                                <Skeleton className="h-3 w-6 shrink-0 rounded" anatPart="Skeleton.Tag" />
                             </div>
                         ))}
                     </div>

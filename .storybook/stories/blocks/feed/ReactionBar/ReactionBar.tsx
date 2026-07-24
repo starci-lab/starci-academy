@@ -133,7 +133,7 @@ export const ReactionBar = ({
         return (
             <div className={cn("flex items-center gap-1", className)} data-anat-part={anatPart}>
                 {myReaction ? (
-                    <span aria-hidden data-anat-part={showAnatomy ? "span · emoji người xem" : undefined}>
+                    <span aria-hidden data-anat-part={showAnatomy ? "Span.ViewerEmoji" : undefined}>
                         {EMOJI[myReaction]}
                     </span>
                 ) : null}
@@ -162,7 +162,7 @@ export const ReactionBar = ({
                 aria-expanded={open}
                 onClick={() => setOpen((previous) => !previous)}
                 className="flex items-center gap-1 rounded-full px-2 py-0 text-muted transition-colors hover:bg-default/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-                data-anat-part={showAnatomy ? "button · React trigger" : undefined}
+                data-anat-part={showAnatomy ? "Button.ReactTrigger" : undefined}
             >
                 <AnimatePresence mode="popLayout" initial={false}>
                     {myReaction ? (
@@ -204,7 +204,7 @@ export const ReactionBar = ({
                         exit="exit"
                         style={{ transformOrigin: "bottom left" }}
                         className="absolute bottom-full left-0 z-10 mb-1 flex items-center gap-1 rounded-full bg-surface p-1 ring-1 ring-separator"
-                        data-anat-part={showAnatomy ? "Emoji picker" : undefined}
+                        data-anat-part={showAnatomy ? "EmojiPicker" : undefined}
                     >
                         {REACTIONS.map((reaction) => (
                             <motion.button
@@ -220,7 +220,7 @@ export const ReactionBar = ({
                                     "flex size-7 items-center justify-center rounded-full text-base leading-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent",
                                     myReaction === reaction.type && "bg-accent-soft",
                                 )}
-                                data-anat-part={showAnatomy ? "button · emoji option" : undefined}
+                                data-anat-part={showAnatomy ? "Button.EmojiOption" : undefined}
                             >
                                 <span aria-hidden>{reaction.emoji}</span>
                             </motion.button>

@@ -65,10 +65,10 @@ export const TrackCard = ({ icon, title, meta, color, tiers, viewLabel, onView, 
                 {/* IconTile has no 40px step — "sm" (48px) is the closest port size to the original size-10 tile. */}
                 <IconTile icon={icon} tone={color} size="sm" anatPart={showAnatomy ? "IconTile" : undefined} />
                 <div className="flex min-w-0 flex-col">
-                    <Typography type="body" weight="semibold" className="truncate" data-anat-part={showAnatomy ? "Typography (tiêu đề + meta)" : undefined}>
+                    <Typography type="body" weight="semibold" className="truncate" data-anat-part={showAnatomy ? "Typography.HeaderMeta" : undefined}>
                         {title}
                     </Typography>
-                    <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography (tiêu đề + meta)" : undefined}>
+                    <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography.HeaderMeta" : undefined}>
                         {meta}
                     </Typography>
                 </div>
@@ -82,10 +82,10 @@ export const TrackCard = ({ icon, title, meta, color, tiers, viewLabel, onView, 
                             {index < tiers.length - 1 ? <span className={cn("my-1 w-px flex-1", LINE[color])} /> : null}
                         </div>
                         <div className={cn("flex flex-col gap-0", index < tiers.length - 1 && "pb-4")}>
-                            <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography (nhãn tầng + chủ đề)" : undefined}>
+                            <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography.TierPath" : undefined}>
                                 {tier.label}
                             </Typography>
-                            <Typography type="body-sm" data-anat-part={showAnatomy ? "Typography (nhãn tầng + chủ đề)" : undefined}>
+                            <Typography type="body-sm" data-anat-part={showAnatomy ? "Typography.TierPath" : undefined}>
                                 {tier.topic}
                             </Typography>
                         </div>
@@ -102,7 +102,7 @@ export const TrackCard = ({ icon, title, meta, color, tiers, viewLabel, onView, 
                 type="button"
                 onClick={onView}
                 className={cn("group mt-auto inline-flex cursor-pointer items-center gap-1 self-start text-sm font-medium", CTA[color])}
-                data-anat-part={showAnatomy ? "button (CTA)" : undefined}
+                data-anat-part={showAnatomy ? "Button.Cta" : undefined}
             >
                 {viewLabel}
                 <ArrowRightIcon aria-hidden focusable="false" className="size-4 transition-transform group-hover:translate-x-0.5" />

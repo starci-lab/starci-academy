@@ -52,7 +52,7 @@ const CONTENT_PARTS: Array<AnatomyNode> = [
 // Khung chờ leaf: Skeleton mirror đúng khung Card này (§6/§8: skeleton là PROP).
 // Cùng 2 hàng layout: header (ô icon + TitledText isSkeleton) · footer (vệt chip + vệt nút).
 const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton · ô icon", tier: "primitive", role: "ô vuông 48px (size-12 rounded-xl) mirror IconTile — đầu header row", state: "skeleton" },
+    { name: "Skeleton.Icon", tier: "primitive", role: "ô vuông 48px (size-12 rounded-xl) mirror IconTile — đầu header row", state: "skeleton" },
     { name: "TitledText", tier: "primitive", role: "TitledText isSkeleton mirror cụm tiêu đề + mô tả (2 vệt chữ) — cùng primitive khi tải", state: "skeleton" },
     { name: "Skeleton.Chip", tier: "primitive", role: "vệt chip giá mirror StatusChip — đầu footer row", state: "skeleton" },
     { name: "Skeleton.Button", tier: "primitive", role: "vệt CTA (width w-20) mirror Button — cuối footer row", state: "skeleton" },
@@ -65,7 +65,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="RewardItemCard"
                 tier="design"
-                leaf="Có dữ liệu"
+                leaf="Default"
                 parts={CONTENT_PARTS}
                 reason="Một ô trong catalog Coin shop gom IconTile (nhận diện thưởng) + tiêu đề/mô tả + StatusChip (giá) + Button (đổi) trong một khung Card tự-đủ, để RewardCatalog chỉ truyền data + onRedeem — không tự dựng lại icon/chip/nút. Khi tải: Skeleton mirror đúng khung Card này."
             >
@@ -85,13 +85,12 @@ export const Default: Story = {
 
 /** CannotAfford — `disabled`: viewer's Coin balance is below the cost, CTA locks + swaps label. */
 export const CannotAfford: Story = {
-    name: "Không đủ Coin",
     render: () =>
         shell(
             <BlockAnatomy
                 name="RewardItemCard"
                 tier="design"
-                leaf="Không đủ Coin"
+                leaf="CannotAfford"
                 parts={CONTENT_PARTS}
                 note="Cùng composition với leaf 'Có dữ liệu'; Button khoá (isDisabled) + đổi nhãn sang 'Không đủ Coin'."
             >
@@ -112,13 +111,12 @@ export const CannotAfford: Story = {
 
 /** Redeeming — `isRedeeming`: this reward's redeem is in flight (CTA spinner, press locked). */
 export const Redeeming: Story = {
-    name: "Đang đổi",
     render: () =>
         shell(
             <BlockAnatomy
                 name="RewardItemCard"
                 tier="design"
-                leaf="Đang đổi"
+                leaf="Redeeming"
                 parts={CONTENT_PARTS}
                 note="Cùng composition; Button hiện spinner (isPending) và khoá bấm khi redeem đang bay."
             >
@@ -139,13 +137,12 @@ export const Redeeming: Story = {
 
 /** Grid — a few items side by side, mirroring the catalog's `@app-sm:grid-cols-2` layout. */
 export const Grid: Story = {
-    name: "Lưới catalog",
     render: () =>
         shell(
             <BlockAnatomy
                 name="RewardItemCard"
                 tier="design"
-                leaf="Lưới catalog"
+                leaf="Grid"
                 parts={CONTENT_PARTS}
                 note="Cùng composition, lặp ×N theo lưới @app-sm:grid-cols-2 của RewardCatalog."
             >
@@ -174,13 +171,12 @@ export const Grid: Story = {
 
 /** LongTitle — title overflows the card width and clips via `truncate` (single line, ellipsis) instead of wrapping. */
 export const LongTitle: Story = {
-    name: "Tiêu đề dài (truncate)",
     render: () =>
         shell(
             <BlockAnatomy
                 name="RewardItemCard"
                 tier="design"
-                leaf="Tiêu đề dài"
+                leaf="LongTitle"
                 parts={CONTENT_PARTS}
                 note="Cùng composition; tiêu đề dài bị cắt truncate 1 dòng (ellipsis) thay vì xuống dòng."
             >
@@ -200,13 +196,13 @@ export const LongTitle: Story = {
 
 /** Skeleton — `isSkeleton` mirrors the exact Card frame while the catalog loads. */
 export const Skeleton: Story = {
-    name: "Khung chờ",
+    name: "Loading",
     render: () =>
         shell(
             <BlockAnatomy
                 name="RewardItemCard"
                 tier="design"
-                leaf="Khung chờ"
+                leaf="Loading"
                 parts={SKELETON_PARTS}
                 note="isSkeleton → Skeleton mirror đúng khung Card (icon · 2 dòng chữ · chip · nút), không phần thật nào — giữ lưới catalog khỏi nhảy khi tải."
             >

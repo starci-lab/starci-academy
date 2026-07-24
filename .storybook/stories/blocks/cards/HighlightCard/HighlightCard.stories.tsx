@@ -4,7 +4,7 @@ import { HighlightCard } from "./HighlightCard"
 import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
 
 const meta: Meta<typeof HighlightCard> = {
-    title: "Primitives/Card/HighlightCard",
+    title: "Primitives/Cards/HighlightCard",
     component: HighlightCard,
     tags: ["autodocs"],
     parameters: {

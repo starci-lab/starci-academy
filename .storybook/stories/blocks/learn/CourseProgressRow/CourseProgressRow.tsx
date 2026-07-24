@@ -95,15 +95,15 @@ export const CourseProgressRow = ({
     if (isSkeleton) {
         return (
             <div className={cn("flex w-full items-center gap-3 p-3", className)}>
-                <Skeleton className="size-12 shrink-0 rounded-xl" anatPart={showAnatomy ? "Skeleton · tile" : undefined} />
+                <Skeleton className="size-12 shrink-0 rounded-xl" anatPart={showAnatomy ? "Skeleton.Tile" : undefined} />
                 <div className="flex min-w-0 flex-1 flex-col gap-2">
                     <div className="flex items-center justify-between gap-2">
-                        <Skeleton.Typography type="body-sm" width="1/2" anatPart={showAnatomy ? "Skeleton.Typography · title" : undefined} />
+                        <Skeleton.Typography type="body-sm" width="1/2" anatPart={showAnatomy ? "Skeleton.Typography.Title" : undefined} />
                         {withTrialChip ? <Skeleton.Chip className="h-6 w-14 shrink-0" anatPart={showAnatomy ? "Skeleton.Chip" : undefined} /> : null}
-                        <Skeleton className="h-3 w-8 shrink-0 rounded" anatPart={showAnatomy ? "Skeleton · percent" : undefined} />
+                        <Skeleton className="h-3 w-8 shrink-0 rounded" anatPart={showAnatomy ? "Skeleton.Percent" : undefined} />
                     </div>
                     <Skeleton.ProgressBar className="h-1" anatPart={showAnatomy ? "Skeleton.ProgressBar" : undefined} />
-                    {withMeta ? <Skeleton.Typography type="body-xs" width="1/3" anatPart={showAnatomy ? "Skeleton.Typography · meta" : undefined} /> : null}
+                    {withMeta ? <Skeleton.Typography type="body-xs" width="1/3" anatPart={showAnatomy ? "Skeleton.Typography.Meta" : undefined} /> : null}
                 </div>
             </div>
         )

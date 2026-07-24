@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Step 2 · Phản biện REUSE-first · CourseContents</title>
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+  :root{
+    --bg:#0b0e14; --panel:#111725; --ink:#e6edf3; --muted:#8b98a9; --line:#243049; --card:#161d2e; --surface:#0f1522;
+    --accent:#7c5cff; --accent-soft:#2a2350; --success:#22c55e; --warn:#f59e0b; --warn-soft:#2c2412;
+    --reuse:#22c55e; --modify:#38bdf8; --add:#f59e0b; --new:#f472b6;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif;padding:28px}
+  .wrap{max-width:1080px;margin:0 auto}
+  h1{font-size:20px;margin:0 0 2px}
+  .sub{color:var(--muted);margin:0 0 18px}
+  .sub a{color:var(--modify)}
+  .rule{border:1px solid color-mix(in srgb,var(--reuse) 40%,var(--line));background:color-mix(in srgb,var(--reuse) 7%,transparent);border-radius:12px;padding:12px 15px;font-size:13px;margin-bottom:8px}
+  .rule b{color:var(--reuse)}
+  h2.section{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:26px 0 14px;border-top:1px solid var(--line);padding-top:18px}
+  .counts{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:6px}
+  .cbox{flex:1;min-width:130px;border:1px solid var(--line);border-radius:12px;padding:11px 13px;background:var(--panel)}
+  .cbox .num{font-size:22px;font-weight:700}
+  .cbox .lbl{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px}
+  .cbox .lbl .dot{width:9px;height:9px;border-radius:999px}
+
+  .case{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:14px 16px;margin-bottom:14px}
+  .case-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+  .case-h .name{font-weight:700;font-size:14px}
+  .case-h .was{font-size:11px;color:var(--muted);text-decoration:line-through}
+  .verdict{margin-left:auto;font-size:11px;font-weight:700;text-transform:uppercase;padding:2px 9px;border-radius:6px}
+  .v-reuse{background:color-mix(in srgb,var(--reuse) 20%,transparent);color:var(--reuse)}
+  .v-modify{background:color-mix(in srgb,var(--modify) 20%,transparent);color:var(--modify)}
+  .v-add{background:color-mix(in srgb,var(--add) 20%,transparent);color:var(--add)}
+  .case-body{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.case-body{grid-template-columns:1fr}}
+  .mini{background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:12px}
+  .mini .cap{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:9px}
+  .reason{font-size:12.5px;color:var(--muted)}
+  .reason b{color:var(--ink)}
+  .reason code{background:var(--card);padding:0 5px;border-radius:5px;font-size:11.5px}
+
+  /* mini row (ListRow look) */
+  .lrow{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:10px;background:var(--card)}
+  .lrow i.lead{font-size:18px;flex:0 0 auto}
+  .ic-play{color:#b9a4ff}.ic-done{color:var(--success)}.ic-todo{color:var(--ink);opacity:.6}
+  .lrow .txt{flex:1;min-width:0}.lrow .t{font-size:12.5px;font-weight:500}.lrow .s{font-size:11px;color:var(--muted)}
+  .lmeta{display:flex;align-items:center;gap:7px}
+  .dchip{font-size:10px;font-weight:600;color:var(--success);background:color-mix(in srgb,var(--success) 15%,transparent);border-radius:999px;padding:2px 9px}
+  .cnt{font-size:11px;color:var(--accent);font-weight:600}.lock{font-size:15px;color:var(--muted)}
+  .go{font-size:14px;color:var(--muted)}
+  .apihint{font-size:11px;color:var(--muted);margin-top:8px}
+  .apihint code{background:var(--card);padding:0 5px;border-radius:5px}
+
+  /* continue mini */
+  .cont{display:flex;flex-direction:column;gap:8px}
+  .cont.card{border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--card)}
+  .eyebrow{font-size:11px;color:var(--muted)} .ctitle{font-size:13px;font-weight:600}
+  .meter{height:7px;border-radius:999px;background:var(--surface);overflow:hidden}.meter>i{display:block;height:100%;background:var(--accent)}
+  .cbtn{align-self:flex-start;display:inline-flex;gap:6px;align-items:center;background:var(--accent);color:#fff;font-size:12px;font-weight:600;border-radius:9px;padding:7px 13px}
+  .frameflag{font-size:10px;color:var(--warn);border:1px dashed color-mix(in srgb,var(--warn) 50%,transparent);border-radius:6px;padding:1px 7px;margin-left:6px}
+
+  .callout{display:flex;gap:9px;align-items:flex-start;background:var(--warn-soft);border:1px solid color-mix(in srgb,var(--warn) 40%,transparent);border-radius:11px;padding:10px 12px}
+  .callout i{font-size:16px;color:var(--warn)}
+  .callout .t{font-size:12px;font-weight:600;color:#f4d9a8}.callout .d{font-size:11px;color:var(--muted)}
+
+  .reusewrap{display:flex;flex-wrap:wrap;gap:6px}
+  .rchip{font-size:11.5px;color:var(--reuse);border:1px solid color-mix(in srgb,var(--reuse) 35%,transparent);background:color-mix(in srgb,var(--reuse) 8%,transparent);border-radius:999px;padding:3px 10px}
+  .order{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:12px 16px}
+  .order ol{margin:0;padding-left:20px}.order li{margin:5px 0;font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Step 2 · Phản biện REUSE-first — CourseContents</h1>
+  <p class="sub">Mỗi node từng đề xuất NEW/EXTRACT được soi lại: <b>ưu tiên tái dùng port sẵn có để ĐỒNG NHẤT tree</b>, chỉ tạo mới nếu <b>chức năng KHÁC</b>. Xem <a href="/CourseContents.html">cây step 1</a>.</p>
+  <div class="rule">Kết quả phản biện: <b>NEW 2 → 0</b> · <b>EXTRACT 2 → 0</b> (thành reuse-composition) · còn lại <b>1 MODIFY</b> (thêm prop cho ContinueCard) + ADD-STORY cho component đã tồn tại.</div>
+
+  <div class="counts">
+    <div class="cbox"><div class="num" style="color:var(--reuse)">4</div><div class="lbl"><span class="dot" style="background:var(--reuse)"></span>REUSE (đổi từ new/extract)</div></div>
+    <div class="cbox"><div class="num" style="color:var(--modify)">1</div><div class="lbl"><span class="dot" style="background:var(--modify)"></span>MODIFY (thêm prop)</div></div>
+    <div class="cbox"><div class="num" style="color:var(--add)">3</div><div class="lbl"><span class="dot" style="background:var(--add)"></span>ADD-STORY (có src)</div></div>
+    <div class="cbox"><div class="num" style="color:var(--new)">0</div><div class="lbl"><span class="dot" style="background:var(--new)"></span>NEW</div></div>
+  </div>
+
+  <h2 class="section">Phản biện từng cái — prototype đối chiếu</h2>
+
+  <!-- LessonRow -->
+  <div class="case">
+    <div class="case-h"><span class="name">LessonRow</span><span class="was">NEW design</span><span class="verdict v-reuse">REUSE · ListRow</span></div>
+    <div class="case-body">
+      <div class="mini"><div class="cap">Render bằng ListRow (port sẵn có)</div>
+        <div class="lrow"><i class="ph ph-play lead ic-play"></i><div class="txt"><div class="t">Viết Dockerfile tối ưu</div><div class="s">12 phút đọc</div></div><div class="lmeta"><span class="dchip" style="color:var(--warn);background:color-mix(in srgb,var(--warn) 15%,transparent)">Trung bình</span><i class="ph ph-lock lock"></i></div></div>
+      </div>
+      <div><div class="reason"><b>ListRow đã đủ:</b> <code>leading</code>=Play/Check/Circle · <code>title</code> · <code>subtitle</code>=phút · <code>meta</code>=DifficultyChip+Lock · <code>onPress</code>. Trạng-thái-icon chỉ là node truyền vào <code>leading</code> — KHÔNG phải chức năng khác.</div><div class="apihint">→ dựng story = <code>ListRow</code> "as lesson", đừng đẻ component.</div></div>
+    </div>
+  </div>
+
+  <!-- NudgeRow -->
+  <div class="case">
+    <div class="case-h"><span class="name">NudgeRow</span><span class="was">NEW design</span><span class="verdict v-reuse">REUSE · ListRow</span></div>
+    <div class="case-body">
+      <div class="mini"><div class="cap">Render bằng ListRow</div>
+        <div class="lrow"><i class="ph ph-cards lead" style="color:var(--muted)"></i><div class="txt"><div class="t">Ôn 12 thẻ đến hạn hôm nay</div></div><div class="lmeta"><span class="cnt">12</span><i class="ph ph-arrow-right go"></i></div></div>
+      </div>
+      <div><div class="reason"><b>Cùng khuôn ListRow:</b> <code>leading</code>=icon · <code>title</code>=label · <code>meta</code>=count · <code>trailing</code>=arrow · <code>href</code>. Giống hệt LessonRow về CẤU TRÚC → tách 2 component = phân mảnh tree.</div><div class="apihint">→ REUSE ListRow. Nếu muốn gọn, ListRow "as nudge".</div></div>
+    </div>
+  </div>
+
+  <!-- KeepGoingPath -->
+  <div class="case">
+    <div class="case-h"><span class="name">KeepGoingPath</span><span class="was">EXTRACT block</span><span class="verdict v-reuse">REUSE · SurfaceListCard + ListRow</span></div>
+    <div class="case-body">
+      <div class="mini"><div class="cap">SurfaceListCard(label) + ListRow ×N</div>
+        <div style="font-size:11px;font-weight:600;color:var(--muted);margin-bottom:7px">Tiếp tục · Chương 2</div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div class="lrow"><i class="ph ph-check-circle lead ic-done"></i><div class="txt"><div class="t">Docker là gì</div></div></div>
+          <div class="lrow"><i class="ph ph-play lead ic-play"></i><div class="txt"><div class="t">Viết Dockerfile tối ưu</div></div></div>
+        </div>
+      </div>
+      <div><div class="reason"><b>Chỉ là list có nhãn:</b> <code>SurfaceListCard</code> đã có prop <code>label</code> (section header baked-in) + children <code>ListRow</code>. Không có chức năng mới → KHÔNG cần block riêng, chỉ composition.</div><div class="apihint">→ ráp tại story trang, không extract.</div></div>
+    </div>
+  </div>
+
+  <!-- ContinuePanel -->
+  <div class="case">
+    <div class="case-h"><span class="name">ContinuePanel</span><span class="was">EXTRACT block</span><span class="verdict v-modify">REUSE ContinueCard + PROP</span></div>
+    <div class="case-body">
+      <div class="mini"><div class="cap">ContinueCard hero (đã có) — nhưng có KHUNG</div>
+        <div class="cont card"><div class="eyebrow">Tiếp tục học</div><div class="ctitle">Bài 4 · Dockerfile</div><div class="meter"><i style="width:34%"></i></div><span class="cbtn">Tiếp tục <i class="ph ph-arrow-right"></i></span></div>
+        <div class="apihint">ContinueCard.hero = SectionCard <b>frame</b> (bg-surface + khung)</div>
+      </div>
+      <div class="mini"><div class="cap">Dashboard cần FLAT<span class="frameflag">khác chrome</span></div>
+        <div class="cont"><div class="eyebrow">Tiếp tục học</div><div class="ctitle">Bài 4 · Dockerfile</div><div class="meter"><i style="width:34%"></i></div><div style="font-size:11px;color:var(--muted)">Đã đọc 8/23 · 2/9 thử thách</div><span class="cbtn">Tiếp tục <i class="ph ph-arrow-right"></i></span></div>
+      </div>
+    </div>
+    <div class="reason" style="margin-top:11px"><b>Cùng CHỨC NĂNG</b> (tiếp tục + progress + CTA), chỉ khác: dashboard <b>flat, no frame</b> (là spine của trang, không phải card nổi) + có <b>eyebrow</b> + <b>stat line</b>. → §6b: thêm <b>prop</b> vào ContinueCard (<code>variant="plain"</code> frameless + <code>eyebrow</code>), KHÔNG đẻ ContinuePanel. Giữ 1 "continue" thống nhất cho dashboard + sidebar + grid.</div>
+  </div>
+
+  <!-- GithubTeamGate -->
+  <div class="case">
+    <div class="case-h"><span class="name">GithubTeamGate (warning)</span><span class="was">ADD-STORY riêng</span><span class="verdict v-reuse">REUSE · Callout</span></div>
+    <div class="case-body">
+      <div class="mini"><div class="cap">Callout status=warning (port đã có)</div>
+        <div class="callout"><i class="ph ph-github-logo"></i><div><div class="t">Bạn chưa vào GitHub team của khoá</div><div class="d">Một số bài lab cần quyền repo — bấm để tham gia.</div></div></div>
+      </div>
+      <div><div class="reason"><b>Phần hình = Callout(warning):</b> src hiện dùng HeroUI <code>Alert</code> + IconTile — đúng khuôn <code>Callout</code> port. Logic join-team là feature-only (không phải design block).</div><div class="apihint">→ story = Callout; feature giữ logic riêng.</div></div>
+    </div>
+  </div>
+
+  <h2 class="section">Còn lại — chức năng THẬT SỰ khác → ADD-STORY (component có src)</h2>
+  <div class="reusewrap">
+    <span class="rchip" style="color:var(--add);border-color:color-mix(in srgb,var(--add) 35%,transparent);background:color-mix(in srgb,var(--add) 8%,transparent)">TrialConversionStrip (conversion: IconTile+PriceTag+PhaseScarcityNote+Button)</span>
+    <span class="rchip" style="color:var(--add);border-color:color-mix(in srgb,var(--add) 35%,transparent);background:color-mix(in srgb,var(--add) 8%,transparent)">HighlightChip</span>
+    <span class="rchip" style="color:var(--add);border-color:color-mix(in srgb,var(--add) 35%,transparent);background:color-mix(in srgb,var(--add) 8%,transparent)">LearnBreadcrumb</span>
+  </div>
+  <p class="apihint" style="margin-top:8px"><b>LearnNudges</b> cấp block = feature container (đọc SWR) nhưng phần HÌNH chỉ là <code>SurfaceListCard + ListRow</code> → không cần primitive mới; story (nếu muốn) chỉ ghép reuse.</p>
+
+  <h2 class="section">REUSE — port đã có, dùng nguyên</h2>
+  <div class="reusewrap">
+    <span class="rchip">ListRow</span><span class="rchip">SurfaceListCard</span><span class="rchip">ContinueCard</span><span class="rchip">Callout</span><span class="rchip">PageHeader</span><span class="rchip">ProgressMeter</span><span class="rchip">DifficultyChip</span><span class="rchip">IconTile</span><span class="rchip">PriceTag</span><span class="rchip">PhaseScarcityNote</span><span class="rchip">EmptyContent</span><span class="rchip">ErrorContent</span><span class="rchip">Typography</span><span class="rchip">Button</span><span class="rchip">Skeleton</span>
+  </div>
+
+  <h2 class="section">Thứ tự dựng (step 3) — sau khi thầy duyệt</h2>
+  <div class="order"><ol>
+    <li><b style="color:var(--modify)">MODIFY</b> ContinueCard: thêm <code>variant="plain"</code> (frameless) + <code>eyebrow</code> prop</li>
+    <li><b style="color:var(--add)">ADD-STORY</b> HighlightChip · LearnBreadcrumb (port design)</li>
+    <li><b style="color:var(--add)">ADD-STORY</b> TrialConversionStrip (chức năng riêng, phủ states)</li>
+    <li>Ráp story trang CourseContents = ghép ContinueCard(plain) · Callout · SurfaceListCard+ListRow · TrialStrip · EmptyContent(state ★)</li>
+  </ol></div>
+  <p class="apihint" style="margin-top:12px"><b>Nhờ reuse-first: 0 component mới, chỉ 1 prop thêm.</b> Tree đồng nhất — mọi "row" = ListRow, mọi "continue" = ContinueCard, mọi cảnh báo = Callout.</p>
+</div>
+</body>
+</html>

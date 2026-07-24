@@ -9,7 +9,7 @@ import { InlineIconLabel } from "./InlineIconLabel"
  * icon size (per the text scale, §5) and the tone colour.
  */
 const meta: Meta<typeof InlineIconLabel> = {
-    title: "Primitives/Text/InlineIconLabel",
+    title: "Primitives/Texts/InlineIconLabel",
     component: InlineIconLabel,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },

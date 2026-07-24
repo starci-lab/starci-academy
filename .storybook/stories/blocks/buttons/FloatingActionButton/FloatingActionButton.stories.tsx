@@ -3,7 +3,7 @@ import { PlusIcon } from "@phosphor-icons/react"
 import { FloatingActionButton } from "./FloatingActionButton"
 
 const meta: Meta<typeof FloatingActionButton> = {
-    title: "Primitives/Button/FloatingActionButton",
+    title: "Primitives/Buttons/FloatingActionButton",
     component: FloatingActionButton,
     tags: ["autodocs"],
     parameters: {

@@ -9,7 +9,7 @@ import { CheckboxField, type CheckboxFieldOption } from "./CheckboxField"
  * group heading, hint, error, and loading skeleton.
  */
 const meta: Meta<typeof CheckboxField> = {
-    title: "Primitives/Form/CheckboxField",
+    title: "Primitives/Forms/CheckboxField",
     component: CheckboxField,
     tags: ["autodocs"],
     parameters: {

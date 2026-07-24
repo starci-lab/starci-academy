@@ -109,7 +109,7 @@ export const CommunityCommentRow = ({
                             type="body-xs"
                             weight="semibold"
                             truncate
-                            data-anat-part={showAnatomy ? "Typography · tên" : undefined}
+                            data-anat-part={showAnatomy ? "Typography.Name" : undefined}
                         >
                             {displayName}
                         </Typography>
@@ -122,7 +122,7 @@ export const CommunityCommentRow = ({
                         <Typography
                             type="body-xs"
                             color="muted"
-                            data-anat-part={showAnatomy ? "Typography · thời gian" : undefined}
+                            data-anat-part={showAnatomy ? "Typography.Time" : undefined}
                         >
                             {timeAgo(comment.createdAt)}
                         </Typography>

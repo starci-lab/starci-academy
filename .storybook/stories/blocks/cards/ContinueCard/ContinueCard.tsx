@@ -27,8 +27,14 @@ import { Button } from "../../buttons/Button/Button"
  * - `"hero"` — the single standout "you left this in progress" card on a
  *   surface. The CTA is a real chip button on its own row, `icon` sinks behind
  *   the content as a watermark, and the card gets an accent ring.
+ * - `"plain"` — frameless: same content (eyebrow · title · subtitle/meta ·
+ *   {@link ProgressMeter} · cta) but with NO {@link SectionCard}/{@link HighlightCard}
+ *   chrome. Used as the spine of a page (e.g. the top of a "continue learning"
+ *   surface) where the surrounding page shell already provides the frame. The
+ *   CTA is a chip button like `hero` (own row); it carries no leading icon and
+ *   no accent ring — a bare surface has nothing to sink an icon behind.
  */
-export type ContinueCardVariant = "item" | "hero"
+export type ContinueCardVariant = "item" | "hero" | "plain"
 
 /**
  * Props for the {@link ContinueCard} block.
@@ -51,6 +57,13 @@ export interface ContinueCardProps {
      * line.
      */
     title: React.ReactNode
+    /**
+     * Optional small muted label ABOVE the title (e.g. "Tiếp tục học") — a
+     * lightweight heading for the card when it sits frameless (`variant="plain"`)
+     * as a page spine. Rendered via {@link Typography} `type="body-xs"` `color="muted"`.
+     * Valid on any variant, but only `"plain"` is expected to use it in practice.
+     */
+    eyebrow?: React.ReactNode
     /**
      * Optional secondary label under the title — e.g. module name, lesson
      * number, or position in a session. Truncated to one line.
@@ -114,17 +127,23 @@ export interface ContinueCardProps {
 }
 
 /**
- * ContinueCard renders a "pick up where you left off" surface inside a
- * {@link SectionCard} frame: an info row (title + subtitle), then a CTA row
- * (both variants render `ctaLabel` here, never inline with the title), then a
- * {@link ProgressMeter} when {@link ContinueCardProps.value} is provided. The
- * `hero` variant is wrapped in {@link HighlightCard} for the sweeping-light ring.
+ * ContinueCard renders a "pick up where you left off" surface: an optional
+ * eyebrow, an info row (title + subtitle), then a CTA row (every variant
+ * renders `ctaLabel` here, never inline with the title), then a
+ * {@link ProgressMeter} when {@link ContinueCardProps.value} is provided.
+ *
+ * - `hero` wraps the content in {@link SectionCard} then {@link HighlightCard}
+ *   for the sweeping-light ring.
+ * - `item` wraps the content in {@link SectionCard} only (static frame).
+ * - `plain` renders the SAME content with NO frame — a bare spine for a page
+ *   that already provides its own surrounding surface.
  *
  * @param props - {@link ContinueCardProps}
  */
 export const ContinueCard = ({
     variant,
     title,
+    eyebrow,
     subtitle,
     value,
     max = 100,
@@ -139,12 +158,15 @@ export const ContinueCard = ({
     showAnatomy = false,
 }: ContinueCardProps) => {
     const isHero = variant === "hero"
+    const isPlain = variant === "plain"
     // Item CTA is a real SeeMoreLink (own hover + click). Never wrap the card —
     // that would nest interactive controls and steal hover from the link.
-    // Hero CTA is also its own control, so the card stays a static frame too.
+    // Hero/plain CTA is a chip button — also its own control, so the card
+    // (or bare content, for `plain`) stays a static frame too.
+    const useChipCta = variant !== "item"
 
     const ctaNode = ctaLabel
-        ? isHero
+        ? useChipCta
             ? href
                 // NOTE: Button port has NO `href` — it's not a link. This is a hand-rolled
                 // <Link>-as-pill (styled to match the primary Button look); left as-is
@@ -187,12 +209,8 @@ export const ContinueCard = ({
             )
         : null
 
-    const cardNode = (
-        <SectionCard
-            anatPart={showAnatomy ? "SectionCard" : undefined}
-            className={cn("relative flex flex-col overflow-hidden", className)}
-            contentClassName="flex flex-col gap-3"
-        >
+    const content = (
+        <>
             {isHero && icon ? (
                 <div
                     aria-hidden
@@ -202,12 +220,23 @@ export const ContinueCard = ({
                 </div>
             ) : null}
 
+            {eyebrow ? (
+                <Typography
+                    type="body-xs"
+                    color="muted"
+                    truncate
+                    data-anat-part={showAnatomy ? "Typography.Eyebrow" : undefined}
+                >
+                    {eyebrow}
+                </Typography>
+            ) : null}
+
             <div className="relative flex items-center gap-3">
                 <div className="flex min-w-0 flex-1 flex-col gap-2">
                     <Typography
                         weight="medium"
                         truncate
-                        data-anat-part={showAnatomy ? "Typography · tiêu đề" : undefined}
+                        data-anat-part={showAnatomy ? "Typography.Title" : undefined}
                     >
                         {title}
                     </Typography>
@@ -234,7 +263,7 @@ export const ContinueCard = ({
                             type="body-xs"
                             color="muted"
                             truncate
-                            data-anat-part={showAnatomy ? "Typography · phụ đề" : undefined}
+                            data-anat-part={showAnatomy ? "Typography.Subtitle" : undefined}
                         >
                             {subtitle}
                         </Typography>
@@ -247,12 +276,34 @@ export const ContinueCard = ({
             {value === undefined ? null : (
                 <ProgressMeter value={value} max={max} anatPart={showAnatomy ? "ProgressMeter" : undefined} />
             )}
-        </SectionCard>
+        </>
     )
 
     // `hero` = the ONE "tiếp tục phiên đang dở" standout on its surface — the
     // canonical `HighlightCard` case (`card.md` §3j). `item` stays a static frame
     // (N of them together — a highlighted card would just fight the others).
+    // `plain` = SAME content, NO frame — a bare spine (page already provides the surface).
+    if (isPlain) {
+        return (
+            <div
+                data-anat-part={showAnatomy ? "PlainRoot" : undefined}
+                className={cn("relative flex flex-col gap-3", className)}
+            >
+                {content}
+            </div>
+        )
+    }
+
+    const cardNode = (
+        <SectionCard
+            anatPart={showAnatomy ? "SectionCard" : undefined}
+            className={cn("relative flex flex-col overflow-hidden", className)}
+            contentClassName="flex flex-col gap-3"
+        >
+            {content}
+        </SectionCard>
+    )
+
     return isHero ? (
         <HighlightCard anatPart={showAnatomy ? "HighlightCard" : undefined}>{cardNode}</HighlightCard>
     ) : (

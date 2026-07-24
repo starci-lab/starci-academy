@@ -33,13 +33,13 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 // only `FilterRow` is a named local sub-component.
 const SITE_PREVIEW_PARTS: Array<AnatomyNode> = [
     {
-        name: "Thanh nav",
+        name: "Navbar",
         tier: "design",
         role: "header trên cùng (border dưới): cụm brand+menu bên trái + nút Đăng ký bên phải",
         children: [
-            { name: "Brand StarCi", tier: "primitive", role: "chấm accent + chữ StarCi" },
+            { name: "Brand", tier: "primitive", role: "chấm accent + chữ StarCi" },
             { name: "Menu", tier: "primitive", role: "Khóa học · Lộ trình · Bảng giá (ẩn dưới @app-sm)" },
-            { name: "Nút Đăng ký", tier: "primitive", role: "pill accent (span rounded-full, không phải Button thật)" },
+            { name: "SignUpButton", tier: "primitive", role: "pill accent (span rounded-full, không phải Button thật)" },
         ],
     },
     {
@@ -48,12 +48,12 @@ const SITE_PREVIEW_PARTS: Array<AnatomyNode> = [
         role: "vùng thân (flex-1): bọc chung sidebar lọc + list khoá",
         children: [
             {
-                name: "Sidebar bộ lọc",
+                name: "FilterSidebar",
                 tier: "design",
                 role: "cột lọc bên trái (ẩn dưới @app-sm)",
                 children: [
                     {
-                        name: "Nhóm Chủ đề",
+                        name: "TopicGroup",
                         tier: "primitive",
                         role: "label Chủ đề + 3 FilterRow (Fullstack on)",
                         children: [
@@ -61,7 +61,7 @@ const SITE_PREVIEW_PARTS: Array<AnatomyNode> = [
                         ],
                     },
                     {
-                        name: "Nhóm Hình thức",
+                        name: "FormatGroup",
                         tier: "primitive",
                         role: "label Hình thức + 2 FilterRow (Tự học on)",
                         children: [
@@ -71,26 +71,26 @@ const SITE_PREVIEW_PARTS: Array<AnatomyNode> = [
                 ],
             },
             {
-                name: "List khoá",
+                name: "CourseList",
                 tier: "design",
                 role: "list khoá học minh hoạ (3 dòng)",
                 children: [
                     {
-                        name: "Dòng khoá học",
+                        name: "CourseRow",
                         tier: "design",
                         role: "1 tile khoá (border rounded): tile initial + cụm thông tin + giá",
                         children: [
-                            { name: "Tile initial", tier: "primitive", role: "ô vuông chữ viết tắt (tone accent/success/warning)" },
+                            { name: "InitialTile", tier: "primitive", role: "ô vuông chữ viết tắt (tone accent/success/warning)" },
                             {
-                                name: "Cụm thông tin",
+                                name: "InfoCluster",
                                 tier: "primitive",
                                 role: "cột giữa: tên khoá + dòng rating/level",
                                 children: [
-                                    { name: "Tên khoá", tier: "primitive", role: "tên + CheckCircleIcon (verified, success)" },
-                                    { name: "Meta rating", tier: "primitive", role: "StarIcon (fill, warning) + rating · level" },
+                                    { name: "CourseName", tier: "primitive", role: "tên + CheckCircleIcon (verified, success)" },
+                                    { name: "RatingMeta", tier: "primitive", role: "StarIcon (fill, warning) + rating · level" },
                                 ],
                             },
-                            { name: "Giá", tier: "primitive", role: "giá + dòng phụ / khóa" },
+                            { name: "Price", tier: "primitive", role: "giá + dòng phụ / khóa" },
                         ],
                     },
                 ],
@@ -115,7 +115,7 @@ export const Standalone: Story = {
             <BlockAnatomy
                 name="SitePreview"
                 tier="design"
-                leaf="Đứng riêng"
+                leaf="Standalone"
                 parts={SITE_PREVIEW_PARTS}
                 reason="Nội dung minh hoạ cố định (nav + sidebar lọc + list khoá) để nhét vào ShowcaseMockup — cho thấy sản phẩm trông thế nào mà không cần ảnh chụp thật. Tự lấp đầy chiều cao cha nên phải bọc trong khung có chiều cao xác định."
             >
@@ -132,7 +132,7 @@ export const InShowcaseMockup: Story = {
             <BlockAnatomy
                 name="SitePreview"
                 tier="design"
-                leaf="Trong ShowcaseMockup"
+                leaf="InShowcaseMockup"
                 parts={MOCKUP_PARTS}
                 note="Bối cảnh thật: cùng SitePreview nhưng bọc trong khung cửa sổ trình duyệt ShowcaseMockup (thêm 1 lớp frame ngoài)."
             >

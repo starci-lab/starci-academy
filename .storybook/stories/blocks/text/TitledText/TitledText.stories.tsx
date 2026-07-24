@@ -8,7 +8,7 @@ import { TitledText } from "./TitledText"
  * `row` (dense) · `header` (section) · `stat` (metric value + label + hint).
  */
 const meta: Meta<typeof TitledText> = {
-    title: "Primitives/Text/TitledText",
+    title: "Primitives/Texts/TitledText",
     component: TitledText,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },

@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Prototype + Cây · CourseContents (/learn/content)</title>
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+  :root{
+    --bg:#0b0e14; --panel:#111725; --ink:#e6edf3; --muted:#8b98a9; --line:#243049;
+    --surface:#0f1522; --card:#161d2e; --accent:#7c5cff; --accent-soft:#2a2350;
+    --success:#22c55e; --warn:#f59e0b; --warn-soft:#2c2412; --danger:#ef4444;
+    --page:#38bdf8; --leaf:#2dd4bf; --block:#f59e0b; --design:#38bdf8; --primitive:#94a3b8; --star:#f472b6;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 ui-sans-serif,system-ui,"Segoe UI",Roboto,sans-serif;padding:28px}
+  .wrap{max-width:1180px;margin:0 auto}
+  h1{font-size:20px;margin:0 0 2px;display:flex;align-items:center;gap:10px}
+  .sub{color:var(--muted);margin:0 0 18px}
+  .page-badge{font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:6px;background:color-mix(in srgb,var(--page) 22%,transparent);color:var(--page)}
+  h2.section{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:26px 0 14px;border-top:1px solid var(--line);padding-top:18px}
+  .protos{display:flex;flex-wrap:wrap;gap:22px;align-items:flex-start}
+  .proto{width:520px;display:flex;flex-direction:column;gap:8px}
+  .proto.narrow{width:340px}
+  .proto-cap{display:flex;align-items:center;gap:8px;font-size:13px}
+  .proto-cap .tag{font-size:10px;color:var(--muted);border:1px dashed var(--line);border-radius:6px;padding:1px 7px}
+  .proto-cap b{font-weight:600}
+
+  /* dashboard mockup */
+  .dash{border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:20px;display:flex;flex-direction:column;gap:22px}
+  .crumb{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px}
+  .crumb i{font-size:12px}
+  .h-title{font-size:19px;font-weight:700;margin:6px 0 4px}
+  .h-desc{font-size:12.5px;color:var(--muted);margin-bottom:10px}
+  .metas{display:flex;flex-wrap:wrap;gap:8px}
+  .hchip{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px 11px}
+  .hchip i{font-size:14px;color:var(--muted)}
+  .hchip b{font-weight:600}
+  .cluster{display:flex;flex-direction:column;gap:18px}
+
+  .gate{display:flex;align-items:center;gap:9px;font-size:12px;background:var(--warn-soft);border:1px solid color-mix(in srgb,var(--warn) 40%,transparent);color:#f4d9a8;border-radius:12px;padding:10px 12px}
+  .gate i{font-size:16px}
+
+  .trial{display:flex;gap:12px;background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);border-radius:14px;padding:14px}
+  .itile{width:40px;height:40px;border-radius:11px;background:color-mix(in srgb,var(--accent) 30%,transparent);color:#cbb8ff;display:grid;place-items:center;font-size:20px;flex:0 0 auto}
+  .trial .body{flex:1;display:flex;flex-direction:column;gap:7px}
+  .trial .h{font-size:13px;font-weight:600}
+  .trial .scar{font-size:11px;color:#c7b8f2}
+  .trial .cta{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:#fff;font-size:12.5px;font-weight:600;border-radius:10px;padding:8px 15px}
+  .price{font-size:12px;color:var(--ink)} .price s{color:var(--muted)}
+
+  .cont{display:flex;flex-direction:column;gap:10px}
+  .cont-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+  .eyebrow{font-size:11px;color:var(--muted)}
+  .cont-title{font-size:14px;font-weight:600}
+  .resume{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;font-size:13px;font-weight:600;border-radius:11px;padding:10px 18px;white-space:nowrap}
+  .meter{height:8px;border-radius:999px;background:var(--card);overflow:hidden}
+  .meter > i{display:block;height:100%;background:var(--accent);border-radius:999px}
+  .meter-row{display:flex;align-items:center;gap:10px}
+  .meter-row .pct{font-size:11px;color:var(--muted);white-space:nowrap}
+  .stat{font-size:11px;color:var(--muted)}
+
+  .nudges{border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .nrow{display:flex;align-items:center;gap:11px;padding:11px 13px;border-bottom:1px solid var(--line);font-size:12.5px}
+  .nrow:last-child{border-bottom:none}
+  .nrow i.lead{font-size:18px;color:var(--muted)}
+  .nrow i.go{font-size:15px;color:var(--muted);margin-left:auto}
+  .nrow .cnt{font-size:11px;color:var(--accent);font-weight:600}
+
+  .path{display:flex;flex-direction:column;gap:9px}
+  .path-h{font-size:12px;font-weight:600;color:var(--muted)}
+  .lrow{display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:11px}
+  .lrow.active{background:var(--card)}
+  .lrow i.lead{font-size:18px;flex:0 0 auto}
+  .lrow .ic-play{color:#b9a4ff} .lrow .ic-done{color:var(--success)} .lrow .ic-todo{color:var(--ink);opacity:.6}
+  .lrow .txt{flex:1;min-width:0}
+  .lrow .t{font-size:12.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lrow .s{font-size:11px;color:var(--muted)}
+  .lmeta{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+  .dchip{font-size:10px;font-weight:600;color:var(--success);background:color-mix(in srgb,var(--success) 15%,transparent);border-radius:999px;padding:2px 9px}
+  .lock{font-size:15px;color:var(--muted)}
+
+  .sk{background:var(--card);border-radius:8px}
+
+  /* tree */
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+  .lg{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+  .dot{width:9px;height:9px;border-radius:999px;display:inline-block}
+  .tree{display:flex;flex-direction:column;gap:12px}
+  .tleaf{border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden}
+  .tleaf-head{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line)}
+  .tidx{width:20px;height:20px;border-radius:999px;background:color-mix(in srgb,var(--leaf) 22%,transparent);color:var(--leaf);font-weight:700;font-size:11px;display:grid;place-items:center}
+  .async{margin-left:auto;font-size:11px;color:var(--muted)}
+  .tblocks{padding:10px 14px;display:flex;flex-direction:column;gap:10px}
+  .tblock{border-left:3px solid var(--block);padding:1px 0 1px 12px}
+  .btop{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .tier{font-size:10px;font-weight:700;text-transform:uppercase;padding:2px 7px;border-radius:6px}
+  .t-block{background:color-mix(in srgb,var(--block) 20%,transparent);color:var(--block)}
+  .t-design{background:color-mix(in srgb,var(--design) 20%,transparent);color:var(--design)}
+  .t-prim{background:color-mix(in srgb,var(--primitive) 22%,transparent);color:var(--primitive)}
+  .states{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+  .st{font-size:11px;color:var(--muted);background:color-mix(in srgb,var(--block) 10%,transparent);border:1px solid color-mix(in srgb,var(--block) 25%,transparent);border-radius:999px;padding:1px 8px}
+  .kids{margin-top:7px;display:flex;flex-direction:column;gap:5px}
+  .kid{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12.5px}
+  .kid .role,.prims{color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1><span class="page-badge">Page</span> CourseContents · /learn/content</h1>
+  <p class="sub">Dashboard nhà của khoá — 1 leaf (không view-switch). Prototype hình + cây tầng.</p>
+
+  <h2 class="section">Prototype — hình trang (icon Phosphor)</h2>
+  <div class="protos">
+
+    <!-- Full dashboard, TRIAL viewer -->
+    <div class="proto">
+      <div class="proto-cap"><b>Content home</b><span class="tag">viewer: trial · đang học</span></div>
+      <div class="dash">
+        <div>
+          <div class="crumb"><i class="ph ph-graduation-cap"></i> Khoá học <i class="ph ph-caret-right" style="font-size:10px"></i> DevOps Mastery</div>
+          <div class="h-title">DevOps Mastery</div>
+          <div class="h-desc">Từ CI/CD tới Kubernetes production — lộ trình thực chiến.</div>
+          <div class="metas">
+            <span class="hchip"><i class="ph ph-stack"></i><b>8</b> chương</span>
+            <span class="hchip"><i class="ph ph-clock"></i><b>~14</b> giờ học</span>
+            <span class="hchip"><i class="ph ph-users"></i><b>2,481</b> học viên</span>
+          </div>
+        </div>
+        <div class="cluster">
+          <div class="gate"><i class="ph ph-github-logo"></i> Bạn chưa nằm trong GitHub team của khoá — một số bài lab cần quyền repo.</div>
+          <div class="trial">
+            <div class="itile"><i class="ph ph-lock-key"></i></div>
+            <div class="body">
+              <div class="h">Bạn đã đọc thử 3/12 bài miễn phí — còn 9 bài đang chờ.</div>
+              <div class="scar"><i class="ph ph-fire" style="color:#f59e0b"></i> Giá ưu đãi giai đoạn 1 · còn 14 suất · <span class="price"><s>1.990k</s> <b>990k</b></span></div>
+              <span class="cta">Ghi danh để build hồ sơ thật <i class="ph ph-arrow-right"></i></span>
+            </div>
+          </div>
+          <div class="cont">
+            <div class="cont-top">
+              <div><div class="eyebrow">Tiếp tục học</div><div class="cont-title">Bài 4 · Viết Dockerfile tối ưu</div></div>
+              <span class="resume">Tiếp tục <i class="ph ph-arrow-right"></i></span>
+            </div>
+            <div class="meter-row"><div class="meter" style="flex:1"><i style="width:34%"></i></div><span class="pct">34% hoàn thành</span></div>
+            <div class="stat">Đã đọc 8/23 bài · Hoàn thành 2/9 thử thách</div>
+          </div>
+          <div class="nudges">
+            <div class="nrow"><i class="ph ph-cards lead"></i> Ôn 12 thẻ đến hạn hôm nay <span class="cnt">12</span><i class="ph ph-arrow-right go"></i></div>
+            <div class="nrow"><i class="ph ph-microphone-stage lead"></i> Luyện phỏng vấn cho capstone <i class="ph ph-arrow-right go"></i></div>
+            <div class="nrow"><i class="ph ph-trophy lead"></i> Bạn đang hạng #42 tuần này <i class="ph ph-arrow-right go"></i></div>
+          </div>
+          <div class="path">
+            <div class="path-h">Tiếp tục · Chương 2 · Container hoá</div>
+            <div class="lrow"><i class="ph ph-check-circle lead ic-done"></i><div class="txt"><div class="t">Docker là gì</div><div class="s">6 phút đọc</div></div><div class="lmeta"><span class="dchip">Cơ bản</span></div></div>
+            <div class="lrow active"><i class="ph ph-play lead ic-play"></i><div class="txt"><div class="t">Viết Dockerfile tối ưu</div><div class="s">12 phút đọc</div></div><div class="lmeta"><span class="dchip" style="color:var(--warn);background:color-mix(in srgb,var(--warn) 15%,transparent)">Trung bình</span></div></div>
+            <div class="lrow"><i class="ph ph-circle lead ic-todo"></i><div class="txt"><div class="t">Multi-stage build</div><div class="s">9 phút đọc</div></div><div class="lmeta"><span class="dchip" style="color:var(--warn);background:color-mix(in srgb,var(--warn) 15%,transparent)">Trung bình</span><i class="ph ph-lock lock"></i></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:22px">
+      <!-- Paid viewer (strips self-hide) -->
+      <div class="proto narrow">
+        <div class="proto-cap"><b>Content home</b><span class="tag">viewer: paid · strip tự ẩn</span></div>
+        <div class="dash" style="padding:16px;gap:16px">
+          <div><div class="crumb"><i class="ph ph-graduation-cap"></i> DevOps Mastery</div><div class="h-title" style="font-size:16px">DevOps Mastery</div><div class="metas"><span class="hchip"><i class="ph ph-stack"></i><b>8</b></span><span class="hchip"><i class="ph ph-clock"></i><b>~14</b>h</span><span class="hchip"><i class="ph ph-users"></i><b>2,481</b></span></div></div>
+          <div class="cont">
+            <div class="cont-top"><div><div class="eyebrow">Tiếp tục học</div><div class="cont-title">Bài 4 · Dockerfile</div></div><span class="resume">Tiếp tục <i class="ph ph-arrow-right"></i></span></div>
+            <div class="meter-row"><div class="meter" style="flex:1"><i style="width:68%"></i></div><span class="pct">68%</span></div>
+            <div class="stat">Đã đọc 16/23 · 6/9 thử thách</div>
+          </div>
+          <div class="path"><div class="path-h">Tiếp tục · Chương 4</div><div class="lrow"><i class="ph ph-check-circle lead ic-done"></i><div class="txt"><div class="t">CI với GitHub Actions</div><div class="s">10 phút</div></div></div><div class="lrow active"><i class="ph ph-play lead ic-play"></i><div class="txt"><div class="t">Cache & artifacts</div><div class="s">8 phút</div></div></div></div>
+        </div>
+      </div>
+
+      <!-- Empty / loading small -->
+      <div class="proto narrow">
+        <div class="proto-cap"><b>state: loading (skeleton)</b></div>
+        <div class="dash" style="padding:16px;gap:16px">
+          <div><div class="sk" style="height:12px;width:40%;margin-bottom:8px"></div><div class="sk" style="height:22px;width:70%;margin-bottom:8px"></div><div style="display:flex;gap:8px"><div class="sk" style="height:24px;width:64px;border-radius:999px"></div><div class="sk" style="height:24px;width:64px;border-radius:999px"></div></div></div>
+          <div class="sk" style="height:8px;width:100%;border-radius:999px"></div>
+          <div style="display:flex;flex-direction:column;gap:8px"><div class="sk" style="height:44px"></div><div class="sk" style="height:44px"></div></div>
+        </div>
+      </div>
+      <div class="proto narrow">
+        <div class="proto-cap"><b>state: empty ★hoàn thiện</b></div>
+        <div class="dash" style="padding:28px;align-items:center;text-align:center;gap:10px">
+          <i class="ph ph-stack" style="font-size:34px;color:var(--muted);opacity:.5"></i>
+          <div style="font-size:13px">Khoá này chưa có bài học nào</div>
+          <div style="font-size:11.5px;color:var(--muted)">Nội dung đang được biên soạn — quay lại sau nhé.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <h2 class="section">Cây tầng — 1 leaf, các block tự ẩn = state</h2>
+  <div class="legend">
+    <span class="lg"><span class="dot" style="background:var(--page)"></span>Page</span>
+    <span class="lg"><span class="dot" style="background:var(--leaf)"></span>Leaf</span>
+    <span class="lg"><span class="dot" style="background:var(--block)"></span>Block (+state)</span>
+    <span class="lg"><span class="dot" style="background:var(--design)"></span>Design</span>
+    <span class="lg"><span class="dot" style="background:var(--primitive)"></span>Primitive</span>
+  </div>
+  <div class="tree">
+    <div class="tleaf">
+      <div class="tleaf-head"><span class="tidx">1</span><b>Content home (dashboard)</b><span class="async">async: loading · empty · error · content</span></div>
+      <div class="tblocks">
+        <div class="tblock"><div class="btop"><span class="tier t-block">Block</span><b>PageHeader</b></div><div class="states"><span class="st">có meta</span><span class="st">không meta</span></div><div class="kids"><div class="kid"><span class="tier t-design">Design</span>LearnBreadcrumb · HighlightChip×3 <span class="role">(learners ẩn nếu 0)</span></div><div class="kid prims"><span class="tier t-prim">Prim</span> Typography</div></div></div>
+        <div class="tblock"><div class="btop"><span class="tier t-block">Block</span><b>GithubTeamGate</b></div><div class="states"><span class="st">ẩn</span><span class="st">cảnh báo</span></div></div>
+        <div class="tblock"><div class="btop"><span class="tier t-block">Block</span><b>TrialConversionStrip</b></div><div class="states"><span class="st">ẩn (paid)</span><span class="st">loading giá</span><span class="st">hiện (trial)</span></div><div class="kids"><div class="kid"><span class="tier t-design">Design</span>IconTile · PriceTag · PhaseScarcityNote</div><div class="kid prims"><span class="tier t-prim">Prim</span> Button(enroll) · Skeleton</div></div></div>
+        <div class="tblock"><div class="btop"><span class="tier t-block">Block</span><b>ContinuePanel</b></div><div class="states"><span class="st">có resume</span><span class="st">capstone</span><span class="st">hết bài (no CTA)</span></div><div class="kids"><div class="kid"><span class="tier t-design">Design</span>ProgressMeter</div><div class="kid prims"><span class="tier t-prim">Prim</span> Typography · Button(resume)</div></div></div>
+        <div class="tblock"><div class="btop"><span class="tier t-block">Block</span><b>LearnNudges</b></div><div class="states"><span class="st">ẩn (all 0)</span><span class="st">loading</span><span class="st">có nudge</span></div><div class="kids"><div class="kid"><span class="tier t-design">Design</span>NudgeRow <span class="role">(thẻ đến hạn · phỏng vấn · hạng)</span></div><div class="kid prims"><span class="tier t-prim">Prim</span> SurfaceListCard · Skeleton</div></div></div>
+        <div class="tblock"><div class="btop"><span class="tier t-block">Block</span><b>KeepGoingPath</b></div><div class="states"><span class="st">có module</span><span class="st">ẩn (không module)</span></div><div class="kids"><div class="kid"><span class="tier t-design">Design</span>LessonRow <span class="role">(Play/Check/Circle · phút · DifficultyChip · Lock)</span></div><div class="kid prims"><span class="tier t-prim">Prim</span> ListRow</div></div></div>
+      </div>
+    </div>
+  </div>
+  <p style="color:var(--muted);font-size:12.5px;margin-top:14px">★ <b>Hoàn thiện:</b> empty state nên giàu hơn (icon + hint + CTA) thay vì 1 dòng title. Trang này THẬT SỰ 1 leaf — không ép view-switch (đối chứng với chat drawer 5 leaf).</p>
+</div>
+</body>
+</html>

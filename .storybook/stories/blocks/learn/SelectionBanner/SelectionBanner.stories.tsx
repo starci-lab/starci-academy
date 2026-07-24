@@ -68,7 +68,7 @@ export const ShortPassage: Story = {
             <BlockAnatomy
                 name="SelectionBanner"
                 tier="block"
-                leaf="Đoạn ngắn"
+                leaf="ShortPassage"
                 parts={WITH_NOTE_PARTS}
                 reason="Bôi đen một đoạn để hỏi riêng cần một banner ghim ở đầu rail, tách biệt khỏi luồng chat chính (viền+nền warning) — gồm icon trích dẫn + đoạn đã chọn (line-clamp-2) + nút bỏ chọn, cộng ghi chú rằng phiên này được lưu trữ riêng."
             >
@@ -85,7 +85,7 @@ export const LongPassageClamped: Story = {
             <BlockAnatomy
                 name="SelectionBanner"
                 tier="block"
-                leaf="Đoạn dài (line-clamp-2 cắt)"
+                leaf="LongPassageClamped"
                 parts={WITH_NOTE_PARTS}
                 note="Đoạn chọn dài hơn 2 dòng → InlineIconLabel clamp phần chữ ở đúng 2 dòng (cắt bằng '…'), không đẩy banner cao vô hạn."
             >
@@ -102,7 +102,7 @@ export const WithArchivedNote: Story = {
             <BlockAnatomy
                 name="SelectionBanner"
                 tier="block"
-                leaf="Có ghi chú born-archived"
+                leaf="WithArchivedNote"
                 parts={WITH_NOTE_PARTS}
                 note="`note` có giá trị → thêm hàng Typography body-xs muted bên dưới, báo phiên hỏi-theo-đoạn được lưu trữ sẵn (không nằm ở danh sách thường)."
             >
@@ -119,7 +119,7 @@ export const WithoutNote: Story = {
             <BlockAnatomy
                 name="SelectionBanner"
                 tier="block"
-                leaf="Không có ghi chú"
+                leaf="WithoutNote"
                 parts={NO_NOTE_PARTS}
                 note="Bỏ trống `note` → cây leaf này KHÔNG có node Typography — banner dừng lại ở hàng icon+đoạn+nút bỏ chọn, không để lại khoảng trống thay chỗ ghi chú."
             >

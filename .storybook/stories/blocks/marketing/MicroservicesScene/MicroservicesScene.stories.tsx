@@ -38,24 +38,24 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 // only `caption` is a prop), so it's the sole part of the caption-less leaf.
 const SCENE_PARTS: Array<AnatomyNode> = [
     {
-        name: "svg · scene",
+        name: "Svg.Scene",
         tier: "design",
         role: "canvas isometric 'mini infra' — topology cố định, thuần SVG (no image/WebGL)",
         children: [
             {
-                name: "g · connectors",
+                name: "G.Connectors",
                 tier: "primitive",
                 role: "dây nối svc → 3 pods; dây pods → DB đơn tô đỏ (hot path nghẽn)",
                 children: [
-                    { name: "circle · packet", tier: "primitive", role: "gói chạy dọc dây vào service (animateMotion, CSS)" },
+                    { name: "Circle.Packet", tier: "primitive", role: "gói chạy dọc dây vào service (animateMotion, CSS)" },
                 ],
             },
             { name: "IsoSvc", tier: "primitive", role: "node Service·LB (hex iso) phía trước deployment" },
             { name: "IsoPod", tier: "primitive", role: "pod cube iso của deployment", state: "×3 · 1 accent focal" },
             { name: "IsoDb", tier: "primitive", role: "datastore trụ iso, single-node = điểm nghẽn", state: "danger" },
-            { name: "text · nhãn", tier: "primitive", role: "nhãn SVG: Service·LB / Deployment·3 pods / Postgres·1 node", state: "×3" },
-            { name: "g · cờ lỗi", tier: "primitive", role: "cảnh báo ⚠ single DB → bottleneck (tone danger)" },
-            { name: "legend · chú giải", tier: "primitive", role: "2 circle+text rời: focal pod (accent) · where it breaks (danger)" },
+            { name: "Text.Label", tier: "primitive", role: "nhãn SVG: Service·LB / Deployment·3 pods / Postgres·1 node", state: "×3" },
+            { name: "G.ErrorFlag", tier: "primitive", role: "cảnh báo ⚠ single DB → bottleneck (tone danger)" },
+            { name: "Legend", tier: "primitive", role: "2 circle+text rời: focal pod (accent) · where it breaks (danger)" },
         ],
     },
 ]
@@ -75,7 +75,7 @@ export const NoCaption: Story = {
             <BlockAnatomy
                 name="MicroservicesScene"
                 tier="design"
-                leaf="Không caption"
+                leaf="NoCaption"
                 parts={SCENE_PARTS}
                 note="Chỉ minh hoạ SVG isometric, KHÔNG có caption — composition trần của scene."
                 reason="Value-prop System Design/DevOps thành hình: một 'mini infra' isometric (pod cubes sau một service, một datastore single-node là điểm nghẽn) vẽ thuần SVG. Topology cố định trong block, chỉ `caption` là prop."
@@ -94,7 +94,7 @@ export const ShortCaption: Story = {
             <BlockAnatomy
                 name="MicroservicesScene"
                 tier="design"
-                leaf="Caption ngắn"
+                leaf="ShortCaption"
                 parts={CAPTION_PARTS}
                 note="Thêm caption dưới minh hoạ (Typography riêng, có anchor) — thêm 1 node so với leaf trần."
             >
@@ -112,7 +112,7 @@ export const LongCaptionWrap: Story = {
             <BlockAnatomy
                 name="MicroservicesScene"
                 tier="design"
-                leaf="Caption dài (wrap)"
+                leaf="LongCaptionWrap"
                 parts={CAPTION_PARTS}
                 note="CÙNG composition với 'Caption ngắn' — chỉ khác độ dài caption + bề rộng khung nên chữ xuống dòng."
             >

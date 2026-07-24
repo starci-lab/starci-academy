@@ -184,7 +184,7 @@ export const Loading: Story = {
             <BlockAnatomy
                 name="ChatToolResult"
                 tier="block"
-                leaf="Đang tải"
+                leaf="Loading"
                 parts={LOADING_PARTS}
                 note="Tool đang chạy → body đổi sang SurfaceListCardItem + Skeleton mirror hàng (không spinner), composition khác leaf có dữ liệu (không hàng thật)."
             >
@@ -209,7 +209,7 @@ export const SingleKindWithViewAll: Story = {
             <BlockAnatomy
                 name="ChatToolResult"
                 tier="block"
-                leaf="Một loại + xem tất cả"
+                leaf="SingleKindWithViewAll"
                 parts={VIEWALL_PARTS}
                 reason="Kết quả một tool call RAG hiển thị ngay trong bong bóng chat cần khung border-only (surface-in-surface) với header gọn (icon + loại + số lượng) rồi một loạt EntityResultRow dùng chung. Gói header + loading skeleton (mirror hàng, không spinner) + danh sách hàng + nút xem-tất-cả vào một block, để phần chat chỉ truyền items — không dựng lại khung, header, và trạng thái tải ở mỗi tool."
             >
@@ -234,7 +234,7 @@ export const MixedKindLocked: Story = {
             <BlockAnatomy
                 name="ChatToolResult"
                 tier="block"
-                leaf="Nhiều loại + khoá"
+                leaf="MixedKindLocked"
                 parts={MIXED_PARTS}
                 note="Danh sách trộn loại → mỗi EntityResultRow hiện EnumChip loại; hàng bị khoá thêm cờ 'Ghi danh để mở'. Không có footer xem-tất-cả."
             >
@@ -258,7 +258,7 @@ export const SingleResult: Story = {
             <BlockAnatomy
                 name="ChatToolResult"
                 tier="block"
-                leaf="Một kết quả"
+                leaf="SingleResult"
                 parts={SIMPLE_PARTS}
                 note="Chỉ một hàng khớp, không chip loại/không breadcrumb/không khoá → hàng chỉ có tiêu đề + snippet (CÙNG composition với leaf xem-tất-cả, chỉ khác số lượng hàng và không có footer link)."
             >

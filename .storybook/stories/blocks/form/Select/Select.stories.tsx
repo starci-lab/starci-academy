@@ -11,7 +11,7 @@ import { Select, type SelectOption } from "./Select"
  * in, all field scaffolding owned by the component.
  */
 const meta: Meta<typeof Select> = {
-    title: "Primitives/Form/Select",
+    title: "Primitives/Forms/Select",
     component: Select,
     tags: ["autodocs"],
     parameters: {

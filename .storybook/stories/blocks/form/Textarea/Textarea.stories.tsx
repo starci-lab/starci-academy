@@ -10,7 +10,7 @@ import { Textarea } from "./Textarea"
  * all field scaffolding owned by the component.
  */
 const meta: Meta<typeof Textarea> = {
-    title: "Primitives/Form/Textarea",
+    title: "Primitives/Forms/Textarea",
     component: Textarea,
     tags: ["autodocs"],
     parameters: {

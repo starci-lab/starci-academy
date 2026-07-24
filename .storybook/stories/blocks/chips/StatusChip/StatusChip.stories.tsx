@@ -3,7 +3,7 @@ import { CheckCircleIcon } from "@phosphor-icons/react"
 import { StatusChip } from "./StatusChip"
 
 const meta: Meta<typeof StatusChip> = {
-    title: "Primitives/Chip/StatusChip",
+    title: "Primitives/Chips/StatusChip",
     component: StatusChip,
     tags: ["autodocs"],
     parameters: {

@@ -3,7 +3,7 @@ import { Typography } from "@heroui/react"
 import { CrossListCard, CrossListItem } from "./CrossListCard"
 
 const meta: Meta<typeof CrossListCard> = {
-    title: "Primitives/Card/CrossListCard",
+    title: "Primitives/Cards/CrossListCard",
     component: CrossListCard,
     tags: ["autodocs"],
     parameters: {

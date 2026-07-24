@@ -10,7 +10,7 @@ import { DatePicker } from "./DatePicker"
  * HeroUI's canonical `DateField.Group` segments + `Calendar` popover compound.
  */
 const meta: Meta<typeof DatePicker> = {
-    title: "Primitives/Form/DatePicker",
+    title: "Primitives/Forms/DatePicker",
     component: DatePicker,
     tags: ["autodocs"],
     parameters: {

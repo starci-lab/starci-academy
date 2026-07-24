@@ -10,7 +10,7 @@ import { Disclosure } from "./Disclosure"
  * 180° on open, `text-muted hover:text-foreground`, `w-fit` trigger).
  */
 const meta: Meta<typeof Disclosure> = {
-    title: "Primitives/Layout/Disclosure",
+    title: "Primitives/Layouts/Disclosure",
     component: Disclosure,
     tags: ["autodocs"],
     parameters: {

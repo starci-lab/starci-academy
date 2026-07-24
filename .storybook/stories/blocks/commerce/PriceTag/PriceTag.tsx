@@ -160,7 +160,7 @@ export const PriceTag = ({
                     type={AMOUNT_TYPE[size]}
                     weight="bold"
                     data-anat-part={
-                        showAnatomy ? (hasSaving ? "Typography · giá phải trả" : "Typography") : undefined
+                        showAnatomy ? (hasSaving ? "Typography.Amount" : "Typography") : undefined
                     }
                 >
                     {formatPrice(discounted, currency)}
@@ -170,7 +170,7 @@ export const PriceTag = ({
                         type={size === "sm" ? "body-xs" : "body-sm"}
                         color="muted"
                         className="line-through"
-                        data-anat-part={showAnatomy ? "Typography · giá gốc" : undefined}
+                        data-anat-part={showAnatomy ? "Typography.Original" : undefined}
                     >
                         {formatPrice(original, currency)}
                     </Typography>
@@ -197,7 +197,7 @@ export const PriceTag = ({
                 <Typography
                     type="body-xs"
                     color="muted"
-                    data-anat-part={showAnatomy ? "Typography · tiết kiệm" : undefined}
+                    data-anat-part={showAnatomy ? "Typography.Saving" : undefined}
                 >
                     {`Tiết kiệm ${formatPrice(original - discounted, currency)}`}
                 </Typography>

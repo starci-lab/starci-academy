@@ -151,14 +151,14 @@ export const NotificationItem = ({
                         // accent dot — the primary unread signal beside the title
                         <span
                             className="mt-2 size-2 shrink-0 rounded-full bg-accent"
-                            data-anat-part={showAnatomy ? "Dot chưa đọc" : undefined}
+                            data-anat-part={showAnatomy ? "Dot" : undefined}
                         />
                     ) : null}
                     <Typography
                         type="body-sm"
                         weight="medium"
                         className="line-clamp-2"
-                        data-anat-part={showAnatomy ? "Typography · title" : undefined}
+                        data-anat-part={showAnatomy ? "Typography.Title" : undefined}
                     >
                         {title}
                     </Typography>
@@ -168,7 +168,7 @@ export const NotificationItem = ({
                         type="body-xs"
                         color="muted"
                         className="line-clamp-2"
-                        data-anat-part={showAnatomy ? "Typography · body" : undefined}
+                        data-anat-part={showAnatomy ? "Typography.Body" : undefined}
                     >
                         {body}
                     </Typography>
@@ -176,7 +176,7 @@ export const NotificationItem = ({
                 <Typography
                     type="body-xs"
                     color="muted"
-                    data-anat-part={showAnatomy ? "Typography · time" : undefined}
+                    data-anat-part={showAnatomy ? "Typography.Time" : undefined}
                 >
                     {timeLabel}
                 </Typography>

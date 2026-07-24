@@ -11,7 +11,7 @@ import type { RadioGroupFieldOption } from "./RadioGroupField"
  * owned by the component; each option's label sits beside its own radio dot.
  */
 const meta: Meta<typeof RadioGroupField> = {
-    title: "Primitives/Form/RadioGroupField",
+    title: "Primitives/Forms/RadioGroupField",
     component: RadioGroupField,
     tags: ["autodocs"],
     parameters: {

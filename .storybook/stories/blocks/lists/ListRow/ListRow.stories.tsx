@@ -1,11 +1,21 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Chip, Typography } from "@heroui/react"
-import { CaretRightIcon, FileTextIcon } from "@phosphor-icons/react"
+import {
+    CaretRightIcon,
+    FileTextIcon,
+    PlayIcon,
+    CheckCircleIcon,
+    CircleIcon,
+    LockIcon,
+    ArrowRightIcon,
+    BellIcon,
+} from "@phosphor-icons/react"
 import { ListRow } from "./ListRow"
+import { DifficultyChip } from "../../chips/DifficultyChip/DifficultyChip"
 
 const meta: Meta<typeof ListRow> = {
-    title: "Primitives/List/ListRow",
+    title: "Primitives/Lists/ListRow",
     component: ListRow,
     tags: ["autodocs"],
     parameters: {
@@ -128,4 +138,109 @@ export const Clickable: Story = {
             </div>
         )
     },
+}
+
+/**
+ * PROOF: `ListRow` alone covers a "lesson row" (leading state icon · title ·
+ * subtitle read-time · meta = DifficultyChip + lock · onPress) — no dedicated
+ * `LessonRow` component needed. Variant-of-chrome comes entirely from props.
+ */
+export const AsLessonRow: Story = {
+    render: () => {
+        const LessonRows = () => {
+            const [lastClicked, setLastClicked] = useState("(chưa bấm bài nào)")
+            const lessons = [
+                {
+                    leading: <CheckCircleIcon className="size-5 text-success" aria-hidden focusable="false" />,
+                    title: "Vòng lặp và điều kiện",
+                    subtitle: "8 phút đọc",
+                    difficulty: "beginner" as const,
+                    locked: false,
+                },
+                {
+                    leading: <PlayIcon className="size-5 text-accent" aria-hidden focusable="false" />,
+                    title: "Hàm và phạm vi biến",
+                    subtitle: "12 phút đọc",
+                    difficulty: "intermediate" as const,
+                    locked: false,
+                },
+                {
+                    leading: <CircleIcon className="size-5 text-muted" aria-hidden focusable="false" />,
+                    title: "Đệ quy và chia để trị",
+                    subtitle: "15 phút đọc",
+                    difficulty: "advanced" as const,
+                    locked: true,
+                },
+            ]
+            return (
+                <div className="flex w-full max-w-md flex-col gap-3">
+                    <div className="flex flex-col rounded-2xl border border-default px-3">
+                        {lessons.map((lesson, index) => (
+                            <ListRow
+                                key={lesson.title}
+                                leading={lesson.leading}
+                                title={lesson.title}
+                                subtitle={lesson.subtitle}
+                                meta={
+                                    <>
+                                        <DifficultyChip difficulty={lesson.difficulty} />
+                                        {lesson.locked ? (
+                                            <LockIcon className="size-4 text-muted" aria-hidden focusable="false" />
+                                        ) : null}
+                                    </>
+                                }
+                                onPress={() => setLastClicked(lesson.title)}
+                                divider={index < lessons.length - 1}
+                            />
+                        ))}
+                    </div>
+                    <Typography type="body-sm" color="muted">
+                        {`Bài vừa bấm: ${lastClicked}`}
+                    </Typography>
+                </div>
+            )
+        }
+        return (
+            <div className="p-8">
+                <LessonRows />
+            </div>
+        )
+    },
+}
+
+/**
+ * PROOF: `ListRow` also covers a "nudge row" (leading icon · label title ·
+ * meta count · trailing arrow · href) — no dedicated `NudgeRow` component
+ * needed. Same primitive, different props.
+ */
+export const AsNudgeRow: Story = {
+    render: () => (
+        <div className="p-8">
+            <div className="w-full max-w-md rounded-2xl border border-default px-3">
+                <ListRow
+                    leading={<BellIcon className="size-5 text-muted" aria-hidden focusable="false" />}
+                    title="Bài tập chưa nộp"
+                    href="/dashboard/assignments?status=pending"
+                    meta={
+                        <Chip size="sm" variant="soft" color="warning">
+                            <Chip.Label>3</Chip.Label>
+                        </Chip>
+                    }
+                    trailing={<ArrowRightIcon className="size-3 text-muted" aria-hidden focusable="false" />}
+                    divider
+                />
+                <ListRow
+                    leading={<FileTextIcon className="size-5 text-muted" aria-hidden focusable="false" />}
+                    title="Ghi chú chưa đọc"
+                    href="/dashboard/notes?status=unread"
+                    meta={
+                        <Chip size="sm" variant="soft" color="accent">
+                            <Chip.Label>5</Chip.Label>
+                        </Chip>
+                    }
+                    trailing={<ArrowRightIcon className="size-3 text-muted" aria-hidden focusable="false" />}
+                />
+            </div>
+        </div>
+    ),
 }

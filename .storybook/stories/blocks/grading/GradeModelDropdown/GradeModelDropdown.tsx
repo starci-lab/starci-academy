@@ -455,13 +455,13 @@ export const GradeModelDropdown = ({
                         <>
                             <DropdownMenu
                                 aria-label="Tự động"
-                                data-anat-part={showAnatomy ? "DropdownMenu · Tự động" : undefined}
+                                data-anat-part={showAnatomy ? "DropdownMenu.Auto" : undefined}
                             >
                                 <DropdownSection data-anat-part={showAnatomy ? "DropdownSection" : undefined}>
                                     <DropdownItem
                                         key="auto"
                                         textValue="Tự động"
-                                        data-anat-part={showAnatomy ? "DropdownItem · Tự động" : undefined}
+                                        data-anat-part={showAnatomy ? "DropdownItem.Auto" : undefined}
                                         onPress={() => {
                                             onSelect({
                                                 model: null,
@@ -533,7 +533,7 @@ export const GradeModelDropdown = ({
                         <DropdownMenu
                             aria-label="Chọn model"
                             className="w-full min-w-0"
-                            data-anat-part={showAnatomy ? "DropdownMenu · Chọn model" : undefined}
+                            data-anat-part={showAnatomy ? "DropdownMenu.ModelList" : undefined}
                         >
                             {/* One entry per catalog model. Below-floor = warning (selectable,
                         risky); Balanced/Premium/Frontier = locked without an unlock. */}
@@ -542,7 +542,7 @@ export const GradeModelDropdown = ({
                                     <DropdownItem
                                         key="no-results"
                                         textValue="Không có model khớp"
-                                        data-anat-part={showAnatomy ? "DropdownItem · rỗng" : undefined}
+                                        data-anat-part={showAnatomy ? "DropdownItem.Empty" : undefined}
                                         onPress={() => undefined}
                                     >
                                         <span className="text-muted">
@@ -579,7 +579,7 @@ export const GradeModelDropdown = ({
                                                 key={key}
                                                 textValue={model.model}
                                                 className={DROPDOWN_ITEM_ROW_CLASS}
-                                                data-anat-part={showAnatomy ? "DropdownItem · không khả dụng" : undefined}
+                                                data-anat-part={showAnatomy ? "DropdownItem.Disabled" : undefined}
                                                 onPress={() => undefined}
                                             >
                                                 <Tooltip>
@@ -608,7 +608,7 @@ export const GradeModelDropdown = ({
                                                 key={key}
                                                 textValue={model.model}
                                                 className={DROPDOWN_ITEM_ROW_CLASS}
-                                                data-anat-part={showAnatomy ? "DropdownItem · khoá" : undefined}
+                                                data-anat-part={showAnatomy ? "DropdownItem.Locked" : undefined}
                                                 onPress={onUpgrade}
                                             >
                                                 <Tooltip>
@@ -640,7 +640,7 @@ export const GradeModelDropdown = ({
                                                 key={key}
                                                 textValue={model.model}
                                                 className={DROPDOWN_ITEM_ROW_CLASS}
-                                                data-anat-part={showAnatomy ? "DropdownItem · cảnh báo" : undefined}
+                                                data-anat-part={showAnatomy ? "DropdownItem.Warning" : undefined}
                                                 onPress={() => onSelect({
                                                     model: model.model,
                                                     provider: model.provider,
@@ -700,7 +700,7 @@ export const GradeModelDropdown = ({
                         <button
                             type="button"
                             onClick={() => setShowHidden((open) => !open)}
-                            data-anat-part={showAnatomy ? "button · Hiện N ẩn" : undefined}
+                            data-anat-part={showAnatomy ? "Button.RevealHidden" : undefined}
                             className="cursor-pointer px-3 pb-2 pt-1 text-start text-xs text-muted transition-colors hover:text-foreground"
                         >
                             {showHidden

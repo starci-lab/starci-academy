@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { SearchBar } from "./SearchBar"
 
 const meta: Meta<typeof SearchBar> = {
-    title: "Design/Form/SearchBar",
+    title: "Design/Forms/SearchBar",
     component: SearchBar,
     tags: ["autodocs"],
     parameters: {

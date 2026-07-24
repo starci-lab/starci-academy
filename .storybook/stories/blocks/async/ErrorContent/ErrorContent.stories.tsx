@@ -84,7 +84,7 @@ export const Basic: Story = {
             <BlockAnatomy
                 name="ErrorContent"
                 tier="design"
-                leaf="Chỉ tiêu đề"
+                leaf="Basic"
                 parts={BASIC_PARTS}
                 reason={"Trạng thái lỗi của một vùng dữ liệu async cần đúng anatomy của EmptyState tone=\"danger\" (icon cảnh báo + tiêu đề + mô tả + nút thử lại canh giữa). ErrorContent chỉ thêm icon WarningOctagon mặc định và truyền onRetry/retryLabel xuống action — nên nó là một lớp mỏng trên EmptyState, không nên tự vẽ lại."}
             >
@@ -99,7 +99,7 @@ export const WithDescription: Story = {
             <BlockAnatomy
                 name="ErrorContent"
                 tier="design"
-                leaf="Có mô tả"
+                leaf="WithDescription"
                 parts={DESCRIPTION_PARTS}
                 note="Thêm dòng mô tả muted dưới tiêu đề — vẫn chưa có nút hành động."
             >
@@ -118,7 +118,7 @@ export const WithRetry: Story = {
             <BlockAnatomy
                 name="ErrorContent"
                 tier="design"
-                leaf="Có nút thử lại"
+                leaf="WithRetry"
                 parts={RETRY_PARTS}
                 note="onRetry + retryLabel → thêm Button vào slot action của EmptyState."
             >
@@ -139,7 +139,7 @@ export const CustomIcon: Story = {
             <BlockAnatomy
                 name="ErrorContent"
                 tier="design"
-                leaf="Icon tuỳ biến"
+                leaf="CustomIcon"
                 parts={CUSTOM_ICON_PARTS}
                 note="Cùng shape đầy đủ, chỉ thay icon mặc định bằng icon caller truyền vào."
             >

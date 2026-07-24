@@ -66,9 +66,9 @@ const PRICE_POPOVER_PARTS: Array<AnatomyNode> = [
 // On sale: amount (renamed "· giá phải trả" once there's a saving to distinguish
 // it from the struck original) + struck list price + −X% chip → popover + a
 // saving line — PriceTag directly renders every one of these Typography itself.
-const AMOUNT_WITH_SAVING: AnatomyNode = { name: "Typography · giá phải trả", tier: "primitive", role: "số tiền phải trả (đậm)" }
-const ORIGINAL: AnatomyNode = { name: "Typography · giá gốc", tier: "primitive", role: "giá gốc gạch ngang (muted, line-through)" }
-const SAVING_LINE: AnatomyNode = { name: "Typography · tiết kiệm", tier: "primitive", role: "dòng \"Tiết kiệm N₫\" cụ thể (muted)" }
+const AMOUNT_WITH_SAVING: AnatomyNode = { name: "Typography.Amount", tier: "primitive", role: "số tiền phải trả (đậm)" }
+const ORIGINAL: AnatomyNode = { name: "Typography.Original", tier: "primitive", role: "giá gốc gạch ngang (muted, line-through)" }
+const SAVING_LINE: AnatomyNode = { name: "Typography.Saving", tier: "primitive", role: "dòng \"Tiết kiệm N₫\" cụ thể (muted)" }
 
 const DISCOUNT_PARTS: Array<AnatomyNode> = [AMOUNT_WITH_SAVING, ORIGINAL, ...PRICE_POPOVER_PARTS, SAVING_LINE]
 
@@ -82,7 +82,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="PriceTag"
                 tier="design"
-                leaf="Không giảm giá"
+                leaf="Default"
                 parts={NO_DISCOUNT_PARTS}
                 reason="Một giá hiển thị cần gói NHIỀU tín hiệu vào một chỗ: số tiền phải trả (đậm), giá gốc gạch ngang, và mức tiết kiệm. Mức tiết kiệm dùng StatusChip (soft-success) làm nhãn kiêm nút mở popover phân rã giá (gốc → giai đoạn → thành viên → bạn trả). Gộp lại một block để logic chiết khấu không lệch giữa các chỗ hiển thị giá."
             >
@@ -98,7 +98,7 @@ export const WithDiscount: Story = {
             <BlockAnatomy
                 name="PriceTag"
                 tier="design"
-                leaf="Đang giảm giá"
+                leaf="WithDiscount"
                 parts={DISCOUNT_PARTS}
                 note="Có giảm → thêm giá gốc gạch ngang, chip −X% (mở popover), và dòng 'Tiết kiệm N₫'."
             >
@@ -119,7 +119,7 @@ export const Sizes: Story = {
             <BlockAnatomy
                 name="PriceTag"
                 tier="design"
-                leaf="Ba cỡ"
+                leaf="Sizes"
                 parts={DISCOUNT_PARTS}
                 note="Đổi cỡ chỉ đổi type-scale số tiền — CÙNG composition với leaf 'Đang giảm giá'."
             >
@@ -157,7 +157,7 @@ export const CurrencyUsd: Story = {
             <BlockAnatomy
                 name="PriceTag"
                 tier="design"
-                leaf="Tiền USD"
+                leaf="CurrencyUsd"
                 parts={DISCOUNT_PARTS}
                 note="Chỉ đổi ký hiệu & định dạng tiền — CÙNG composition với leaf 'Đang giảm giá'."
             >
@@ -179,7 +179,7 @@ export const NoSavingLine: Story = {
             <BlockAnatomy
                 name="PriceTag"
                 tier="design"
-                leaf="Ẩn dòng tiết kiệm"
+                leaf="NoSavingLine"
                 parts={NO_SAVING_LINE_PARTS}
                 note="showSavingLine={false} → BỎ dòng 'Tiết kiệm N₫'; chip −X% + popover vẫn còn (khác leaf 'Đang giảm giá')."
             >
@@ -201,7 +201,7 @@ export const DiscountWithoutBreakdown: Story = {
             <BlockAnatomy
                 name="PriceTag"
                 tier="design"
-                leaf="Giảm, không breakdown"
+                leaf="DiscountWithoutBreakdown"
                 parts={DISCOUNT_PARTS}
                 note="Không truyền breakdown → popover chỉ có 'giá gốc → bạn trả'; composition vẫn như leaf 'Đang giảm giá'."
             >
@@ -217,7 +217,7 @@ export const BreakdownOpen: Story = {
             <BlockAnatomy
                 name="PriceTag"
                 tier="design"
-                leaf="Popover mở"
+                leaf="BreakdownOpen"
                 parts={DISCOUNT_PARTS}
                 note="Bấm chip −X% → Popover mở, hiện phân rã giá; composition như leaf 'Đang giảm giá'."
             >
@@ -231,7 +231,7 @@ export const BreakdownOpen: Story = {
         ),
     play: async ({ canvasElement }) => {
         const canvas = within(canvasElement)
-        await userEvent.click(canvas.getByRole("button", { name: "Chi tiết giá" }))
+        await userEvent.click(canvas.getByRole("button", { name: "PriceDetail" }))
         await waitFor(() => expect(screen.getByRole("dialog")).toBeInTheDocument())
     },
 }

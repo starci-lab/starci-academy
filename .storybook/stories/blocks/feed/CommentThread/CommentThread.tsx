@@ -86,7 +86,7 @@ const CommentThreadItem = ({
             type="button"
             onClick={() => setReplying((previous) => !previous)}
             className="cursor-pointer text-xs font-medium text-muted transition-colors hover:text-foreground"
-            data-anat-part={showAnatomy ? "Trả lời" : undefined}
+            data-anat-part={showAnatomy ? "Reply" : undefined}
         >
             Trả lời
         </button>

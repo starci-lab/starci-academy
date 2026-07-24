@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { HostPlatformChip, VideoHostPlatform } from "./HostPlatformChip"
 
 const meta: Meta<typeof HostPlatformChip> = {
-    title: "Primitives/Chip/HostPlatformChip",
+    title: "Primitives/Chips/HostPlatformChip",
     component: HostPlatformChip,
     tags: ["autodocs"],
     parameters: {

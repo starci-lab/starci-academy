@@ -134,7 +134,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="DeckCard"
                 tier="design"
-                leaf="Đầy đủ"
+                leaf="Default"
                 parts={DECK_PARTS}
                 reason="Gom chip trạng thái (đến hạn + độ khó), thanh mastery trực quan thay dòng chữ, và MỘT CTA duy nhất vào một ô — để feature (FlashcardDeckList) chỉ lặp map truyền dữ liệu, không dựng lại khung/chip/thanh mỗi nơi. Khi tải: Skeleton mirror đúng khung này."
             >
@@ -161,7 +161,7 @@ export const NoDue: Story = {
             <BlockAnatomy
                 name="DeckCard"
                 tier="design"
-                leaf="Không đến hạn"
+                leaf="NoDue"
                 parts={NO_DUE_PARTS}
                 note="dueCount rỗng → StatusChip 'đến hạn' biến mất, chỉ còn DifficultyChip; meter vẫn hiện."
             >
@@ -187,7 +187,7 @@ export const FullyMastered: Story = {
             <BlockAnatomy
                 name="DeckCard"
                 tier="design"
-                leaf="Thuộc hết"
+                leaf="FullyMastered"
                 parts={NO_DUE_PARTS}
                 note="Không đến hạn → không StatusChip; ProgressMeter đầy 100% (đã thuộc = tổng)."
             >
@@ -213,7 +213,7 @@ export const NoDescription: Story = {
             <BlockAnatomy
                 name="DeckCard"
                 tier="design"
-                leaf="Không mô tả"
+                leaf="NoDescription"
                 parts={NO_DESC_PARTS}
                 note="Bỏ description → Typography mô tả biến mất khỏi cây; các part còn lại (chip · meter · CTA) giữ nguyên."
             >
@@ -239,7 +239,7 @@ export const LongTitleAndDescription: Story = {
             <BlockAnatomy
                 name="DeckCard"
                 tier="design"
-                leaf="Nội dung dài"
+                leaf="LongTitleAndDescription"
                 parts={DECK_PARTS}
                 note="Tiêu đề + mô tả dài đều clamp-2 → tràn thì cắt, không kéo dài card; composition y hệt leaf 'Đầy đủ'."
             >
@@ -266,7 +266,7 @@ export const QuizModeNoProgress: Story = {
             <BlockAnatomy
                 name="DeckCard"
                 tier="design"
-                leaf="Chế độ quiz"
+                leaf="QuizModeNoProgress"
                 parts={QUIZ_PARTS}
                 note="showProgress=false → bỏ cả StatusChip lẫn ProgressMeter (SR không liên quan khi chỉ chọn chủ đề để hỏi); chỉ còn tiêu đề · chip độ khó · CTA đổi nhãn."
             >
@@ -293,7 +293,7 @@ export const Grid: Story = {
             <BlockAnatomy
                 name="DeckCard"
                 tier="design"
-                leaf="Lưới"
+                leaf="Grid"
                 parts={DECK_PARTS}
                 note="Lưới deck picker chỉ lặp CÙNG card ×N (mỗi ô tự phân giải chip/meter theo dữ liệu) — không dựng lại khung mỗi nơi."
             >
@@ -338,13 +338,13 @@ export const Grid: Story = {
 
 /** Khung chờ — mirror của card thật khi đang tải (`isSkeleton`), mọi prop dữ liệu bị bỏ qua. */
 export const Skeleton: Story = {
-    name: "Khung chờ",
+    name: "Loading",
     render: () =>
         frame(
             <BlockAnatomy
                 name="DeckCard"
                 tier="design"
-                leaf="Khung chờ"
+                leaf="Loading"
                 parts={SKELETON_PARTS}
                 note="isSkeleton → mỗi part thật đổi sang Skeleton tương ứng, giữ đúng footprint card (mọi prop dữ liệu bị bỏ qua)."
             >
@@ -357,13 +357,13 @@ export const Skeleton: Story = {
 
 /** Khung chờ · lưới — cả lưới deck picker đang tải cùng lúc. */
 export const SkeletonGrid: Story = {
-    name: "Khung chờ · lưới",
+    name: "Loading.Grid",
     render: () =>
         frame(
             <BlockAnatomy
                 name="DeckCard"
                 tier="design"
-                leaf="Khung chờ · lưới"
+                leaf="Loading.Grid"
                 parts={SKELETON_PARTS}
                 note="Cả lưới deck picker đang tải cùng lúc — Skeleton mirror ×4, giữ nguyên footprint lưới thật."
             >

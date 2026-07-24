@@ -3,7 +3,7 @@ import { BuildingOfficeIcon } from "@phosphor-icons/react"
 import { RemovableToken } from "./RemovableToken"
 
 const meta: Meta<typeof RemovableToken> = {
-    title: "Primitives/Chip/RemovableToken",
+    title: "Primitives/Chips/RemovableToken",
     component: RemovableToken,
     tags: ["autodocs"],
     parameters: {

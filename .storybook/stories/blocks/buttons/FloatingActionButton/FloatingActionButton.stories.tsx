@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { PlusIcon } from "@phosphor-icons/react"
-import { FloatingActionButton } from "./FloatingActionButton"
+import { FloatingActionButton } from "@sb-components/blocks/buttons/FloatingActionButton/FloatingActionButton"
 
 const meta: Meta<typeof FloatingActionButton> = {
     title: "Primitives/Buttons/FloatingActionButton",

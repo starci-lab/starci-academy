@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ProgressRing } from "./ProgressRing"
+import { ProgressRing } from "@sb-components/blocks/stats/ProgressRing/ProgressRing"
 
 const meta: Meta<typeof ProgressRing> = {
     title: "Primitives/Stats/ProgressRing",

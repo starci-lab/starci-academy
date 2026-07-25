@@ -7,16 +7,16 @@ import {
     FlameIcon,
     VideoCameraIcon,
 } from "@phosphor-icons/react"
-import { NotificationList } from "./NotificationList"
-import type { NotificationGroup } from "./NotificationList"
-import { EmptyState } from "../../feedback/EmptyState/EmptyState"
-import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { NotificationList } from "@sb-components/blocks/notifications/NotificationList/NotificationList"
+import type { NotificationGroup } from "@sb-components/blocks/notifications/NotificationList/NotificationList"
+import { Feedback } from "@sb-components/blocks/feedback/Feedback/Feedback"
+import { Skeleton } from "@sb-components/blocks/skeleton/Skeleton/Skeleton"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * BLOCK — the notification list REGION in the bell popover: an optional header
  * (title + mark-all-read) over day-grouped `NotificationItem` rows, falling to an
- * `EmptyState` when nothing is present.
+ * `Feedback.Empty` when nothing is present.
  *
  * ANATOMY IS PER-LEAF: each state below is its OWN leaf and carries its OWN
  * BlockAnatomy axis (Sơ đồ + Cây) reflecting the parts THAT leaf composes — there
@@ -135,10 +135,10 @@ const POPULATED_PARTS: Array<AnatomyNode> = [
 ]
 
 // Empty leaf: header STILL renders (title="Notifications" is passed) but with no
-// mark-all-read Button (onMarkAllRead omitted); the body falls to a single EmptyState.
+// mark-all-read Button (onMarkAllRead omitted); the body falls to a single Feedback.Empty.
 const EMPTY_PARTS: Array<AnatomyNode> = [
     { name: "Typography.Header", tier: "primitive", role: "tiêu đề panel (\"Notifications\") — hiện prop title, không có Button (onMarkAllRead bỏ trống)" },
-    { name: "EmptyState", tier: "primitive", role: "fallback \"Chưa có thông báo nào\" (tiêu đề + mô tả)", state: "empty" },
+    { name: "Feedback.Empty", tier: "primitive", role: "fallback \"Chưa có thông báo nào\" (tiêu đề + mô tả)", state: "empty" },
 ]
 
 // Loading leaf: story-authored skeleton scaffold mirroring the populated chrome —
@@ -171,7 +171,7 @@ export const Populated: Story = {
                 tier="block"
                 leaf="Populated"
                 parts={POPULATED_PARTS}
-                reason="Gom nhiều NotificationItem thành một danh sách cuộn có header (tiêu đề + đánh dấu đã đọc hết) và nhãn gom theo ngày; khi rỗng thì tự rơi về EmptyState thay vì một khối trống. Feature chỉ gom dữ liệu theo ngày và truyền các dòng đã format — không phải tự dựng lại header, nhóm, và trạng thái rỗng ở mỗi nơi. Khi tải: Skeleton mirror đúng khung này."
+                reason="Gom nhiều NotificationItem thành một danh sách cuộn có header (tiêu đề + đánh dấu đã đọc hết) và nhãn gom theo ngày; khi rỗng thì tự rơi về Feedback.Empty thay vì một khối trống. Feature chỉ gom dữ liệu theo ngày và truyền các dòng đã format — không phải tự dựng lại header, nhóm, và trạng thái rỗng ở mỗi nơi. Khi tải: Skeleton mirror đúng khung này."
             >
                 {listFrame(
                     <NotificationList
@@ -193,7 +193,7 @@ export const Empty: Story = {
                 tier="block"
                 leaf="Empty"
                 parts={EMPTY_PARTS}
-                note="Header vẫn render (title được truyền) nhưng KHÔNG có nút mark-all-read (onMarkAllRead bỏ trống); mọi nhóm rỗng → body rơi về EmptyState duy nhất (khác leaf data)."
+                note="Header vẫn render (title được truyền) nhưng KHÔNG có nút mark-all-read (onMarkAllRead bỏ trống); mọi nhóm rỗng → body rơi về Feedback.Empty duy nhất (khác leaf data)."
             >
                 {listFrame(
                     <NotificationList
@@ -201,10 +201,10 @@ export const Empty: Story = {
                         groups={[{ items: [] }]}
                         showAnatomy
                         emptyState={
-                            <EmptyState
+                            <Feedback.Empty
                                 title="Chưa có thông báo nào"
                                 description="Khi có hoạt động mới trên khoá học của bạn, thông báo sẽ xuất hiện ở đây."
-                                anatPart="EmptyState"
+                                anatPart="Feedback.Empty"
                             />
                         }
                     />,

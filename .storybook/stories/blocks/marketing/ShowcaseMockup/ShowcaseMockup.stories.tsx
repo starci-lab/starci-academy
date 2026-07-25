@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ShowcaseMockup, SHOWCASE_THEMES } from "./ShowcaseMockup"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { ShowcaseMockup, SHOWCASE_THEMES } from "@sb-components/blocks/marketing/ShowcaseMockup/ShowcaseMockup"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — a reusable "browser window" showcase frame: window chrome (3 dots +

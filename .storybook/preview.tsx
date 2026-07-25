@@ -33,7 +33,7 @@ const preview: Preview = {
     globalTypes: {
         theme: {
             description: "HeroUI theme",
-            defaultValue: "dark",
+            defaultValue: "light",
             toolbar: {
                 title: "Theme",
                 icon: "circlehollow",
@@ -47,7 +47,7 @@ const preview: Preview = {
     },
     decorators: [
         (Story, context) => {
-            const theme = context.globals.theme || "dark"
+            const theme = context.globals.theme || "light"
             return (
                 <NextIntlClientProvider locale="vi" messages={messages}>
                     <HeroUIProvider>

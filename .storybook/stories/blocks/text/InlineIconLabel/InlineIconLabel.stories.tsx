@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { UsersIcon, SparkleIcon, WarningCircleIcon, ChatCircleIcon } from "@phosphor-icons/react"
-import { InlineIconLabel } from "./InlineIconLabel"
+import { InlineIconLabel } from "@sb-components/blocks/text/InlineIconLabel/InlineIconLabel"
 
 /**
  * PRIMITIVE — a leading icon + inline text label as ONE unit. Use this instead of

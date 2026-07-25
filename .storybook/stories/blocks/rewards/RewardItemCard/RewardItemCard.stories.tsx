@@ -4,8 +4,8 @@ import {
     SnowflakeIcon,
     TShirtIcon,
 } from "@phosphor-icons/react"
-import { RewardItemCard } from "./RewardItemCard"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { RewardItemCard } from "@sb-components/blocks/rewards/RewardItemCard/RewardItemCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof RewardItemCard> = {
     title: "Design/Rewards/RewardItemCard",

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { AiCategoryChip, AiModelCategory } from "./AiCategoryChip"
+import { AiCategoryChip, AiModelCategory } from "@sb-components/blocks/chips/AiCategoryChip/AiCategoryChip"
 
 const meta: Meta<typeof AiCategoryChip> = {
     title: "Design/Chips/AiCategoryChip",

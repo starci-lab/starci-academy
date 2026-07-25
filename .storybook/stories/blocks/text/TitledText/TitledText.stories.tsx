@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { TitledText } from "./TitledText"
+import { TitledText } from "@sb-components/blocks/text/TitledText/TitledText"
 
 /**
  * PRIMITIVE — a primary line + optional muted secondary (and hint) stacked as ONE

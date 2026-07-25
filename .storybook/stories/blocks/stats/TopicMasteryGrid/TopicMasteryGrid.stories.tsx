@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { TopicMasteryGrid } from "./TopicMasteryGrid"
+import { TopicMasteryGrid } from "@sb-components/blocks/stats/TopicMasteryGrid/TopicMasteryGrid"
 
 const meta: Meta<typeof TopicMasteryGrid> = {
     title: "Primitives/Stats/TopicMasteryGrid",

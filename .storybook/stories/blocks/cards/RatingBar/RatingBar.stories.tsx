@@ -1,6 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { RatingBar } from "./RatingBar"
+import { RatingBar } from "@sb-components/blocks/cards/RatingBar/RatingBar"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
+/**
+ * ANATOMY IS PER-LEAF: each story below is its OWN leaf and wraps its render in
+ * its OWN BlockAnatomy reflecting the parts THAT leaf composes — there is no
+ * separate consolidated "Anatomy" story. RatingBar directly composes, per tile:
+ * a Label (the grade text), a `StatusChip` (the 1–4 keyboard-shortcut number),
+ * and an optional `Typography` hint (next-interval preview) — the tile grid +
+ * pressable chrome itself is `GroupPressableCard`'s own anatomy, not drilled here.
+ */
 const meta: Meta<typeof RatingBar> = {
     title: "Block/Cards/RatingBar",
     component: RatingBar,
@@ -30,6 +39,21 @@ const gradesWithoutInterval = [
     { grade: 3, label: "Dễ" },
 ]
 
+// Every tile: label + shortcut-number chip + (optional) next-interval hint.
+const LABEL: AnatomyNode = { name: "Label", tier: "primitive", role: "nhãn mức nhớ (Quên/Khó/Tốt/Dễ)" }
+const STATUS_CHIP: AnatomyNode = { name: "StatusChip", tier: "primitive", role: "số phím tắt 1–4 (tone neutral)" }
+const HINT: AnatomyNode = { name: "Typography", tier: "primitive", role: "khoảng lặp kế tiếp (vd '3 ngày')" }
+
+/** With hint — every tile shows its next-interval preview. */
+const PARTS_WITH_HINT: Array<AnatomyNode> = [LABEL, STATUS_CHIP, HINT]
+/** Without hint — new card, no review history yet, so no interval to show. */
+const PARTS_NO_HINT: Array<AnatomyNode> = [LABEL, STATUS_CHIP]
+/** Loading — each tile's Label/StatusChip/hint mirrored as Skeleton stand-ins. */
+const PARTS_SKELETON: Array<AnatomyNode> = [
+    { name: "Skeleton.Typography", tier: "primitive", role: "khung nhãn mức nhớ", state: "skeleton" },
+    { name: "Skeleton.Chip", tier: "primitive", role: "khung số phím tắt", state: "skeleton" },
+]
+
 /**
  * Mặc định — có hint khoảng lặp. Dùng khi thẻ đã có lịch sử ôn tập: mỗi mức hiện
  * luôn số ngày tới lần ôn kế tiếp để người học cân nhắc trước khi chọn.
@@ -37,11 +61,20 @@ const gradesWithoutInterval = [
 export const Default: Story = {
     render: () => (
         <div className="p-8">
-            <RatingBar
-                options={gradesWithInterval}
-                onRate={() => {}}
-                ariaLabel="Chọn mức độ nhớ"
-            />
+            <BlockAnatomy
+                name="RatingBar"
+                tier="block"
+                leaf="Default"
+                parts={PARTS_WITH_HINT}
+                reason="Mỗi ô SM-2 gói 3 tín hiệu: nhãn mức nhớ, số phím tắt 1–4 (StatusChip), và khoảng lặp kế tiếp — grid + chrome pressable đến từ GroupPressableCard (anatomy riêng của nó)."
+            >
+                <RatingBar
+                    options={gradesWithInterval}
+                    onRate={() => {}}
+                    ariaLabel="Chọn mức độ nhớ"
+                    showAnatomy
+                />
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -53,11 +86,20 @@ export const Default: Story = {
 export const NoHint: Story = {
     render: () => (
         <div className="p-8">
-            <RatingBar
-                options={gradesWithoutInterval}
-                onRate={() => {}}
-                ariaLabel="Chọn mức độ nhớ"
-            />
+            <BlockAnatomy
+                name="RatingBar"
+                tier="block"
+                leaf="NoHint"
+                parts={PARTS_NO_HINT}
+                note="Thẻ mới chưa có lịch sử ôn — hint không truyền → dòng Typography khoảng lặp không render, biến mất khỏi cây."
+            >
+                <RatingBar
+                    options={gradesWithoutInterval}
+                    onRate={() => {}}
+                    ariaLabel="Chọn mức độ nhớ"
+                    showAnatomy
+                />
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -69,12 +111,21 @@ export const NoHint: Story = {
 export const Pending: Story = {
     render: () => (
         <div className="p-8">
-            <RatingBar
-                options={gradesWithInterval}
-                onRate={() => {}}
-                ariaLabel="Chọn mức độ nhớ"
-                isPending
-            />
+            <BlockAnatomy
+                name="RatingBar"
+                tier="block"
+                leaf="Pending"
+                parts={PARTS_WITH_HINT}
+                note="isPending → cùng composition với Default, chỉ khoá press (isDisabled xuống GroupPressableCard); không đổi cây."
+            >
+                <RatingBar
+                    options={gradesWithInterval}
+                    onRate={() => {}}
+                    ariaLabel="Chọn mức độ nhớ"
+                    isPending
+                    showAnatomy
+                />
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -86,12 +137,21 @@ export const Pending: Story = {
 export const Loading: Story = {
     render: () => (
         <div className="p-8">
-            <RatingBar
-                options={gradesWithInterval}
-                onRate={() => {}}
-                ariaLabel="Chọn mức độ nhớ"
-                isSkeleton
-            />
+            <BlockAnatomy
+                name="RatingBar"
+                tier="block"
+                leaf="Loading"
+                parts={PARTS_SKELETON}
+                note="isSkeleton → mỗi tile đổi Label/StatusChip thật sang Skeleton tương ứng, giữ đúng lưới + khung ô."
+            >
+                <RatingBar
+                    options={gradesWithInterval}
+                    onRate={() => {}}
+                    ariaLabel="Chọn mức độ nhớ"
+                    isSkeleton
+                    showAnatomy
+                />
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -104,11 +164,20 @@ export const NarrowContainer: Story = {
     render: () => (
         <div className="p-8">
             <div className="w-72">
-                <RatingBar
-                    options={gradesWithInterval}
-                    onRate={() => {}}
-                    ariaLabel="Chọn mức độ nhớ"
-                />
+                <BlockAnatomy
+                    name="RatingBar"
+                    tier="block"
+                    leaf="NarrowContainer"
+                    parts={PARTS_WITH_HINT}
+                    note="Container hẹp (<384px) tự co về lưới 2×2 — CÙNG composition với Default, chỉ đổi số cột."
+                >
+                    <RatingBar
+                        options={gradesWithInterval}
+                        onRate={() => {}}
+                        ariaLabel="Chọn mức độ nhớ"
+                        showAnatomy
+                    />
+                </BlockAnatomy>
             </div>
         </div>
     ),

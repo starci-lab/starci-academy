@@ -1,8 +1,19 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Typography } from "@heroui/react"
 import { BookOpenIcon, CardsIcon, CodeIcon, FlameIcon, PuzzlePieceIcon } from "@phosphor-icons/react"
-import { StatGridCard } from "./StatGridCard"
+import { StatGridCard } from "@sb-components/blocks/stats/StatGridCard/StatGridCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
+/**
+ * PRIMITIVE — a bounded surface whose cells sit in a 2-col grid, divided by thin
+ * seams (the grid sibling of `SurfaceListCard`'s vertical list). The block owns
+ * only the grid/border/span structure — cell content is free-form (`ReactNode`).
+ *
+ * ANATOMY IS PER-LEAF: each story below is its OWN leaf and carries its OWN
+ * BlockAnatomy axis. `items[].content` is an opaque caller-built slot (icon +
+ * label + count + mini progress bar assembled by the STORY, not this
+ * component) so it stays collapsed as ONE `Cell` node, never drilled into.
+ */
 const meta: Meta<typeof StatGridCard> = {
     title: "Primitives/Stats/StatGridCard",
     component: StatGridCard,
@@ -15,6 +26,9 @@ const meta: Meta<typeof StatGridCard> = {
 export default meta
 
 type Story = StoryObj<typeof StatGridCard>
+
+const CELL: AnatomyNode = { name: "Cell", tier: "primitive", role: "1 ô lưới (lặp ×N, nội dung tự do); ô cuối span 2 cột khi tổng số lẻ" }
+const PARTS: Array<AnatomyNode> = [CELL]
 
 /** One cell: an icon + label row, a count, and a mini progress bar — the exact shape `WeeklyGoals` feeds in. */
 const statCell = (icon: React.ReactNode, label: string, current: number, target: number) => (
@@ -44,14 +58,17 @@ export const Even: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <StatGridCard
-                    items={[
-                        { key: "lessons", content: statCell(icon(BookOpenIcon), "Nội dung", 2, 5) },
-                        { key: "studyDays", content: statCell(icon(FlameIcon), "Ngày học", 4, 5) },
-                        { key: "challenges", content: statCell(icon(PuzzlePieceIcon), "Challenge", 0, 3) },
-                        { key: "coding", content: statCell(icon(CodeIcon), "Coding", 0, 3) },
-                    ]}
-                />
+                <BlockAnatomy name="StatGridCard" tier="primitive" leaf="Even" parts={PARTS} reason="Khung grid 2 cột với seam border; mỗi Cell là 1 ô lặp, nội dung (icon+label+count+bar) là slot tự do do story lắp, không phải node của StatGridCard.">
+                    <StatGridCard
+                        showAnatomy
+                        items={[
+                            { key: "lessons", content: statCell(icon(BookOpenIcon), "Nội dung", 2, 5) },
+                            { key: "studyDays", content: statCell(icon(FlameIcon), "Ngày học", 4, 5) },
+                            { key: "challenges", content: statCell(icon(PuzzlePieceIcon), "Challenge", 0, 3) },
+                            { key: "coding", content: statCell(icon(CodeIcon), "Coding", 0, 3) },
+                        ]}
+                    />
+                </BlockAnatomy>
             </div>
         </div>
     ),
@@ -62,15 +79,18 @@ export const OddOverflow: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <StatGridCard
-                    items={[
-                        { key: "lessons", content: statCell(icon(BookOpenIcon), "Nội dung", 2, 5) },
-                        { key: "studyDays", content: statCell(icon(FlameIcon), "Ngày học", 4, 5) },
-                        { key: "challenges", content: statCell(icon(PuzzlePieceIcon), "Challenge", 0, 3) },
-                        { key: "coding", content: statCell(icon(CodeIcon), "Coding", 0, 3) },
-                        { key: "flashcards", content: statCell(icon(CardsIcon), "Flashcard", 12, 20) },
-                    ]}
-                />
+                <BlockAnatomy name="StatGridCard" tier="primitive" leaf="OddOverflow" parts={PARTS} note="Tổng số lẻ (5) → Cell cuối tự `col-span-2`, không để trống 1 ô — vẫn cùng 1 loại node Cell.">
+                    <StatGridCard
+                        showAnatomy
+                        items={[
+                            { key: "lessons", content: statCell(icon(BookOpenIcon), "Nội dung", 2, 5) },
+                            { key: "studyDays", content: statCell(icon(FlameIcon), "Ngày học", 4, 5) },
+                            { key: "challenges", content: statCell(icon(PuzzlePieceIcon), "Challenge", 0, 3) },
+                            { key: "coding", content: statCell(icon(CodeIcon), "Coding", 0, 3) },
+                            { key: "flashcards", content: statCell(icon(CardsIcon), "Flashcard", 12, 20) },
+                        ]}
+                    />
+                </BlockAnatomy>
             </div>
         </div>
     ),
@@ -81,11 +101,14 @@ export const Single: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <StatGridCard
-                    items={[
-                        { key: "lessons", content: statCell(icon(BookOpenIcon), "Nội dung", 2, 5) },
-                    ]}
-                />
+                <BlockAnatomy name="StatGridCard" tier="primitive" leaf="Single" parts={PARTS} note="1 item (lẻ suy biến) → Cell duy nhất span full-width, không border-r/b thừa.">
+                    <StatGridCard
+                        showAnatomy
+                        items={[
+                            { key: "lessons", content: statCell(icon(BookOpenIcon), "Nội dung", 2, 5) },
+                        ]}
+                    />
+                </BlockAnatomy>
             </div>
         </div>
     ),

@@ -6,9 +6,9 @@ import {
     PuzzlePieceIcon,
     SparkleIcon,
 } from "@phosphor-icons/react"
-import { ChatComposer, type ChipButtonItem } from "./ChatComposer"
-import { Button } from "../../buttons/Button/Button"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { ChatComposer, type ChipButtonItem } from "@sb-components/blocks/learn/ChatComposer/ChatComposer"
+import { Button } from "@sb-components/blocks/buttons/Button/Button"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * BLOCK — the AI-chat COMPOSER ("soạn & gửi tin"), ported from

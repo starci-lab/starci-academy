@@ -8,7 +8,7 @@ import {
     PuzzlePieceIcon,
     TrophyIcon,
 } from "@phosphor-icons/react"
-import { SegmentedToggle, type SegmentedToggleOption } from "./SegmentedToggle"
+import { SegmentedToggle, type SegmentedToggleOption } from "@sb-components/blocks/navigation/SegmentedToggle/SegmentedToggle"
 
 const meta: Meta<typeof SegmentedToggle> = {
     title: "Primitives/Navigation/SegmentedToggle",

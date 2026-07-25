@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React, { useState } from "react"
-import { CommentThread, type CommentThreadNode } from "./CommentThread"
-import { ReactionType } from "../ReactionBar/ReactionBar"
-import type { CommunityPostAuthor } from "../CommunityCommentRow/CommunityCommentRow"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { CommentThread, type CommentThreadNode } from "@sb-components/blocks/feed/CommentThread/CommentThread"
+import { ReactionType } from "@sb-components/blocks/feed/ReactionBar/ReactionBar"
+import type { CommunityPostAuthor } from "@sb-components/blocks/feed/CommunityCommentRow/CommunityCommentRow"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * BLOCK — a nested discussion thread: a root Composer for a top-level comment, a

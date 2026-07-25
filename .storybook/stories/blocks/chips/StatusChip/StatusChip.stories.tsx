@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CheckCircleIcon } from "@phosphor-icons/react"
-import { StatusChip } from "./StatusChip"
+import { StatusChip } from "@sb-components/blocks/chips/StatusChip/StatusChip"
 
 const meta: Meta<typeof StatusChip> = {
     title: "Primitives/Chips/StatusChip",

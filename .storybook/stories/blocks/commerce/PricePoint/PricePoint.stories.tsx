@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { PricePoint } from "./PricePoint"
+import { PricePoint } from "@sb-components/blocks/commerce/PricePoint/PricePoint"
 
 /**
  * PRIMITIVE — a tier/subscription price as ONE unit: amount + optional struck

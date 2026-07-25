@@ -1,6 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { TagChips } from "./TagChips"
+import { TagChips } from "@sb-components/blocks/chips/TagChips/TagChips"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
+/**
+ * PRIMITIVE — a row of `Chip`s (tags), collapsing overflow into a "+N" chip that
+ * opens a `Tooltip` listing every tag.
+ *
+ * ANATOMY IS PER-LEAF: each story below is its OWN leaf and carries its OWN
+ * BlockAnatomy axis reflecting the parts THAT leaf composes.
+ */
 const meta: Meta<typeof TagChips> = {
     title: "Primitives/Chips/TagChips",
     component: TagChips,
@@ -14,6 +22,9 @@ export default meta
 
 type Story = StoryObj<typeof TagChips>
 
+const CHIP: AnatomyNode = { name: "Chip", tier: "primitive", role: "chip tag hiển thị (lặp ×N theo tags, cắt tại maxVisible)" }
+const OVERFLOW: AnatomyNode = { name: "Tooltip", tier: "primitive", role: "chip \"+N\" mở tooltip liệt kê toàn bộ tag khi tràn maxVisible" }
+
 /**
  * Empty: no tags → renders NOTHING (not even the +N counter, which only appears
  * when the overflow count > 0). This is the component's real empty behaviour — a
@@ -22,7 +33,9 @@ type Story = StoryObj<typeof TagChips>
 export const Empty: Story = {
     render: () => (
         <div className="p-8">
-            <TagChips tags={[]} />
+            <BlockAnatomy name="TagChips" tier="primitive" leaf="Empty" parts={[]} note="`tags=[]` → không Chip nào, không +N — row collapses về rỗng, không EmptyState.">
+                <TagChips showAnatomy tags={[]} />
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -31,7 +44,9 @@ export const Empty: Story = {
 export const SingleTag: Story = {
     render: () => (
         <div className="p-8">
-            <TagChips tags={["nestjs"]} />
+            <BlockAnatomy name="TagChips" tier="primitive" leaf="SingleTag" parts={[CHIP]} note="1 tag, dưới maxVisible → chỉ 1 Chip, không +N.">
+                <TagChips showAnatomy tags={["nestjs"]} />
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -40,7 +55,9 @@ export const SingleTag: Story = {
 export const AtMaxVisible: Story = {
     render: () => (
         <div className="p-8">
-            <TagChips tags={["typescript", "nodejs", "postgresql"]} />
+            <BlockAnatomy name="TagChips" tier="primitive" leaf="AtMaxVisible" parts={[CHIP]} note="Đúng maxVisible (3) → mọi tag hiện Chip, chưa tràn nên không +N.">
+                <TagChips showAnatomy tags={["typescript", "nodejs", "postgresql"]} />
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -52,17 +69,20 @@ export const AtMaxVisible: Story = {
 export const Overflow: Story = {
     render: () => (
         <div className="p-8">
-            <TagChips
-                tags={[
-                    "system-design",
-                    "microservices",
-                    "docker",
-                    "kubernetes",
-                    "graphql",
-                    "keycloak",
-                    "rag",
-                ]}
-            />
+            <BlockAnatomy name="TagChips" tier="primitive" leaf="Overflow" parts={[CHIP, OVERFLOW]} note="Tràn maxVisible → 3 Chip đầu + 1 chip +N mở Tooltip liệt kê hết.">
+                <TagChips
+                    showAnatomy
+                    tags={[
+                        "system-design",
+                        "microservices",
+                        "docker",
+                        "kubernetes",
+                        "graphql",
+                        "keycloak",
+                        "rag",
+                    ]}
+                />
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -71,7 +91,15 @@ export const Overflow: Story = {
 export const Loading: Story = {
     render: () => (
         <div className="p-8">
-            <TagChips tags={[]} isSkeleton={true} />
+            <BlockAnatomy
+                name="TagChips"
+                tier="primitive"
+                leaf="Loading"
+                parts={[{ name: "Skeleton.Chip", tier: "design", role: "mirror hàng Chip (maxVisible pill), không +N/Tooltip" }]}
+                note="`isSkeleton` thay TOÀN BỘ hàng bằng skeleton pill (1 node), không Chip/+N thật."
+            >
+                <TagChips showAnatomy tags={[]} isSkeleton={true} />
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -80,19 +108,22 @@ export const Loading: Story = {
 export const CustomMaxVisible: Story = {
     render: () => (
         <div className="p-8">
-            <TagChips
-                tags={[
-                    "javascript",
-                    "react",
-                    "nextjs",
-                    "tailwindcss",
-                    "heroui",
-                    "vitest",
-                    "playwright",
-                    "ci-cd",
-                ]}
-                maxVisible={5}
-            />
+            <BlockAnatomy name="TagChips" tier="primitive" leaf="CustomMaxVisible" parts={[CHIP, OVERFLOW]} note="`maxVisible={5}` dời ngưỡng tràn — vẫn cùng composition Chip+Tooltip.">
+                <TagChips
+                    showAnatomy
+                    tags={[
+                        "javascript",
+                        "react",
+                        "nextjs",
+                        "tailwindcss",
+                        "heroui",
+                        "vitest",
+                        "playwright",
+                        "ci-cd",
+                    ]}
+                    maxVisible={5}
+                />
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -105,7 +136,9 @@ export const CustomMaxVisible: Story = {
 export const Variants: Story = {
     render: () => (
         <div className="flex flex-col gap-3 p-8">
-            <TagChips tags={["frontend", "backend", "ai", "vector-db"]} variant="soft" />
+            <BlockAnatomy name="TagChips" tier="primitive" leaf="Variants" parts={[CHIP]} note="`variant` chỉ đổi màu/tông Chip — vẫn 1 Chip node lặp ×N, không +N (dưới maxVisible).">
+                <TagChips showAnatomy tags={["frontend", "backend", "ai", "vector-db"]} variant="soft" />
+            </BlockAnatomy>
             <TagChips tags={["frontend", "backend", "ai", "vector-db"]} variant="tertiary" />
             <TagChips tags={["frontend", "backend", "ai", "vector-db"]} variant="primary" />
         </div>

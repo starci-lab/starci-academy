@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
 import { Typography } from "@heroui/react"
 import { BellIcon, ChatCircleIcon, CheckCircleIcon, FlameIcon } from "@phosphor-icons/react"
-import { NotificationItem } from "./NotificationItem"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { NotificationItem } from "@sb-components/blocks/notifications/NotificationItem/NotificationItem"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — one notification row: an optional tone-colored icon tile + a

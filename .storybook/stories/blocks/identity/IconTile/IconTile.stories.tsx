@@ -5,7 +5,7 @@ import {
     RocketLaunchIcon,
     WarningIcon,
 } from "@phosphor-icons/react"
-import { IconTile } from "./IconTile"
+import { IconTile } from "@sb-components/blocks/identity/IconTile/IconTile"
 
 const meta: Meta<typeof IconTile> = {
     title: "Primitives/Identity/IconTile",

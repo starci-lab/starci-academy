@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { CourseProgressBar } from "./CourseProgressBar"
+import { CourseProgressBar } from "@sb-components/blocks/stats/CourseProgressBar/CourseProgressBar"
 
 const meta: Meta<typeof CourseProgressBar> = {
     title: "Primitives/Stats/CourseProgressBar",

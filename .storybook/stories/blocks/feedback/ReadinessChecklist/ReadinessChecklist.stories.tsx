@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CircuitryIcon, CloudIcon, DatabaseIcon, RobotIcon } from "@phosphor-icons/react"
-import { ReadinessChecklist, type ReadinessChecklistItem } from "./ReadinessChecklist"
-import { SurfaceListCard } from "../../cards/SurfaceListCard/SurfaceListCard"
+import { ReadinessChecklist, type ReadinessChecklistItem } from "@sb-components/blocks/feedback/ReadinessChecklist/ReadinessChecklist"
+import { SurfaceCard } from "@sb-components/blocks/cards/SurfaceCard/SurfaceCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof ReadinessChecklist> = {
     title: "Block/Feedback/ReadinessChecklist",
@@ -51,18 +52,35 @@ const ITEMS: Array<ReadinessChecklistItem> = [
     },
 ]
 
+// ROW — one repeated per item: List.Row (leading·title·subtitle·trailing, opaque —
+// badged via AnatomyOverlay) composing an IconTile (leading) + StatusChip (trailing).
+const ROW_PARTS: Array<AnatomyNode> = [
+    { name: "List.Row", tier: "design", role: "hàng leading·title·subtitle·trailing — lặp mỗi item", storyId: "layouts-lists-list-list-row--title-only" },
+    { name: "IconTile", tier: "primitive", role: "leading — check tròn (success) khi ready, icon caller (neutral) khi chờ" },
+    { name: "StatusChip", tier: "primitive", role: "trailing — nhãn Sẵn sàng/Chờ theo tone success/neutral" },
+]
+
 /** All waiting — no prerequisite ready yet (right after the local model cluster boots, no health check passed). */
 export const AllWaiting: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <SurfaceListCard bordered>
-                    <ReadinessChecklist
-                        items={ITEMS}
-                        readyLabel="Sẵn sàng"
-                        pendingLabel="Chờ"
-                    />
-                </SurfaceListCard>
+                <BlockAnatomy
+                    name="ReadinessChecklist"
+                    tier="block"
+                    leaf="AllWaiting"
+                    parts={ROW_PARTS}
+                    reason="Danh sách prerequisite/setup: mỗi hàng = List.Row ghép IconTile (leading) + StatusChip (trailing) theo state ready/pending của item."
+                >
+                    <SurfaceCard.Base bordered flushContent>
+                        <ReadinessChecklist
+                            items={ITEMS}
+                            readyLabel="Sẵn sàng"
+                            pendingLabel="Chờ"
+                            showAnatomy
+                        />
+                    </SurfaceCard.Base>
+                </BlockAnatomy>
             </div>
         </div>
     ),
@@ -73,15 +91,24 @@ export const PartiallyReady: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <SurfaceListCard bordered>
-                    <ReadinessChecklist
-                        items={ITEMS.map((item) => (
-                            item.id === "agent" || item.id === "ollama" ? { ...item, ready: true } : item
-                        ))}
-                        readyLabel="Sẵn sàng"
-                        pendingLabel="Chờ"
-                    />
-                </SurfaceListCard>
+                <BlockAnatomy
+                    name="ReadinessChecklist"
+                    tier="block"
+                    leaf="PartiallyReady"
+                    parts={ROW_PARTS}
+                    note="CÙNG composition leaf AllWaiting; 2 hàng đầu đổi sang state ready (IconTile success + StatusChip success)."
+                >
+                    <SurfaceCard.Base bordered flushContent>
+                        <ReadinessChecklist
+                            items={ITEMS.map((item) => (
+                                item.id === "agent" || item.id === "ollama" ? { ...item, ready: true } : item
+                            ))}
+                            readyLabel="Sẵn sàng"
+                            pendingLabel="Chờ"
+                            showAnatomy
+                        />
+                    </SurfaceCard.Base>
+                </BlockAnatomy>
             </div>
         </div>
     ),

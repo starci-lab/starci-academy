@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { BackLink } from "./BackLink"
+import { BackLink } from "@sb-components/blocks/navigation/BackLink/BackLink"
 
 const meta: Meta<typeof BackLink> = {
     title: "Primitives/Navigation/BackLink",

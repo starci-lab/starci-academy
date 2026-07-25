@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { GradeCreditCaption } from "./GradeCreditCaption"
-import type { GradeCreditUsage } from "./GradeCreditCaption"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { GradeCreditCaption } from "@sb-components/blocks/grading/GradeCreditCaption/GradeCreditCaption"
+import type { GradeCreditUsage } from "@sb-components/blocks/grading/GradeCreditCaption/GradeCreditCaption"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — the ONE shared credit caption sitting under every model picker. It is

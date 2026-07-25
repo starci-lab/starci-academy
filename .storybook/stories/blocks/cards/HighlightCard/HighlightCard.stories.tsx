@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Avatar, AvatarFallback, Card, CardContent } from "@heroui/react"
-import { HighlightCard } from "./HighlightCard"
-import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
+import { HighlightCard } from "@sb-components/blocks/cards/HighlightCard/HighlightCard"
+import { Skeleton } from "@sb-components/blocks/skeleton/Skeleton/Skeleton"
 
 const meta: Meta<typeof HighlightCard> = {
     title: "Primitives/Cards/HighlightCard",

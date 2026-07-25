@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { MicroservicesDiagram } from "./MicroservicesDiagram"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { MicroservicesDiagram } from "@sb-components/blocks/marketing/MicroservicesDiagram/MicroservicesDiagram"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — a coded hero illustration: a curated microservices topology framed over

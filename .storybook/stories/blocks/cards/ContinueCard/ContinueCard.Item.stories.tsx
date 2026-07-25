@@ -1,11 +1,16 @@
+import type { SVGProps } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ContinueCard } from "./ContinueCard"
-import { SectionCard } from "../SectionCard/SectionCard"
-import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
+import { ContinueCard } from "@sb-components/blocks/cards/ContinueCard/ContinueCard"
+import { SectionCard } from "@sb-components/blocks/cards/SectionCard/SectionCard"
+import { Skeleton } from "@sb-components/blocks/skeleton/Skeleton/Skeleton"
 import { WarningIcon } from "@phosphor-icons/react"
-import { EmptyState } from "../../feedback/EmptyState/EmptyState"
-import { Button } from "../../buttons/Button/Button"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { Feedback } from "@sb-components/blocks/feedback/Feedback/Feedback"
+import { Button } from "@sb-components/blocks/buttons/Button/Button"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+
+// `Feedback.Empty` nhận icon là COMPONENT ref và tự ép `size-8` (§4/§5) — phosphor
+// `weight="duotone"` không đi kèm được nữa, nên bọc thành component để GIỮ NGUYÊN nét vẽ.
+const WarningDuotone = (props: SVGProps<SVGSVGElement>) => <WarningIcon {...props} weight="duotone" />
 
 /**
  * DESIGN — the `item` variant of ContinueCard: one of N "tiếp tục phiên đang dở"
@@ -66,10 +71,10 @@ const LOADING_PARTS: Array<AnatomyNode> = [
     },
 ]
 
-// Error leaf — the error renders INSIDE the card frame (not a blank card): EmptyState danger + retry.
-// EmptyState mounts INSIDE SectionCard; the retry Button (action prop) mounts INSIDE
-// EmptyState → the tree nests SectionCard > EmptyState > Button. WarningIcon is CUT —
-// it's just the value passed into EmptyState's `icon` prop, not a composed part.
+// Error leaf — the error renders INSIDE the card frame (not a blank card): Feedback.Empty danger + retry.
+// Feedback.Empty mounts INSIDE SectionCard; the retry Button (action prop) mounts INSIDE
+// Feedback.Empty → the tree nests SectionCard > Feedback.Empty > Button. WarningIcon is CUT —
+// it's just the value passed into Feedback.Empty's `icon` prop, not a composed part.
 const ERROR_PARTS: Array<AnatomyNode> = [
     {
         name: "SectionCard",
@@ -77,7 +82,7 @@ const ERROR_PARTS: Array<AnatomyNode> = [
         role: "khung surface — lỗi render TRONG khung (không phải card trắng)",
         children: [
             {
-                name: "EmptyState",
+                name: "Feedback.Empty",
                 tier: "primitive",
                 role: "trạng thái \"Mất kết nối\" — icon cảnh báo + mô tả",
                 state: "danger",
@@ -99,7 +104,7 @@ export const Content: Story = {
                 leaf="Content"
                 parts={ITEM_PARTS}
                 reason={
-                    "Biến thể \"item\" (1-trong-N — story trình 1 card đại diện, lưới là việc của consumer). Mỗi state là 1 leaf trong folder: Mục (content, CTA SeeMoreLink) · Đang tải (Skeleton mirror LAYOUT item, KHÔNG progress/sweep) · Lỗi mạng rớt (EmptyState tone=\"danger\" trong SectionCard). Skeleton mirror layout, không nhấn/animation."
+                    "Biến thể \"item\" (1-trong-N — story trình 1 card đại diện, lưới là việc của consumer). Mỗi state là 1 leaf trong folder: Mục (content, CTA SeeMoreLink) · Đang tải (Skeleton mirror LAYOUT item, KHÔNG progress/sweep) · Lỗi mạng rớt (Feedback.Empty tone=\"danger\" trong SectionCard). Skeleton mirror layout, không nhấn/animation."
                 }
             >
                 <div className="w-80">
@@ -142,14 +147,14 @@ export const LoadError: Story = {
                 tier="design"
                 leaf="LoadError"
                 parts={ERROR_PARTS}
-                note={"Mạng rớt → EmptyState tone=\"danger\" + nút Thử lại render TRONG SectionCard, không để lại card trắng."}
+                note={"Mạng rớt → Feedback.Empty tone=\"danger\" + nút Thử lại render TRONG SectionCard, không để lại card trắng."}
             >
                 <div className="w-80">
                     <SectionCard anatPart="SectionCard">
-                        <EmptyState
-                            anatPart="EmptyState"
+                        <Feedback.Empty
+                            anatPart="Feedback.Empty"
                             tone="danger"
-                            icon={<WarningIcon weight="duotone" />}
+                            icon={WarningDuotone}
                             title="Mất kết nối"
                             description="Mạng có vẻ bị rớt. Kiểm tra kết nối rồi thử lại."
                             action={

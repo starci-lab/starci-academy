@@ -8,8 +8,8 @@ import {
     SparkleIcon,
     UserPlusIcon,
 } from "@phosphor-icons/react"
-import { ActivityAvatar } from "./ActivityAvatar"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { ActivityAvatar } from "@sb-components/blocks/feed/ActivityAvatar/ActivityAvatar"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — a feed avatar that carries an activity-type badge. Composed from the

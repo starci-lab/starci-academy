@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { EnumChip } from "./EnumChip"
-import type { EnumChipEntry } from "./EnumChip"
+import { EnumChip } from "@sb-components/blocks/chips/EnumChip/EnumChip"
+import type { EnumChipEntry } from "@sb-components/blocks/chips/EnumChip/EnumChip"
 
 const meta: Meta<typeof EnumChip> = {
     title: "Primitives/Chips/EnumChip",
@@ -23,6 +23,23 @@ const ORDER_STATUS_MAP: Record<OrderStatus, EnumChipEntry> = {
     shipped: { color: "accent", label: "Đang giao" },
     cancelled: { color: "danger", label: "Đã huỷ" },
     refunded: { color: "warning", label: "Hoàn tiền" },
+}
+
+/**
+ * Overview — mọi tone trên CÙNG 1 hàng (showcase) + skeleton. Trang landing đầy
+ * đủ thay vì 1 chip lọt thỏm giữa khoảng trống.
+ */
+export const Gallery: Story = {
+    render: () => (
+        <div className="flex flex-wrap items-center gap-2 p-8">
+            <EnumChip<OrderStatus> value="pending" map={ORDER_STATUS_MAP} />
+            <EnumChip<OrderStatus> value="paid" map={ORDER_STATUS_MAP} />
+            <EnumChip<OrderStatus> value="shipped" map={ORDER_STATUS_MAP} />
+            <EnumChip<OrderStatus> value="cancelled" map={ORDER_STATUS_MAP} />
+            <EnumChip<OrderStatus> value="refunded" map={ORDER_STATUS_MAP} />
+            <EnumChip<OrderStatus> value="paid" map={ORDER_STATUS_MAP} isSkeleton />
+        </div>
+    ),
 }
 
 export const Neutral: Story = {

@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
-import { ContentSearchList } from "./ContentSearchList"
-import type { SearchCourseContentItem } from "../EntityResultRow/EntityResultRow"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { ContentSearchList } from "@sb-components/blocks/learn/ContentSearchList/ContentSearchList"
+import type { SearchCourseContentItem } from "@sb-components/blocks/learn/EntityResultRow/EntityResultRow"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * BLOCK — the chatbox's "Tìm nội dung khóa" (search-in-course) view: a
@@ -98,7 +98,7 @@ const ITEM_CAPSTONE_MILESTONE: SearchCourseContentItem = {
 
 const QUERY = "N+1 query"
 
-// IDLE leaf — query rỗng: ScrollShadow > AsyncContent (nhánh content) > chỉ một dòng hint.
+// IDLE leaf — query rỗng: ScrollShadow > AsyncContent.Base (nhánh content) > chỉ một dòng hint.
 const IDLE_PARTS: Array<AnatomyNode> = [
     {
         name: "ScrollShadow",
@@ -106,7 +106,7 @@ const IDLE_PARTS: Array<AnatomyNode> = [
         role: "vùng cuộn tự giới hạn (max-h-[55vh])",
         children: [
             {
-                name: "AsyncContent",
+                name: "AsyncContent.Base",
                 tier: "primitive",
                 role: "switch error → loading → empty → content",
                 state: "content",
@@ -118,7 +118,7 @@ const IDLE_PARTS: Array<AnatomyNode> = [
     },
 ]
 
-// LOADING leaf — cùng ScrollShadow > AsyncContent nhưng nhánh loading: SurfaceListCard
+// LOADING leaf — cùng ScrollShadow > AsyncContent.Base nhưng nhánh loading: SurfaceListCard
 // bordered giữ khung, mỗi hàng là SurfaceListCardItem bọc 2 Skeleton.Typography + 1 Skeleton icon.
 const LOADING_PARTS: Array<AnatomyNode> = [
     {
@@ -127,7 +127,7 @@ const LOADING_PARTS: Array<AnatomyNode> = [
         role: "vùng cuộn tự giới hạn (max-h-[55vh])",
         children: [
             {
-                name: "AsyncContent",
+                name: "AsyncContent.Base",
                 tier: "primitive",
                 role: "nhánh loading → skeleton",
                 state: "loading",
@@ -155,7 +155,7 @@ const LOADING_PARTS: Array<AnatomyNode> = [
     },
 ]
 
-// EMPTY leaf — query không rỗng nhưng isEmpty=true: AsyncContent nhánh empty → EmptyContent (qua EmptyState).
+// EMPTY leaf — query không rỗng nhưng isEmpty=true: AsyncContent.Base nhánh empty → AsyncContent.Empty (qua Feedback.Empty).
 const EMPTY_PARTS: Array<AnatomyNode> = [
     {
         name: "ScrollShadow",
@@ -163,19 +163,19 @@ const EMPTY_PARTS: Array<AnatomyNode> = [
         role: "vùng cuộn tự giới hạn (max-h-[55vh])",
         children: [
             {
-                name: "AsyncContent",
+                name: "AsyncContent.Base",
                 tier: "primitive",
                 role: "nhánh empty",
                 state: "empty",
                 children: [
-                    { name: "EmptyContent", tier: "primitive", role: "dòng 'không tìm thấy' — CÙNG câu với leaf lỗi" },
+                    { name: "AsyncContent.Empty", tier: "primitive", role: "dòng 'không tìm thấy' — CÙNG câu với leaf lỗi" },
                 ],
             },
         ],
     },
 ]
 
-// ERROR leaf — hasError=true: AsyncContent nhánh error (ưu tiên cao nhất) → ErrorContent, CÙNG câu với empty.
+// ERROR leaf — hasError=true: AsyncContent.Base nhánh error (ưu tiên cao nhất) → AsyncContent.Error, CÙNG câu với empty.
 const ERROR_PARTS: Array<AnatomyNode> = [
     {
         name: "ScrollShadow",
@@ -183,19 +183,19 @@ const ERROR_PARTS: Array<AnatomyNode> = [
         role: "vùng cuộn tự giới hạn (max-h-[55vh])",
         children: [
             {
-                name: "AsyncContent",
+                name: "AsyncContent.Base",
                 tier: "primitive",
                 role: "nhánh error (ưu tiên trước loading/empty)",
                 state: "error",
                 children: [
-                    { name: "ErrorContent", tier: "primitive", role: "dòng 'không tìm thấy' — nguồn dùng CHUNG một câu cho empty và error" },
+                    { name: "AsyncContent.Error", tier: "primitive", role: "dòng 'không tìm thấy' — nguồn dùng CHUNG một câu cho empty và error" },
                 ],
             },
         ],
     },
 ]
 
-// DATA leaf — kết quả thật: AsyncContent nhánh content > SurfaceListCard bordered (CÙNG khung
+// DATA leaf — kết quả thật: AsyncContent.Base nhánh content > SurfaceListCard bordered (CÙNG khung
 // với skeleton — port fix) > EntityResultRow ×N (showKindChip + showSnippet).
 const DATA_PARTS: Array<AnatomyNode> = [
     {
@@ -204,7 +204,7 @@ const DATA_PARTS: Array<AnatomyNode> = [
         role: "vùng cuộn tự giới hạn (max-h-[55vh])",
         children: [
             {
-                name: "AsyncContent",
+                name: "AsyncContent.Base",
                 tier: "primitive",
                 role: "nhánh content, query không rỗng",
                 state: "content",
@@ -235,7 +235,7 @@ export const Idle: Story = {
                 tier="block"
                 leaf="Idle"
                 parts={IDLE_PARTS}
-                note="query rỗng → nhánh content của AsyncContent chỉ render MỘT dòng Typography gợi ý, không khung/không hàng nào cả."
+                note="query rỗng → nhánh content của AsyncContent.Base chỉ render MỘT dòng Typography gợi ý, không khung/không hàng nào cả."
             >
                 <ContentSearchList items={[]} query="" onSelect={() => {}} showAnatomy />
             </BlockAnatomy>,
@@ -250,7 +250,7 @@ export const Skeleton: Story = {
                 tier="block"
                 leaf="Skeleton"
                 parts={LOADING_PARTS}
-                note="isLoading → AsyncContent đổi sang khung SurfaceListCard bordered với 3 hàng SurfaceListCardItem mirror Skeleton — CÙNG khung với leaf có kết quả (khác leaf idle: khung đã dựng sẵn dù chưa có dữ liệu)."
+                note="isLoading → AsyncContent.Base đổi sang khung SurfaceListCard bordered với 3 hàng SurfaceListCardItem mirror Skeleton — CÙNG khung với leaf có kết quả (khác leaf idle: khung đã dựng sẵn dù chưa có dữ liệu)."
             >
                 <ContentSearchList items={[]} query={QUERY} isLoading onSelect={() => {}} showAnatomy />
             </BlockAnatomy>,
@@ -265,7 +265,7 @@ export const Empty: Story = {
                 tier="block"
                 leaf="Empty"
                 parts={EMPTY_PARTS}
-                note="query không rỗng nhưng isEmpty=true → AsyncContent nhánh empty; câu hiện ra GIỐNG HỆT leaf lỗi (nguồn dùng chung một i18n key cho cả hai)."
+                note="query không rỗng nhưng isEmpty=true → AsyncContent.Base nhánh empty; câu hiện ra GIỐNG HỆT leaf lỗi (nguồn dùng chung một i18n key cho cả hai)."
             >
                 <ContentSearchList items={[]} query={QUERY} isEmpty onSelect={() => {}} showAnatomy />
             </BlockAnatomy>,
@@ -280,7 +280,7 @@ export const ErrorState: Story = {
                 tier="block"
                 leaf="Error"
                 parts={ERROR_PARTS}
-                note="hasError=true → AsyncContent ưu tiên nhánh error trước cả loading/empty; câu hiện ra GIỐNG HỆT leaf rỗng (nguồn dùng chung một i18n key)."
+                note="hasError=true → AsyncContent.Base ưu tiên nhánh error trước cả loading/empty; câu hiện ra GIỐNG HỆT leaf rỗng (nguồn dùng chung một i18n key)."
             >
                 <ContentSearchList items={[]} query={QUERY} hasError onSelect={() => {}} showAnatomy />
             </BlockAnatomy>,
@@ -295,7 +295,7 @@ export const WithResults: Story = {
                 tier="block"
                 leaf="WithResults"
                 parts={DATA_PARTS}
-                reason="View 'Tìm nội dung khóa' trong chatbox cần MỘT vùng cuộn tự giới hạn chạy đúng chuỗi trạng thái error→loading→empty→content chuẩn (AsyncContent), cộng một gợi ý khi chưa gõ gì. Gói vùng cuộn + AsyncContent + khung kết quả + logic lọc bỏ milestone vào một block để bề mặt chat chỉ truyền items/query/isLoading/isEmpty/hasError — không dựng lại 4 nhánh trạng thái ở mỗi nơi cần tìm nội dung."
+                reason="View 'Tìm nội dung khóa' trong chatbox cần MỘT vùng cuộn tự giới hạn chạy đúng chuỗi trạng thái error→loading→empty→content chuẩn (AsyncContent.Base), cộng một gợi ý khi chưa gõ gì. Gói vùng cuộn + AsyncContent.Base + khung kết quả + logic lọc bỏ milestone vào một block để bề mặt chat chỉ truyền items/query/isLoading/isEmpty/hasError — không dựng lại 4 nhánh trạng thái ở mỗi nơi cần tìm nội dung."
             >
                 <ContentSearchList
                     items={[ITEM_ORM_LESSON, ITEM_EAGER_LOADING_CHALLENGE, ITEM_QUERY_PLAN_FLASHCARD, ITEM_CAPSTONE_MILESTONE]}

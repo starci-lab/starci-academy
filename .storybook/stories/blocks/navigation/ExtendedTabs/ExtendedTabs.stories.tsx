@@ -3,7 +3,7 @@ import type { ReactNode } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Tabs } from "@heroui/react"
 import { HouseIcon, CompassIcon, GraduationCapIcon } from "@phosphor-icons/react"
-import { ExtendedTabs } from "./ExtendedTabs"
+import { ExtendedTabs } from "@sb-components/blocks/navigation/ExtendedTabs/ExtendedTabs"
 
 const meta: Meta<typeof ExtendedTabs> = {
     title: "Primitives/Navigation/ExtendedTabs",

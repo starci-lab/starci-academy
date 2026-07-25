@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { MarkdownContent } from "./MarkdownContent"
+import { MarkdownContent } from "@sb-components/blocks/rendering/MarkdownContent/MarkdownContent"
 
 const meta: Meta<typeof MarkdownContent> = {
     title: "Primitives/Rendering/MarkdownContent",

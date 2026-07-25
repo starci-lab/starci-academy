@@ -3,7 +3,7 @@ import type { ReactNode } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button } from "@heroui/react"
 import { DotsThreeVerticalIcon, TrashIcon } from "@phosphor-icons/react"
-import { FlexWrapButtonRadio, type FlexWrapButtonRadioItem } from "./FlexWrapButtonRadio"
+import { FlexWrapButtonRadio, type FlexWrapButtonRadioItem } from "@sb-components/blocks/navigation/FlexWrapButtonRadio/FlexWrapButtonRadio"
 
 const meta: Meta<typeof FlexWrapButtonRadio> = {
     title: "Primitives/Navigation/FlexWrapButtonRadio",

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { QRCode } from "./QRCode"
+import { QRCode } from "@sb-components/blocks/media/QRCode/QRCode"
 
 const meta: Meta<typeof QRCode> = {
     title: "Primitives/Media/QRCode",

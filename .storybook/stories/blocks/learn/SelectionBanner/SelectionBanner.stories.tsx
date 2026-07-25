@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
-import { SelectionBanner } from "./SelectionBanner"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { SelectionBanner } from "@sb-components/blocks/learn/SelectionBanner/SelectionBanner"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * BLOCK — the warning-toned "asking about this passage" banner pinned at the top

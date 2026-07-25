@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { StepBadge } from "./StepBadge"
+import { StepBadge } from "@sb-components/blocks/identity/StepBadge/StepBadge"
 
 const meta: Meta<typeof StepBadge> = {
     title: "Primitives/Identity/StepBadge",

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Skeleton } from "./Skeleton"
+import { Skeleton } from "@sb-components/blocks/skeleton/Skeleton/Skeleton"
 
 const meta: Meta<typeof Skeleton> = {
     title: "Primitives/Skeletons/Skeleton",

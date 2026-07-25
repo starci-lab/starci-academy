@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
-import { EntityResultRow, type SearchCourseContentItem } from "./EntityResultRow"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { EntityResultRow, type SearchCourseContentItem } from "@sb-components/blocks/learn/EntityResultRow/EntityResultRow"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — one pickable RAG result row shared by the content-AI search view, the

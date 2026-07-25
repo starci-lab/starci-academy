@@ -1,6 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { TaskChecklistRow } from "./TaskChecklistRow"
+import { TaskChecklistRow } from "@sb-components/blocks/learn/TaskChecklistRow/TaskChecklistRow"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
+/**
+ * DESIGN — a generic checklist row: a `CheckCircleIcon`/`CircleIcon` beside a
+ * truncated title, generalised from the capstone milestone roadmap's hand-rolled
+ * task rows.
+ *
+ * ANATOMY IS PER-LEAF: each story below is its OWN leaf and carries its OWN
+ * BlockAnatomy axis reflecting the parts THAT leaf composes.
+ */
 const meta: Meta<typeof TaskChecklistRow> = {
     title: "Design/Learn/TaskChecklistRow",
     component: TaskChecklistRow,
@@ -14,11 +23,17 @@ export default meta
 
 type Story = StoryObj<typeof TaskChecklistRow>
 
+const ICON: AnatomyNode = { name: "Icon", tier: "primitive", role: "CheckCircleIcon (done) hoặc CircleIcon (chưa xong)" }
+const TITLE: AnatomyNode = { name: "Typography", tier: "primitive", role: "tiêu đề task, truncate 1 dòng, tint success khi done" }
+const PARTS: Array<AnatomyNode> = [ICON, TITLE]
+
 /** Not done: a `CircleIcon` beside a muted-tone title. */
 export const Default: Story = {
     render: () => (
         <div className="max-w-sm p-8">
-            <TaskChecklistRow label="Thiết lập Docker Compose cho staging" done={false} />
+            <BlockAnatomy name="TaskChecklistRow" tier="design" leaf="Default" parts={PARTS} reason="Hàng checklist tối giản: icon trạng thái (CheckCircle/Circle) + tiêu đề — hai phần trực tiếp cố định.">
+                <TaskChecklistRow showAnatomy label="Thiết lập Docker Compose cho staging" done={false} />
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -27,7 +42,9 @@ export const Default: Story = {
 export const Done: Story = {
     render: () => (
         <div className="max-w-sm p-8">
-            <TaskChecklistRow label="Viết Dockerfile multi-stage" done />
+            <BlockAnatomy name="TaskChecklistRow" tier="design" leaf="Done" parts={PARTS} note="`done` đổi Icon sang CheckCircleIcon + tint success trên Typography — cùng 2 node.">
+                <TaskChecklistRow showAnatomy label="Viết Dockerfile multi-stage" done />
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -36,10 +53,13 @@ export const Done: Story = {
 export const LongTitleTruncates: Story = {
     render: () => (
         <div className="max-w-sm p-8">
-            <TaskChecklistRow
-                label="Cấu hình CI/CD pipeline chạy lint, test, build và deploy tự động lên staging mỗi khi merge vào nhánh main"
-                done={false}
-            />
+            <BlockAnatomy name="TaskChecklistRow" tier="design" leaf="LongTitleTruncates" parts={PARTS} note="Title dài → truncate 1 dòng (Typography), không đổi composition.">
+                <TaskChecklistRow
+                    showAnatomy
+                    label="Cấu hình CI/CD pipeline chạy lint, test, build và deploy tự động lên staging mỗi khi merge vào nhánh main"
+                    done={false}
+                />
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -48,7 +68,9 @@ export const LongTitleTruncates: Story = {
 export const Interactive: Story = {
     render: () => (
         <div className="max-w-sm p-8">
-            <TaskChecklistRow label="Deploy container lên VPS" done={false} onClick={() => {}} />
+            <BlockAnatomy name="TaskChecklistRow" tier="design" leaf="Interactive" parts={PARTS} note="`onClick` đổi root sang `<button>` (hover/focus ring) — Icon+Typography bên trong không đổi.">
+                <TaskChecklistRow showAnatomy label="Deploy container lên VPS" done={false} onClick={() => {}} />
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -57,7 +79,18 @@ export const Interactive: Story = {
 export const Loading: Story = {
     render: () => (
         <div className="max-w-sm p-8">
-            <TaskChecklistRow label="Deploy container lên VPS" done={false} isSkeleton />
+            <BlockAnatomy
+                name="TaskChecklistRow"
+                tier="design"
+                leaf="Loading"
+                parts={[
+                    { name: "Skeleton.Icon", tier: "design", role: "chấm tròn skeleton thay Icon" },
+                    { name: "Skeleton.Typography", tier: "design", role: "thanh bar skeleton thay title (1/2 chiều rộng)" },
+                ]}
+                note="`isSkeleton` thay cả Icon lẫn Typography bằng skeleton mirror, giữ nguyên gap-3/py-2."
+            >
+                <TaskChecklistRow showAnatomy label="Deploy container lên VPS" done={false} isSkeleton />
+            </BlockAnatomy>
         </div>
     ),
 }

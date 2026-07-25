@@ -7,9 +7,9 @@ import {
     FlameIcon,
     VideoCameraIcon,
 } from "@phosphor-icons/react"
-import { NotificationBell } from "./NotificationBell"
-import type { NotificationGroup } from "../NotificationList/NotificationList"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { NotificationBell } from "@sb-components/blocks/notifications/NotificationBell/NotificationBell"
+import type { NotificationGroup } from "@sb-components/blocks/notifications/NotificationList/NotificationList"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof NotificationBell> = {
     title: "Block/Notifications/NotificationBell",

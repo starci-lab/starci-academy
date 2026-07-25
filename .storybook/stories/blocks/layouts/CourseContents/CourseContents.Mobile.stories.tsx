@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { CourseContents } from "./CourseContents"
-import { deviceLeaf } from "./_shared"
+import { CourseContents } from "@sb-components/blocks/layouts/CourseContents/CourseContents"
+import { deviceLeaf } from "@sb-components/blocks/layouts/CourseContents/_shared"
 
 /**
  * LAYOUT `/learn/content` at MOBILE width (375px, below `@app-sm`). Every story is

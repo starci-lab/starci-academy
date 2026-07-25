@@ -4,9 +4,9 @@ import {
     CommunityPostCard,
     CommunityChannel,
     type QueryCommunityFeedItemData,
-} from "./CommunityPostCard"
-import { ReactionType } from "../ReactionBar/ReactionBar"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+} from "@sb-components/blocks/feed/CommunityPostCard/CommunityPostCard"
+import { ReactionType } from "@sb-components/blocks/feed/ReactionBar/ReactionBar"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — one community feed post: author header + markdown body + reaction/

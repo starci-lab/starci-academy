@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { CoverImage } from "./CoverImage"
+import { CoverImage } from "@sb-components/blocks/media/CoverImage/CoverImage"
 
 const meta: Meta<typeof CoverImage> = {
     title: "Primitives/Media/CoverImage",

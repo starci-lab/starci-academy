@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Logo } from "./Logo"
+import { Logo } from "@sb-components/blocks/identity/Logo/Logo"
 
 const meta: Meta<typeof Logo> = {
     title: "Primitives/Identity/Logo",

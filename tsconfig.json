@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@sb-components/*": ["./.storybook/components/*"]
     }
   },
   "include": [

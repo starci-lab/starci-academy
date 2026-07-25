@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ContinueCard } from "./ContinueCard"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { ContinueCard } from "@sb-components/blocks/cards/ContinueCard/ContinueCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — the `plain` variant of ContinueCard: SAME content (eyebrow · title ·
@@ -30,7 +30,7 @@ type Story = StoryObj<typeof ContinueCard>
 const shell = (node: React.ReactNode) => <div className="rounded-2xl border p-8">{node}</div>
 
 // scenario base = có tiến độ, CTA "Tiếp tục". No SectionCard/HighlightCard wrapper —
-// DOM thật: bare div (root) ⊃ eyebrow · title · MetaRow(chip) · Button chip CTA · ProgressMeter.
+// DOM thật: bare div (root) ⊃ eyebrow · title · List.Meta(chip) · Button chip CTA · ProgressMeter.
 const progressBase = {
     variant: "plain" as const,
     title: "Building a RESTful API with NestJS",
@@ -43,7 +43,7 @@ const progressBase = {
 const CONTENT_PARTS: Array<AnatomyNode> = [
     { name: "Typography.Title", tier: "primitive", role: "tên mục đang tiếp tục (title, weight medium, truncate)" },
     {
-        name: "MetaRow",
+        name: "List.Meta",
         tier: "primitive",
         role: "hàng meta muted nối bằng dấu chấm (module · bài học)",
     },
@@ -61,7 +61,7 @@ const EYEBROW_PARTS: Array<AnatomyNode> = [
 
 const NO_CTA_PARTS: Array<AnatomyNode> = [
     { name: "Typography.Title", tier: "primitive", role: "tên mục — đã hoàn thành" },
-    { name: "MetaRow", tier: "primitive", role: "hàng meta muted" },
+    { name: "List.Meta", tier: "primitive", role: "hàng meta muted" },
     { name: "ProgressMeter", tier: "primitive", role: "thanh tiến độ đầy 100% — KHÔNG có CTA vì hết bài để tiếp tục" },
 ]
 

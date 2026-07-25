@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
 import { CardsIcon, MagnifyingGlassIcon } from "@phosphor-icons/react"
-import { ChatToolResult } from "./ChatToolResult"
-import type { SearchCourseContentItem } from "../EntityResultRow/EntityResultRow"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { ChatToolResult } from "@sb-components/blocks/learn/ChatToolResult/ChatToolResult"
+import type { SearchCourseContentItem } from "@sb-components/blocks/learn/EntityResultRow/EntityResultRow"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * BLOCK — the in-chat tool-result widget: a labeled, pickable list of RAG hits
@@ -63,7 +63,7 @@ const FLASHCARD_ITEMS: Array<SearchCourseContentItem> = [
 const MIXED_KIND_ITEMS: Array<SearchCourseContentItem> = [
     {
         kind: "content",
-        title: "Memory leak trong Node.js là gì",
+        title: "Memory leak trong Node/Memory leak trong Node.js là gì",
         breadcrumb: "Module 4 · Debug hiệu năng Node.js",
         snippet: "Memory leak thường xuất phát từ closure giữ tham chiếu lâu hơn cần thiết hoặc listener quên gỡ.",
         score: 0.91,

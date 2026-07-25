@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { SectionHeading } from "./SectionHeading"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { SectionHeading } from "@sb-components/blocks/marketing/SectionHeading/SectionHeading"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — a marketing section heading: accent eyebrow chip → bold title (+ optional

@@ -1,3 +1,4 @@
+import path from "path"
 import type { StorybookConfig } from "@storybook/nextjs"
 
 /**
@@ -19,6 +20,19 @@ const config: StorybookConfig = {
     // table from the TS types + every story as a gallery). No hand-written MDX.
     docs: {
         defaultName: "Overview",
+    },
+    // Component implementations live in a SEPARATE tree `.storybook/components/**`
+    // (stories stay in `./stories/**`). Resolve `@sb-components/*` to it so stories
+    // import components by alias instead of `../../../`. (Mirrors tsconfig paths.)
+    webpackFinal: async (webpackConfig) => {
+        webpackConfig.resolve = webpackConfig.resolve ?? {}
+        webpackConfig.resolve.alias = {
+            ...(webpackConfig.resolve.alias ?? {}),
+            // main.ts is loaded as ESM (file:// URL) → no `__dirname`. `storybook dev`
+            // runs from the project root, so resolve the components tree off cwd.
+            "@sb-components": path.resolve(process.cwd(), ".storybook/components"),
+        }
+        return webpackConfig
     },
 }
 

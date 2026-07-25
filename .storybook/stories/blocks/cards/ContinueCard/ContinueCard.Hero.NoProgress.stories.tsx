@@ -1,11 +1,16 @@
+import type { SVGProps } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ContinueCard } from "./ContinueCard"
-import { SectionCard } from "../SectionCard/SectionCard"
-import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
+import { ContinueCard } from "@sb-components/blocks/cards/ContinueCard/ContinueCard"
+import { SectionCard } from "@sb-components/blocks/cards/SectionCard/SectionCard"
+import { Skeleton } from "@sb-components/blocks/skeleton/Skeleton/Skeleton"
 import { FireIcon, WarningIcon } from "@phosphor-icons/react"
-import { EmptyState } from "../../feedback/EmptyState/EmptyState"
-import { Button } from "../../buttons/Button/Button"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { Feedback } from "@sb-components/blocks/feedback/Feedback/Feedback"
+import { Button } from "@sb-components/blocks/buttons/Button/Button"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+
+// `Feedback.Empty` nhận icon là COMPONENT ref và tự ép `size-8` (§4/§5) — phosphor
+// `weight="duotone"` không đi kèm được nữa, nên bọc thành component để GIỮ NGUYÊN nét vẽ.
+const WarningDuotone = (props: SVGProps<SVGSVGElement>) => <WarningIcon {...props} weight="duotone" />
 
 /**
  * DESIGN — the `hero` ContinueCard in its NO-PROGRESS shape (no `value` → no
@@ -41,7 +46,7 @@ const noProgressBase = {
 }
 
 // Base hero no-progress composition mirrors the REAL DOM: HighlightCard WRAPS
-// SectionCard, which CONTAINS the title Typography + MetaRow(chip inside) + CTA
+// SectionCard, which CONTAINS the title Typography + List.Meta(chip inside) + CTA
 // Button. NO bar (value undefined → ProgressMeter not rendered). The title
 // Typography IS a composed node — ContinueCard writes it directly; only the CTA's
 // arrow icon stays CUT (a value passed into Button's `icon` prop).
@@ -58,11 +63,11 @@ const NO_PROGRESS_PARTS: Array<AnatomyNode> = [
                 children: [
                     { name: "Typography.Title", tier: "primitive", role: "tên phiên đang tiếp tục (title, weight medium, truncate)" },
                     {
-                        name: "MetaRow",
+                        name: "List.Meta",
                         tier: "primitive",
                         role: "hàng meta: các segment muted nối · (prop items)",
                         children: [
-                            { name: "StatusChip", tier: "primitive", role: "chip time-remaining (prop chip → mount TRONG MetaRow)", state: "neutral" },
+                            { name: "StatusChip", tier: "primitive", role: "chip time-remaining (prop chip → mount TRONG List.Meta)", state: "neutral" },
                         ],
                     },
                     { name: "Button", tier: "primitive", role: "CTA chip (hero, primary, onPress)" },
@@ -88,11 +93,11 @@ const WITH_ICON_PARTS: Array<AnatomyNode> = [
                 children: [
                     { name: "Typography.Title", tier: "primitive", role: "tên phiên đang tiếp tục (title, weight medium, truncate)" },
                     {
-                        name: "MetaRow",
+                        name: "List.Meta",
                         tier: "primitive",
                         role: "hàng meta: các segment muted nối · (prop items)",
                         children: [
-                            { name: "StatusChip", tier: "primitive", role: "chip time-remaining (prop chip → mount TRONG MetaRow)", state: "neutral" },
+                            { name: "StatusChip", tier: "primitive", role: "chip time-remaining (prop chip → mount TRONG List.Meta)", state: "neutral" },
                         ],
                     },
                     { name: "Button", tier: "primitive", role: "CTA chip (hero, primary, onPress)" },
@@ -116,11 +121,11 @@ const LINK_CTA_PARTS: Array<AnatomyNode> = [
                 children: [
                     { name: "Typography.Title", tier: "primitive", role: "tên phiên đang tiếp tục (title, weight medium, truncate)" },
                     {
-                        name: "MetaRow",
+                        name: "List.Meta",
                         tier: "primitive",
                         role: "hàng meta: các segment muted nối · (prop items)",
                         children: [
-                            { name: "StatusChip", tier: "primitive", role: "chip time-remaining (prop chip → mount TRONG MetaRow)", state: "neutral" },
+                            { name: "StatusChip", tier: "primitive", role: "chip time-remaining (prop chip → mount TRONG List.Meta)", state: "neutral" },
                         ],
                     },
                     { name: "Link", tier: "primitive", role: "CTA pill dùng href (hand-rolled Link-as-pill)" },
@@ -145,8 +150,8 @@ const LOADING_PARTS: Array<AnatomyNode> = [
     },
 ]
 
-// Error leaf: SectionCard frame CONTAINS a danger EmptyState; the retry Button
-// mounts INSIDE EmptyState via its `action` prop.
+// Error leaf: SectionCard frame CONTAINS a danger Feedback.Empty; the retry Button
+// mounts INSIDE Feedback.Empty via its `action` prop.
 const ERROR_PARTS: Array<AnatomyNode> = [
     {
         name: "SectionCard",
@@ -154,12 +159,12 @@ const ERROR_PARTS: Array<AnatomyNode> = [
         role: "khung surface (frame giữ nguyên)",
         children: [
             {
-                name: "EmptyState",
+                name: "Feedback.Empty",
                 tier: "primitive",
                 role: "trạng thái mất kết nối (tone danger) — icon + title + description + action",
                 state: "danger",
                 children: [
-                    { name: "Button", tier: "primitive", role: "nút thử lại (secondary, prop action → mount TRONG EmptyState)" },
+                    { name: "Button", tier: "primitive", role: "nút thử lại (secondary, prop action → mount TRONG Feedback.Empty)" },
                 ],
             },
         ],
@@ -260,14 +265,14 @@ export const LoadError: Story = {
                 tier="design"
                 leaf="LoadError"
                 parts={ERROR_PARTS}
-                note="Mạng rớt → khung SectionCard giữ nguyên, thân đổi sang EmptyState tone danger + nút thử lại (không nội dung thẻ)."
+                note="Mạng rớt → khung SectionCard giữ nguyên, thân đổi sang Feedback.Empty tone danger + nút thử lại (không nội dung thẻ)."
             >
                 <div className="w-96 p-8">
                     <SectionCard anatPart="SectionCard">
-                        <EmptyState
-                            anatPart="EmptyState"
+                        <Feedback.Empty
+                            anatPart="Feedback.Empty"
                             tone="danger"
-                            icon={<WarningIcon weight="duotone" />}
+                            icon={WarningDuotone}
                             title="Mất kết nối"
                             description="Mạng có vẻ bị rớt. Kiểm tra kết nối rồi thử lại."
                             action={

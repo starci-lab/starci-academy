@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { DiffViewer } from "./DiffViewer"
-import type { DiffHunk } from "./DiffViewer"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { DiffViewer } from "@sb-components/blocks/grading/DiffViewer/DiffViewer"
+import type { DiffHunk } from "@sb-components/blocks/grading/DiffViewer/DiffViewer"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — a leaf renderer for grading diffs (student code vs a suggested fix).

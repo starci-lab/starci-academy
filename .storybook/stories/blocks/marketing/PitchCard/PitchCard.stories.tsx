@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { LightningIcon, ShieldCheckIcon, RocketLaunchIcon, WarningIcon, StackIcon } from "@phosphor-icons/react"
-import { PitchCard } from "./PitchCard"
-import { Button } from "../../buttons/Button/Button"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { PitchCard } from "@sb-components/blocks/marketing/PitchCard/PitchCard"
+import { Button } from "@sb-components/blocks/buttons/Button/Button"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — one landing "beat": a tinted icon tile, a bold claim, supporting copy,

@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button, Chip } from "@heroui/react"
-import { MediaCard } from "./MediaCard"
-import { MetaRow } from "../../lists/MetaRow/MetaRow"
+import { MediaCard } from "@sb-components/blocks/cards/MediaCard/MediaCard"
+import { List } from "@sb-components/blocks/lists/List/List"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof MediaCard> = {
     title: "Design/Cards/MediaCard",
@@ -16,9 +17,9 @@ export default meta
 
 type Story = StoryObj<typeof MediaCard>
 
-// Cụm meta = MetaRow (1 chip tín hiệu + đoạn muted nối `·`), KHÔNG fragment chip rời.
+// Cụm meta = List.Meta (1 chip tín hiệu + đoạn muted nối `·`), KHÔNG fragment chip rời.
 const courseMeta = (
-    <MetaRow
+    <List.Meta
         chip={
             <Chip size="sm" variant="soft">
                 Intermediate
@@ -30,19 +31,42 @@ const courseMeta = (
 
 const DESCRIPTION = "Build a solid foundation from frontend to backend through hands-on projects, graded by AI."
 
+// LOADED leaf shape — cover slot · title · optional meta · optional description · optional footer,
+// all inside the HeroUI Card/CardContent frame (frame itself isn't a named part — it's the primitive's own root).
+const FULL_PARTS: Array<AnatomyNode> = [
+    { name: "Cover", tier: "design", role: "media full-bleed 16:9 (ảnh thật hoặc placeholder khi omit `cover`)" },
+    { name: "Typography.Title", tier: "primitive", role: "tiêu đề (weight medium)" },
+    { name: "Meta", tier: "design", role: "slot meta — nhận node List.Meta do caller truyền vào" },
+    { name: "Typography.Description", tier: "primitive", role: "mô tả ngắn, line-clamp-2" },
+    { name: "Footer", tier: "design", role: "slot footer — CTA/giá/tiến độ do caller truyền vào" },
+]
+const MINIMAL_PARTS: Array<AnatomyNode> = [
+    { name: "Cover", tier: "design", role: "placeholder 16:9 (không truyền `cover`) — lấp slot để lưới đều" },
+    { name: "Typography.Title", tier: "primitive", role: "tiêu đề (weight medium)" },
+]
+const LOADING_PARTS: Array<AnatomyNode> = [
+    { name: "Skeleton.Cover", tier: "primitive", role: "mirror cover 16:9", state: "skeleton" },
+    { name: "Skeleton.Typography", tier: "primitive", role: "mirror tiêu đề + 2 dòng mô tả (×3)", state: "skeleton" },
+    { name: "Skeleton.Chip", tier: "primitive", role: "mirror chip tín hiệu trong meta", state: "skeleton" },
+    { name: "Skeleton.Button", tier: "primitive", role: "mirror CTA footer", state: "skeleton" },
+]
+
 /** Có cover — ảnh 16:9 full-bleed trên đầu, rồi title / meta / description / CTA trong body `p-3`. */
 export const WithCover: Story = {
     render: () => (
         <div className="p-8">
-            <div style={{ width: 320 }}>
-                <MediaCard
-                    cover={<img src="https://placehold.co/640x360" alt="Course cover" />}
-                    title="Fullstack Mastery path"
-                    meta={courseMeta}
-                    description={DESCRIPTION}
-                    footer={<Button size="sm">View course</Button>}
-                />
-            </div>
+            <BlockAnatomy name="MediaCard" tier="design" leaf="WithCover" parts={FULL_PARTS}>
+                <div style={{ width: 320 }}>
+                    <MediaCard
+                        showAnatomy
+                        cover={<img src="https://placehold.co/640x360" alt="Course cover" />}
+                        title="Fullstack Mastery path"
+                        meta={courseMeta}
+                        description={DESCRIPTION}
+                        footer={<Button size="sm">View course</Button>}
+                    />
+                </div>
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -51,14 +75,23 @@ export const WithCover: Story = {
 export const WithoutCover: Story = {
     render: () => (
         <div className="p-8">
-            <div style={{ width: 320 }}>
-                <MediaCard
-                    title="Fullstack Mastery path"
-                    meta={courseMeta}
-                    description={DESCRIPTION}
-                    footer={<Button size="sm">View course</Button>}
-                />
-            </div>
+            <BlockAnatomy
+                name="MediaCard"
+                tier="design"
+                leaf="WithoutCover"
+                parts={FULL_PARTS}
+                note="Không truyền `cover` — placeholder 16:9 lấp ĐÚNG slot Cover, phần còn lại giống hệt WithCover."
+            >
+                <div style={{ width: 320 }}>
+                    <MediaCard
+                        showAnatomy
+                        title="Fullstack Mastery path"
+                        meta={courseMeta}
+                        description={DESCRIPTION}
+                        footer={<Button size="sm">View course</Button>}
+                    />
+                </div>
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -67,15 +100,18 @@ export const WithoutCover: Story = {
 export const Pressable: Story = {
     render: () => (
         <div className="p-8">
-            <div style={{ width: 320 }}>
-                <MediaCard
-                    cover={<img src="https://placehold.co/640x360" alt="Course cover" />}
-                    title="Fullstack Mastery path"
-                    meta={courseMeta}
-                    description={DESCRIPTION}
-                    onPress={() => {}}
-                />
-            </div>
+            <BlockAnatomy name="MediaCard" tier="design" leaf="Pressable" parts={FULL_PARTS.filter((p) => p.name !== "Footer")}>
+                <div style={{ width: 320 }}>
+                    <MediaCard
+                        showAnatomy
+                        cover={<img src="https://placehold.co/640x360" alt="Course cover" />}
+                        title="Fullstack Mastery path"
+                        meta={courseMeta}
+                        description={DESCRIPTION}
+                        onPress={() => {}}
+                    />
+                </div>
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -84,15 +120,18 @@ export const Pressable: Story = {
 export const AsLink: Story = {
     render: () => (
         <div className="p-8">
-            <div style={{ width: 320 }}>
-                <MediaCard
-                    cover={<img src="https://placehold.co/640x360" alt="Course cover" />}
-                    title="Fullstack Mastery path"
-                    meta={courseMeta}
-                    description={DESCRIPTION}
-                    href="#"
-                />
-            </div>
+            <BlockAnatomy name="MediaCard" tier="design" leaf="AsLink" parts={FULL_PARTS.filter((p) => p.name !== "Footer")}>
+                <div style={{ width: 320 }}>
+                    <MediaCard
+                        showAnatomy
+                        cover={<img src="https://placehold.co/640x360" alt="Course cover" />}
+                        title="Fullstack Mastery path"
+                        meta={courseMeta}
+                        description={DESCRIPTION}
+                        href="#"
+                    />
+                </div>
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -101,9 +140,17 @@ export const AsLink: Story = {
 export const Minimal: Story = {
     render: () => (
         <div className="p-8">
-            <div style={{ width: 320 }}>
-                <MediaCard title="Fullstack Mastery path" />
-            </div>
+            <BlockAnatomy
+                name="MediaCard"
+                tier="design"
+                leaf="Minimal"
+                parts={MINIMAL_PARTS}
+                note="Mọi slot phụ (meta/description/footer) đều rỗng — chỉ còn Cover placeholder + Title."
+            >
+                <div style={{ width: 320 }}>
+                    <MediaCard showAnatomy title="Fullstack Mastery path" />
+                </div>
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -112,9 +159,17 @@ export const Minimal: Story = {
 export const Loading: Story = {
     render: () => (
         <div className="p-8">
-            <div style={{ width: 320 }}>
-                <MediaCard isSkeleton title="Fullstack Mastery path" />
-            </div>
+            <BlockAnatomy
+                name="MediaCard"
+                tier="design"
+                leaf="Loading"
+                parts={LOADING_PARTS}
+                note="Skeleton mirror TỰ vẽ bởi primitive (isSkeleton) — composition khác hẳn leaf loaded (không part thật)."
+            >
+                <div style={{ width: 320 }}>
+                    <MediaCard showAnatomy isSkeleton title="Fullstack Mastery path" />
+                </div>
+            </BlockAnatomy>
         </div>
     ),
 }

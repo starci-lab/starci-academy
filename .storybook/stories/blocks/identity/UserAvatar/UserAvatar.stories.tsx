@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { UserAvatar } from "./UserAvatar"
+import { UserAvatar } from "@sb-components/blocks/identity/UserAvatar/UserAvatar"
 
 const meta: Meta<typeof UserAvatar> = {
     title: "Primitives/Identity/UserAvatar",

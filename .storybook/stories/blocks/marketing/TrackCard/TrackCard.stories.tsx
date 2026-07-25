@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CloudIcon, CodeIcon, TreeStructureIcon } from "@phosphor-icons/react"
-import { TrackCard } from "./TrackCard"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { TrackCard } from "@sb-components/blocks/marketing/TrackCard/TrackCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — one learning-track card: identity header (icon tile + title + meta)

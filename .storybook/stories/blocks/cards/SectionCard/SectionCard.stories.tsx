@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button, Typography } from "@heroui/react"
 import { LightningIcon } from "@phosphor-icons/react"
-import { SectionCard } from "./SectionCard"
+import { SectionCard } from "@sb-components/blocks/cards/SectionCard/SectionCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof SectionCard> = {
     title: "Design/Cards/SectionCard",
@@ -22,18 +23,48 @@ const body = (
     </Typography>
 )
 
+// FULL — header row (Icon + Title left, Action right) separated by a rule, then Body.
+// Shared by Default and Loading (same composition; Loading swaps each node for its skeleton mirror).
+const FULL_PARTS: Array<AnatomyNode> = [
+    { name: "Icon", tier: "primitive", role: "icon đầu header (muted/accent theo `accent`) — hiện khi có prop `icon`" },
+    { name: "Title", tier: "primitive", role: "tiêu đề header (text-base semibold) — hiện prop `title`" },
+    { name: "Action", tier: "primitive", role: "action ghim phải header (vd nút 'View all') — hiện khi có prop `action`" },
+    { name: "Body", tier: "design", role: "nội dung section dưới header — children" },
+]
+
+// HEADER_NO_ACTION — Icon + Title, no Action (WhoToFollow/UpcomingLivestreamCard/StreakFreezeCard combo).
+const HEADER_NO_ACTION_PARTS: Array<AnatomyNode> = [
+    { name: "Icon", tier: "primitive", role: "icon đầu header" },
+    { name: "Title", tier: "primitive", role: "tiêu đề header" },
+    { name: "Body", tier: "design", role: "nội dung section dưới header — children" },
+]
+
+// PLAIN — no header at all (title/icon/action all omitted) → only Body.
+const BODY_ONLY_PARTS: Array<AnatomyNode> = [
+    { name: "Body", tier: "design", role: "nội dung section — children (không header)" },
+]
+
 /** The standard "bordered" frame: header (icon + title left, action right) separated by a rule, then the body. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <SectionCard
-                    title="Review & practice"
-                    icon={<LightningIcon aria-hidden focusable="false" />}
-                    action={<Button variant="tertiary" size="sm">View all</Button>}
+                <BlockAnatomy
+                    name="SectionCard"
+                    tier="design"
+                    leaf="Default"
+                    parts={FULL_PARTS}
+                    reason="Card viền chuẩn: header (icon + title trái, action phải) ngăn cách bằng rule, rồi tới body — dùng lặp lại khắp profile/dashboard."
                 >
-                    {body}
-                </SectionCard>
+                    <SectionCard
+                        title="Review & practice"
+                        icon={<LightningIcon aria-hidden focusable="false" />}
+                        action={<Button variant="tertiary" size="sm">View all</Button>}
+                        showAnatomy
+                    >
+                        {body}
+                    </SectionCard>
+                </BlockAnatomy>
             </div>
         </div>
     ),
@@ -44,13 +75,22 @@ export const Accent: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <SectionCard
-                    accent
-                    title="Your profile"
-                    icon={<LightningIcon aria-hidden focusable="false" />}
+                <BlockAnatomy
+                    name="SectionCard"
+                    tier="design"
+                    leaf="Accent"
+                    parts={HEADER_NO_ACTION_PARTS}
+                    note="`accent` — viền tô nhạt accent + icon đổi màu accent; không có Action."
                 >
-                    {body}
-                </SectionCard>
+                    <SectionCard
+                        accent
+                        title="Your profile"
+                        icon={<LightningIcon aria-hidden focusable="false" />}
+                        showAnatomy
+                    >
+                        {body}
+                    </SectionCard>
+                </BlockAnatomy>
             </div>
         </div>
     ),
@@ -61,12 +101,21 @@ export const IconTitleNoAction: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <SectionCard
-                    title="Ai đó nên follow"
-                    icon={<LightningIcon aria-hidden focusable="false" />}
+                <BlockAnatomy
+                    name="SectionCard"
+                    tier="design"
+                    leaf="IconTitleNoAction"
+                    parts={HEADER_NO_ACTION_PARTS}
+                    note="Tổ hợp header phổ biến nhất: Icon + Title, không Action."
                 >
-                    {body}
-                </SectionCard>
+                    <SectionCard
+                        title="Ai đó nên follow"
+                        icon={<LightningIcon aria-hidden focusable="false" />}
+                        showAnatomy
+                    >
+                        {body}
+                    </SectionCard>
+                </BlockAnatomy>
             </div>
         </div>
     ),
@@ -77,7 +126,15 @@ export const Plain: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <SectionCard>{body}</SectionCard>
+                <BlockAnatomy
+                    name="SectionCard"
+                    tier="design"
+                    leaf="Plain"
+                    parts={BODY_ONLY_PARTS}
+                    note="Bỏ hết title/icon/action → không header, chỉ khung + Body."
+                >
+                    <SectionCard showAnatomy>{body}</SectionCard>
+                </BlockAnatomy>
             </div>
         </div>
     ),
@@ -88,14 +145,23 @@ export const Loading: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <SectionCard
-                    isSkeleton
-                    title="Review & practice"
-                    icon={<LightningIcon aria-hidden focusable="false" />}
-                    action={<Button variant="tertiary" size="sm">View all</Button>}
+                <BlockAnatomy
+                    name="SectionCard"
+                    tier="design"
+                    leaf="Loading"
+                    parts={FULL_PARTS}
+                    note="`isSkeleton` — CÙNG composition leaf Default; mỗi node đổi sang skeleton mirror (Icon/Title/Action bar + Body paragraph)."
                 >
-                    {body}
-                </SectionCard>
+                    <SectionCard
+                        isSkeleton
+                        title="Review & practice"
+                        icon={<LightningIcon aria-hidden focusable="false" />}
+                        action={<Button variant="tertiary" size="sm">View all</Button>}
+                        showAnatomy
+                    >
+                        {body}
+                    </SectionCard>
+                </BlockAnatomy>
             </div>
         </div>
     ),
@@ -109,22 +175,33 @@ export const Loading: Story = {
 export const WithVerdict: Story = {
     render: () => (
         <div className="p-8">
-            <div className="flex max-w-md flex-col gap-3">
-                <SectionCard withVerdict={{ enable: true, variant: "danger" }}>
-                    Trí nhớ đang tuột — bạn nạp thẻ mới nhanh hơn tốc độ ghi nhớ.
-                </SectionCard>
-                <SectionCard withVerdict={{ enable: true, variant: "warning" }}>
-                    Chưa ổn định — vài chủ đề đang rơi, cần ôn đều hơn.
-                </SectionCard>
-                <SectionCard withVerdict={{ enable: true, variant: "success" }}>
-                    Trí nhớ khỏe — giữ được phần lớn kiến thức đã học.
-                </SectionCard>
-                <SectionCard withVerdict={{ enable: true, color: "amber-500" }}>
-                    Màu thô theo thang riêng của caller (vd ramp độ khó của challenge).
-                </SectionCard>
-                <SectionCard withVerdict={{ enable: false, variant: "danger" }}>
-                    enable=false → về card thường, không dải viền.
-                </SectionCard>
+            <div className="max-w-md">
+                <BlockAnatomy
+                    name="SectionCard"
+                    tier="design"
+                    leaf="WithVerdict"
+                    parts={BODY_ONLY_PARTS}
+                    note="5 card không header (chỉ Body) — `withVerdict` chỉ đổi className viền trái (không phải node render riêng), nên anatomy chỉ badge Body ở mỗi card."
+                    reason="`withVerdict` là dải viền TRÁI báo tín hiệu TỪ DATA (band/tier/zone) — không phải decoration, không phải node cấu trúc riêng của SectionCard."
+                >
+                    <div className="flex flex-col gap-3">
+                        <SectionCard withVerdict={{ enable: true, variant: "danger" }} showAnatomy>
+                            Trí nhớ đang tuột — bạn nạp thẻ mới nhanh hơn tốc độ ghi nhớ.
+                        </SectionCard>
+                        <SectionCard withVerdict={{ enable: true, variant: "warning" }} showAnatomy>
+                            Chưa ổn định — vài chủ đề đang rơi, cần ôn đều hơn.
+                        </SectionCard>
+                        <SectionCard withVerdict={{ enable: true, variant: "success" }} showAnatomy>
+                            Trí nhớ khỏe — giữ được phần lớn kiến thức đã học.
+                        </SectionCard>
+                        <SectionCard withVerdict={{ enable: true, color: "amber-500" }} showAnatomy>
+                            Màu thô theo thang riêng của caller (vd ramp độ khó của challenge).
+                        </SectionCard>
+                        <SectionCard withVerdict={{ enable: false, variant: "danger" }} showAnatomy>
+                            enable=false → về card thường, không dải viền.
+                        </SectionCard>
+                    </div>
+                </BlockAnatomy>
             </div>
         </div>
     ),

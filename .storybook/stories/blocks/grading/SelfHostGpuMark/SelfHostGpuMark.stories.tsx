@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Typography } from "@heroui/react"
-import { SelfHostGpuMark } from "./SelfHostGpuMark"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { SelfHostGpuMark } from "@sb-components/blocks/grading/SelfHostGpuMark/SelfHostGpuMark"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — a leaf mark: an accent GPU icon + tooltip that sits beside a model

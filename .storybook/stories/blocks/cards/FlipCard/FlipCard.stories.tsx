@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { useState } from "react"
 import { Button, Chip, Typography } from "@heroui/react"
-import { FlipCard } from "./FlipCard"
+import { FlipCard } from "@sb-components/blocks/cards/FlipCard/FlipCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof FlipCard> = {
     title: "Design/Cards/FlipCard",
@@ -74,12 +75,44 @@ const LONG_ANSWER = (
     </>
 )
 
+// DOM thật: câu hỏi = SurfaceCard riêng; chips (level+tag) nhóm NGAY dưới câu hỏi;
+// đáp án = SurfaceCard riêng, chỉ hiện khi revealed.
+const NOT_REVEALED_PARTS: Array<AnatomyNode> = [
+    { name: "SurfaceCard.Question", tier: "primitive", role: "thẻ câu hỏi (label ngoài, viền bordered)" },
+    { name: "BelowFront", tier: "primitive", role: "cụm chip cấp độ + tag, gom NGAY dưới câu hỏi" },
+]
+
+const REVEALED_PARTS: Array<AnatomyNode> = [
+    { name: "SurfaceCard.Question", tier: "primitive", role: "thẻ câu hỏi (label ngoài, viền bordered)" },
+    { name: "BelowFront", tier: "primitive", role: "cụm chip cấp độ + tag, gom NGAY dưới câu hỏi" },
+    { name: "SurfaceCard.Answer", tier: "primitive", role: "thẻ đáp án, reveal bên dưới (height-animate)" },
+]
+
+const NO_CHIPS_PARTS: Array<AnatomyNode> = [
+    { name: "SurfaceCard.Question", tier: "primitive", role: "thẻ câu hỏi (label ngoài, viền bordered)" },
+    { name: "SurfaceCard.Answer", tier: "primitive", role: "thẻ đáp án, reveal bên dưới (height-animate)" },
+]
+
+const LOCKED_PARTS: Array<AnatomyNode> = [
+    { name: "SurfaceCard.Question", tier: "primitive", role: "thẻ câu hỏi (label ngoài, viền bordered)" },
+    { name: "BelowFront", tier: "primitive", role: "cụm chip cấp độ + tag, gom NGAY dưới câu hỏi" },
+    { name: "SurfaceCard.Answer", tier: "primitive", role: "thẻ đáp án — nội dung thay bằng prompt mở khoá (icon khoá + title + subtitle)", state: "locked" },
+]
+
 /** Not revealed — the default when the card first appears: only the question card + its chips. */
 export const NotRevealed: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <FlipCard revealed={false} questionLabel="Câu hỏi" answerLabel="Đáp án" front={QUESTION} belowFront={CHIPS} back={ANSWER} />
+                <BlockAnatomy
+                    name="FlipCard"
+                    tier="design"
+                    leaf="NotRevealed"
+                    parts={NOT_REVEALED_PARTS}
+                    reason="Anki-style: câu hỏi và đáp án là HAI thẻ tách biệt, không lật ảo. Leaf này chưa reveal nên chỉ thẻ câu hỏi + chips render."
+                >
+                    <FlipCard revealed={false} questionLabel="Câu hỏi" answerLabel="Đáp án" front={QUESTION} belowFront={CHIPS} back={ANSWER} showAnatomy />
+                </BlockAnatomy>
             </div>
         </div>
     ),
@@ -90,7 +123,15 @@ export const Revealed: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <FlipCard revealed questionLabel="Câu hỏi" answerLabel="Đáp án" front={QUESTION} belowFront={CHIPS} back={ANSWER} />
+                <BlockAnatomy
+                    name="FlipCard"
+                    tier="design"
+                    leaf="Revealed"
+                    parts={REVEALED_PARTS}
+                    note="revealed=true thêm SurfaceCard.Answer bên dưới; SurfaceCard.Question + BelowFront giữ nguyên vị trí."
+                >
+                    <FlipCard revealed questionLabel="Câu hỏi" answerLabel="Đáp án" front={QUESTION} belowFront={CHIPS} back={ANSWER} showAnatomy />
+                </BlockAnatomy>
             </div>
         </div>
     ),
@@ -101,7 +142,15 @@ export const WithoutChips: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <FlipCard revealed={false} questionLabel="Câu hỏi" answerLabel="Đáp án" front={QUESTION} back={ANSWER} />
+                <BlockAnatomy
+                    name="FlipCard"
+                    tier="design"
+                    leaf="WithoutChips"
+                    parts={NO_CHIPS_PARTS}
+                    note="belowFront bỏ trống → không render (không phải div rỗng) — chỉ 2 part: Question + Answer."
+                >
+                    <FlipCard revealed={false} questionLabel="Câu hỏi" answerLabel="Đáp án" front={QUESTION} back={ANSWER} showAnatomy />
+                </BlockAnatomy>
             </div>
         </div>
     ),
@@ -112,7 +161,15 @@ export const LongAnswer: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <FlipCard revealed questionLabel="Câu hỏi" answerLabel="Đáp án" front={QUESTION} belowFront={CHIPS} back={LONG_ANSWER} />
+                <BlockAnatomy
+                    name="FlipCard"
+                    tier="design"
+                    leaf="LongAnswer"
+                    parts={REVEALED_PARTS}
+                    note="Cùng bộ part như Revealed — chỉ nội dung answer dài hơn, cuộn trong ScrollShadow riêng của SurfaceCard.Answer."
+                >
+                    <FlipCard revealed questionLabel="Câu hỏi" answerLabel="Đáp án" front={QUESTION} belowFront={CHIPS} back={LONG_ANSWER} showAnatomy />
+                </BlockAnatomy>
             </div>
         </div>
     ),
@@ -123,14 +180,23 @@ export const Locked: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <FlipCard
-                    revealed
-                    locked
-                    questionLabel="Câu hỏi"
-                    answerLabel="Đáp án"
-                    front={QUESTION}
-                    belowFront={CHIPS}
-                />
+                <BlockAnatomy
+                    name="FlipCard"
+                    tier="design"
+                    leaf="Locked"
+                    parts={LOCKED_PARTS}
+                    note="locked=true: SurfaceCard.Answer vẫn là 1 part, nhưng nội dung bên trong đổi thành prompt mở khoá do primitive tự vẽ (icon+title+subtitle), không phải `back` truyền vào."
+                >
+                    <FlipCard
+                        revealed
+                        locked
+                        questionLabel="Câu hỏi"
+                        answerLabel="Đáp án"
+                        front={QUESTION}
+                        belowFront={CHIPS}
+                        showAnatomy
+                    />
+                </BlockAnatomy>
             </div>
         </div>
     ),
@@ -141,7 +207,15 @@ const Controlled = () => {
     const [revealed, setRevealed] = useState(false)
     return (
         <div className="flex max-w-md flex-col gap-3">
-            <FlipCard revealed={revealed} questionLabel="Câu hỏi" answerLabel="Đáp án" front={QUESTION} belowFront={CHIPS} back={ANSWER} />
+            <BlockAnatomy
+                name="FlipCard"
+                tier="design"
+                leaf="Interactive"
+                parts={REVEALED_PARTS}
+                note="revealed do CALLER giữ state — bấm nút để toggle; SurfaceCard.Answer chỉ có mặt trong DOM khi revealed=true."
+            >
+                <FlipCard revealed={revealed} questionLabel="Câu hỏi" answerLabel="Đáp án" front={QUESTION} belowFront={CHIPS} back={ANSWER} showAnatomy />
+            </BlockAnatomy>
             {!revealed ? (
                 <Button variant="primary" onPress={() => setRevealed(true)}>Xem đáp án</Button>
             ) : (
@@ -165,7 +239,15 @@ export const Loading: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <FlipCard isSkeleton revealed questionLabel="Câu hỏi" answerLabel="Đáp án" front={QUESTION} back={ANSWER} />
+                <BlockAnatomy
+                    name="FlipCard"
+                    tier="design"
+                    leaf="Loading"
+                    parts={REVEALED_PARTS}
+                    note="isSkeleton mirror LUÔN vẽ đủ 3 part (Question/BelowFront/Answer) bằng Skeleton.* — composition giống leaf loaded, chỉ nội dung thay bằng bar."
+                >
+                    <FlipCard isSkeleton revealed questionLabel="Câu hỏi" answerLabel="Đáp án" front={QUESTION} back={ANSWER} showAnatomy />
+                </BlockAnatomy>
             </div>
         </div>
     ),

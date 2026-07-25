@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { DotChip } from "./DotChip"
+import { DotChip } from "@sb-components/blocks/chips/DotChip/DotChip"
 
 const meta: Meta<typeof DotChip> = {
     title: "Primitives/Chips/DotChip",

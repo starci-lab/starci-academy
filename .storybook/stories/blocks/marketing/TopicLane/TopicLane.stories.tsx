@@ -1,9 +1,14 @@
+import type { SVGProps } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CodeIcon, StackIcon, TrayIcon } from "@phosphor-icons/react"
-import { TopicLane } from "./TopicLane"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
-import { EmptyState } from "../../feedback/EmptyState/EmptyState"
-import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
+import { TopicLane } from "@sb-components/blocks/marketing/TopicLane/TopicLane"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { Feedback } from "@sb-components/blocks/feedback/Feedback/Feedback"
+import { Skeleton } from "@sb-components/blocks/skeleton/Skeleton/Skeleton"
+
+// `Feedback.Empty` nhận icon là COMPONENT ref và tự ép `size-8` (§4/§5) — phosphor
+// `weight="duotone"` không đi kèm được nữa, nên bọc thành component để GIỮ NGUYÊN nét vẽ.
+const TrayDuotone = (props: SVGProps<SVGSVGElement>) => <TrayIcon {...props} weight="duotone" />
 
 /**
  * BLOCK — a labelled vertical lane of clickable "trophy topic" rows (lesson title
@@ -53,13 +58,13 @@ const CONTENT_PARTS: Array<AnatomyNode> = [
 ]
 
 // empty leaf: header (Icon + tiêu đề) vẫn giữ (2 node riêng, cùng lý do trên); danh
-// sách hàng đổi sang EmptyState — EmptyState LÀ một primitive thật (import riêng, có
+// sách hàng đổi sang Feedback.Empty — Feedback.Empty LÀ một primitive thật (import riêng, có
 // anatomy của chính nó) → giữ NGUYÊN 1 node, KHÔNG đào vào con của nó (icon/tiêu đề/
-// mô tả rỗng nằm TRONG slot của EmptyState, không badge riêng).
+// mô tả rỗng nằm TRONG slot của Feedback.Empty, không badge riêng).
 const EMPTY_PARTS: Array<AnatomyNode> = [
     { name: "Icon", tier: "primitive", role: "icon lane — header vẫn giữ" },
     { name: "Typography", tier: "primitive", role: "tiêu đề lane (type=body-sm, weight=semibold)" },
-    { name: "EmptyState", tier: "primitive", role: "\"Chưa có chủ đề nào\" thay cho danh sách hàng", state: "empty" },
+    { name: "Feedback.Empty", tier: "primitive", role: "\"Chưa có chủ đề nào\" thay cho danh sách hàng", state: "empty" },
 ]
 
 // loading leaf: chrome mirrored — header Skeleton (icon + tiêu đề) + 3 khung hàng,
@@ -178,7 +183,7 @@ export const StaticRows: Story = {
         ),
 }
 
-/** Empty: no topics → the {@link EmptyState} primitive fills the lane instead of a bare header. */
+/** Empty: no topics → the {@link Feedback.Empty} primitive fills the lane instead of a bare header. */
 export const Empty: Story = {
     render: () =>
         frame(
@@ -187,13 +192,13 @@ export const Empty: Story = {
                 tier="block"
                 leaf="Empty"
                 parts={EMPTY_PARTS}
-                note="Không có chủ đề → header giữ nguyên, danh sách hàng đổi sang EmptyState (khác leaf có dữ liệu)."
+                note="Không có chủ đề → header giữ nguyên, danh sách hàng đổi sang Feedback.Empty (khác leaf có dữ liệu)."
             >
                 <div className="max-w-[320px]">
                     <TopicLane showAnatomy icon={<CodeIcon />} title="Code" items={[]} />
-                    <EmptyState
-                        anatPart="EmptyState"
-                        icon={<TrayIcon weight="duotone" />}
+                    <Feedback.Empty
+                        anatPart="Feedback.Empty"
+                        icon={TrayDuotone}
                         title="Chưa có chủ đề nào"
                         description="Các chủ đề tiêu biểu của lộ trình sẽ hiện ở đây."
                     />

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { PlaygroundCard } from "./PlaygroundCard"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { PlaygroundCard } from "@sb-components/blocks/cards/PlaygroundCard/PlaygroundCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — one exercise cell in the Playground hub grid: icon tile + title +

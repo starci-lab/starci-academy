@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { SeeMoreLink } from "./SeeMoreLink"
+import { SeeMoreLink } from "@sb-components/blocks/navigation/SeeMoreLink/SeeMoreLink"
 
 const meta: Meta<typeof SeeMoreLink> = {
     title: "Primitives/Navigation/SeeMoreLink",

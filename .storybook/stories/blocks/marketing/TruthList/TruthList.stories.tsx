@@ -1,10 +1,15 @@
+import type { SVGProps } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Typography } from "@heroui/react"
 import { TrayIcon } from "@phosphor-icons/react"
-import { TruthList } from "./TruthList"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
-import { EmptyState } from "../../feedback/EmptyState/EmptyState"
-import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
+import { TruthList } from "@sb-components/blocks/marketing/TruthList/TruthList"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { Feedback } from "@sb-components/blocks/feedback/Feedback/Feedback"
+import { Skeleton } from "@sb-components/blocks/skeleton/Skeleton/Skeleton"
+
+// `Feedback.Empty` nhận icon là COMPONENT ref và tự ép `size-8` (§4/§5) — phosphor
+// `weight="duotone"` không đi kèm được nữa, nên bọc thành component để GIỮ NGUYÊN nét vẽ.
+const TrayDuotone = (props: SVGProps<SVGSVGElement>) => <TrayIcon {...props} weight="duotone" />
 
 /**
  * BLOCK — the "raw truth" manifesto: uncomfortable industry truths (accordion
@@ -125,17 +130,17 @@ const TRUTHLIST_BYLINE_PARTS: Array<AnatomyNode> = [
     },
 ]
 
-// empty leaf: the story hand-rolls the surface frame, then EmptyState fills it instead of an
-// accordion. EmptyState (design) renders its own icon/title/description via props — those are
-// cut from the tree (§ granularity), so EmptyState is a leaf node with no children here.
+// empty leaf: the story hand-rolls the surface frame, then Feedback.Empty fills it instead of an
+// accordion. Feedback.Empty (design) renders its own icon/title/description via props — those are
+// cut from the tree (§ granularity), so Feedback.Empty is a leaf node with no children here.
 const EMPTY_PARTS: Array<AnatomyNode> = [
     {
         name: "Surface frame",
         tier: "primitive",
-        role: "div khung ngoài (overflow-hidden rounded-3xl bg-surface shadow-surface) — lấp bằng EmptyState thay accordion",
+        role: "div khung ngoài (overflow-hidden rounded-3xl bg-surface shadow-surface) — lấp bằng Feedback.Empty thay accordion",
         children: [
             {
-                name: "EmptyState",
+                name: "Feedback.Empty",
                 tier: "design",
                 role: "\"Chưa có sự thật nào\" — stack canh giữa lấp surface (size default, không action) — tự hiện icon khay + tiêu đề + mô tả phụ qua prop icon/title/description",
             },
@@ -245,7 +250,7 @@ export const LongContentWrap: Story = {
         ),
 }
 
-/** Empty: no truths → the {@link EmptyState} primitive fills the surface instead of a blank accordion. */
+/** Empty: no truths → the {@link Feedback.Empty} primitive fills the surface instead of a blank accordion. */
 export const Empty: Story = {
     render: () =>
         shell(
@@ -254,15 +259,15 @@ export const Empty: Story = {
                 tier="block"
                 leaf="Empty"
                 parts={EMPTY_PARTS}
-                note="Không có sự thật nào → EmptyState lấp surface, composition khác leaf data (không Accordion)."
+                note="Không có sự thật nào → Feedback.Empty lấp surface, composition khác leaf data (không Accordion)."
             >
                 <div
                     className="overflow-hidden rounded-3xl bg-surface shadow-surface"
                     data-anat-part="Surface frame"
                 >
-                    <EmptyState
-                        anatPart="EmptyState"
-                        icon={<TrayIcon weight="duotone" />}
+                    <Feedback.Empty
+                        anatPart="Feedback.Empty"
+                        icon={TrayDuotone}
                         title="Chưa có sự thật nào"
                         description="Các tuyên bố định vị sẽ hiện ở đây."
                     />

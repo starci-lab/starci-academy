@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React, { useState } from "react"
-import { QuizCard } from "./QuizCard"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { QuizCard } from "@sb-components/blocks/learn/QuizCard/QuizCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — a self-framed single multiple-choice question. Composed from local

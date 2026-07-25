@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { expect, userEvent, waitFor } from "storybook/test"
 import { Typography } from "@heroui/react"
-import { SnippetIcon } from "./SnippetIcon"
+import { SnippetIcon } from "@sb-components/blocks/identity/SnippetIcon/SnippetIcon"
 
 const meta: Meta<typeof SnippetIcon> = {
     title: "Primitives/Identity/SnippetIcon",

@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React, { useState } from "react"
-import { ActivityFeed, ActivityType, type QueryMyFeedItemData } from "./ActivityFeed"
-import { ReactionType } from "../ReactionBar/ReactionBar"
-import { SurfaceListCard, SurfaceListCardItem } from "../../cards/SurfaceListCard/SurfaceListCard"
-import { EmptyState } from "../../feedback/EmptyState/EmptyState"
-import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { ActivityFeed, ActivityType, type QueryMyFeedItemData } from "@sb-components/blocks/feed/ActivityFeed/ActivityFeed"
+import { ReactionType } from "@sb-components/blocks/feed/ReactionBar/ReactionBar"
+import { SurfaceCard } from "@sb-components/blocks/cards/SurfaceCard/SurfaceCard"
+import { Feedback } from "@sb-components/blocks/feedback/Feedback/Feedback"
+import { Skeleton } from "@sb-components/blocks/skeleton/Skeleton/Skeleton"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * BLOCK — the shared activity feed: rows grouped under relative day headers, each
@@ -15,7 +15,7 @@ import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockA
  *
  * ANATOMY IS PER-LEAF: each story below is its OWN leaf and carries its OWN
  * BlockAnatomy axis (Sơ đồ + Cây) reflecting the parts THAT leaf composes — the
- * data leaves share one FEED_PARTS composition, while `Rỗng` (EmptyState from the
+ * data leaves share one FEED_PARTS composition, while `Rỗng` (Feedback.Empty from the
  * feature) and `Đang tải` (skeleton mirror) each swap composition. There is no
  * separate consolidated "Anatomy" story.
  */
@@ -122,13 +122,13 @@ const FEED_PARTS: Array<AnatomyNode> = [
 ]
 
 // Empty leaf: the block itself has no empty slot (items=[] renders nothing) — the
-// owning FEATURE renders an EmptyState in the feed's place. Its title/description
-// are element-render-props of EmptyState itself (it displays whatever ReactNode the
+// owning FEATURE renders an Feedback.Empty in the feed's place. Its title/description
+// are element-render-props of Feedback.Empty itself (it displays whatever ReactNode the
 // caller hands its `title`/`description` props) — cut per canon granularity;
-// EmptyState absorbs them as ONE node.
+// Feedback.Empty absorbs them as ONE node.
 const EMPTY_PARTS: Array<AnatomyNode> = [
     {
-        name: "EmptyState",
+        name: "Feedback.Empty",
         tier: "primitive",
         role: "trạng thái rỗng do FEATURE dựng (\"Chưa có hoạt động nào\")",
         state: "empty",
@@ -260,7 +260,7 @@ export const InteractiveReactions: Story = {
 
 /**
  * Empty: `items=[]` renders nothing (no empty-state slot on the block). A local
- * {@link EmptyState} shown alongside is what the owning FEATURE would render in the
+ * {@link Feedback.Empty} shown alongside is what the owning FEATURE would render in the
  * feed's place when there's no activity.
  */
 export const Empty: Story = {
@@ -271,13 +271,13 @@ export const Empty: Story = {
                 tier="block"
                 leaf="Empty"
                 parts={EMPTY_PARTS}
-                note="Block không có slot rỗng — items=[] render trống; FEATURE dựng EmptyState thay chỗ."
+                note="Block không có slot rỗng — items=[] render trống; FEATURE dựng Feedback.Empty thay chỗ."
             >
                 <div className="w-full max-w-xl">
-                    <EmptyState
+                    <Feedback.Empty
                         title="Chưa có hoạt động nào"
                         description="Hoạt động của bạn và người bạn theo dõi sẽ xuất hiện ở đây."
-                        anatPart="EmptyState"
+                        anatPart="Feedback.Empty"
                     />
                     <ActivityFeed items={[]} onResolve={resolveDemo} onReact={() => {}} showAnatomy />
                 </div>
@@ -287,7 +287,7 @@ export const Empty: Story = {
 
 /**
  * SkeletonLoading MIRRORS the real layout: a subtle day-header eyebrow over a
- * {@link SurfaceListCard} of rows, each row = an avatar circle + two text bars +
+ * `SurfaceCard.List` of rows, each row = an avatar circle + two text bars +
  * a footer bar, matching {@link ActivityFeed}'s FeedItem structure.
  */
 export const SkeletonLoading: Story = {
@@ -303,9 +303,12 @@ export const SkeletonLoading: Story = {
                 <div className="flex w-full max-w-xl flex-col gap-6">
                     <section className="flex flex-col gap-2">
                         <Skeleton.Typography type="body-xs" width="1/4" anatPart="Skeleton.Typography" />
-                        <SurfaceListCard anatPart="SurfaceListCard">
-                            {[0, 1, 2].map((row) => (
-                                <SurfaceListCardItem key={row} anatPart="SurfaceListCardItem">
+                        <SurfaceCard.List
+                            anatPart="SurfaceListCard"
+                            items={[0, 1, 2].map((row) => ({
+                                key: String(row),
+                                anatPart: "SurfaceListCardItem",
+                                content: (
                                     <div className="flex items-start gap-2">
                                         <Skeleton.Avatar size="sm" anatPart="Skeleton.Avatar" />
                                         <div className="flex min-w-0 flex-1 flex-col gap-1">
@@ -316,9 +319,9 @@ export const SkeletonLoading: Story = {
                                             <Skeleton className="h-4 w-12 rounded-full" anatPart="Skeleton" />
                                         </div>
                                     </div>
-                                </SurfaceListCardItem>
-                            ))}
-                        </SurfaceListCard>
+                                ),
+                            }))}
+                        />
                     </section>
                 </div>
             </BlockAnatomy>,

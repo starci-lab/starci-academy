@@ -3,9 +3,9 @@ import React, { useState } from "react"
 import type { ReactNode } from "react"
 import { Typography } from "@heroui/react"
 import { ChatCircleDotsIcon } from "@phosphor-icons/react"
-import { ChatPanel, type ChatPanelMessage } from "./ChatPanel"
-import { NestedCard, NestedCardSection } from "../../cards/NestedCard/NestedCard"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { ChatPanel, type ChatPanelMessage } from "@sb-components/blocks/feed/ChatPanel/ChatPanel"
+import { SurfaceCard } from "@sb-components/blocks/cards/SurfaceCard/SurfaceCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * BLOCK — a complete chat surface: a scrollable list of turns (with tool-result
@@ -45,10 +45,10 @@ const COMPOSER_PART: AnatomyNode = {
     ],
 }
 
-// Tool-result row under an assistant turn: the caller-built NestedCard, which
-// CONTAINS its section rows. NestedCardSection's eyebrow/title are its own props
+// Tool-result row under an assistant turn: the caller-built SurfaceCard.Nested, which
+// CONTAINS its section rows (`items`). A section's eyebrow/title are its own data
 // (rendered internally, untaggable) and its body is an element-render-prop of
-// `children` — cut per canon granularity; NestedCardSection absorbs them as ONE node.
+// `content` — cut per canon granularity; the section absorbs them as ONE node.
 const TOOL_RESULT_PART: AnatomyNode = {
     name: "NestedCard",
     tier: "design",
@@ -94,22 +94,30 @@ const baseMessages: Array<ChatPanelMessage> = [
         role: "assistant",
         content: "Usually when you notice data repeating across many rows, or a column that depends on a non-primary-key column. I found a few sources in the course related to this question.",
         toolResult: (
-            <NestedCard title="Related lessons" bordered anatPart="NestedCard">
-                <NestedCardSection
-                    eyebrow="Relational databases"
-                    title="Data normalization and the normal forms"
-                    anatPart="NestedCardSection"
-                >
-                    <Typography type="body-sm" color="muted">
-                        Normalization splits data across multiple tables to reduce duplication and update anomalies.
-                    </Typography>
-                </NestedCardSection>
-                <NestedCardSection
-                    eyebrow="Database review flashcard deck"
-                    title="When should you denormalize to optimize reads?"
-                    anatPart="NestedCardSection"
-                />
-            </NestedCard>
+            <SurfaceCard.Nested
+                title="Related lessons"
+                bordered
+                anatPart="NestedCard"
+                items={[
+                    {
+                        key: "normalization",
+                        eyebrow: "Relational databases",
+                        title: "Data normalization and the normal forms",
+                        anatPart: "NestedCardSection",
+                        content: (
+                            <Typography type="body-sm" color="muted">
+                                Normalization splits data across multiple tables to reduce duplication and update anomalies.
+                            </Typography>
+                        ),
+                    },
+                    {
+                        key: "denormalize",
+                        eyebrow: "Database review flashcard deck",
+                        title: "When should you denormalize to optimize reads?",
+                        anatPart: "NestedCardSection",
+                    },
+                ]}
+            />
         ),
     },
     {

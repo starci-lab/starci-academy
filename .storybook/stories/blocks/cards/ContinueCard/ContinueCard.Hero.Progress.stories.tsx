@@ -1,11 +1,16 @@
+import type { SVGProps } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ContinueCard } from "./ContinueCard"
-import { SectionCard } from "../SectionCard/SectionCard"
-import { Skeleton } from "../../skeleton/Skeleton/Skeleton"
+import { ContinueCard } from "@sb-components/blocks/cards/ContinueCard/ContinueCard"
+import { SectionCard } from "@sb-components/blocks/cards/SectionCard/SectionCard"
+import { Skeleton } from "@sb-components/blocks/skeleton/Skeleton/Skeleton"
 import { WarningIcon } from "@phosphor-icons/react"
-import { EmptyState } from "../../feedback/EmptyState/EmptyState"
-import { Button } from "../../buttons/Button/Button"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { Feedback } from "@sb-components/blocks/feedback/Feedback/Feedback"
+import { Button } from "@sb-components/blocks/buttons/Button/Button"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+
+// `Feedback.Empty` nhận icon là COMPONENT ref và tự ép `size-8` (§4/§5) — phosphor
+// `weight="duotone"` không đi kèm được nữa, nên bọc thành component để GIỮ NGUYÊN nét vẽ.
+const WarningDuotone = (props: SVGProps<SVGSVGElement>) => <WarningIcon {...props} weight="duotone" />
 
 /**
  * DESIGN — the "tiếp tục phiên đang dở" hero card with progress. Each state below
@@ -43,7 +48,7 @@ const progressBase = {
 }
 
 // Loaded shape "có tiến độ" — urgent/không-gấp SHARE this composition (chỉ khác TONE chip).
-// DOM thật: HighlightCard (wrapper hero) ⊃ SectionCard (frame) ⊃ title · MetaRow(chip) · CTA · bar.
+// DOM thật: HighlightCard (wrapper hero) ⊃ SectionCard (frame) ⊃ title · List.Meta(chip) · CTA · bar.
 const CONTENT_PARTS: Array<AnatomyNode> = [
     {
         name: "HighlightCard",
@@ -57,7 +62,7 @@ const CONTENT_PARTS: Array<AnatomyNode> = [
                 children: [
                     { name: "Typography.Title", tier: "primitive", role: "tên phiên đang tiếp tục (title, weight medium, truncate)" },
                     {
-                        name: "MetaRow",
+                        name: "List.Meta",
                         tier: "primitive",
                         role: "hàng meta: segment muted nối · + chip time",
                         children: [
@@ -87,7 +92,7 @@ const LOADING_PARTS: Array<AnatomyNode> = [
     },
 ]
 
-// error leaf: network drop → EmptyState trong khung, nút Thử lại nằm TRONG EmptyState (prop action).
+// error leaf: network drop → Feedback.Empty trong khung, nút Thử lại nằm TRONG Feedback.Empty (prop action).
 const ERROR_PARTS: Array<AnatomyNode> = [
     {
         name: "SectionCard",
@@ -95,7 +100,7 @@ const ERROR_PARTS: Array<AnatomyNode> = [
         role: "khung surface",
         children: [
             {
-                name: "EmptyState",
+                name: "Feedback.Empty",
                 tier: "design",
                 role: "tone danger + icon + mô tả + nút Thử lại",
                 state: "danger",
@@ -116,7 +121,7 @@ export const NotUrgent: Story = {
                 tier="design"
                 leaf="NotUrgent"
                 parts={CONTENT_PARTS}
-                reason="Thẻ tiếp tục phiên đang dở. Mỗi LEAF composition khác nhau: leaf loaded gom hero chrome + ProgressMeter; loading swap sang Skeleton mirror đúng footprint; error rơi về EmptyState trong khung. Nhờ SectionCard làm frame chung, khung không nhảy khi đổi state."
+                reason="Thẻ tiếp tục phiên đang dở. Mỗi LEAF composition khác nhau: leaf loaded gom hero chrome + ProgressMeter; loading swap sang Skeleton mirror đúng footprint; error rơi về Feedback.Empty trong khung. Nhờ SectionCard làm frame chung, khung không nhảy khi đổi state."
             >
                 <div className="w-96">
                     <ContinueCard {...progressBase} value={2} max={8} />
@@ -177,14 +182,14 @@ export const LoadError: Story = {
                 tier="design"
                 leaf="LoadError"
                 parts={ERROR_PARTS}
-                note="Mạng rớt → chỉ EmptyState trong khung; KHÔNG phải part của leaf loaded."
+                note="Mạng rớt → chỉ Feedback.Empty trong khung; KHÔNG phải part của leaf loaded."
             >
                 <div className="w-96">
                     <SectionCard anatPart="SectionCard">
-                        <EmptyState
-                            anatPart="EmptyState"
+                        <Feedback.Empty
+                            anatPart="Feedback.Empty"
                             tone="danger"
-                            icon={<WarningIcon weight="duotone" />}
+                            icon={WarningDuotone}
                             title="Mất kết nối"
                             description="Mạng có vẻ bị rớt. Kiểm tra kết nối rồi thử lại."
                             action={

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { TrialConversionStrip, type TrialConversionStripPrice } from "./TrialConversionStrip"
-import { PricingPhase } from "../PhaseScarcityNote/PhaseScarcityNote"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { TrialConversionStrip, type TrialConversionStripPrice } from "@sb-components/blocks/commerce/TrialConversionStrip/TrialConversionStrip"
+import { PricingPhase } from "@sb-components/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * BLOCK — the trial → enroll conversion strip on the content-home. Bundles a

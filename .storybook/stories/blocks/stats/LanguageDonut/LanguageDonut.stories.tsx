@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { LanguageDonut } from "./LanguageDonut"
+import { LanguageDonut } from "@sb-components/blocks/stats/LanguageDonut/LanguageDonut"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof LanguageDonut> = {
     title: "Block/Stats/LanguageDonut",
@@ -14,21 +15,36 @@ export default meta
 
 type Story = StoryObj<typeof LanguageDonut>
 
+// Both leaves share the same two direct parts — only size/item count differ.
+const DONUT_PARTS: Array<AnatomyNode> = [
+    { name: "Donut", tier: "primitive", role: "vành recharts theo màu brand ngôn ngữ + tổng số ở tâm" },
+    { name: "Legend", tier: "primitive", role: "danh sách dot màu + tên · count · % mỗi ngôn ngữ" },
+]
+
 /** Default size for many languages — ring split by brand colour, total at the centre, legend with count + %. */
 export const MultiLanguage: Story = {
     render: () => (
         <div className="p-8">
-            <LanguageDonut
-                ariaLabel="Phân bố bài giải theo ngôn ngữ"
-                unitLabel="bài giải"
-                items={[
-                    { key: "typescript", value: 128 },
-                    { key: "python", value: 64 },
-                    { key: "java", value: 31 },
-                    { key: "go", value: 18 },
-                    { key: "csharp", value: 9 },
-                ]}
-            />
+            <BlockAnatomy
+                name="LanguageDonut"
+                tier="block"
+                leaf="MultiLanguage"
+                parts={DONUT_PARTS}
+                reason="Donut GitHub-style: vành recharts tô theo màu brand ngôn ngữ đứng cạnh legend liệt kê count + share — hai part cố định, không phụ thuộc số lượng ngôn ngữ."
+            >
+                <LanguageDonut
+                    ariaLabel="Phân bố bài giải theo ngôn ngữ"
+                    unitLabel="bài giải"
+                    items={[
+                        { key: "typescript", value: 128 },
+                        { key: "python", value: 64 },
+                        { key: "java", value: 31 },
+                        { key: "go", value: 18 },
+                        { key: "csharp", value: 9 },
+                    ]}
+                    showAnatomy
+                />
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -37,16 +53,25 @@ export const MultiLanguage: Story = {
 export const Compact: Story = {
     render: () => (
         <div className="p-8">
-            <LanguageDonut
-                size={96}
-                thickness={6}
-                ariaLabel="Phân bố bài giải theo ngôn ngữ (compact)"
-                unitLabel="bài giải"
-                items={[
-                    { key: "typescript", value: 42 },
-                    { key: "go", value: 15 },
-                ]}
-            />
+            <BlockAnatomy
+                name="LanguageDonut"
+                tier="block"
+                leaf="Compact"
+                parts={DONUT_PARTS}
+                note="Cùng composition với leaf MultiLanguage — chỉ đổi `size`/`thickness` nhỏ hơn, không đổi cây parts."
+            >
+                <LanguageDonut
+                    size={96}
+                    thickness={6}
+                    ariaLabel="Phân bố bài giải theo ngôn ngữ (compact)"
+                    unitLabel="bài giải"
+                    items={[
+                        { key: "typescript", value: 42 },
+                        { key: "go", value: 15 },
+                    ]}
+                    showAnatomy
+                />
+            </BlockAnatomy>
         </div>
     ),
 }

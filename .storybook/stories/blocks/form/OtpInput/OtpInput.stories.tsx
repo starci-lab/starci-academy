@@ -1,7 +1,7 @@
 import { useState } from "react"
 import type { ReactNode } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { OtpInput } from "./OtpInput"
+import { OtpInput } from "@sb-components/blocks/form/OtpInput/OtpInput"
 
 const meta: Meta<typeof OtpInput> = {
     title: "Primitives/Forms/OtpInput",

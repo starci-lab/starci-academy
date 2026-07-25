@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ArchitectureFlow } from "./ArchitectureFlow"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { ArchitectureFlow } from "@sb-components/blocks/marketing/ArchitectureFlow/ArchitectureFlow"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — a compact coded mini-architecture diagram: labelled node boxes joined

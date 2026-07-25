@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { AvatarUploadButton } from "./AvatarUploadButton"
+import { AvatarUploadButton } from "@sb-components/blocks/identity/AvatarUploadButton/AvatarUploadButton"
 
 const meta: Meta<typeof AvatarUploadButton> = {
     title: "Design/Identity/AvatarUploadButton",

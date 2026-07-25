@@ -1,6 +1,7 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { CheckboxField, type CheckboxFieldOption } from "./CheckboxField"
+import { CheckboxField, type CheckboxFieldOption } from "@sb-components/blocks/form/CheckboxField/CheckboxField"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * CheckboxField is the boolean / multi-pick checkbox input. SINGLE mode is one
@@ -34,12 +35,14 @@ const ControlledSingle = ({
     description,
     errorMessage,
     isDisabled,
+    showAnatomy,
 }: {
     initialValue?: boolean
     checkboxLabel: string
     description?: string
     errorMessage?: string
     isDisabled?: boolean
+    showAnatomy?: boolean
 }) => {
     const [value, setValue] = useState(initialValue)
     return (
@@ -50,6 +53,7 @@ const ControlledSingle = ({
             value={value}
             onValueChange={setValue}
             isDisabled={isDisabled}
+            showAnatomy={showAnatomy}
         />
     )
 }
@@ -61,12 +65,14 @@ const ControlledGroup = ({
     description,
     errorMessage,
     isDisabled,
+    showAnatomy,
 }: {
     initialValue?: Array<string>
     label?: string
     description?: string
     errorMessage?: string
     isDisabled?: boolean
+    showAnatomy?: boolean
 }) => {
     const [value, setValue] = useState(initialValue)
     return (
@@ -78,15 +84,37 @@ const ControlledGroup = ({
             value={value}
             onValueChange={setValue}
             isDisabled={isDisabled}
+            showAnatomy={showAnatomy}
         />
     )
 }
+
+// leaf SINGLE (Default/WithError): FieldShell (không label) bọc 1 Checkbox.
+const SINGLE_PARTS: Array<AnatomyNode> = [
+    { name: "FieldShell", tier: "primitive", role: "khung mô tả · lỗi bao quanh control (không label, canon Checkbox/Switch)" },
+    { name: "Checkbox", tier: "primitive", role: "checkbox đơn + nhãn cạnh (HeroUI Checkbox)" },
+]
+
+// leaf GROUP (WithHint/Disabled): FieldShell (có label nhóm) bọc CheckboxGroup, mỗi option 1 Checkbox.
+const GROUP_PARTS: Array<AnatomyNode> = [
+    { name: "FieldShell", tier: "primitive", role: "khung tiêu đề nhóm · mô tả · lỗi" },
+    { name: "CheckboxGroup", tier: "primitive", role: "khung nhóm HeroUI bọc các hàng" },
+    { name: "Checkbox", tier: "primitive", role: "1 hàng mỗi option (value·label)" },
+]
+
+// leaf Skeleton: FieldShell tự vẽ label-bar + control mirror — Skeleton.Checkbox 1 hàng/option.
+const SKELETON_PARTS: Array<AnatomyNode> = [
+    { name: "FieldShell", tier: "primitive", role: "khung skeleton (label bar + control mirror)" },
+    { name: "Skeleton.Checkbox", tier: "primitive", role: "hàng checkbox placeholder, 1 mỗi option (hoặc 1 cho single)" },
+]
 
 /** Default: a single labelled checkbox, unchecked. */
 export const Default: Story = {
     render: () => (
         <div className="p-8 max-w-sm">
-            <ControlledSingle checkboxLabel="Ghi nhớ đăng nhập" />
+            <BlockAnatomy name="CheckboxField" tier="primitive" leaf="Default" parts={SINGLE_PARTS}>
+                <ControlledSingle checkboxLabel="Ghi nhớ đăng nhập" showAnatomy />
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -95,11 +123,14 @@ export const Default: Story = {
 export const WithHint: Story = {
     render: () => (
         <div className="p-8 max-w-sm">
-            <ControlledGroup
-                label="Chủ đề quan tâm"
-                description="Chọn một hoặc nhiều mảng bạn muốn theo dõi."
-                initialValue={["fe"]}
-            />
+            <BlockAnatomy name="CheckboxField" tier="primitive" leaf="WithHint" parts={GROUP_PARTS}>
+                <ControlledGroup
+                    label="Chủ đề quan tâm"
+                    description="Chọn một hoặc nhiều mảng bạn muốn theo dõi."
+                    initialValue={["fe"]}
+                    showAnatomy
+                />
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -108,10 +139,13 @@ export const WithHint: Story = {
 export const WithError: Story = {
     render: () => (
         <div className="p-8 max-w-sm">
-            <ControlledSingle
-                checkboxLabel="Tôi đồng ý với điều khoản dịch vụ"
-                errorMessage="Bạn cần đồng ý điều khoản để tiếp tục."
-            />
+            <BlockAnatomy name="CheckboxField" tier="primitive" leaf="WithError" parts={SINGLE_PARTS} note="errorMessage → FieldShell render dòng lỗi bên trong (cùng node FieldShell).">
+                <ControlledSingle
+                    checkboxLabel="Tôi đồng ý với điều khoản dịch vụ"
+                    errorMessage="Bạn cần đồng ý điều khoản để tiếp tục."
+                    showAnatomy
+                />
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -120,8 +154,12 @@ export const WithError: Story = {
 export const Disabled: Story = {
     render: () => (
         <div className="p-8 max-w-sm flex flex-col gap-6">
-            <ControlledSingle checkboxLabel="Ghi nhớ đăng nhập" initialValue isDisabled />
-            <ControlledGroup label="Chủ đề quan tâm" initialValue={["be"]} isDisabled />
+            <BlockAnatomy name="CheckboxField" tier="primitive" leaf="Disabled" parts={GROUP_PARTS} note="Cả hai mode (single + group) cùng lúc — hợp cả 3 part: FieldShell·CheckboxGroup·Checkbox.">
+                <div className="flex flex-col gap-6">
+                    <ControlledSingle checkboxLabel="Ghi nhớ đăng nhập" initialValue isDisabled showAnatomy />
+                    <ControlledGroup label="Chủ đề quan tâm" initialValue={["be"]} isDisabled showAnatomy />
+                </div>
+            </BlockAnatomy>
         </div>
     ),
 }
@@ -130,14 +168,19 @@ export const Disabled: Story = {
 export const Skeleton: Story = {
     render: () => (
         <div className="p-8 max-w-sm flex flex-col gap-6">
-            <CheckboxField checkboxLabel="" value={false} onValueChange={() => {}} isSkeleton />
-            <CheckboxField
-                label="Chủ đề quan tâm"
-                options={TOPIC_OPTIONS}
-                value={[]}
-                onValueChange={() => {}}
-                isSkeleton
-            />
+            <BlockAnatomy name="CheckboxField" tier="primitive" leaf="Skeleton" parts={SKELETON_PARTS}>
+                <div className="flex flex-col gap-6">
+                    <CheckboxField checkboxLabel="" value={false} onValueChange={() => {}} isSkeleton showAnatomy />
+                    <CheckboxField
+                        label="Chủ đề quan tâm"
+                        options={TOPIC_OPTIONS}
+                        value={[]}
+                        onValueChange={() => {}}
+                        isSkeleton
+                        showAnatomy
+                    />
+                </div>
+            </BlockAnatomy>
         </div>
     ),
 }

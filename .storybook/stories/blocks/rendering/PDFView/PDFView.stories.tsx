@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { PDFView } from "./PDFView"
+import { PDFView } from "@sb-components/blocks/rendering/PDFView/PDFView"
 
 const meta: Meta<typeof PDFView> = {
     title: "Primitives/Rendering/PDFView",

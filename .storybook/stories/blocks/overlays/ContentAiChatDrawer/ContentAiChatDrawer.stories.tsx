@@ -1,38 +1,27 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
-import { Typography } from "@heroui/react"
-import { CardsIcon } from "@phosphor-icons/react"
-import {
-    ChatComposer,
-    ChatThread,
-    ContentAiChatDrawer,
-    ContentSearchList,
-    ConversationList,
-    HistoryLink,
-    SelectionBanner,
-} from "./ContentAiChatDrawer"
-import { ChatBubble } from "../../feed/ChatBubble/ChatBubble"
-import { ChatToolResult } from "../../learn/ChatToolResult/ChatToolResult"
-import { BackLink } from "../../navigation/BackLink/BackLink"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
-import type { SearchCourseContentItem } from "../../learn/EntityResultRow/EntityResultRow"
+import { Button as HeroButton } from "@heroui/react"
+import { CardsIcon, PuzzlePieceIcon } from "@phosphor-icons/react"
+import { ContentAiChatDrawer, HistoryLink } from "@sb-components/blocks/overlays/ContentAiChatDrawer/ContentAiChatDrawer"
+import { ChatThread, type ChatThreadMessage } from "@sb-components/blocks/learn/ChatThread/ChatThread"
+import { ChatComposer } from "@sb-components/blocks/learn/ChatComposer/ChatComposer"
+import { SelectionBanner } from "@sb-components/blocks/learn/SelectionBanner/SelectionBanner"
+import { ConversationList, type ConversationListItem } from "@sb-components/blocks/learn/ConversationList/ConversationList"
+import { ContentSearchList } from "@sb-components/blocks/learn/ContentSearchList/ContentSearchList"
+import { BackLink } from "@sb-components/blocks/navigation/BackLink/BackLink"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import type { SearchCourseContentItem } from "@sb-components/blocks/learn/EntityResultRow/EntityResultRow"
 
 /**
- * OVERLAY — the in-lesson AI chat drawer's CONTENT, rendered as a static leaf inside a
- * SQUARE surface panel (a `bg-surface` sheet standing in for the portal `Drawer.Dialog`,
- * NOT a rounded floating card). The portal/placement/backdrop are the app's concern.
+ * OVERLAY — the in-lesson AI chat drawer, rendered as a static leaf inside a SQUARE
+ * surface panel (NOT the live HeroUI Drawer portal). FOUR LEAVES = four distinct
+ * STRUCTURES (which blocks the shell composes); empty/loading/error/streaming are
+ * STATE inside each block's own story, never a leaf here.
  *
- * FOUR LEAVES = four distinct STRUCTURES (`ChatThread`/`ChatComposer`/`SelectionBanner`/
- * `ConversationList`/`ContentSearchList` regions appear/disappear/reshape) — NOT the
- * `chat`/`empty`/`error`/`loading` STATE inside any one of them; those states are that
- * block's own concern, drilled in its own future story once ported (see
- * `ContentAiChatDrawer.tsx` header comment for the "TODO port" list).
- *
- * ANATOMY IS BLOCK-FIRST: only functional-region nodes (`ChatThread` / `ChatComposer` /
- * `SelectionBanner` / `ConversationList` / `ContentSearchList`) plus a handful of header
- * primitives (`Typography · tiêu đề`, `ModeSwitch`, `HistoryLink`/`BackLink`) — never the
- * primitives those blocks compose internally (`ChatBubble`, `ChatToolResult`,
- * `EntityResultRow`…).
+ * The shell composes the REAL learn/* blocks (`ChatThread` · `ChatComposer` ·
+ * `SelectionBanner` · `ConversationList` · `ContentSearchList`) — no hand-rolled
+ * duplicates. ANATOMY IS BLOCK-FIRST (§11a): each block is ONE opaque node (its
+ * internals are drilled in that block's own story), plus the shell's header primitives.
  */
 const meta: Meta<typeof ContentAiChatDrawer> = {
     title: "Overlays/ContentAiChatDrawer",
@@ -44,10 +33,11 @@ export default meta
 
 type Story = StoryObj<typeof ContentAiChatDrawer>
 
-/** Frame each leaf like a block story — right-aligned like a side drawer. */
+/** Frame each leaf right-aligned like a side drawer. */
 const frame = (node: React.ReactNode) => <div className="flex justify-end p-8">{node}</div>
 
 const LESSON_TITLE = "Closure trong JavaScript"
+const noop = () => {}
 
 const TOOL_ITEMS: Array<SearchCourseContentItem> = [
     {
@@ -63,192 +53,204 @@ const TOOL_ITEMS: Array<SearchCourseContentItem> = [
         isLocked: false,
     },
     {
-        kind: "flashcard",
-        title: "Event loop và microtask queue",
-        breadcrumb: null,
-        snippet: "So sánh thứ tự chạy giữa Promise.then và setTimeout trong Node.js.",
-        score: 0.81,
-        moduleId: null,
-        contentId: null,
-        deckId: "deck-event-loop-202",
+        kind: "content",
+        title: "Memory leak trong Node/Memory leak trong Node.js là gì",
+        breadcrumb: "Module 4 · Debug hiệu năng",
+        snippet: "Memory leak thường xuất phát từ closure giữ tham chiếu lâu hơn cần thiết.",
+        score: 0.82,
+        moduleId: "m4",
+        contentId: "lesson-leak",
+        deckId: null,
         taskId: null,
         isLocked: false,
     },
 ]
 
-/** Header primitives shared by every leaf. */
+const CHAT_MESSAGES: Array<ChatThreadMessage> = [
+    { id: "u1", role: "user", content: "closure trong JS là gì và khi nào dễ gây memory leak?" },
+    {
+        id: "a1",
+        role: "assistant",
+        content: "",
+        toolResult: {
+            intro: "Dưới đây là vài nội dung liên quan:",
+            label: "Nội dung liên quan",
+            icon: <CardsIcon aria-hidden focusable="false" />,
+            items: TOOL_ITEMS,
+            onViewAll: noop,
+            viewAllLabel: "Xem tất cả kết quả",
+        },
+    },
+]
+
+/** Model-picker slot stand-in (real UI = GradeModelDropdown). */
+const ModelPicker = () => <HeroButton size="sm" variant="ghost">Auto</HeroButton>
+
+const COMPOSER_SKILLS = [
+    { label: "Tìm bài học", icon: <CardsIcon aria-hidden focusable="false" /> },
+    { label: "Tìm challenges", icon: <PuzzlePieceIcon aria-hidden focusable="false" /> },
+]
+
+const CONVERSATIONS: Array<ConversationListItem> = [
+    { id: "c1", title: "Closure & memory leak", subtitle: "Bài 4 · 6 lượt", isActive: true },
+    { id: "c2", title: "Event loop hỏi nhanh", subtitle: "Cả khoá · 3 lượt", isActive: false },
+    { id: "c3", title: null, subtitle: "2 lượt", isActive: false },
+]
+
+/** Shell header primitives shared by every leaf. */
 const HEADER_PARTS: Array<AnatomyNode> = [
-    { name: "Typography.Title", tier: "primitive", role: "tên bài học — tiêu đề drawer" },
-    { name: "ModeSwitch", tier: "design", role: "chuyển hiển thị rail ⇄ drawer (segmented, 2 icon)" },
+    { name: "Title", tier: "primitive", role: "tên bài học — tiêu đề drawer" },
+    { name: "ModeSwitch", tier: "primitive", role: "chuyển hiển thị rail ⇄ drawer (segmented 2 icon)" },
 ]
 
-// ─────────────────────────────────────────────────────────────────────────────
-// LEAF 1 — Chat thường: HistoryLink + ChatThread + ChatComposer(normal)
-// ─────────────────────────────────────────────────────────────────────────────
-const NORMAL_PARTS: Array<AnatomyNode> = [
-    ...HEADER_PARTS,
-    { name: "HistoryLink", tier: "primitive", role: "mở lịch sử phiên trò chuyện" },
-    { name: "ChatThread", tier: "block", role: "vùng hội thoại — luồng tin nhắn (đào sâu ở story ChatThread)" },
-    { name: "ChatComposer", tier: "block", role: "ô soạn — input + model picker (Auto) + tìm nguồn + gửi" },
-]
-
+/** LEAF 1 — Chat thường: HistoryLink + ChatThread + ChatComposer(normal). */
 export const ChatThuong: Story = {
-    name: "Default",
+    name: "Chat thường",
     render: () =>
         frame(
             <BlockAnatomy
                 name="ContentAiChatDrawer"
                 tier="block"
-                leaf="Default"
-                parts={NORMAL_PARTS}
-                reason="Leaf gốc: KHÔNG có đoạn bôi đen — composer là MỘT hộp (input + action row liền nhau), không tách hộp quick-ask. Đây là cấu trúc mặc định khi mở drawer từ trong bài học."
+                leaf="Chat thường"
+                parts={[
+                    ...HEADER_PARTS,
+                    { name: "HistoryLink", tier: "primitive", role: "mở lịch sử phiên trò chuyện" },
+                    { name: "ChatThread", tier: "block", role: "vùng hội thoại — luồng tin nhắn (states ở story ChatThread)", storyId: "block-learn-chatthread--conversation" },
+                    { name: "ChatComposer", tier: "block", role: "ô soạn — input + model picker + gửi (states ở story ChatComposer)" },
+                ]}
+                reason="Leaf gốc: KHÔNG có đoạn bôi đen — composer là MỘT hộp liền. Shell compose 2 block THẬT ChatThread + ChatComposer."
             >
-                <ContentAiChatDrawer
-                    title={LESSON_TITLE}
-                    headerSecondary={<HistoryLink anatPart="HistoryLink" />}
-                    showAnatomy
-                >
-                    <ChatThread anatPart="ChatThread">
-                        <ChatBubble role="user">
-                            <Typography type="body-sm">closure trong JS là gì và khi nào dễ gây memory leak?</Typography>
-                        </ChatBubble>
-                        <ChatBubble role="assistant">
-                            <div className="flex flex-col gap-2">
-                                <Typography type="body-sm">
-                                    Closure là hàm “nhớ” được scope nơi nó sinh ra — nó giữ tham chiếu tới biến ngoài ngay
-                                    cả sau khi hàm cha đã return. Memory leak xảy ra khi closure giữ tham chiếu sống lâu hơn
-                                    cần thiết. Dưới đây là vài thẻ ôn liên quan:
-                                </Typography>
-                                <ChatToolResult
-                                    items={TOOL_ITEMS}
-                                    label="Flashcard liên quan"
-                                    icon={<CardsIcon aria-hidden focusable="false" />}
-                                    onSelect={() => {}}
-                                    onViewAll={() => {}}
-                                    viewAllLabel="Xem tất cả kết quả"
-                                />
-                            </div>
-                        </ChatBubble>
-                    </ChatThread>
-                    <ChatComposer mode="normal" anatPart="ChatComposer" />
-                </ContentAiChatDrawer>
-            </BlockAnatomy>,
-        ),
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// LEAF 2 — Chat có bôi đen: HistoryLink + SelectionBanner + ChatThread + ChatComposer(selection)
-// ─────────────────────────────────────────────────────────────────────────────
-const SELECTION_PARTS: Array<AnatomyNode> = [
-    ...HEADER_PARTS,
-    { name: "HistoryLink", tier: "primitive", role: "mở lịch sử phiên trò chuyện" },
-    { name: "SelectionBanner", tier: "block", role: "đoạn văn đã bôi đen — ghim TRÊN đầu thread" },
-    { name: "ChatThread", tier: "block", role: "vùng hội thoại của side-thread về đoạn đã chọn" },
-    { name: "ChatComposer", tier: "block", role: "ô soạn — CHẾ ĐỘ selection: input rời sang hộp quick-ask riêng, action row chỉ còn model picker/tìm nguồn/gửi" },
-]
-
-export const ChatBoiDen: Story = {
-    name: "WithSelection",
-    render: () =>
-        frame(
-            <BlockAnatomy
-                name="ContentAiChatDrawer"
-                tier="block"
-                leaf="WithSelection"
-                parts={SELECTION_PARTS}
-                note="Khác leaf 1 ở CẤU TRÚC: xuất hiện thêm SelectionBanner phía trên thread, và ChatComposer đổi hình dạng — input rời khỏi hộp composer chính, chuyển sang một hộp quick-ask riêng (kèm chip gợi ý) ngay dưới thread."
-            >
-                <ContentAiChatDrawer
-                    title={LESSON_TITLE}
-                    headerSecondary={<HistoryLink anatPart="HistoryLink" />}
-                    showAnatomy
-                >
-                    <SelectionBanner
-                        anatPart="SelectionBanner"
-                        excerpt="“Closure là hàm giữ tham chiếu tới scope nơi nó được tạo ra, ngay cả sau khi hàm cha đã return.”"
+                <ContentAiChatDrawer title={LESSON_TITLE} headerSecondary={<HistoryLink anatPart="HistoryLink" />} showAnatomy>
+                    <ChatThread messages={CHAT_MESSAGES} onSelectHit={noop} anatPart="ChatThread" />
+                    <ChatComposer
+                        value=""
+                        onChange={noop}
+                        onSubmit={noop}
+                        isSkillMenuOpen={false}
+                        onToggleSkillMenu={noop}
+                        skills={COMPOSER_SKILLS}
+                        modelPicker={<ModelPicker />}
+                        anatPart="ChatComposer"
                     />
-                    <ChatThread anatPart="ChatThread">
-                        <ChatBubble role="user">
-                            <Typography type="body-sm">giải thích đoạn này bằng ví dụ đơn giản hơn?</Typography>
-                        </ChatBubble>
-                        <ChatBubble role="assistant">
-                            <Typography type="body-sm">
-                                Hãy tưởng tượng một hàm `createCounter` trả về hàm `increment` — `increment` vẫn "nhớ"
-                                biến `count` dù `createCounter` đã chạy xong từ lâu. Đó chính là closure.
-                            </Typography>
-                        </ChatBubble>
-                    </ChatThread>
-                    <ChatComposer mode="selection" anatPart="ChatComposer" />
                 </ContentAiChatDrawer>
             </BlockAnatomy>,
         ),
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// LEAF 3 — Lịch sử phiên: BackLink + ConversationList, KHÔNG có composer
-// ─────────────────────────────────────────────────────────────────────────────
-const HISTORY_PARTS: Array<AnatomyNode> = [
-    ...HEADER_PARTS,
-    { name: "BackLink", tier: "primitive", role: "quay lại thread chat" },
-    { name: "ConversationList", tier: "block", role: "tìm + tạo mới + toggle lưu trữ + danh sách phiên trò chuyện (gộp 1 vùng chức năng)" },
-]
+/** LEAF 2 — Chat có bôi đen: + SelectionBanner, ChatComposer(selection). */
+export const ChatBoiDen: Story = {
+    name: "Chat có bôi đen",
+    render: () =>
+        frame(
+            <BlockAnatomy
+                name="ContentAiChatDrawer"
+                tier="block"
+                leaf="Chat có bôi đen"
+                parts={[
+                    ...HEADER_PARTS,
+                    { name: "HistoryLink", tier: "primitive", role: "mở lịch sử phiên" },
+                    { name: "SelectionBanner", tier: "block", role: "đoạn văn đã bôi đen — ghim trên đầu thread", storyId: "block-learn-selectionbanner--overview" },
+                    { name: "ChatThread", tier: "block", role: "hội thoại side-thread về đoạn đã chọn", storyId: "block-learn-chatthread--conversation" },
+                    { name: "ChatComposer", tier: "block", role: "chế độ selection — input rời sang hộp quick-ask riêng" },
+                ]}
+                note="Khác leaf 1 ở CẤU TRÚC: thêm SelectionBanner + ChatComposer sang chế độ selection (input dời khỏi composer chính)."
+            >
+                <ContentAiChatDrawer title={LESSON_TITLE} headerSecondary={<HistoryLink anatPart="HistoryLink" />} showAnatomy>
+                    <SelectionBanner
+                        passage="Closure giữ tham chiếu tới biến ngoài scope ngay cả sau khi hàm cha đã return."
+                        note="Phiên hỏi theo đoạn này được lưu trữ riêng."
+                        onDismiss={noop}
+                        anatPart="SelectionBanner"
+                    />
+                    <ChatThread messages={[]} hasSelection anatPart="ChatThread" />
+                    <ChatComposer
+                        value=""
+                        onChange={noop}
+                        onSubmit={noop}
+                        isSkillMenuOpen={false}
+                        onToggleSkillMenu={noop}
+                        skills={COMPOSER_SKILLS}
+                        modelPicker={<ModelPicker />}
+                        selection={{
+                            hasSelection: true,
+                            showQuickAsks: true,
+                            quickAsks: [{ label: "Giải thích đoạn này" }, { label: "Cho ví dụ" }, { label: "Đơn giản hoá" }],
+                        }}
+                        anatPart="ChatComposer"
+                    />
+                </ContentAiChatDrawer>
+            </BlockAnatomy>,
+        ),
+}
 
+/** LEAF 3 — Lịch sử phiên: BackLink + ConversationList, KHÔNG composer. */
 export const LichSuPhien: Story = {
-    name: "History",
+    name: "Lịch sử phiên",
     render: () =>
         frame(
             <BlockAnatomy
                 name="ContentAiChatDrawer"
                 tier="block"
-                leaf="History"
-                parts={HISTORY_PARTS}
-                note="Khác hẳn 2 leaf chat ở CẤU TRÚC: ChatThread/SelectionBanner/ChatComposer biến mất hoàn toàn, HistoryLink được thay bằng BackLink (đi ngược), và toàn drawer là MỘT block quản lý phiên (ConversationList) — hoàn toàn KHÔNG có composer."
+                leaf="Lịch sử phiên"
+                parts={[
+                    ...HEADER_PARTS,
+                    { name: "BackLink", tier: "primitive", role: "quay lại phiên chat" },
+                    { name: "ConversationList", tier: "block", role: "danh sách/chọn phiên (states ở story ConversationList)", storyId: "block-learn-conversationlist--list" },
+                ]}
+                note="Cấu trúc KHÁC hẳn chat: HistoryLink → BackLink, body là ConversationList, KHÔNG composer."
             >
                 <ContentAiChatDrawer
                     title={LESSON_TITLE}
-                    headerSecondary={(
-                        <div data-anat-part="BackLink">
-                            <BackLink label="Trở lại" onPress={() => {}} />
+                    headerSecondary={
+                        <div data-anat-part="BackLink" className="w-fit">
+                            <BackLink label="Cuộc trò chuyện" onPress={noop} />
                         </div>
-                    )}
+                    }
                     showAnatomy
                 >
-                    <ConversationList anatPart="ConversationList" />
+                    <div data-anat-part="ConversationList">
+                        <ConversationList
+                            items={CONVERSATIONS}
+                            onSelect={noop}
+                            onRenameStart={noop}
+                            onRenameChange={noop}
+                            onRenameCommit={noop}
+                            onRenameCancel={noop}
+                            onArchive={noop}
+                            onDelete={noop}
+                        />
+                    </div>
                 </ContentAiChatDrawer>
             </BlockAnatomy>,
         ),
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// LEAF 4 — Tìm nội dung khoá: BackLink + ContentSearchList, KHÔNG có composer
-// ─────────────────────────────────────────────────────────────────────────────
-const CONTENT_SEARCH_PARTS: Array<AnatomyNode> = [
-    ...HEADER_PARTS,
-    { name: "BackLink", tier: "primitive", role: "quay lại thread chat" },
-    { name: "ContentSearchList", tier: "block", role: "tìm + danh sách kết quả nội dung khoá (gộp 1 vùng chức năng)" },
-]
-
-export const TimNoiDungKhoa: Story = {
-    name: "ContentSearch",
+/** LEAF 4 — Tìm nội dung khoá: BackLink + ContentSearchList, KHÔNG composer. */
+export const TimNoiDung: Story = {
+    name: "Tìm nội dung khoá",
     render: () =>
         frame(
             <BlockAnatomy
                 name="ContentAiChatDrawer"
                 tier="block"
-                leaf="ContentSearch"
-                parts={CONTENT_SEARCH_PARTS}
-                note="Cùng họ với leaf 'Lịch sử phiên' (BackLink, không composer) nhưng KHÁC block chức năng: ContentSearchList thay ConversationList — tìm nội dung khoá học (bài/flashcard/thử thách) thay vì tìm phiên chat cũ."
+                leaf="Tìm nội dung khoá"
+                parts={[
+                    ...HEADER_PARTS,
+                    { name: "BackLink", tier: "primitive", role: "quay lại phiên chat" },
+                    { name: "ContentSearchList", tier: "block", role: "tìm nội dung khoá (states ở story ContentSearchList)", storyId: "block-learn-contentsearchlist--results" },
+                ]}
+                note="Cấu trúc riêng: BackLink + ContentSearchList (ô tìm + danh sách kết quả), KHÔNG composer."
             >
                 <ContentAiChatDrawer
                     title={LESSON_TITLE}
-                    headerSecondary={(
-                        <div data-anat-part="BackLink">
-                            <BackLink label="Trở lại" onPress={() => {}} />
+                    headerSecondary={
+                        <div data-anat-part="BackLink" className="w-fit">
+                            <BackLink label="Tìm nội dung khoá" onPress={noop} />
                         </div>
-                    )}
+                    }
                     showAnatomy
                 >
-                    <ContentSearchList anatPart="ContentSearchList" />
+                    <ContentSearchList items={TOOL_ITEMS} query="closure" onSelect={noop} anatPart="ContentSearchList" />
                 </ContentAiChatDrawer>
             </BlockAnatomy>,
         ),

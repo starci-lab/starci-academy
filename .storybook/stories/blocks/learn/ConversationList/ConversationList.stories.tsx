@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ConversationList, type ConversationListItem } from "./ConversationList"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { ConversationList, type ConversationListItem } from "@sb-components/blocks/learn/ConversationList/ConversationList"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * BLOCK — the conversation-picker REGION inside the AI-chat drawer
  * (`ContentAiChat/index.tsx:1044-1197`): a self-scrolling, bounded list of chat
- * sessions driven by `AsyncContent` (error → loading → empty → content), each
+ * sessions driven by `AsyncContent.Base` (error → loading → empty → content), each
  * row switchable to an inline rename `<input>`, with a ⋯ menu for
  * Đổi tên / Lưu trữ / Xoá.
  *
@@ -34,11 +34,11 @@ const SESSIONS: Array<ConversationListItem> = [
     { id: "3", title: null, subtitle: "Cả khoá · 3 lượt", isActive: false },
 ]
 
-// ── content leaf — chrome: ScrollShadow → AsyncContent(content) → SurfaceListCard → rows. ──
+// ── content leaf — chrome: ScrollShadow → AsyncContent.Base(content) → SurfaceListCard → rows. ──
 const DATA_PARTS: Array<AnatomyNode> = [
     { name: "ScrollShadow", tier: "primitive", role: "khung cuộn tự giới hạn 55vh" },
     {
-        name: "AsyncContent",
+        name: "AsyncContent.Base",
         tier: "primitive",
         role: "switch error → loading → empty → content",
         state: "content",
@@ -73,12 +73,12 @@ const DATA_PARTS: Array<AnatomyNode> = [
     },
 ]
 
-// loading leaf — AsyncContent falls to its loading branch → a bordered
+// loading leaf — AsyncContent.Base falls to its loading branch → a bordered
 // SurfaceListCard of skeleton rows (same footprint as a real row).
 const LOADING_PARTS: Array<AnatomyNode> = [
     { name: "ScrollShadow", tier: "primitive", role: "khung cuộn (vẫn hiện)" },
     {
-        name: "AsyncContent",
+        name: "AsyncContent.Base",
         tier: "primitive",
         role: "nhánh loading",
         state: "loading",
@@ -104,45 +104,45 @@ const LOADING_PARTS: Array<AnatomyNode> = [
     },
 ]
 
-// empty leaf — chrome stays, AsyncContent falls to EmptyContent → EmptyState.
+// empty leaf — chrome stays, AsyncContent.Base falls to AsyncContent.Empty → Feedback.Empty.
 // SAME copy as the error leaf (source :1063-1070), no retry button.
 const EMPTY_PARTS: Array<AnatomyNode> = [
     { name: "ScrollShadow", tier: "primitive", role: "khung cuộn" },
     {
-        name: "AsyncContent",
+        name: "AsyncContent.Base",
         tier: "primitive",
         role: "nhánh empty",
         state: "empty",
         children: [
             {
-                name: "EmptyContent",
+                name: "AsyncContent.Empty",
                 tier: "design",
                 role: "khung rỗng của region",
                 children: [
-                    { name: "EmptyState", tier: "primitive", role: "\"Chưa có cuộc trò chuyện\" — KHÔNG nút thử lại" },
+                    { name: "Feedback.Empty", tier: "primitive", role: "\"Chưa có cuộc trò chuyện\" — KHÔNG nút thử lại" },
                 ],
             },
         ],
     },
 ]
 
-// error leaf — chrome stays, AsyncContent falls to ErrorContent → EmptyState
+// error leaf — chrome stays, AsyncContent.Base falls to AsyncContent.Error → Feedback.Empty
 // (tone danger). Source dùng CÙNG câu với empty, không có onRetry/retryLabel
 // nên KHÔNG có nút thử lại — anatomy phản ánh đúng thực tế đó.
 const ERROR_PARTS: Array<AnatomyNode> = [
     { name: "ScrollShadow", tier: "primitive", role: "khung cuộn" },
     {
-        name: "AsyncContent",
+        name: "AsyncContent.Base",
         tier: "primitive",
         role: "nhánh error",
         state: "error",
         children: [
             {
-                name: "ErrorContent",
+                name: "AsyncContent.Error",
                 tier: "design",
                 role: "khung lỗi của region",
                 children: [
-                    { name: "EmptyState", tier: "primitive", role: "\"Chưa có cuộc trò chuyện\" (cùng câu empty) — KHÔNG nút thử lại", state: "danger" },
+                    { name: "Feedback.Empty", tier: "primitive", role: "\"Chưa có cuộc trò chuyện\" (cùng câu empty) — KHÔNG nút thử lại", state: "danger" },
                 ],
             },
         ],
@@ -154,7 +154,7 @@ const ERROR_PARTS: Array<AnatomyNode> = [
 const ACTIVE_PARTS: Array<AnatomyNode> = [
     { name: "ScrollShadow", tier: "primitive", role: "khung cuộn" },
     {
-        name: "AsyncContent",
+        name: "AsyncContent.Base",
         tier: "primitive",
         role: "nhánh content",
         state: "content",
@@ -192,7 +192,7 @@ const ACTIVE_PARTS: Array<AnatomyNode> = [
 const RENAMING_PARTS: Array<AnatomyNode> = [
     { name: "ScrollShadow", tier: "primitive", role: "khung cuộn" },
     {
-        name: "AsyncContent",
+        name: "AsyncContent.Base",
         tier: "primitive",
         role: "nhánh content",
         state: "content",
@@ -222,7 +222,7 @@ const RENAMING_PARTS: Array<AnatomyNode> = [
 const PAGINATING_PARTS: Array<AnatomyNode> = [
     { name: "ScrollShadow", tier: "primitive", role: "khung cuộn" },
     {
-        name: "AsyncContent",
+        name: "AsyncContent.Base",
         tier: "primitive",
         role: "nhánh content",
         state: "content",
@@ -263,7 +263,7 @@ export const Default: Story = {
                 tier="block"
                 leaf="Default"
                 parts={DATA_PARTS}
-                reason="Gộp ScrollShadow (tự giới hạn 55vh) + AsyncContent (error/loading/empty/content) + SurfaceListCard vào MỘT region, mỗi phiên là 1 SurfaceListCardItem tái dùng TitledText cho cụm tiêu đề/phụ đề thay vì rải Typography tay."
+                reason="Gộp ScrollShadow (tự giới hạn 55vh) + AsyncContent.Base (error/loading/empty/content) + SurfaceListCard vào MỘT region, mỗi phiên là 1 SurfaceListCardItem tái dùng TitledText cho cụm tiêu đề/phụ đề thay vì rải Typography tay."
             >
                 <ConversationList
                     items={SESSIONS}
@@ -289,7 +289,7 @@ export const Skeleton: Story = {
                 tier="block"
                 leaf="Skeleton"
                 parts={LOADING_PARTS}
-                note="AsyncContent nhánh loading → 3 hàng skeleton mirror đúng footprint hàng thật (source :1047-1062)."
+                note="AsyncContent.Base nhánh loading → 3 hàng skeleton mirror đúng footprint hàng thật (source :1047-1062)."
             >
                 <ConversationList
                     items={[]}
@@ -316,7 +316,7 @@ export const Empty: Story = {
                 tier="block"
                 leaf="Empty"
                 parts={EMPTY_PARTS}
-                note="Không có phiên nào → AsyncContent rơi về EmptyContent, câu 'Chưa có cuộc trò chuyện', KHÔNG nút thử lại (source :1063-1066)."
+                note="Không có phiên nào → AsyncContent.Base rơi về AsyncContent.Empty, câu 'Chưa có cuộc trò chuyện', KHÔNG nút thử lại (source :1063-1066)."
             >
                 <ConversationList
                     items={[]}
@@ -343,7 +343,7 @@ export const ErrorState: Story = {
                 tier="block"
                 leaf="Error"
                 parts={ERROR_PARTS}
-                note="Tải hỏng, không cache → AsyncContent rơi về ErrorContent → EmptyState tone danger, nhưng dùng CÙNG câu 'Chưa có cuộc trò chuyện' với Empty và KHÔNG có nút thử lại — port trung thực source :1067-1070 (không phải audit ẩu, đây thực sự là 1 gap của source)."
+                note="Tải hỏng, không cache → AsyncContent.Base rơi về AsyncContent.Error → Feedback.Empty tone danger, nhưng dùng CÙNG câu 'Chưa có cuộc trò chuyện' với Empty và KHÔNG có nút thử lại — port trung thực source :1067-1070 (không phải audit ẩu, đây thực sự là 1 gap của source)."
             >
                 <ConversationList
                     items={[]}

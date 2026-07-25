@@ -2,8 +2,9 @@ import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CalendarDate } from "@internationalized/date"
 import type { DateValue } from "@internationalized/date"
-import { SchedulePicker } from "./SchedulePicker"
-import type { SchedulePickerSlot } from "./SchedulePicker"
+import { SchedulePicker } from "@sb-components/blocks/form/SchedulePicker/SchedulePicker"
+import type { SchedulePickerSlot } from "@sb-components/blocks/form/SchedulePicker/SchedulePicker"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof SchedulePicker> = {
     title: "Primitives/Forms/SchedulePicker",
@@ -21,6 +22,13 @@ type Story = StoryObj<typeof SchedulePicker>
 // Fixed literals so stories are deterministic — never `new Date()`.
 const MIN_DATE = new CalendarDate(2026, 7, 16)
 const INITIAL_DATE = new CalendarDate(2026, 7, 20)
+
+// The Booking/NoSelection leaves both compose the same two direct parts — the
+// DatePicker half and the time-slot grid half; the Skeleton leaf mirrors the
+// same two halves with placeholder rows (same part names, per §11a).
+const DATE_PICKER: AnatomyNode = { name: "DatePicker", tier: "primitive", role: "FieldShell label + DateField/Calendar — chọn ngày" }
+const SLOT_GRID: AnatomyNode = { name: "SlotGrid", tier: "primitive", role: "Label + lưới nút chọn khung giờ (single-select)" }
+const PARTS: Array<AnatomyNode> = [DATE_PICKER, SLOT_GRID]
 
 const SLOTS: Array<SchedulePickerSlot> = [
     { id: "0900", label: "09:00 - 10:00" },
@@ -53,6 +61,7 @@ const Controlled = ({
             availableSlots={availableSlots}
             selectedSlotId={slotId}
             onSlotChange={setSlotId}
+            showAnatomy
         />
     )
 }
@@ -65,7 +74,9 @@ export const Booking: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <Controlled initialSlotId="1030" />
+                <BlockAnatomy name="SchedulePicker" tier="primitive" leaf="Booking" parts={PARTS} note="2 nửa trực tiếp: DatePicker (chọn ngày) + SlotGrid (chọn khung giờ, single-select).">
+                    <Controlled initialSlotId="1030" />
+                </BlockAnatomy>
             </div>
         </div>
     ),
@@ -76,7 +87,9 @@ export const NoSelection: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <Controlled initialDate={null} />
+                <BlockAnatomy name="SchedulePicker" tier="primitive" leaf="NoSelection" parts={PARTS} note="Composition không đổi khi rỗng — DatePicker chưa có value, SlotGrid chưa có slot chọn.">
+                    <Controlled initialDate={null} />
+                </BlockAnatomy>
             </div>
         </div>
     ),
@@ -86,13 +99,16 @@ export const NoSelection: Story = {
 export const Skeleton: Story = {
     render: () => (
         <div className="p-8 max-w-sm">
-            <SchedulePicker
-                isSkeleton
-                dateValue={null}
-                onDateChange={() => {}}
-                availableSlots={[]}
-                onSlotChange={() => {}}
-            />
+            <BlockAnatomy name="SchedulePicker" tier="primitive" leaf="Skeleton" parts={PARTS} note="Mirror cùng 2 phần DatePicker/SlotGrid bằng Skeleton.Input, không mount control thật.">
+                <SchedulePicker
+                    isSkeleton
+                    dateValue={null}
+                    onDateChange={() => {}}
+                    availableSlots={[]}
+                    onSlotChange={() => {}}
+                    showAnatomy
+                />
+            </BlockAnatomy>
         </div>
     ),
 }

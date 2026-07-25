@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
-import { ChatBubble } from "./ChatBubble"
-import { BlockAnatomy, type AnatomyNode } from "../../layout/BlockAnatomy/BlockAnatomy"
+import { ChatBubble } from "@sb-components/blocks/feed/ChatBubble/ChatBubble"
+import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — a single chat-message bubble: align + tint by author, closer to a

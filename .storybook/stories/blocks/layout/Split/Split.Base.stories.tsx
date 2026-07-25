@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import type { ReactNode } from "react"
-import { Split } from "@sb-components/blocks/layout/Split/Split"
-import { Stack } from "@sb-components/blocks/layout/Stack/Stack"
+import { Split } from "@sb-components/layouts/layout/Split/Split"
+import { Stack } from "@sb-components/layouts/layout/Stack/Stack"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE: `Split.Base` là KHUNG hàng TRÁI ↔ PHẢI. State nó sinh ra = quan hệ
@@ -36,7 +36,7 @@ const SIDE_PARTS: Array<AnatomyNode> = [
  */
 const Frame = ({ width, label, children }: { width: string; label: string; children: ReactNode }) => (
     <div className="flex flex-col gap-2">
-        <Typography.Xs text={label} color="muted" />
+        <Typography.Base size="xs" text={label} color="muted" />
         <div className="@container rounded-3xl border border-dashed border-default p-3" style={{ width, maxWidth: "100%" }}>
             {children}
         </div>
@@ -55,7 +55,7 @@ export const Default: Story = {
                 reason="Không phải `Stack.H justify=between`: đây là HAI PHÍA CÓ TÊN với chiến lược bề ngang KHÁC nhau (`start` co được, `end` không). Đặt tên hai phía là cách ép luật đó ở MỘT chỗ thay vì ở 43 call-site. Vì hai slot có tên đã đủ nên khung KHÔNG nhận `children` (§13b)."
                 code={`<Split.Base
   gap={3}
-  start={<Typography.Sm text="Khoá System Design" weight="medium" />}
+  start={<Typography.Base size="sm" text="Khoá System Design" weight="medium" />}
   end={<Button.Base label="Tiếp tục" size="sm" />}
 />`}
             >
@@ -63,7 +63,7 @@ export const Default: Story = {
                     <Split.Base
                         showAnatomy
                         gap={3}
-                        start={<Typography.Sm text="Khoá System Design" weight="medium" truncate />}
+                        start={<Typography.Base size="sm" text="Khoá System Design" weight="medium" truncate />}
                         end={<Button.Base label="Tiếp tục" size="sm" />}
                     />
                 </div>
@@ -99,7 +99,7 @@ export const StackOnMobile: Story = {
                             showAnatomy
                             stackOnMobile
                             gap={3}
-                            start={<Typography.Sm text="Gói Pro — thanh toán theo năm" weight="medium" />}
+                            start={<Typography.Base size="sm" text="Gói Pro — thanh toán theo năm" weight="medium" />}
                             end={<Button.Base label="Nâng cấp" size="sm" />}
                         />
                     </Frame>
@@ -107,7 +107,7 @@ export const StackOnMobile: Story = {
                         <Split.Base
                             stackOnMobile
                             gap={3}
-                            start={<Typography.Sm text="Gói Pro — thanh toán theo năm" weight="medium" />}
+                            start={<Typography.Base size="sm" text="Gói Pro — thanh toán theo năm" weight="medium" />}
                             end={<Button.Base label="Nâng cấp" size="sm" />}
                         />
                     </Frame>
@@ -140,7 +140,7 @@ export const Align: Story = {
                 <div className="flex flex-col gap-6">
                     {(["center", "start", "end", "stretch"] as const).map((align, index) => (
                         <div key={align} className="flex flex-col gap-2">
-                            <Typography.Xs text={align} color="muted" />
+                            <Typography.Base size="xs" text={align} color="muted" />
                             <div className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
                                 <Split.Base
                                     showAnatomy={index === 0}
@@ -148,8 +148,8 @@ export const Align: Story = {
                                     align={align}
                                     start={(
                                         <Stack.V gap={0}>
-                                            <Typography.Sm text="Bài 4 — Consistent Hashing" weight="medium" />
-                                            <Typography.Xs text="Còn 18 phút · 3 thử thách" color="muted" />
+                                            <Typography.Base size="sm" text="Bài 4 — Consistent Hashing" weight="medium" />
+                                            <Typography.Base size="xs" text="Còn 18 phút · 3 thử thách" color="muted" />
                                         </Stack.V>
                                     )}
                                     end={<Button.Base label="Học" size="sm" />}

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ArrowRightIcon, XIcon } from "@phosphor-icons/react"
-import { ButtonGroup } from "@sb-components/blocks/buttons/ButtonGroup/ButtonGroup"
+import { ButtonGroup } from "@sb-components/layouts/buttons/ButtonGroup/ButtonGroup"
 
 const meta: Meta<typeof ButtonGroup> = {
     title: "Primitives/Buttons/ButtonGroup",

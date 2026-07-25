@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
 import { CardsIcon, SparkleIcon, ListMagnifyingGlassIcon, PuzzlePieceIcon, BookOpenIcon } from "@phosphor-icons/react"
-import { ChatThread, type ChatThreadMessage } from "@sb-components/blocks/learn/ChatThread/ChatThread"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
-import type { SearchCourseContentItem } from "@sb-components/blocks/learn/EntityResultRow/EntityResultRow"
+import { ChatThread, type ChatThreadMessage } from "@sb-components/_blocks/learn/ChatThread/ChatThread"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import type { SearchCourseContentItem } from "@sb-components/_blocks/learn/EntityResultRow/EntityResultRow"
 
 /**
  * BLOCK — the AI-chat message THREAD (the scrolling conversation region). One function:

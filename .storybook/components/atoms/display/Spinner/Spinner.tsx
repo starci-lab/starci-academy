@@ -52,6 +52,6 @@ const SpinnerBase = ({ size = "md", tone = "accent", label = "Đang tải", show
  * `Spinner.*` — the spinner ATOM namespace. `Spinner.Base` is the single
  * constrained spinner; size / tone are LEAVES of it (prop-driven).
  */
-export const Spinner = {
+export const Spinner = Object.assign(SpinnerBase, {
     Base: SpinnerBase,
-}
+})

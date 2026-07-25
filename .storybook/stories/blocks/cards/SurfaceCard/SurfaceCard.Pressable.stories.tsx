@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
 import { Avatar, AvatarFallback, Button } from "@heroui/react"
-import { SurfaceCard } from "@sb-components/blocks/cards/SurfaceCard/SurfaceCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * KHUNG (Layouts) — vỏ card BẤM-ĐƯỢC, slot-agnostic: khung surface + phản hồi press

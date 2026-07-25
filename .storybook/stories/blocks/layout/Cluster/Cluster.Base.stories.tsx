@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Cluster } from "@sb-components/blocks/layout/Cluster/Cluster"
+import { Cluster } from "@sb-components/layouts/layout/Cluster/Cluster"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE: `Cluster.Base` là KHUNG DANH SÁCH LẶP — hàng tràn dòng của N phần
@@ -88,7 +88,7 @@ export const Gaps: Story = {
                 <div className="flex flex-col gap-6">
                     {SCALE.map((step, index) => (
                         <div key={step.gap} className="flex flex-col gap-2">
-                            <Typography.Xs text={step.name} color="muted" />
+                            <Typography.Base size="xs" text={step.name} color="muted" />
                             <div className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
                                 <Cluster.Base showAnatomy={index === 0} gap={step.gap} items={tagItems(TAGS.slice(0, 4))} />
                             </div>
@@ -122,7 +122,7 @@ export const Justify: Story = {
                 <div className="flex flex-col gap-6">
                     {(["start", "center", "end", "between"] as const).map((justify, index) => (
                         <div key={justify} className="flex flex-col gap-2">
-                            <Typography.Xs text={justify} color="muted" />
+                            <Typography.Base size="xs" text={justify} color="muted" />
                             <div className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
                                 <Cluster.Base
                                     showAnatomy={index === 0}

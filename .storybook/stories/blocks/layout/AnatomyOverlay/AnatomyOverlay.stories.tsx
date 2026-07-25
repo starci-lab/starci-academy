@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Typography } from "@heroui/react"
-import { AnatomyOverlay } from "@sb-components/blocks/layout/AnatomyOverlay/AnatomyOverlay"
+import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 
 /**
  * PRIMITIVE — AnatomyOverlay: an ABSOLUTE annotation (dashed outline + corner tag)

@@ -212,7 +212,7 @@ const AvatarGroup = ({
  * avatar (image / initials / icon / status are LEAVES of it, prop-driven);
  * `Avatar.Group` is the overlapping row of them (+ "+N" overflow).
  */
-export const Avatar = {
+export const Avatar = Object.assign(AvatarBase, {
     Base: AvatarBase,
     Group: AvatarGroup,
-}
+})

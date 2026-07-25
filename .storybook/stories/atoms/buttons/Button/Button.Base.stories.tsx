@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { FloppyDisk } from "@gravity-ui/icons"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Button.Base> = {
     title: "Atoms/Buttons/Button/Button.Base",
@@ -64,7 +64,7 @@ export const WithIcon: Story = {
                 leaf="WithIcon"
                 parts={ICON_PARTS}
                 note="icon = COMPONENT (`icon={FloppyDisk}`, không JSX) — atom ép size-4; glyph-duy-nhất của Button.Icon to hơn (size-5)."
-                code={`<Button.Base variant="primary" icon={FloppyDisk} label="Lưu bài" />`}
+                code={"<Button.Base variant=\"primary\" icon={FloppyDisk} label=\"Lưu bài\" />"}
             >
                 <Button.Base variant="primary" icon={FloppyDisk} label="Lưu bài" showAnatomy />
             </BlockAnatomy>
@@ -82,7 +82,7 @@ export const Primary: Story = {
                 leaf="Primary"
                 parts={LABEL_PARTS}
                 reason="Atom nút DUY NHẤT bọc HeroUI Button; biến thể thị giác phân bằng prop `variant` → leaf = composition."
-                code={`<Button.Base variant="primary" label="Lưu bài" />`}
+                code={"<Button.Base variant=\"primary\" label=\"Lưu bài\" />"}
             >
                 <Button.Base variant="primary" label="Lưu bài" showAnatomy />
             </BlockAnatomy>
@@ -100,7 +100,7 @@ export const Secondary: Story = {
                 leaf="Secondary"
                 parts={LABEL_PARTS}
                 note="variant=secondary — action ngang hàng/ít nhấn hơn primary."
-                code={`<Button.Base variant="secondary" label="Xem trước" />`}
+                code={"<Button.Base variant=\"secondary\" label=\"Xem trước\" />"}
             >
                 <Button.Base variant="secondary" label="Xem trước" showAnatomy />
             </BlockAnatomy>
@@ -118,7 +118,7 @@ export const Ghost: Story = {
                 leaf="Ghost"
                 parts={LABEL_PARTS}
                 note="variant=ghost — nền phẳng, dùng cho action nhẹ/inline."
-                code={`<Button.Base variant="ghost" label="Huỷ" />`}
+                code={"<Button.Base variant=\"ghost\" label=\"Huỷ\" />"}
             >
                 <Button.Base variant="ghost" label="Huỷ" showAnatomy />
             </BlockAnatomy>
@@ -136,7 +136,7 @@ export const Danger: Story = {
                 leaf="Danger"
                 parts={LABEL_PARTS}
                 note="variant=danger — map thẳng xuống HeroUI variant destructive (không phải color prop)."
-                code={`<Button.Base variant="danger" label="Xoá" />`}
+                code={"<Button.Base variant=\"danger\" label=\"Xoá\" />"}
             >
                 <Button.Base variant="danger" label="Xoá" showAnatomy />
             </BlockAnatomy>
@@ -154,7 +154,7 @@ export const Disabled: Story = {
                 leaf="Disabled"
                 parts={LABEL_PARTS}
                 note="isDisabled → forward xuống HeroUI (khoá press, giảm opacity)."
-                code={`<Button.Base variant="primary" isDisabled label="Lưu bài" />`}
+                code={"<Button.Base variant=\"primary\" isDisabled label=\"Lưu bài\" />"}
             >
                 <Button.Base variant="primary" isDisabled label="Lưu bài" showAnatomy />
             </BlockAnatomy>
@@ -172,7 +172,7 @@ export const Pending: Story = {
                 leaf="Pending"
                 parts={PENDING_PARTS}
                 note="isPending → atom render TAY <Spinner size=sm color=current> (react-aria không tự vẽ) + khoá press."
-                code={`<Button.Base variant="primary" isPending label="Đang lưu…" />`}
+                code={"<Button.Base variant=\"primary\" isPending label=\"Đang lưu…\" />"}
             >
                 <Button.Base variant="primary" isPending label="Đang lưu…" showAnatomy />
             </BlockAnatomy>
@@ -190,7 +190,7 @@ export const Loading: Story = {
                 leaf="Loading"
                 parts={SKELETON_PARTS}
                 note="isSkeleton → pill shimmer OWNED bởi atom (hybrid C), khớp box nút."
-                code={`<Button.Base isSkeleton label="Lưu bài" />`}
+                code={"<Button.Base isSkeleton label=\"Lưu bài\" />"}
             >
                 <Button.Base isSkeleton label="Lưu bài" showAnatomy />
             </BlockAnatomy>

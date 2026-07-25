@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { List } from "@sb-components/blocks/lists/List/List"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { List } from "@sb-components/layouts/lists/List/List"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `List.ToggleRow` là khung MỘT HÀNG CÀI ĐẶT.

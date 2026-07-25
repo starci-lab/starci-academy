@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
 import { TrophyIcon } from "@phosphor-icons/react"
-import { Timeline } from "@sb-components/blocks/feed/Timeline/Timeline"
-import { FeedItem } from "@sb-components/blocks/feed/FeedItem/FeedItem"
-import { ActivityAvatar } from "@sb-components/blocks/feed/ActivityAvatar/ActivityAvatar"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { Timeline } from "@sb-components/_blocks/feed/Timeline/Timeline"
+import { FeedItem } from "@sb-components/_designs/feed/FeedItem/FeedItem"
+import { ActivityAvatar } from "@sb-components/_designs/feed/ActivityAvatar/ActivityAvatar"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Timeline> = {
     title: "Block/Feed/Timeline",

@@ -1,0 +1,132 @@
+[
+ [
+  "atoms/chips/StatusChip",
+  [
+   "12b|StatusChip.tsx:30 `children: ReactNode` is the chip's label content (JSDoc: \"Label content rendered inside the chip\") — this is plain text content for|Replace `children` with a data prop `text: ReactNode` and render `<Chip.Label>{text}</Chip.Label>`.",
+   "12c|StatusChip.tsx:5 imports `Skeleton` from the shared `@sb-components/layouts/skeleton/Skeleton/Skeleton` registry and line 90 calls `<Skeleton.Chip cla|Draw the skeleton inline with the raw HeroUI `Skeleton` (like `Chip.Base` does) instead of calling the shared `Skeleton."
+  ]
+ ],
+ [
+  "atoms/chips/TagChips",
+  [
+   "12c|TagChips.tsx:5 imports the shared `Skeleton` registry and line 67 renders `<Skeleton.Chip key={index} />` in a loop — external Skeleton.* call rather |Draw the loading pills inline from raw HeroUI `Skeleton`, owned by this component, instead of the shared `Skeleton.Chip`"
+  ]
+ ],
+ [
+  "atoms/display/PricePoint",
+  [
+   "12c|PricePoint.tsx:4 imports the shared `Skeleton` registry; lines 67-68 call `<Skeleton.Typography type=\"h3\" width=\"1/3\" />` / `<Skeleton.Typography type|Self-draw the amount/period placeholder bars from raw HeroUI `Skeleton`, sized locally, instead of calling the shared `S"
+  ]
+ ],
+ [
+  "atoms/display/Skeleton",
+  [
+   "12c|This file IS the central `Skeleton.*` registry every other atom is called FROM THE OUTSIDE (Skeleton.stories.tsx uses `<Skeleton.Button/>`, `<Skeleton|Migrate each shape into its owning atom as a co-located `isSkeleton` prop (e.g. Button renders its own skeleton via `But"
+  ]
+ ],
+ [
+  "atoms/feedback/Alert",
+  [
+   "12b|`children?: ReactNode` prop (Alert.tsx:92) is rendered as `const main = body ?? children` (line 130) — a bare duplicate escape hatch for content that |Xoá prop `children`, chỉ giữ `body` làm đường DUY NHẤT để truyền nội dung phụ."
+  ]
+ ],
+ [
+  "atoms/forms/Dropzone",
+  [
+   "12c|dòng 5, 80: `import { Skeleton } from \"@sb-components/layouts/skeleton/Skeleton/Skeleton\"` rồi gọi `<Skeleton className=\"h-[68px]...\" />` từ NGOÀI — n|Tự vẽ khối skeleton bằng div class thay vì import Skeleton component ngoài, giống cách `InputOtp` tự vẽ hàng ô skeleton ",
+   "12e|prop đặt tên `onChange`/`onBlur` (dòng 31, 33) thay vì quy ước `onValueChange` mà mọi atom form khác trong `Input.*` dùng.|Đổi thành `onValueChange` cho nhất quán với họ atom."
+  ]
+ ],
+ [
+  "atoms/forms/SearchAutocomplete",
+  [
+   "12c|`import { Skeleton } from \"@sb-components/layouts/skeleton/Skeleton/Skeleton\"` (line 12) then `<Skeleton.Input data-anat-part={...} className={...} />|Draw the search-field skeleton box inline in SearchAutocomplete instead of importing `Skeleton.Input`.",
+   "12e|`SearchAutocompleteProps` (lines 40-71) has no `label`, `errorMessage`, or `isRequired` at all (only `placeholder`/`emptyLabel`) unlike its sibling fo|Either document that SearchAutocomplete is intentionally error-less (search-only), or add `errorMessage`/`isRequired` fo"
+  ]
+ ],
+ [
+  "atoms/forms/_field",
+  [
+   "12b|`children?: ReactNode` (FieldFrame.tsx:39) rendered directly at lines 104/122. This is a legitimate wrapper case (the scaffold must wrap arbitrary com|Thêm 1 dòng JSDoc trên prop `children` trích rõ đây là ngoại lệ khung-bọc §12b, để không bị nhầm là vi phạm khi audit lạ"
+  ]
+ ],
+ [
+  "atoms/media/QRCode",
+  [
+   "13a|QRCode.tsx:26 `export const QRCode = ({ size, data, icon, className }: QRCodeProps) => {...}` — bare component export, not grouped into any khung name|Move to `atoms/media/QRCode` and export namespaced (e.g. `QRCode = { Base: ... }`), matching the sibling atoms already m"
+  ]
+ ],
+ [
+  "atoms/navigation/BackLink",
+  [
+   "13a|BackLink.tsx:37 `export const BackLink = ({ label, target, onPress, className }: BackLinkProps) => {...}` is a bare export, not a namespace, while it |Relocate to `atoms/navigation/BackLink`, export namespaced (e.g. `BackLink = { Base: ... }`), consistent with the `Primi"
+  ]
+ ],
+ [
+  "atoms/navigation/ExtendedTabs",
+  [
+   "12b|ExtendedTabs.tsx:26 `children: ReactNode` is a required prop carrying the `Tabs.*` compound parts, with no JSDoc exception recorded for why this atom-|Document the Tooltip/Badge-style exception in JSDoc, or accept it only once merged into the Tabs atom's own compound con"
+  ]
+ ],
+ [
+  "atoms/navigation/SeeMoreLink",
+  [
+   "12b|SeeMoreLink.tsx:25 `children: ReactNode` is the link's visible label text, passed as children instead of a data prop; not a Tooltip/Badge-style conten|Rename `children` to a `label: ReactNode` prop."
+  ]
+ ],
+ [
+  "atoms/navigation/SegmentedToggle",
+  [
+   "12c|SegmentedToggle.tsx:4 `import { Skeleton } from \"@sb-components/layouts/skeleton/Skeleton/Skeleton\"` then `<Skeleton .../>` at line 99 — calls an exte|Replace with an inline skeleton mirror (plain div/span with pulse classes) owned by this file."
+  ]
+ ],
+ [
+  "atoms/overlay/Menu",
+  [
+   "12b|`import { Header as HeroMenuHeader } from \"react-aria-components\"` (line 14) in an atom whose file-header states the atom is \"the ONE constrained acti|Leave as-is if HeroUI truly exposes no section-title API (already documented), otherwise file a HeroUI-level wrapper so "
+  ]
+ ],
+ [
+  "atoms/overlay/Tooltip",
+  [
+   "12b|`children: ReactNode` kept (props line 38) — this is the one named, JSDoc-documented exception (\"NGOẠI LỆ children\", atom-wrapper must wrap an arbitra|No action needed — flagged only for traceability; `children` usage here is compliant with the documented exception, not "
+  ]
+ ],
+ [
+  "atoms/text/Typography",
+  [
+   "12d|Same split as above means `size` is baked into which namespace member you import instead of being an independent prop sitting alongside `color`/`weigh|Expose `size` as a prop on a single component instead of four separate exported functions.",
+   "12c|isLoading?: boolean (line 92, used at line 126 `if (isLoading)`) — every sibling atom/layout in this batch (Button, ButtonGroup, ChipButtonList, Float|Rename `isLoading` to `isSkeleton` for naming consistency with the rest of the system's co-located skeleton convention."
+  ]
+ ],
+ [
+  "layouts/buttons/FloatingActionButton",
+  [
+   "13b|children?: ReactNode (line 23) is passed through as `icon={children}` (line 51) — the slot is really a single named icon, not a generic wrapped body, |Rename `children` to an explicit `icon` prop, matching the icon-prop convention used by ButtonGroupAction/InputButtonLik"
+  ]
+ ],
+ [
+  "layouts/cards/SurfaceCard",
+  [
+   "13a|Namespace grouping itself (`Base/Nested/Pressable/PressableGroup/List/Accordion`) correctly follows §13a — noted as clean for contrast with the Accord|No change needed for the namespace shape itself."
+  ]
+ ],
+ [
+  "layouts/chips/Chip",
+  [
+   "13a|Chip.tsx:24-26 JSDoc states the discipline explicitly: \"TIER (thầy chốt: chỉ gom cùng tier): CHỈ chip Primitives ở đây... Chip DESIGN (DifficultyChip |Remove `HostPlatform: HostPlatformChip` from this namespace once HostPlatformChip is moved to the design tier, so `Chip."
+  ]
+ ],
+ [
+  "layouts/navigation/Stepper",
+  [
+   "13a|Stepper.tsx:97 `export const Stepper = ({ ... }: StepperProps) => {` — bare export, not `Stepper.Base`.|Export as `Stepper.Base` namespace member."
+  ]
+ ],
+ [
+  "layouts/stats/StatGridCard",
+  [
+   "13a|JSDoc (lines 29-37) calls itself \"the grid sibling of `SurfaceListCard`\" — but `SurfaceListCard` was already consolidated into `SurfaceCard.List` per |Update the doc comment's cross-reference from `SurfaceListCard` to `SurfaceCard.List`."
+  ]
+ ]
+]

@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
 import { UserPlusIcon } from "@phosphor-icons/react"
-import { FeedItem } from "@sb-components/blocks/feed/FeedItem/FeedItem"
-import { ActivityAvatar } from "@sb-components/blocks/feed/ActivityAvatar/ActivityAvatar"
-import { ReactionBar, ReactionType } from "@sb-components/blocks/feed/ReactionBar/ReactionBar"
-import { EntityLink } from "@sb-components/blocks/feed/EntityLink/EntityLink"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { FeedItem } from "@sb-components/_designs/feed/FeedItem/FeedItem"
+import { ActivityAvatar } from "@sb-components/_designs/feed/ActivityAvatar/ActivityAvatar"
+import { ReactionBar, ReactionType } from "@sb-components/_designs/feed/ReactionBar/ReactionBar"
+import { EntityLink } from "@sb-components/_designs/feed/EntityLink/EntityLink"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — a generic activity-row that narrates one event that already happened

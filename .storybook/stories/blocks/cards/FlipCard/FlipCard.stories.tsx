@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { useState } from "react"
 import { Button, Chip, Typography } from "@heroui/react"
-import { FlipCard } from "@sb-components/blocks/cards/FlipCard/FlipCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { FlipCard } from "@sb-components/_designs/cards/FlipCard/FlipCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof FlipCard> = {
     title: "Design/Cards/FlipCard",

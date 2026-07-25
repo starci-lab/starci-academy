@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Typography } from "@heroui/react"
-import { DragScrollArea } from "@sb-components/blocks/layout/DragScrollArea/DragScrollArea"
+import { DragScrollArea } from "@sb-components/layouts/layout/DragScrollArea/DragScrollArea"
 
 /**
  * `DragScrollArea.Base` — a vertical scroll region with a hidden scrollbar plus

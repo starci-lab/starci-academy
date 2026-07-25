@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { FilePlusIcon } from "@phosphor-icons/react"
-import { SurfaceCard } from "@sb-components/blocks/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
 
 /**
  * KHUNG (Layouts) — ô "thêm mới": card bo `rounded-3xl` viền ĐỨT NÉT, bấm được, icon + nhãn

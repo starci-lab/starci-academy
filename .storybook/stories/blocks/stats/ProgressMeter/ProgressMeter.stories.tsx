@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ProgressMeter } from "@sb-components/blocks/stats/ProgressMeter/ProgressMeter"
+import { ProgressMeter } from "@sb-components/layouts/stats/ProgressMeter/ProgressMeter"
 
 const meta: Meta<typeof ProgressMeter> = {
     title: "Primitives/Stats/ProgressMeter",

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { RagSourceGraph } from "@sb-components/blocks/rendering/RagSourceGraph/RagSourceGraph"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { RagSourceGraph } from "@sb-components/_designs/rendering/RagSourceGraph/RagSourceGraph"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof RagSourceGraph> = {
     title: "Design/Rendering/RagSourceGraph",

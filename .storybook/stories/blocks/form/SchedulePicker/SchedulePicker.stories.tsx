@@ -2,9 +2,9 @@ import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CalendarDate } from "@internationalized/date"
 import type { DateValue } from "@internationalized/date"
-import { SchedulePicker } from "@sb-components/blocks/form/SchedulePicker/SchedulePicker"
-import type { SchedulePickerSlot } from "@sb-components/blocks/form/SchedulePicker/SchedulePicker"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { SchedulePicker } from "@sb-components/_blocks/form/SchedulePicker/SchedulePicker"
+import type { SchedulePickerSlot } from "@sb-components/_blocks/form/SchedulePicker/SchedulePicker"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof SchedulePicker> = {
     title: "Primitives/Forms/SchedulePicker",

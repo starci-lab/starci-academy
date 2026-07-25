@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Tooltip } from "@sb-components/atoms/overlay/Tooltip/Tooltip"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Tooltip.Base> = {
     title: "Atoms/Overlay/Tooltip/Tooltip.Base",
@@ -39,7 +39,7 @@ export const Default: Story = {
                 parts={PARTS}
                 reason="Atom tooltip DUY NHẤT bọc HeroUI Tooltip; atom sở hữu inset/max-width/arrow, consumer chỉ truyền label + trigger."
                 note="defaultOpen pin panel mở khi load để soi. placement=top. ⚠️ Tooltip.Base GIỮ `children` — ngoại lệ CÓ TÊN: atom-wrapper buộc bọc phần tử bất kỳ (chip/icon-button/thuật ngữ) để react-aria gắn hover/focus/aria-describedby thẳng lên nó. Atom khác cấm tuyệt đối."
-                code={`<Tooltip.Base label="Xếp hạng theo XP tuần" placement="top">\n  <TermChip />\n</Tooltip.Base>`}
+                code={"<Tooltip.Base label=\"Xếp hạng theo XP tuần\" placement=\"top\">\n  <TermChip />\n</Tooltip.Base>"}
             >
                 <div className="flex justify-center py-12">
                     <Tooltip.Base label="Xếp hạng theo tổng XP trong tuần" placement="top" defaultOpen showAnatomy>
@@ -61,7 +61,7 @@ export const Placements: Story = {
                 leaf="Placements"
                 parts={PARTS}
                 note="Cùng một atom, khác `placement`. Panel portal ra body và tự neo quanh trigger."
-                code={`<Tooltip.Base label="…" placement="top | bottom | left | right">…</Tooltip.Base>`}
+                code={"<Tooltip.Base label=\"…\" placement=\"top | bottom | left | right\">…</Tooltip.Base>"}
             >
                 <div className="grid grid-cols-2 gap-x-24 gap-y-20 px-16 py-24">
                     <div className="flex justify-center">

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Card } from "@heroui/react"
-import { StatPair } from "@sb-components/blocks/stats/StatPair/StatPair"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { StatPair } from "@sb-components/layouts/stats/StatPair/StatPair"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof StatPair> = {
     title: "Primitives/Stats/StatPair",

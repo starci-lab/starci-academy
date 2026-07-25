@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import type { ReactNode } from "react"
-import { Grid } from "@sb-components/blocks/layout/Grid/Grid"
+import { Grid } from "@sb-components/layouts/layout/Grid/Grid"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { SurfaceCard } from "@sb-components/blocks/cards/SurfaceCard/SurfaceCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE: `Grid.Base` là KHUNG DANH SÁCH LẶP hai chiều. State nó sinh ra =
@@ -35,7 +35,7 @@ const cellItems = (labels: ReadonlyArray<string>) =>
         key: label,
         content: (
             <SurfaceCard.Base>
-                <Typography.Sm text={label} />
+                <Typography.Base size="sm" text={label} />
             </SurfaceCard.Base>
         ),
     }))
@@ -49,7 +49,7 @@ const MODULES = ["Nhập môn", "Container", "Orchestration", "CI/CD", "Quan tr�
  */
 const Frame = ({ width, label, children }: { width: string; label: string; children: ReactNode }) => (
     <div className="flex flex-col gap-2">
-        <Typography.Xs text={label} color="muted" />
+        <Typography.Base size="xs" text={label} color="muted" />
         <div className="@container rounded-3xl border border-dashed border-default p-3" style={{ width, maxWidth: "100%" }}>
             {children}
         </div>

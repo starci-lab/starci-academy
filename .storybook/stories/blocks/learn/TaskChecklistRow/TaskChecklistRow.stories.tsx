@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { TaskChecklistRow } from "@sb-components/blocks/learn/TaskChecklistRow/TaskChecklistRow"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { TaskChecklistRow } from "@sb-components/_designs/learn/TaskChecklistRow/TaskChecklistRow"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — a generic checklist row: a `CheckCircleIcon`/`CircleIcon` beside a

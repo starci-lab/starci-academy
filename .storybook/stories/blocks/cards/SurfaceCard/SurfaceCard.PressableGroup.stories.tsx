@@ -2,9 +2,9 @@ import type { ReactNode } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Avatar, AvatarFallback, Typography } from "@heroui/react"
 import { CaretRightIcon, FolderOpenIcon } from "@phosphor-icons/react"
-import { SurfaceCard, type SurfaceCardPressableGroupItem } from "@sb-components/blocks/cards/SurfaceCard/SurfaceCard"
-import type { VerdictBandVariant } from "@sb-components/blocks/cards/verdict-band"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { SurfaceCard, type SurfaceCardPressableGroupItem } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
+import type { VerdictBandVariant } from "@sb-components/layouts/cards/verdict-band"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `SurfaceCard.PressableGroup` KHÔNG đẻ nghĩa

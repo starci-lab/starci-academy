@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Person } from "@gravity-ui/icons"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Avatar.Base> = {
     title: "Atoms/Display/Avatar/Avatar.Base",
@@ -45,7 +45,7 @@ export const Image: Story = {
                 leaf="Image"
                 parts={IMAGE_PARTS}
                 reason="Atom avatar DUY NHẤT bọc HeroUI Avatar; ảnh/initials/icon/status phân bằng prop → leaf = composition."
-                code={`<Avatar.Base src="…" name="Mai Chi" />`}
+                code={"<Avatar.Base src=\"…\" name=\"Mai Chi\" />"}
             >
                 <Avatar.Base src={DEMO_SRC} name="Mai Chi" showAnatomy />
             </BlockAnatomy>
@@ -63,7 +63,7 @@ export const Initials: Story = {
                 leaf="Initials"
                 parts={INITIALS_PARTS}
                 note="Không src → atom lấy 2 chữ đầu `name` (chuỗi fallback: ảnh → initials → icon)."
-                code={`<Avatar.Base name="Mai Chi" color="accent" />`}
+                code={"<Avatar.Base name=\"Mai Chi\" color=\"accent\" />"}
             >
                 <Avatar.Base name="Mai Chi" color="accent" showAnatomy />
             </BlockAnatomy>
@@ -81,7 +81,7 @@ export const Fallback: Story = {
                 leaf="Fallback"
                 parts={ICON_PARTS}
                 note="`icon` truyền COMPONENT (`Person`) — atom render trong Fallback, tự ép size."
-                code={`<Avatar.Base icon={Person} />`}
+                code={"<Avatar.Base icon={Person} />"}
             >
                 <Avatar.Base icon={Person} showAnatomy />
             </BlockAnatomy>
@@ -99,7 +99,7 @@ export const WithStatus: Story = {
                 leaf="WithStatus"
                 parts={STATUS_PARTS}
                 note="status='online' → chấm success; offline=default · busy=danger · away=warning."
-                code={`<Avatar.Base src="…" name="Mai" status="online" />`}
+                code={"<Avatar.Base src=\"…\" name=\"Mai\" status=\"online\" />"}
             >
                 <Avatar.Base src={DEMO_SRC} name="Mai" status="online" showAnatomy />
             </BlockAnatomy>
@@ -117,7 +117,7 @@ export const Sizes: Story = {
                 leaf="Sizes"
                 parts={INITIALS_PARTS}
                 note="3 bậc size sm/md/lg — atom sở hữu scale (§4), consumer không tự đặt px."
-                code={`<Avatar.Base name="Mai" size="sm|md|lg" />`}
+                code={"<Avatar.Base name=\"Mai\" size=\"sm|md|lg\" />"}
             >
                 <div className="flex items-end gap-4">
                     <Avatar.Base name="Mai" size="sm" color="accent" showAnatomy />
@@ -139,7 +139,7 @@ export const Loading: Story = {
                 leaf="Loading"
                 parts={SKELETON_PARTS}
                 note="isSkeleton → circle shimmer OWNED bởi atom (hybrid C), khớp size box."
-                code={`<Avatar.Base isSkeleton />`}
+                code={"<Avatar.Base isSkeleton />"}
             >
                 <Avatar.Base isSkeleton showAnatomy />
             </BlockAnatomy>

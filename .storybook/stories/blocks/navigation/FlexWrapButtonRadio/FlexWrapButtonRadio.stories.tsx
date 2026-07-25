@@ -3,11 +3,11 @@ import type { ReactNode } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button } from "@heroui/react"
 import { DotsThreeVerticalIcon, TrashIcon } from "@phosphor-icons/react"
-import { FlexWrapButtonRadio, type FlexWrapButtonRadioItem } from "@sb-components/blocks/navigation/FlexWrapButtonRadio/FlexWrapButtonRadio"
+import { FlexWrapButtonRadio, type FlexWrapButtonRadioItem } from "@sb-components/atoms/navigation/FlexWrapButtonRadio/FlexWrapButtonRadio"
 
-const meta: Meta<typeof FlexWrapButtonRadio> = {
-    title: "Primitives/Navigation/FlexWrapButtonRadio",
-    component: FlexWrapButtonRadio,
+const meta: Meta<typeof FlexWrapButtonRadio.Base> = {
+    title: "Atoms/Navigation/FlexWrapButtonRadio",
+    component: FlexWrapButtonRadio.Base,
     tags: ["autodocs"],
     parameters: {
         layout: "fullscreen",
@@ -16,7 +16,7 @@ const meta: Meta<typeof FlexWrapButtonRadio> = {
 
 export default meta
 
-type Story = StoryObj<typeof FlexWrapButtonRadio>
+type Story = StoryObj<typeof FlexWrapButtonRadio.Base>
 
 const DIFFICULTY_ITEMS: Array<FlexWrapButtonRadioItem<string>> = [
     { value: "easy", content: "Easy" },
@@ -55,7 +55,7 @@ const Controlled = <T extends string>(props: {
 }) => {
     const [value, setValue] = useState<T>(props.initialValue)
     return (
-        <FlexWrapButtonRadio
+        <FlexWrapButtonRadio.Base
             items={props.items}
             value={value}
             onChange={setValue}
@@ -82,7 +82,7 @@ const ControlledMulti = <T extends string>(props: {
         })
     }
     return (
-        <FlexWrapButtonRadio
+        <FlexWrapButtonRadio.Base
             multiple
             items={props.items}
             values={values}

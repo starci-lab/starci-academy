@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Kbd } from "@heroui/react"
 import { MagnifyingGlassIcon } from "@phosphor-icons/react"
-import { InputButtonLike } from "@sb-components/blocks/buttons/InputButtonLike/InputButtonLike"
+import { InputButtonLike } from "@sb-components/layouts/buttons/InputButtonLike/InputButtonLike"
 
 const meta: Meta<typeof InputButtonLike> = {
     title: "Primitives/Buttons/InputButtonLike",

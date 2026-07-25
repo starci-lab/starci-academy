@@ -38,7 +38,7 @@ Prop `color="default | muted | accent | success | warning | danger"`:
 - Khi nào gắn icon: xem cơ sở ở [[Chip README]] (success/failure · nhấn mạnh · brand;
   icon phổ quát, không domain-specific).
 
-## `isLoading`
+## `isSkeleton`
 
 Atom TỰ vẽ **text-bar skeleton** (cao = glyph height của cỡ) — hybrid C, KHÔNG gọi `Skeleton.*`.
 
@@ -50,7 +50,7 @@ Atom TỰ vẽ **text-bar skeleton** (cao = glyph height của cỡ) — hybrid 
 <Typography.Sm text="Đã đạt" prefixIcon={CircleCheck} />   // icon (KHÔNG weight)
 <Typography.Base text="Doanh thu quý 4" weight="bold" />
 <Typography.Sm text="Xem chi tiết" isLink />               // HeroUI Link
-<Typography.Sm text="…" isLoading />
+<Typography.Sm text="…" isSkeleton />
 ```
 
 Content qua **`text={...}`** (thống nhất `Chip.Base` — mono/nhất-quán, KHÔNG children).

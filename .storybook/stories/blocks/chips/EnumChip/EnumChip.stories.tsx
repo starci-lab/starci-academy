@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { EnumChip } from "@sb-components/blocks/chips/EnumChip/EnumChip"
-import type { EnumChipEntry } from "@sb-components/blocks/chips/EnumChip/EnumChip"
+import { EnumChip } from "@sb-components/layouts/chips/EnumChip/EnumChip"
+import type { EnumChipEntry } from "@sb-components/layouts/chips/EnumChip/EnumChip"
 
 const meta: Meta<typeof EnumChip> = {
     title: "Primitives/Chips/EnumChip",

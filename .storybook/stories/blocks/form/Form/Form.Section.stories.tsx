@@ -1,8 +1,8 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Input } from "@sb-components/atoms/forms/Input/Input"
-import { Form } from "@sb-components/blocks/form/Form/Form"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { Form } from "@sb-components/layouts/form/Form/Form"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * KHUNG (layout tier §13) — `Form.Section`: nhóm field CÓ TIÊU ĐỀ. Một khối

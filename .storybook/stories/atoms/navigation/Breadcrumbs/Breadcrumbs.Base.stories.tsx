@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Breadcrumbs } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcrumbs"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Breadcrumbs.Base> = {
     title: "Atoms/Navigation/Breadcrumbs/Breadcrumbs.Base",
@@ -39,7 +39,7 @@ export const Default: Story = {
                 leaf="Default"
                 parts={TRAIL_PARTS}
                 reason="Atom breadcrumb DUY NHẤT bọc HeroUI Breadcrumbs; truncation là leaf (prop maxItems), không component riêng."
-                code={`<Breadcrumbs.Base items={[{ key: "home", label: "Trang chủ", onPress: fn }, …, { key: "current", label: "Bài 3" }]} />`}
+                code={"<Breadcrumbs.Base items={[{ key: \"home\", label: \"Trang chủ\", onPress: fn }, …, { key: \"current\", label: \"Bài 3\" }]} />"}
             >
                 <Breadcrumbs.Base
                     items={[
@@ -64,7 +64,7 @@ export const Truncated: Story = {
                 leaf="Truncated"
                 parts={TRUNCATED_PARTS}
                 note="maxItems=3 mà trail 5 crumb → hiện đầu + '…' + 2 crumb cuối; ancestor sâu đã tới được từ top-nav."
-                code={`<Breadcrumbs.Base maxItems={3} items={[/* 5 crumbs */]} />`}
+                code={"<Breadcrumbs.Base maxItems={3} items={[/* 5 crumbs */]} />"}
             >
                 <Breadcrumbs.Base
                     maxItems={3}
@@ -92,7 +92,7 @@ export const CollapsedLongTrail: Story = {
                 leaf="CollapsedLongTrail"
                 parts={BACK_PARTS}
                 note="collapseFrom=4 mà trail 4 crumb → Breadcrumbs KHÔNG render, chỉ còn back link (trail dài wrap, ăn chiều dọc; ancestor sâu đã tới được từ top-nav)."
-                code={`<Breadcrumbs.Base collapseFrom={4} items={[/* 4 crumbs */]} />`}
+                code={"<Breadcrumbs.Base collapseFrom={4} items={[/* 4 crumbs */]} />"}
             >
                 <Breadcrumbs.Base
                     collapseFrom={4}
@@ -119,7 +119,7 @@ export const CollapsedOnMobile: Story = {
                 leaf="CollapsedOnMobile"
                 parts={BACK_PARTS}
                 note="collapseOnMobile → cột hẹp không chứa nổi trail: dưới @app-sm hiện back link, từ @app-sm lên hiện trail. Container 375px cố định LÀ tín hiệu mobile (container-query, viewport addon vô tác dụng)."
-                code={`<Breadcrumbs.Base collapseOnMobile items={[…]} />`}
+                code={"<Breadcrumbs.Base collapseOnMobile items={[…]} />"}
             >
                 <div className="@container w-[375px] max-w-full rounded-none border border-dashed border-accent p-3">
                     <Breadcrumbs.Base
@@ -147,7 +147,7 @@ export const Loading: Story = {
                 leaf="Loading"
                 parts={SKELETON_PARTS}
                 note="isSkeleton → hàng bar shimmer OWNED bởi atom (hybrid C) khi trail chưa resolve từ route."
-                code={`<Breadcrumbs.Base isSkeleton items={[…]} />`}
+                code={"<Breadcrumbs.Base isSkeleton items={[…]} />"}
             >
                 <Breadcrumbs.Base
                     isSkeleton

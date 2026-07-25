@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { expect, screen, userEvent, waitFor, within } from "storybook/test"
-import { PriceTag } from "@sb-components/blocks/commerce/PriceTag/PriceTag"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { PriceTag } from "@sb-components/_designs/commerce/PriceTag/PriceTag"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — a single course/product price: the amount to pay (bold), the struck

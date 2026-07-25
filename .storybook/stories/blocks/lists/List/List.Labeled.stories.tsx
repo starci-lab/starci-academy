@@ -2,9 +2,9 @@ import type { SVGProps } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button, Chip } from "@heroui/react"
 import { CardsIcon, TrayIcon, CaretRightIcon } from "@phosphor-icons/react"
-import { List, type ListLabeledItem } from "@sb-components/blocks/lists/List/List"
-import { Feedback } from "@sb-components/blocks/feedback/Feedback/Feedback"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { List, type ListLabeledItem } from "@sb-components/layouts/lists/List/List"
+import { Feedback } from "@sb-components/layouts/feedback/Feedback/Feedback"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 // `Feedback.Empty` nhận icon là COMPONENT ref và tự ép `size-8` (§4/§5) — phosphor
 // `weight="duotone"` không đi kèm được nữa, nên bọc thành component để GIỮ NGUYÊN nét vẽ.
@@ -31,7 +31,7 @@ export default meta
 type Story = StoryObj<typeof List.Labeled>
 
 /**
- * Local stand-in for `@sb-components/blocks/chips/DifficultyChip` — a soft chip whose
+ * Local stand-in for `@sb-components/_designs/chips/DifficultyChip` — a soft chip whose
  * colour maps to a challenge difficulty.
  */
 type Difficulty = "beginner" | "intermediate" | "advanced"

@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hệ thống tư duy — Storybook StarCi</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#fff; --ink:#15171c; --muted:#6b7280; --line:#e3e6ec; --line2:#cbd2dc;
+    --atom:#8b5cf6; --layout:#0ea5e9; --design:#10b981; --block:#f59e0b; --screen:#ef4444;
+    --yes:#10b981; --no:#ef4444;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{--bg:#0e1014;--card:#171a20;--ink:#e9ebee;--muted:#98a1ad;--line:#262b34;--line2:#39404c}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);padding:34px 20px 90px;
+    font:15px/1.62 "Segoe UI",system-ui,-apple-system,sans-serif}
+  .wrap{max-width:1120px;margin:0 auto}
+  h1{font-size:27px;margin:0 0 4px;letter-spacing:-.4px}
+  .sub{color:var(--muted);margin:0 0 30px}
+  h2{font-size:13px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);
+    margin:48px 0 16px;font-weight:700}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:20px}
+  code{font-family:ui-monospace,"Cascadia Code",Consolas,monospace;font-size:12.6px;
+    background:color-mix(in srgb,var(--ink) 8%,transparent);padding:1.5px 5px;border-radius:5px}
+
+  /* ── TẦNG ── */
+  .tier{display:grid;grid-template-columns:104px 1fr;gap:16px;padding:15px 0;border-bottom:1px solid var(--line)}
+  .tier:last-child{border-bottom:0}
+  .chip{align-self:start;text-align:center;font-weight:800;font-size:11.5px;letter-spacing:.9px;
+    color:#fff;border-radius:9px;padding:7px 0;text-transform:uppercase}
+  .t-atom{background:var(--atom)}.t-layout{background:var(--layout)}.t-design{background:var(--design)}
+  .t-block{background:var(--block)}.t-screen{background:var(--screen)}
+  .q{font-weight:650;margin-bottom:5px}
+  .q em{font-style:normal;color:var(--muted);font-weight:400}
+  .rules{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .r{font-size:12.3px;padding:3px 9px;border-radius:20px;border:1px solid var(--line2);color:var(--muted)}
+  .r.ok{border-color:color-mix(in srgb,var(--yes) 45%,var(--line2));color:var(--yes)}
+  .r.no{border-color:color-mix(in srgb,var(--no) 45%,var(--line2));color:var(--no)}
+  .ex{font-size:13.2px;color:var(--muted);margin-top:7px}
+
+  .builton{display:flex;align-items:center;gap:10px;justify-content:center;
+    margin:16px 0 2px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+  .pill{padding:4px 12px;border-radius:20px;color:#fff;font-weight:700;font-size:11.5px;letter-spacing:.6px}
+
+  /* ── STATE ĐỆ QUY ── */
+  .lv{border-left:3px solid var(--line2);padding:2px 0 2px 18px;margin:0 0 22px}
+  .lv:last-child{margin-bottom:0}
+  .lv-h{font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:9px}
+  .dot{width:9px;height:9px;border-radius:50%;flex:0 0 9px}
+  .fork{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:760px){.fork{grid-template-columns:1fr}}
+  .br{border:1px solid var(--line);border-radius:11px;padding:13px;background:var(--card)}
+  .br.k1{border-color:color-mix(in srgb,var(--no) 42%,var(--line))}
+  .br.k2{border-color:color-mix(in srgb,var(--yes) 42%,var(--line))}
+  .br h4{margin:0 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.6px}
+  .br.k1 h4{color:var(--no)} .br.k2 h4{color:var(--yes)}
+  .br p{margin:0 0 7px;font-size:13.6px}
+  .out{font-size:12.4px;font-weight:700;padding:3px 9px;border-radius:6px;display:inline-block}
+  .br.k1 .out{background:color-mix(in srgb,var(--no) 15%,transparent);color:var(--no)}
+  .br.k2 .out{background:color-mix(in srgb,var(--yes) 15%,transparent);color:var(--yes)}
+  .egs{margin:8px 0 0;padding-left:17px;font-size:13px;color:var(--muted)}
+  .egs li{margin:2px 0}
+
+  /* ── ISOLATION ── */
+  .iso{display:grid;grid-template-columns:1fr;gap:12px;text-align:center}
+  .scr{border:2px dashed color-mix(in srgb,var(--screen) 55%,var(--line));border-radius:13px;padding:14px 12px}
+  .scr .cap{font-size:11.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--screen);font-weight:800;margin-bottom:11px}
+  .blocks{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:11px}
+  .bl{border:1px solid color-mix(in srgb,var(--block) 55%,var(--line));border-radius:10px;padding:11px 9px;background:var(--card)}
+  .bl b{display:block;font-size:13.5px}
+  .bl span{font-size:12px;color:var(--muted)}
+  .arrows{color:var(--muted);font-size:12.6px;margin-top:12px}
+  .arrows b{color:var(--ink)}
+  .cross{margin-top:9px;font-size:12.8px;color:var(--no);font-weight:600}
+
+  /* ── PHÉP THỬ ── */
+  .flow{display:flex;flex-direction:column;align-items:center;gap:0}
+  .node{border:1px solid var(--line2);border-radius:11px;padding:11px 17px;background:var(--card);text-align:center;max-width:640px}
+  .node.ask{font-weight:650}
+  .vline{width:2px;height:16px;background:var(--line2)}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;max-width:720px;margin-top:4px}
+  @media(max-width:700px){.split{grid-template-columns:1fr}}
+  .leg{text-align:center}
+  .leg .lbl{font-size:12px;font-weight:800;letter-spacing:.6px;margin-bottom:6px}
+  .leg.a .lbl{color:var(--no)} .leg.b .lbl{color:var(--yes)}
+  .leg .node{margin:0 auto}
+  .leg.a .node{border-color:color-mix(in srgb,var(--no) 45%,var(--line2))}
+  .leg.b .node{border-color:color-mix(in srgb,var(--yes) 45%,var(--line2))}
+
+  table{width:100%;border-collapse:collapse;font-size:13.7px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+  .note{border-left:3px solid var(--block);padding:5px 0 5px 14px;margin-top:16px;color:var(--muted);font-size:13.6px}
+  .note b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Hệ thống tư duy — cuốn Storybook này</h1>
+  <p class="sub">Ghi lại theo lời thầy giảng · 2026-07-25</p>
+
+  <h2>1 · Năm tầng — mỗi tầng trả lời một câu khác nhau</h2>
+  <div class="card">
+    <div class="tier">
+      <span class="chip t-screen">screen</span>
+      <div>
+        <div class="q">Trang này <em>cung cấp những chức năng gì?</em></div>
+        <div class="rules"><span class="r ok">chỉ ghép block</span><span class="r ok">quyết định block nào CÓ MẶT</span><span class="r no">không chạm atom</span><span class="r no">không gọi khung layout</span><span class="r no">không tự vẽ chi tiết</span></div>
+        <div class="ex">Screen = <b>danh sách chức năng</b>. Đọc tên block là biết trang làm gì.</div>
+      </div>
+    </div>
+    <div class="tier">
+      <span class="chip t-block">block</span>
+      <div>
+        <div class="q">Screen làm được <em>việc gì?</em> — một block = một chức năng</div>
+        <div class="rules"><span class="r ok">mang business</span><span class="r ok">ISOLATED</span><span class="r ok">nhận DỮ LIỆU, không nhận node</span><span class="r no">không đụng state block khác</span><span class="r no">không tự sáng tạo thẩm mỹ</span></div>
+        <div class="ex">Chỉ được <b>LẮP</b>. Cần một quyết định thẩm mỹ mới ⇒ đẻ ở tầng design rồi dùng lại.</div>
+      </div>
+    </div>
+    <div class="tier">
+      <span class="chip t-design">design</span>
+      <div>
+        <div class="q">Ý niệm này <em>trông ra sao?</em> — chức năng mang tính SÁNG TẠO</div>
+        <div class="rules"><span class="r ok">có giọng riêng</span><span class="r ok">quyết định thẩm mỹ tái dùng được</span><span class="r no">không trung tính</span></div>
+        <div class="ex"><code>DifficultyChip</code> — nhìn ra "độ khó" là <b>thang bậc</b> chứ không phải trạng thái, nên từ chối 5 token ngữ nghĩa, tự dựng ramp emerald→amber→orange→rose. Atom không làm được việc đó.</div>
+      </div>
+    </div>
+    <div class="tier">
+      <span class="chip t-layout">layout</span>
+      <div>
+        <div class="q">Các phần tử <em>đứng với nhau thế nào?</em></div>
+        <div class="rules"><span class="r ok">bộ khung thuần bố cục</span><span class="r ok">TRUNG TÍNH</span><span class="r no">không mang chức năng</span><span class="r no">không có ý đồ</span></div>
+        <div class="ex"><code>Page</code> · <code>Stack</code> · <code>Grid</code> · <code>Section</code> · <code>SurfaceCard</code></div>
+      </div>
+    </div>
+    <div class="tier">
+      <span class="chip t-atom">atom</span>
+      <div>
+        <div class="q">Phần tử web này <em>là gì?</em></div>
+        <div class="rules"><span class="r ok">PORT DUY NHẤT xuống HeroUI</span><span class="r ok">sở hữu size · tone · icon · skeleton</span><span class="r no">không biết domain</span></div>
+        <div class="ex"><code>Button</code> · <code>Chip.Dot</code> · <code>Typography</code> · <code>Alert.Base</code></div>
+      </div>
+    </div>
+
+    <div class="builton">
+      <span class="pill t-block">block</span> được dựng trên
+      <span class="pill t-layout">layout</span> +
+      <span class="pill t-design">design</span> +
+      <span class="pill t-atom">atom</span>
+    </div>
+  </div>
+
+  <h2>2 · Quy tắc STATE — cùng một hình, lặp lại ở mỗi tầng</h2>
+  <div class="card">
+
+    <div class="lv" style="border-color:var(--screen)">
+      <div class="lv-h"><span class="dot" style="background:var(--screen)"></span>STATE CỦA SCREEN</div>
+      <div class="fork">
+        <div class="br k1">
+          <h4>① nội dung KHÁC</h4>
+          <p>Trang chứa <b>cụm khác</b> — danh sách block đổi.</p>
+          <span class="out">⇒ STORY SCREEN riêng</span>
+          <ul class="egs"><li><code>paid</code> / <code>unpaid</code></li><li>nội dung từng tab</li><li><code>empty</code> — thay trọn spine</li></ul>
+        </div>
+        <div class="br k2">
+          <h4>② state của BLOCK</h4>
+          <p>Cụm vẫn thế, ruột block đổi. Screen <b>không cần biết</b>.</p>
+          <span class="out">⇒ KHÔNG đẻ story screen</span>
+          <ul class="egs"><li>bài <code>done/active/todo</code></li><li>chip time <code>neutral→warning</code></li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="lv" style="border-color:var(--block)">
+      <div class="lv-h"><span class="dot" style="background:var(--block)"></span>STATE CỦA BLOCK</div>
+      <div class="fork">
+        <div class="br k1">
+          <h4>① đổi theo BLOCK</h4>
+          <p>Cấu trúc block đổi — khung khác, thành phần khác.</p>
+          <span class="out">⇒ LEAF riêng</span>
+          <ul class="egs"><li><code>variant</code> item · hero · plain</li></ul>
+        </div>
+        <div class="br k2">
+          <h4>② đổi theo PHẦN TỬ bên trong</h4>
+          <p><code>&lt;A isSkeleton&gt;</code> → mọi phần tử bên trong tự skeleton. <b>Cấu trúc A không đổi một mảnh nào.</b></p>
+          <span class="out">⇒ chỉ là PROP, không đẻ leaf</span>
+          <ul class="egs"><li>mỗi atom tự sở hữu skeleton của mình</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="lv" style="border-color:var(--atom)">
+      <div class="lv-h"><span class="dot" style="background:var(--atom)"></span>LEAF</div>
+      <p style="margin:0;font-size:14px">Leaf là đơn vị của tầng block ⇒ <b>leaf CHỈ thay đổi theo block</b>. State lan xuống phần tử không sinh leaf.</p>
+    </div>
+
+    <div class="note"><b>Cùng một hình lặp lại:</b> mỗi tầng đều tách đôi — state <b>đổi cấu trúc của chính tầng đó</b> thì đẻ ra một đơn vị (story / leaf); state <b>chỉ lan xuống tầng dưới</b> thì mãi chỉ là một prop.</div>
+  </div>
+
+  <h2>3 · Isolation — block không biết block khác tồn tại</h2>
+  <div class="card iso">
+    <div class="scr">
+      <div class="cap">screen · quyết định block nào có mặt</div>
+      <div class="blocks">
+        <div class="bl"><b>CourseBrief</b><span>khoá này là gì</span></div>
+        <div class="bl"><b>ContinueCard</b><span>quay lại chỗ đang dở</span></div>
+        <div class="bl"><b>LearnNudges</b><span>hôm nay nên làm gì</span></div>
+        <div class="bl"><b>KeepGoingPath</b><span>đi tiếp trong chương</span></div>
+      </div>
+      <div class="arrows">↓ giao tiếp <b>MỘT CHIỀU</b>: screen → block, qua props (dữ liệu, không phải node)</div>
+      <div class="cross">✕ không có block ↔ block · state loại ② chết trong lòng block</div>
+    </div>
+    <div class="note" style="text-align:left"><b>Phép thử isolation:</b> story của một block phải render được <b>một mình</b>. Phải dựng cả màn mới ra hình ⇒ block đó đang ăn state của hàng xóm.</div>
+  </div>
+
+  <h2>4 · Phép thử — state này thuộc loại nào?</h2>
+  <div class="card flow">
+    <div class="node ask">Chụp cây block <b>hai lần</b>, ở hai state cần so</div>
+    <div class="vline"></div>
+    <div class="node ask">Danh sách block có <b>khác nhau</b> không?</div>
+    <div class="vline"></div>
+    <div class="split">
+      <div class="leg a">
+        <div class="lbl">KHÁC ⇒ LOẠI ①</div>
+        <div class="node">Đẻ đơn vị riêng<br><span style="color:var(--muted);font-size:13px">story screen · leaf</span></div>
+      </div>
+      <div class="leg b">
+        <div class="lbl">GIỐNG ⇒ LOẠI ②</div>
+        <div class="node">Chỉ là prop<br><span style="color:var(--muted);font-size:13px">không đẻ gì cả</span></div>
+      </div>
+    </div>
+    <div class="note" style="align-self:stretch"><b>Câu hỏi là "trang còn cụm đó không", KHÔNG phải "ai viết đoạn code ẩn nó".</b> Block tự ẩn hay screen <code>? null</code> đều cho ra cùng một cây ⇒ cùng một loại.</div>
+  </div>
+
+  <h2>5 · Luật suy ra được, không phải ý thích</h2>
+  <div class="card">
+    <table>
+      <tr><th>Quyết định</th><th>Suy ra từ đâu</th></tr>
+      <tr><td>Bỏ story <code>Skeleton</code>, giữ <code>Empty</code></td><td><code>loading</code> lan xuống phần tử ⇒ loại ②. <code>empty</code> thay trọn spine ⇒ loại ①</td></tr>
+      <tr><td><code>Unpaid</code> / <code>Paid</code> là hai story, không phải một prop</td><td>rụng hẳn 2 block ⇒ danh sách khác ⇒ loại ①</td></tr>
+      <tr><td>Block nhận <code>breadcrumbItems</code> chứ không nhận <code>breadcrumb: ReactNode</code></td><td>nhận node = phụ thuộc thứ caller dựng sẵn ⇒ phá isolation</td></tr>
+      <tr><td><code>bordered</code> là prop, không hard-code trong block</td><td>block không biết cha nó là gì</td></tr>
+      <tr><td>Screen không được chạm atom</td><td>chạm atom = thò tay vào ruột chức năng</td></tr>
+      <tr><td>Block không tự chọn <code>rounded-2xl border</code></td><td>đó là quyết định thẩm mỹ ⇒ quyền của tầng design</td></tr>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>

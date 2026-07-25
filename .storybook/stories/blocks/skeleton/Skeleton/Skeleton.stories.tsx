@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Skeleton } from "@sb-components/blocks/skeleton/Skeleton/Skeleton"
+import { Skeleton } from "@sb-components/atoms/display/Skeleton/Skeleton"
 
 const meta: Meta<typeof Skeleton> = {
-    title: "Primitives/Skeletons/Skeleton",
+    title: "Atoms/Display/Skeleton",
     component: Skeleton,
     tags: ["autodocs"],
     parameters: {

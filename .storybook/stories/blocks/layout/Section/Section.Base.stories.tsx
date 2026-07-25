@@ -1,12 +1,12 @@
 import type { ReactNode } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ArrowRight } from "@gravity-ui/icons"
-import { Section, type SectionGap } from "@sb-components/blocks/layout/Section/Section"
-import { SurfaceCard } from "@sb-components/blocks/cards/SurfaceCard/SurfaceCard"
+import { Section, type SectionGap } from "@sb-components/layouts/layout/Section/Section"
+import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * `Section.Base` — khung của MỘT VÙNG trong trang: xếp `header` ↔ `body` ↔ `footer`
@@ -40,8 +40,8 @@ const ProfileRow = () => (
     <div className="flex items-center gap-3">
         <Avatar.Base name="StarCi Academy" size="md" />
         <div className="flex min-w-0 flex-col">
-            <Typography.Sm text="StarCi Academy" weight="medium" truncate />
-            <Typography.Xs text="Học fullstack, system design và DevOps theo lộ trình phỏng vấn." color="muted" truncate />
+            <Typography.Base size="sm" text="StarCi Academy" weight="medium" truncate />
+            <Typography.Base size="xs" text="Học fullstack, system design và DevOps theo lộ trình phỏng vấn." color="muted" truncate />
         </div>
     </div>
 )
@@ -141,14 +141,14 @@ export const Slots: Story = {
                     code={`<Section.Base
   header={<Section.Header level={3} title="Bài đã lưu" />}
   body={<SurfaceCard.Base><ProfileRow /></SurfaceCard.Base>}
-  footer={<Typography.Xs text="Cập nhật 5 phút trước" color="muted" />}
+  footer={<Typography.Base size="xs" text="Cập nhật 5 phút trước" color="muted" />}
 />`}
                 >
                     <Section.Base
                         showAnatomy
                         header={<Section.Header level={3} title="Bài đã lưu" />}
                         body={<CardBody />}
-                        footer={<Typography.Xs text="Cập nhật 5 phút trước" color="muted" />}
+                        footer={<Typography.Base size="xs" text="Cập nhật 5 phút trước" color="muted" />}
                     />
                 </BlockAnatomy>
             </div>

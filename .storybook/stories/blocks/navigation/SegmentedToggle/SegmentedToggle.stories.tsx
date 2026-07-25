@@ -8,11 +8,11 @@ import {
     PuzzlePieceIcon,
     TrophyIcon,
 } from "@phosphor-icons/react"
-import { SegmentedToggle, type SegmentedToggleOption } from "@sb-components/blocks/navigation/SegmentedToggle/SegmentedToggle"
+import { SegmentedToggle, type SegmentedToggleOption } from "@sb-components/atoms/navigation/SegmentedToggle/SegmentedToggle"
 
-const meta: Meta<typeof SegmentedToggle> = {
-    title: "Primitives/Navigation/SegmentedToggle",
-    component: SegmentedToggle,
+const meta: Meta<typeof SegmentedToggle.Base> = {
+    title: "Atoms/Navigation/SegmentedToggle",
+    component: SegmentedToggle.Base,
     tags: ["autodocs"],
     parameters: {
         layout: "fullscreen",
@@ -21,7 +21,7 @@ const meta: Meta<typeof SegmentedToggle> = {
 
 export default meta
 
-type Story = StoryObj<typeof SegmentedToggle>
+type Story = StoryObj<typeof SegmentedToggle.Base>
 
 const CATEGORY_OPTIONS: Array<SegmentedToggleOption<string>> = [
     { value: "total", label: "Tổng", icon: <TrophyIcon /> },
@@ -53,7 +53,7 @@ const Controlled = <T extends string>(props: {
 }) => {
     const [value, setValue] = useState<T>(props.initialValue)
     return (
-        <SegmentedToggle
+        <SegmentedToggle.Base
             options={props.options}
             value={value}
             onChange={setValue}
@@ -122,7 +122,7 @@ export const Small: Story = {
 export const SkeletonState: Story = {
     render: () => (
         <div className="p-8">
-            <SegmentedToggle
+            <SegmentedToggle.Base
                 options={TAB_OPTIONS.slice(0, 3)}
                 value="account"
                 onChange={() => {}}

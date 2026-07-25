@@ -1,7 +1,7 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Input } from "@sb-components/atoms/forms/Input/Input"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta = { title: "Atoms/Forms/Input/Input.Otp", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
 export default meta
@@ -20,7 +20,7 @@ export const Default: Story = {
         const Demo = () => {
             const [value, setValue] = useState("")
             return (
-                <BlockAnatomy name="Input.Otp" tier="atom" leaf="Default" parts={[FIELD]} note="trần — không label/hint/error." code={`<Input.Otp value={v} onValueChange={setV} length={6} />`}>
+                <BlockAnatomy name="Input.Otp" tier="atom" leaf="Default" parts={[FIELD]} note="trần — không label/hint/error." code={"<Input.Otp value={v} onValueChange={setV} length={6} />"}>
                     <div className="w-80"><Input.Otp value={value} onValueChange={setValue} length={6} ariaLabel="Mã xác minh" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -35,7 +35,7 @@ export const WithLabel: Story = {
         const Demo = () => {
             const [value, setValue] = useState("")
             return (
-                <BlockAnatomy name="Input.Otp" tier="atom" leaf="WithLabel" parts={[LABEL, DESC, FIELD]} note="label + hint." code={`<Input.Otp label="Mã xác minh" hint="Gửi qua email của bạn" value={v} onValueChange={setV} length={6} />`}>
+                <BlockAnatomy name="Input.Otp" tier="atom" leaf="WithLabel" parts={[LABEL, DESC, FIELD]} note="label + hint." code={"<Input.Otp label=\"Mã xác minh\" hint=\"Gửi qua email của bạn\" value={v} onValueChange={setV} length={6} />"}>
                     <div className="w-80"><Input.Otp label="Mã xác minh" hint="Gửi qua email của bạn" value={value} onValueChange={setValue} length={6} showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -50,7 +50,7 @@ export const Required: Story = {
         const Demo = () => {
             const [value, setValue] = useState("")
             return (
-                <BlockAnatomy name="Input.Otp" tier="atom" leaf="Required" parts={[LABEL, FIELD]} note="isRequired → dấu * sau nhãn." code={`<Input.Otp label="Mã xác minh" isRequired value={v} onValueChange={setV} length={6} />`}>
+                <BlockAnatomy name="Input.Otp" tier="atom" leaf="Required" parts={[LABEL, FIELD]} note="isRequired → dấu * sau nhãn." code={"<Input.Otp label=\"Mã xác minh\" isRequired value={v} onValueChange={setV} length={6} />"}>
                     <div className="w-80"><Input.Otp label="Mã xác minh" isRequired value={value} onValueChange={setValue} length={6} showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -65,7 +65,7 @@ export const Filled: Story = {
         const Demo = () => {
             const [value, setValue] = useState("1234")
             return (
-                <BlockAnatomy name="Input.Otp" tier="atom" leaf="Filled" parts={[LABEL, FIELD]} note="value có một phần mã." code={`<Input.Otp label="Mã xác minh" value="1234" onValueChange={setV} length={6} />`}>
+                <BlockAnatomy name="Input.Otp" tier="atom" leaf="Filled" parts={[LABEL, FIELD]} note="value có một phần mã." code={"<Input.Otp label=\"Mã xác minh\" value=\"1234\" onValueChange={setV} length={6} />"}>
                     <div className="w-80"><Input.Otp label="Mã xác minh" value={value} onValueChange={setValue} length={6} showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -80,7 +80,7 @@ export const Disabled: Story = {
         const Demo = () => {
             const [value, setValue] = useState("1234")
             return (
-                <BlockAnatomy name="Input.Otp" tier="atom" leaf="Disabled" parts={[LABEL, FIELD]} note="isDisabled → khoá + nhạt dãy ô." code={`<Input.Otp label="Mã xác minh" isDisabled value="1234" length={6} />`}>
+                <BlockAnatomy name="Input.Otp" tier="atom" leaf="Disabled" parts={[LABEL, FIELD]} note="isDisabled → khoá + nhạt dãy ô." code={"<Input.Otp label=\"Mã xác minh\" isDisabled value=\"1234\" length={6} />"}>
                     <div className="w-80"><Input.Otp label="Mã xác minh" value={value} onValueChange={setValue} length={6} isDisabled showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -95,7 +95,7 @@ export const Error: Story = {
         const Demo = () => {
             const [value, setValue] = useState("123")
             return (
-                <BlockAnatomy name="Input.Otp" tier="atom" leaf="Error" parts={[LABEL, FIELD, ERROR]} note="label + errorMessage → nhãn + dòng đỏ + viền." code={`<Input.Otp label="Mã xác minh" errorMessage="Mã không đúng" value="123" length={6} />`}>
+                <BlockAnatomy name="Input.Otp" tier="atom" leaf="Error" parts={[LABEL, FIELD, ERROR]} note="label + errorMessage → nhãn + dòng đỏ + viền." code={"<Input.Otp label=\"Mã xác minh\" errorMessage=\"Mã không đúng\" value=\"123\" length={6} />"}>
                     <div className="w-80"><Input.Otp label="Mã xác minh" errorMessage="Mã không đúng" value={value} onValueChange={setValue} length={6} showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -108,7 +108,7 @@ export const Error: Story = {
 export const Loading: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="Input.Otp" tier="atom" leaf="Loading" parts={[LABEL, SKELETON]} note="isSkeleton + label → mirror nhãn trên dãy ô." code={`<Input.Otp label="Mã xác minh" isSkeleton length={6} />`}>
+            <BlockAnatomy name="Input.Otp" tier="atom" leaf="Loading" parts={[LABEL, SKELETON]} note="isSkeleton + label → mirror nhãn trên dãy ô." code={"<Input.Otp label=\"Mã xác minh\" isSkeleton length={6} />"}>
                 <div className="w-80"><Input.Otp label="Mã xác minh" value="" onValueChange={() => {}} length={6} isSkeleton showAnatomy /></div>
             </BlockAnatomy>
         </div>

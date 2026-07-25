@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { LogoGithub } from "@gravity-ui/icons"
-import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { Feedback, CALLOUT_ACTION_CLASS } from "@sb-components/blocks/feedback/Feedback/Feedback"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { Feedback } from "@sb-components/layouts/feedback/Feedback/Feedback"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * KHUNG (layout tier) — `Feedback.Callout`: dải tint PHẲNG đặt BÊN TRONG một
@@ -13,8 +12,8 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/Blo
  *
  * ⚠️ PHẠM VI STATE (§12f): mỗi story dưới đây chỉ render state do CHÍNH khung này
  * đẻ ra — `status`, có/không `description`, `body`, `action`, `onClose`, `icon`.
- * State của thứ caller nhét vào `action` (pending/disabled của Button) sống ở story
- * `Atoms/Buttons/Button`.
+ * State của nút CTA (pending/disabled) sống ở story `Atoms/Buttons/Button` — khung
+ * này chỉ nhận `actionLabel`/`onAction`, không nhận node.
  */
 const meta: Meta<typeof Feedback.Callout> = {
     title: "Layouts/Feedback/Feedback/Feedback.Callout",
@@ -200,8 +199,8 @@ export const WithBody: Story = {
                     description="Bổ sung rồi nộp lại để được chấm."
                     body={(
                         <ul className="list-disc space-y-1 pl-4">
-                            <li><Typography.Xs text="README mô tả cách chạy dự án" color="muted" /></li>
-                            <li><Typography.Xs text="Ảnh chụp màn hình kết quả" color="muted" /></li>
+                            <li><Typography.Base size="xs" text="README mô tả cách chạy dự án" color="muted" /></li>
+                            <li><Typography.Base size="xs" text="Ảnh chụp màn hình kết quả" color="muted" /></li>
                         </ul>
                     )}
                 />
@@ -211,8 +210,9 @@ export const WithBody: Story = {
 }
 
 /**
- * `action` — CTA phụ nằm cùng hàng, dùng `CALLOUT_ACTION_CLASS[status]` để nút
- * đặc màu tone nổi trên nền tint (khung export bảng màu này cho caller).
+ * `actionLabel`/`onAction` — CTA phụ nằm cùng hàng. Khung TỰ dựng nút và tự bôi
+ * skin đặc màu theo `status`; caller chỉ đưa CHỮ, không cầm `Button` (thầy chốt
+ * 2026-07-25: screen tuyệt đối không xài atom).
  */
 export const WithAction: Story = {
     render: () => (
@@ -222,11 +222,11 @@ export const WithAction: Story = {
                 tier="primitive"
                 leaf="WithAction"
                 parts={WITH_ACTION_PARTS}
-                note="`action` = slot footer nằm ngang, trước nút đóng. Nút CTA lấy skin từ `CALLOUT_ACTION_CLASS[status]` (bg đặc trên nền tint)."
+                note="`actionLabel` = slot footer nằm ngang, trước nút đóng. Khung tự dựng nút + tự bôi bg đặc theo status — caller không đưa node."
                 code={`<Feedback.Callout
   status="accent"
   title="Nâng cấp để mở khoá AI"
-  action={<Button.Base label="Nâng cấp" size="sm" className={CALLOUT_ACTION_CLASS.accent} />}
+  actionLabel="Nâng cấp"
 />`}
             >
                 <Feedback.Callout
@@ -234,7 +234,7 @@ export const WithAction: Story = {
                     status="accent"
                     title="Nâng cấp để mở khoá AI"
                     description="Gói trả phí cho phép chấm nâng cao."
-                    action={<Button.Base label="Nâng cấp" size="sm" className={CALLOUT_ACTION_CLASS.accent} />}
+                    actionLabel="Nâng cấp"
                 />
             </BlockAnatomy>
         </div>
@@ -264,7 +264,7 @@ export const CustomIcon: Story = {
                     icon={LogoGithub}
                     title="Bạn chưa vào team GitHub của khoá"
                     description="Nội dung premium nằm trong repo GitHub của khoá, nên bạn cần vào team mới mở được."
-                    action={<Button.Base label="Vào team" size="sm" className={CALLOUT_ACTION_CLASS.warning} />}
+                    actionLabel="Vào team"
                 />
             </BlockAnatomy>
         </div>

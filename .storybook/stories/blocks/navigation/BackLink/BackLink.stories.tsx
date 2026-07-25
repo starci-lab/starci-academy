@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { BackLink } from "@sb-components/blocks/navigation/BackLink/BackLink"
+import { BackLink } from "@sb-components/atoms/navigation/BackLink/BackLink"
 
-const meta: Meta<typeof BackLink> = {
-    title: "Primitives/Navigation/BackLink",
-    component: BackLink,
+const meta: Meta<typeof BackLink.Base> = {
+    title: "Atoms/Navigation/BackLink",
+    component: BackLink.Base,
     tags: ["autodocs"],
     parameters: {
         layout: "fullscreen",
@@ -12,13 +12,13 @@ const meta: Meta<typeof BackLink> = {
 
 export default meta
 
-type Story = StoryObj<typeof BackLink>
+type Story = StoryObj<typeof BackLink.Base>
 
 /** Generic "Trở lại" — a subpage that only needs one way back, no named destination. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
-            <BackLink onPress={() => {}} />
+            <BackLink.Base onPress={() => {}} />
         </div>
     ),
 }
@@ -27,7 +27,7 @@ export const Default: Story = {
 export const WithTarget: Story = {
     render: () => (
         <div className="p-8">
-            <BackLink target="thử thách" onPress={() => {}} />
+            <BackLink.Base target="thử thách" onPress={() => {}} />
         </div>
     ),
 }
@@ -36,7 +36,7 @@ export const WithTarget: Story = {
 export const CustomLabel: Story = {
     render: () => (
         <div className="p-8">
-            <BackLink label="Quay lại danh sách khoá học" onPress={() => {}} />
+            <BackLink.Base label="Quay lại danh sách khoá học" onPress={() => {}} />
         </div>
     ),
 }

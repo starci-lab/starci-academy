@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import type { ReactNode } from "react"
 import { Button, Typography } from "@heroui/react"
-import { Page } from "@sb-components/blocks/layout/Page/Page"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { Page } from "@sb-components/layouts/layout/Page/Page"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * `Page.BottomBar` — the viewport-pinned action bar of a route. A bar is a

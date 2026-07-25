@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Progress } from "@sb-components/atoms/display/Progress/Progress"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Progress.Circle> = {
     title: "Atoms/Display/Progress/Progress.Circle",
@@ -31,7 +31,7 @@ export const Value: Story = {
                 leaf="Value"
                 parts={RING_PARTS}
                 reason="Vòng TIẾN TRÌNH bọc react-aria ProgressBar (dạng circle); cùng ngữ nghĩa với Bar."
-                code={`<Progress.Circle value={68} size="md" />`}
+                code={"<Progress.Circle value={68} size=\"md\" />"}
             >
                 <Progress.Circle value={68} ariaLabel="Tiến độ" showAnatomy />
             </BlockAnatomy>
@@ -49,7 +49,7 @@ export const Indeterminate: Story = {
                 leaf="Indeterminate"
                 parts={RING_PARTS}
                 note="isIndeterminate → cung animate; react-aria bỏ qua value."
-                code={`<Progress.Circle isIndeterminate />`}
+                code={"<Progress.Circle isIndeterminate />"}
             >
                 <Progress.Circle isIndeterminate ariaLabel="Đang xử lý" showAnatomy />
             </BlockAnatomy>
@@ -67,7 +67,7 @@ export const Loading: Story = {
                 leaf="Loading"
                 parts={SKELETON_PARTS}
                 note="isSkeleton → circle shimmer OWNED bởi atom (hybrid C) — trước khi biết value."
-                code={`<Progress.Circle isSkeleton />`}
+                code={"<Progress.Circle isSkeleton />"}
             >
                 <Progress.Circle isSkeleton showAnatomy />
             </BlockAnatomy>

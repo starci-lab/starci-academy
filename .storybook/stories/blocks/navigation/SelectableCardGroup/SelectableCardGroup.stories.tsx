@@ -1,11 +1,11 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { SelectableCardGroup, type SelectableCardItem } from "@sb-components/blocks/navigation/SelectableCardGroup/SelectableCardGroup"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { SelectableCardGroup, type SelectableCardItem } from "@sb-components/atoms/navigation/SelectableCardGroup/SelectableCardGroup"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
-const meta: Meta<typeof SelectableCardGroup> = {
-    title: "Primitives/Navigation/SelectableCardGroup",
-    component: SelectableCardGroup,
+const meta: Meta<typeof SelectableCardGroup.Base> = {
+    title: "Atoms/Navigation/SelectableCardGroup",
+    component: SelectableCardGroup.Base,
     tags: ["autodocs"],
     parameters: {
         layout: "fullscreen",
@@ -14,7 +14,7 @@ const meta: Meta<typeof SelectableCardGroup> = {
 
 export default meta
 
-type Story = StoryObj<typeof SelectableCardGroup>
+type Story = StoryObj<typeof SelectableCardGroup.Base>
 
 type PlanValue = "monthly" | "quarterly" | "yearly"
 
@@ -67,7 +67,7 @@ const ControlledGroup = <T extends string>({
     const [value, setValue] = useState<T>(initialValue)
     return (
         <div style={{ width }}>
-            <SelectableCardGroup items={items} value={value} onChange={setValue} ariaLabel={ariaLabel} columns={columns} showAnatomy={showAnatomy} />
+            <SelectableCardGroup.Base items={items} value={value} onChange={setValue} ariaLabel={ariaLabel} columns={columns} showAnatomy={showAnatomy} />
         </div>
     )
 }

@@ -5,11 +5,11 @@ import {
     RocketLaunchIcon,
     WarningIcon,
 } from "@phosphor-icons/react"
-import { IconTile } from "@sb-components/blocks/identity/IconTile/IconTile"
+import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
 
-const meta: Meta<typeof IconTile> = {
-    title: "Primitives/Identity/IconTile",
-    component: IconTile,
+const meta: Meta<typeof IconTile.Base> = {
+    title: "Atoms/Display/IconTile",
+    component: IconTile.Base,
     tags: ["autodocs"],
     parameters: {
         layout: "fullscreen",
@@ -18,7 +18,7 @@ const meta: Meta<typeof IconTile> = {
 
 export default meta
 
-type Story = StoryObj<typeof IconTile>
+type Story = StoryObj<typeof IconTile.Base>
 
 // Stable local data-URI cover so the image-fill state renders without an external host.
 const COVER =
@@ -27,7 +27,7 @@ const COVER =
 export const Default: Story = {
     render: () => (
         <div className="p-8">
-            <IconTile icon={<BookOpenIcon />} />
+            <IconTile.Base icon={<BookOpenIcon />} />
         </div>
     ),
 }
@@ -35,7 +35,7 @@ export const Default: Story = {
 export const ToneAccent: Story = {
     render: () => (
         <div className="p-8">
-            <IconTile icon={<RocketLaunchIcon />} tone="accent" />
+            <IconTile.Base icon={<RocketLaunchIcon />} tone="accent" />
         </div>
     ),
 }
@@ -43,7 +43,7 @@ export const ToneAccent: Story = {
 export const ToneSuccess: Story = {
     render: () => (
         <div className="p-8">
-            <IconTile icon={<CheckCircleIcon />} tone="success" />
+            <IconTile.Base icon={<CheckCircleIcon />} tone="success" />
         </div>
     ),
 }
@@ -51,7 +51,7 @@ export const ToneSuccess: Story = {
 export const ToneWarning: Story = {
     render: () => (
         <div className="p-8">
-            <IconTile icon={<WarningIcon />} tone="warning" />
+            <IconTile.Base icon={<WarningIcon />} tone="warning" />
         </div>
     ),
 }
@@ -59,7 +59,7 @@ export const ToneWarning: Story = {
 export const ToneDanger: Story = {
     render: () => (
         <div className="p-8">
-            <IconTile icon={<WarningIcon />} tone="danger" />
+            <IconTile.Base icon={<WarningIcon />} tone="danger" />
         </div>
     ),
 }
@@ -67,7 +67,7 @@ export const ToneDanger: Story = {
 export const ToneNeutral: Story = {
     render: () => (
         <div className="p-8">
-            <IconTile icon={<BookOpenIcon />} tone="neutral" />
+            <IconTile.Base icon={<BookOpenIcon />} tone="neutral" />
         </div>
     ),
 }
@@ -75,7 +75,7 @@ export const ToneNeutral: Story = {
 export const SizeSm: Story = {
     render: () => (
         <div className="p-8">
-            <IconTile icon={<BookOpenIcon />} size="sm" />
+            <IconTile.Base icon={<BookOpenIcon />} size="sm" />
         </div>
     ),
 }
@@ -83,7 +83,7 @@ export const SizeSm: Story = {
 export const SizeMd: Story = {
     render: () => (
         <div className="p-8">
-            <IconTile icon={<BookOpenIcon />} size="md" />
+            <IconTile.Base icon={<BookOpenIcon />} size="md" />
         </div>
     ),
 }
@@ -91,7 +91,7 @@ export const SizeMd: Story = {
 export const SizeLg: Story = {
     render: () => (
         <div className="p-8">
-            <IconTile icon={<BookOpenIcon />} size="lg" />
+            <IconTile.Base icon={<BookOpenIcon />} size="lg" />
         </div>
     ),
 }
@@ -99,7 +99,7 @@ export const SizeLg: Story = {
 export const WithCoverImage: Story = {
     render: () => (
         <div className="p-8">
-            <IconTile
+            <IconTile.Base
                 icon={<BookOpenIcon />}
                 src={COVER}
                 alt="Fullstack Mastery track"
@@ -112,7 +112,7 @@ export const WithCoverImage: Story = {
 export const BrokenCoverFallsBackToIcon: Story = {
     render: () => (
         <div className="p-8">
-            <IconTile
+            <IconTile.Base
                 icon={<BookOpenIcon />}
                 src="https://invalid.starci.example/not-found.jpg"
                 alt="Cover image failed to load"

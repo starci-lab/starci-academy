@@ -1,7 +1,7 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Choice } from "@sb-components/atoms/forms/Choice/Choice"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta = { title: "Atoms/Forms/Choice/Choice.Checkbox", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
 export default meta
@@ -20,7 +20,7 @@ export const Default: Story = {
         const Demo = () => {
             const [value, setValue] = useState(false)
             return (
-                <BlockAnatomy name="Choice.Checkbox" tier="atom" leaf="Default" parts={PARTS} code={`<Choice.Checkbox isSelected={v} onValueChange={setV} label="Nhận email" />`}>
+                <BlockAnatomy name="Choice.Checkbox" tier="atom" leaf="Default" parts={PARTS} code={"<Choice.Checkbox isSelected={v} onValueChange={setV} label=\"Nhận email\" />"}>
                     <div className="w-72"><Choice.Checkbox isSelected={value} onValueChange={setValue} label="Nhận email thông báo" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -35,7 +35,7 @@ export const Checked: Story = {
         const Demo = () => {
             const [value, setValue] = useState(true)
             return (
-                <BlockAnatomy name="Choice.Checkbox" tier="atom" leaf="Checked" parts={PARTS} note="isSelected → ô tick." code={`<Choice.Checkbox isSelected onValueChange={setV} label="…" />`}>
+                <BlockAnatomy name="Choice.Checkbox" tier="atom" leaf="Checked" parts={PARTS} note="isSelected → ô tick." code={"<Choice.Checkbox isSelected onValueChange={setV} label=\"…\" />"}>
                     <div className="w-72"><Choice.Checkbox isSelected={value} onValueChange={setValue} label="Nhận email thông báo" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -50,7 +50,7 @@ export const WithHint: Story = {
         const Demo = () => {
             const [value, setValue] = useState(false)
             return (
-                <BlockAnatomy name="Choice.Checkbox" tier="atom" leaf="WithHint" parts={[CONTROL, LABEL, DESCRIPTION]} note="hint → FieldFrame." code={`<Choice.Checkbox … hint="Có thể tắt bất cứ lúc nào." />`}>
+                <BlockAnatomy name="Choice.Checkbox" tier="atom" leaf="WithHint" parts={[CONTROL, LABEL, DESCRIPTION]} note="hint → FieldFrame." code={"<Choice.Checkbox … hint=\"Có thể tắt bất cứ lúc nào.\" />"}>
                     <div className="w-72"><Choice.Checkbox isSelected={value} onValueChange={setValue} label="Nhận email thông báo" hint="Có thể tắt bất cứ lúc nào trong Cài đặt." showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -65,7 +65,7 @@ export const Required: Story = {
         const Demo = () => {
             const [value, setValue] = useState(false)
             return (
-                <BlockAnatomy name="Choice.Checkbox" tier="atom" leaf="Required" parts={PARTS} note="isRequired → dấu * cạnh nhãn inline." code={`<Choice.Checkbox … isRequired label="Đồng ý điều khoản" />`}>
+                <BlockAnatomy name="Choice.Checkbox" tier="atom" leaf="Required" parts={PARTS} note="isRequired → dấu * cạnh nhãn inline." code={"<Choice.Checkbox … isRequired label=\"Đồng ý điều khoản\" />"}>
                     <div className="w-72"><Choice.Checkbox isSelected={value} onValueChange={setValue} label="Đồng ý điều khoản" isRequired showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -78,7 +78,7 @@ export const Required: Story = {
 export const Disabled: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="Choice.Checkbox" tier="atom" leaf="Disabled" parts={PARTS} note="isDisabled → khoá + nhạt." code={`<Choice.Checkbox isDisabled isSelected onValueChange={setV} label="…" />`}>
+            <BlockAnatomy name="Choice.Checkbox" tier="atom" leaf="Disabled" parts={PARTS} note="isDisabled → khoá + nhạt." code={"<Choice.Checkbox isDisabled isSelected onValueChange={setV} label=\"…\" />"}>
                 <div className="w-72"><Choice.Checkbox isSelected onValueChange={() => {}} label="Đồng ý điều khoản" isDisabled showAnatomy /></div>
             </BlockAnatomy>
         </div>
@@ -91,7 +91,7 @@ export const Error: Story = {
         const Demo = () => {
             const [value, setValue] = useState(false)
             return (
-                <BlockAnatomy name="Choice.Checkbox" tier="atom" leaf="Error" parts={[CONTROL, LABEL, ERROR]} note="errorMessage → viền lỗi + dòng đỏ." code={`<Choice.Checkbox … errorMessage="Bạn phải đồng ý để tiếp tục." />`}>
+                <BlockAnatomy name="Choice.Checkbox" tier="atom" leaf="Error" parts={[CONTROL, LABEL, ERROR]} note="errorMessage → viền lỗi + dòng đỏ." code={"<Choice.Checkbox … errorMessage=\"Bạn phải đồng ý để tiếp tục.\" />"}>
                     <div className="w-72"><Choice.Checkbox isSelected={value} onValueChange={setValue} label="Đồng ý điều khoản" errorMessage="Bạn phải đồng ý để tiếp tục." showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -104,7 +104,7 @@ export const Error: Story = {
 export const Loading: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="Choice.Checkbox" tier="atom" leaf="Loading" parts={SKELETON_PARTS} code={`<Choice.Checkbox isSkeleton />`}>
+            <BlockAnatomy name="Choice.Checkbox" tier="atom" leaf="Loading" parts={SKELETON_PARTS} code={"<Choice.Checkbox isSkeleton />"}>
                 <div className="w-72"><Choice.Checkbox isSelected={false} onValueChange={() => {}} label="" isSkeleton showAnatomy /></div>
             </BlockAnatomy>
         </div>

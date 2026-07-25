@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button, Typography } from "@heroui/react"
 import { FolderOpenIcon } from "@phosphor-icons/react"
-import { SurfaceCard, type SurfaceCardNestedSection } from "@sb-components/blocks/cards/SurfaceCard/SurfaceCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { SurfaceCard, type SurfaceCardNestedSection } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `SurfaceCard.Nested` là khung CARD-TRONG-CARD

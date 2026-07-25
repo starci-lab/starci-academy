@@ -3,8 +3,8 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ArrowRotateLeft, Box, CircleExclamation, House, Magnifier, TriangleExclamation } from "@gravity-ui/icons"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { Feedback } from "@sb-components/blocks/feedback/Feedback/Feedback"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { Feedback } from "@sb-components/layouts/feedback/Feedback/Feedback"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * KHUNG (layout tier) — `Feedback.Empty`: chồng dọc CANH GIỮA lấp một chỗ trống
@@ -199,8 +199,8 @@ export const WithBody: Story = {
                     description="Vài cách thường ra kết quả hơn:"
                     body={(
                         <ul className="list-disc space-y-1 pl-4 text-left">
-                            <li><Typography.Xs text="Bỏ bớt bộ lọc đang bật" color="muted" /></li>
-                            <li><Typography.Xs text="Dùng từ khoá ngắn hơn" color="muted" /></li>
+                            <li><Typography.Base size="xs" text="Bỏ bớt bộ lọc đang bật" color="muted" /></li>
+                            <li><Typography.Base size="xs" text="Dùng từ khoá ngắn hơn" color="muted" /></li>
                         </ul>
                     )}
                     action={<Button.Base label="Xoá bộ lọc" variant="secondary" size="sm" />}

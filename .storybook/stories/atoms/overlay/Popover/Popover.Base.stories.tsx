@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CircleInfo } from "@gravity-ui/icons"
 import { Popover } from "@sb-components/atoms/overlay/Popover/Popover"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Popover.Base> = {
     title: "Atoms/Overlay/Popover/Popover.Base",
@@ -48,7 +48,7 @@ export const Default: Story = {
                 parts={BASE_PARTS}
                 reason="Atom popover DUY NHẤT bọc HeroUI Popover + Button trigger (react-aria DialogTrigger cần trigger pressable); atom sở hữu surface/placement/arrow."
                 note="defaultOpen pin panel mở khi load để soi. placement=bottom. Nhãn nút đi bằng `triggerLabel` — atom KHÔNG nhận children; `content` là THÂN panel nên vẫn là ReactNode."
-                code={`<Popover.Base triggerLabel="Chi tiết" content={<p>…</p>} placement="bottom" />`}
+                code={"<Popover.Base triggerLabel=\"Chi tiết\" content={<p>…</p>} placement=\"bottom\" />"}
             >
                 <div className="flex justify-center py-16">
                     <Popover.Base
@@ -74,7 +74,7 @@ export const WithHeading: Story = {
                 leaf="WithHeading"
                 parts={HEADING_PARTS}
                 note="`heading` bật Popover.Heading (dòng đậm) trên `content`."
-                code={`<Popover.Base triggerLabel="Chi tiết" heading="Chuỗi 12 ngày" content={<p>…</p>} />`}
+                code={"<Popover.Base triggerLabel=\"Chi tiết\" heading=\"Chuỗi 12 ngày\" content={<p>…</p>} />"}
             >
                 <div className="flex justify-center py-16">
                     <Popover.Base
@@ -101,7 +101,7 @@ export const WithTriggerIcon: Story = {
                 leaf="WithTriggerIcon"
                 parts={TRIGGER_ICON_PARTS}
                 note="`triggerIcon` là COMPONENT gravity; atom ép `size-3.5` (icon = size chữ nút) nên caller không chèn sai scale."
-                code={`<Popover.Base triggerLabel="Cách tính điểm" triggerIcon={CircleInfo} content={<p>…</p>} />`}
+                code={"<Popover.Base triggerLabel=\"Cách tính điểm\" triggerIcon={CircleInfo} content={<p>…</p>} />"}
             >
                 <div className="flex justify-center py-16">
                     <Popover.Base

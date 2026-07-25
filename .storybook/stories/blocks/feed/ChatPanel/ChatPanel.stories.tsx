@@ -3,9 +3,9 @@ import React, { useState } from "react"
 import type { ReactNode } from "react"
 import { Typography } from "@heroui/react"
 import { ChatCircleDotsIcon } from "@phosphor-icons/react"
-import { ChatPanel, type ChatPanelMessage } from "@sb-components/blocks/feed/ChatPanel/ChatPanel"
-import { SurfaceCard } from "@sb-components/blocks/cards/SurfaceCard/SurfaceCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { ChatPanel, type ChatPanelMessage } from "@sb-components/_blocks/feed/ChatPanel/ChatPanel"
+import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * BLOCK — a complete chat surface: a scrollable list of turns (with tool-result

@@ -2,9 +2,9 @@ import type { SVGProps } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Avatar, AvatarFallback, Chip } from "@heroui/react"
 import { FolderOpenIcon } from "@phosphor-icons/react"
-import { SurfaceCard, type SurfaceCardAccordionItem } from "@sb-components/blocks/cards/SurfaceCard/SurfaceCard"
-import { Feedback } from "@sb-components/blocks/feedback/Feedback/Feedback"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { SurfaceCard, type SurfaceCardAccordionItem } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
+import { Feedback } from "@sb-components/layouts/feedback/Feedback/Feedback"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 // `Feedback.Empty` nhận icon là COMPONENT ref và tự ép `size-8` (§4/§5) — phosphor
 // `weight="duotone"` không đi kèm được nữa, nên bọc thành component để GIỮ NGUYÊN nét vẽ.

@@ -1,8 +1,7 @@
 import type { ReactNode } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Chip } from "@sb-components/blocks/chips/Chip/Chip"
-import type { EnumChipEntry } from "@sb-components/blocks/chips/EnumChip/EnumChip"
-import { VideoHostPlatform } from "@sb-components/blocks/chips/HostPlatformChip/HostPlatformChip"
+import { Chip } from "@sb-components/layouts/chips/Chip/Chip"
+import type { EnumChipEntry } from "@sb-components/layouts/chips/EnumChip/EnumChip"
 
 /**
  * `Chip.*` — compound namespace gom các chip PRIMITIVE cùng tier vào một root
@@ -41,13 +40,11 @@ export const Gallery: Story = {
     render: () => (
         <div className="flex flex-col gap-3 p-8">
             <Row member="Chip.Status">
-                <Chip.Status tone="success">Đã đọc</Chip.Status>
-                <Chip.Status tone="warning">Đang chờ</Chip.Status>
+                <Chip.Status tone="success" text="Đã đọc" />
+                <Chip.Status tone="warning" text="Đang chờ" />
             </Row>
-            <Row member="Chip.Dot">
-                <Chip.Dot dotClassName="bg-emerald-500" label="Beginner" />
-                <Chip.Dot dotClassName="bg-amber-500" label="Intermediate" />
-            </Row>
+            {/* `Chip.Dot` đã LÊN ATOM (thầy chốt 2026-07-25) — xem
+                `Atoms/Chips/Chip/Chip.Dot`. Khác tier nên không nằm trong index này. */}
             <Row member="Chip.Enum">
                 <Chip.Enum<OrderStatus> value="paid" map={ORDER_STATUS_MAP} />
                 <Chip.Enum<OrderStatus> value="pending" map={ORDER_STATUS_MAP} />
@@ -55,9 +52,8 @@ export const Gallery: Story = {
             <Row member="Chip.Highlight">
                 <Chip.Highlight value={24} label="Module" />
             </Row>
-            <Row member="Chip.HostPlatform">
-                <Chip.HostPlatform hostPlatform={VideoHostPlatform.Youtube} />
-            </Row>
+            {/* `Chip.HostPlatform` đã BỎ (2026-07-25): `HostPlatformChip` là tier
+                DESIGN (_designs/chips), xem `Design/Chips/HostPlatformChip`. */}
             <Row member="Chip.Removable">
                 <Chip.Removable label="Acme Corp" />
             </Row>

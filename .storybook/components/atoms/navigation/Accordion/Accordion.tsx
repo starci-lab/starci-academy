@@ -111,6 +111,6 @@ const AccordionBase = ({
  * constrained accordion (single/multi-open, default-open are LEAVES of it,
  * prop-driven).
  */
-export const Accordion = {
+export const Accordion = Object.assign(AccordionBase, {
     Base: AccordionBase,
-}
+})

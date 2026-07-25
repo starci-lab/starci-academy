@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ImageDropzone } from "@sb-components/blocks/identity/ImageDropzone/ImageDropzone"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { ImageDropzone } from "@sb-components/atoms/forms/ImageDropzone/ImageDropzone"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
-const meta: Meta<typeof ImageDropzone> = {
-    title: "Primitives/Identity/ImageDropzone",
-    component: ImageDropzone,
+const meta: Meta<typeof ImageDropzone.Base> = {
+    title: "Atoms/Forms/ImageDropzone",
+    component: ImageDropzone.Base,
     tags: ["autodocs"],
     parameters: {
         layout: "fullscreen",
@@ -13,7 +13,7 @@ const meta: Meta<typeof ImageDropzone> = {
 
 export default meta
 
-type Story = StoryObj<typeof ImageDropzone>
+type Story = StoryObj<typeof ImageDropzone.Base>
 
 // Icon (centered, default or custom) · Label (CTA) · optional Hint (format/size).
 const WITH_HINT_PARTS: Array<AnatomyNode> = [
@@ -31,7 +31,7 @@ export const WithHint: Story = {
         <div className="p-8">
             <BlockAnatomy name="ImageDropzone" tier="primitive" leaf="WithHint" parts={WITH_HINT_PARTS}>
                 <div className="max-w-md">
-                    <ImageDropzone
+                    <ImageDropzone.Base
                         showAnatomy
                         onFile={() => {}}
                         label="Drag and drop an image here, or click to choose"
@@ -54,7 +54,7 @@ export const NoHint: Story = {
                 note="Không truyền `hint` — chỉ còn Icon + Label."
             >
                 <div className="max-w-md">
-                    <ImageDropzone showAnatomy onFile={() => {}} label="Click to choose an image" />
+                    <ImageDropzone.Base showAnatomy onFile={() => {}} label="Click to choose an image" />
                 </div>
             </BlockAnatomy>
         </div>

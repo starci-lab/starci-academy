@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ContinueCard } from "@sb-components/blocks/cards/ContinueCard/ContinueCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { ContinueCard } from "@sb-components/_designs/cards/ContinueCard/ContinueCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — the `plain` variant of ContinueCard: SAME content (eyebrow · title ·

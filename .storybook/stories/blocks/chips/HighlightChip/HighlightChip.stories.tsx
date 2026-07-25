@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { BookOpenIcon } from "@phosphor-icons/react"
-import { HighlightChip } from "@sb-components/blocks/chips/HighlightChip/HighlightChip"
+import { HighlightChip } from "@sb-components/layouts/chips/HighlightChip/HighlightChip"
 
 const meta: Meta<typeof HighlightChip> = {
     title: "Primitives/Chips/HighlightChip",

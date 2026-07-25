@@ -1,8 +1,8 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Typography } from "@heroui/react"
-import { ProgrammingLanguageTabs, ProgrammingLanguageTabsVariant } from "@sb-components/blocks/navigation/ProgrammingLanguageTabs/ProgrammingLanguageTabs"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { ProgrammingLanguageTabs, ProgrammingLanguageTabsVariant } from "@sb-components/_designs/navigation/ProgrammingLanguageTabs/ProgrammingLanguageTabs"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — a thin wrapper over `ExtendedTabs`: PLT owns the fixed language set,

@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button, Typography } from "@heroui/react"
 import { ArrowRightIcon, CubeIcon, RocketLaunchIcon } from "@phosphor-icons/react"
-import { HeroBanner } from "@sb-components/blocks/marketing/HeroBanner/HeroBanner"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { HeroBanner } from "@sb-components/_designs/marketing/HeroBanner/HeroBanner"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — the landing-page opening hero: eyebrow + headline + subline + CTA

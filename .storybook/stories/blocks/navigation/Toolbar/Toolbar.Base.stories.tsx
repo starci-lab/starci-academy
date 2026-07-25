@@ -2,11 +2,11 @@ import { useState } from "react"
 import type { Key, ReactNode } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Gear, Globe, Plus } from "@gravity-ui/icons"
-import { Toolbar, type ToolbarTabItem, type ToolbarBaseProps } from "@sb-components/blocks/navigation/Toolbar/Toolbar"
-import { SurfaceCard } from "@sb-components/blocks/cards/SurfaceCard/SurfaceCard"
+import { Toolbar, type ToolbarTabItem, type ToolbarBaseProps } from "@sb-components/layouts/navigation/Toolbar/Toolbar"
+import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * `Toolbar.Base` — khung HÀNG điều hướng/điều khiển nằm TRÊN một panel: nhóm tab chính
@@ -63,7 +63,7 @@ const TabPanel = ({ selectedKey }: { selectedKey: string }) => {
         <SurfaceCard.Base>
             <div className="flex flex-col gap-2">
                 <Typography.Base text={panel?.title} weight="bold" />
-                <Typography.Sm text={panel?.body} color="muted" />
+                <Typography.Base size="sm" text={panel?.body} color="muted" />
             </div>
         </SurfaceCard.Base>
     )

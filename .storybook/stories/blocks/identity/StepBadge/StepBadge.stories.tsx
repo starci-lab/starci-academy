@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { StepBadge } from "@sb-components/blocks/identity/StepBadge/StepBadge"
+import { StepBadge } from "@sb-components/atoms/display/StepBadge/StepBadge"
 
-const meta: Meta<typeof StepBadge> = {
-    title: "Primitives/Identity/StepBadge",
-    component: StepBadge,
+const meta: Meta<typeof StepBadge.Base> = {
+    title: "Atoms/Display/StepBadge",
+    component: StepBadge.Base,
     tags: ["autodocs"],
     parameters: {
         layout: "fullscreen",
@@ -12,12 +12,12 @@ const meta: Meta<typeof StepBadge> = {
 
 export default meta
 
-type Story = StoryObj<typeof StepBadge>
+type Story = StoryObj<typeof StepBadge.Base>
 
 export const Default: Story = {
     render: () => (
         <div className="p-8">
-            <StepBadge number={1} />
+            <StepBadge.Base number={1} />
         </div>
     ),
 }
@@ -25,7 +25,7 @@ export const Default: Story = {
 export const Active: Story = {
     render: () => (
         <div className="p-8">
-            <StepBadge number={2} state="active" />
+            <StepBadge.Base number={2} state="active" />
         </div>
     ),
 }
@@ -33,7 +33,7 @@ export const Active: Story = {
 export const Done: Story = {
     render: () => (
         <div className="p-8">
-            <StepBadge number={1} state="done" />
+            <StepBadge.Base number={1} state="done" />
         </div>
     ),
 }
@@ -41,7 +41,7 @@ export const Done: Story = {
 export const Muted: Story = {
     render: () => (
         <div className="p-8">
-            <StepBadge number={3} state="muted" />
+            <StepBadge.Base number={3} state="muted" />
         </div>
     ),
 }
@@ -49,7 +49,7 @@ export const Muted: Story = {
 export const SizeMd: Story = {
     render: () => (
         <div className="p-8">
-            <StepBadge number={1} size="md" />
+            <StepBadge.Base number={1} size="md" />
         </div>
     ),
 }
@@ -58,9 +58,9 @@ export const SizeMd: Story = {
 export const Sequence: Story = {
     render: () => (
         <div className="flex gap-3 p-8">
-            <StepBadge number={1} state="done" />
-            <StepBadge number={2} state="active" />
-            <StepBadge number={3} state="muted" />
+            <StepBadge.Base number={1} state="done" />
+            <StepBadge.Base number={2} state="active" />
+            <StepBadge.Base number={3} state="muted" />
         </div>
     ),
 }
@@ -68,7 +68,7 @@ export const Sequence: Story = {
 export const Skeleton: Story = {
     render: () => (
         <div className="p-8">
-            <StepBadge number={1} isSkeleton />
+            <StepBadge.Base number={1} isSkeleton />
         </div>
     ),
 }

@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
-import { ContentSearchList } from "@sb-components/blocks/learn/ContentSearchList/ContentSearchList"
-import type { SearchCourseContentItem } from "@sb-components/blocks/learn/EntityResultRow/EntityResultRow"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { ContentSearchList } from "@sb-components/_blocks/learn/ContentSearchList/ContentSearchList"
+import type { SearchCourseContentItem } from "@sb-components/_blocks/learn/EntityResultRow/EntityResultRow"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * BLOCK — the chatbox's "Tìm nội dung khóa" (search-in-course) view: a

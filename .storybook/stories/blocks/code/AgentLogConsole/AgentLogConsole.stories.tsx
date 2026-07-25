@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { AgentLogConsole } from "@sb-components/blocks/code/AgentLogConsole/AgentLogConsole"
+import { AgentLogConsole } from "@sb-components/_designs/code/AgentLogConsole/AgentLogConsole"
 
 const meta: Meta<typeof AgentLogConsole> = {
     title: "Design/Code/AgentLogConsole",

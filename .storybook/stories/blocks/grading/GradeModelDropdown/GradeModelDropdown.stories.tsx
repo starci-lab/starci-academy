@@ -5,9 +5,9 @@ import {
     AiModelCategory,
     AiModelTask,
     ModelProvider,
-} from "@sb-components/blocks/grading/GradeModelDropdown/GradeModelDropdown"
-import type { AiGradableModel, GradeModelSelection } from "@sb-components/blocks/grading/GradeModelDropdown/GradeModelDropdown"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+} from "@sb-components/_blocks/grading/GradeModelDropdown/GradeModelDropdown"
+import type { AiGradableModel, GradeModelSelection } from "@sb-components/_blocks/grading/GradeModelDropdown/GradeModelDropdown"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * BLOCK — the shared model-picker lane (grading, AI lab, any model-select

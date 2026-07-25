@@ -8,7 +8,7 @@ import {
     Skeleton as HeroSkeleton,
     cn,
 } from "@heroui/react"
-import { FieldFrame } from "../_field/FieldFrame"
+import { FieldFrame } from "@sb-components/atoms/forms/_field/FieldFrame"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -87,14 +87,14 @@ const ChoiceCheckbox = ({ isSelected, onValueChange, label, isDisabled, isInvali
         </div>
     )
     return (
-        <FieldFrame hint={hint} errorMessage={errorMessage} isDisabled={isDisabled} isSkeleton={isSkeleton} showAnatomy={showAnatomy} skeletonControl={skeletonControl}>
+        <FieldFrame.Base hint={hint} errorMessage={errorMessage} isDisabled={isDisabled} isSkeleton={isSkeleton} showAnatomy={showAnatomy} skeletonControl={skeletonControl}>
             <HeroCheckbox isSelected={isSelected} onChange={onValueChange} isInvalid={invalid} isDisabled={isDisabled} className={className}>
                 <HeroCheckbox.Control data-anat-part={showAnatomy ? "Control" : undefined}>
                     <HeroCheckbox.Indicator />
                 </HeroCheckbox.Control>
                 <HeroCheckbox.Content data-anat-part={showAnatomy ? "Label" : undefined}>{withRequired(label, isRequired)}</HeroCheckbox.Content>
             </HeroCheckbox>
-        </FieldFrame>
+        </FieldFrame.Base>
     )
 }
 
@@ -213,7 +213,7 @@ const ChoiceRadioGroup = ({
         </div>
     )
     return (
-        <FieldFrame
+        <FieldFrame.Base
             label={groupLabel}
             hint={hint}
             errorMessage={errorMessage}
@@ -235,7 +235,7 @@ const ChoiceRadioGroup = ({
                     <ChoiceRadio key={option.value} value={option.value} label={option.label} isDisabled={option.isDisabled} showAnatomy={showAnatomy} />
                 ))}
             </HeroRadioGroup>
-        </FieldFrame>
+        </FieldFrame.Base>
     )
 }
 
@@ -271,7 +271,7 @@ const ChoiceSwitch = ({ isSelected, onValueChange, label, isDisabled, isInvalid,
         </div>
     )
     return (
-        <FieldFrame hint={hint} errorMessage={errorMessage} isDisabled={isDisabled} isSkeleton={isSkeleton} showAnatomy={showAnatomy} skeletonControl={skeletonControl}>
+        <FieldFrame.Base hint={hint} errorMessage={errorMessage} isDisabled={isDisabled} isSkeleton={isSkeleton} showAnatomy={showAnatomy} skeletonControl={skeletonControl}>
             <div className={cn("flex items-center gap-3", className)}>
                 <HeroSwitch
                     data-anat-part={showAnatomy ? "Control" : undefined}
@@ -294,7 +294,7 @@ const ChoiceSwitch = ({ isSelected, onValueChange, label, isDisabled, isInvalid,
                     </HeroLabel>
                 ) : null}
             </div>
-        </FieldFrame>
+        </FieldFrame.Base>
     )
 }
 

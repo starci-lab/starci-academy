@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Spinner } from "@sb-components/atoms/display/Spinner/Spinner"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Spinner.Base> = {
     title: "Atoms/Display/Spinner/Spinner.Base",
@@ -27,7 +27,7 @@ export const Default: Story = {
                 leaf="Default"
                 parts={SPINNER_PARTS}
                 reason="Chỉ-báo BUSY: một glyph xoay bọc HeroUI Spinner; size/tone phân bằng prop. KHÔNG isSkeleton (spinner CHÍNH LÀ chỉ-báo tải)."
-                code={`<Spinner.Base label="Đang tải" />`}
+                code={"<Spinner.Base label=\"Đang tải\" />"}
             >
                 <Spinner.Base showAnatomy />
             </BlockAnatomy>
@@ -45,7 +45,7 @@ export const Sizes: Story = {
                 leaf="Sizes"
                 parts={SPINNER_PARTS}
                 note="4 bậc size sm/md/lg/xl — atom sở hữu scale (§4)."
-                code={`<Spinner.Base size="sm|md|lg|xl" />`}
+                code={"<Spinner.Base size=\"sm|md|lg|xl\" />"}
             >
                 <div className="flex items-end gap-6">
                     <Spinner.Base size="sm" showAnatomy />
@@ -68,7 +68,7 @@ export const Tones: Story = {
                 leaf="Tones"
                 parts={SPINNER_PARTS}
                 note="tone='current' kế thừa màu chữ container (vd trong nút màu)."
-                code={`<Spinner.Base tone="accent|success|warning|danger|current" />`}
+                code={"<Spinner.Base tone=\"accent|success|warning|danger|current\" />"}
             >
                 <div className="flex items-center gap-6">
                     <Spinner.Base tone="accent" showAnatomy />

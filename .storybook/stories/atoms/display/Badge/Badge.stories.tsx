@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Bell } from "@gravity-ui/icons"
 import { Badge } from "@sb-components/atoms/display/Badge/Badge"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Badge.Base> = {
     title: "Atoms/Display/Badge/Badge.Base",
@@ -40,7 +40,7 @@ export const Count: Story = {
                 leaf="Count"
                 parts={ANCHORED_PARTS}
                 reason="Atom badge DUY NHẤT bọc HeroUI Badge; count/dot/cap/standalone phân bằng prop → leaf = composition."
-                code={`<Badge.Base count={3}>{<Bell/>}</Badge.Base>`}
+                code={"<Badge.Base count={3}>{<Bell/>}</Badge.Base>"}
             >
                 <Badge.Base count={3} showAnatomy>
                     <BellHost />
@@ -60,7 +60,7 @@ export const Dot: Story = {
                 leaf="Dot"
                 parts={ANCHORED_PARTS}
                 note="dot → badge không nhãn, thu về chấm (min-w-0 p-0)."
-                code={`<Badge.Base dot>{<Bell/>}</Badge.Base>`}
+                code={"<Badge.Base dot>{<Bell/>}</Badge.Base>"}
             >
                 <Badge.Base dot showAnatomy>
                     <BellHost />
@@ -80,7 +80,7 @@ export const Max: Story = {
                 leaf="Max"
                 parts={ANCHORED_PARTS}
                 note="count=128, max=99 → atom render '99+' (cap là việc của atom, consumer đưa số thô)."
-                code={`<Badge.Base count={128} max={99}>{<Bell/>}</Badge.Base>`}
+                code={"<Badge.Base count={128} max={99}>{<Bell/>}</Badge.Base>"}
             >
                 <Badge.Base count={128} max={99} showAnatomy>
                     <BellHost />
@@ -100,7 +100,7 @@ export const Colors: Story = {
                 leaf="Colors"
                 parts={STANDALONE_PARTS}
                 note="Badge độc lập (không children) — 5 tone ngữ nghĩa; màu tải nghĩa (alert/mới…)."
-                code={`<Badge.Base count={5} color="danger|accent|success|warning|default" />`}
+                code={"<Badge.Base count={5} color=\"danger|accent|success|warning|default\" />"}
             >
                 <div className="flex items-center gap-3">
                     <Badge.Base count={5} color="danger" showAnatomy />
@@ -124,7 +124,7 @@ export const Loading: Story = {
                 leaf="Loading"
                 parts={SKELETON_PARTS}
                 note="isSkeleton → pill shimmer OWNED bởi atom (hybrid C)."
-                code={`<Badge.Base isSkeleton count={3} />`}
+                code={"<Badge.Base isSkeleton count={3} />"}
             >
                 <Badge.Base isSkeleton count={3} showAnatomy />
             </BlockAnatomy>

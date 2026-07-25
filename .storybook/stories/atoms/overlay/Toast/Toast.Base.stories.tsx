@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button as HeroButton } from "@heroui/react"
 import { Toast } from "@sb-components/atoms/overlay/Toast/Toast"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Toast.Base> = {
     title: "Atoms/Overlay/Toast/Toast.Base",
@@ -41,7 +41,7 @@ export const Success: Story = {
                 parts={BASE_PARTS}
                 reason="Atom toast/notification DUY NHẤT bọc HeroUI Alert; atom map status→tone + tự chọn icon (đúng valence), consumer chỉ truyền title/description."
                 note="status=success → tint success + CircleCheck (gravity). Toast 100% prop dữ liệu — không có children."
-                code={`<Toast.Base status="success" title="Đã lưu" description="Bài nộp đã được ghi nhận." />`}
+                code={"<Toast.Base status=\"success\" title=\"Đã lưu\" description=\"Bài nộp đã được ghi nhận.\" />"}
             >
                 <Toast.Base status="success" title="Đã lưu bài nộp" description="Kết quả chấm sẽ có sau ít phút." showAnatomy />
             </BlockAnatomy>
@@ -59,7 +59,7 @@ export const Warning: Story = {
                 leaf="Warning"
                 parts={BASE_PARTS}
                 note="status=warning → tint warning + TriangleExclamation."
-                code={`<Toast.Base status="warning" title="Sắp hết hạn" description="Đề đóng sau 10 phút." />`}
+                code={"<Toast.Base status=\"warning\" title=\"Sắp hết hạn\" description=\"Đề đóng sau 10 phút.\" />"}
             >
                 <Toast.Base status="warning" title="Sắp hết thời gian" description="Đề sẽ tự nộp sau 10 phút nữa." showAnatomy />
             </BlockAnatomy>
@@ -77,7 +77,7 @@ export const Danger: Story = {
                 leaf="Danger"
                 parts={BASE_PARTS}
                 note="status=danger → tint danger + CircleXmark."
-                code={`<Toast.Base status="danger" title="Nộp thất bại" description="Kiểm tra kết nối rồi thử lại." />`}
+                code={"<Toast.Base status=\"danger\" title=\"Nộp thất bại\" description=\"Kiểm tra kết nối rồi thử lại.\" />"}
             >
                 <Toast.Base status="danger" title="Nộp bài thất bại" description="Không kết nối được máy chủ. Thử lại sau." showAnatomy />
             </BlockAnatomy>
@@ -95,7 +95,7 @@ export const Info: Story = {
                 leaf="Info"
                 parts={BASE_PARTS}
                 note="status=info → tint accent + CircleInfo (info fold về accent)."
-                code={`<Toast.Base status="info" title="Có bản cập nhật" description="Nội dung khoá vừa được làm mới." />`}
+                code={"<Toast.Base status=\"info\" title=\"Có bản cập nhật\" description=\"Nội dung khoá vừa được làm mới.\" />"}
             >
                 <Toast.Base status="info" title="Nội dung vừa cập nhật" description="Bài học có phiên bản mới, tải lại để xem." showAnatomy />
             </BlockAnatomy>
@@ -113,7 +113,7 @@ export const WithAction: Story = {
                 leaf="WithAction"
                 parts={ACTION_PARTS}
                 note="`action` (nút) đặt trước ×; `onClose` bật × (gravity Xmark). `action` là NỘI DUNG ReactNode — được giữ, khác với children."
-                code={`<Toast.Base status="info" title="Đã xoá thẻ" action={<Button>Hoàn tác</Button>} onClose={fn} />`}
+                code={"<Toast.Base status=\"info\" title=\"Đã xoá thẻ\" action={<Button>Hoàn tác</Button>} onClose={fn} />"}
             >
                 <Toast.Base
                     status="info"

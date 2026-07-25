@@ -1,7 +1,7 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Input } from "@sb-components/atoms/forms/Input/Input"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta = { title: "Atoms/Forms/Input/Input.Password", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
 export default meta
@@ -21,7 +21,7 @@ export const Default: Story = {
         const Demo = () => {
             const [value, setValue] = useState("matkhau123")
             return (
-                <BlockAnatomy name="Input.Password" tier="atom" leaf="Default" parts={[FIELD, TOGGLE]} note="trần — không label/hint/error." code={`<Input.Password value={v} onValueChange={setV} placeholder="Mật khẩu" />`}>
+                <BlockAnatomy name="Input.Password" tier="atom" leaf="Default" parts={[FIELD, TOGGLE]} note="trần — không label/hint/error." code={"<Input.Password value={v} onValueChange={setV} placeholder=\"Mật khẩu\" />"}>
                     <div className="w-72"><Input.Password value={value} onValueChange={setValue} placeholder="Mật khẩu" ariaLabel="Mật khẩu" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -36,7 +36,7 @@ export const WithLabel: Story = {
         const Demo = () => {
             const [value, setValue] = useState("")
             return (
-                <BlockAnatomy name="Input.Password" tier="atom" leaf="WithLabel" parts={[LABEL, DESC, FIELD, TOGGLE]} note="label + hint." code={`<Input.Password label="Mật khẩu" hint="Tối thiểu 8 ký tự" value={v} onValueChange={setV} />`}>
+                <BlockAnatomy name="Input.Password" tier="atom" leaf="WithLabel" parts={[LABEL, DESC, FIELD, TOGGLE]} note="label + hint." code={"<Input.Password label=\"Mật khẩu\" hint=\"Tối thiểu 8 ký tự\" value={v} onValueChange={setV} />"}>
                     <div className="w-72"><Input.Password label="Mật khẩu" hint="Tối thiểu 8 ký tự" value={value} onValueChange={setValue} placeholder="Mật khẩu" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -51,7 +51,7 @@ export const Required: Story = {
         const Demo = () => {
             const [value, setValue] = useState("")
             return (
-                <BlockAnatomy name="Input.Password" tier="atom" leaf="Required" parts={[LABEL, FIELD, TOGGLE]} note="isRequired → dấu * sau nhãn." code={`<Input.Password label="Mật khẩu" isRequired value={v} onValueChange={setV} />`}>
+                <BlockAnatomy name="Input.Password" tier="atom" leaf="Required" parts={[LABEL, FIELD, TOGGLE]} note="isRequired → dấu * sau nhãn." code={"<Input.Password label=\"Mật khẩu\" isRequired value={v} onValueChange={setV} />"}>
                     <div className="w-72"><Input.Password label="Mật khẩu" isRequired value={value} onValueChange={setValue} placeholder="Mật khẩu" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -66,7 +66,7 @@ export const Filled: Story = {
         const Demo = () => {
             const [value, setValue] = useState("SieuBaoMat!2026")
             return (
-                <BlockAnatomy name="Input.Password" tier="atom" leaf="Filled" parts={[LABEL, FIELD, TOGGLE]} note="value có chữ (ẩn thành ●)." code={`<Input.Password label="Mật khẩu" value="SieuBaoMat!2026" onValueChange={setV} />`}>
+                <BlockAnatomy name="Input.Password" tier="atom" leaf="Filled" parts={[LABEL, FIELD, TOGGLE]} note="value có chữ (ẩn thành ●)." code={"<Input.Password label=\"Mật khẩu\" value=\"SieuBaoMat!2026\" onValueChange={setV} />"}>
                     <div className="w-72"><Input.Password label="Mật khẩu" value={value} onValueChange={setValue} showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -81,7 +81,7 @@ export const Disabled: Story = {
         const Demo = () => {
             const [value, setValue] = useState("SieuBaoMat!2026")
             return (
-                <BlockAnatomy name="Input.Password" tier="atom" leaf="Disabled" parts={[LABEL, FIELD, TOGGLE]} note="isDisabled → khoá + nhạt." code={`<Input.Password label="Mật khẩu" value="SieuBaoMat!2026" isDisabled onValueChange={setV} />`}>
+                <BlockAnatomy name="Input.Password" tier="atom" leaf="Disabled" parts={[LABEL, FIELD, TOGGLE]} note="isDisabled → khoá + nhạt." code={"<Input.Password label=\"Mật khẩu\" value=\"SieuBaoMat!2026\" isDisabled onValueChange={setV} />"}>
                     <div className="w-72"><Input.Password label="Mật khẩu" value={value} onValueChange={setValue} isDisabled showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -96,7 +96,7 @@ export const Error: Story = {
         const Demo = () => {
             const [value, setValue] = useState("123")
             return (
-                <BlockAnatomy name="Input.Password" tier="atom" leaf="Error" parts={[LABEL, FIELD, TOGGLE, ERROR]} note="label + errorMessage → nhãn + dòng đỏ + viền." code={`<Input.Password label="Mật khẩu" errorMessage="Mật khẩu quá ngắn" value={v} onValueChange={setV} />`}>
+                <BlockAnatomy name="Input.Password" tier="atom" leaf="Error" parts={[LABEL, FIELD, TOGGLE, ERROR]} note="label + errorMessage → nhãn + dòng đỏ + viền." code={"<Input.Password label=\"Mật khẩu\" errorMessage=\"Mật khẩu quá ngắn\" value={v} onValueChange={setV} />"}>
                     <div className="w-72"><Input.Password label="Mật khẩu" errorMessage="Mật khẩu quá ngắn" value={value} onValueChange={setValue} placeholder="Mật khẩu" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -109,7 +109,7 @@ export const Error: Story = {
 export const Loading: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="Input.Password" tier="atom" leaf="Loading" parts={[LABEL, SKELETON]} note="isSkeleton + label → mirror nhãn trên hộp." code={`<Input.Password label="Mật khẩu" isSkeleton />`}>
+            <BlockAnatomy name="Input.Password" tier="atom" leaf="Loading" parts={[LABEL, SKELETON]} note="isSkeleton + label → mirror nhãn trên hộp." code={"<Input.Password label=\"Mật khẩu\" isSkeleton />"}>
                 <div className="w-72"><Input.Password label="Mật khẩu" value="" onValueChange={() => {}} isSkeleton showAnatomy /></div>
             </BlockAnatomy>
         </div>

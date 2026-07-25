@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Avatar, AvatarFallback, Button, Label, Typography } from "@heroui/react"
-import { SurfaceCard } from "@sb-components/blocks/cards/SurfaceCard/SurfaceCard"
-import { Skeleton } from "@sb-components/blocks/skeleton/Skeleton/Skeleton"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
+import { Skeleton } from "@sb-components/atoms/display/Skeleton/Skeleton"
+import { Avatar as AtomAvatar } from "@sb-components/atoms/display/Avatar/Avatar"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `SurfaceCard.Base` là KHUNG-BỌC tổng quát
@@ -50,7 +51,7 @@ const ProfileRow = () => (
 /** Skeleton mirror của ProfileRow — cùng khung, swap từng node sang Skeleton.*. */
 const ProfileRowSkeleton = () => (
     <div className="flex items-center gap-3">
-        <Skeleton.Avatar size="md" className="shrink-0" />
+        <AtomAvatar.Base isSkeleton size="md" className="shrink-0" />
         <div className="flex min-w-0 grow flex-col">
             <Skeleton.Typography type="body-sm" width="1/3" />
             <Skeleton.Typography type="body-xs" width="2/3" />

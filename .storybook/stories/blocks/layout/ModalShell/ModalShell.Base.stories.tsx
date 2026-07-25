@@ -2,8 +2,8 @@ import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button, Input, Label, ScrollShadow, Tabs, TextField, Typography } from "@heroui/react"
 import { CheckIcon } from "@phosphor-icons/react"
-import { ModalShell } from "@sb-components/blocks/layout/ModalShell/ModalShell"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { ModalShell } from "@sb-components/layouts/layout/ModalShell/ModalShell"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * `ModalShell.Base` — the dialog scaffold khung:

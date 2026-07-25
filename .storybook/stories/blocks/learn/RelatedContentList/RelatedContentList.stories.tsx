@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { RelatedContentList } from "@sb-components/blocks/learn/RelatedContentList/RelatedContentList"
-import type { SearchCourseContentItem } from "@sb-components/blocks/learn/EntityResultRow/EntityResultRow"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { RelatedContentList } from "@sb-components/_blocks/learn/RelatedContentList/RelatedContentList"
+import type { SearchCourseContentItem } from "@sb-components/_blocks/learn/EntityResultRow/EntityResultRow"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * BLOCK — a passive, self-hiding "related content" list at the tail of a learning

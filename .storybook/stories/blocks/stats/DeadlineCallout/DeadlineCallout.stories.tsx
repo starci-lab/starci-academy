@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { DeadlineCallout } from "@sb-components/blocks/stats/DeadlineCallout/DeadlineCallout"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { DeadlineCallout } from "@sb-components/_designs/stats/DeadlineCallout/DeadlineCallout"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof DeadlineCallout> = {
     title: "Design/Stats/DeadlineCallout",

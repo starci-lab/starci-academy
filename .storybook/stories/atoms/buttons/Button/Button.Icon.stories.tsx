@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Plus } from "@gravity-ui/icons"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Button.Icon> = {
     title: "Atoms/Buttons/Button/Button.Icon",
@@ -34,7 +34,7 @@ export const Default: Story = {
                 leaf="Default"
                 parts={ICON_PARTS}
                 reason="Nút CHỈ-icon: `icon` = component reference, atom sở hữu glyph scale (§4/§5) — a11y qua `ariaLabel`."
-                code={`<Button.Icon icon={Plus} ariaLabel="Thêm mục" />`}
+                code={"<Button.Icon icon={Plus} ariaLabel=\"Thêm mục\" />"}
             >
                 <Button.Icon icon={Plus} ariaLabel="Thêm mục" showAnatomy />
             </BlockAnatomy>
@@ -76,7 +76,7 @@ export const Disabled: Story = {
                 leaf="Disabled"
                 parts={ICON_PARTS}
                 note="isDisabled → forward xuống HeroUI (khoá press, giảm opacity)."
-                code={`<Button.Icon icon={Plus} ariaLabel="Thêm mục" isDisabled />`}
+                code={"<Button.Icon icon={Plus} ariaLabel=\"Thêm mục\" isDisabled />"}
             >
                 <Button.Icon icon={Plus} ariaLabel="Thêm mục" isDisabled showAnatomy />
             </BlockAnatomy>
@@ -94,7 +94,7 @@ export const Loading: Story = {
                 leaf="Loading"
                 parts={SKELETON_PARTS}
                 note="isSkeleton → square shimmer OWNED bởi atom (hybrid C), khớp box iconOnly."
-                code={`<Button.Icon icon={Plus} ariaLabel="Thêm mục" isSkeleton />`}
+                code={"<Button.Icon icon={Plus} ariaLabel=\"Thêm mục\" isSkeleton />"}
             >
                 <Button.Icon icon={Plus} ariaLabel="Thêm mục" isSkeleton showAnatomy />
             </BlockAnatomy>
@@ -112,7 +112,7 @@ export const Pending: Story = {
                 leaf="Pending"
                 parts={PENDING_PARTS}
                 note="isPending → atom render Spinner THAY icon + khoá press (react-aria không tự vẽ)."
-                code={`<Button.Icon icon={Plus} ariaLabel="Thêm mục" isPending />`}
+                code={"<Button.Icon icon={Plus} ariaLabel=\"Thêm mục\" isPending />"}
             >
                 <Button.Icon icon={Plus} ariaLabel="Thêm mục" isPending showAnatomy />
             </BlockAnatomy>

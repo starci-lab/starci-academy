@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
 import { CardsIcon, MagnifyingGlassIcon } from "@phosphor-icons/react"
-import { ChatToolResult } from "@sb-components/blocks/learn/ChatToolResult/ChatToolResult"
-import type { SearchCourseContentItem } from "@sb-components/blocks/learn/EntityResultRow/EntityResultRow"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { ChatToolResult } from "@sb-components/_blocks/learn/ChatToolResult/ChatToolResult"
+import type { SearchCourseContentItem } from "@sb-components/_blocks/learn/EntityResultRow/EntityResultRow"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * BLOCK — the in-chat tool-result widget: a labeled, pickable list of RAG hits

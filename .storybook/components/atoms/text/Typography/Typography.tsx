@@ -1,5 +1,5 @@
 import type { ComponentType, ReactNode, SVGProps } from "react"
-import { Link as HeroLink, Skeleton as HeroSkeleton, cn } from "@heroui/react"
+import { Link as HeroLink, Skeleton as HeroSkeleton, Typography as HeroTypography, cn } from "@heroui/react"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -17,7 +17,7 @@ import { Link as HeroLink, Skeleton as HeroSkeleton, cn } from "@heroui/react"
  *     gravity (không `weight`). ⚠️ CÓ ICON → text TỰ `font-medium` (icon gravity fit medium text).
  *   • `iconSlide` (§5b): ARROW trượt khi hover (prefix←back · suffix→forward). CHỈ arrow, không caret.
  *   • `truncate`/`lineClamp` cắt chữ · `tabularNums` số thẳng cột (§3).
- *   • `isLoading` — atom TỰ vẽ text-bar skeleton (hybrid C).
+ *   • `isSkeleton` — atom TỰ vẽ text-bar skeleton (hybrid C, §12c).
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -27,7 +27,20 @@ export type TypographyIcon = ComponentType<SVGProps<SVGSVGElement>>
 /** Semantic text color (default = foreground). */
 export type TypographyColor = "default" | "muted" | "accent" | "success" | "warning" | "danger"
 
+/**
+ * MỘT TRỤC CỠ CHỮ cho toàn hệ (thầy chốt 2026-07-25 — gộp namespace, chỉ còn
+ * `Typography.Base`). Ba nhóm, ba cách hiện thực BÊN TRONG atom, caller chỉ thấy
+ * một prop:
+ *   • `xs`/`sm`/`base`/`lg` — body scale, dựng bằng class.
+ *   • `h1`…`h5`             — bọc compound `HeroTypography.Heading level={N}`.
+ *   • `code`                — bọc `HeroTypography type="code"`.
+ */
+export type TypographySize = "xs" | "sm" | "base" | "lg" | "h1" | "h2" | "h3" | "h4" | "h5" | "code"
+
+/** Cỡ body (nhóm dựng bằng class). */
 type Size = "xs" | "sm" | "base" | "lg"
+
+const HEADING_LEVEL: Record<string, 1 | 2 | 3 | 4 | 5> = { h1: 1, h2: 2, h3: 3, h4: 4, h5: 5 }
 
 const TEXT_CLS: Record<Size, string> = { xs: "text-xs", sm: "text-sm", base: "text-base", lg: "text-lg" }
 const ICON_CLS: Record<Size, string> = { xs: "size-3", sm: "size-3.5", base: "size-4", lg: "size-[18px]" }
@@ -42,14 +55,37 @@ const COLOR_CLS: Record<TypographyColor, string | null> = {
 }
 const CLAMP_CLS: Record<1 | 2 | 3, string> = { 1: "line-clamp-1", 2: "line-clamp-2", 3: "line-clamp-3" }
 
+/**
+ * Canh chữ. Thêm 2026-07-25 sau đợt quét drift: 5 block phải giữ raw HeroUI CHỈ vì
+ * atom không có trục này (caption canh giữa trong sơ đồ, hero banner canh động).
+ *
+ * Từ vựng LOGICAL (`start`/`end`) chứ KHÔNG phải physical (`left`/`right`) — khớp
+ * đúng cái HeroUI và các block đang dùng (`align={centered ? "center" : "start"}`),
+ * và tự đảo chiều khi RTL. Bản đầu trò đặt `left|right` nên 2 block không khớp kiểu,
+ * phải giữ raw — sửa lại cho đúng nguồn.
+ */
+export type TypographyAlign = "start" | "center" | "end"
+
+const ALIGN_CLS: Record<TypographyAlign, string> = {
+    start: "text-start",
+    center: "text-center",
+    end: "text-end",
+}
+
 /** Props for every `Typography.<Size>` member. */
 export interface TypographyProps {
     /** Text content — PROP `text={...}` (thống nhất `Chip.Base`, KHÔNG children). */
     text: ReactNode
+    /** Cỡ chữ — xem {@link TypographySize}. Default `"base"`. */
+    size?: TypographySize
     /** Semantic color (§9a foreground/muted + §2 accent/success/warning/danger). Default = `default`. */
     color?: TypographyColor
-    /** Font weight (§9b): `medium` = nhấn làm-việc · `bold` = heading. Bỏ trống = normal. */
-    weight?: "medium" | "bold"
+    /**
+     * Font weight (§9b): `medium` = nhấn làm-việc · `bold` = heading.
+     * `semibold` CHỈ hợp lệ với `size` heading (`h1`…`h5`); ở body scale thầy đã chốt
+     * dồn `semibold` → `medium` (2026-07-25).
+     */
+    weight?: "medium" | "semibold" | "bold"
     isItalic?: boolean
     /** Render như LINK — HeroUI `Link` (accent + hover underline + a11y). KHÔNG kèm weight/icon. */
     isLink?: boolean
@@ -67,39 +103,91 @@ export interface TypographyProps {
     truncate?: boolean
     /** Clamp N dòng (1–3). Thắng `truncate`. */
     lineClamp?: 1 | 2 | 3
+    /** Canh chữ. Bỏ trống = theo dòng chảy (không khai báo class). */
+    align?: TypographyAlign
     /** `tabular-nums` cho số/giá/đếm (§3 thẳng cột). */
     tabularNums?: boolean
-    /** Render leaf skeleton (text bar) thay vì chữ. */
-    isLoading?: boolean
+    /** Render leaf skeleton (text bar) thay vì chữ. §12c: co-located, ĐẶT TÊN thống nhất `isSkeleton`. */
+    isSkeleton?: boolean
     /** `true` → tag each part với `data-anat-part` cho BlockAnatomy. */
     showAnatomy?: boolean
+    /**
+     * Tên `data-anat-part` TUỲ Ý cho node chữ (thắng tên mặc định `"Text"`). Thêm
+     * 2026-07-25: nhiều block đặt tên riêng cho slot chữ ("Verdict", "Original"…) nên
+     * trước đó phải giữ raw HeroUI chỉ vì atom ép cứng một tên.
+     */
+    anatPart?: string
     className?: string
 }
 
-const makeTypography = (size: Size) => {
-    const Typo = ({
-        text,
-        color,
-        weight,
-        isItalic,
-        isLink,
-        href,
-        onPress,
-        prefixIcon: Prefix,
-        suffixIcon: Suffix,
-        iconSlide = false,
-        truncate = false,
-        lineClamp,
-        tabularNums = false,
-        isLoading = false,
-        showAnatomy = false,
-        className,
-    }: TypographyProps) => {
-        if (isLoading) {
+const TypographyBase = ({
+    text,
+    color,
+    weight,
+    isItalic,
+    isLink,
+    href,
+    onPress,
+    prefixIcon: Prefix,
+    suffixIcon: Suffix,
+    iconSlide = false,
+    truncate = false,
+    lineClamp,
+    align,
+    tabularNums = false,
+    isSkeleton = false,
+    showAnatomy = false,
+    anatPart,
+    className,
+    size = "base",
+}: TypographyProps) => {
+    const textPart = anatPart ?? (showAnatomy ? "Text" : undefined)
+
+    // ── nhánh HEADING: bọc compound HeroUI, giữ nguyên hình của `Typography.Heading` cũ.
+    if (size in HEADING_LEVEL) {
+        return (
+            <HeroTypography.Heading
+                level={HEADING_LEVEL[size]}
+                weight={weight}
+                className={cn(
+                    color ? COLOR_CLS[color] : null,
+                    align ? ALIGN_CLS[align] : null,
+                    lineClamp ? CLAMP_CLS[lineClamp] : truncate ? "block truncate" : null,
+                    className,
+                )}
+                data-anat-part={textPart}
+            >
+                {text}
+            </HeroTypography.Heading>
+        )
+    }
+
+    // ── nhánh CODE
+    if (size === "code") {
+        return (
+            <HeroTypography
+                type="code"
+                className={cn(
+                    color ? COLOR_CLS[color] : null,
+                    align ? ALIGN_CLS[align] : null,
+                    lineClamp ? CLAMP_CLS[lineClamp] : truncate ? "block truncate" : null,
+                    className,
+                )}
+                data-anat-part={textPart}
+            >
+                {text}
+            </HeroTypography>
+        )
+    }
+
+    // ── nhánh BODY (xs/sm/base/lg) — dựng bằng class
+    const bodySize = size as Size
+    {
+        if (isSkeleton) {
             return (
                 <HeroSkeleton
-                    className={cn("inline-block w-24 rounded", SKEL_H[size], className)}
-                    data-anat-part={showAnatomy ? "Skeleton" : undefined}
+                    className={cn("inline-block w-24 rounded", SKEL_H[bodySize], className)}
+                    data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
                 />
             )
         }
@@ -110,8 +198,8 @@ const makeTypography = (size: Size) => {
                 <HeroLink
                     href={href}
                     onPress={onPress}
-                    className={cn(TEXT_CLS[size], "cursor-pointer text-accent underline-offset-2 hover:underline", className)}
-                    data-anat-part={showAnatomy ? "Text" : undefined}
+                    className={cn(TEXT_CLS[bodySize], "cursor-pointer text-accent underline-offset-2 hover:underline", className)}
+                    data-anat-part={textPart}
                 >
                     {text}
                 </HeroLink>
@@ -126,10 +214,11 @@ const makeTypography = (size: Size) => {
         // Cắt chữ: lineClamp thắng truncate. `block` để overflow clip được (cần parent giới hạn width).
         const clampCls = lineClamp ? CLAMP_CLS[lineClamp] : truncate ? "block truncate" : null
         const baseCls = cn(
-            TEXT_CLS[size],
+            TEXT_CLS[bodySize],
             weightCls,
             isItalic && "italic",
             color ? COLOR_CLS[color] : null,
+            align ? ALIGN_CLS[align] : null,
             tabularNums && "tabular-nums",
             className,
         )
@@ -144,34 +233,32 @@ const makeTypography = (size: Size) => {
                     // `translate` (không `transform`), nếu không hover sẽ giật ([[tailwind-v4-scale-is-own-property]]).
                     className={cn("inline-flex shrink-0", iconSlide && "transition-[translate] duration-200 ease-out", iconSlide && slide)}
                 >
-                    <Icon className={ICON_CLS[size]} />
+                    <Icon className={ICON_CLS[bodySize]} />
                 </span>
             )
             return (
                 // `group` để arrow con nghe `group-hover` khi bật iconSlide (§5b).
                 <span className={cn("inline-flex items-center gap-1", iconSlide && "group", baseCls)}>
                     {Prefix ? iconSpan(Prefix, "PrefixIcon", "group-hover:-translate-x-1") : null}
-                    <span data-anat-part={showAnatomy ? "Text" : undefined} className={cn("min-w-0", clampCls)}>{text}</span>
+                    <span data-anat-part={textPart} className={cn("min-w-0", clampCls)}>{text}</span>
                     {Suffix ? iconSpan(Suffix, "SuffixIcon", "group-hover:translate-x-1") : null}
                 </span>
             )
         }
         return (
-            <span className={cn(baseCls, clampCls)} data-anat-part={showAnatomy ? "Text" : undefined}>
+            <span className={cn(baseCls, clampCls)} data-anat-part={textPart}>
                 {text}
             </span>
         )
     }
-    return Typo
 }
 
 /**
- * `Typography.*` — custom text atom namespace (size-partitioned). Members share
- * {@link TypographyProps}; size sets the text/icon/skeleton scale.
+ * `Typography.*` — text atom. MỘT member duy nhất `Base` (thầy chốt 2026-07-25:
+ * gộp namespace). Trước đó có `Xs/Sm/Base/Lg` + `H3/H4/H5/Code` + `Heading` — tám
+ * cửa vào cho MỘT khái niệm "chữ", nên mỗi call-site phải chọn member trước khi
+ * chọn nội dung. Nay chỉ còn một trục PROP `size` (§6b: biến thể = prop).
  */
-export const Typography = {
-    Xs: makeTypography("xs"),
-    Sm: makeTypography("sm"),
-    Base: makeTypography("base"),
-    Lg: makeTypography("lg"),
-}
+export const Typography = Object.assign(TypographyBase, {
+    Base: TypographyBase,
+})

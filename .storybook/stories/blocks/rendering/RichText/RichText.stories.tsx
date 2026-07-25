@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { RichText } from "@sb-components/blocks/rendering/RichText/RichText"
+import { RichText } from "@sb-components/layouts/rendering/RichText/RichText"
 
 const meta: Meta<typeof RichText> = {
     title: "Primitives/Rendering/RichText",

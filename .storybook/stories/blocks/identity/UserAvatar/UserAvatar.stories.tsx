@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { UserAvatar } from "@sb-components/blocks/identity/UserAvatar/UserAvatar"
+import { UserAvatar } from "@sb-components/atoms/display/UserAvatar/UserAvatar"
 
-const meta: Meta<typeof UserAvatar> = {
-    title: "Primitives/Identity/UserAvatar",
-    component: UserAvatar,
+const meta: Meta<typeof UserAvatar.Base> = {
+    title: "Atoms/Display/UserAvatar",
+    component: UserAvatar.Base,
     tags: ["autodocs"],
     parameters: {
         layout: "fullscreen",
@@ -12,7 +12,7 @@ const meta: Meta<typeof UserAvatar> = {
 
 export default meta
 
-type Story = StoryObj<typeof UserAvatar>
+type Story = StoryObj<typeof UserAvatar.Base>
 
 // Stable local data-URI "photo" so the uploaded-image path renders without an external host.
 const PHOTO =
@@ -21,7 +21,7 @@ const PHOTO =
 export const Default: Story = {
     render: () => (
         <div className="p-8">
-            <UserAvatar username="Ben Turner" seed="tranbinh@example.com" />
+            <UserAvatar.Base username="Ben Turner" seed="tranbinh@example.com" />
         </div>
     ),
 }
@@ -29,7 +29,7 @@ export const Default: Story = {
 export const UploadedImage: Story = {
     render: () => (
         <div className="p-8">
-            <UserAvatar username="Sophia Chen" avatar={PHOTO} />
+            <UserAvatar.Base username="Sophia Chen" avatar={PHOTO} />
         </div>
     ),
 }
@@ -38,9 +38,9 @@ export const Sizes: Story = {
     render: () => (
         <div className="p-8">
             <div className="flex items-center gap-3">
-                <UserAvatar username="Anna" seed="an@example.com" size="sm" />
-                <UserAvatar username="Ben" seed="binh@example.com" size="md" />
-                <UserAvatar username="Chris" seed="cuong@example.com" size="lg" />
+                <UserAvatar.Base username="Anna" seed="an@example.com" size="sm" />
+                <UserAvatar.Base username="Ben" seed="binh@example.com" size="md" />
+                <UserAvatar.Base username="Chris" seed="cuong@example.com" size="lg" />
             </div>
         </div>
     ),

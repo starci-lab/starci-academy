@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button, Chip } from "@heroui/react"
-import { MediaCard } from "@sb-components/blocks/cards/MediaCard/MediaCard"
-import { List } from "@sb-components/blocks/lists/List/List"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { MediaCard } from "@sb-components/_designs/cards/MediaCard/MediaCard"
+import { List } from "@sb-components/layouts/lists/List/List"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof MediaCard> = {
     title: "Design/Cards/MediaCard",

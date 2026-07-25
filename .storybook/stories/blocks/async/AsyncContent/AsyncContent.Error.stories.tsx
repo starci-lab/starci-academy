@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
 import { ArrowClockwiseIcon, WifiSlashIcon } from "@phosphor-icons/react"
-import { AsyncContent } from "@sb-components/blocks/async/AsyncContent/AsyncContent"
-import { Button } from "@sb-components/blocks/buttons/Button/Button"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { AsyncContent } from "@sb-components/layouts/async/AsyncContent/AsyncContent"
+import { Button } from "@sb-components/_designs/buttons/Button/Button"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `AsyncContent.Error` là KHUNG THÔNG ĐIỆP
@@ -178,7 +178,7 @@ export const CustomIcon: Story = {
 />`}
             >
                 <AsyncContent.Error
-                    icon={<WifiSlashIcon aria-hidden focusable="false" weight="duotone" />}
+                    icon={WifiSlashIcon}
                     title="Mất kết nối mạng"
                     description="Kiểm tra kết nối rồi thử lại."
                     onRetry={() => {}}

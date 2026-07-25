@@ -1,7 +1,7 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Select } from "@sb-components/atoms/forms/Select/Select"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta = { title: "Atoms/Forms/Select/Select.Multi", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
 export default meta
@@ -27,7 +27,7 @@ export const Default: Story = {
         const Demo = () => {
             const [value, setValue] = useState<Array<string>>([])
             return (
-                <BlockAnatomy name="Select.Multi" tier="atom" leaf="Default" parts={[TRIGGER, FIELD]} code={`<Select.Multi value={v} onValueChange={setV} options={OPTIONS} placeholder="Chọn ngôn ngữ" />`}>
+                <BlockAnatomy name="Select.Multi" tier="atom" leaf="Default" parts={[TRIGGER, FIELD]} code={"<Select.Multi value={v} onValueChange={setV} options={OPTIONS} placeholder=\"Chọn ngôn ngữ\" />"}>
                     <div className="w-72"><Select.Multi value={value} onValueChange={setValue} options={OPTIONS} placeholder="Chọn ngôn ngữ" ariaLabel="Ngôn ngữ" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -42,7 +42,7 @@ export const WithLabel: Story = {
         const Demo = () => {
             const [value, setValue] = useState<Array<string>>([])
             return (
-                <BlockAnatomy name="Select.Multi" tier="atom" leaf="WithLabel" parts={[LABEL, DESC, TRIGGER, FIELD]} code={`<Select.Multi label="Ngôn ngữ" hint="Chọn tất cả ngôn ngữ bạn dùng." ... />`}>
+                <BlockAnatomy name="Select.Multi" tier="atom" leaf="WithLabel" parts={[LABEL, DESC, TRIGGER, FIELD]} code={"<Select.Multi label=\"Ngôn ngữ\" hint=\"Chọn tất cả ngôn ngữ bạn dùng.\" ... />"}>
                     <div className="w-72"><Select.Multi value={value} onValueChange={setValue} options={OPTIONS} placeholder="Chọn ngôn ngữ" label="Ngôn ngữ" hint="Chọn tất cả ngôn ngữ bạn dùng." showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -57,7 +57,7 @@ export const Required: Story = {
         const Demo = () => {
             const [value, setValue] = useState<Array<string>>([])
             return (
-                <BlockAnatomy name="Select.Multi" tier="atom" leaf="Required" parts={[LABEL, TRIGGER, FIELD]} code={`<Select.Multi label="Ngôn ngữ" isRequired ... />`} note="isRequired → dấu * sau nhãn.">
+                <BlockAnatomy name="Select.Multi" tier="atom" leaf="Required" parts={[LABEL, TRIGGER, FIELD]} code={"<Select.Multi label=\"Ngôn ngữ\" isRequired ... />"} note="isRequired → dấu * sau nhãn.">
                     <div className="w-72"><Select.Multi value={value} onValueChange={setValue} options={OPTIONS} placeholder="Chọn ngôn ngữ" label="Ngôn ngữ" isRequired showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -72,7 +72,7 @@ export const Filled: Story = {
         const Demo = () => {
             const [value, setValue] = useState<Array<string>>(["ts", "go"])
             return (
-                <BlockAnatomy name="Select.Multi" tier="atom" leaf="Filled" parts={[LABEL, TRIGGER, FIELD]} code={`<Select.Multi label="Ngôn ngữ" value={["ts","go"]} options={OPTIONS} />`} note="≥2 → trigger hiện 'Đã chọn n'.">
+                <BlockAnatomy name="Select.Multi" tier="atom" leaf="Filled" parts={[LABEL, TRIGGER, FIELD]} code={"<Select.Multi label=\"Ngôn ngữ\" value={[\"ts\",\"go\"]} options={OPTIONS} />"} note="≥2 → trigger hiện 'Đã chọn n'.">
                     <div className="w-72"><Select.Multi value={value} onValueChange={setValue} options={OPTIONS} placeholder="Chọn ngôn ngữ" label="Ngôn ngữ" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -85,7 +85,7 @@ export const Filled: Story = {
 export const Disabled: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="Select.Multi" tier="atom" leaf="Disabled" parts={[LABEL, TRIGGER, FIELD]} code={`<Select.Multi label="Ngôn ngữ" isDisabled value={["js"]} ... />`} note="isDisabled → khoá trigger + nhạt nhãn.">
+            <BlockAnatomy name="Select.Multi" tier="atom" leaf="Disabled" parts={[LABEL, TRIGGER, FIELD]} code={"<Select.Multi label=\"Ngôn ngữ\" isDisabled value={[\"js\"]} ... />"} note="isDisabled → khoá trigger + nhạt nhãn.">
                 <div className="w-72"><Select.Multi value={["js"]} onValueChange={() => {}} options={OPTIONS} placeholder="Chọn ngôn ngữ" label="Ngôn ngữ" isDisabled showAnatomy /></div>
             </BlockAnatomy>
         </div>
@@ -98,7 +98,7 @@ export const Error: Story = {
         const Demo = () => {
             const [value, setValue] = useState<Array<string>>([])
             return (
-                <BlockAnatomy name="Select.Multi" tier="atom" leaf="Error" parts={[LABEL, TRIGGER, FIELD, ERROR]} code={`<Select.Multi label="Ngôn ngữ" errorMessage="Chọn ít nhất một ngôn ngữ." ... />`} note="errorMessage → NHÃN + dòng đỏ + viền.">
+                <BlockAnatomy name="Select.Multi" tier="atom" leaf="Error" parts={[LABEL, TRIGGER, FIELD, ERROR]} code={"<Select.Multi label=\"Ngôn ngữ\" errorMessage=\"Chọn ít nhất một ngôn ngữ.\" ... />"} note="errorMessage → NHÃN + dòng đỏ + viền.">
                     <div className="w-72"><Select.Multi value={value} onValueChange={setValue} options={OPTIONS} placeholder="Chọn ngôn ngữ" label="Ngôn ngữ" errorMessage="Chọn ít nhất một ngôn ngữ." showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -111,7 +111,7 @@ export const Error: Story = {
 export const Loading: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="Select.Multi" tier="atom" leaf="Loading" parts={[LABEL, SKELETON]} code={`<Select.Multi label="Ngôn ngữ" isSkeleton />`} note="isSkeleton → label-skeleton + trigger-box skeleton.">
+            <BlockAnatomy name="Select.Multi" tier="atom" leaf="Loading" parts={[LABEL, SKELETON]} code={"<Select.Multi label=\"Ngôn ngữ\" isSkeleton />"} note="isSkeleton → label-skeleton + trigger-box skeleton.">
                 <div className="w-72"><Select.Multi value={[]} onValueChange={() => {}} options={OPTIONS} label="Ngôn ngữ" isSkeleton showAnatomy /></div>
             </BlockAnatomy>
         </div>

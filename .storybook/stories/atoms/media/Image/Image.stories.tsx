@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Image } from "@sb-components/atoms/media/Image/Image"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Image.Base> = {
     title: "Atoms/Media/Image/Image",
@@ -47,7 +47,7 @@ export const Loaded: Story = {
                 leaf="Loaded"
                 parts={LOADED_PARTS}
                 reason="Atom media bọc <img>; tự lo skeleton lúc fetch + fallback khi lỗi → media primitive (CoverImage) chỉ truyền src/alt."
-                code={`<Image.Base src={url} alt="Ảnh khoá học" ratio="video" />`}
+                code={"<Image.Base src={url} alt=\"Ảnh khoá học\" ratio=\"video\" />"}
             >
                 <Image.Base src={OK_SRC} alt="Ảnh khoá học" ratio="video" loading="eager" showAnatomy />
             </BlockAnatomy>
@@ -65,7 +65,7 @@ export const Loading: Story = {
                 leaf="Loading"
                 parts={SKELETON_PARTS}
                 note="Đang fetch → shimmer; ảnh opacity-0 tới onLoad. isSkeleton ép skeleton khi parent còn tải data."
-                code={`<Image.Base isSkeleton alt="Đang tải" ratio="video" />`}
+                code={"<Image.Base isSkeleton alt=\"Đang tải\" ratio=\"video\" />"}
             >
                 <Image.Base isSkeleton src={OK_SRC} alt="Đang tải" ratio="video" showAnatomy />
             </BlockAnatomy>
@@ -83,7 +83,7 @@ export const Fallback: Story = {
                 leaf="Fallback"
                 parts={FALLBACK_PARTS}
                 note="src rỗng/onError → glyph Picture trên surface; alt vào sr-only. Không bao giờ để khung trống."
-                code={`<Image.Base src={null} alt="Ảnh bìa" ratio="video" />   // hoặc src ảnh hỏng → cùng nhánh`}
+                code={"<Image.Base src={null} alt=\"Ảnh bìa\" ratio=\"video\" />   // hoặc src ảnh hỏng → cùng nhánh"}
             >
                 <Image.Base src={null} alt="Ảnh bìa" ratio="video" showAnatomy />
             </BlockAnatomy>
@@ -101,7 +101,7 @@ export const FallbackImage: Story = {
                 leaf="FallbackImage"
                 parts={FALLBACK_IMG_PARTS}
                 note="src rỗng/hỏng + có fallbackSrc → dùng ảnh thay thế (vd avatar mặc định) thay glyph."
-                code={`<Image.Base src={null} fallbackSrc={defaultUrl} alt="Avatar" ratio="square" />`}
+                code={"<Image.Base src={null} fallbackSrc={defaultUrl} alt=\"Avatar\" ratio=\"square\" />"}
             >
                 <Image.Base src={null} fallbackSrc={FALLBACK_SRC} alt="Avatar" ratio="video" loading="eager" showAnatomy />
             </BlockAnatomy>

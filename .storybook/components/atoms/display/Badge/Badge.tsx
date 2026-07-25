@@ -111,6 +111,6 @@ const BadgeBase = ({
  * `Badge.*` — the badge ATOM namespace. `Badge.Base` is the single constrained
  * badge; count / dot / cap / standalone are LEAVES of it (prop-driven).
  */
-export const Badge = {
+export const Badge = Object.assign(BadgeBase, {
     Base: BadgeBase,
-}
+})

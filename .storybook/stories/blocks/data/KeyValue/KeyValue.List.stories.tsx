@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { KeyValue } from "@sb-components/blocks/data/KeyValue/KeyValue"
-import { Skeleton } from "@sb-components/blocks/skeleton/Skeleton/Skeleton"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { KeyValue } from "@sb-components/layouts/data/KeyValue/KeyValue"
+import { Skeleton } from "@sb-components/atoms/display/Skeleton/Skeleton"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE (§12f/§13) — `KeyValue.List` là khung DANH SÁCH LẶP: nó chỉ sở

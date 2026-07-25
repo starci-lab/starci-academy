@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Stack } from "@sb-components/blocks/layout/Stack/Stack"
+import { Stack } from "@sb-components/layouts/layout/Stack/Stack"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { SurfaceCard } from "@sb-components/blocks/cards/SurfaceCard/SurfaceCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE: `Stack.V` là KHUNG một-trục DỌC. State nó SINH RA = những gì
@@ -28,7 +28,7 @@ type Story = StoryObj<typeof Stack.V>
 /** Khung không mang nội dung — fixture là card thật để thấy seam giữa hai con. */
 const Panel = ({ text }: { text: string }) => (
     <SurfaceCard.Base>
-        <Typography.Sm text={text} />
+        <Typography.Base size="sm" text={text} />
     </SurfaceCard.Base>
 )
 
@@ -98,7 +98,7 @@ export const Gaps: Story = {
                 <div className="flex flex-wrap gap-6">
                     {SCALE.map((step, index) => (
                         <div key={step.gap} className="flex w-40 flex-col gap-2">
-                            <Typography.Xs text={step.name} color="muted" />
+                            <Typography.Base size="xs" text={step.name} color="muted" />
                             <Stack.V gap={step.gap} showAnatomy={index === 0}>
                                 <Panel text="Một" />
                                 <Panel text="Hai" />
@@ -125,16 +125,16 @@ export const WithDivider: Story = {
                 parts={DIVIDER_PARTS}
                 note="Kẻ NGANG (cắt ngang trục dọc) do `Divider.Base` vẽ — khung chỉ xen vào giữa. `gap` vẫn áp cho cả con lẫn kẻ nên hai bên đường kẻ luôn cân."
                 code={`<Stack.V gap={3} divider>
-  <Typography.Sm text="Đã hoàn thành 12 bài" />
-  <Typography.Sm text="Chuỗi 5 ngày" />
-  <Typography.Sm text="Xếp hạng 34/120" />
+  <Typography.Base size="sm" text="Đã hoàn thành 12 bài" />
+  <Typography.Base size="sm" text="Chuỗi 5 ngày" />
+  <Typography.Base size="sm" text="Xếp hạng 34/120" />
 </Stack.V>`}
             >
                 <div className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
                     <Stack.V gap={3} divider showAnatomy>
-                        <Typography.Sm text="Đã hoàn thành 12 bài" />
-                        <Typography.Sm text="Chuỗi 5 ngày" />
-                        <Typography.Sm text="Xếp hạng 34/120" />
+                        <Typography.Base size="sm" text="Đã hoàn thành 12 bài" />
+                        <Typography.Base size="sm" text="Chuỗi 5 ngày" />
+                        <Typography.Base size="sm" text="Xếp hạng 34/120" />
                     </Stack.V>
                 </div>
             </BlockAnatomy>
@@ -162,7 +162,7 @@ export const Align: Story = {
                 <div className="flex flex-wrap gap-6">
                     {(["stretch", "start", "center", "end"] as const).map((align, index) => (
                         <div key={align} className="flex w-56 flex-col gap-2">
-                            <Typography.Xs text={align} color="muted" />
+                            <Typography.Base size="xs" text={align} color="muted" />
                             <div className="rounded-3xl border border-dashed border-default p-3">
                                 <Stack.V gap={2} align={align} showAnatomy={index === 0}>
                                     <Button.Base label="Tiếp tục học" variant="secondary" size="sm" />

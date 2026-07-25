@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Chip } from "@heroui/react"
-import { UserCell } from "@sb-components/blocks/identity/UserCell/UserCell"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { UserCell } from "@sb-components/atoms/display/UserCell/UserCell"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
-const meta: Meta<typeof UserCell> = {
-    title: "Primitives/Identity/UserCell",
-    component: UserCell,
+const meta: Meta<typeof UserCell.Base> = {
+    title: "Atoms/Display/UserCell",
+    component: UserCell.Base,
     tags: ["autodocs"],
     parameters: {
         layout: "fullscreen",
@@ -14,7 +14,7 @@ const meta: Meta<typeof UserCell> = {
 
 export default meta
 
-type Story = StoryObj<typeof UserCell>
+type Story = StoryObj<typeof UserCell.Base>
 
 // Stable local data-URI "photo" so the uploaded-image path renders without an external host.
 const PHOTO =
@@ -43,7 +43,7 @@ export const Small: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy name="UserCell" tier="primitive" leaf="Small" parts={WITH_HANDLE_PARTS}>
-                <UserCell
+                <UserCell.Base
                     username="levan.dev"
                     displayName="Ethan Vaughn"
                     avatar={null}
@@ -60,7 +60,7 @@ export const Medium: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy name="UserCell" tier="primitive" leaf="Medium" parts={WITH_HANDLE_PARTS}>
-                <UserCell
+                <UserCell.Base
                     username="levan.dev"
                     displayName="Ethan Vaughn"
                     avatar={null}
@@ -77,7 +77,7 @@ export const NoHandle: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy name="UserCell" tier="primitive" leaf="NoHandle" parts={BASE_PARTS} note="Không truyền `handle` → dòng @handle không render, chỉ còn avatar + tên.">
-                <UserCell
+                <UserCell.Base
                     username="jamesanderson"
                     displayName="James Anderson"
                     avatar={null}
@@ -92,7 +92,7 @@ export const RealAvatar: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy name="UserCell" tier="primitive" leaf="RealAvatar" parts={WITH_HANDLE_PARTS} note="avatar thật (uploaded) — UserAvatar tự ưu tiên ảnh upload trước fallback.">
-                <UserCell
+                <UserCell.Base
                     username="sophiachen"
                     displayName="Sophia Chen"
                     avatar={PHOTO}
@@ -108,7 +108,7 @@ export const WithTrailing: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy name="UserCell" tier="primitive" leaf="WithTrailing" parts={WITH_TRAILING_PARTS}>
-                <UserCell
+                <UserCell.Base
                     username="emmafoster"
                     displayName="Emma Foster"
                     avatar={null}
@@ -126,7 +126,7 @@ export const LongNameNarrow: Story = {
         <div className="p-8">
             <div className="w-48">
                 <BlockAnatomy name="UserCell" tier="primitive" leaf="LongNameNarrow" parts={WITH_HANDLE_PARTS} note="tên/handle dài trong khung hẹp — cả hai dòng truncate (min-w-0), cùng composition với Small.">
-                    <UserCell
+                    <UserCell.Base
                         username="very.long.username.for.testing.truncation"
                         displayName="Alexandra Wellington-Fairchild With An Exceptionally Long Display Name For Testing Truncation"
                         avatar={null}

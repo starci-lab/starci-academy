@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { IOExampleCard } from "@sb-components/blocks/code/IOExampleCard/IOExampleCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { IOExampleCard } from "@sb-components/_blocks/code/IOExampleCard/IOExampleCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof IOExampleCard> = {
     title: "Design/Code/IOExampleCard",

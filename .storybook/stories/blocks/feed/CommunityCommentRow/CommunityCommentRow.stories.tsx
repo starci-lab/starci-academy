@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React, { useState } from "react"
-import { CommunityCommentRow, type QueryCommunityCommentNode } from "@sb-components/blocks/feed/CommunityCommentRow/CommunityCommentRow"
-import { ReactionType } from "@sb-components/blocks/feed/ReactionBar/ReactionBar"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { CommunityCommentRow, type QueryCommunityCommentNode } from "@sb-components/_blocks/feed/CommunityCommentRow/CommunityCommentRow"
+import { ReactionType } from "@sb-components/_designs/feed/ReactionBar/ReactionBar"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ANATOMY IS PER-LEAF: each story below is its OWN leaf and wraps its render in its

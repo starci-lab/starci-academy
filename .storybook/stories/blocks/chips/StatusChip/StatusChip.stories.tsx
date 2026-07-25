@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CheckCircleIcon } from "@phosphor-icons/react"
-import { StatusChip } from "@sb-components/blocks/chips/StatusChip/StatusChip"
+import { StatusChip } from "@sb-components/atoms/chips/StatusChip/StatusChip"
 
-const meta: Meta<typeof StatusChip> = {
-    title: "Primitives/Chips/StatusChip",
-    component: StatusChip,
+const meta: Meta<typeof StatusChip.Base> = {
+    title: "Atoms/Chips/StatusChip",
+    component: StatusChip.Base,
     tags: ["autodocs"],
     parameters: {
         layout: "fullscreen",
@@ -13,13 +13,13 @@ const meta: Meta<typeof StatusChip> = {
 
 export default meta
 
-type Story = StoryObj<typeof StatusChip>
+type Story = StoryObj<typeof StatusChip.Base>
 
 /** Neutral (default): an undetermined / unhandled state — a draft, a pending entry. */
 export const Neutral: Story = {
     render: () => (
         <div className="p-8">
-            <StatusChip tone="neutral">Draft</StatusChip>
+            <StatusChip.Base tone="neutral" text="Draft" />
         </div>
     ),
 }
@@ -28,7 +28,7 @@ export const Neutral: Story = {
 export const Success: Story = {
     render: () => (
         <div className="p-8">
-            <StatusChip tone="success">Completed</StatusChip>
+            <StatusChip.Base tone="success" text="Completed" />
         </div>
     ),
 }
@@ -37,7 +37,7 @@ export const Success: Story = {
 export const Warning: Story = {
     render: () => (
         <div className="p-8">
-            <StatusChip tone="warning">Due soon</StatusChip>
+            <StatusChip.Base tone="warning" text="Due soon" />
         </div>
     ),
 }
@@ -46,7 +46,7 @@ export const Warning: Story = {
 export const Danger: Story = {
     render: () => (
         <div className="p-8">
-            <StatusChip tone="danger">Cancelled</StatusChip>
+            <StatusChip.Base tone="danger" text="Cancelled" />
         </div>
     ),
 }
@@ -55,7 +55,7 @@ export const Danger: Story = {
 export const Accent: Story = {
     render: () => (
         <div className="p-8">
-            <StatusChip tone="accent">Highlighted</StatusChip>
+            <StatusChip.Base tone="accent" text="Highlighted" />
         </div>
     ),
 }
@@ -64,9 +64,7 @@ export const Accent: Story = {
 export const Loading: Story = {
     render: () => (
         <div className="p-8">
-            <StatusChip tone="neutral" isSkeleton>
-                Draft
-            </StatusChip>
+            <StatusChip.Base tone="neutral" isSkeleton text="Draft" />
         </div>
     ),
 }
@@ -78,9 +76,7 @@ export const Loading: Story = {
 export const WithLeadingIcon: Story = {
     render: () => (
         <div className="p-8">
-            <StatusChip tone="success" icon={<CheckCircleIcon aria-hidden focusable="false" />}>
-                Verified
-            </StatusChip>
+            <StatusChip.Base tone="success" icon={<CheckCircleIcon aria-hidden focusable="false" />} text="Verified" />
         </div>
     ),
 }
@@ -92,15 +88,9 @@ export const WithLeadingIcon: Story = {
 export const Removable: Story = {
     render: () => (
         <div className="flex flex-wrap items-center gap-2 p-8">
-            <StatusChip tone="accent" onCancel={() => {}} cancelLabel="Remove React filter">
-                React
-            </StatusChip>
-            <StatusChip tone="accent" onCancel={() => {}} cancelLabel="Remove TypeScript filter">
-                TypeScript
-            </StatusChip>
-            <StatusChip tone="neutral" onCancel={() => {}} cancelLabel="Remove Junior filter">
-                Junior
-            </StatusChip>
+            <StatusChip.Base tone="accent" onCancel={() => {}} cancelLabel="Remove React filter" text="React" />
+            <StatusChip.Base tone="accent" onCancel={() => {}} cancelLabel="Remove TypeScript filter" text="TypeScript" />
+            <StatusChip.Base tone="neutral" onCancel={() => {}} cancelLabel="Remove Junior filter" text="Junior" />
         </div>
     ),
 }

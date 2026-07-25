@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { StatRibbon } from "@sb-components/blocks/stats/StatRibbon/StatRibbon"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { StatRibbon } from "@sb-components/layouts/stats/StatRibbon/StatRibbon"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof StatRibbon> = {
     title: "Primitives/Stats/StatRibbon",

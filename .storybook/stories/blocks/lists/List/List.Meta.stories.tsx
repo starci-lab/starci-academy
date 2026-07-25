@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { List } from "@sb-components/blocks/lists/List/List"
-import { StatusChip } from "@sb-components/blocks/chips/StatusChip/StatusChip"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { List } from "@sb-components/layouts/lists/List/List"
+import { StatusChip } from "@sb-components/atoms/chips/StatusChip/StatusChip"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `List.Meta` là khung MỘT DÒNG META inline.
@@ -44,16 +44,12 @@ export const WithChip: Story = {
                 parts={WITH_CHIP_PARTS}
                 reason="Consolidate dòng meta chấm-ngăn hand-roll khắp nơi: MỘT chip tín hiệu dẫn đầu (nếu có) rồi các đoạn meta trung tính nối middot, tất cả mờ trừ chip (principles §2 color-prominence). `items` là dữ liệu vì các đoạn meta LẶP (§13b)."
                 code={`<List.Meta
-  chip={<StatusChip tone="warning">2 phút còn lại</StatusChip>}
+  chip={<StatusChip.Base tone="warning" text="2 phút còn lại" />}
   items={["Question 7 / 8", "Middle"]}
 />`}
             >
                 <List.Meta
-                    chip={
-                        <StatusChip tone="warning">
-                            2 phút còn lại
-                        </StatusChip>
-                    }
+                    chip={<StatusChip.Base tone="warning" text="2 phút còn lại" />}
                     items={["Question 7 / 8", "Middle"]}
                     showAnatomy
                 />

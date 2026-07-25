@@ -60,6 +60,6 @@ const DividerBase = ({ orientation = "horizontal", variant = "default", label, s
  * `Divider.*` — the divider ATOM namespace. `Divider.Base` is the single
  * constrained divider; orientation / label are LEAVES of it (prop-driven).
  */
-export const Divider = {
+export const Divider = Object.assign(DividerBase, {
     Base: DividerBase,
-}
+})

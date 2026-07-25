@@ -1,8 +1,8 @@
 import type { ReactNode } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button } from "@heroui/react"
-import { VerdictHeroCard, type VerdictHeroSplit } from "@sb-components/blocks/stats/VerdictHeroCard/VerdictHeroCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { VerdictHeroCard, type VerdictHeroSplit } from "@sb-components/_designs/stats/VerdictHeroCard/VerdictHeroCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof VerdictHeroCard> = {
     title: "Design/Stats/VerdictHeroCard",

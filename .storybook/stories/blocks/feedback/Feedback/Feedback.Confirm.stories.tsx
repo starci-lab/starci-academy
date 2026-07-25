@@ -2,8 +2,8 @@ import React from "react"
 import type { ReactNode } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { Feedback } from "@sb-components/blocks/feedback/Feedback/Feedback"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { Feedback } from "@sb-components/layouts/feedback/Feedback/Feedback"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * KHUNG (layout tier) — `Feedback.Confirm`: vỏ dialog CHẶN ĐƯỜNG cho hành động

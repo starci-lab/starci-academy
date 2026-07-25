@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Chip, Typography } from "@heroui/react"
-import { ModelByline, VerdictIcon } from "@sb-components/blocks/grading/GradingByline/GradingByline"
-import { AiModelCategory } from "@sb-components/blocks/chips/AiCategoryChip/AiCategoryChip"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { ModelByline, VerdictIcon } from "@sb-components/_designs/grading/GradingByline/GradingByline"
+import { AiModelCategory } from "@sb-components/_designs/chips/AiCategoryChip/AiCategoryChip"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — the grading attribution pair reused across the result card / drawer /

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Choice } from "@sb-components/atoms/forms/Choice/Choice"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta = { title: "Atoms/Forms/Choice/Choice.Switch", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
 export default meta
@@ -20,7 +20,7 @@ export const Default: Story = {
         const Demo = () => {
             const [value, setValue] = useState(false)
             return (
-                <BlockAnatomy name="Choice.Switch" tier="atom" leaf="Default" parts={PARTS} code={`<Choice.Switch isSelected={v} onValueChange={setV} label="Chế độ tối" />`}>
+                <BlockAnatomy name="Choice.Switch" tier="atom" leaf="Default" parts={PARTS} code={"<Choice.Switch isSelected={v} onValueChange={setV} label=\"Chế độ tối\" />"}>
                     <div className="w-72"><Choice.Switch isSelected={value} onValueChange={setValue} label="Chế độ tối" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -35,7 +35,7 @@ export const Selected: Story = {
         const Demo = () => {
             const [value, setValue] = useState(true)
             return (
-                <BlockAnatomy name="Choice.Switch" tier="atom" leaf="Selected" parts={PARTS} note="isSelected → bật." code={`<Choice.Switch isSelected onValueChange={setV} label="…" />`}>
+                <BlockAnatomy name="Choice.Switch" tier="atom" leaf="Selected" parts={PARTS} note="isSelected → bật." code={"<Choice.Switch isSelected onValueChange={setV} label=\"…\" />"}>
                     <div className="w-72"><Choice.Switch isSelected={value} onValueChange={setValue} label="Chế độ tối" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -50,7 +50,7 @@ export const WithHint: Story = {
         const Demo = () => {
             const [value, setValue] = useState(true)
             return (
-                <BlockAnatomy name="Choice.Switch" tier="atom" leaf="WithHint" parts={[CONTROL, LABEL, DESCRIPTION]} note="hint → FieldFrame." code={`<Choice.Switch … hint="Giảm mỏi mắt về đêm." />`}>
+                <BlockAnatomy name="Choice.Switch" tier="atom" leaf="WithHint" parts={[CONTROL, LABEL, DESCRIPTION]} note="hint → FieldFrame." code={"<Choice.Switch … hint=\"Giảm mỏi mắt về đêm.\" />"}>
                     <div className="w-72"><Choice.Switch isSelected={value} onValueChange={setValue} label="Chế độ tối" hint="Giảm mỏi mắt khi dùng vào ban đêm." showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -65,7 +65,7 @@ export const Required: Story = {
         const Demo = () => {
             const [value, setValue] = useState(false)
             return (
-                <BlockAnatomy name="Choice.Switch" tier="atom" leaf="Required" parts={PARTS} note="isRequired → dấu * cạnh nhãn inline." code={`<Choice.Switch … isRequired label="Bật xác thực 2 lớp" />`}>
+                <BlockAnatomy name="Choice.Switch" tier="atom" leaf="Required" parts={PARTS} note="isRequired → dấu * cạnh nhãn inline." code={"<Choice.Switch … isRequired label=\"Bật xác thực 2 lớp\" />"}>
                     <div className="w-72"><Choice.Switch isSelected={value} onValueChange={setValue} label="Bật xác thực 2 lớp" isRequired showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -78,7 +78,7 @@ export const Required: Story = {
 export const Disabled: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="Choice.Switch" tier="atom" leaf="Disabled" parts={PARTS} note="isDisabled → khoá + nhạt." code={`<Choice.Switch isDisabled isSelected onValueChange={setV} label="…" />`}>
+            <BlockAnatomy name="Choice.Switch" tier="atom" leaf="Disabled" parts={PARTS} note="isDisabled → khoá + nhạt." code={"<Choice.Switch isDisabled isSelected onValueChange={setV} label=\"…\" />"}>
                 <div className="w-72"><Choice.Switch isSelected onValueChange={() => {}} label="Tự động lưu" isDisabled showAnatomy /></div>
             </BlockAnatomy>
         </div>
@@ -91,7 +91,7 @@ export const Error: Story = {
         const Demo = () => {
             const [value, setValue] = useState(false)
             return (
-                <BlockAnatomy name="Choice.Switch" tier="atom" leaf="Error" parts={[CONTROL, LABEL, ERROR]} note="errorMessage → viền lỗi + dòng đỏ." code={`<Choice.Switch … errorMessage="Cần bật để nhận cảnh báo." />`}>
+                <BlockAnatomy name="Choice.Switch" tier="atom" leaf="Error" parts={[CONTROL, LABEL, ERROR]} note="errorMessage → viền lỗi + dòng đỏ." code={"<Choice.Switch … errorMessage=\"Cần bật để nhận cảnh báo.\" />"}>
                     <div className="w-72"><Choice.Switch isSelected={value} onValueChange={setValue} label="Cảnh báo bảo mật" errorMessage="Cần bật để nhận cảnh báo bảo mật." showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -104,7 +104,7 @@ export const Error: Story = {
 export const Loading: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="Choice.Switch" tier="atom" leaf="Loading" parts={SKELETON_PARTS} code={`<Choice.Switch isSkeleton label="…" />`}>
+            <BlockAnatomy name="Choice.Switch" tier="atom" leaf="Loading" parts={SKELETON_PARTS} code={"<Choice.Switch isSkeleton label=\"…\" />"}>
                 <div className="w-72"><Choice.Switch isSelected={false} onValueChange={() => {}} label="Chế độ tối" isSkeleton showAnatomy /></div>
             </BlockAnatomy>
         </div>

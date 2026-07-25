@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Stack } from "@sb-components/blocks/layout/Stack/Stack"
+import { Stack } from "@sb-components/layouts/layout/Stack/Stack"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE: `Stack.H` là KHUNG một-trục NGANG. State riêng của nó = `wrap`
@@ -74,7 +74,7 @@ export const Wrap: Story = {
             >
                 <div className="flex flex-col gap-6">
                     <div className="flex flex-col gap-2">
-                        <Typography.Xs text="wrap" color="muted" />
+                        <Typography.Base size="xs" text="wrap" color="muted" />
                         <div className="w-80 rounded-3xl border border-dashed border-default p-3">
                             <Stack.H gap={2} wrap showAnatomy>
                                 <Button.Base label="Tất cả" variant="secondary" size="sm" />
@@ -85,7 +85,7 @@ export const Wrap: Story = {
                         </div>
                     </div>
                     <div className="flex flex-col gap-2">
-                        <Typography.Xs text="không wrap (mặc định)" color="muted" />
+                        <Typography.Base size="xs" text="không wrap (mặc định)" color="muted" />
                         <div className="w-80 rounded-3xl border border-dashed border-default p-3">
                             <Stack.H gap={2}>
                                 <Button.Base label="Tất cả" variant="secondary" size="sm" />
@@ -121,7 +121,7 @@ export const Justify: Story = {
                 <div className="flex flex-col gap-6">
                     {(["start", "center", "end", "between"] as const).map((justify, index) => (
                         <div key={justify} className="flex flex-col gap-2">
-                            <Typography.Xs text={justify} color="muted" />
+                            <Typography.Base size="xs" text={justify} color="muted" />
                             <div className="w-96 max-w-full rounded-3xl border border-dashed border-default p-3">
                                 <Stack.H gap={2} justify={justify} showAnatomy={index === 0}>
                                     <Button.Base label="Huỷ" variant="secondary" size="sm" />
@@ -150,16 +150,16 @@ export const WithDivider: Story = {
                 parts={DIVIDER_PARTS}
                 note="`align-self: stretch` thắng `items-center` của hàng, nên đường kẻ luôn cao trọn hàng — không cần caller đặt chiều cao."
                 code={`<Stack.H gap={3} divider>
-  <Typography.Sm text="12 bài" />
-  <Typography.Sm text="4 giờ" />
-  <Typography.Sm text="Trung cấp" />
+  <Typography.Base size="sm" text="12 bài" />
+  <Typography.Base size="sm" text="4 giờ" />
+  <Typography.Base size="sm" text="Trung cấp" />
 </Stack.H>`}
             >
                 <div className="w-fit rounded-3xl bg-surface p-3 shadow-surface">
                     <Stack.H gap={3} divider showAnatomy>
-                        <Typography.Sm text="12 bài" color="muted" />
-                        <Typography.Sm text="4 giờ" color="muted" />
-                        <Typography.Sm text="Trung cấp" color="muted" />
+                        <Typography.Base size="sm" text="12 bài" color="muted" />
+                        <Typography.Base size="sm" text="4 giờ" color="muted" />
+                        <Typography.Base size="sm" text="Trung cấp" color="muted" />
                     </Stack.H>
                 </div>
             </BlockAnatomy>

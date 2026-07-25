@@ -20,7 +20,8 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@sb-components/*": ["./.storybook/components/*"]
+      "@sb-components/*": ["./.storybook/components/*"],
+      "@sb-utils/*": ["./.storybook/utils/*"]
     }
   },
   "include": [

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { LanguageDonut } from "@sb-components/blocks/stats/LanguageDonut/LanguageDonut"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { LanguageDonut } from "@sb-components/_blocks/stats/LanguageDonut/LanguageDonut"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof LanguageDonut> = {
     title: "Block/Stats/LanguageDonut",

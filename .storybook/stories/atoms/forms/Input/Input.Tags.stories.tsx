@@ -1,7 +1,7 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Input } from "@sb-components/atoms/forms/Input/Input"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta = { title: "Atoms/Forms/Input/Input.Tags", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
 export default meta
@@ -21,7 +21,7 @@ export const Default: Story = {
         const Demo = () => {
             const [value, setValue] = useState<string[]>([])
             return (
-                <BlockAnatomy name="Input.Tags" tier="atom" leaf="Default" parts={[FIELD]} note="trần — không label/hint/error." code={`<Input.Tags value={v} onValueChange={setV} placeholder="Thêm thẻ…" />`}>
+                <BlockAnatomy name="Input.Tags" tier="atom" leaf="Default" parts={[FIELD]} note="trần — không label/hint/error." code={"<Input.Tags value={v} onValueChange={setV} placeholder=\"Thêm thẻ…\" />"}>
                     <div className="w-80"><Input.Tags value={value} onValueChange={setValue} placeholder="Thêm thẻ…" ariaLabel="Thẻ" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -36,7 +36,7 @@ export const WithLabel: Story = {
         const Demo = () => {
             const [value, setValue] = useState<string[]>([])
             return (
-                <BlockAnatomy name="Input.Tags" tier="atom" leaf="WithLabel" parts={[LABEL, DESC, FIELD]} note="label + hint." code={`<Input.Tags label="Kỹ năng" hint="Enter để thêm" value={v} onValueChange={setV} />`}>
+                <BlockAnatomy name="Input.Tags" tier="atom" leaf="WithLabel" parts={[LABEL, DESC, FIELD]} note="label + hint." code={"<Input.Tags label=\"Kỹ năng\" hint=\"Enter để thêm\" value={v} onValueChange={setV} />"}>
                     <div className="w-80"><Input.Tags label="Kỹ năng" hint="Enter để thêm thẻ" value={value} onValueChange={setValue} placeholder="Thêm thẻ…" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -51,7 +51,7 @@ export const Required: Story = {
         const Demo = () => {
             const [value, setValue] = useState<string[]>([])
             return (
-                <BlockAnatomy name="Input.Tags" tier="atom" leaf="Required" parts={[LABEL, FIELD]} note="isRequired → dấu * sau nhãn." code={`<Input.Tags label="Kỹ năng" isRequired value={v} onValueChange={setV} />`}>
+                <BlockAnatomy name="Input.Tags" tier="atom" leaf="Required" parts={[LABEL, FIELD]} note="isRequired → dấu * sau nhãn." code={"<Input.Tags label=\"Kỹ năng\" isRequired value={v} onValueChange={setV} />"}>
                     <div className="w-80"><Input.Tags label="Kỹ năng" isRequired value={value} onValueChange={setValue} placeholder="Thêm thẻ…" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -66,7 +66,7 @@ export const Filled: Story = {
         const Demo = () => {
             const [value, setValue] = useState<string[]>(["React", "TypeScript", "GraphQL"])
             return (
-                <BlockAnatomy name="Input.Tags" tier="atom" leaf="Filled" parts={[LABEL, FIELD, CHIP]} note="value có token → mỗi cái là 1 Chip." code={`<Input.Tags label="Kỹ năng" value={["React", "TypeScript", "GraphQL"]} onValueChange={setV} />`}>
+                <BlockAnatomy name="Input.Tags" tier="atom" leaf="Filled" parts={[LABEL, FIELD, CHIP]} note="value có token → mỗi cái là 1 Chip." code={"<Input.Tags label=\"Kỹ năng\" value={[\"React\", \"TypeScript\", \"GraphQL\"]} onValueChange={setV} />"}>
                     <div className="w-80"><Input.Tags label="Kỹ năng" value={value} onValueChange={setValue} placeholder="Thêm thẻ…" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -81,7 +81,7 @@ export const Disabled: Story = {
         const Demo = () => {
             const [value, setValue] = useState<string[]>(["React", "TypeScript"])
             return (
-                <BlockAnatomy name="Input.Tags" tier="atom" leaf="Disabled" parts={[LABEL, FIELD, CHIP]} note="isDisabled → khoá hộp + nhạt (Chip không xoá được)." code={`<Input.Tags label="Kỹ năng" isDisabled value={["React", "TypeScript"]} />`}>
+                <BlockAnatomy name="Input.Tags" tier="atom" leaf="Disabled" parts={[LABEL, FIELD, CHIP]} note="isDisabled → khoá hộp + nhạt (Chip không xoá được)." code={"<Input.Tags label=\"Kỹ năng\" isDisabled value={[\"React\", \"TypeScript\"]} />"}>
                     <div className="w-80"><Input.Tags label="Kỹ năng" value={value} onValueChange={setValue} placeholder="Thêm thẻ…" isDisabled showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -96,7 +96,7 @@ export const Error: Story = {
         const Demo = () => {
             const [value, setValue] = useState<string[]>(["React"])
             return (
-                <BlockAnatomy name="Input.Tags" tier="atom" leaf="Error" parts={[LABEL, FIELD, CHIP, ERROR]} note="label + errorMessage → nhãn + dòng đỏ + viền." code={`<Input.Tags label="Kỹ năng" errorMessage="Cần ít nhất 3 thẻ" value={["React"]} onValueChange={setV} />`}>
+                <BlockAnatomy name="Input.Tags" tier="atom" leaf="Error" parts={[LABEL, FIELD, CHIP, ERROR]} note="label + errorMessage → nhãn + dòng đỏ + viền." code={"<Input.Tags label=\"Kỹ năng\" errorMessage=\"Cần ít nhất 3 thẻ\" value={[\"React\"]} onValueChange={setV} />"}>
                     <div className="w-80"><Input.Tags label="Kỹ năng" errorMessage="Cần ít nhất 3 thẻ" value={value} onValueChange={setValue} placeholder="Thêm thẻ…" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -109,7 +109,7 @@ export const Error: Story = {
 export const Loading: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="Input.Tags" tier="atom" leaf="Loading" parts={[LABEL, SKELETON]} note="isSkeleton + label → mirror nhãn trên hộp." code={`<Input.Tags label="Kỹ năng" isSkeleton />`}>
+            <BlockAnatomy name="Input.Tags" tier="atom" leaf="Loading" parts={[LABEL, SKELETON]} note="isSkeleton + label → mirror nhãn trên hộp." code={"<Input.Tags label=\"Kỹ năng\" isSkeleton />"}>
                 <div className="w-80"><Input.Tags label="Kỹ năng" value={[]} onValueChange={() => {}} isSkeleton showAnatomy /></div>
             </BlockAnatomy>
         </div>

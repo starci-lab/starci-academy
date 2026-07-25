@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { FeedbackListItem } from "@sb-components/blocks/profile/FeedbackListItem/FeedbackListItem"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { FeedbackListItem } from "@sb-components/_designs/profile/FeedbackListItem/FeedbackListItem"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof FeedbackListItem> = {
     title: "Design/Profile/FeedbackListItem",

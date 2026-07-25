@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ArrowRight, Gear } from "@gravity-ui/icons"
-import { Section } from "@sb-components/blocks/layout/Section/Section"
+import { Section } from "@sb-components/layouts/layout/Section/Section"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * `Section.Header` — khung tiêu đề của MỘT VÙNG trong trang: `eyebrow` · `title` ·

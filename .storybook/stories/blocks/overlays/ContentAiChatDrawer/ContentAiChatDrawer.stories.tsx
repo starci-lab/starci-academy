@@ -2,15 +2,15 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
 import { Button as HeroButton } from "@heroui/react"
 import { CardsIcon, PuzzlePieceIcon } from "@phosphor-icons/react"
-import { ContentAiChatDrawer, HistoryLink } from "@sb-components/blocks/overlays/ContentAiChatDrawer/ContentAiChatDrawer"
-import { ChatThread, type ChatThreadMessage } from "@sb-components/blocks/learn/ChatThread/ChatThread"
-import { ChatComposer } from "@sb-components/blocks/learn/ChatComposer/ChatComposer"
-import { SelectionBanner } from "@sb-components/blocks/learn/SelectionBanner/SelectionBanner"
-import { ConversationList, type ConversationListItem } from "@sb-components/blocks/learn/ConversationList/ConversationList"
-import { ContentSearchList } from "@sb-components/blocks/learn/ContentSearchList/ContentSearchList"
-import { BackLink } from "@sb-components/blocks/navigation/BackLink/BackLink"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
-import type { SearchCourseContentItem } from "@sb-components/blocks/learn/EntityResultRow/EntityResultRow"
+import { ContentAiChatDrawer, HistoryLink } from "@sb-components/_blocks/overlays/ContentAiChatDrawer/ContentAiChatDrawer"
+import { ChatThread, type ChatThreadMessage } from "@sb-components/_blocks/learn/ChatThread/ChatThread"
+import { ChatComposer } from "@sb-components/_blocks/learn/ChatComposer/ChatComposer"
+import { SelectionBanner } from "@sb-components/_blocks/learn/SelectionBanner/SelectionBanner"
+import { ConversationList, type ConversationListItem } from "@sb-components/_blocks/learn/ConversationList/ConversationList"
+import { ContentSearchList } from "@sb-components/_blocks/learn/ContentSearchList/ContentSearchList"
+import { BackLink } from "@sb-components/atoms/navigation/BackLink/BackLink"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import type { SearchCourseContentItem } from "@sb-components/_blocks/learn/EntityResultRow/EntityResultRow"
 
 /**
  * OVERLAY — the in-lesson AI chat drawer, rendered as a static leaf inside a SQUARE
@@ -195,7 +195,7 @@ export const LichSuPhien: Story = {
                 parts={[
                     ...HEADER_PARTS,
                     { name: "BackLink", tier: "primitive", role: "quay lại phiên chat" },
-                    { name: "ConversationList", tier: "block", role: "danh sách/chọn phiên (states ở story ConversationList)", storyId: "block-learn-conversationlist--list" },
+                    { name: "ConversationList", tier: "block", role: "danh sách/chọn phiên (states ở story ConversationList)", storyId: "block-learn-conversationlist--default" },
                 ]}
                 note="Cấu trúc KHÁC hẳn chat: HistoryLink → BackLink, body là ConversationList, KHÔNG composer."
             >
@@ -203,7 +203,7 @@ export const LichSuPhien: Story = {
                     title={LESSON_TITLE}
                     headerSecondary={
                         <div data-anat-part="BackLink" className="w-fit">
-                            <BackLink label="Cuộc trò chuyện" onPress={noop} />
+                            <BackLink.Base label="Cuộc trò chuyện" onPress={noop} />
                         </div>
                     }
                     showAnatomy
@@ -237,7 +237,7 @@ export const TimNoiDung: Story = {
                 parts={[
                     ...HEADER_PARTS,
                     { name: "BackLink", tier: "primitive", role: "quay lại phiên chat" },
-                    { name: "ContentSearchList", tier: "block", role: "tìm nội dung khoá (states ở story ContentSearchList)", storyId: "block-learn-contentsearchlist--results" },
+                    { name: "ContentSearchList", tier: "block", role: "tìm nội dung khoá (states ở story ContentSearchList)", storyId: "block-learn-contentsearchlist--with-results" },
                 ]}
                 note="Cấu trúc riêng: BackLink + ContentSearchList (ô tìm + danh sách kết quả), KHÔNG composer."
             >
@@ -245,7 +245,7 @@ export const TimNoiDung: Story = {
                     title={LESSON_TITLE}
                     headerSecondary={
                         <div data-anat-part="BackLink" className="w-fit">
-                            <BackLink label="Tìm nội dung khoá" onPress={noop} />
+                            <BackLink.Base label="Tìm nội dung khoá" onPress={noop} />
                         </div>
                     }
                     showAnatomy

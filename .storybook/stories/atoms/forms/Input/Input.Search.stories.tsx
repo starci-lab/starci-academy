@@ -1,7 +1,7 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Input } from "@sb-components/atoms/forms/Input/Input"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta = { title: "Atoms/Forms/Input/Input.Search", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
 export default meta
@@ -20,7 +20,7 @@ export const Default: Story = {
         const Demo = () => {
             const [value, setValue] = useState("")
             return (
-                <BlockAnatomy name="Input.Search" tier="atom" leaf="Default" parts={[FIELD]} note="trần — không label/hint/error." code={`<Input.Search value={v} onValueChange={setV} placeholder="Tìm khoá học…" />`}>
+                <BlockAnatomy name="Input.Search" tier="atom" leaf="Default" parts={[FIELD]} note="trần — không label/hint/error." code={"<Input.Search value={v} onValueChange={setV} placeholder=\"Tìm khoá học…\" />"}>
                     <div className="w-72"><Input.Search value={value} onValueChange={setValue} placeholder="Tìm khoá học…" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -35,7 +35,7 @@ export const WithLabel: Story = {
         const Demo = () => {
             const [value, setValue] = useState("")
             return (
-                <BlockAnatomy name="Input.Search" tier="atom" leaf="WithLabel" parts={[LABEL, DESC, FIELD]} note="label + hint." code={`<Input.Search label="Tìm khoá học" hint="Theo tên hoặc kỹ năng" value={v} onValueChange={setV} />`}>
+                <BlockAnatomy name="Input.Search" tier="atom" leaf="WithLabel" parts={[LABEL, DESC, FIELD]} note="label + hint." code={"<Input.Search label=\"Tìm khoá học\" hint=\"Theo tên hoặc kỹ năng\" value={v} onValueChange={setV} />"}>
                     <div className="w-72"><Input.Search label="Tìm khoá học" hint="Theo tên hoặc kỹ năng" value={value} onValueChange={setValue} placeholder="Tìm khoá học…" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -50,7 +50,7 @@ export const Required: Story = {
         const Demo = () => {
             const [value, setValue] = useState("")
             return (
-                <BlockAnatomy name="Input.Search" tier="atom" leaf="Required" parts={[LABEL, FIELD]} note="isRequired → dấu * sau nhãn." code={`<Input.Search label="Tìm khoá học" isRequired value={v} onValueChange={setV} />`}>
+                <BlockAnatomy name="Input.Search" tier="atom" leaf="Required" parts={[LABEL, FIELD]} note="isRequired → dấu * sau nhãn." code={"<Input.Search label=\"Tìm khoá học\" isRequired value={v} onValueChange={setV} />"}>
                     <div className="w-72"><Input.Search label="Tìm khoá học" isRequired value={value} onValueChange={setValue} placeholder="Tìm khoá học…" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -65,7 +65,7 @@ export const Filled: Story = {
         const Demo = () => {
             const [value, setValue] = useState("React")
             return (
-                <BlockAnatomy name="Input.Search" tier="atom" leaf="Filled" parts={[LABEL, FIELD]} note="value có chữ → nút clear (×) hiện." code={`<Input.Search label="Tìm khoá học" value="React" onValueChange={setV} />`}>
+                <BlockAnatomy name="Input.Search" tier="atom" leaf="Filled" parts={[LABEL, FIELD]} note="value có chữ → nút clear (×) hiện." code={"<Input.Search label=\"Tìm khoá học\" value=\"React\" onValueChange={setV} />"}>
                     <div className="w-72"><Input.Search label="Tìm khoá học" value={value} onValueChange={setValue} placeholder="Tìm khoá học…" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -80,7 +80,7 @@ export const Disabled: Story = {
         const Demo = () => {
             const [value, setValue] = useState("React")
             return (
-                <BlockAnatomy name="Input.Search" tier="atom" leaf="Disabled" parts={[LABEL, FIELD]} note="isDisabled → khoá + nhạt." code={`<Input.Search label="Tìm khoá học" value="React" isDisabled onValueChange={setV} />`}>
+                <BlockAnatomy name="Input.Search" tier="atom" leaf="Disabled" parts={[LABEL, FIELD]} note="isDisabled → khoá + nhạt." code={"<Input.Search label=\"Tìm khoá học\" value=\"React\" isDisabled onValueChange={setV} />"}>
                     <div className="w-72"><Input.Search label="Tìm khoá học" value={value} onValueChange={setValue} isDisabled placeholder="Tìm khoá học…" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -95,7 +95,7 @@ export const Error: Story = {
         const Demo = () => {
             const [value, setValue] = useState("!!!")
             return (
-                <BlockAnatomy name="Input.Search" tier="atom" leaf="Error" parts={[LABEL, FIELD, ERROR]} note="label + errorMessage → nhãn + dòng đỏ + viền." code={`<Input.Search label="Tìm khoá học" errorMessage="Từ khoá không hợp lệ" value={v} onValueChange={setV} />`}>
+                <BlockAnatomy name="Input.Search" tier="atom" leaf="Error" parts={[LABEL, FIELD, ERROR]} note="label + errorMessage → nhãn + dòng đỏ + viền." code={"<Input.Search label=\"Tìm khoá học\" errorMessage=\"Từ khoá không hợp lệ\" value={v} onValueChange={setV} />"}>
                     <div className="w-72"><Input.Search label="Tìm khoá học" errorMessage="Từ khoá không hợp lệ" value={value} onValueChange={setValue} placeholder="Tìm khoá học…" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -108,7 +108,7 @@ export const Error: Story = {
 export const Loading: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="Input.Search" tier="atom" leaf="Loading" parts={[LABEL, SKELETON]} note="isSkeleton + label → mirror nhãn trên hộp." code={`<Input.Search label="Tìm khoá học" isSkeleton />`}>
+            <BlockAnatomy name="Input.Search" tier="atom" leaf="Loading" parts={[LABEL, SKELETON]} note="isSkeleton + label → mirror nhãn trên hộp." code={"<Input.Search label=\"Tìm khoá học\" isSkeleton />"}>
                 <div className="w-72"><Input.Search label="Tìm khoá học" value="" onValueChange={() => {}} isSkeleton showAnatomy /></div>
             </BlockAnatomy>
         </div>

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { TrashBin, FloppyDisk } from "@gravity-ui/icons"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `Button.Group` KHÔNG đẻ nghĩa mới — nó
@@ -123,7 +123,7 @@ export const Loading: Story = {
                 leaf="Loading"
                 parts={SKELETON_PARTS}
                 note="isSkeleton ở cấp cụm → mỗi item tự vẽ skeleton của chính nó (hybrid C); footprint hàng nút giữ nguyên nên không nhảy layout."
-                code={`<Button.Group isSkeleton items={[…3 item…]} />`}
+                code={"<Button.Group isSkeleton items={[…3 item…]} />"}
             >
                 <Button.Group
                     showAnatomy

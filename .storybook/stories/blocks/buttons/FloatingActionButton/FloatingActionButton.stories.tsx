@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { PlusIcon } from "@phosphor-icons/react"
-import { FloatingActionButton } from "@sb-components/blocks/buttons/FloatingActionButton/FloatingActionButton"
+import { FloatingActionButton } from "@sb-components/layouts/buttons/FloatingActionButton/FloatingActionButton"
 
 const meta: Meta<typeof FloatingActionButton> = {
     title: "Primitives/Buttons/FloatingActionButton",
@@ -24,9 +24,7 @@ type Story = StoryObj<typeof FloatingActionButton>
 export const Default: Story = {
     render: () => (
         <div className="p-8">
-            <FloatingActionButton onPress={() => {}} ariaLabel="Create new">
-                <PlusIcon />
-            </FloatingActionButton>
+            <FloatingActionButton onPress={() => {}} ariaLabel="Create new" icon={<PlusIcon />} />
         </div>
     ),
 }
@@ -35,9 +33,7 @@ export const Default: Story = {
 export const IsSkeleton: Story = {
     render: () => (
         <div className="p-8">
-            <FloatingActionButton onPress={() => {}} ariaLabel="Create new" isSkeleton>
-                <PlusIcon />
-            </FloatingActionButton>
+            <FloatingActionButton onPress={() => {}} ariaLabel="Create new" isSkeleton icon={<PlusIcon />} />
         </div>
     ),
 }

@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Typography } from "@heroui/react"
 import { BookOpenIcon, CardsIcon, CodeIcon, FlameIcon, PuzzlePieceIcon } from "@phosphor-icons/react"
-import { StatGridCard } from "@sb-components/blocks/stats/StatGridCard/StatGridCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { StatGridCard } from "@sb-components/layouts/stats/StatGridCard/StatGridCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * PRIMITIVE — a bounded surface whose cells sit in a 2-col grid, divided by thin

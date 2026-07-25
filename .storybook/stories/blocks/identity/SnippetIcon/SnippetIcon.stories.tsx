@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { expect, userEvent, waitFor } from "storybook/test"
 import { Typography } from "@heroui/react"
-import { SnippetIcon } from "@sb-components/blocks/identity/SnippetIcon/SnippetIcon"
+import { SnippetIcon } from "@sb-components/atoms/display/SnippetIcon/SnippetIcon"
 
-const meta: Meta<typeof SnippetIcon> = {
-    title: "Primitives/Identity/SnippetIcon",
-    component: SnippetIcon,
+const meta: Meta<typeof SnippetIcon.Base> = {
+    title: "Atoms/Display/SnippetIcon",
+    component: SnippetIcon.Base,
     tags: ["autodocs"],
     parameters: {
         layout: "fullscreen",
@@ -14,7 +14,7 @@ const meta: Meta<typeof SnippetIcon> = {
 
 export default meta
 
-type Story = StoryObj<typeof SnippetIcon>
+type Story = StoryObj<typeof SnippetIcon.Base>
 
 export const Default: Story = {
     render: () => (
@@ -23,7 +23,7 @@ export const Default: Story = {
                 <Typography type="body-sm" className="font-mono">
                     npm install @starciacademy/playground-agent
                 </Typography>
-                <SnippetIcon copyString="npm install @starciacademy/playground-agent" />
+                <SnippetIcon.Base copyString="npm install @starciacademy/playground-agent" />
             </div>
         </div>
     ),
@@ -36,7 +36,7 @@ export const CustomIconColors: Story = {
                 <Typography type="body-sm" className="font-mono">
                     sk-live-51H8x2KJ9mQwErTyUiOp
                 </Typography>
-                <SnippetIcon
+                <SnippetIcon.Base
                     copyString="sk-live-51H8x2KJ9mQwErTyUiOp"
                     classNames={{ copyIcon: "text-accent", checkIcon: "text-success" }}
                 />
@@ -52,7 +52,7 @@ export const Copied: Story = {
                 <Typography type="body-sm" className="font-mono">
                     git clone https://github.com/StarCi-Academy/rag-from-scratch
                 </Typography>
-                <SnippetIcon
+                <SnippetIcon.Base
                     copyString="git clone https://github.com/StarCi-Academy/rag-from-scratch"
                     className="copy-trigger"
                     classNames={{ checkIcon: "check-icon" }}

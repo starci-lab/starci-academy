@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { PricingTable, PricingTableTier } from "@sb-components/blocks/commerce/PricingTable/PricingTable"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { PricingTable, PricingTableTier } from "@sb-components/_blocks/commerce/PricingTable/PricingTable"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * BLOCK — the pricing comparison REGION: 2–3 tier columns side by side (columns

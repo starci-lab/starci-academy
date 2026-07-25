@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { RatingBar } from "@sb-components/blocks/cards/RatingBar/RatingBar"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { RatingBar } from "@sb-components/_blocks/cards/RatingBar/RatingBar"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ANATOMY IS PER-LEAF: each story below is its OWN leaf and wraps its render in

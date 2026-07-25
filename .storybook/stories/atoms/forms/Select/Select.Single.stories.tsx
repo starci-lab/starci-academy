@@ -1,7 +1,7 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Select } from "@sb-components/atoms/forms/Select/Select"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta = { title: "Atoms/Forms/Select/Select.Single", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
 export default meta
@@ -26,7 +26,7 @@ export const Default: Story = {
         const Demo = () => {
             const [value, setValue] = useState<string | null>(null)
             return (
-                <BlockAnatomy name="Select.Single" tier="atom" leaf="Default" parts={[TRIGGER, FIELD]} code={`<Select.Single value={v} onValueChange={setV} options={OPTIONS} placeholder="Chọn khoá học" />`}>
+                <BlockAnatomy name="Select.Single" tier="atom" leaf="Default" parts={[TRIGGER, FIELD]} code={"<Select.Single value={v} onValueChange={setV} options={OPTIONS} placeholder=\"Chọn khoá học\" />"}>
                     <div className="w-72"><Select.Single value={value} onValueChange={setValue} options={OPTIONS} placeholder="Chọn khoá học" ariaLabel="Khoá học" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -41,7 +41,7 @@ export const WithLabel: Story = {
         const Demo = () => {
             const [value, setValue] = useState<string | null>(null)
             return (
-                <BlockAnatomy name="Select.Single" tier="atom" leaf="WithLabel" parts={[LABEL, DESC, TRIGGER, FIELD]} code={`<Select.Single label="Khoá học" hint="Chọn lộ trình bạn muốn theo." ... />`}>
+                <BlockAnatomy name="Select.Single" tier="atom" leaf="WithLabel" parts={[LABEL, DESC, TRIGGER, FIELD]} code={"<Select.Single label=\"Khoá học\" hint=\"Chọn lộ trình bạn muốn theo.\" ... />"}>
                     <div className="w-72"><Select.Single value={value} onValueChange={setValue} options={OPTIONS} placeholder="Chọn khoá học" label="Khoá học" hint="Chọn lộ trình bạn muốn theo." showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -56,7 +56,7 @@ export const Required: Story = {
         const Demo = () => {
             const [value, setValue] = useState<string | null>(null)
             return (
-                <BlockAnatomy name="Select.Single" tier="atom" leaf="Required" parts={[LABEL, TRIGGER, FIELD]} code={`<Select.Single label="Khoá học" isRequired ... />`} note="isRequired → dấu * sau nhãn.">
+                <BlockAnatomy name="Select.Single" tier="atom" leaf="Required" parts={[LABEL, TRIGGER, FIELD]} code={"<Select.Single label=\"Khoá học\" isRequired ... />"} note="isRequired → dấu * sau nhãn.">
                     <div className="w-72"><Select.Single value={value} onValueChange={setValue} options={OPTIONS} placeholder="Chọn khoá học" label="Khoá học" isRequired showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -71,7 +71,7 @@ export const Filled: Story = {
         const Demo = () => {
             const [value, setValue] = useState<string | null>("sd")
             return (
-                <BlockAnatomy name="Select.Single" tier="atom" leaf="Filled" parts={[LABEL, TRIGGER, FIELD]} code={`<Select.Single label="Khoá học" value="sd" options={OPTIONS} />`} note="value có sẵn.">
+                <BlockAnatomy name="Select.Single" tier="atom" leaf="Filled" parts={[LABEL, TRIGGER, FIELD]} code={"<Select.Single label=\"Khoá học\" value=\"sd\" options={OPTIONS} />"} note="value có sẵn.">
                     <div className="w-72"><Select.Single value={value} onValueChange={setValue} options={OPTIONS} placeholder="Chọn khoá học" label="Khoá học" showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -84,7 +84,7 @@ export const Filled: Story = {
 export const Disabled: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="Select.Single" tier="atom" leaf="Disabled" parts={[LABEL, TRIGGER, FIELD]} code={`<Select.Single label="Khoá học" isDisabled value="fs" ... />`} note="isDisabled → khoá trigger + nhạt nhãn.">
+            <BlockAnatomy name="Select.Single" tier="atom" leaf="Disabled" parts={[LABEL, TRIGGER, FIELD]} code={"<Select.Single label=\"Khoá học\" isDisabled value=\"fs\" ... />"} note="isDisabled → khoá trigger + nhạt nhãn.">
                 <div className="w-72"><Select.Single value="fs" onValueChange={() => {}} options={OPTIONS} placeholder="Chọn khoá học" label="Khoá học" isDisabled showAnatomy /></div>
             </BlockAnatomy>
         </div>
@@ -97,7 +97,7 @@ export const Error: Story = {
         const Demo = () => {
             const [value, setValue] = useState<string | null>(null)
             return (
-                <BlockAnatomy name="Select.Single" tier="atom" leaf="Error" parts={[LABEL, TRIGGER, FIELD, ERROR]} code={`<Select.Single label="Khoá học" errorMessage="Vui lòng chọn một khoá." ... />`} note="errorMessage → NHÃN + dòng đỏ + viền.">
+                <BlockAnatomy name="Select.Single" tier="atom" leaf="Error" parts={[LABEL, TRIGGER, FIELD, ERROR]} code={"<Select.Single label=\"Khoá học\" errorMessage=\"Vui lòng chọn một khoá.\" ... />"} note="errorMessage → NHÃN + dòng đỏ + viền.">
                     <div className="w-72"><Select.Single value={value} onValueChange={setValue} options={OPTIONS} placeholder="Chọn khoá học" label="Khoá học" errorMessage="Vui lòng chọn một khoá." showAnatomy /></div>
                 </BlockAnatomy>
             )
@@ -110,7 +110,7 @@ export const Error: Story = {
 export const Loading: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="Select.Single" tier="atom" leaf="Loading" parts={[LABEL, SKELETON]} code={`<Select.Single label="Khoá học" isSkeleton />`} note="isSkeleton → label-skeleton + trigger-box skeleton.">
+            <BlockAnatomy name="Select.Single" tier="atom" leaf="Loading" parts={[LABEL, SKELETON]} code={"<Select.Single label=\"Khoá học\" isSkeleton />"} note="isSkeleton → label-skeleton + trigger-box skeleton.">
                 <div className="w-72"><Select.Single value={null} onValueChange={() => {}} options={OPTIONS} label="Khoá học" isSkeleton showAnatomy /></div>
             </BlockAnatomy>
         </div>

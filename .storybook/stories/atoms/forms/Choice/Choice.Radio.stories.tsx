@@ -2,7 +2,7 @@ import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { RadioGroup as HeroRadioGroup } from "@heroui/react"
 import { Choice } from "@sb-components/atoms/forms/Choice/Choice"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta = { title: "Atoms/Forms/Choice/Choice.Radio", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
 export default meta
@@ -30,7 +30,7 @@ export const Default: Story = {
         const Demo = () => {
             const [value, setValue] = useState("")
             return (
-                <BlockAnatomy name="Choice.Radio" tier="atom" leaf="Default" parts={PARTS} note="Radio phải nằm trong một radio-context (app dùng Choice.RadioGroup options)." code={`<Choice.Radio value="option-a" label="Gói cơ bản" />`}>
+                <BlockAnatomy name="Choice.Radio" tier="atom" leaf="Default" parts={PARTS} note="Radio phải nằm trong một radio-context (app dùng Choice.RadioGroup options)." code={"<Choice.Radio value=\"option-a\" label=\"Gói cơ bản\" />"}>
                     <div className="w-72">
                         <HeroRadioGroup aria-label="Lựa chọn" value={value} onChange={setValue} className="flex flex-col gap-2">
                             <Choice.Radio value="option-a" label="Gói cơ bản" showAnatomy />
@@ -49,7 +49,7 @@ export const Selected: Story = {
         const Demo = () => {
             const [value, setValue] = useState("option-a")
             return (
-                <BlockAnatomy name="Choice.Radio" tier="atom" leaf="Selected" parts={PARTS} note="value của nhóm khớp → dot đầy (hàng option KHÔNG tự giữ state chọn)." code={`<Choice.Radio value="option-a" label="Gói cơ bản" />`}>
+                <BlockAnatomy name="Choice.Radio" tier="atom" leaf="Selected" parts={PARTS} note="value của nhóm khớp → dot đầy (hàng option KHÔNG tự giữ state chọn)." code={"<Choice.Radio value=\"option-a\" label=\"Gói cơ bản\" />"}>
                     <div className="w-72">
                         <HeroRadioGroup aria-label="Lựa chọn" value={value} onChange={setValue} className="flex flex-col gap-2">
                             <Choice.Radio value="option-a" label="Gói cơ bản" showAnatomy />
@@ -66,7 +66,7 @@ export const Selected: Story = {
 export const Disabled: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="Choice.Radio" tier="atom" leaf="Disabled" parts={PARTS} note="isDisabled → khoá + nhạt đúng MỘT hàng." code={`<Choice.Radio value="option-a" label="Gói cơ bản" isDisabled />`}>
+            <BlockAnatomy name="Choice.Radio" tier="atom" leaf="Disabled" parts={PARTS} note="isDisabled → khoá + nhạt đúng MỘT hàng." code={"<Choice.Radio value=\"option-a\" label=\"Gói cơ bản\" isDisabled />"}>
                 <div className="w-72">
                     <HeroRadioGroup aria-label="Lựa chọn" value="option-a" onChange={() => {}} className="flex flex-col gap-2">
                         <Choice.Radio value="option-a" label="Gói cơ bản" isDisabled showAnatomy />
@@ -81,7 +81,7 @@ export const Disabled: Story = {
 export const Loading: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="Choice.Radio" tier="atom" leaf="Loading" parts={SKELETON_PARTS} code={`<Choice.Radio value="" label="" isSkeleton />`}>
+            <BlockAnatomy name="Choice.Radio" tier="atom" leaf="Loading" parts={SKELETON_PARTS} code={"<Choice.Radio value=\"\" label=\"\" isSkeleton />"}>
                 <div className="w-72"><Choice.Radio value="" label="" isSkeleton showAnatomy /></div>
             </BlockAnatomy>
         </div>

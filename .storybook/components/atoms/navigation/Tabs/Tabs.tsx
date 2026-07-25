@@ -150,6 +150,6 @@ const TabsBase = ({
  * `Tabs.*` — the tab-strip ATOM namespace. `Tabs.Base` is the single constrained
  * strip (icon / badge / disabled are LEAVES of it, per-item prop-driven).
  */
-export const Tabs = {
+export const Tabs = Object.assign(TabsBase, {
     Base: TabsBase,
-}
+})

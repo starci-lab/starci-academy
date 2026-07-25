@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { CoverImage } from "@sb-components/blocks/media/CoverImage/CoverImage"
+import { CoverImage } from "@sb-components/atoms/media/CoverImage/CoverImage"
 
-const meta: Meta<typeof CoverImage> = {
-    title: "Primitives/Media/CoverImage",
-    component: CoverImage,
+const meta: Meta<typeof CoverImage.Base> = {
+    title: "Atoms/Media/CoverImage",
+    component: CoverImage.Base,
     tags: ["autodocs"],
     parameters: {
         layout: "fullscreen",
@@ -12,7 +12,7 @@ const meta: Meta<typeof CoverImage> = {
 
 export default meta
 
-type Story = StoryObj<typeof CoverImage>
+type Story = StoryObj<typeof CoverImage.Base>
 
 // Offline-safe inline cover (16:9). No external host so it renders under CSP.
 const COVER_SRC =
@@ -22,7 +22,7 @@ export const WithImage: Story = {
     render: () => (
         <div className="p-8">
             <div className="w-96">
-                <CoverImage src={COVER_SRC} alt="Course cover image" />
+                <CoverImage.Base src={COVER_SRC} alt="Course cover image" />
             </div>
         </div>
     ),
@@ -32,7 +32,7 @@ export const NoImage: Story = {
     render: () => (
         <div className="p-8">
             <div className="w-96">
-                <CoverImage src={null} alt="No cover image yet" />
+                <CoverImage.Base src={null} alt="No cover image yet" />
             </div>
         </div>
     ),

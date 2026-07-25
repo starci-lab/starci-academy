@@ -7,6 +7,8 @@ import {
     DropdownItem as HeroDropdownItem,
     DropdownSection as HeroDropdownSection,
     Button as HeroButton,
+    Skeleton as HeroSkeleton,
+    cn,
 } from "@heroui/react"
 // react-aria `Header` is the collection-native way to label a menu SECTION; HeroUI's
 // `DropdownSection` (react-aria MenuSection) does not expose a `title` prop, so the
@@ -89,6 +91,12 @@ export interface MenuBaseProps {
     onOpenChange?: (isOpen: boolean) => void
     /** Dev/spec: emit `data-anat-part` on Trigger/Popover/Menu/Item so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
+    /**
+     * Render the leaf skeleton (rows of icon + label bars, MIRROR of `Skeleton.Menu`
+     * from the registry) instead of the real dropdown — atom SỞ HỮU skeleton của
+     * chính nó (canon §12c, hybrid C).
+     */
+    isSkeleton?: boolean
     /** Extra classes on the trigger. */
     className?: string
 }
@@ -130,8 +138,32 @@ const MenuBase = ({
     defaultOpen,
     onOpenChange,
     showAnatomy = false,
+    isSkeleton = false,
     className,
 }: MenuBaseProps) => {
+    if (isSkeleton) {
+        // Leaf skeleton OWNED by the atom (hybrid C, §12c) — MIRROR của `Skeleton.Menu`
+        // trong registry (`atoms/display/Skeleton`): container `p-1` + mỗi row là icon
+        // `size-5 rounded-full` cạnh nhãn `h-[14px] w-24`. Số row = tổng items thật (flat
+        // hoặc gộp từ sections) để không lệch chiều cao khi data thật vào; fallback 4
+        // (mặc định của `Skeleton.Menu`) khi chưa biết trước.
+        const rowCount = sections
+            ? sections.reduce((total, section) => total + section.items.length, 0)
+            : (items?.length ?? 4)
+        return (
+            <div
+                className={cn("flex w-full flex-col gap-1 p-1", className)}
+                data-anat-part={showAnatomy ? "Skeleton" : undefined}
+            >
+                {Array.from({ length: rowCount || 4 }).map((_, index) => (
+                    <div key={index} className="flex items-center gap-2 px-2 py-2">
+                        <HeroSkeleton className="size-5 shrink-0 rounded-full" />
+                        <HeroSkeleton className="h-[14px] w-24 rounded" />
+                    </div>
+                ))}
+            </div>
+        )
+    }
     return (
         <HeroDropdown isOpen={isOpen} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
             <HeroDropdownTrigger className={className} data-anat-part={showAnatomy ? "Trigger" : undefined}>
@@ -180,6 +212,6 @@ const MenuBase = ({
  * `Menu.*` — the action-menu ATOM namespace. `Menu.Base` là atom menu DUY NHẤT
  * (flat `items` hay `sections` gộp đều là LEAF prop-driven của nó).
  */
-export const Menu = {
+export const Menu = Object.assign(MenuBase, {
     Base: MenuBase,
-}
+})

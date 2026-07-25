@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { DeckCard } from "@sb-components/blocks/learn/DeckCard/DeckCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { DeckCard } from "@sb-components/_designs/learn/DeckCard/DeckCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — a single flashcard-deck picker card (title + due/difficulty chips, an

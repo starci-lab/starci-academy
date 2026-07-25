@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { House, ChartColumn, Clock } from "@gravity-ui/icons"
 import { Tabs } from "@sb-components/atoms/navigation/Tabs/Tabs"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Tabs.Base> = {
     title: "Atoms/Navigation/Tabs/Tabs.Base",
@@ -68,7 +68,7 @@ export const Secondary: Story = {
                 leaf="Secondary"
                 parts={TAB_PARTS}
                 note="variant='secondary' → underline in-page; 'primary' (mặc định) là pill segmented cho page-level switch."
-                code={`<Tabs.Base variant="secondary" ariaLabel="Khoá học" selectedKey="overview" onSelectionChange={fn} items={BASE_ITEMS} />`}
+                code={"<Tabs.Base variant=\"secondary\" ariaLabel=\"Khoá học\" selectedKey=\"overview\" onSelectionChange={fn} items={BASE_ITEMS} />"}
             >
                 <Tabs.Base
                     variant="secondary"
@@ -93,7 +93,7 @@ export const WithIcon: Story = {
                 leaf="WithIcon"
                 parts={ICON_PARTS}
                 note="icon = component reference (`House`, không `<House/>`). Atom render size-4 khớp nhãn tab."
-                code={`items={[{ key: "home", label: "Trang chủ", icon: House }, ...]}`}
+                code={"items={[{ key: \"home\", label: \"Trang chủ\", icon: House }, ...]}"}
             >
                 <Tabs.Base
                     ariaLabel="Bảng điều khiển"
@@ -121,7 +121,7 @@ export const WithBadge: Story = {
                 leaf="WithBadge"
                 parts={BADGE_PARTS}
                 note="badge = count/notice nổi góc nhãn (Badge.Anchor). Dùng cho tab có mục chưa xử lý."
-                code={`items={[{ key: "inbox", label: "Hộp thư", badge: 3 }, ...]}`}
+                code={"items={[{ key: \"inbox\", label: \"Hộp thư\", badge: 3 }, ...]}"}
             >
                 <Tabs.Base
                     ariaLabel="Thông báo"
@@ -149,7 +149,7 @@ export const DisabledTab: Story = {
                 leaf="DisabledTab"
                 parts={TAB_PARTS}
                 note="isDisabled trên 1 item → tab render mờ, không focus/không chọn được."
-                code={`items={[..., { key: "premium", label: "Nâng cao", isDisabled: true }]}`}
+                code={"items={[..., { key: \"premium\", label: \"Nâng cao\", isDisabled: true }]}"}
             >
                 <Tabs.Base
                     ariaLabel="Nội dung"
@@ -177,7 +177,7 @@ export const Loading: Story = {
                 leaf="Loading"
                 parts={SKELETON_PARTS}
                 note="isSkeleton → hàng pill shimmer OWNED bởi atom (hybrid C)."
-                code={`<Tabs.Base isSkeleton ariaLabel="…" selectedKey="" onSelectionChange={fn} items={[…]} />`}
+                code={"<Tabs.Base isSkeleton ariaLabel=\"…\" selectedKey=\"\" onSelectionChange={fn} items={[…]} />"}
             >
                 <Tabs.Base isSkeleton ariaLabel="Khoá học" selectedKey="overview" onSelectionChange={() => {}} items={BASE_ITEMS} showAnatomy />
             </BlockAnatomy>

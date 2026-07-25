@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ConversationList, type ConversationListItem } from "@sb-components/blocks/learn/ConversationList/ConversationList"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { ConversationList, type ConversationListItem } from "@sb-components/_blocks/learn/ConversationList/ConversationList"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * BLOCK — the conversation-picker REGION inside the AI-chat drawer

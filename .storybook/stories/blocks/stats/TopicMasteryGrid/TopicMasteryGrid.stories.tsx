@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { TopicMasteryGrid } from "@sb-components/blocks/stats/TopicMasteryGrid/TopicMasteryGrid"
+import { TopicMasteryGrid } from "@sb-components/_designs/stats/TopicMasteryGrid/TopicMasteryGrid"
 
 const meta: Meta<typeof TopicMasteryGrid> = {
-    title: "Primitives/Stats/TopicMasteryGrid",
+    title: "Design/Stats/TopicMasteryGrid",
     component: TopicMasteryGrid,
     tags: ["autodocs"],
     parameters: {

@@ -164,8 +164,8 @@ const Meter = ({
  * `Progress.*` — progress-indicator atom namespace. `Bar`/`Circle` = tiến trình
  * (determinate/indeterminate), `Meter` = đo lường tĩnh (chỉ determinate).
  */
-export const Progress = {
+export const Progress = Object.assign(ProgressBar, {
     Bar: ProgressBar,
     Circle: ProgressCircle,
     Meter: Meter,
-}
+})

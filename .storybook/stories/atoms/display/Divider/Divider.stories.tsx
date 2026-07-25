@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Divider.Base> = {
     title: "Atoms/Display/Divider/Divider.Base",
@@ -31,7 +31,7 @@ export const Horizontal: Story = {
                 leaf="Horizontal"
                 parts={LINE_PARTS}
                 reason="Đường phân cách bọc HeroUI Separator (HeroUI không có 'Divider' — đổi tên cho ngữ vựng app); orientation/label phân bằng prop."
-                code={`<Divider.Base />`}
+                code={"<Divider.Base />"}
             >
                 <div className="w-72">
                     <Divider.Base showAnatomy />
@@ -51,7 +51,7 @@ export const Vertical: Story = {
                 leaf="Vertical"
                 parts={LINE_PARTS}
                 note="orientation='vertical' → cần cha có cao (vd h-16); dùng ngăn cách item trên một hàng."
-                code={`<Divider.Base orientation="vertical" />`}
+                code={"<Divider.Base orientation=\"vertical\" />"}
             >
                 <div className="flex h-16 items-center gap-4">
                     <span className="text-muted text-sm">Bài học</span>
@@ -75,7 +75,7 @@ export const WithLabel: Story = {
                 leaf="WithLabel"
                 parts={LABELLED_PARTS}
                 note="label (horizontal) → atom dựng 2 rule flex-1 kẹp nhãn giữa (vd 'HOẶC' ở form đăng nhập)."
-                code={`<Divider.Base label="HOẶC" />`}
+                code={"<Divider.Base label=\"HOẶC\" />"}
             >
                 <div className="w-72">
                     <Divider.Base label="HOẶC" showAnatomy />

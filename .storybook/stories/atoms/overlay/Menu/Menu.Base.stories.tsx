@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ArrowRightFromSquare, ChevronDown, Copy, Gear, Pencil, Person, TrashBin } from "@gravity-ui/icons"
 import { Menu } from "@sb-components/atoms/overlay/Menu/Menu"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Menu.Base> = {
     title: "Atoms/Overlay/Menu/Menu.Base",
@@ -62,7 +62,7 @@ export const Default: Story = {
                 parts={FLAT_PARTS}
                 reason="Atom menu DUY NHẤT bọc HeroUI Dropdown; consumer truyền DỮ LIỆU (items/sections + triggerLabel), atom dựng Item + sở hữu layout/icon-scale."
                 note="defaultOpen pin menu mở khi load để soi. `items` phẳng, chọn → onAction(key). Nhãn nút đi bằng `triggerLabel` — atom KHÔNG nhận children."
-                code={`<Menu.Base triggerLabel="Tài khoản" items={[{ key: "profile", label: "Hồ sơ" }, …]} onAction={fn} />`}
+                code={"<Menu.Base triggerLabel=\"Tài khoản\" items={[{ key: \"profile\", label: \"Hồ sơ\" }, …]} onAction={fn} />"}
             >
                 <div className="flex justify-center py-4">
                     <Menu.Base
@@ -93,7 +93,7 @@ export const WithIcons: Story = {
                 leaf="WithIcons"
                 parts={ICON_PARTS}
                 note="`icon` truyền COMPONENT (`Gear`), atom ép size-4. Dùng icon khi nó tải nghĩa/hành động rõ."
-                code={`<Menu.Base triggerLabel="Thao tác" items={[{ key: "edit", label: "Sửa", icon: Pencil }, …]} />`}
+                code={"<Menu.Base triggerLabel=\"Thao tác\" items={[{ key: \"edit\", label: \"Sửa\", icon: Pencil }, …]} />"}
             >
                 <div className="flex justify-center py-4">
                     <Menu.Base
@@ -125,7 +125,7 @@ export const WithTriggerIcon: Story = {
                 leaf="WithTriggerIcon"
                 parts={TRIGGER_ICON_PARTS}
                 note="`triggerIcon` là COMPONENT gravity; atom ép `size-3.5` (icon = size chữ nút) nên caller không chèn sai scale."
-                code={`<Menu.Base triggerLabel="Sắp xếp" triggerIcon={ChevronDown} items={[…]} />`}
+                code={"<Menu.Base triggerLabel=\"Sắp xếp\" triggerIcon={ChevronDown} items={[…]} />"}
             >
                 <div className="flex justify-center py-4">
                     <Menu.Base
@@ -157,7 +157,7 @@ export const WithSections: Story = {
                 leaf="WithSections"
                 parts={SECTION_PARTS}
                 note="`sections` gộp dòng theo nhóm; `section.title` render header (react-aria Header)."
-                code={`<Menu.Base triggerLabel="Menu" sections={[{ key: "acct", title: "Tài khoản", items: [...] }, …]} />`}
+                code={"<Menu.Base triggerLabel=\"Menu\" sections={[{ key: \"acct\", title: \"Tài khoản\", items: [...] }, …]} />"}
             >
                 <div className="flex justify-center py-4">
                     <Menu.Base
@@ -198,7 +198,7 @@ export const DisabledItem: Story = {
                 leaf="DisabledItem"
                 parts={DISABLED_PARTS}
                 note="`isDisabled` làm dòng mờ + không phát onAction (vd: chưa đủ quyền)."
-                code={`<Menu.Base triggerLabel="Thao tác" items={[{ key: "archive", label: "Lưu trữ", isDisabled: true }, …]} />`}
+                code={"<Menu.Base triggerLabel=\"Thao tác\" items={[{ key: \"archive\", label: \"Lưu trữ\", isDisabled: true }, …]} />"}
             >
                 <div className="flex justify-center py-4">
                     <Menu.Base

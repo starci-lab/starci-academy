@@ -1,9 +1,9 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button } from "@heroui/react"
-import { CodeConsole } from "@sb-components/blocks/code/CodeConsole/CodeConsole"
-import { IOExampleCard } from "@sb-components/blocks/code/IOExampleCard/IOExampleCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { CodeConsole } from "@sb-components/_blocks/code/CodeConsole/CodeConsole"
+import { IOExampleCard } from "@sb-components/_blocks/code/IOExampleCard/IOExampleCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof CodeConsole> = {
     title: "Block/Code/CodeConsole",

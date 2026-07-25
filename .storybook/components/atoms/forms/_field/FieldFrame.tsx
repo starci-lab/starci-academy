@@ -35,7 +35,12 @@ export interface FieldFrameProps {
     isSkeleton?: boolean
     /** Control-shaped skeleton khi `isSkeleton` (atom truyền hộp của chính nó). */
     skeletonControl?: ReactNode
-    /** Control thật (ô HeroUI đã bọc). */
+    /**
+     * Control thật (ô HeroUI đã bọc). Ngoại lệ hợp lệ §12b (atom-WRAPPER thật):
+     * `FieldFrame` là khung bọc, phải nhận NGUYÊN control tuỳ ý của atom gọi nó
+     * (Input/Select/Choice/…) — không thể thay bằng prop dữ liệu vì control không
+     * phải "nội dung" mà là một cây component hoàn chỉnh.
+     */
     children?: ReactNode
     /** `id` control để `htmlFor` nhãn trỏ đúng — atom truyền cùng id xuống control. */
     id?: string
@@ -68,7 +73,7 @@ const withRequired = (label: ReactNode, isRequired?: boolean) =>
  * `FieldFrame` — label/hint/control/error column shared by mọi form atom.
  * @param props - {@link FieldFrameProps}
  */
-export const FieldFrame = ({
+const FieldFrameBase = ({
     label,
     hint,
     errorMessage,
@@ -129,3 +134,8 @@ export const FieldFrame = ({
         </div>
     )
 }
+
+/** `FieldFrame.*` — label/hint/control/error scaffold namespace. */
+export const FieldFrame = Object.assign(FieldFrameBase, {
+    Base: FieldFrameBase,
+})

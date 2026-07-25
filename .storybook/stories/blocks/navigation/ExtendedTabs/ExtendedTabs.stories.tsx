@@ -3,11 +3,11 @@ import type { ReactNode } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Tabs } from "@heroui/react"
 import { HouseIcon, CompassIcon, GraduationCapIcon } from "@phosphor-icons/react"
-import { ExtendedTabs } from "@sb-components/blocks/navigation/ExtendedTabs/ExtendedTabs"
+import { ExtendedTabs } from "@sb-components/atoms/navigation/ExtendedTabs/ExtendedTabs"
 
-const meta: Meta<typeof ExtendedTabs> = {
-    title: "Primitives/Navigation/ExtendedTabs",
-    component: ExtendedTabs,
+const meta: Meta<typeof ExtendedTabs.Base> = {
+    title: "Atoms/Navigation/ExtendedTabs",
+    component: ExtendedTabs.Base,
     tags: ["autodocs"],
     parameters: {
         layout: "fullscreen",
@@ -16,7 +16,7 @@ const meta: Meta<typeof ExtendedTabs> = {
 
 export default meta
 
-type Story = StoryObj<typeof ExtendedTabs>
+type Story = StoryObj<typeof ExtendedTabs.Base>
 
 /** Owns the selected-tab state since `ExtendedTabs` is fully controlled. */
 const Controlled = ({
@@ -32,9 +32,9 @@ const Controlled = ({
 }) => {
     const [selectedKey, setSelectedKey] = useState(defaultKey)
     return (
-        <ExtendedTabs selectedKey={selectedKey} onSelectionChange={setSelectedKey} variant={variant} size={size}>
+        <ExtendedTabs.Base selectedKey={selectedKey} onSelectionChange={setSelectedKey} variant={variant} size={size}>
             {children}
-        </ExtendedTabs>
+        </ExtendedTabs.Base>
     )
 }
 

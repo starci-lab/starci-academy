@@ -1,12 +1,12 @@
 import type { SVGProps } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ContinueCard } from "@sb-components/blocks/cards/ContinueCard/ContinueCard"
-import { SectionCard } from "@sb-components/blocks/cards/SectionCard/SectionCard"
-import { Skeleton } from "@sb-components/blocks/skeleton/Skeleton/Skeleton"
+import { ContinueCard } from "@sb-components/_designs/cards/ContinueCard/ContinueCard"
+import { SectionCard } from "@sb-components/_designs/cards/SectionCard/SectionCard"
+import { Skeleton } from "@sb-components/atoms/display/Skeleton/Skeleton"
 import { WarningIcon } from "@phosphor-icons/react"
-import { Feedback } from "@sb-components/blocks/feedback/Feedback/Feedback"
-import { Button } from "@sb-components/blocks/buttons/Button/Button"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { Feedback } from "@sb-components/layouts/feedback/Feedback/Feedback"
+import { Button } from "@sb-components/_designs/buttons/Button/Button"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 // `Feedback.Empty` nhận icon là COMPONENT ref và tự ép `size-8` (§4/§5) — phosphor
 // `weight="duotone"` không đi kèm được nữa, nên bọc thành component để GIỮ NGUYÊN nét vẽ.

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { MilestoneRoadmap } from "@sb-components/blocks/stats/MilestoneRoadmap/MilestoneRoadmap"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { MilestoneRoadmap } from "@sb-components/_blocks/stats/MilestoneRoadmap/MilestoneRoadmap"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof MilestoneRoadmap> = {
     title: "Block/Stats/MilestoneRoadmap",

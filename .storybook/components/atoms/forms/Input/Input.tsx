@@ -19,8 +19,8 @@ import type { DateValue } from "@internationalized/date"
 // that is where HeroUI's own TimeField imports it from (NOT @internationalized/date, which
 // only exports the concrete `Time` class used to CONSTRUCT a value).
 import type { TimeValue } from "react-aria-components"
-import { Chip } from "../../chips/Chip/Chip"
-import { FieldFrame, fieldName } from "../_field/FieldFrame"
+import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
+import { FieldFrame, fieldName } from "@sb-components/atoms/forms/_field/FieldFrame"
 
 /**
  * Field-frame props mọi atom form nhận để TỰ mang nhãn/mô tả/lỗi/bắt buộc (thầy
@@ -78,7 +78,7 @@ const InputText = ({ value, onValueChange, placeholder, isDisabled, isInvalid, a
     const controlId = useId()
     const invalid = isInvalid || errorMessage != null
     return (
-        <FieldFrame
+        <FieldFrame.Base
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -99,7 +99,7 @@ const InputText = ({ value, onValueChange, placeholder, isDisabled, isInvalid, a
                     data-anat-part={showAnatomy ? "Field" : undefined}
                 />
             </HeroTextField>
-        </FieldFrame>
+        </FieldFrame.Base>
     )
 }
 
@@ -123,7 +123,7 @@ const InputTextarea = ({
     const controlId = useId()
     const invalid = isInvalid || errorMessage != null
     return (
-        <FieldFrame
+        <FieldFrame.Base
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -145,7 +145,7 @@ const InputTextarea = ({
                     data-anat-part={showAnatomy ? "Field" : undefined}
                 />
             </HeroTextField>
-        </FieldFrame>
+        </FieldFrame.Base>
     )
 }
 
@@ -181,7 +181,7 @@ const InputNumber = ({
 } & FrameProps) => {
     const invalid = isInvalid || errorMessage != null
     return (
-        <FieldFrame
+        <FieldFrame.Base
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -211,7 +211,7 @@ const InputNumber = ({
                     </HeroNumberField.Group>
                 </div>
             </HeroNumberField>
-        </FieldFrame>
+        </FieldFrame.Base>
     )
 }
 
@@ -245,7 +245,7 @@ const InputDate = ({
 } & FrameProps) => {
     const invalid = isInvalid || errorMessage != null
     return (
-        <FieldFrame
+        <FieldFrame.Base
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -277,7 +277,7 @@ const InputDate = ({
                     <Calendar aria-label={ariaLabel} />
                 </HeroDatePicker.Popover>
             </HeroDatePicker>
-        </FieldFrame>
+        </FieldFrame.Base>
     )
 }
 
@@ -300,7 +300,7 @@ const InputSearch = ({
     const controlId = useId()
     const invalid = isInvalid || errorMessage != null
     return (
-        <FieldFrame
+        <FieldFrame.Base
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -324,7 +324,7 @@ const InputSearch = ({
                     <HeroSearchField.Input id={controlId} placeholder={placeholder} />
                 </HeroSearchField.Group>
             </HeroSearchField>
-        </FieldFrame>
+        </FieldFrame.Base>
     )
 }
 
@@ -348,7 +348,7 @@ const InputPassword = ({
     const controlId = useId()
     const invalid = isInvalid || errorMessage != null
     return (
-        <FieldFrame
+        <FieldFrame.Base
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -380,7 +380,7 @@ const InputPassword = ({
                     </button>
                 </div>
             </HeroTextField>
-        </FieldFrame>
+        </FieldFrame.Base>
     )
 }
 
@@ -419,7 +419,7 @@ const InputCurrency = ({
 } & FrameProps) => {
     const invalid = isInvalid || errorMessage != null
     return (
-        <FieldFrame
+        <FieldFrame.Base
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -452,7 +452,7 @@ const InputCurrency = ({
                     </HeroNumberField.Group>
                 </div>
             </HeroNumberField>
-        </FieldFrame>
+        </FieldFrame.Base>
     )
 }
 
@@ -482,7 +482,7 @@ const InputTime = ({
 } & FrameProps) => {
     const invalid = isInvalid || errorMessage != null
     return (
-        <FieldFrame
+        <FieldFrame.Base
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -505,7 +505,7 @@ const InputTime = ({
                     <HeroTimeField.Input>{(segment) => <HeroTimeField.Segment segment={segment} />}</HeroTimeField.Input>
                 </HeroTimeField.Group>
             </HeroTimeField>
-        </FieldFrame>
+        </FieldFrame.Base>
     )
 }
 
@@ -540,7 +540,7 @@ const InputOtp = ({
 } & FrameProps) => {
     const invalid = isInvalid || errorMessage != null
     return (
-        <FieldFrame
+        <FieldFrame.Base
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -573,7 +573,7 @@ const InputOtp = ({
                     ))}
                 </HeroInputOTP.Group>
             </HeroInputOTP>
-        </FieldFrame>
+        </FieldFrame.Base>
     )
 }
 
@@ -618,7 +618,7 @@ const InputTags = ({
     }
     const removeAt = (index: number) => onValueChange(value.filter((_, i) => i !== index))
     return (
-        <FieldFrame
+        <FieldFrame.Base
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -661,14 +661,14 @@ const InputTags = ({
                     className="min-w-24 flex-1 bg-transparent px-1 py-0.5 text-sm outline-none"
                 />
             </div>
-        </FieldFrame>
+        </FieldFrame.Base>
     )
 }
 
 /**
  * `Input.*` — field-control atom namespace. Ô trần; primitive fields compose members.
  */
-export const Input = {
+export const Input = Object.assign(InputText, {
     Text: InputText,
     Textarea: InputTextarea,
     Number: InputNumber,
@@ -679,4 +679,4 @@ export const Input = {
     Time: InputTime,
     Otp: InputOtp,
     Tags: InputTags,
-}
+})

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { SearchBar } from "@sb-components/blocks/form/SearchBar/SearchBar"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { SearchBar } from "@sb-components/_designs/form/SearchBar/SearchBar"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ANATOMY IS PER-LEAF: each story below is its OWN leaf and wraps its render in

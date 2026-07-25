@@ -184,6 +184,6 @@ const PaginationLink = ({ pageNumber, isActive, onPageChange, showAnatomy }: Pag
  * `Pagination.*` — the page-nav ATOM namespace. `Pagination.Base` is the single
  * constrained pager (windowing / ellipsis are LEAVES of it, prop-driven).
  */
-export const Pagination = {
+export const Pagination = Object.assign(PaginationBase, {
     Base: PaginationBase,
-}
+})

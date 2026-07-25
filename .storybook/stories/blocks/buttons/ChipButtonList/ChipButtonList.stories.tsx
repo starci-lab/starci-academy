@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
 import { BookOpenIcon, CardsIcon, ListMagnifyingGlassIcon, MagnifyingGlassIcon, SparkleIcon } from "@phosphor-icons/react"
-import { ChipButtonList } from "@sb-components/blocks/buttons/ChipButtonList/ChipButtonList"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { ChipButtonList } from "@sb-components/layouts/buttons/ChipButtonList/ChipButtonList"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — a row of secondary "suggestion" chips OR a vertical ghost "menu" list,

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Progress } from "@sb-components/atoms/display/Progress/Progress"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Progress.Meter> = {
     title: "Atoms/Display/Progress/Progress.Meter",
@@ -35,7 +35,7 @@ export const Value: Story = {
                 leaf="Value"
                 parts={METER_PARTS}
                 reason="Meter = ĐO LƯỜNG tĩnh (bọc react-aria Meter). Không phải tiến-trình → không có indeterminate; tone tải nghĩa NGƯỠNG (xem Bands)."
-                code={`<Progress.Meter value={72} max={100} />`}
+                code={"<Progress.Meter value={72} max={100} />"}
             >
                 <div className="w-72">
                     <Progress.Meter value={72} ariaLabel="Dung lượng ổ đĩa" showAnatomy />
@@ -55,7 +55,7 @@ export const Bands: Story = {
                 leaf="Bands"
                 parts={METER_PARTS}
                 note="Với Meter, MÀU là thông tin: cùng phép đo, band khác nhau theo mức (an toàn → cảnh báo → nguy hiểm)."
-                code={`<Progress.Meter value={30|65|92} color="success|warning|danger" />`}
+                code={"<Progress.Meter value={30|65|92} color=\"success|warning|danger\" />"}
             >
                 <div className="flex w-72 flex-col gap-4">
                     <Progress.Meter value={30} color="success" ariaLabel="Mức an toàn" showAnatomy />
@@ -77,7 +77,7 @@ export const Loading: Story = {
                 leaf="Loading"
                 parts={SKELETON_PARTS}
                 note="isSkeleton → thanh shimmer OWNED bởi atom (hybrid C) — trước khi biết phép đo."
-                code={`<Progress.Meter isSkeleton value={0} />`}
+                code={"<Progress.Meter isSkeleton value={0} />"}
             >
                 <div className="w-72">
                     <Progress.Meter isSkeleton value={0} showAnatomy />

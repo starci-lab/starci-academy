@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { MarkdownContent } from "@sb-components/blocks/rendering/MarkdownContent/MarkdownContent"
+import { MarkdownContent } from "@sb-components/_designs/rendering/MarkdownContent/MarkdownContent"
 
 const meta: Meta<typeof MarkdownContent> = {
-    title: "Primitives/Rendering/MarkdownContent",
+    title: "Design/Rendering/MarkdownContent",
     component: MarkdownContent,
     tags: ["autodocs"],
     parameters: {

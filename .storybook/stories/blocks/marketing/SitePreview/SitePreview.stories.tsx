@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { SitePreview } from "@sb-components/blocks/marketing/SitePreview/SitePreview"
-import { ShowcaseMockup } from "@sb-components/blocks/marketing/ShowcaseMockup/ShowcaseMockup"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { SitePreview } from "@sb-components/_designs/marketing/SitePreview/SitePreview"
+import { ShowcaseMockup } from "@sb-components/_designs/marketing/ShowcaseMockup/ShowcaseMockup"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — a fixed marketing preview of a course-catalog page (nav + filter

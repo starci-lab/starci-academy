@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { BrandLockup } from "@sb-components/blocks/identity/BrandLockup/BrandLockup"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BrandLockup } from "@sb-components/_designs/identity/BrandLockup/BrandLockup"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof BrandLockup> = {
     title: "Design/Identity/BrandLockup",

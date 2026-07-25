@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { MicroservicesScene } from "@sb-components/blocks/marketing/MicroservicesScene/MicroservicesScene"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { MicroservicesScene } from "@sb-components/_designs/marketing/MicroservicesScene/MicroservicesScene"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — a coded hero illustration: an isometric "mini infra" (pod cubes behind

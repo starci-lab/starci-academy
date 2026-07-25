@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button } from "@heroui/react"
-import { PricingCard } from "@sb-components/blocks/cards/PricingCard/PricingCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { PricingCard } from "@sb-components/_designs/cards/PricingCard/PricingCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — one pricing tier (a self-framed SectionCard surface). The leaves here

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { FlashcardDeckList, type FlashcardDeckListDeck } from "@sb-components/blocks/learn/FlashcardDeckList/FlashcardDeckList"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { FlashcardDeckList, type FlashcardDeckListDeck } from "@sb-components/_blocks/learn/FlashcardDeckList/FlashcardDeckList"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * BLOCK — the flashcard-deck browse REGION (search + count + grid/line toggle +

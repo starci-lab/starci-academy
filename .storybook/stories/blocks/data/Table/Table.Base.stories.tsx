@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Table } from "@sb-components/blocks/data/Table/Table"
+import { Table } from "@sb-components/layouts/data/Table/Table"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE (§12f/§13) — `Table.Base` là KHUNG bảng: nó SỞ HỮU cấu hình cột
@@ -169,7 +169,7 @@ export const Empty: Story = {
   ariaLabel="Danh sách học viên"
   columns={COLUMNS}
   items={[]}
-  emptyContent={<Typography.Sm color="muted" text="Chưa có học viên nào." />}
+  emptyContent={<Typography.Base size="sm" color="muted" text="Chưa có học viên nào." />}
 />`}
             >
                 <Table.Base
@@ -177,7 +177,7 @@ export const Empty: Story = {
                     ariaLabel="Danh sách học viên"
                     columns={COLUMNS}
                     items={[]}
-                    emptyContent={<Typography.Sm color="muted" text="Chưa có học viên nào." />}
+                    emptyContent={<Typography.Base size="sm" color="muted" text="Chưa có học viên nào." />}
                 />
             </BlockAnatomy>
         </div>

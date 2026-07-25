@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React, { useState } from "react"
-import { ReactionBar, ReactionType } from "@sb-components/blocks/feed/ReactionBar/ReactionBar"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { ReactionBar, ReactionType } from "@sb-components/_designs/feed/ReactionBar/ReactionBar"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — the Facebook-style reaction bar for a feed item: a react trigger that

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Pagination } from "@sb-components/atoms/navigation/Pagination/Pagination"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Pagination.Base> = {
     title: "Atoms/Navigation/Pagination/Pagination.Base",
@@ -41,7 +41,7 @@ export const Default: Story = {
                     leaf="Default"
                     parts={BASE_PARTS}
                     reason="Atom page-nav DUY NHẤT bọc HeroUI Pagination; windowing/'…' là leaf (prop) khi nhiều trang, không component riêng."
-                    code={`<Pagination.Base currentPage={page} totalPages={5} onPageChange={setPage} />`}
+                    code={"<Pagination.Base currentPage={page} totalPages={5} onPageChange={setPage} />"}
                 >
                     <Pagination.Base currentPage={page} totalPages={5} onPageChange={setPage} showAnatomy />
                 </BlockAnatomy>
@@ -62,7 +62,7 @@ export const ManyPages: Story = {
                     leaf="ManyPages"
                     parts={MANY_PARTS}
                     note="totalPages=24, current=12 → 1 · … · 11 12 13 · … · 24. siblings=1 (mặc định)."
-                    code={`<Pagination.Base currentPage={12} totalPages={24} onPageChange={setPage} />`}
+                    code={"<Pagination.Base currentPage={12} totalPages={24} onPageChange={setPage} />"}
                 >
                     <Pagination.Base currentPage={page} totalPages={24} onPageChange={setPage} showAnatomy />
                 </BlockAnatomy>
@@ -81,7 +81,7 @@ export const Loading: Story = {
                 leaf="Loading"
                 parts={SKELETON_PARTS}
                 note="isSkeleton → hàng ô shimmer OWNED bởi atom (hybrid C) khi tổng trang chưa biết."
-                code={`<Pagination.Base isSkeleton currentPage={1} totalPages={5} onPageChange={fn} />`}
+                code={"<Pagination.Base isSkeleton currentPage={1} totalPages={5} onPageChange={fn} />"}
             >
                 <Pagination.Base isSkeleton currentPage={1} totalPages={5} onPageChange={() => {}} showAnatomy />
             </BlockAnatomy>

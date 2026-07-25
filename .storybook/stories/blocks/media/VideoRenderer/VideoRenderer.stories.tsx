@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { VideoRenderer } from "@sb-components/blocks/media/VideoRenderer/VideoRenderer"
-import { LessonVideoType, VideoHostPlatform, VideoRendererType } from "@sb-components/blocks/media/VideoRenderer/enums"
+import { VideoRenderer } from "@sb-components/_designs/media/VideoRenderer/VideoRenderer"
+import { LessonVideoType, VideoHostPlatform, VideoRendererType } from "@sb-components/_designs/media/VideoRenderer/enums"
 
 const meta: Meta<typeof VideoRenderer> = {
     title: "Design/Media/VideoRenderer",

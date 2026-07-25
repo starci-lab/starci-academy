@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CircleCheck } from "@gravity-ui/icons"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 // README (rules xài icon) hiện ngay đầu trang Overview — nguồn đầy đủ ở
 // `components/atoms/chips/Chip/README.md`.
@@ -72,7 +72,7 @@ export const Base: Story = {
                 leaf="Base"
                 parts={LABEL_PARTS}
                 reason="Atom chip DUY NHẤT bọc HeroUI Chip; biến thể phân bằng prop (icon/onRemove) → leaf = composition."
-                code={`<Chip.Base tone="neutral" text="Draft" />`}
+                code={"<Chip.Base tone=\"neutral\" text=\"Draft\" />"}
             >
                 <Chip.Base tone="neutral" text="Draft" showAnatomy />
             </BlockAnatomy>
@@ -90,7 +90,7 @@ export const WithIcon: Story = {
                 leaf="WithIcon"
                 parts={ICON_PARTS}
                 note="icon = component reference (`CircleCheck`, outline — KHÔNG fill). Xem README: chỉ xài icon cho success/failure · nhấn mạnh · brand."
-                code={`<Chip.Base tone="success" icon={CircleCheck} text="Verified" />`}
+                code={"<Chip.Base tone=\"success\" icon={CircleCheck} text=\"Verified\" />"}
             >
                 <Chip.Base tone="success" icon={CircleCheck} text="Verified" showAnatomy />
             </BlockAnatomy>
@@ -108,7 +108,7 @@ export const Removable: Story = {
                 leaf="Removable"
                 parts={REMOVE_PARTS}
                 note="onRemove bật × (filter token). Không icon leading."
-                code={`<Chip.Base tone="accent" text="React" onRemove={fn} removeLabel="Remove React filter" />`}
+                code={"<Chip.Base tone=\"accent\" text=\"React\" onRemove={fn} removeLabel=\"Remove React filter\" />"}
             >
                 <Chip.Base tone="accent" onRemove={() => {}} removeLabel="Remove React filter" text="React" showAnatomy />
             </BlockAnatomy>
@@ -126,7 +126,7 @@ export const Loading: Story = {
                 leaf="Loading"
                 parts={SKELETON_PARTS}
                 note="isSkeleton → pill shimmer OWNED bởi atom (hybrid C)."
-                code={`<Chip.Base isSkeleton text="Verified" />`}
+                code={"<Chip.Base isSkeleton text=\"Verified\" />"}
             >
                 <Chip.Base isSkeleton text="Verified" showAnatomy />
             </BlockAnatomy>

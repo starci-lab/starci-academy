@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { KeyValue } from "@sb-components/blocks/data/KeyValue/KeyValue"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { KeyValue } from "@sb-components/layouts/data/KeyValue/KeyValue"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE (§12f/§13) — `KeyValue.Row` sở hữu HÌNH THÁI của MỘT cặp

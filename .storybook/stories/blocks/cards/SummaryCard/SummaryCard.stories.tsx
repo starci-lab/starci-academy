@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { BookOpenIcon, FireIcon, TrophyIcon } from "@phosphor-icons/react"
-import { SummaryCard } from "@sb-components/blocks/cards/SummaryCard/SummaryCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { SummaryCard } from "@sb-components/_designs/cards/SummaryCard/SummaryCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof SummaryCard> = {
     title: "Design/Cards/SummaryCard",

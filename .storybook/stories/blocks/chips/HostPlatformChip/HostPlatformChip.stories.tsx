@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { HostPlatformChip, VideoHostPlatform } from "@sb-components/blocks/chips/HostPlatformChip/HostPlatformChip"
+import { HostPlatformChip, VideoHostPlatform } from "@sb-components/_designs/chips/HostPlatformChip/HostPlatformChip"
 
 const meta: Meta<typeof HostPlatformChip> = {
-    title: "Primitives/Chips/HostPlatformChip",
+    title: "Design/Chips/HostPlatformChip",
     component: HostPlatformChip,
     tags: ["autodocs"],
     parameters: {

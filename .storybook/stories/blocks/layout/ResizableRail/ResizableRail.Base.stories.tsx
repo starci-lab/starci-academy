@@ -10,9 +10,9 @@ import {
     Typography,
     cn,
 } from "@heroui/react"
-import { ResizableRail } from "@sb-components/blocks/layout/ResizableRail/ResizableRail"
-import { Page } from "@sb-components/blocks/layout/Page/Page"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { ResizableRail } from "@sb-components/layouts/layout/ResizableRail/ResizableRail"
+import { Page } from "@sb-components/layouts/layout/Page/Page"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * `ResizableRail.Base` — a side rail whose width the reader drags, persisted to

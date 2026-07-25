@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button, Typography } from "@heroui/react"
 import { LightningIcon } from "@phosphor-icons/react"
-import { SectionCard } from "@sb-components/blocks/cards/SectionCard/SectionCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { SectionCard } from "@sb-components/_designs/cards/SectionCard/SectionCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof SectionCard> = {
     title: "Design/Cards/SectionCard",

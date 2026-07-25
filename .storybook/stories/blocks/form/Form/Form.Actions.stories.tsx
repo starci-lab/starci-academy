@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { FloppyDisk, Xmark } from "@gravity-ui/icons"
-import { Form } from "@sb-components/blocks/form/Form/Form"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { Form } from "@sb-components/layouts/form/Form/Form"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * KHUNG (layout tier §13) — `Form.Actions`: hàng nút cuối form. Là khung DANH

@@ -1,10 +1,10 @@
 import type { SVGProps } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CodeIcon, StackIcon, TrayIcon } from "@phosphor-icons/react"
-import { TopicLane } from "@sb-components/blocks/marketing/TopicLane/TopicLane"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
-import { Feedback } from "@sb-components/blocks/feedback/Feedback/Feedback"
-import { Skeleton } from "@sb-components/blocks/skeleton/Skeleton/Skeleton"
+import { TopicLane } from "@sb-components/_blocks/marketing/TopicLane/TopicLane"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { Feedback } from "@sb-components/layouts/feedback/Feedback/Feedback"
+import { Skeleton } from "@sb-components/atoms/display/Skeleton/Skeleton"
 
 // `Feedback.Empty` nhận icon là COMPONENT ref và tự ép `size-8` (§4/§5) — phosphor
 // `weight="duotone"` không đi kèm được nữa, nên bọc thành component để GIỮ NGUYÊN nét vẽ.

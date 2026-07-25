@@ -285,8 +285,8 @@ const ButtonGroup = ({ items, size = "md", isSkeleton = false, showAnatomy = fal
  * `Button.*` — action-trigger atom namespace. `Base` (nhãn) · `Icon` (chỉ-icon) ·
  * `Group` (hàng nút). Biến thể thị giác phân bằng `variant` (leaf = prop).
  */
-export const Button = {
+export const Button = Object.assign(ButtonBase, {
     Base: ButtonBase,
     Icon: ButtonIcon,
     Group: ButtonGroup,
-}
+})

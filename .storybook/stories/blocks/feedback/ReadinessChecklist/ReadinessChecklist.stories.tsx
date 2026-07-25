@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CircuitryIcon, CloudIcon, DatabaseIcon, RobotIcon } from "@phosphor-icons/react"
-import { ReadinessChecklist, type ReadinessChecklistItem } from "@sb-components/blocks/feedback/ReadinessChecklist/ReadinessChecklist"
-import { SurfaceCard } from "@sb-components/blocks/cards/SurfaceCard/SurfaceCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { ReadinessChecklist, type ReadinessChecklistItem } from "@sb-components/_blocks/feedback/ReadinessChecklist/ReadinessChecklist"
+import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof ReadinessChecklist> = {
     title: "Block/Feedback/ReadinessChecklist",

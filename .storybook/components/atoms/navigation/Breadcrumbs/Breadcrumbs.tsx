@@ -180,6 +180,6 @@ const BreadcrumbsBase = ({
  * single constrained trail; truncation (`maxItems`) and the responsive back-link
  * collapse (`collapseOnMobile` / `collapseFrom`) are LEAVES of it, prop-driven.
  */
-export const Breadcrumbs = {
+export const Breadcrumbs = Object.assign(BreadcrumbsBase, {
     Base: BreadcrumbsBase,
-}
+})

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { BuildingOfficeIcon } from "@phosphor-icons/react"
-import { RemovableToken } from "@sb-components/blocks/chips/RemovableToken/RemovableToken"
+import { RemovableToken } from "@sb-components/layouts/chips/RemovableToken/RemovableToken"
 
 const meta: Meta<typeof RemovableToken> = {
     title: "Primitives/Chips/RemovableToken",

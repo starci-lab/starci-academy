@@ -1,8 +1,8 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Typography } from "@heroui/react"
-import { Disclosure } from "@sb-components/blocks/layout/Disclosure/Disclosure"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { Disclosure } from "@sb-components/layouts/layout/Disclosure/Disclosure"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * `Disclosure.Base` is the generic collapsible khung: a trigger row (leading

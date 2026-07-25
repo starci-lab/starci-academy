@@ -11,9 +11,9 @@ import {
 // size = font-size (leading↔title text-sm → size-3.5; lock↔chip text-xs → size-3).
 // So sánh weight/size với các story List.Row khác (còn Phosphor). Chưa đụng canon.
 import { CircleCheckFill, Play, Circle, Lock } from "@gravity-ui/icons"
-import { List } from "@sb-components/blocks/lists/List/List"
-import { DifficultyChip } from "@sb-components/blocks/chips/DifficultyChip/DifficultyChip"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { List } from "@sb-components/layouts/lists/List/List"
+import { DifficultyChip } from "@sb-components/_designs/chips/DifficultyChip/DifficultyChip"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `List.Row` là khung MỘT HÀNG. Thứ nó đẻ ra:

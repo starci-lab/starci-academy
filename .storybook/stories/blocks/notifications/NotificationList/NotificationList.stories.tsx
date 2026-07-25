@@ -7,11 +7,12 @@ import {
     FlameIcon,
     VideoCameraIcon,
 } from "@phosphor-icons/react"
-import { NotificationList } from "@sb-components/blocks/notifications/NotificationList/NotificationList"
-import type { NotificationGroup } from "@sb-components/blocks/notifications/NotificationList/NotificationList"
-import { Feedback } from "@sb-components/blocks/feedback/Feedback/Feedback"
-import { Skeleton } from "@sb-components/blocks/skeleton/Skeleton/Skeleton"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { NotificationList } from "@sb-components/_blocks/notifications/NotificationList/NotificationList"
+import type { NotificationGroup } from "@sb-components/_blocks/notifications/NotificationList/NotificationList"
+import { Feedback } from "@sb-components/layouts/feedback/Feedback/Feedback"
+import { Skeleton } from "@sb-components/atoms/display/Skeleton/Skeleton"
+import { Button } from "@sb-components/atoms/buttons/Button/Button"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * BLOCK — the notification list REGION in the bell popover: an optional header
@@ -247,7 +248,7 @@ export const SkeletonLoading: Story = {
                                 width="1/3"
                                 anatPart="Skeleton.Typography.Header"
                             />
-                            <Skeleton.Button width="w-28" anatPart="Skeleton.Button" />
+                            <Button.Base isSkeleton label="" className="w-28" />
                         </div>
                         {/* one day group: label + rows */}
                         <div className="flex max-h-[420px] flex-col gap-3 p-1">

@@ -3,8 +3,8 @@ import React, { useState } from "react"
 import type { ReactNode } from "react"
 import { Button } from "@heroui/react"
 import { PaperclipIcon } from "@phosphor-icons/react"
-import { Composer } from "@sb-components/blocks/feed/Composer/Composer"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { Composer } from "@sb-components/_blocks/feed/Composer/Composer"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * BLOCK — a controlled message-input ROW (avatar + auto-growing field + Send),

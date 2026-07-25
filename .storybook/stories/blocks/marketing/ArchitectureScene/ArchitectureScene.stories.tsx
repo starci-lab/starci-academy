@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ArchitectureScene } from "@sb-components/blocks/marketing/ArchitectureScene/ArchitectureScene"
-import type { ArchitectureSceneData } from "@sb-components/blocks/marketing/ArchitectureScene/types"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { ArchitectureScene } from "@sb-components/_designs/marketing/ArchitectureScene/ArchitectureScene"
+import type { ArchitectureSceneData } from "@sb-components/_designs/marketing/ArchitectureScene/types"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — a data-driven 3D architecture hero (real WebGL via react-three-fiber):

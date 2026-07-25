@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { SegmentBar } from "@sb-components/blocks/stats/SegmentBar/SegmentBar"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { SegmentBar } from "@sb-components/layouts/stats/SegmentBar/SegmentBar"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof SegmentBar> = {
     title: "Primitives/Stats/SegmentBar",

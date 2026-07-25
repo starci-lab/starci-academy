@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Breadcrumbs, Button, Chip, Typography } from "@heroui/react"
-import { Page } from "@sb-components/blocks/layout/Page/Page"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { Page } from "@sb-components/layouts/layout/Page/Page"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * `Page.Header` — the breadcrumb/title/description/actions/meta khung of a route.

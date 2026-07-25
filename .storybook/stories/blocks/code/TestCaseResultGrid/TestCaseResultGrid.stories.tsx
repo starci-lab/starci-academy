@@ -1,8 +1,8 @@
 import type { ReactNode } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { TestCaseResultGrid } from "@sb-components/blocks/code/TestCaseResultGrid/TestCaseResultGrid"
-import { Skeleton } from "@sb-components/blocks/skeleton/Skeleton/Skeleton"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { TestCaseResultGrid } from "@sb-components/_blocks/code/TestCaseResultGrid/TestCaseResultGrid"
+import { Skeleton } from "@sb-components/atoms/display/Skeleton/Skeleton"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof TestCaseResultGrid> = {
     title: "Block/Code/TestCaseResultGrid",

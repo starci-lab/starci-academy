@@ -1,15 +1,18 @@
 import type { ComponentType, ReactNode, SVGProps } from "react"
-import { Alert as HeroAlert, cn } from "@heroui/react"
-import { CircleCheck, CircleInfo, CircleXmark, TriangleExclamation, Xmark } from "@gravity-ui/icons"
+import { Alert } from "@sb-components/atoms/feedback/Alert/Alert"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Toast.Base`: the ONE constrained notification-surface atom over HeroUI Alert.
+ * ATOM — `Toast.Base`: the ONE constrained notification-surface atom.
  *
- * Bọc HeroUI `Alert` TỐI ĐA (Indicator · Content · Title · Description). Đây là bề
- * mặt thông báo TĨNH (soi được, không cần queue sống) — feature dùng nó làm thân của
- * một toast/inline-alert. Atom SỞ HỮU: map status→tone, icon mặc định theo status
- * (gravity), scale icon, layout action/close.
+ * Compose từ atom `Alert.Base` (thầy chốt 2026-07-25 — toast và callout là CÙNG một
+ * hạt alert, chỉ khác chỗ đặt: toast nổi, callout nằm trong surface). Trước đây file
+ * này tự `import { Alert } from "@heroui/react"` và tự nuôi bảng icon + nút × song
+ * song với `Feedback.Callout` → drift. Nay chỉ còn CHỖ ĐẶT: `tone="plain"` (tint mặc
+ * định, không ép soft) + glyph `sm`. Port xuống HeroUI nằm DUY NHẤT ở `Alert.Base`.
+ *
+ * Đây là bề mặt thông báo TĨNH (soi được, không cần queue sống) — feature dùng nó làm
+ * thân của một toast/inline-alert.
  *
  * NAMESPACE (thầy chốt 2026-07-25): atom KHÔNG export component trần — mọi thành
  * viên đi qua `Toast.*` (hôm nay chỉ có `Base`), khớp `Chip.*` / `Button.*`.
@@ -30,20 +33,12 @@ export type IconComponent = ComponentType<SVGProps<SVGSVGElement>>
 /** Semantic tone of the toast. */
 export type ToastStatus = "success" | "warning" | "danger" | "info"
 
-/** `status` → HeroUI `Alert` status (info folds to the accent tint). */
+/** `status` → the `Alert.Base` atom status (info folds to the accent tint). */
 const STATUS_TO_ALERT: Record<ToastStatus, "success" | "warning" | "danger" | "accent"> = {
     success: "success",
     warning: "warning",
     danger: "danger",
     info: "accent",
-}
-
-/** Default indicator icon per status (gravity, outline). */
-const STATUS_ICON: Record<ToastStatus, IconComponent> = {
-    success: CircleCheck,
-    warning: TriangleExclamation,
-    danger: CircleXmark,
-    info: CircleInfo,
 }
 
 /** Props for {@link ToastBase}. */
@@ -83,43 +78,25 @@ const ToastBase = ({
     closeLabel,
     showAnatomy = false,
     className,
-}: ToastBaseProps) => {
-    const Icon = icon ?? STATUS_ICON[status]
-    return (
-        <HeroAlert status={STATUS_TO_ALERT[status]} className={cn("shadow-none", className)}>
-            <HeroAlert.Indicator className="[&_svg]:size-5!" data-anat-part={showAnatomy ? "Icon" : undefined}>
-                <Icon aria-hidden />
-            </HeroAlert.Indicator>
-            <HeroAlert.Content data-anat-part={showAnatomy ? "Content" : undefined}>
-                <HeroAlert.Title data-anat-part={showAnatomy ? "Title" : undefined}>{title}</HeroAlert.Title>
-                {description ? (
-                    <HeroAlert.Description data-anat-part={showAnatomy ? "Description" : undefined}>{description}</HeroAlert.Description>
-                ) : null}
-            </HeroAlert.Content>
-            {action ? (
-                <div className="shrink-0" data-anat-part={showAnatomy ? "Action" : undefined}>
-                    {action}
-                </div>
-            ) : null}
-            {onClose ? (
-                <button
-                    type="button"
-                    aria-label={closeLabel ?? "Đóng"}
-                    onClick={onClose}
-                    data-anat-part={showAnatomy ? "Close" : undefined}
-                    className="text-muted inline-flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-full opacity-70 outline-none transition hover:bg-current/10 hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-accent [&_svg]:size-4"
-                >
-                    <Xmark aria-hidden />
-                </button>
-            ) : null}
-        </HeroAlert>
-    )
-}
+}: ToastBaseProps) => (
+    <Alert.Base
+        status={STATUS_TO_ALERT[status]}
+        tone="plain"
+        title={title}
+        description={description}
+        icon={icon}
+        action={action}
+        onClose={onClose}
+        closeAriaLabel={closeLabel}
+        className={className}
+        showAnatomy={showAnatomy}
+    />
+)
 
 /**
  * `Toast.*` — the notification-surface ATOM namespace. `Toast.Base` là bề mặt thông
  * báo DUY NHẤT (status/action/close đều là LEAF prop-driven của nó).
  */
-export const Toast = {
+export const Toast = Object.assign(ToastBase, {
     Base: ToastBase,
-}
+})

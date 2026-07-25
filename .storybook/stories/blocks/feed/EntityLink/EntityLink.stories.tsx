@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
-import { EntityLink } from "@sb-components/blocks/feed/EntityLink/EntityLink"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { EntityLink } from "@sb-components/_designs/feed/EntityLink/EntityLink"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — an inline entity reference inside a feed/activity sentence (the actor

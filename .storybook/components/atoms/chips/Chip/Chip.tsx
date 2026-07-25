@@ -1,7 +1,7 @@
 import type { ComponentType, ReactNode, SVGProps } from "react"
-import { Chip as HeroChip, Skeleton as HeroSkeleton, cn } from "@heroui/react"
+import { Chip as HeroChip, Skeleton as HeroSkeleton, Typography as HeroTypography, cn } from "@heroui/react"
 import { Xmark, CircleFill } from "@gravity-ui/icons"
-import { CHIP_TONE_TO_COLOR, type ChipTone } from "../chip-tone"
+import { CHIP_TONE_TO_COLOR, type ChipTone } from "@sb-components/atoms/chips/chip-tone"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -91,16 +91,34 @@ const ChipBase = ({
     )
 }
 
+/**
+ * Hình của chip chấm. `pill` = viên có nền `bg-default` (chấm 6px) · `bare` = chấm
+ * TRẦN + nhãn muted, không nền (chấm 12px) — dùng khi chip nằm trong một hàng dày
+ * đặc (row của list) mà thêm nền sẽ thành viên-trong-viên.
+ *
+ * Thầy chốt 2026-07-25: trước đó bản `bare` sống thành block `DotChip` RIÊNG, tự vẽ
+ * `span.rounded-full` + `Typography` — hai bảng "chấm + nhãn" nuôi song song. Gộp về
+ * đây làm MỘT trục prop, `DotChip` xoá.
+ */
+export type ChipDotVariant = "pill" | "bare"
+
 /** Props for {@link ChipDot}. */
 export interface ChipDotProps {
-    /** Label text (màu foreground). */
+    /** Label text (màu foreground ở `pill`, muted ở `bare`). */
     text: ReactNode
+    /** Hình chip — viên có nền hay chấm trần. Default `"pill"`. */
+    variant?: ChipDotVariant
     /**
      * Tailwind text-color class LÀM MÀU CHO DOT (vd `text-success` · `text-warning`).
      * Dot = gravity `CircleFill` ăn `currentColor` nên className quyết định màu chấm;
      * text của chip vẫn là foreground. Bỏ trống → dot theo màu text.
      */
     dotClassName?: string
+    /**
+     * Màu chấm dạng HEX thô (vd `#3178c6` của GitHub language colours) — khi màu KHÔNG
+     * nằm trong bảng token Tailwind. Thắng `dotClassName`; cùng cơ chế `currentColor`.
+     */
+    dotColor?: string
     /** When set → renders a trailing × and calls this on click. */
     onRemove?: () => void
     /** Accessible label for the × (caller passes a localised string). */
@@ -113,28 +131,65 @@ export interface ChipDotProps {
 }
 
 /**
- * `Chip.Dot` — neutral chip (bg-default · text foreground) với chấm trạng thái dẫn
- * đầu (gravity `CircleFill` width 6). MÀU CHẤM đi qua `dotClassName` (tailwind
- * text-color, ăn `currentColor`) — như ví dụ status-dot của HeroUI, nhưng chấm là
- * icon gravity, không phải span màu. Body chip trung tính để chấm nói lên trạng thái.
+ * `Chip.Dot` — chip chấm trạng thái. Hai HÌNH qua `variant`, MỘT cơ chế màu:
+ *   • `pill` (mặc định) — viên `bg-default` + text foreground, chấm 6px.
+ *   • `bare` — chấm 12px + nhãn muted, KHÔNG nền (chip nằm trong row dày đặc).
+ *
+ * MÀU CHẤM luôn đi qua `currentColor`: `dotClassName` (tailwind text-color) hoặc
+ * `dotColor` (hex thô, cho màu ngoài bảng token). Chấm là icon gravity `CircleFill`,
+ * KHÔNG phải span bôi background — nên hai variant dùng chung một đường màu.
  *
  * @param props - {@link ChipDotProps}
  */
-const ChipDot = ({ text, dotClassName, onRemove, removeLabel, isSkeleton = false, showAnatomy = false, className }: ChipDotProps) => {
+const ChipDot = ({
+    text,
+    variant = "pill",
+    dotClassName,
+    dotColor,
+    onRemove,
+    removeLabel,
+    isSkeleton = false,
+    showAnatomy = false,
+    className,
+}: ChipDotProps) => {
+    const bare = variant === "bare"
     if (isSkeleton) {
-        return (
+        return bare ? (
+            <span className={cn("inline-flex items-center gap-2", className)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
+                <HeroSkeleton className="size-3 shrink-0 rounded-full" />
+                <HeroSkeleton className="h-4 w-16 rounded" />
+            </span>
+        ) : (
             <HeroSkeleton
                 className={cn("h-7 rounded-full", onRemove ? "w-20" : "w-16", className)}
                 data-anat-part={showAnatomy ? "Skeleton" : undefined}
             />
         )
     }
+    // Chấm — currentColor lấy từ dotClassName (tailwind text-color) hoặc dotColor (hex).
+    const dot = (
+        <span
+            aria-hidden
+            data-anat-part={showAnatomy ? "Dot" : undefined}
+            className={cn("inline-flex shrink-0", dotClassName)}
+            style={dotColor ? { color: dotColor } : undefined}
+        >
+            <CircleFill width={bare ? 12 : 6} height={bare ? 12 : 6} />
+        </span>
+    )
+    if (bare) {
+        return (
+            <span className={cn("inline-flex w-fit items-center gap-2", className)}>
+                {dot}
+                <HeroTypography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Label" : undefined}>
+                    {text}
+                </HeroTypography>
+            </span>
+        )
+    }
     return (
         <HeroChip variant="soft" size="md" className={cn("bg-default text-foreground w-fit", className)}>
-            {/* Chấm trạng thái — currentColor lấy từ dotClassName (tailwind text-color). */}
-            <span aria-hidden data-anat-part={showAnatomy ? "Dot" : undefined} className={cn("inline-flex shrink-0", dotClassName)}>
-                <CircleFill width={6} height={6} />
-            </span>
+            {dot}
             <HeroChip.Label data-anat-part={showAnatomy ? "Label" : undefined}>{text}</HeroChip.Label>
             {onRemove ? (
                 <button
@@ -156,7 +211,7 @@ const ChipDot = ({ text, dotClassName, onRemove, removeLabel, isSkeleton = false
  * (icon / removable are LEAVES of it, prop-driven); `Chip.Dot` is the neutral
  * status-dot chip (màu chấm qua `dotClassName`).
  */
-export const Chip = {
+export const Chip = Object.assign(ChipBase, {
     Base: ChipBase,
     Dot: ChipDot,
-}
+})

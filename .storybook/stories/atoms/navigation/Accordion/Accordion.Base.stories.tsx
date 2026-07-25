@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Accordion } from "@sb-components/atoms/navigation/Accordion/Accordion"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Accordion.Base> = {
     title: "Atoms/Navigation/Accordion/Accordion.Base",
@@ -39,7 +39,7 @@ export const Single: Story = {
                 leaf="Single"
                 parts={PANEL_PARTS}
                 reason="Atom accordion DUY NHẤT bọc HeroUI DisclosureGroup+Disclosure; single/multi là leaf (prop allowsMultiple), không component riêng."
-                code={`<Accordion.Base items={FAQ_ITEMS} /> {/* allowsMultiple mặc định false */}`}
+                code={"<Accordion.Base items={FAQ_ITEMS} /> {/* allowsMultiple mặc định false */}"}
             >
                 <Accordion.Base items={FAQ_ITEMS} showAnatomy />
             </BlockAnatomy>
@@ -57,7 +57,7 @@ export const Multiple: Story = {
                 leaf="Multiple"
                 parts={PANEL_PARTS}
                 note="allowsMultiple → mỗi panel mở/đóng riêng, không đóng các panel khác."
-                code={`<Accordion.Base allowsMultiple items={FAQ_ITEMS} />`}
+                code={"<Accordion.Base allowsMultiple items={FAQ_ITEMS} />"}
             >
                 <Accordion.Base allowsMultiple items={FAQ_ITEMS} showAnatomy />
             </BlockAnatomy>
@@ -75,7 +75,7 @@ export const DefaultOpen: Story = {
                 leaf="DefaultOpen"
                 parts={PANEL_PARTS}
                 note="defaultExpandedKeys=['refund'] → panel đầu mở sẵn; vẫn single-open (mở panel khác sẽ đóng nó)."
-                code={`<Accordion.Base defaultExpandedKeys={["refund"]} items={FAQ_ITEMS} />`}
+                code={"<Accordion.Base defaultExpandedKeys={[\"refund\"]} items={FAQ_ITEMS} />"}
             >
                 <Accordion.Base defaultExpandedKeys={["refund"]} items={FAQ_ITEMS} showAnatomy />
             </BlockAnatomy>
@@ -93,7 +93,7 @@ export const Loading: Story = {
                 leaf="Loading"
                 parts={SKELETON_PARTS}
                 note="isSkeleton → cột trigger-row shimmer OWNED bởi atom (hybrid C) khi FAQ chưa tải."
-                code={`<Accordion.Base isSkeleton items={FAQ_ITEMS} />`}
+                code={"<Accordion.Base isSkeleton items={FAQ_ITEMS} />"}
             >
                 <Accordion.Base isSkeleton items={FAQ_ITEMS} showAnatomy />
             </BlockAnatomy>

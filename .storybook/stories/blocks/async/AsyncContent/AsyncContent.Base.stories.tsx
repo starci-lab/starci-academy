@@ -1,9 +1,10 @@
 import React from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Avatar, AvatarFallback, Card, CardContent } from "@heroui/react"
-import { AsyncContent } from "@sb-components/blocks/async/AsyncContent/AsyncContent"
-import { Skeleton } from "@sb-components/blocks/skeleton/Skeleton/Skeleton"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { AsyncContent } from "@sb-components/layouts/async/AsyncContent/AsyncContent"
+import { Skeleton } from "@sb-components/atoms/display/Skeleton/Skeleton"
+import { Avatar as AvatarAtom } from "@sb-components/atoms/display/Avatar/Avatar"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `AsyncContent.Base` là KHUNG CHUYỂN
@@ -54,7 +55,7 @@ const ProfileCard = () => (
 const ProfileCardSkeleton = () => (
     <Card>
         <CardContent className="flex-row items-center gap-3">
-            <Skeleton.Avatar size="md" className="shrink-0" />
+            <AvatarAtom.Base isSkeleton size="md" className="shrink-0" />
             <div className="flex min-w-0 grow flex-col">
                 <Skeleton.Typography type="body-sm" width="1/3" />
                 <Skeleton.Typography type="body-xs" width="2/3" />

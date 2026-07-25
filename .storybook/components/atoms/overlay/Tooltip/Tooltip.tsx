@@ -93,6 +93,6 @@ const TooltipBase = ({
  * `Tooltip.*` — the hover-hint ATOM namespace. `Tooltip.Base` là atom tooltip DUY
  * NHẤT và là một trong hai atom được GIỮ `children` (wrapper bắt buộc).
  */
-export const Tooltip = {
+export const Tooltip = Object.assign(TooltipBase, {
     Base: TooltipBase,
-}
+})

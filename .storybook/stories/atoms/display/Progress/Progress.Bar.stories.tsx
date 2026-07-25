@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Progress } from "@sb-components/atoms/display/Progress/Progress"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Progress.Bar> = {
     title: "Atoms/Display/Progress/Progress.Bar",
@@ -31,7 +31,7 @@ export const Value: Story = {
                 leaf="Value"
                 parts={TRACK_PARTS}
                 reason="Thanh TIẾN TRÌNH tuyến tính bọc react-aria ProgressBar; xác định (value) hoặc indeterminate."
-                code={`<Progress.Bar value={62} max={100} />`}
+                code={"<Progress.Bar value={62} max={100} />"}
             >
                 <div className="w-72">
                     <Progress.Bar value={62} ariaLabel="Tiến độ khoá học" showAnatomy />
@@ -51,7 +51,7 @@ export const Indeterminate: Story = {
                 leaf="Indeterminate"
                 parts={TRACK_PARTS}
                 note="isIndeterminate → fill animate; react-aria bỏ qua value."
-                code={`<Progress.Bar isIndeterminate />`}
+                code={"<Progress.Bar isIndeterminate />"}
             >
                 <div className="w-72">
                     <Progress.Bar isIndeterminate ariaLabel="Đang xử lý" showAnatomy />
@@ -71,7 +71,7 @@ export const Loading: Story = {
                 leaf="Loading"
                 parts={SKELETON_PARTS}
                 note="isSkeleton → thanh shimmer OWNED bởi atom (hybrid C) — trước khi biết value."
-                code={`<Progress.Bar isSkeleton />`}
+                code={"<Progress.Bar isSkeleton />"}
             >
                 <div className="w-72">
                     <Progress.Bar isSkeleton showAnatomy />

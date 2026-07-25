@@ -1,0 +1,175 @@
+[
+ {
+  "kind": "both",
+  "files": [
+   "blocks/buttons/ChipButtonList/ChipButtonList.tsx",
+   "blocks/cards/ContinueCard/ContinueCard.tsx",
+   "blocks/cards/FlipCard/FlipCard.tsx",
+   "blocks/cards/MediaCard/MediaCard.tsx",
+   "blocks/cards/PricingCard/PricingCard.tsx",
+   "blocks/cards/RatingBar/RatingBar.tsx",
+   "blocks/cards/SurfaceCard/SurfaceCard.tsx",
+   "blocks/chips/RemovableToken/RemovableToken.tsx",
+   "blocks/commerce/PricePoint/PricePoint.tsx"
+  ]
+ },
+ {
+  "kind": "both",
+  "files": [
+   "blocks/commerce/PriceTag/PriceTag.tsx",
+   "blocks/commerce/PricingTable/PricingTable.tsx",
+   "blocks/commerce/TrialConversionStrip/TrialConversionStrip.tsx",
+   "blocks/feed/CommunityCommentRow/CommunityCommentRow.tsx",
+   "blocks/feed/CommunityPostCard/CommunityPostCard.tsx",
+   "blocks/feed/FeedItem/FeedItem.tsx",
+   "blocks/feed/ReactionBar/ReactionBar.tsx",
+   "blocks/feedback/Feedback/Feedback.tsx",
+   "blocks/form/FieldShell/FieldShell.tsx"
+  ]
+ },
+ {
+  "kind": "both",
+  "files": [
+   "blocks/form/Select/Select.tsx",
+   "blocks/grading/DiffViewer/DiffViewer.tsx",
+   "blocks/identity/ImageDropzone/ImageDropzone.tsx",
+   "blocks/identity/UserCell/UserCell.tsx",
+   "blocks/layout/ModalShell/ModalShell.tsx",
+   "blocks/layout/Page/Page.tsx",
+   "blocks/learn/ChatComposer/ChatComposer.tsx",
+   "blocks/learn/ChatThread/ChatThread.tsx",
+   "blocks/learn/ChatToolResult/ChatToolResult.tsx"
+  ]
+ },
+ {
+  "kind": "both",
+  "files": [
+   "blocks/learn/ContentSearchList/ContentSearchList.tsx",
+   "blocks/learn/CourseBrief/CourseBrief.tsx",
+   "blocks/learn/CourseProgressRow/CourseProgressRow.tsx",
+   "blocks/learn/DeckCard/DeckCard.tsx",
+   "blocks/learn/EntityResultRow/EntityResultRow.tsx",
+   "blocks/learn/FlashcardDeckList/FlashcardDeckList.tsx",
+   "blocks/learn/PersonaIdentityChip/PersonaIdentityChip.tsx",
+   "blocks/learn/QuizCard/QuizCard.tsx",
+   "blocks/learn/SelectionBanner/SelectionBanner.tsx"
+  ]
+ },
+ {
+  "kind": "both",
+  "files": [
+   "blocks/learn/TaskChecklistRow/TaskChecklistRow.tsx",
+   "blocks/learn/UpNextCard/UpNextCard.tsx",
+   "blocks/lists/List/List.tsx",
+   "blocks/marketing/ArchitectureFlow/ArchitectureFlow.tsx",
+   "blocks/marketing/ArchitectureScene/ArchitectureScene.tsx",
+   "blocks/marketing/HeroBanner/HeroBanner.tsx",
+   "blocks/marketing/MicroservicesDiagram/MicroservicesDiagram.tsx",
+   "blocks/marketing/MicroservicesScene/MicroservicesScene.tsx",
+   "blocks/marketing/PitchCard/PitchCard.tsx"
+  ]
+ },
+ {
+  "kind": "both",
+  "files": [
+   "blocks/marketing/SectionHeading/SectionHeading.tsx",
+   "blocks/marketing/ShowcaseMockup/ShowcaseMockup.tsx",
+   "blocks/marketing/TopicLane/TopicLane.tsx",
+   "blocks/marketing/TrackCard/TrackCard.tsx",
+   "blocks/marketing/TruthList/TruthList.tsx",
+   "blocks/navigation/Stepper/Stepper.tsx",
+   "blocks/notifications/NotificationItem/NotificationItem.tsx",
+   "blocks/notifications/NotificationList/NotificationList.tsx",
+   "blocks/overlays/ContentAiChatDrawer/ContentAiChatDrawer.tsx"
+  ]
+ },
+ {
+  "kind": "both",
+  "files": [
+   "blocks/profile/FeedbackListItem/FeedbackListItem.tsx",
+   "blocks/rendering/FlowDiagram/FlowDiagram.tsx",
+   "blocks/rendering/RagSourceGraph/RagSourceGraph.tsx",
+   "blocks/rendering/RichText/RichText.tsx",
+   "blocks/stats/DeadlineCallout/DeadlineCallout.tsx",
+   "blocks/stats/LanguageDonut/LanguageDonut.tsx",
+   "blocks/stats/Legend/Legend.tsx",
+   "blocks/stats/MetricCard/MetricCard.tsx",
+   "blocks/stats/ProgressMeter/ProgressMeter.tsx"
+  ]
+ },
+ {
+  "kind": "both",
+  "files": [
+   "blocks/stats/ProgressMeter/TargetMark.tsx",
+   "blocks/stats/ProgressRing/ProgressRing.tsx",
+   "blocks/stats/SegmentBar/SegmentBar.tsx",
+   "blocks/stats/StatPair/StatPair.tsx",
+   "blocks/stats/TopicMasteryGrid/TopicMasteryGrid.tsx",
+   "blocks/stats/VerdictHeroCard/VerdictHeroCard.tsx",
+   "blocks/text/InlineIconLabel/InlineIconLabel.tsx",
+   "blocks/text/TitledText/TitledText.tsx"
+  ]
+ },
+ {
+  "kind": "small",
+  "files": [
+   "blocks/buttons/Button/Button.tsx",
+   "blocks/buttons/InputButtonLike/InputButtonLike.tsx",
+   "blocks/chips/EnumChip/EnumChip.tsx",
+   "blocks/chips/HighlightChip/HighlightChip.tsx"
+  ]
+ },
+ {
+  "kind": "small",
+  "files": [
+   "blocks/chips/StatusChip/StatusChip.tsx",
+   "blocks/chips/TagChips/TagChips.tsx",
+   "blocks/code/CodeConsole/CodeConsole.tsx",
+   "blocks/feed/Composer/Composer.tsx"
+  ]
+ },
+ {
+  "kind": "small",
+  "files": [
+   "blocks/form/CheckboxField/CheckboxField.tsx",
+   "blocks/form/RadioGroupField/RadioGroupField.tsx",
+   "blocks/form/SwitchField/SwitchField.tsx",
+   "blocks/form/TextField/TextField.tsx"
+  ]
+ },
+ {
+  "kind": "small",
+  "files": [
+   "blocks/form/Textarea/Textarea.tsx",
+   "blocks/grading/SelfHostGpuMark/SelfHostGpuMark.tsx",
+   "blocks/identity/UserAvatar/UserAvatar.tsx",
+   "blocks/layout/BlockAnatomy/BlockAnatomy.tsx"
+  ]
+ },
+ {
+  "kind": "small",
+  "files": [
+   "blocks/media/VideoRenderer/FullscreenButton.tsx",
+   "blocks/media/VideoRenderer/PlayPauseButton.tsx",
+   "blocks/media/VideoRenderer/VolumeControl.tsx",
+   "blocks/navigation/ExtendedTabs/ExtendedTabs.tsx"
+  ]
+ },
+ {
+  "kind": "small",
+  "files": [
+   "blocks/navigation/FlexWrapButtonRadio/FlexWrapButtonRadio.tsx",
+   "blocks/navigation/ProgrammingLanguageTabs/ProgrammingLanguageTabs.tsx",
+   "blocks/navigation/SelectableCardGroup/SelectableCardGroup.tsx",
+   "blocks/navigation/Toolbar/Toolbar.tsx"
+  ]
+ },
+ {
+  "kind": "small",
+  "files": [
+   "blocks/notifications/NotificationBell/NotificationBell.tsx",
+   "blocks/rendering/MarkdownContent/CodePreviewTabs/index.tsx",
+   "blocks/rendering/MarkdownContent/RenderReactComponent/index.tsx"
+  ]
+ }
+]

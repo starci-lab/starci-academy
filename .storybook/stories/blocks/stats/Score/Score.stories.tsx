@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Score } from "@sb-components/blocks/stats/Score/Score"
+import { Score } from "@sb-components/_designs/stats/Score/Score"
 
 const meta: Meta<typeof Score> = {
     title: "Design/Stats/Score",

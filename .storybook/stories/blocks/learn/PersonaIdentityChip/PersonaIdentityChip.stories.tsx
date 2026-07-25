@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { PersonaIdentityChip } from "@sb-components/blocks/learn/PersonaIdentityChip/PersonaIdentityChip"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { PersonaIdentityChip } from "@sb-components/_designs/learn/PersonaIdentityChip/PersonaIdentityChip"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof PersonaIdentityChip> = {
     title: "Design/Learn/PersonaIdentityChip",

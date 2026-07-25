@@ -9,7 +9,7 @@ import {
     cn,
 } from "@heroui/react"
 import { ChevronDown } from "@gravity-ui/icons"
-import { FieldFrame, fieldName } from "../_field/FieldFrame"
+import { FieldFrame, fieldName } from "@sb-components/atoms/forms/_field/FieldFrame"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -110,7 +110,7 @@ const SelectSingle = ({
     const invalid = isInvalid || errorMessage != null
     const selected = options.find((option) => option.value === value)
     return (
-        <FieldFrame
+        <FieldFrame.Base
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -156,7 +156,7 @@ const SelectSingle = ({
                     </HeroListBox.Root>
                 </HeroSelect.Popover>
             </HeroSelect.Root>
-        </FieldFrame>
+        </FieldFrame.Base>
     )
 }
 
@@ -191,7 +191,7 @@ const SelectMulti = ({
     const summary =
         chosen.length === 0 ? null : chosen.length === 1 ? chosen[0].label : `Đã chọn ${chosen.length}`
     return (
-        <FieldFrame
+        <FieldFrame.Base
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -234,7 +234,7 @@ const SelectMulti = ({
                     </HeroListBox.Root>
                 </HeroSelect.Popover>
             </HeroSelect.Root>
-        </FieldFrame>
+        </FieldFrame.Base>
     )
 }
 
@@ -265,7 +265,7 @@ const SelectCombobox = ({
 }) => {
     const invalid = isInvalid || errorMessage != null
     return (
-        <FieldFrame
+        <FieldFrame.Base
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -310,7 +310,7 @@ const SelectCombobox = ({
                     </HeroListBox>
                 </HeroComboBox.Popover>
             </HeroComboBox>
-        </FieldFrame>
+        </FieldFrame.Base>
     )
 }
 
@@ -319,8 +319,8 @@ const SelectCombobox = ({
  * over HeroUI `Select`, Combobox over HeroUI `ComboBox`; primitive fields compose
  * these members (xem block `Select`).
  */
-export const Select = {
+export const Select = Object.assign(SelectSingle, {
     Single: SelectSingle,
     Multi: SelectMulti,
     Combobox: SelectCombobox,
-}
+})

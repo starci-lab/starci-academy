@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { MetricCard } from "@sb-components/blocks/stats/MetricCard/MetricCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { MetricCard } from "@sb-components/layouts/stats/MetricCard/MetricCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof MetricCard> = {
     title: "Primitives/Stats/MetricCard",

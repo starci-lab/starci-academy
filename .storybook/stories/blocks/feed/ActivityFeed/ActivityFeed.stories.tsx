@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import React, { useState } from "react"
-import { ActivityFeed, ActivityType, type QueryMyFeedItemData } from "@sb-components/blocks/feed/ActivityFeed/ActivityFeed"
-import { ReactionType } from "@sb-components/blocks/feed/ReactionBar/ReactionBar"
-import { SurfaceCard } from "@sb-components/blocks/cards/SurfaceCard/SurfaceCard"
-import { Feedback } from "@sb-components/blocks/feedback/Feedback/Feedback"
-import { Skeleton } from "@sb-components/blocks/skeleton/Skeleton/Skeleton"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { ActivityFeed, ActivityType, type QueryMyFeedItemData } from "@sb-components/_blocks/feed/ActivityFeed/ActivityFeed"
+import { ReactionType } from "@sb-components/_designs/feed/ReactionBar/ReactionBar"
+import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
+import { Feedback } from "@sb-components/layouts/feedback/Feedback/Feedback"
+import { Skeleton } from "@sb-components/atoms/display/Skeleton/Skeleton"
+import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * BLOCK — the shared activity feed: rows grouped under relative day headers, each
@@ -310,7 +311,7 @@ export const SkeletonLoading: Story = {
                                 anatPart: "SurfaceListCardItem",
                                 content: (
                                     <div className="flex items-start gap-2">
-                                        <Skeleton.Avatar size="sm" anatPart="Skeleton.Avatar" />
+                                        <Avatar.Base isSkeleton size="sm" />
                                         <div className="flex min-w-0 flex-1 flex-col gap-1">
                                             <div className="flex flex-col gap-1">
                                                 <Skeleton.Typography type="body-sm" width="3/4" anatPart="Skeleton.Typography" />

@@ -2,7 +2,7 @@ import type { ComponentType, ReactNode } from "react"
 import type { StoryObj } from "@storybook/nextjs"
 import { CircleCheck, ArrowRight } from "@gravity-ui/icons"
 import type { TypographyProps } from "@sb-components/atoms/text/Typography/Typography"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * Shared story-leaf builder for the per-SIZE Typography components. NOT a `.stories`
@@ -20,7 +20,7 @@ Tách theo CỠ: \`Typography.Xs\` · \`.Sm\` · \`.Base\` · \`.Lg\` (mở rộ
 **\`isLink\`:** HeroUI \`Link\` (accent + hover underline) — KHÔNG kèm weight/icon.
 **Icon (strict):** \`prefixIcon\`/\`suffixIcon\` = COMPONENT; atom ép size=font-size; gravity (không \`weight\`). ⚠️ **có icon → text TỰ \`font-medium\`**. \`iconSlide\` = ARROW trượt khi hover (§5b, không caret).
 **Cắt chữ:** \`truncate\` (1 dòng) · \`lineClamp={1|2|3}\` · **\`tabularNums\`** cho số (§3 thẳng cột).
-**\`isLoading\`:** atom tự vẽ text-bar skeleton (hybrid C).
+**\`isSkeleton\`:** atom tự vẽ text-bar skeleton (hybrid C).
 `
 
 type SizeComponent = ComponentType<TypographyProps>
@@ -103,8 +103,8 @@ export const makeTypographyLeaves = (Comp: SizeComponent, label: string) => {
             <Comp text="1.284.000₫" tabularNums weight="bold" showAnatomy />
         ), "tabularNums = chữ số đều bề rộng (giá/đếm thẳng cột)."),
         /** Loading — atom tự vẽ text-bar skeleton. */
-        Loading: leaf("Loading", SKELETON_PARTS, `<${label} text="…" isLoading />`, (
-            <Comp text="Chấm bài với model premium" isLoading showAnatomy />
-        ), "isLoading → text-bar shimmer OWNED bởi atom (hybrid C)."),
+        Loading: leaf("Loading", SKELETON_PARTS, `<${label} text="…" isSkeleton />`, (
+            <Comp text="Chấm bài với model premium" isSkeleton showAnatomy />
+        ), "isSkeleton → text-bar shimmer OWNED bởi atom (hybrid C)."),
     }
 }

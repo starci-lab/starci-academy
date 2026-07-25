@@ -114,6 +114,6 @@ const PopoverBase = ({
  * `Popover.*` — the click-panel ATOM namespace. `Popover.Base` là atom popover DUY
  * NHẤT (heading/arrow/placement đều là LEAF prop-driven của nó).
  */
-export const Popover = {
+export const Popover = Object.assign(PopoverBase, {
     Base: PopoverBase,
-}
+})

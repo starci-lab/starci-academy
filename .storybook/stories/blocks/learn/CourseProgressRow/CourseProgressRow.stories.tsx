@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { BookOpenIcon } from "@phosphor-icons/react"
-import { CourseProgressRow } from "@sb-components/blocks/learn/CourseProgressRow/CourseProgressRow"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
+import { CourseProgressRow } from "@sb-components/_designs/learn/CourseProgressRow/CourseProgressRow"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — one enrolled-course progress row (tile · title · optional trial chip ·

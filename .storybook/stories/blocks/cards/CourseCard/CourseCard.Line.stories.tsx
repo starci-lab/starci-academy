@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Button } from "@sb-components/blocks/buttons/Button/Button"
-import { CourseCard } from "@sb-components/blocks/cards/CourseCard/CourseCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-components/blocks/layout/BlockAnatomy/BlockAnatomy"
-import { discountedCourse, enrolledCourse, freeCourse, noCoverCourse } from "@sb-components/blocks/cards/CourseCard/CourseCard.mocks"
+import { Button } from "@sb-components/_designs/buttons/Button/Button"
+import { CourseCard } from "@sb-components/_designs/cards/CourseCard/CourseCard"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { discountedCourse, enrolledCourse, freeCourse, noCoverCourse } from "@sb-components/_designs/cards/CourseCard/CourseCard.mocks"
 
 /**
  * DESIGN — CourseCard in the compact `line` layout (catalog list view): thumbnail ·

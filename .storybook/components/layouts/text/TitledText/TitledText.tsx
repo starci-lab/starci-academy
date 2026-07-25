@@ -1,9 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Typography as HeroTypography, cn } from "@heroui/react"
+import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { Skeleton } from "@sb-components/atoms/display/Skeleton/Skeleton"
-import type { SkeletonTypographyType } from "@sb-components/atoms/display/Skeleton/Skeleton"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — TitledText: a primary line + optional muted
@@ -20,46 +18,49 @@ import type { SkeletonTypographyType } from "@sb-components/atoms/display/Skelet
 
 /**
  * Vertical text-stack scale:
- * - `row`    — dense list/setting row (title `body-sm` medium · subtitle `body-xs` muted).
- * - `header` — section/page header (title `h3` semibold · subtitle `body-sm` muted).
+ * - `row`    — dense list/setting row (title `sm` medium · subtitle `xs` muted).
+ * - `header` — section/page header (title `h3` semibold · subtitle `sm` muted).
  * - `stat`   — a metric (title = big `h3` bold VALUE · subtitle = foreground label · hint muted).
  */
 export type TitledTextSize = "row" | "header" | "stat"
 
-/** Typography type + tone config resolved per {@link TitledTextSize}. */
+/** Typography `size` + tone config resolved per {@link TitledTextSize}. */
 interface SizeConfig {
-    titleType: "body-sm" | "h3"
+    titleSize: "sm" | "h3"
     titleWeight: "medium" | "semibold" | "bold"
-    subType: "body-xs" | "body-sm"
+    subSize: "xs" | "sm"
     /** `undefined` → foreground (default); `"muted"` → muted line. */
     subColor?: "muted"
     subWeight?: "medium"
-    /** Skeleton mirror widths per line. */
+    /**
+     * Bề rộng thanh skeleton của từng dòng — ghi NGUYÊN class (`w-1/2`), không ghép
+     * động `w-${…}`, vì Tailwind quét chuỗi literal trong source mới sinh ra class.
+     */
     skeleton: { title: string; sub: string; hint: string }
 }
 
 const SIZE_CONFIG: Record<TitledTextSize, SizeConfig> = {
     row: {
-        titleType: "body-sm",
+        titleSize: "sm",
         titleWeight: "medium",
-        subType: "body-xs",
+        subSize: "xs",
         subColor: "muted",
-        skeleton: { title: "1/2", sub: "2/3", hint: "1/3" },
+        skeleton: { title: "w-1/2", sub: "w-2/3", hint: "w-1/3" },
     },
     header: {
-        titleType: "h3",
+        titleSize: "h3",
         titleWeight: "semibold",
-        subType: "body-sm",
+        subSize: "sm",
         subColor: "muted",
-        skeleton: { title: "1/3", sub: "2/3", hint: "1/2" },
+        skeleton: { title: "w-1/3", sub: "w-2/3", hint: "w-1/2" },
     },
     stat: {
-        titleType: "h3",
+        titleSize: "h3",
         titleWeight: "bold",
         // stat's secondary is the LABEL — foreground + medium, not muted.
-        subType: "body-sm",
+        subSize: "sm",
         subWeight: "medium",
-        skeleton: { title: "1/3", sub: "2/3", hint: "1/2" },
+        skeleton: { title: "w-1/3", sub: "w-2/3", hint: "w-1/2" },
     },
 }
 
@@ -109,22 +110,20 @@ export const TitledText = ({
     if (isSkeleton) {
         return (
             <div className={cn("flex min-w-0 flex-col gap-0", className)} data-anat-part={anatPart}>
-                <Skeleton.Typography type={cfg.titleType as SkeletonTypographyType} width={cfg.skeleton.title} />
-                {subtitle ? <Skeleton.Typography type={cfg.subType as SkeletonTypographyType} width={cfg.skeleton.sub} /> : null}
-                {hint ? <Skeleton.Typography type="body-xs" width={cfg.skeleton.hint} /> : null}
+                {/* §12c: chủ của hình là chủ của skeleton — mỗi dòng tự vẽ gạch bằng chính atom của nó. */}
+                <Typography.Base size={cfg.titleSize} isSkeleton className={cfg.skeleton.title} />
+                {subtitle ? <Typography.Base size={cfg.subSize} isSkeleton className={cfg.skeleton.sub} /> : null}
+                {hint ? <Typography.Base size="xs" isSkeleton className={cfg.skeleton.hint} /> : null}
             </div>
         )
     }
 
     return (
         <div className={cn("flex min-w-0 flex-col gap-0", className)} data-anat-part={anatPart}>
-            <HeroTypography type={cfg.titleType} weight={weight ?? cfg.titleWeight} truncate={truncate}>
-                {title}
-            </HeroTypography>
+            {/* Chữ đi qua ATOM `Typography` (cùng trục `size` với nhánh skeleton ở trên), không raw HeroUI. */}
+            <Typography.Base size={cfg.titleSize} weight={weight ?? cfg.titleWeight} truncate={truncate} text={title} />
             {subtitle ? (
-                <HeroTypography type={cfg.subType} color={cfg.subColor} weight={cfg.subWeight} truncate={truncate}>
-                    {subtitle}
-                </HeroTypography>
+                <Typography.Base size={cfg.subSize} color={cfg.subColor} weight={cfg.subWeight} truncate={truncate} text={subtitle} />
             ) : null}
             {hint ? (
                 <Typography.Base size="xs" color="muted" truncate={truncate} text={hint} />

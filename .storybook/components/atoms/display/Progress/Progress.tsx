@@ -118,10 +118,8 @@ const ProgressCircle = ({
     )
 }
 
-/** Props for {@link Meter} — a static measurement (no indeterminate). */
-interface MeterProps {
-    /** The measured value in `[0, max]`. */
-    value: number
+/** Props chung của {@link Meter} — TRỪ cặp `value`/`isSkeleton`. */
+interface MeterOwnProps {
     /** Maximum value = full. Default `100`. */
     max?: number
     /** Tone. Default `accent`; pass success/warning/danger to signal a threshold band. */
@@ -130,12 +128,20 @@ interface MeterProps {
     size?: ProgressSize
     /** Accessible name (announced by screen readers). */
     ariaLabel?: string
-    /** Render the leaf skeleton instead of the meter. */
-    isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
     className?: string
 }
+
+/**
+ * `value` BẮT BUỘC khi meter sống (đo cái gì thì phải có số), KHÔNG cần khi
+ * `isSkeleton` — track shimmer chưa đo gì. Cùng khuôn với `TypographyProps`.
+ */
+type MeterProps = MeterOwnProps &
+    (
+        | { isSkeleton: true; value?: number }
+        | { isSkeleton?: false; value: number }
+    )
 
 /** `Progress.Meter` — static gauge (HeroUI Meter). Always determinate; tone signals a band. */
 const Meter = ({

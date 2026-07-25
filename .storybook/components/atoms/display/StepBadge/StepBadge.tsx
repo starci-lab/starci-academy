@@ -1,8 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { cn } from "@heroui/react"
+import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { CheckIcon } from "@phosphor-icons/react"
-import { Skeleton } from "@sb-components/atoms/display/Skeleton/Skeleton"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -85,7 +84,7 @@ const StepBadgeBase = ({
     isSkeleton = false,
 }: StepBadgeProps) => {
     if (isSkeleton) {
-        return <Skeleton className={cn("rounded-full", SKELETON_SIZE[size], className)} />
+        return <HeroSkeleton className={cn("rounded-full", SKELETON_SIZE[size], className)} />
     }
     return (
         <span

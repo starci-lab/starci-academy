@@ -1,6 +1,6 @@
 import type { ComponentType, ReactNode } from "react"
 import type { StoryObj } from "@storybook/nextjs"
-import { CircleCheck, ArrowRight } from "@gravity-ui/icons"
+import { CheckCircleIcon, ArrowRightIcon } from "@phosphor-icons/react"
 import type { TypographyProps } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
@@ -18,7 +18,7 @@ Tách theo CỠ: \`Typography.Xs\` · \`.Sm\` · \`.Base\` · \`.Lg\` (mở rộ
 **Màu:** \`color="default|muted|accent|success|warning|danger"\` (default=foreground §9a; semantic=§2).
 **Weight §9b:** \`weight="medium"|"bold"\` · \`isItalic\`.
 **\`isLink\`:** HeroUI \`Link\` (accent + hover underline) — KHÔNG kèm weight/icon.
-**Icon (strict):** \`prefixIcon\`/\`suffixIcon\` = COMPONENT; atom ép size=font-size; gravity (không \`weight\`). ⚠️ **có icon → text TỰ \`font-medium\`**. \`iconSlide\` = ARROW trượt khi hover (§5b, không caret).
+**Icon (strict):** \`prefixIcon\`/\`suffixIcon\` = COMPONENT phosphor (\`*Icon\`, §5⃣0 một bộ duy nhất); atom ép size=font-size + weight theo §5⃣0a — story KHÔNG tự truyền \`weight\`. ⚠️ **có icon → text TỰ \`font-medium\`**. \`iconSlide\` = ARROW trượt khi hover (§5b, không caret).
 **Cắt chữ:** \`truncate\` (1 dòng) · \`lineClamp={1|2|3}\` · **\`tabularNums\`** cho số (§3 thẳng cột).
 **\`isSkeleton\`:** atom tự vẽ text-bar skeleton (hybrid C).
 `
@@ -81,16 +81,16 @@ export const makeTypographyLeaves = (Comp: SizeComponent, label: string) => {
             <Comp text="Xem chi tiết" isLink showAnatomy />
         ), "isLink = HeroUI Link (accent + hover underline)."),
         /** WithPrefixIcon — leading icon; text tự font-medium. */
-        WithPrefixIcon: leaf("WithPrefixIcon", PREFIX_PARTS, `<${label} text="Đã đạt" prefixIcon={CircleCheck} />`, (
-            <Comp text="Đã đạt" prefixIcon={CircleCheck} showAnatomy />
-        ), "có icon → text tự font-medium (icon gravity fit medium text)."),
+        WithPrefixIcon: leaf("WithPrefixIcon", PREFIX_PARTS, `<${label} text="Đã đạt" prefixIcon={CheckCircleIcon} />`, (
+            <Comp text="Đã đạt" prefixIcon={CheckCircleIcon} showAnatomy />
+        ), "có icon → text tự font-medium (glyph phosphor fit medium text)."),
         /** WithBothIcons — prefix + suffix. */
-        WithBothIcons: leaf("WithBothIcons", BOTH_PARTS, `<${label} text="Xem kết quả" prefixIcon={CircleCheck} suffixIcon={ArrowRight} />`, (
-            <Comp text="Xem kết quả" prefixIcon={CircleCheck} suffixIcon={ArrowRight} showAnatomy />
+        WithBothIcons: leaf("WithBothIcons", BOTH_PARTS, `<${label} text="Xem kết quả" prefixIcon={CheckCircleIcon} suffixIcon={ArrowRightIcon} />`, (
+            <Comp text="Xem kết quả" prefixIcon={CheckCircleIcon} suffixIcon={ArrowRightIcon} showAnatomy />
         )),
         /** CtaArrow — suffix ARROW + `iconSlide` (hover trượt phải, §5b). */
-        CtaArrow: leaf("CtaArrow", SUFFIX_PARTS, `<${label} text="Xem thêm" suffixIcon={ArrowRight} iconSlide color="accent" />`, (
-            <Comp text="Xem thêm" suffixIcon={ArrowRight} iconSlide color="accent" showAnatomy />
+        CtaArrow: leaf("CtaArrow", SUFFIX_PARTS, `<${label} text="Xem thêm" suffixIcon={ArrowRightIcon} iconSlide color="accent" />`, (
+            <Comp text="Xem thêm" suffixIcon={ArrowRightIcon} iconSlide color="accent" showAnatomy />
         ), "iconSlide: hover thì arrow trượt phải (§5b, CHỈ arrow không caret)."),
         /** Truncate — 1 dòng ellipsis trong khung hẹp. */
         Truncate: leaf("Truncate", TEXT_PARTS, `<${label} text="…chuỗi dài…" truncate />`, (

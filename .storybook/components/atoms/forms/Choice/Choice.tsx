@@ -302,10 +302,15 @@ const ChoiceSwitch = ({ isSelected, onValueChange, label, isDisabled, isInvalid,
  * `Choice.*` — boolean / single-select control atom namespace. Each member is the
  * bare inline control; primitive fields (FieldShell) compose them for the group
  * heading / hint / error column.
+ *
+ * §12a: khai bằng `Object.assign` như 42 atom còn lại (KHÔNG object literal trần) —
+ * root phải là callable-namespace. Root gọi thẳng = `Choice.Checkbox`, hình thái
+ * cơ bản nhất của họ (cùng lối `Select` lấy `Select.Single` làm root). API các
+ * member GIỮ NGUYÊN, chỉ đổi HÌNH export.
  */
-export const Choice = {
+export const Choice = Object.assign(ChoiceCheckbox, {
     Checkbox: ChoiceCheckbox,
     Radio: ChoiceRadio,
     RadioGroup: ChoiceRadioGroup,
     Switch: ChoiceSwitch,
-}
+})

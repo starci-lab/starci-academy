@@ -31,7 +31,8 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * - Namespace only — KHÔNG export component trần (§13a).
  *
  * ATOM COMPOSITION (§12): chữ đi qua `Typography.*`, nút đi qua `Button.*`, icon
- * lấy từ `@gravity-ui/icons` (component ref, khung tự ép size — §4/§5).
+ * lấy từ `@phosphor-icons/react` — MỘT BỘ DUY NHẤT (§5⃣0), truyền dạng component
+ * ref, khung tự ép size/weight (§4/§5).
  * NGOẠI LỆ CÓ CHỦ Ý: `.Callout` giữ `Alert.Title`/`Alert.Description` của HeroUI
  * vì chính HeroUI mang hợp đồng MÀU-THEO-STATUS (`.alert--warning .alert__title`
  * → `text-warning-soft-foreground`). Thay bằng `Typography` sẽ phải tự nuôi một
@@ -42,7 +43,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** Icon passed as a COMPONENT (gravity), never JSX — the frame owns its scale (§4/§5). */
+/** Icon passed as a COMPONENT (phosphor), never JSX — the frame owns its scale (§4/§5). */
 export type FeedbackIcon = ComponentType<SVGProps<SVGSVGElement>>
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -157,7 +158,7 @@ const Callout = ({
 /** Props for {@link Feedback.Empty}. */
 export interface FeedbackEmptyProps {
     /**
-     * Optional decorative icon as a COMPONENT (gravity) above the title — the frame
+     * Optional decorative icon as a COMPONENT (Phosphor) above the title — the frame
      * renders it `size-8` + toned. Ignored in `size="compact"`.
      */
     icon?: FeedbackIcon

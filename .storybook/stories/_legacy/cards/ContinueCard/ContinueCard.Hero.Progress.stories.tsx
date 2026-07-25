@@ -1,0 +1,207 @@
+import type { SVGProps } from "react"
+import type { Meta, StoryObj } from "@storybook/nextjs"
+import { ContinueCard } from "@sb-components/_legacy/designs/cards/ContinueCard/ContinueCard"
+import { SectionCard } from "@sb-components/_legacy/designs/cards/SectionCard/SectionCard"
+import { WarningIcon } from "@phosphor-icons/react"
+import { Feedback } from "@sb-components/layouts/feedback/Feedback/Feedback"
+import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
+import { Button as ButtonAtom } from "@sb-components/atoms/buttons/Button/Button"
+import { Progress as ProgressAtom } from "@sb-components/atoms/display/Progress/Progress"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+
+// `Feedback.Empty` nhận icon là COMPONENT ref và tự ép `size-8` (§4/§5) — phosphor
+// `weight="duotone"` không đi kèm được nữa, nên bọc thành component để GIỮ NGUYÊN nét vẽ.
+const WarningDuotone = (props: SVGProps<SVGSVGElement>) => <WarningIcon {...props} weight="duotone" />
+
+/**
+ * DESIGN — the "tiếp tục phiên đang dở" hero card with progress. Each state below
+ * is its OWN leaf and carries its OWN BlockAnatomy axis (Sơ đồ + Cây) reflecting
+ * the parts THAT leaf composes — there is no separate consolidated "Anatomy" story.
+ */
+const meta: Meta<typeof ContinueCard> = {
+    title: "Legacy/Design/Cards/ContinueCard/Hero/Progress",
+    component: ContinueCard,
+    tags: ["autodocs"],
+    parameters: {
+        layout: "fullscreen",
+    },
+}
+
+export default meta
+
+type Story = StoryObj<typeof ContinueCard>
+
+/** Plain canvas — every leaf wraps its render in its own BlockAnatomy panel. */
+const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
+
+// scenario base = shape có-tiến-độ, không gấp. Các state nội suy bằng delta.
+// NOTE: the title Typography IS a composed node in the trees below — ContinueCard
+// writes `<Typography>{title}</Typography>` itself (not a value folded into another
+// primitive's slot), so it badges like any other directly-composed part.
+const progressBase = {
+    variant: "hero" as const,
+    title: "Mock interview: Design a rate limiter",
+    meta: ["Question 2 / 8", "Middle"],
+    timeLeft: "40 minutes left",
+    ctaLabel: "Continue",
+    onPress: () => {},
+    showAnatomy: true,
+}
+
+// Loaded shape "có tiến độ" — urgent/không-gấp SHARE this composition (chỉ khác TONE chip).
+// DOM thật: HighlightCard (wrapper hero) ⊃ SectionCard (frame) ⊃ title · List.Meta(chip) · CTA · bar.
+const CONTENT_PARTS: Array<AnatomyNode> = [
+    {
+        name: "HighlightCard",
+        tier: "primitive",
+        role: "wrapper hero — vành arc accent quét quanh thẻ (chỉ hero, bọc NGOÀI SectionCard)",
+        children: [
+            {
+                name: "SectionCard",
+                tier: "primitive",
+                role: "khung surface (frame chung mọi state)",
+                children: [
+                    { name: "Typography.Title", tier: "primitive", role: "tên phiên đang tiếp tục (title, weight medium, truncate)" },
+                    {
+                        name: "List.Meta",
+                        tier: "primitive",
+                        role: "hàng meta: segment muted nối · + chip time",
+                        children: [
+                            { name: "StatusChip", tier: "primitive", role: "chip time-remaining, tông neutral↔warning theo urgency", state: "neutral↔warning" },
+                        ],
+                    },
+                    { name: "Button", tier: "primitive", role: "CTA chip (hero, onPress + icon ArrowRight)" },
+                    { name: "ProgressMeter", tier: "primitive", role: "thanh tiến độ — ĐẶC TRƯNG của shape 'có tiến độ'" },
+                ],
+            },
+        ],
+    },
+]
+
+// loading leaf: Skeleton mirror shape CÓ thanh (title · meta · CTA · bar), tất cả TRONG SectionCard.
+// KHÔNG HighlightCard: render loading là SectionCard trần (đúng footprint, không quầng accent).
+const LOADING_PARTS: Array<AnatomyNode> = [
+    {
+        name: "SectionCard",
+        tier: "primitive",
+        role: "khung surface (giữ đúng footprint)",
+        children: [
+            { name: "Skeleton", tier: "primitive", role: "mirror tiêu đề + meta (×2)", state: "skeleton" },
+            { name: "Skeleton", tier: "primitive", role: "mirror CTA", state: "skeleton" },
+            { name: "Skeleton", tier: "primitive", role: "mirror thanh tiến độ", state: "skeleton" },
+        ],
+    },
+]
+
+// error leaf: network drop → Feedback.Empty trong khung, nút Thử lại nằm TRONG Feedback.Empty (prop action).
+const ERROR_PARTS: Array<AnatomyNode> = [
+    {
+        name: "SectionCard",
+        tier: "primitive",
+        role: "khung surface",
+        children: [
+            {
+                name: "Feedback.Empty",
+                tier: "design",
+                role: "tone danger + icon + mô tả + nút Thử lại",
+                state: "danger",
+                children: [
+                    { name: "Button", tier: "primitive", role: "nút thử lại (secondary, trong prop action)" },
+                ],
+            },
+        ],
+    },
+]
+
+/** STATE không gấp — còn nhiều giờ: chip time NEUTRAL + thanh tiến độ. */
+export const NotUrgent: Story = {
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="ContinueCard"
+                tier="design"
+                leaf="NotUrgent"
+                parts={CONTENT_PARTS}
+                reason="Thẻ tiếp tục phiên đang dở. Mỗi LEAF composition khác nhau: leaf loaded gom hero chrome + ProgressMeter; loading swap sang Skeleton mirror đúng footprint; error rơi về Feedback.Empty trong khung. Nhờ SectionCard làm frame chung, khung không nhảy khi đổi state."
+            >
+                <div className="w-96">
+                    <ContinueCard {...progressBase} value={2} max={8} />
+                </div>
+            </BlockAnatomy>,
+        ),
+}
+
+/** STATE gấp — sắp hết giờ: CÙNG chip time nhưng leo tông WARNING + thanh gần đầy. */
+export const Urgent: Story = {
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="ContinueCard"
+                tier="design"
+                leaf="Urgent"
+                parts={CONTENT_PARTS}
+                note="urgent/không-gấp CÙNG bộ part — chỉ khác TONE chip time (neutral → warning) + thanh gần đầy."
+            >
+                <div className="w-96">
+                    <ContinueCard {...progressBase} meta={["Question 7 / 8", "Middle"]} timeLeft="2 minutes left" urgent value={7} max={8} />
+                </div>
+            </BlockAnatomy>,
+        ),
+}
+
+/** STATE loading — skeleton mirror shape CÓ thanh (title · meta · CTA · bar). */
+export const Loading: Story = {
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="ContinueCard"
+                tier="design"
+                leaf="Loading"
+                parts={LOADING_PARTS}
+                note="Skeleton mirror shape CÓ thanh — composition khác hẳn leaf loaded (không part thật)."
+            >
+                <div className="w-96">
+                    <SectionCard anatPart="SectionCard" contentClassName="flex flex-col gap-3">
+                        <div className="flex flex-col gap-2">
+                            <Typography size="base" isSkeleton className="w-2/3" anatPart="Skeleton" />
+                            <Typography size="xs" isSkeleton className="w-1/2" anatPart="Skeleton" />
+                        </div>
+                        <ButtonAtom.Base isSkeleton label="" className="w-28" />
+                        <ProgressAtom.Bar isSkeleton />
+                    </SectionCard>
+                </div>
+            </BlockAnatomy>,
+        ),
+}
+
+/** STATE error — network drop rendered INSIDE the card frame. */
+export const LoadError: Story = {
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="ContinueCard"
+                tier="design"
+                leaf="LoadError"
+                parts={ERROR_PARTS}
+                note="Mạng rớt → chỉ Feedback.Empty trong khung; KHÔNG phải part của leaf loaded."
+            >
+                <div className="w-96">
+                    <SectionCard anatPart="SectionCard">
+                        <Feedback.Empty
+                            anatPart="Feedback.Empty"
+                            tone="danger"
+                            icon={WarningDuotone}
+                            title="Mất kết nối"
+                            description="Mạng có vẻ bị rớt. Kiểm tra kết nối rồi thử lại."
+                            action={
+                                <Button variant="secondary" size="sm" onPress={() => {}} anatPart="Button">
+                                    Thử lại
+                                </Button>
+                            }
+                        />
+                    </SectionCard>
+                </div>
+            </BlockAnatomy>,
+        ),
+}

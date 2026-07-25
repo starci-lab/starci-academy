@@ -1,8 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Typography, cn } from "@heroui/react"
-import { Skeleton } from "@sb-components/atoms/display/Skeleton/Skeleton"
-import type { SkeletonTypographyType } from "@sb-components/atoms/display/Skeleton/Skeleton"
+import { Typography as HeroTypography, cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — InlineIconLabel: a leading icon + an inline text
@@ -103,8 +102,9 @@ export const InlineIconLabel = ({
     if (isSkeleton) {
         return (
             <span className={cn("inline-flex items-center", cfg.gap, className)} data-anat-part={anatPart}>
-                <Skeleton className={cn(SKELETON_ICON, "shrink-0 rounded-full")} />
-                <Skeleton.Typography type={cfg.text as SkeletonTypographyType} width={skeletonWidth} />
+                <HeroSkeleton className={cn(SKELETON_ICON, "shrink-0 rounded-full")} />
+                {/* §12c: chủ của hình là chủ của skeleton — Typography atom TỰ vẽ gạch của chính nó */}
+                <Typography size={size} isSkeleton className={skeletonWidth} />
             </span>
         )
     }
@@ -113,14 +113,14 @@ export const InlineIconLabel = ({
         <span className={cn("inline-flex items-center", cfg.gap, className)} data-anat-part={anatPart}>
             {/* icon-ownership: the primitive forces the svg box; tone via currentColor on this span */}
             <span className={cn("shrink-0", ICON_BOX, toneClass)}>{icon}</span>
-            <Typography
+            <HeroTypography
                 type={cfg.text}
                 color={tone === "muted" ? "muted" : undefined}
                 className={textToneClass}
                 truncate={truncate}
             >
                 {children}
-            </Typography>
+            </HeroTypography>
         </span>
     )
 }

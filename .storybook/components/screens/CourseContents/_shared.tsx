@@ -18,18 +18,18 @@ export const CONTENT_PARTS: Array<AnatomyNode> = [
         name: "CourseBrief",
         tier: "block",
         role: "định danh khoá — breadcrumb + tên + mô tả + meta. Screen gọi BLOCK này, KHÔNG gọi khung Page.Header hay atom Breadcrumbs",
-        storyId: "block-learn-coursebrief--default",
+        storyId: "blocks-learn-coursebrief-base--full",
     },
-    { name: "Feedback.Callout", tier: "primitive", role: "cảnh báo GitHub-team (STATE trial; ẩn khi paid)", state: "warning", storyId: "layouts-feedback-feedback-feedback-callout--warning" },
-    { name: "TrialConversionStrip", tier: "block", role: "strip đổi trial→enroll (STATE trial; ẩn khi paid)", storyId: "block-commerce-trialconversionstrip--price-loaded-with-free-left" },
-    { name: "ContinueCard", tier: "design", role: "tiếp tục + tiến độ + CTA — variant hero (khung HighlightCard ôm trọn), KHÔNG eyebrow (khung đã nói thay)", storyId: "design-cards-continuecard-hero-progress--not-urgent" },
-    { name: "LearnNudges", tier: "block", role: "việc nên làm hôm nay — thẻ đến hạn · phỏng vấn · hạng. Screen đưa `kind` (ENUM), block tự chọn icon (§14b)", storyId: "block-learn-learnnudges--default" },
-    { name: "KeepGoingPath", tier: "block", role: "bài của module hiện tại — SurfaceCard.List bordered, mỗi hàng: icon trạng thái · tên · thời lượng · DifficultyChip · Lock", storyId: "block-learn-keepgoingpath--default" },
+    { name: "Feedback.Callout", tier: "primitive", role: "cảnh báo GitHub-team (STATE trial; ẩn khi paid)", state: "warning", storyId: "blocks-learn-courseteamgate-base--warning" },
+    { name: "TrialConversionStrip", tier: "block", role: "strip đổi trial→enroll (STATE trial; ẩn khi paid)", storyId: "legacy-block-commerce-trialconversionstrip--price-loading" },
+    { name: "ContinueCard", tier: "design", role: "tiếp tục + tiến độ + CTA — variant hero (khung HighlightCard ôm trọn), KHÔNG eyebrow (khung đã nói thay)", storyId: "legacy-design-cards-continuecard-hero-no-progress--not-started" },
+    { name: "LearnNudges", tier: "block", role: "việc nên làm hôm nay — thẻ đến hạn · phỏng vấn · hạng. Screen đưa `kind` (ENUM), block tự chọn icon (§14b)", storyId: "blocks-learn-learnnudges-base--nudges" },
+    { name: "KeepGoingPath", tier: "block", role: "bài của module hiện tại — SurfaceCard.List bordered, mỗi hàng: icon trạng thái · tên · thời lượng · DifficultyChip · LockIcon", storyId: "blocks-learn-keepgoingpath-base--path" },
 ]
 
 /** Loading state — one skeleton node. */
 export const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton", tier: "primitive", role: "khung tải nội dung (mirror spine dashboard)", storyId: "atoms-display-skeleton--overview" },
+    { name: "Skeleton", tier: "primitive", role: "khung tải nội dung (mirror spine dashboard)" },
 ]
 
 /** Empty state — one AsyncContent.Empty node. */

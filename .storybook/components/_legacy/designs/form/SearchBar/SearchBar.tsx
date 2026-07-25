@@ -1,0 +1,127 @@
+import { SlidersHorizontalIcon } from "@phosphor-icons/react"
+import { Input } from "@sb-components/atoms/forms/Input/Input"
+import React, { useMemo } from "react"
+import {
+    Autocomplete,
+    cn,
+    InputGroup,
+    Label,
+    ListBox,
+    SearchField,
+    TextField,
+} from "@heroui/react"
+import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
+
+/**
+ * ─────────────────────────────────────────────────────────────────────────────
+ * STORYBOOK-LOCAL DESIGN SPEC — full port of `@/components/blocks/form/SearchBar`.
+ * Authored in Storybook (not `src`); synced to `src` later. Faithful port of the
+ * whole composition + class names; no `@/components` import. The src pulls its
+ * copy from next-intl `search.*` — here those strings are inlined literally so
+ * the block renders without an i18n provider.
+ * ─────────────────────────────────────────────────────────────────────────────
+ */
+
+/** One selectable row in the autocomplete list (demo data until search is API-driven). */
+interface SearchSuggestionItem {
+    /** Stable key forwarded to `ListBox.Item` `id`. */
+    id: string
+    /** Display label (inlined from the `search.suggestions.*` i18n keys). */
+    label: string
+}
+
+/**
+ * Props for the search bar.
+ */
+export interface SearchBarProps {
+    /** Optional class names on the root `TextField` wrapper. */
+    className?: string
+    /** Renders the loading mirror (bar-shaped field box) instead of the real search bar. */
+    isSkeleton?: boolean
+    /** Dev/spec: emit `data-anat-part` on this leaf's composed parts (Label/Autocomplete/Button) for a BlockAnatomy panel. */
+    showAnatomy?: boolean
+}
+
+/**
+ * Search field using HeroUI `TextField` + `InputGroup` with an `Autocomplete` on the left
+ * and a filters icon button in the suffix (same composition pattern as InputGroup + suffix).
+ *
+ * @param props.className — Merged onto the root `TextField`.
+ * @param props.isSkeleton — Renders the loading mirror (same outer footprint, no popover).
+ */
+export const SearchBar = ({ className, isSkeleton = false, showAnatomy = false }: SearchBarProps) => {
+    const suggestionItems = useMemo<Array<SearchSuggestionItem>>(
+        () => [
+            { id: "courses", label: "Khoá học" },
+            { id: "modules", label: "Học phần" },
+            { id: "videos", label: "Video" },
+        ],
+        []
+    )
+
+    // loading mirror: same full-width bar footprint as the real field, no popover ever renders
+    if (isSkeleton) {
+        return (
+            <div className={cn("w-full", className)}>
+                <Input.Text isSkeleton className="h-10" showAnatomy={showAnatomy} />
+            </div>
+        )
+    }
+
+    return (
+        <TextField className={cn("w-full", className)} fullWidth variant="secondary">
+            <Label className="sr-only" data-anat-part={showAnatomy ? "Label" : undefined}>Tìm kiếm</Label>
+            <InputGroup className="w-full" variant="secondary">
+                <div className="min-w-0 flex-1">
+                    <Autocomplete
+                        allowsEmptyCollection
+                        className="w-full"
+                        fullWidth
+                        placeholder="Tìm khoá học, học phần, video..."
+                        variant="secondary"
+                    >
+                        <Autocomplete.Trigger
+                            className="flex h-10 w-full min-w-0 items-center gap-2 rounded-r-none border-0 bg-transparent px-3 shadow-none ring-0"
+                            data-anat-part={showAnatomy ? "Autocomplete.Trigger" : undefined}
+                        >
+                            <Autocomplete.Value />
+                            <Autocomplete.ClearButton />
+                            <Autocomplete.Indicator />
+                        </Autocomplete.Trigger>
+                        <Autocomplete.Popover data-anat-part={showAnatomy ? "Autocomplete.Popover" : undefined}>
+                            <Autocomplete.Filter>
+                                <SearchField className="px-2 pt-2">
+                                    <SearchField.Group>
+                                        <SearchField.SearchIcon />
+                                        <SearchField.Input placeholder="Tìm khoá học, học phần, video..." />
+                                    </SearchField.Group>
+                                </SearchField>
+                                <ListBox className="max-h-60 overflow-auto p-1">
+                                    {suggestionItems.map((item) => (
+                                        <ListBox.Item
+                                            key={item.id}
+                                            id={item.id}
+                                            textValue={item.label}
+                                        >
+                                            {item.label}
+                                        </ListBox.Item>
+                                    ))}
+                                </ListBox>
+                            </Autocomplete.Filter>
+                        </Autocomplete.Popover>
+                    </Autocomplete>
+                </div>
+                <InputGroup.Suffix className="pr-0">
+                    <Button
+                        ariaLabel="Bộ lọc"
+                        iconOnly
+                        size="sm"
+                        variant="ghost"
+                        icon={<SlidersHorizontalIcon />}
+                        anatPart={showAnatomy ? "Button" : undefined}
+                    />
+                </InputGroup.Suffix>
+            </InputGroup>
+        </TextField>
+    )
+}

@@ -1,12 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import type { ComponentType, ReactNode, SVGProps } from "react"
 import Link from "next/link"
-import { Accordion, cn } from "@heroui/react"
+import { Accordion, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { AnimatePresence, motion } from "framer-motion"
 import { CheckCircleIcon, PlusIcon, XCircleIcon } from "@phosphor-icons/react"
 import { SurfaceCardHeader, surfaceSectionGap, surfaceFrame, type SurfaceLabelProps } from "@sb-components/layouts/cards/surface-card-header"
 import { type VerdictBand, type VerdictBandVariant, verdictBandClassName } from "@sb-components/layouts/cards/verdict-band"
-import { Skeleton } from "@sb-components/atoms/display/Skeleton/Skeleton"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
@@ -549,10 +548,10 @@ const Pressable = ({
                 data-anat-part={showAnatomy ? "Skeleton" : undefined}
                 className={cn("flex items-center gap-3 rounded-3xl bg-surface p-3 shadow-surface", className)}
             >
-                <Skeleton className="size-10 shrink-0 rounded-xl" />
+                <HeroSkeleton className="size-10 shrink-0 rounded-xl" />
                 <div className="flex min-w-0 flex-1 flex-col gap-2">
-                    <Skeleton.Typography type="body-sm" width="2/3" />
-                    <Skeleton.Typography type="body-xs" width="1/3" />
+                    <Typography size="sm" isSkeleton className="w-2/3" />
+                    <Typography size="xs" isSkeleton className="w-1/3" />
                 </div>
             </div>
         )
@@ -837,8 +836,8 @@ const PressableGroupSkeletonTile = ({ className }: { className?: string }) => (
     <div className={cn(TILE_CHROME, "flex items-center gap-3 p-3", className)}>
         <Avatar.Base isSkeleton size="md" className="shrink-0" />
         <div className="flex min-w-0 flex-1 flex-col">
-            <Skeleton.Typography type="body-sm" width="1/3" />
-            <Skeleton.Typography type="body-xs" width="2/3" />
+            <Typography size="sm" isSkeleton className="w-1/3" />
+            <Typography size="xs" isSkeleton className="w-2/3" />
         </div>
     </div>
 )
@@ -1271,9 +1270,10 @@ export interface SurfaceCardAccordionProps extends SurfaceLabelProps {
     /** Secondary node rendered OUTSIDE (below) the card, `gap-2` — a caption/prompt. */
     description?: ReactNode
     /**
-     * `true` → self-render a `Skeleton.Accordion` mirror (same surface frame, row
-     * count = `items.length`) INSTEAD of the real accordion. Consumer just passes
-     * the flag — no separate `<Skeleton.Accordion>` outside (mirrors `Button.isSkeleton`).
+     * `true` → SELF-render this card's own mirror (same surface frame, same trigger
+     * row, row count = `items.length` — 3 when empty) INSTEAD of the real accordion:
+     * chủ của hình là chủ của skeleton (§12c). Consumer just flips the flag; there is
+     * NO shared skeleton component to place outside (mirrors `Button.isSkeleton`).
      */
     isSkeleton?: boolean
     /** Extra classes on the outer section / surface. */
@@ -1283,6 +1283,14 @@ export interface SurfaceCardAccordionProps extends SurfaceLabelProps {
     /** Storybook-only: badge this composite's OWN direct parts (Header/Surface/Row) for a BlockAnatomy panel. */
     showAnatomy?: boolean
 }
+
+/**
+ * Màu vạch ngăn giữa hai hàng accordion — SSOT DÙNG CHUNG cho hàng THẬT và hàng
+ * skeleton, để hai bên không trôi khỏi nhau (§12c).
+ */
+const ACCORDION_SEPARATOR_STYLE = {
+    "--separator": "color-mix(in oklab, var(--surface-foreground) 6%, transparent)",
+} as React.CSSProperties
 
 /** The bounded `bg-surface` frame of full-bleed collapsible rows. */
 const AccordionFrame = ({
@@ -1296,7 +1304,7 @@ const AccordionFrame = ({
     <div className={cn("overflow-hidden", surfaceFrame(bordered))} data-anat-part={anatPart}>
         <Accordion
             variant="default"
-            style={{ "--separator": "color-mix(in oklab, var(--surface-foreground) 6%, transparent)" } as React.CSSProperties}
+            style={ACCORDION_SEPARATOR_STYLE}
             allowsMultipleExpanded={allowsMultipleExpanded}
             defaultExpandedKeys={defaultExpandedKeys}
         >
@@ -1331,6 +1339,59 @@ const AccordionFrame = ({
 )
 
 /**
+ * Mirror skeleton của CHÍNH {@link AccordionFrame} — chủ của hình là chủ của
+ * skeleton (§12c), không mượn component skeleton dùng chung.
+ *
+ * KHUNG RENDER THẬT: cùng `surfaceFrame(bordered)` + `overflow-hidden`, cùng hàng
+ * trigger (`px-4 py-4`, hộp dòng cao đúng line-height chữ thật), cùng vạch ngăn
+ * `h-px` giữa hai hàng (hàng cuối không có) — CHỈ chữ và caret thành thanh shimmer.
+ *
+ * Số hàng lấy từ `items` thật khi có (mirror luôn dòng `subtitle` của từng hàng, để
+ * chiều cao khớp bản thật); chưa có `items` thì 3 hàng mặc định.
+ */
+const AccordionFrameSkeleton = ({
+    items,
+    bordered,
+    showAnatomy,
+    anatPart,
+}: Pick<SurfaceCardAccordionProps, "items" | "bordered" | "showAnatomy"> & { anatPart?: string }) => {
+    // Chưa có dữ liệu → 3 hàng mặc định; có rồi thì soi gương đúng từng hàng.
+    const rows: ReadonlyArray<SurfaceCardAccordionItem | undefined> =
+        items.length > 0 ? items : Array.from({ length: 3 }, () => undefined)
+    return (
+        <div
+            className={cn("overflow-hidden", surfaceFrame(bordered))}
+            style={ACCORDION_SEPARATOR_STYLE}
+            data-anat-part={anatPart}
+        >
+            {rows.map((item, index) => (
+                <div key={item?.id ?? index} className="relative" data-anat-part={showAnatomy ? "Row" : undefined}>
+                    <div className="flex items-center px-4 py-4">
+                        <div className="flex min-w-0 flex-1 flex-col gap-0 text-left">
+                            {/* Hộp dòng cao ĐÚNG line-height chữ thật (sm=20px · xs=16px) — thanh
+                                shimmer chỉ cao bằng glyph, không bọc thì hàng loading thấp hơn hàng thật. */}
+                            <span className="flex h-5 items-center">
+                                <Typography size="sm" isSkeleton className="w-2/5" />
+                            </span>
+                            {item?.subtitle != null ? (
+                                <span className="flex h-4 items-center">
+                                    <Typography size="xs" isSkeleton className="w-1/4" />
+                                </span>
+                            ) : null}
+                        </div>
+                        {/* Caret: hàng thật LUÔN có `Accordion.Indicator` (`ml-auto size-4`) → mirror giữ đúng ô đó. */}
+                        <HeroSkeleton className="ml-auto size-4 shrink-0 rounded" />
+                    </div>
+                    {index < rows.length - 1 ? (
+                        <div className="absolute bottom-0 left-0 h-px w-full rounded-xs bg-[var(--separator)]" />
+                    ) : null}
+                </div>
+            ))}
+        </div>
+    )
+}
+
+/**
  * An "Accordion Card": one bounded `bg-surface` frame holding collapsible sections
  * whose separators run FULL-BLEED to the card edge — the same skin as
  * {@link SurfaceCard.List}, but each row expands. Pass `label` for a section header
@@ -1361,9 +1422,11 @@ const AccordionCard = ({
     // isSkeleton → self-render the mirror (same frame, items.length rows); never a bare accordion.
     // else no items → show the empty state in the same bg-surface frame (never a bare, broken accordion)
     const frame = isSkeleton ? (
-        <Skeleton.Accordion
-            items={items.length > 0 ? items.length : 3}
-            anatPart={showAnatomy ? "Skeleton.Accordion" : bare ? anatPart : undefined}
+        <AccordionFrameSkeleton
+            items={items}
+            bordered={bordered}
+            showAnatomy={showAnatomy}
+            anatPart={showAnatomy ? "Surface" : bare ? anatPart : undefined}
         />
     ) : items.length === 0 && emptyState != null ? (
         <div
@@ -1523,9 +1586,9 @@ const CrossListRow = ({
     >
         {isSkeleton ? (
             <>
-                <Skeleton className="size-5 shrink-0 rounded-full" />
+                <HeroSkeleton className="size-5 shrink-0 rounded-full" />
                 <div className="min-w-0 flex-1">
-                    <Skeleton.Typography type="body-sm" width="3/4" />
+                    <Typography size="sm" isSkeleton className="w-3/4" />
                 </div>
             </>
         ) : (
@@ -1637,8 +1700,8 @@ const Placeholder = ({
                     className,
                 )}
             >
-                <Skeleton className="size-8 rounded-xl" />
-                <Skeleton.Typography type="body-sm" width="1/3" />
+                <HeroSkeleton className="size-8 rounded-xl" />
+                <Typography size="sm" isSkeleton className="w-1/3" />
             </div>
         )
     }

@@ -35,8 +35,8 @@
 
 Chỉ dùng **icon PHỔ QUÁT / common** — cái ai cũng đọc ra NGAY, không cần ngữ cảnh domain:
 
-- ✅ `CircleCheck` (✓ đạt/xong) · `CircleXmark` (✕ lỗi/trượt) · `Clock` (chờ/hạn) ·
-  `Lock` (khoá) · `TriangleExclamation` (cảnh báo)… — glyph status quen mặt toàn cầu.
+- ✅ `CheckCircleIcon` (✓ đạt/xong) · `XCircleIcon` (✕ lỗi/trượt) · `ClockIcon` (chờ/hạn) ·
+  `LockIcon` (khoá) · `WarningIcon` (cảnh báo)… — glyph status quen mặt toàn cầu.
 - ❌ **Icon SPECIFIC theo domain quá** — chỉ người trong domain hẹp mới hiểu (biểu
   tượng nghiệp vụ, viết tắt bằng hình, metaphor riêng). Người ngoài đọc không ra →
   KHÔNG nhét vào chip. Chip cần đọc-nhanh, phổ quát; khái niệm domain hãy để **CHỮ**
@@ -48,22 +48,26 @@ Test: người chưa biết domain nhìn icon này có đoán đúng nghĩa khô
 
 - **Chip = 1 size duy nhất (`md` medium).** (Font theo HeroUI size — KHÔNG override
   `text-xs` trong globals.css nữa; đã bỏ.)
-- **Ưu tiên OUTLINE, KHÔNG fill** — `CircleCheck` (outline) mặc định; `CircleCheckFill`
-  chỉ khi cần đặc/đậm có chủ đích đã chốt.
+- **Ưu tiên nét OUTLINE, KHÔNG đặc** — `CheckCircleIcon` mặc định; bản ĐẶC chỉ khi cần
+  đặc/đậm có chủ đích đã chốt, và làm bằng `weight="fill"` (Phosphor không có component
+  `*Fill` riêng).
 - Size icon = `size-3.5` (14px, khớp `text-sm` của chip md) — **ATOM tự ép**, caller không set.
 - Tone icon = theo tone chip (`currentColor`), không sơn màu riêng.
-- Icon lib = **gravity** (`@gravity-ui/icons`); gravity **KHÔNG** có prop `weight`.
+- Bộ icon = **Phosphor** (`@phosphor-icons/react`) — MỘT bộ duy nhất cho cả cây (§5⃣0).
+- **Weight theo size (§5⃣0a):** `size-5` → `regular` (mặc định) · nhỏ hơn `size-5` → `weight="bold"`
+  để bù nét mảnh đi khi thu nhỏ. Icon chip là `size-3.5` ⇒ **`weight="bold"`**, và **ATOM tự áp** —
+  caller truyền component reference, KHÔNG tự set `weight`.
 
 ## API (strict UI)
 
 ```tsx
-<Chip.Base icon={CircleCheck} text="Verified" tone="success" />   // icon = COMPONENT, không JSX
+<Chip.Base icon={CheckCircleIcon} text="Verified" tone="success" /> // icon = COMPONENT, không JSX
 <Chip.Base text="Draft" />                                        // không icon → bỏ prop
 <Chip.Base onRemove={fn} text="React" tone="accent" />            // filter token (×)
 ```
 
-`icon` nhận **component reference** (`CircleCheck`), KHÔNG phải `<CircleCheck/>` — atom
-kiểm soát render/size, caller không chèn sai được.
+`icon` nhận **component reference** (`CheckCircleIcon`), KHÔNG phải `<CheckCircleIcon/>` — atom
+kiểm soát render/size/weight, caller không chèn sai được.
 
 ## Tự hỏi trước khi thêm icon
 

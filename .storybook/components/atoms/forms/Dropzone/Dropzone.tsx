@@ -46,7 +46,7 @@ export interface DropzoneProps {
  * Dropzone file input with drag and drop interaction.
  * @param {DropzoneProps} props Dropzone display and validation props.
  */
-export const Dropzone = ({
+const DropzoneBase = ({
     hint,
     file,
     errorMessage,
@@ -120,3 +120,11 @@ export const Dropzone = ({
         </div>
     )
 }
+
+/**
+ * `Dropzone.*` — namespace ô kéo-thả file. Root GỌI THẲNG được (`<Dropzone …/>`)
+ * và chính nó là `Base` (§12a: callable-namespace, không export trần).
+ */
+export const Dropzone = Object.assign(DropzoneBase, {
+    Base: DropzoneBase,
+})

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { House, ChartColumn, Clock } from "@gravity-ui/icons"
+import { HouseIcon, ChartBarIcon, ClockIcon } from "@phosphor-icons/react"
 import { Tabs } from "@sb-components/atoms/navigation/Tabs/Tabs"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
@@ -21,7 +21,7 @@ const TAB_PARTS: Array<AnatomyNode> = [
 ]
 const ICON_PARTS: Array<AnatomyNode> = [
     { name: "Tab", tier: "atom", role: "một tab (HeroTabs.Tab)" },
-    { name: "Icon", tier: "atom", role: "glyph dẫn đầu — `icon` truyền COMPONENT, atom ép size-4" },
+    { name: "Icon", tier: "atom", role: "glyph dẫn đầu — `icon` truyền COMPONENT phosphor, atom ép size-4" },
     { name: "Indicator", tier: "atom", role: "thanh chỉ báo tab đang chọn" },
 ]
 const BADGE_PARTS: Array<AnatomyNode> = [
@@ -39,7 +39,12 @@ const BASE_ITEMS = [
     { key: "reviews", label: "Đánh giá" },
 ]
 
-/** Default — tab chữ trơn, tab đầu đang chọn. */
+/**
+ * Default — tab chữ trơn. MỘT leaf render ĐỦ VARIANT + STATE (§14d.2): `primary`
+ * (pill segmented) · `secondary` (underline in-page) · strip có một item
+ * `isDisabled`. Cả ba CÙNG CÂY DOM (Tab × n + Indicator) — chỉ khác skin/cờ
+ * per-item — nên KHÔNG tách thành leaf riêng.
+ */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
@@ -49,41 +54,40 @@ export const Default: Story = {
                 leaf="Default"
                 parts={TAB_PARTS}
                 reason="Atom tab-strip DUY NHẤT bọc HeroUI Tabs; biến thể (icon/badge/disabled) phân bằng per-item prop → leaf = composition."
+                note="variant='primary' (mặc định) = pill segmented cho page-level switch · 'secondary' = underline in-page. Hàng 3 có item `isDisabled`: tab vẫn render, chỉ mờ + không focus/không chọn được. Ba hàng cùng cây DOM ⇒ một leaf (§14d.2)."
                 code={`<Tabs.Base ariaLabel="Khoá học" selectedKey="overview" onSelectionChange={fn}
-  items={[{ key: "overview", label: "Tổng quan" }, ...]} />`}
+  items={[{ key: "overview", label: "Tổng quan" }, ...]} />
+<Tabs.Base variant="secondary" … />
+items={[…, { key: "premium", label: "Nâng cao", isDisabled: true }]}`}
             >
-                <Tabs.Base ariaLabel="Khoá học" selectedKey="overview" onSelectionChange={() => {}} items={BASE_ITEMS} showAnatomy />
+                <div className="flex flex-col items-start gap-6">
+                    <Tabs.Base ariaLabel="Khoá học" selectedKey="overview" onSelectionChange={() => {}} items={BASE_ITEMS} showAnatomy />
+                    <Tabs.Base
+                        variant="secondary"
+                        ariaLabel="Khoá học (secondary)"
+                        selectedKey="overview"
+                        onSelectionChange={() => {}}
+                        items={BASE_ITEMS}
+                        showAnatomy
+                    />
+                    <Tabs.Base
+                        ariaLabel="Nội dung"
+                        selectedKey="free"
+                        onSelectionChange={() => {}}
+                        items={[
+                            { key: "free", label: "Miễn phí" },
+                            { key: "pro", label: "Chuyên nghiệp" },
+                            { key: "premium", label: "Nâng cao", isDisabled: true },
+                        ]}
+                        showAnatomy
+                    />
+                </div>
             </BlockAnatomy>
         </div>
     ),
 }
 
-/** Secondary — `variant="secondary"`: kiểu gạch chân dùng cho content-tabs trong trang. */
-export const Secondary: Story = {
-    render: () => (
-        <div className="p-8">
-            <BlockAnatomy
-                name="Tabs.Base"
-                tier="atom"
-                leaf="Secondary"
-                parts={TAB_PARTS}
-                note="variant='secondary' → underline in-page; 'primary' (mặc định) là pill segmented cho page-level switch."
-                code={"<Tabs.Base variant=\"secondary\" ariaLabel=\"Khoá học\" selectedKey=\"overview\" onSelectionChange={fn} items={BASE_ITEMS} />"}
-            >
-                <Tabs.Base
-                    variant="secondary"
-                    ariaLabel="Khoá học"
-                    selectedKey="overview"
-                    onSelectionChange={() => {}}
-                    items={BASE_ITEMS}
-                    showAnatomy
-                />
-            </BlockAnatomy>
-        </div>
-    ),
-}
-
-/** WithIcon — mỗi tab có `icon` truyền COMPONENT (gravity, không JSX); atom ép size-4. */
+/** WithIcon — mỗi tab có `icon` truyền COMPONENT (phosphor `*Icon`, không JSX); atom ép size-4. */
 export const WithIcon: Story = {
     render: () => (
         <div className="p-8">
@@ -92,17 +96,17 @@ export const WithIcon: Story = {
                 tier="atom"
                 leaf="WithIcon"
                 parts={ICON_PARTS}
-                note="icon = component reference (`House`, không `<House/>`). Atom render size-4 khớp nhãn tab."
-                code={"items={[{ key: \"home\", label: \"Trang chủ\", icon: House }, ...]}"}
+                note="icon = component reference (`HouseIcon`, không `<HouseIcon/>`). Atom render size-4 khớp nhãn tab + weight theo §5⃣0a — story KHÔNG truyền `weight`."
+                code={"items={[{ key: \"home\", label: \"Trang chủ\", icon: HouseIcon }, ...]}"}
             >
                 <Tabs.Base
                     ariaLabel="Bảng điều khiển"
                     selectedKey="home"
                     onSelectionChange={() => {}}
                     items={[
-                        { key: "home", label: "Trang chủ", icon: House },
-                        { key: "stats", label: "Thống kê", icon: ChartColumn },
-                        { key: "history", label: "Lịch sử", icon: Clock },
+                        { key: "home", label: "Trang chủ", icon: HouseIcon },
+                        { key: "stats", label: "Thống kê", icon: ChartBarIcon },
+                        { key: "history", label: "Lịch sử", icon: ClockIcon },
                     ]}
                     showAnatomy
                 />
@@ -131,34 +135,6 @@ export const WithBadge: Story = {
                         { key: "inbox", label: "Hộp thư", badge: 3 },
                         { key: "mentions", label: "Nhắc đến", badge: "9+" },
                         { key: "archived", label: "Lưu trữ" },
-                    ]}
-                    showAnatomy
-                />
-            </BlockAnatomy>
-        </div>
-    ),
-}
-
-/** DisabledTab — một tab `isDisabled` (hiện nhưng chặn chọn). */
-export const DisabledTab: Story = {
-    render: () => (
-        <div className="p-8">
-            <BlockAnatomy
-                name="Tabs.Base"
-                tier="atom"
-                leaf="DisabledTab"
-                parts={TAB_PARTS}
-                note="isDisabled trên 1 item → tab render mờ, không focus/không chọn được."
-                code={"items={[..., { key: \"premium\", label: \"Nâng cao\", isDisabled: true }]}"}
-            >
-                <Tabs.Base
-                    ariaLabel="Nội dung"
-                    selectedKey="free"
-                    onSelectionChange={() => {}}
-                    items={[
-                        { key: "free", label: "Miễn phí" },
-                        { key: "pro", label: "Chuyên nghiệp" },
-                        { key: "premium", label: "Nâng cao", isDisabled: true },
                     ]}
                     showAnatomy
                 />

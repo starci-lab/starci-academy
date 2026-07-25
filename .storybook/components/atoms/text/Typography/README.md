@@ -25,16 +25,19 @@ Prop `color="default | muted | accent | success | warning | danger"`:
 - **`weight="medium"`** = nhấn LÀM-VIỆC: nhãn · phần "value" · tiêu đề cỡ-body · từ trọng tâm.
 - **`weight="bold"`** = heading / display / số lớn.
 - `isItalic` = nghiêng (trích dẫn / nhấn nhẹ).
-- ⚠️ **RULE: có icon → text TỰ `font-medium`** (size icon gravity fit medium-weight text) —
-  KHÔNG tự set `weight` khi có icon.
+- ⚠️ **RULE: có icon → text TỰ `font-medium`** (icon đứng cạnh chữ nhìn cân với text
+  medium-weight) — KHÔNG tự set `weight` khi có icon.
 - **`isLink`** = link INLINE — dùng **HeroUI `Link`** (accent + hover underline + a11y). State riêng, KHÔNG weight/icon.
 
 ## Icon (strict, tùy chọn)
 
-- `prefixIcon` (leading) · `suffixIcon` (trailing) — nhận **COMPONENT** (`prefixIcon={CircleCheck}`,
+- `prefixIcon` (leading) · `suffixIcon` (trailing) — nhận **COMPONENT** (`prefixIcon={CheckCircleIcon}`,
   KHÔNG JSX). Atom ép **size = font-size**: xs→`size-3` · sm→`size-3.5` · base→`size-4`.
 - Icon **inherit tone của chữ** (currentColor) — muted thì icon cũng muted.
-- Icon lib = **gravity** (`@gravity-ui/icons`); gravity **KHÔNG** có `weight`.
+- Bộ icon = **Phosphor** (`@phosphor-icons/react`) — MỘT bộ duy nhất cho cả cây (§5⃣0).
+- **Weight theo size (§5⃣0a):** `size-5` → `regular` (mặc định) · nhỏ hơn `size-5` → `weight="bold"`
+  để bù nét mảnh đi khi thu nhỏ. Mọi cỡ icon của atom này đều nhỏ hơn `size-5` ⇒ **`weight="bold"`**,
+  và **ATOM tự áp** — caller chỉ truyền component reference, KHÔNG tự set `weight`.
 - Khi nào gắn icon: xem cơ sở ở [[Chip README]] (success/failure · nhấn mạnh · brand;
   icon phổ quát, không domain-specific).
 
@@ -47,7 +50,7 @@ Atom TỰ vẽ **text-bar skeleton** (cao = glyph height của cỡ) — hybrid 
 ```tsx
 <Typography.Sm text="Chấm bài với model premium" />        // chữ chính
 <Typography.Xs text="Nộp 15/03/2026" isMuted />            // chữ phụ
-<Typography.Sm text="Đã đạt" prefixIcon={CircleCheck} />   // icon (KHÔNG weight)
+<Typography.Sm text="Đã đạt" prefixIcon={CheckCircleIcon} /> // icon (KHÔNG weight)
 <Typography.Base text="Doanh thu quý 4" weight="bold" />
 <Typography.Sm text="Xem chi tiết" isLink />               // HeroUI Link
 <Typography.Sm text="…" isSkeleton />

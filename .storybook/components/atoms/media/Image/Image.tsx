@@ -1,6 +1,6 @@
-import { useEffect, useState, type ReactNode } from "react"
+import { useEffect, useState } from "react"
 import { Skeleton as HeroSkeleton, cn } from "@heroui/react"
-import { Picture } from "@gravity-ui/icons"
+import { ImageIcon } from "@phosphor-icons/react"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -10,12 +10,13 @@ import { Picture } from "@gravity-ui/icons"
  * 3 trạng thái tải (atom tự quản, hybrid C — không đẩy lên consumer):
  *   • loading  → HeroUI Skeleton phủ khung (ảnh opacity-0 tới khi onLoad).
  *   • loaded   → ảnh hiện.
- *   • error/rỗng → `fallbackSrc` (nếu có) hoặc glyph Picture trên surface — KHÔNG
+ *   • error/rỗng → `fallbackSrc` (nếu có) hoặc glyph ảnh trên surface — KHÔNG
  *     bao giờ để khung trắng trống.
  *
  * `isSkeleton` = ép skeleton từ NGOÀI (parent còn fetch data) — cộng dồn với
  * loading nội bộ. STRICT §4: consumer chỉ truyền `src`/`alt`/tỉ-lệ, không đụng
- * cấu trúc khung. Icon lib = gravity (KHÔNG `weight`).
+ * cấu trúc khung. Icon lib = `@phosphor-icons/react` (MỘT bộ duy nhất, §5.0);
+ * weight theo size (§5.0a): glyph fallback luôn ≥ `size-5` nên giữ `regular`.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -48,7 +49,7 @@ export interface ImageBaseProps {
     fit?: "cover" | "contain"
     /** Bo góc khung. Default `lg`. */
     radius?: keyof typeof RADIUS_CLS
-    /** Ảnh thay thế khi lỗi/rỗng. Bỏ trống → glyph Picture trên surface. */
+    /** Ảnh thay thế khi lỗi/rỗng. Bỏ trống → glyph ảnh (`ImageIcon`) trên surface. */
     fallbackSrc?: string
     /** Chiến lược tải native. Default `lazy` (perf cover-image); `eager` khi ảnh above-the-fold. */
     loading?: "lazy" | "eager"
@@ -92,7 +93,9 @@ const ImageBase = ({ src, alt, ratio, fit = "cover", radius = "lg", fallbackSrc,
 
             {showFallbackGlyph ? (
                 <div className="text-muted absolute inset-0 flex items-center justify-center" data-anat-part={showAnatomy ? "Fallback" : undefined}>
-                    <Picture className="size-1/4 max-h-10 max-w-10" aria-hidden />
+                    {/* Glyph co theo khung (1/4), CHẶN SÀN `min-*-5` = size-5 để luôn ở nấc
+                        weight `regular` (§5.0a: dưới size-5 mới phải bold) và không teo mất hình. */}
+                    <ImageIcon className="size-1/4 max-h-10 max-w-10 min-h-5 min-w-5" aria-hidden />
                     <span className="sr-only">{alt}</span>
                 </div>
             ) : (
@@ -113,9 +116,12 @@ const ImageBase = ({ src, alt, ratio, fit = "cover", radius = "lg", fallbackSrc,
 }
 
 /**
- * `Image.*` — framed-image atom namespace. `Image.Base` bọc `<img>` với skeleton
- * lúc fetch + fallback khi lỗi/rỗng (media primitive như CoverImage compose nó).
+ * `Image` — framed-image atom. Bọc `<img>` với skeleton lúc fetch + fallback khi
+ * lỗi/rỗng (media primitive như CoverImage compose nó).
+ *
+ * §12a: root GỌI THẲNG được (`<Image …/>`); `Image.Base` chỉ là alias giữ cho
+ * call-site cũ — atom này một hình thái nên không mở thêm member.
  */
-export const Image: { Base: (props: ImageBaseProps) => ReactNode } = {
+export const Image = Object.assign(ImageBase, {
     Base: ImageBase,
-}
+})

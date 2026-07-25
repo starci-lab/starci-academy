@@ -9,7 +9,7 @@ type Story = StoryObj
 
 // FieldFrame parts (§11a) — atom TỰ mang nhãn/mô tả/lỗi, không tách Field primitive.
 const FIELD: AnatomyNode = { name: "Field", tier: "atom", role: "ô mật khẩu (HeroUI Input type=password)" }
-const TOGGLE: AnatomyNode = { name: "Toggle", tier: "atom", role: "nút hiện/ẩn (gravity Eye/EyeSlash)" }
+const TOGGLE: AnatomyNode = { name: "Toggle", tier: "atom", role: "nút hiện/ẩn (Phosphor EyeIcon/EyeSlashIcon)" }
 const LABEL: AnatomyNode = { name: "Label", tier: "atom", role: "nhãn field (HeroUI Label)" }
 const DESC: AnatomyNode = { name: "Description", tier: "atom", role: "mô tả dưới nhãn (text-muted)" }
 const ERROR: AnatomyNode = { name: "Error", tier: "atom", role: "dòng lỗi (text-danger)" }

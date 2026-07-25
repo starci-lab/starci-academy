@@ -33,7 +33,7 @@ import { Header as HeroMenuHeader } from "react-aria-components"
  *
  * STRICT §4: consumer truyền DỮ LIỆU (`items` phẳng HOẶC `sections` gộp), KHÔNG dựng
  * `DropdownItem` tay. Mỗi item = `{ key, label, icon?, isDisabled? }`; `icon` truyền
- * COMPONENT (gravity), atom render size-4. Chọn item → `onAction(key)`.
+ * COMPONENT (Phosphor), atom render size-4. Chọn item → `onAction(key)`.
  *
  * Overlay portal: `DropdownPopover` render RA NGOÀI render-box nên badge on-render chỉ
  * neo được `Trigger`; các part menu vẫn hiện trong legend + Cây.
@@ -92,8 +92,7 @@ export interface MenuBaseProps {
     /** Dev/spec: emit `data-anat-part` on Trigger/Popover/Menu/Item so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
     /**
-     * Render the leaf skeleton (rows of icon + label bars, MIRROR of `Skeleton.Menu`
-     * from the registry) instead of the real dropdown — atom SỞ HỮU skeleton của
+     * Render the leaf skeleton (rows of icon + label bars) instead of the real dropdown — atom SỞ HỮU skeleton của
      * chính nó (canon §12c, hybrid C).
      */
     isSkeleton?: boolean
@@ -142,11 +141,11 @@ const MenuBase = ({
     className,
 }: MenuBaseProps) => {
     if (isSkeleton) {
-        // Leaf skeleton OWNED by the atom (hybrid C, §12c) — MIRROR của `Skeleton.Menu`
-        // trong registry (`atoms/display/Skeleton`): container `p-1` + mỗi row là icon
-        // `size-5 rounded-full` cạnh nhãn `h-[14px] w-24`. Số row = tổng items thật (flat
-        // hoặc gộp từ sections) để không lệch chiều cao khi data thật vào; fallback 4
-        // (mặc định của `Skeleton.Menu`) khi chưa biết trước.
+        // Leaf skeleton CO-LOCATED — chủ của hình là chủ của skeleton (§12c). KHÔNG có
+        // component skeleton dùng chung; atom tự vẽ bằng `HeroSkeleton`: container `p-1`
+        // + mỗi row là icon `size-5 rounded-full` cạnh nhãn `h-[14px] w-24`. Số row =
+        // tổng items thật (flat hoặc gộp từ sections) để không lệch chiều cao khi data
+        // thật vào; fallback 4 (mặc định cũ) khi chưa biết trước.
         const rowCount = sections
             ? sections.reduce((total, section) => total + section.items.length, 0)
             : (items?.length ?? 4)

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 import { Table as HeroTable, cn } from "@heroui/react"
-import { Skeleton } from "@sb-components/atoms/display/Skeleton/Skeleton"
+import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -135,7 +135,7 @@ const TableBase = ({
                                 `h-5` để hàng mirror CAO ĐÚNG bằng hàng thật (§8, không nhảy
                                 layout). Căn bằng chiều cao + `items-center`, KHÔNG bằng margin (§10a). */}
                             <span className="flex h-5 items-center">
-                                <Skeleton.Typography type="body-sm" width="2/3" />
+                                <Typography size="sm" isSkeleton className="w-2/3" />
                             </span>
                         </HeroTable.Cell>
                     ))}

@@ -22,24 +22,59 @@ import { Button as HeroUIButton, Spinner, Skeleton as HeroSkeleton, cn } from "@
  *   • `isPending`: react-aria `isPending` KHÔNG tự vẽ spinner (chỉ khoá tương
  *     tác) — atom render TAY `<Spinner size="sm" color="current">` + khoá press.
  *   • `icon` LUÔN là COMPONENT (như `Chip`); scale icon SUY TỪ `size` theo luật
- *     gravity "size icon = size chữ" (xem {@link ICON_CLS}) — KHÔNG có prop icon-size.
+ *     atom-layer "size icon = size chữ" (xem {@link ICON_CLS}) — KHÔNG có prop icon-size.
  *   • `variant` (ý nghĩa) và `size` (tỉ lệ) là HAI TRỤC ĐỘC LẬP.
- *   • Icon lib = gravity (`@gravity-ui/icons`) — KHÔNG có prop `weight`.
+ *   • Icon lib = Phosphor (`@phosphor-icons/react`) — MỘT BỘ DUY NHẤT (§5.0).
+ *     `weight` cũng do ATOM ép theo `size` (§5.0a, xem {@link ICON_WEIGHT}) —
+ *     caller chỉ chọn "hình gì", KHÔNG chọn "nét dày mỏng".
  *   • Anatomy tier `atom`; parts gắn `data-anat-part` khi `showAnatomy`.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 /** Semantic action intent → maps straight to the HeroUI fork's `variant`. */
-export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger"
+export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger" | "danger-soft"
+
+/**
+ * HeroUI KHÔNG có variant `danger-soft` — chỉ có `danger` đặc. Bản mềm phải mượn một
+ * variant trung tính của HeroUI rồi đắp token `danger-soft` lên. Tách hai bảng để khi
+ * HeroUI có variant thật thì chỉ xoá đúng một dòng mỗi bảng.
+ *
+ * Dùng cho hành động phá huỷ ở ngữ cảnh NHẸ (xoá một dòng trong danh sách) — `danger`
+ * đặc dành cho nút chốt của hộp thoại xác nhận.
+ */
+type HeroVariant = "primary" | "secondary" | "ghost" | "danger"
+
+const HERO_VARIANT: Record<ButtonVariant, HeroVariant> = {
+    primary: "primary",
+    secondary: "secondary",
+    ghost: "ghost",
+    danger: "danger",
+    "danger-soft": "secondary",
+}
+
+/** Class đắp thêm cho variant HeroUI không có sẵn. Rỗng = dùng nguyên variant HeroUI. */
+const VARIANT_CLS: Partial<Record<ButtonVariant, string>> = {
+    "danger-soft": "bg-danger-soft text-danger-soft-foreground hover:bg-danger-soft/70",
+}
 
 /** Scale bậc thang → map THẲNG xuống HeroUI `size` (`md` = default). */
 export type ButtonSize = "sm" | "md" | "lg"
 
-/** An icon passed as a COMPONENT (e.g. `Plus`), rendered by the atom at button scale. */
-export type IconComponent = ComponentType<SVGProps<SVGSVGElement>>
+/**
+ * Nét icon Phosphor mà ATOM tự ép (§5.0a) — khai TẠI CHỖ, KHÔNG import kiểu `Icon`
+ * của thư viện: khai chặt theo lib là khoá cả cây vào một nhà cung cấp.
+ */
+type IconWeight = "regular" | "bold"
 
 /**
- * ICON SCALE = FONT SCALE (luật gravity: size icon = size chữ — thầy chốt
+ * An icon passed as a COMPONENT (e.g. `PlusIcon`), rendered by the atom at button
+ * scale. Prop `weight` để OPTIONAL vì atom tự truyền (§5.0a); component icon nào
+ * không hiểu `weight` vẫn nhận được.
+ */
+export type IconComponent = ComponentType<SVGProps<SVGSVGElement> & { weight?: IconWeight }>
+
+/**
+ * ICON SCALE = FONT SCALE (luật atom-layer: size icon = size chữ — thầy chốt
  * 2026-07-25). `sm`/`md` chữ `text-sm` (14px) → `size-3.5`; `lg` chữ `text-base`
  * (16px) → `size-4`. Áp CHUNG cho cả glyph-duy-nhất (`Button.Icon`) — một luật
  * duy nhất, không có thang riêng theo box.
@@ -55,11 +90,35 @@ const ICON_CLS: Record<ButtonSize, string> = {
     lg: "[&_svg]:!size-4",
 }
 
+/**
+ * WEIGHT THEO SIZE (§5.0a — thầy chốt 2026-07-26): nét Phosphor co theo cỡ, nên
+ * icon NHỎ HƠN `size-5` phải `bold` mới nhìn dày BẰNG icon `size-5` regular
+ * (regular 16 đơn vị vs bold 24 trên lưới 256). Cả 3 size của nút đều dưới
+ * `size-5` (xem {@link ICON_CLS}) → `bold` hết; vẫn giữ map theo size để bậc nào
+ * lên `size-5` thì đổi về `regular` tại đúng một chỗ.
+ */
+const ICON_WEIGHT: Record<ButtonSize, IconWeight> = {
+    sm: "bold",
+    md: "bold",
+    lg: "bold",
+}
+
 /** Skeleton box theo size — mirror đúng chiều cao nút (mobile → `@app-md` desktop). */
 const SKELETON_H: Record<ButtonSize, string> = {
     sm: "h-9 @app-md:h-8",
     md: "h-10 @app-md:h-9",
     lg: "h-11 @app-md:h-10",
+}
+/**
+ * Bề NGANG skeleton cũng phải theo `size` — nút lớn thì padding ngang lớn hơn nên pill
+ * dài hơn. Sửa 2026-07-26: trước đó dùng `w-24` CỨNG cho cả ba bậc, chỉ khác chiều cao
+ * 4px ⇒ ba skeleton nhìn y hệt nhau, và footprint sai so với nút thật (layout nhảy khi
+ * dữ liệu về). Bản legacy vốn có bảng này, bản live làm rơi mất.
+ */
+const SKELETON_W: Record<ButtonSize, string> = {
+    sm: "w-20",
+    md: "w-24",
+    lg: "w-28",
 }
 /** Skeleton VUÔNG cho nút chỉ-icon (khớp cả bề ngang iconOnly). */
 const SKELETON_SQUARE: Record<ButtonSize, string> = {
@@ -68,15 +127,24 @@ const SKELETON_SQUARE: Record<ButtonSize, string> = {
     lg: "size-11 @app-md:size-10",
 }
 
-/** Props for the base {@link ButtonBase} — a labelled action trigger. */
-export interface ButtonBaseProps {
-    /** Nhãn nút qua PROP (bắt buộc — nút chỉ-icon dùng {@link ButtonIcon}). */
-    label: ReactNode
+/** Props chung — TRỪ cặp `label`/`isSkeleton`, xem {@link ButtonBaseProps}. */
+interface ButtonBaseOwnProps {
     /**
-     * Glyph dẫn đầu như COMPONENT (`icon={Plus}`, KHÔNG JSX) — atom ép `size-4`
-     * (khớp nhãn text-sm; glyph-duy-nhất của `Button.Icon` to hơn: `size-5`).
+     * Glyph dẫn đầu như COMPONENT (`icon={PlusIcon}`, KHÔNG JSX) — atom ép CẢ scale
+     * ({@link ICON_CLS}) lẫn `weight` ({@link ICON_WEIGHT}) theo `size`.
      */
     icon?: IconComponent
+    /**
+     * Glyph ĐUÔI (sau nhãn) như COMPONENT. Cùng luật scale/weight với `icon`.
+     * Thêm 2026-07-26: trước đó atom chỉ có ô glyph dẫn đầu nên nút "Tiếp tục →"
+     * không dựng được, phải chèn tay ở caller — đúng thứ §4 cấm.
+     */
+    suffixIcon?: IconComponent
+    /**
+     * §5b — ARROW trượt khi hover: `icon` (dẫn đầu) lùi ←, `suffixIcon` tiến →.
+     * CHỈ dùng cho mũi tên điều hướng; caret/glyph tĩnh bật cái này là gây nhiễu.
+     */
+    iconSlide?: boolean
     /** Action intent → HeroUI variant. Default `primary`. */
     variant?: ButtonVariant
     /** Scale nút. Default `md`. Icon TỰ SUY theo size (caller không chỉnh). */
@@ -86,17 +154,28 @@ export interface ButtonBaseProps {
     isDisabled?: boolean
     /** `true` → BUSY: chèn `<Spinner>` trước nhãn + khoá press (react-aria không tự vẽ). */
     isPending?: boolean
-    /** `true` → render skeleton pill co-located (đúng size nút). */
-    isSkeleton?: boolean
     /** `true` → gắn `data-anat-part` cho mỗi part để BlockAnatomy badge. */
     showAnatomy?: boolean
     className?: string
 }
 
+/**
+ * `label` BẮT BUỘC khi render nút thật (nút chỉ-icon dùng {@link ButtonIcon}),
+ * KHÔNG cần khi `isSkeleton` — pill shimmer không có nhãn. Cùng khuôn với
+ * `TypographyProps`/`ChipBaseProps`.
+ */
+export type ButtonBaseProps = ButtonBaseOwnProps &
+    (
+        | { isSkeleton: true; label?: ReactNode }
+        | { isSkeleton?: false; label: ReactNode }
+    )
+
 /** Base button — nhãn text, `isPending` tự vẽ Spinner, `isSkeleton` mirror pill. */
 const ButtonBase = ({
     label,
     icon: Icon,
+    suffixIcon: SuffixIcon,
+    iconSlide = false,
     variant = "primary",
     size = "md",
     onPress,
@@ -110,19 +189,19 @@ const ButtonBase = ({
         // Leaf skeleton OWNED bởi atom (hybrid C) — pill khớp box HeroUI Button theo size.
         return (
             <HeroSkeleton
-                className={cn("w-24 rounded-full", SKELETON_H[size], className)}
+                className={cn("rounded-full", SKELETON_W[size], SKELETON_H[size], className)}
                 data-anat-part={showAnatomy ? "Skeleton" : undefined}
             />
         )
     }
     return (
         <HeroUIButton
-            variant={variant}
+            variant={HERO_VARIANT[variant]}
             size={size}
             onPress={onPress}
             isPending={isPending}
             isDisabled={isDisabled || isPending}
-            className={className}
+            className={cn("group", VARIANT_CLS[variant], className)}
         >
             {isPending ? (
                 // BUSY → Spinner THAY glyph (không chồng 2 tín hiệu ở cùng vị trí dẫn đầu).
@@ -130,19 +209,43 @@ const ButtonBase = ({
                     <Spinner size="sm" color="current" />
                 </span>
             ) : Icon ? (
-                // Atom sở hữu glyph scale (§4/§5) — caller không chèn được sai size.
-                <span aria-hidden className={cn("inline-flex shrink-0", ICON_CLS[size])} data-anat-part={showAnatomy ? "Icon" : undefined}>
-                    <Icon />
+                // Atom sở hữu glyph scale + weight (§4/§5) — caller không chèn được sai size/nét.
+                // iconSlide: glyph dẫn đầu LÙI ← khi hover (nghĩa "quay lại").
+                <span
+                    aria-hidden
+                    className={cn(
+                        "inline-flex shrink-0",
+                        ICON_CLS[size],
+                        // Tailwind v4: translate là property RIÊNG — phải transition-[translate], KHÔNG phải -transform.
+                        iconSlide && "transition-[translate] group-hover:-translate-x-0.5",
+                    )}
+                    data-anat-part={showAnatomy ? "Icon" : undefined}
+                >
+                    <Icon weight={ICON_WEIGHT[size]} />
                 </span>
             ) : null}
             <span data-anat-part={showAnatomy ? "Label" : undefined}>{label}</span>
+            {SuffixIcon ? (
+                // Glyph ĐUÔI — iconSlide: TIẾN → khi hover (nghĩa "đi tiếp").
+                <span
+                    aria-hidden
+                    className={cn(
+                        "inline-flex shrink-0",
+                        ICON_CLS[size],
+                        iconSlide && "transition-[translate] group-hover:translate-x-0.5",
+                    )}
+                    data-anat-part={showAnatomy ? "SuffixIcon" : undefined}
+                >
+                    <SuffixIcon weight={ICON_WEIGHT[size]} />
+                </span>
+            ) : null}
         </HeroUIButton>
     )
 }
 
 /** Props for {@link ButtonIcon} — an icon-only trigger. */
 export interface ButtonIconProps {
-    /** Glyph as a COMPONENT reference (e.g. `Plus`). Atom ép scale theo `size`. */
+    /** Glyph as a COMPONENT reference (e.g. `PlusIcon`). Atom ép scale + weight theo `size`. */
     icon: IconComponent
     /** Accessible name (nút không có text → bắt buộc cho a11y). */
     ariaLabel: string
@@ -197,9 +300,9 @@ const ButtonIcon = ({
                     <Spinner size="sm" color="current" />
                 </span>
             ) : (
-                // Atom sở hữu glyph scale (§4/§5) — caller không chèn được sai size.
+                // Atom sở hữu glyph scale + weight (§4/§5) — caller không chèn được sai size/nét.
                 <span aria-hidden className={cn("inline-flex shrink-0", ICON_CLS[size])} data-anat-part={showAnatomy ? "Icon" : undefined}>
-                    <Icon />
+                    <Icon weight={ICON_WEIGHT[size]} />
                 </span>
             )}
         </HeroUIButton>

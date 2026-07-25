@@ -8,7 +8,7 @@ import {
     Skeleton as HeroSkeleton,
     cn,
 } from "@heroui/react"
-import { ChevronDown } from "@gravity-ui/icons"
+import { CaretDownIcon } from "@phosphor-icons/react"
 import { FieldFrame, fieldName } from "@sb-components/atoms/forms/_field/FieldFrame"
 
 /**
@@ -31,7 +31,9 @@ import { FieldFrame, fieldName } from "@sb-components/atoms/forms/_field/FieldFr
  *   • Anatomy tier `atom` (part `Field` = ô control · `Trigger` = actuator mở list;
  *     FieldFrame thêm `Label`/`Description`/`Error`).
  *
- * Icon lib = gravity (`@gravity-ui/icons`) — gravity KHÔNG có prop `weight`.
+ * Icon lib = Phosphor (`@phosphor-icons/react`) — MỘT BỘ DUY NHẤT (§5.0). Caret ở
+ * đây là `size-4` (nhỏ hơn `size-5`) nên phải `weight="bold"` để nét không mảnh đi
+ * so với icon cỡ chuẩn (§5.0a).
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -139,7 +141,7 @@ const SelectSingle = ({
                         )}
                     </HeroSelect.Value>
                     <HeroSelect.Indicator>
-                        <ChevronDown className="text-muted size-4" />
+                        <CaretDownIcon className="text-muted size-4" weight="bold" />
                     </HeroSelect.Indicator>
                 </HeroSelect.Trigger>
                 <HeroSelect.Popover>
@@ -217,7 +219,7 @@ const SelectMulti = ({
                         {summary ?? placeholder}
                     </span>
                     <HeroSelect.Indicator>
-                        <ChevronDown className="text-muted size-4" />
+                        <CaretDownIcon className="text-muted size-4" weight="bold" />
                     </HeroSelect.Indicator>
                 </HeroSelect.Trigger>
                 <HeroSelect.Popover>
@@ -297,7 +299,7 @@ const SelectCombobox = ({
                         className="text-muted absolute right-1 top-1/2 -translate-y-1/2 inline-flex size-7 items-center justify-center rounded-lg [&_svg]:size-4"
                         data-anat-part={showAnatomy ? "Trigger" : undefined}
                     >
-                        <ChevronDown aria-hidden />
+                        <CaretDownIcon aria-hidden weight="bold" />
                     </HeroComboBox.Trigger>
                 </HeroComboBox.InputGroup>
                 <HeroComboBox.Popover>

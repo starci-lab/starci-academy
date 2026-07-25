@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Person } from "@gravity-ui/icons"
+import { UserIcon } from "@phosphor-icons/react"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
@@ -53,7 +53,7 @@ export const Image: Story = {
     ),
 }
 
-/** Initials — không `src` → 2 chữ cái đầu của `name`. */
+/** Initials — không `src` → 2 chữ cái đầu của `name`; render đủ 3 bậc size. */
 export const Initials: Story = {
     render: () => (
         <div className="p-8">
@@ -62,10 +62,14 @@ export const Initials: Story = {
                 tier="atom"
                 leaf="Initials"
                 parts={INITIALS_PARTS}
-                note="Không src → atom lấy 2 chữ đầu `name` (chuỗi fallback: ảnh → initials → icon)."
-                code={"<Avatar.Base name=\"Mai Chi\" color=\"accent\" />"}
+                note="Không src → atom lấy 2 chữ đầu `name` (chuỗi fallback: ảnh → initials → icon). 3 bậc sm/md/lg cùng CÂY DOM nên nằm chung một leaf (§14d.2) — atom sở hữu scale (§4), consumer không đặt px."
+                code={"<Avatar.Base name=\"Mai Chi\" color=\"accent\" size=\"sm|md|lg\" />"}
             >
-                <Avatar.Base name="Mai Chi" color="accent" showAnatomy />
+                <div className="flex items-end gap-4">
+                    <Avatar.Base name="Mai Chi" size="sm" color="accent" showAnatomy />
+                    <Avatar.Base name="Mai Chi" size="md" color="accent" showAnatomy />
+                    <Avatar.Base name="Mai Chi" size="lg" color="accent" showAnatomy />
+                </div>
             </BlockAnatomy>
         </div>
     ),
@@ -80,10 +84,14 @@ export const Fallback: Story = {
                 tier="atom"
                 leaf="Fallback"
                 parts={ICON_PARTS}
-                note="`icon` truyền COMPONENT (`Person`) — atom render trong Fallback, tự ép size."
-                code={"<Avatar.Base icon={Person} />"}
+                note="`icon` truyền COMPONENT (`UserIcon`, phosphor) — atom render trong Fallback, tự ép size + weight (§5.0a: sm → glyph size-4 nên bold)."
+                code={"<Avatar.Base icon={UserIcon} />"}
             >
-                <Avatar.Base icon={Person} showAnatomy />
+                <div className="flex items-end gap-4">
+                    <Avatar.Base icon={UserIcon} size="sm" showAnatomy />
+                    <Avatar.Base icon={UserIcon} size="md" showAnatomy />
+                    <Avatar.Base icon={UserIcon} size="lg" showAnatomy />
+                </div>
             </BlockAnatomy>
         </div>
     ),
@@ -102,28 +110,6 @@ export const WithStatus: Story = {
                 code={"<Avatar.Base src=\"…\" name=\"Mai\" status=\"online\" />"}
             >
                 <Avatar.Base src={DEMO_SRC} name="Mai" status="online" showAnatomy />
-            </BlockAnatomy>
-        </div>
-    ),
-}
-
-/** Sizes — sm · md · lg (atom tự ép kích thước). */
-export const Sizes: Story = {
-    render: () => (
-        <div className="p-8">
-            <BlockAnatomy
-                name="Avatar.Base"
-                tier="atom"
-                leaf="Sizes"
-                parts={INITIALS_PARTS}
-                note="3 bậc size sm/md/lg — atom sở hữu scale (§4), consumer không tự đặt px."
-                code={"<Avatar.Base name=\"Mai\" size=\"sm|md|lg\" />"}
-            >
-                <div className="flex items-end gap-4">
-                    <Avatar.Base name="Mai" size="sm" color="accent" showAnatomy />
-                    <Avatar.Base name="Mai" size="md" color="accent" showAnatomy />
-                    <Avatar.Base name="Mai" size="lg" color="accent" showAnatomy />
-                </div>
             </BlockAnatomy>
         </div>
     ),

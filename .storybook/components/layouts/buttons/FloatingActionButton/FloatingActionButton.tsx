@@ -2,7 +2,7 @@
 
 import { cn } from "@heroui/react"
 import type { ReactNode } from "react"
-import { Button } from "@sb-components/_designs/buttons/Button/Button"
+import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — the target `FloatingActionButton`. Authored in

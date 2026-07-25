@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ArrowRightFromSquare, ChevronDown, Copy, Gear, Pencil, Person, TrashBin } from "@gravity-ui/icons"
+import { CaretDownIcon, CopyIcon, GearIcon, PencilSimpleIcon, SignOutIcon, TrashIcon, UserIcon } from "@phosphor-icons/react"
 import { Menu } from "@sb-components/atoms/overlay/Menu/Menu"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
@@ -26,7 +26,7 @@ const ICON_PARTS: Array<AnatomyNode> = [
     { name: "Trigger", tier: "atom", role: "nút mở menu (DropdownTrigger + Button) — prop `triggerLabel`" },
     { name: "Popover", tier: "atom", role: "surface menu (DropdownPopover), portal ra body" },
     { name: "Menu", tier: "atom", role: "danh sách (DropdownMenu) — onAction(key)" },
-    { name: "Item", tier: "atom", role: "dòng chọn có `icon` (COMPONENT gravity, size-4)" },
+    { name: "Item", tier: "atom", role: "dòng chọn có `icon` (COMPONENT phosphor, size-4)" },
 ]
 const SECTION_PARTS: Array<AnatomyNode> = [
     { name: "Trigger", tier: "atom", role: "nút mở menu (DropdownTrigger + Button) — prop `triggerLabel`" },
@@ -83,7 +83,7 @@ export const Default: Story = {
     ),
 }
 
-/** WithIcons — mỗi dòng có leading icon (COMPONENT gravity). */
+/** WithIcons — mỗi dòng có leading icon (COMPONENT phosphor `*Icon`). */
 export const WithIcons: Story = {
     render: () => (
         <div className="p-8">
@@ -92,8 +92,8 @@ export const WithIcons: Story = {
                 tier="atom"
                 leaf="WithIcons"
                 parts={ICON_PARTS}
-                note="`icon` truyền COMPONENT (`Gear`), atom ép size-4. Dùng icon khi nó tải nghĩa/hành động rõ."
-                code={"<Menu.Base triggerLabel=\"Thao tác\" items={[{ key: \"edit\", label: \"Sửa\", icon: Pencil }, …]} />"}
+                note="`icon` truyền COMPONENT phosphor (`GearIcon`, §5⃣0), atom ép size-4 + weight (§5⃣0a) — story KHÔNG truyền `weight`. Dùng icon khi nó tải nghĩa/hành động rõ."
+                code={"<Menu.Base triggerLabel=\"Thao tác\" items={[{ key: \"edit\", label: \"Sửa\", icon: PencilSimpleIcon }, …]} />"}
             >
                 <div className="flex justify-center py-4">
                     <Menu.Base
@@ -103,10 +103,10 @@ export const WithIcons: Story = {
                         showAnatomy
                         onAction={() => {}}
                         items={[
-                            { key: "edit", label: "Sửa", icon: Pencil },
-                            { key: "duplicate", label: "Nhân bản", icon: Copy },
-                            { key: "settings", label: "Cài đặt", icon: Gear },
-                            { key: "delete", label: "Xoá", icon: TrashBin },
+                            { key: "edit", label: "Sửa", icon: PencilSimpleIcon },
+                            { key: "duplicate", label: "Nhân bản", icon: CopyIcon },
+                            { key: "settings", label: "Cài đặt", icon: GearIcon },
+                            { key: "delete", label: "Xoá", icon: TrashIcon },
                         ]}
                     />
                 </div>
@@ -124,13 +124,13 @@ export const WithTriggerIcon: Story = {
                 tier="atom"
                 leaf="WithTriggerIcon"
                 parts={TRIGGER_ICON_PARTS}
-                note="`triggerIcon` là COMPONENT gravity; atom ép `size-3.5` (icon = size chữ nút) nên caller không chèn sai scale."
-                code={"<Menu.Base triggerLabel=\"Sắp xếp\" triggerIcon={ChevronDown} items={[…]} />"}
+                note="`triggerIcon` là COMPONENT phosphor (`*Icon`, §5⃣0); atom ép `size-3.5` (icon = size chữ nút) + weight theo §5⃣0a nên caller không chèn sai scale/nét — story KHÔNG truyền `weight`."
+                code={"<Menu.Base triggerLabel=\"Sắp xếp\" triggerIcon={CaretDownIcon} items={[…]} />"}
             >
                 <div className="flex justify-center py-4">
                     <Menu.Base
                         triggerLabel="Sắp xếp"
-                        triggerIcon={ChevronDown}
+                        triggerIcon={CaretDownIcon}
                         ariaLabel="Sắp xếp"
                         defaultOpen
                         showAnatomy
@@ -171,14 +171,14 @@ export const WithSections: Story = {
                                 key: "account",
                                 title: "Tài khoản",
                                 items: [
-                                    { key: "profile", label: "Hồ sơ", icon: Person },
-                                    { key: "settings", label: "Cài đặt", icon: Gear },
+                                    { key: "profile", label: "Hồ sơ", icon: UserIcon },
+                                    { key: "settings", label: "Cài đặt", icon: GearIcon },
                                 ],
                             },
                             {
                                 key: "session",
                                 title: "Phiên",
-                                items: [{ key: "logout", label: "Đăng xuất", icon: ArrowRightFromSquare }],
+                                items: [{ key: "logout", label: "Đăng xuất", icon: SignOutIcon }],
                             },
                         ]}
                     />
@@ -208,9 +208,9 @@ export const DisabledItem: Story = {
                         showAnatomy
                         onAction={() => {}}
                         items={[
-                            { key: "edit", label: "Sửa", icon: Pencil },
-                            { key: "archive", label: "Lưu trữ (cần quyền)", icon: Copy, isDisabled: true },
-                            { key: "delete", label: "Xoá", icon: TrashBin },
+                            { key: "edit", label: "Sửa", icon: PencilSimpleIcon },
+                            { key: "archive", label: "Lưu trữ (cần quyền)", icon: CopyIcon, isDisabled: true },
+                            { key: "delete", label: "Xoá", icon: TrashIcon },
                         ]}
                     />
                 </div>

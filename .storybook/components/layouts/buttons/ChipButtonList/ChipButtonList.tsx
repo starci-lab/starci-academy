@@ -1,9 +1,8 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { cn } from "@heroui/react"
-import { Button } from "@sb-components/_designs/buttons/Button/Button"
+import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
 import { Button as ButtonAtom } from "@sb-components/atoms/buttons/Button/Button"
-import { Skeleton } from "@sb-components/atoms/display/Skeleton/Skeleton"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
@@ -104,8 +103,13 @@ export const ChipButtonList = ({
                 {direction === "column"
                     ? Array.from({ length: skeletonCount }).map((_, index) => (
                         <div key={index} className="flex items-center gap-3 px-3 py-2">
-                            <Skeleton className="size-4 shrink-0 rounded" />
-                            <Skeleton.Typography type="body-sm" width={index % 2 === 0 ? "2/3" : "1/2"} />
+                            <HeroSkeleton className="size-4 shrink-0 rounded" />
+                            {/* §12c: chủ của hình là chủ của skeleton — Typography tự vẽ gạch của nó */}
+                            <Typography.Base
+                                size="sm"
+                                isSkeleton
+                                className={index % 2 === 0 ? "w-2/3" : "w-1/2"}
+                            />
                         </div>
                     ))
                     : Array.from({ length: skeletonCount }).map((_, index) => (

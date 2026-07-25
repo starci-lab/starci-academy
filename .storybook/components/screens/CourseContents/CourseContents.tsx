@@ -1,16 +1,16 @@
 import React from "react"
-import { GithubLogoIcon, StackIcon } from "@phosphor-icons/react"
-import { CourseBrief } from "@sb-components/_blocks/learn/CourseBrief/CourseBrief"
-import { KeepGoingPath, type KeepGoingLesson } from "@sb-components/_blocks/learn/KeepGoingPath/KeepGoingPath"
-import { LearnNudges, type LearnNudge } from "@sb-components/_blocks/learn/LearnNudges/LearnNudges"
-import { Feedback } from "@sb-components/layouts/feedback/Feedback/Feedback"
+import { Skeleton as HeroSkeleton } from "@heroui/react"
+import { StackIcon } from "@phosphor-icons/react"
+import { CourseBrief } from "@sb-components/blocks/learn/CourseBrief/CourseBrief"
+import { KeepGoingPath, type KeepGoingContent } from "@sb-components/blocks/learn/KeepGoingPath/KeepGoingPath"
+import { LearnNudges, type LearnNudge } from "@sb-components/blocks/learn/LearnNudges/LearnNudges"
+import { CourseTeamGate } from "@sb-components/blocks/learn/CourseTeamGate/CourseTeamGate"
 import {
     TrialConversionStrip,
     type TrialConversionStripPrice,
-} from "@sb-components/_blocks/commerce/TrialConversionStrip/TrialConversionStrip"
-import { PricingPhase } from "@sb-components/_designs/commerce/PhaseScarcityNote/PhaseScarcityNote"
-import { ContinueCard } from "@sb-components/_designs/cards/ContinueCard/ContinueCard"
-import { Skeleton } from "@sb-components/atoms/display/Skeleton/Skeleton"
+} from "@sb-components/_legacy/blocks/commerce/TrialConversionStrip/TrialConversionStrip"
+import { PricingPhase } from "@sb-components/_legacy/designs/commerce/PhaseScarcityNote/PhaseScarcityNote"
+import { ContinueCard } from "@sb-components/_legacy/designs/cards/ContinueCard/ContinueCard"
 import { AsyncContent } from "@sb-components/layouts/async/AsyncContent/AsyncContent"
 
 /**
@@ -43,7 +43,7 @@ const SAMPLE_PRICE: TrialConversionStripPrice = {
 
 // DỮ LIỆU thuần — hình (icon theo trạng thái, chip độ khó, dấu khoá) do block
 // `KeepGoingPath` sở hữu. Screen không biết bài "đang học" trông thế nào.
-const KEEP_GOING: Array<KeepGoingLesson> = [
+const KEEP_GOING: Array<KeepGoingContent> = [
     { id: "l1", title: "Docker là gì", minutes: 6, state: "done", difficulty: "beginner", onPress: () => {} },
     { id: "l2", title: "Viết Dockerfile tối ưu", minutes: 12, state: "active", difficulty: "intermediate", onPress: () => {} },
     { id: "l3", title: "Multi-stage build", minutes: 9, state: "todo", difficulty: "intermediate", locked: true, onPress: () => {} },
@@ -51,7 +51,7 @@ const KEEP_GOING: Array<KeepGoingLesson> = [
 
 // DỮ LIỆU thuần — `kind` là ENUM, block `LearnNudges` tự quyết icon (§14b).
 const NUDGES: Array<LearnNudge> = [
-    { id: "flashcards", kind: "flashcards", title: "Ôn 12 thẻ đến hạn hôm nay", count: 12, onPress: () => {} },
+    { id: "flashcards", kind: "flashcards", title: "Ôn 12 thẻ đến hạn hôm nay", onPress: () => {} },
     { id: "mock-interview", kind: "interview", title: "Luyện phỏng vấn cho capstone", onPress: () => {} },
     { id: "league", kind: "league", title: "Bạn đang hạng #42 tuần này", onPress: () => {} },
 ]
@@ -68,20 +68,20 @@ export interface CourseContentsLayoutProps {
 const CourseContentsLoading = () => (
     <div data-anat-part="Skeleton" className="mx-auto flex max-w-3xl flex-col gap-10 p-6">
         <div className="flex flex-col gap-3">
-            <Skeleton className="h-3 w-1/4 rounded" />
-            <Skeleton className="h-7 w-1/2 rounded" />
+            <HeroSkeleton className="h-3 w-1/4 rounded" />
+            <HeroSkeleton className="h-7 w-1/2 rounded" />
             {/* description + meta = 2 dòng text (meta giờ là muted text dot-strip, KHÔNG chip). */}
-            <Skeleton className="h-4 w-3/4 rounded" />
-            <Skeleton className="h-3 w-2/5 rounded" />
+            <HeroSkeleton className="h-4 w-3/4 rounded" />
+            <HeroSkeleton className="h-3 w-2/5 rounded" />
         </div>
         <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-3">
-                <Skeleton className="h-4 w-2/3 rounded" />
-                <Skeleton className="h-2 w-full rounded-full" />
-                <Skeleton className="h-3 w-1/2 rounded" />
+                <HeroSkeleton className="h-4 w-2/3 rounded" />
+                <HeroSkeleton className="h-2 w-full rounded-full" />
+                <HeroSkeleton className="h-3 w-1/2 rounded" />
             </div>
-            <Skeleton className="h-32 w-full rounded-2xl" />
-            <Skeleton className="h-28 w-full rounded-2xl" />
+            <HeroSkeleton className="h-32 w-full rounded-2xl" />
+            <HeroSkeleton className="h-28 w-full rounded-2xl" />
         </div>
     </div>
 )
@@ -126,21 +126,20 @@ export const CourseContents = ({ viewer = "trial", state = "content" }: CourseCo
                 ]}
                 title="DevOps Mastery"
                 description="Từ CI/CD tới Kubernetes production — lộ trình thực chiến."
-                meta="8 chương · ~14 giờ học · 2,481 học viên"
+                moduleCount={8}
+                hours={14}
+                learnerCount={2481}
             />
 
             <div className="flex flex-col gap-6">
-                {viewer === "trial" ? (
-                    <Feedback.Callout
-                        anatPart="Feedback.Callout"
-                        status="warning"
-                        icon={GithubLogoIcon}
-                        title="Bạn chưa vào GitHub team của khoá"
-                        description="Một số bài lab cần quyền repo — bấm để tham gia."
-                        actionLabel="Vào team"
-                        onAction={() => {}}
-                    />
-                ) : null}
+                {/* 🔴 Gate dành cho người ĐÃ MUA (backend scope team theo is_enrolled). Bản cũ
+                gate ngược `viewer === "trial"`. Block tự ẩn nên screen chỉ đưa dữ kiện. */}
+                <CourseTeamGate.Base
+                    anatPart="CourseTeamGate"
+                    isEnrolled={viewer === "paid"}
+                    isInTeam={false}
+                    onJoin={() => {}}
+                />
 
                 {viewer === "trial" ? (
                     <TrialConversionStrip
@@ -174,14 +173,13 @@ export const CourseContents = ({ viewer = "trial", state = "content" }: CourseCo
 
                 <LearnNudges
                     anatPart="LearnNudges"
-                    heading="Việc nên làm hôm nay"
                     items={NUDGES}
                 />
 
                 <KeepGoingPath
                     anatPart="KeepGoingPath"
-                    heading="Tiếp tục · Chương 2 · Container hoá"
-                    lessons={KEEP_GOING}
+                    moduleTitle="Chương 2 · Container hoá"
+                    contents={KEEP_GOING}
                 />
             </div>
         </div>

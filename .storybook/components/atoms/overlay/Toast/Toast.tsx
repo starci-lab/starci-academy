@@ -23,11 +23,12 @@ import { Alert } from "@sb-components/atoms/feedback/Alert/Alert"
  *
  * STRICT §4: `status` chọn tone (success/warning/danger/info), atom tự chọn icon —
  * consumer KHÔNG truyền icon sai valence. `title`/`description` là nội dung; `action`
- * (tuỳ chọn) đặt trước nút ×; `onClose` bật ×. Icon lib = gravity (KHÔNG có `weight`).
+ * (tuỳ chọn) đặt trước nút ×; `onClose` bật ×. Bảng icon nằm DUY NHẤT ở `Alert.Base`
+ * (`@phosphor-icons/react` — MỘT BỘ DUY NHẤT, §5.0).
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** An icon passed as a COMPONENT (gravity), rendered by the atom at status-icon scale. */
+/** An icon passed as a COMPONENT (Phosphor), rendered by the atom at status-icon scale. */
 export type IconComponent = ComponentType<SVGProps<SVGSVGElement>>
 
 /** Semantic tone of the toast. */

@@ -1,8 +1,7 @@
 import React, { useState } from "react"
 import type { ReactNode } from "react"
-import { cn } from "@heroui/react"
+import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { CaretDownIcon } from "@phosphor-icons/react"
-import { Skeleton } from "@sb-components/atoms/display/Skeleton/Skeleton"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -23,10 +22,9 @@ import { Skeleton } from "@sb-components/atoms/display/Skeleton/Skeleton"
  * hover:text-foreground`, `w-fit` (hug-content) trigger; the config content
  * (a `LabeledCard`) is rendered below only while open. NOT built on HeroUI's
  * headless `Disclosure` compound — that compound's default indicator/trigger
- * slots assume a trailing, `justify-between` row (see the existing
- * `Skeleton.Disclosure` mirror), a different shape than this leading-caret,
- * hug-width trigger; this port generalises the SAME hand-roll instead of
- * fighting that layout. `TaskSubmissionPanel`'s settings summary row is the
+ * slots assume a trailing, `justify-between` row, a different shape than this
+ * leading-caret, hug-width trigger; this port generalises the SAME hand-roll
+ * instead of fighting that layout. `TaskSubmissionPanel`'s settings summary row is the
  * sibling shape (icon + label, trailing `CaretRightIcon` that does NOT
  * rotate) — that one opens an external Drawer, not an inline region, so it
  * is a different control, not this frame.
@@ -56,7 +54,13 @@ export interface DisclosureBaseProps {
     defaultOpen?: boolean
     /** Disables the trigger — no toggle, dimmed, not focusable. */
     isDisabled?: boolean
-    /** `true` → render the `Skeleton.Disclosure` trigger-row mirror instead. */
+    /**
+     * `true` → render this frame's OWN collapsed trigger-row mirror (§12c: chủ
+     * của hình là chủ của skeleton). The row keeps its real box — same `w-fit`,
+     * same `gap-2`, same real `CaretDownIcon` (a caret is SHAPE, not content) —
+     * and only the title turns into a shimmer bar. The body region stays
+     * unmounted, exactly like the collapsed real state.
+     */
     isSkeleton?: boolean
     /** Extra classes on the root. */
     className?: string
@@ -96,7 +100,22 @@ const Base = ({
     const content = body ?? children
 
     if (isSkeleton) {
-        return <Skeleton.Disclosure className={className} anatPart={showAnatomy ? "Skeleton" : undefined} />
+        // Mirror of the collapsed trigger row: SAME frame as the real branch
+        // (`flex flex-col gap-3` root + `w-fit items-center gap-2 text-muted` row),
+        // real caret kept, only the `text-sm` title swapped for a bar.
+        // text-sm = 14/20 → h-[14px] my-[3px] keeps the 20px line box, so
+        // toggling isSkeleton does not shift layout (§8).
+        return (
+            <div className={cn("flex flex-col gap-3", className)}>
+                <div
+                    className="flex w-fit items-center gap-2 text-muted"
+                    data-anat-part={showAnatomy ? "Skeleton" : undefined}
+                >
+                    <CaretDownIcon className="size-4 shrink-0" weight="bold" aria-hidden focusable="false" />
+                    <HeroSkeleton className="my-[3px] h-[14px] w-24 rounded" />
+                </div>
+            </div>
+        )
     }
 
     const toggle = () => {

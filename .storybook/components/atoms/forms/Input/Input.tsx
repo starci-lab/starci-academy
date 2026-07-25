@@ -13,7 +13,7 @@ import {
     Skeleton as HeroSkeleton,
     cn,
 } from "@heroui/react"
-import { Eye, EyeSlash } from "@gravity-ui/icons"
+import { EyeIcon, EyeSlashIcon } from "@phosphor-icons/react"
 import type { DateValue } from "@internationalized/date"
 // `TimeValue` (= Time | CalendarDateTime | ZonedDateTime) lives in react-aria-components —
 // that is where HeroUI's own TimeField imports it from (NOT @internationalized/date, which
@@ -59,19 +59,26 @@ const FieldSkeleton = ({ heightCls = "h-9", className, showAnatomy }: { heightCl
     <HeroSkeleton className={cn("w-full rounded-xl", heightCls, className)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
 )
 
-/** Shared props for the text-string members (+ frame nhãn/lỗi). */
-interface StringFieldProps extends FrameProps {
-    value: string
-    onValueChange: (value: string) => void
+/** Props chung của text-string member — TRỪ cặp giá-trị/`isSkeleton`. */
+interface StringFieldOwnProps extends FrameProps {
     placeholder?: string
     isDisabled?: boolean
     isInvalid?: boolean
     /** Accessible name khi KHÔNG có `label` (có label thì label lo). */
     ariaLabel?: string
-    isSkeleton?: boolean
     showAnatomy?: boolean
     className?: string
 }
+
+/**
+ * `value`/`onValueChange` BẮT BUỘC khi field sống, KHÔNG cần khi `isSkeleton` —
+ * field-box shimmer không giữ giá trị nào. Cùng khuôn với `TypographyProps`.
+ */
+type StringFieldProps = StringFieldOwnProps &
+    (
+        | { isSkeleton: true; value?: string; onValueChange?: (value: string) => void }
+        | { isSkeleton?: false; value: string; onValueChange: (value: string) => void }
+    )
 
 /** `Input.Text` — single-line text (HeroUI TextField+Input) + nhãn/mô tả/lỗi. */
 const InputText = ({ value, onValueChange, placeholder, isDisabled, isInvalid, ariaLabel, isSkeleton, showAnatomy, className, label, hint, errorMessage, isRequired }: StringFieldProps) => {
@@ -94,7 +101,7 @@ const InputText = ({ value, onValueChange, placeholder, isDisabled, isInvalid, a
                     id={controlId}
                     placeholder={placeholder}
                     value={value}
-                    onChange={(event) => onValueChange(event.target.value)}
+                    onChange={(event) => onValueChange?.(event.target.value)}
                     className="w-full"
                     data-anat-part={showAnatomy ? "Field" : undefined}
                 />
@@ -140,7 +147,7 @@ const InputTextarea = ({
                     rows={rows}
                     placeholder={placeholder}
                     value={value}
-                    onChange={(event) => onValueChange(event.target.value)}
+                    onChange={(event) => onValueChange?.(event.target.value)}
                     className="w-full"
                     data-anat-part={showAnatomy ? "Field" : undefined}
                 />
@@ -328,7 +335,7 @@ const InputSearch = ({
     )
 }
 
-/** `Input.Password` — text ẩn + nút hiện/ẩn (gravity Eye/EyeSlash). */
+/** `Input.Password` — text ẩn + nút hiện/ẩn (Phosphor EyeIcon/EyeSlashIcon). */
 const InputPassword = ({
     value,
     onValueChange,
@@ -366,7 +373,7 @@ const InputPassword = ({
                         type={reveal ? "text" : "password"}
                         placeholder={placeholder}
                         value={value}
-                        onChange={(event) => onValueChange(event.target.value)}
+                        onChange={(event) => onValueChange?.(event.target.value)}
                         className="w-full pr-9"
                     />
                     <button
@@ -376,7 +383,8 @@ const InputPassword = ({
                         data-anat-part={showAnatomy ? "Toggle" : undefined}
                         className="text-muted absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer [&_svg]:size-4"
                     >
-                        {reveal ? <EyeSlash aria-hidden /> : <Eye aria-hidden />}
+                        {/* icon `size-4` (nhỏ hơn `size-5`) → `weight="bold"` bù nét mảnh, §5.0a. */}
+                        {reveal ? <EyeSlashIcon weight="bold" aria-hidden /> : <EyeIcon weight="bold" aria-hidden />}
                     </button>
                 </div>
             </HeroTextField>

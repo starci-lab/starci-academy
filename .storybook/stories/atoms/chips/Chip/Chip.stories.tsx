@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { CircleCheck } from "@gravity-ui/icons"
+import { CheckCircleIcon } from "@phosphor-icons/react"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
@@ -21,11 +21,11 @@ Icon trong chip = **tín hiệu THÊM**, không trang trí. Chỉ thêm khi icon
 - Hàng token đồng cấp (tags/filter) → text-only cho cả hàng.
 - Scalar/đếm (số, giờ, học viên) → muted text, KHÔNG icon.
 
-**Chọn icon nào:** chỉ dùng icon **PHỔ QUÁT** — \`CircleCheck\` ✓ · \`CircleXmark\` ✕ · \`Clock\` · \`Lock\`… (ai cũng đọc ra ngay). Icon **specific theo domain** quá (chỉ người trong domain hiểu) → KHÔNG dùng, để CHỮ tải nghĩa.
+**Chọn icon nào:** chỉ dùng icon **PHỔ QUÁT** — \`CheckCircleIcon\` ✓ · \`XCircleIcon\` ✕ · \`ClockIcon\` · \`LockIcon\`… (ai cũng đọc ra ngay). Icon **specific theo domain** quá (chỉ người trong domain hiểu) → KHÔNG dùng, để CHỮ tải nghĩa.
 
-**Kỹ thuật:** chip 1 size (**medium \`md\`**, font theo HeroUI — đã bỏ override text-xs ở globals.css) · ưu tiên **outline** (\`CircleCheck\`, không \`CircleCheckFill\`) · icon size \`size-3.5\` (khớp text-sm, atom tự ép) · tone theo chip · gravity **KHÔNG** có \`weight\`.
+**Kỹ thuật:** bộ icon = **\`@phosphor-icons/react\`**, MỘT BỘ DUY NHẤT (§5⃣0 — không trộn lib trong một màn) · chip 1 size (**medium \`md\`**, font theo HeroUI — đã bỏ override text-xs ở globals.css) · ưu tiên nét **outline** (weight mặc định, không \`weight="fill"\`) · icon size \`size-3.5\` (khớp text-sm, atom tự ép) · nhỏ hơn \`size-5\` nên **atom tự áp \`weight="bold"\`** (§5⃣0a) — story KHÔNG truyền weight · tone theo chip.
 
-**API strict:** \`icon\` nhận **COMPONENT** (\`icon={CircleCheck}\`), không JSX \`<CircleCheck/>\`.
+**API strict:** \`icon\` nhận **COMPONENT** (\`icon={CheckCircleIcon}\`), không JSX \`<CheckCircleIcon/>\`.
 `
 
 const meta: Meta<typeof Chip.Base> = {
@@ -51,7 +51,7 @@ const LABEL_PARTS: Array<AnatomyNode> = [
     { name: "Label", tier: "atom", role: "nhãn chip (HeroChip.Label) — prop `text`" },
 ]
 const ICON_PARTS: Array<AnatomyNode> = [
-    { name: "Icon", tier: "atom", role: "leading glyph — `icon` truyền COMPONENT, atom ép size-3.5 (chip md)" },
+    { name: "Icon", tier: "atom", role: "leading glyph — `icon` truyền COMPONENT, atom ép size-3.5 + weight=\"bold\" (chip md, §5⃣0a)" },
     { name: "Label", tier: "atom", role: "nhãn chip (HeroChip.Label)" },
 ]
 const REMOVE_PARTS: Array<AnatomyNode> = [
@@ -80,7 +80,7 @@ export const Base: Story = {
     ),
 }
 
-/** WithIcon — `icon={CircleCheck}` truyền COMPONENT (không JSX); atom render size-3. */
+/** WithIcon — `icon={CheckCircleIcon}` truyền COMPONENT (không JSX); atom render size-3.5. */
 export const WithIcon: Story = {
     render: () => (
         <div className="p-8">
@@ -89,10 +89,10 @@ export const WithIcon: Story = {
                 tier="atom"
                 leaf="WithIcon"
                 parts={ICON_PARTS}
-                note="icon = component reference (`CircleCheck`, outline — KHÔNG fill). Xem README: chỉ xài icon cho success/failure · nhấn mạnh · brand."
-                code={"<Chip.Base tone=\"success\" icon={CircleCheck} text=\"Verified\" />"}
+                note="icon = component reference (Phosphor `CheckCircleIcon`, nét outline — KHÔNG weight='fill'). Weight do ATOM áp (size-3.5 < size-5 ⇒ bold, §5⃣0a), story không truyền. Xem README: chỉ xài icon cho success/failure · nhấn mạnh · brand."
+                code={"<Chip.Base tone=\"success\" icon={CheckCircleIcon} text=\"Verified\" />"}
             >
-                <Chip.Base tone="success" icon={CircleCheck} text="Verified" showAnatomy />
+                <Chip.Base tone="success" icon={CheckCircleIcon} text="Verified" showAnatomy />
             </BlockAnatomy>
         </div>
     ),

@@ -1,7 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { Breadcrumbs as HeroBreadcrumbs, Link as HeroLink, Skeleton as HeroSkeleton, cn } from "@heroui/react"
-import { ArrowLeft } from "@gravity-ui/icons"
+import { ArrowLeftIcon } from "@phosphor-icons/react"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -22,9 +22,9 @@ import { ArrowLeft } from "@gravity-ui/icons"
  * ancestor:
  *   • `collapseOnMobile` → back link below `@app-sm`, trail from `@app-sm` up.
  *   • `collapseFrom={n}` → back link at EVERY width once the trail has ≥ n crumbs.
- * The back link is a LEAF of this atom (inline HeroUI `Link` + gravity
- * `ArrowLeft`) — an atom is the bottom tier and must not import `blocks/`, so it
- * does NOT reuse the `BackLink` block.
+ * The back link is a LEAF of this atom (inline HeroUI `Link` + Phosphor
+ * `ArrowLeftIcon`) — an atom is the bottom tier and must not import `blocks/`,
+ * so it does NOT reuse the `BackLink` block.
  *
  * Rules (Chip/Input):
  *   • NAMESPACE bắt buộc — chỉ export `Breadcrumbs = { Base }`, không export
@@ -149,9 +149,10 @@ const BreadcrumbsBase = ({
             {collapseAlways ? null : trail}
             {/*
               Collapsed LEAF of this atom: one quiet back affordance, not a pill.
-              Arrow slides left on hover (§5b — arrow = action icon); gravity glyph
-              at `size-3.5` to match `text-sm` (§5a gravity scale). Tailwind v4:
-              `translate` is its own property → transition `[translate]`.
+              Arrow slides left on hover (§5b — arrow = action icon); glyph Phosphor
+              ở `size-3.5` cho khớp `text-sm`, nhỏ hơn `size-5` nên phải
+              `weight="bold"` bù nét (§5.0a). Tailwind v4: `translate` là property
+              riêng → transition `[translate]`.
             */}
             <HeroLink
                 data-anat-part={showAnatomy ? "Back" : undefined}
@@ -162,9 +163,10 @@ const BreadcrumbsBase = ({
                     className,
                 )}
             >
-                <ArrowLeft
+                <ArrowLeftIcon
                     aria-hidden
                     focusable="false"
+                    weight="bold"
                     className="size-3.5 transition-[translate] group-hover:-translate-x-1"
                 />
                 <span className="decoration-[var(--separator-tertiary)] underline-offset-4 group-hover:underline">

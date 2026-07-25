@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { CircleInfo } from "@gravity-ui/icons"
+import { InfoIcon } from "@phosphor-icons/react"
 import { Popover } from "@sb-components/atoms/overlay/Popover/Popover"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
@@ -100,13 +100,13 @@ export const WithTriggerIcon: Story = {
                 tier="atom"
                 leaf="WithTriggerIcon"
                 parts={TRIGGER_ICON_PARTS}
-                note="`triggerIcon` là COMPONENT gravity; atom ép `size-3.5` (icon = size chữ nút) nên caller không chèn sai scale."
-                code={"<Popover.Base triggerLabel=\"Cách tính điểm\" triggerIcon={CircleInfo} content={<p>…</p>} />"}
+                note="`triggerIcon` là COMPONENT phosphor (`*Icon`, §5⃣0); atom ép `size-3.5` (icon = size chữ nút) + weight theo §5⃣0a nên caller không chèn sai scale/nét — story KHÔNG truyền `weight`."
+                code={"<Popover.Base triggerLabel=\"Cách tính điểm\" triggerIcon={InfoIcon} content={<p>…</p>} />"}
             >
                 <div className="flex justify-center py-16">
                     <Popover.Base
                         triggerLabel="Cách tính điểm"
-                        triggerIcon={CircleInfo}
+                        triggerIcon={InfoIcon}
                         content="Điểm = số tiêu chí đạt / tổng tiêu chí trong checklist của câu hỏi."
                         placement="bottom"
                         defaultOpen

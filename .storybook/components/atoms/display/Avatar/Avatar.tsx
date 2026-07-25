@@ -8,19 +8,33 @@ import { Avatar as HeroAvatar, AvatarImage as HeroAvatarImage, AvatarFallback as
  * Gom mọi biến thể avatar vào MỘT atom, phân biệt bằng PROP (leaf = composition):
  *   • ảnh thật             → `<Avatar.Base src="…" name="Mai" />`
  *   • initials fallback     → `<Avatar.Base name="Mai Chi" />` (không src → 2 chữ cái)
- *   • icon fallback         → `<Avatar.Base icon={Person} />` (không src/name → glyph)
+ *   • icon fallback         → `<Avatar.Base icon={UserIcon} />` (không src/name → glyph)
  *   • + status dot          → `<Avatar.Base src="…" status="online" />`
  *
  * Chuỗi fallback ĐÚNG thứ tự (atom sở hữu §4): ảnh → initials(name) → icon. Atom tự
  * ép size (sm/md/lg), tự vẽ status-dot + leaf skeleton (`isSkeleton`, hybrid C).
- * Icon nhận **COMPONENT** (`icon={Person}`), KHÔNG JSX — atom render trong Fallback.
+ * Icon nhận **COMPONENT** (`icon={UserIcon}`), KHÔNG JSX — atom render trong Fallback.
  *
- * Icon lib = gravity (`@gravity-ui/icons`) — gravity KHÔNG có prop `weight`.
+ * Icon lib = `@phosphor-icons/react` — MỘT BỘ DUY NHẤT (§5.0), không trộn lib khác.
+ * Weight theo size (§5.0a): glyph `size-5` trở lên → `regular` (KHÔNG truyền
+ * `weight`); glyph nhỏ hơn `size-5` (avatar `sm` → `size-4`) → `weight="bold"` để
+ * bù nét mảnh đi khi thu nhỏ. Atom tự suy weight từ `size`, consumer không đặt.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** An icon passed as a COMPONENT (e.g. `Person`), rendered by the atom at avatar scale. */
-export type IconComponent = ComponentType<SVGProps<SVGSVGElement>>
+/**
+ * Bề dày nét icon (§5.0a) — CHỈ hai nấc, atom tự chọn theo `size`.
+ * Khai tại chỗ thay vì import `IconWeight` của phosphor: khai kiểu của một thư
+ * viện là khoá cả cây vào một nhà cung cấp (§5.0a).
+ */
+export type IconWeight = "regular" | "bold"
+
+/**
+ * An icon passed as a COMPONENT (e.g. `UserIcon`), rendered by the atom at avatar scale.
+ * Kiểu giữ nguyên `SVGProps` (không phụ thuộc lib), chỉ nới thêm `weight` để atom
+ * bù nét ở cỡ nhỏ.
+ */
+export type IconComponent = ComponentType<SVGProps<SVGSVGElement> & { weight?: IconWeight }>
 
 /** Presence status → status-dot tone (the SINGLE source for status colour). */
 export type AvatarStatus = "online" | "offline" | "busy" | "away"
@@ -38,9 +52,14 @@ const STATUS_TONE: Record<AvatarStatus, string> = {
     away: "bg-warning",
 }
 
-/** Per-size chrome: skeleton box · status-dot diameter · fallback glyph scale. */
-const SIZE_MAP: Record<AvatarSize, { box: string; dot: string; glyph: string }> = {
-    sm: { box: "size-8", dot: "size-2", glyph: "size-4" },
+/**
+ * Per-size chrome: skeleton box · status-dot diameter · fallback glyph scale + weight.
+ *
+ * `glyphWeight` theo §5.0a: `size-4` (< `size-5`) phải `bold`, từ `size-5` trở lên
+ * để `regular` — `undefined` nghĩa là KHÔNG truyền prop `weight` (dùng mặc định).
+ */
+const SIZE_MAP: Record<AvatarSize, { box: string; dot: string; glyph: string; glyphWeight?: IconWeight }> = {
+    sm: { box: "size-8", dot: "size-2", glyph: "size-4", glyphWeight: "bold" },
     md: { box: "size-10", dot: "size-2.5", glyph: "size-5" },
     lg: { box: "size-12", dot: "size-3", glyph: "size-6" },
 }
@@ -82,7 +101,7 @@ const AvatarBase = ({
     showAnatomy = false,
     className,
 }: AvatarBaseProps) => {
-    const { box, dot, glyph } = SIZE_MAP[size]
+    const { box, dot, glyph, glyphWeight } = SIZE_MAP[size]
     if (isSkeleton) {
         // Leaf skeleton OWNED by the atom (hybrid C) — a circle matched to the size box.
         return <HeroSkeleton className={cn("rounded-full", box, className)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
@@ -98,7 +117,7 @@ const AvatarBase = ({
                         initials
                     ) : Icon ? (
                         <span aria-hidden className="inline-flex">
-                            <Icon className={glyph} />
+                            <Icon className={glyph} weight={glyphWeight} />
                         </span>
                     ) : null}
                 </HeroAvatarFallback>

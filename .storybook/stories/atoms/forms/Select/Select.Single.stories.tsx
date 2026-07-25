@@ -65,30 +65,27 @@ export const Required: Story = {
     },
 }
 
-/** Filled — đã chọn 1 option + có nhãn (nhãn hiện trong trigger). */
-export const Filled: Story = {
+/**
+ * Labeled — có nhãn, không mô tả. Ba STATE nằm CHUNG một leaf (§14d.2: cùng cây DOM,
+ * chỉ khác nội dung ⇒ state, không tách story): chưa chọn · đã chọn · khoá.
+ */
+export const Labeled: Story = {
     render: () => {
         const Demo = () => {
-            const [value, setValue] = useState<string | null>("sd")
+            const [empty, setEmpty] = useState<string | null>(null)
+            const [filled, setFilled] = useState<string | null>("sd")
             return (
-                <BlockAnatomy name="Select.Single" tier="atom" leaf="Filled" parts={[LABEL, TRIGGER, FIELD]} code={"<Select.Single label=\"Khoá học\" value=\"sd\" options={OPTIONS} />"} note="value có sẵn.">
-                    <div className="w-72"><Select.Single value={value} onValueChange={setValue} options={OPTIONS} placeholder="Chọn khoá học" label="Khoá học" showAnatomy /></div>
+                <BlockAnatomy name="Select.Single" tier="atom" leaf="Labeled" parts={[LABEL, TRIGGER, FIELD]} code={"<Select.Single label=\"Khoá học\" value={v} onValueChange={setV} options={OPTIONS} />"} note="Ba state cùng cấu trúc: chưa chọn · đã chọn · isDisabled.">
+                    <div className="flex flex-col gap-4">
+                        <div className="w-72"><Select.Single value={empty} onValueChange={setEmpty} options={OPTIONS} placeholder="Chọn khoá học" label="Khoá học" showAnatomy /></div>
+                        <div className="w-72"><Select.Single value={filled} onValueChange={setFilled} options={OPTIONS} placeholder="Chọn khoá học" label="Khoá học" /></div>
+                        <div className="w-72"><Select.Single value="fs" onValueChange={() => {}} options={OPTIONS} placeholder="Chọn khoá học" label="Khoá học" isDisabled /></div>
+                    </div>
                 </BlockAnatomy>
             )
         }
         return <div className="p-8"><Demo /></div>
     },
-}
-
-/** Disabled — khoá trigger + có nhãn (nhạt). */
-export const Disabled: Story = {
-    render: () => (
-        <div className="p-8">
-            <BlockAnatomy name="Select.Single" tier="atom" leaf="Disabled" parts={[LABEL, TRIGGER, FIELD]} code={"<Select.Single label=\"Khoá học\" isDisabled value=\"fs\" ... />"} note="isDisabled → khoá trigger + nhạt nhãn.">
-                <div className="w-72"><Select.Single value="fs" onValueChange={() => {}} options={OPTIONS} placeholder="Chọn khoá học" label="Khoá học" isDisabled showAnatomy /></div>
-            </BlockAnatomy>
-        </div>
-    ),
 }
 
 /** Error — nhãn + dòng lỗi đỏ + viền lỗi (errorMessage bật cả message lẫn viền). */

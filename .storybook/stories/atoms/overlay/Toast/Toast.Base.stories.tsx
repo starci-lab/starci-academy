@@ -16,18 +16,18 @@ type Story = StoryObj<typeof Toast.Base>
 
 // Toast KHÔNG portal (bọc Alert render inline) → mọi part được badge on-render.
 const BASE_PARTS: Array<AnatomyNode> = [
-    { name: "Icon", tier: "atom", role: "chỉ báo status (Alert.Indicator) — icon gravity theo `status`" },
+    { name: "Icon", tier: "atom", role: "chỉ báo status (Alert.Indicator) — icon Phosphor theo `status`" },
     { name: "Content", tier: "atom", role: "cụm text (Alert.Content)" },
     { name: "Title", tier: "atom", role: "dòng tiêu đề (Alert.Title) — prop `title`" },
     { name: "Description", tier: "atom", role: "dòng phụ (Alert.Description) — prop `description`" },
 ]
 const ACTION_PARTS: Array<AnatomyNode> = [
-    { name: "Icon", tier: "atom", role: "chỉ báo status (Alert.Indicator) — icon gravity theo `status`" },
+    { name: "Icon", tier: "atom", role: "chỉ báo status (Alert.Indicator) — icon Phosphor theo `status`" },
     { name: "Content", tier: "atom", role: "cụm text (Alert.Content)" },
     { name: "Title", tier: "atom", role: "dòng tiêu đề (Alert.Title) — prop `title`" },
     { name: "Description", tier: "atom", role: "dòng phụ (Alert.Description) — prop `description`" },
     { name: "Action", tier: "atom", role: "hành động phụ (prop `action`) — đặt trước ×" },
-    { name: "Close", tier: "atom", role: "nút × (prop `onClose`) — gravity Xmark, tone muted" },
+    { name: "Close", tier: "atom", role: "nút × (prop `onClose`) — Phosphor XIcon, tone muted" },
 ]
 
 /** Success — chấm/lưu thành công. */
@@ -40,7 +40,7 @@ export const Success: Story = {
                 leaf="Success"
                 parts={BASE_PARTS}
                 reason="Atom toast/notification DUY NHẤT bọc HeroUI Alert; atom map status→tone + tự chọn icon (đúng valence), consumer chỉ truyền title/description."
-                note="status=success → tint success + CircleCheck (gravity). Toast 100% prop dữ liệu — không có children."
+                note="status=success → tint success + CheckCircleIcon (Phosphor). Toast 100% prop dữ liệu — không có children."
                 code={"<Toast.Base status=\"success\" title=\"Đã lưu\" description=\"Bài nộp đã được ghi nhận.\" />"}
             >
                 <Toast.Base status="success" title="Đã lưu bài nộp" description="Kết quả chấm sẽ có sau ít phút." showAnatomy />
@@ -112,7 +112,7 @@ export const WithAction: Story = {
                 tier="atom"
                 leaf="WithAction"
                 parts={ACTION_PARTS}
-                note="`action` (nút) đặt trước ×; `onClose` bật × (gravity Xmark). `action` là NỘI DUNG ReactNode — được giữ, khác với children."
+                note="`action` (nút) đặt trước ×; `onClose` bật × (Phosphor XIcon). `action` là NỘI DUNG ReactNode — được giữ, khác với children."
                 code={"<Toast.Base status=\"info\" title=\"Đã xoá thẻ\" action={<Button>Hoàn tác</Button>} onClose={fn} />"}
             >
                 <Toast.Base

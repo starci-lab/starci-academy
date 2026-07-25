@@ -39,10 +39,9 @@ export interface UserCellProps extends WithClassNames<undefined> {
     /** When on, emit `data-anat-part` on this cell's own direct sub-parts (avatar · name · handle · trailing) so a `BlockAnatomy` panel can badge them. */
     showAnatomy?: boolean
     /**
-     * Render the leaf skeleton (shimmer) instead of the cell — the atom OWNS its own
-     * loading picture (canon §12c hybrid C), mirroring `Skeleton.UserCell`'s shape
-     * exactly (avatar `size-9` + name/handle bars) instead of a consumer reaching
-     * for the external `Skeleton` registry.
+     * Render the leaf skeleton (shimmer) instead of the cell — avatar `size-9` +
+     * name/handle bars. Atom này là **BẢN GỐC DUY NHẤT** của hình đó (§12c — chủ
+     * của HÌNH là chủ của SKELETON). Compound `Skeleton.*` đã XOÁ HẲN 2026-07-25.
      */
     isSkeleton?: boolean
 }
@@ -73,9 +72,9 @@ const UserCellBase = ({
     const name = displayName ?? username
 
     if (isSkeleton) {
-        // Leaf skeleton OWNED by the atom (hybrid C) — mirrors `Skeleton.UserCell`'s
-        // exact box: avatar size-9 + name bar (h-3 w-24 my-1) + optional handle bar
-        // (h-3 w-16 my-0), gated on `handle` the same way the real cell gates its line.
+        // Skeleton lá do CHÍNH atom này sở hữu (§12c) — đúng hộp: avatar size-9 +
+        // name bar (h-3 w-24 my-1) + handle bar tuỳ chọn (h-3 w-16 my-0), gate theo
+        // `handle` y như nhánh sống gate dòng đó.
         return (
             <div
                 className={cn("flex min-w-0 items-center gap-2", className)}

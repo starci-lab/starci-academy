@@ -10,6 +10,12 @@ import { Tabs, cn } from "@heroui/react"
  * The `.extended-tabs` hug-content override lives in the app globals.css (kept in
  * `src`), so the `variant="secondary"` look renders here only when Storybook loads
  * those globals — the class name is preserved verbatim for fidelity.
+ *
+ * ⚠️ NGOẠI LỆ §12b CÓ TÊN — atom-WRAPPER: atom này GIỮ `children` là ĐÚNG LUẬT, vì
+ * nó buộc phải bọc cây compound `Tabs.*` của HeroUI (`Tabs.ListContainer` >
+ * `Tabs.List` > `Tabs.Tab` + `Tabs.Indicator`) mà chỉ caller mới dựng được — không
+ * có hình prop dữ liệu nào chở nổi cây đó. Cùng nhóm ngoại lệ với `Tooltip.Base` /
+ * `Badge.Base`. Audit sau ĐỪNG cờ đây là vi phạm "cấm children".
  * ─────────────────────────────────────────────────────────────────────────────
  */
 

@@ -1,7 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
-import { Button, type ButtonSize, type ButtonVariant } from "@sb-components/_designs/buttons/Button/Button"
+import { Button, type ButtonSize, type ButtonVariant } from "@sb-components/_legacy/designs/buttons/Button/Button"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — a NEW primitive (no `src` yet; synced later).

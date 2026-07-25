@@ -1,7 +1,6 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Button, cn } from "@heroui/react"
-import { Skeleton } from "@sb-components/atoms/display/Skeleton/Skeleton"
+import { Button, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — the target `InputButtonLike`. Authored in
@@ -84,7 +83,7 @@ export const InputButtonLike = ({
 }: InputButtonLikeProps) => {
     if (isSkeleton) {
         // Skeleton mirror: field-shaped bar, SAME height/rounding as the real control.
-        return <Skeleton className={cn("w-full rounded-field", HEIGHT_CLS[size], className)} />
+        return <HeroSkeleton className={cn("w-full rounded-field", HEIGHT_CLS[size], className)} />
     }
     // NOTE: left as raw HeroUI <Button> (not the Button port,
     // ../../buttons/Button/Button.tsx) — three real gaps vs the port's API:

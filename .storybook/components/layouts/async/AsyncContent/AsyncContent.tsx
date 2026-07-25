@@ -5,7 +5,7 @@ import type { ReactNode, SVGProps } from "react"
 import { TrayIcon, WarningIcon, type Icon as PhosphorIcon } from "@phosphor-icons/react"
 
 import { Feedback, type FeedbackIcon } from "@sb-components/layouts/feedback/Feedback/Feedback"
-import { Button } from "@sb-components/_designs/buttons/Button/Button"
+import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 
 /**

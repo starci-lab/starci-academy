@@ -39,7 +39,7 @@ const OVERFLOW_PARTS: Array<AnatomyNode> = [
     { name: "Overflow", tier: "atom", role: "chip tròn '+N' đếm phần dư, cùng ring như Avatar" },
 ]
 
-/** Default — `items` đủ chỗ hiện hết, không có chip "+N". */
+/** Default — `items` đủ chỗ hiện hết, không có chip "+N"; render đủ 3 bậc size. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
@@ -49,9 +49,14 @@ export const Default: Story = {
                 leaf="Default"
                 parts={DEFAULT_PARTS}
                 reason="Cụm avatar chồng mép ('who follows') là MEMBER của atom Avatar, không phải khung riêng (§13c) — atom tự dựng từng Avatar.Base từ `items`, consumer không truyền children."
-                code={"<Avatar.Group items={[{ key: \"u1\", name: \"Noah\", src: \"…\" }, …]} />"}
+                note="`size` đặt ở CẤP CỤM (§12d): cả hàng luôn đồng cỡ, item KHÔNG mang size riêng. 3 bậc cùng CÂY DOM nên nằm chung một leaf (§14d.2)."
+                code={"<Avatar.Group size=\"sm|md|lg\" items={[{ key: \"u1\", name: \"Noah\", src: \"…\" }, …]} />"}
             >
-                <Avatar.Group items={members.slice(0, 3)} showAnatomy />
+                <div className="flex flex-col gap-4">
+                    <Avatar.Group size="sm" items={members.slice(0, 3)} showAnatomy />
+                    <Avatar.Group size="md" items={members.slice(0, 3)} showAnatomy />
+                    <Avatar.Group size="lg" items={members.slice(0, 3)} showAnatomy />
+                </div>
             </BlockAnatomy>
         </div>
     ),
@@ -70,28 +75,6 @@ export const Overflow: Story = {
                 code={"<Avatar.Group max={3} items={/* 6 người */} />"}
             >
                 <Avatar.Group max={3} items={members} showAnatomy />
-            </BlockAnatomy>
-        </div>
-    ),
-}
-
-/** Sizes — `size` đặt ở CẤP CỤM (§12d): cả hàng luôn đồng cỡ. */
-export const Sizes: Story = {
-    render: () => (
-        <div className="p-8">
-            <BlockAnatomy
-                name="Avatar.Group"
-                tier="atom"
-                leaf="Sizes"
-                parts={DEFAULT_PARTS}
-                note="size ở cụm, item KHÔNG mang size riêng — hàng avatar không bao giờ so le."
-                code={"<Avatar.Group size=\"sm|md|lg\" items={[…]} />"}
-            >
-                <div className="flex flex-col gap-4">
-                    <Avatar.Group size="sm" items={members.slice(0, 3)} showAnatomy />
-                    <Avatar.Group size="md" items={members.slice(0, 3)} showAnatomy />
-                    <Avatar.Group size="lg" items={members.slice(0, 3)} showAnatomy />
-                </div>
             </BlockAnatomy>
         </div>
     ),

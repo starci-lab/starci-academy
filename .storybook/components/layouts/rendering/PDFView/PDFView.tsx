@@ -9,8 +9,7 @@ import React, {
     useState,
 } from "react"
 import { Document, Page, pdfjs } from "react-pdf"
-import { cn } from "@heroui/react"
-import { Skeleton } from "@sb-components/atoms/display/Skeleton/Skeleton"
+import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -125,7 +124,7 @@ const PdfViewportPage = (props: PdfViewportPageProps) => {
                         style={{ minHeight: placeholderMinH }}
                         aria-hidden
                     >
-                        <Skeleton className="size-full rounded-medium" />
+                        <HeroSkeleton className="size-full rounded-medium" />
                     </div>
                 )
             }

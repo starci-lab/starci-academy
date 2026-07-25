@@ -1,7 +1,6 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Label, Switch, cn } from "@heroui/react"
-import { Skeleton } from "@sb-components/atoms/display/Skeleton/Skeleton"
+import { Label, Switch, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { TitledText } from "@sb-components/layouts/text/TitledText/TitledText"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Choice } from "@sb-components/atoms/forms/Choice/Choice"
@@ -118,7 +117,7 @@ const RowSkeleton = ({
 }) => (
     <div className={cn("flex min-w-0 items-center gap-3 py-2", className)}>
         {hasLeading ? (
-            <Skeleton className="size-5 shrink-0 rounded" anatPart={showAnatomy ? "Leading" : undefined} />
+            <HeroSkeleton className="size-5 shrink-0 rounded" data-anat-part={showAnatomy ? "Leading" : undefined} />
         ) : null}
         {/* `TitledText` mirrors per LINE PRESENCE, so the placeholder text just has
             to be non-empty — it is never rendered while `isSkeleton` is on. */}

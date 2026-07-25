@@ -1,6 +1,6 @@
 import type { ComponentType, ReactNode, SVGProps } from "react"
 import { Chip as HeroChip, Skeleton as HeroSkeleton, Typography as HeroTypography, cn } from "@heroui/react"
-import { Xmark, CircleFill } from "@gravity-ui/icons"
+import { XIcon, CircleIcon } from "@phosphor-icons/react"
 import { CHIP_TONE_TO_COLOR, type ChipTone } from "@sb-components/atoms/chips/chip-tone"
 
 /**
@@ -9,39 +9,53 @@ import { CHIP_TONE_TO_COLOR, type ChipTone } from "@sb-components/atoms/chips/ch
  *
  * Gom mọi biến thể chip vào MỘT atom, phân biệt bằng PROP (leaf = composition):
  *   • text only            → `<Chip.Base text="Draft" />`
- *   • + leading icon        → `<Chip.Base icon={CircleCheck} text="Verified" />`
+ *   • + leading icon        → `<Chip.Base icon={CheckCircleIcon} text="Verified" />`
  *   • + removable ×         → `<Chip.Base onRemove={fn} text="React" />`
  *
  * STRICT UI (thầy chốt 2026-07-25): `icon` nhận **COMPONENT** (function reference —
- * `icon={CircleCheck}`), KHÔNG phải ReactNode (`icon={<CircleCheck/>}`). Atom tự
+ * `icon={CheckCircleIcon}`), KHÔNG phải ReactNode (`icon={<CheckCircleIcon/>}`). Atom tự
  * render nó ở `size-3` (chip label scale, §4/§5) — caller KHÔNG chèn được sai size/
  * màu. `text` là nhãn, không mở children tự do. Tự sở hữu leaf skeleton (`isSkeleton`).
  *
- * Icon lib = gravity (`@gravity-ui/icons`) — gravity KHÔNG có prop `weight`.
+ * Icon lib = **`@phosphor-icons/react`**, MỘT BỘ DUY NHẤT (§5⃣0) — không trộn lib
+ * trong cùng một màn. Icon ở đây nhỏ hơn `size-5` nên atom tự áp `weight="bold"`
+ * (§5⃣0a: nét mảnh đi khi thu nhỏ → nặng weight lên để bù).
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** An icon passed as a COMPONENT (e.g. `CircleCheck`), rendered by the atom at chip scale. */
-export type IconComponent = ComponentType<SVGProps<SVGSVGElement>>
+/**
+ * An icon passed as a COMPONENT (e.g. `CheckCircleIcon`), rendered by the atom at chip scale.
+ *
+ * Kiểu để MỞ (`SVGProps` + `weight` tuỳ chọn), KHÔNG khai `Icon` của Phosphor — khai chặt
+ * theo một thư viện là khoá cả cây vào một nhà cung cấp (§5⃣0). `weight` có mặt để ATOM tự
+ * áp luật §5⃣0a lên icon caller đưa vào; chỉ HAI nấc `regular`/`bold`.
+ */
+export type IconComponent = ComponentType<SVGProps<SVGSVGElement> & { weight?: "regular" | "bold" }>
 
-/** Props for {@link ChipBase}. */
-export interface ChipBaseProps {
+/** Props chung — TRỪ cặp `text`/`isSkeleton`, xem {@link ChipBaseProps}. */
+interface ChipBaseOwnProps {
     /** Semantic tone → HeroUI soft color. Default `neutral`. */
     tone?: ChipTone
-    /** Label text. */
-    text: ReactNode
-    /** Leading icon as a COMPONENT reference (not JSX). Atom renders it at `size-3`. */
+    /** Leading icon as a COMPONENT reference (not JSX). Atom renders it at `size-3.5` + `weight="bold"`. */
     icon?: IconComponent
     /** When set → renders a trailing × and calls this on click. */
     onRemove?: () => void
     /** Accessible label for the × (caller passes a localised string). */
     removeLabel?: string
-    /** Render the leaf skeleton (a pill shimmer) instead of the chip. */
-    isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
     className?: string
 }
+
+/**
+ * `text` BẮT BUỘC khi render chip thật, KHÔNG cần khi `isSkeleton` — pill shimmer
+ * không có nhãn. Cùng khuôn với `TypographyProps`.
+ */
+export type ChipBaseProps = ChipBaseOwnProps &
+    (
+        | { isSkeleton: true; text?: ReactNode }
+        | { isSkeleton?: false; text: ReactNode }
+    )
 
 /**
  * The base chip atom. See file header for the strict `icon`-as-component contract.
@@ -71,8 +85,9 @@ const ChipBase = ({
         <HeroChip color={CHIP_TONE_TO_COLOR[tone]} variant="soft" size="md" className={cn("w-fit", className)}>
             {Icon ? (
                 // Atom owns the glyph scale (§4) — icon = chip label scale (size-3.5, khớp text-sm của chip).
+                // Nhỏ hơn size-5 ⇒ weight="bold" để nét không mảnh đi (§5⃣0a).
                 <span aria-hidden data-anat-part={showAnatomy ? "Icon" : undefined} className="inline-flex shrink-0">
-                    <Icon className="size-3.5" />
+                    <Icon className="size-3.5" weight="bold" />
                 </span>
             ) : null}
             <HeroChip.Label data-anat-part={showAnatomy ? "Label" : undefined}>{text}</HeroChip.Label>
@@ -84,7 +99,8 @@ const ChipBase = ({
                     data-anat-part={showAnatomy ? "Remove" : undefined}
                     className="inline-flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-full opacity-70 outline-none transition hover:bg-current/15 hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-accent [&_svg]:size-3"
                 >
-                    <Xmark aria-hidden />
+                    {/* × bị ép size-3 (< size-5) ⇒ weight="bold" (§5⃣0a). */}
+                    <XIcon aria-hidden weight="bold" />
                 </button>
             ) : null}
         </HeroChip>
@@ -110,7 +126,7 @@ export interface ChipDotProps {
     variant?: ChipDotVariant
     /**
      * Tailwind text-color class LÀM MÀU CHO DOT (vd `text-success` · `text-warning`).
-     * Dot = gravity `CircleFill` ăn `currentColor` nên className quyết định màu chấm;
+     * Dot = Phosphor `CircleIcon weight="fill"` ăn `currentColor` nên className quyết định màu chấm;
      * text của chip vẫn là foreground. Bỏ trống → dot theo màu text.
      */
     dotClassName?: string
@@ -136,8 +152,8 @@ export interface ChipDotProps {
  *   • `bare` — chấm 12px + nhãn muted, KHÔNG nền (chip nằm trong row dày đặc).
  *
  * MÀU CHẤM luôn đi qua `currentColor`: `dotClassName` (tailwind text-color) hoặc
- * `dotColor` (hex thô, cho màu ngoài bảng token). Chấm là icon gravity `CircleFill`,
- * KHÔNG phải span bôi background — nên hai variant dùng chung một đường màu.
+ * `dotColor` (hex thô, cho màu ngoài bảng token). Chấm là icon Phosphor `CircleIcon`
+ * (`weight="fill"`), KHÔNG phải span bôi background — nên hai variant dùng chung một đường màu.
  *
  * @param props - {@link ChipDotProps}
  */
@@ -174,7 +190,9 @@ const ChipDot = ({
             className={cn("inline-flex shrink-0", dotClassName)}
             style={dotColor ? { color: dotColor } : undefined}
         >
-            <CircleFill width={bare ? 12 : 6} height={bare ? 12 : 6} />
+            {/* Chấm ĐẶC = `CircleIcon weight="fill"` (Phosphor không có bản `*Fill` riêng);
+                fill mặc định = `currentColor` nên đường màu ở span cha giữ nguyên. */}
+            <CircleIcon weight="fill" width={bare ? 12 : 6} height={bare ? 12 : 6} />
         </span>
     )
     if (bare) {
@@ -199,7 +217,8 @@ const ChipDot = ({
                     data-anat-part={showAnatomy ? "Remove" : undefined}
                     className="inline-flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-full opacity-70 outline-none transition hover:bg-current/15 hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-accent [&_svg]:size-3"
                 >
-                    <Xmark aria-hidden />
+                    {/* × bị ép size-3 (< size-5) ⇒ weight="bold" (§5⃣0a). */}
+                    <XIcon aria-hidden weight="bold" />
                 </button>
             ) : null}
         </HeroChip>

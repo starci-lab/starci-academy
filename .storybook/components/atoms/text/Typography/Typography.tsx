@@ -14,7 +14,7 @@ import { Link as HeroLink, Skeleton as HeroSkeleton, Typography as HeroTypograph
  *   • Weight §9b: `weight="medium" | "bold"`. `isItalic`.
  *   • `isLink` → HeroUI `Link` (accent + hover underline + a11y). KHÔNG kèm weight/icon.
  *   • Icon STRICT — `prefixIcon`/`suffixIcon` = COMPONENT (không JSX), atom ép size=font-size,
- *     gravity (không `weight`). ⚠️ CÓ ICON → text TỰ `font-medium` (icon gravity fit medium text).
+ *     Phosphor (atom KHÔNG truyền `weight`). ⚠️ CÓ ICON → text TỰ `font-medium` (nét icon fit medium text).
  *   • `iconSlide` (§5b): ARROW trượt khi hover (prefix←back · suffix→forward). CHỈ arrow, không caret.
  *   • `truncate`/`lineClamp` cắt chữ · `tabularNums` số thẳng cột (§3).
  *   • `isSkeleton` — atom TỰ vẽ text-bar skeleton (hybrid C, §12c).
@@ -44,7 +44,22 @@ const HEADING_LEVEL: Record<string, 1 | 2 | 3 | 4 | 5> = { h1: 1, h2: 2, h3: 3, 
 
 const TEXT_CLS: Record<Size, string> = { xs: "text-xs", sm: "text-sm", base: "text-base", lg: "text-lg" }
 const ICON_CLS: Record<Size, string> = { xs: "size-3", sm: "size-3.5", base: "size-4", lg: "size-[18px]" }
-const SKEL_H: Record<Size, string> = { xs: "h-3", sm: "h-[14px]", base: "h-4", lg: "h-[18px]" }
+/**
+ * Chiều cao thanh skeleton = CHIỀU CAO GLYPH của cỡ đó, cho MỌI cỡ (body + heading
+ * + code). Atom sở hữu skeleton lá của chính nó (§12c) nên bảng này là SSOT.
+ */
+const SKEL_H: Record<TypographySize, string> = {
+    xs: "h-3",
+    sm: "h-[14px]",
+    base: "h-4",
+    lg: "h-[18px]",
+    h1: "h-9",
+    h2: "h-[30px]",
+    h3: "h-6",
+    h4: "h-5",
+    h5: "h-[18px]",
+    code: "h-[14px]",
+}
 const COLOR_CLS: Record<TypographyColor, string | null> = {
     default: null, // foreground — không khai báo (§9a)
     muted: "text-muted",
@@ -73,9 +88,7 @@ const ALIGN_CLS: Record<TypographyAlign, string> = {
 }
 
 /** Props for every `Typography.<Size>` member. */
-export interface TypographyProps {
-    /** Text content — PROP `text={...}` (thống nhất `Chip.Base`, KHÔNG children). */
-    text: ReactNode
+interface TypographyOwnProps {
     /** Cỡ chữ — xem {@link TypographySize}. Default `"base"`. */
     size?: TypographySize
     /** Semantic color (§9a foreground/muted + §2 accent/success/warning/danger). Default = `default`. */
@@ -107,8 +120,6 @@ export interface TypographyProps {
     align?: TypographyAlign
     /** `tabular-nums` cho số/giá/đếm (§3 thẳng cột). */
     tabularNums?: boolean
-    /** Render leaf skeleton (text bar) thay vì chữ. §12c: co-located, ĐẶT TÊN thống nhất `isSkeleton`. */
-    isSkeleton?: boolean
     /** `true` → tag each part với `data-anat-part` cho BlockAnatomy. */
     showAnatomy?: boolean
     /**
@@ -119,6 +130,17 @@ export interface TypographyProps {
     anatPart?: string
     className?: string
 }
+
+/**
+ * `text` BẮT BUỘC khi render chữ thật, KHÔNG cần khi `isSkeleton` — gạch shimmer
+ * không có nội dung. Union ép luật đó ở compile-time, thay vì hạ `text` xuống
+ * optional đại trà (sẽ mất lưới an toàn của §12b).
+ */
+export type TypographyProps = TypographyOwnProps &
+    (
+        | { isSkeleton: true; text?: ReactNode }
+        | { isSkeleton?: false; text: ReactNode }
+    )
 
 const TypographyBase = ({
     text,
@@ -142,6 +164,18 @@ const TypographyBase = ({
     size = "base",
 }: TypographyProps) => {
     const textPart = anatPart ?? (showAnatomy ? "Text" : undefined)
+
+    // ── nhánh SKELETON — xét TRƯỚC mọi nhánh cỡ, vì heading/code cũng phải ra thanh
+    // gạch chứ không phải chữ rỗng. (Để dưới nhánh heading thì `size="h3" isSkeleton`
+    // render heading TRỐNG — lỗi câm, tsc/eslint không bắt.)
+    if (isSkeleton) {
+        return (
+            <HeroSkeleton
+                className={cn("inline-block w-24 rounded", SKEL_H[size], className)}
+                data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
+            />
+        )
+    }
 
     // ── nhánh HEADING: bọc compound HeroUI, giữ nguyên hình của `Typography.Heading` cũ.
     if (size in HEADING_LEVEL) {
@@ -207,7 +241,7 @@ const TypographyBase = ({
         }
 
         const hasIcons = Boolean(Prefix || Suffix)
-        // RULE (thầy chốt): có icon → text BẮT BUỘC `font-medium` (size icon gravity fit medium text).
+        // RULE (thầy chốt): có icon → text BẮT BUỘC `font-medium` (nét icon fit medium text).
         const weightCls = hasIcons
             ? "font-medium"
             : weight === "bold" ? "font-bold" : weight === "medium" ? "font-medium" : null

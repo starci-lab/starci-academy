@@ -1,0 +1,143 @@
+import React from "react"
+import { Accordion, cn } from "@heroui/react"
+import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+
+/**
+ * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
+ * `@/components/blocks/marketing/TruthList`. Authored in Storybook (not `src`);
+ * synced to `src` later. A "raw truth" manifesto: uncomfortable industry truths
+ * (accordion triggers) each opening to a concrete "here's our answer" line.
+ */
+
+/** Local mirror of `@/modules/types/base/class-name` (storybook-local, no `@/` imports). */
+interface WithClassNames<T> {
+    classNames?: T
+    className?: string
+}
+
+/** One blunt truth + how the product answers it. */
+export interface TruthListItem {
+    /** The uncomfortable truth (the headline statement). */
+    truth: React.ReactNode
+    /** What we do about it (the proof line — keep it concrete). */
+    fix: React.ReactNode
+}
+
+/** Props for the {@link TruthList} block. */
+export interface TruthListProps extends WithClassNames<undefined> {
+    /** Ordered truths — each a broken industry reality + the product's answer. */
+    items: Array<TruthListItem>
+    /** Optional signature footer (who is saying this) — e.g. a founder byline. */
+    byline?: React.ReactNode
+    /**
+     * `true` → render skeleton mirror. Block TỰ vẽ (§12c mở rộng lên MỌI tầng:
+     * chủ của HÌNH là chủ của SKELETON) — trước đây story phải tự bịa bằng
+     * `Skeleton.Accordion`, nên hình loading sống ngoài block và trôi khỏi nó.
+     */
+    isSkeleton?: boolean
+    /** Số hàng giả khi `isSkeleton` mà `items` rỗng. Default 4. */
+    skeletonRows?: number
+    /** Storybook-only: emit `data-anat-part` markers on each anatomy part. */
+    showAnatomy?: boolean
+}
+
+/**
+ * A "raw truth" manifesto: a list of uncomfortable industry truths, each paired
+ * with a concrete "→ here's our answer" line, closed
+ * by an optional byline (who's saying it). Built for confrontational, grounded
+ * positioning — the truths are the hero, the author recedes to a signature.
+ * Tier-3 block on a surface frame; styling here, content via props.
+ *
+ * @param props - {@link TruthListProps}
+ */
+export const TruthList = ({
+    items,
+    byline,
+    isSkeleton = false,
+    skeletonRows = 4,
+    className,
+    showAnatomy,
+}: TruthListProps) => {
+    if (isSkeleton) {
+        // GIỮ khung surface thật (rounded-3xl bg-surface shadow-surface) — khung là
+        // khung, chỉ CHỮ mới thành gạch. Mỗi hàng = trigger h-14 + separator (hàng
+        // cuối không có), khớp hộp `Accordion.Trigger` bên nhánh sống.
+        const rows = items.length > 0 ? items.length : skeletonRows
+        return (
+            <div
+                className={cn("overflow-hidden rounded-3xl bg-surface shadow-surface", className)}
+                data-anat-part={showAnatomy ? "Surface frame" : undefined}
+            >
+                {Array.from({ length: rows }).map((_, index) => (
+                    <div key={index} data-anat-part={showAnatomy ? "Accordion.Item" : undefined}>
+                        <div className="flex h-14 items-center px-5">
+                            <Typography.Base
+                                isSkeleton
+                                className="w-2/5"
+                                anatPart={showAnatomy ? "Accordion.Trigger" : undefined}
+                            />
+                        </div>
+                        {index < rows - 1 ? (
+                            <div
+                                className="h-px w-full bg-default"
+                                data-anat-part={showAnatomy ? "Separator" : undefined}
+                            />
+                        ) : null}
+                    </div>
+                ))}
+            </div>
+        )
+    }
+
+    return (
+        <div
+            className={cn("overflow-hidden rounded-3xl bg-surface shadow-surface", className)}
+            data-anat-part={showAnatomy ? "Surface frame" : undefined}
+        >
+            {/* Accordion Card: khung p-0 flush, accordion surface tự lo nền + separator + bo góc.
+                Mỗi sự thật = trigger (statement) bấm mở ra phần giải. KHÔNG Accordion.Indicator
+                → không caret (thầy chốt); hover trigger là affordance. */}
+            <Accordion
+                variant="surface"
+                className="!rounded-none [&_*]:!rounded-none"
+                data-anat-part={showAnatomy ? "Accordion" : undefined}
+            >
+                {/* accordion vuông toàn bộ → khung ngoài (overflow-hidden rounded-3xl) lo bo góc;
+                    item cuối flush phẳng với byline, không bo lòi khi hover. */}
+                {items.map((item, index) => (
+                    <Accordion.Item
+                        key={index}
+                        aria-label={typeof item.truth === "string" ? item.truth : `truth-${index}`}
+                        data-anat-part={showAnatomy ? "Accordion.Item" : undefined}
+                    >
+                        <Accordion.Heading data-anat-part={showAnatomy ? "Accordion.Heading" : undefined}>
+                            <Accordion.Trigger data-anat-part={showAnatomy ? "Accordion.Trigger" : undefined}>
+                                <Typography.Base
+                                    text={item.truth}
+                                    weight="medium"
+                                    className="text-left"
+                                />
+                            </Accordion.Trigger>
+                        </Accordion.Heading>
+                        <Accordion.Panel data-anat-part={showAnatomy ? "Accordion.Panel" : undefined}>
+                            <Accordion.Body data-anat-part={showAnatomy ? "Accordion.Body" : undefined}>
+                                <Typography.Base size="sm"
+                                    text={item.fix}
+                                    color="muted"
+                                />
+                            </Accordion.Body>
+                        </Accordion.Panel>
+                    </Accordion.Item>
+                ))}
+            </Accordion>
+            {byline ? (
+                <div
+                    className="flex flex-wrap items-center gap-3 border-t border-default px-5 py-4"
+                    data-anat-part={showAnatomy ? "Byline row" : undefined}
+                >
+                    {byline}
+                </div>
+            ) : null}
+        </div>
+    )
+}

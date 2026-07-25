@@ -66,30 +66,28 @@ export const Required: Story = {
     },
 }
 
-/** Filled — đã chọn nhiều + có nhãn (trigger tóm tắt "Đã chọn n"). */
-export const Filled: Story = {
+/**
+ * Labeled — có nhãn, không mô tả. Ba STATE nằm CHUNG một leaf (§14d.2: cùng cây DOM,
+ * chỉ khác nội dung ⇒ state, không tách story): chưa chọn · đã chọn (≥2 → "Đã chọn n") ·
+ * khoá.
+ */
+export const Labeled: Story = {
     render: () => {
         const Demo = () => {
-            const [value, setValue] = useState<Array<string>>(["ts", "go"])
+            const [empty, setEmpty] = useState<Array<string>>([])
+            const [filled, setFilled] = useState<Array<string>>(["ts", "go"])
             return (
-                <BlockAnatomy name="Select.Multi" tier="atom" leaf="Filled" parts={[LABEL, TRIGGER, FIELD]} code={"<Select.Multi label=\"Ngôn ngữ\" value={[\"ts\",\"go\"]} options={OPTIONS} />"} note="≥2 → trigger hiện 'Đã chọn n'.">
-                    <div className="w-72"><Select.Multi value={value} onValueChange={setValue} options={OPTIONS} placeholder="Chọn ngôn ngữ" label="Ngôn ngữ" showAnatomy /></div>
+                <BlockAnatomy name="Select.Multi" tier="atom" leaf="Labeled" parts={[LABEL, TRIGGER, FIELD]} code={"<Select.Multi label=\"Ngôn ngữ\" value={v} onValueChange={setV} options={OPTIONS} />"} note="Ba state cùng cấu trúc: chưa chọn · đã chọn (≥2 → 'Đã chọn n') · isDisabled.">
+                    <div className="flex flex-col gap-4">
+                        <div className="w-72"><Select.Multi value={empty} onValueChange={setEmpty} options={OPTIONS} placeholder="Chọn ngôn ngữ" label="Ngôn ngữ" showAnatomy /></div>
+                        <div className="w-72"><Select.Multi value={filled} onValueChange={setFilled} options={OPTIONS} placeholder="Chọn ngôn ngữ" label="Ngôn ngữ" /></div>
+                        <div className="w-72"><Select.Multi value={["js"]} onValueChange={() => {}} options={OPTIONS} placeholder="Chọn ngôn ngữ" label="Ngôn ngữ" isDisabled /></div>
+                    </div>
                 </BlockAnatomy>
             )
         }
         return <div className="p-8"><Demo /></div>
     },
-}
-
-/** Disabled — khoá trigger + có nhãn (nhạt). */
-export const Disabled: Story = {
-    render: () => (
-        <div className="p-8">
-            <BlockAnatomy name="Select.Multi" tier="atom" leaf="Disabled" parts={[LABEL, TRIGGER, FIELD]} code={"<Select.Multi label=\"Ngôn ngữ\" isDisabled value={[\"js\"]} ... />"} note="isDisabled → khoá trigger + nhạt nhãn.">
-                <div className="w-72"><Select.Multi value={["js"]} onValueChange={() => {}} options={OPTIONS} placeholder="Chọn ngôn ngữ" label="Ngôn ngữ" isDisabled showAnatomy /></div>
-            </BlockAnatomy>
-        </div>
-    ),
 }
 
 /** Error — nhãn + dòng lỗi đỏ + viền lỗi (errorMessage bật cả message lẫn viền). */

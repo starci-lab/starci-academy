@@ -12,11 +12,11 @@ export default meta
 type Story = StoryObj<typeof Chip.Dot>
 
 const DOT_PARTS: Array<AnatomyNode> = [
-    { name: "Dot", tier: "atom", role: "chấm trạng thái (gravity CircleFill w6) — màu qua `dotClassName` (currentColor)" },
+    { name: "Dot", tier: "atom", role: "chấm trạng thái (Phosphor CircleIcon weight=\"fill\" w6) — màu qua `dotClassName` (currentColor)" },
     { name: "Label", tier: "atom", role: "nhãn chip (HeroChip.Label) — màu foreground" },
 ]
 const REMOVE_PARTS: Array<AnatomyNode> = [
-    { name: "Dot", tier: "atom", role: "chấm trạng thái (CircleFill w6)" },
+    { name: "Dot", tier: "atom", role: "chấm trạng thái (CircleIcon weight=\"fill\" w6)" },
     { name: "Label", tier: "atom", role: "nhãn chip" },
     { name: "Remove", tier: "atom", role: "nút × (onRemove)" },
 ]
@@ -84,7 +84,7 @@ export const Colors: Story = {
                 tier="atom"
                 leaf="Colors"
                 parts={DOT_PARTS}
-                note="dotClassName ăn `currentColor` của gravity CircleFill → text-success/warning/danger/muted đổi màu chấm; text vẫn foreground."
+                note={"dotClassName ăn `currentColor` của Phosphor CircleIcon (`weight=\"fill\"`) → text-success/warning/danger/muted đổi màu chấm; text vẫn foreground."}
                 code={`<Chip.Dot text="Online" dotClassName="text-success" />
 <Chip.Dot text="Bận" dotClassName="text-warning" />
 <Chip.Dot text="Offline" dotClassName="text-danger" />

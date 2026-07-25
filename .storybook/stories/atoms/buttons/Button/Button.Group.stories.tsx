@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { TrashBin, FloppyDisk } from "@gravity-ui/icons"
-import { Button } from "@sb-components/atoms/buttons/Button/Button"
+import { TrashIcon, FloppyDiskIcon } from "@phosphor-icons/react"
+import { Button, type ButtonGroupItem, type ButtonSize } from "@sb-components/atoms/buttons/Button/Button"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -9,6 +9,15 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * CHỈ render state THUỘC VỀ CỤM: mapping items · `size` cấp cụm · skeleton cả cụm.
  * Các state của TỪNG NÚT (WithIcon · Pending · Disabled · variant) sống ở story
  * `Button.Base`/`Button.Icon` — KHÔNG lặp lại ở đây.
+ *
+ * 📐 **1 PROP = 1 LEAF** (§12g — tầng atom): `items` · `size` · `isSkeleton`, mỗi prop
+ * một leaf. Đây là bộ prop ĐẦY ĐỦ của cụm — ít hơn `Button.Base` vì §12f: prop nào chỉ
+ * chuyển tiếp xuống từng nút (`variant`/`icon`/`isPending`/`isDisabled`) thì thuộc về
+ * `Button.Base`, cụm KHÔNG được mở leaf cho chúng.
+ *
+ * ⚠️ Bản trước viện §14d.2 để gộp cả ba vào một leaf — luật đó của design/block/screen.
+ *
+ * 🎨 Icon = Phosphor (§5.0); nét do atom ép theo `size` cụm (§5.0a).
  */
 const meta: Meta<typeof Button.Group> = {
     title: "Atoms/Buttons/Button/Button.Group",
@@ -32,108 +41,90 @@ const GROUP_PARTS: Array<AnatomyNode> = [
         ],
     },
 ]
-const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Group", tier: "atom", role: "cluster giữ nguyên footprint", children: [{ name: "Skeleton", tier: "atom", role: "pill/vuông mirror từng item" }] },
+
+/** Ba bậc tỉ lệ — `size` đặt ở CẤP CỤM, item chỉ mang vai trò/hành vi. */
+const SIZES: Array<ButtonSize> = ["sm", "md", "lg"]
+
+/** Cùng một bộ `items` cho mọi hàng — khác nhau chỉ là prop của CỤM. */
+const items = (suffix: string): Array<ButtonGroupItem> => [
+    { key: "cancel", label: "Huỷ", variant: "ghost" },
+    { key: "save", label: "Lưu", icon: FloppyDiskIcon, variant: "primary" },
+    { key: "delete", icon: TrashIcon, ariaLabel: `Xoá ${suffix}`, variant: "danger" },
 ]
 
-/** Default — mapping `items`: item có `label` → nút nhãn; không `label` → nút chỉ-icon. */
+/** Leaf prop `items` — cụm dựng từ DỮ LIỆU; item không có `label` thành nút chỉ-icon. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
                 name="Button.Group"
                 tier="atom"
-                leaf="Default"
+                leaf="Prop `items`"
                 parts={GROUP_PARTS}
                 reason="Group = CLUSTER thuần layout; `items` là DỮ LIỆU (§4 STRICT — caller không truyền JSX con nên không lắp sai cấu trúc/size). Item không có `label` → nút chỉ-icon."
+                note="Mỗi item tự chọn `variant`/`icon` của nó, nhưng đó là prop của Button.Base — xem leaf tương ứng bên đó, cụm không lặp lại (§12f)."
                 code={`<Button.Group
   items={[
     { key: "cancel", label: "Huỷ", variant: "ghost" },
-    { key: "save", label: "Lưu", icon: FloppyDisk, variant: "primary" },
-    { key: "delete", icon: TrashBin, ariaLabel: "Xoá", variant: "danger" },
+    { key: "save", label: "Lưu", icon: FloppyDiskIcon, variant: "primary" },
+    { key: "delete", icon: TrashIcon, ariaLabel: "Xoá", variant: "danger" },
   ]}
 />`}
             >
-                <Button.Group
-                    showAnatomy
-                    items={[
-                        { key: "cancel", label: "Huỷ", variant: "ghost" },
-                        { key: "save", label: "Lưu", icon: FloppyDisk, variant: "primary" },
-                        { key: "delete", icon: TrashBin, ariaLabel: "Xoá", variant: "danger" },
-                    ]}
-                />
+                <Button.Group items={items("(mặc định)")} showAnatomy />
             </BlockAnatomy>
         </div>
     ),
 }
 
-/** Sizes — `size` ở CẤP CỤM (cluster luôn đồng cỡ), item chỉ mang vai trò/hành vi. */
+/** Leaf prop `size` — đặt ở CẤP CỤM: hàng nút luôn đồng cỡ (§12d). */
 export const Sizes: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
                 name="Button.Group"
                 tier="atom"
-                leaf="Sizes"
+                leaf="Prop `size`"
                 parts={GROUP_PARTS}
-                reason="Cụm nút luôn ĐỒNG CỠ nên `size` đặt ở group, không ở từng item — đây là prop RIÊNG của cụm (member không có)."
+                reason="Cụm luôn ĐỒNG CỠ nên `size` đặt ở group, KHÔNG ở từng item (§12d) — mở size cho item là cho phép dựng hàng nút cao thấp lệch nhau."
+                note="Size cụm ép xuống cả hộp nút lẫn glyph của từng item."
                 code={`<Button.Group size="sm" items={[…]} />
-<Button.Group size="md" items={[…]} />   // default
+<Button.Group items={[…]} />          // md = default
 <Button.Group size="lg" items={[…]} />`}
             >
-                <div className="flex flex-col items-start gap-3">
-                    <Button.Group
-                        showAnatomy
-                        size="sm"
-                        items={[
-                            { key: "cancel", label: "Huỷ", variant: "ghost" },
-                            { key: "save", label: "Lưu", icon: FloppyDisk, variant: "primary" },
-                            { key: "delete", icon: TrashBin, ariaLabel: "Xoá (sm)", variant: "danger" },
-                        ]}
-                    />
-                    <Button.Group
-                        size="md"
-                        items={[
-                            { key: "cancel", label: "Huỷ", variant: "ghost" },
-                            { key: "save", label: "Lưu", icon: FloppyDisk, variant: "primary" },
-                            { key: "delete", icon: TrashBin, ariaLabel: "Xoá (md)", variant: "danger" },
-                        ]}
-                    />
-                    <Button.Group
-                        size="lg"
-                        items={[
-                            { key: "cancel", label: "Huỷ", variant: "ghost" },
-                            { key: "save", label: "Lưu", icon: FloppyDisk, variant: "primary" },
-                            { key: "delete", icon: TrashBin, ariaLabel: "Xoá (lg)", variant: "danger" },
-                        ]}
-                    />
+                <div className="flex flex-col items-start gap-4">
+                    {SIZES.map((size, index) => (
+                        <Button.Group
+                            key={size}
+                            size={size}
+                            items={items(`(${size})`)}
+                            showAnatomy={index === 0}
+                        />
+                    ))}
                 </div>
             </BlockAnatomy>
         </div>
     ),
 }
 
-/** Loading — skeleton mirror CẢ CỤM: đúng số nút + đúng hình từng nút (pill / vuông). */
-export const Loading: Story = {
+/** Leaf prop `isSkeleton` — bật ở cấp cụm, từng item tự vẽ shimmer của mình. */
+export const Skeleton: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
                 name="Button.Group"
                 tier="atom"
-                leaf="Loading"
-                parts={SKELETON_PARTS}
-                note="isSkeleton ở cấp cụm → mỗi item tự vẽ skeleton của chính nó (hybrid C); footprint hàng nút giữ nguyên nên không nhảy layout."
+                leaf="Prop `isSkeleton`"
+                parts={GROUP_PARTS}
+                reason="Cụm chỉ CHUYỂN cờ xuống; mỗi item tự vẽ skeleton của chính nó (§12c) — nút có nhãn ra pill dài, nút chỉ-icon ra ô vuông."
+                note="Footprint hàng nút giữ nguyên nên layout không nhảy khi dữ liệu về."
                 code={"<Button.Group isSkeleton items={[…3 item…]} />"}
             >
-                <Button.Group
-                    showAnatomy
-                    isSkeleton
-                    items={[
-                        { key: "cancel", label: "Huỷ", variant: "ghost" },
-                        { key: "save", label: "Lưu", variant: "primary" },
-                        { key: "delete", icon: TrashBin, ariaLabel: "Xoá", variant: "danger" },
-                    ]}
-                />
+                <div className="flex flex-col items-start gap-4">
+                    {SIZES.map((size) => (
+                        <Button.Group key={size} size={size} isSkeleton items={items(`(${size})`)} />
+                    ))}
+                </div>
             </BlockAnatomy>
         </div>
     ),

@@ -67,30 +67,27 @@ export const Required: Story = {
     },
 }
 
-/** Filled — đã chọn 1 gợi ý + có nhãn (nhãn hiện trong ô). */
-export const Filled: Story = {
+/**
+ * Labeled — có nhãn, không mô tả. Ba STATE nằm CHUNG một leaf (§14d.2: cùng cây DOM,
+ * chỉ khác nội dung ⇒ state, không tách story): ô trống · đã chọn gợi ý · khoá.
+ */
+export const Labeled: Story = {
     render: () => {
         const Demo = () => {
-            const [value, setValue] = useState<string | null>("dn")
+            const [empty, setEmpty] = useState<string | null>(null)
+            const [filled, setFilled] = useState<string | null>("dn")
             return (
-                <BlockAnatomy name="Select.Combobox" tier="atom" leaf="Filled" parts={[LABEL, FIELD, TRIGGER]} code={"<Select.Combobox label=\"Tỉnh/thành\" value=\"dn\" options={OPTIONS} />"} note="value có sẵn.">
-                    <div className="w-72"><Select.Combobox value={value} onValueChange={setValue} options={OPTIONS} placeholder="Tìm tỉnh/thành" label="Tỉnh/thành" showAnatomy /></div>
+                <BlockAnatomy name="Select.Combobox" tier="atom" leaf="Labeled" parts={[LABEL, FIELD, TRIGGER]} code={"<Select.Combobox label=\"Tỉnh/thành\" value={v} onValueChange={setV} options={OPTIONS} />"} note="Ba state cùng cấu trúc: ô trống · đã chọn · isDisabled.">
+                    <div className="flex flex-col gap-4">
+                        <div className="w-72"><Select.Combobox value={empty} onValueChange={setEmpty} options={OPTIONS} placeholder="Tìm tỉnh/thành" label="Tỉnh/thành" showAnatomy /></div>
+                        <div className="w-72"><Select.Combobox value={filled} onValueChange={setFilled} options={OPTIONS} placeholder="Tìm tỉnh/thành" label="Tỉnh/thành" /></div>
+                        <div className="w-72"><Select.Combobox value="hn" onValueChange={() => {}} options={OPTIONS} placeholder="Tìm tỉnh/thành" label="Tỉnh/thành" isDisabled /></div>
+                    </div>
                 </BlockAnatomy>
             )
         }
         return <div className="p-8"><Demo /></div>
     },
-}
-
-/** Disabled — khoá ô gõ + caret + có nhãn (nhạt). */
-export const Disabled: Story = {
-    render: () => (
-        <div className="p-8">
-            <BlockAnatomy name="Select.Combobox" tier="atom" leaf="Disabled" parts={[LABEL, FIELD, TRIGGER]} code={"<Select.Combobox label=\"Tỉnh/thành\" isDisabled value=\"hn\" ... />"} note="isDisabled → khoá ô + caret + nhạt nhãn.">
-                <div className="w-72"><Select.Combobox value="hn" onValueChange={() => {}} options={OPTIONS} placeholder="Tìm tỉnh/thành" label="Tỉnh/thành" isDisabled showAnatomy /></div>
-            </BlockAnatomy>
-        </div>
-    ),
 }
 
 /** Error — nhãn + dòng lỗi đỏ + viền lỗi (errorMessage bật cả message lẫn viền). */

@@ -1,8 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Button, cn } from "@heroui/react"
+import { Button, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { XIcon } from "@phosphor-icons/react"
-import { Skeleton } from "@sb-components/atoms/display/Skeleton/Skeleton"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
@@ -84,10 +83,10 @@ export const RemovableToken = ({
                 )}
             >
                 <div className="flex min-w-0 items-center gap-2">
-                    <Skeleton className="size-4 shrink-0 rounded" />
-                    <Skeleton className="my-[5px] h-[14px] w-32 rounded" />
+                    <HeroSkeleton className="size-4 shrink-0 rounded" />
+                    <HeroSkeleton className="my-[5px] h-[14px] w-32 rounded" />
                 </div>
-                <Skeleton className="h-9 w-20 shrink-0 rounded-full" />
+                <HeroSkeleton className="h-9 w-20 shrink-0 rounded-full" />
             </div>
         )
     }

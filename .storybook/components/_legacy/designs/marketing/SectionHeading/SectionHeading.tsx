@@ -1,7 +1,7 @@
 import React from "react"
 import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { StatusChip } from "@sb-components/atoms/chips/StatusChip/StatusChip"
+import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -63,7 +63,7 @@ export const SectionHeading = ({
             )}
         >
             {eyebrow ? (
-                <StatusChip.Base tone="accent" anatPart={showAnatomy ? "StatusChip" : undefined} text={eyebrow} />
+                <Chip.Base tone="accent" anatPart={showAnatomy ? "StatusChip" : undefined} text={eyebrow} />
             ) : null}
             <div
                 className={cn("flex items-center gap-2", centered && "justify-center")}

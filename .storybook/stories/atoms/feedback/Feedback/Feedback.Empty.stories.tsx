@@ -180,7 +180,7 @@ export const Action: Story = {
                         icon={WarningCircleIcon}
                         title="Không tải được dữ liệu"
                         description="Đã có lỗi xảy ra. Vui lòng thử lại sau."
-                        action={<Button.Base label="Thử lại" variant="danger" icon={ArrowCounterClockwiseIcon} />}
+                        action={<Button.Base label="Thử lại" variant="danger" prefixIcon={ArrowCounterClockwiseIcon} />}
                     />
                 </div>
             </BlockAnatomy>,
@@ -241,7 +241,7 @@ export const FullPage: Story = {
   size="page"
   code="404"
   title="Không tìm thấy trang"
-  action={<Button.Base label="Trang chủ" icon={HouseIcon} />}
+  action={<Button.Base label="Trang chủ" prefixIcon={HouseIcon} />}
 />`}
         >
             <div className="flex flex-col">
@@ -251,7 +251,7 @@ export const FullPage: Story = {
                     code="404"
                     title="Không tìm thấy trang"
                     description="Trang bạn tìm không tồn tại hoặc đã được chuyển đi."
-                    action={<Button.Base label="Trang chủ" icon={HouseIcon} />}
+                    action={<Button.Base label="Trang chủ" prefixIcon={HouseIcon} />}
                 />
                 <Feedback.Empty
                     size="page"
@@ -260,8 +260,8 @@ export const FullPage: Story = {
                     description="Máy chủ gặp sự cố khi xử lý yêu cầu. Thử lại sau giây lát nhé."
                     action={(
                         <>
-                            <Button.Base label="Thử lại" icon={ArrowCounterClockwiseIcon} />
-                            <Button.Base label="Trang chủ" variant="secondary" icon={HouseIcon} />
+                            <Button.Base label="Thử lại" prefixIcon={ArrowCounterClockwiseIcon} />
+                            <Button.Base label="Trang chủ" variant="secondary" prefixIcon={HouseIcon} />
                         </>
                     )}
                 />

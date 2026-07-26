@@ -2,7 +2,7 @@ import React from "react"
 import { Checkbox, CheckboxGroup, Radio, RadioGroup, cn } from "@heroui/react"
 import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { StatusChip } from "@sb-components/atoms/chips/StatusChip/StatusChip"
+import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { SectionCard } from "@sb-components/_legacy/designs/cards/SectionCard/SectionCard"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
 
@@ -94,7 +94,7 @@ export const QuizCard = ({
             <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-2">
                     {typeof questionIndex === "number" ? (
-                        <StatusChip.Base anatPart={showAnatomy ? "StatusChip" : undefined} tone="accent" text={`Câu ${questionIndex}`} />
+                        <Chip.Base anatPart={showAnatomy ? "StatusChip" : undefined} tone="accent" text={`Câu ${questionIndex}`} />
                     ) : null}
                     <Typography.Base weight="medium" showAnatomy={showAnatomy} text={question} />
                 </div>

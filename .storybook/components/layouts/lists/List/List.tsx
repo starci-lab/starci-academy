@@ -322,7 +322,7 @@ const Labeled = ({
 export interface ListMetaProps {
     /**
      * Optional leading signal chip — the ONE prominent token in the row (e.g. a
-     * warning `StatusChip` for a deadline). Omit for a plain muted meta line.
+     * warning `Chip.Base` for a deadline). Omit for a plain muted meta line.
      */
     chip?: ReactNode
     /**
@@ -344,7 +344,7 @@ export interface ListMetaProps {
 
 /**
  * A single inline META ROW: an optional leading SIGNAL chip (the one prominent
- * token — e.g. a `StatusChip`) followed by neutral secondary meta segments joined
+ * token — e.g. a `Chip.Base`) followed by neutral secondary meta segments joined
  * by a middot `·`, all muted. Consolidates the dot-separated meta line hand-rolled
  * across many blocks. The chip carries the ONE signal; everything after stays
  * muted (principles §2 color-prominence).

@@ -3,7 +3,7 @@ import type { ReactNode } from "react"
 import { CheckCircleIcon } from "@phosphor-icons/react"
 import { List } from "@sb-components/layouts/lists/List/List"
 import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
-import { StatusChip } from "@sb-components/atoms/chips/StatusChip/StatusChip"
+import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 
 /**
@@ -84,7 +84,7 @@ export const ReadinessChecklist = ({ items, readyLabel, pendingLabel, className,
                         title={item.label}
                         subtitle={item.ready ? item.readyDescription : item.pendingDescription}
                         trailing={(
-                            <StatusChip.Base
+                            <Chip.Base
                                 tone={item.ready ? "success" : "neutral"}
                                 anatPart={showAnatomy ? "StatusChip" : undefined}
                                 text={item.ready ? readyLabel : pendingLabel}

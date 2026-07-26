@@ -1,6 +1,7 @@
 import React from "react"
-import { Chip, cn } from "@heroui/react"
-import { StatusChip } from "@sb-components/atoms/chips/StatusChip/StatusChip"
+import { Chip as HeroChip, cn } from "@heroui/react"
+import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
+import type { IconComponent } from "@sb-components/atoms/chips/Chip/Chip"
 import { Typography as TypographyAtom } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
@@ -21,8 +22,11 @@ interface WithClassNames<T> {
 export interface HeroBannerProps extends WithClassNames<undefined> {
     /** Eyebrow label (the audience/subject gate). */
     eyebrow: React.ReactNode
-    /** Optional leading icon for the eyebrow chip. */
-    eyebrowIcon?: React.ReactNode
+    /**
+     * Optional leading icon for the eyebrow chip — COMPONENT, not element: the atom
+     * `Chip.Base` owns the glyph scale/weight (§4/§5.0a), so the caller only picks the shape.
+     */
+    eyebrowIcon?: IconComponent
     /** Headline — pass a rich node so the caller controls emphasis/strikethrough. */
     headline: React.ReactNode
     /** Supporting positioning line. */
@@ -83,7 +87,7 @@ export const HeroBanner = ({
                 hasVisual ? "flex-1 items-start text-left" : "items-center text-center",
             )}
         >
-            <StatusChip.Base tone="accent" icon={eyebrowIcon} anatPart={showAnatomy ? "StatusChip" : undefined} text={eyebrow} />
+            <Chip.Base tone="accent" icon={eyebrowIcon} anatPart={showAnatomy ? "StatusChip" : undefined} text={eyebrow} />
 
             <TypographyAtom.Base
                 size="h1"
@@ -124,14 +128,14 @@ export const HeroBanner = ({
                     ) : null}
                     {keywords.map((lang) => (
                         // brand-coloured chip — the language's official colour as a bg/10 + text tint
-                        <Chip
+                        <HeroChip
                             key={lang.label}
                             size="sm"
                             className={lang.className}
                             data-anat-part={showAnatomy ? "Chip" : undefined}
                         >
-                            <Chip.Label>{lang.label}</Chip.Label>
-                        </Chip>
+                            <HeroChip.Label>{lang.label}</HeroChip.Label>
+                        </HeroChip>
                     ))}
                 </div>
             ) : null}

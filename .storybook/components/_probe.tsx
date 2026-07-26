@@ -6,7 +6,7 @@ export const Probe = () => (
         <Typography size="sm" text="goi tran" />
         <Typography.Base size="sm" text="goi qua Base" />
         <Button label="tran" />
-        <Button.Icon icon={() => null} ariaLabel="x" />
+        <Button.Base isIconOnly prefixIcon={() => null} ariaLabel="x" />
         <Input value="" onValueChange={() => {}} />
     </>
 )

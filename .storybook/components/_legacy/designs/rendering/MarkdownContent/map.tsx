@@ -5,7 +5,7 @@ import * as HeroUI from "@heroui/react"
 import { CaretDownIcon } from "@phosphor-icons/react"
 // TODO: swap for the next-intl locale-aware Link (`@/i18n/navigation`) when this port syncs to src.
 import IntlLink from "next/link"
-import { StatusChip } from "@sb-components/atoms/chips/StatusChip/StatusChip"
+import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import {
     MarkdownTable,
     MarkdownTableBody,
@@ -227,7 +227,7 @@ export const buildMarkdownRenderers = ({
         chipblock: ({ items }: { items?: string }) => (
             <span className="my-2 flex flex-wrap gap-2">
                 {String(items ?? "").split("|").filter(Boolean).map((keyword, index) => (
-                    <StatusChip.Base key={index} tone="neutral" text={keyword} />
+                    <Chip.Base key={index} tone="neutral" text={keyword} />
                 ))}
             </span>
         ),

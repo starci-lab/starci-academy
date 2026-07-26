@@ -3,7 +3,7 @@
 import React from "react"
 import { cn } from "@heroui/react"
 import { CaretRightIcon, WarningIcon } from "@phosphor-icons/react"
-import { StatusChip } from "@sb-components/atoms/chips/StatusChip/StatusChip"
+import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { motion, useReducedMotion, type Variants } from "framer-motion"
 import type { CSSProperties, ReactNode } from "react"
@@ -201,10 +201,10 @@ export const MicroservicesDiagram = ({ caption, className, showAnatomy }: Micros
                     >
                         {/* NOTE: WarningIcon was size-4 in the raw Chip; StatusChip's `icon` slot
                             normalizes leading glyphs to size-3 (§4 icon ownership) — intentional. */}
-                        <StatusChip.Base
+                        <Chip.Base
                             tone="danger"
                             anatPart={showAnatomy ? "StatusChip" : undefined}
-                            icon={<WarningIcon aria-hidden focusable="false" />}
+                            icon={WarningIcon}
                             text={(
                                 <span className="inline-flex items-center gap-1">
                                     {failure.from}

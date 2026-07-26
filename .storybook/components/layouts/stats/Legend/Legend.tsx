@@ -13,7 +13,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * Resolve a swatch `color` into the right paint channel: a Tailwind `bg-*`
  * utility class is applied as a className; anything else (a raw hex, `var(--…)`,
  * `rgb(…)`, …) is applied as an inline `backgroundColor` — same dual-mode
- * handling as the `Chip.Dot` atom (variant `bare`).
+ * handling as the dot of `Chip.Base` (`dotClassName` vs `dotColor`).
  */
 const resolveDotColor = (color: string): { className?: string; style?: React.CSSProperties } =>
     color.startsWith("bg-")

@@ -10,7 +10,7 @@ import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
  * đổi Ý NGHĨA "độ khó" / "ngôn ngữ" / "nền tảng" = việc của file này.
  *
  * MEMBER = VAI NGHĨA, không phải hình thái. Đây là chỗ tầng design khác tầng atom:
- * atom chia member theo hình (`Chip.Base` · `Chip.Dot`), design chia theo WHY.
+ * atom chỉ có MỘT viên chip (`Chip.Base`) và chia theo PROP, design chia theo WHY.
  *
  * ⛔ **DESIGN TUYỆT ĐỐI KHÔNG MỞ `custom` VÀ `bare`** (thầy chốt 2026-07-26):
  * không nhãn tự đặt, không đổi hình. Mở hai thứ đó ra thì caller đổi được cả chữ
@@ -20,7 +20,7 @@ import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
  * Hệ quả: `difficulty` là trục DUY NHẤT — nó quyết cả nhãn lẫn màu.
  *
  * KHÔNG có member `Base`: một "variant chip" không mang vai nào thì chính là
- * `Chip.Dot` — đẻ `Base` rỗng ở đây là namespace rỗng (§12a cấm).
+ * `Chip.Base` có chấm — đẻ `Base` rỗng ở đây là namespace rỗng (§12a cấm).
  *
  * Họ này sẽ còn `.Language` · `.HostPlatform` · `.AiCategory` (đang ở `_legacy`).
  * Chỉ dựng thành viên nào SCREEN ĐANG CẦN — không nuôi member không ai gọi.
@@ -63,9 +63,13 @@ const capitalize = (value: Difficulty): string => value.charAt(0).toUpperCase() 
 
 /**
  * `VariantChip.Difficulty` — chấm màu theo bậc + chữ độ khó (kiểu GitHub language
- * dot). Bọc mỏng atom `Chip.Dot`; màu lấy từ {@link DIFFICULTY_COLOR}.
+ * dot). Bọc mỏng atom `Chip.Base`; màu lấy từ {@link DIFFICULTY_COLOR}.
  *
- * Hình LUÔN là `pill` — đúng mặc định của atom, và design không mở trục hình ra
+ * ⚠️ Đổi 2026-07-26: trước đây gọi `Chip.Dot`. Atom đã gộp chấm thành PROP của viên
+ * chip DUY NHẤT, nên chấm giờ là `dotClassName` trên `Chip.Base` — không có member
+ * riêng nữa. Hình không đổi, chỉ đổi lối gọi.
+ *
+ * Hình LUÔN là viên pill — đúng mặc định của atom, và design không mở trục hình ra
  * cho caller (xem ⛔ ở doc đầu file).
  *
  * @param props - {@link VariantChipDifficultyProps}
@@ -77,17 +81,27 @@ const VariantChipDifficulty = ({
     showAnatomy = false,
     anatPart,
 }: VariantChipDifficultyProps) => {
-    const chip = (
-        <Chip.Dot
-            variant="pill"
+    // Tên part để cây anatomy gọi đúng cái design này dựng lại — cây đọc từ DOM nên
+    // không gắn tên thì nhìn story không biết nó làm bằng gì (thầy bắt 2026-07-25).
+    // Nhãn phải là tên NAMESPACE (`Chip.Base`) vì người đọc tra theo tên story.
+    const chipPart = showAnatomy ? "Chip.Base" : undefined
+    // Hai nhánh vì `isSkeleton` của atom là union rời (skeleton thì `text` không bắt
+    // buộc): truyền một biến `boolean | undefined` vào chung một chỗ là không khớp kiểu.
+    // Nhánh skeleton VẪN giữ `dotClassName` để atom đếm đủ ô mà chừa chỗ cho chấm.
+    const chip = isSkeleton ? (
+        <Chip.Base
+            isSkeleton
+            dotClassName={DIFFICULTY_COLOR[difficulty]}
+            className={className}
+            anatPart={chipPart}
+        />
+    ) : (
+        <Chip.Base
             dotClassName={DIFFICULTY_COLOR[difficulty]}
             text={capitalize(difficulty)}
             className={className}
-            isSkeleton={isSkeleton}
-            // Truyền XUỐNG để atom phát `data-anat-part` — không truyền thì anatomy
-            // KHÔNG thấy design này dựng từ `Chip.Dot`, nhìn story không biết nó
-            // làm bằng gì (thầy bắt 2026-07-25).
             showAnatomy={showAnatomy}
+            anatPart={chipPart}
         />
     )
     // Tên part đặt lên chính span BỌC chip — KHÔNG qua `AnatomyOverlay`.

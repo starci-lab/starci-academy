@@ -3,7 +3,10 @@ import { VariantChip, type Difficulty } from "@sb-components/designs/chips/Varia
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * DESIGN — `VariantChip.Difficulty`: áp vai nghĩa **ĐỘ KHÓ** lên atom `Chip.Dot`.
+ * DESIGN — `VariantChip.Difficulty`: áp vai nghĩa **ĐỘ KHÓ** lên atom `Chip.Base`.
+ *
+ * ⚠️ 2026-07-26: atom bỏ member `Chip.Dot` — chấm là PROP của viên chip duy nhất
+ * (`dotClassName`). Design này không đổi hình, chỉ đổi cái nó gọi xuống.
  *
  * Member của họ `VariantChip.*` chia theo **VAI** (§14d), không theo hình — đó là
  * chỗ tầng design khác tầng atom.
@@ -34,10 +37,10 @@ type Story = StoryObj<typeof VariantChip.Difficulty>
 const LEVELS: Array<Difficulty> = ["beginner", "intermediate", "advanced", "insane"]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "Chip.Dot": {
-        storyId: "atoms-chips-chip-chip-dot--default",
+    "Chip.Base": {
+        storyId: "atoms-chips-chip-chip-base--default",
         tier: "atom",
-        role: "toàn bộ HÌNH đến từ đây — design chỉ gắn nghĩa + màu, không vẽ gì thêm",
+        role: "The whole shape comes from here. Design only adds meaning and the dot colour.",
     },
 }
 
@@ -56,7 +59,7 @@ export const Levels: Story = {
                 leaf="Chip độ khó"
                 parts={[]}
                 annotate={ANNOTATE}
-                note="Hình luôn là `pill` — đúng mặc định của `Chip.Dot`; design không mở trục hình."
+                note="The pill shape is the atom's own default — design never opens a shape axis."
             >
                 <div className="flex flex-col gap-4">
                     <div className="flex flex-wrap items-center gap-3">

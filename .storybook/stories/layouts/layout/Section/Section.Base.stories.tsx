@@ -105,7 +105,7 @@ export const HeaderProps: Story = {
   header={{
     title: "Khoá của tôi",
     description: "Sắp theo lần học gần nhất.",
-    action: <Button.Base label="Xem tất cả" variant="ghost" size="sm" icon={ArrowRightIcon} />,
+    action: <Button.Base label="Xem tất cả" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} />,
   }}
 >
   <SurfaceCard.Base><ProfileRow /></SurfaceCard.Base>
@@ -116,7 +116,7 @@ export const HeaderProps: Story = {
                         header={{
                             title: "Khoá của tôi",
                             description: "Sắp theo lần học gần nhất.",
-                            action: <Button.Base label="Xem tất cả" variant="ghost" size="sm" icon={ArrowRightIcon} onPress={() => {}} />,
+                            action: <Button.Base label="Xem tất cả" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} onPress={() => {}} />,
                         }}
                     >
                         <CardBody />

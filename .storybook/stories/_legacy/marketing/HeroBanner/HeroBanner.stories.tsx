@@ -106,7 +106,7 @@ export const CenteredNoVisual: Story = {
                 <HeroBanner
                     showAnatomy
                     eyebrow="Học lập trình thực chiến"
-                    eyebrowIcon={<CubeIcon aria-hidden focusable="false" className="size-3" />}
+                    eyebrowIcon={CubeIcon}
                     headline="Trở thành kỹ sư phần mềm sẵn sàng đi làm"
                     subline="Từ nền tảng đến dự án thực tế, mỗi khóa học gắn với một sản phẩm bạn cầm được trên tay."
                     primary={
@@ -133,7 +133,7 @@ export const SplitWithVisual: Story = {
                 <HeroBanner
                     showAnatomy
                     eyebrow="System Design Mastery"
-                    eyebrowIcon={<CubeIcon aria-hidden focusable="false" className="size-3" />}
+                    eyebrowIcon={CubeIcon}
                     headline="Thiết kế hệ thống chịu được triệu người dùng"
                     subline="Học qua kiến trúc backend thật của StarCi — không phải sơ đồ vẽ trên giấy."
                     primary={
@@ -217,7 +217,7 @@ export const LongHeadline: Story = {
                 <HeroBanner
                     showAnatomy
                     eyebrow="DevOps Mastery"
-                    eyebrowIcon={<CubeIcon aria-hidden focusable="false" className="size-3" />}
+                    eyebrowIcon={CubeIcon}
                     headline="Tự tay dựng pipeline CI/CD, container hóa và vận hành hệ thống trên nhiều cloud thật"
                     subline="Không học lý thuyết suông — mọi bài lab đều triển khai trên hạ tầng thật, có log và metric thật để soi."
                     primary={

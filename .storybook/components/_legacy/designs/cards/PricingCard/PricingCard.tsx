@@ -1,7 +1,7 @@
 import React from "react"
 import { cn } from "@heroui/react"
 import { SectionCard } from "@sb-components/_legacy/designs/cards/SectionCard/SectionCard"
-import { StatusChip } from "@sb-components/atoms/chips/StatusChip/StatusChip"
+import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { PricePoint } from "@sb-components/atoms/display/PricePoint/PricePoint"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
@@ -99,7 +99,7 @@ export const PricingCard = ({
                 <div className="flex flex-wrap items-center gap-2">
                     <Typography.Base weight="medium" showAnatomy={showAnatomy} text={name} />
                     {highlighted && badge ? (
-                        <StatusChip.Base
+                        <Chip.Base
                             tone="accent"
                             className="shrink-0"
                             anatPart={showAnatomy ? "StatusChip" : undefined}

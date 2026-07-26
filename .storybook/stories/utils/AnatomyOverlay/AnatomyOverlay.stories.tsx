@@ -30,7 +30,7 @@ const Box = ({ label, tier, children }: { label: string; tier: "primitive" | "de
 export const Tiers: Story = {
     render: () => (
         <div className="flex flex-wrap gap-8 p-12">
-            <Box label="StatusChip" tier="primitive"><Typography type="body-sm">primitive</Typography></Box>
+            <Box label="EnumChip" tier="primitive"><Typography type="body-sm">primitive</Typography></Box>
             <Box label="DeckCard" tier="design"><Typography type="body-sm">design</Typography></Box>
             <Box label="FlashcardDeckList" tier="block"><Typography type="body-sm">block</Typography></Box>
         </div>

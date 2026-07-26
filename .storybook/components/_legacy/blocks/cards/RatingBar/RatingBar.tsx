@@ -4,7 +4,6 @@ import React from "react"
 import { cn } from "@heroui/react"
 import type { ReactNode } from "react"
 import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
-import { StatusChip } from "@sb-components/atoms/chips/StatusChip/StatusChip"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 
@@ -136,7 +135,7 @@ export const RatingBar = ({
                             >
                                 {option.label}
                             </span>
-                            <StatusChip.Base
+                            <Chip.Base
                                 tone="neutral"
                                 anatPart={showAnatomy ? "StatusChip" : undefined}
                                 text={position + 1}

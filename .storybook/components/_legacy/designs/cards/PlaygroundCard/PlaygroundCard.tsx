@@ -11,7 +11,7 @@ import {
 } from "@phosphor-icons/react"
 import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
-import { StatusChip } from "@sb-components/atoms/chips/StatusChip/StatusChip"
+import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported faithfully from
@@ -72,9 +72,9 @@ export const PlaygroundCard = ({
                     >
                         {title}
                     </Typography>
-                    <StatusChip.Base
+                    <Chip.Base
                         tone="neutral"
-                        icon={<ListChecksIcon aria-hidden focusable="false" />}
+                        icon={ListChecksIcon}
                         anatPart={showAnatomy ? "StatusChip" : undefined}
                         text={stepCountLabel(stepCount)}
                     />

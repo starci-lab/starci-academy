@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { List } from "@sb-components/layouts/lists/List/List"
-import { StatusChip } from "@sb-components/atoms/chips/StatusChip/StatusChip"
+import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -24,7 +24,7 @@ type Story = StoryObj<typeof List.Meta>
 
 // With the leading signal chip — Chip + Meta side by side.
 const WITH_CHIP_PARTS: Array<AnatomyNode> = [
-    { name: "Chip", tier: "design", role: "chip tín hiệu dẫn đầu (ví dụ StatusChip cảnh báo)" },
+    { name: "Chip", tier: "atom", role: "The one leading signal — here a warning Chip.Base." },
     { name: "Meta", tier: "primitive", role: "đoạn text mờ nối bằng middot ·" },
 ]
 
@@ -33,7 +33,7 @@ const META_ONLY_PARTS: Array<AnatomyNode> = [
     { name: "Meta", tier: "primitive", role: "đoạn text mờ nối bằng middot ·" },
 ]
 
-/** Leading warning `StatusChip` (the one signal) + dot-joined muted meta segments. */
+/** Leading warning `Chip.Base` (the one signal) + dot-joined muted meta segments. */
 export const WithChip: Story = {
     render: () => (
         <div className="w-96 p-8">
@@ -44,12 +44,12 @@ export const WithChip: Story = {
                 parts={WITH_CHIP_PARTS}
                 reason="Consolidate dòng meta chấm-ngăn hand-roll khắp nơi: MỘT chip tín hiệu dẫn đầu (nếu có) rồi các đoạn meta trung tính nối middot, tất cả mờ trừ chip (principles §2 color-prominence). `items` là dữ liệu vì các đoạn meta LẶP (§13b)."
                 code={`<List.Meta
-  chip={<StatusChip.Base tone="warning" text="2 phút còn lại" />}
+  chip={<Chip.Base tone="warning" text="2 phút còn lại" />}
   items={["Question 7 / 8", "Middle"]}
 />`}
             >
                 <List.Meta
-                    chip={<StatusChip.Base tone="warning" text="2 phút còn lại" />}
+                    chip={<Chip.Base tone="warning" text="2 phút còn lại" />}
                     items={["Question 7 / 8", "Middle"]}
                     showAnatomy
                 />

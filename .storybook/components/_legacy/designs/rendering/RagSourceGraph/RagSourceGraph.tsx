@@ -13,7 +13,7 @@ import {
     ReactFlowProvider,
 } from "@xyflow/react"
 import { cn } from "@heroui/react"
-import { StatusChip } from "@sb-components/atoms/chips/StatusChip/StatusChip"
+import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
@@ -95,7 +95,7 @@ const RagSourceGraphSourceNode = ({ data }: NodeProps) => {
                 <div className="flex items-center justify-between gap-2">
                     <Typography.Base size="xs" weight="medium" truncate className="font-mono text-accent-soft-foreground" text={filePath} />
                     {score != null ? (
-                        <StatusChip.Base tone="accent" className="shrink-0" text={score.toFixed(2)} />
+                        <Chip.Base tone="accent" className="shrink-0" text={score.toFixed(2)} />
                     ) : null}
                 </div>
                 <Typography.Base size="xs" color="muted" truncate text={snippetPreview} />

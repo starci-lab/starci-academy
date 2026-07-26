@@ -78,7 +78,7 @@ const WITH_ACTION_PARTS: Array<AnatomyNode> = [
 
 const DISMISSIBLE_PARTS: Array<AnatomyNode> = [
     ...TITLE_ONLY_PARTS,
-    { name: "Close", tier: "atom", role: "`Button.Icon` (`XIcon`, ghost) tô theo tone — đóng dải" },
+    { name: "Close", tier: "atom", role: "`Button.Base` (`XIcon`, ghost) tô theo tone — đóng dải" },
 ]
 
 /**
@@ -241,7 +241,7 @@ export const CustomIcon: Story = {
     ),
 }
 
-/** `onClose` — dải tự tắt được: thêm node `Close` (atom `Button.Icon`) ở cuối hàng. */
+/** `onClose` — dải tự tắt được: thêm node `Close` (atom `Button.Base`) ở cuối hàng. */
 export const Dismissible: Story = {
     render: () => (
         <div className="p-8">
@@ -250,7 +250,7 @@ export const Dismissible: Story = {
                 tier="primitive"
                 leaf="Dismissible"
                 parts={DISMISSIBLE_PARTS}
-                note="`onClose` bật nút × (atom `Button.Icon` ghost, tô theo tone). §11a: badge dừng ở node Close, không drill vào ruột atom."
+                note="`onClose` bật nút × (atom `Button.Base` ghost, tô theo tone). §11a: badge dừng ở node Close, không drill vào ruột atom."
                 code={`<Feedback.Callout
   status="accent"
   title="…"

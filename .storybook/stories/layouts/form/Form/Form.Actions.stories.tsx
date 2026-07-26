@@ -67,8 +67,8 @@ export const Default: Story = {
                 code={`<Form.Actions
   align="end"
   items={[
-    { key: "cancel", label: "Huỷ", variant: "secondary", icon: XIcon },
-    { key: "save", label: "Lưu thay đổi", icon: FloppyDiskIcon },
+    { key: "cancel", label: "Huỷ", variant: "secondary", prefixIcon: XIcon },
+    { key: "save", label: "Lưu thay đổi", prefixIcon: FloppyDiskIcon },
   ]}
 />`}
             >

@@ -3,7 +3,6 @@ import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import type { ReactNode } from "react"
 import { Card, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
-import { StatusChip } from "@sb-components/atoms/chips/StatusChip/StatusChip"
 import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
 import { TitledText } from "@sb-components/layouts/text/TitledText/TitledText"
 
@@ -114,7 +113,7 @@ export const RewardItemCard = ({
             </div>
 
             <div className="flex items-center justify-between gap-3">
-                <StatusChip.Base tone="accent" anatPart={showAnatomy ? "StatusChip" : undefined} text={formatCost(cost)} />
+                <Chip.Base tone="accent" anatPart={showAnatomy ? "StatusChip" : undefined} text={formatCost(cost)} />
                 <Button
                     variant="primary"
                     size="sm"

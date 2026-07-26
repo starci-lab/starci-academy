@@ -115,7 +115,7 @@ const Controlled = (props: Omit<ToolbarBaseProps, "leftTabs" | "rightTabs"> & {
 
 // Truyền icon dạng COMPONENT xuống atom — atom tự ép size + weight (§5.0a), story không chọn nét.
 const addButton: ReactNode = (
-    <Button.Icon icon={PlusIcon} ariaLabel="Thêm phần mới" variant="ghost" size="sm" onPress={() => {}} />
+    <Button.Base isIconOnly prefixIcon={PlusIcon} ariaLabel="Thêm phần mới" variant="ghost" size="sm" onPress={() => {}} />
 )
 
 // Part mà Toolbar.Base compose TRỰC TIẾP — LeftTabs (nhóm chính) · LeftEnd (cụm action
@@ -169,7 +169,7 @@ export const WithLeftEnd: Story = {
                 note="react-aria cấm lồng phần tử tương tác trong `Tabs.Tab`, nên nút nằm SIBLING của tab list, cụm trái gom lại bằng `gap-1` (tight)."
                 code={`<Toolbar.Base
   leftTabs={…}
-  leftEnd={<Button.Icon icon={PlusIcon} ariaLabel="Thêm phần mới" variant="ghost" size="sm" />}
+  leftEnd={<Button.Base isIconOnly prefixIcon={PlusIcon} ariaLabel="Thêm phần mới" variant="ghost" size="sm" />}
 />`}
             >
                 <Controlled leftItems={CONTENT_TABS} defaultLeftKey="overview" leftEnd={addButton} showAnatomy />

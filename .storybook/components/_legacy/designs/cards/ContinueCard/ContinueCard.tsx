@@ -6,7 +6,7 @@ import { SectionCard } from "@sb-components/_legacy/designs/cards/SectionCard/Se
 import { SeeMoreLink } from "@sb-components/atoms/navigation/SeeMoreLink/SeeMoreLink"
 import { ProgressMeter } from "@sb-components/layouts/stats/ProgressMeter/ProgressMeter"
 import { List } from "@sb-components/layouts/lists/List/List"
-import { StatusChip } from "@sb-components/atoms/chips/StatusChip/StatusChip"
+import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
@@ -261,7 +261,7 @@ export const ContinueCard = ({
                                     // Same info type (time remaining) → same element (a time
                                     // StatusChip) in EVERY scenario; only the tone escalates:
                                     // `neutral` (muted) when there's time, `warning` when running out.
-                                    <StatusChip.Base
+                                    <Chip.Base
                                         tone={urgent ? "warning" : "neutral"}
                                         anatPart={showAnatomy ? "StatusChip" : undefined}
                                         text={timeLeft}

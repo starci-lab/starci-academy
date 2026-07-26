@@ -6,7 +6,6 @@ import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
 import type { IconTileTone } from "@sb-components/atoms/display/IconTile/IconTile"
-import { StatusChip } from "@sb-components/atoms/chips/StatusChip/StatusChip"
 import { SegmentBar } from "@sb-components/layouts/stats/SegmentBar/SegmentBar"
 
 /**
@@ -129,7 +128,7 @@ export const CourseProgressRow = ({
                         showAnatomy={showAnatomy}
                         text={title}
                     />
-                    {trialLabel ? <StatusChip.Base tone="warning" anatPart={showAnatomy ? "StatusChip" : undefined} text={trialLabel} /> : null}
+                    {trialLabel ? <Chip.Base tone="warning" anatPart={showAnatomy ? "StatusChip" : undefined} text={trialLabel} /> : null}
                     <Typography.Base size="xs"
                         color="muted"
                         className="shrink-0"

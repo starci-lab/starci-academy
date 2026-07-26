@@ -134,12 +134,12 @@ export const WithAction: Story = {
                     note="Action là SLOT: khung chỉ ghim `shrink-0` bên phải và giữ cột chữ `min-w-0`. Caller đưa atom Button.* vào — khung không mang chức năng (§13)."
                     code={`<Section.Header
   title="Khoá của tôi"
-  action={<Button.Base label="Xem tất cả" variant="ghost" size="sm" icon={ArrowRightIcon} />}
+  action={<Button.Base label="Xem tất cả" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} />}
 />`}
                 >
                     <Section.Header
                         title="Khoá của tôi"
-                        action={<Button.Base label="Xem tất cả" variant="ghost" size="sm" icon={ArrowRightIcon} onPress={() => {}} />}
+                        action={<Button.Base label="Xem tất cả" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} onPress={() => {}} />}
                         showAnatomy
                     />
                 </BlockAnatomy>
@@ -163,14 +163,14 @@ export const Full: Story = {
   eyebrow="Fullstack Mastery"
   title="Bài tập đã nộp"
   description="AI chấm trong vài phút; bạn có thể nộp lại tối đa 3 lần."
-  action={<Button.Base label="Cấu hình" variant="secondary" size="sm" icon={GearIcon} />}
+  action={<Button.Base label="Cấu hình" variant="secondary" size="sm" prefixIcon={GearIcon} />}
 />`}
                 >
                     <Section.Header
                         eyebrow="Fullstack Mastery"
                         title="Bài tập đã nộp"
                         description="AI chấm trong vài phút; bạn có thể nộp lại tối đa 3 lần."
-                        action={<Button.Base label="Cấu hình" variant="secondary" size="sm" icon={GearIcon} onPress={() => {}} />}
+                        action={<Button.Base label="Cấu hình" variant="secondary" size="sm" prefixIcon={GearIcon} onPress={() => {}} />}
                         showAnatomy
                     />
                 </BlockAnatomy>

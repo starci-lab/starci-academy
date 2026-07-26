@@ -36,7 +36,7 @@ const FULL_PARTS: Array<AnatomyNode> = [
     ...BASE_PARTS,
     { name: "Body", tier: "atom", role: "vùng tự do dưới description — prop `body` (atom CẤM children, §12b)" },
     { name: "Action", tier: "atom", role: "hành động (prop `action`) — đặt trước ×" },
-    { name: "Close", tier: "atom", role: "nút × (prop `onClose`) — `Button.Icon`, tone theo status" },
+    { name: "Close", tier: "atom", role: "nút × (prop `onClose`) — `Button.Base`, tone theo status" },
 ]
 
 /**
@@ -85,7 +85,7 @@ export const WithActionAndClose: Story = {
                 tier="atom"
                 leaf="WithActionAndClose"
                 parts={FULL_PARTS}
-                reason="Slot CÓ TÊN là đường chính: `title` header · `description`/`body` body · `action` footer. Nút × là `Button.Icon` (atom), tone lấy theo status — badge dừng ở node Close, không drill vào ruột atom."
+                reason="Slot CÓ TÊN là đường chính: `title` header · `description`/`body` body · `action` footer. Nút × là `Button.Base` (atom), tone lấy theo status — badge dừng ở node Close, không drill vào ruột atom."
                 note="`body` (hoặc children) là vùng tự do — chỗ nhét list ngắn hay meta row."
                 code={"<Alert.Base status=\"warning\" title=\"…\" action={<Button.Base … />} onClose={fn} />"}
             >

@@ -5,7 +5,6 @@ import type { ReactNode } from "react"
 import { Card, cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
-import { StatusChip } from "@sb-components/atoms/chips/StatusChip/StatusChip"
 import { DifficultyChip, type Difficulty } from "@sb-components/_legacy/designs/chips/DifficultyChip/DifficultyChip"
 import { ProgressMeter } from "@sb-components/layouts/stats/ProgressMeter/ProgressMeter"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
@@ -130,7 +129,7 @@ export const DeckCard = ({
                     />
                     <div className="flex shrink-0 items-center gap-2">
                         {showProgress && dueCount ? (
-                            <StatusChip.Base tone="warning" showAnatomy={showAnatomy} text={`${dueCount} đến hạn`} />
+                            <Chip.Base tone="warning" showAnatomy={showAnatomy} text={`${dueCount} đến hạn`} />
                         ) : null}
                         <DifficultyChip difficulty={difficulty} showAnatomy={showAnatomy} />
                     </div>

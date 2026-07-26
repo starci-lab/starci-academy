@@ -1,9 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { cn } from "@heroui/react"
 import { Tooltip } from "@sb-components/atoms/overlay/Tooltip/Tooltip"
-import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
-import { StatusChip, type StatusChipTone } from "@sb-components/atoms/chips/StatusChip/StatusChip"
+import { Chip, type ChipTone } from "@sb-components/atoms/chips/Chip/Chip"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -13,8 +11,8 @@ import { StatusChip, type StatusChipTone } from "@sb-components/atoms/chips/Stat
 /** HeroUI soft-chip colors usable by an {@link EnumChip}. */
 export type EnumChipColor = "default" | "success" | "warning" | "danger" | "accent"
 
-/** Maps a raw {@link EnumChipColor} to the {@link StatusChip} tone it composes onto. */
-const COLOR_TO_TONE: Record<EnumChipColor, StatusChipTone> = {
+/** Maps a raw {@link EnumChipColor} to the `Chip.Base` tone it composes onto. */
+const COLOR_TO_TONE: Record<EnumChipColor, ChipTone> = {
     default: "neutral",
     success: "success",
     warning: "warning",
@@ -47,26 +45,29 @@ export interface EnumChipProps<E extends string> {
 }
 
 /**
- * The canonical "enum → soft chip" primitive: a {@link StatusChip} whose
+ * The canonical "enum → soft chip" primitive: a `Chip.Base` whose
  * tone / label / optional tooltip come from a per-value map. Text-only — no leading icon.
  * Domain badges (AI-model category, difficulty, video host …) shrink to just their map
  * table + this delegate. Deliberately does NOT force width.
+ *
+ * ⚠️ Đổi 2026-07-26: trước đây dựng trên `StatusChip` — component đó đã xoá vì nó chỉ là
+ * `Chip.Base` khoá cứng `tone`, không thêm hành vi nào. Giờ gọi thẳng atom.
  *
  * @param props - {@link EnumChipProps}
  */
 export const EnumChip = <E extends string>({ value, map, className, isSkeleton, anatPart }: EnumChipProps<E>) => {
     if (isSkeleton) {
-        // Atom's own skeleton pill defaults to `h-7`; force back to the registry's
-        // `h-6` (24px, matches HeroUI Chip's real box) so the shimmer keeps its
-        // exact prior footprint — no visual drift from the swap.
-        return <Chip.Base isSkeleton text="" className={cn("h-6", className)} />
+        // KHÔNG còn đắp `h-6` ở đây nữa: shimmer của atom trước kia cao `h-7`, lệch 4px
+        // so với hộp chip thật, nên call-site phải vá hình hộ. Atom đã sửa (2026-07-26) —
+        // call-site phải vá hình của atom chính là dấu hiệu atom sai, không phải chỗ này sai.
+        return <Chip.Base isSkeleton className={className} anatPart={anatPart} />
     }
     const entry = map[value]
     if (!entry) {
         throw new Error(`EnumChip: no map entry for value "${value}"`)
     }
     const chip = (
-        <StatusChip.Base
+        <Chip.Base
             tone={entry.color ? COLOR_TO_TONE[entry.color] : "neutral"}
             className={className}
             anatPart={anatPart}

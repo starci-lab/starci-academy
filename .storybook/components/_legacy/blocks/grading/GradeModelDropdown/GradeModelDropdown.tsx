@@ -16,7 +16,7 @@ import {
     cn,
 } from "@heroui/react"
 import { AiCategoryChip, AiModelCategory } from "@sb-components/_legacy/designs/chips/AiCategoryChip/AiCategoryChip"
-import { StatusChip } from "@sb-components/atoms/chips/StatusChip/StatusChip"
+import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { FlexWrapButtonRadio } from "@sb-components/atoms/navigation/FlexWrapButtonRadio/FlexWrapButtonRadio"
 import { SelfHostGpuMark } from "@sb-components/_legacy/designs/grading/SelfHostGpuMark/SelfHostGpuMark"
 
@@ -145,9 +145,9 @@ const TIER_FILTERS: ReadonlyArray<AiModelCategory | "all"> = [
  */
 const ModelHealthChip = ({ ok, latencyMs, errorMessage }: ModelHealth) => {
     const chip = (
-        <StatusChip.Base
+        <Chip.Base
             tone={ok ? "success" : "danger"}
-            icon={<span className={cn("size-1.5 rounded-full", ok ? "bg-success" : "bg-danger")} />}
+            dotClassName={ok ? "text-success" : "text-danger"}
             text={ok ? `${latencyMs}ms` : "Ngưng"}
         />
     )

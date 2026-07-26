@@ -2,7 +2,7 @@ import React from "react"
 import { cn } from "@heroui/react"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
 import { SectionCard } from "@sb-components/_legacy/designs/cards/SectionCard/SectionCard"
-import { StatusChip } from "@sb-components/atoms/chips/StatusChip/StatusChip"
+import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
 import { PricePoint } from "@sb-components/atoms/display/PricePoint/PricePoint"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
@@ -64,7 +64,7 @@ const PricingCard = ({
             {/* Name (+ optional popular chip inline — chip is w-fit, never full-width) */}
             <div className="flex flex-wrap items-center gap-2">
                 <Typography.Base weight="medium" showAnatomy={showAnatomy} text={name} />
-                {highlighted && badge ? <StatusChip.Base tone="accent" anatPart={showAnatomy ? "StatusChip" : undefined} text={badge} /> : null}
+                {highlighted && badge ? <Chip.Base tone="accent" anatPart={showAnatomy ? "StatusChip" : undefined} text={badge} /> : null}
             </div>
 
             {/* Price = ONE PricePoint primitive (amount + struck original + period) —

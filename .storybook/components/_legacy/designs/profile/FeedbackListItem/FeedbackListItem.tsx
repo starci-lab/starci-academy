@@ -1,8 +1,7 @@
 import React from "react"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Card, CardContent, cn } from "@heroui/react"
-import { StatusChip } from "@sb-components/atoms/chips/StatusChip/StatusChip"
-import type { StatusChipTone } from "@sb-components/atoms/chips/StatusChip/StatusChip"
+import type { ChipTone } from "@sb-components/atoms/chips/Chip/Chip"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
@@ -17,8 +16,8 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 /** Which surface produced the feedback — drives the {@link StatusChip} tone. */
 export type FeedbackSource = "challenge" | "task" | "cv"
 
-/** Maps a {@link FeedbackSource} to a {@link StatusChipTone} (mirrors `SOURCE_COLOR_MAP`). */
-const SOURCE_TONE_MAP: Record<FeedbackSource, StatusChipTone> = {
+/** Maps a {@link FeedbackSource} to a {@link ChipTone} (mirrors `SOURCE_COLOR_MAP`). */
+const SOURCE_TONE_MAP: Record<FeedbackSource, ChipTone> = {
     challenge: "accent",
     task: "warning",
     cv: "success",
@@ -84,7 +83,7 @@ export const FeedbackListItem = ({
         <Card className={cn(className)}>
             <CardContent className="flex flex-col gap-2">
                 <div className="flex flex-wrap items-center gap-3">
-                    <StatusChip.Base
+                    <Chip.Base
                         tone={SOURCE_TONE_MAP[source] ?? "accent"}
                         anatPart={showAnatomy ? "SourceChip" : undefined}
                         text={sourceLabel}

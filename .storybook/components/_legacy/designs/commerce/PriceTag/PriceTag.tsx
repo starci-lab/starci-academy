@@ -1,6 +1,6 @@
 import React from "react"
 import { Popover, Typography, cn } from "@heroui/react"
-import { StatusChip } from "@sb-components/atoms/chips/StatusChip/StatusChip"
+import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Typography as TypographyAtom } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
@@ -108,7 +108,7 @@ export const PriceTag = ({
     // exactly ONE interactive element. No caret; the whole chip is the affordance.
     const chip =
         savePercent > 0 ? (
-            <StatusChip.Base
+            <Chip.Base
                 tone="success"
                 anatPart={showAnatomy ? "StatusChip" : undefined}
                 text={`−${savePercent}%`}

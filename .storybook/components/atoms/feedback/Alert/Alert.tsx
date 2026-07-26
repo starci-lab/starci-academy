@@ -20,7 +20,7 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
  *
  * ICON (§5.0, thầy chốt 2026-07-26): MỘT bộ duy nhất `@phosphor-icons/react`.
  * Weight theo size (§5.0a): glyph chỉ báo `size-5` ⇒ regular (không truyền
- * `weight`); glyph × trong `Button.Icon size="sm"` bị ép `size-3.5` ⇒ `weight="bold"`.
+ * `weight`); glyph × trong `Button.Base size="sm"` bị ép `size-3.5` ⇒ `weight="bold"`.
  *
  * NAMESPACE (§13a): KHÔNG export component trần — mọi thành viên qua `Alert.*`.
  *
@@ -70,7 +70,7 @@ const STATUS_TINT: Record<AlertStatus, string> = {
 }
 
 /**
- * Close (×) colour + hover tint per status. The `!` beats `Button.Icon`'s own
+ * Close (×) colour + hover tint per status. The `!` beats `Button.Base`'s own
  * `ghost` text/hover (a plain utility would lose to it). Hover = a tint of the
  * alert's OWN tone.
  */
@@ -91,7 +91,7 @@ const STATUS_CLOSE_TONE: Record<AlertStatus, string> = {
 const GLYPH_SCALE = "[&_svg]:size-5!"
 
 /**
- * Glyph × của nút đóng. `Button.Icon size="sm"` ép icon xuống `size-3.5` — nhỏ hơn
+ * Glyph × của nút đóng. `Button.Base size="sm"` ép icon xuống `size-3.5` — nhỏ hơn
  * `size-5` nên §5.0a bắt bù `weight="bold"`; để regular thì nét × mảnh hơn ~33% so
  * với glyph chỉ báo `size-5` đứng cùng hàng, nhìn ra hai độ đậm khác nhau.
  */
@@ -203,10 +203,10 @@ const AlertBase = ({
                 <div className="shrink-0" data-anat-part={showAnatomy ? "Action" : undefined}>{action}</div>
             ) : null}
             {onClose ? (
-                // §11a: badge dừng ở node "Close" (atom `Button.Icon`) — không drill vào ruột atom.
+                // §11a: badge dừng ở node "Close" (atom `Button.Base`) — không drill vào ruột atom.
                 <span className="shrink-0" data-anat-part={showAnatomy ? "Close" : undefined}>
-                    <Button.Icon
-                        icon={CloseGlyph}
+                    <Button.Base isIconOnly
+                        prefixIcon={CloseGlyph}
                         ariaLabel={closeAriaLabel ?? "Đóng"}
                         variant="ghost"
                         size="sm"

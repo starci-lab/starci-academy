@@ -46,17 +46,21 @@ Test: người chưa biết domain nhìn icon này có đoán đúng nghĩa khô
 
 ## Hình dạng & kỹ thuật
 
-- **Chip = 1 size duy nhất (`md` medium).** (Font theo HeroUI size — KHÔNG override
-  `text-xs` trong globals.css nữa; đã bỏ.)
+- **Chip = 1 size duy nhất (`md` medium).** Font do HeroUI quyết: `.chip { text-xs }` và
+  `.chip--md { text-xs }` ⇒ chữ chip là **12px**.
 - **Ưu tiên nét OUTLINE, KHÔNG đặc** — `CheckCircleIcon` mặc định; bản ĐẶC chỉ khi cần
   đặc/đậm có chủ đích đã chốt, và làm bằng `weight="fill"` (Phosphor không có component
   `*Fill` riêng).
-- Size icon = `size-3.5` (14px, khớp `text-sm` của chip md) — **ATOM tự ép**, caller không set.
+- Size icon = `size-3` (12px, bằng đúng cỡ chữ 12px của chip md) — **ATOM tự ép**, caller
+  không set. ⚠️ Sửa 2026-07-26: trước ghi `size-3.5` và viện "khớp `text-sm` của chip" —
+  chip không hề có `text-sm`, nên icon to hơn chữ một nấc ở mọi chip của hệ.
 - Tone icon = theo tone chip (`currentColor`), không sơn màu riêng.
 - Bộ icon = **Phosphor** (`@phosphor-icons/react`) — MỘT bộ duy nhất cho cả cây (§5⃣0).
 - **Weight theo size (§5⃣0a):** `size-5` → `regular` (mặc định) · nhỏ hơn `size-5` → `weight="bold"`
-  để bù nét mảnh đi khi thu nhỏ. Icon chip là `size-3.5` ⇒ **`weight="bold"`**, và **ATOM tự áp** —
+  để bù nét mảnh đi khi thu nhỏ. Icon chip là `size-3` ⇒ **`weight="bold"`**, và **ATOM tự áp** —
   caller truyền component reference, KHÔNG tự set `weight`.
+- **KHÔNG cần `!important`** (khác `Button`): `chip.css` không có rule `.chip svg` nào để tranh
+  specificity, nên class Tailwind thường là đủ.
 
 ## API (strict UI)
 
@@ -64,7 +68,13 @@ Test: người chưa biết domain nhìn icon này có đoán đúng nghĩa khô
 <Chip.Base icon={CheckCircleIcon} text="Verified" tone="success" /> // icon = COMPONENT, không JSX
 <Chip.Base text="Draft" />                                        // không icon → bỏ prop
 <Chip.Base onRemove={fn} text="React" tone="accent" />            // filter token (×)
+<Chip.Base dotClassName="text-success" text="Đang chạy" />        // chip CHẤM trạng thái
+<Chip.Base dotColor="#3178c6" text="TypeScript" />                // màu ngoài bảng token
+<Chip.Group items={[{ key: "ts", text: "TypeScript" }]} />        // hàng chip, tràn → +N
 ```
+
+⚠️ Ô glyph dẫn đầu chỉ có MỘT chỗ: `icon` và `dotColor`/`dotClassName` loại trừ nhau (ép ở
+kiểu). Chấm chỉ hiện khi caller cho nó một MÀU — chấm sinh ra để tải màu.
 
 `icon` nhận **component reference** (`CheckCircleIcon`), KHÔNG phải `<CheckCircleIcon/>` — atom
 kiểm soát render/size/weight, caller không chèn sai được.

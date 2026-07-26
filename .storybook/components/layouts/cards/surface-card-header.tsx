@@ -67,11 +67,25 @@ export const SurfaceCardHeader = ({
 export const surfaceSectionGap = (subtleLabel: boolean | undefined) => (subtleLabel ? "gap-2" : "gap-3")
 
 /**
- * The shared `Surface*Card` frame class — `rounded-3xl bg-surface` + a BORDER XOR the
- * elevation SHADOW (bordered = surface-in-surface: a border replaces the shadow that
- * renders invisible on a parent surface). Was copy-pasted verbatim in SurfaceCard /
- * SurfaceListCard / SurfaceAccordionCard / CrossListCard — now ONE source. Callers add
- * their own `overflow-hidden` / padding.
+ * Ba biến thể khung của một mặt `Surface*Card` — TRỤC 1/3 (thầy chốt 2026-07-26,
+ * xem SurfaceCard.tsx đầu file để đọc đủ ba trục):
+ * - `"surface"` (mặc định) — `shadow-surface`, dùng khi cha là `bg-background` trơn.
+ * - `"nested"` — border THAY CHO shadow (`border border-default`, bỏ shadow) — dùng
+ *   khi mặt này nằm TRONG một mặt khác (panel `bg-surface`, bubble
+ *   `bg-surface-secondary`, modal/page card): shadow chìm nghỉm trên mặt cha nên
+ *   đổi tín hiệu sang viền (§1a).
  */
-export const surfaceFrame = (bordered?: boolean) =>
-    cn("rounded-3xl bg-surface", bordered ? "border border-default" : "shadow-surface")
+export type SurfaceCardVariant = "surface" | "nested"
+
+/**
+ * The shared `Surface*Card` frame class — `rounded-3xl bg-surface` + a BORDER XOR the
+ * elevation SHADOW (`variant="nested"` = surface-in-surface: a border replaces the
+ * shadow that renders invisible on a parent surface). Was copy-pasted verbatim in
+ * SurfaceCard / SurfaceListCard / SurfaceAccordionCard / CrossListCard — now ONE
+ * source. Callers add their own `overflow-hidden` / padding.
+ *
+ * 2026-07-26 (thầy): tham số đổi từ `bordered?: boolean` sang {@link SurfaceCardVariant}.
+ * `bordered=true` ⇔ `variant="nested"`, `bordered=false` ⇔ `variant="surface"` (mặc định).
+ */
+export const surfaceFrame = (variant: SurfaceCardVariant = "surface") =>
+    cn("rounded-3xl bg-surface", variant === "nested" ? "border border-default" : "shadow-surface")

@@ -6,15 +6,12 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — `Page.*`, the ONE page-chrome KHUNG namespace
- * (thầy 2026-07-25, canon §13a). Three sibling frames that used to live as
- * three loose folders (`PageHeader` · `PageContainer` · `StickyBottomBar`) are
- * now MEMBERS of one namespace — same tier (khung / layout), same họ (chrome
- * of a ROUTE: what sits above the content, around it, and pinned under it),
- * one import.
+ * (thầy 2026-07-25, canon §13a). Sibling frames that used to live as loose
+ * folders (`PageHeader` · `StickyBottomBar`) are now MEMBERS of one namespace
+ * — same tier (khung / layout), same họ (chrome of a ROUTE: what sits above
+ * the content and pinned under it), one import.
  *
  * KHUNG API LAW (§13b):
- * - `Page.Container` is a WRAPPER frame → named slots `header`/`body`/`footer`
- *   are the main road, `children` stays as shorthand for `body`.
  * - `Page.BottomBar` is a WRAPPER frame → named slots `body`/`actions` (a bar
  *   is a horizontal row, so `header`/`footer` would be a lie); `children`
  *   stays as shorthand for `body`.
@@ -27,6 +24,11 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * Behaviour/skin of every member is carried over VERBATIM from its old folder;
  * this is an API refactor, not a visual one. Synced to `src` later. No
  * `@/components` imports (design-spec ports stay self-contained).
+ *
+ * LỊCH SỬ — `.Container` đã chuyển thành `Container.Base` (`@sb-components/layouts/layout/Container/Container`)
+ * ngày 2026-07-26: khung cũ không `mx-auto`, không `max-w`, chỉ đệm bên phải —
+ * là bản nửa vời của khái niệm "khổ nội dung" mà `Container.Base` đã làm đúng
+ * (§13c: khung trùng thì xoá).
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -86,7 +88,7 @@ export interface PageHeaderProps {
  * controls on the right.
  *
  * This frame carries no card wrapper — the caller places it directly inside
- * {@link Page.Container} or wraps it in a `SectionCard` when a framed surface
+ * a `Container.Base` or wraps it in a `SectionCard` when a framed surface
  * is required.
  *
  * @param props - See {@link PageHeaderProps}.
@@ -140,77 +142,6 @@ const Header = ({
             {meta ? (
                 <div data-anat-part={showAnatomy ? "Meta" : undefined}>{meta}</div>
             ) : null}
-        </div>
-    )
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// .Container — the outermost route frame (was `PageContainer`)
-// ─────────────────────────────────────────────────────────────────────────────
-
-/** Props for {@link Page.Container}. */
-export interface PageContainerProps {
-    /**
-     * Top region of the page — normally a {@link Page.Header}. Separated from
-     * `body` by the PAGE rhythm (`gap-8`), not the card rhythm.
-     */
-    header?: ReactNode
-    /** Main region. Equivalent to `children`; wins over it when both are passed. */
-    body?: ReactNode
-    /** Bottom region IN FLOW (a page footer, a closing CTA row). Not the fixed bar — that is {@link Page.BottomBar}. */
-    footer?: ReactNode
-    /** Shorthand for {@link PageContainerProps.body} — a wrapper frame wraps anything. */
-    children?: ReactNode
-    /** Extra classes on the page shell. */
-    className?: string
-    /**
-     * `true` → each region emits `data-anat-part="<name>"` so a BlockAnatomy
-     * panel can badge it on-render. Off in production.
-     */
-    showAnatomy?: boolean
-}
-
-/**
- * Standard page shell — full width of the parent with a right gutter + vertical
- * rhythm. No `mx-auto` centering and no left padding (flush start). Owns page
- * spacing so features (which must not use `p-*`) compose inside it. Override
- * via `className`.
- *
- * With neither `header` nor `footer` the body renders RAW — a `children`-only
- * call produces the exact same DOM as the old `PageContainer` (no extra div).
- *
- * @param props - {@link PageContainerProps}
- */
-const Container = ({
-    header,
-    body,
-    footer,
-    children,
-    className,
-    showAnatomy = false,
-}: PageContainerProps) => {
-    const main = body ?? children
-    // gap-8 = the PAGE rhythm between top-level regions (header ↔ content ↔
-    // footer). Deliberately wider than the card-internal gap-3 (§10: related
-    // tight, sections wide).
-    const content = header == null && footer == null
-        ? main
-        : (
-            <div className="flex flex-col gap-8">
-                {header != null ? <div data-anat-part={showAnatomy ? "Header" : undefined}>{header}</div> : null}
-                {main != null ? <div data-anat-part={showAnatomy ? "Body" : undefined}>{main}</div> : null}
-                {footer != null ? <div data-anat-part={showAnatomy ? "Footer" : undefined}>{footer}</div> : null}
-            </div>
-        )
-
-    return (
-        <div
-            className={cn(
-                "w-full py-16 pr-4 @app-sm:pr-6 @app-lg:pr-8",
-                className,
-            )}
-        >
-            {content}
         </div>
     )
 }
@@ -290,16 +221,17 @@ const BottomBar = ({
 
 /**
  * The page-chrome KHUNG namespace — the frames a ROUTE is built out of, one
- * import, three members:
+ * import, two members:
  *
  * | Member | Content channel |
  * |---|---|
  * | `.Header` | `breadcrumb`/`title`/`description`/`actions`/`meta` (no children) |
- * | `.Container` | `header`/`body`/`footer` slots (+ `children` = body) |
  * | `.BottomBar` | `body`/`actions` slots (+ `children` = body) |
+ *
+ * `.Container` moved to `Container.Base` (`@sb-components/layouts/layout/Container/Container`)
+ * on 2026-07-26 — see the history note at the top of this file.
  */
 export const Page = {
     Header,
-    Container,
     BottomBar,
 }

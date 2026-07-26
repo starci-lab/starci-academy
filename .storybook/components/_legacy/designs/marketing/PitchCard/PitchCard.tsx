@@ -1,7 +1,7 @@
 import React from "react"
 import { cn } from "@heroui/react"
 import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
-import type { IconTileTone } from "@sb-components/atoms/display/IconTile/IconTile"
+import type { IconTileTone, IconComponent } from "@sb-components/atoms/display/IconTile/IconTile"
 import { SectionCard } from "@sb-components/_legacy/designs/cards/SectionCard/SectionCard"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
@@ -13,8 +13,8 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /** Props for the {@link PitchCard} block. */
 export interface PitchCardProps {
-    /** Phosphor icon node rendered inside the tinted {@link IconTile}. */
-    icon: React.ReactNode
+    /** Phosphor icon component rendered inside the tinted {@link IconTile}. */
+    icon: IconComponent
     /** Tint of the icon tile; defaults to accent. */
     tone?: IconTileTone
     /** Card title (the claim). */

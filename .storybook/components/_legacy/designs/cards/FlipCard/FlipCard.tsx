@@ -126,8 +126,9 @@ export const FlipCard = ({
         return (
             <div className={cn("flex flex-col gap-6", className)}>
                 <div className="flex flex-col gap-3">
+                    {/* Codemod 2026-07-26: `bordered` → `variant="nested"` (API 3-trục SurfaceCard.Base). */}
                     <div data-anat-part={showAnatomy ? "SurfaceCard.Question" : undefined}>
-                        <SurfaceCard.Base label={questionLabel} bordered contentClassName="flex flex-col gap-3">
+                        <SurfaceCard.Base label={questionLabel} variant="nested" contentClassName="flex flex-col gap-3">
                             <ProseSkeleton lines={2} />
                         </SurfaceCard.Base>
                     </div>
@@ -137,7 +138,7 @@ export const FlipCard = ({
                     </div>
                 </div>
                 <div data-anat-part={showAnatomy ? "SurfaceCard.Answer" : undefined}>
-                    <SurfaceCard.Base label={answerLabel} bordered>
+                    <SurfaceCard.Base label={answerLabel} variant="nested">
                         <ProseSkeleton lines={3} />
                     </SurfaceCard.Base>
                 </div>
@@ -162,8 +163,9 @@ export const FlipCard = ({
             {/* question card + its `belowFront` chips grouped `gap-3` — the chips
                 stay under the QUESTION when the answer reveals below. */}
             <div className="flex flex-col gap-3">
+                {/* Codemod 2026-07-26: `bordered` → `variant="nested"` (API 3-trục SurfaceCard.Base). */}
                 <div data-anat-part={showAnatomy ? "SurfaceCard.Question" : undefined}>
-                    <SurfaceCard.Base label={questionLabel} bordered contentClassName="flex flex-col gap-3">
+                    <SurfaceCard.Base label={questionLabel} variant="nested" contentClassName="flex flex-col gap-3">
                         {front}
                     </SurfaceCard.Base>
                 </div>
@@ -184,8 +186,9 @@ export const FlipCard = ({
                         onAnimationComplete={() => setAnimating(false)}
                         className={cn(animating && "overflow-hidden")}
                     >
+                        {/* Codemod 2026-07-26: `bordered` → `variant="nested"` (API 3-trục SurfaceCard.Base). */}
                         <div data-anat-part={showAnatomy ? "SurfaceCard.Answer" : undefined}>
-                            <SurfaceCard.Base label={answerLabel} bordered>
+                            <SurfaceCard.Base label={answerLabel} variant="nested">
                                 <ScrollShadow hideScrollBar className="flex max-h-[28rem] flex-col gap-3 overflow-y-auto text-left">
                                     {answerContent}
                                 </ScrollShadow>

@@ -92,7 +92,7 @@ export const Default: Story = {
                 reason="Một dòng thông báo gộp ô icon theo tone + cột title/body + nhãn thời gian đã format + tín hiệu unread (dot accent + nền accent nhạt) + action slot cuối dòng, để feature chỉ ánh xạ kind → icon/tone và truyền copy đã dịch. Cả dòng bấm được khi có onPress."
             >
                 <NotificationItem
-                    icon={<BellIcon />}
+                    icon={BellIcon}
                     title="A new lesson was published in your course"
                     body="System Design Mastery — module 4, lesson 3 is now available."
                     timeLabel="3 days ago"
@@ -113,7 +113,7 @@ export const Unread: Story = {
                 note="Thêm chấm accent cạnh tiêu đề + nền accent-soft báo chưa đọc; cả dòng bấm được (onPress)."
             >
                 <NotificationItem
-                    icon={<CheckCircleIcon />}
+                    icon={CheckCircleIcon}
                     tone="success"
                     title="Your submission has been graded"
                     body="API Gateway challenge — scored 92/100, passed every test case."
@@ -137,7 +137,7 @@ export const Read: Story = {
                 note="Đã đọc — không chấm/không nền accent; CÙNG composition với leaf mặc định, cả dòng bấm được."
             >
                 <NotificationItem
-                    icon={<FlameIcon />}
+                    icon={FlameIcon}
                     tone="warning"
                     title="Don't lose your 12-day study streak"
                     body="Study one more lesson today to keep your streak going."
@@ -160,7 +160,7 @@ export const WithAction: Story = {
                 note="Thêm actionSlot cuối dòng ('View') cạnh trạng thái chưa đọc; slot giữ kích thước riêng, không bóp cột chữ."
             >
                 <NotificationItem
-                    icon={<ChatCircleIcon />}
+                    icon={ChatCircleIcon}
                     tone="accent"
                     title="Ethan replied to your comment"
                     body="Right, that part should be split out into its own service."
@@ -213,7 +213,7 @@ export const TitleOnly: Story = {
                 note="Bỏ body → hàng chỉ tiêu đề + thời gian (không truyền `body`)."
             >
                 <NotificationItem
-                    icon={<CheckCircleIcon />}
+                    icon={CheckCircleIcon}
                     tone="success"
                     title="Your certificate has been issued"
                     timeLabel="Just now"
@@ -239,7 +239,7 @@ export const LongText: Story = {
             >
                 <div className="w-80">
                     <NotificationItem
-                        icon={<FlameIcon />}
+                        icon={FlameIcon}
                         tone="warning"
                         title="Don't lose your 45-day study streak — you have studied every single day since you first enrolled and it would be a shame to lose it now"
                         body="Study one more lesson today to keep your streak going, otherwise your progress resets back down to zero and you will have to start building it up again from scratch"

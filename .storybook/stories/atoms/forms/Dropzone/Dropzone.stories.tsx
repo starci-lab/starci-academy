@@ -1,7 +1,7 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Dropzone } from "@sb-components/atoms/forms/Dropzone/Dropzone"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Dropzone> = {
     title: "Atoms/Forms/Dropzone",
@@ -44,39 +44,34 @@ const Controlled = ({
     )
 }
 
-const cvFile = new File(["nội dung CV mẫu"], "cv-nguyen-van-a.pdf", { type: "application/pdf" })
+const cvFile = new File(["sample resume content"], "jane-doe-resume.pdf", { type: "application/pdf" })
 
-const HINT = "Kéo-thả hoặc bấm để chọn file CV (PDF, tối đa 5MB)"
+const HINT = "Drag and drop, or click to choose a resume file (PDF, up to 5 MB)"
 const ACCEPT = ["application/pdf"]
 const MAX = 5 * 1024 * 1024
 
 /**
- * ANATOMY IS PER-LEAF: every story below wraps its render in its OWN BlockAnatomy
- * axis. `Dropzone` is hand-rolled (deliberately NOT `FieldShell` — see the
- * component's own note) but still composes a `DropBox` (the dashed drag surface:
- * icon + hint/filename, undrilled) plus an optional `ErrorMessage` line below.
+ * ATOM — `Dropzone`: ô kéo-thả file DUY NHẤT của hệ, hand-rolled (deliberately
+ * NOT `FieldShell` — xem note trong component). Không compose atom nào có story
+ * riêng ⇒ ATOM LÁ, không có `annotate` (§12 — "atom lá bọc thẳng HeroUI/hand-roll
+ * thì bỏ hẳn prop, đừng để `{}`"). `DropBox`/`ErrorMessage`/`Skeleton` chỉ là KHE
+ * nội bộ, không phải deps.
+ *
+ * 📐 Bộ leaf theo §12g — mỗi leaf ứng với MỘT prop có hình: `file` (nội dung
+ * trong khung đổi từ hint sang tên file), `errorMessage` (viền đỏ + dòng lỗi),
+ * `isSkeleton` (mirror khung lúc chưa sẵn sàng). `hint` luôn có nên nằm sẵn ở
+ * leaf trần (`Empty`), không tách leaf riêng.
  */
-const BOX_PARTS: Array<AnatomyNode> = [
-    { name: "DropBox", tier: "primitive", role: "khung nét đứt kéo-thả (icon + hint/tên file)" },
-]
-const ERROR_PARTS: Array<AnatomyNode> = [
-    { name: "DropBox", tier: "primitive", role: "khung nét đứt, viền đỏ khi có lỗi" },
-    { name: "ErrorMessage", tier: "primitive", role: "dòng lỗi validation dưới khung" },
-]
-const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton", tier: "primitive", role: "mirror khung nét đứt lúc chưa sẵn sàng", state: "skeleton" },
-]
 
-/** Empty: default state on entering a form — the drop area shows the hint, no file picked. */
+/** Baseline: entering a form, the drop area shows the hint, no file picked yet. */
 export const Empty: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
                 name="Dropzone"
-                tier="primitive"
+                tier="atom"
                 leaf="Empty"
-                parts={BOX_PARTS}
-                reason="Ô kéo-thả file, không phải FieldShell có label — hint render NGAY TRONG khung như placeholder, thay bằng tên file khi đã chọn."
+                reason="A drag-drop box, not a labeled field — the hint renders as placeholder text INSIDE the box, replaced by the file name once one is picked."
             >
                 <Controlled hint={HINT} acceptedMimeTypes={ACCEPT} maxSizeInBytes={MAX} />
             </BlockAnatomy>
@@ -84,16 +79,15 @@ export const Empty: Story = {
     ),
 }
 
-/** WithFile: after a successful drop/pick, the file name replaces the hint line. */
+/** Leaf prop `file` — once a file is picked, its name replaces the hint line. */
 export const WithFile: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
                 name="Dropzone"
-                tier="primitive"
-                leaf="WithFile"
-                parts={BOX_PARTS}
-                note="file != null → DropBox hiện tên file thay hint, cùng composition."
+                tier="atom"
+                leaf="Prop `file`"
+                note="file != null swaps the hint for the file name — same box, same composition, just different content."
             >
                 <Controlled hint={HINT} initialFile={cvFile} acceptedMimeTypes={ACCEPT} maxSizeInBytes={MAX} />
             </BlockAnatomy>
@@ -101,20 +95,19 @@ export const WithFile: Story = {
     ),
 }
 
-/** Error: wrong mime type or over the size cap — the border goes danger and an error line appears below. */
+/** Leaf prop `errorMessage` — wrong mime type or over the size cap: border goes danger, an error line appears below. */
 export const Error: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
                 name="Dropzone"
-                tier="primitive"
-                leaf="Error"
-                parts={ERROR_PARTS}
-                note="errorMessage → thêm node ErrorMessage dưới DropBox, viền DropBox chuyển đỏ."
+                tier="atom"
+                leaf="Prop `errorMessage`"
+                note="Passing errorMessage adds an error line under the box and switches its border to danger."
             >
                 <Controlled
                     hint={HINT}
-                    errorMessage="File vượt quá 5MB hoặc không đúng định dạng PDF — vui lòng chọn file khác."
+                    errorMessage="File is over 5 MB or not a PDF — please choose a different file."
                     acceptedMimeTypes={ACCEPT}
                     maxSizeInBytes={MAX}
                 />
@@ -123,16 +116,15 @@ export const Error: Story = {
     ),
 }
 
-/** Skeleton: loading placeholder mirroring the dashed drop box's shape/rounding. */
+/** Leaf prop `isSkeleton` — loading placeholder mirroring the dashed box's shape/rounding. */
 export const Skeleton: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
                 name="Dropzone"
-                tier="primitive"
-                leaf="Skeleton"
-                parts={SKELETON_PARTS}
-                note="isSkeleton → một khối Skeleton duy nhất mirror kích thước DropBox, chưa tách DropBox/ErrorMessage."
+                tier="atom"
+                leaf="Prop `isSkeleton`"
+                note="isSkeleton swaps in a single shimmer block sized to the dashed box — it does not try to separately mirror the box and the error line."
             >
                 <Dropzone
                     isSkeleton

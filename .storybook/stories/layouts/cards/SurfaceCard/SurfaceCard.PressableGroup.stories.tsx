@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, Typography } from "@heroui/react"
 import { CaretRightIcon, FolderOpenIcon } from "@phosphor-icons/react"
 import { SurfaceCard, type SurfaceCardPressableGroupItem } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
 import type { VerdictBandVariant } from "@sb-components/layouts/cards/verdict-band"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `SurfaceCard.PressableGroup` KHÔNG đẻ nghĩa
@@ -15,6 +15,13 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  *
  * State của TỪNG Ô (`selected` · `isDisabled` · `href` vs `onPress`) sống ở story
  * `SurfaceCard.Pressable` — KHÔNG lặp lại ở đây.
+ *
+ * 2026-07-26 (thầy) — hệ lưới riêng của member này (`SurfaceCardPressableGroupColumns`
+ * 7 bậc, thang container NỬA CỠ `@sm`/`@md`) bị xoá; `columns`/`gap` nay dùng
+ * {@link GridColumns}/`SpaceScale` DÙNG CHUNG của `Grid.Base` (§13) — thang ĐẦY CỠ
+ * `@app-sm`/`@app-md`/`@app-lg`. Panel anatomy cũng đổi: prop `parts`/`AnatomyNode`
+ * (đường cũ, khai cấu trúc bằng tay) → `annotate` (chỉ chú giải WHY, cấu trúc suy từ
+ * DOM), và chỉ giữ entry có `storyId` THẬT.
  */
 const meta: Meta<typeof SurfaceCard.PressableGroup> = {
     title: "Layouts/Cards/SurfaceCard/SurfaceCard.PressableGroup",
@@ -47,10 +54,10 @@ const profileTile = (initials: string, title: string, description: string) => (
 )
 
 const MENTORS = [
-    { initials: "SC", title: "StarCi Academy", description: "Học fullstack, system design và DevOps theo lộ trình phỏng vấn." },
-    { initials: "QN", title: "Thầy Quang", description: "Mentor fullstack — review dự án và mock interview." },
-    { initials: "MM", title: "Mia Mia English", description: "Luyện đề và học cụm từ theo phương pháp SM-2." },
-    { initials: "DV", title: "DevOps Lab", description: "Thực hành 4-cloud với credentials thật." },
+    { initials: "SC", title: "StarCi Academy", description: "Learn fullstack, system design, and DevOps on an interview-prep roadmap." },
+    { initials: "QN", title: "Thầy Quang", description: "Fullstack mentor — reviews projects and runs mock interviews." },
+    { initials: "MM", title: "Mia Mia English", description: "Practice test sets and phrases with the SM-2 method." },
+    { initials: "DV", title: "DevOps Lab", description: "Hands-on 4-cloud practice with real credentials." },
 ]
 
 const profileItems: Array<SurfaceCardPressableGroupItem> = MENTORS.map((m) => ({
@@ -63,16 +70,24 @@ const profileItems: Array<SurfaceCardPressableGroupItem> = MENTORS.map((m) => ({
 /** Plain canvas for each leaf's anatomy panel. */
 const shell = (node: ReactNode) => <div className="p-8"><div className="max-w-2xl">{node}</div></div>
 
-// Live grid leaf: mỗi ô là một `Item` LẶP — một `SurfaceCard.Pressable` mà `content` do
-// caller compose tự do (ProfileCard ở đây); Item là part DUY NHẤT cụm này tự đặt tên.
-const ITEM_PARTS: Array<AnatomyNode> = [
-    { name: "Item", tier: "primitive", role: "SurfaceCard.Pressable lặp lại — nội dung `content` do caller compose tự do" },
-]
+/**
+ * Live grid leaf: mỗi ô là một `Item` LẶP — một `SurfaceCard.Pressable` mà `content` do
+ * caller compose tự do (ProfileCard ở đây). `Item` CÓ story riêng
+ * (`SurfaceCard.Pressable/Default`) nên khai `storyId` để bấm nhảy sang được.
+ *
+ * 2026-07-26 (thầy): đổi từ mảng `parts: Array<AnatomyNode>` viết tay sang bảng
+ * `annotate: Record<string, AnatomyAnnotation>` — cấu trúc cây nay suy từ DOM
+ * (`data-anat-part="Item"` do chính story gắn ở dưới), phần khai tay chỉ còn WHY.
+ */
+const ITEM_ANNOTATE: Record<string, AnatomyAnnotation> = {
+    Item: {
+        tier: "primitive",
+        role: "SurfaceCard.Pressable repeated — its own story lives at SurfaceCard.Pressable/Default.",
+        storyId: "layouts-cards-surfacecard-surfacecard-pressable--default",
+    },
+}
 
-// Loading leaf: mọi ô đổi sang mirror skeleton chung thay cho `Item`.
-const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "SkeletonTile", tier: "primitive", role: "tile mirror avatar + 2 dòng text — placeholder khi isSkeleton" },
-]
+const VERDICTS: Array<VerdictBandVariant> = ["success", "warning", "danger", "accent"]
 
 /** Default — `items` là DỮ LIỆU (danh sách LẶP thì cấm children); cả grid là MỘT unit có nhãn. */
 export const Default: Story = {
@@ -82,8 +97,8 @@ export const Default: Story = {
                 name="SurfaceCard.PressableGroup"
                 tier="primitive"
                 leaf="Default"
-                parts={ITEM_PARTS}
-                reason="Grid các SurfaceCard.Pressable: cả nhóm là MỘT unit có nhãn (role=group + aria-label), mỗi ô là một Item lặp lại. Danh sách LẶP → `items` bắt buộc là dữ liệu, không children (luật API tầng khung)."
+                annotate={ITEM_ANNOTATE}
+                reason="Grid of SurfaceCard.Pressable cards: the whole group is ONE labelled unit (role=group + aria-label), and each cell is a repeated Item. A REPEATING list → `items` must be DATA, never children (khung API law)."
                 code={`<SurfaceCard.PressableGroup
   ariaLabel="Mentors"
   columns={{ base: 1, sm: 2 }}
@@ -99,8 +114,8 @@ export const Default: Story = {
 }
 
 /**
- * `columns` — số cột theo BỀ RỘNG CONTAINER (container query `@sm`/`@md`/`@lg`…), KHÔNG
- * phải viewport: cùng một grid có thể nằm trong cột trang rộng hay trong rail 256px.
+ * `columns` — số cột theo BỀ RỘNG CONTAINER (container query `@app-sm`/`@app-md`/`@app-lg`…),
+ * KHÔNG phải viewport: cùng một grid có thể nằm trong cột trang rộng hay trong rail 256px.
  * Kéo hẹp cửa sổ để thấy hai khung dưới đây reflow ĐỘC LẬP với nhau.
  */
 export const Columns: Story = {
@@ -110,8 +125,8 @@ export const Columns: Story = {
                 name="SurfaceCard.PressableGroup"
                 tier="primitive"
                 leaf="Columns"
-                parts={ITEM_PARTS}
-                note="Cùng composition với leaf Default — `columns` chỉ đổi grid-template theo bề rộng CONTAINER, không thêm part mới."
+                annotate={ITEM_ANNOTATE}
+                note="Same composition as leaf Default — `columns` only swaps the grid-template by CONTAINER width, no new part."
                 code={`<SurfaceCard.PressableGroup
   ariaLabel="Mentors"
   columns={{ base: 1, sm: 2, lg: 4 }}
@@ -120,18 +135,18 @@ export const Columns: Story = {
             >
                 <div className="flex flex-col gap-4">
                     <div className="max-w-2xl">
-                        <Typography type="body-xs" color="muted">container rộng → tới 4 cột</Typography>
+                        <Typography type="body-xs" color="muted">wide container → up to 4 columns</Typography>
                         <SurfaceCard.PressableGroup
-                            ariaLabel="Mentors (container rộng)"
+                            ariaLabel="Mentors (wide container)"
                             columns={{ base: 1, sm: 2, lg: 4 }}
                             items={profileItems}
                             showAnatomy
                         />
                     </div>
                     <div className="max-w-xs">
-                        <Typography type="body-xs" color="muted">container hẹp → vẫn 1 cột, dù viewport rộng</Typography>
+                        <Typography type="body-xs" color="muted">narrow container → still 1 column, even on a wide viewport</Typography>
                         <SurfaceCard.PressableGroup
-                            ariaLabel="Mentors (container hẹp)"
+                            ariaLabel="Mentors (narrow container)"
                             columns={{ base: 1, sm: 2, lg: 4 }}
                             items={profileItems.slice(0, 2)}
                         />
@@ -150,8 +165,8 @@ export const Gap: Story = {
                 name="SurfaceCard.PressableGroup"
                 tier="primitive"
                 leaf="Gap"
-                parts={ITEM_PARTS}
-                note="`gap` là prop RIÊNG của cụm (item không có) — grid luôn đều khoảng cách; `2` cho grid dày, `3` (mặc định) cho grid thường."
+                annotate={ITEM_ANNOTATE}
+                note="`gap` is a prop of the GROUP (items don't have one) — the grid always keeps an even gap; `2` for a dense grid, `3` (default) for a normal one."
                 code={`<SurfaceCard.PressableGroup gap={2} ariaLabel="Mentors" items={[…]} />
 <SurfaceCard.PressableGroup gap={3} ariaLabel="Mentors" items={[…]} />  // default`}
             >
@@ -171,32 +186,32 @@ export const WithIcon: Story = {
                 name="SurfaceCard.PressableGroup"
                 tier="primitive"
                 leaf="WithIcon"
-                parts={ITEM_PARTS}
-                note="`icon` đi TRẦN, cụm sở hữu cỡ/màu; `iconPosition` đổi bên (leading mặc định / trailing) — vẫn 1 part Item."
+                annotate={ITEM_ANNOTATE}
+                note="`icon` is passed BARE, the group owns its size/color; `iconPosition` only flips the side (leading default / trailing) — still one Item part."
                 code={`<SurfaceCard.PressableGroup
-  ariaLabel="Tài nguyên"
+  ariaLabel="Resources"
   items={[
-    { key: "docs", icon: <FolderOpenIcon />, content: <Typography type="body-sm">Tài liệu</Typography>, onPress: () => {} },
-    { key: "labs", icon: <FolderOpenIcon />, iconPosition: "trailing", content: <Typography type="body-sm">Bài lab</Typography>, onPress: () => {} },
+    { key: "docs", icon: <FolderOpenIcon />, content: <Typography type="body-sm">Docs</Typography>, onPress: () => {} },
+    { key: "labs", icon: <FolderOpenIcon />, iconPosition: "trailing", content: <Typography type="body-sm">Labs</Typography>, onPress: () => {} },
   ]}
 />`}
             >
                 <SurfaceCard.PressableGroup
-                    ariaLabel="Tài nguyên"
+                    ariaLabel="Resources"
                     columns={{ base: 1, sm: 2 }}
                     showAnatomy
                     items={[
                         {
                             key: "docs",
                             icon: <FolderOpenIcon />,
-                            content: <Typography type="body-sm" weight="medium">Tài liệu</Typography>,
+                            content: <Typography type="body-sm" weight="medium">Docs</Typography>,
                             onPress: () => {},
                         },
                         {
                             key: "labs",
                             icon: <FolderOpenIcon />,
                             iconPosition: "trailing",
-                            content: <Typography type="body-sm" weight="medium">Bài lab</Typography>,
+                            content: <Typography type="body-sm" weight="medium">Labs</Typography>,
                             onPress: () => {},
                         },
                     ]}
@@ -216,16 +231,16 @@ export const KeyboardShortcut: Story = {
                 name="SurfaceCard.PressableGroup"
                 tier="primitive"
                 leaf="KeyboardShortcut"
-                parts={ITEM_PARTS}
-                note="Cùng composition với leaf Default — `keyboardShortcut` chỉ thêm phím tắt 1–N ở cấp CỤM, không đổi cây parts."
+                annotate={ITEM_ANNOTATE}
+                note="Same composition as leaf Default — `keyboardShortcut` only adds a GROUP-level 1–N shortcut, no change to the parts tree."
                 code={`<SurfaceCard.PressableGroup
-  ariaLabel="Chọn mentor bằng phím số"
+  ariaLabel="Select a mentor by number key"
   keyboardShortcut
   items={[…]}
 />`}
             >
                 <SurfaceCard.PressableGroup
-                    ariaLabel="Chọn mentor bằng phím số"
+                    ariaLabel="Select a mentor by number key"
                     columns={{ base: 1, sm: 2 }}
                     items={profileItems}
                     keyboardShortcut
@@ -234,8 +249,6 @@ export const KeyboardShortcut: Story = {
             </BlockAnatomy>,
         ),
 }
-
-const VERDICTS: Array<VerdictBandVariant> = ["success", "warning", "danger", "accent"]
 
 /**
  * `item.withVerdict` — dải TÍN HIỆU DATA bên trái mỗi tile (cùng band canonical với
@@ -248,15 +261,15 @@ export const Verdict: Story = {
                 name="SurfaceCard.PressableGroup"
                 tier="primitive"
                 leaf="Verdict"
-                parts={ITEM_PARTS}
-                note="Cùng composition với leaf Default — `withVerdict` chỉ phủ một dải màu DATA lên viền mỗi Item, không thêm part mới."
+                annotate={ITEM_ANNOTATE}
+                note="Same composition as leaf Default — `withVerdict` only overlays a DATA color band on each Item's edge, no new part."
                 code={`<SurfaceCard.PressableGroup
-  ariaLabel="Mentors theo trạng thái"
+  ariaLabel="Mentors by status"
   items={items.map((item, i) => ({ ...item, withVerdict: { enable: true, variant: VERDICTS[i] } }))}
 />`}
             >
                 <SurfaceCard.PressableGroup
-                    ariaLabel="Mentors theo trạng thái"
+                    ariaLabel="Mentors by status"
                     columns={{ base: 1, sm: 2 }}
                     items={profileItems.map((item, index) => ({
                         ...item,
@@ -269,9 +282,14 @@ export const Verdict: Story = {
 }
 
 /**
- * `item.className` với biến CONTAINER (`@sm:col-start-2`) — một pager card lẻ ghim vào cột
- * phải (card trước bị thiếu). Phải dùng biến container đúng bước grid đạt 2 cột nên không
- * rơi vào track ẩn. Thu hẹp cửa sổ: nó vẫn full-width khi còn 1 cột.
+ * `item.className` với biến CONTAINER (`@app-sm:col-start-2`) — một pager card lẻ ghim vào
+ * cột phải (card trước bị thiếu). Phải dùng biến container ĐÚNG bậc mà `Grid.Base` dùng
+ * cho `columns` (`@app-sm`/`@app-md`/`@app-lg`, KHÔNG phải `@sm`/`@md`/`@lg` nửa-cỡ của
+ * Tailwind) nên nó bật ĐÚNG lúc grid đạt 2 cột. Thu hẹp cửa sổ: nó vẫn full-width khi còn 1 cột.
+ *
+ * 2026-07-26 (thầy): đổi từ `@sm:col-start-2` → `@app-sm:col-start-2` — `.PressableGroup`
+ * nay dựng lưới bằng `Grid.Base` (thang container ĐẦY CỠ `@app-*`), nên biến ghim cột
+ * phải khớp CÙNG thang, không thì bật sai bậc so với lúc grid thật sự chuyển 2 cột.
  */
 export const PagerPinRight: Story = {
     render: () => (
@@ -281,22 +299,22 @@ export const PagerPinRight: Story = {
                     name="SurfaceCard.PressableGroup"
                     tier="primitive"
                     leaf="PagerPinRight"
-                    parts={ITEM_PARTS}
-                    note="Chỉ 1 Item ghim `@sm:col-start-2` — vẫn cùng part Item; class ghim phải là biến CONTAINER (`@sm:`), không phải viewport."
+                    annotate={ITEM_ANNOTATE}
+                    note="Only 1 Item pinned via `@app-sm:col-start-2` — still the same Item part; the pin class must be the CONTAINER variant matching `columns` (`@app-sm:`), not a viewport one."
                     code={`<SurfaceCard.PressableGroup
-  ariaLabel="Đi tới nội dung trước hoặc sau"
+  ariaLabel="Go to previous or next content"
   columns={{ base: 1, sm: 2 }}
-  items={[{ key: "next", href: "#", className: "@sm:col-start-2", content: <…/> }]}
+  items={[{ key: "next", href: "#", className: "@app-sm:col-start-2", content: <…/> }]}
 />`}
                 >
                     <SurfaceCard.PressableGroup
-                        ariaLabel="Đi tới nội dung trước hoặc sau"
+                        ariaLabel="Go to previous or next content"
                         columns={{ base: 1, sm: 2 }}
                         items={[
                             {
                                 key: "next",
                                 href: "#",
-                                className: "@sm:col-start-2",
+                                className: "@app-sm:col-start-2",
                                 content: (
                                     <div className="flex items-center justify-between gap-3">
                                         <Typography type="body-sm" weight="medium">Next content</Typography>
@@ -314,7 +332,11 @@ export const PagerPinRight: Story = {
     ),
 }
 
-/** Loading — `isSkeleton` tự vẽ mirror grid GENERIC, giữ đúng columns/gap/tile-chrome. Không Skeleton rời ngoài. */
+/**
+ * Loading — `isSkeleton` tự vẽ mirror grid GENERIC, giữ đúng columns/gap/tile-chrome.
+ * Không Skeleton rời ngoài. `SkeletonTile` không có story riêng (mirror nội bộ) nên
+ * KHÔNG có `storyId` để trỏ tới — panel bỏ hẳn prop deps ở leaf này.
+ */
 export const Loading: Story = {
     render: () =>
         shell(
@@ -322,8 +344,7 @@ export const Loading: Story = {
                 name="SurfaceCard.PressableGroup"
                 tier="primitive"
                 leaf="Loading"
-                parts={SKELETON_PARTS}
-                note="`isSkeleton` swap toàn bộ Item sang SkeletonTile GENERIC (avatar + 2 dòng), giữ nguyên columns/gap/tile-chrome — không giả định shape content thật."
+                note="`isSkeleton` swaps every Item for a GENERIC SkeletonTile (avatar + 2 lines), keeping columns/gap/tile-chrome — it does not assume the real content's shape."
                 code={`<SurfaceCard.PressableGroup
   ariaLabel="Mentors"
   columns={{ base: 1, sm: 2 }}

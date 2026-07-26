@@ -1,7 +1,39 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { SelectableCardGroup, type SelectableCardItem } from "@sb-components/atoms/navigation/SelectableCardGroup/SelectableCardGroup"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+
+/**
+ * ATOM — `SelectableCardGroup.Base`: nhóm thẻ chọn-một trên `RadioGroup`/`Radio` của
+ * HeroUI, mỗi lựa chọn là một `Card` trung tính, chọn xong nổi viền outline accent.
+ *
+ * 📐 **1 PROP = 1 LEAF** (§12g — luật TẦNG ATOM):
+ * - `items` — dữ liệu dựng ra N thẻ con ⇒ **leaf `Default`** (§12g.2, neo `Button.Group`).
+ *   Mọi field TUỲ CHỌN của một item (`description` · `icon` · `badge` · `isDisabled`) đều
+ *   là HÌNH THÁI của `items`, không phải trục riêng của atom ⇒ nằm chung TRONG `Default`,
+ *   KHÔNG đẻ leaf `Icon`/`Badge`/`Disabled` riêng — đúng câu neo *"item có label ra nút
+ *   thường, không có ra nút chỉ-icon"*.
+ * - `columns` — đổi pixel thật (số cột grid) ⇒ **leaf `Columns`**, render ĐỦ 1/2/3 chồng
+ *   dọc trên CÙNG một `items` để mắt thấy chỉ số cột đổi, không gì khác đổi theo.
+ * - `value`/`onChange` — không phải union giá trị cần liệt kê, chỉ là dây điều khiển; mọi
+ *   leaf đều tự chạy nó qua `ControlledGroup` nên không cần leaf riêng.
+ * - `ariaLabel` — CHỈ chạy vào `aria-label` của `RadioGroup`, không đổi một pixel nào ⇒
+ *   **KHÔNG leaf** (§12g.1, cùng họ với `ariaLabel` của `Choice.RadioGroup`).
+ * - `className`/`showAnatomy` — escape hatch / cờ dev, không phải hình của atom ⇒ không leaf.
+ *
+ * ⚠️ SỬA 2026-07-26: bản trước tách `OneColumn`/`ThreeColumns` theo GIÁ TRỊ của
+ * `columns` (đúng thứ §12g cấm), lại nhét icon/badge/isDisabled rải rác ở `ThreeColumns`/
+ * `WithIconsAndLocked` thay vì gộp vào `Default`. Gộp lại còn 2 leaf: `Default` (prop
+ * `items`, đủ hình thái item) + `Columns` (prop `columns`, đủ 1/2/3).
+ *
+ * `Icon`/`Label`/`Badge` mà component phát ra qua `data-anat-part` đều là SPAN nội bộ
+ * (không phải atom nào của hệ có story riêng — component gọi thẳng HeroUI
+ * `Card`/`Radio`/`RadioGroup`, không qua `Choice.Radio`) ⇒ KHÔNG có deps thật, nên KHÔNG
+ * truyền `annotate` (thầy chốt 2026-07-26 lần 2).
+ *
+ * ✍️ Chữ hiện trên panel (`leaf`/`reason`/`note`/`code`) và nhãn demo viết TIẾNG ANH;
+ * JSDoc/comment giữ tiếng Việt.
+ */
 
 const meta: Meta<typeof SelectableCardGroup.Base> = {
     title: "Atoms/Navigation/SelectableCardGroup",
@@ -16,19 +48,14 @@ export default meta
 
 type Story = StoryObj<typeof SelectableCardGroup.Base>
 
-type PlanValue = "monthly" | "quarterly" | "yearly"
+type PlanValue = "free" | "pro" | "team" | "enterprise"
 
-const savePill = (text: string) => (
+/** Pill dùng cho slot `badge` — trung tính, không gắn nghĩa "giảm giá" cụ thể. */
+const badgePill = (text: string) => (
     <span className="rounded-full bg-accent-soft px-2 py-0 text-xs font-medium text-accent-soft-foreground">
         {text}
     </span>
 )
-
-const PLAN_ITEMS: Array<SelectableCardItem<PlanValue>> = [
-    { value: "monthly", label: "Monthly", description: "299.000đ / month" },
-    { value: "quarterly", label: "Quarterly", description: "799.000đ / quarter", badge: savePill("Save 11%") },
-    { value: "yearly", label: "Yearly", description: "2.499.000đ / year", badge: savePill("Save 30%") },
-]
 
 const StarIcon = () => (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -41,11 +68,18 @@ const StarIcon = () => (
     </svg>
 )
 
-const LANGUAGE_ITEMS: Array<SelectableCardItem<"ts" | "java" | "csharp" | "go">> = [
-    { value: "ts", label: "TypeScript", description: "Node.js / NestJS", icon: <StarIcon /> },
-    { value: "java", label: "Java", description: "Spring Boot" },
-    { value: "csharp", label: "C#", description: ".NET" },
-    { value: "go", label: "Go", description: "Coming soon", isDisabled: true },
+/**
+ * MỘT bộ item duy nhất phủ đủ mọi field tuỳ chọn của `SelectableCardItem` — mỗi field
+ * xuất hiện đúng một lần để tương phản với phần còn lại đang thiếu nó:
+ * `free` không `description`/`icon`/`badge` (baseline) · `pro` có `description` + `icon`
+ * (đánh dấu gợi ý) · `team` có `description` + `badge` ("Most popular") · `enterprise`
+ * có `description` + `isDisabled` (mờ đi, phải liên hệ sales chứ không chọn trực tiếp).
+ */
+const PLAN_ITEMS: Array<SelectableCardItem<PlanValue>> = [
+    { value: "free", label: "Free" },
+    { value: "pro", label: "Pro", description: "For solo developers shipping side projects", icon: <StarIcon /> },
+    { value: "team", label: "Team", description: "Shared workspaces and roles for a growing team", badge: badgePill("Most popular") },
+    { value: "enterprise", label: "Enterprise", description: "Custom limits, SSO, and a dedicated success manager", isDisabled: true },
 ]
 
 /** Owns the selection so the group is interactive (the block is fully controlled). */
@@ -54,7 +88,7 @@ const ControlledGroup = <T extends string>({
     initialValue,
     ariaLabel,
     columns,
-    width = "420px",
+    width = "480px",
     showAnatomy,
 }: {
     items: Array<SelectableCardItem<T>>
@@ -72,81 +106,60 @@ const ControlledGroup = <T extends string>({
     )
 }
 
-// PLAN_ITEMS: no icon, but description + (on 2/3 items) a trailing "Save N%" badge.
-const PLAN_PARTS: Array<AnatomyNode> = [
-    { name: "Label", tier: "primitive", role: "label + description mỗi thẻ (vd 'Quarterly' + giá)" },
-    { name: "Badge", tier: "design", role: "tag phụ tuỳ chọn (vd 'Save 11%') — không phải mọi thẻ đều có" },
-]
-
-// LANGUAGE_ITEMS: first item carries an icon, none carry a badge.
-const LANGUAGE_PARTS: Array<AnatomyNode> = [
-    { name: "Icon", tier: "primitive", role: "icon nhận diện tuỳ chọn — chỉ TypeScript có trong bộ này" },
-    { name: "Label", tier: "primitive", role: "label + description mỗi thẻ (vd 'Java' + 'Spring Boot')" },
-]
-
-/** Rich options (icon-less here): label + description + badge, 2 columns — a real radio group. */
-export const RichOption: Story = {
+/**
+ * Leaf prop `items` — cụm dựng từ DỮ LIỆU; mọi field tuỳ chọn của một item
+ * (`description`/`icon`/`badge`/`isDisabled`) sống NGAY TRONG bộ dữ liệu này thay vì
+ * tách leaf riêng (§12g.2).
+ */
+export const Default: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
                 name="SelectableCardGroup"
-                tier="primitive"
-                leaf="RichOption"
-                parts={PLAN_PARTS}
-                reason="Bộ chọn single-select trên HeroUI RadioGroup/Radio thật — mỗi thẻ là Card trung tính, chọn = viền outline accent (không đổi fill), không phải hand-roll toggle-button."
+                tier="atom"
+                leaf="Prop `items`"
+                reason="The group is a cluster built from data, not JSX children — items is the whole surface worth reading. Free carries only a label, Pro adds a description and an identifying icon, Team adds a badge, and Enterprise is dimmed and unselectable — one array, four shapes an item can take."
+                note="value/onChange make the group fully controlled — this story just owns the state locally so the ring can move when you click a card. ariaLabel never reaches the screen; it only feeds the RadioGroup's accessible name, so it gets no leaf of its own."
+                code={`<SelectableCardGroup.Base
+  items={[
+    { value: "free", label: "Free" },
+    { value: "pro", label: "Pro", description: "For solo developers shipping side projects", icon: <StarIcon /> },
+    { value: "team", label: "Team", description: "Shared workspaces and roles for a growing team", badge: badgePill("Most popular") },
+    { value: "enterprise", label: "Enterprise", description: "Custom limits, SSO, and a dedicated success manager", isDisabled: true },
+  ]}
+  value={value}
+  onChange={setValue}
+  ariaLabel="Select plan"
+/>`}
             >
-                <ControlledGroup items={PLAN_ITEMS} initialValue="monthly" ariaLabel="Select billing cycle" columns={2} showAnatomy />
+                <ControlledGroup items={PLAN_ITEMS} initialValue="pro" ariaLabel="Select plan" columns={2} showAnatomy />
             </BlockAnatomy>
         </div>
     ),
 }
 
-/** `columns={1}` — stacks in a single column for a narrow block / sidebar. */
-export const OneColumn: Story = {
+/**
+ * Leaf prop `columns` — ĐỦ 1/2/3 chồng dọc trên CÙNG một `PLAN_ITEMS`, để mắt thấy chỉ
+ * số cột grid đổi, không gì khác đổi theo.
+ */
+export const Columns: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
                 name="SelectableCardGroup"
-                tier="primitive"
-                leaf="OneColumn"
-                parts={PLAN_PARTS}
-                note="Cùng composition với leaf RichOption — chỉ đổi `columns={1}` (xếp chồng dọc), không đổi cây parts."
+                tier="atom"
+                leaf="Prop `columns`"
+                reason="columns is the group's own grid: stack cards in a sidebar with 1, pair them at 2 (the default), or line up more options side by side at 3."
+                note="All three rows use the same PLAN_ITEMS array — the only thing that changes on screen is the grid-template-columns count, nothing about item shape."
+                code={`<SelectableCardGroup.Base items={PLAN_ITEMS} value={value} onChange={setValue} ariaLabel="Select plan" columns={1} />
+<SelectableCardGroup.Base items={PLAN_ITEMS} value={value} onChange={setValue} ariaLabel="Select plan" columns={2} />  // default
+<SelectableCardGroup.Base items={PLAN_ITEMS} value={value} onChange={setValue} ariaLabel="Select plan" columns={3} />`}
             >
-                <ControlledGroup items={PLAN_ITEMS} initialValue="quarterly" ariaLabel="Select billing cycle" columns={1} showAnatomy />
-            </BlockAnatomy>
-        </div>
-    ),
-}
-
-/** `columns={3}` — many options side by side on a wide block. */
-export const ThreeColumns: Story = {
-    render: () => (
-        <div className="p-8">
-            <BlockAnatomy
-                name="SelectableCardGroup"
-                tier="primitive"
-                leaf="ThreeColumns"
-                parts={LANGUAGE_PARTS}
-                note="Bộ LANGUAGE_ITEMS: chỉ TypeScript có `icon` → Icon part chỉ badge trên thẻ đó; Badge vắng mặt (không item nào có `badge`)."
-            >
-                <ControlledGroup items={LANGUAGE_ITEMS} initialValue="ts" ariaLabel="Select language" columns={3} width="640px" showAnatomy />
-            </BlockAnatomy>
-        </div>
-    ),
-}
-
-/** With an identifying `icon` and a locked (`isDisabled`) option that still shows. */
-export const WithIconsAndLocked: Story = {
-    render: () => (
-        <div className="p-8">
-            <BlockAnatomy
-                name="SelectableCardGroup"
-                tier="primitive"
-                leaf="WithIconsAndLocked"
-                parts={LANGUAGE_PARTS}
-                note="Cùng composition với leaf ThreeColumns — thêm 1 option `isDisabled` (Go) vẫn hiện, chỉ dimmed."
-            >
-                <ControlledGroup items={LANGUAGE_ITEMS} initialValue="java" ariaLabel="Select language" columns={2} showAnatomy />
+                <div className="flex flex-col gap-6">
+                    <ControlledGroup items={PLAN_ITEMS} initialValue="free" ariaLabel="Select plan (1 column)" columns={1} width="360px" showAnatomy />
+                    <ControlledGroup items={PLAN_ITEMS} initialValue="pro" ariaLabel="Select plan (2 columns)" columns={2} width="480px" />
+                    <ControlledGroup items={PLAN_ITEMS} initialValue="team" ariaLabel="Select plan (3 columns)" columns={3} width="720px" />
+                </div>
             </BlockAnatomy>
         </div>
     ),

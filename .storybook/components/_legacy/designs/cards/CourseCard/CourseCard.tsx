@@ -263,8 +263,9 @@ export const CourseCard = ({
                         {/* description (line-clamp-2) */}
                         <Typography size="sm" isSkeleton className="w-full" anatPart={showAnatomy ? "Skeleton.Description" : undefined} />
                         <Typography size="sm" isSkeleton className="w-3/4" anatPart={showAnatomy ? "Skeleton.Description" : undefined} />
-                        {/* value-props — same bordered SurfaceCard.CrossList surface, self-skeletoned */}
-                        <SurfaceCard.CrossList items={[]} bordered isSkeleton className="mt-1" anatPart={showAnatomy ? "CrossListCard" : undefined} />
+                        {/* value-props — same nested-variant SurfaceCard.CrossList surface, self-skeletoned.
+                            Codemod 2026-07-26: `bordered` → `variant="nested"` (API 3-trục SurfaceCard). */}
+                        <SurfaceCard.CrossList items={[]} variant="nested" isSkeleton className="mt-1" anatPart={showAnatomy ? "CrossListCard" : undefined} />
                     </div>
                 </Card.Content>
                 <Card.Footer className="mt-auto flex flex-col items-start gap-2" data-anat-part={showAnatomy ? "Card.Footer" : undefined}>
@@ -432,12 +433,13 @@ export const CourseCard = ({
                         {course.description}
                     </HeroTypography>
                     {topValueProps.length > 0 ? (
-                        // value-props checklist = the SurfaceCard.CrossList frame (bordered, mark="check",
-                        // tone="muted"). NOT a hand-rolled list. Muted tick → the TEXT leads, card
-                        // keeps only price-deal + CTA as the nổi points (principles.md §2). Bordered =
-                        // surface-in-surface.
+                        // value-props checklist = the SurfaceCard.CrossList frame (variant="nested",
+                        // mark="check", tone="muted"). NOT a hand-rolled list. Muted tick → the TEXT
+                        // leads, card keeps only price-deal + CTA as the nổi points (principles.md §2).
+                        // variant="nested" = surface-in-surface. Codemod 2026-07-26: `bordered` →
+                        // `variant="nested"` (API 3-trục SurfaceCard).
                         <SurfaceCard.CrossList
-                            bordered
+                            variant="nested"
                             className="mt-1"
                             anatPart={showAnatomy ? "CrossListCard" : undefined}
                             items={topValueProps.map((valueProp, index) => ({

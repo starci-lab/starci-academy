@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { TrashIcon, FloppyDiskIcon } from "@phosphor-icons/react"
 import { Button, type ButtonGroupItem, type ButtonSize } from "@sb-components/atoms/buttons/Button/Button"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `Button.Group` KHÔNG đẻ nghĩa mới — nó
@@ -17,9 +17,9 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  *
  * ⚠️ Bản trước viện §14d.2 để gộp cả ba vào một leaf — luật đó của design/block/screen.
  *
- * 🧮 **Tab States**: bảng phủ chỉ khai giá trị của prop SỞ HỮU leaf. Hệ quả của §12f —
- * bảng của cụm cũng không được liệt kê giá trị `variant`/`isPending` của item, dù item
- * mang chúng: chúng có nhà ở `Button.Base`, kê lại là kể hai lần.
+ * ⚠️ Tab States đã BỎ (thầy chốt 2026-07-26, lần 2). §12f vẫn đúng — cụm không kê
+ * lại state của `Button.Base` (`variant`/`isPending`…) — chỉ là không còn ô nào tự
+ * nhắc, đọc kỹ khi viết leaf.
  *
  * ✍️ Chữ hiện trên panel (`leaf`/`reason`/`note`/`role`/`hint`/`code`) và nhãn demo
  * trong khung render viết TIẾNG ANH; JSDoc/comment giữ tiếng Việt, neo § nằm ở đây.
@@ -43,17 +43,18 @@ type Story = StoryObj<typeof Button.Group>
  * không phải deps. `Button.Base` để deps RỖNG (nó bọc thẳng HeroUI); cụm này thì CÓ,
  * và là component duy nhất trong họ có deps.
  *
- * Chỉ MỘT node: từ 2026-07-26 `Button.Icon` đã xoá, item không nhãn cũng là
+ * Key PHẢI trùng `data-anat-part` mà `ButtonGroup` phát ra — nó luôn gắn tên
+ * `"Button.Base"` lên gốc mỗi nút con (xem `ButtonGroup.tsx`), kể cả khi `isSkeleton`.
+ * Chỉ MỘT entry: từ 2026-07-26 `Button.Icon` đã xoá, item không nhãn cũng là
  * `ButtonBase` với `isIconOnly`.
  */
-const GROUP_PARTS: Array<AnatomyNode> = [
-    {
-        name: "Button.Base",
+const GROUP_ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "Button.Base": {
         tier: "atom",
         role: "the group imports it and rebuilds one per item — with a label it's a normal button, without one it's icon-only",
         storyId: "atoms-buttons-button-button-base--default",
     },
-]
+}
 
 /** Ba bậc tỉ lệ — `size` đặt ở CẤP CỤM, item chỉ mang vai trò/hành vi. */
 const SIZES: Array<ButtonSize> = ["sm", "md", "lg"]
@@ -73,21 +74,9 @@ export const Default: Story = {
                 name="Button.Group"
                 tier="atom"
                 leaf="Prop `items`"
-                parts={GROUP_PARTS}
+                annotate={GROUP_ANNOTATE}
                 reason="The group is a cluster — layout and nothing else. `items` is data, not JSX children, so a caller can't wire up the wrong structure or a mismatched size. An item with no `label` comes out as an icon-only button."
                 note="Each item picks its own variant and icon, but those belong to Button.Base — read them in that story; the cluster doesn't repeat them."
-                states={[
-                    {
-                        value: "{ key, label, variant }",
-                        hint: "With a label: a normal button.",
-                        rendered: true,
-                    },
-                    {
-                        value: "{ key, prefixIcon, ariaLabel }",
-                        hint: "No label: an icon-only button.",
-                        rendered: true,
-                    },
-                ]}
                 code={`<Button.Group
   items={[
     { key: "cancel", label: "Cancel", variant: "ghost" },
@@ -110,14 +99,9 @@ export const Sizes: Story = {
                 name="Button.Group"
                 tier="atom"
                 leaf="Prop `size`"
-                parts={GROUP_PARTS}
+                annotate={GROUP_ANNOTATE}
                 reason="A cluster is always one size, so `size` sits on the group, never on an item — putting it on items would let anyone build a row of buttons at mismatched heights."
                 note="The group size flows down to both the button box and the glyph of every item."
-                states={[
-                    { value: "sm", hint: "Dense toolbars.", rendered: true },
-                    { value: "md", hint: "Default.", rendered: true },
-                    { value: "lg", hint: "Roomy footers and dialogs.", rendered: true },
-                ]}
                 code={`<Button.Group size="sm" items={[…]} />
 <Button.Group items={[…]} />          // md = default
 <Button.Group size="lg" items={[…]} />`}
@@ -145,31 +129,9 @@ export const Skeleton: Story = {
                 name="Button.Group"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
-                parts={GROUP_PARTS}
+                annotate={GROUP_ANNOTATE}
                 reason="The group only passes the flag down; every item draws its own shimmer — a pill for a labelled button, a square for an icon-only one."
                 note="The row keeps its footprint, so nothing shifts when the data lands."
-                states={[
-                    {
-                        value: "isSkeleton",
-                        hint: "Flag goes down to every item.",
-                        rendered: true,
-                    },
-                    {
-                        value: "isSkeleton on a labelled item",
-                        hint: "Shimmers as a pill.",
-                        rendered: true,
-                    },
-                    {
-                        value: "isSkeleton on an icon-only item",
-                        hint: "Shimmers as a square.",
-                        rendered: true,
-                    },
-                    {
-                        value: "isSkeleton + size=\"sm|md|lg\"",
-                        hint: "Boxes follow the group size.",
-                        rendered: true,
-                    },
-                ]}
                 code={"<Button.Group isSkeleton items={[…3 items…]} />"}
             >
                 <div className="flex flex-col items-start gap-4">

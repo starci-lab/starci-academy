@@ -24,9 +24,9 @@ type Story = StoryObj<typeof RewardItemCard>
 const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
 const ICONS = {
-    streakFreeze: <SnowflakeIcon aria-hidden focusable="false" />,
-    aiCreditBoost: <LightningIcon aria-hidden focusable="false" />,
-    tshirt: <TShirtIcon aria-hidden focusable="false" />,
+    streakFreeze: SnowflakeIcon,
+    aiCreditBoost: LightningIcon,
+    tshirt: TShirtIcon,
 }
 
 // ── DOM MIRROR ────────────────────────────────────────────────────────────
@@ -207,8 +207,8 @@ export const Skeleton: Story = {
                 note="isSkeleton → Skeleton mirror đúng khung Card (icon · 2 dòng chữ · chip · nút), không phần thật nào — giữ lưới catalog khỏi nhảy khi tải."
             >
                 <div className="grid w-full max-w-3xl grid-cols-1 gap-3 @app-sm:grid-cols-2">
-                    <RewardItemCard showAnatomy isSkeleton icon={null} title="" description="" cost={0} onRedeem={() => {}} />
-                    <RewardItemCard showAnatomy isSkeleton icon={null} title="" description="" cost={0} onRedeem={() => {}} />
+                    <RewardItemCard showAnatomy isSkeleton onRedeem={() => {}} />
+                    <RewardItemCard showAnatomy isSkeleton onRedeem={() => {}} />
                 </div>
             </BlockAnatomy>,
         ),

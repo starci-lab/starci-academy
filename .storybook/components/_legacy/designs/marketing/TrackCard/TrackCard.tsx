@@ -2,8 +2,8 @@ import React from "react"
 import { Card, CardContent, cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { ArrowRightIcon } from "@phosphor-icons/react"
-import type { ReactNode } from "react"
 import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
+import type { IconComponent } from "@sb-components/atoms/display/IconTile/IconTile"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -25,8 +25,8 @@ export interface TrackTier {
 
 /** Props for {@link TrackCard}. */
 export interface TrackCardProps {
-    /** Leading icon (bare phosphor icon — tile sizes it). */
-    icon: ReactNode
+    /** Leading icon (phosphor icon component — tile sizes it). */
+    icon: IconComponent
     /** Track title, e.g. "Fullstack thực chiến". */
     title: string
     /** Meta line, e.g. "23 module · 20 hệ thống". */

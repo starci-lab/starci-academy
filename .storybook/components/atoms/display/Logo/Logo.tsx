@@ -4,18 +4,17 @@ import { cn } from "@heroui/react"
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/identity/Logo`. Authored in Storybook (not `src`);
- * synced to `src` later. The shared `WithClassNames` base is inlined locally
- * to keep the port free of `@/` imports.
+ * synced to `src` later.
+ *
+ * ⚠️ Sửa 2026-07-26 (canon §4): trước đó `LogoProps = WithClassNames<undefined>`
+ * ⇒ prop `classNames` có kiểu `undefined`, không gán được giá trị nào — bề mặt
+ * API chết. Xoá interface local, khai thẳng `className`.
  */
 
-/** Local mirror of the shared `WithClassNames` base (avoids a `@/` import). */
-interface WithClassNames<T> {
-    classNames?: T
+/** Props for the {@link Logo} block. */
+export interface LogoProps {
     className?: string
 }
-
-/** Props for the {@link Logo} block. */
-export type LogoProps = WithClassNames<undefined>
 
 /**
  * Logo — the StarCi brand mark: a brand-pink circuit-traced "C" + corner circuit

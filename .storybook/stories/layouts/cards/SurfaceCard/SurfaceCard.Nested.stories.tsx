@@ -2,14 +2,19 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button, Typography } from "@heroui/react"
 import { FolderOpenIcon } from "@phosphor-icons/react"
 import { SurfaceCard, type SurfaceCardNestedSection } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `SurfaceCard.Nested` là khung CARD-TRONG-CARD
  * — thứ duy nhất nó đẻ ra so với `.Base` là: một HEADER BAR nằm TRONG khung (eyebrow icon
  * + title + meta), một BODY chia section bằng divider (`items`), một FOOTER bar, và nấc
- * bo góc `compact`. Header section NGOÀI card (label/see-more/action) là tài sản của
+ * bo góc `radius`. Header section NGOÀI card (label/see-more/action) là tài sản của
  * `.Base` — KHÔNG lặp ở đây.
+ *
+ * 2026-07-26 (thầy, BA TRỤC ĐỘC LẬP): `bordered?: boolean` → `variant?: SurfaceCardVariant`
+ * (`"surface" | "nested"`), `compact?: boolean` → `radius?: "xl" | "3xl"`. Hai leaf
+ * đơn-giá-trị cũ (`Bordered`, `Compact`) gộp thành hai leaf mang TÊN PROP (`Variant`,
+ * `Radius`), mỗi leaf render đủ union cạnh nhau thay vì chỉ mỗi giá trị lệch mặc định.
  */
 const meta: Meta<typeof SurfaceCard.Nested> = {
     title: "Layouts/Cards/SurfaceCard/SurfaceCard.Nested",
@@ -23,13 +28,6 @@ const meta: Meta<typeof SurfaceCard.Nested> = {
 export default meta
 
 type Story = StoryObj<typeof SurfaceCard.Nested>
-
-// Header bar + Body là hai part LUÔN có khi truyền `title`; `Meta`/`Footer` chỉ tồn tại
-// ở leaf thực sự render chúng (§11a: cây anatomy phải khớp render thật).
-const HEADER: AnatomyNode = { name: "Header", tier: "primitive", role: "thanh header TRONG khung — eyebrow icon (tuỳ chọn) + title thu gọn" }
-const BODY: AnatomyNode = { name: "Body", tier: "primitive", role: "cột section, ngăn nhau bằng divider" }
-const SECTION: AnatomyNode = { name: "Section", tier: "primitive", role: "1 section (lặp ×N) — eyebrow + title + content" }
-const PARTS: Array<AnatomyNode> = [HEADER, { ...BODY, children: [SECTION] }]
 
 const relatedItems: ReadonlyArray<SurfaceCardNestedSection> = [
     {
@@ -52,7 +50,7 @@ const relatedItems: ReadonlyArray<SurfaceCardNestedSection> = [
 ]
 
 /**
- * Default — `bordered={false}` (mặc định): card đứng TRỰC TIẾP trên `bg-background` nên
+ * Default — `variant="surface"` (mặc định): card đứng TRỰC TIẾP trên `bg-background` nên
  * tự sở hữu nền + shadow. Body dựng từ `items` (danh sách LẶP → dữ liệu, không children).
  */
 export const Default: Story = {
@@ -63,7 +61,6 @@ export const Default: Story = {
                     name="SurfaceCard.Nested"
                     tier="primitive"
                     leaf="Default"
-                    parts={PARTS}
                     reason="Khung card-trong-card CÓ HEADER: thanh header thu gọn nằm TRONG khung + một cột section flush ngăn bằng divider (không bo góc từng hàng). `items` là dữ liệu vì Body là danh sách LẶP."
                     code={`<SurfaceCard.Nested
   title="Related lessons"
@@ -81,13 +78,21 @@ export const Default: Story = {
 }
 
 /**
- * `bordered` — surface-in-surface: card nằm trong một cha ĐÃ CÓ NỀN (chat panel / bubble /
- * modal / page card) nên phân định bằng BORDER, không phải shadow (shadow gần như vô hình).
+ * `variant` — trục ĐỘC LẬP đầu tiên (§1a): `"surface"` (mặc định) tự có nền + shadow khi
+ * đứng TRỰC TIẾP trên `bg-background`; `"nested"` đổi sang border khi mặt này nằm TRONG
+ * một mặt cha ĐÃ CÓ NỀN (chat panel / bubble / modal / page card) — shadow gần như vô
+ * hình trên nền đó. Gộp từ hai leaf đơn-giá-trị cũ (`Default` ngầm định `surface`,
+ * `Bordered`) thành MỘT leaf `Variant` render cả hai cạnh nhau.
+ *
+ * 2026-07-26 (thầy): đổi từ `bordered?: boolean` (`bordered=true` → `variant="nested"`).
  */
-export const Bordered: Story = {
+export const Variant: Story = {
     render: () => (
-        <div className="p-8">
-            <div className="flex flex-col overflow-hidden rounded-2xl border border-default bg-surface">
+        <div className="flex flex-wrap items-start gap-6 p-8">
+            <div className="max-w-md flex-1">
+                <SurfaceCard.Nested title="Related lessons" variant="surface" items={relatedItems} />
+            </div>
+            <div className="flex max-w-md flex-1 flex-col overflow-hidden rounded-2xl border border-default bg-surface">
                 <div className="flex flex-col gap-2 p-3">
                     <div className="max-w-[85%] rounded-2xl bg-surface-secondary px-3 py-2">
                         <Typography type="body-sm">
@@ -98,16 +103,15 @@ export const Bordered: Story = {
                         <BlockAnatomy
                             name="SurfaceCard.Nested"
                             tier="primitive"
-                            leaf="Bordered"
-                            parts={PARTS}
-                            note="Surface-in-surface: border thay vì shadow vì cha đã có nền. Composition không đổi so với leaf Default."
+                            leaf="Variant"
+                            note={"`variant=\"nested\"` (phải, trong bubble panel) đổi khung sang border thay shadow (surface-in-surface); `variant=\"surface\"` (trái, mặc định) tự có nền + shadow khi đứng trực tiếp trên bg-background — composition không đổi."}
                             code={`<SurfaceCard.Nested
   title="Related lessons"
-  bordered
+  variant="nested"
   items={[…]}
 />`}
                         >
-                            <SurfaceCard.Nested title="Related lessons" bordered items={relatedItems} showAnatomy />
+                            <SurfaceCard.Nested title="Related lessons" variant="nested" items={relatedItems} showAnatomy />
                         </BlockAnatomy>
                     </div>
                 </div>
@@ -130,7 +134,6 @@ export const InteractiveSections: Story = {
                     name="SurfaceCard.Nested"
                     tier="primitive"
                     leaf="InteractiveSections"
-                    parts={PARTS}
                     note="Composition không đổi — chỉ Section trong Body chuyển thành <a>/<button> khi item có `href`/`onPress` (ROW ≠ CARD, §7b)."
                     code={`<SurfaceCard.Nested
   title="Related lessons"
@@ -154,12 +157,6 @@ export const InteractiveSections: Story = {
     ),
 }
 
-const ICON_META_PARTS: Array<AnatomyNode> = [
-    HEADER,
-    { name: "Meta", tier: "primitive", role: "slot phải của header bar (đếm số / trạng thái)" },
-    { ...BODY, children: [SECTION] },
-]
-
 /** `icon` + `meta` — hai slot còn lại của header bar: eyebrow icon bên trái, meta ghim bên phải. */
 export const WithIconMeta: Story = {
     render: () => (
@@ -169,19 +166,18 @@ export const WithIconMeta: Story = {
                     name="SurfaceCard.Nested"
                     tier="primitive"
                     leaf="WithIconMeta"
-                    parts={ICON_META_PARTS}
                     note="`icon` đi TRẦN — khung tự ép size-4 + màu muted (§4/§5). `meta` là node riêng, ghim phải, không co."
                     code={`<SurfaceCard.Nested
   icon={<FolderOpenIcon />}
   title="Related lessons"
-  meta={<Typography type="body-xs" color="muted">2 mục</Typography>}
+  meta={<Typography type="body-xs" color="muted">2 items</Typography>}
   items={[…]}
 />`}
                 >
                     <SurfaceCard.Nested
                         icon={<FolderOpenIcon />}
                         title="Related lessons"
-                        meta={<Typography type="body-xs" color="muted">2 mục</Typography>}
+                        meta={<Typography type="body-xs" color="muted">2 items</Typography>}
                         items={relatedItems}
                         showAnatomy
                     />
@@ -190,12 +186,6 @@ export const WithIconMeta: Story = {
         </div>
     ),
 }
-
-const FOOTER_PARTS: Array<AnatomyNode> = [
-    HEADER,
-    { ...BODY, children: [SECTION] },
-    { name: "Footer", tier: "primitive", role: "thanh dưới TRONG khung, ngăn bằng border-t (CTA / caption)" },
-]
 
 /** `footer` — thanh cuối NẰM TRONG khung (ngăn bằng `border-t`), khác `description` ở ngoài của `.Base`. */
 export const WithFooter: Story = {
@@ -206,18 +196,17 @@ export const WithFooter: Story = {
                     name="SurfaceCard.Nested"
                     tier="primitive"
                     leaf="WithFooter"
-                    parts={FOOTER_PARTS}
                     note="`footer` render TRONG khung (border-t), không phải caption ngoài card — đó là `description` của `.Base`."
                     code={`<SurfaceCard.Nested
   title="Related lessons"
   items={[…]}
-  footer={<Button size="sm" variant="tertiary">Xem tất cả</Button>}
+  footer={<Button size="sm" variant="tertiary">View all</Button>}
 />`}
                 >
                     <SurfaceCard.Nested
                         title="Related lessons"
                         items={relatedItems}
-                        footer={<Button size="sm" variant="tertiary">Xem tất cả</Button>}
+                        footer={<Button size="sm" variant="tertiary">View all</Button>}
                         showAnatomy
                     />
                 </BlockAnatomy>
@@ -225,8 +214,6 @@ export const WithFooter: Story = {
         </div>
     ),
 }
-
-const HEADERLESS_PARTS: Array<AnatomyNode> = [{ ...BODY, children: [SECTION] }]
 
 /** Không `header`/`title`/`icon`/`meta` → thanh header KHÔNG render: còn đúng khung + cột section. */
 export const Headerless: Story = {
@@ -237,8 +224,7 @@ export const Headerless: Story = {
                     name="SurfaceCard.Nested"
                     tier="primitive"
                     leaf="Headerless"
-                    parts={HEADERLESS_PARTS}
-                    note="Bỏ hết 4 slot header → khung bỏ luôn thanh header (không để lại viền rỗng), cây parts rụng node Header."
+                    note="Bỏ hết 4 slot header → khung bỏ luôn thanh header (không để lại viền rỗng), cây DOM rụng node Header."
                     code={`<SurfaceCard.Nested
   items={[…]}
 />`}
@@ -259,18 +245,17 @@ export const FreeBody: Story = {
                     name="SurfaceCard.Nested"
                     tier="primitive"
                     leaf="FreeBody"
-                    parts={[HEADER, BODY]}
-                    note="Body là một khối tự do (không lặp) → dùng `children`/`body`; cây parts không có Section vì không có hàng lặp."
-                    code={`<SurfaceCard.Nested title="Ghi chú">
+                    note="Body là một khối tự do (không lặp) → dùng `children`/`body`; DOM không có Section vì không có hàng lặp."
+                    code={`<SurfaceCard.Nested title="Notes">
   <div className="p-3">
     <Typography type="body-sm">…</Typography>
   </div>
 </SurfaceCard.Nested>`}
                 >
-                    <SurfaceCard.Nested title="Ghi chú" showAnatomy>
+                    <SurfaceCard.Nested title="Notes" showAnatomy>
                         <div className="p-3">
                             <Typography type="body-sm">
-                                Chuẩn hoá tới 3NF trước, chỉ phi chuẩn hoá khi đã đo được điểm nghẽn đọc.
+                                Normalize to 3NF first, only denormalize once you&apos;ve measured a real read bottleneck.
                             </Typography>
                         </div>
                     </SurfaceCard.Nested>
@@ -280,25 +265,35 @@ export const FreeBody: Story = {
     ),
 }
 
-/** `compact` — hạ bo góc `rounded-3xl` → `rounded-xl` cho ngữ cảnh hẹp (bong bóng chat). */
-export const Compact: Story = {
+/**
+ * `radius` — trục ĐỘC LẬP thứ hai: `"3xl"` (mặc định) chuẩn cho khung ngoài;
+ * `"xl"` hạ một nấc bo góc cho ngữ cảnh hẹp (bong bóng chat), thường đi kèm
+ * `variant="nested"` (concentric radius với bubble cha). Gộp từ hai leaf đơn-giá-trị
+ * cũ (`Default` ngầm định `3xl`, `Compact`) thành MỘT leaf `Radius` render cả hai
+ * cạnh nhau.
+ *
+ * 2026-07-26 (thầy): đổi từ `compact?: boolean` (`compact=true` → `radius="xl"`).
+ */
+export const Radius: Story = {
     render: () => (
-        <div className="p-8">
-            <div className="max-w-sm rounded-2xl bg-surface p-3 shadow-surface">
+        <div className="flex flex-wrap items-start gap-6 p-8">
+            <div className="max-w-md flex-1">
+                <SurfaceCard.Nested title="Related lessons" radius="3xl" items={relatedItems} />
+            </div>
+            <div className="max-w-sm flex-1 rounded-2xl bg-surface p-3 shadow-surface">
                 <BlockAnatomy
                     name="SurfaceCard.Nested"
                     tier="primitive"
-                    leaf="Compact"
-                    parts={PARTS}
-                    note="`compact` chỉ đổi nấc bo góc của khung (concentric radius với bubble cha) — composition không đổi."
+                    leaf="Radius"
+                    note={"`radius=\"xl\"` (phải, trong bubble panel) hạ bo góc một nấc, kết hợp `variant=\"nested\"` cho concentric radius với cha; `radius=\"3xl\"` (trái, mặc định) chuẩn cho khung ngoài."}
                     code={`<SurfaceCard.Nested
   title="Related lessons"
-  compact
-  bordered
+  radius="xl"
+  variant="nested"
   items={[…]}
 />`}
                 >
-                    <SurfaceCard.Nested title="Related lessons" compact bordered items={relatedItems} showAnatomy />
+                    <SurfaceCard.Nested title="Related lessons" radius="xl" variant="nested" items={relatedItems} showAnatomy />
                 </BlockAnatomy>
             </div>
         </div>

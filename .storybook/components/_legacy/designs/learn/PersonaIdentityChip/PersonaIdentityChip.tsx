@@ -2,7 +2,6 @@ import React from "react"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { cn } from "@heroui/react"
 import { Typography, type TypographySize } from "@sb-components/atoms/text/Typography/Typography"
-import { UserAvatar } from "@sb-components/atoms/display/UserAvatar/UserAvatar"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -55,7 +54,7 @@ export interface PersonaIdentityChipProps {
 
 /**
  * Persona identity cluster: avatar + name + role, in a row. Composes
- * {@link UserAvatar} (resilient uploaded → generated → initials fallback
+ * `Avatar.Base` (resilient uploaded → generated → initials fallback
  * chain) beside two stacked {@link Typography} lines — name (medium weight)
  * over role (muted). Purely presentational; no interaction, no TTS/speaking
  * affordance (that lives one level up, in `InterviewerPresence`).
@@ -93,12 +92,12 @@ export const PersonaIdentityChip = ({
 
     return (
         <div className={cn("flex items-center gap-3", className)}>
-            <UserAvatar.Base
-                username={name}
-                avatar={avatarUrl}
+            <Avatar.Base
+                name={name}
+                src={avatarUrl ?? undefined}
                 seed={avatarSeed ?? name}
                 size={size}
-                anatPart={showAnatomy ? "UserAvatar" : undefined}
+                showAnatomy={showAnatomy}
             />
             <div className="flex min-w-0 flex-col">
                 <Typography.Base size={nameSize}

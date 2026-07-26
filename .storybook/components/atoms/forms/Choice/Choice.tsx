@@ -188,7 +188,7 @@ const ChoiceRadioGroup = ({
     onValueChange,
     options,
     groupLabel,
-    ariaLabel = "Nhóm lựa chọn",
+    ariaLabel = "Choice group",
     isDisabled,
     isInvalid,
     isSkeleton,

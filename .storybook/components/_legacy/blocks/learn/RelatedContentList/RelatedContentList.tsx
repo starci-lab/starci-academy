@@ -114,8 +114,9 @@ export const RelatedContentList = ({
                 isLoading={isLoading}
                 showAnatomy={showAnatomy}
                 skeleton={
+                    // Codemod 2026-07-26: `bordered` → `variant="nested"` (API 3-trục SurfaceCard).
                     <SurfaceCard.List
-                        bordered
+                        variant="nested"
                         anatPart={showAnatomy ? "SurfaceListCard" : undefined}
                         items={Array.from({ length: Math.min(limit, 2) }).map((_, index) => ({
                             key: String(index),
@@ -131,11 +132,12 @@ export const RelatedContentList = ({
                     />
                 }
             >
-                {/* WRAPPER frame (`.Base flushContent` = same `overflow-hidden` + surface skin
+                {/* WRAPPER frame (`.Base padding={0}` = same `overflow-hidden` + surface skin
                     as the skeleton branch's `.List`), NOT `.List items`: EntityResultRow already
                     OWNS its row frame (px-4 py-3 + full-bleed separator), so a `.List` row would
-                    double the padding + hairline. */}
-                <SurfaceCard.Base bordered flushContent anatPart={showAnatomy ? "SurfaceListCard" : undefined}>
+                    double the padding + hairline. Codemod 2026-07-26: `bordered` → `variant="nested"`,
+                    `flushContent` → `padding={0}` (API 3-trục SurfaceCard.Base). */}
+                <SurfaceCard.Base variant="nested" padding={0} anatPart={showAnatomy ? "SurfaceListCard" : undefined}>
                     {filtered.map((item, index) => (
                         <EntityResultRow
                             key={`${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`}

@@ -1,7 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Spinner } from "@sb-components/atoms/display/Spinner/Spinner"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
+/**
+ * ATOM — `Spinner.Base`: bọc thẳng HeroUI Spinner, chỉ ép `size`/`tone` (§4).
+ *
+ * ⭐ Atom LÁ — không compose component nào có story riêng ⇒ DEPS RỖNG. Bản trước
+ * tự khai một part "Spinner" TRỎ VÀO CHÍNH NÓ (không `storyId` nên không bấm đi
+ * đâu được) — đúng thứ luật "deps không có thì thôi" cấm (thầy chốt 2026-07-26
+ * lần 2). Bỏ hẳn `parts`/`annotate` ở đây, giống `Button.Base`.
+ */
 const meta: Meta<typeof Spinner.Base> = {
     title: "Atoms/Display/Spinner/Spinner.Base",
     component: Spinner.Base,
@@ -13,11 +21,7 @@ export default meta
 
 type Story = StoryObj<typeof Spinner.Base>
 
-const SPINNER_PARTS: Array<AnatomyNode> = [
-    { name: "Spinner", tier: "atom", role: "glyph xoay (HeroUI Spinner) — atom ép size/tone" },
-]
-
-/** Default — spinner md, tone accent; `label` = tên a11y. */
+/** Leaf trần — spinner md, tone accent; `label` là tên a11y (không hiện chữ). */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
@@ -25,9 +29,8 @@ export const Default: Story = {
                 name="Spinner.Base"
                 tier="atom"
                 leaf="Default"
-                parts={SPINNER_PARTS}
-                reason="Chỉ-báo BUSY: một glyph xoay bọc HeroUI Spinner; size/tone phân bằng prop. KHÔNG isSkeleton (spinner CHÍNH LÀ chỉ-báo tải)."
-                code={"<Spinner.Base label=\"Đang tải\" />"}
+                reason="A busy indicator: one spinning glyph wrapping HeroUI Spinner, size/tone set by prop. No isSkeleton branch here — the spin itself IS the loading signal."
+                code={"<Spinner.Base label=\"Loading\" />"}
             >
                 <Spinner.Base showAnatomy />
             </BlockAnatomy>
@@ -35,48 +38,46 @@ export const Default: Story = {
     ),
 }
 
-/** Sizes — sm · md · lg · xl (atom tự ép kích thước). */
+/** Leaf prop `size` — sm · md · lg · xl, atom tự ép kích thước (§4). */
 export const Sizes: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
                 name="Spinner.Base"
                 tier="atom"
-                leaf="Sizes"
-                parts={SPINNER_PARTS}
-                note="4 bậc size sm/md/lg/xl — atom sở hữu scale (§4)."
+                leaf="Prop `size`"
+                note="Four steps: sm/md/lg/xl. The atom owns the scale — callers never hand-set a diameter."
                 code={"<Spinner.Base size=\"sm|md|lg|xl\" />"}
             >
                 <div className="flex items-end gap-6">
                     <Spinner.Base size="sm" showAnatomy />
-                    <Spinner.Base size="md" showAnatomy />
-                    <Spinner.Base size="lg" showAnatomy />
-                    <Spinner.Base size="xl" showAnatomy />
+                    <Spinner.Base size="md" />
+                    <Spinner.Base size="lg" />
+                    <Spinner.Base size="xl" />
                 </div>
             </BlockAnatomy>
         </div>
     ),
 }
 
-/** Tones — accent · success · warning · danger · current (theo màu chữ container). */
+/** Leaf prop `tone` — accent · success · warning · danger · current (đọc màu chữ container). */
 export const Tones: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
                 name="Spinner.Base"
                 tier="atom"
-                leaf="Tones"
-                parts={SPINNER_PARTS}
-                note="tone='current' kế thừa màu chữ container (vd trong nút màu)."
+                leaf="Prop `tone`"
+                note={"\"current\" inherits the surrounding text colour — useful inside a coloured button."}
                 code={"<Spinner.Base tone=\"accent|success|warning|danger|current\" />"}
             >
                 <div className="flex items-center gap-6">
                     <Spinner.Base tone="accent" showAnatomy />
-                    <Spinner.Base tone="success" showAnatomy />
-                    <Spinner.Base tone="warning" showAnatomy />
-                    <Spinner.Base tone="danger" showAnatomy />
+                    <Spinner.Base tone="success" />
+                    <Spinner.Base tone="warning" />
+                    <Spinner.Base tone="danger" />
                     <span className="text-foreground inline-flex">
-                        <Spinner.Base tone="current" showAnatomy />
+                        <Spinner.Base tone="current" />
                     </span>
                 </div>
             </BlockAnatomy>

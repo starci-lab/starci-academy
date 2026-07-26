@@ -10,22 +10,20 @@ import { CodeSnippet } from "@sb-utils/BlockAnatomy/CodeSnippet"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ĐỒ NGHỀ — BlockAnatomy: panel BA TAB dưới khung render của MỘT leaf.
+ * ĐỒ NGHỀ — BlockAnatomy: panel HAI TAB dưới khung render của MỘT leaf.
  *
- * Thầy chốt 2026-07-26 (qua prototype): panel là **công cụ bắt lỗi**, không phải
- * chú thích. Ba tab, mỗi tab trả lời đúng một câu hỏi:
+ * Thầy chốt 2026-07-26 (qua prototype), rồi RÚT GỌN cùng ngày sau khi soi thật
+ * trên Storybook: tab **States** bị bỏ hẳn — khung render bên trên ĐÃ hiện đủ mọi
+ * giá trị rồi, một tab riêng chỉ lặp lại đúng thứ mắt vừa thấy bằng chữ. Còn hai
+ * tab, mỗi tab trả lời đúng một câu hỏi:
  *
  * | Tab | Câu hỏi | Luật |
  * |---|---|---|
- * | **States** | prop sở hữu leaf này có đủ giá trị chưa? | ⛔ KHÔNG vẽ lại hình — khung trên render rồi. Ô xanh = đã render · ô ĐỎ = union có mà leaf chưa render. Header ghi `n/N`. |
- * | **Deps** | leaf này dựng lại story nào? | chỉ component CÓ story riêng, bấm nhảy được. Rỗng thì nói thẳng. |
+ * | **Deps** | leaf này dựng lại story nào? | chỉ component CÓ `storyId` — bấm nhảy được. KHÔNG có thì THÔI, tab không mọc ra (không còn dòng "no deps" placeholder). |
  * | **Code** | gọi thế nào? | snippet + nút Copy. |
  *
- * Ô đỏ chính là thứ đáng lẽ bắt được `danger` sót khỏi mảng `VARIANTS` của
- * `Button.Base` — trước khi nó mọc thành một story `Danger` lạc chỗ (§12g).
- *
  * CẤU TRÚC cây luôn suy từ DOM (leo ancestor của `data-anat-part`) — không ai gõ
- * tay được nên không trôi được. Phần người viết chỉ còn WHY + bảng phủ.
+ * tay được nên không trôi được. Phần người viết chỉ còn WHY + `storyId`.
  *
  * ✍️ Chữ HIỆN RA MÀN HÌNH viết TIẾNG ANH (thầy chốt 2026-07-26: panel nửa Việt
  * nửa thuật-ngữ đọc rất khó). JSDoc/comment thì vẫn tiếng Việt, và neo § nằm ở đây.
@@ -45,22 +43,6 @@ export interface AnatomyAnnotation {
     state?: string
     /** Story id của chính part đó — bấm để nhảy sang. */
     storyId?: string
-}
-
-/**
- * MỘT Ô của bảng phủ ở tab **States** — một giá trị của prop SỞ HỮU leaf này.
- *
- * Khai **ĐỦ TẬP GIÁ TRỊ** của prop, kể cả giá trị leaf CHƯA render (`rendered: false`)
- * — đó mới là chỗ panel có ích: ô đỏ tố cáo giá trị bị bỏ quên (§12g).
- * Prop boolean thì hai ô là đủ: `false` (mặc định) và `true`.
- */
-export interface AnatomyStateCell {
-    /** Giá trị của prop, viết y như lúc gọi (`"primary"`, `"lg"`, `"true"`). */
-    value: string
-    /** Một câu NGẮN bằng tiếng Anh: giá trị này dùng lúc nào. */
-    hint?: string
-    /** Khung story ở trên có render giá trị này không. `false` ⇒ ô ĐỎ. */
-    rendered: boolean
 }
 
 /** One node of a leaf's composition. `children` nests a sub-block's own parts. */
@@ -92,9 +74,10 @@ export interface BlockAnatomyProps {
     /**
      * DEPS — **story KHÁC** mà leaf này dựa vào (thầy chốt 2026-07-26).
      *
-     * CHỈ khai component CÓ story riêng. Span nội bộ của atom (`Label`, `Icon`,
-     * `Spinner`, `SuffixIcon`) KHÔNG phải deps — khai chúng chỉ làm nhiễu cây, vì
-     * bấm vào không nhảy đi đâu được.
+     * CHỈ khai component CÓ story riêng, VÀ PHẢI kèm `storyId` — entry thiếu
+     * `storyId` không bấm nhảy đi đâu được nên KHÔNG được tính là dep (thầy chốt
+     * 2026-07-26 lần 2: "deps không có thì thôi"). Span nội bộ của atom (`Label`,
+     * `Icon`, `Spinner`, `SuffixIcon`) cũng KHÔNG phải deps cùng lý do.
      *
      * OPTIONAL: atom lá bọc thẳng HeroUI thì KHÔNG có deps — bỏ hẳn prop này
      * (neo: `Button.Base` rỗng · `Button.Group` khai đúng cái nó dựng lại).
@@ -109,19 +92,11 @@ export interface BlockAnatomyProps {
      *
      * Cấu trúc cây LUÔN đến từ DOM; bảng này chỉ thêm `role`/`tier`/`storyId` cho
      * part nào cần, và đồng thời là **DANH SÁCH TRẮNG**: part không khai thì không
-     * vào cây. Bỏ trống cũng chạy — tab Deps khi đó báo "no deps".
+     * vào cây. Entry KHÔNG có `storyId` cũng không vào cây (đọc kỹ ở
+     * {@link BlockAnatomyProps.parts}). Bỏ trống hoặc rỗng sau lọc → tab Deps
+     * KHÔNG hiện ra (thay vì báo "no deps" như trước 2026-07-26).
      */
     annotate?: Record<string, AnatomyAnnotation>
-    /**
-     * TAB **States** — bảng PHỦ của prop SỞ HỮU leaf này (§12g).
-     *
-     * ⛔ KHÔNG vẽ lại hình ở đây: khung story bên trên đã render rồi. Tab này chỉ
-     * đối chiếu "prop này có những giá trị nào" với "leaf render được mấy giá trị".
-     *
-     * Bỏ trống thì tab States biến mất — hợp lý cho block/design (leaf tách theo
-     * CẤU TRÚC chứ không theo prop, §14d.2), chỉ tầng atom mới cần bảng phủ.
-     */
-    states?: Array<AnatomyStateCell>
     /** THIS leaf's live render (pass the component in this exact state). */
     children: ReactNode
     /** Leaf label shown in the header (e.g. `"Prop variant"`). */
@@ -165,12 +140,16 @@ const TIER_NAME: Record<AnatomyTier, string> = {
     atom: "atom",
 }
 
-/** Ba tab của panel. Thứ tự cố định: phủ → phụ thuộc → cách gọi. */
-type PanelTab = "states" | "deps" | "code"
+/**
+ * Hai tab của panel. Thứ tự cố định: phụ thuộc → cách gọi.
+ *
+ * ⚠️ `"states"` đã gỡ khỏi union 2026-07-26 (thầy chốt bỏ tab States). Giữ lại thành
+ * viên chết trong type là mở đường cho ai đó nhét lại tab — nên xoá hẳn.
+ */
+type PanelTab = "deps" | "code"
 
 /** Nhãn tab hiện trên UI — tiếng Anh, một từ. */
 const TAB_LABEL: Record<PanelTab, string> = {
-    states: "States",
     deps: "Deps",
     code: "Code",
 }
@@ -206,7 +185,6 @@ export const BlockAnatomy = ({
     note,
     reason,
     code,
-    states,
     annotate,
 }: BlockAnatomyProps) => {
     // MỘT ĐƯỜNG DUY NHẤT (thầy chốt 2026-07-26): cấu trúc luôn suy từ DOM. Không có
@@ -215,7 +193,7 @@ export const BlockAnatomy = ({
     // `parts` cũ KHÔNG bị vứt: rút lấy phần WHY làm chú giải, cấu trúc lấy từ DOM.
     return (
         <BlockAnatomyDerived
-            {...{ name, tier, children, leaf, note, reason, code, states }}
+            {...{ name, tier, children, leaf, note, reason, code }}
             annotate={annotate ?? flattenParts(parts ?? [])}
         />
     )
@@ -235,7 +213,6 @@ const BlockAnatomyDerived = ({
     note,
     reason,
     code,
-    states,
     annotate,
 }: Omit<BlockAnatomyProps, "parts"> & { annotate: Record<string, AnatomyAnnotation> }) => {
     const hostRef = useRef<HTMLDivElement>(null)
@@ -254,17 +231,20 @@ const BlockAnatomyDerived = ({
             const order: Array<string> = []
             els.forEach((el) => {
                 const nm = el.getAttribute("data-anat-part") ?? ""
-                // ⭐ `annotate` là DANH SÁCH TRẮNG (§11a, thầy chốt 2026-07-26).
+                // ⭐ `annotate` là DANH SÁCH TRẮNG (§11a, thầy chốt 2026-07-26) — VÀ từ
+                // 2026-07-26 (lần 2) còn lọc thêm: chỉ nhận part có `storyId` THẬT.
                 //
                 // DOM phát ra cả RUỘT của component con (`Feedback.Callout` phát
                 // `Icon`/`Content`/`Title`/`Description`/`Action`). Vẽ chúng ở đây là
                 // ĐÀO VÀO cái đã có story riêng — kể hai lần, và đẻ ra node không bấm
                 // được vì chúng là KHE chứ không phải component.
                 //
-                // Nên cây chỉ nhận node mà tác giả KHAI: đó đúng là tập component mà
-                // leaf này COMPOSE. Hệ quả: mọi node trong cây đều có story ⇒ đều bấm
-                // được. Muốn xem sâu hơn thì bấm vào, không drill tại chỗ.
-                if (nm && nm in annotate && !order.includes(nm)) {
+                // Trước đây chỉ cần CÓ MẶT trong `annotate` là vào cây, kể cả khi
+                // `storyId` bỏ trống — ra một "dep" không bấm đi đâu được (neo:
+                // `Spinner.Base` tự khai part "Spinner" trỏ vào chính nó). "Deps" giờ
+                // đúng nghĩa: có `storyId` mới tính, không thì THÔI — không vào cây,
+                // không chiếm chỗ trong tab.
+                if (nm && annotate[nm]?.storyId && !order.includes(nm)) {
                     order.push(nm)
                 }
             })
@@ -362,16 +342,12 @@ const BlockAnatomyDerived = ({
     const countNodes = (nodes: Array<AnatomyNode>): number =>
         nodes.reduce((sum, node) => sum + 1 + countNodes(node.children ?? []), 0)
 
-    const stateCells = states ?? []
-    const coveredCount = stateCells.filter((cell) => cell.rendered).length
-    const missingCount = stateCells.length - coveredCount
     const depsCount = countNodes(derived)
 
-    // Tab nào KHÔNG có dữ liệu thì không mọc ra: block/design không khai `states`,
-    // story chưa viết snippet thì không có `code`. Deps luôn có (rỗng cũng đáng nói).
+    // Tab nào KHÔNG có dữ liệu thì không mọc ra: Deps rỗng (sau khi lọc storyId)
+    // thì THÔI, không hiện tab; story chưa viết snippet thì không có `code`.
     const tabs: Array<PanelTab> = [
-        ...(stateCells.length > 0 ? (["states"] as const) : []),
-        "deps" as const,
+        ...(depsCount > 0 ? (["deps"] as const) : []),
         ...(code ? (["code"] as const) : []),
     ]
     const [picked, setPicked] = useState<PanelTab | null>(null)
@@ -407,16 +383,6 @@ const BlockAnatomyDerived = ({
                     <span className="font-mono text-sm text-foreground">{name}</span>
                     <span className={cn(PILL, TIER_PILL[tier])}>{TIER_NAME[tier]}</span>
                     {leaf ? <span className="text-[11px] text-muted">· {leaf}</span> : null}
-                    {stateCells.length > 0 ? (
-                        <span
-                            className={cn(
-                                "ml-auto text-[11px] font-semibold",
-                                missingCount > 0 ? "text-danger-soft-foreground" : "text-muted",
-                            )}
-                        >
-                            {coveredCount}/{stateCells.length} states
-                        </span>
-                    ) : null}
                 </div>
 
                 {/* Một tab thì khỏi bày thanh tab — story cũ (chỉ có Deps) trông y như trước. */}
@@ -424,7 +390,7 @@ const BlockAnatomyDerived = ({
                     <div role="tablist" aria-label="Anatomy views" className="flex gap-1 border-b border-default px-3">
                         {tabs.map((tabId) => {
                             const isActive = tabId === activeTab
-                            const count = tabId === "states" ? stateCells.length : tabId === "deps" ? depsCount : null
+                            const count = tabId === "deps" ? depsCount : null
                             return (
                                 <button
                                     key={tabId}
@@ -452,61 +418,8 @@ const BlockAnatomyDerived = ({
                 ) : null}
 
                 <div className="p-4">
-                    {activeTab === "states" ? (
-                        <div className="flex flex-col gap-3">
-                            <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-                                {stateCells.map((cell) => (
-                                    <div
-                                        key={cell.value}
-                                        className={cn(
-                                            "flex items-center gap-2 rounded-lg border px-3 py-2",
-                                            cell.rendered
-                                                ? "border-default bg-surface"
-                                                : "border-danger bg-danger-soft",
-                                        )}
-                                    >
-                                        <span
-                                            aria-hidden
-                                            className={cn(
-                                                "size-1.5 shrink-0 rounded-full",
-                                                cell.rendered ? "bg-success" : "bg-danger",
-                                            )}
-                                        />
-                                        <span
-                                            className={cn(
-                                                "font-mono text-xs",
-                                                cell.rendered ? "text-foreground" : "text-danger-soft-foreground",
-                                            )}
-                                        >
-                                            {cell.value}
-                                        </span>
-                                        {cell.hint ? (
-                                            <span className="truncate text-[11px] text-muted">{cell.hint}</span>
-                                        ) : null}
-                                    </div>
-                                ))}
-                            </div>
-                            {missingCount > 0 ? (
-                                <p className="rounded-lg bg-danger-soft px-3 py-2 text-xs text-danger-soft-foreground">
-                                    Red means the prop accepts this value but the render above skips it. Left alone, it
-                                    grows into a stray story somewhere else.
-                                </p>
-                            ) : (
-                                <p className="text-xs text-muted">
-                                    Every value this prop accepts is rendered above.
-                                </p>
-                            )}
-                        </div>
-                    ) : null}
-
                     {activeTab === "deps" ? (
-                        derived.length > 0 ? (
-                            derived.map((node) => <Branch key={node.name} node={node} depth={1} />)
-                        ) : (
-                            <p className="rounded-lg border border-dashed border-default px-3 py-3 text-xs text-muted">
-                                No deps — this leaf rebuilds nothing that has a story of its own.
-                            </p>
-                        )
+                        derived.map((node) => <Branch key={node.name} node={node} depth={1} />)
                     ) : null}
 
                     {activeTab === "code" && code ? (

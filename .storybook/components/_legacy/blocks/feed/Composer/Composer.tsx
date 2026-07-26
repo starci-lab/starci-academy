@@ -2,13 +2,13 @@ import React, { useEffect, useRef } from "react"
 import { TextArea, TextField, cn } from "@heroui/react"
 import { PaperPlaneRightIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
-import { UserAvatar } from "@sb-components/atoms/display/UserAvatar/UserAvatar"
+import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { Spinner } from "@sb-components/atoms/display/Spinner/Spinner"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK ported faithfully from
- * `@/components/blocks/feed/Composer`. Composed from the local primitive
- * `UserAvatar` + HeroUI TextField/TextArea/Button. Synced to `src` later.
+ * `@/components/blocks/feed/Composer`. Composed from the atom `Avatar.Base` +
+ * HeroUI TextField/TextArea/Button. Synced to `src` later.
  */
 
 /** Props for the {@link Composer} block. */
@@ -25,7 +25,7 @@ export interface ComposerProps {
     /** Placeholder shown while the field is empty. */
     placeholder?: string
     /**
-     * Optional leading avatar image url. When set, a small {@link UserAvatar} sits
+     * Optional leading avatar image url. When set, a small `Avatar.Base` sits
      * at the start of the row; omit to render the field flush to the edge.
      */
     avatarSrc?: string
@@ -100,11 +100,11 @@ export const Composer = ({
         <div className={cn("flex items-end gap-3", className)} data-anat-part={anatPart}>
             {/* optional leading avatar — omitted when no src is supplied */}
             {avatarSrc ? (
-                <UserAvatar.Base
+                <Avatar.Base
                     size="sm"
-                    avatar={avatarSrc}
+                    src={avatarSrc}
                     className="mb-1 shrink-0"
-                    anatPart={showAnatomy ? "UserAvatar" : undefined}
+                    showAnatomy={showAnatomy}
                 />
             ) : null}
 

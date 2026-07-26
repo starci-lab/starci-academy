@@ -230,7 +230,7 @@ const InputDate = ({
     maxValue,
     isDisabled,
     isInvalid,
-    ariaLabel = "Chọn ngày",
+    ariaLabel = "Pick a date",
     isSkeleton,
     showAnatomy,
     className,
@@ -295,7 +295,7 @@ const InputSearch = ({
     placeholder,
     isDisabled,
     isInvalid,
-    ariaLabel = "Tìm kiếm",
+    ariaLabel = "Search",
     isSkeleton,
     showAnatomy,
     className,
@@ -378,7 +378,7 @@ const InputPassword = ({
                     />
                     <button
                         type="button"
-                        aria-label={reveal ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
+                        aria-label={reveal ? "Hide password" : "Show password"}
                         onClick={() => setReveal((r) => !r)}
                         data-anat-part={showAnatomy ? "Toggle" : undefined}
                         className="text-muted absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer [&_svg]:size-4"
@@ -470,7 +470,7 @@ const InputTime = ({
     onValueChange,
     isDisabled,
     isInvalid,
-    ariaLabel = "Chọn giờ",
+    ariaLabel = "Pick a time",
     isSkeleton,
     showAnatomy,
     className,
@@ -592,8 +592,8 @@ const InputTags = ({
     placeholder,
     isDisabled,
     isInvalid,
-    ariaLabel = "Thẻ",
-    removeLabel = "Xoá thẻ",
+    ariaLabel = "Tags",
+    removeLabel = "Remove tag",
     isSkeleton,
     showAnatomy,
     className,
@@ -666,7 +666,7 @@ const InputTags = ({
                             removeAt(value.length - 1)
                         }
                     }}
-                    className="min-w-24 flex-1 bg-transparent px-1 py-0.5 text-sm outline-none"
+                    className="min-w-24 flex-1 bg-transparent px-1 py-0 text-sm outline-none"
                 />
             </div>
         </FieldFrame.Base>

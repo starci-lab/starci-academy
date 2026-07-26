@@ -2,14 +2,14 @@ import React from "react"
 import { Card, CardContent } from "@heroui/react"
 import { ChatCircleIcon, PushPinIcon, SealCheckIcon } from "@phosphor-icons/react"
 import { ReactionBar, ReactionType } from "@sb-components/_legacy/designs/feed/ReactionBar/ReactionBar"
-import { UserAvatar } from "@sb-components/atoms/display/UserAvatar/UserAvatar"
+import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { MarkdownContent } from "@sb-components/_legacy/designs/rendering/MarkdownContent/MarkdownContent"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK ported faithfully from
- * `@/components/blocks/feed/CommunityPostCard`. Composed from local primitives
- * `UserAvatar` + `MarkdownContent` + the local `ReactionBar` block, framed by HeroUI
+ * `@/components/blocks/feed/CommunityPostCard`. Composed from the atom
+ * `Avatar.Base` + `MarkdownContent` + the local `ReactionBar` block, framed by HeroUI
  * `Card`. Synced to `src` later. `@/modules` types, the channel label, and the
  * time-ago label are inlined locally.
  */
@@ -113,10 +113,10 @@ export const CommunityPostCard = ({
             <CardContent data-anat-part={showAnatomy ? "CardContent" : undefined}>
                 <div className="flex flex-col gap-3">
                     <div className="flex items-center gap-3">
-                        <UserAvatar.Base
-                            username={post.author.username}
-                            avatar={post.author.avatar}
-                            anatPart={showAnatomy ? "UserAvatar" : undefined}
+                        <Avatar.Base
+                            name={post.author.username}
+                            src={post.author.avatar ?? undefined}
+                            showAnatomy={showAnatomy}
                         />
                         <div className="flex min-w-0 flex-1 flex-col">
                             <div className="flex items-center gap-1">

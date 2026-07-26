@@ -70,7 +70,7 @@ export const AccentFourTiers: Story = {
             >
                 <div className="max-w-sm">
                     <TrackCard
-                        icon={<CodeIcon />}
+                        icon={CodeIcon}
                         title="Fullstack thực chiến"
                         meta="23 module · 20 hệ thống"
                         color="accent"
@@ -101,7 +101,7 @@ export const SuccessFourTiers: Story = {
             >
                 <div className="max-w-sm">
                     <TrackCard
-                        icon={<TreeStructureIcon />}
+                        icon={TreeStructureIcon}
                         title="System Design Mastery"
                         meta="18 module · 12 case study"
                         color="success"
@@ -132,7 +132,7 @@ export const WarningSingleTier: Story = {
             >
                 <div className="max-w-sm">
                     <TrackCard
-                        icon={<CloudIcon />}
+                        icon={CloudIcon}
                         title="DevOps Mastery"
                         meta="9 module · 6 hệ thống"
                         color="warning"
@@ -158,7 +158,7 @@ export const LongTitleTruncate: Story = {
             >
                 <div className="max-w-[220px]">
                     <TrackCard
-                        icon={<CodeIcon />}
+                        icon={CodeIcon}
                         title="Kỹ thuật phần mềm nâng cao cho hệ thống phân tán quy mô lớn"
                         meta="35 module · 28 hệ thống thực chiến từ cơ bản đến production"
                         color="accent"
@@ -187,7 +187,7 @@ export const ThreeTracksLayout: Story = {
             >
                 <div className="grid gap-6 @container @app-md:grid-cols-3">
                     <TrackCard
-                        icon={<CodeIcon />}
+                        icon={CodeIcon}
                         title="Fullstack thực chiến"
                         meta="23 module · 20 hệ thống"
                         color="accent"
@@ -202,7 +202,7 @@ export const ThreeTracksLayout: Story = {
                         showAnatomy
                     />
                     <TrackCard
-                        icon={<TreeStructureIcon />}
+                        icon={TreeStructureIcon}
                         title="System Design Mastery"
                         meta="18 module · 12 case study"
                         color="success"
@@ -217,7 +217,7 @@ export const ThreeTracksLayout: Story = {
                         showAnatomy
                     />
                     <TrackCard
-                        icon={<CloudIcon />}
+                        icon={CloudIcon}
                         title="DevOps Mastery"
                         meta="9 module · 6 hệ thống"
                         color="warning"

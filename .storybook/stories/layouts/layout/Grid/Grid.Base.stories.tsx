@@ -3,7 +3,7 @@ import type { ReactNode } from "react"
 import { Grid } from "@sb-components/layouts/layout/Grid/Grid"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE: `Grid.Base` là KHUNG DANH SÁCH LẶP hai chiều. State nó sinh ra =
@@ -24,10 +24,6 @@ const meta: Meta<typeof Grid.Base> = {
 export default meta
 
 type Story = StoryObj<typeof Grid.Base>
-
-const CELL_PARTS: Array<AnatomyNode> = [
-    { name: "Cell", tier: "primitive", role: "một ô của lưới — đến từ `items` DỮ LIỆU, không phải children" },
-]
 
 /** Khung không mang nội dung — fixture là card thật để thấy ô và seam. */
 const cellItems = (labels: ReadonlyArray<string>) =>
@@ -74,7 +70,6 @@ export const Default: Story = {
                 name="Grid.Base"
                 tier="primitive"
                 leaf="Default"
-                parts={CELL_PARTS}
                 reason="Danh sách lặp hai chiều ⇒ `items` DỮ LIỆU, CẤM children (§13b) — tiền đề của lưới là mọi ô cùng một loại. Mốc reflow là CONTAINER QUERY `@app-*` chứ không phải `md:`: app shell là cột trái mà rail AI bóp được bất cứ lúc nào, lưới phải nghe theo cột của chính nó, không nghe cửa sổ."
                 code={`<Grid.Base
   gap={3}
@@ -91,6 +86,43 @@ export const Default: Story = {
 }
 
 /**
+ * Span — `GridItem.span` (việc 1, họ Grid): một ô chiếm 2 cột thay vì 1, cho ô cần
+ * nổi bật (banner, ô tổng) giữa các ô thường. Union chỉ dừng ở `1 | 2` — căn cứ ghi
+ * ở JSDoc `GridItem.span` trong `Grid.tsx`.
+ */
+export const Span: Story = {
+    render: () => {
+        const items = cellItems(MODULES.slice(0, 4)).map((item, index) => ({
+            ...item,
+            span: index === 0 ? (2 as const) : undefined,
+        }))
+        return (
+            <div className="p-8">
+                <BlockAnatomy
+                    name="Grid.Base"
+                    tier="primitive"
+                    leaf="Span"
+                    note="Ô đầu `span: 2` chiếm hai cột trong lưới 3 cột; các ô còn lại giữ `span` mặc định (1). Ô span luôn có wrapper thật để đeo `col-span-2`, kể cả khi `showAnatomy` tắt."
+                    code={`<Grid.Base
+  gap={3}
+  columns={{ base: 1, sm: 2, md: 3 }}
+  items={[
+    { key: "hero", span: 2, content: <HeroCard /> },
+    { key: "a", content: <ModuleCard /> },
+    …
+  ]}
+/>`}
+                >
+                    <Frame width="48rem" label="container 768px — @app-md → 3 cột, ô đầu chiếm 2">
+                        <Grid.Base showAnatomy gap={3} columns={{ base: 1, sm: 2, md: 3 }} items={items} />
+                    </Frame>
+                </BlockAnatomy>
+            </div>
+        )
+    },
+}
+
+/**
  * Columns — state ĐẶC TRƯNG của lưới: CÙNG một `columns`, chỉ đổi bề ngang container
  * là số cột đổi theo. Mỗi mốc KẾ THỪA mốc nhỏ hơn liền trước, nên `{base:1, md:3}`
  * nghĩa là 1 cột cho tới `@app-md` rồi 3 cột từ đó lên.
@@ -102,7 +134,6 @@ export const Columns: Story = {
                 name="Grid.Base"
                 tier="primitive"
                 leaf="Columns"
-                parts={CELL_PARTS}
                 note="Số cột bị CHẶN theo mốc bằng TYPE (`sm` tối đa 3, `base` tối đa 2): 4 cột trong một shell hẹp thì không đọc được, nên type từ chối thẳng thay vì để review bắt."
                 code={`<Grid.Base
   gap={3}
@@ -140,7 +171,6 @@ export const Gaps: Story = {
                 name="Grid.Base"
                 tier="primitive"
                 leaf="Gaps"
-                parts={CELL_PARTS}
                 note="Lưới card thường ở `grouped(3)`; `section(6)` dành cho lưới các VÙNG lớn (§10b), không dùng cho lưới thẻ thường."
                 code={`<Grid.Base
   gap={3}

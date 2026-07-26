@@ -3,7 +3,7 @@ import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
-import type { IconTileTone } from "@sb-components/atoms/display/IconTile/IconTile"
+import type { IconTileTone, IconComponent } from "@sb-components/atoms/display/IconTile/IconTile"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported faithfully from
@@ -18,12 +18,6 @@ import type { IconTileTone } from "@sb-components/atoms/display/IconTile/IconTil
  * the `sm` preset's `size-12`/`[&_svg]:size-6` in favor of these).
  */
 
-/** Local mirror of the shared `WithClassNames` base (avoids a `@/` import). */
-interface WithClassNames<T> {
-    classNames?: T
-    className?: string
-}
-
 /**
  * Visual tone of a {@link NotificationItem}. Drives ONLY the color of the
  * leading icon tile (never a `bg-<status>/10` overlay — soft tokens only), so a
@@ -36,7 +30,9 @@ interface WithClassNames<T> {
 export type NotificationTone = "default" | "success" | "warning" | "accent"
 
 /** Props for {@link NotificationItem}. */
-export interface NotificationItemProps extends WithClassNames<undefined> {
+export interface NotificationItemProps {
+    /** Extra classes on the row root. */
+    className?: string
     /**
      * Primary line describing what happened. Rendered medium-weight foreground
      * and clamped to two lines. The caller localizes it (pass a `t()` result).
@@ -59,7 +55,7 @@ export interface NotificationItemProps extends WithClassNames<undefined> {
      * When provided it is wrapped in a rounded tile whose color derives from
      * {@link NotificationItemProps.tone}. Omit for a text-only row.
      */
-    icon?: ReactNode
+    icon?: IconComponent
     /**
      * Color tone of the leading icon tile. Defaults to `"default"`. Has no
      * effect when {@link NotificationItemProps.icon} is omitted.

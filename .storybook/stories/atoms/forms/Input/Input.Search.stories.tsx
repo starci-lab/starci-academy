@@ -1,27 +1,39 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Input } from "@sb-components/atoms/forms/Input/Input"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta = { title: "Atoms/Forms/Input/Input.Search", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
 export default meta
 type Story = StoryObj
 
-// FieldFrame parts (§11a) — atom TỰ mang nhãn/mô tả/lỗi, không tách Field primitive.
-const FIELD: AnatomyNode = { name: "Field", tier: "atom", role: "ô tìm (HeroUI SearchField: leading icon + clear sẵn)" }
-const LABEL: AnatomyNode = { name: "Label", tier: "atom", role: "nhãn field (HeroUI Label)" }
-const DESC: AnatomyNode = { name: "Description", tier: "atom", role: "mô tả dưới nhãn (text-muted)" }
-const ERROR: AnatomyNode = { name: "Error", tier: "atom", role: "dòng lỗi (text-danger)" }
-const SKELETON: AnatomyNode = { name: "Skeleton", tier: "atom", role: "field-box skeleton (hybrid C)" }
+/**
+ * ATOM LÁ — `Input.Search` bọc thẳng HeroUI `SearchField` (leading icon + clear sẵn)
+ * + `FieldFrame` nội bộ (§11a). Cùng lý do với các member khác: mọi part
+ * (`Label`/`Description`/`Field`/`Error`/`Skeleton`) là KHE nội bộ, không phải story
+ * riêng ⇒ KHÔNG có deps ⇒ bỏ hẳn prop `annotate`.
+ *
+ * ⭐ 2026-07-26 (§12g): leaf `Invalid` tách khỏi `Error` — `isInvalid` một mình chỉ
+ * đổi viền (không dòng chữ), `errorMessage` mới kéo theo viền + dòng đỏ. Hai prop
+ * khác pixel nhau nên phải là hai leaf khác nhau (§12g.1: đổi pixel = có leaf).
+ */
 
-/** Default — ô TRẦN, icon kính lúp + nút clear khi có chữ. */
+/** Default — bare field, magnifier icon + clear button once there is text. */
 export const Default: Story = {
     render: () => {
         const Demo = () => {
             const [value, setValue] = useState("")
             return (
-                <BlockAnatomy name="Input.Search" tier="atom" leaf="Default" parts={[FIELD]} note="trần — không label/hint/error." code={"<Input.Search value={v} onValueChange={setV} placeholder=\"Tìm khoá học…\" />"}>
-                    <div className="w-72"><Input.Search value={value} onValueChange={setValue} placeholder="Tìm khoá học…" showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Search"
+                    tier="atom"
+                    leaf="Default"
+                    note="Bare — no label, hint, or error."
+                    code={"<Input.Search value={v} onValueChange={setV} />"}
+                >
+                    <div className="w-72">
+                        <Input.Search value={value} onValueChange={setValue} ariaLabel="Search" showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -29,14 +41,48 @@ export const Default: Story = {
     },
 }
 
-/** WithLabel — nhãn trên + mô tả (hint) dưới nhãn. */
+/**
+ * Leaf prop `placeholder` — chữ mờ chỉ hiện khi ô rỗng. Trước 2026-07-26 nó bị nhét
+ * vào leaf `Default` nên prop có hình mà không có leaf nào sở hữu (§12g).
+ */
+export const Placeholder: Story = {
+    render: () => {
+        const Demo = () => {
+            const [value, setValue] = useState("")
+            return (
+                <BlockAnatomy
+                    name="Input.Search"
+                    tier="atom"
+                    leaf="Prop `placeholder`"
+                    note="Ghost text only shows while the field is empty; typing the first character hides it."
+                    code={"<Input.Search placeholder=\"Search courses…\" value={v} onValueChange={setV} />"}
+                >
+                    <div className="w-72">
+                        <Input.Search placeholder="Search courses…" value={value} onValueChange={setValue} showAnatomy />
+                    </div>
+                </BlockAnatomy>
+            )
+        }
+        return <div className="p-8"><Demo /></div>
+    },
+}
+
+/** WithLabel — label on top, hint below it. */
 export const WithLabel: Story = {
     render: () => {
         const Demo = () => {
             const [value, setValue] = useState("")
             return (
-                <BlockAnatomy name="Input.Search" tier="atom" leaf="WithLabel" parts={[LABEL, DESC, FIELD]} note="label + hint." code={"<Input.Search label=\"Tìm khoá học\" hint=\"Theo tên hoặc kỹ năng\" value={v} onValueChange={setV} />"}>
-                    <div className="w-72"><Input.Search label="Tìm khoá học" hint="Theo tên hoặc kỹ năng" value={value} onValueChange={setValue} placeholder="Tìm khoá học…" showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Search"
+                    tier="atom"
+                    leaf="WithLabel"
+                    note="label + hint."
+                    code={"<Input.Search label=\"Search courses\" hint=\"By name or skill\" value={v} onValueChange={setV} />"}
+                >
+                    <div className="w-72">
+                        <Input.Search label="Search courses" hint="By name or skill" value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -44,14 +90,22 @@ export const WithLabel: Story = {
     },
 }
 
-/** Required — nhãn + dấu `*` bắt buộc. */
+/** Required — label with the `*` mark. */
 export const Required: Story = {
     render: () => {
         const Demo = () => {
             const [value, setValue] = useState("")
             return (
-                <BlockAnatomy name="Input.Search" tier="atom" leaf="Required" parts={[LABEL, FIELD]} note="isRequired → dấu * sau nhãn." code={"<Input.Search label=\"Tìm khoá học\" isRequired value={v} onValueChange={setV} />"}>
-                    <div className="w-72"><Input.Search label="Tìm khoá học" isRequired value={value} onValueChange={setValue} placeholder="Tìm khoá học…" showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Search"
+                    tier="atom"
+                    leaf="Required"
+                    note="isRequired → * mark after the label."
+                    code={"<Input.Search label=\"Search courses\" isRequired value={v} onValueChange={setV} />"}
+                >
+                    <div className="w-72">
+                        <Input.Search label="Search courses" isRequired value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -59,14 +113,22 @@ export const Required: Story = {
     },
 }
 
-/** Filled — value có chữ → nút clear (×) hiện, kèm nhãn. */
+/** Filled — value holds text → the clear (×) button shows, with a label. */
 export const Filled: Story = {
     render: () => {
         const Demo = () => {
             const [value, setValue] = useState("React")
             return (
-                <BlockAnatomy name="Input.Search" tier="atom" leaf="Filled" parts={[LABEL, FIELD]} note="value có chữ → nút clear (×) hiện." code={"<Input.Search label=\"Tìm khoá học\" value=\"React\" onValueChange={setV} />"}>
-                    <div className="w-72"><Input.Search label="Tìm khoá học" value={value} onValueChange={setValue} placeholder="Tìm khoá học…" showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Search"
+                    tier="atom"
+                    leaf="Filled"
+                    note="value holds text → the clear (×) button shows."
+                    code={"<Input.Search label=\"Search courses\" value=\"React\" onValueChange={setV} />"}
+                >
+                    <div className="w-72">
+                        <Input.Search label="Search courses" value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -74,14 +136,22 @@ export const Filled: Story = {
     },
 }
 
-/** Disabled — khoá control + nhãn nhạt. */
+/** Disabled — control locked, label dimmed. */
 export const Disabled: Story = {
     render: () => {
         const Demo = () => {
             const [value, setValue] = useState("React")
             return (
-                <BlockAnatomy name="Input.Search" tier="atom" leaf="Disabled" parts={[LABEL, FIELD]} note="isDisabled → khoá + nhạt." code={"<Input.Search label=\"Tìm khoá học\" value=\"React\" isDisabled onValueChange={setV} />"}>
-                    <div className="w-72"><Input.Search label="Tìm khoá học" value={value} onValueChange={setValue} isDisabled placeholder="Tìm khoá học…" showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Search"
+                    tier="atom"
+                    leaf="Disabled"
+                    note="isDisabled → locked + dimmed."
+                    code={"<Input.Search label=\"Search courses\" value=\"React\" isDisabled onValueChange={setV} />"}
+                >
+                    <div className="w-72">
+                        <Input.Search label="Search courses" value={value} onValueChange={setValue} isDisabled placeholder="Search courses…" showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -89,14 +159,49 @@ export const Disabled: Story = {
     },
 }
 
-/** Error — nhãn + errorMessage → hiện NHÃN + dòng đỏ + viền lỗi. */
+/**
+ * Invalid — prop `isInvalid` ALONE: border turns red, no error line below.
+ * Compare against `Error` next — that leaf adds `errorMessage`, which is the only
+ * thing that grows the red text line; the border here is already the same red.
+ */
+export const Invalid: Story = {
+    render: () => {
+        const Demo = () => {
+            const [value, setValue] = useState("!!!")
+            return (
+                <BlockAnatomy
+                    name="Input.Search"
+                    tier="atom"
+                    leaf="Invalid"
+                    note="isInvalid → red border only. No errorMessage set → no red line, label stays normal."
+                    code={"<Input.Search label=\"Search courses\" isInvalid value={v} onValueChange={setV} />"}
+                >
+                    <div className="w-72">
+                        <Input.Search label="Search courses" isInvalid value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
+                    </div>
+                </BlockAnatomy>
+            )
+        }
+        return <div className="p-8"><Demo /></div>
+    },
+}
+
+/** Error — prop `errorMessage`: same red border as `Invalid`, PLUS the red message line. */
 export const Error: Story = {
     render: () => {
         const Demo = () => {
             const [value, setValue] = useState("!!!")
             return (
-                <BlockAnatomy name="Input.Search" tier="atom" leaf="Error" parts={[LABEL, FIELD, ERROR]} note="label + errorMessage → nhãn + dòng đỏ + viền." code={"<Input.Search label=\"Tìm khoá học\" errorMessage=\"Từ khoá không hợp lệ\" value={v} onValueChange={setV} />"}>
-                    <div className="w-72"><Input.Search label="Tìm khoá học" errorMessage="Từ khoá không hợp lệ" value={value} onValueChange={setValue} placeholder="Tìm khoá học…" showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Search"
+                    tier="atom"
+                    leaf="Error"
+                    note="errorMessage → red border (same as isInvalid) + red message line below."
+                    code={"<Input.Search label=\"Search courses\" errorMessage=\"Invalid search term\" value={v} onValueChange={setV} />"}
+                >
+                    <div className="w-72">
+                        <Input.Search label="Search courses" errorMessage="Invalid search term" value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -104,12 +209,20 @@ export const Error: Story = {
     },
 }
 
-/** Loading — nhãn skeleton (mirror) trên field-box skeleton. */
+/** Loading — label skeleton mirrored above the field-box skeleton. */
 export const Loading: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="Input.Search" tier="atom" leaf="Loading" parts={[LABEL, SKELETON]} note="isSkeleton + label → mirror nhãn trên hộp." code={"<Input.Search label=\"Tìm khoá học\" isSkeleton />"}>
-                <div className="w-72"><Input.Search label="Tìm khoá học" value="" onValueChange={() => {}} isSkeleton showAnatomy /></div>
+            <BlockAnatomy
+                name="Input.Search"
+                tier="atom"
+                leaf="Loading"
+                note="isSkeleton + label → label mirrored above the box."
+                code={"<Input.Search label=\"Search courses\" isSkeleton />"}
+            >
+                <div className="w-72">
+                    <Input.Search label="Search courses" value="" onValueChange={() => {}} isSkeleton showAnatomy />
+                </div>
             </BlockAnatomy>
         </div>
     ),

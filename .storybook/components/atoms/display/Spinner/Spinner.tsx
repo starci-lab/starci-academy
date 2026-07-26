@@ -38,7 +38,7 @@ export interface SpinnerBaseProps {
  *
  * @param props - {@link SpinnerBaseProps}
  */
-const SpinnerBase = ({ size = "md", tone = "accent", label = "Đang tải", showAnatomy = false, className }: SpinnerBaseProps) => (
+const SpinnerBase = ({ size = "md", tone = "accent", label = "Loading", showAnatomy = false, className }: SpinnerBaseProps) => (
     <HeroSpinner
         aria-label={label}
         size={size}

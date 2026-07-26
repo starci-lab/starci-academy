@@ -1,8 +1,7 @@
 import React from "react"
-import type { ReactNode } from "react"
 import { CheckCircleIcon } from "@phosphor-icons/react"
 import { List } from "@sb-components/layouts/lists/List/List"
-import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
+import { IconTile, type IconComponent } from "@sb-components/atoms/display/IconTile/IconTile"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 
@@ -19,7 +18,7 @@ export interface ReadinessChecklistItem {
     /** Stable row key. */
     id: string
     /** Icon shown when the item is NOT ready (a `ready` row swaps it for a check). */
-    icon: ReactNode
+    icon: IconComponent
     /** Row title — the thing being checked (e.g. "Ollama agent"). */
     label: string
     /** Subtitle shown when {@link ReadinessChecklistItem.ready} is true. */
@@ -75,7 +74,7 @@ export const ReadinessChecklist = ({ items, readyLabel, pendingLabel, className,
                             <IconTile.Base
                                 // circle-check, not a bare tick — icon.md §2: every
                                 // "done / passed" mark is `CheckCircleIcon`.
-                                icon={item.ready ? <CheckCircleIcon aria-hidden focusable="false" /> : item.icon}
+                                icon={item.ready ? CheckCircleIcon : item.icon}
                                 tone={item.ready ? "success" : "neutral"}
                                 size="sm"
                                 anatPart={showAnatomy ? "IconTile" : undefined}

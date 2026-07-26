@@ -172,10 +172,11 @@ export const PricingTable = ({
                             ) : null}
 
                             {/* Feature rows in ONE SurfaceCard.CrossList: included → mark="check" (✓),
-                                excluded → mark="cross" (✗). Bordered = surface-in-surface.
+                                excluded → mark="cross" (✗). variant="nested" = surface-in-surface.
                                 Repeat list = DATA (`items`), never children. */}
+                            {/* Codemod 2026-07-26: `bordered` → `variant="nested"` (API 3-trục SurfaceCard). */}
                             <SurfaceCard.CrossList
-                                bordered
+                                variant="nested"
                                 anatPart={showAnatomy ? "CrossListCard" : undefined}
                                 items={tier.features.map((feature, index) => ({
                                     key: `${tier.id}-${index}`,

@@ -1,11 +1,11 @@
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
-import { UserAvatar } from "@sb-components/atoms/display/UserAvatar/UserAvatar"
+import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK ported faithfully from
- * `@/components/blocks/feed/ActivityAvatar`. Composed from the local primitive
- * `UserAvatar` (base avatar) + a small activity-type icon badge. Synced to `src` later.
+ * `@/components/blocks/feed/ActivityAvatar`. Composed from the atom
+ * `Avatar.Base` + a small activity-type icon badge. Synced to `src` later.
  */
 
 /** Props for the {@link ActivityAvatar} block. */
@@ -25,7 +25,7 @@ export interface ActivityAvatarProps {
 }
 
 /**
- * Facebook-style feed avatar: a {@link UserAvatar} with a small activity-type icon
+ * Facebook-style feed avatar: an `Avatar.Base` with a small activity-type icon
  * badge at the bottom-right. The badge is an OPAQUE soft-accent disc (a `bg-surface`
  * base under a `bg-accent-soft` tint so the avatar never bleeds through) with an
  * accent icon, and a surface ring cuts it cleanly from the avatar. Pure/props-only;
@@ -43,12 +43,12 @@ export const ActivityAvatar = ({
 }: ActivityAvatarProps) => {
     return (
         <div className={cn("relative shrink-0", className)} data-anat-part={anatPart}>
-            <UserAvatar.Base
+            <Avatar.Base
                 className="size-9"
-                username={username}
-                avatar={avatar ?? undefined}
+                name={username}
+                src={avatar ?? undefined}
                 seed={username}
-                anatPart={showAnatomy ? "UserAvatar" : undefined}
+                showAnatomy={showAnatomy}
             />
             <span
                 aria-hidden

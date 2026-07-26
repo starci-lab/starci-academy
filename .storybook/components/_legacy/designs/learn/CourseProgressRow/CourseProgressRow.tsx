@@ -5,7 +5,7 @@ import type { ReactNode } from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
-import type { IconTileTone } from "@sb-components/atoms/display/IconTile/IconTile"
+import type { IconTileTone, IconComponent } from "@sb-components/atoms/display/IconTile/IconTile"
 import { SegmentBar } from "@sb-components/layouts/stats/SegmentBar/SegmentBar"
 
 /**
@@ -26,7 +26,7 @@ import { SegmentBar } from "@sb-components/layouts/stats/SegmentBar/SegmentBar"
 /** Props for {@link CourseProgressRow}. */
 export interface CourseProgressRowProps {
     /** The icon (phosphor `*Icon`) — fallback when no {@link CourseProgressRowProps.src}. */
-    icon: ReactNode
+    icon: IconComponent
     /** Optional cover image filling the tile (course thumbnail); falls back to `icon`. */
     src?: string | null
     /** Alt text for the cover image. */

@@ -2,27 +2,36 @@ import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { parseDate, type DateValue } from "@internationalized/date"
 import { Input } from "@sb-components/atoms/forms/Input/Input"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta = { title: "Atoms/Forms/Input/Input.Date", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
 export default meta
 type Story = StoryObj
 
-// FieldFrame parts (§11a) — atom TỰ mang nhãn/mô tả/lỗi, không tách Field primitive.
-const FIELD: AnatomyNode = { name: "Field", tier: "atom", role: "ô ngày: segments + trigger lịch (HeroUI DatePicker)" }
-const LABEL: AnatomyNode = { name: "Label", tier: "atom", role: "nhãn field (HeroUI Label)" }
-const DESC: AnatomyNode = { name: "Description", tier: "atom", role: "mô tả dưới nhãn (text-muted)" }
-const ERROR: AnatomyNode = { name: "Error", tier: "atom", role: "dòng lỗi (text-danger)" }
-const SKELETON: AnatomyNode = { name: "Skeleton", tier: "atom", role: "field-box skeleton (hybrid C)" }
+/**
+ * `Input.Date` KHÔNG có deps (2026-07-26): DOM chỉ phát `Field`/`Label`/
+ * `Description`/`Error`/`Skeleton` — toàn bộ là RUỘT của `FieldFrame` (atom-
+ * internal, không có story riêng) cộng HeroUI `DatePicker`/`Calendar` bọc thẳng.
+ * Không component con nào có story để nhảy sang ⇒ BỎ HẲN prop `annotate` (đọc
+ * `.storybook/components/atoms/forms/Input/Input.tsx`, `InputDate`).
+ */
 
-/** Default — ô TRẦN segments ngày/tháng/năm + nút mở lịch. */
+/** Leaf TRẦN — chưa có label/hint/error, chỉ segments ngày + trigger lịch. */
 export const Default: Story = {
     render: () => {
         const Demo = () => {
             const [value, setValue] = useState<DateValue | null>(null)
             return (
-                <BlockAnatomy name="Input.Date" tier="atom" leaf="Default" parts={[FIELD]} note="trần — không label/hint/error." code={"<Input.Date value={v} onValueChange={setV} />"}>
-                    <div className="w-72"><Input.Date value={value} onValueChange={setValue} ariaLabel="Ngày bắt đầu" showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Date"
+                    tier="atom"
+                    leaf="Default"
+                    note="Bare — no label, hint, or error."
+                    code={"<Input.Date value={value} onValueChange={setValue} />"}
+                >
+                    <div className="w-72">
+                        <Input.Date value={value} onValueChange={setValue} ariaLabel="Start date" showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -30,14 +39,22 @@ export const Default: Story = {
     },
 }
 
-/** WithLabel — nhãn trên + mô tả (hint) dưới nhãn. */
+/** Leaf props `label` + `hint` — nhãn trên, mô tả dưới nhãn. */
 export const WithLabel: Story = {
     render: () => {
         const Demo = () => {
             const [value, setValue] = useState<DateValue | null>(null)
             return (
-                <BlockAnatomy name="Input.Date" tier="atom" leaf="WithLabel" parts={[LABEL, DESC, FIELD]} note="label + hint." code={"<Input.Date label=\"Ngày bắt đầu\" hint=\"Định dạng dd/mm/yyyy\" value={v} onValueChange={setV} />"}>
-                    <div className="w-72"><Input.Date label="Ngày bắt đầu" hint="Định dạng dd/mm/yyyy" value={value} onValueChange={setValue} showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Date"
+                    tier="atom"
+                    leaf="Props `label` + `hint`"
+                    note="Label plus hint."
+                    code={"<Input.Date label=\"Start date\" hint=\"Format: dd/mm/yyyy\" value={value} onValueChange={setValue} />"}
+                >
+                    <div className="w-72">
+                        <Input.Date label="Start date" hint="Format: dd/mm/yyyy" value={value} onValueChange={setValue} showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -45,14 +62,22 @@ export const WithLabel: Story = {
     },
 }
 
-/** Required — nhãn + dấu `*` bắt buộc. */
+/** Leaf prop `isRequired` — dấu `*` sau nhãn. */
 export const Required: Story = {
     render: () => {
         const Demo = () => {
             const [value, setValue] = useState<DateValue | null>(null)
             return (
-                <BlockAnatomy name="Input.Date" tier="atom" leaf="Required" parts={[LABEL, FIELD]} note="isRequired → dấu * sau nhãn." code={"<Input.Date label=\"Ngày bắt đầu\" isRequired value={v} onValueChange={setV} />"}>
-                    <div className="w-72"><Input.Date label="Ngày bắt đầu" isRequired value={value} onValueChange={setValue} showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Date"
+                    tier="atom"
+                    leaf="Prop `isRequired`"
+                    note="isRequired adds a * after the label."
+                    code={"<Input.Date label=\"Start date\" isRequired value={value} onValueChange={setValue} />"}
+                >
+                    <div className="w-72">
+                        <Input.Date label="Start date" isRequired value={value} onValueChange={setValue} showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -60,14 +85,22 @@ export const Required: Story = {
     },
 }
 
-/** Filled — có giá trị ngày thật (`parseDate("2026-07-25")`) + nhãn. */
+/** Leaf prop `value` filled — ngày thật (`parseDate`) thay vì `null`. */
 export const Filled: Story = {
     render: () => {
         const Demo = () => {
             const [value, setValue] = useState<DateValue | null>(parseDate("2026-07-25"))
             return (
-                <BlockAnatomy name="Input.Date" tier="atom" leaf="Filled" parts={[LABEL, FIELD]} note="value có dữ liệu thật (DateValue)." code={"<Input.Date label=\"Ngày bắt đầu\" value={parseDate(\"2026-07-25\")} onValueChange={setV} />"}>
-                    <div className="w-72"><Input.Date label="Ngày bắt đầu" value={value} onValueChange={setValue} showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Date"
+                    tier="atom"
+                    leaf="Prop `value` (filled)"
+                    note="value holds a real DateValue."
+                    code={"<Input.Date label=\"Start date\" value={parseDate(\"2026-07-25\")} onValueChange={setValue} />"}
+                >
+                    <div className="w-72">
+                        <Input.Date label="Start date" value={value} onValueChange={setValue} showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -75,14 +108,22 @@ export const Filled: Story = {
     },
 }
 
-/** Disabled — khoá segments + trigger lịch + nhãn nhạt. */
+/** Leaf prop `isDisabled` — khoá segments + trigger lịch, nhãn nhạt. */
 export const Disabled: Story = {
     render: () => {
         const Demo = () => {
             const [value, setValue] = useState<DateValue | null>(parseDate("2026-07-25"))
             return (
-                <BlockAnatomy name="Input.Date" tier="atom" leaf="Disabled" parts={[LABEL, FIELD]} note="isDisabled → khoá segments + trigger lịch." code={"<Input.Date label=\"Ngày bắt đầu\" value={parseDate(\"2026-07-25\")} onValueChange={setV} isDisabled />"}>
-                    <div className="w-72"><Input.Date label="Ngày bắt đầu" value={value} onValueChange={setValue} isDisabled showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Date"
+                    tier="atom"
+                    leaf="Prop `isDisabled`"
+                    note="isDisabled locks the segments and the calendar trigger."
+                    code={"<Input.Date label=\"Start date\" value={parseDate(\"2026-07-25\")} onValueChange={setValue} isDisabled />"}
+                >
+                    <div className="w-72">
+                        <Input.Date label="Start date" value={value} onValueChange={setValue} isDisabled showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -90,14 +131,22 @@ export const Disabled: Story = {
     },
 }
 
-/** Error — nhãn + errorMessage → hiện NHÃN + dòng đỏ + viền lỗi. */
+/** Leaf prop `errorMessage` — cùng `label` → dòng đỏ + viền lỗi. */
 export const Error: Story = {
     render: () => {
         const Demo = () => {
             const [value, setValue] = useState<DateValue | null>(null)
             return (
-                <BlockAnatomy name="Input.Date" tier="atom" leaf="Error" parts={[LABEL, FIELD, ERROR]} note="label + errorMessage → nhãn + dòng đỏ + viền." code={"<Input.Date label=\"Ngày bắt đầu\" errorMessage=\"Vui lòng chọn ngày\" value={v} onValueChange={setV} />"}>
-                    <div className="w-72"><Input.Date label="Ngày bắt đầu" errorMessage="Vui lòng chọn ngày" value={value} onValueChange={setValue} showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Date"
+                    tier="atom"
+                    leaf="Prop `errorMessage`"
+                    note="label plus errorMessage adds the red line and the invalid border."
+                    code={"<Input.Date label=\"Start date\" errorMessage=\"Please choose a date\" value={value} onValueChange={setValue} />"}
+                >
+                    <div className="w-72">
+                        <Input.Date label="Start date" errorMessage="Please choose a date" value={value} onValueChange={setValue} showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -105,12 +154,20 @@ export const Error: Story = {
     },
 }
 
-/** Loading — nhãn skeleton (mirror) trên field-box skeleton. */
+/** Leaf prop `isSkeleton` — nhãn mirror trên field-box skeleton. */
 export const Loading: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="Input.Date" tier="atom" leaf="Loading" parts={[LABEL, SKELETON]} note="isSkeleton + label → mirror nhãn trên hộp." code={"<Input.Date label=\"Ngày bắt đầu\" isSkeleton />"}>
-                <div className="w-72"><Input.Date label="Ngày bắt đầu" value={null} onValueChange={() => {}} isSkeleton showAnatomy /></div>
+            <BlockAnatomy
+                name="Input.Date"
+                tier="atom"
+                leaf="Prop `isSkeleton`"
+                note="isSkeleton with a label mirrors the label above the shimmer box."
+                code={"<Input.Date label=\"Start date\" isSkeleton />"}
+            >
+                <div className="w-72">
+                    <Input.Date label="Start date" value={null} onValueChange={() => {}} isSkeleton showAnatomy />
+                </div>
             </BlockAnatomy>
         </div>
     ),

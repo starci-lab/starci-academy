@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Typography } from "@heroui/react"
 import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * KHUNG (Layouts) — danh sách "brief" TĨNH các hàng CÓ DẤU (✓ / ✗ / none) trong một khung
@@ -10,7 +10,12 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  *
  * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): là danh sách LẶP nên `items` BẮT BUỘC là dữ liệu
  * (cấm children). Story ở đây chỉ render state của CHÍNH nó: `mark` (check/cross/none),
- * `tone` (success/muted/danger), `bordered`, và mirror `isSkeleton`.
+ * `tone` (success/muted/danger), `variant`, và mirror `isSkeleton`.
+ *
+ * 2026-07-26 (thầy, BA TRỤC ĐỘC LẬP): `bordered?: boolean` → `variant?: SurfaceCardVariant`
+ * (`"surface" | "nested"`, mặc định `"surface"`). Ánh xạ 1-1: `bordered=true` →
+ * `variant="nested"`. Leaf trước đây tách riêng `Bordered` nay gộp thành MỘT leaf `Variant`
+ * render đủ hai giá trị cạnh nhau (§ union side-by-side, cùng nếp với `MutedTone`).
  */
 const meta: Meta<typeof SurfaceCard.CrossList> = {
     title: "Layouts/Cards/SurfaceCard/SurfaceCard.CrossList",
@@ -29,13 +34,12 @@ const row = (text: string) => <Typography type="body-sm">{text}</Typography>
 
 /**
  * ANATOMY IS PER-LEAF: mỗi story bọc render của chính nó trong một BlockAnatomy riêng.
- * Khung này compose MỘT hàng lặp — `CrossListItem` — không drill xuống chỗ tách mark/body
- * bên trong hàng (đó là việc nội tại của hàng, không phải của khung). Cùng shape một-part ở
- * mọi leaf, kể cả `isSkeleton` (hàng vẫn render, chỉ ở state mirror).
+ *
+ * 2026-07-26 (thầy): bỏ hẳn prop `parts` (đường CŨ, `type AnatomyNode`) — leaf lặp
+ * `CrossListItem` của khung này không có story riêng nên không có `storyId` THẬT; theo
+ * luật whitelist mới của panel (chỉ nhận entry có `storyId` bấm-nhảy-được), khai `parts`/
+ * `annotate` ở đây chỉ tạo ra một "dep" không bấm đi đâu được. Bỏ hẳn prop thay vì khai rỗng.
  */
-const CROSS_LIST_PARTS: Array<AnatomyNode> = [
-    { name: "CrossListItem", tier: "primitive", role: "mỗi hàng (mark ✓/✗/none + nội dung, hoặc skeleton mirror)" },
-]
 
 export const Checks: Story = {
     render: () => (
@@ -44,21 +48,20 @@ export const Checks: Story = {
                 name="SurfaceCard.CrossList"
                 tier="primitive"
                 leaf="Checks"
-                parts={CROSS_LIST_PARTS}
-                reason="Danh sách brief marked (✓/✗) trong khung bg-surface, bounded, dùng lại ở PricingTable/CourseCard cho value-props. `mark` mặc định là 'check' nên item chỉ cần `text`."
+                reason="A marked (✓/✗) brief list inside a bounded bg-surface frame, reused by PricingTable/CourseCard for value-props. `mark` defaults to 'check', so an item only needs `text`."
                 code={`<SurfaceCard.CrossList
   items={[
-    { key: "projects", text: <Typography type="body-sm">Xây 3 dự án thực chiến…</Typography> },
-    { key: "grading", text: <Typography type="body-sm">Chấm bài bằng AI…</Typography> },
+    { key: "projects", text: <Typography type="body-sm">Build 3 real-world projects…</Typography> },
+    { key: "grading", text: <Typography type="body-sm">AI-graded assignments…</Typography> },
   ]}
 />`}
             >
                 <SurfaceCard.CrossList
                     showAnatomy
                     items={[
-                        { key: "projects", mark: "check", text: row("Xây 3 dự án thực chiến từ đầu đến khi triển khai") },
-                        { key: "grading", mark: "check", text: row("Chấm bài bằng AI theo checklist tuyển dụng thật") },
-                        { key: "mock", mark: "check", text: row("Mock interview không giới hạn số lần") },
+                        { key: "projects", mark: "check", text: row("Build 3 real-world projects from scratch to deployment") },
+                        { key: "grading", mark: "check", text: row("AI-graded assignments using real hiring checklists") },
+                        { key: "mock", mark: "check", text: row("Unlimited mock interviews") },
                     ]}
                 />
             </BlockAnatomy>
@@ -73,17 +76,16 @@ export const Crosses: Story = {
                 name="SurfaceCard.CrossList"
                 tier="primitive"
                 leaf="Crosses"
-                parts={CROSS_LIST_PARTS}
-                note="`mark='cross'` → XCircleIcon, tone mặc định 'muted' (chưa gồm — lùi lại, không phải cảnh báo)."
+                note="`mark='cross'` → XCircleIcon, default tone 'muted' (not included — recede, not a warning)."
                 code={`<SurfaceCard.CrossList
-  items={[{ key: "cert", mark: "cross", text: <Typography type="body-sm">Không có chứng chỉ…</Typography> }]}
+  items={[{ key: "cert", mark: "cross", text: <Typography type="body-sm">No certificate…</Typography> }]}
 />`}
             >
                 <SurfaceCard.CrossList
                     showAnatomy
                     items={[
-                        { key: "cert", mark: "cross", text: row("Không có chứng chỉ nộp cho nhà tuyển dụng") },
-                        { key: "mentor", mark: "cross", text: row("Không hỗ trợ 1-1 với mentor") },
+                        { key: "cert", mark: "cross", text: row("No certificate to submit to employers") },
+                        { key: "mentor", mark: "cross", text: row("No 1-on-1 mentor support") },
                     ]}
                 />
             </BlockAnatomy>
@@ -99,8 +101,7 @@ export const Mixed: Story = {
                 name="SurfaceCard.CrossList"
                 tier="primitive"
                 leaf="Mixed"
-                parts={CROSS_LIST_PARTS}
-                note="Một CrossList trộn cả `mark: 'check'` và `mark: 'cross'` — mark sống trên ITEM, không phải trên khung."
+                note="One CrossList mixing both `mark: 'check'` and `mark: 'cross'` — mark lives on the ITEM, not the frame."
                 code={`<SurfaceCard.CrossList
   items={[
     { key: "content", mark: "check", text: <…/> },
@@ -111,10 +112,10 @@ export const Mixed: Story = {
                 <SurfaceCard.CrossList
                     showAnatomy
                     items={[
-                        { key: "content", mark: "check", text: row("Toàn bộ 12 tuần nội dung + bài tập tự chấm") },
-                        { key: "mock", mark: "check", text: row("Mock interview không giới hạn") },
-                        { key: "mentor", mark: "cross", text: row("Chưa gồm 1-1 review với mentor") },
-                        { key: "referral", mark: "cross", text: row("Chưa gồm hỗ trợ giới thiệu việc làm") },
+                        { key: "content", mark: "check", text: row("All 12 weeks of content + self-graded exercises") },
+                        { key: "mock", mark: "check", text: row("Unlimited mock interviews") },
+                        { key: "mentor", mark: "cross", text: row("Not included: 1-on-1 mentor review") },
+                        { key: "referral", mark: "cross", text: row("Not included: job referral support") },
                     ]}
                 />
             </BlockAnatomy>
@@ -130,17 +131,16 @@ export const NoMark: Story = {
                 name="SurfaceCard.CrossList"
                 tier="primitive"
                 leaf="NoMark"
-                parts={CROSS_LIST_PARTS}
-                note="`mark: 'none'` → hàng không render icon, chỉ còn nội dung — vẫn cùng composition (1 hàng = 1 part)."
+                note="`mark: 'none'` → the row renders no icon, only content — still the same composition (1 row = 1 part)."
                 code={`<SurfaceCard.CrossList
-  items={[{ key: "lang", mark: "none", text: <Typography type="body-sm">Biết một ngôn ngữ lập trình bất kỳ</Typography> }]}
+  items={[{ key: "lang", mark: "none", text: <Typography type="body-sm">Know any programming language</Typography> }]}
 />`}
             >
                 <SurfaceCard.CrossList
                     showAnatomy
                     items={[
-                        { key: "lang", mark: "none", text: row("Biết một ngôn ngữ lập trình bất kỳ") },
-                        { key: "node", mark: "none", text: row("Máy tính cài được Node.js") },
+                        { key: "lang", mark: "none", text: row("Know any programming language") },
+                        { key: "node", mark: "none", text: row("A computer with Node.js installed") },
                     ]}
                 />
             </BlockAnatomy>
@@ -148,31 +148,55 @@ export const NoMark: Story = {
     ),
 }
 
-/** Bordered — surface-in-surface (lồng trong modal/drawer/panel): border thay shadow. */
-export const Bordered: Story = {
+/**
+ * `variant` — surface-in-surface (§1a). `"surface"` (mặc định) khi render THẲNG trên
+ * `bg-background`; `"nested"` (border thay shadow) khi khung này lồng trong một mặt khác
+ * (modal/drawer/panel).
+ *
+ * 2026-07-26 (thầy): gộp từ leaf `Bordered` cũ (chỉ render MỘT giá trị `bordered=true`)
+ * thành MỘT leaf `Variant` render đủ union cạnh nhau — composition hàng không đổi giữa
+ * hai giá trị, chỉ khung ngoài đổi.
+ */
+export const Variant: Story = {
     render: () => (
-        <div className="p-8">
-            <div className="rounded-3xl bg-surface p-3 shadow-surface">
+        <div className="flex flex-col gap-6 p-8">
+            <div className="flex flex-col gap-2">
+                <Typography type="body-xs" color="muted">variant=&quot;surface&quot; (default) — shadow-surface, rendered directly on bg-background</Typography>
                 <BlockAnatomy
                     name="SurfaceCard.CrossList"
                     tier="primitive"
-                    leaf="Bordered"
-                    parts={CROSS_LIST_PARTS}
-                    note="`bordered` đổi khung (border thay shadow) khi lồng trong surface khác — composition hàng không đổi."
-                    code={`<SurfaceCard.CrossList
-  bordered
-  items={[…]}
-/>`}
+                    leaf="Variant / surface"
+                    code={`<SurfaceCard.CrossList items={[…]} />`}
                 >
                     <SurfaceCard.CrossList
-                        bordered
                         showAnatomy
                         items={[
-                            { key: "included", mark: "check", text: row("Gồm: toàn bộ nội dung khoá") },
-                            { key: "excluded", mark: "cross", text: row("Chưa gồm: mentor 1-1") },
+                            { key: "included", mark: "check", text: row("Included: full course content") },
+                            { key: "excluded", mark: "cross", text: row("Not included: 1-on-1 mentor") },
                         ]}
                     />
                 </BlockAnatomy>
+            </div>
+            <div className="flex flex-col gap-2">
+                <Typography type="body-xs" color="muted">variant=&quot;nested&quot; — border instead of shadow, when nested inside another surface</Typography>
+                <div className="rounded-3xl bg-surface p-3 shadow-surface">
+                    <BlockAnatomy
+                        name="SurfaceCard.CrossList"
+                        tier="primitive"
+                        leaf="Variant / nested"
+                        note={"`variant=\"nested\"` changes the outer frame (border instead of shadow) when nested in another surface — row composition stays the same."}
+                        code={`<SurfaceCard.CrossList variant="nested" items={[…]} />`}
+                    >
+                        <SurfaceCard.CrossList
+                            variant="nested"
+                            showAnatomy
+                            items={[
+                                { key: "included", mark: "check", text: row("Included: full course content") },
+                                { key: "excluded", mark: "cross", text: row("Not included: 1-on-1 mentor") },
+                            ]}
+                        />
+                    </BlockAnatomy>
+                </div>
             </div>
         </div>
     ),
@@ -189,8 +213,7 @@ export const DangerTone: Story = {
                 name="SurfaceCard.CrossList"
                 tier="primitive"
                 leaf="DangerTone"
-                parts={CROSS_LIST_PARTS}
-                note="`tone: 'danger'` chỉ đổi màu icon mark bên trong hàng — composition (1 hàng = 1 part) không đổi."
+                note="`tone: 'danger'` only changes the mark icon's color inside the row — composition (1 row = 1 part) stays the same."
                 code={`<SurfaceCard.CrossList
   items={[{ key: "progress", mark: "cross", tone: "danger", text: <…/> }]}
 />`}
@@ -198,9 +221,9 @@ export const DangerTone: Story = {
                 <SurfaceCard.CrossList
                     showAnatomy
                     items={[
-                        { key: "progress", mark: "cross", tone: "danger", text: row("Mất toàn bộ tiến độ chấm bài bằng AI") },
-                        { key: "mock", mark: "cross", tone: "danger", text: row("Mất quyền mock interview không giới hạn") },
-                        { key: "mentor", mark: "cross", text: row("Chưa gồm: mentor 1-1 (như cũ)") },
+                        { key: "progress", mark: "cross", tone: "danger", text: row("Lose all AI-graded assignment progress") },
+                        { key: "mock", mark: "cross", tone: "danger", text: row("Lose unlimited mock interview access") },
+                        { key: "mentor", mark: "cross", text: row("Not included: 1-on-1 mentor (unchanged)") },
                     ]}
                 />
             </BlockAnatomy>
@@ -217,46 +240,44 @@ export const MutedTone: Story = {
     render: () => (
         <div className="flex flex-col gap-6 p-8">
             <div className="flex flex-col gap-2">
-                <Typography type="body-xs" color="muted">tone=&quot;success&quot; (mặc định) — tick xanh, tín hiệu &quot;gồm&quot;</Typography>
+                <Typography type="body-xs" color="muted">tone=&quot;success&quot; (default) — green check, an &quot;included&quot; signal</Typography>
                 <BlockAnatomy
                     name="SurfaceCard.CrossList"
                     tier="primitive"
                     leaf="MutedTone / success"
-                    parts={CROSS_LIST_PARTS}
                     code={`<SurfaceCard.CrossList
-  bordered
+  variant="nested"
   items={[{ key: "projects", mark: "check", text: <…/> }]}
 />`}
                 >
                     <SurfaceCard.CrossList
-                        bordered
+                        variant="nested"
                         showAnatomy
                         items={[
-                            { key: "projects", mark: "check", text: row("Xây 3 dự án thực chiến") },
-                            { key: "grading", mark: "check", text: row("Chấm bài bằng AI") },
+                            { key: "projects", mark: "check", text: row("Build 3 real-world projects") },
+                            { key: "grading", mark: "check", text: row("AI-graded assignments") },
                         ]}
                     />
                 </BlockAnatomy>
             </div>
             <div className="flex flex-col gap-2">
-                <Typography type="body-xs" color="muted">tone=&quot;muted&quot; — tick mờ, chữ dẫn (value-props trong card)</Typography>
+                <Typography type="body-xs" color="muted">tone=&quot;muted&quot; — faded check, text leads (value-props inside another card)</Typography>
                 <BlockAnatomy
                     name="SurfaceCard.CrossList"
                     tier="primitive"
                     leaf="MutedTone / muted"
-                    parts={CROSS_LIST_PARTS}
-                    note="`tone: 'muted'` chỉ đổi màu icon — composition không đổi so với leaf success ở trên."
+                    note="`tone: 'muted'` only changes the icon color — composition stays the same as the success leaf above."
                     code={`<SurfaceCard.CrossList
-  bordered
+  variant="nested"
   items={[{ key: "projects", mark: "check", tone: "muted", text: <…/> }]}
 />`}
                 >
                     <SurfaceCard.CrossList
-                        bordered
+                        variant="nested"
                         showAnatomy
                         items={[
-                            { key: "projects", mark: "check", tone: "muted", text: row("Xây 3 dự án thực chiến") },
-                            { key: "grading", mark: "check", tone: "muted", text: row("Chấm bài bằng AI") },
+                            { key: "projects", mark: "check", tone: "muted", text: row("Build 3 real-world projects") },
+                            { key: "grading", mark: "check", tone: "muted", text: row("AI-graded assignments") },
                         ]}
                     />
                 </BlockAnatomy>
@@ -273,8 +294,7 @@ export const Loading: Story = {
                 name="SurfaceCard.CrossList"
                 tier="primitive"
                 leaf="Loading"
-                parts={CROSS_LIST_PARTS}
-                note="`isSkeleton` → khung tự sinh `skeletonRows` hàng ở state skeleton (bỏ qua `items`), cùng 1 part 'CrossListItem'."
+                note="`isSkeleton` → the frame self-generates `skeletonRows` rows in skeleton state (ignores `items`), same single part 'CrossListItem'."
                 code={`<SurfaceCard.CrossList
   items={[]}
   isSkeleton

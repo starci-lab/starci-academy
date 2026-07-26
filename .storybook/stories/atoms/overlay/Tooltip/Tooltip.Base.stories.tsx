@@ -1,7 +1,23 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Tooltip } from "@sb-components/atoms/overlay/Tooltip/Tooltip"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
+/**
+ * ATOM — `Tooltip.Base`: hover-hint DUY NHẤT bọc HeroUI Tooltip.
+ *
+ * ⚠️ GIỮ `children` là ĐÚNG (§12b, lý do ghi ở header `Tooltip.tsx`): atom-wrapper
+ * buộc bọc phần tử bất kỳ để react-aria gắn hover/focus/aria-describedby thẳng lên
+ * nó. Cùng giới hạn PORTAL như Menu/Popover — `Content`/`Arrow` render ra body nên
+ * BlockAnatomy (leo ancestor trong render-box) không leo tới được.
+ *
+ * ⚠️ KHÔNG có `annotate`: phần DOM duy nhất còn nằm TRONG render-box là `Trigger` —
+ * chính là `children` do story truyền vào (`TriggerBox`, một span demo không có
+ * story riêng). `Content`/`Arrow` portal ra ngoài nên không bao giờ vào được cây dù
+ * có khai `storyId`. Không có node nào trỏ tới được một story thật ⇒ bỏ hẳn prop.
+ *
+ * 📐 Hai leaf theo prop CÓ HÌNH: `Default` (trần, baseline) + `Placements` (union
+ * `placement` render đủ 4 hướng trong CÙNG một leaf, không tách theo từng giá trị).
+ */
 const meta: Meta<typeof Tooltip.Base> = {
     title: "Atoms/Overlay/Tooltip/Tooltip.Base",
     component: Tooltip.Base,
@@ -13,16 +29,8 @@ export default meta
 
 type Story = StoryObj<typeof Tooltip.Base>
 
-// LEAF = composition. Trigger nằm TRONG render-box (được badge); Content/Arrow portal
-// ra body nên chỉ hiện ở legend + Cây.
-const PARTS: Array<AnatomyNode> = [
-    { name: "Trigger", tier: "atom", role: "phần tử mở tooltip (Tooltip.Trigger) — prop `children` (NGOẠI LỆ wrapper)" },
-    { name: "Content", tier: "atom", role: "panel hint (Tooltip.Content) — prop `label`, portal ra body" },
-    { name: "Arrow", tier: "atom", role: "mũi chỉ về trigger (Tooltip.Arrow) — bật bằng `showArrow`" },
-]
-
 /** A bordered term used as the tooltip trigger. */
-const TriggerBox = ({ label = "Di chuột vào đây" }: { label?: string }) => (
+const TriggerBox = ({ label = "Hover to see it" }: { label?: string }) => (
     <span className="inline-flex cursor-help rounded-xl border border-default-200 bg-default-100 px-3 py-2 text-sm font-medium text-foreground">
         {label}
     </span>
@@ -36,14 +44,13 @@ export const Default: Story = {
                 name="Tooltip.Base"
                 tier="atom"
                 leaf="Default"
-                parts={PARTS}
-                reason="Atom tooltip DUY NHẤT bọc HeroUI Tooltip; atom sở hữu inset/max-width/arrow, consumer chỉ truyền label + trigger."
-                note="defaultOpen pin panel mở khi load để soi. placement=top. ⚠️ Tooltip.Base GIỮ `children` — ngoại lệ CÓ TÊN: atom-wrapper buộc bọc phần tử bất kỳ (chip/icon-button/thuật ngữ) để react-aria gắn hover/focus/aria-describedby thẳng lên nó. Atom khác cấm tuyệt đối."
-                code={"<Tooltip.Base label=\"Xếp hạng theo XP tuần\" placement=\"top\">\n  <TermChip />\n</Tooltip.Base>"}
+                reason="The one tooltip atom, wrapping HeroUI Tooltip. It owns the inset, max-width and arrow — callers just hand it a label and a trigger."
+                note="defaultOpen pins the panel open on load so you can inspect it; placement defaults to top. Tooltip.Base is one of only two atoms allowed to keep children (the other is Badge) — it has to wrap whatever element it explains, so react-aria can attach hover/focus/aria-describedby straight onto that element. Every other atom is barred from taking children."
+                code={"<Tooltip.Base label=\"Weekly XP ranking\" placement=\"top\">\n  <TermChip />\n</Tooltip.Base>"}
             >
                 <div className="flex justify-center py-12">
-                    <Tooltip.Base label="Xếp hạng theo tổng XP trong tuần" placement="top" defaultOpen showAnatomy>
-                        <TriggerBox label="Hạng tuần" />
+                    <Tooltip.Base label="Ranked by total XP earned this week" placement="top" defaultOpen showAnatomy>
+                        <TriggerBox label="Weekly rank" />
                     </Tooltip.Base>
                 </div>
             </BlockAnatomy>
@@ -58,9 +65,8 @@ export const Placements: Story = {
             <BlockAnatomy
                 name="Tooltip.Base"
                 tier="atom"
-                leaf="Placements"
-                parts={PARTS}
-                note="Cùng một atom, khác `placement`. Panel portal ra body và tự neo quanh trigger."
+                leaf="Prop `placement`"
+                note="Same atom, different placement. The panel portals to the body and anchors itself around the trigger."
                 code={"<Tooltip.Base label=\"…\" placement=\"top | bottom | left | right\">…</Tooltip.Base>"}
             >
                 <div className="grid grid-cols-2 gap-x-24 gap-y-20 px-16 py-24">

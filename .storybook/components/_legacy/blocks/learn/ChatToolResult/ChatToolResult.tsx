@@ -49,7 +49,8 @@ export interface ChatToolResultProps {
 /**
  * In-chat tool-result widget — a labeled, pickable list of RAG hits rendered
  * INLINE inside an assistant ChatBubble (generative-UI message part). Composes a
- * `compact bordered` `SurfaceCard.Nested` (surface-in-surface on the chat bubble) with
+ * `radius="xl" variant="nested"` `SurfaceCard.Nested` (surface-in-surface on the chat bubble; codemod
+ * 2026-07-26, formerly `compact bordered`) with
  * a leading kind icon + count in the header, shared {@link EntityResultRow}s as its
  * sections, and a {@link SeeMoreLink} footer.
  *
@@ -102,10 +103,12 @@ export const ChatToolResult = ({
             />
         ))
 
+    // Codemod 2026-07-26: `compact` → `radius="xl"`, `bordered` → `variant="nested"`
+    // (API 3-trục SurfaceCard.Nested).
     return (
         <SurfaceCard.Nested
-            compact
-            bordered
+            radius="xl"
+            variant="nested"
             title={label}
             icon={icon}
             meta={

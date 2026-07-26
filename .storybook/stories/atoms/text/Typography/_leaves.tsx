@@ -2,52 +2,40 @@ import type { ComponentType, ReactNode } from "react"
 import type { StoryObj } from "@storybook/nextjs"
 import { CheckCircleIcon, ArrowRightIcon } from "@phosphor-icons/react"
 import type { TypographyProps } from "@sb-components/atoms/text/Typography/Typography"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * Shared story-leaf builder for the per-SIZE Typography components. NOT a `.stories`
  * file (leading `_`, no `.stories` suffix → not loaded by the glob).
+ *
+ * ⚠️ 2026-07-26: bỏ hẳn `parts`/`annotate`. `Typography.*` là ATOM LÁ cuối cùng của
+ * hệ chữ — bọc thẳng HeroUI (`Typography.Heading`/`Link`/`Skeleton`), KHÔNG compose
+ * atom nào khác có story riêng, nên KHÔNG có deps (canon §12, `BlockAnatomyProps`).
+ * `data-anat-part` mà atom tự phát (`Text`/`PrefixIcon`/`SuffixIcon`/`Skeleton`) là
+ * KHE nội bộ, không phải component có nhà để nhảy tới — không khai `annotate`.
  */
 
-/** Rules (mirrors README) — shown at the top of each size's Overview. */
+/** Rules (mirrors README) — shown at the top of each size's Overview. Chữ TIẾNG ANH vì hiện ra docs page. */
 export const TYPOGRAPHY_RULES = `
-## \`Typography.*\` — atom chữ (custom, KHÔNG phải HeroUI Typography)
+## \`Typography.*\` — the text atom (custom, not the HeroUI \`Typography\`)
 
-Tách theo CỠ: \`Typography.Xs\` · \`.Sm\` · \`.Base\` · \`.Lg\` (mở rộng dễ). Content qua PROP \`text={...}\`.
+One member: \`Typography.Base\`. Content goes through the \`text={...}\` prop, never children.
 
-**Màu:** \`color="default|muted|accent|success|warning|danger"\` (default=foreground §9a; semantic=§2).
-**Weight §9b:** \`weight="medium"|"bold"\` · \`isItalic\`.
-**\`isLink\`:** HeroUI \`Link\` (accent + hover underline) — KHÔNG kèm weight/icon.
-**Icon (strict):** \`prefixIcon\`/\`suffixIcon\` = COMPONENT phosphor (\`*Icon\`, §5⃣0 một bộ duy nhất); atom ép size=font-size + weight theo §5⃣0a — story KHÔNG tự truyền \`weight\`. ⚠️ **có icon → text TỰ \`font-medium\`**. \`iconSlide\` = ARROW trượt khi hover (§5b, không caret).
-**Cắt chữ:** \`truncate\` (1 dòng) · \`lineClamp={1|2|3}\` · **\`tabularNums\`** cho số (§3 thẳng cột).
-**\`isSkeleton\`:** atom tự vẽ text-bar skeleton (hybrid C).
+**Color:** \`color="default|muted|accent|success|warning|danger"\` — default is the page foreground, the rest borrow the shared status colors.
+**Weight:** \`weight="medium"|"bold"\` — medium reads as working emphasis, bold reads as a heading. \`isItalic\` for italics.
+**\`isLink\`:** renders as a HeroUI \`Link\` — accent color with a hover underline. Don't pair it with weight or an icon.
+**Icons (strict):** \`prefixIcon\`/\`suffixIcon\` take an icon COMPONENT, never JSX. The atom pins the glyph to the text size and picks the weight — stories never pass either. ⚠️ Any icon pushes the text to \`font-medium\` automatically. \`iconSlide\` slides an arrow on hover (prefix ← / suffix →) — arrows only, never a caret.
+**Clipping:** \`truncate\` for one line, \`lineClamp={1|2|3}\` for a few, **\`tabularNums\`** to keep digits lined up in a column.
+**\`isSkeleton\`:** the atom draws its own shimmer bar — it owns its resting state.
 `
 
 type SizeComponent = ComponentType<TypographyProps>
 
-const TEXT_PARTS: Array<AnatomyNode> = [{ name: "Text", tier: "atom", role: "nội dung chữ (prop `text`)" }]
-const PREFIX_PARTS: Array<AnatomyNode> = [
-    { name: "PrefixIcon", tier: "atom", role: "leading glyph — COMPONENT, atom ép size=font-size" },
-    { name: "Text", tier: "atom", role: "nội dung chữ (icon → tự font-medium)" },
-]
-const BOTH_PARTS: Array<AnatomyNode> = [
-    { name: "PrefixIcon", tier: "atom", role: "leading glyph (component)" },
-    { name: "Text", tier: "atom", role: "nội dung chữ" },
-    { name: "SuffixIcon", tier: "atom", role: "trailing glyph (component)" },
-]
-const SUFFIX_PARTS: Array<AnatomyNode> = [
-    { name: "Text", tier: "atom", role: "nội dung chữ" },
-    { name: "SuffixIcon", tier: "atom", role: "trailing arrow — `iconSlide` trượt khi hover (§5b)" },
-]
-const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton", tier: "atom", role: "leaf skeleton do atom tự sở hữu (text bar)" },
-]
-
 export const makeTypographyLeaves = (Comp: SizeComponent, label: string) => {
-    const leaf = (leafName: string, parts: Array<AnatomyNode>, code: string, node: ReactNode, extra?: string): StoryObj => ({
+    const leaf = (leafName: string, code: string, node: ReactNode, extra?: string): StoryObj => ({
         render: () => (
             <div className="p-8">
-                <BlockAnatomy name={label} tier="atom" leaf={leafName} parts={parts} note={extra} code={code}>
+                <BlockAnatomy name={label} tier="atom" leaf={leafName} note={extra} code={code}>
                     {node}
                 </BlockAnatomy>
             </div>
@@ -56,55 +44,89 @@ export const makeTypographyLeaves = (Comp: SizeComponent, label: string) => {
 
     return {
         /** Plain — chỉ chữ. */
-        Plain: leaf("Plain", TEXT_PARTS, `<${label} text="Chấm bài với model premium" />`, (
-            <Comp text="Chấm bài với model premium" showAnatomy />
+        Plain: leaf("Plain", `<${label} text="Grade assignments with the premium model" />`, (
+            <Comp text="Grade assignments with the premium model" showAnatomy />
         )),
-        /** Colors — mọi tone semantic (§9a + §2). */
+        /** Colors — mọi tone semantic (§9a + §2), một row. */
         Colors: {
             render: () => (
-                <div className="flex flex-col gap-2 p-8">
-                    <Comp text="default — chữ chính (foreground)" />
-                    <Comp text="muted — chữ phụ" color="muted" />
-                    <Comp text="accent — nhấn / của tôi" color="accent" />
-                    <Comp text="success — đạt / xong" color="success" />
-                    <Comp text="warning — cảnh báo / sắp hết" color="warning" />
-                    <Comp text="danger — lỗi / trượt" color="danger" />
+                <div className="p-8">
+                    <BlockAnatomy
+                        name={label}
+                        tier="atom"
+                        leaf="Prop `color`"
+                        note="Every semantic tone in one row — default stays the page foreground, the rest borrow the shared status colors."
+                        code={`<${label} text="Primary text" />
+<${label} text="Secondary text" color="muted" />
+<${label} text="Highlight / mine" color="accent" />
+<${label} text="Passed / done" color="success" />
+<${label} text="Caution / running low" color="warning" />
+<${label} text="Error / failed" color="danger" />`}
+                    >
+                        <div className="flex flex-col gap-2">
+                            <Comp text="Primary text" showAnatomy />
+                            <Comp text="Secondary text" color="muted" />
+                            <Comp text="Highlight / mine" color="accent" />
+                            <Comp text="Passed / done" color="success" />
+                            <Comp text="Caution / running low" color="warning" />
+                            <Comp text="Error / failed" color="danger" />
+                        </div>
+                    </BlockAnatomy>
                 </div>
             ),
         } as StoryObj,
-        /** Bold — heading (§9b), KHÔNG kèm icon. */
-        Bold: leaf("Bold", TEXT_PARTS, `<${label} text="Doanh thu quý 4" weight="bold" />`, (
-            <Comp text="Doanh thu quý 4" weight="bold" showAnatomy />
-        ), "weight=bold = heading. Weight KHÔNG kèm icon."),
+        /**
+         * Weight — cả hai giá trị hợp lệ ở body scale (`semibold` chỉ dành cho heading,
+         * đã dồn về `medium` ở body — xem JSDoc `Typography.tsx`). KHÔNG kèm icon.
+         */
+        Bold: {
+            render: () => (
+                <div className="p-8">
+                    <BlockAnatomy
+                        name={label}
+                        tier="atom"
+                        leaf="Prop `weight`"
+                        note="medium reads as working emphasis, bold reads as a heading. Don't pair weight with an icon — an icon already forces medium."
+                        code={`<${label} text="Emphasized text" weight="medium" />
+<${label} text="Q4 revenue" weight="bold" />`}
+                    >
+                        <div className="flex flex-col gap-2">
+                            <Comp text="Emphasized text" weight="medium" showAnatomy />
+                            <Comp text="Q4 revenue" weight="bold" />
+                        </div>
+                    </BlockAnatomy>
+                </div>
+            ),
+        } as StoryObj,
         /** Link — HeroUI Link (§1 accent). */
-        Link: leaf("Link", TEXT_PARTS, `<${label} text="Xem chi tiết" isLink />`, (
-            <Comp text="Xem chi tiết" isLink showAnatomy />
-        ), "isLink = HeroUI Link (accent + hover underline)."),
+        Link: leaf("Link", `<${label} text="View details" isLink />`, (
+            <Comp text="View details" isLink showAnatomy />
+        ), "isLink renders as HeroUI Link — accent color with a hover underline."),
         /** WithPrefixIcon — leading icon; text tự font-medium. */
-        WithPrefixIcon: leaf("WithPrefixIcon", PREFIX_PARTS, `<${label} text="Đã đạt" prefixIcon={CheckCircleIcon} />`, (
-            <Comp text="Đã đạt" prefixIcon={CheckCircleIcon} showAnatomy />
-        ), "có icon → text tự font-medium (glyph phosphor fit medium text)."),
+        WithPrefixIcon: leaf("WithPrefixIcon", `<${label} text="Passed" prefixIcon={CheckCircleIcon} />`, (
+            <Comp text="Passed" prefixIcon={CheckCircleIcon} showAnatomy />
+        ), "An icon pushes the text to font-medium automatically, so the glyph sits flush with the weight."),
         /** WithBothIcons — prefix + suffix. */
-        WithBothIcons: leaf("WithBothIcons", BOTH_PARTS, `<${label} text="Xem kết quả" prefixIcon={CheckCircleIcon} suffixIcon={ArrowRightIcon} />`, (
-            <Comp text="Xem kết quả" prefixIcon={CheckCircleIcon} suffixIcon={ArrowRightIcon} showAnatomy />
+        WithBothIcons: leaf("WithBothIcons", `<${label} text="View results" prefixIcon={CheckCircleIcon} suffixIcon={ArrowRightIcon} />`, (
+            <Comp text="View results" prefixIcon={CheckCircleIcon} suffixIcon={ArrowRightIcon} showAnatomy />
         )),
         /** CtaArrow — suffix ARROW + `iconSlide` (hover trượt phải, §5b). */
-        CtaArrow: leaf("CtaArrow", SUFFIX_PARTS, `<${label} text="Xem thêm" suffixIcon={ArrowRightIcon} iconSlide color="accent" />`, (
-            <Comp text="Xem thêm" suffixIcon={ArrowRightIcon} iconSlide color="accent" showAnatomy />
-        ), "iconSlide: hover thì arrow trượt phải (§5b, CHỈ arrow không caret)."),
+        CtaArrow: leaf("CtaArrow", `<${label} text="See more" suffixIcon={ArrowRightIcon} iconSlide color="accent" />`, (
+            <Comp text="See more" suffixIcon={ArrowRightIcon} iconSlide color="accent" showAnatomy />
+        ), "iconSlide slides the arrow right on hover — arrows only, never a caret."),
         /** Truncate — 1 dòng ellipsis trong khung hẹp. */
-        Truncate: leaf("Truncate", TEXT_PARTS, `<${label} text="…chuỗi dài…" truncate />`, (
+        Truncate: leaf("Truncate", `<${label} text="…a very long string…" truncate />`, (
             <div className="max-w-[220px] rounded-2xl border border-default p-3">
-                <Comp text="Chuỗi rất dài này sẽ bị cắt bằng ellipsis khi vượt khung" truncate showAnatomy />
+                <Comp text="This string is long enough that it gets clipped with an ellipsis once it overflows the box" truncate showAnatomy />
             </div>
-        ), "truncate = 1 dòng + ellipsis (cần parent giới hạn width)."),
+        ), "truncate clips to one line with an ellipsis — the parent needs a bounded width."),
         /** Numeric — `tabularNums` cho số thẳng cột (§3). */
-        Numeric: leaf("Numeric", TEXT_PARTS, `<${label} text="1.284.000₫" tabularNums weight="bold" />`, (
+        Numeric: leaf("Numeric", `<${label} text="1.284.000₫" tabularNums weight="bold" />`, (
             <Comp text="1.284.000₫" tabularNums weight="bold" showAnatomy />
-        ), "tabularNums = chữ số đều bề rộng (giá/đếm thẳng cột)."),
+        ), "tabularNums locks digit widths so prices and counts line up in a column."),
         /** Loading — atom tự vẽ text-bar skeleton. */
-        Loading: leaf("Loading", SKELETON_PARTS, `<${label} text="…" isSkeleton />`, (
-            <Comp text="Chấm bài với model premium" isSkeleton showAnatomy />
-        ), "isSkeleton → text-bar shimmer OWNED bởi atom (hybrid C)."),
+        Loading: leaf("Loading", `<${label} text="…" isSkeleton />`, (
+            <Comp text="Grade assignments with the premium model" isSkeleton showAnatomy />
+        ), "isSkeleton draws its own shimmer bar — the atom owns its resting state."),
     }
 }

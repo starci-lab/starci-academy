@@ -14,6 +14,11 @@ import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCar
  * (không slot, không `items`) — story chỉ có state của chính nó: icon mặc định vs thay icon,
  * `isSelected`, `isDisabled`, `isSkeleton`. Không có BlockAnatomy vì khung này không phơi
  * `showAnatomy`/`anatPart` (§11a: chỉ gắn cây anatomy khi có `data-anat-part` thật).
+ *
+ * 2026-07-26 (thầy, BA TRỤC ĐỘC LẬP): `.Placeholder` KHÔNG nằm trong danh sách member đổi
+ * `bordered`/`flushContent`/`compact` — `SurfaceCardPlaceholderProps` không có prop nào
+ * trong ba trục đó (chỉ `icon`/`label`/`onPress`/`isSelected`/`isDisabled`/`isSkeleton`/
+ * `className`), nên story này không đổi gì ở codemod prop.
  */
 const meta: Meta<typeof SurfaceCard.Placeholder> = {
     title: "Layouts/Cards/SurfaceCard/SurfaceCard.Placeholder",
@@ -42,7 +47,7 @@ const Cell = ({ children }: { children: ReactNode }) => (
 export const Default: Story = {
     render: () => (
         <Cell>
-            <SurfaceCard.Placeholder label="Tạo CV mới" onPress={() => {}} />
+            <SurfaceCard.Placeholder label="Create new CV" onPress={() => {}} />
         </Cell>
     ),
 }
@@ -51,7 +56,7 @@ export const Default: Story = {
 export const CustomIcon: Story = {
     render: () => (
         <Cell>
-            <SurfaceCard.Placeholder icon={<FilePlusIcon />} label="Nhập từ file" onPress={() => {}} />
+            <SurfaceCard.Placeholder icon={<FilePlusIcon />} label="Import from file" onPress={() => {}} />
         </Cell>
     ),
 }
@@ -60,7 +65,7 @@ export const CustomIcon: Story = {
 export const Selected: Story = {
     render: () => (
         <Cell>
-            <SurfaceCard.Placeholder label="Tạo CV mới" isSelected onPress={() => {}} />
+            <SurfaceCard.Placeholder label="Create new CV" isSelected onPress={() => {}} />
         </Cell>
     ),
 }
@@ -69,7 +74,7 @@ export const Selected: Story = {
 export const Disabled: Story = {
     render: () => (
         <Cell>
-            <SurfaceCard.Placeholder label="Tạo CV mới" isDisabled onPress={() => {}} />
+            <SurfaceCard.Placeholder label="Create new CV" isDisabled onPress={() => {}} />
         </Cell>
     ),
 }
@@ -78,7 +83,7 @@ export const Disabled: Story = {
 export const Loading: Story = {
     render: () => (
         <Cell>
-            <SurfaceCard.Placeholder label="Tạo CV mới" isSkeleton onPress={() => {}} />
+            <SurfaceCard.Placeholder label="Create new CV" isSkeleton onPress={() => {}} />
         </Cell>
     ),
 }

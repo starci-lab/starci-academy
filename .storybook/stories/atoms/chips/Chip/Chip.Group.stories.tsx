@@ -76,10 +76,6 @@ export const Default: Story = {
                 annotate={GROUP_DEPS}
                 reason="The row is described as data, never as JSX children — so a caller cannot slip a different pill, a different tone, or a stray wrapper into the middle of it."
                 note="Short rows render every item. Once the list runs past the cut, the tail collapses into a +N chip; hover it and the tooltip lists the whole set, not just the hidden part — people open it to ask 'what are all of these', not 'what is missing'."
-                states={[
-                    { value: "fits the row", hint: "every item shown", rendered: true },
-                    { value: "runs past the cut", hint: "tail collapses into +N", rendered: true },
-                ]}
                 code={`<Chip.Group
   items={[
     { key: "ts", text: "TypeScript" },
@@ -108,12 +104,6 @@ export const MaxVisible: Story = {
                 annotate={GROUP_DEPS}
                 reason="The cut belongs to the row, not to the page: a tag row in a dense card can only afford two chips, the same row on a detail page can show five. Same data, one number to move."
                 note="All four rows below hold the same six items. Raise the number past the list and the +N chip disappears on its own — the count never goes negative."
-                states={[
-                    { value: "2", hint: "dense card", rendered: true },
-                    { value: "3", hint: "the default", rendered: true },
-                    { value: "5", hint: "roomy surface", rendered: true },
-                    { value: "8", hint: "above the list — no +N", rendered: true },
-                ]}
                 code={`<Chip.Group maxVisible={2} items={[…6 items…]} />
 <Chip.Group items={[…6 items…]} />          // 3 = default
 <Chip.Group maxVisible={5} items={[…6 items…]} />
@@ -141,7 +131,6 @@ export const Tones: Story = {
                 annotate={GROUP_DEPS}
                 reason="Tone sits on the row, not on the item. A row is read as one set, so one colour; letting each item pick its own turns a tag list into a rainbow and nobody can tell which chip is trying to say something."
                 note="The +N chip takes the row tone too, so the overflow does not read as a different kind of thing."
-                states={TONES.map(({ tone, hint }) => ({ value: tone, hint, rendered: true }))}
                 code={`<Chip.Group tone="neutral" items={[…]} />
 <Chip.Group tone="success" items={[…]} />
 <Chip.Group tone="warning" items={[…]} />
@@ -174,10 +163,6 @@ export const Skeleton: Story = {
                 annotate={GROUP_DEPS}
                 reason="The row does not draw the resting state itself — it still builds Chip.Base, one per slot, and each pill draws its own shimmer. Two components drawing the same pill would drift apart the first time one of them changes."
                 note="It holds maxVisible pills, so the row keeps the width it will have when the data lands. The pills are the bare, narrowest form because a row of tags has no leading mark and no × on it."
-                states={[
-                    { value: "default cut", hint: "3 resting pills", rendered: true },
-                    { value: "maxVisible={5}", hint: "5 resting pills", rendered: true },
-                ]}
                 code={`<Chip.Group isSkeleton items={tags} />
 <Chip.Group isSkeleton maxVisible={5} items={tags} />`}
             >

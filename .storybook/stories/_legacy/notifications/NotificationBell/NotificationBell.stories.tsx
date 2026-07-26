@@ -122,7 +122,7 @@ const SAMPLE_GROUPS: NotificationGroup[] = [
         label: "Today",
         items: [
             {
-                icon: <CheckCircleIcon />,
+                icon: CheckCircleIcon,
                 tone: "success",
                 title: "Your submission has been graded",
                 body: "API Gateway challenge — scored 92/100.",
@@ -131,7 +131,7 @@ const SAMPLE_GROUPS: NotificationGroup[] = [
                 onPress: () => {},
             },
             {
-                icon: <ChatCircleIcon />,
+                icon: ChatCircleIcon,
                 tone: "accent",
                 title: "Ethan replied to your comment",
                 body: "Right, that part should be split out into its own service.",
@@ -140,7 +140,7 @@ const SAMPLE_GROUPS: NotificationGroup[] = [
                 onPress: () => {},
             },
             {
-                icon: <VideoCameraIcon />,
+                icon: VideoCameraIcon,
                 tone: "warning",
                 title: "Your mock interview is about to start",
                 body: "System Design interview at 8:00 PM — about an hour to go.",
@@ -153,7 +153,7 @@ const SAMPLE_GROUPS: NotificationGroup[] = [
         label: "Earlier",
         items: [
             {
-                icon: <BookOpenIcon />,
+                icon: BookOpenIcon,
                 tone: "accent",
                 title: "New course just launched: Kubernetes in practice",
                 body: "Enroll early this week to get a special offer.",
@@ -161,7 +161,7 @@ const SAMPLE_GROUPS: NotificationGroup[] = [
                 onPress: () => {},
             },
             {
-                icon: <FlameIcon />,
+                icon: FlameIcon,
                 tone: "warning",
                 title: "Don't lose your 12-day study streak",
                 body: "Study one more lesson today to keep your streak going.",

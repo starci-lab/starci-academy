@@ -26,13 +26,8 @@ export type StepBadgeState = "done" | "active" | "muted"
 /** Badge size. */
 export type StepBadgeSize = "sm" | "md"
 
-/** Props for the {@link StepBadge} primitive. */
-export interface StepBadgeProps {
-    /**
-     * The step number (or any short glyph) to center in the badge. Ignored
-     * when {@link StepBadgeProps.state} is `"done"` — a check replaces it.
-     */
-    number: ReactNode
+/** Props chung — TRỪ cụm `number`/`isSkeleton` (xem {@link StepBadgeProps}). */
+interface StepBadgeOwnProps {
     /**
      * Visual state. `"done"` swaps the number for a check and fills success
      * (step completed); `"active"` fills accent-soft (the current step —
@@ -44,9 +39,22 @@ export interface StepBadgeProps {
     size?: StepBadgeSize
     /** Extra classes. */
     className?: string
-    /** `true` → render the skeleton mirror (a round placeholder). Consumer just flips the flag. */
-    isSkeleton?: boolean
+    /** `true` → gắn `data-anat-part` cho từng part để `BlockAnatomy` badge được. */
+    showAnatomy?: boolean
+    /**
+     * Tên `data-anat-part` gắn ở GỐC badge. Component BỌC nó (vd `Stepper`) truyền
+     * xuống (vd `"StepBadge"`) để cây deps nhận ra "chỗ này là một StepBadge" — cây
+     * dựng từ DOM nên không có nhãn thì không thấy.
+     */
+    anatPart?: string
 }
+
+/**
+ * `number` BẮT BUỘC khi render badge thật, KHÔNG cần khi `isSkeleton` — pill shimmer
+ * không có nội dung để căn giữa. Cùng khuôn với `ChipBaseProps`/`TypographyProps` (§12c).
+ */
+export type StepBadgeProps = StepBadgeOwnProps &
+    ({ isSkeleton: true; number?: ReactNode } | { isSkeleton?: false; number: ReactNode })
 
 /** state → filled tone. */
 const STATE: Record<StepBadgeState, string> = {
@@ -82,13 +90,22 @@ const StepBadgeBase = ({
     size = "sm",
     className,
     isSkeleton = false,
+    showAnatomy = false,
+    anatPart,
 }: StepBadgeProps) => {
     if (isSkeleton) {
-        return <HeroSkeleton className={cn("rounded-full", SKELETON_SIZE[size], className)} />
+        // Nhánh skeleton xét TRƯỚC mọi nhánh rẽ hình (§12c) — không có `number` để căn giữa.
+        return (
+            <HeroSkeleton
+                className={cn("rounded-full", SKELETON_SIZE[size], className)}
+                data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
+            />
+        )
     }
     return (
         <span
             aria-hidden
+            data-anat-part={anatPart ?? (showAnatomy ? "Badge" : undefined)}
             className={cn(
                 "flex shrink-0 items-center justify-center rounded-full font-medium",
                 SIZE[size],
@@ -96,7 +113,13 @@ const StepBadgeBase = ({
                 className,
             )}
         >
-            {state === "done" ? <CheckIcon weight="bold" /> : number}
+            {state === "done" ? (
+                <span aria-hidden data-anat-part={showAnatomy ? "Icon" : undefined} className="inline-flex shrink-0">
+                    <CheckIcon weight="bold" />
+                </span>
+            ) : (
+                number
+            )}
         </span>
     )
 }

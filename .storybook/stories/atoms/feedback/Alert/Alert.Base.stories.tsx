@@ -1,18 +1,23 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Alert } from "@sb-components/atoms/feedback/Alert/Alert"
+import { GithubLogoIcon } from "@phosphor-icons/react"
+import { Alert, type AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — `Alert.Base`: port DUY NHẤT xuống HeroUI Alert (`Feedback.Callout` và
  * `Toast.Base` đều compose từ đây).
  *
- * 📐 **HAI LEAF** (§14d.2): leaf chia theo CẤU TRÚC. `status` và `tone` cùng một cây
- * DOM, chỉ khác nội dung/màu ⇒ chúng là STATE, gộp chung MỘT leaf. Leaf thứ hai là
- * `WithActionAndClose` vì cây MỌC THÊM node thật (`Action` + `Close`).
+ * 📐 **1 PROP = 1 LEAF** (§12g — luật của TẦNG ATOM). Bản trước file này dùng lý lẽ
+ * §14d.2 ("leaf = cấu trúc, state gộp chung leaf") — SAI cho một atom: §14d.2 dành
+ * cho design/block/screen (xem cảnh báo ở đầu `Chip.Base.stories.tsx`). Ở tầng atom,
+ * `tone`/`icon`/`body`/`action`/`onClose` mỗi cái đổi một HÌNH thật (fill khác, thêm
+ * node khác) nên mỗi cái một leaf; hai leaf cũ (`Statuses`, `WithActionAndClose`) bỏ
+ * sót hẳn `icon` và `body` — hai prop có hình chưa từng lên hình ở đâu.
  *
- * Skeleton KHÔNG phải leaf — cùng cấu trúc, chỉ thay chữ bằng gạch (prop `isSkeleton`
- * vẫn có, §12c — hai chuyện khác nhau).
+ * DEPS thật DUY NHẤT: node `Close` — atom TỰ dựng nút × bằng `Button.Base` (không
+ * phải slot caller đưa vào) nên bấm nhảy được sang story của nó. `action` là slot
+ * caller đưa NODE TUỲ Ý (không riêng gì `Button.Base`) nên không tính là dep.
  */
 const meta: Meta<typeof Alert.Base> = {
     title: "Atoms/Feedback/Alert/Alert.Base",
@@ -25,79 +30,206 @@ export default meta
 
 type Story = StoryObj<typeof Alert.Base>
 
-const BASE_PARTS: Array<AnatomyNode> = [
-    { name: "Icon", tier: "atom", role: "chỉ báo valence — atom tự chọn icon Phosphor theo `status`" },
-    { name: "Content", tier: "atom", role: "cụm text" },
-    { name: "Title", tier: "atom", role: "dòng tiêu đề — prop `title`" },
-    { name: "Description", tier: "atom", role: "dòng phụ — prop `description`" },
+/** Node duy nhất trỏ sang story KHÁC: nút × luôn là `Button.Base` (atom tự dựng, không phải slot caller). */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    Close: {
+        tier: "atom",
+        role: "the × button — Alert.Base always builds it from Button.Base, ghost variant toned to status",
+        storyId: "atoms-buttons-button-button-base--default",
+    },
+}
+
+/** ĐỦ union `AlertStatus` — thiếu một giá trị là giá trị đó mọc thành leaf lạc chỗ. */
+const STATUSES: Array<{ status: AlertStatus; title: string; description: string }> = [
+    { status: "default", title: "Neutral note", description: "Carries no valence — for supporting information." },
+    { status: "accent", title: "Study tip", description: "Review the cards due today before starting a new lesson." },
+    { status: "success", title: "Submission saved", description: "Grading results will be ready in a few minutes." },
+    { status: "warning", title: "You haven't joined the course's GitHub team", description: "Some labs need repo access — join to unlock them." },
+    { status: "danger", title: "Couldn't load the content", description: "The connection dropped — try again in a moment." },
 ]
 
-const FULL_PARTS: Array<AnatomyNode> = [
-    ...BASE_PARTS,
-    { name: "Body", tier: "atom", role: "vùng tự do dưới description — prop `body` (atom CẤM children, §12b)" },
-    { name: "Action", tier: "atom", role: "hành động (prop `action`) — đặt trước ×" },
-    { name: "Close", tier: "atom", role: "nút × (prop `onClose`) — `Button.Base`, tone theo status" },
-]
-
-/**
- * Leaf "alert chỉ có CHỮ" — render đủ STATE trong CÙNG một cây DOM (§14d.2):
- * 5 `status` · 2 `tone` · hàng `isSkeleton`.
- *
- * `status` chọn tint + icon cùng lúc nên không thể lỡ ghép icon sai valence;
- * `tone` là CHỖ ĐẶT chứ không phải màu mới (`soft` trong surface, `plain` nổi).
- */
-export const Statuses: Story = {
+/** Leaf TRẦN — chỉ `title`, mọi prop khác giữ mặc định (status=default, tone=soft, không icon/description/body/action/close). */
+export const Default: Story = {
     render: () => (
-        <div className="flex max-w-xl flex-col gap-4 p-8">
+        <div className="max-w-xl p-8">
             <BlockAnatomy
                 name="Alert.Base"
                 tier="atom"
-                leaf="Statuses"
-                parts={BASE_PARTS}
-                reason="Port DUY NHẤT xuống HeroUI Alert. `Feedback.Callout` và `Toast.Base` đều compose từ đây — trước 2026-07-25 mỗi bên tự cắt thẳng vào HeroUI và nuôi bảng màu riêng."
-                note="`status` + `tone` + `isSkeleton` KHÔNG đổi một node nào ⇒ state, nằm chung một leaf. Glyph cố định size-5 (weight regular, §5.0a), không có trục `size`."
-                code={"<Alert.Base status=\"warning\" title=\"…\" description=\"…\" />\n<Alert.Base tone=\"plain\" … />   // alert nổi (toast)\n<Alert.Base isSkeleton />        // khung + icon THẬT, chữ thành gạch"}
+                leaf="Bare alert"
+                annotate={ANNOTATE}
+                reason="Port DUY NHẤT xuống HeroUI Alert — Feedback.Callout và Toast.Base đều compose từ đây. Mỗi leaf dưới đây khác đúng MỘT prop so với cái này, nên đây là mốc so sánh."
+                note="Chỉ `title` — status mặc định, tone mặc định soft, không description/body/icon riêng/action/close."
+                code={"<Alert.Base title=\"Note saved\" />"}
+            >
+                <Alert.Base title="Note saved" showAnatomy />
+            </BlockAnatomy>
+        </div>
+    ),
+}
+
+/** Leaf prop `status` — 5 Ý NGHĨA, render ĐỦ union. Đổi tint + icon mặc định + màu Title cùng lúc. */
+export const Statuses: Story = {
+    render: () => (
+        <div className="max-w-xl p-8">
+            <BlockAnatomy
+                name="Alert.Base"
+                tier="atom"
+                leaf="Prop `status`"
+                annotate={ANNOTATE}
+                reason="`status` chọn tint + icon mặc định + màu tiêu đề CÙNG LÚC — không thể lỡ ghép icon sai valence với chữ."
+                note="Năm status dùng chung một cây DOM, chỉ khác tint/icon/màu — không tách leaf theo giá trị."
+                code={STATUSES.map(({ status, title, description }) => `<Alert.Base status="${status}" title="${title}" description="${description}" />`).join("\n")}
             >
                 <div className="flex w-full flex-col gap-3">
-                    <Alert.Base status="default" title="Ghi chú trung tính" description="Không mang valence — dùng cho thông tin phụ." showAnatomy />
-                    <Alert.Base status="accent" title="Mẹo học nhanh" description="Ôn lại thẻ đến hạn trước khi vào bài mới." />
-                    <Alert.Base status="success" title="Đã lưu bài nộp" description="Kết quả chấm sẽ có sau ít phút." />
-                    <Alert.Base status="warning" title="Bạn chưa vào GitHub team của khoá" description="Một số bài lab cần quyền repo — bấm để tham gia." />
-                    <Alert.Base status="danger" title="Không tải được nội dung" description="Kết nối bị gián đoạn, thử lại sau ít phút." />
-                    {/* `tone` = chỗ đặt: soft nằm TRONG surface (không đọc thành card-in-card), plain là alert nổi. */}
-                    <Alert.Base tone="soft" status="warning" title="tone=soft" description="Hình của Feedback.Callout — dải tint phẳng trong surface." />
-                    <Alert.Base tone="plain" status="warning" title="tone=plain" description="Hình của Toast.Base — tint mặc định HeroUI." />
-                    {/* Skeleton = STATE, không phải leaf: khung + icon giữ THẬT, chỉ chữ thành gạch (§12c). */}
-                    <Alert.Base status="accent" isSkeleton />
-                    <Alert.Base status="danger" tone="plain" isSkeleton />
+                    {STATUSES.map(({ status, title, description }, index) => (
+                        <Alert.Base key={status} status={status} title={title} description={description} showAnatomy={index === 0} />
+                    ))}
                 </div>
             </BlockAnatomy>
         </div>
     ),
 }
 
-/** Đủ slot: action (footer) + close (×) + body tự do dưới description. */
-export const WithActionAndClose: Story = {
+/** Leaf prop `tone` — chỗ ĐẶT, không phải màu mới: `soft` phẳng TRONG surface, `plain` giữ tint HeroUI để alert nổi (toast). */
+export const Tone: Story = {
     render: () => (
         <div className="max-w-xl p-8">
             <BlockAnatomy
                 name="Alert.Base"
                 tier="atom"
-                leaf="WithActionAndClose"
-                parts={FULL_PARTS}
-                reason="Slot CÓ TÊN là đường chính: `title` header · `description`/`body` body · `action` footer. Nút × là `Button.Base` (atom), tone lấy theo status — badge dừng ở node Close, không drill vào ruột atom."
-                note="`body` (hoặc children) là vùng tự do — chỗ nhét list ngắn hay meta row."
-                code={"<Alert.Base status=\"warning\" title=\"…\" action={<Button.Base … />} onClose={fn} />"}
+                leaf="Prop `tone`"
+                annotate={ANNOTATE}
+                reason="`tone` là CHỖ ĐẶT chứ không phải một màu mới — cùng status, hai tone vẫn đọc ra hai NGỮ CẢNH khác nhau."
+                note="`soft` là hình `Feedback.Callout` dùng (dải tint phẳng trong surface). `plain` là hình `Toast.Base` dùng (tint mặc định HeroUI, alert nổi)."
+                code={"<Alert.Base tone=\"soft\" status=\"warning\" title=\"…\" />\n<Alert.Base tone=\"plain\" status=\"warning\" title=\"…\" />"}
+            >
+                <div className="flex flex-col gap-3">
+                    <Alert.Base tone="soft" status="warning" title="Flat tint (soft)" description="The shape Feedback.Callout uses — a flat strip inside a surface." showAnatomy />
+                    <Alert.Base tone="plain" status="warning" title="Default tint (plain)" description="The shape Toast.Base uses — HeroUI's own tint, meant to float." />
+                </div>
+            </BlockAnatomy>
+        </div>
+    ),
+}
+
+/** Leaf prop `icon` — thay glyph mặc định của status bằng một icon COMPONENT khác. */
+export const Icon: Story = {
+    render: () => (
+        <div className="max-w-xl p-8">
+            <BlockAnatomy
+                name="Alert.Base"
+                tier="atom"
+                leaf="Prop `icon`"
+                annotate={ANNOTATE}
+                note="Bỏ trống → icon mặc định của status. Truyền `icon` → atom vẫn tự ép size-5 (§4/§5), chỉ đổi glyph."
+                code={"<Alert.Base status=\"warning\" title=\"…\" />\n<Alert.Base status=\"warning\" icon={GithubLogoIcon} title=\"…\" />"}
+            >
+                <div className="flex flex-col gap-3">
+                    <Alert.Base status="warning" title="Default icon" description="No `icon` passed — falls back to the status glyph." showAnatomy />
+                    <Alert.Base status="warning" icon={GithubLogoIcon} title="Join the GitHub team" description="A custom icon replaces the status default." />
+                </div>
+            </BlockAnatomy>
+        </div>
+    ),
+}
+
+/** Leaf prop `body` (§12b) — vùng tự do dưới description, đường DUY NHẤT vì atom không mở `children`. */
+export const Body: Story = {
+    render: () => (
+        <div className="max-w-xl p-8">
+            <BlockAnatomy
+                name="Alert.Base"
+                tier="atom"
+                leaf="Prop `body`"
+                annotate={ANNOTATE}
+                reason="Atom không mở `children` (§12b) — `body` là đường DUY NHẤT nhét nội dung tự do (list ngắn, meta row) dưới description."
+                note="`body` render ngay dưới Description, thụt cùng cột với Content."
+                code={"<Alert.Base status=\"warning\" title=\"…\" description=\"…\" body={<ul>…</ul>} />"}
             >
                 <Alert.Base
                     status="warning"
-                    title="Bạn chưa vào GitHub team của khoá"
-                    description="Một số bài lab cần quyền repo — bấm để tham gia."
-                    action={<Button.Base size="sm" label="Vào team" onPress={() => {}} />}
-                    onClose={() => {}}
-                    closeAriaLabel="Đóng"
+                    title="Submission is missing 2 items"
+                    description="Add them, then resubmit for grading."
+                    body={(
+                        <ul className="list-disc space-y-1 pl-4 text-sm">
+                            <li>A README describing how to run the project</li>
+                            <li>A screenshot of the result</li>
+                        </ul>
+                    )}
                     showAnatomy
                 />
+            </BlockAnatomy>
+        </div>
+    ),
+}
+
+/** Leaf prop `action` — slot NODE tuỳ ý từ caller, đặt trước nút ×. KHÔNG phải dep vì atom không sở hữu nội dung bên trong. */
+export const Action: Story = {
+    render: () => (
+        <div className="max-w-xl p-8">
+            <BlockAnatomy
+                name="Alert.Base"
+                tier="atom"
+                leaf="Prop `action`"
+                annotate={ANNOTATE}
+                note="`action` nhận NODE tuỳ ý (thường là `Button.Base`, nhưng atom không ép) — atom chỉ đặt nó trước nút ×, không sở hữu ruột bên trong nên không phải dep."
+                code={"<Alert.Base status=\"warning\" title=\"…\" action={<Button.Base size=\"sm\" label=\"Join team\" onPress={fn} />} />"}
+            >
+                <Alert.Base
+                    status="warning"
+                    title="You haven't joined the course's GitHub team"
+                    description="Some labs need repo access — join to unlock them."
+                    action={<Button.Base size="sm" label="Join team" onPress={() => {}} />}
+                    showAnatomy
+                />
+            </BlockAnatomy>
+        </div>
+    ),
+}
+
+/** Leaf prop `onClose` — atom TỰ dựng nút × từ `Button.Base`. Node `Close` là DEP THẬT duy nhất của atom này. */
+export const Close: Story = {
+    render: () => (
+        <div className="max-w-xl p-8">
+            <BlockAnatomy
+                name="Alert.Base"
+                tier="atom"
+                leaf="Prop `onClose`"
+                annotate={ANNOTATE}
+                reason="Pass a handler and the alert grows a status-toned × — built internally from Button.Base, so this is the one node in the atom that jumps to another story."
+                note="`closeAriaLabel` gives the × its accessible name."
+                code={"<Alert.Base status=\"warning\" title=\"…\" onClose={fn} closeAriaLabel=\"Close\" />"}
+            >
+                <Alert.Base
+                    status="warning"
+                    title="You haven't joined the course's GitHub team"
+                    description="Some labs need repo access — join to unlock them."
+                    onClose={() => {}}
+                    closeAriaLabel="Close"
+                    showAnatomy
+                />
+            </BlockAnatomy>
+        </div>
+    ),
+}
+
+/** Leaf prop `isSkeleton` — shimmer CO-LOCATED (§12c): khung + icon giữ THẬT, chỉ chữ thành gạch. */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="max-w-xl p-8">
+            <BlockAnatomy
+                name="Alert.Base"
+                tier="atom"
+                leaf="Prop `isSkeleton`"
+                annotate={ANNOTATE}
+                reason="Whoever owns the shape owns its resting state — the atom draws its own shimmer instead of leaning on a shared skeleton component."
+                note="Bar khớp đúng hộp dòng thật (title 24px, description 20px) nên không nhảy layout khi dữ liệu tới (§8). `title` trở thành optional khi `isSkeleton` (union type)."
+                code={"<Alert.Base status=\"accent\" isSkeleton />\n<Alert.Base status=\"danger\" tone=\"plain\" isSkeleton />"}
+            >
+                <div className="flex flex-col gap-3">
+                    <Alert.Base status="accent" isSkeleton showAnatomy />
+                    <Alert.Base status="danger" tone="plain" isSkeleton />
+                </div>
             </BlockAnatomy>
         </div>
     ),

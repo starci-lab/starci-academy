@@ -1,27 +1,35 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Input } from "@sb-components/atoms/forms/Input/Input"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta = { title: "Atoms/Forms/Input/Input.Textarea", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
 export default meta
 type Story = StoryObj
 
-// FieldFrame parts (§11a) — atom TỰ mang nhãn/mô tả/lỗi, không tách Field primitive.
-const FIELD: AnatomyNode = { name: "Field", tier: "atom", role: "ô nhập nhiều dòng (HeroUI TextArea)" }
-const LABEL: AnatomyNode = { name: "Label", tier: "atom", role: "nhãn field (HeroUI Label)" }
-const DESC: AnatomyNode = { name: "Description", tier: "atom", role: "mô tả dưới nhãn (text-muted)" }
-const ERROR: AnatomyNode = { name: "Error", tier: "atom", role: "dòng lỗi (text-danger)" }
-const SKELETON: AnatomyNode = { name: "Skeleton", tier: "atom", role: "field-box skeleton cao (hybrid C)" }
+/**
+ * ATOM LÁ — `Input.Textarea` bọc thẳng HeroUI `TextField`/`TextArea` + `FieldFrame`
+ * nội bộ (§11a). Cùng lý do với `Input.Text`: mọi part (`Label`/`Description`/
+ * `Field`/`Error`/`Skeleton`) là KHE nội bộ, không phải story riêng ⇒ KHÔNG có deps
+ * ⇒ bỏ hẳn prop `annotate`.
+ */
 
-/** Default — ô TRẦN nhiều dòng (rows=3), không nhãn. */
+/** Default — bare multi-line field (rows=3): empty box, no label/hint/error/placeholder. */
 export const Default: Story = {
     render: () => {
         const Demo = () => {
             const [value, setValue] = useState("")
             return (
-                <BlockAnatomy name="Input.Textarea" tier="atom" leaf="Default" parts={[FIELD]} note="trần — không label/hint/error." code={"<Input.Textarea value={v} onValueChange={setV} rows={3} placeholder=\"Ghi chú…\" />"}>
-                    <div className="w-72"><Input.Textarea value={value} onValueChange={setValue} rows={3} placeholder="Ghi chú bài học…" ariaLabel="Ghi chú" showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Textarea"
+                    tier="atom"
+                    leaf="Default"
+                    note="Bare — no label, hint, error, or placeholder ghost text."
+                    code={"<Input.Textarea value={v} onValueChange={setV} rows={3} />"}
+                >
+                    <div className="w-72">
+                        <Input.Textarea value={value} onValueChange={setValue} rows={3} ariaLabel="Notes" showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -29,14 +37,48 @@ export const Default: Story = {
     },
 }
 
-/** WithLabel — nhãn trên + mô tả (hint) dưới nhãn. */
+/**
+ * Leaf prop `placeholder` — dimmed ghost text while `value` is empty. Distinct pixels
+ * from `Default` above: same bare box, but a grey hint sentence sits inside it.
+ */
+export const Placeholder: Story = {
+    render: () => {
+        const Demo = () => {
+            const [value, setValue] = useState("")
+            return (
+                <BlockAnatomy
+                    name="Input.Textarea"
+                    tier="atom"
+                    leaf="Prop `placeholder`"
+                    note="Ghost text only shows while value is empty; it disappears the moment real text lands."
+                    code={"<Input.Textarea placeholder=\"Lesson notes…\" value={v} onValueChange={setV} rows={3} />"}
+                >
+                    <div className="w-72">
+                        <Input.Textarea placeholder="Lesson notes…" value={value} onValueChange={setValue} rows={3} ariaLabel="Notes" showAnatomy />
+                    </div>
+                </BlockAnatomy>
+            )
+        }
+        return <div className="p-8"><Demo /></div>
+    },
+}
+
+/** WithLabel — label on top, hint below it. */
 export const WithLabel: Story = {
     render: () => {
         const Demo = () => {
             const [value, setValue] = useState("")
             return (
-                <BlockAnatomy name="Input.Textarea" tier="atom" leaf="WithLabel" parts={[LABEL, DESC, FIELD]} note="label + hint." code={"<Input.Textarea label=\"Ghi chú\" hint=\"Riêng bạn thấy\" value={v} onValueChange={setV} rows={3} />"}>
-                    <div className="w-72"><Input.Textarea label="Ghi chú" hint="Chỉ riêng bạn thấy" value={value} onValueChange={setValue} rows={3} placeholder="Ghi chú bài học…" showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Textarea"
+                    tier="atom"
+                    leaf="WithLabel"
+                    note="label + hint."
+                    code={"<Input.Textarea label=\"Notes\" hint=\"Only visible to you\" value={v} onValueChange={setV} rows={3} />"}
+                >
+                    <div className="w-72">
+                        <Input.Textarea label="Notes" hint="Only visible to you" value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -44,14 +86,22 @@ export const WithLabel: Story = {
     },
 }
 
-/** Required — nhãn + dấu `*` bắt buộc. */
+/** Required — label with the `*` mark. */
 export const Required: Story = {
     render: () => {
         const Demo = () => {
             const [value, setValue] = useState("")
             return (
-                <BlockAnatomy name="Input.Textarea" tier="atom" leaf="Required" parts={[LABEL, FIELD]} note="isRequired → dấu * sau nhãn." code={"<Input.Textarea label=\"Ghi chú\" isRequired value={v} onValueChange={setV} rows={3} />"}>
-                    <div className="w-72"><Input.Textarea label="Ghi chú" isRequired value={value} onValueChange={setValue} rows={3} placeholder="Ghi chú bài học…" showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Textarea"
+                    tier="atom"
+                    leaf="Required"
+                    note="isRequired → * mark after the label."
+                    code={"<Input.Textarea label=\"Notes\" isRequired value={v} onValueChange={setV} rows={3} />"}
+                >
+                    <div className="w-72">
+                        <Input.Textarea label="Notes" isRequired value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -59,14 +109,22 @@ export const Required: Story = {
     },
 }
 
-/** Filled — có nội dung nhiều dòng + nhãn. */
+/** Filled — multi-line content with a label. */
 export const Filled: Story = {
     render: () => {
         const Demo = () => {
-            const [value, setValue] = useState("Buổi này ôn lại vòng lặp và mảng; nhớ làm bài tập cuối chương.")
+            const [value, setValue] = useState("This session covers loops and arrays again — remember to finish the end-of-chapter exercise.")
             return (
-                <BlockAnatomy name="Input.Textarea" tier="atom" leaf="Filled" parts={[LABEL, FIELD]} note="value có nội dung nhiều dòng." code={"<Input.Textarea label=\"Ghi chú\" value=\"Buổi này ôn lại…\" onValueChange={setV} rows={3} />"}>
-                    <div className="w-72"><Input.Textarea label="Ghi chú" value={value} onValueChange={setValue} rows={3} showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Textarea"
+                    tier="atom"
+                    leaf="Filled"
+                    note="value holds multi-line content."
+                    code={"<Input.Textarea label=\"Notes\" value=\"This session covers…\" onValueChange={setV} rows={3} />"}
+                >
+                    <div className="w-72">
+                        <Input.Textarea label="Notes" value={value} onValueChange={setValue} rows={3} showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -74,14 +132,22 @@ export const Filled: Story = {
     },
 }
 
-/** Disabled — khoá control + nhãn nhạt. */
+/** Disabled — control locked, label dimmed. */
 export const Disabled: Story = {
     render: () => {
         const Demo = () => {
-            const [value, setValue] = useState("Buổi này ôn lại vòng lặp và mảng.")
+            const [value, setValue] = useState("This session covers loops and arrays again.")
             return (
-                <BlockAnatomy name="Input.Textarea" tier="atom" leaf="Disabled" parts={[LABEL, FIELD]} note="isDisabled → khoá + nhạt." code={"<Input.Textarea label=\"Ghi chú\" value=\"Buổi này…\" isDisabled onValueChange={setV} rows={3} />"}>
-                    <div className="w-72"><Input.Textarea label="Ghi chú" value={value} onValueChange={setValue} rows={3} isDisabled showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Textarea"
+                    tier="atom"
+                    leaf="Disabled"
+                    note="isDisabled → locked + dimmed."
+                    code={"<Input.Textarea label=\"Notes\" value=\"This session…\" isDisabled onValueChange={setV} rows={3} />"}
+                >
+                    <div className="w-72">
+                        <Input.Textarea label="Notes" value={value} onValueChange={setValue} rows={3} isDisabled showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -89,14 +155,48 @@ export const Disabled: Story = {
     },
 }
 
-/** Error — nhãn + errorMessage → hiện NHÃN + dòng đỏ + viền lỗi. */
+/**
+ * Leaf prop `isInvalid` — red border WITHOUT an error line (`errorMessage` unset).
+ * Different pixels than `Error` below: same red border, but no text underneath.
+ */
+export const Invalid: Story = {
+    render: () => {
+        const Demo = () => {
+            const [value, setValue] = useState("")
+            return (
+                <BlockAnatomy
+                    name="Input.Textarea"
+                    tier="atom"
+                    leaf="Prop `isInvalid`"
+                    note="isInvalid alone only reddens the border — no errorMessage means no line underneath. Compare with Error below."
+                    code={"<Input.Textarea label=\"Notes\" isInvalid value={v} onValueChange={setV} rows={3} placeholder=\"Lesson notes…\" />"}
+                >
+                    <div className="w-72">
+                        <Input.Textarea label="Notes" isInvalid value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" showAnatomy />
+                    </div>
+                </BlockAnatomy>
+            )
+        }
+        return <div className="p-8"><Demo /></div>
+    },
+}
+
+/** Error — label + errorMessage → label, red error line, and error border all show. */
 export const Error: Story = {
     render: () => {
         const Demo = () => {
             const [value, setValue] = useState("")
             return (
-                <BlockAnatomy name="Input.Textarea" tier="atom" leaf="Error" parts={[LABEL, FIELD, ERROR]} note="label + errorMessage → nhãn + dòng đỏ + viền." code={"<Input.Textarea label=\"Ghi chú\" errorMessage=\"Ghi chú không được để trống\" value={v} onValueChange={setV} rows={3} />"}>
-                    <div className="w-72"><Input.Textarea label="Ghi chú" errorMessage="Ghi chú không được để trống" value={value} onValueChange={setValue} rows={3} placeholder="Ghi chú bài học…" showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Textarea"
+                    tier="atom"
+                    leaf="Error"
+                    note="label + errorMessage → label, red line, border."
+                    code={"<Input.Textarea label=\"Notes\" errorMessage=\"Notes cannot be empty\" value={v} onValueChange={setV} rows={3} />"}
+                >
+                    <div className="w-72">
+                        <Input.Textarea label="Notes" errorMessage="Notes cannot be empty" value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -104,12 +204,20 @@ export const Error: Story = {
     },
 }
 
-/** Loading — nhãn skeleton (mirror) trên field-box skeleton cao. */
+/** Loading — label skeleton mirrored above the taller field-box skeleton. */
 export const Loading: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="Input.Textarea" tier="atom" leaf="Loading" parts={[LABEL, SKELETON]} note="isSkeleton + label → mirror nhãn trên hộp cao." code={"<Input.Textarea label=\"Ghi chú\" isSkeleton />"}>
-                <div className="w-72"><Input.Textarea label="Ghi chú" value="" onValueChange={() => {}} isSkeleton showAnatomy /></div>
+            <BlockAnatomy
+                name="Input.Textarea"
+                tier="atom"
+                leaf="Loading"
+                note="isSkeleton + label → label mirrored above the tall box."
+                code={"<Input.Textarea label=\"Notes\" isSkeleton />"}
+            >
+                <div className="w-72">
+                    <Input.Textarea label="Notes" value="" onValueChange={() => {}} isSkeleton showAnatomy />
+                </div>
             </BlockAnatomy>
         </div>
     ),

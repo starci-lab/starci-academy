@@ -57,3 +57,22 @@ export const JUSTIFY_CLASS: Record<LayoutJustify, string> = {
     end: "justify-end",
     between: "justify-between",
 }
+
+/**
+ * Scale step → literal `p-*` Tailwind class. Same §10c scale as {@link GAP_CLASS},
+ * written out for the same reason (Tailwind never emits an interpolated `p-${n}`).
+ *
+ * 2026-07-26 (thầy): SSOT chuyển về ĐÂY từ `layout/Container/Container.tsx` — nó
+ * khai `PADDING_CLASS` cục bộ trước, `cards/SurfaceCard/SurfaceCard.tsx` cần bảng
+ * y hệt cho trục `padding` (đổi từ `flushContent?: boolean`) nên gộp về một nguồn
+ * thay vì đẻ bản sao thứ hai. `Container.tsx` giờ import từ đây thay vì giữ bảng
+ * cục bộ.
+ */
+export const PADDING_CLASS: Record<SpaceScale, string> = {
+    0: "p-0",
+    1: "p-1",
+    2: "p-2",
+    3: "p-3",
+    6: "p-6",
+    8: "p-8",
+}

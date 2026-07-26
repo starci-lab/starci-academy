@@ -96,7 +96,8 @@ const baseMessages: Array<ChatPanelMessage> = [
         toolResult: (
             <SurfaceCard.Nested
                 title="Related lessons"
-                bordered
+                // 2026-07-26: bordered (boolean) → variant="nested" (ba trục độc lập, thầy chốt).
+                variant="nested"
                 anatPart="NestedCard"
                 items={[
                     {

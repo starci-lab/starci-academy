@@ -1,14 +1,14 @@
 import React from "react"
 import { SealCheckIcon } from "@phosphor-icons/react"
 import { ReactionBar, ReactionType } from "@sb-components/_legacy/designs/feed/ReactionBar/ReactionBar"
-import { UserAvatar } from "@sb-components/atoms/display/UserAvatar/UserAvatar"
+import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { MarkdownContent } from "@sb-components/_legacy/designs/rendering/MarkdownContent/MarkdownContent"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK ported faithfully from
- * `@/components/blocks/feed/CommunityCommentRow`. Composed from local primitives
- * `UserAvatar` + `MarkdownContent` + the local `ReactionBar` block. Synced to `src`
+ * `@/components/blocks/feed/CommunityCommentRow`. Composed from the atom
+ * `Avatar.Base` + `MarkdownContent` + the local `ReactionBar` block. Synced to `src`
  * later. `@/modules` types + the localized time-ago label are inlined locally.
  */
 
@@ -98,10 +98,10 @@ export const CommunityCommentRow = ({
     return (
         <div className={className} data-anat-part={anatPart}>
             <div className="flex gap-3">
-                <UserAvatar.Base
-                    username={comment.author.username}
-                    avatar={comment.author.avatar}
-                    anatPart={showAnatomy ? "UserAvatar" : undefined}
+                <Avatar.Base
+                    name={comment.author.username}
+                    src={comment.author.avatar ?? undefined}
+                    showAnatomy={showAnatomy}
                 />
                 <div className="flex min-w-0 flex-1 flex-col gap-1">
                     <div className="flex items-center gap-1">

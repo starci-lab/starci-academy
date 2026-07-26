@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, Button, Chip, Skeleton as HeroSkeleton } from "
 import { CaretRightIcon, CreditCardIcon, TrayIcon, WalletIcon } from "@phosphor-icons/react"
 import { SurfaceCard, type SurfaceCardListItem } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
 import { Feedback } from "@sb-components/layouts/feedback/Feedback/Feedback"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 // `Feedback.Empty` nhận icon là COMPONENT ref và tự ép `size-8` (§4/§5) — phosphor
 // `weight="duotone"` không đi kèm được nữa, nên bọc thành component để GIỮ NGUYÊN nét vẽ.
@@ -19,6 +19,10 @@ const TrayDuotone = (props: SVGProps<SVGSVGElement>) => <TrayIcon {...props} wei
  * Bộ header section (`label`/`labelEnd`/`onSeeMore`/`action`/`subtleLabel`/`description`)
  * dùng CHUNG `SurfaceCardHeader` với `SurfaceCard.Base` — ở đây chỉ giữ MỘT leaf `WithLabel`
  * để chứng minh header bật được; cả bộ state của header sống ở story `SurfaceCard.Base`.
+ *
+ * ⚠️ `variant` (§1a, `.List` cũng có prop này — 2026-07-26) KHÔNG có leaf riêng ở đây: state
+ * đó là TRỤC surface-in-surface, cùng leaf `Variants` đã diễn ở `SurfaceCard.Base`/`.Accordion`,
+ * không lặp lại một lần nữa cho mỗi member cùng khung.
  */
 const meta: Meta<typeof SurfaceCard.List> = {
     title: "Layouts/Cards/SurfaceCard/SurfaceCard.List",
@@ -58,15 +62,17 @@ const courseItems: ReadonlyArray<SurfaceCardListItem> = [
     { key: "system-design", title: "System design", subtitle: "9 lessons · 5 hours", onPress: () => {}, trailing: caret, anatPart: "Row" },
 ]
 
-/** Bare list (không label): Surface + Row (lặp ×N). */
-const BARE_PARTS: Array<AnatomyNode> = [
-    {
-        name: "Surface",
-        tier: "primitive",
-        role: "khung bo góc lớn, các Row cạnh nhau + separator full-bleed",
-        children: [{ name: "Row", tier: "primitive", role: "1 hàng CỐ ĐỊNH (lặp ×N) — leading · title+subtitle · meta+trailing" }],
-    },
-]
+/**
+ * `Feedback.Empty` là DEP THẬT của leaf `Empty` (story riêng, bấm nhảy được) — khớp shape
+ * icon+title+description+action đang render ở leaf này ⇒ trỏ đúng leaf `Action` bên đó.
+ * Mọi part khác của khung (`Surface`/`Header`/`Row`/`Item`) KHÔNG có story riêng nên
+ * KHÔNG khai — đường cũ `parts={...}` từng khai chúng chỉ tạo entry chết (không bấm được).
+ */
+const PART_FEEDBACK_EMPTY: AnatomyAnnotation = {
+    role: "Fills the Surface when items is empty — icon + title + description + action.",
+    tier: "primitive",
+    storyId: "layouts-feedback-feedback-feedback-empty--action",
+}
 
 export const Default: Story = {
     render: () => (
@@ -75,8 +81,7 @@ export const Default: Story = {
                 name="SurfaceCard.List"
                 tier="primitive"
                 leaf="Default"
-                parts={BARE_PARTS}
-                reason="Khung danh sách BOUNDED: một surface bo góc lớn ôm các hàng sát mép, mỗi hàng một separator full-bleed (hàng cuối tự ẩn). Không `label` → render trần (bare), không Header."
+                reason="A BOUNDED list frame: one large-radius surface holds edge-to-edge rows, each separated by a full-bleed divider (the last row hides its own). No `label` → renders bare, no Header."
                 code={`<SurfaceCard.List
   items={[
     { key: "fundamentals", title: "Programming fundamentals", subtitle: "12 lessons · 4 hours", onPress: () => {}, trailing: caret },
@@ -91,11 +96,6 @@ export const Default: Story = {
 }
 
 /** Có label: Header (SurfaceCardHeader) + Surface + Row. Cả bộ slot header xem ở `SurfaceCard.Base`. */
-const WITH_LABEL_PARTS: Array<AnatomyNode> = [
-    { name: "Header", tier: "primitive", role: "nhãn phần (SurfaceCardHeader) phía trên surface" },
-    ...BARE_PARTS,
-]
-
 export const WithLabel: Story = {
     render: () => (
         <div className="p-8">
@@ -103,14 +103,13 @@ export const WithLabel: Story = {
                 name="SurfaceCard.List"
                 tier="primitive"
                 leaf="WithLabel"
-                parts={WITH_LABEL_PARTS}
-                note="`label` bật Header phía trên (gap-3). Bỏ cả `label` lẫn `description` → khung trả về THẲNG div surface (bare). Bộ slot header đầy đủ (see-more/action/labelEnd/subtleLabel) diễn ở story SurfaceCard.Base."
+                note="`label` turns on the Header above (gap-3). Drop both `label` and `description` → the frame returns a bare surface div directly. The full header slot set (see-more/action/labelEnd/subtleLabel) is demonstrated in the SurfaceCard.Base story."
                 code={`<SurfaceCard.List
-  label="Lộ trình của tôi"
+  label="My learning path"
   items={[…]}
 />`}
             >
-                <SurfaceCard.List label="Lộ trình của tôi" items={courseItems} showAnatomy />
+                <SurfaceCard.List label="My learning path" items={courseItems} showAnatomy />
             </BlockAnatomy>
         </div>
     ),
@@ -124,8 +123,7 @@ export const LeadingMeta: Story = {
                 name="SurfaceCard.List"
                 tier="primitive"
                 leaf="LeadingMeta"
-                parts={BARE_PARTS}
-                note="Row nhận thêm `leading` (icon tròn) + `meta` (Chip) — vẫn 1 node Row (leading/meta là slot NỘI TẠI của Row, không phải part riêng của khung)."
+                note="The row also takes `leading` (a round icon) + `meta` (a Chip) — still ONE Row node (leading/meta are INTERNAL slots of Row, not separate frame parts)."
                 code={`<SurfaceCard.List
   items={[
     { key: "once", leading: <IconCircle/>, title: "One-time payment", subtitle: "Pay the full tuition now",
@@ -169,15 +167,6 @@ export const LeadingMeta: Story = {
     ),
 }
 
-const ITEM_PARTS: Array<AnatomyNode> = [
-    {
-        name: "Surface",
-        tier: "primitive",
-        role: "khung bo góc lớn",
-        children: [{ name: "Item", tier: "primitive", role: "1 hàng TỰ DO (lặp ×2, item có `content`) — nội dung bất kỳ, không slot cố định" }],
-    },
-]
-
 /**
  * Shape thứ hai của item: `content` thay cho bộ slot cố định — khung vẫn giữ padding +
  * separator inset, caller tự bố trí bên trong. `content` THẮNG `title` khi truyền cả hai.
@@ -189,12 +178,11 @@ export const FreeForm: Story = {
                 name="SurfaceCard.List"
                 tier="primitive"
                 leaf="FreeForm"
-                parts={ITEM_PARTS}
-                note="Item có `content` (khác Row có `title`) không ép leading/title/subtitle — nội dung hoàn toàn tự do (đây: avatar+title+description, C-fixture)."
+                note="An item with `content` (instead of Row's `title`) skips the forced leading/title/subtitle shape — content is entirely free-form (here: avatar + title + description, the C-fixture)."
                 code={`<SurfaceCard.List
   items={[
     { key: "starci", content: profileRow("SC", "StarCi Academy", "…"), onPress: () => {} },
-    { key: "quang", content: profileRow("QN", "Thầy Quang", "…"), onPress: () => {} },
+    { key: "quang", content: profileRow("QN", "Mentor Quang", "…"), onPress: () => {} },
   ]}
 />`}
             >
@@ -203,13 +191,13 @@ export const FreeForm: Story = {
                     items={[
                         {
                             key: "starci",
-                            content: profileRow("SC", "StarCi Academy", "Học fullstack, system design và DevOps theo lộ trình phỏng vấn."),
+                            content: profileRow("SC", "StarCi Academy", "Learn fullstack, system design, and DevOps along an interview-prep path."),
                             onPress: () => {},
                             anatPart: "Item",
                         },
                         {
                             key: "quang",
-                            content: profileRow("QN", "Thầy Quang", "Mentor fullstack — review dự án và mock interview."),
+                            content: profileRow("QN", "Mentor Quang", "Fullstack mentor — reviews projects and runs mock interviews."),
                             onPress: () => {},
                             anatPart: "Item",
                         },
@@ -228,8 +216,7 @@ export const Selected: Story = {
                 name="SurfaceCard.List"
                 tier="primitive"
                 leaf="Selected"
-                parts={BARE_PARTS}
-                note="Row `selected` → CheckCircleIcon trailing accent + `aria-current` — vẫn 1 node Row, không drill xuống icon."
+                note="Row `selected` → a trailing accent CheckCircleIcon + `aria-current` — still one Row node, no drilling into the icon."
                 code={`<SurfaceCard.List
   items={[
     { key: "vi", title: "Vietnamese", onPress: () => {} },
@@ -257,8 +244,7 @@ export const Disabled: Story = {
                 name="SurfaceCard.List"
                 tier="primitive"
                 leaf="Disabled"
-                parts={BARE_PARTS}
-                note="1 Row `isDisabled` — vẫn hiện, dimmed + non-interactive (không ẩn khỏi danh sách)."
+                note="One Row with `isDisabled` — stays visible, dimmed + non-interactive (not hidden from the list)."
                 code={`<SurfaceCard.List
   items={[
     { key: "pdf", title: "Export PDF invoice", onPress: () => {} },
@@ -293,8 +279,7 @@ export const HoverUnderline: Story = {
                 name="SurfaceCard.List"
                 tier="primitive"
                 leaf="HoverUnderline"
-                parts={BARE_PARTS}
-                note={"`hover=\"underline\"` + `href` → Row render `<a>`, title underline khi hover (không tint nền hàng)."}
+                note={"`hover=\"underline\"` + `href` → the Row renders as an `<a>`, the title underlines on hover (no row background tint)."}
                 code={`<SurfaceCard.List
   items={[
     { key: "dropout", title: "Why do learners drop out of courses?", subtitle: "12.4k reads", hover: "underline", href: "#" },
@@ -321,20 +306,19 @@ export const Static: Story = {
                 name="SurfaceCard.List"
                 tier="primitive"
                 leaf="Static"
-                parts={BARE_PARTS}
-                note="Không `onPress`/`href` → Row render `<div>` tĩnh (không hover/focus/cursor giả)."
+                note="No `onPress`/`href` → the Row renders a static `<div>` (no fake hover/focus/cursor)."
                 code={`<SurfaceCard.List
   items={[
-    { key: "resilience", title: "Resilience", meta: <Chip size="sm" variant="soft" color="danger">nhớ 25%</Chip> },
+    { key: "resilience", title: "Resilience", meta: <Chip size="sm" variant="soft" color="danger">25% recall</Chip> },
   ]}
 />`}
             >
                 <SurfaceCard.List
                     showAnatomy
                     items={[
-                        { key: "resilience", title: "Resilience", meta: <Chip size="sm" variant="soft" color="danger" className="shrink-0">nhớ 25%</Chip>, anatPart: "Row" },
-                        { key: "errors", title: "Error Handling", meta: <Chip size="sm" variant="soft" color="warning" className="shrink-0">nhớ 33%</Chip>, anatPart: "Row" },
-                        { key: "authz", title: "Authorization", meta: <Chip size="sm" variant="soft" color="success" className="shrink-0">nhớ 57%</Chip>, anatPart: "Row" },
+                        { key: "resilience", title: "Resilience", meta: <Chip size="sm" variant="soft" color="danger" className="shrink-0">25% recall</Chip>, anatPart: "Row" },
+                        { key: "errors", title: "Error Handling", meta: <Chip size="sm" variant="soft" color="warning" className="shrink-0">33% recall</Chip>, anatPart: "Row" },
+                        { key: "authz", title: "Authorization", meta: <Chip size="sm" variant="soft" color="success" className="shrink-0">57% recall</Chip>, anatPart: "Row" },
                     ]}
                 />
             </BlockAnatomy>
@@ -350,22 +334,21 @@ export const Verdict: Story = {
                 name="SurfaceCard.List"
                 tier="primitive"
                 leaf="Verdict"
-                parts={BARE_PARTS}
-                note="`tone` = rút gọn của `withVerdict={{ enable: true, variant: tone }}` → dải inset-shadow trái ngay trên Row, không phải part riêng."
+                note="`tone` is shorthand for `withVerdict={{ enable: true, variant: tone }}` → a left inset-shadow band right on the Row, not a separate part."
                 code={`<SurfaceCard.List
   items={[
-    { key: "shell", title: "Shell & hệ thống file", tone: "success", onPress: () => {} },
+    { key: "shell", title: "Shell & file system", tone: "success", onPress: () => {} },
     { key: "pipe", title: "Redirect & pipe", tone: "warning", onPress: () => {} },
-    { key: "perm", title: "Quyền file cơ bản", tone: "danger", onPress: () => {} },
+    { key: "perm", title: "Basic file permissions", tone: "danger", onPress: () => {} },
   ]}
 />`}
             >
                 <SurfaceCard.List
                     showAnatomy
                     items={[
-                        { key: "shell", title: "Shell & hệ thống file", tone: "success", onPress: () => {}, anatPart: "Row" },
+                        { key: "shell", title: "Shell & file system", tone: "success", onPress: () => {}, anatPart: "Row" },
                         { key: "pipe", title: "Redirect & pipe", tone: "warning", onPress: () => {}, anatPart: "Row" },
-                        { key: "perm", title: "Quyền file cơ bản", tone: "danger", onPress: () => {}, anatPart: "Row" },
+                        { key: "perm", title: "Basic file permissions", tone: "danger", onPress: () => {}, anatPart: "Row" },
                     ]}
                 />
             </BlockAnatomy>
@@ -381,30 +364,19 @@ export const SingleRow: Story = {
                 name="SurfaceCard.List"
                 tier="primitive"
                 leaf="SingleRow"
-                parts={BARE_PARTS}
-                note="Chỉ 1 Row — separator tự ẩn ở hàng cuối (biên: không cần ≥2 hàng để hợp lệ)."
+                note="Just one Row — the separator hides itself on the last row (edge case: no need for ≥2 rows to be valid)."
                 code={`<SurfaceCard.List
-  items={[{ key: "only", title: "Chỉ một mục", onPress: () => {}, trailing: caret }]}
+  items={[{ key: "only", title: "Just one item", onPress: () => {}, trailing: caret }]}
 />`}
             >
                 <SurfaceCard.List
                     showAnatomy
-                    items={[{ key: "only", title: "Chỉ một mục", subtitle: "Separator tự ẩn ở row cuối", onPress: () => {}, trailing: caret, anatPart: "Row" }]}
+                    items={[{ key: "only", title: "Just one item", subtitle: "The separator hides itself on the last row", onPress: () => {}, trailing: caret, anatPart: "Row" }]}
                 />
             </BlockAnatomy>
         </div>
     ),
 }
-
-const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "Header", tier: "primitive", role: "nhãn phần" },
-    {
-        name: "Surface",
-        tier: "primitive",
-        role: "khung bo góc lớn, bọc Feedback.Empty thay vì Row",
-        children: [{ name: "Feedback.Empty", tier: "primitive", role: "trạng thái rỗng lấp đầy surface (không phải card trắng trơn)" }],
-    },
-]
 
 /** Empty: `items` rỗng → {@link Feedback.Empty} lấp đầy surface (không để card trắng trơn). */
 export const Empty: Story = {
@@ -414,23 +386,23 @@ export const Empty: Story = {
                 name="SurfaceCard.List"
                 tier="primitive"
                 leaf="Empty"
-                parts={EMPTY_PARTS}
-                note="`items={[]}` → `emptyState` lấp đầy Surface (p-8) thay vì bỏ trống."
+                annotate={{ "Feedback.Empty": PART_FEEDBACK_EMPTY }}
+                note="`items={[]}` → `emptyState` fills the Surface (p-8) instead of leaving it blank."
                 code={`<SurfaceCard.List
-  label="Khoá của tôi"
+  label="My courses"
   items={[]}
-  emptyState={<Feedback.Empty icon={TrayDuotone} title="Chưa có khoá nào" … />}
+  emptyState={<Feedback.Empty icon={TrayDuotone} title="No courses yet" … />}
 />`}
             >
                 <SurfaceCard.List
-                    label="Khoá của tôi"
+                    label="My courses"
                     items={[]}
                     emptyState={
                         <Feedback.Empty
                             icon={TrayDuotone}
-                            title="Chưa có khoá nào"
-                            description="Ghi danh một khoá để thấy nó ở đây."
-                            action={<Button variant="primary" size="sm">Khám phá khoá học</Button>}
+                            title="No courses yet"
+                            description="Enroll in a course to see it here."
+                            action={<Button variant="primary" size="sm">Explore courses</Button>}
                             anatPart="Feedback.Empty"
                         />
                     }
@@ -440,16 +412,6 @@ export const Empty: Story = {
         </div>
     ),
 }
-
-const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Header", tier: "primitive", role: "nhãn phần (giữ nguyên, KHÔNG skeleton hoá)" },
-    {
-        name: "Surface",
-        tier: "primitive",
-        role: "khung bo góc lớn (giữ nguyên frame thật)",
-        children: [{ name: "Row", tier: "primitive", role: "1 hàng THẬT (lặp ×3), title thay bằng Skeleton bar" }],
-    },
-]
 
 /**
  * Loading: khung danh sách KHÔNG có cờ `isSkeleton` — caller MIRROR cây thật: vẫn cùng
@@ -464,15 +426,14 @@ export const Loading: Story = {
                 name="SurfaceCard.List"
                 tier="primitive"
                 leaf="Loading"
-                parts={SKELETON_PARTS}
-                note="Skeleton MIRROR cây thật: Header + Surface + Row THẬT vẫn đứng nguyên, chỉ title bên trong Row đổi thành Skeleton bar."
+                note="Skeleton MIRRORS the real tree: Header + Surface + real Row stay exactly as-is, only the title inside each Row swaps for a Skeleton bar."
                 code={`<SurfaceCard.List
-  label="Khoá của tôi"
+  label="My courses"
   items={[0, 1, 2].map((i) => ({ key: String(i), title: <HeroSkeleton className="h-[14px] w-1/2 rounded" /> }))}
 />`}
             >
                 <SurfaceCard.List
-                    label="Khoá của tôi"
+                    label="My courses"
                     showAnatomy
                     items={[0, 1, 2].map((i) => ({
                         key: String(i),

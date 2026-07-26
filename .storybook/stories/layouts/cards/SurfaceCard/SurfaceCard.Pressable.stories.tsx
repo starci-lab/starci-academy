@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import React from "react"
 import { Avatar, AvatarFallback, Button } from "@heroui/react"
 import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * KHUNG (Layouts) — vỏ card BẤM-ĐƯỢC, slot-agnostic: khung surface + phản hồi press
@@ -14,8 +14,15 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * `isSelected`, `isDisabled`, `isSkeleton`. Bộ slot `header`/`body`/`footer` là cơ chế
  * CHUNG của khung-bọc, đã diễn ở `SurfaceCard.Base` → không lặp lại.
  *
- * ANATOMY IS PER-LEAF: mỗi story là một leaf riêng với BlockAnatomy riêng — phần lớn chỉ
- * có `Content`; `WithActions` thêm part thứ hai `Actions`, `Loading` sụp về mirror `Skeleton`.
+ * `.Pressable` KHÔNG nằm trong BA TRỤC `variant`/`padding`/`radius` (thầy chốt
+ * 2026-07-26) — chỉ `.Base`/`.Nested`/`.List`/`.Accordion`/`.CrossList` có ba prop đó.
+ *
+ * ANATOMY: mỗi story là một leaf riêng với BlockAnatomy riêng. 2026-07-26 (thầy) —
+ * panel bỏ prop `parts`/`AnatomyNode` (đường cũ, khai cấu trúc bằng tay) lẫn tab
+ * States; cấu trúc nay suy từ DOM, chú giải qua `annotate` CHỈ khi part có `storyId`
+ * THẬT (bấm nhảy được). `Content`/`Actions`/`Skeleton` ở đây là các slot NỘI BỘ của
+ * chính `.Pressable`, không component nào trong số đó có story riêng để trỏ tới —
+ * nên bỏ hẳn prop panel-parts, không thay bằng `annotate` rỗng.
  */
 const meta: Meta<typeof SurfaceCard.Pressable> = {
     title: "Layouts/Cards/SurfaceCard/SurfaceCard.Pressable",
@@ -47,30 +54,11 @@ const ProfileRow = () => (
         <div className="flex min-w-0 flex-col">
             <span className="truncate text-sm font-medium">StarCi Academy</span>
             <span className="truncate text-xs text-muted">
-                Học fullstack, system design và DevOps theo lộ trình phỏng vấn.
+                Learn fullstack, system design, and DevOps on an interview-prep roadmap.
             </span>
         </div>
     </div>
 )
-
-// Whole-card press target (Default / AsLink / Selected / Disabled): nội dung caller
-// compose CHÍNH LÀ nhãn a11y của cả thẻ — MỘT part có tên.
-const CONTENT_PARTS: Array<AnatomyNode> = [
-    { name: "Content", tier: "primitive", role: "nội dung tự do do caller compose — cũng là nhãn a11y của cả thẻ" },
-]
-
-// Stretched-link (actions + label): overlay bấm-toàn-thẻ NẰM DƯỚI một vùng nút phụ
-// bấm riêng được — HAI part có tên.
-const ACTIONS_PARTS: Array<AnatomyNode> = [
-    { name: "Content", tier: "primitive", role: "nội dung tự do do caller compose" },
-    { name: "Actions", tier: "primitive", role: "vùng nút phụ độc lập (Continue + menu), đứng trên overlay press toàn thẻ" },
-]
-
-// Loading: nhánh isSkeleton thay CẢ hai slot bằng một mirror chung — shape khác hẳn,
-// không phụ thuộc shape thật của body.
-const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton", tier: "primitive", role: "mirror khối icon + 2 dòng chữ, không phụ thuộc body thật" },
-]
 
 /** Default — tile điều hướng: cả thẻ là MỘT đích press, body của nó là nhãn a11y. */
 export const Default: Story = {
@@ -80,8 +68,7 @@ export const Default: Story = {
                 name="SurfaceCard.Pressable"
                 tier="primitive"
                 leaf="Default"
-                parts={CONTENT_PARTS}
-                reason="Cần MỘT khung card có press-feedback (hover trơ, lún nhẹ + ripple) dùng chung cho mọi tile bấm-được — thay vì mỗi nơi tự viết lại surface/rounded-3xl/p-3/shadow-surface + ripple. Slot-agnostic (body tự do) nên đứng ở tầng khung; chỉ khi cần nút phụ độc lập bên trong (stretched-link) mới phát sinh part thứ hai (Actions)."
+                reason="Needs ONE card frame with press feedback (inert hover, a subtle press-in + ripple) shared by every pressable tile — instead of every call site re-writing surface/rounded-3xl/p-3/shadow-surface + ripple by hand. Slot-agnostic (free-form body), so it belongs at the khung tier; a second part (Actions) only appears once the card also needs its own independent buttons (stretched-link)."
                 code={`<SurfaceCard.Pressable onPress={() => {}}>
   <ProfileRow />
 </SurfaceCard.Pressable>`}
@@ -101,8 +88,7 @@ export const AsLink: Story = {
                 name="SurfaceCard.Pressable"
                 tier="primitive"
                 leaf="AsLink"
-                parts={CONTENT_PARTS}
-                note="`href` thay `onPress` → thẻ render <a>, cùng shape (một Content) với leaf Default."
+                note="`href` replaces `onPress` → the card renders an `<a>`, same shape (one Content) as leaf Default."
                 code={`<SurfaceCard.Pressable href="#">
   <ProfileRow />
 </SurfaceCard.Pressable>`}
@@ -126,8 +112,7 @@ export const WithActions: Story = {
                 name="SurfaceCard.Pressable"
                 tier="primitive"
                 leaf="WithActions"
-                parts={ACTIONS_PARTS}
-                note="`actions` + `label` → chuyển sang stretched-link: overlay bấm-toàn-thẻ TRONG SUỐT nằm dưới Content, Actions đứng trên overlay (z-10) để Continue/menu bấm riêng được."
+                note="`actions` + `label` → switches to the stretched-link pattern: a transparent whole-card press overlay sits under Content, and Actions sit above the overlay (z-10) so Continue/menu stay separately clickable."
                 code={`<SurfaceCard.Pressable
   onPress={() => {}}
   label="Open the StarCi Academy profile"
@@ -166,8 +151,7 @@ export const Selected: Story = {
                 name="SurfaceCard.Pressable"
                 tier="primitive"
                 leaf="Selected"
-                parts={CONTENT_PARTS}
-                note="`isSelected` chỉ thêm `ring-2 ring-accent` + `aria-pressed`/`aria-current` — cùng shape Content với leaf Default."
+                note="`isSelected` only adds `ring-2 ring-accent` + `aria-pressed`/`aria-current` — same Content shape as leaf Default."
                 code={`<SurfaceCard.Pressable isSelected onPress={() => {}}>
   <ProfileRow />
 </SurfaceCard.Pressable>`}
@@ -187,8 +171,7 @@ export const Disabled: Story = {
                 name="SurfaceCard.Pressable"
                 tier="primitive"
                 leaf="Disabled"
-                parts={CONTENT_PARTS}
-                note="`isDisabled` chỉ dim + tắt tương tác (không ripple/không press-scale) — cùng shape Content với leaf Default."
+                note="`isDisabled` only dims + disables interaction (no ripple / no press-scale) — same Content shape as leaf Default."
                 code={`<SurfaceCard.Pressable isDisabled onPress={() => {}}>
   <ProfileRow />
 </SurfaceCard.Pressable>`}
@@ -208,8 +191,7 @@ export const Loading: Story = {
                 name="SurfaceCard.Pressable"
                 tier="primitive"
                 leaf="Loading"
-                parts={SKELETON_PARTS}
-                note="`isSkeleton` thay TOÀN BỘ nội dung bằng một mirror chung (icon tile + 2 thanh chữ) — khác composition hẳn với các leaf Content/Actions ở trên."
+                note="`isSkeleton` replaces the ENTIRE content with a shared mirror (icon tile + 2 text bars) — a completely different composition from the Content/Actions leaves above."
                 code={`<SurfaceCard.Pressable
   isSkeleton
 />`}

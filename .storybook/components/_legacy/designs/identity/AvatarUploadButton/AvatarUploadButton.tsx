@@ -4,13 +4,13 @@ import React from "react"
 import { cn } from "@heroui/react"
 import { CameraIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
-import { UserAvatar } from "@sb-components/atoms/display/UserAvatar/UserAvatar"
+import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/identity/AvatarUploadButton`. Authored in Storybook (not
- * `src`); synced to `src` later. Composes the local {@link UserAvatar} port
- * (sibling folder) instead of `@/components`.
+ * `src`); synced to `src` later. Composes the atom `Avatar.Base` (2026-07-26 —
+ * `UserAvatar` xoá, gộp về `Avatar.Base`) instead of `@/components`.
  */
 
 /** Local mirror of the shared `WithClassNames` base (avoids a `@/` import). */
@@ -63,10 +63,10 @@ export const AvatarUploadButton = ({
         ariaLabel={label}
         icon={
             <>
-                <UserAvatar.Base
-                    username={displayName}
-                    avatar={avatar}
-                    seed={seed}
+                <Avatar.Base
+                    name={displayName ?? undefined}
+                    src={avatar ?? undefined}
+                    seed={seed ?? undefined}
                     size="lg"
                     className="size-20 text-2xl"
                 />

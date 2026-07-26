@@ -3,12 +3,17 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { userEvent, within } from "storybook/test"
 import { SearchAutocomplete } from "@sb-components/atoms/forms/SearchAutocomplete/SearchAutocomplete"
 import type { SearchAutocompleteItem } from "@sb-components/atoms/forms/SearchAutocomplete/SearchAutocomplete"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * PRIMITIVE — a suggest-as-you-type search field built on HeroUI `ComboBox`.
- * Real free-text anatomy: `ComboBox.InputGroup` (Input + leading icon) plus
+ * ATOM — a suggest-as-you-type search field built on HeroUI `ComboBox`. Real
+ * free-text anatomy: `ComboBox.InputGroup` (Input + leading icon) plus
  * `ComboBox.Popover` (ListBox of suggestion rows / spinner / empty state).
+ *
+ * Atom lá (§12g cuối bài): `InputGroup`/`Popover`/`Skeleton` là span nội bộ,
+ * không component nào có story riêng để nhảy tới ⇒ KHÔNG dùng `annotate`, bỏ
+ * hẳn prop. Tier sửa lại `atom` (trước là `primitive` — tên cũ của tầng KHUNG
+ * §13, sai vì đây là atom thật, title đã là `Atoms/Forms/SearchAutocomplete`).
  *
  * ANATOMY IS PER-LEAF: each story below is its OWN leaf and wraps its render in
  * its OWN BlockAnatomy reflecting the parts THAT leaf composes — the field +
@@ -43,18 +48,6 @@ const openPopover = async ({ canvasElement }: { canvasElement: HTMLElement }) =>
     await userEvent.click(canvas.getByRole("combobox"))
 }
 
-// §11a — direct children of the ComboBox root only: InputGroup (field + icon) and
-// Popover (dropdown). What the Popover renders INSIDE (rows / spinner / empty
-// text) is its own internal concern, not drilled into here.
-const FIELD_PARTS: Array<AnatomyNode> = [
-    { name: "InputGroup", tier: "primitive", role: "trường nhập liệu (Input search + icon kính lúp)" },
-    { name: "Popover", tier: "primitive", role: "dropdown gợi ý — ListBox các row, hoặc spinner, hoặc rỗng, tuỳ state" },
-]
-
-const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton", tier: "primitive", role: "mirror khung field lúc đang tải — không có dropdown để mirror" },
-]
-
 /**
  * WithSuggestions: the parent owns `inputValue` + the `items` list (filtered
  * here to mimic real suggestions — the block renders `items` as-is). Picking a
@@ -76,10 +69,9 @@ export const WithSuggestions: Story = {
                 <div className="max-w-sm">
                     <BlockAnatomy
                         name="SearchAutocomplete"
-                        tier="primitive"
+                        tier="atom"
                         leaf="WithSuggestions"
-                        parts={FIELD_PARTS}
-                        reason="Suggest-as-you-type cần đúng anatomy free-text của HeroUI ComboBox — InputGroup (field + icon) và Popover (dropdown) là hai part cấp cao nhất; parent chỉ đưa items/inputValue, block không tự filter nên tái dùng được cho mọi nguồn dữ liệu."
+                        reason="Suggest-as-you-type needs the real free-text anatomy of the HeroUI ComboBox — InputGroup (field + icon) and Popover (dropdown) are the two top-level parts; the parent only hands over items/inputValue, and the block does no filtering itself, so it stays reusable for any data source."
                     >
                         <SearchAutocomplete.Base
                             items={items}
@@ -108,10 +100,9 @@ export const Loading: Story = {
                 <div className="max-w-sm">
                     <BlockAnatomy
                         name="SearchAutocomplete"
-                        tier="primitive"
+                        tier="atom"
                         leaf="Loading"
-                        parts={FIELD_PARTS}
-                        note="isLoading chỉ đổi NỘI DUNG bên trong Popover (spinner thay vì rows) — cùng shape InputGroup + Popover với leaf 'Có gợi ý'."
+                        note="isLoading only changes what the Popover shows inside — a spinner instead of rows — same InputGroup + Popover shape as the WithSuggestions leaf."
                     >
                         <SearchAutocomplete.Base
                             items={CATALOG}
@@ -138,10 +129,9 @@ export const Skeleton: Story = {
         <div className="p-8 max-w-sm">
             <BlockAnatomy
                 name="SearchAutocomplete"
-                tier="primitive"
+                tier="atom"
                 leaf="Skeleton"
-                parts={SKELETON_PARTS}
-                note="isSkeleton thay TOÀN BỘ ComboBox bằng một field-box mirror — dropdown không có resting shape nên không mirror."
+                note="isSkeleton swaps the whole ComboBox for a single field-box mirror — the dropdown has no resting shape, so nothing mirrors it."
             >
                 <SearchAutocomplete.Base
                     items={[]}
@@ -168,10 +158,9 @@ export const NoResults: Story = {
                 <div className="max-w-sm">
                     <BlockAnatomy
                         name="SearchAutocomplete"
-                        tier="primitive"
+                        tier="atom"
                         leaf="NoResults"
-                        parts={FIELD_PARTS}
-                        note="items rỗng + không loading → Popover hiện emptyLabel thay rows — cùng shape InputGroup + Popover với các leaf khác."
+                        note="Empty items with no loading flag makes the Popover show emptyLabel instead of rows — same InputGroup + Popover shape as the other leaves."
                     >
                         <SearchAutocomplete.Base
                             items={[]}

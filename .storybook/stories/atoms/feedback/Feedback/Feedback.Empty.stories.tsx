@@ -4,7 +4,7 @@ import { ArrowCounterClockwiseIcon, HouseIcon, MagnifyingGlassIcon, PackageIcon,
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Feedback } from "@sb-components/layouts/feedback/Feedback/Feedback"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * KHUNG (layout tier) — `Feedback.Empty`: chồng dọc CANH GIỮA lấp một chỗ trống
@@ -19,10 +19,14 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * ⚠️ KHÔNG có leaf "loading" ở đây: khung này LÀ trạng thái rỗng/lỗi — skeleton
  * của một vùng đang tải là việc của chính block/khung vùng đó (§11f).
  *
- * 📐 LEAF = CẤU TRÚC (§14d.2, thầy chốt 2026-07-26): leaf chỉ tách khi cây DOM
- * thêm/bớt node (`Icon` · `Description` · `Body` · `Action` · `Code`). `tone` chỉ
- * đổi MÀU icon, và số nút trong `action` là nội dung của slot ⇒ cả hai là STATE,
- * nằm TRONG leaf, không đẻ story riêng.
+ * 📐 LEAF = CẤU TRÚC (§14d.2, ĐÚNG cho khung — khác atom, xem cảnh báo ở
+ * `Alert.Base.stories.tsx`): leaf chỉ tách khi cây DOM thêm/bớt node (`Icon` ·
+ * `Description` · `Body` · `Action` · `Code`). `tone` chỉ đổi MÀU icon, và số nút
+ * trong `action` là nội dung của slot ⇒ cả hai là STATE, nằm TRONG leaf.
+ *
+ * ⛔ KHÔNG có `annotate`: `action` là NODE tuỳ ý caller đưa vào (khung không tự
+ * dựng `Button.Base` bên trong như `Feedback.Callout`), nên không có node nào ở
+ * đây trỏ sang được một story khác — bỏ hẳn prop thay vì để rác.
  */
 const meta: Meta<typeof Feedback.Empty> = {
     title: "Layouts/Feedback/Feedback/Feedback.Empty",
@@ -40,45 +44,6 @@ type Story = StoryObj<typeof Feedback.Empty>
 /** Plain canvas for each leaf's anatomy panel. */
 const shell = (node: ReactNode) => <div className="p-8">{node}</div>
 
-// §11a: chỉ badge slot TRỰC TIẾP của chồng dọc (code/icon/title/description/body/
-// action) — thứ caller nhét VÀO `action` là part của story component đó.
-
-const TITLE_PARTS: Array<AnatomyNode> = [
-    { name: "Title", tier: "primitive", role: "dòng chính giải thích vì sao khu vực rỗng" },
-]
-
-const ICON_TITLE_PARTS: Array<AnatomyNode> = [
-    { name: "Icon", tier: "primitive", role: "icon minh hoạ (component phosphor, khung ép size-8)" },
-    ...TITLE_PARTS,
-]
-
-const DESCRIPTION_PARTS: Array<AnatomyNode> = [
-    ...ICON_TITLE_PARTS,
-    { name: "Description", tier: "primitive", role: "dòng phụ (muted) dưới tiêu đề" },
-]
-
-const ACTION_PARTS: Array<AnatomyNode> = [
-    ...DESCRIPTION_PARTS,
-    { name: "Action", tier: "primitive", role: "slot CTA (thường là Button) dưới thân" },
-]
-
-const BODY_PARTS: Array<AnatomyNode> = [
-    ...DESCRIPTION_PARTS,
-    { name: "Body", tier: "primitive", role: "slot TỰ DO (`body`/`children`) giữa mô tả và CTA" },
-    { name: "Action", tier: "primitive", role: "slot CTA dưới thân" },
-]
-
-const PAGE_PARTS: Array<AnatomyNode> = [
-    { name: "Code", tier: "primitive", role: "số trạng thái to (muted) — CHỈ có ở size=\"page\"" },
-    { name: "Title", tier: "primitive", role: "tiêu đề cỡ lớn hơn shape mặc định" },
-    { name: "Description", tier: "primitive", role: "dòng phụ (muted) dưới tiêu đề" },
-    { name: "Action", tier: "primitive", role: "slot CTA — size=\"page\" cho nhiều nút canh giữa, tự wrap" },
-]
-
-const COMPACT_PARTS: Array<AnatomyNode> = [
-    { name: "Title", tier: "primitive", role: "size=\"compact\" thu về ĐÚNG một dòng chữ muted (không icon/mô tả/CTA)" },
-]
-
 /** Biên gọn nhất: chỉ `title` — không icon, không mô tả, không CTA. */
 export const TitleOnly: Story = {
     render: () =>
@@ -87,13 +52,12 @@ export const TitleOnly: Story = {
                 name="Feedback.Empty"
                 tier="primitive"
                 leaf="TitleOnly"
-                parts={TITLE_PARTS}
-                reason="Khung LẤP CHỖ TRỐNG: mọi 'không có gì ở đây' của app phải đọc giống nhau (canh giữa, cùng thứ tự slot), dù là rỗng bình thường hay hỏng (tone), dù compact/default/page. Leaf này ít slot nhất."
+                reason="The frame that FILLS AN EMPTY SPOT: every 'nothing here' in the app should read the same — centered, same slot order — whether it's plain-empty or broken (tone), compact/default/page. This leaf has the fewest slots."
                 code={`<Feedback.Empty
-  title="Chưa có dữ liệu"
+  title="No data yet"
 />`}
             >
-                <Feedback.Empty showAnatomy title="Chưa có dữ liệu" />
+                <Feedback.Empty showAnatomy title="No data yet" />
             </BlockAnatomy>,
         ),
 }
@@ -106,14 +70,13 @@ export const IconAndTitle: Story = {
                 name="Feedback.Empty"
                 tier="primitive"
                 leaf="IconAndTitle"
-                parts={ICON_TITLE_PARTS}
-                note="`icon` nhận COMPONENT (không JSX) — khung sở hữu size + màu, caller không set class icon (§4/§5)."
+                note="`icon` takes a COMPONENT (not JSX) — the frame owns the size and colour, the caller never sets an icon class (§4/§5)."
                 code={`<Feedback.Empty
   icon={PackageIcon}
-  title="Chưa có khoá học"
+  title="No courses yet"
 />`}
             >
-                <Feedback.Empty showAnatomy icon={PackageIcon} title="Chưa có khoá học" />
+                <Feedback.Empty showAnatomy icon={PackageIcon} title="No courses yet" />
             </BlockAnatomy>,
         ),
 }
@@ -126,19 +89,18 @@ export const Description: Story = {
                 name="Feedback.Empty"
                 tier="primitive"
                 leaf="Description"
-                parts={DESCRIPTION_PARTS}
-                note="Thêm `description` — dòng phụ muted, cỡ nhỏ hơn tiêu đề."
+                note="Adding `description` — a muted supporting line, smaller than the title."
                 code={`<Feedback.Empty
   icon={MagnifyingGlassIcon}
-  title="Không tìm thấy kết quả"
+  title="No results found"
   description="…"
 />`}
             >
                 <Feedback.Empty
                     showAnatomy
                     icon={MagnifyingGlassIcon}
-                    title="Không tìm thấy kết quả"
-                    description="Thử đổi bộ lọc hoặc từ khoá để thấy nhiều kết quả hơn."
+                    title="No results found"
+                    description="Try different filters or a shorter search term."
                 />
             </BlockAnatomy>,
         ),
@@ -158,29 +120,28 @@ export const Action: Story = {
                 name="Feedback.Empty"
                 tier="primitive"
                 leaf="Action"
-                parts={ACTION_PARTS}
-                note={"`action` = lối thoát khỏi trạng thái rỗng (đừng để người dùng bí). Hàng dưới là cùng shape với `tone=\"danger\"` — chỉ khác màu icon."}
+                note={"`action` is the way out of an empty state (don't leave the reader stuck). The row below is the SAME shape with `tone=\"danger\"` — only the icon colour differs."}
                 code={`<Feedback.Empty
   icon={PackageIcon}
-  title="Danh sách trống"
+  title="This list is empty"
   description="…"
-  action={<Button.Base label="Thêm mục mới" />}
+  action={<Button.Base label="Add an item" />}
 />`}
             >
                 <div className="flex flex-col gap-8">
                     <Feedback.Empty
                         showAnatomy
                         icon={PackageIcon}
-                        title="Danh sách trống"
-                        description="Bạn chưa lưu mục nào vào danh sách này."
-                        action={<Button.Base label="Thêm mục mới" />}
+                        title="This list is empty"
+                        description="You haven't saved any items to this list yet."
+                        action={<Button.Base label="Add an item" />}
                     />
                     <Feedback.Empty
                         tone="danger"
                         icon={WarningCircleIcon}
-                        title="Không tải được dữ liệu"
-                        description="Đã có lỗi xảy ra. Vui lòng thử lại sau."
-                        action={<Button.Base label="Thử lại" variant="danger" prefixIcon={ArrowCounterClockwiseIcon} />}
+                        title="Couldn't load the data"
+                        description="Something went wrong. Please try again."
+                        action={<Button.Base label="Retry" variant="danger" prefixIcon={ArrowCounterClockwiseIcon} />}
                     />
                 </div>
             </BlockAnatomy>,
@@ -195,11 +156,10 @@ export const WithBody: Story = {
                 name="Feedback.Empty"
                 tier="primitive"
                 leaf="WithBody"
-                parts={BODY_PARTS}
-                note="Khung BỌC (§13b): `body` là slot thân tự do, `children` là shorthand — ở đây là danh sách gợi ý trước khi tới CTA."
+                note="The frame WRAPS (§13b): `body` is the free-form body slot, `children` is its shorthand — here it's a hint list before the CTA."
                 code={`<Feedback.Empty
   icon={MagnifyingGlassIcon}
-  title="Không tìm thấy kết quả"
+  title="No results found"
   description="…"
   body={<ul>…</ul>}
   action={…}
@@ -208,15 +168,15 @@ export const WithBody: Story = {
                 <Feedback.Empty
                     showAnatomy
                     icon={MagnifyingGlassIcon}
-                    title="Không tìm thấy kết quả"
-                    description="Vài cách thường ra kết quả hơn:"
+                    title="No results found"
+                    description="A few things that usually help:"
                     body={(
                         <ul className="list-disc space-y-1 pl-4 text-left">
-                            <li><Typography.Base size="xs" text="Bỏ bớt bộ lọc đang bật" color="muted" /></li>
-                            <li><Typography.Base size="xs" text="Dùng từ khoá ngắn hơn" color="muted" /></li>
+                            <li><Typography.Base size="xs" text="Clear some active filters" color="muted" /></li>
+                            <li><Typography.Base size="xs" text="Use a shorter search term" color="muted" /></li>
                         </ul>
                     )}
-                    action={<Button.Base label="Xoá bộ lọc" variant="secondary" size="sm" />}
+                    action={<Button.Base label="Clear filters" variant="secondary" size="sm" />}
                 />
             </BlockAnatomy>,
         ),
@@ -235,13 +195,12 @@ export const FullPage: Story = {
             name="Feedback.Empty"
             tier="primitive"
             leaf="FullPage"
-            parts={PAGE_PARTS}
-            note={"`size=\"page\"` cho khung chiều cao 70vh + tiêu đề cỡ lớn + slot `code`. Hàng dưới có 2 nút trong `action` — khung tự canh giữa + wrap (chỉ size=\"page\")."}
+            note={"`size=\"page\"` gives the frame a 70vh height + a larger title + room for a `code` numeral. The row below has 2 buttons in `action` — the frame centers and wraps them automatically (size=\"page\" only)."}
             code={`<Feedback.Empty
   size="page"
   code="404"
-  title="Không tìm thấy trang"
-  action={<Button.Base label="Trang chủ" prefixIcon={HouseIcon} />}
+  title="Page not found"
+  action={<Button.Base label="Go home" prefixIcon={HouseIcon} />}
 />`}
         >
             <div className="flex flex-col">
@@ -249,19 +208,19 @@ export const FullPage: Story = {
                     showAnatomy
                     size="page"
                     code="404"
-                    title="Không tìm thấy trang"
-                    description="Trang bạn tìm không tồn tại hoặc đã được chuyển đi."
-                    action={<Button.Base label="Trang chủ" prefixIcon={HouseIcon} />}
+                    title="Page not found"
+                    description="The page you're looking for doesn't exist or has moved."
+                    action={<Button.Base label="Go home" prefixIcon={HouseIcon} />}
                 />
                 <Feedback.Empty
                     size="page"
                     code="500"
-                    title="Đã có lỗi xảy ra"
-                    description="Máy chủ gặp sự cố khi xử lý yêu cầu. Thử lại sau giây lát nhé."
+                    title="Something went wrong"
+                    description="The server ran into a problem handling your request. Try again in a moment."
                     action={(
                         <>
-                            <Button.Base label="Thử lại" prefixIcon={ArrowCounterClockwiseIcon} />
-                            <Button.Base label="Trang chủ" variant="secondary" prefixIcon={HouseIcon} />
+                            <Button.Base label="Retry" prefixIcon={ArrowCounterClockwiseIcon} />
+                            <Button.Base label="Go home" variant="secondary" prefixIcon={HouseIcon} />
                         </>
                     )}
                 />
@@ -278,20 +237,19 @@ export const Compact: Story = {
                 name="Feedback.Empty"
                 tier="primitive"
                 leaf="Compact"
-                parts={COMPACT_PARTS}
-                note={"`size=\"compact\"` bỏ HẾT icon/mô tả/body/CTA — khác hẳn shape mặc định. Gộp từ khung `SimpleEmptyState` đã xoá."}
+                note={"`size=\"compact\"` drops EVERY icon/description/body/CTA — a different shape from the default. Merged from the deleted `SimpleEmptyState` frame."}
                 code={`<Feedback.Empty
   size="compact"
-  title="Chưa có bài nộp nào cho bài tập này."
+  title="No submissions yet for this assignment."
 />`}
             >
                 <div className="w-64">
                     <Feedback.Empty
                         showAnatomy
                         size="compact"
-                        title="Chưa có bài nộp nào cho bài tập này."
+                        title="No submissions yet for this assignment."
                         icon={WarningIcon}
-                        description="Dòng này KHÔNG render — compact bỏ hết slot phụ."
+                        description="This line does NOT render — compact drops every secondary slot."
                     />
                 </div>
             </BlockAnatomy>,

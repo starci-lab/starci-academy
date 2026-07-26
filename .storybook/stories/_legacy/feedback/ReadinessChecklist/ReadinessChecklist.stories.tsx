@@ -20,7 +20,7 @@ type Story = StoryObj<typeof ReadinessChecklist>
 const ITEMS: Array<ReadinessChecklistItem> = [
     {
         id: "agent",
-        icon: <RobotIcon aria-hidden focusable="false" />,
+        icon: RobotIcon,
         label: "Ollama agent",
         readyDescription: "Agent is reachable and responding to health checks.",
         pendingDescription: "Waiting for the agent to come online.",
@@ -28,7 +28,7 @@ const ITEMS: Array<ReadinessChecklistItem> = [
     },
     {
         id: "ollama",
-        icon: <CircuitryIcon aria-hidden focusable="false" />,
+        icon: CircuitryIcon,
         label: "Ollama runtime",
         readyDescription: "Runtime process is up and serving requests.",
         pendingDescription: "Runtime hasn't started yet.",
@@ -36,7 +36,7 @@ const ITEMS: Array<ReadinessChecklistItem> = [
     },
     {
         id: "embed",
-        icon: <DatabaseIcon aria-hidden focusable="false" />,
+        icon: DatabaseIcon,
         label: "Embedding model",
         readyDescription: "Embedding model is pulled and loaded in memory.",
         pendingDescription: "Embedding model still needs to be pulled.",
@@ -44,7 +44,7 @@ const ITEMS: Array<ReadinessChecklistItem> = [
     },
     {
         id: "gen",
-        icon: <CloudIcon aria-hidden focusable="false" />,
+        icon: CloudIcon,
         label: "Generation model",
         readyDescription: "Generation model is pulled and loaded in memory.",
         pendingDescription: "Generation model still needs to be pulled.",
@@ -72,7 +72,8 @@ export const AllWaiting: Story = {
                     parts={ROW_PARTS}
                     reason="Danh sách prerequisite/setup: mỗi hàng = List.Row ghép IconTile (leading) + StatusChip (trailing) theo state ready/pending của item."
                 >
-                    <SurfaceCard.Base bordered flushContent>
+                    {/* 2026-07-26: bordered+flushContent (boolean) → variant="nested"+padding={0} (ba trục độc lập, thầy chốt). */}
+                    <SurfaceCard.Base variant="nested" padding={0}>
                         <ReadinessChecklist
                             items={ITEMS}
                             readyLabel="Sẵn sàng"
@@ -98,7 +99,8 @@ export const PartiallyReady: Story = {
                     parts={ROW_PARTS}
                     note="CÙNG composition leaf AllWaiting; 2 hàng đầu đổi sang state ready (IconTile success + StatusChip success)."
                 >
-                    <SurfaceCard.Base bordered flushContent>
+                    {/* 2026-07-26: bordered+flushContent (boolean) → variant="nested"+padding={0} (ba trục độc lập, thầy chốt). */}
+                    <SurfaceCard.Base variant="nested" padding={0}>
                         <ReadinessChecklist
                             items={ITEMS.map((item) => (
                                 item.id === "agent" || item.id === "ollama" ? { ...item, ready: true } : item

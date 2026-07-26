@@ -58,7 +58,7 @@ export const PlaygroundCard = ({
         <Card className={cn("flex flex-col overflow-hidden rounded-3xl", className)}>
             <Card.Content className="flex flex-col gap-3">
                 <IconTile.Base
-                    icon={<TerminalWindowIcon aria-hidden focusable="false" />}
+                    icon={TerminalWindowIcon}
                     tone="accent"
                     size="lg"
                     anatPart={showAnatomy ? "IconTile" : undefined}

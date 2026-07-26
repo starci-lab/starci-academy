@@ -333,8 +333,11 @@ export const ActivityFeed = ({
         <div className={cn("flex flex-col gap-6", className)}>
             {dayGroups.map((group) => (
                 <DayHeaderSection key={group.key} label={group.label} anatPart={showAnatomy ? "DayHeaderSection" : undefined}>
+                    {/* Codemod 2026-07-26: `bordered={bordered}` → `variant={bordered ? "nested" : "surface"}`
+                        (API 3-trục SurfaceCard). Prop `bordered` của CHÍNH ActivityFeed vẫn giữ tên cũ — chỉ đổi
+                        cách nó rót vào SurfaceCard.List. */}
                     <SurfaceCard.List
-                        bordered={bordered}
+                        variant={bordered ? "nested" : "surface"}
                         anatPart={showAnatomy ? "SurfaceListCard" : undefined}
                         items={group.rows.map((row, index) => ({
                             key: `${row.head.actorGlobalId}-${row.head.at}-${index}`,

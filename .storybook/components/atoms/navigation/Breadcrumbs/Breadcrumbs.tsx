@@ -91,7 +91,7 @@ const BreadcrumbsBase = ({
     maxItems,
     collapseOnMobile = false,
     collapseFrom,
-    backLabel = "Trở lại",
+    backLabel = "Back",
     isSkeleton = false,
     showAnatomy = false,
     className,

@@ -4,11 +4,13 @@ import Link from "next/link"
 import { Accordion, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { AnimatePresence, motion } from "framer-motion"
 import { CheckCircleIcon, PlusIcon, XCircleIcon } from "@phosphor-icons/react"
-import { SurfaceCardHeader, surfaceSectionGap, surfaceFrame, type SurfaceLabelProps } from "@sb-components/layouts/cards/surface-card-header"
+import { SurfaceCardHeader, surfaceSectionGap, surfaceFrame, type SurfaceLabelProps, type SurfaceCardVariant } from "@sb-components/layouts/cards/surface-card-header"
 import { type VerdictBand, type VerdictBandVariant, verdictBandClassName } from "@sb-components/layouts/cards/verdict-band"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { PADDING_CLASS, type SpaceScale } from "@sb-components/layouts/_spacing"
+import { Grid, type GridColumns } from "@sb-components/layouts/layout/Grid/Grid"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -29,6 +31,19 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  *
  * Behaviour/skin of every member is carried over VERBATIM from its old folder;
  * this is an API refactor, not a visual one. Synced to `src` later.
+ *
+ * ⭐ BA TRỤC ĐỘC LẬP (thầy chốt 2026-07-26) — ba prop `boolean` cũ tưởng là một
+ * ý ("thẻ nhỏ hơn/nhẹ hơn") hoá ra là BA CHIỀU không liên quan nhau. Gộp lại sẽ
+ * giết những tổ hợp có thật (một thẻ lồng VÀ có ảnh tràn viền là hợp lệ):
+ *
+ * | Prop cũ | Prop mới | Union | Mặc định | Có ở member |
+ * |---|---|---|---|---|
+ * | `bordered?: boolean` | `variant` | `"surface" \| "nested"` | `"surface"` | `.Base` `.Nested` `.List` `.Accordion` `.CrossList` |
+ * | `flushContent?: boolean` | `padding` | `SpaceScale` (từ `_spacing`) | `3` | `.Base` |
+ * | `compact?: boolean` | `radius` | `"xl" \| "3xl"` | `"3xl"` | `.Nested` |
+ *
+ * Ánh xạ 1-1: `bordered` → `variant="nested"` · `flushContent` → `padding={0}` ·
+ * `compact` → `radius="xl"`.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -100,10 +115,22 @@ const RowAnchor = ({
 export interface SurfaceCardBaseProps extends SurfaceLabelProps, SlotProps {
     /** Secondary node rendered OUTSIDE (below) the card, `gap-2` — a caption/prompt. */
     description?: ReactNode
-    /** `border border-default` on top of `shadow-surface` — for a distinct bounded surface. */
-    bordered?: boolean
-    /** Drop padding on the card + content so an edge-owning child sits flush. */
-    flushContent?: boolean
+    /**
+     * Khung mặt: `"surface"` (mặc định) `shadow-surface`, hoặc `"nested"` — border
+     * THAY CHO shadow khi mặt này nằm TRONG một mặt khác (§1a).
+     *
+     * 2026-07-26 (thầy): đổi từ `bordered?: boolean`. `bordered=true` → `variant="nested"`.
+     */
+    variant?: SurfaceCardVariant
+    /**
+     * Đệm quanh nội dung, thang §10c. Mặc định `3`. Đặt `0` khi con tự ôm mép (ảnh
+     * bìa tràn viền) — vẫn giữ `overflow-hidden` để bo góc cắt đúng con tràn mép.
+     *
+     * 2026-07-26 (thầy): đổi từ `flushContent?: boolean` (`flushContent=true` →
+     * `padding={0}`). Trục ĐỘC LẬP với `variant` — một thẻ `nested` VÀ `padding={0}`
+     * là tổ hợp có thật (ảnh tràn viền trong thẻ lồng), gộp chung sẽ giết tổ hợp đó.
+     */
+    padding?: SpaceScale
     /** Extra classes on the section wrapper. */
     className?: string
     /** Extra classes on the surface (content) wrapper. */
@@ -139,8 +166,8 @@ const Base = ({
     footer,
     children,
     description,
-    bordered = false,
-    flushContent = false,
+    variant = "surface",
+    padding = 3,
     className,
     contentClassName,
     anatPart,
@@ -150,8 +177,8 @@ const Base = ({
     const card = (
         <div
             className={cn(
-                surfaceFrame(bordered),
-                flushContent ? "overflow-hidden" : "p-3",
+                surfaceFrame(variant),
+                padding === 0 ? "overflow-hidden" : PADDING_CLASS[padding],
                 contentClassName,
             )}
             data-anat-part={showAnatomy ? "Content" : undefined}
@@ -220,15 +247,22 @@ export interface SurfaceCardNestedProps extends SlotProps {
      * the body IS a repeating list of sections.
      */
     items?: ReadonlyArray<SurfaceCardNestedSection>
-    /** Tight radius (`rounded-xl` vs default `rounded-3xl`) for narrow contexts like a chat bubble. */
-    compact?: boolean
     /**
-     * Surface-in-surface: `border border-default bg-transparent` — when the parent
-     * already has a fill (`bg-surface` panel, `bg-surface-secondary` bubble,
-     * modal/page card). Pass `bordered={false}` only when rendering directly on
-     * `bg-background` with no parent surface.
+     * Bo góc: `"3xl"` (mặc định) hoặc `"xl"` (chật hơn, cho ngữ cảnh hẹp như bong
+     * bóng chat).
+     *
+     * 2026-07-26 (thầy): đổi từ `compact?: boolean` (`compact=true` → `radius="xl"`).
      */
-    bordered?: boolean
+    radius?: "xl" | "3xl"
+    /**
+     * Surface-in-surface: `variant="nested"` → `border border-default bg-transparent`
+     * — khi cha ĐÃ có mặt riêng (panel `bg-surface`, bubble `bg-surface-secondary`,
+     * modal/page card). Chỉ để `variant="surface"` (mặc định) khi render THẲNG trên
+     * `bg-background`, không có mặt cha.
+     *
+     * 2026-07-26 (thầy): đổi từ `bordered?: boolean`. `bordered=true` → `variant="nested"`.
+     */
+    variant?: SurfaceCardVariant
     /** Extra classes on the card root. */
     className?: string
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
@@ -309,8 +343,8 @@ const NestedSection = ({ title, eyebrow, content, onPress, href, className, anat
  * Card-inside-card WITH HEADERS: quiet header (optional eyebrow icon + title-only
  * label + optional trailing meta) + a flush stack of sections separated by dividers
  * (no per-row rounded borders) + an optional footer row. Parent context drives the
- * shell: any filled parent surface → `bordered`; bare `bg-background` only → omit
- * `bordered` → `bg-surface shadow-surface`.
+ * shell: any filled parent surface → `variant="nested"`; bare `bg-background` only
+ * → omit `variant` (defaults `"surface"`) → `bg-surface shadow-surface`.
  *
  * @param props - {@link SurfaceCardNestedProps}
  */
@@ -323,8 +357,8 @@ const Nested = ({
     body,
     children,
     footer,
-    compact = false,
-    bordered = false,
+    radius = "3xl",
+    variant = "surface",
     className,
     anatPart,
     showAnatomy,
@@ -338,8 +372,8 @@ const Nested = ({
             data-anat-part={anatPart}
             className={cn(
                 "overflow-hidden",
-                compact ? "rounded-xl" : "rounded-3xl",
-                bordered ? "border border-default bg-transparent" : "bg-surface shadow-surface",
+                radius === "xl" ? "rounded-xl" : "rounded-3xl",
+                variant === "nested" ? "border border-default bg-transparent" : "bg-surface shadow-surface",
                 className,
             )}
         >
@@ -664,27 +698,14 @@ const Pressable = ({
 // .PressableGroup — a grid of press targets (was `GroupPressableCard`)
 // ─────────────────────────────────────────────────────────────────────────────
 
-/**
- * Column count per CONTAINER width — these are container queries, not viewport
- * breakpoints. A frame cannot know where it is placed: the same grid may sit in a
- * full page column or in a 256px rail. Steps mirror Tailwind v4's container sizes.
- */
-export interface SurfaceCardPressableGroupColumns {
-    /** Columns at the narrowest. Defaults to `1`. */
-    base?: 1 | 2
-    /** From a 24rem / 384px container. */
-    sm?: 2 | 3 | 4
-    /** From a 28rem / 448px container. */
-    md?: 2 | 3 | 4
-    /** From a 32rem / 512px container. */
-    lg?: 2 | 3 | 4
-    /** From a 36rem / 576px container. */
-    xl?: 2 | 3 | 4
-    /** From a 48rem / 768px container. */
-    xl3?: 2 | 3 | 4
-    /** From a 56rem / 896px container. */
-    xl4?: 2 | 3 | 4
-}
+// Cột theo bậc container: dùng thẳng {@link GridColumns} của `Grid.Base` — hệ lưới
+// DUY NHẤT của tầng layout (§13).
+//
+// 2026-07-26 (thầy): xoá bảng riêng `SurfaceCardPressableGroupColumns` (7 bậc
+// `base/sm/md/lg/xl/xl3/xl4`, dựng bằng `@sm:`/`@md:`…) — đó là thang CONTAINER
+// NỬA CỠ của Tailwind (`@sm` = 24rem), khác hẳn thang `@app-*` (`@app-sm` = 40rem)
+// mà `Container.Base`/`Grid.Base` và cả hệ đang dùng. Mọi breakpoint của bảng cũ
+// âm thầm bắn sai chỗ so với phần còn lại của app.
 
 /** One pressable card inside a {@link SurfaceCard.PressableGroup}. */
 export interface SurfaceCardPressableGroupItem {
@@ -738,10 +759,21 @@ export interface SurfaceCardPressableGroupProps {
      * hears N loose buttons with nothing tying them together.
      */
     ariaLabel: string
-    /** Responsive column count. Defaults to a single column. */
-    columns?: SurfaceCardPressableGroupColumns
-    /** Gap between cards on the spacing scale. Defaults to `3`. */
-    gap?: 2 | 3
+    /**
+     * Responsive column count — dựng lưới bằng `Grid.Base` (§13). Defaults to a
+     * single column.
+     *
+     * 2026-07-26 (thầy): đổi từ `SurfaceCardPressableGroupColumns` cục bộ (7 bậc,
+     * thang container nửa cỡ) sang {@link GridColumns} dùng chung toàn tầng (4 bậc
+     * `base/sm/md/lg`, thang `@app-*`).
+     */
+    columns?: GridColumns
+    /**
+     * Gap between cards, thang §10c. Defaults to `3`.
+     *
+     * 2026-07-26 (thầy): đổi kiểu từ `2 | 3` cục bộ sang {@link SpaceScale} dùng chung.
+     */
+    gap?: SpaceScale
     /**
      * Binds number keys `1`–`N` to the items in order, so the group can be driven
      * without the mouse. Off by default — only opt in where the group IS the
@@ -767,45 +799,6 @@ export interface SurfaceCardPressableGroupProps {
 // `.Pressable`'s own `rounded-3xl`/`shadow-surface` default (concentric
 // radius: card 24px − 1 step → 16px) and one nấc UP from the flat button.
 const TILE_CHROME = "rounded-2xl shadow-field"
-
-// Tailwind needs LITERAL class strings — `@sm:grid-cols-${n}` interpolation is
-// never emitted by the compiler, so each supported count maps to a written-out class.
-/** Grid template per base column count. */
-const BASE_COLUMNS_CLASS: Record<1 | 2, string> = {
-    1: "grid-cols-1",
-    2: "grid-cols-2",
-}
-/** Container-step key → its literal class map, applied in ascending width order. */
-const STEP_COLUMNS_CLASS: Record<
-    Exclude<keyof SurfaceCardPressableGroupColumns, "base">,
-    Record<2 | 3 | 4, string>
-> = {
-    sm: { 2: "@sm:grid-cols-2", 3: "@sm:grid-cols-3", 4: "@sm:grid-cols-4" },
-    md: { 2: "@md:grid-cols-2", 3: "@md:grid-cols-3", 4: "@md:grid-cols-4" },
-    lg: { 2: "@lg:grid-cols-2", 3: "@lg:grid-cols-3", 4: "@lg:grid-cols-4" },
-    xl: { 2: "@xl:grid-cols-2", 3: "@xl:grid-cols-3", 4: "@xl:grid-cols-4" },
-    xl3: { 2: "@3xl:grid-cols-2", 3: "@3xl:grid-cols-3", 4: "@3xl:grid-cols-4" },
-    xl4: { 2: "@4xl:grid-cols-2", 3: "@4xl:grid-cols-3", 4: "@4xl:grid-cols-4" },
-}
-/** Ascending container-step order — later steps must win, so emit them in width order. */
-const STEP_ORDER = ["sm", "md", "lg", "xl", "xl3", "xl4"] as const
-/** Gap class per supported spacing step. */
-const GAP_CLASS: Record<2 | 3, string> = {
-    2: "gap-2",
-    3: "gap-3",
-}
-
-/** Grid classes shared by the live grid AND its skeleton mirror — one place, one shape. */
-const gridClassName = (columns: SurfaceCardPressableGroupColumns, gap: 2 | 3) =>
-    cn(
-        "grid",
-        GAP_CLASS[gap],
-        BASE_COLUMNS_CLASS[columns.base ?? 1],
-        STEP_ORDER.map((step) => {
-            const count = columns[step]
-            return count === undefined ? undefined : STEP_COLUMNS_CLASS[step][count]
-        }),
-    )
 
 // §5a: tile body defaults to body-sm/text-sm → icon size-5, muted (list-icon convention).
 // Forced HERE (descendant selector) so no call-site ever hand-sets icon size/color again.
@@ -846,7 +839,8 @@ const PressableGroupSkeletonTile = ({ className }: { className?: string }) => (
  * A grid of `.Pressable` cards that act and then get out of the way — the whole
  * group is ONE labelled unit (`role="group"` + `aria-label`), each cell is a
  * canonical `.Pressable`, and the cards' bodies stay the caller's to compose.
- * Reflows on the CONTAINER's width, not the viewport's ({@link SurfaceCardPressableGroupColumns}).
+ * Reflows on the CONTAINER's width, not the viewport's ({@link GridColumns}) — grid
+ * built via `Grid.Base` (§13, the tier's ONE grid khung).
  *
  * **Two modes.** Default = ACTIONS (press a card and the surface acts — grade, open
  * a page — nothing stays "chosen"). Opt into SELECTION by passing `item.selected`:
@@ -907,29 +901,36 @@ const PressableGroup = ({
 
     if (isSkeleton) {
         return (
-            <div className={cn("@container", className)}>
-                <div role="group" aria-label={ariaLabel} className={gridClassName(columns, gap)}>
-                    {items.map((item) => (
-                        showAnatomy ? (
-                            <div key={item.key} className="relative" data-anat>
+            <div role="group" aria-label={ariaLabel} className={className}>
+                <Grid.Base
+                    columns={columns}
+                    gap={gap}
+                    items={items.map((item) => ({
+                        key: item.key,
+                        content: showAnatomy ? (
+                            <div className="relative" data-anat>
                                 <PressableGroupSkeletonTile className={item.className} />
                                 <AnatomyOverlay label="SkeletonTile" tier="primitive" />
                             </div>
                         ) : (
-                            <PressableGroupSkeletonTile key={item.key} className={item.className} />
-                        )
-                    ))}
-                </div>
+                            <PressableGroupSkeletonTile className={item.className} />
+                        ),
+                    }))}
+                />
             </div>
         )
     }
 
+    // 2026-07-26 (thầy): bỏ `<div className="@container">` tự mở riêng — từ nay
+    // `Container.Base` là chỗ MỞ container của tầng layout (một khung, không mỗi
+    // khung tự mở lấy một cái). Lưới dựng bằng `Grid.Base` (§13, hệ lưới DUY NHẤT
+    // của tầng) thay vì tự khai `grid`/`grid-cols-*`.
     return (
-        // The `@container` wrapper is NOT decorative: an element cannot query its
-        // own size, so the queried grid must live inside the container it reacts to.
-        <div className={cn("@container", className)}>
-            <div role="group" aria-label={ariaLabel} className={gridClassName(columns, gap)}>
-                {items.map((item) => {
+        <div role="group" aria-label={ariaLabel} className={className}>
+            <Grid.Base
+                columns={columns}
+                gap={gap}
+                items={items.map((item) => {
                     const tile = (
                         <Pressable
                             onPress={item.onPress}
@@ -946,16 +947,17 @@ const PressableGroup = ({
                             {itemBody(item)}
                         </Pressable>
                     )
-                    return showAnatomy ? (
-                        <div key={item.key} className="relative" data-anat>
-                            {tile}
-                            <AnatomyOverlay label="Item" tier="primitive" />
-                        </div>
-                    ) : (
-                        <React.Fragment key={item.key}>{tile}</React.Fragment>
-                    )
+                    return {
+                        key: item.key,
+                        content: showAnatomy ? (
+                            <div className="relative" data-anat>
+                                {tile}
+                                <AnatomyOverlay label="Item" tier="primitive" />
+                            </div>
+                        ) : tile,
+                    }
                 })}
-            </div>
+            />
         </div>
     )
 }
@@ -1039,8 +1041,13 @@ export interface SurfaceCardListProps extends SurfaceLabelProps {
     items: ReadonlyArray<SurfaceCardListItem>
     /** Shown (padded) INSIDE the surface when there are no rows — so empty reads as intentional. */
     emptyState?: ReactNode
-    /** `border border-default` instead of `shadow-surface` — for a nested surface. */
-    bordered?: boolean
+    /**
+     * `"surface"` (mặc định) `shadow-surface`, hoặc `"nested"` — border THAY CHO
+     * shadow khi mặt này nằm TRONG một mặt khác (§1a).
+     *
+     * 2026-07-26 (thầy): đổi từ `bordered?: boolean`. `bordered=true` → `variant="nested"`.
+     */
+    variant?: SurfaceCardVariant
     /** Secondary node rendered OUTSIDE (below) the list, `gap-2` — a caption/prompt. */
     description?: ReactNode
     /** Extra classes on the outer section / surface. */
@@ -1178,7 +1185,7 @@ const ListFreeRow = ({ item }: { item: SurfaceCardListItem }) => {
 const List = ({
     items,
     emptyState,
-    bordered = false,
+    variant = "surface",
     description,
     className,
     label,
@@ -1203,7 +1210,7 @@ const List = ({
             data-anat-part={showAnatomy ? "Surface" : bare ? anatPart : undefined}
             className={cn(
                 "overflow-hidden",
-                surfaceFrame(bordered),
+                surfaceFrame(variant),
                 bare && className,
             )}
         >
@@ -1260,8 +1267,13 @@ export interface SurfaceCardAccordionProps extends SurfaceLabelProps {
     allowsMultipleExpanded?: boolean
     /** Sections expanded on mount, keyed by item `id` (a `Set`). */
     defaultExpandedKeys?: Set<string>
-    /** `border border-default` instead of `shadow-surface` — for a nested surface. */
-    bordered?: boolean
+    /**
+     * `"surface"` (mặc định) `shadow-surface`, hoặc `"nested"` — border THAY CHO
+     * shadow khi mặt này nằm TRONG một mặt khác (§1a).
+     *
+     * 2026-07-26 (thầy): đổi từ `bordered?: boolean`. `bordered=true` → `variant="nested"`.
+     */
+    variant?: SurfaceCardVariant
     /**
      * Shown (padded, centered) INSIDE the surface when `items` is empty — so an empty
      * accordion reads as an intentional empty state, not a blank card.
@@ -1297,11 +1309,11 @@ const AccordionFrame = ({
     items,
     allowsMultipleExpanded,
     defaultExpandedKeys,
-    bordered,
+    variant,
     showAnatomy,
     anatPart,
-}: Pick<SurfaceCardAccordionProps, "items" | "allowsMultipleExpanded" | "defaultExpandedKeys" | "bordered" | "showAnatomy"> & { anatPart?: string }) => (
-    <div className={cn("overflow-hidden", surfaceFrame(bordered))} data-anat-part={anatPart}>
+}: Pick<SurfaceCardAccordionProps, "items" | "allowsMultipleExpanded" | "defaultExpandedKeys" | "variant" | "showAnatomy"> & { anatPart?: string }) => (
+    <div className={cn("overflow-hidden", surfaceFrame(variant))} data-anat-part={anatPart}>
         <Accordion
             variant="default"
             style={ACCORDION_SEPARATOR_STYLE}
@@ -1342,7 +1354,7 @@ const AccordionFrame = ({
  * Mirror skeleton của CHÍNH {@link AccordionFrame} — chủ của hình là chủ của
  * skeleton (§12c), không mượn component skeleton dùng chung.
  *
- * KHUNG RENDER THẬT: cùng `surfaceFrame(bordered)` + `overflow-hidden`, cùng hàng
+ * KHUNG RENDER THẬT: cùng `surfaceFrame(variant)` + `overflow-hidden`, cùng hàng
  * trigger (`px-4 py-4`, hộp dòng cao đúng line-height chữ thật), cùng vạch ngăn
  * `h-px` giữa hai hàng (hàng cuối không có) — CHỈ chữ và caret thành thanh shimmer.
  *
@@ -1351,16 +1363,16 @@ const AccordionFrame = ({
  */
 const AccordionFrameSkeleton = ({
     items,
-    bordered,
+    variant,
     showAnatomy,
     anatPart,
-}: Pick<SurfaceCardAccordionProps, "items" | "bordered" | "showAnatomy"> & { anatPart?: string }) => {
+}: Pick<SurfaceCardAccordionProps, "items" | "variant" | "showAnatomy"> & { anatPart?: string }) => {
     // Chưa có dữ liệu → 3 hàng mặc định; có rồi thì soi gương đúng từng hàng.
     const rows: ReadonlyArray<SurfaceCardAccordionItem | undefined> =
         items.length > 0 ? items : Array.from({ length: 3 }, () => undefined)
     return (
         <div
-            className={cn("overflow-hidden", surfaceFrame(bordered))}
+            className={cn("overflow-hidden", surfaceFrame(variant))}
             style={ACCORDION_SEPARATOR_STYLE}
             data-anat-part={anatPart}
         >
@@ -1410,7 +1422,7 @@ const AccordionCard = ({
     items,
     allowsMultipleExpanded = false,
     defaultExpandedKeys,
-    bordered = false,
+    variant = "surface",
     emptyState,
     description,
     isSkeleton = false,
@@ -1424,13 +1436,13 @@ const AccordionCard = ({
     const frame = isSkeleton ? (
         <AccordionFrameSkeleton
             items={items}
-            bordered={bordered}
+            variant={variant}
             showAnatomy={showAnatomy}
             anatPart={showAnatomy ? "Surface" : bare ? anatPart : undefined}
         />
     ) : items.length === 0 && emptyState != null ? (
         <div
-            className={cn("overflow-hidden p-8", surfaceFrame(bordered))}
+            className={cn("overflow-hidden p-8", surfaceFrame(variant))}
             data-anat-part={showAnatomy ? "Surface" : bare ? anatPart : undefined}
         >
             {emptyState}
@@ -1440,7 +1452,7 @@ const AccordionCard = ({
             items={items}
             allowsMultipleExpanded={allowsMultipleExpanded}
             defaultExpandedKeys={defaultExpandedKeys}
-            bordered={bordered}
+            variant={variant}
             showAnatomy={showAnatomy}
             anatPart={showAnatomy ? "Surface" : bare ? anatPart : undefined}
         />
@@ -1545,10 +1557,13 @@ export interface SurfaceCardCrossListProps {
     /** The rows. REQUIRED — repeat list = data, never children. Ignored when `isSkeleton`. */
     items: ReadonlyArray<SurfaceCardCrossListItem>
     /**
-     * `border border-default` instead of `shadow-surface` — for a list NESTED inside
-     * another surface (modal/drawer/panel) where the shadow is invisible. Default `false`.
+     * `"surface"` (mặc định) `shadow-surface`, hoặc `"nested"` — border THAY CHO
+     * shadow khi list này nằm TRONG một mặt khác (modal/drawer/panel) — nơi shadow
+     * vô hình (§1a).
+     *
+     * 2026-07-26 (thầy): đổi từ `bordered?: boolean`. `bordered=true` → `variant="nested"`.
      */
-    bordered?: boolean
+    variant?: SurfaceCardVariant
     /** `true` → self-render `skeletonRows` placeholder rows (mark + text mirror) instead of `items`. */
     isSkeleton?: boolean
     /** Number of placeholder rows when `isSkeleton`. Default `3`. */
@@ -1612,14 +1627,14 @@ const CrossListRow = ({
  */
 const CrossList = ({
     items,
-    bordered = false,
+    variant = "surface",
     isSkeleton = false,
     skeletonRows = 3,
     className,
     anatPart,
     showAnatomy,
 }: SurfaceCardCrossListProps) => (
-    <ul className={cn("overflow-hidden", surfaceFrame(bordered), className)} data-anat-part={anatPart}>
+    <ul className={cn("overflow-hidden", surfaceFrame(variant), className)} data-anat-part={anatPart}>
         {isSkeleton
             ? Array.from({ length: skeletonRows }).map((_, index) => (
                 <CrossListRow key={index} isSkeleton anatPart={showAnatomy ? "CrossListItem" : undefined} />

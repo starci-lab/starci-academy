@@ -150,8 +150,9 @@ export const ConversationList = ({
     className,
 }: ConversationListProps) => {
     const skeleton = (
+        // Codemod 2026-07-26: `bordered` → `variant="nested"` (API 3-trục SurfaceCard).
         <SurfaceCard.List
-            bordered
+            variant="nested"
             anatPart={showAnatomy ? "SurfaceListCard" : undefined}
             items={Array.from({ length: SKELETON_ROW_COUNT }).map((_, index) => ({
                 key: String(index),
@@ -308,8 +309,9 @@ export const ConversationList = ({
                     errorContent={{ title: "Chưa có cuộc trò chuyện", showAnatomy }}
                     showAnatomy={showAnatomy}
                 >
+                    {/* Codemod 2026-07-26: `bordered` → `variant="nested"` (API 3-trục SurfaceCard). */}
                     <SurfaceCard.List
-                        bordered
+                        variant="nested"
                         anatPart={showAnatomy ? "SurfaceListCard" : undefined}
                         items={rowItems}
                     />

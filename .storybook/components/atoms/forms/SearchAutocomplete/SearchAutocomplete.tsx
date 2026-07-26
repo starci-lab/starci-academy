@@ -98,9 +98,9 @@ const SearchAutocompleteBase = ({
     inputValue,
     onInputChange,
     onSelect,
-    placeholder = "Tìm khoá học, chủ đề...",
+    placeholder = "Search courses, topics…",
     isLoading = false,
-    emptyLabel = "Không có gợi ý nào",
+    emptyLabel = "No suggestions",
     isSkeleton = false,
     label,
     hint,
@@ -170,7 +170,7 @@ const SearchAutocompleteBase = ({
                                 <div className="flex items-center justify-center gap-2 px-3 py-6">
                                     <Spinner size="sm" />
                                     <Typography type="body-sm" color="muted">
-                                        Đang tìm...
+                                        Searching…
                                     </Typography>
                                 </div>
                             ) : (

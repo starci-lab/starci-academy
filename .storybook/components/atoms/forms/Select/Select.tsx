@@ -189,9 +189,11 @@ const SelectMulti = ({
 }) => {
     const invalid = isInvalid || errorMessage != null
     const chosen = options.filter((option) => value.includes(option.value))
-    // Nhãn trigger: "n đã chọn" khi ≥2, nhãn đơn khi =1, placeholder khi rỗng.
+    // Nhãn trigger: "n selected" khi ≥2, nhãn đơn khi =1, placeholder khi rỗng.
+    // Chữ HIỆN RA UI viết tiếng Anh (thầy chốt 2026-07-26) — đây là chuỗi MẶC ĐỊNH nên
+    // call-site không truyền tay là nó lộ thẳng lên màn hình.
     const summary =
-        chosen.length === 0 ? null : chosen.length === 1 ? chosen[0].label : `Đã chọn ${chosen.length}`
+        chosen.length === 0 ? null : chosen.length === 1 ? chosen[0].label : `${chosen.length} selected`
     return (
         <FieldFrame.Base
             label={label}

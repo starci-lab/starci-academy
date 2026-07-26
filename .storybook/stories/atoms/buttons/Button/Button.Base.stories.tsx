@@ -16,11 +16,11 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * leaf `Default`; ở tầng atom thế là SAI: atom là bảng tra, người đọc đến để xem "prop
  * này làm được gì", nên mỗi prop phải đứng riêng.
  *
- * 🧮 **Tab States** (panel 3 tab, thầy chốt 2026-07-26): mỗi leaf khai `states` =
- * bảng PHỦ của ĐÚNG prop sở hữu leaf đó. Ô đỏ (`rendered: false`) tố cáo giá trị bị
- * bỏ quên — đúng thứ đáng lẽ bắt được `danger` sót khỏi mảng `VARIANTS` trước khi nó
- * mọc thành story `Danger` lạc chỗ. Bảng KHÔNG vẽ lại hình: khung trên render rồi.
- * ⛔ Không kéo prop khác vào bảng: mọi ô phải là một cách gọi của CHÍNH prop này.
+ * ⚠️ Tab **States** đã BỎ (thầy chốt 2026-07-26, lần 2 — soi thật thấy nó chỉ lặp
+ * lại bằng chữ đúng thứ khung render trên đã hiện). Panel giờ còn hai tab: Deps ·
+ * Code. Bài học `danger` sót khỏi mảng `VARIANTS` (trước khi nó mọc thành story
+ * `Danger` lạc chỗ) vẫn còn giá trị — chỉ là bắt bằng cách ĐỌC kỹ mảng union khi
+ * viết leaf, không còn ô đỏ tự động nhắc nữa.
  *
  * ✍️ Chữ hiện trên panel (`leaf`/`reason`/`note`/`hint`/`code`) viết TIẾNG ANH; nhãn
  * demo trong khung render cũng tiếng Anh để tab Code khớp đúng từng chữ với hình.
@@ -62,13 +62,6 @@ export const Default: Story = {
                 leaf="No prop turned on"
                 reason="The one button atom in the system, wrapping HeroUI Button. This leaf is the baseline: every leaf below differs from it by exactly one prop."
                 note="Defaults are variant=primary and size=md. The DOM stays flat — button > label."
-                states={[
-                    {
-                        value: "label=\"Save draft\"",
-                        hint: "The only prop a labelled button needs.",
-                        rendered: true,
-                    },
-                ]}
                 code={"<Button.Base label=\"Save draft\" />"}
             >
                 <Button.Base label="Save draft" showAnatomy />
@@ -87,13 +80,6 @@ export const Variants: Story = {
                 leaf="Prop `variant`"
                 reason="variant is the meaning of the action, not a colour. `danger` maps onto the destructive variant of our HeroUI fork — it is not the `color` prop."
                 note="Two levels of danger: `danger` is the solid confirm button of a dialog, `danger-soft` is for destructive actions in a calmer place, like dropping one row from a list. HeroUI has no soft version, so the atom borrows a neutral variant and paints tokens over it."
-                states={[
-                    { value: "primary", hint: "Main action on the surface.", rendered: true },
-                    { value: "secondary", hint: "Sits next to a primary.", rendered: true },
-                    { value: "ghost", hint: "Quiet action, no fill.", rendered: true },
-                    { value: "danger", hint: "Solid confirm in a dialog.", rendered: true },
-                    { value: "danger-soft", hint: "Destructive, calm context.", rendered: true },
-                ]}
                 code={`<Button.Base variant="primary" label="Save draft" />
 <Button.Base variant="secondary" label="Preview" />
 <Button.Base variant="ghost" label="Cancel" />
@@ -120,11 +106,6 @@ export const Sizes: Story = {
                 leaf="Prop `size`"
                 reason="size is scale only — it never changes what the button means. The box also shrinks with the container it sits in (@app-md), not with the viewport."
                 note="There is no icon-size prop: the glyph is read off `size` — see the prefixIcon leaf."
-                states={[
-                    { value: "sm", hint: "Dense rows and toolbars.", rendered: true },
-                    { value: "md", hint: "Default.", rendered: true },
-                    { value: "lg", hint: "Hero calls to action.", rendered: true },
-                ]}
                 code={`<Button.Base size="sm" label="Save draft" />
 <Button.Base size="md" label="Save draft" />   // default
 <Button.Base size="lg" label="Save draft" />`}
@@ -154,28 +135,6 @@ export const PrefixIcon: Story = {
                 leaf="Prop `prefixIcon` (leading)"
                 reason="Renamed from `icon`: with a `suffixIcon` on the other end, a bare `icon` no longer read as one half of a pair. Both glyph slots now say the same thing from both sides, matching how Typography names them."
                 note="The glyph has no size of its own. The atom reads it off `size` — 14px text takes a 14px icon, 16px text a 16px one — and forces bold weight, because every button glyph sits under 20px and thin strokes look weak there. Top row swaps the glyph, bottom row swaps the size."
-                states={[
-                    {
-                        value: "prefixIcon={ArrowLeftIcon}",
-                        hint: "Pass the component, not JSX.",
-                        rendered: true,
-                    },
-                    {
-                        value: "prefixIcon={FloppyDiskIcon}",
-                        hint: "Swap the glyph, nothing else moves.",
-                        rendered: true,
-                    },
-                    {
-                        value: "prefixIcon={TrashIcon}",
-                        hint: "Reads on a filled variant too.",
-                        rendered: true,
-                    },
-                    {
-                        value: "prefixIcon + size=\"sm|md|lg\"",
-                        hint: "Scale and weight follow the button.",
-                        rendered: true,
-                    },
-                ]}
                 code={`<Button.Base prefixIcon={ArrowLeftIcon} label="Back" />
 <Button.Base prefixIcon={FloppyDiskIcon} label="Save" />
 <Button.Base size="lg" prefixIcon={FloppyDiskIcon} label="Save" />`}
@@ -207,18 +166,6 @@ export const SuffixIcon: Story = {
                 leaf="Prop `suffixIcon` (trailing)"
                 reason="Where the glyph sits carries meaning: leading says what kind of action this is (save, delete), trailing says where it takes you (onward, out to a doc). Without a trailing slot, a “Continue →” button gets hand-assembled at the call site — the thing this atom exists to stop."
                 note="Both slots can be on at once (bottom row) — the atom lays them out as icon, label, icon."
-                states={[
-                    {
-                        value: "suffixIcon={ArrowRightIcon}",
-                        hint: "Trailing glyph, after the label.",
-                        rendered: true,
-                    },
-                    {
-                        value: "prefixIcon + suffixIcon",
-                        hint: "Both slots at once, atom orders them.",
-                        rendered: true,
-                    },
-                ]}
                 code={`<Button.Base label="Continue" suffixIcon={ArrowRightIcon} />
 <Button.Base prefixIcon={FloppyDiskIcon} label="Save and continue" suffixIcon={ArrowRightIcon} />`}
             >
@@ -246,18 +193,6 @@ export const IconSlide: Story = {
                 leaf="Prop `iconSlide`"
                 reason="The arrow slides the way it points — a leading arrow backs off to the left (go back), a trailing one moves right (keep going). Navigation arrows only; a caret or a static glyph doing this just fidgets."
                 note="Hover a button to see it. Tailwind v4 treats translate as its own property, so the atom transitions `translate`, not `transform` — get that wrong and the hover stutters."
-                states={[
-                    {
-                        value: "iconSlide + suffixIcon",
-                        hint: "Arrow moves right: keep going.",
-                        rendered: true,
-                    },
-                    {
-                        value: "iconSlide + prefixIcon",
-                        hint: "Arrow moves left: go back.",
-                        rendered: true,
-                    },
-                ]}
                 code={`<Button.Base label="Continue" suffixIcon={ArrowRightIcon} iconSlide />
 <Button.Base prefixIcon={ArrowLeftIcon} label="Back" iconSlide />`}
             >
@@ -286,23 +221,6 @@ export const IsIconOnly: Story = {
                 leaf="Prop `isIconOnly`"
                 reason="Turn it on and `prefixIcon` + `ariaLabel` become required — the types enforce it, because a button with no text is silent to a screen reader. `label` and `suffixIcon` stop meaning anything, so the atom drops them."
                 note="The box goes square with the size (36 / 40 / 44px) but the glyph still follows the font scale, exactly like a labelled button — one rule, not a second scale per box. That is why sm and md share a glyph size and differ only in the box."
-                states={[
-                    {
-                        value: "isIconOnly prefixIcon={PlusIcon}",
-                        hint: "Square box, glyph only.",
-                        rendered: true,
-                    },
-                    {
-                        value: "isIconOnly ariaLabel=\"Add item\"",
-                        hint: "Required — no text, no name.",
-                        rendered: true,
-                    },
-                    {
-                        value: "isIconOnly + size=\"sm|md|lg\"",
-                        hint: "Box grows, glyph keeps the font scale.",
-                        rendered: true,
-                    },
-                ]}
                 code={`<Button.Base isIconOnly prefixIcon={PlusIcon} ariaLabel="Add item" />
 <Button.Base isIconOnly variant="danger" prefixIcon={TrashIcon} ariaLabel="Delete" />
 <Button.Base isIconOnly size="lg" prefixIcon={PlusIcon} ariaLabel="Add item" />`}
@@ -341,14 +259,6 @@ export const Disabled: Story = {
                 leaf="Prop `isDisabled`"
                 reason="isDisabled means not allowed yet — an invalid form, a missing permission. `isPending` means waiting on something already running. Two different messages; they don't stand in for each other."
                 note="Forwarded straight to HeroUI: press is blocked and the button dims. No spinner."
-                states={[
-                    { value: "isDisabled", hint: "Press blocked, no spinner.", rendered: true },
-                    {
-                        value: "isDisabled on every variant",
-                        hint: "Dimming reads the same on all five.",
-                        rendered: true,
-                    },
-                ]}
                 code={"<Button.Base variant=\"primary\" isDisabled label=\"Save draft\" />"}
             >
                 <div className="flex flex-wrap items-center gap-3">
@@ -371,18 +281,6 @@ export const Pending: Story = {
                 leaf="Prop `isPending`"
                 reason="react-aria's `isPending` draws nothing on its own — the atom renders the spinner itself, or the button goes silent for the whole wait."
                 note="The spinner takes the leading slot instead of standing next to the glyph: two marks in one place are two signals fighting. That also means a button with an icon and one without look identical while pending, so this leaf only varies size — rendering both would render the same picture twice."
-                states={[
-                    {
-                        value: "isPending",
-                        hint: "Spinner takes the leading slot.",
-                        rendered: true,
-                    },
-                    {
-                        value: "isPending + size=\"sm|md|lg\"",
-                        hint: "Spinner scales with the button.",
-                        rendered: true,
-                    },
-                ]}
                 code={"<Button.Base variant=\"primary\" isPending label=\"Saving…\" />"}
             >
                 <div className="flex items-center gap-3">
@@ -411,23 +309,6 @@ export const Skeleton: Story = {
                 leaf="Prop `isSkeleton`"
                 reason="Whoever owns the shape owns its loading state, so the atom draws its own shimmer at button size. There is no shared skeleton component to keep in sync."
                 note="The shimmer box tracks `size` (pills 80 / 96 / 112px, squares 36 / 40 / 44px) so a row of buttons doesn't jump when the data lands. It used to be one fixed width for all three steps — three boxes that looked alike and none of them the size of the real button."
-                states={[
-                    {
-                        value: "isSkeleton",
-                        hint: "Pill shimmer for a labelled button.",
-                        rendered: true,
-                    },
-                    {
-                        value: "isSkeleton isIconOnly",
-                        hint: "Square shimmer for the icon button.",
-                        rendered: true,
-                    },
-                    {
-                        value: "isSkeleton + size=\"sm|md|lg\"",
-                        hint: "Each size gets its own box.",
-                        rendered: true,
-                    },
-                ]}
                 code={`<Button.Base isSkeleton />
 <Button.Base size="lg" isSkeleton />
 <Button.Base isIconOnly isSkeleton />`}

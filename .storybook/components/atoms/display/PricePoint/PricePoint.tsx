@@ -1,7 +1,7 @@
-import React from "react"
 import type { ReactNode } from "react"
-import { Skeleton as HeroSkeleton, Typography as HeroTypography, cn } from "@heroui/react"
+import { Skeleton as HeroSkeleton, cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import type { TypographySize } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — PricePoint: the tier / subscription price display
@@ -16,14 +16,23 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * NO `@/components` imports.
  */
 
-/** Amount type scale — drives the main amount's size. */
+/** Amount type scale — drives the main amount's size, and (via {@link SIZE_TO_TOKENS}) the original/period sizes riding along with it. */
 export type PricePointSize = "sm" | "md" | "lg"
 
-/** Amount `Typography` type per size. */
-const SIZE_TO_TYPE: Record<PricePointSize, "h4" | "h3" | "h2"> = {
-    sm: "h4",
-    md: "h3",
-    lg: "h2",
+/**
+ * MỘT BẢNG DUY NHẤT theo `size` cho cả ba phần — amount (Typography heading) +
+ * original + period (Typography body). Trước đây `original`/`period` khoá cứng
+ * `sm`/`xs` bất kể `size`, nên ở `size="lg"` (amount to bằng h2) chúng nhỏ lạc lõng
+ * bên cạnh con số lớn. `periodBarH` là chiều cao thanh skeleton của `period`, đi kèm
+ * để bar MIRROR đúng cỡ chữ thật của bậc đó (§12d) thay vì khoá cứng một cỡ.
+ */
+const SIZE_TO_TOKENS: Record<
+    PricePointSize,
+    { amount: "h4" | "h3" | "h2"; original: TypographySize; period: TypographySize; periodBarH: string }
+> = {
+    sm: { amount: "h4", original: "xs", period: "xs", periodBarH: "h-3" },
+    md: { amount: "h3", original: "sm", period: "xs", periodBarH: "h-3" },
+    lg: { amount: "h2", original: "base", period: "sm", periodBarH: "h-[14px]" },
 }
 
 /**
@@ -37,23 +46,32 @@ const SIZE_TO_BAR: Record<PricePointSize, string> = {
     lg: "h-[30px] my-[3px]",
 }
 
-/** Props for the {@link PricePoint} primitive. */
-export interface PricePointProps {
-    /** The price the user pays, PRE-FORMATTED by the caller (e.g. "299.000đ", "0đ", "$9"). */
-    amount: ReactNode
+/** Props shared by every `amount`/`isSkeleton` combination — see {@link PricePointProps}. */
+interface PricePointOwnProps {
     /** Optional struck-through original/list price shown beside the amount (e.g. "399.000đ"). */
     original?: ReactNode
     /** Optional billing period rendered small + muted after the amount (e.g. "/tháng"). */
     period?: ReactNode
-    /** Amount size. Defaults to `"md"` (h3). */
+    /** Amount size — also drives `original`/`period`'s size via {@link SIZE_TO_TOKENS}. Defaults to `"md"` (h3). */
     size?: PricePointSize
-    /** `true` → render the skeleton mirror (amount + period placeholders). */
-    isSkeleton?: boolean
-    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
+    /** `true` → tag `Amount`/`Original`/`Period` with `data-anat-part`, and forward down into the composed `Typography.Base` calls. */
+    showAnatomy?: boolean
     /** Extra classes on the root. */
     className?: string
 }
+
+/**
+ * `amount` BẮT BUỘC khi render giá thật, KHÔNG cần khi `isSkeleton` — thanh
+ * shimmer không có nội dung để đọc. Union ép luật đó ở compile-time (§12c), thay vì
+ * hạ `amount` xuống optional đại trà và mất lưới an toàn.
+ */
+export type PricePointProps = PricePointOwnProps &
+    (
+        | { isSkeleton: true; amount?: ReactNode }
+        | { isSkeleton?: false; amount: ReactNode }
+    )
 
 /**
  * PricePoint renders a price as one baseline-aligned unit: the amount (prominent),
@@ -69,32 +87,64 @@ const PricePointBase = ({
     size = "md",
     isSkeleton = false,
     anatPart,
+    showAnatomy = false,
     className,
 }: PricePointProps) => {
+    const tokens = SIZE_TO_TOKENS[size]
+
     if (isSkeleton) {
         // Leaf skeleton OWNED by this atom (hybrid C) — bars sized to MIRROR the
-        // real amount/period boxes (amount bar follows `size`; period bar mirrors
-        // the `Typography.Xs`/body-xs glyph box), not the shared Skeleton registry.
+        // real amount/period boxes (amount bar follows `size`; period bar follows
+        // the SAME size table as the real `period` Typography), not a shared,
+        // one-size-fits-all Skeleton registry entry.
         return (
             <div className={cn("flex flex-wrap items-baseline gap-2", className)} data-anat-part={anatPart}>
-                <HeroSkeleton className={cn("w-1/3 rounded", SIZE_TO_BAR[size])} />
-                {period ? <HeroSkeleton className="h-3 my-1 w-1/4 rounded" /> : null}
+                <HeroSkeleton
+                    className={cn("w-1/3 rounded", SIZE_TO_BAR[size])}
+                    data-anat-part={showAnatomy ? "Amount" : undefined}
+                />
+                {period ? (
+                    <HeroSkeleton
+                        className={cn("my-1 w-1/4 rounded", tokens.periodBarH)}
+                        data-anat-part={showAnatomy ? "Period" : undefined}
+                    />
+                ) : null}
             </div>
         )
     }
     return (
         <div className={cn("flex flex-wrap items-baseline gap-2", className)} data-anat-part={anatPart}>
-            {/* Main amount — prominent (primitive owns the scale). NOTE: `size="lg"` maps
-                to `type="h2"`, which the `Typography.*` atom does NOT expose (only
-                H3/H4/H5/Code) — kept as raw HeroUI `Typography` (aliased `HeroTypography`)
-                since the type is picked dynamically from {@link SIZE_TO_TYPE}. */}
-            <HeroTypography type={SIZE_TO_TYPE[size]} weight="semibold">{amount}</HeroTypography>
+            {/* Main amount — prominent, sized off {@link SIZE_TO_TOKENS}. Composed via
+                `Typography.Base` (which now covers h1–h5) instead of raw HeroUI
+                `Typography`, so `showAnatomy` forwards down like `original`/`period`. */}
+            <Typography.Base
+                size={tokens.amount}
+                weight="semibold"
+                text={amount}
+                showAnatomy={showAnatomy}
+                anatPart="Amount"
+            />
             {/* Struck-through original — line-through is text-decoration, allowed as className */}
             {original ? (
-                <Typography.Base size="sm" color="muted" className="line-through" text={original} />
+                <Typography.Base
+                    size={tokens.original}
+                    color="muted"
+                    className="line-through"
+                    text={original}
+                    showAnatomy={showAnatomy}
+                    anatPart="Original"
+                />
             ) : null}
-            {/* Billing period — smallest muted text */}
-            {period ? <Typography.Base size="xs" color="muted" text={period} /> : null}
+            {/* Billing period — smallest muted text at this size */}
+            {period ? (
+                <Typography.Base
+                    size={tokens.period}
+                    color="muted"
+                    text={period}
+                    showAnatomy={showAnatomy}
+                    anatPart="Period"
+                />
+            ) : null}
         </div>
     )
 }

@@ -1,27 +1,36 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Input } from "@sb-components/atoms/forms/Input/Input"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta = { title: "Atoms/Forms/Input/Input.Text", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
 export default meta
 type Story = StoryObj
 
-// FieldFrame parts (§11a) — atom TỰ mang nhãn/mô tả/lỗi, không tách Field primitive.
-const FIELD: AnatomyNode = { name: "Field", tier: "atom", role: "ô nhập text (HeroUI TextField+Input)" }
-const LABEL: AnatomyNode = { name: "Label", tier: "atom", role: "nhãn field (HeroUI Label)" }
-const DESC: AnatomyNode = { name: "Description", tier: "atom", role: "mô tả dưới nhãn (text-muted)" }
-const ERROR: AnatomyNode = { name: "Error", tier: "atom", role: "dòng lỗi (text-danger)" }
-const SKELETON: AnatomyNode = { name: "Skeleton", tier: "atom", role: "field-box skeleton (hybrid C)" }
+/**
+ * ATOM LÁ — `Input.Text` bọc thẳng HeroUI `TextField`/`Input` + `FieldFrame` nội bộ
+ * (§11a: nhãn/mô tả/lỗi tính vào atom, không tách Field primitive). Mọi part nó phát
+ * ra (`Label`/`Description`/`Field`/`Error`/`Skeleton`) là KHE nội bộ, không phải
+ * component có story riêng ⇒ KHÔNG có deps ⇒ bỏ hẳn prop `annotate` (thầy chốt
+ * 2026-07-26 lần 2).
+ */
 
-/** Default — ô TRẦN, không nhãn (FieldFrame render thẳng control). */
+/** Default — bare field: empty box, no label/hint/error/placeholder. */
 export const Default: Story = {
     render: () => {
         const Demo = () => {
             const [value, setValue] = useState("")
             return (
-                <BlockAnatomy name="Input.Text" tier="atom" leaf="Default" parts={[FIELD]} note="trần — không label/hint/error." code={"<Input.Text value={v} onValueChange={setV} placeholder=\"Tên khoá học\" />"}>
-                    <div className="w-72"><Input.Text value={value} onValueChange={setValue} placeholder="Tên khoá học" ariaLabel="Tên khoá học" showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Text"
+                    tier="atom"
+                    leaf="Default"
+                    note="Bare — no label, hint, error, or placeholder ghost text."
+                    code={"<Input.Text value={v} onValueChange={setV} />"}
+                >
+                    <div className="w-72">
+                        <Input.Text value={value} onValueChange={setValue} ariaLabel="Course name" showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -29,14 +38,48 @@ export const Default: Story = {
     },
 }
 
-/** WithLabel — nhãn trên + mô tả (hint) dưới nhãn. */
+/**
+ * Leaf prop `placeholder` — dimmed ghost text while `value` is empty. Distinct pixels
+ * from `Default` above: same bare box, but a grey hint word sits inside it.
+ */
+export const Placeholder: Story = {
+    render: () => {
+        const Demo = () => {
+            const [value, setValue] = useState("")
+            return (
+                <BlockAnatomy
+                    name="Input.Text"
+                    tier="atom"
+                    leaf="Prop `placeholder`"
+                    note="Ghost text only shows while value is empty; it disappears the moment real text lands."
+                    code={"<Input.Text placeholder=\"Course name\" value={v} onValueChange={setV} />"}
+                >
+                    <div className="w-72">
+                        <Input.Text placeholder="Course name" value={value} onValueChange={setValue} ariaLabel="Course name" showAnatomy />
+                    </div>
+                </BlockAnatomy>
+            )
+        }
+        return <div className="p-8"><Demo /></div>
+    },
+}
+
+/** WithLabel — label on top, hint below it. */
 export const WithLabel: Story = {
     render: () => {
         const Demo = () => {
             const [value, setValue] = useState("")
             return (
-                <BlockAnatomy name="Input.Text" tier="atom" leaf="WithLabel" parts={[LABEL, DESC, FIELD]} note="label + hint." code={"<Input.Text label=\"Tên khoá học\" hint=\"Hiện trên thẻ khoá học\" value={v} onValueChange={setV} />"}>
-                    <div className="w-72"><Input.Text label="Tên khoá học" hint="Hiện trên thẻ khoá học" value={value} onValueChange={setValue} placeholder="Tên khoá học" showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Text"
+                    tier="atom"
+                    leaf="WithLabel"
+                    note="label + hint."
+                    code={"<Input.Text label=\"Course name\" hint=\"Shown on the course card\" value={v} onValueChange={setV} />"}
+                >
+                    <div className="w-72">
+                        <Input.Text label="Course name" hint="Shown on the course card" value={value} onValueChange={setValue} placeholder="Course name" showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -44,14 +87,22 @@ export const WithLabel: Story = {
     },
 }
 
-/** Required — nhãn + dấu `*` bắt buộc. */
+/** Required — label with the `*` mark. */
 export const Required: Story = {
     render: () => {
         const Demo = () => {
             const [value, setValue] = useState("")
             return (
-                <BlockAnatomy name="Input.Text" tier="atom" leaf="Required" parts={[LABEL, FIELD]} note="isRequired → dấu * sau nhãn." code={"<Input.Text label=\"Tên khoá học\" isRequired value={v} onValueChange={setV} />"}>
-                    <div className="w-72"><Input.Text label="Tên khoá học" isRequired value={value} onValueChange={setValue} placeholder="Tên khoá học" showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Text"
+                    tier="atom"
+                    leaf="Required"
+                    note="isRequired → * mark after the label."
+                    code={"<Input.Text label=\"Course name\" isRequired value={v} onValueChange={setV} />"}
+                >
+                    <div className="w-72">
+                        <Input.Text label="Course name" isRequired value={value} onValueChange={setValue} placeholder="Course name" showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -59,14 +110,22 @@ export const Required: Story = {
     },
 }
 
-/** Filled — có value thật + nhãn. */
+/** Filled — a real value with a label. */
 export const Filled: Story = {
     render: () => {
         const Demo = () => {
             const [value, setValue] = useState("Fullstack Mastery")
             return (
-                <BlockAnatomy name="Input.Text" tier="atom" leaf="Filled" parts={[LABEL, FIELD]} note="value có chữ." code={"<Input.Text label=\"Tên khoá học\" value=\"Fullstack Mastery\" onValueChange={setV} />"}>
-                    <div className="w-72"><Input.Text label="Tên khoá học" value={value} onValueChange={setValue} showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Text"
+                    tier="atom"
+                    leaf="Filled"
+                    note="value holds text."
+                    code={"<Input.Text label=\"Course name\" value=\"Fullstack Mastery\" onValueChange={setV} />"}
+                >
+                    <div className="w-72">
+                        <Input.Text label="Course name" value={value} onValueChange={setValue} showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -74,14 +133,22 @@ export const Filled: Story = {
     },
 }
 
-/** Disabled — khoá control + nhãn nhạt. */
+/** Disabled — control locked, label dimmed. */
 export const Disabled: Story = {
     render: () => {
         const Demo = () => {
             const [value, setValue] = useState("Fullstack Mastery")
             return (
-                <BlockAnatomy name="Input.Text" tier="atom" leaf="Disabled" parts={[LABEL, FIELD]} note="isDisabled → khoá + nhạt." code={"<Input.Text label=\"Tên khoá học\" value=\"Fullstack Mastery\" isDisabled onValueChange={setV} />"}>
-                    <div className="w-72"><Input.Text label="Tên khoá học" value={value} onValueChange={setValue} isDisabled showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Text"
+                    tier="atom"
+                    leaf="Disabled"
+                    note="isDisabled → locked + dimmed."
+                    code={"<Input.Text label=\"Course name\" value=\"Fullstack Mastery\" isDisabled onValueChange={setV} />"}
+                >
+                    <div className="w-72">
+                        <Input.Text label="Course name" value={value} onValueChange={setValue} isDisabled showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -89,14 +156,48 @@ export const Disabled: Story = {
     },
 }
 
-/** Error — nhãn + errorMessage → hiện NHÃN + dòng đỏ + viền lỗi. */
+/**
+ * Leaf prop `isInvalid` — red border WITHOUT an error line (`errorMessage` unset).
+ * Different pixels than `Error` below: same red border, but no text underneath.
+ */
+export const Invalid: Story = {
+    render: () => {
+        const Demo = () => {
+            const [value, setValue] = useState("")
+            return (
+                <BlockAnatomy
+                    name="Input.Text"
+                    tier="atom"
+                    leaf="Prop `isInvalid`"
+                    note="isInvalid alone only reddens the border — no errorMessage means no line underneath. Compare with Error below."
+                    code={"<Input.Text label=\"Course name\" isInvalid value={v} onValueChange={setV} placeholder=\"Course name\" />"}
+                >
+                    <div className="w-72">
+                        <Input.Text label="Course name" isInvalid value={value} onValueChange={setValue} placeholder="Course name" showAnatomy />
+                    </div>
+                </BlockAnatomy>
+            )
+        }
+        return <div className="p-8"><Demo /></div>
+    },
+}
+
+/** Error — label + errorMessage → label, red error line, and error border all show. */
 export const Error: Story = {
     render: () => {
         const Demo = () => {
             const [value, setValue] = useState("")
             return (
-                <BlockAnatomy name="Input.Text" tier="atom" leaf="Error" parts={[LABEL, FIELD, ERROR]} note="label + errorMessage → nhãn + dòng đỏ + viền." code={"<Input.Text label=\"Tên khoá học\" errorMessage=\"Tên không được để trống\" value={v} onValueChange={setV} />"}>
-                    <div className="w-72"><Input.Text label="Tên khoá học" errorMessage="Tên không được để trống" value={value} onValueChange={setValue} placeholder="Tên khoá học" showAnatomy /></div>
+                <BlockAnatomy
+                    name="Input.Text"
+                    tier="atom"
+                    leaf="Error"
+                    note="label + errorMessage → label, red line, border."
+                    code={"<Input.Text label=\"Course name\" errorMessage=\"Name is required\" value={v} onValueChange={setV} />"}
+                >
+                    <div className="w-72">
+                        <Input.Text label="Course name" errorMessage="Name is required" value={value} onValueChange={setValue} placeholder="Course name" showAnatomy />
+                    </div>
                 </BlockAnatomy>
             )
         }
@@ -104,12 +205,20 @@ export const Error: Story = {
     },
 }
 
-/** Loading — nhãn skeleton (mirror) trên field-box skeleton. */
+/** Loading — label skeleton mirrored above the field-box skeleton. */
 export const Loading: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="Input.Text" tier="atom" leaf="Loading" parts={[LABEL, SKELETON]} note="isSkeleton + label → mirror nhãn trên hộp." code={"<Input.Text label=\"Tên khoá học\" isSkeleton />"}>
-                <div className="w-72"><Input.Text label="Tên khoá học" value="" onValueChange={() => {}} isSkeleton showAnatomy /></div>
+            <BlockAnatomy
+                name="Input.Text"
+                tier="atom"
+                leaf="Loading"
+                note="isSkeleton + label → label mirrored above the box."
+                code={"<Input.Text label=\"Course name\" isSkeleton />"}
+            >
+                <div className="w-72">
+                    <Input.Text label="Course name" value="" onValueChange={() => {}} isSkeleton showAnatomy />
+                </div>
             </BlockAnatomy>
         </div>
     ),

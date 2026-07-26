@@ -1,28 +1,24 @@
 import React from "react"
 import { Skeleton as HeroSkeleton, cn } from "@heroui/react"
-import { UserAvatar } from "@sb-components/atoms/display/UserAvatar/UserAvatar"
+import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/identity/UserCell`. Authored in Storybook (not `src`);
- * synced to `src` later. Composes the local {@link UserAvatar} port (sibling
- * folder) instead of `@/components`.
+ * synced to `src` later. Composes the shared {@link Avatar} atom (`Avatar.Base`)
+ * instead of the retired `UserAvatar` port — that port's DiceBear + broken-image
+ * fallback chain merged into `Avatar.Base` on 2026-07-26 (xem header của
+ * `AvatarBase.tsx`), nên compose thẳng `Avatar.Base` chứ không quay lại `UserAvatar`.
  */
 
-/** Local mirror of the shared `WithClassNames` base (avoids a `@/` import). */
-interface WithClassNames<T> {
-    classNames?: T
-    className?: string
-}
-
 /** Props for {@link UserCell}. */
-export interface UserCellProps extends WithClassNames<undefined> {
+export interface UserCellProps {
     /** Account username; drives the avatar fallback and is the default display name. */
     username: string
     /** Human-friendly name shown as the primary label; falls back to {@link UserCellProps.username}. */
     displayName?: string
-    /** Uploaded avatar URL; resilient fallbacks are handled by {@link UserAvatar}. */
+    /** Uploaded avatar URL; resilient fallbacks are handled by {@link Avatar.Base}. */
     avatar?: string | null
     /** Secondary handle line (e.g. `@username`); hidden when omitted. */
     handle?: string
@@ -31,17 +27,19 @@ export interface UserCellProps extends WithClassNames<undefined> {
     /** Optional right-aligned slot, e.g. a follow button or status chip. */
     trailing?: React.ReactNode
     /**
-     * Extra classes on the NAME's own `Typography` (e.g. `text-accent` to mark the
-     * viewer's own row) — applied last so it overrides Typography's default colour,
-     * which a parent `text-*` can't reach through the component boundary.
+     * `true` khi hàng này là của chính người đang xem — đổi tone tên sang accent để
+     * mắt tự nhận ra "đây là mình" giữa danh sách (vd bảng xếp hạng, thread bình
+     * luận). Prop NGỮ NGHĨA — atom tự chọn class, caller không truyền chuỗi thô (§4).
      */
-    nameClassName?: string
+    isOwnRow?: boolean
+    className?: string
     /** When on, emit `data-anat-part` on this cell's own direct sub-parts (avatar · name · handle · trailing) so a `BlockAnatomy` panel can badge them. */
     showAnatomy?: boolean
     /**
-     * Render the leaf skeleton (shimmer) instead of the cell — avatar `size-9` +
-     * name/handle bars. Atom này là **BẢN GỐC DUY NHẤT** của hình đó (§12c — chủ
-     * của HÌNH là chủ của SKELETON). Compound `Skeleton.*` đã XOÁ HẲN 2026-07-25.
+     * Render the leaf skeleton (shimmer) instead of the cell. Atom này là **BẢN GỐC
+     * DUY NHẤT** của hình đó (§12c — chủ của HÌNH là chủ của SKELETON): avatar
+     * shimmer uỷ quyền thẳng cho `Avatar.Base isSkeleton size={size}` nên luôn khớp
+     * cỡ hàng thật, không khoá cứng một size cho mọi row.
      */
     isSkeleton?: boolean
 }
@@ -51,9 +49,9 @@ export interface UserCellProps extends WithClassNames<undefined> {
  * right-aligned trailing slot. Pure and props-only — no store or data access; the
  * caller supplies all text and any interactive controls via {@link UserCellProps.trailing}.
  *
- * Composes the shared {@link UserAvatar} so the avatar fallback chain stays consistent
- * everywhere a user is rendered. The text column truncates so the cell survives narrow
- * containers (`min-w-0`).
+ * Composes the shared {@link Avatar} atom (`Avatar.Base`) so the avatar fallback chain
+ * (uploaded → generated → initials → icon) stays consistent everywhere a user is
+ * rendered. The text column truncates so the cell survives narrow containers (`min-w-0`).
  *
  * @param props - {@link UserCellProps}
  */
@@ -65,25 +63,31 @@ const UserCellBase = ({
     size = "sm",
     trailing,
     className,
-    nameClassName,
+    isOwnRow = false,
     showAnatomy = false,
     isSkeleton = false,
 }: UserCellProps) => {
     const name = displayName ?? username
 
     if (isSkeleton) {
-        // Skeleton lá do CHÍNH atom này sở hữu (§12c) — đúng hộp: avatar size-9 +
-        // name bar (h-3 w-24 my-1) + handle bar tuỳ chọn (h-3 w-16 my-0), gate theo
-        // `handle` y như nhánh sống gate dòng đó.
+        // Skeleton lá do CHÍNH atom này sở hữu (§12c) — avatar uỷ quyền cho
+        // `Avatar.Base isSkeleton size={size}` (chủ hình = chủ skeleton, cỡ luôn
+        // khớp hàng thật) + name bar (h-3 w-24 my-1) + handle bar tuỳ chọn
+        // (h-3 w-16 my-0), gate theo `handle` y như nhánh sống gate dòng đó.
         return (
-            <div
-                className={cn("flex min-w-0 items-center gap-2", className)}
-                data-anat-part={showAnatomy ? "Skeleton" : undefined}
-            >
-                <HeroSkeleton className="size-9 shrink-0 rounded-full" />
+            <div className={cn("flex min-w-0 items-center gap-2", className)}>
+                <Avatar.Base isSkeleton size={size} showAnatomy={showAnatomy} />
                 <div className="flex min-w-0 flex-col gap-0">
-                    <HeroSkeleton className="my-1 h-3 w-24 rounded" />
-                    {handle ? <HeroSkeleton className="my-0 h-3 w-16 rounded" /> : null}
+                    <HeroSkeleton
+                        className="my-1 h-3 w-24 rounded"
+                        data-anat-part={showAnatomy ? "Name" : undefined}
+                    />
+                    {handle ? (
+                        <HeroSkeleton
+                            className="my-0 h-3 w-16 rounded"
+                            data-anat-part={showAnatomy ? "Handle" : undefined}
+                        />
+                    ) : null}
                 </div>
             </div>
         )
@@ -91,19 +95,21 @@ const UserCellBase = ({
 
     return (
         <div className={cn("flex min-w-0 items-center gap-2", className)}>
-            <UserAvatar.Base
-                username={username}
-                avatar={avatar}
+            <Avatar.Base
+                name={username}
+                src={avatar ?? undefined}
                 seed={username}
                 size={size}
-                anatPart={showAnatomy ? "UserAvatar" : undefined}
+                showAnatomy={showAnatomy}
             />
             <div className="flex min-w-0 flex-col gap-0">
                 <Typography.Base size="sm"
                     weight="medium"
+                    color={isOwnRow ? "accent" : undefined}
                     truncate
                     showAnatomy={showAnatomy}
-                    className={cn("leading-5", nameClassName)}
+                    anatPart={showAnatomy ? "Name" : undefined}
+                    className="leading-5"
                     text={name}
                 />
                 {handle ? (
@@ -111,6 +117,7 @@ const UserCellBase = ({
                         color="muted"
                         truncate
                         showAnatomy={showAnatomy}
+                        anatPart={showAnatomy ? "Handle" : undefined}
                         className="leading-4"
                         text={handle}
                     />

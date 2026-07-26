@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { GithubLogoIcon } from "@phosphor-icons/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Feedback, type FeedbackCalloutStatus } from "@sb-components/layouts/feedback/Feedback/Feedback"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * KHUNG (layout tier) — `Feedback.Callout`: dải tint PHẲNG đặt BÊN TRONG một
@@ -15,10 +15,17 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * State của nút CTA (pending/disabled) sống ở story `Atoms/Buttons/Button` — khung
  * này chỉ nhận `actionLabel`/`onAction`, không nhận node.
  *
- * 📐 LEAF = CẤU TRÚC (§14d.2, thầy chốt 2026-07-26): `status` KHÔNG đổi cây DOM —
- * mọi tone dùng chung `Icon · Content(Title · Description)`, chỉ khác tint + glyph
- * mặc định + màu Title ⇒ chúng là STATE, gộp trong MỘT leaf. Mấy leaf còn lại giữ
- * riêng vì mỗi cái thêm/bớt node THẬT (bỏ `Description`, thêm `Body`/`Action`/`Close`).
+ * 📐 LEAF = CẤU TRÚC (§14d.2, ĐÚNG cho khung — khác atom, xem cảnh báo ở
+ * `Alert.Base.stories.tsx`): `status` KHÔNG đổi cây DOM — mọi tone dùng chung
+ * `Icon · Content(Title · Description)`, chỉ khác tint + glyph mặc định + màu Title
+ * ⇒ chúng là STATE, gộp trong MỘT leaf. Mấy leaf còn lại giữ riêng vì mỗi cái
+ * thêm/bớt node THẬT (bỏ `Description`, thêm `Body`/`Action`/`Close`).
+ *
+ * DEPS thật: `Action` (khung tự dựng `Button.Base` từ `actionLabel`) và `Close`
+ * (khung forward `onClose` xuống atom `Alert.Base`, atom đó tự dựng `Button.Base`
+ * cho nút ×) — cả hai đều là component KHÁC có story riêng mà khung dựng lại.
+ * `Icon`/`Content`/`Title`/`Description`/`Body` là ruột của atom `Alert.Base`
+ * (khung này compose từ nó), KHÔNG phải deps.
  */
 const meta: Meta<typeof Feedback.Callout> = {
     title: "Layouts/Feedback/Feedback/Feedback.Callout",
@@ -33,64 +40,28 @@ export default meta
 
 type Story = StoryObj<typeof Feedback.Callout>
 
-/** Icon · Content(Title · Description) — bộ part chung của mọi tone. */
-const BASE_PARTS: Array<AnatomyNode> = [
-    { name: "Icon", tier: "primitive", role: "biểu tượng tone (mặc định theo status, hoặc icon custom)" },
-    {
-        name: "Content",
-        tier: "primitive",
-        role: "cột nội dung — Alert.Content",
-        children: [
-            { name: "Title", tier: "primitive", role: "dòng tiêu đề (Alert.Title, tô theo status)" },
-            { name: "Description", tier: "primitive", role: "dòng mô tả phụ (Alert.Description)" },
-        ],
+/** Hai node THẬT có story khác để nhảy tới — cả hai đều là `Button.Base` do khung/atom tự dựng. */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    Action: {
+        tier: "atom",
+        role: "the CTA button — built from `actionLabel`/`onAction`, always a Button.Base",
+        storyId: "atoms-buttons-button-button-base--default",
     },
-]
-
-const TITLE_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "Icon", tier: "primitive", role: "biểu tượng tone mặc định" },
-    {
-        name: "Content",
-        tier: "primitive",
-        role: "cột nội dung — chỉ còn Title",
-        children: [{ name: "Title", tier: "primitive", role: "dòng tiêu đề (Alert.Title)" }],
+    Close: {
+        tier: "atom",
+        role: "the × button — forwarded to Alert.Base, which always builds it from Button.Base",
+        storyId: "atoms-buttons-button-button-base--default",
     },
-]
+}
 
-const WITH_BODY_PARTS: Array<AnatomyNode> = [
-    { name: "Icon", tier: "primitive", role: "biểu tượng tone" },
-    {
-        name: "Content",
-        tier: "primitive",
-        role: "cột nội dung — Alert.Content",
-        children: [
-            { name: "Title", tier: "primitive", role: "dòng tiêu đề" },
-            { name: "Description", tier: "primitive", role: "dòng mô tả phụ" },
-            { name: "Body", tier: "primitive", role: "slot TỰ DO dưới mô tả (`body`/`children`) — nội dung do caller soạn" },
-        ],
-    },
-]
-
-const WITH_ACTION_PARTS: Array<AnatomyNode> = [
-    ...BASE_PARTS,
-    { name: "Action", tier: "primitive", role: "slot CTA phụ (node do caller truyền), đứng trước nút đóng" },
-]
-
-const DISMISSIBLE_PARTS: Array<AnatomyNode> = [
-    ...TITLE_ONLY_PARTS,
-    { name: "Close", tier: "atom", role: "`Button.Base` (`XIcon`, ghost) tô theo tone — đóng dải" },
-]
-
-/**
- * Trục `status` — cùng cây DOM, chỉ đổi tint + glyph mặc định + màu Title. Vì thế
- * cả bộ nằm TRONG một leaf (§14d.2), không tách mỗi tone một story.
- */
+/** Trục `status` — cùng cây DOM, chỉ đổi tint + glyph mặc định + màu Title. Vì thế
+ * cả bộ nằm TRONG một leaf (§14d.2), không tách mỗi tone một story. */
 const TONES: Array<{ status: FeedbackCalloutStatus, title: string, description: string }> = [
-    { status: "default", title: "Bản nháp đã lưu", description: "Thay đổi của bạn được giữ tự động." },
-    { status: "accent", title: "Chương 3 vừa có phần thực hành mới", description: "Mở lại chương để làm phần vừa thêm." },
-    { status: "success", title: "Nộp bài thành công", description: "Kết quả sẽ có sau ít phút." },
-    { status: "warning", title: "Sắp hết hạn", description: "Còn 2 ngày để hoàn thành milestone." },
-    { status: "danger", title: "Không kết nối được máy chủ", description: "Kiểm tra mạng rồi thử lại." },
+    { status: "default", title: "Draft saved", description: "Your changes are kept automatically." },
+    { status: "accent", title: "Chapter 3 just got a new practice section", description: "Reopen the chapter to try what's new." },
+    { status: "success", title: "Submission successful", description: "Results will be ready in a few minutes." },
+    { status: "warning", title: "Deadline coming up", description: "2 days left to finish this milestone." },
+    { status: "danger", title: "Couldn't reach the server", description: "Check your connection and try again." },
 ]
 
 /** Leaf gốc — render ĐỦ tone của khung (state, không phải leaf riêng). */
@@ -101,14 +72,14 @@ export const Default: Story = {
             <BlockAnatomy
                 name="Feedback.Callout"
                 tier="primitive"
-                leaf="Đủ tone"
-                parts={BASE_PARTS}
-                reason="Khung THÔNG BÁO TẠI CHỖ: một dải tint phẳng (`shadow-none`) nằm TRONG surface có sẵn, để nó đọc như một vệt nhấn chứ không phải card-trong-card. Khung sở hữu tint + icon theo `status`; caller chỉ đưa chữ."
-                note="Mọi tone (default/accent/success/warning/danger) CÙNG bộ part — chỉ khác icon mặc định + tint + màu Title, nên chung MỘT leaf (§14d.2)."
+                leaf="Full tone set"
+                annotate={ANNOTATE}
+                reason="The IN-PLACE notice frame: a flat tint strip (shadow-none) that sits INSIDE an existing surface, so it reads as a highlight — not a card-in-card. The frame owns the tint and default icon per status; the caller just supplies the copy."
+                note="Every tone (default/accent/success/warning/danger) shares the same part tree — only the icon, tint, and title colour change, so they share one leaf (§14d.2)."
                 code={`<Feedback.Callout
   status="success"
-  title="Nộp bài thành công"
-  description="Kết quả sẽ có sau ít phút."
+  title="Submission successful"
+  description="Results will be ready in a few minutes."
 />`}
             >
                 <div className="flex flex-col gap-4">
@@ -135,14 +106,14 @@ export const TitleOnly: Story = {
                 name="Feedback.Callout"
                 tier="primitive"
                 leaf="TitleOnly"
-                parts={TITLE_ONLY_PARTS}
-                note="Bỏ `description` → Content chỉ còn Title (dải mỏng nhất của khung)."
+                annotate={ANNOTATE}
+                note="Drop `description` and Content shrinks to just the title — the thinnest strip this frame renders."
                 code={`<Feedback.Callout
   status="accent"
-  title="Mẹo: bôi đen đoạn văn để hỏi AI"
+  title="Tip: highlight a passage to ask AI about it"
 />`}
             >
-                <Feedback.Callout showAnatomy status="accent" title="Mẹo: bôi đen đoạn văn để hỏi AI" />
+                <Feedback.Callout showAnatomy status="accent" title="Tip: highlight a passage to ask AI about it" />
             </BlockAnatomy>
         </div>
     ),
@@ -156,21 +127,21 @@ export const WithBody: Story = {
                 name="Feedback.Callout"
                 tier="primitive"
                 leaf="WithBody"
-                parts={WITH_BODY_PARTS}
-                note="Khung BỌC (§13b): `body` là slot thân tự do, `children` là shorthand của nó — dùng khi thông điệp cần nhiều hơn một dòng mô tả."
-                code={`<Feedback.Callout status="warning" title="Bài nộp thiếu 2 mục" description="…">
+                annotate={ANNOTATE}
+                note="The frame WRAPS (§13b): `body` is the free-form body slot, `children` is its shorthand — use it when the message needs more than one line of description."
+                code={`<Feedback.Callout status="warning" title="Submission is missing 2 items" description="…">
   <ul className="list-disc pl-4">…</ul>
 </Feedback.Callout>`}
             >
                 <Feedback.Callout
                     showAnatomy
                     status="warning"
-                    title="Bài nộp còn thiếu 2 mục"
-                    description="Bổ sung rồi nộp lại để được chấm."
+                    title="Submission is missing 2 items"
+                    description="Add them, then resubmit for grading."
                     body={(
                         <ul className="list-disc space-y-1 pl-4">
-                            <li><Typography.Base size="xs" text="README mô tả cách chạy dự án" color="muted" /></li>
-                            <li><Typography.Base size="xs" text="Ảnh chụp màn hình kết quả" color="muted" /></li>
+                            <li><Typography.Base size="xs" text="A README describing how to run the project" color="muted" /></li>
+                            <li><Typography.Base size="xs" text="A screenshot of the result" color="muted" /></li>
                         </ul>
                     )}
                 />
@@ -191,20 +162,20 @@ export const WithAction: Story = {
                 name="Feedback.Callout"
                 tier="primitive"
                 leaf="WithAction"
-                parts={WITH_ACTION_PARTS}
-                note="`actionLabel` = slot footer nằm ngang, trước nút đóng. Khung tự dựng nút + tự bôi bg đặc theo status — caller không đưa node."
+                annotate={ANNOTATE}
+                note="`actionLabel` is a horizontal footer slot, before the close button. The frame builds the button itself and paints a solid background per status — the caller never passes a node."
                 code={`<Feedback.Callout
   status="accent"
-  title="Nâng cấp để mở khoá AI"
-  actionLabel="Nâng cấp"
+  title="Upgrade to unlock AI"
+  actionLabel="Upgrade"
 />`}
             >
                 <Feedback.Callout
                     showAnatomy
                     status="accent"
-                    title="Nâng cấp để mở khoá AI"
-                    description="Gói trả phí cho phép chấm nâng cao."
-                    actionLabel="Nâng cấp"
+                    title="Upgrade to unlock AI"
+                    description="The paid plan enables advanced grading."
+                    actionLabel="Upgrade"
                 />
             </BlockAnatomy>
         </div>
@@ -219,12 +190,12 @@ export const CustomIcon: Story = {
                 name="Feedback.Callout"
                 tier="primitive"
                 leaf="CustomIcon"
-                parts={WITH_ACTION_PARTS}
-                note="`icon` nhận COMPONENT (không JSX) — khung tự ép size-6 + màu theo tone, caller không set class icon."
+                annotate={ANNOTATE}
+                note="`icon` takes a COMPONENT (not JSX) — the frame keeps forcing size-6 + the tone colour, the caller never sets an icon class."
                 code={`<Feedback.Callout
   status="warning"
   icon={GithubLogoIcon}
-  title="Bạn chưa vào team GitHub"
+  title="You haven't joined the GitHub team"
   …
 />`}
             >
@@ -232,9 +203,9 @@ export const CustomIcon: Story = {
                     showAnatomy
                     status="warning"
                     icon={GithubLogoIcon}
-                    title="Bạn chưa vào team GitHub của khoá"
-                    description="Nội dung premium nằm trong repo GitHub của khoá, nên bạn cần vào team mới mở được."
-                    actionLabel="Vào team"
+                    title="You haven't joined the course's GitHub team"
+                    description="Premium content lives in the course's GitHub repo, so you need to join the team to unlock it."
+                    actionLabel="Join team"
                 />
             </BlockAnatomy>
         </div>
@@ -249,21 +220,21 @@ export const Dismissible: Story = {
                 name="Feedback.Callout"
                 tier="primitive"
                 leaf="Dismissible"
-                parts={DISMISSIBLE_PARTS}
-                note="`onClose` bật nút × (atom `Button.Base` ghost, tô theo tone). §11a: badge dừng ở node Close, không drill vào ruột atom."
+                annotate={ANNOTATE}
+                note="`onClose` turns on the × (atom Button.Base, ghost, toned to the status). §11a: the badge stops at the Close node — it does not drill into the atom's own internals."
                 code={`<Feedback.Callout
   status="accent"
   title="…"
-  onClose={() =>
-  {}} closeAriaLabel="Đóng gợi ý"
+  onClose={() => {}}
+  closeAriaLabel="Dismiss tip"
 />`}
             >
                 <Feedback.Callout
                     showAnatomy
                     status="accent"
-                    title="Mẹo: bôi đen để hỏi AI"
+                    title="Tip: highlight text to ask AI"
                     onClose={() => {}}
-                    closeAriaLabel="Đóng gợi ý"
+                    closeAriaLabel="Dismiss tip"
                 />
             </BlockAnatomy>
         </div>

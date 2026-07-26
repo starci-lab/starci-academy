@@ -102,7 +102,6 @@ export const Tones: Story = {
                 leaf="Prop `tone`"
                 reason="Tone is meaning, not colour. Pick it from what the chip says — a red chip that means nothing bad is noise the reader has to learn to ignore."
                 note="Every tone lands on the same soft surface, one step of opacity over its own colour. There is no solid variant on purpose: adding one would smuggle a second axis (surface) into a union that carries meaning."
-                states={TONES.map(({ tone, hint }) => ({ value: tone, hint, rendered: true }))}
                 code={`<Chip.Base tone="neutral" text="Draft" />
 <Chip.Base tone="success" text="Passed" />
 <Chip.Base tone="warning" text="Needs review" />
@@ -129,12 +128,6 @@ export const Icon: Story = {
                 leaf="Prop `icon`"
                 reason="An icon earns its slot when the symbol reads faster than the word — verified, failed, waiting, locked. Anything a reader has to decode belongs in the label instead."
                 note="The glyph has no size prop of its own: the atom pins it to the chip's text size and picks the stroke weight, so it always sits on the same line as the label. Colour comes from the tone through currentColor — the icon never carries its own."
-                states={[
-                    { value: "CheckCircleIcon", hint: "the thing passed", rendered: true },
-                    { value: "XCircleIcon", hint: "the thing failed", rendered: true },
-                    { value: "ClockIcon", hint: "still waiting", rendered: true },
-                    { value: "LockIcon", hint: "not yours to open", rendered: true },
-                ]}
                 code={`<Chip.Base tone="success" icon={CheckCircleIcon} text="Verified" />
 <Chip.Base tone="danger" icon={XCircleIcon} text="Failed" />
 <Chip.Base tone="warning" icon={ClockIcon} text="Pending review" />
@@ -166,13 +159,6 @@ export const Dot: Story = {
                 leaf="Props `dotColor` / `dotClassName`"
                 reason="The dot carries the status so the chip does not have to. That is why these chips stay neutral: a row of live services reads as one list with coloured markers, instead of five competing pills."
                 note="The dot shows up only when you give it a colour — there is no boolean to turn it on, because a dot with no colour is decoration. Use dotClassName for palette colours, dotColor for a value from outside the palette (a language colour, a partner brand). Set both and the raw value wins."
-                states={[
-                    { value: "dotClassName=\"text-success\"", hint: "palette colour", rendered: true },
-                    { value: "dotClassName=\"text-warning\"", hint: "palette colour", rendered: true },
-                    { value: "dotClassName=\"text-danger\"", hint: "palette colour", rendered: true },
-                    { value: "dotColor=\"#3178c6\"", hint: "colour from outside the palette", rendered: true },
-                    { value: "both set", hint: "raw value wins", rendered: true },
-                ]}
                 code={`<Chip.Base dotClassName="text-success" text="Running" />
 <Chip.Base dotClassName="text-warning" text="Degraded" />
 <Chip.Base dotClassName="text-danger" text="Down" />
@@ -201,10 +187,6 @@ export const Removable: Story = {
                 leaf="Prop `onRemove`"
                 reason="Pass a handler and the chip grows a × — that is the whole switch. A chip the reader can dismiss is a filter or a picked value; a chip they cannot is a label."
                 note="The × is a real button sized for the pill, and it borrows the chip's colour rather than owning one — the third chip here is the same button on an accent chip. Give it removeLabel so a screen reader hears what is being removed, not just 'Remove'."
-                states={[
-                    { value: "omitted", hint: "read-only label", rendered: true },
-                    { value: "() => {}", hint: "the reader can dismiss it", rendered: true },
-                ]}
                 code={`<Chip.Base text="React" />
 <Chip.Base text="React" onRemove={dropFilter} removeLabel="Remove the React filter" />
 <Chip.Base tone="accent" text="TypeScript" onRemove={dropFilter} removeLabel="Remove the TypeScript filter" />`}
@@ -239,12 +221,6 @@ export const Skeleton: Story = {
                 leaf="Prop `isSkeleton`"
                 reason="Whoever owns the shape owns its resting state, so the chip draws its own shimmer. There is no shared skeleton component to keep in sync."
                 note="Width follows how many slots the chip will have when the data lands, so the row does not jump. The two middle pills match on purpose — one leading mark and one × cost the same width; the shimmer counts slots, not sides."
-                states={[
-                    { value: "label only", hint: "narrowest pill", rendered: true },
-                    { value: "with a leading mark", hint: "one extra slot", rendered: true },
-                    { value: "with a remove button", hint: "one extra slot", rendered: true },
-                    { value: "both slots", hint: "widest pill", rendered: true },
-                ]}
                 code={`<Chip.Base isSkeleton />
 <Chip.Base isSkeleton icon={ClockIcon} />
 <Chip.Base isSkeleton onRemove={dropFilter} />

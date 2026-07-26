@@ -4,6 +4,7 @@ import type { ReactNode } from "react"
 import { Card, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
 import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
+import type { IconComponent } from "@sb-components/atoms/display/IconTile/IconTile"
 import { TitledText } from "@sb-components/layouts/text/TitledText/TitledText"
 
 /**
@@ -20,37 +21,54 @@ import { TitledText } from "@sb-components/layouts/text/TitledText/TitledText"
  * around `onRedeem`.
  */
 
-/** Props for the {@link RewardItemCard} block. */
-export interface RewardItemCardProps {
-    /** Leading glyph (phosphor `*Icon`), shown inside an `IconTile`. Primitive owns sizing — pass it bare. */
-    icon: ReactNode
-    title: string
-    description: string
-    /** Coin cost — rendered through {@link RewardItemCardProps.formatCost} inside a `StatusChip`. */
-    cost: number
+/** Props shared by both the real and skeleton state of {@link RewardItemCard}. */
+export interface RewardItemCardOwnProps {
     /** Formats the numeric cost into the chip label. Defaults to `"<n> Coin"`. */
     formatCost?: (cost: number) => ReactNode
     /** Redeem CTA label. Defaults to `"Đổi"`. */
     redeemLabel?: string
-    /** Shown on the CTA instead of {@link RewardItemCardProps.redeemLabel} when `disabled` (can't afford). */
+    /** Shown on the CTA instead of {@link RewardItemCardOwnProps.redeemLabel} when `disabled` (can't afford). */
     cannotAffordLabel?: string
     /** Fired on redeem-CTA press. */
     onRedeem: () => void
-    /** `true` → viewer can't afford this reward: CTA disabled, label swaps to {@link RewardItemCardProps.cannotAffordLabel}. */
+    /** `true` → viewer can't afford this reward: CTA disabled, label swaps to {@link RewardItemCardOwnProps.cannotAffordLabel}. */
     disabled?: boolean
     /** `true` → this reward's redeem is in flight (CTA spinner via `Button`'s `isPending`, press locked). */
     isRedeeming?: boolean
-    /**
-     * `true` → render the skeleton MIRROR (same `Card` frame/box), keeping the
-     * catalog grid from jumping while the reward list loads. All other props
-     * ignored (§6/§8: skeleton is a PROP, not a separate component).
-     */
-    isSkeleton?: boolean
     /** `true` → emit `data-anat-part` on each anatomy part (Storybook `BlockAnatomy` overlay). */
     showAnatomy?: boolean
     /** Extra classes on the card root. */
     className?: string
 }
+
+/**
+ * Props for the {@link RewardItemCard} block. `isSkeleton: true` drops the
+ * content requirements (icon/title/description/cost become optional and are
+ * ignored) — render the skeleton MIRROR (same `Card` frame/box), keeping the
+ * catalog grid from jumping while the reward list loads (§6/§8: skeleton is a
+ * PROP, not a separate component).
+ */
+export type RewardItemCardProps = RewardItemCardOwnProps &
+    (
+        | {
+              isSkeleton: true
+              /** Leading glyph (phosphor icon component), shown inside an `IconTile`. */
+              icon?: IconComponent
+              title?: string
+              description?: string
+              /** Coin cost — rendered through {@link RewardItemCardOwnProps.formatCost} inside a `StatusChip`. */
+              cost?: number
+          }
+        | {
+              isSkeleton?: false
+              /** Leading glyph (phosphor icon component), shown inside an `IconTile`. */
+              icon: IconComponent
+              title: string
+              description: string
+              /** Coin cost — rendered through {@link RewardItemCardOwnProps.formatCost} inside a `StatusChip`. */
+              cost: number
+          }
+    )
 
 /**
  * Reward catalog item: an icon tile, title + description, a Coin-cost chip and a
@@ -59,22 +77,19 @@ export interface RewardItemCardProps {
  *
  * @param props - {@link RewardItemCardProps}
  */
-export const RewardItemCard = ({
-    icon,
-    title,
-    description,
-    cost,
-    formatCost = (amount) => `${amount} Coin`,
-    redeemLabel = "Đổi",
-    cannotAffordLabel = "Không đủ Coin",
-    onRedeem,
-    disabled = false,
-    isRedeeming = false,
-    isSkeleton = false,
-    showAnatomy = false,
-    className,
-}: RewardItemCardProps) => {
-    if (isSkeleton) {
+export const RewardItemCard = (props: RewardItemCardProps) => {
+    const {
+        formatCost = (amount) => `${amount} Coin`,
+        redeemLabel = "Đổi",
+        cannotAffordLabel = "Không đủ Coin",
+        onRedeem,
+        disabled = false,
+        isRedeeming = false,
+        showAnatomy = false,
+        className,
+    } = props
+
+    if (props.isSkeleton) {
         return (
             <Card className={cn("flex flex-col gap-3", className)}>
                 <div className="flex items-start gap-3">
@@ -95,6 +110,8 @@ export const RewardItemCard = ({
             </Card>
         )
     }
+
+    const { icon, title, description, cost } = props
 
     return (
         <Card className={cn("flex flex-col gap-3", className)}>

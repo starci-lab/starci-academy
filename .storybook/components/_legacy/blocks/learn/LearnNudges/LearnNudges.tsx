@@ -73,8 +73,11 @@ export const LearnNudges = ({
     showAnatomy = false,
     anatPart,
 }: LearnNudgesProps) => (
+    // Codemod 2026-07-26: `bordered={bordered}` → `variant={bordered ? "nested" : "surface"}`
+    // (API 3-trục SurfaceCard). Prop `bordered` của CHÍNH LearnNudges vẫn giữ tên cũ — chỉ
+    // đổi cách nó rót vào SurfaceCard.List.
     <SurfaceCard.List
-        bordered={bordered}
+        variant={bordered ? "nested" : "surface"}
         label={heading}
         anatPart={anatPart}
         showAnatomy={showAnatomy}

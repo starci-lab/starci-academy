@@ -34,6 +34,15 @@ export interface GridItem {
     key: string
     /** The cell's content — a card, a tile, a stat. */
     content: ReactNode
+    /**
+     * Columns this cell spans. Default `1` (no class set — the cell stays a
+     * normal one-column track). Capped at `2`: an app-wide scan found only 7
+     * `col-span` call sites (5×`col-span-2`, 2×`col-span-1`), so the union stops
+     * there on purpose — a wider span or an arbitrary start position belongs to
+     * a real composition decision, not a khung prop (thầy chốt: no `Col` escape
+     * hatch, that is what let `col-start-2` break mobile in `GroupPressableCard`).
+     */
+    span?: 1 | 2
 }
 
 /**
@@ -80,6 +89,13 @@ const LG_COLUMNS_CLASS: Record<1 | 2 | 3 | 4, string> = {
     3: "@app-lg:grid-cols-3",
     4: "@app-lg:grid-cols-4",
 }
+// Same reason as the column tables above: Tailwind never emits an interpolated
+// `col-span-${n}`, so the one supported span (2 — see `GridItem.span`) is
+// written out literal.
+/** {@link GridItem.span} `2` → literal class. */
+const SPAN_CLASS: Record<2, string> = {
+    2: "col-span-2",
+}
 
 /** Props for {@link Grid.Base}. */
 export interface GridBaseProps {
@@ -120,17 +136,26 @@ const GridBase = ({ items, columns, gap, className, showAnatomy = false }: GridB
             className,
         )}
     >
-        {items.map((item) =>
-            showAnatomy ? (
-                // `min-w-0` keeps a long-text cell from blowing out its track
-                // (grid items default to `min-width:auto`).
-                <div key={item.key} className="min-w-0" data-anat-part="Cell">
-                    {item.content}
-                </div>
-            ) : (
-                <React.Fragment key={item.key}>{item.content}</React.Fragment>
-            ),
-        )}
+        {items.map((item) => {
+            const spanClass = item.span === 2 ? SPAN_CLASS[2] : undefined
+            // A spanning cell needs a real wrapper to hang `col-span-2` on, even
+            // when `showAnatomy` is off — a `Fragment` cannot carry a class. A
+            // plain (non-spanning) cell keeps the old behaviour untouched.
+            if (showAnatomy || spanClass) {
+                return (
+                    // `min-w-0` keeps a long-text cell from blowing out its track
+                    // (grid items default to `min-width:auto`).
+                    <div
+                        key={item.key}
+                        className={cn("min-w-0", spanClass)}
+                        data-anat-part={showAnatomy ? "Cell" : undefined}
+                    >
+                        {item.content}
+                    </div>
+                )
+            }
+            return <React.Fragment key={item.key}>{item.content}</React.Fragment>
+        })}
     </div>
 )
 

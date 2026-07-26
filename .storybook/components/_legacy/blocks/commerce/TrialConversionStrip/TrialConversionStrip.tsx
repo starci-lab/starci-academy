@@ -83,7 +83,7 @@ export const TrialConversionStrip = ({
         <div data-anat-part={anatPart} className={cn("flex flex-col gap-3 rounded-3xl bg-surface p-5 shadow-surface", className)}>
             <div className="flex items-start gap-3">
                 <IconTile.Base
-                    icon={<LockIcon aria-hidden focusable="false" />}
+                    icon={LockIcon}
                     tone="accent"
                     size="sm"
                     anatPart={showAnatomy ? "IconTile" : undefined}

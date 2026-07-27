@@ -35,7 +35,7 @@ type Story = StoryObj<typeof Accordion.Base>
 const FAQ_ITEMS = [
     { key: "refund", title: "Refund policy?", content: "Full refund within the first 7 days if you haven't completed more than 20% of the content." },
     { key: "cert", title: "Do I get a certificate?", content: "You get a certificate of completion once you pass the final exam." },
-    { key: "access", title: "How long do I have access?", content: "Lifetime — pay once, revisit whenever you want." },
+    { key: "access", title: "How long do I have access?", content: "Lifetime, pay once and revisit whenever you want." },
 ]
 
 /** Leaf TRẦN — chỉ `items`, mọi panel đóng. Là leaf của prop `items` (§12g.2: content prop → Default chính là leaf của nó). */
@@ -46,11 +46,16 @@ export const Default: Story = {
                 name="Accordion.Base"
                 tier="atom"
                 leaf="Prop `items`"
-                reason="The one accordion atom, wrapping HeroUI's DisclosureGroup and Disclosure. `items` renders one Disclosure per entry — three panels here, all collapsed on first mount."
-                code={"<Accordion.Base items={FAQ_ITEMS} />"}
-            >
-                <Accordion.Base items={FAQ_ITEMS} showAnatomy />
-            </BlockAnatomy>
+                reason="This is the one accordion atom in the system, wrapping HeroUI's DisclosureGroup and Disclosure directly with no other component composed inside it."
+                states={[
+                    {
+                        name: "items = 3 FAQ entries, allowsMultiple unset",
+                        why: "`items` renders one Disclosure per entry, giving three panels here, and all three sit collapsed because nothing has been toggled open yet. This bare leaf is the shape a caller reaches for with only the data prop set, before any open behavior is pinned in.",
+                        code: "<Accordion.Base items={FAQ_ITEMS} />",
+                        render: <Accordion.Base items={FAQ_ITEMS} showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -67,11 +72,16 @@ export const Single: Story = {
                 name="Accordion.Base"
                 tier="atom"
                 leaf="Single"
-                reason="allowsMultiple defaults to false: only one panel can stay open. defaultExpandedKeys seeds that one open panel so the mutually-exclusive behavior has a visible shape — without it, this leaf would mount identically to Multiple."
-                code={"<Accordion.Base defaultExpandedKeys={[\"refund\"]} items={FAQ_ITEMS} /> {/* allowsMultiple defaults to false */}"}
-            >
-                <Accordion.Base defaultExpandedKeys={["refund"]} items={FAQ_ITEMS} showAnatomy />
-            </BlockAnatomy>
+                reason="Single and Multiple share the same items and the same defaultExpandedKeys mechanism; only how many panels the group lets stay open at once tells them apart."
+                states={[
+                    {
+                        name: "allowsMultiple unset (defaults false), defaultExpandedKeys = [\"refund\"]",
+                        why: "allowsMultiple defaults to false, so opening one panel closes any other automatically, and defaultExpandedKeys seeds one panel open so that mutually-exclusive behavior has a visible shape at mount. Without seeding a panel open here, this leaf would mount looking identical to Multiple, and the reader could never tell single-open from multi-open just by looking.",
+                        code: "<Accordion.Base defaultExpandedKeys={[\"refund\"]} items={FAQ_ITEMS} /> {/* allowsMultiple defaults to false */}",
+                        render: <Accordion.Base defaultExpandedKeys={["refund"]} items={FAQ_ITEMS} showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -87,11 +97,15 @@ export const Multiple: Story = {
                 name="Accordion.Base"
                 tier="atom"
                 leaf="Multiple"
-                note="allowsMultiple lets panels expand independently — two panels start open together here, something single-open can never show at once. Compare against Single: same items, same defaultExpandedKeys mechanism, different count of panels open."
-                code={"<Accordion.Base allowsMultiple defaultExpandedKeys={[\"refund\", \"cert\"]} items={FAQ_ITEMS} />"}
-            >
-                <Accordion.Base allowsMultiple defaultExpandedKeys={["refund", "cert"]} items={FAQ_ITEMS} showAnatomy />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "allowsMultiple = true, defaultExpandedKeys = [\"refund\", \"cert\"]",
+                        why: "allowsMultiple lets panels expand independently, and two of the three start open together here, a count Single can never show at once. Same items, same defaultExpandedKeys mechanism as Single, only the number of panels open at mount differs.",
+                        code: "<Accordion.Base allowsMultiple defaultExpandedKeys={[\"refund\", \"cert\"]} items={FAQ_ITEMS} />",
+                        render: <Accordion.Base allowsMultiple defaultExpandedKeys={["refund", "cert"]} items={FAQ_ITEMS} showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -104,11 +118,15 @@ export const Skeleton: Story = {
                 name="Accordion.Base"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
-                note="isSkeleton renders a shimmer row per item, owned by the atom, while the FAQ data hasn't loaded yet."
-                code={"<Accordion.Base isSkeleton items={FAQ_ITEMS} />"}
-            >
-                <Accordion.Base isSkeleton items={FAQ_ITEMS} showAnatomy />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "The atom swaps every panel row for its own shimmer bar instead of forwarding to a shared Skeleton component, so it draws exactly the closed-trigger shape it will hold once real data lands. This is what the FAQ list looks like while it hasn't loaded yet.",
+                        code: "<Accordion.Base isSkeleton items={FAQ_ITEMS} />",
+                        render: <Accordion.Base isSkeleton items={FAQ_ITEMS} showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }

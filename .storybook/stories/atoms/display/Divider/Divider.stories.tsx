@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Divider, type DividerVariant } from "@sb-components/atoms/display/Divider/Divider"
+import { Divider } from "@sb-components/atoms/display/Divider/Divider"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -17,6 +17,11 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * `Orientation` leaf rendering both values in full. `variant` previously had no
  * leaf at all, even though it's also a prop with a visible shape — added
  * `Variants` to complete the set.
+ *
+ * MIGRATED TO `states` (2026-07-27): each prop's values used to be stacked by
+ * hand in one `children` block with no room to explain any single value on its
+ * own. Now each value is its own `states[]` entry — its own `why` and its own
+ * `code` — reachable through the leaf's state tabs.
  */
 const meta: Meta<typeof Divider.Base> = {
     title: "Atoms/Display/Divider/Divider.Base",
@@ -29,10 +34,7 @@ export default meta
 
 type Story = StoryObj<typeof Divider.Base>
 
-/** The FULL `DividerVariant` union — miss one value and it'll grow a leaf in the wrong place. */
-const VARIANTS: Array<DividerVariant> = ["default", "secondary", "tertiary"]
-
-/** Bare leaf — default orientation (horizontal), default variant, no label. */
+/** Bare leaf — default orientation (horizontal), default variant, no label. Migrated to `states` 2026-07-27. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
@@ -41,18 +43,24 @@ export const Default: Story = {
                 tier="atom"
                 leaf="Bare divider"
                 reason="The one rule in the system. Every leaf below it differs by exactly one prop, so this is the baseline you compare against."
-                note="Defaults to a horizontal line, default weight, no label."
-                code={"<Divider.Base />"}
-            >
-                <div className="w-72">
-                    <Divider.Base showAnatomy />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "no props set (bare horizontal line)",
+                        why: "A single horizontal rule renders at the default weight, with no label attached. This is the plain separator every other leaf on this page differs from by exactly one prop.",
+                        code: "<Divider.Base />",
+                        render: (
+                            <div className="w-72">
+                                <Divider.Base showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
-/** Leaf prop `orientation` — BOTH values: horizontal (default) and vertical. */
+/** Leaf prop `orientation` — BOTH values: horizontal (default) and vertical. Migrated to `states` 2026-07-27. */
 export const Orientation: Story = {
     render: () => (
         <div className="p-8">
@@ -60,28 +68,38 @@ export const Orientation: Story = {
                 name="Divider.Base"
                 tier="atom"
                 leaf="Prop `orientation`"
-                note="Vertical needs a parent with a height to show against — use it between items sitting on one row."
-                code={`<Divider.Base />
-<Divider.Base orientation="vertical" />`}
-            >
-                <div className="flex flex-col gap-6">
-                    <div className="w-72">
-                        <Divider.Base showAnatomy />
-                    </div>
-                    <div className="flex h-16 items-center gap-4">
-                        <span className="text-muted text-sm">Lesson</span>
-                        <Divider.Base orientation="vertical" />
-                        <span className="text-muted text-sm">Exercise</span>
-                        <Divider.Base orientation="vertical" />
-                        <span className="text-muted text-sm">Discussion</span>
-                    </div>
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "orientation = \"horizontal\" (default)",
+                        why: "A single full-width rule renders on its own line. This is the default reading-flow separator, used to break up stacked sections in a column.",
+                        code: "<Divider.Base />",
+                        render: (
+                            <div className="w-72">
+                                <Divider.Base showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "orientation = \"vertical\"",
+                        why: "A standing rule renders between inline items instead of one horizontal line spanning the width. A vertical line needs a parent with a set height to show against, which is why it only makes sense between items sitting on the same row, like separating three lesson stages.",
+                        code: "<Divider.Base orientation=\"vertical\" />",
+                        render: (
+                            <div className="flex h-16 items-center gap-4">
+                                <span className="text-muted text-sm">Lesson</span>
+                                <Divider.Base orientation="vertical" showAnatomy />
+                                <span className="text-muted text-sm">Exercise</span>
+                                <Divider.Base orientation="vertical" />
+                                <span className="text-muted text-sm">Discussion</span>
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
-/** Leaf prop `variant` — the FULL weight/tone union of the line. */
+/** Leaf prop `variant` — the FULL weight/tone union of the line. Migrated to `states` 2026-07-27. */
 export const Variants: Story = {
     render: () => (
         <div className="p-8">
@@ -89,22 +107,44 @@ export const Variants: Story = {
                 name="Divider.Base"
                 tier="atom"
                 leaf="Prop `variant`"
-                note="Line weight/tone only — orientation and label stay at their defaults."
-                code={`<Divider.Base variant="default" />
-<Divider.Base variant="secondary" />
-<Divider.Base variant="tertiary" />`}
-            >
-                <div className="flex w-72 flex-col gap-4">
-                    {VARIANTS.map((variant, index) => (
-                        <Divider.Base key={variant} variant={variant} showAnatomy={index === 0} />
-                    ))}
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "variant = \"default\"",
+                        why: "One horizontal rule renders at the default weight and tone. This is the everyday separator used between ordinary sections.",
+                        code: "<Divider.Base variant=\"default\" />",
+                        render: (
+                            <div className="w-72">
+                                <Divider.Base variant="default" showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "variant = \"secondary\"",
+                        why: "The same single rule renders, only its weight and tone step down one notch from default. A quieter seam is needed where a full-strength line would compete with more important content nearby.",
+                        code: "<Divider.Base variant=\"secondary\" />",
+                        render: (
+                            <div className="w-72">
+                                <Divider.Base variant="secondary" showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "variant = \"tertiary\"",
+                        why: "The same single rule renders at the lightest weight and tone in the union. The faintest seam is for a boundary that should barely register, like inside a dense list.",
+                        code: "<Divider.Base variant=\"tertiary\" />",
+                        render: (
+                            <div className="w-72">
+                                <Divider.Base variant="tertiary" showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
-/** Leaf prop `label` — horizontal only: rule · label · rule. */
+/** Leaf prop `label` — horizontal only: rule · label · rule. Migrated to `states` 2026-07-27. */
 export const WithLabel: Story = {
     render: () => (
         <div className="p-8">
@@ -112,13 +152,19 @@ export const WithLabel: Story = {
                 name="Divider.Base"
                 tier="atom"
                 leaf="Prop `label`"
-                note="Horizontal only — the atom builds two flex-1 rules around the centered text (e.g. 'OR' on a sign-in form)."
-                code={"<Divider.Base label=\"OR\" />"}
-            >
-                <div className="w-72">
-                    <Divider.Base label="OR" showAnatomy />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "label set (horizontal only)",
+                        why: "Two `flex-1` rules render on either side of the centered label text instead of one continuous line. A labelled break — like an 'OR' divider on a sign-in form — needs the text itself to interrupt the line, not just sit beside it.",
+                        code: "<Divider.Base label=\"OR\" />",
+                        render: (
+                            <div className="w-72">
+                                <Divider.Base label="OR" showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

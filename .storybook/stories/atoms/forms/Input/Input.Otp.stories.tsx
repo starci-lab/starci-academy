@@ -31,13 +31,19 @@ export const Default: Story = {
                     name="Input.Otp"
                     tier="atom"
                     leaf="Default"
-                    note="Bare — no label, hint, or error."
-                    code={"<Input.Otp value={v} onValueChange={setV} length={6} />"}
-                >
-                    <div className="w-80">
-                        <Input.Otp value={value} onValueChange={setValue} length={6} ariaLabel="Verification code" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "no label, value = \"\"",
+                            why: "Six empty cells render with no Label above them. This is the bare shape for a code entry the caller hasn't named yet, relying on the surrounding page to carry the context.",
+                            code: "<Input.Otp value={v} onValueChange={setV} length={6} />",
+                            render: (
+                                <div className="w-80">
+                                    <Input.Otp value={value} onValueChange={setValue} length={6} ariaLabel="Verification code" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -54,13 +60,19 @@ export const WithLabel: Story = {
                     name="Input.Otp"
                     tier="atom"
                     leaf="WithLabel"
-                    note="Label + hint."
-                    code={"<Input.Otp label=\"Verification code\" hint=\"Sent to your email\" value={v} onValueChange={setV} length={6} />"}
-                >
-                    <div className="w-80">
-                        <Input.Otp label="Verification code" hint="Sent to your email" value={value} onValueChange={setValue} length={6} showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "label and hint passed",
+                            why: "FieldFrame grows a Label above the row of cells and a Description line under the label. This is for a code field the caller wants to introduce and explain in the same spot, such as naming where the code was sent.",
+                            code: "<Input.Otp label=\"Verification code\" hint=\"Sent to your email\" value={v} onValueChange={setV} length={6} />",
+                            render: (
+                                <div className="w-80">
+                                    <Input.Otp label="Verification code" hint="Sent to your email" value={value} onValueChange={setValue} length={6} showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -77,13 +89,19 @@ export const Required: Story = {
                     name="Input.Otp"
                     tier="atom"
                     leaf="Required"
-                    note="isRequired adds an asterisk after the label."
-                    code={"<Input.Otp label=\"Verification code\" isRequired value={v} onValueChange={setV} length={6} />"}
-                >
-                    <div className="w-80">
-                        <Input.Otp label="Verification code" isRequired value={value} onValueChange={setValue} length={6} showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "isRequired = true",
+                            why: "An asterisk is appended right after the Label text, nothing else changes. This tells the learner the code cannot be left blank before they even start typing.",
+                            code: "<Input.Otp label=\"Verification code\" isRequired value={v} onValueChange={setV} length={6} />",
+                            render: (
+                                <div className="w-80">
+                                    <Input.Otp label="Verification code" isRequired value={value} onValueChange={setValue} length={6} showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -100,13 +118,19 @@ export const Filled: Story = {
                     name="Input.Otp"
                     tier="atom"
                     leaf="Filled"
-                    note="value already holds part of the code."
-                    code={"<Input.Otp label=\"Verification code\" value=\"1234\" onValueChange={setV} length={6} />"}
-                >
-                    <div className="w-80">
-                        <Input.Otp label="Verification code" value={value} onValueChange={setValue} length={6} showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "value = \"1234\" (length 6)",
+                            why: "The first four cells carry their digits while the last two stay empty, same DOM shape as the empty row. This is the mid-typing shape of the same control, not a separate structure.",
+                            code: "<Input.Otp label=\"Verification code\" value=\"1234\" onValueChange={setV} length={6} />",
+                            render: (
+                                <div className="w-80">
+                                    <Input.Otp label="Verification code" value={value} onValueChange={setValue} length={6} showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -123,13 +147,19 @@ export const Disabled: Story = {
                     name="Input.Otp"
                     tier="atom"
                     leaf="Disabled"
-                    note="isDisabled locks and fades the row of cells."
-                    code={"<Input.Otp label=\"Verification code\" isDisabled value=\"1234\" length={6} />"}
-                >
-                    <div className="w-80">
-                        <Input.Otp label="Verification code" value={value} onValueChange={setValue} length={6} isDisabled showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "isDisabled = true, value = \"1234\"",
+                            why: "The whole row of cells locks and fades, along with the Label above it. This is for a code the caller has already resolved or blocked from editing, without hiding what was entered.",
+                            code: "<Input.Otp label=\"Verification code\" isDisabled value=\"1234\" length={6} />",
+                            render: (
+                                <div className="w-80">
+                                    <Input.Otp label="Verification code" value={value} onValueChange={setValue} length={6} isDisabled showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -146,13 +176,19 @@ export const Error: Story = {
                     name="Input.Otp"
                     tier="atom"
                     leaf="Error"
-                    note="label + errorMessage → label, red message, and border all together."
-                    code={"<Input.Otp label=\"Verification code\" errorMessage=\"Incorrect code\" value=\"123\" length={6} />"}
-                >
-                    <div className="w-80">
-                        <Input.Otp label="Verification code" errorMessage="Incorrect code" value={value} onValueChange={setValue} length={6} showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "errorMessage set, value = \"123\"",
+                            why: "The Label, a red error line, and an invalid border on the cells all appear together, added by `errorMessage` alone. This is the full validation-failed shape after a wrong code is submitted, giving the learner the reason alongside the visual cue.",
+                            code: "<Input.Otp label=\"Verification code\" errorMessage=\"Incorrect code\" value=\"123\" length={6} />",
+                            render: (
+                                <div className="w-80">
+                                    <Input.Otp label="Verification code" errorMessage="Incorrect code" value={value} onValueChange={setValue} length={6} showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -167,13 +203,19 @@ export const Loading: Story = {
                 name="Input.Otp"
                 tier="atom"
                 leaf="Loading"
-                note="isSkeleton + label → the label mirrors above the row of cells."
-                code={"<Input.Otp label=\"Verification code\" isSkeleton length={6} />"}
-            >
-                <div className="w-80">
-                    <Input.Otp label="Verification code" value="" onValueChange={() => {}} length={6} isSkeleton showAnatomy />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isSkeleton = true, label passed",
+                        why: "A label-shaped bar renders above a row of cell-shaped bars matching the real `length`. This mirrors the exact box the real label and cells will occupy, so the field doesn't jump in size once it's ready.",
+                        code: "<Input.Otp label=\"Verification code\" isSkeleton length={6} />",
+                        render: (
+                            <div className="w-80">
+                                <Input.Otp label="Verification code" value="" onValueChange={() => {}} length={6} isSkeleton showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

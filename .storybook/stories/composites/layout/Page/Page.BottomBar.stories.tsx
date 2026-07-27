@@ -100,23 +100,29 @@ export const PriceWithAction: Story = {
                 tier="composite"
                 leaf="PriceWithAction"
                 parts={BOTH_PARTS}
-                reason="With BOTH slots filled → the khung lays out flex justify-between itself, so the caller no longer has to hand-write that flex row."
-                code={`<Page.BottomBar
+                states={[
+                    {
+                        name: "body set, actions set (enroll bar of a paid course)",
+                        why: "With both slots filled, the khung lays out a justify-between row itself, the price on the left and the CTA on the right. The caller no longer has to hand-write that flex row, which is the whole point of filling both slots instead of just one.",
+                        code: `<Page.BottomBar
   body={<PriceTag discounted={599000} original={899000} />}
   actions={<Button variant="primary">Enroll now</Button>}
-/>`}
-            >
-                <Screen
-                    bar={(
-                        <Page.BottomBar
-                            className={IN_BOX}
-                            showAnatomy
-                            body={<PriceTag discounted={599000} original={899000} />}
-                            actions={<Button variant="primary" onPress={() => {}}>Enroll now</Button>}
-                        />
-                    )}
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <Screen
+                                bar={(
+                                    <Page.BottomBar
+                                        className={IN_BOX}
+                                        showAnatomy
+                                        body={<PriceTag discounted={599000} original={899000} />}
+                                        actions={<Button variant="primary" onPress={() => {}}>Enroll now</Button>}
+                                    />
+                                )}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -130,17 +136,23 @@ export const FullWidthAction: Story = {
                 tier="composite"
                 leaf="FullWidthAction"
                 parts={BODY_ONLY_PARTS}
-                note="Only one side filled → content renders RAW, not wrapped in shrink-0, so the button's w-full still takes effect."
-                code={"<Page.BottomBar><Button variant=\"primary\" className=\"w-full\">Start learning for free</Button></Page.BottomBar>"}
-            >
-                <Screen
-                    bar={(
-                        <Page.BottomBar className={IN_BOX} showAnatomy>
-                            <Button variant="primary" className="w-full" onPress={() => {}}>Start learning for free</Button>
-                        </Page.BottomBar>
-                    )}
-                />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "children set (body shorthand), actions not set",
+                        why: "Content renders raw instead of wrapped in shrink-0, so the button's own w-full still takes effect across the whole bar. A free course has no price to weigh against a CTA, so one full-width button is left to own the entire row.",
+                        code: "<Page.BottomBar><Button variant=\"primary\" className=\"w-full\">Start learning for free</Button></Page.BottomBar>",
+                        render: (
+                            <Screen
+                                bar={(
+                                    <Page.BottomBar className={IN_BOX} showAnatomy>
+                                        <Button variant="primary" className="w-full" onPress={() => {}}>Start learning for free</Button>
+                                    </Page.BottomBar>
+                                )}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -154,31 +166,37 @@ export const WithDecline: Story = {
                 tier="composite"
                 leaf="WithDecline"
                 parts={ACTIONS_ONLY_PARTS}
-                note="body null → Actions fills the whole bar and keeps the two buttons' flex-1 intact (not squeezed by shrink-0)."
-                code={`<Page.BottomBar
+                states={[
+                    {
+                        name: "body not set, actions set (two flex-1 buttons)",
+                        why: "Actions fills the whole bar and keeps the two buttons' flex-1 intact instead of being squeezed by shrink-0. A blocking decision like cookie consent has no leading content to weigh against, so both choices share the bar equally.",
+                        code: `<Page.BottomBar
   actions={(
     <>
       <Button variant="secondary" className="flex-1">Decline</Button>
       <Button variant="primary" className="flex-1">Accept all</Button>
     </>
   )}
-/>`}
-            >
-                <Screen
-                    bar={(
-                        <Page.BottomBar
-                            className={IN_BOX}
-                            showAnatomy
-                            actions={(
-                                <div className="flex items-center gap-3">
-                                    <Button variant="secondary" className="flex-1" onPress={() => {}}>Decline</Button>
-                                    <Button variant="primary" className="flex-1" onPress={() => {}}>Accept all</Button>
-                                </div>
-                            )}
-                        />
-                    )}
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <Screen
+                                bar={(
+                                    <Page.BottomBar
+                                        className={IN_BOX}
+                                        showAnatomy
+                                        actions={(
+                                            <div className="flex items-center gap-3">
+                                                <Button variant="secondary" className="flex-1" onPress={() => {}}>Decline</Button>
+                                                <Button variant="primary" className="flex-1" onPress={() => {}}>Accept all</Button>
+                                            </div>
+                                        )}
+                                    />
+                                )}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

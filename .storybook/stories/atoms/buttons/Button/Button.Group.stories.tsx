@@ -55,7 +55,7 @@ type Story = StoryObj<typeof Button.Group>
 const GROUP_ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Button.Base": {
         tier: "atom",
-        role: "the group imports it and rebuilds one per item — with a label it's a normal button, without one it's icon-only",
+        role: "the group imports it and rebuilds one per item, coming out as a normal button when the item carries a label and as an icon-only button when it doesn't",
         storyId: "atoms-buttons-button-button-base--default",
     },
 }
@@ -79,18 +79,22 @@ export const Default: Story = {
                 tier="atom"
                 leaf="Prop `items`"
                 annotate={GROUP_ANNOTATE}
-                reason="The group is a cluster — layout and nothing else. `items` is data, not JSX children, so a caller can't wire up the wrong structure or a mismatched size. An item with no `label` comes out as an icon-only button."
-                note="Each item picks its own variant and icon, but those belong to Button.Base — read them in that story; the cluster doesn't repeat them."
-                code={`<Button.Group
+                reason="The group is a cluster: layout and nothing else. `items` is data, not JSX children, so a caller can't wire up the wrong structure or a mismatched size for one entry alone."
+                states={[
+                    {
+                        name: "items = [cancel, save, delete (icon-only)]",
+                        why: "Each entry becomes one Button.Base the group rebuilds, and the delete entry carries no `label` so it comes out icon-only with an `ariaLabel` standing in for the missing text. Each item still picks its own variant and icon, but that state belongs to the Button.Base story, not to this cluster.",
+                        code: `<Button.Group
   items={[
     { key: "cancel", label: "Cancel", variant: "ghost" },
     { key: "save", label: "Save", prefixIcon: FloppyDiskIcon, variant: "primary" },
     { key: "delete", prefixIcon: TrashIcon, ariaLabel: "Delete", variant: "danger" },
   ]}
-/>`}
-            >
-                <Button.Group items={items("(default)")} showAnatomy />
-            </BlockAnatomy>
+/>`,
+                        render: <Button.Group items={items("(default)")} showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -104,23 +108,16 @@ export const Sizes: Story = {
                 tier="atom"
                 leaf="Prop `size`"
                 annotate={GROUP_ANNOTATE}
-                reason="A cluster is always one size, so `size` sits on the group, never on an item — putting it on items would let anyone build a row of buttons at mismatched heights."
-                note="The group size flows down to both the button box and the glyph of every item."
-                code={`<Button.Group size="sm" items={[…]} />
-<Button.Group items={[…]} />          // md = default
-<Button.Group size="lg" items={[…]} />`}
-            >
-                <div className="flex flex-col items-start gap-4">
-                    {SIZES.map((size, index) => (
-                        <Button.Group
-                            key={size}
-                            size={size}
-                            items={items(`(${size})`)}
-                            showAnatomy={index === 0}
-                        />
-                    ))}
-                </div>
-            </BlockAnatomy>
+                reason="A cluster is always one size, so `size` sits on the group and never on an item. Putting it on items instead would let anyone build a row of buttons at mismatched heights, which reads as broken rather than intentional."
+                states={SIZES.map((size, index) => ({
+                    name: `size = "${size}"`,
+                    why: `The button box and glyph of every entry in the row shrink or grow together at this one scale, while the group's shape (three buttons, one icon-only) and each item's variant stay identical to the other two sizes. The group flows the size down into both the box and the glyph of every item${index === 0 ? ", so a caller never has to size each button separately" : ""}.`,
+                    code: size === "md"
+                        ? "<Button.Group items={[…]} />          // md = default"
+                        : `<Button.Group size="${size}" items={[…]} />`,
+                    render: <Button.Group size={size} items={items(`(${size})`)} showAnatomy />,
+                }))}
+            />
         </div>
     ),
 }
@@ -134,26 +131,14 @@ export const Skeleton: Story = {
                 tier="atom"
                 leaf="Prop `isSkeleton`"
                 annotate={GROUP_ANNOTATE}
-                reason="The group only passes the flag down; every item draws its own shimmer — a pill for a labelled button, a square for an icon-only one."
-                note="The row keeps its footprint, so nothing shifts when the data lands."
-                code={"<Button.Group isSkeleton items={[…3 items…]} />"}
-            >
-                <div className="flex flex-col items-start gap-4">
-                    {SIZES.map((size) => (
-                        <Button.Group
-                            key={size}
-                            size={size}
-                            isSkeleton
-                            items={items(`(${size})`)}
-                            // Skeleton STILL goes through ButtonBase (the cluster only forwards
-                            // the flag), so showAnatomy must be turned on here — otherwise the
-                            // tree reports "0 part" and looks like the cluster draws the shimmer
-                            // itself, which is flat-out wrong about the source.
-                            showAnatomy={size === "sm"}
-                        />
-                    ))}
-                </div>
-            </BlockAnatomy>
+                reason="The group only passes the flag down; every item draws its own shimmer, a pill for a labelled button and a square for an icon-only one. The row keeps its footprint at every size, so nothing shifts once the real labels land."
+                states={SIZES.map((size) => ({
+                    name: `isSkeleton = true, size = "${size}"`,
+                    why: "Every item still goes through Button.Base, so the shimmer comes from the atom rather than the cluster drawing it itself. Skeleton still goes through Button.Base at this leaf's own scale, which is why the row holds the exact width and height the real buttons will occupy.",
+                    code: `<Button.Group isSkeleton size="${size}" items={[…3 items…]} />`,
+                    render: <Button.Group size={size} isSkeleton items={items(`(${size})`)} showAnatomy />,
+                }))}
+            />
         </div>
     ),
 }

@@ -61,6 +61,9 @@ const MAX = 5 * 1024 * 1024
  * trong khung đổi từ hint sang tên file), `errorMessage` (viền đỏ + dòng lỗi),
  * `isSkeleton` (mirror khung lúc chưa sẵn sàng). `hint` luôn có nên nằm sẵn ở
  * leaf trần (`Empty`), không tách leaf riêng.
+ *
+ * Mỗi leaf dưới đây có ĐÚNG một state trong `states[]` (thầy chốt bố cục C,
+ * 2026-07-27) — atom-tier vẫn 1 prop = 1 leaf, chỉ đổi chỗ chứa render/why/code.
  */
 
 /** Baseline: entering a form, the drop area shows the hint, no file picked yet. */
@@ -71,11 +74,16 @@ export const Empty: Story = {
                 name="Dropzone"
                 tier="atom"
                 leaf="Empty"
-                code={"<Dropzone.Base hint=\"PDF or DOCX, up to 5MB\" acceptedMimeTypes={[…]} maxSizeInBytes={…} />"}
-                reason="A drag-drop box, not a labeled field — the hint renders as placeholder text INSIDE the box, replaced by the file name once one is picked."
-            >
-                <Controlled hint={HINT} acceptedMimeTypes={ACCEPT} maxSizeInBytes={MAX} />
-            </BlockAnatomy>
+                reason="This is a drag-drop box rather than a labeled field, so the hint text renders as placeholder content inside the box itself. That single spot is also where the file name lands once one is picked, so the box never needs a second line to confirm the pick."
+                states={[
+                    {
+                        name: "file = null",
+                        why: "The dashed box shows only the hint line, with no file name and no error text present. This is the first thing a learner sees before touching the field, so the copy has to explain what to drop and which format is accepted.",
+                        code: "<Dropzone.Base hint=\"PDF or DOCX, up to 5MB\" acceptedMimeTypes={[…]} maxSizeInBytes={…} />",
+                        render: <Controlled hint={HINT} acceptedMimeTypes={ACCEPT} maxSizeInBytes={MAX} />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -88,11 +96,15 @@ export const WithFile: Story = {
                 name="Dropzone"
                 tier="atom"
                 leaf="Prop `file`"
-                code={"<Dropzone.Base file={cvFile} hint=\"PDF or DOCX, up to 5MB\" />"}
-                note="file != null swaps the hint for the file name — same box, same composition, just different content."
-            >
-                <Controlled hint={HINT} initialFile={cvFile} acceptedMimeTypes={ACCEPT} maxSizeInBytes={MAX} />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "file != null",
+                        why: "The hint line is swapped for the picked file's name, in the exact same spot and with the same box around it. Showing the real file name confirms the pick succeeded without adding a second confirmation element next to the box.",
+                        code: "<Dropzone.Base file={cvFile} hint=\"PDF or DOCX, up to 5MB\" />",
+                        render: <Controlled hint={HINT} initialFile={cvFile} acceptedMimeTypes={ACCEPT} maxSizeInBytes={MAX} />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -105,16 +117,22 @@ export const Error: Story = {
                 name="Dropzone"
                 tier="atom"
                 leaf="Prop `errorMessage`"
-                code={"<Dropzone.Base errorMessage=\"File is larger than 5MB\" hint=\"PDF or DOCX, up to 5MB\" />"}
-                note="Passing errorMessage adds an error line under the box and switches its border to danger."
-            >
-                <Controlled
-                    hint={HINT}
-                    errorMessage="File is over 5 MB or not a PDF — please choose a different file."
-                    acceptedMimeTypes={ACCEPT}
-                    maxSizeInBytes={MAX}
-                />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "errorMessage != null",
+                        why: "The box border switches to the danger tone and an error line appears directly beneath it. Naming the exact problem right at the field, wrong type or over the size cap, lets the learner fix the file without guessing what went wrong.",
+                        code: "<Dropzone.Base errorMessage=\"File is larger than 5MB\" hint=\"PDF or DOCX, up to 5MB\" />",
+                        render: (
+                            <Controlled
+                                hint={HINT}
+                                errorMessage="File is over 5 MB or not a PDF — please choose a different file."
+                                acceptedMimeTypes={ACCEPT}
+                                maxSizeInBytes={MAX}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -127,19 +145,25 @@ export const Skeleton: Story = {
                 name="Dropzone"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
-                code={"<Dropzone.Base isSkeleton />"}
-                note="isSkeleton swaps in a single shimmer block sized to the dashed box — it does not try to separately mirror the box and the error line."
-            >
-                <Dropzone
-                    isSkeleton
-                    hint={HINT}
-                    file={null}
-                    acceptedMimeTypes={ACCEPT}
-                    maxSizeInBytes={MAX}
-                    onValueChange={() => {}}
-                    showAnatomy
-                />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isSkeleton",
+                        why: "The whole box collapses into a single shimmer block sized to the dashed box's shape, with no hint text and no error line drawn. Keeping the rest to one simple shape avoids mirroring a box and an error line that might never even appear.",
+                        code: "<Dropzone.Base isSkeleton />",
+                        render: (
+                            <Dropzone
+                                isSkeleton
+                                hint={HINT}
+                                file={null}
+                                acceptedMimeTypes={ACCEPT}
+                                maxSizeInBytes={MAX}
+                                onValueChange={() => {}}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

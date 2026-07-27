@@ -33,19 +33,26 @@ export const Default: Story = {
                     name="Select.Multi"
                     tier="atom"
                     leaf="Default"
-                    code={"<Select.Multi value={v} onValueChange={setV} options={OPTIONS} placeholder=\"Choose languages\" />"}
-                >
-                    <div className="w-72">
-                        <Select.Multi
-                            value={value}
-                            onValueChange={setValue}
-                            options={OPTIONS}
-                            placeholder="Choose languages"
-                            ariaLabel="Language"
-                            showAnatomy
-                        />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "value = [], no prop turned on",
+                            why: "The trigger shows the placeholder text and no label sits above it. This is the baseline shape every other leaf differs from by exactly one prop.",
+                            code: "<Select.Multi value={v} onValueChange={setV} options={OPTIONS} placeholder=\"Choose languages\" />",
+                            render: (
+                                <div className="w-72">
+                                    <Select.Multi
+                                        value={value}
+                                        onValueChange={setValue}
+                                        options={OPTIONS}
+                                        placeholder="Choose languages"
+                                        ariaLabel="Language"
+                                        showAnatomy
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -62,20 +69,27 @@ export const WithLabel: Story = {
                     name="Select.Multi"
                     tier="atom"
                     leaf="Props `label` / `hint`"
-                    code={"<Select.Multi label=\"Language\" hint=\"Pick every language you use.\" ... />"}
-                >
-                    <div className="w-72">
-                        <Select.Multi
-                            value={value}
-                            onValueChange={setValue}
-                            options={OPTIONS}
-                            placeholder="Choose languages"
-                            label="Language"
-                            hint="Pick every language you use."
-                            showAnatomy
-                        />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "label set, hint set",
+                            why: "A label heading and a description line grow above the trigger. The pair tells the reader what the field is for and adds a sentence of guidance before they open it.",
+                            code: "<Select.Multi label=\"Language\" hint=\"Pick every language you use.\" ... />",
+                            render: (
+                                <div className="w-72">
+                                    <Select.Multi
+                                        value={value}
+                                        onValueChange={setValue}
+                                        options={OPTIONS}
+                                        placeholder="Choose languages"
+                                        label="Language"
+                                        hint="Pick every language you use."
+                                        showAnatomy
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -92,21 +106,27 @@ export const Required: Story = {
                     name="Select.Multi"
                     tier="atom"
                     leaf="Prop `isRequired`"
-                    code={"<Select.Multi label=\"Language\" isRequired ... />"}
-                    note="isRequired adds a * after the label."
-                >
-                    <div className="w-72">
-                        <Select.Multi
-                            value={value}
-                            onValueChange={setValue}
-                            options={OPTIONS}
-                            placeholder="Choose languages"
-                            label="Language"
-                            isRequired
-                            showAnatomy
-                        />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "isRequired = true",
+                            why: "A `*` mark attaches after the label, nothing else about the trigger changes. The mark flags a field the form will reject as empty before the reader ever opens it.",
+                            code: "<Select.Multi label=\"Language\" isRequired ... />",
+                            render: (
+                                <div className="w-72">
+                                    <Select.Multi
+                                        value={value}
+                                        onValueChange={setValue}
+                                        options={OPTIONS}
+                                        placeholder="Choose languages"
+                                        label="Language"
+                                        isRequired
+                                        showAnatomy
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -131,18 +151,29 @@ export const Value: Story = {
                     name="Select.Multi"
                     tier="atom"
                     leaf="Prop `value`"
-                    code={"<Select.Multi value={[]} … />             // empty\n<Select.Multi value={[\"ts\", \"go\"]} … />   // 2 picked → count"}
-                    note="Empty falls back to the placeholder; two or more collapse into a count instead of a growing list."
-                >
-                    <div className="flex flex-col gap-4">
-                        <div className="w-72">
-                            <Select.Multi value={empty} onValueChange={setEmpty} options={OPTIONS} placeholder="Choose languages" ariaLabel="Language" showAnatomy />
-                        </div>
-                        <div className="w-72">
-                            <Select.Multi value={filled} onValueChange={setFilled} options={OPTIONS} placeholder="Choose languages" ariaLabel="Language" />
-                        </div>
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "value = []",
+                            why: "The trigger falls back to the placeholder text. An empty array reads as nothing chosen yet, the same visual as before the reader ever opened the popover.",
+                            code: "<Select.Multi value={[]} … />",
+                            render: (
+                                <div className="w-72">
+                                    <Select.Multi value={empty} onValueChange={setEmpty} options={OPTIONS} placeholder="Choose languages" ariaLabel="Language" showAnatomy />
+                                </div>
+                            ),
+                        },
+                        {
+                            name: "value = [\"ts\", \"go\"]",
+                            why: "Two or more picks collapse into a count instead of listing every label. A growing list would push the trigger's width around as the reader keeps picking, so the atom holds the box steady.",
+                            code: "<Select.Multi value={[\"ts\", \"go\"]} … />",
+                            render: (
+                                <div className="w-72">
+                                    <Select.Multi value={filled} onValueChange={setFilled} options={OPTIONS} placeholder="Choose languages" ariaLabel="Language" />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -157,21 +188,27 @@ export const Disabled: Story = {
                 name="Select.Multi"
                 tier="atom"
                 leaf="Prop `isDisabled`"
-                code={"<Select.Multi label=\"Language\" value={[\"js\"]} isDisabled ... />"}
-                note="isDisabled dims the label and the trigger box together, and blocks the popover from opening."
-            >
-                <div className="w-72">
-                    <Select.Multi
-                        value={["js"]}
-                        onValueChange={() => {}}
-                        options={OPTIONS}
-                        placeholder="Choose languages"
-                        label="Language"
-                        isDisabled
-                        showAnatomy
-                    />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isDisabled = true",
+                        why: "The label and the trigger box dim together and the popover no longer opens. The dimmed pair reads as one locked control instead of a label that looks live above a dead box.",
+                        code: "<Select.Multi label=\"Language\" value={[\"js\"]} isDisabled ... />",
+                        render: (
+                            <div className="w-72">
+                                <Select.Multi
+                                    value={["js"]}
+                                    onValueChange={() => {}}
+                                    options={OPTIONS}
+                                    placeholder="Choose languages"
+                                    label="Language"
+                                    isDisabled
+                                    showAnatomy
+                                />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -188,21 +225,27 @@ export const Invalid: Story = {
                 name="Select.Multi"
                 tier="atom"
                 leaf="Prop `isInvalid`"
-                code={"<Select.Multi label=\"Language\" isInvalid ... />"}
-                note="isInvalid alone only switches the trigger border to danger — no error line under it. Pass errorMessage as well when the red line should show too."
-            >
-                <div className="w-72">
-                    <Select.Multi
-                        value={[]}
-                        onValueChange={() => {}}
-                        options={OPTIONS}
-                        placeholder="Choose languages"
-                        label="Language"
-                        isInvalid
-                        showAnatomy
-                    />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isInvalid = true, errorMessage not set",
+                        why: "Only the trigger border switches to danger, no error line grows under it. isInvalid alone is a bare visual flag; pass errorMessage as well when the red line should show too.",
+                        code: "<Select.Multi label=\"Language\" isInvalid ... />",
+                        render: (
+                            <div className="w-72">
+                                <Select.Multi
+                                    value={[]}
+                                    onValueChange={() => {}}
+                                    options={OPTIONS}
+                                    placeholder="Choose languages"
+                                    label="Language"
+                                    isInvalid
+                                    showAnatomy
+                                />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -217,21 +260,27 @@ export const Error: Story = {
                     name="Select.Multi"
                     tier="atom"
                     leaf="Prop `errorMessage`"
-                    code={"<Select.Multi label=\"Language\" errorMessage=\"Pick at least one language.\" ... />"}
-                    note="errorMessage adds the label, a red line, and an invalid border."
-                >
-                    <div className="w-72">
-                        <Select.Multi
-                            value={value}
-                            onValueChange={setValue}
-                            options={OPTIONS}
-                            placeholder="Choose languages"
-                            label="Language"
-                            errorMessage="Pick at least one language."
-                            showAnatomy
-                        />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "errorMessage set",
+                            why: "The trigger border turns invalid and a red line grows below it, under the same label as any other leaf. Setting errorMessage flips the control invalid on its own, so there is no separate isInvalid to remember alongside it.",
+                            code: "<Select.Multi label=\"Language\" errorMessage=\"Pick at least one language.\" ... />",
+                            render: (
+                                <div className="w-72">
+                                    <Select.Multi
+                                        value={value}
+                                        onValueChange={setValue}
+                                        options={OPTIONS}
+                                        placeholder="Choose languages"
+                                        label="Language"
+                                        errorMessage="Pick at least one language."
+                                        showAnatomy
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -246,13 +295,19 @@ export const Skeleton: Story = {
                 name="Select.Multi"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
-                code={"<Select.Multi label=\"Language\" isSkeleton />"}
-                note="isSkeleton swaps in a label skeleton plus a trigger-box skeleton."
-            >
-                <div className="w-72">
-                    <Select.Multi value={[]} onValueChange={() => {}} options={OPTIONS} label="Language" isSkeleton showAnatomy />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "The label swaps for a bar skeleton and the trigger box swaps for a matching box skeleton. Whoever owns the shape owns its resting state, so the atom draws its own shimmer instead of waiting on a shared skeleton component.",
+                        code: "<Select.Multi label=\"Language\" isSkeleton />",
+                        render: (
+                            <div className="w-72">
+                                <Select.Multi value={[]} onValueChange={() => {}} options={OPTIONS} label="Language" isSkeleton showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

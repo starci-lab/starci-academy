@@ -17,6 +17,8 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
 /**
  * `ResizableRail.Base` — a side rail whose width the reader drags, persisted to
  * `localStorage`. One region (the rail body) → plain `children`, no named slots.
+ *
+ * 2026-07-27: migrated every leaf below to the `states[]` API.
  */
 const meta: Meta<typeof ResizableRail.Base> = {
     title: "Frames/ResizableRail/ResizableRail.Base",
@@ -162,8 +164,8 @@ const PracticeShellDemo = ({
 // Content (rail body — an anatomy-only marker, real children keep their own layout)
 // · Handle (drag splitter, edge per `handleSide`).
 const RAIL_PARTS: Array<AnatomyNode> = [
-    { name: "Content", tier: "composite", role: "vùng thân rail (children) — marker, không đổi layout thật" },
-    { name: "Handle", tier: "composite", role: "splitter kéo-thả (role=separator), cạnh theo `handleSide`" },
+    { name: "Content", tier: "composite", role: "The rail's body (children); a marker only, it does not change the real layout." },
+    { name: "Handle", tier: "composite", role: "The drag-to-resize splitter (role=separator), positioned on the edge set by handleSide." },
 ]
 
 /** Default: search + topic ListBox rail beside a content pane. Drag the right-edge handle to resize. */
@@ -175,14 +177,21 @@ export const Default: Story = {
                 tier="frame"
                 leaf="Default"
                 parts={RAIL_PARTS}
-                code={"<ResizableRail.Base storageKey=\"practice.rail.width\" defaultWidth={300} minWidth={256} maxWidth={420} ariaLabel=\"Resize the topic list\"><TopicList /></ResizableRail.Base>"}
-            >
-                <PracticeShellDemo
-                    storageKey="storybook.practice.rail.width"
-                    heightClassName="h-[32rem]"
-                    showAnatomy
-                />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "defaultWidth = 300, minWidth = 256, maxWidth = 420",
+                        why: "The rail body renders the topic search plus ListBox at its default 300px width, beside a content pane that fills the rest of the row. Dragging the right-edge handle resizes the rail within the 256 to 420 bound and the width persists to localStorage under storageKey.",
+                        code: "<ResizableRail.Base storageKey=\"practice.rail.width\" defaultWidth={300} minWidth={256} maxWidth={420} ariaLabel=\"Resize the topic list\"><TopicList /></ResizableRail.Base>",
+                        render: (
+                            <PracticeShellDemo
+                                storageKey="storybook.practice.rail.width"
+                                heightClassName="h-[32rem]"
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -196,16 +205,22 @@ export const OverflowScrollsInRail: Story = {
                 tier="frame"
                 leaf="OverflowScrollsInRail"
                 parts={RAIL_PARTS}
-                note="Cùng bộ part với Default — chỉ khác chiều cao/overflow BÊN TRONG Content (ScrollShadow tự cuộn)."
-                code={"<ResizableRail.Base storageKey=\"practice.rail.scroll.width\" defaultWidth={360} minWidth={256} maxWidth={420} ariaLabel=\"Resize the topic list\"><ScrollShadow><TopicList /></ScrollShadow></ResizableRail.Base>"}
-            >
-                <PracticeShellDemo
-                    storageKey="storybook.practice.rail.scroll.v2.width"
-                    heightClassName="h-80"
-                    defaultWidth={360}
-                    showAnatomy
-                />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "rail height = h-80, topic list taller than the rail",
+                        why: "The topic list scrolls inside the rail through its own ScrollShadow rather than pushing the surrounding shell taller. The rail composes the exact same Content and Handle parts as Default, only the height and the overflow behaviour inside Content differ.",
+                        code: "<ResizableRail.Base storageKey=\"practice.rail.scroll.width\" defaultWidth={360} minWidth={256} maxWidth={420} ariaLabel=\"Resize the topic list\"><ScrollShadow><TopicList /></ScrollShadow></ResizableRail.Base>",
+                        render: (
+                            <PracticeShellDemo
+                                storageKey="storybook.practice.rail.scroll.v2.width"
+                                heightClassName="h-80"
+                                defaultWidth={360}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -221,27 +236,43 @@ export const ShrinkingMaxWidth: Story = {
         const [maxWidth, setMaxWidth] = useState(560)
         return (
             <div className="p-8">
-                <div className="flex flex-col gap-3">
-                    <div className="flex flex-col gap-2">
-                        <Label>Bounds that move under the rail</Label>
-                        <Typography type="body-sm" color="muted">
-                            drag the rail out to its full {maxWidth}px, then shrink the cap. The rail re-clamps itself; it must not sit at an illegal width until the reader drags again.
-                        </Typography>
-                        <div className="flex gap-2">
-                            <Button size="sm" variant="secondary" onPress={() => setMaxWidth(560)}>
-                                maxWidth 560
-                            </Button>
-                            <Button size="sm" variant="secondary" onPress={() => setMaxWidth(360)}>
-                                maxWidth 360
-                            </Button>
-                        </div>
-                    </div>
-                    <PracticeShellDemo
-                        storageKey="storybook.practice.rail.bounds.width"
-                        heightClassName="h-[32rem]"
-                        maxWidth={maxWidth}
-                    />
-                </div>
+                <BlockAnatomy
+                    name="ResizableRail.Base"
+                    tier="frame"
+                    leaf="ShrinkingMaxWidth"
+                    parts={RAIL_PARTS}
+                    reason="The persisted width is the reader's own preference, so a temporarily small maxWidth clamps the rail on screen without overwriting what gets saved to localStorage — the next time the bound widens, the rail returns to the width the reader actually chose."
+                    states={[
+                        {
+                            name: "maxWidth toggled at runtime between 560 and 360",
+                            why: "Dragging the rail out to its full width and then pressing the 360 button snaps the rail back to the new bound immediately, without waiting for another drag. The rail re-clamps itself the moment maxWidth narrows, so it can never sit at a width that is no longer legal.",
+                            code: "<ResizableRail.Base storageKey=\"practice.rail.bounds.width\" defaultWidth={300} minWidth={256} maxWidth={maxWidth} ariaLabel=\"Resize the topic list\"><TopicList /></ResizableRail.Base>",
+                            render: (
+                                <div className="flex flex-col gap-3">
+                                    <div className="flex flex-col gap-2">
+                                        <Label>Bounds that move under the rail</Label>
+                                        <Typography type="body-sm" color="muted">
+                                            drag the rail out to its full {maxWidth}px, then shrink the cap. The rail re-clamps itself; it must not sit at an illegal width until the reader drags again.
+                                        </Typography>
+                                        <div className="flex gap-2">
+                                            <Button size="sm" variant="secondary" onPress={() => setMaxWidth(560)}>
+                                                maxWidth 560
+                                            </Button>
+                                            <Button size="sm" variant="secondary" onPress={() => setMaxWidth(360)}>
+                                                maxWidth 360
+                                            </Button>
+                                        </div>
+                                    </div>
+                                    <PracticeShellDemo
+                                        storageKey="storybook.practice.rail.bounds.width"
+                                        heightClassName="h-[32rem]"
+                                        maxWidth={maxWidth}
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             </div>
         )
     },

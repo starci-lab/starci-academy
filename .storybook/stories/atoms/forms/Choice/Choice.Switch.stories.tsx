@@ -51,13 +51,19 @@ export const Default: Story = {
                     tier="atom"
                     leaf="No prop turned on"
                     reason="The one switch atom in the system, wrapping HeroUI Switch. This leaf is the baseline: off, no hint, no error."
-                    note="The label sits beside the track as a sibling — Switch has no content slot to own it."
-                    code={"<Choice.Switch isSelected={value} onValueChange={setValue} label=\"Dark mode\" />"}
-                >
-                    <div className="w-72">
-                        <Choice.Switch isSelected={value} onValueChange={setValue} label="Dark mode" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "isSelected = false, no hint, no error",
+                            why: "The track sits off and the label reads as a plain sibling beside it. Switch has no content slot of its own to own the label, so this bare pairing is the resting shape of the whole atom.",
+                            code: "<Choice.Switch isSelected={value} onValueChange={setValue} label=\"Dark mode\" />",
+                            render: (
+                                <div className="w-72">
+                                    <Choice.Switch isSelected={value} onValueChange={setValue} label="Dark mode" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -74,14 +80,20 @@ export const Selected: Story = {
                     name="Choice.Switch"
                     tier="atom"
                     leaf="Prop `isSelected`"
-                    reason="isSelected is controlled — the caller owns the value and hands it back through onValueChange, so the track never drifts from the setting it represents."
-                    note="On slides the thumb across and fills the track; nothing else in the row moves."
-                    code={"<Choice.Switch isSelected onValueChange={setValue} label=\"Dark mode\" />"}
-                >
-                    <div className="w-72">
-                        <Choice.Switch isSelected={value} onValueChange={setValue} label="Dark mode" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    reason="isSelected is controlled: the caller owns the value and hands it back through onValueChange, so the track never drifts from the setting it represents."
+                    states={[
+                        {
+                            name: "isSelected = true",
+                            why: "The thumb slides across and fills the track, while nothing else in the row moves. This is the shape isSelected = false above becomes once the caller flips the value it owns.",
+                            code: "<Choice.Switch isSelected onValueChange={setValue} label=\"Dark mode\" />",
+                            render: (
+                                <div className="w-72">
+                                    <Choice.Switch isSelected={value} onValueChange={setValue} label="Dark mode" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -98,18 +110,24 @@ export const Sizes: Story = {
                     name="Choice.Switch"
                     tier="atom"
                     leaf="Prop `size`"
-                    reason="size is scale only — it never changes what the switch means. Use it to match the switch to the row it sits in (a dense settings list vs. a spacious one)."
-                    note="The label stays one text size across all three — only the track and thumb scale."
-                    code={`<Choice.Switch size="sm" isSelected onValueChange={setValue} label="Dark mode" />
+                    reason="size is scale only, it never changes what the switch means. Use it to match the switch to the row it sits in (a dense settings list vs. a spacious one)."
+                    states={[
+                        {
+                            name: "size = sm | md | lg (full union)",
+                            why: "Three tracks render at increasing scale while the label stays one text size across all three. Only the track and thumb grow, so size is purely a fit decision for the row the switch sits in, not a meaning change.",
+                            code: `<Choice.Switch size="sm" isSelected onValueChange={setValue} label="Dark mode" />
 <Choice.Switch size="md" isSelected onValueChange={setValue} label="Dark mode" />   // default
-<Choice.Switch size="lg" isSelected onValueChange={setValue} label="Dark mode" />`}
-                >
-                    <div className="flex flex-col items-start gap-4">
-                        {SIZES.map((size, index) => (
-                            <Choice.Switch key={size} size={size} isSelected={value} onValueChange={setValue} label={`Dark mode (${size})`} showAnatomy={index === 0} />
-                        ))}
-                    </div>
-                </BlockAnatomy>
+<Choice.Switch size="lg" isSelected onValueChange={setValue} label="Dark mode" />`,
+                            render: (
+                                <div className="flex flex-col items-start gap-4">
+                                    {SIZES.map((size, index) => (
+                                        <Choice.Switch key={size} size={size} isSelected={value} onValueChange={setValue} label={`Dark mode (${size})`} showAnatomy={index === 0} />
+                                    ))}
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -126,20 +144,26 @@ export const WithHint: Story = {
                     name="Choice.Switch"
                     tier="atom"
                     leaf="Prop `hint`"
-                    reason="A switch with a side effect worth knowing gets a sentence, not just a label — hint stays visible below the row whether the switch is on or off."
-                    note="Routed through FieldFrame internally — the atom stays a single call, no separate Field wrapper at the call site."
-                    code={"<Choice.Switch isSelected={value} onValueChange={setValue} label=\"Dark mode\" hint=\"Eases eye strain at night.\" />"}
-                >
-                    <div className="w-72">
-                        <Choice.Switch
-                            isSelected={value}
-                            onValueChange={setValue}
-                            label="Dark mode"
-                            hint="Eases eye strain when using the app at night."
-                            showAnatomy
-                        />
-                    </div>
-                </BlockAnatomy>
+                    reason="A switch with a side effect worth knowing gets a sentence, not just a label; hint stays visible below the row whether the switch is on or off."
+                    states={[
+                        {
+                            name: "hint set",
+                            why: "A description line grows below the row, routed through the internal FieldFrame scaffold so the atom stays a single call. The sentence stays visible whether the switch is on or off, because the side effect it names is true either way.",
+                            code: "<Choice.Switch isSelected={value} onValueChange={setValue} label=\"Dark mode\" hint=\"Eases eye strain at night.\" />",
+                            render: (
+                                <div className="w-72">
+                                    <Choice.Switch
+                                        isSelected={value}
+                                        onValueChange={setValue}
+                                        label="Dark mode"
+                                        hint="Eases eye strain when using the app at night."
+                                        showAnatomy
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -156,20 +180,26 @@ export const Required: Story = {
                     name="Choice.Switch"
                     tier="atom"
                     leaf="Prop `isRequired`"
-                    reason="Some toggles gate the rest of a form — the asterisk on the inline label flags that before the reader tries to move on."
-                    note="The mark rides on the same label as the track, not on a separate FieldFrame heading — this control has no heading of its own."
-                    code={"<Choice.Switch isSelected={value} onValueChange={setValue} label=\"Enable two-factor authentication\" isRequired />"}
-                >
-                    <div className="w-72">
-                        <Choice.Switch
-                            isSelected={value}
-                            onValueChange={setValue}
-                            label="Enable two-factor authentication"
-                            isRequired
-                            showAnatomy
-                        />
-                    </div>
-                </BlockAnatomy>
+                    reason="Some toggles gate the rest of a form, so the asterisk on the inline label flags that before the reader tries to move on."
+                    states={[
+                        {
+                            name: "isRequired = true",
+                            why: "A `*` mark rides on the same inline label as the track, since this control has no separate FieldFrame heading of its own to carry it. The mark flags a toggle the form will not accept left off, before the reader tries to move on.",
+                            code: "<Choice.Switch isSelected={value} onValueChange={setValue} label=\"Enable two-factor authentication\" isRequired />",
+                            render: (
+                                <div className="w-72">
+                                    <Choice.Switch
+                                        isSelected={value}
+                                        onValueChange={setValue}
+                                        label="Enable two-factor authentication"
+                                        isRequired
+                                        showAnatomy
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -184,14 +214,20 @@ export const Disabled: Story = {
                 name="Choice.Switch"
                 tier="atom"
                 leaf="Prop `isDisabled`"
-                reason="Not allowed yet — a plan tier doesn't cover the setting, or a step upstream isn't done. The track stays visible so the reader knows the option exists."
-                note="Forwarded straight to HeroUI: press is blocked and both track and label dim."
-                code={"<Choice.Switch isDisabled isSelected onValueChange={setValue} label=\"Autosave\" />"}
-            >
-                <div className="w-72">
-                    <Choice.Switch isSelected onValueChange={() => {}} label="Autosave" isDisabled showAnatomy />
-                </div>
-            </BlockAnatomy>
+                reason="Not allowed yet: a plan tier doesn't cover the setting, or a step upstream isn't done. The track stays visible so the reader knows the option exists."
+                states={[
+                    {
+                        name: "isDisabled = true",
+                        why: "Both track and label dim together and press is blocked, forwarded straight to HeroUI's own disabled handling. The track stays visible rather than disappearing, so the reader still knows the option exists even though it is out of reach right now.",
+                        code: "<Choice.Switch isDisabled isSelected onValueChange={setValue} label=\"Autosave\" />",
+                        render: (
+                            <div className="w-72">
+                                <Choice.Switch isSelected onValueChange={() => {}} label="Autosave" isDisabled showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -206,20 +242,26 @@ export const Error: Story = {
                     name="Choice.Switch"
                     tier="atom"
                     leaf="Prop `errorMessage`"
-                    reason="A safety toggle left off is easy to miss on a settings page — the red border and the line beneath it stop the eye at the exact row that needs attention."
-                    note="Setting errorMessage flips the control invalid on its own; there's no separate isInvalid to remember."
-                    code={"<Choice.Switch isSelected={value} onValueChange={setValue} label=\"Security alerts\" errorMessage=\"Turn this on to get alerted.\" />"}
-                >
-                    <div className="w-72">
-                        <Choice.Switch
-                            isSelected={value}
-                            onValueChange={setValue}
-                            label="Security alerts"
-                            errorMessage="Turn this on to get alerted about suspicious activity."
-                            showAnatomy
-                        />
-                    </div>
-                </BlockAnatomy>
+                    reason="A safety toggle left off is easy to miss on a settings page, so the red border and the line beneath it stop the eye at the exact row that needs attention."
+                    states={[
+                        {
+                            name: "errorMessage set",
+                            why: "The track border turns invalid and a red line grows beneath it, stopping the eye at the exact row that needs attention. Setting errorMessage flips the control invalid on its own, so there is no separate isInvalid to remember alongside it.",
+                            code: "<Choice.Switch isSelected={value} onValueChange={setValue} label=\"Security alerts\" errorMessage=\"Turn this on to get alerted.\" />",
+                            render: (
+                                <div className="w-72">
+                                    <Choice.Switch
+                                        isSelected={value}
+                                        onValueChange={setValue}
+                                        label="Security alerts"
+                                        errorMessage="Turn this on to get alerted about suspicious activity."
+                                        showAnatomy
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -234,18 +276,24 @@ export const Loading: Story = {
                 name="Choice.Switch"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
-                reason="Whoever owns the shape owns its resting state, so the switch draws its own shimmer — no shared skeleton component to keep in sync."
-                note="The shimmer tracks size (sm/md/lg), so a row of switches doesn't jump when the real content lands."
-                code={`<Choice.Switch size="sm" isSkeleton label="Dark mode" />
+                reason="Whoever owns the shape owns its resting state, so the switch draws its own shimmer; there is no shared skeleton component to keep in sync."
+                states={[
+                    {
+                        name: "isSkeleton = true, size = sm | md | lg (full union)",
+                        why: "A shimmer track and a shimmer label bar stand at each size instead of the real switch. The shimmer tracks size, so a row of switches does not jump once the real content lands and replaces it.",
+                        code: `<Choice.Switch size="sm" isSkeleton label="Dark mode" />
 <Choice.Switch isSkeleton label="Dark mode" />
-<Choice.Switch size="lg" isSkeleton label="Dark mode" />`}
-            >
-                <div className="flex flex-col items-start gap-4">
-                    {SIZES.map((size, index) => (
-                        <Choice.Switch key={size} size={size} isSelected={false} onValueChange={() => {}} label="Dark mode" isSkeleton showAnatomy={index === 0} />
-                    ))}
-                </div>
-            </BlockAnatomy>
+<Choice.Switch size="lg" isSkeleton label="Dark mode" />`,
+                        render: (
+                            <div className="flex flex-col items-start gap-4">
+                                {SIZES.map((size, index) => (
+                                    <Choice.Switch key={size} size={size} isSelected={false} onValueChange={() => {}} label="Dark mode" isSkeleton showAnatomy={index === 0} />
+                                ))}
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

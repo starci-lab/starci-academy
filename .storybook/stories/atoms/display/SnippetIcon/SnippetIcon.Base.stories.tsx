@@ -18,6 +18,9 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * Vậy bộ leaf: `Default` (bare, idle) + `Copied` (prop `isCopied`, hai state cạnh
  * nhau). Atom giờ có `showAnatomy`/`anatPart` nên cả hai leaf đều badge được — trước
  * đây là atom DUY NHẤT trong hệ chưa có anatomy.
+ *
+ * 2026-07-27: di trú toàn bộ leaf sang API `states[]` (§8/§4a). Leaf `Copied` từng
+ * xếp HAI ví dụ (idle + ghim) cạnh nhau trong một khung; giờ tách thành hai state.
  */
 
 /** Hướng dẫn hiện đầu trang autodocs. Chữ trên UI viết TIẾNG ANH. */
@@ -64,20 +67,26 @@ export const Default: Story = {
                 name="SnippetIcon.Base"
                 tier="atom"
                 leaf="Bare icon"
-                reason="The one copy affordance in the system. It sits next to the value it copies and needs nothing else to work — no size, no tone, no icon choice."
-                note="copyString does not change the shape, only the clipboard payload — that is why it has no leaf of its own."
-                code={"<SnippetIcon.Base copyString=\"npm install @starciacademy/playground-agent\" />"}
-            >
-                <div className="flex max-w-md items-center justify-between gap-3 rounded-lg border border-default bg-muted px-3 py-2">
-                    <Typography type="body-sm" className="font-mono">
-                        npm install @starciacademy/playground-agent
-                    </Typography>
-                    <SnippetIcon.Base
-                        copyString="npm install @starciacademy/playground-agent"
-                        showAnatomy
-                    />
-                </div>
-            </BlockAnatomy>
+                reason="The one copy affordance in the system. It sits next to the value it copies and needs nothing else to work, no size, no tone, no icon choice."
+                states={[
+                    {
+                        name: "copyString set, isCopied not set",
+                        why: "A single copy glyph sits beside the command text, at rest, waiting for a click. copyString only changes what gets written to the clipboard, never the glyph itself, which is why the prop is required but earns no leaf of its own.",
+                        code: "<SnippetIcon.Base copyString=\"npm install @starciacademy/playground-agent\" />",
+                        render: (
+                            <div className="flex max-w-md items-center justify-between gap-3 rounded-lg border border-default bg-muted px-3 py-2">
+                                <Typography type="body-sm" className="font-mono">
+                                    npm install @starciacademy/playground-agent
+                                </Typography>
+                                <SnippetIcon.Base
+                                    copyString="npm install @starciacademy/playground-agent"
+                                    showAnatomy
+                                />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -90,32 +99,42 @@ export const Copied: Story = {
                 name="SnippetIcon.Base"
                 tier="atom"
                 leaf="Prop `isCopied`"
-                reason="A real click swaps the glyph to a checkmark for 350ms on its own — but a static page can never land on that exact millisecond, so isCopied pins either frame for anyone building or reviewing this state."
-                note="Leave isCopied unset and the atom manages the swap itself via internal state (unchanged behaviour). Pass true and it stays pinned to the checkmark regardless of internal state."
-                code={`<SnippetIcon.Base copyString="npm install pkg" />
-<SnippetIcon.Base copyString="npm install pkg" isCopied />`}
-            >
-                <div className="flex flex-wrap items-center gap-6">
-                    <div className="flex max-w-md items-center justify-between gap-3 rounded-lg border border-default bg-muted px-3 py-2">
-                        <Typography type="body-sm" className="font-mono">
-                            sk-live-51H8x2KJ9mQwErTyUiOp
-                        </Typography>
-                        <SnippetIcon.Base
-                            copyString="sk-live-51H8x2KJ9mQwErTyUiOp"
-                            showAnatomy
-                        />
-                    </div>
-                    <div className="flex max-w-md items-center justify-between gap-3 rounded-lg border border-default bg-muted px-3 py-2">
-                        <Typography type="body-sm" className="font-mono">
-                            git clone https://github.com/StarCi-Academy/rag-from-scratch
-                        </Typography>
-                        <SnippetIcon.Base
-                            copyString="git clone https://github.com/StarCi-Academy/rag-from-scratch"
-                            isCopied
-                        />
-                    </div>
-                </div>
-            </BlockAnatomy>
+                reason="A real click swaps the glyph to a checkmark for 350ms on its own, but a static page can never land on that exact millisecond, so isCopied pins either frame for anyone building or reviewing this state."
+                states={[
+                    {
+                        name: "isCopied not set",
+                        why: "The glyph shows the plain copy icon, unchanged from the Default leaf. Left unset, the atom keeps managing the checkmark swap itself through internal state, exactly as it does everywhere else it is used.",
+                        code: "<SnippetIcon.Base copyString=\"npm install pkg\" />",
+                        render: (
+                            <div className="flex max-w-md items-center justify-between gap-3 rounded-lg border border-default bg-muted px-3 py-2">
+                                <Typography type="body-sm" className="font-mono">
+                                    sk-live-51H8x2KJ9mQwErTyUiOp
+                                </Typography>
+                                <SnippetIcon.Base
+                                    copyString="sk-live-51H8x2KJ9mQwErTyUiOp"
+                                    showAnatomy
+                                />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "isCopied = true",
+                        why: "The glyph shows the checkmark instead of the copy icon, staying pinned to that frame regardless of whatever internal state the atom would otherwise be in. Pinning it this way is the only way a static page can display the confirmation frame that a real click only holds for 350ms.",
+                        code: "<SnippetIcon.Base copyString=\"npm install pkg\" isCopied />",
+                        render: (
+                            <div className="flex max-w-md items-center justify-between gap-3 rounded-lg border border-default bg-muted px-3 py-2">
+                                <Typography type="body-sm" className="font-mono">
+                                    git clone https://github.com/StarCi-Academy/rag-from-scratch
+                                </Typography>
+                                <SnippetIcon.Base
+                                    copyString="git clone https://github.com/StarCi-Academy/rag-from-scratch"
+                                    isCopied
+                                />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

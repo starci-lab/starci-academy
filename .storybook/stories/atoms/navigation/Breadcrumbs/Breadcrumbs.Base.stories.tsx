@@ -45,17 +45,24 @@ export const Default: Story = {
                 tier="atom"
                 leaf="Default"
                 reason="The one breadcrumb atom, wrapping HeroUI's Breadcrumbs. Truncation is a leaf of the maxItems prop, not a separate component."
-                code={"<Breadcrumbs.Base items={[{ key: \"home\", label: \"Home\", onPress: fn }, …, { key: \"current\", label: \"Lesson 3\" }]} />"}
-            >
-                <Breadcrumbs.Base
-                    items={[
-                        { key: "home", label: "Home", onPress: () => {} },
-                        { key: "course", label: "Advanced React", onPress: () => {} },
-                        { key: "current", label: "Lesson 3: Hooks" },
-                    ]}
-                    showAnatomy
-                />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "3-crumb trail, no maxItems/collapseFrom/collapseOnMobile",
+                        why: "The full trail renders as plain crumbs; the last one carries no `onPress` so it reads as the current page rather than a link. This is the bare atom, the shape every other leaf below narrows down from.",
+                        code: "<Breadcrumbs.Base items={[{ key: \"home\", label: \"Home\", onPress: fn }, …, { key: \"current\", label: \"Lesson 3\" }]} />",
+                        render: (
+                            <Breadcrumbs.Base
+                                items={[
+                                    { key: "home", label: "Home", onPress: () => {} },
+                                    { key: "course", label: "Advanced React", onPress: () => {} },
+                                    { key: "current", label: "Lesson 3: Hooks" },
+                                ]}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -68,21 +75,27 @@ export const Truncated: Story = {
                 name="Breadcrumbs.Base"
                 tier="atom"
                 leaf="Truncated"
-                note="maxItems=3 with a 5-crumb trail shows the first crumb, an '…', then the last two. Deeper ancestors are already reachable from top nav."
-                code={"<Breadcrumbs.Base maxItems={3} items={[/* 5 crumbs */]} />"}
-            >
-                <Breadcrumbs.Base
-                    maxItems={3}
-                    items={[
-                        { key: "home", label: "Home", onPress: () => {} },
-                        { key: "catalog", label: "Catalog", onPress: () => {} },
-                        { key: "course", label: "Advanced React", onPress: () => {} },
-                        { key: "module", label: "Chapter 2", onPress: () => {} },
-                        { key: "current", label: "Lesson 3: Hooks" },
-                    ]}
-                    showAnatomy
-                />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "maxItems = 3, 5-crumb trail",
+                        why: "The trail shrinks to the first crumb, an ellipsis, then the last two, instead of five crumbs wrapping onto a second line. Deeper ancestors are already reachable from top nav, so collapsing the middle loses no real navigation.",
+                        code: "<Breadcrumbs.Base maxItems={3} items={[/* 5 crumbs */]} />",
+                        render: (
+                            <Breadcrumbs.Base
+                                maxItems={3}
+                                items={[
+                                    { key: "home", label: "Home", onPress: () => {} },
+                                    { key: "catalog", label: "Catalog", onPress: () => {} },
+                                    { key: "course", label: "Advanced React", onPress: () => {} },
+                                    { key: "module", label: "Chapter 2", onPress: () => {} },
+                                    { key: "current", label: "Lesson 3: Hooks" },
+                                ]}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -95,21 +108,27 @@ export const CollapsedLongTrail: Story = {
                 name="Breadcrumbs.Base"
                 tier="atom"
                 leaf="CollapsedLongTrail"
-                note="collapseFrom=4 with a 4-crumb trail swaps the whole Breadcrumbs for the back link — a long trail wraps and eats vertical space, and deeper ancestors are already reachable from top nav."
-                code={"<Breadcrumbs.Base collapseFrom={4} backLabel=\"Back\" items={[/* 4 crumbs */]} />"}
-            >
-                <Breadcrumbs.Base
-                    collapseFrom={4}
-                    backLabel="Back"
-                    items={[
-                        { key: "home", label: "Home", onPress: () => {} },
-                        { key: "catalog", label: "Catalog", onPress: () => {} },
-                        { key: "course", label: "Advanced React", onPress: () => {} },
-                        { key: "current", label: "Lesson 3: Hooks" },
-                    ]}
-                    showAnatomy
-                />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "collapseFrom = 4, 4-crumb trail",
+                        why: "The whole Breadcrumbs trail is replaced by a single back link, at every viewport width. A trail this long would wrap and eat vertical space, and deeper ancestors are already reachable from top nav, so a back link is the honest shape here.",
+                        code: "<Breadcrumbs.Base collapseFrom={4} backLabel=\"Back\" items={[/* 4 crumbs */]} />",
+                        render: (
+                            <Breadcrumbs.Base
+                                collapseFrom={4}
+                                backLabel="Back"
+                                items={[
+                                    { key: "home", label: "Home", onPress: () => {} },
+                                    { key: "catalog", label: "Catalog", onPress: () => {} },
+                                    { key: "course", label: "Advanced React", onPress: () => {} },
+                                    { key: "current", label: "Lesson 3: Hooks" },
+                                ]}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -122,22 +141,28 @@ export const CollapsedOnMobile: Story = {
                 name="Breadcrumbs.Base"
                 tier="atom"
                 leaf="CollapsedOnMobile"
-                note="collapseOnMobile swaps a narrow column for the back link below @app-sm and shows the trail from @app-sm up. The fixed 375px container IS the mobile signal here (container queries — the viewport addon has no effect)."
-                code={"<Breadcrumbs.Base collapseOnMobile backLabel=\"Back\" items={[…]} />"}
-            >
-                <div className="@container w-[375px] max-w-full rounded-none border border-dashed border-accent p-3">
-                    <Breadcrumbs.Base
-                        collapseOnMobile
-                        backLabel="Back"
-                        items={[
-                            { key: "home", label: "Home", onPress: () => {} },
-                            { key: "course", label: "Advanced React", onPress: () => {} },
-                            { key: "current", label: "Lesson 3: Hooks" },
-                        ]}
-                        showAnatomy
-                    />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "collapseOnMobile = true, container narrower than @app-sm",
+                        why: "The trail swaps for a back link only while the CONTAINER is narrow, and shows the full trail from `@app-sm` up. The fixed 375px wrapper is the mobile signal here, since this reads a container query rather than the viewport addon.",
+                        code: "<Breadcrumbs.Base collapseOnMobile backLabel=\"Back\" items={[…]} />",
+                        render: (
+                            <div className="@container w-[375px] max-w-full rounded-none border border-dashed border-accent p-3">
+                                <Breadcrumbs.Base
+                                    collapseOnMobile
+                                    backLabel="Back"
+                                    items={[
+                                        { key: "home", label: "Home", onPress: () => {} },
+                                        { key: "course", label: "Advanced React", onPress: () => {} },
+                                        { key: "current", label: "Lesson 3: Hooks" },
+                                    ]}
+                                    showAnatomy
+                                />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -162,45 +187,62 @@ export const Skeleton: Story = {
                 name="Breadcrumbs.Base"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
-                note="isSkeleton's shape follows collapseFrom/collapseOnMobile + trail depth — bar-row, back-link, or both (responsive) — the same way the loaded trail would resolve, so the layout doesn't jump once data lands."
-                code={`<Breadcrumbs.Base isSkeleton items={[…3 crumbs]} />
-<Breadcrumbs.Base isSkeleton collapseFrom={3} items={[…3 crumbs]} />
-<Breadcrumbs.Base isSkeleton collapseOnMobile items={[…3 crumbs]} />`}
-            >
-                <div className="flex flex-col items-start gap-6">
-                    <Breadcrumbs.Base
-                        isSkeleton
-                        items={[
-                            { key: "home", label: "Home" },
-                            { key: "course", label: "React" },
-                            { key: "current", label: "Lesson 3" },
-                        ]}
-                        showAnatomy
-                    />
-                    <Breadcrumbs.Base
-                        isSkeleton
-                        collapseFrom={3}
-                        items={[
-                            { key: "home", label: "Home" },
-                            { key: "course", label: "React" },
-                            { key: "current", label: "Lesson 3" },
-                        ]}
-                        showAnatomy
-                    />
-                    <div className="@container w-[375px] max-w-full rounded-none border border-dashed border-accent p-3">
-                        <Breadcrumbs.Base
-                            isSkeleton
-                            collapseOnMobile
-                            items={[
-                                { key: "home", label: "Home" },
-                                { key: "course", label: "React" },
-                                { key: "current", label: "Lesson 3" },
-                            ]}
-                            showAnatomy
-                        />
-                    </div>
-                </div>
-            </BlockAnatomy>
+                reason="The skeleton follows the exact shape the loaded trail would resolve to, computed from collapseFrom/collapseOnMobile and the trail depth, so the layout never jumps once real data lands."
+                states={[
+                    {
+                        name: "isSkeleton = true, no collapseFrom/collapseOnMobile",
+                        why: "A plain row of trail bars shimmers, one per item, mirroring the shape of `Default`. Nothing here is about to collapse, so the resting shape is the full trail.",
+                        code: "<Breadcrumbs.Base isSkeleton items={[…3 crumbs]} />",
+                        render: (
+                            <Breadcrumbs.Base
+                                isSkeleton
+                                items={[
+                                    { key: "home", label: "Home" },
+                                    { key: "course", label: "React" },
+                                    { key: "current", label: "Lesson 3" },
+                                ]}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                    {
+                        name: "isSkeleton = true, collapseFrom = 3 matching a 3-crumb trail",
+                        why: "The bar strip is replaced by a single back-link shimmer, mirroring the shape of `CollapsedLongTrail`. `collapseFrom` matches the trail's own depth, so the loaded trail would collapse too, and the skeleton must match it or the layout would jump.",
+                        code: "<Breadcrumbs.Base isSkeleton collapseFrom={3} items={[…3 crumbs]} />",
+                        render: (
+                            <Breadcrumbs.Base
+                                isSkeleton
+                                collapseFrom={3}
+                                items={[
+                                    { key: "home", label: "Home" },
+                                    { key: "course", label: "React" },
+                                    { key: "current", label: "Lesson 3" },
+                                ]}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                    {
+                        name: "isSkeleton = true, collapseOnMobile = true, narrow container",
+                        why: "The narrow-container skeleton mirrors the back-link shape, matching `CollapsedOnMobile`'s real behaviour at the same width. The same container query drives both the loaded and the loading trail, so neither ever disagrees with the other.",
+                        code: "<Breadcrumbs.Base isSkeleton collapseOnMobile items={[…3 crumbs]} />",
+                        render: (
+                            <div className="@container w-[375px] max-w-full rounded-none border border-dashed border-accent p-3">
+                                <Breadcrumbs.Base
+                                    isSkeleton
+                                    collapseOnMobile
+                                    items={[
+                                        { key: "home", label: "Home" },
+                                        { key: "course", label: "React" },
+                                        { key: "current", label: "Lesson 3" },
+                                    ]}
+                                    showAnatomy
+                                />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

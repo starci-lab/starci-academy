@@ -33,20 +33,26 @@ export const Default: Story = {
                     name="Select.Combobox"
                     tier="atom"
                     leaf="Default"
-                    code={"<Select.Combobox value={v} onValueChange={setV} options={OPTIONS} placeholder=\"Search city or province\" />"}
-                    note="Typing runs react-aria's own option filter."
-                >
-                    <div className="w-72">
-                        <Select.Combobox
-                            value={value}
-                            onValueChange={setValue}
-                            options={OPTIONS}
-                            placeholder="Search city or province"
-                            ariaLabel="City/Province"
-                            showAnatomy
-                        />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "no label, value = null",
+                            why: "The field renders an empty box carrying only the `placeholder` text. Typing runs react-aria's own option filter, so a bare combobox is ready to search the moment it mounts, with no label above it.",
+                            code: "<Select.Combobox value={v} onValueChange={setV} options={OPTIONS} placeholder=\"Search city or province\" />",
+                            render: (
+                                <div className="w-72">
+                                    <Select.Combobox
+                                        value={value}
+                                        onValueChange={setValue}
+                                        options={OPTIONS}
+                                        placeholder="Search city or province"
+                                        ariaLabel="City/Province"
+                                        showAnatomy
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -63,20 +69,27 @@ export const WithLabel: Story = {
                     name="Select.Combobox"
                     tier="atom"
                     leaf="Props `label` / `hint`"
-                    code={"<Select.Combobox label=\"City/Province\" hint=\"Type to filter fast.\" ... />"}
-                >
-                    <div className="w-72">
-                        <Select.Combobox
-                            value={value}
-                            onValueChange={setValue}
-                            options={OPTIONS}
-                            placeholder="Search city or province"
-                            label="City/Province"
-                            hint="Type to filter fast."
-                            showAnatomy
-                        />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "label and hint passed",
+                            why: "FieldFrame grows a Label above the box and a Description line below it. This is for a field the caller wants to name and explain on its own, instead of leaving the meaning to a surrounding form section.",
+                            code: "<Select.Combobox label=\"City/Province\" hint=\"Type to filter fast.\" ... />",
+                            render: (
+                                <div className="w-72">
+                                    <Select.Combobox
+                                        value={value}
+                                        onValueChange={setValue}
+                                        options={OPTIONS}
+                                        placeholder="Search city or province"
+                                        label="City/Province"
+                                        hint="Type to filter fast."
+                                        showAnatomy
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -93,21 +106,27 @@ export const Required: Story = {
                     name="Select.Combobox"
                     tier="atom"
                     leaf="Prop `isRequired`"
-                    code={"<Select.Combobox label=\"City/Province\" isRequired ... />"}
-                    note="isRequired adds a * after the label."
-                >
-                    <div className="w-72">
-                        <Select.Combobox
-                            value={value}
-                            onValueChange={setValue}
-                            options={OPTIONS}
-                            placeholder="Search city or province"
-                            label="City/Province"
-                            isRequired
-                            showAnatomy
-                        />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "isRequired = true",
+                            why: "A `*` is appended right after the Label text, no other node changes. This tells the viewer the field cannot be submitted empty before they even try.",
+                            code: "<Select.Combobox label=\"City/Province\" isRequired ... />",
+                            render: (
+                                <div className="w-72">
+                                    <Select.Combobox
+                                        value={value}
+                                        onValueChange={setValue}
+                                        options={OPTIONS}
+                                        placeholder="Search city or province"
+                                        label="City/Province"
+                                        isRequired
+                                        showAnatomy
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -132,18 +151,29 @@ export const Value: Story = {
                     name="Select.Combobox"
                     tier="atom"
                     leaf="Prop `value`"
-                    code={"<Select.Combobox value={null} … />   // empty\n<Select.Combobox value=\"dn\" … />     // picked"}
-                    note="Empty falls back to the placeholder; picked swaps in that option's label. Same DOM either way."
-                >
-                    <div className="flex flex-col gap-4">
-                        <div className="w-72">
-                            <Select.Combobox value={empty} onValueChange={setEmpty} options={OPTIONS} placeholder="Search city or province" ariaLabel="City or province" showAnatomy />
-                        </div>
-                        <div className="w-72">
-                            <Select.Combobox value={filled} onValueChange={setFilled} options={OPTIONS} placeholder="Search city or province" ariaLabel="City or province" />
-                        </div>
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "value = null",
+                            why: "The box falls back to the muted `placeholder` text, same DOM shape as a filled box. This is the resting state before the learner has picked anything yet.",
+                            code: "<Select.Combobox value={null} ... />",
+                            render: (
+                                <div className="w-72">
+                                    <Select.Combobox value={empty} onValueChange={setEmpty} options={OPTIONS} placeholder="Search city or province" ariaLabel="City or province" showAnatomy />
+                                </div>
+                            ),
+                        },
+                        {
+                            name: "value = \"dn\"",
+                            why: "The box swaps the placeholder for the matching option's own label text, same DOM shape as the empty box. This is what the field shows once a real selection has landed.",
+                            code: "<Select.Combobox value=\"dn\" ... />",
+                            render: (
+                                <div className="w-72">
+                                    <Select.Combobox value={filled} onValueChange={setFilled} options={OPTIONS} placeholder="Search city or province" ariaLabel="City or province" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -158,21 +188,27 @@ export const Disabled: Story = {
                 name="Select.Combobox"
                 tier="atom"
                 leaf="Prop `isDisabled`"
-                code={"<Select.Combobox label=\"City/Province\" value=\"hn\" isDisabled ... />"}
-                note="isDisabled dims the label and the input box together, and blocks typing/the popover."
-            >
-                <div className="w-72">
-                    <Select.Combobox
-                        value="hn"
-                        onValueChange={() => {}}
-                        options={OPTIONS}
-                        placeholder="Search city or province"
-                        label="City/Province"
-                        isDisabled
-                        showAnatomy
-                    />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isDisabled = true",
+                        why: "The Label and the input box both dim together, and typing plus opening the popover are both blocked. This is for a field the caller has decided the learner cannot touch right now, without removing it from view.",
+                        code: "<Select.Combobox label=\"City/Province\" value=\"hn\" isDisabled ... />",
+                        render: (
+                            <div className="w-72">
+                                <Select.Combobox
+                                    value="hn"
+                                    onValueChange={() => {}}
+                                    options={OPTIONS}
+                                    placeholder="Search city or province"
+                                    label="City/Province"
+                                    isDisabled
+                                    showAnatomy
+                                />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -189,21 +225,27 @@ export const Invalid: Story = {
                 name="Select.Combobox"
                 tier="atom"
                 leaf="Prop `isInvalid`"
-                code={"<Select.Combobox label=\"City/Province\" isInvalid ... />"}
-                note="isInvalid alone only switches the input border to danger — no error line under it. Pass errorMessage as well when the red line should show too."
-            >
-                <div className="w-72">
-                    <Select.Combobox
-                        value={null}
-                        onValueChange={() => {}}
-                        options={OPTIONS}
-                        placeholder="Search city or province"
-                        label="City/Province"
-                        isInvalid
-                        showAnatomy
-                    />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isInvalid = true, no errorMessage",
+                        why: "Only the input border switches to the danger tone; no error line appears under it, because FieldFrame never invents error text on its own. Pass `errorMessage` alongside it when the red line should show too.",
+                        code: "<Select.Combobox label=\"City/Province\" isInvalid ... />",
+                        render: (
+                            <div className="w-72">
+                                <Select.Combobox
+                                    value={null}
+                                    onValueChange={() => {}}
+                                    options={OPTIONS}
+                                    placeholder="Search city or province"
+                                    label="City/Province"
+                                    isInvalid
+                                    showAnatomy
+                                />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -218,21 +260,27 @@ export const Error: Story = {
                     name="Select.Combobox"
                     tier="atom"
                     leaf="Prop `errorMessage`"
-                    code={"<Select.Combobox label=\"City/Province\" errorMessage=\"Choose a valid city or province.\" ... />"}
-                    note="errorMessage adds the label, a red line, and an invalid border."
-                >
-                    <div className="w-72">
-                        <Select.Combobox
-                            value={value}
-                            onValueChange={setValue}
-                            options={OPTIONS}
-                            placeholder="Search city or province"
-                            label="City/Province"
-                            errorMessage="Choose a valid city or province."
-                            showAnatomy
-                        />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "errorMessage set",
+                            why: "The Label, a red message line, and an invalid border all appear together, added by `errorMessage` alone. This is the full validation-failed shape, giving the learner both the visual cue and the reason in one line.",
+                            code: "<Select.Combobox label=\"City/Province\" errorMessage=\"Choose a valid city or province.\" ... />",
+                            render: (
+                                <div className="w-72">
+                                    <Select.Combobox
+                                        value={value}
+                                        onValueChange={setValue}
+                                        options={OPTIONS}
+                                        placeholder="Search city or province"
+                                        label="City/Province"
+                                        errorMessage="Choose a valid city or province."
+                                        showAnatomy
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -247,13 +295,19 @@ export const Skeleton: Story = {
                 name="Select.Combobox"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
-                code={"<Select.Combobox label=\"City/Province\" isSkeleton />"}
-                note="isSkeleton swaps in a label skeleton plus a trigger-box skeleton."
-            >
-                <div className="w-72">
-                    <Select.Combobox value={null} onValueChange={() => {}} options={OPTIONS} label="City/Province" isSkeleton showAnatomy />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "A label-shaped bar and a trigger-box-shaped bar both swap in for the real field. This mirrors the exact column the real label and box will occupy, so the row doesn't shift once the field is ready.",
+                        code: "<Select.Combobox label=\"City/Province\" isSkeleton />",
+                        render: (
+                            <div className="w-72">
+                                <Select.Combobox value={null} onValueChange={() => {}} options={OPTIONS} label="City/Province" isSkeleton showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

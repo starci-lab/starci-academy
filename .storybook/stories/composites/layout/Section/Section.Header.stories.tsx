@@ -33,25 +33,25 @@ type Story = StoryObj<typeof Section.Header>
  * `Description`/`Action` chỉ tồn tại ở leaf thực sự truyền slot đó.
  */
 const TITLE_PARTS: Array<AnatomyNode> = [
-    { name: "Title", tier: "composite", role: "tiêu đề vùng — Typography.<size theo level>, weight bold" },
+    { name: "Title", tier: "composite", role: "the region's title, rendered at the size the level sets, always bold weight" },
 ]
 const EYEBROW_PARTS: Array<AnatomyNode> = [
-    { name: "Eyebrow", tier: "composite", role: "kicker muted TRÊN title (ngữ cảnh, không phải title thứ hai)" },
-    { name: "Title", tier: "composite", role: "tiêu đề vùng" },
+    { name: "Eyebrow", tier: "composite", role: "a muted kicker sitting above the title, context rather than a second title" },
+    { name: "Title", tier: "composite", role: "the region's title" },
 ]
 const DESCRIPTION_PARTS: Array<AnatomyNode> = [
-    { name: "Title", tier: "composite", role: "tiêu đề vùng" },
-    { name: "Description", tier: "composite", role: "dòng bổ trợ dưới title, muted, nhỏ hơn 1 bậc" },
+    { name: "Title", tier: "composite", role: "the region's title" },
+    { name: "Description", tier: "composite", role: "a supporting line under the title, muted and one size smaller" },
 ]
 const ACTION_PARTS: Array<AnatomyNode> = [
-    { name: "Title", tier: "composite", role: "tiêu đề vùng" },
-    { name: "Action", tier: "composite", role: "slot điều khiển ghim phải (`shrink-0`) — nhận node Button.* từ caller" },
+    { name: "Title", tier: "composite", role: "the region's title" },
+    { name: "Action", tier: "composite", role: "the right-pinned control slot, shrink-0, holding whatever Button.* node the caller passes" },
 ]
 const FULL_PARTS: Array<AnatomyNode> = [
-    { name: "Eyebrow", tier: "composite", role: "kicker muted trên title" },
-    { name: "Title", tier: "composite", role: "tiêu đề vùng" },
-    { name: "Description", tier: "composite", role: "dòng bổ trợ muted" },
-    { name: "Action", tier: "composite", role: "slot điều khiển ghim phải" },
+    { name: "Eyebrow", tier: "composite", role: "a muted kicker above the title" },
+    { name: "Title", tier: "composite", role: "the region's title" },
+    { name: "Description", tier: "composite", role: "a muted supporting line" },
+    { name: "Action", tier: "composite", role: "the right-pinned control slot" },
 ]
 
 /** Tối thiểu — chỉ `title`. Khung vẫn là hàng flex, chỉ có một cột chữ. */
@@ -64,11 +64,16 @@ export const Default: Story = {
                     tier="composite"
                     leaf="Default"
                     parts={TITLE_PARTS}
-                    reason="Khung tiêu đề của một VÙNG trong trang. Không mang chức năng: nó không biết vùng dưới nó là gì, chỉ xếp eyebrow/title/description bên trái và một slot action bên phải."
-                    code={"<Section.Header title=\"Khoá của tôi\" />"}
-                >
-                    <Section.Header title="Khoá của tôi" showAnatomy />
-                </BlockAnatomy>
+                    reason="The heading of ONE region inside a page. It carries no function of its own: it doesn't know what sits below it, it only lays out an eyebrow, a title and a description on the left and one action slot on the right."
+                    states={[
+                        {
+                            name: "only title passed",
+                            why: "Just the title text renders, no eyebrow above it and no description or action beside it. This is the bare frame, the shape every other leaf below adds one slot on top of.",
+                            code: "<Section.Header title=\"Khoá của tôi\" />",
+                            render: <Section.Header title="Khoá của tôi" showAnatomy />,
+                        },
+                    ]}
+                />
             </div>
         </div>
     ),
@@ -84,11 +89,15 @@ export const WithEyebrow: Story = {
                     tier="composite"
                     leaf="WithEyebrow"
                     parts={EYEBROW_PARTS}
-                    note="`eyebrow` nhỏ hơn title 1 bậc và luôn muted — nó là NGỮ CẢNH, không leo lên thành title thứ hai (§9a)."
-                    code={"<Section.Header eyebrow=\"Fullstack Mastery\" title=\"Module 3 · Cơ sở dữ liệu\" />"}
-                >
-                    <Section.Header eyebrow="Fullstack Mastery" title="Module 3 · Cơ sở dữ liệu" showAnatomy />
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "eyebrow set",
+                            why: "A muted kicker line grows above the title, one size smaller and in the same tight text cluster. The eyebrow names the course or module the region belongs to, so it stays context rather than climbing into a second title (§9a).",
+                            code: "<Section.Header eyebrow=\"Fullstack Mastery\" title=\"Module 3 · Cơ sở dữ liệu\" />",
+                            render: <Section.Header eyebrow="Fullstack Mastery" title="Module 3 · Cơ sở dữ liệu" showAnatomy />,
+                        },
+                    ]}
+                />
             </div>
         </div>
     ),
@@ -104,18 +113,24 @@ export const WithDescription: Story = {
                     tier="composite"
                     leaf="WithDescription"
                     parts={DESCRIPTION_PARTS}
-                    note="Title ↔ description là MỘT cụm chữ → `gap-1` (tight, §10b), không phải nhịp giữa các vùng."
-                    code={`<Section.Header
+                    states={[
+                        {
+                            name: "description set",
+                            why: "A muted line grows below the title, tied to it with the same tight `gap-1` used inside a single text cluster rather than the looser rhythm between regions. Title and description read as one unit, not two separate stacked blocks.",
+                            code: `<Section.Header
   title="Khoá của tôi"
   description="Những khoá bạn đã ghi danh, sắp theo lần học gần nhất."
-/>`}
-                >
-                    <Section.Header
-                        title="Khoá của tôi"
-                        description="Những khoá bạn đã ghi danh, sắp theo lần học gần nhất."
-                        showAnatomy
-                    />
-                </BlockAnatomy>
+/>`,
+                            render: (
+                                <Section.Header
+                                    title="Khoá của tôi"
+                                    description="Những khoá bạn đã ghi danh, sắp theo lần học gần nhất."
+                                    showAnatomy
+                                />
+                            ),
+                        },
+                    ]}
+                />
             </div>
         </div>
     ),
@@ -131,18 +146,24 @@ export const WithAction: Story = {
                     tier="composite"
                     leaf="WithAction"
                     parts={ACTION_PARTS}
-                    note="Action là SLOT: khung chỉ ghim `shrink-0` bên phải và giữ cột chữ `min-w-0`. Caller đưa atom Button.* vào — khung không mang chức năng (§13)."
-                    code={`<Section.Header
+                    states={[
+                        {
+                            name: "action set",
+                            why: "A control slot grows on the right, pinned `shrink-0` so it never squeezes the text column. The header only reserves the slot and pins it there; the caller decides what the button actually does (§13).",
+                            code: `<Section.Header
   title="Khoá của tôi"
   action={<Button.Base label="Xem tất cả" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} />}
-/>`}
-                >
-                    <Section.Header
-                        title="Khoá của tôi"
-                        action={<Button.Base label="Xem tất cả" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} onPress={() => {}} />}
-                        showAnatomy
-                    />
-                </BlockAnatomy>
+/>`,
+                            render: (
+                                <Section.Header
+                                    title="Khoá của tôi"
+                                    action={<Button.Base label="Xem tất cả" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} onPress={() => {}} />}
+                                    showAnatomy
+                                />
+                            ),
+                        },
+                    ]}
+                />
             </div>
         </div>
     ),
@@ -158,22 +179,28 @@ export const Full: Story = {
                     tier="composite"
                     leaf="Full"
                     parts={FULL_PARTS}
-                    note="`items-start` để action neo mép TRÊN khi cột chữ cao 3 dòng — không trôi xuống giữa."
-                    code={`<Section.Header
+                    states={[
+                        {
+                            name: "eyebrow, title, description, and action all set",
+                            why: "All four slots render at once: eyebrow above the title, description below it, and the action pinned to the right, anchored to the TOP of the row (`items-start`). With a three-line text column on the left, the action must anchor at the top or it would drift down to the middle.",
+                            code: `<Section.Header
   eyebrow="Fullstack Mastery"
   title="Bài tập đã nộp"
   description="AI chấm trong vài phút; bạn có thể nộp lại tối đa 3 lần."
   action={<Button.Base label="Cấu hình" variant="secondary" size="sm" prefixIcon={GearIcon} />}
-/>`}
-                >
-                    <Section.Header
-                        eyebrow="Fullstack Mastery"
-                        title="Bài tập đã nộp"
-                        description="AI chấm trong vài phút; bạn có thể nộp lại tối đa 3 lần."
-                        action={<Button.Base label="Cấu hình" variant="secondary" size="sm" prefixIcon={GearIcon} onPress={() => {}} />}
-                        showAnatomy
-                    />
-                </BlockAnatomy>
+/>`,
+                            render: (
+                                <Section.Header
+                                    eyebrow="Fullstack Mastery"
+                                    title="Bài tập đã nộp"
+                                    description="AI chấm trong vài phút; bạn có thể nộp lại tối đa 3 lần."
+                                    action={<Button.Base label="Cấu hình" variant="secondary" size="sm" prefixIcon={GearIcon} onPress={() => {}} />}
+                                    showAnatomy
+                                />
+                            ),
+                        },
+                    ]}
+                />
             </div>
         </div>
     ),
@@ -186,33 +213,33 @@ export const Full: Story = {
 export const Levels: Story = {
     render: () => (
         <div className="p-8">
-            <div className="flex max-w-2xl flex-col gap-6">
+            <div className="max-w-2xl">
                 <BlockAnatomy
                     name="Section.Header"
                     tier="composite"
                     leaf="Levels"
                     parts={DESCRIPTION_PARTS}
-                    note="level 1 = Typography.Lg bold · 2 (mặc định) = Base bold · 3 = Sm medium; description tụt theo (Sm → Sm → Xs). Composition KHÔNG đổi, chỉ đổi cỡ."
-                    code={`<Section.Header level={1} title="…" description="…" />
-<Section.Header level={2} title="…" description="…" />
-<Section.Header level={3} title="…" description="…" />`}
-                >
-                    <Section.Header
-                        level={1}
-                        title="Lộ trình học"
-                        description="level 1 — dải lớn nhất của trang."
-                        showAnatomy
-                    />
-                </BlockAnatomy>
-                <Section.Header
-                    level={2}
-                    title="Module đang học"
-                    description="level 2 — vùng thường (mặc định)."
-                />
-                <Section.Header
-                    level={3}
-                    title="Bài trong module"
-                    description="level 3 — vùng con nằm dưới một header khác."
+                    reason="Level picks the Typography size for every line at once, so title, description and eyebrow move together and a header never mixes scales by hand at a single call site."
+                    states={[
+                        {
+                            name: "level = 1",
+                            why: "Title renders at `lg` bold and description at `sm`, the largest band a page uses. The tree stays the same as every other level; only the type scale steps up.",
+                            code: "<Section.Header level={1} title=\"…\" description=\"…\" />",
+                            render: <Section.Header level={1} title="Lộ trình học" description="level 1 — dải lớn nhất của trang." showAnatomy />,
+                        },
+                        {
+                            name: "level = 2 (default)",
+                            why: "Title renders at `base` bold and description at `sm`, the scale used for a normal section on the page. This is the level a header takes when the caller passes none.",
+                            code: "<Section.Header level={2} title=\"…\" description=\"…\" />",
+                            render: <Section.Header level={2} title="Module đang học" description="level 2 — vùng thường (mặc định)." />,
+                        },
+                        {
+                            name: "level = 3",
+                            why: "Title renders at `sm` medium and description drops to `xs`, the scale for a sub-section nested under another header. Weight drops from bold to medium too, so a level-3 header never competes with the header above it.",
+                            code: "<Section.Header level={3} title=\"…\" description=\"…\" />",
+                            render: <Section.Header level={3} title="Bài trong module" description="level 3 — vùng con nằm dưới một header khác." />,
+                        },
+                    ]}
                 />
             </div>
         </div>

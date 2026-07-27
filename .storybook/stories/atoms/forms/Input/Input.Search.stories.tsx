@@ -28,13 +28,19 @@ export const Default: Story = {
                     name="Input.Search"
                     tier="atom"
                     leaf="Default"
-                    note="Bare — no label, hint, or error."
-                    code={"<Input.Search value={v} onValueChange={setV} />"}
-                >
-                    <div className="w-72">
-                        <Input.Search value={value} onValueChange={setValue} ariaLabel="Search" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "no label, hint, or error passed",
+                            why: "Only the search field renders: a magnifier leading icon inside `FieldFrame`, no label row above it and no hint or error line below it. This is the bare control, the shape every other leaf below adds one thing on top of.",
+                            code: "<Input.Search value={v} onValueChange={setV} />",
+                            render: (
+                                <div className="w-72">
+                                    <Input.Search value={value} onValueChange={setValue} ariaLabel="Search" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -54,13 +60,19 @@ export const Placeholder: Story = {
                     name="Input.Search"
                     tier="atom"
                     leaf="Prop `placeholder`"
-                    note="Ghost text only shows while the field is empty; typing the first character hides it."
-                    code={"<Input.Search placeholder=\"Search courses…\" value={v} onValueChange={setV} />"}
-                >
-                    <div className="w-72">
-                        <Input.Search placeholder="Search courses…" value={value} onValueChange={setValue} showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "placeholder set, value empty",
+                            why: "The ghost text sits inside the empty field and disappears the moment a first character is typed. It only shows while the field holds no value, so it never competes with real input.",
+                            code: "<Input.Search placeholder=\"Search courses…\" value={v} onValueChange={setV} />",
+                            render: (
+                                <div className="w-72">
+                                    <Input.Search placeholder="Search courses…" value={value} onValueChange={setValue} showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -77,13 +89,19 @@ export const WithLabel: Story = {
                     name="Input.Search"
                     tier="atom"
                     leaf="WithLabel"
-                    note="label + hint."
-                    code={"<Input.Search label=\"Search courses\" hint=\"By name or skill\" value={v} onValueChange={setV} />"}
-                >
-                    <div className="w-72">
-                        <Input.Search label="Search courses" hint="By name or skill" value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "label and hint set",
+                            why: "A label row grows above the field and a muted hint line grows below it, on top of the same bare field from `Default`. Naming the field and explaining what to type in it are two separate slots that a caller can add independently.",
+                            code: "<Input.Search label=\"Search courses\" hint=\"By name or skill\" value={v} onValueChange={setV} />",
+                            render: (
+                                <div className="w-72">
+                                    <Input.Search label="Search courses" hint="By name or skill" value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -100,13 +118,19 @@ export const Required: Story = {
                     name="Input.Search"
                     tier="atom"
                     leaf="Required"
-                    note="isRequired → * mark after the label."
-                    code={"<Input.Search label=\"Search courses\" isRequired value={v} onValueChange={setV} />"}
-                >
-                    <div className="w-72">
-                        <Input.Search label="Search courses" isRequired value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "isRequired = true",
+                            why: "A `*` mark appears right after the label text, nothing else in the field changes. It's the one visual cue that tells the learner this search is not optional before they can move on.",
+                            code: "<Input.Search label=\"Search courses\" isRequired value={v} onValueChange={setV} />",
+                            render: (
+                                <div className="w-72">
+                                    <Input.Search label="Search courses" isRequired value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -123,13 +147,19 @@ export const Filled: Story = {
                     name="Input.Search"
                     tier="atom"
                     leaf="Filled"
-                    note="value holds text → the clear (×) button shows."
-                    code={"<Input.Search label=\"Search courses\" value=\"React\" onValueChange={setV} />"}
-                >
-                    <div className="w-72">
-                        <Input.Search label="Search courses" value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "value = \"React\"",
+                            why: "A trailing clear (×) button grows in the field once `value` holds text, next to the label from `WithLabel`. HeroUI's `SearchField` only offers a way to blank the field back out when there's something to blank.",
+                            code: "<Input.Search label=\"Search courses\" value=\"React\" onValueChange={setV} />",
+                            render: (
+                                <div className="w-72">
+                                    <Input.Search label="Search courses" value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -146,13 +176,19 @@ export const Disabled: Story = {
                     name="Input.Search"
                     tier="atom"
                     leaf="Disabled"
-                    note="isDisabled → locked + dimmed."
-                    code={"<Input.Search label=\"Search courses\" value=\"React\" isDisabled onValueChange={setV} />"}
-                >
-                    <div className="w-72">
-                        <Input.Search label="Search courses" value={value} onValueChange={setValue} isDisabled placeholder="Search courses…" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "isDisabled = true",
+                            why: "The whole field locks and the label dims along with it, no node is added or removed. This is the state a search bar takes while whatever it filters hasn't finished loading yet.",
+                            code: "<Input.Search label=\"Search courses\" value=\"React\" isDisabled onValueChange={setV} />",
+                            render: (
+                                <div className="w-72">
+                                    <Input.Search label="Search courses" value={value} onValueChange={setValue} isDisabled placeholder="Search courses…" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -173,13 +209,19 @@ export const Invalid: Story = {
                     name="Input.Search"
                     tier="atom"
                     leaf="Invalid"
-                    note="isInvalid → red border only. No errorMessage set → no red line, label stays normal."
-                    code={"<Input.Search label=\"Search courses\" isInvalid value={v} onValueChange={setV} />"}
-                >
-                    <div className="w-72">
-                        <Input.Search label="Search courses" isInvalid value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "isInvalid = true, errorMessage not set",
+                            why: "The field's border turns red and nothing else changes, no message line grows below it. `isInvalid` alone only marks the control as wrong; it takes a separate `errorMessage` (the next leaf) to say why.",
+                            code: "<Input.Search label=\"Search courses\" isInvalid value={v} onValueChange={setV} />",
+                            render: (
+                                <div className="w-72">
+                                    <Input.Search label="Search courses" isInvalid value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -196,13 +238,19 @@ export const Error: Story = {
                     name="Input.Search"
                     tier="atom"
                     leaf="Error"
-                    note="errorMessage → red border (same as isInvalid) + red message line below."
-                    code={"<Input.Search label=\"Search courses\" errorMessage=\"Invalid search term\" value={v} onValueChange={setV} />"}
-                >
-                    <div className="w-72">
-                        <Input.Search label="Search courses" errorMessage="Invalid search term" value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "errorMessage = \"Invalid search term\"",
+                            why: "The same red border from `Invalid` shows, plus a red message line grows below the field carrying the actual text. Setting `errorMessage` implies `isInvalid` on its own, so a caller never has to pass both.",
+                            code: "<Input.Search label=\"Search courses\" errorMessage=\"Invalid search term\" value={v} onValueChange={setV} />",
+                            render: (
+                                <div className="w-72">
+                                    <Input.Search label="Search courses" errorMessage="Invalid search term" value={value} onValueChange={setValue} placeholder="Search courses…" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -217,13 +265,19 @@ export const Loading: Story = {
                 name="Input.Search"
                 tier="atom"
                 leaf="Loading"
-                note="isSkeleton + label → label mirrored above the box."
-                code={"<Input.Search label=\"Search courses\" isSkeleton />"}
-            >
-                <div className="w-72">
-                    <Input.Search label="Search courses" value="" onValueChange={() => {}} isSkeleton showAnatomy />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isSkeleton = true, label set",
+                        why: "The field box and the label both switch to shimmer bars in the same layout the loaded control will occupy. Mirroring the label too, instead of only the box, keeps the row height from jumping once the real label text arrives.",
+                        code: "<Input.Search label=\"Search courses\" isSkeleton />",
+                        render: (
+                            <div className="w-72">
+                                <Input.Search label="Search courses" value="" onValueChange={() => {}} isSkeleton showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

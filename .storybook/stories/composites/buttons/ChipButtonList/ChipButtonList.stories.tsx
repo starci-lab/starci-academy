@@ -12,6 +12,9 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  *
  * ANATOMY IS PER-LEAF: each state below is its OWN leaf and carries its OWN
  * BlockAnatomy axis reflecting the parts THAT leaf composes.
+ *
+ * 2026-07-27: di trú toàn bộ leaf sang API `states[]` (§8/§4a); `role` viết lại
+ * TIẾNG ANH theo luật B.
  */
 const meta: Meta<typeof ChipButtonList> = {
     title: "Composites/Buttons/ChipButtonList",
@@ -26,8 +29,8 @@ export default meta
 
 type Story = StoryObj<typeof ChipButtonList>
 
-/** Frame each leaf with breathing room + a bounded width (chips/menu never span full viewport). */
-const frame = (node: React.ReactNode) => <div className="mx-auto max-w-md p-8">{node}</div>
+/** Canvas padding only. Bề ngang của chủ thể đi qua `renderClassName` của từng leaf. */
+const frame = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
 const WRAP_ICON_ITEMS = [
     { label: "Tóm tắt bài học này", icon: <SparkleIcon aria-hidden focusable="false" /> },
@@ -60,14 +63,14 @@ const WRAP_ICON_PARTS: Array<AnatomyNode> = [
     {
         name: "Button",
         tier: "composite",
-        role: "chip gợi ý (variant secondary, size sm, lặp ×N)",
-        children: [{ name: "icon", tier: "composite", role: "icon dẫn nhãn (size-4 shrink-0, muted) — ChipButtonList tự ép" }],
+        role: "A suggestion chip (variant secondary, size sm), repeated once per item.",
+        children: [{ name: "icon", tier: "composite", role: "The leading icon (size-4 shrink-0, muted); ChipButtonList forces this size itself." }],
     },
 ]
 
 // wrap không icon: chip chỉ còn Button + nhãn trần (children trực tiếp, không Typography — giống base Button).
 const WRAP_PLAIN_PARTS: Array<AnatomyNode> = [
-    { name: "Button", tier: "composite", role: "chip gợi ý (variant secondary, size sm, lặp ×N), không icon" },
+    { name: "Button", tier: "composite", role: "A suggestion chip (variant secondary, size sm), repeated once per item, with no icon." },
 ]
 
 // column/ghost: mỗi Button là 1 hàng full-width, con gồm icon + Typography (label qua Typography, không className tay).
@@ -75,10 +78,10 @@ const COLUMN_PARTS: Array<AnatomyNode> = [
     {
         name: "Button",
         tier: "composite",
-        role: "hàng menu kỹ năng (variant ghost, full-width, lặp ×N)",
+        role: "A full-width skill-menu row (variant ghost), repeated once per item.",
         children: [
-            { name: "icon", tier: "composite", role: "icon dẫn nhãn (size-4 shrink-0, muted)" },
-            { name: "Typography", tier: "composite", role: "nhãn kỹ năng (weight medium, truncate)" },
+            { name: "icon", tier: "composite", role: "The leading icon (size-4 shrink-0, muted)." },
+            { name: "Typography", tier: "composite", role: "The skill label (weight medium, truncate)." },
         ],
     },
 ]
@@ -88,21 +91,21 @@ const DISABLED_PARTS: Array<AnatomyNode> = [
     {
         name: "Button",
         tier: "composite",
-        role: "chip gợi ý (lặp ×N) — 1 item isDisabled vẫn hiện, không tương tác được",
+        role: "A suggestion chip, repeated once per item; one item's isDisabled still renders it, only interaction is blocked.",
         state: "1 item isDisabled",
-        children: [{ name: "icon", tier: "composite", role: "icon dẫn nhãn" }],
+        children: [{ name: "icon", tier: "composite", role: "The leading icon." }],
     },
 ]
 
 // skeleton: mirror shape wrap (Skeleton.Button pill ×N, container tự vẽ khi isSkeleton — không dựng Button thật).
 const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton", tier: "composite", role: "pill giả ×N (mirror chip gợi ý)", state: "skeleton" },
+    { name: "Skeleton", tier: "composite", role: "A shimmer pill repeated N times, mirroring the suggestion-chip shape.", state: "skeleton" },
 ]
 
 // single: cùng composition với wrap+icon, chỉ 1 item — container không ép tối thiểu N chip.
 const SINGLE_PARTS: Array<AnatomyNode> = [
-    { name: "Button", tier: "composite", role: "chip gợi ý — chỉ 1 item" },
-    { name: "icon", tier: "composite", role: "icon dẫn nhãn" },
+    { name: "Button", tier: "composite", role: "A suggestion chip; only one item is passed." },
+    { name: "icon", tier: "composite", role: "The leading icon." },
 ]
 
 /** WRAP + ICON — cụm chip gợi ý có icon dẫn nhãn (retrieval-skill chips). */
@@ -114,11 +117,17 @@ export const WrapWithIcon: Story = {
                 tier="block"
                 leaf="WrapWithIcon"
                 parts={WRAP_ICON_PARTS}
-                reason="4 nơi trong ContentAiChat (gợi ý rỗng-state, kỹ năng truy hồi, quick-ask khi bôi đen, menu kỹ năng) đều hand-roll MỘT danh sách secondary/ghost Button giống hệt nhau (leading icon trần + nhãn, justify-start text-start). Gom vào một composite dùng chung để icon-size + layout sống ở một nơi, không lặp lại 4 lần."
-                code={"<ChipButtonList items={[{ label: \"Summarize this lesson\", icon: <SparkleIcon /> }]} direction=\"wrap\" />"}
-            >
-                <ChipButtonList items={WRAP_ICON_ITEMS} direction="wrap" showAnatomy />
-            </BlockAnatomy>,
+                renderClassName="mx-auto max-w-md"
+                reason="Four spots inside ContentAiChat, empty-state suggestions, retrieval-skill chips, quick-ask on a highlighted selection, and the skill menu, used to hand-roll the exact same secondary or ghost Button row (a bare leading icon plus a label, justify-start text-start). Folding them into one composite keeps icon size and layout in one place instead of drifting four separate ways."
+                states={[
+                    {
+                        name: "direction = \"wrap\", items[].icon set",
+                        why: "Three suggestion chips wrap onto new lines as the row runs out of width, each one a repeated Button with a leading icon before its label. Wrapping keeps every suggestion visible at once instead of forcing the row to scroll sideways.",
+                        code: "<ChipButtonList items={[{ label: \"Summarize this lesson\", icon: <SparkleIcon /> }]} direction=\"wrap\" />",
+                        render: <ChipButtonList items={WRAP_ICON_ITEMS} direction="wrap" showAnatomy />,
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -131,11 +140,16 @@ export const WrapPlain: Story = {
                 tier="block"
                 leaf="WrapPlain"
                 parts={WRAP_PLAIN_PARTS}
-                note="items không truyền `icon` → mỗi Button chỉ còn nhãn trần (children trực tiếp), không Typography — giống cách base Button tự hiện nhãn của nó."
-                code={"<ChipButtonList items={[{ label: \"Summarize this lesson for me\" }]} direction=\"wrap\" />"}
-            >
-                <ChipButtonList items={WRAP_PLAIN_ITEMS} direction="wrap" showAnatomy />
-            </BlockAnatomy>,
+                renderClassName="mx-auto max-w-md"
+                states={[
+                    {
+                        name: "direction = \"wrap\", items[].icon not set",
+                        why: "Each chip renders as a bare label with no leading icon, using the same direct-children pattern the base Button already uses for a plain label. Omitting icon on every item is what drops the icon slot from the composition entirely, rather than leaving an empty gap where it would sit.",
+                        code: "<ChipButtonList items={[{ label: \"Summarize this lesson for me\" }]} direction=\"wrap\" />",
+                        render: <ChipButtonList items={WRAP_PLAIN_ITEMS} direction="wrap" showAnatomy />,
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -148,13 +162,20 @@ export const ColumnMenu: Story = {
                 tier="block"
                 leaf="ColumnMenu"
                 parts={COLUMN_PARTS}
-                note={"direction=\"column\" → variant mặc định đổi sang ghost, mỗi hàng full-width; nhãn qua Typography (weight medium, truncate) thay vì className text-sm font-medium text-foreground tay ở bản gốc."}
-                code={"<ChipButtonList items={[{ label: \"Find related lesson\", icon: <BookOpenIcon /> }]} direction=\"column\" />"}
-            >
-                <div className="rounded-2xl border border-default-200 bg-surface p-1">
-                    <ChipButtonList items={COLUMN_ITEMS} direction="column" showAnatomy />
-                </div>
-            </BlockAnatomy>,
+                renderClassName="mx-auto max-w-md"
+                states={[
+                    {
+                        name: "direction = \"column\"",
+                        why: "The default variant switches to ghost and every row spans the full width of the menu, with the label going through Typography (weight medium, truncate) instead of a hand-typed className. Stacking full-width rows reads as a menu the composer button opens, rather than the wrapping chip row the other leaves show.",
+                        code: "<ChipButtonList items={[{ label: \"Find related lesson\", icon: <BookOpenIcon /> }]} direction=\"column\" />",
+                        render: (
+                            <div className="rounded-2xl border border-default-200 bg-surface p-1">
+                                <ChipButtonList items={COLUMN_ITEMS} direction="column" showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -167,11 +188,16 @@ export const WithDisabledItem: Story = {
                 tier="block"
                 leaf="WithDisabledItem"
                 parts={DISABLED_PARTS}
-                note="`item.isDisabled` forward xuống Button.isDisabled — chip vẫn HIỆN (không ẩn), chỉ khoá tương tác, giữ nguyên vị trí trong cụm."
-                code={"<ChipButtonList items={[{ label: \"Coming soon\", icon: <MagnifyingGlassIcon />, isDisabled: true }]} direction=\"wrap\" />"}
-            >
-                <ChipButtonList items={DISABLED_ITEMS} direction="wrap" showAnatomy />
-            </BlockAnatomy>,
+                renderClassName="mx-auto max-w-md"
+                states={[
+                    {
+                        name: "items[1].isDisabled = true",
+                        why: "The middle chip stays visible in its normal position but stops responding to press, because item.isDisabled forwards straight to Button.isDisabled. A locked item never hides, since hiding it would make the reader wonder whether the feature exists at all.",
+                        code: "<ChipButtonList items={[{ label: \"Coming soon\", icon: <MagnifyingGlassIcon />, isDisabled: true }]} direction=\"wrap\" />",
+                        render: <ChipButtonList items={DISABLED_ITEMS} direction="wrap" showAnatomy />,
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -184,11 +210,16 @@ export const Loading: Story = {
                 tier="block"
                 leaf="Loading"
                 parts={SKELETON_PARTS}
-                note="Bật `isSkeleton` (không cần `items`) → container tự vẽ `skeletonCount` pill Skeleton.Button, đúng gap/layout của cụm chip thật."
-                code={"<ChipButtonList items={[]} direction=\"wrap\" isSkeleton skeletonCount={3} />"}
-            >
-                <ChipButtonList items={[]} direction="wrap" isSkeleton skeletonCount={3} showAnatomy />
-            </BlockAnatomy>,
+                renderClassName="mx-auto max-w-md"
+                states={[
+                    {
+                        name: "isSkeleton = true, skeletonCount = 3, items = []",
+                        why: "Three shimmer pills render in the same gap and layout the real chip row would use, without building any real Button. isSkeleton needs no items to work, the count comes from skeletonCount alone, so the loading shape never depends on data that has not arrived yet.",
+                        code: "<ChipButtonList items={[]} direction=\"wrap\" isSkeleton skeletonCount={3} />",
+                        render: <ChipButtonList items={[]} direction="wrap" isSkeleton skeletonCount={3} showAnatomy />,
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -201,10 +232,15 @@ export const SingleItem: Story = {
                 tier="block"
                 leaf="SingleItem"
                 parts={SINGLE_PARTS}
-                note="`items` chỉ 1 phần tử vẫn render đúng — không có ràng buộc tối thiểu về số lượng."
-                code={"<ChipButtonList items={[{ label: \"Summarize this lesson\", icon: <SparkleIcon /> }]} direction=\"wrap\" />"}
-            >
-                <ChipButtonList items={ONE_ITEM} direction="wrap" showAnatomy />
-            </BlockAnatomy>,
+                renderClassName="mx-auto max-w-md"
+                states={[
+                    {
+                        name: "items.length = 1",
+                        why: "A single chip renders on its own, using the exact same Button-plus-icon composition as every other leaf. Nothing in the container enforces a minimum item count, so one entry is exactly as valid a shape as four.",
+                        code: "<ChipButtonList items={[{ label: \"Summarize this lesson\", icon: <SparkleIcon /> }]} direction=\"wrap\" />",
+                        render: <ChipButtonList items={ONE_ITEM} direction="wrap" showAnatomy />,
+                    },
+                ]}
+            />,
         ),
 }

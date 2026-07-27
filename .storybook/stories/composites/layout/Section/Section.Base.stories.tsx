@@ -1,4 +1,3 @@
-import type { ReactNode } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ArrowRightIcon } from "@phosphor-icons/react"
 import { Section, type SectionGap } from "@sb-components/composites/layout/Section/Section"
@@ -9,18 +8,21 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * `Section.Base` — khung của MỘT VÙNG trong trang: xếp `header` ↔ `body` ↔ `footer`
- * theo MỘT nhịp dọc (`gap`) và không làm gì khác. KHÔNG chrome: không nền, không viền,
- * không bo, không padding — mặt phẳng nằm BÊN TRONG nó (`SurfaceCard.*`/`SectionCard`).
+ * `Section.Base`, the frame for ONE region of a page: it stacks `header` / `body` /
+ * `footer` along ONE vertical rhythm (`gap`) and does nothing else. NO chrome: no
+ * background, no border, no radius, no padding, the surface lives INSIDE it
+ * (`SurfaceCard.*`/`SectionCard`).
  *
- * ⚠️ Đừng nhầm với `SectionCard` (tầng design, `blocks/cards/SectionCard`): thằng đó LÀ
- * một cái thẻ — có chrome HeroUI Card (viền + bo + padding), skin `accent`, dải
- * `withVerdict` theo DATA và `isSkeleton` riêng. `Section.Base` là khung TRẦN bao quanh.
+ * ⚠️ Do not confuse this with `SectionCard` (design tier, `blocks/cards/SectionCard`):
+ * that one IS a card, it carries HeroUI Card chrome (border, radius, padding), an
+ * accent skin, a data-driven `withVerdict` band, and its own `isSkeleton`. `Section.Base`
+ * is the bare frame around it.
  *
- * ⚠️ PHẠM VI STATE (§12f/§13): ở đây chỉ có state của CHÍNH khung — tổ hợp slot và thang
- * `gap`. Bộ slot của header (eyebrow/description/action/level) là tài sản của
- * `Section.Header`, xem story riêng; loading/empty/error là state của BLOCK bên trong
- * body, khung không sở hữu (nên không có cờ `isSkeleton`).
+ * ⚠️ STATE SCOPE (§12f/§13): only the frame's OWN states live here, the slot
+ * combination and the `gap` scale. The header's own slot set (eyebrow/description/
+ * action/level) belongs to `Section.Header`, see its own story; loading/empty/error are
+ * states of the BLOCK inside `body`, the frame does not own them (hence no `isSkeleton`
+ * flag of its own).
  */
 const meta: Meta<typeof Section.Base> = {
     title: "Composites/Layout/Section/Section.Base",
@@ -35,7 +37,7 @@ export default meta
 
 type Story = StoryObj<typeof Section.Base>
 
-/** Fixture chuẩn (C-fixture) = ProfileCard — avatar + title + description trong một mặt card. */
+/** Standard fixture (C-fixture) = ProfileCard: avatar + title + description inside one card face. */
 const ProfileRow = () => (
     <div className="flex items-center gap-3">
         <Avatar.Base name="StarCi Academy" size="md" />
@@ -46,7 +48,7 @@ const ProfileRow = () => (
     </div>
 )
 
-/** Body mẫu: vùng thường chứa một (hoặc nhiều) mặt card, không phải chữ trần. */
+/** Sample body: a region usually holds one (or more) card faces, not bare text. */
 const CardBody = () => (
     <SurfaceCard.Base>
         <ProfileRow />
@@ -54,54 +56,61 @@ const CardBody = () => (
 )
 
 const HEADER_BODY_PARTS: Array<AnatomyNode> = [
-    { name: "Header", tier: "composite", role: "vùng trên — khung tự dựng Section.Header từ props" },
-    { name: "Body", tier: "composite", role: "vùng chính (`body`, hoặc `children` rút gọn)" },
+    { name: "Header", tier: "composite", role: "the top region, the frame builds a Section.Header from props itself" },
+    { name: "Body", tier: "composite", role: "the main region (`body`, or the `children` shorthand)" },
 ]
 const BODY_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "Body", tier: "composite", role: "vùng chính — `children` là lối rút gọn của `body`" },
+    { name: "Body", tier: "composite", role: "the main region, `children` is the shorthand for `body`" },
 ]
 const FULL_PARTS: Array<AnatomyNode> = [
-    { name: "Header", tier: "composite", role: "vùng trên — ở leaf này là NODE tự do, không phải props Section.Header" },
-    { name: "Body", tier: "composite", role: "vùng chính" },
-    { name: "Footer", tier: "composite", role: "vùng dưới (CTA đóng vùng, caption, link xem thêm)" },
+    { name: "Header", tier: "composite", role: "the top region; in this leaf it is a free-form NODE, not `Section.Header` props" },
+    { name: "Body", tier: "composite", role: "the main region" },
+    { name: "Footer", tier: "composite", role: "the bottom region (a closing CTA, a caption, a see-more link)" },
 ]
 
-/** `children` = lối rút gọn của `body`: khung-BỌC nhận nội dung bất kỳ, không header. */
+/** `children` = shorthand for `body`: a wrapping frame that accepts any content, no header. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
-            <div className="max-w-2xl">
-                <BlockAnatomy
-                    name="Section.Base"
-                    tier="composite"
-                    leaf="Default"
-                    parts={BODY_ONLY_PARTS}
-                    reason="Khung của một VÙNG trong trang — chỉ xếp header/body/footer theo một nhịp dọc. Nó KHÔNG vẽ mặt phẳng (không nền/viền/bo/padding): mặt phẳng là `SurfaceCard.*` nằm TRONG body. Vì là khung-BỌC nên `children` vẫn hợp lệ (= `body` rút gọn, §13b)."
-                    code={`<Section.Base>
-  <SurfaceCard.Base><ProfileRow /></SurfaceCard.Base>
-</Section.Base>`}
-                >
-                    <Section.Base showAnatomy>
-                        <CardBody />
-                    </Section.Base>
-                </BlockAnatomy>
-            </div>
+            <BlockAnatomy
+                name="Section.Base"
+                tier="composite"
+                leaf="Default"
+                parts={BODY_ONLY_PARTS}
+                renderClassName="max-w-2xl"
+                reason="The frame for one region of a page, it only stacks header/body/footer along one vertical rhythm. It does NOT draw a surface (no background/border/radius/padding), the surface is `SurfaceCard.*` living INSIDE `body`. Because it is a wrapping frame, `children` is still valid (the shorthand for `body`, §13b)."
+                states={[
+                    {
+                        name: "children set, no header",
+                        why: "Only the body region renders: a SurfaceCard profile row sits directly inside the frame with no header above it. `children` is accepted here as the shorthand for `body`, since the frame is a pure wrapper with nothing of its own to draw around the content.",
+                        code: "<Section.Base>\n  <SurfaceCard.Base><ProfileRow /></SurfaceCard.Base>\n</Section.Base>",
+                        render: (
+                            <Section.Base showAnatomy>
+                                <CardBody />
+                            </Section.Base>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
-/** `header` nhận PROPS của `Section.Header` — đường CHÍNH: khung tự dựng header. */
+/** `header` accepts the PROPS of `Section.Header`, the MAIN path: the frame builds the header itself. */
 export const HeaderProps: Story = {
     render: () => (
         <div className="p-8">
-            <div className="max-w-2xl">
-                <BlockAnatomy
-                    name="Section.Base"
-                    tier="composite"
-                    leaf="HeaderProps"
-                    parts={HEADER_BODY_PARTS}
-                    note="Truyền OBJECT `{ title, description, action… }` → khung render `Section.Header` bên trong, và `showAnatomy` chảy tiếp xuống nó."
-                    code={`<Section.Base
+            <BlockAnatomy
+                name="Section.Base"
+                tier="composite"
+                leaf="HeaderProps"
+                parts={HEADER_BODY_PARTS}
+                renderClassName="max-w-2xl"
+                states={[
+                    {
+                        name: "header = { title, description, action }",
+                        why: "Passing the object form (`{ title, description, action }`) makes the frame render its own `Section.Header` above the body, and `showAnatomy` flows down into that header too. This is the main path: the frame builds the header FOR the caller instead of the caller assembling a header node by hand.",
+                        code: `<Section.Base
   header={{
     title: "Khoá của tôi",
     description: "Sắp theo lần học gần nhất.",
@@ -109,49 +118,56 @@ export const HeaderProps: Story = {
   }}
 >
   <SurfaceCard.Base><ProfileRow /></SurfaceCard.Base>
-</Section.Base>`}
-                >
-                    <Section.Base
-                        showAnatomy
-                        header={{
-                            title: "Khoá của tôi",
-                            description: "Sắp theo lần học gần nhất.",
-                            action: <Button.Base label="Xem tất cả" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} onPress={() => {}} />,
-                        }}
-                    >
-                        <CardBody />
-                    </Section.Base>
-                </BlockAnatomy>
-            </div>
+</Section.Base>`,
+                        render: (
+                            <Section.Base
+                                showAnatomy
+                                header={{
+                                    title: "Khoá của tôi",
+                                    description: "Sắp theo lần học gần nhất.",
+                                    action: <Button.Base label="Xem tất cả" variant="ghost" size="sm" prefixIcon={ArrowRightIcon} onPress={() => {}} />,
+                                }}
+                            >
+                                <CardBody />
+                            </Section.Base>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
-/** Đủ 3 slot — `header` ở leaf này là NODE tự do (lối thoát khi header không do vùng tự viết). */
+/** All 3 slots filled — `header` in this leaf is a free-form NODE (the escape hatch when a region's header isn't written by the frame itself). */
 export const Slots: Story = {
     render: () => (
         <div className="p-8">
-            <div className="max-w-2xl">
-                <BlockAnatomy
-                    name="Section.Base"
-                    tier="composite"
-                    leaf="Slots"
-                    parts={FULL_PARTS}
-                    note="`header` chấp nhận CẢ node: dùng khi hàng trên là thứ khác (toolbar, tab row) chứ không phải tiêu đề. `body` thắng `children` khi truyền cả hai."
-                    code={`<Section.Base
+            <BlockAnatomy
+                name="Section.Base"
+                tier="composite"
+                leaf="Slots"
+                parts={FULL_PARTS}
+                renderClassName="max-w-2xl"
+                states={[
+                    {
+                        name: "header (node) + body + footer",
+                        why: "All three regions are filled at once, and `header` here is a free-form node (a `Section.Header` built by hand) rather than the object shorthand, useful when the top row is something other than a title, such as a toolbar or a tab row. `body` wins over `children` whenever both are passed, which is what lets this leaf also demonstrate the `footer` region.",
+                        code: `<Section.Base
   header={<Section.Header level={3} title="Bài đã lưu" />}
   body={<SurfaceCard.Base><ProfileRow /></SurfaceCard.Base>}
   footer={<Typography.Base size="xs" text="Cập nhật 5 phút trước" color="muted" />}
-/>`}
-                >
-                    <Section.Base
-                        showAnatomy
-                        header={<Section.Header level={3} title="Bài đã lưu" />}
-                        body={<CardBody />}
-                        footer={<Typography.Base size="xs" text="Cập nhật 5 phút trước" color="muted" />}
-                    />
-                </BlockAnatomy>
-            </div>
+/>`,
+                        render: (
+                            <Section.Base
+                                showAnatomy
+                                header={<Section.Header level={3} title="Bài đã lưu" />}
+                                body={<CardBody />}
+                                footer={<Typography.Base size="xs" text="Cập nhật 5 phút trước" color="muted" />}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -160,46 +176,62 @@ export const Slots: Story = {
 interface GapSampleProps {
     /** The `SectionGap` value this sample demonstrates. */
     gap: SectionGap
-    /** Description text shown under the sample's header. */
-    note: ReactNode
+    /** Caption text shown under the sample's header. */
+    caption: string
+    /** `true` → this is the sample currently inspected by the anatomy overlay. */
+    showAnatomy?: boolean
 }
 
-/** Một cột `gap` (§10c) để đối chiếu nhịp — mỗi mẫu là cùng composition, chỉ đổi token. */
-const GapSample = ({ gap, note }: GapSampleProps) => (
+/** One `gap` (§10c) column for comparing rhythm — every sample shares the same composition, only the token changes. */
+const GapSample = ({ gap, caption, showAnatomy }: GapSampleProps) => (
     <Section.Base
         gap={gap}
-        header={{ level: 3, title: `gap=${gap}`, description: note }}
+        header={{ level: 3, title: `gap=${gap}`, description: caption }}
         body={<CardBody />}
+        showAnatomy={showAnatomy}
     />
 )
 
 /**
- * `gap` — nhịp dọc giữa các vùng, ÉP theo thang §10c bằng union literal
- * (`0 · 1 · 2 · 3 · 6 · 8`). `gap-4`/`gap-5` là LỖI TYPE, không phải lỗi review.
+ * `gap`, the vertical rhythm between regions, forced onto the §10c scale by a union
+ * literal (`0 · 1 · 2 · 3 · 6 · 8`). `gap-4`/`gap-5` are TYPE errors, not review comments.
  */
 export const Gaps: Story = {
     render: () => (
         <div className="p-8">
-            <div className="flex max-w-2xl flex-col gap-8">
-                <BlockAnatomy
-                    name="Section.Base"
-                    tier="composite"
-                    leaf="Gaps"
-                    parts={HEADER_BODY_PARTS}
-                    note="Mặc định `6` (section) = nhịp giữa các vùng của trang; hạ xuống `3` (grouped) khi header chỉ là nhãn dán sát một danh sách. Off-scale bị TYPE chặn."
-                    code={"<Section.Base gap={3} header={{ title: \"…\" }} body={…} />"}
-                >
-                    <Section.Base
-                        showAnatomy
-                        gap={6}
-                        header={{ level: 3, title: "gap=6", description: "mặc định — nhịp giữa các VÙNG của trang." }}
-                        body={<CardBody />}
-                    />
-                </BlockAnatomy>
-                <GapSample gap={3} note="grouped — header dán sát một danh sách/khối." />
-                <GapSample gap={2} note="related — header và body là cùng một cụm." />
-                <GapSample gap={8} note="page — dải lớn nhất, dùng ở khung trang." />
-            </div>
+            <BlockAnatomy
+                name="Section.Base"
+                tier="composite"
+                leaf="Gaps"
+                parts={HEADER_BODY_PARTS}
+                reason="The vertical rhythm between header/body/footer, forced onto the §10c scale by a union literal (`0 · 1 · 2 · 3 · 6 · 8`). `gap-4`/`gap-5` are TYPE errors, not review comments."
+                states={[
+                    {
+                        name: "gap = 6 (default, section rhythm)",
+                        why: "The default `gap=6` opens the widest rhythm between the header and the body, the spacing a page uses between its major regions. Reach for it whenever the region stands on its own rather than being visually grouped with something above or below it.",
+                        code: "<Section.Base gap={6} header={{ title: \"…\" }} body={…} />",
+                        render: <GapSample gap={6} caption="Default — the rhythm between the PAGE's regions." showAnatomy />,
+                    },
+                    {
+                        name: "gap = 3 (grouped)",
+                        why: "Tightening to `gap=3` pulls the header right up against a list or a group of items below it. Use it when the header reads as a label stuck to what follows rather than a heading over a whole standalone region.",
+                        code: "<Section.Base gap={3} header={{ title: \"…\" }} body={…} />",
+                        render: <GapSample gap={3} caption="Grouped — the header sits stuck to a list/group." showAnatomy />,
+                    },
+                    {
+                        name: "gap = 2 (related)",
+                        why: "At `gap=2` the header and body read as one cluster rather than two separate regions. This is the closest step on the scale, meant for a header and body that are really one composed unit.",
+                        code: "<Section.Base gap={2} header={{ title: \"…\" }} body={…} />",
+                        render: <GapSample gap={2} caption="Related — header and body are one cluster." showAnatomy />,
+                    },
+                    {
+                        name: "gap = 8 (page)",
+                        why: "At `gap=8` the header opens the widest gap the scale allows. This is the step a page-level frame reaches for, wider than the default `section` rhythm.",
+                        code: "<Section.Base gap={8} header={{ title: \"…\" }} body={…} />",
+                        render: <GapSample gap={8} caption="Page — the widest step, used at the page frame." showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }

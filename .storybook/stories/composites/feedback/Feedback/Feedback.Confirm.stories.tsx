@@ -22,6 +22,8 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * DEPS thật: `Footer` — composite tự dựng `Button.Group` (data-driven `items`, không
  * phải node caller đưa vào) nên bấm nhảy được sang story của nó. `Header`/`Body`
  * chỉ bọc chữ (`AlertDialog.Heading`/`Typography.Base`) — ruột, không phải deps.
+ *
+ * 2026-07-27: di trú toàn bộ leaf sang API `states[]` (§8/§4a).
  */
 const meta: Meta<typeof Feedback.Confirm> = {
     title: "Composites/Feedback/Feedback/Feedback.Confirm",
@@ -40,7 +42,7 @@ type Story = StoryObj<typeof Feedback.Confirm>
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     Footer: {
         tier: "atom",
-        role: "Cancel (secondary) + Confirm (primary/danger), right-aligned — always a Button.Group",
+        role: "Cancel (secondary) plus Confirm (primary or danger), right-aligned; always a Button.Group.",
         storyId: "atoms-buttons-button-button-group--default",
     },
 }
@@ -93,23 +95,30 @@ export const Default: Story = {
                 tier="composite"
                 leaf="Default"
                 annotate={ANNOTATE}
-                reason="The BLOCKING frame: an irreversible action must pause on the same shape everywhere — the question (Header), the consequence (Body), and the two ways out (Footer). Press the trigger to open; the anatomy panel measures the dialog body once it's open."
-                code={`<Feedback.Confirm
-  isOpen={isOpen}
-  onOpenChange={setOpen}
-  title="Submit this quiz?"
-  description="Once submitted, you won't be able to change your answers until results are in."
-  confirmLabel="Submit"
-  onConfirm={submit}
-/>`}
-            >
-                <Demo
-                    triggerLabel="Submit"
-                    title="Submit this quiz?"
-                    description="Once submitted, you won't be able to change your answers until results are in."
-                    confirmLabel="Submit"
-                />
-            </BlockAnatomy>
+                reason="The blocking frame: an irreversible action must pause on the same shape everywhere, the question in the Header, the consequence in the Body, and the two ways out in the Footer. Press the trigger to open; the anatomy panel measures the dialog body once it is open."
+                states={[
+                    {
+                        name: "tone = \"default\", description set",
+                        why: "The dialog shows a Header question, a Body consequence sentence, and a Footer with Cancel and a primary Confirm button. This tone is for a choice that does not destroy anything, which is why Confirm stays primary rather than danger.",
+                        code: `<Feedback.Confirm
+    isOpen={isOpen}
+    onOpenChange={setOpen}
+    title="Submit this quiz?"
+    description="Once submitted, you won't be able to change your answers until results are in."
+    confirmLabel="Submit"
+    onConfirm={submit}
+/>`,
+                        render: (
+                            <Demo
+                                triggerLabel="Submit"
+                                title="Submit this quiz?"
+                                description="Once submitted, you won't be able to change your answers until results are in."
+                                confirmLabel="Submit"
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -123,22 +132,28 @@ export const Danger: Story = {
                 tier="composite"
                 leaf="Danger"
                 annotate={ANNOTATE}
-                note={"`tone=\"danger\"` only swaps the Confirm button's variant — Header/Body/Footer stay the same. Use it for deletes and undo actions."}
-                code={`<Feedback.Confirm
-  tone="danger"
-  title="Delete this submission?"
-  confirmLabel="Delete submission"
-  …
-/>`}
-            >
-                <Demo
-                    tone="danger"
-                    triggerLabel="Delete submission"
-                    title="Delete this submission?"
-                    description="The submission will be permanently deleted and cannot be recovered."
-                    confirmLabel="Delete submission"
-                />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "tone = \"danger\"",
+                        why: "Only the Confirm button's variant swaps to danger, while Header, Body, and Footer keep the exact same composition as the Default leaf. This tone is for deletes and undo actions, where the button's colour is the one signal that this choice cannot be walked back.",
+                        code: `<Feedback.Confirm
+    tone="danger"
+    title="Delete this submission?"
+    confirmLabel="Delete submission"
+    …
+/>`,
+                        render: (
+                            <Demo
+                                tone="danger"
+                                triggerLabel="Delete submission"
+                                title="Delete this submission?"
+                                description="The submission will be permanently deleted and cannot be recovered."
+                                confirmLabel="Delete submission"
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -152,23 +167,29 @@ export const TitleOnly: Story = {
                 tier="composite"
                 leaf="TitleOnly"
                 annotate={ANNOTATE}
-                note="Drop `description` and the frame renders NO Body at all (no empty gap left behind) — use this only when the consequence is already clear from the question."
-                code={`<Feedback.Confirm
-  isOpen
-  title="Leave this practice session?"
-  confirmLabel="Leave"
-  …
-/>`}
-            >
-                <Feedback.Confirm
-                    isOpen
-                    onOpenChange={() => {}}
-                    title="Leave this practice session?"
-                    confirmLabel="Leave"
-                    onConfirm={() => {}}
-                    showAnatomy
-                />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "description not set",
+                        why: "The Body node disappears entirely, leaving only the Header question and the Footer buttons, with no empty gap left where the Body would have been. Drop description only when the consequence is already obvious from the question alone.",
+                        code: `<Feedback.Confirm
+    isOpen
+    title="Leave this practice session?"
+    confirmLabel="Leave"
+    …
+/>`,
+                        render: (
+                            <Feedback.Confirm
+                                isOpen
+                                onOpenChange={() => {}}
+                                title="Leave this practice session?"
+                                confirmLabel="Leave"
+                                onConfirm={() => {}}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -182,27 +203,33 @@ export const Confirming: Story = {
                 tier="composite"
                 leaf="Confirming"
                 annotate={ANNOTATE}
-                note="`isConfirming`: Footer still shows both buttons — Confirm turns pending (the atom draws its own Spinner), Cancel is disabled, and the dialog does NOT auto-close."
-                code={`<Feedback.Confirm
-  isOpen
-  isConfirming
-  tone="danger"
-  title="Deleting submission…"
-  …
-/>`}
-            >
-                <Feedback.Confirm
-                    isOpen
-                    onOpenChange={() => {}}
-                    tone="danger"
-                    title="Deleting submission…"
-                    description="The submission is being permanently deleted."
-                    confirmLabel="Delete submission"
-                    isConfirming
-                    onConfirm={() => {}}
-                    showAnatomy
-                />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isConfirming = true, tone = \"danger\"",
+                        why: "Both Footer buttons still render, but Confirm turns pending with its own spinner and Cancel becomes disabled, while the dialog stays open rather than auto-closing. Keeping the dialog open during the async action is what lets isConfirming show the reader their delete is actually in flight.",
+                        code: `<Feedback.Confirm
+    isOpen
+    isConfirming
+    tone="danger"
+    title="Deleting submission…"
+    …
+/>`,
+                        render: (
+                            <Feedback.Confirm
+                                isOpen
+                                onOpenChange={() => {}}
+                                tone="danger"
+                                title="Deleting submission…"
+                                description="The submission is being permanently deleted."
+                                confirmLabel="Delete submission"
+                                isConfirming
+                                onConfirm={() => {}}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

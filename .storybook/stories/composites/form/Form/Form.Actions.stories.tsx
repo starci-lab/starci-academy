@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { FloppyDiskIcon, XIcon } from "@phosphor-icons/react"
-import { Form, type FormActionsAlign } from "@sb-components/composites/form/Form/Form"
+import { Form } from "@sb-components/composites/form/Form/Form"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -27,7 +27,7 @@ type Story = StoryObj<typeof Form.Actions>
 
 /** Con TRỰC TIẾP duy nhất = atom `Button.Group` (khung chỉ căn ngang + chrome dính đáy). */
 const PARTS: Array<AnatomyNode> = [
-    { name: "Group", tier: "atom", role: "hàng nút — atom Button.Group dựng từ `items` (gap-2 related, §10b)" },
+    { name: "Group", tier: "atom", role: "the button row, built from `items` by the atom `Button.Group` (gap-2, a related cluster per §10b)" },
 ]
 
 /** Cặp nút chuẩn của một form: huỷ (secondary) + lưu (primary). */
@@ -36,56 +36,62 @@ const SAVE_ITEMS = [
     { key: "save", label: "Lưu thay đổi", icon: FloppyDiskIcon },
 ]
 
-/** Props for the `AlignSample` helper — one labelled `align` demo cell. */
-interface AlignSampleProps {
-    /** The `align` value this cell demonstrates. */
-    align: FormActionsAlign
-    /** Human-readable note shown above the cell, explaining what this align does. */
-    note: string
-}
-
-/** Nhãn cho từng mẫu `align` trong leaf gộp — chữ trần, không phải part của khung. */
-const AlignSample = ({ align, note }: AlignSampleProps) => (
-    <div className="flex w-96 flex-col gap-1">
-        <p className="text-xs text-muted">{`align="${align}" — ${note}`}</p>
-        <Form.Actions align={align} items={SAVE_ITEMS} />
-    </div>
-)
-
 /**
  * Default — `align`: mép neo của hàng nút. GỘP MỘT LEAF (§14d.2) vì cả ba giá trị
- * cho ra ĐÚNG một cây DOM (Button.Group + 2 nút), chỉ đổi lớp `justify-*` —
- * khác lớp thì là STATE, không phải leaf.
- *
- * - `end` (mặc định) — CTA nằm ở mép kết thúc của form.
- * - `start` — dùng khi form nằm trong một cột hẹp đọc từ trái (§3).
- * - `between` — đẩy HAI mép (lối thoát trái, CTA phải): khung cho cụm nút chiếm
- *   hết bề ngang mới đẩy ra được — việc của KHUNG, không phải của atom.
+ * cho ra ĐÚNG một cây DOM (Button.Group + 2 nút), chỉ đổi lớp `justify-*` — khác
+ * lớp thì là STATE, không phải leaf. Ba giá trị của `align` giờ là ba phần tử của
+ * `states[]` thay vì ba bản render xếp tay bằng `AlignSample` (đã xoá, chỉ để xếp
+ * state tay).
  */
 export const Default: Story = {
     render: () => (
-        <div className="flex flex-col gap-6 p-8">
+        <div className="p-8">
             <BlockAnatomy
                 name="Form.Actions"
                 tier="composite"
                 leaf="Default"
                 parts={PARTS}
-                reason="Hàng nút cuối form. Khung KHÔNG hand-roll nút (§13c) — nó chuyển `items` thẳng xuống atom `Button.Group` và chỉ thêm hai khái niệm KHUNG thật: căn ngang (`align`) và dính đáy (`sticky`). Danh sách lặp ⇒ `items` dữ liệu, cấm children (§13b)."
-                note="Ba mẫu bên dưới là CÙNG một cây: `end` → `justify-end` · `start` → `justify-start` · `between` → khung truyền `w-full justify-between` xuống Button.Group."
-                code={`<Form.Actions
-  align="end"
-  items={[
-    { key: "cancel", label: "Huỷ", variant: "secondary", prefixIcon: XIcon },
-    { key: "save", label: "Lưu thay đổi", prefixIcon: FloppyDiskIcon },
-  ]}
-/>`}
-            >
-                <div className="w-96">
-                    <Form.Actions showAnatomy items={SAVE_ITEMS} />
-                </div>
-            </BlockAnatomy>
-            <AlignSample align="start" note="cụm nút giữ nguyên bề rộng nội tại, chỉ đổi mép neo." />
-            <AlignSample align="between" note="huỷ dạt trái, CTA dạt phải." />
+                renderClassName="w-96"
+                reason="This row never hand-rolls its own buttons: it forwards `items` straight down to the atom `Button.Group` and only adds two concepts that belong to the frame itself, horizontal alignment (`align`) and bottom-docking (`sticky`). Because it renders a repeated list of buttons it must take `items` as data, so passing `children` here is forbidden."
+                states={[
+                    {
+                        name: "align = \"end\" (default)",
+                        why: "The button cluster sits flush against the row's end edge, with `Huỷ` and `Lưu thay đổi` reading toward that edge. This is the resting alignment most forms want, so a caller who never sets `align` still lands a CTA where the eye expects to find it.",
+                        code: `<Form.Actions
+    align="end"
+    items={[
+        { key: "cancel", label: "Huỷ", variant: "secondary", prefixIcon: XIcon },
+        { key: "save", label: "Lưu thay đổi", prefixIcon: FloppyDiskIcon },
+    ]}
+/>`,
+                        render: <Form.Actions showAnatomy align="end" items={SAVE_ITEMS} />,
+                    },
+                    {
+                        name: "align = \"start\"",
+                        why: "The button cluster keeps its natural width and only slides over to the row's start edge instead of its end edge. This fits a form living in a narrow column read from the left (§3), where anchoring at the end edge would leave a visually detached gap.",
+                        code: `<Form.Actions
+    align="start"
+    items={[
+        { key: "cancel", label: "Huỷ", variant: "secondary", prefixIcon: XIcon },
+        { key: "save", label: "Lưu thay đổi", prefixIcon: FloppyDiskIcon },
+    ]}
+/>`,
+                        render: <Form.Actions showAnatomy align="start" items={SAVE_ITEMS} />,
+                    },
+                    {
+                        name: "align = \"between\"",
+                        why: "The frame stretches the button row to the full width of its container, pushing `Huỷ` to the start edge and `Lưu thay đổi` to the end edge. Spreading the two mismatched actions across both edges reads as an escape route on one side and the committing action on the other, and only the frame can claim the full width the split needs.",
+                        code: `<Form.Actions
+    align="between"
+    items={[
+        { key: "cancel", label: "Huỷ", variant: "secondary", prefixIcon: XIcon },
+        { key: "save", label: "Lưu thay đổi", prefixIcon: FloppyDiskIcon },
+    ]}
+/>`,
+                        render: <Form.Actions showAnatomy align="between" items={SAVE_ITEMS} />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -107,24 +113,29 @@ export const Pending: Story = {
                 tier="composite"
                 leaf="Pending"
                 parts={PARTS}
-                note="Chuyển tiếp `isPending` xuống item — Button.Base tự vẽ Spinner + khoá press. Khung không đổi bố cục."
-                code={`<Form.Actions
-  items={[
-    { key: "cancel", label: "Huỷ", variant: "secondary" },
-    { key: "save", label: "Đang lưu", isPending: true },
-  ]}
-/>`}
-            >
-                <div className="w-96">
-                    <Form.Actions
-                        showAnatomy
-                        items={[
-                            { key: "cancel", label: "Huỷ", variant: "secondary" },
-                            { key: "save", label: "Đang lưu", isPending: true },
-                        ]}
-                    />
-                </div>
-            </BlockAnatomy>
+                renderClassName="w-96"
+                states={[
+                    {
+                        name: "save item's isPending = true",
+                        why: "The save button swaps its label for a spinner and stops accepting presses, while the cancel button next to it stays exactly as it was. This frame never draws the spinner itself, the flag only flows through `items` into `Button.Base`, which already owns its own pending shape.",
+                        code: `<Form.Actions
+    items={[
+        { key: "cancel", label: "Huỷ", variant: "secondary" },
+        { key: "save", label: "Đang lưu", isPending: true },
+    ]}
+/>`,
+                        render: (
+                            <Form.Actions
+                                showAnatomy
+                                items={[
+                                    { key: "cancel", label: "Huỷ", variant: "secondary" },
+                                    { key: "save", label: "Đang lưu", isPending: true },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -141,20 +152,26 @@ export const Sticky: Story = {
                 tier="composite"
                 leaf="Sticky"
                 parts={PARTS}
-                note="`sticky` → `sticky bottom-0` + `border-t` + nền đặc: chrome của KHUNG (không đổi API nút). Cuộn thử khung bên dưới để thấy hàng nút đứng yên ở đáy."
-                code={`<div className="h-64 overflow-y-auto">
-  <Form.Base actions={<Form.Actions sticky items={[…]} />}>…</Form.Base>
-</div>`}
-            >
-                <div className="h-64 w-96 overflow-y-auto rounded-3xl border border-default px-3">
-                    <div className="flex flex-col gap-3 py-3">
-                        {["Họ và tên", "Email", "Số điện thoại", "Công ty", "Chức danh", "Ghi chú"].map((row) => (
-                            <div key={row} className="h-16 rounded-xl bg-default" aria-hidden />
-                        ))}
-                    </div>
-                    <Form.Actions showAnatomy sticky items={SAVE_ITEMS} />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "sticky",
+                        why: "The button row grows a top border and an opaque background, then pins itself to the bottom edge of the scrolling container instead of scrolling away with the fields above it. A long form loses its call to action once the user scrolls past it, so docking the row keeps `Lưu thay đổi` reachable at every scroll position.",
+                        code: `<div className="h-64 overflow-y-auto">
+    <Form.Base actions={<Form.Actions sticky items={[…]} />}>…</Form.Base>
+</div>`,
+                        render: (
+                            <div className="h-64 w-96 overflow-y-auto rounded-3xl border border-default px-3">
+                                <div className="flex flex-col gap-3 py-3">
+                                    {["Họ và tên", "Email", "Số điện thoại", "Công ty", "Chức danh", "Ghi chú"].map((row) => (
+                                        <div key={row} className="h-16 rounded-xl bg-default" aria-hidden />
+                                    ))}
+                                </div>
+                                <Form.Actions showAnatomy sticky items={SAVE_ITEMS} />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

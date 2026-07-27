@@ -1,4 +1,3 @@
-import type { ReactNode } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CourseBrief } from "@sb-components/blocks/learn/CourseBrief/CourseBrief"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
@@ -16,7 +15,8 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *
  * 📐 **LEAF by STRUCTURE** (§14d.2): the two leaves below are REAL leaves because
  * they **lose a node**. A long trail only changes the crumb count ⇒ a STATE,
- * rendered together inside the full-set leaf.
+ * rendered together inside the full-set leaf's `states[]` (thầy chốt bố cục C,
+ * 2026-07-27) — `leafShell` đã bị xoá vì nó chỉ để xếp state tay.
  */
 const meta: Meta<typeof CourseBrief.Base> = {
     title: "Blocks/Learn/CourseBrief/CourseBrief.Base",
@@ -44,58 +44,27 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     // (decided 2026-07-27: "nothing is allowed to stand outside the tree").
     "Skeleton.Title": { tier: "atom", role: "title mirror while loading (h3 bold)", storyId: "atoms-text-typography-typography-base--plain" },
     "Skeleton.Description": { tier: "atom", role: "description mirror while loading (sm muted)", storyId: "atoms-text-typography-typography-base--plain" },
-    Meta: { tier: "atom", role: "meta line — modules · study hours · learners, joined by ·", storyId: "atoms-text-typography-typography-base--plain" },
-    "Page.Header": { tier: "composite", role: "page-header FRAME — breadcrumb ↔ title ↔ description ↔ meta; the frame owns the type scale", storyId: "composites-layout-page-page-header--full" },
-    Breadcrumbs: { tier: "atom", role: "trail — the block builds it from crumb DATA", storyId: "atoms-navigation-breadcrumbs-breadcrumbs-base--default" },
+    Meta: { tier: "atom", role: "the meta line that lists modules, study hours, and learners joined together by a middle dot", storyId: "atoms-text-typography-typography-base--plain" },
+    "Page.Header": { tier: "composite", role: "the page-header frame that lines up the breadcrumb, title, description, and meta line, owning the type scale for all four", storyId: "composites-layout-page-page-header--full" },
+    Breadcrumbs: { tier: "atom", role: "the trail the block builds from crumb data handed down by the caller", storyId: "atoms-navigation-breadcrumbs-breadcrumbs-base--default" },
 }
-
-const leafShell = (leaf: string, node: ReactNode, note?: ReactNode, code?: string) => (
-    <div className="mx-auto max-w-3xl p-8">
-        <BlockAnatomy
-            name="CourseBrief.Base"
-            tier="block"
-            leaf={leaf}
-            parts={[]}
-            annotate={ANNOTATE}
-            note={note}
-            code={code}
-        >
-            {node}
-        </BlockAnatomy>
-    </div>
-)
 
 /** LEAF — full set: breadcrumb → course name → description → meta strip. Includes the long-trail case (state). */
 export const Full: Story = {
-    render: () =>
-        leafShell(
-            "Full",
-            <div className="flex flex-col gap-8">
-                <CourseBrief.Base
-                    anatPart="CourseBrief"
-                    showAnatomy
-                    breadcrumbItems={CRUMBS}
-                    title="DevOps Mastery"
-                    description="Từ CI/CD tới Kubernetes production — lộ trình thực chiến."
-                    moduleCount={8}
-                    hours={14}
-                    learnerCount={2481}
-                />
-                <CourseBrief.Base
-                    breadcrumbItems={[
-                        { key: "home", label: "Trang chủ", onPress: () => {} },
-                        { key: "courses", label: "Khoá học", onPress: () => {} },
-                        { key: "devops", label: "DevOps", onPress: () => {} },
-                        { key: "module", label: "Chương 2", onPress: () => {} },
-                        { key: "course", label: "Container hoá" },
-                    ]}
-                    title="DevOps Mastery"
-                    moduleCount={8}
-                    hours={14}
-                />
-            </div>,
-            "A long trail → the `Breadcrumbs` atom collapses itself into a back-link. Collapsing is behaviour INSIDE the atom ⇒ a state, not a leaf.",
-            `<CourseBrief.Base
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="CourseBrief.Base"
+                tier="block"
+                leaf="Full"
+                parts={[]}
+                annotate={ANNOTATE}
+                renderClassName="mx-auto max-w-3xl"
+                states={[
+                    {
+                        name: "breadcrumbItems.length = 2",
+                        why: "The full cluster renders in order: a two-crumb trail, the course title, the description, and the meta line listing modules, hours, and learners. This is the shape most course pages land in once every field the block reads has resolved.",
+                        code: `<CourseBrief.Base
     breadcrumbItems={[{ key: "courses", label: "Courses", onPress: goToCourses }, { key: "course", label: "DevOps Mastery" }]}
     title="DevOps Mastery"
     description="From CI/CD to Kubernetes production — a hands-on path."
@@ -103,48 +72,124 @@ export const Full: Story = {
     hours={14}
     learnerCount={2481}
 />`,
-        ),
+                        render: (
+                            <CourseBrief.Base
+                                anatPart="CourseBrief"
+                                showAnatomy
+                                breadcrumbItems={CRUMBS}
+                                title="DevOps Mastery"
+                                description="Từ CI/CD tới Kubernetes production — lộ trình thực chiến."
+                                moduleCount={8}
+                                hours={14}
+                                learnerCount={2481}
+                            />
+                        ),
+                    },
+                    {
+                        name: "breadcrumbItems.length = 5",
+                        why: "The `Breadcrumbs` atom collapses its five-crumb trail into a single back link instead of spelling out every step. Collapsing a long trail keeps the header on one line, and the collapsing behaviour lives inside the atom itself rather than being a shape this block draws.",
+                        code: `<CourseBrief.Base
+    breadcrumbItems={[
+        { key: "home", label: "Home", onPress: goHome },
+        { key: "courses", label: "Courses", onPress: goToCourses },
+        { key: "devops", label: "DevOps", onPress: goToDevOps },
+        { key: "module", label: "Chapter 2", onPress: goToModule },
+        { key: "course", label: "Containerization" },
+    ]}
+    title="DevOps Mastery"
+    moduleCount={8}
+    hours={14}
+/>`,
+                        render: (
+                            <CourseBrief.Base
+                                breadcrumbItems={[
+                                    { key: "home", label: "Trang chủ", onPress: () => {} },
+                                    { key: "courses", label: "Khoá học", onPress: () => {} },
+                                    { key: "devops", label: "DevOps", onPress: () => {} },
+                                    { key: "module", label: "Chương 2", onPress: () => {} },
+                                    { key: "course", label: "Container hoá" },
+                                ]}
+                                title="DevOps Mastery"
+                                moduleCount={8}
+                                hours={14}
+                            />
+                        ),
+                    },
+                ]}
+            />
+        </div>
+    ),
 }
 
 /** LEAF — arriving straight from another page ⇒ **loses** the `Breadcrumbs` node. */
 export const NoBreadcrumb: Story = {
-    render: () =>
-        leafShell(
-            "No breadcrumb",
-            <CourseBrief.Base
-                anatPart="CourseBrief"
-                showAnatomy
-                title="DevOps Mastery"
-                description="Từ CI/CD tới Kubernetes production — lộ trình thực chiến."
-                moduleCount={8}
-                hours={14}
-                learnerCount={2481}
-            />,
-            undefined,
-            `<CourseBrief.Base
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="CourseBrief.Base"
+                tier="block"
+                leaf="No breadcrumb"
+                parts={[]}
+                annotate={ANNOTATE}
+                renderClassName="mx-auto max-w-3xl"
+                states={[
+                    {
+                        name: "breadcrumbItems = undefined",
+                        why: "The `Breadcrumbs` node drops out entirely, leaving the title as the first line the reader sees. This is the shape for a viewer who lands straight on the course page rather than clicking through a listing, so there is no trail behind them to show.",
+                        code: `<CourseBrief.Base
     title="DevOps Mastery"
     description="From CI/CD to Kubernetes production — a hands-on path."
     moduleCount={8}
     hours={14}
     learnerCount={2481}
 />`,
-        ),
+                        render: (
+                            <CourseBrief.Base
+                                anatPart="CourseBrief"
+                                showAnatomy
+                                title="DevOps Mastery"
+                                description="Từ CI/CD tới Kubernetes production — lộ trình thực chiến."
+                                moduleCount={8}
+                                hours={14}
+                                learnerCount={2481}
+                            />
+                        ),
+                    },
+                ]}
+            />
+        </div>
+    ),
 }
 
 /** LEAF — a brand-new course ⇒ **loses** both `Meta` and the description; the cluster shrinks to breadcrumb + name. */
 export const TitleOnly: Story = {
-    render: () =>
-        leafShell(
-            "Title only",
-            <CourseBrief.Base
-                anatPart="CourseBrief"
-                showAnatomy
-                breadcrumbItems={CRUMBS}
-                title="DevOps Mastery"
-            />,
-            undefined,
-            "<CourseBrief.Base breadcrumbItems={crumbs} title=\"DevOps Mastery\" />",
-        ),
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="CourseBrief.Base"
+                tier="block"
+                leaf="Title only"
+                parts={[]}
+                annotate={ANNOTATE}
+                renderClassName="mx-auto max-w-3xl"
+                states={[
+                    {
+                        name: "description = undefined, moduleCount/hours/learnerCount = undefined",
+                        why: "Both the `Meta` line and the description drop out, shrinking the cluster down to just the breadcrumb and the course name. A brand-new course has no module count, study hours, or learner count to report yet, so the block shows only what it actually knows.",
+                        code: "<CourseBrief.Base breadcrumbItems={crumbs} title=\"DevOps Mastery\" />",
+                        render: (
+                            <CourseBrief.Base
+                                anatPart="CourseBrief"
+                                showAnatomy
+                                breadcrumbItems={CRUMBS}
+                                title="DevOps Mastery"
+                            />
+                        ),
+                    },
+                ]}
+            />
+        </div>
+    ),
 }
 
 /**
@@ -153,16 +198,31 @@ export const TitleOnly: Story = {
  * tree reuses the `ANNOTATE` above, no separate parts array declared for this state.
  */
 export const Skeleton: Story = {
-    render: () =>
-        leafShell(
-            "Prop `isSkeleton`",
-            <CourseBrief.Base
-                anatPart="CourseBrief"
-                showAnatomy
-                isSkeleton
-                title=""
-            />,
-            "Every line keeps the exact real text shape (name/description/meta strip) so nothing shifts when data arrives (§8).",
-            "<CourseBrief.Base isSkeleton title=\"\" />",
-        ),
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="CourseBrief.Base"
+                tier="block"
+                leaf="Prop `isSkeleton`"
+                parts={[]}
+                annotate={ANNOTATE}
+                renderClassName="mx-auto max-w-3xl"
+                states={[
+                    {
+                        name: "isSkeleton",
+                        why: "Every line keeps the exact real text shape, the name, description, and meta strip, so nothing shifts once the data arrives (§8). No node is lost or added compared to the full leaf; only the content each line shows changes.",
+                        code: "<CourseBrief.Base isSkeleton title=\"\" />",
+                        render: (
+                            <CourseBrief.Base
+                                anatPart="CourseBrief"
+                                showAnatomy
+                                isSkeleton
+                                title=""
+                            />
+                        ),
+                    },
+                ]}
+            />
+        </div>
+    ),
 }

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button as HeroButton } from "@heroui/react"
-import { Toast, type ToastStatus } from "@sb-components/atoms/overlay/Toast/Toast"
+import { Toast } from "@sb-components/atoms/overlay/Toast/Toast"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -20,6 +20,10 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * `issues` trong báo cáo audit: muốn có deps tới `Alert.Base` thì `Toast.tsx`
  * phải truyền `anatPart="Alert.Base"` xuống — đó là sửa component, ngoài phạm vi
  * file story này.
+ *
+ * MIGRATED TO `states` (2026-07-27): `Statuses` used to map the full `ToastStatus`
+ * union into one stacked block with no room to explain any one tone on its own —
+ * now each tone is its own `states[]` entry.
  */
 const meta: Meta<typeof Toast.Base> = {
     title: "Atoms/Overlay/Toast/Toast.Base",
@@ -32,25 +36,7 @@ export default meta
 
 type Story = StoryObj<typeof Toast.Base>
 
-/** One row of the `status` demo table. */
-interface StatusRow {
-    /** The status value this row demonstrates. */
-    status: ToastStatus
-    /** Toast title shown for this row. */
-    title: string
-    /** Toast description shown for this row. */
-    description: string
-}
-
-/** ĐỦ union `ToastStatus` — thiếu một giá trị là giá trị đó mọc thành leaf lạc chỗ. */
-const STATUSES: Array<StatusRow> = [
-    { status: "success", title: "Submission saved", description: "Grading results will be ready in a few minutes." },
-    { status: "warning", title: "Running out of time", description: "The quiz submits itself in 10 minutes." },
-    { status: "danger", title: "Submission failed", description: "Could not reach the server — try again." },
-    { status: "info", title: "Content just updated", description: "This lesson has a new version, reload to see it." },
-]
-
-/** Leaf prop `status` — render ĐỦ union trong CÙNG một cây (§12g, không tách theo giá trị). */
+/** Leaf prop `status` — render ĐỦ union, mỗi giá trị một state (§12g, gộp leaf, tách state). Migrated 2026-07-27. */
 export const Statuses: Story = {
     render: () => (
         <div className="max-w-md p-8">
@@ -59,28 +45,63 @@ export const Statuses: Story = {
                 tier="atom"
                 leaf="Prop `status`"
                 reason="The one toast atom, composed from Alert.Base. Status picks the tint and the icon together, so a caller can never pair the wrong icon with a tone — it only ever hands over a title and description."
-                note="success → CheckCircleIcon, warning → WarningIcon, danger → XCircleIcon, info folds to the accent tint with InfoIcon. All four share the same shape; only the tint and icon change."
-                code={STATUSES.map(({ status, title, description }) =>
-                    `<Toast.Base status="${status}" title="${title}" description="${description}" />`,
-                ).join("\n")}
-            >
-                <div className="flex w-full flex-col gap-3">
-                    {STATUSES.map(({ status, title, description }, index) => (
-                        <Toast.Base
-                            key={status}
-                            status={status}
-                            title={title}
-                            description={description}
-                            showAnatomy={index === 0}
-                        />
-                    ))}
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "status = \"success\"",
+                        why: "The surface tints success and mounts a `CheckCircleIcon`, wrapping the given title and description. This tone confirms an action already completed, like a submission that saved.",
+                        code: "<Toast.Base status=\"success\" title=\"Submission saved\" description=\"Grading results will be ready in a few minutes.\" />",
+                        render: (
+                            <Toast.Base
+                                status="success"
+                                title="Submission saved"
+                                description="Grading results will be ready in a few minutes."
+                                showAnatomy
+                            />
+                        ),
+                    },
+                    {
+                        name: "status = \"warning\"",
+                        why: "The surface tints warning and mounts a `WarningIcon`, same shape as the success state otherwise. This tone flags something the learner should act on soon but hasn't failed yet, like a quiz about to auto-submit.",
+                        code: "<Toast.Base status=\"warning\" title=\"Running out of time\" description=\"The quiz submits itself in 10 minutes.\" />",
+                        render: (
+                            <Toast.Base
+                                status="warning"
+                                title="Running out of time"
+                                description="The quiz submits itself in 10 minutes."
+                            />
+                        ),
+                    },
+                    {
+                        name: "status = \"danger\"",
+                        why: "The surface tints danger and mounts an `XCircleIcon`, again the same shape as the other tones. This tone reports an action that actually failed, like a submission the server never received.",
+                        code: "<Toast.Base status=\"danger\" title=\"Submission failed\" description=\"Could not reach the server — try again.\" />",
+                        render: (
+                            <Toast.Base
+                                status="danger"
+                                title="Submission failed"
+                                description="Could not reach the server — try again."
+                            />
+                        ),
+                    },
+                    {
+                        name: "status = \"info\"",
+                        why: "The surface folds to the accent tint and mounts an `InfoIcon`, still the identical shape as the other three tones. This tone is for a neutral update that isn't a success or a problem, like new content landing on a lesson already open.",
+                        code: "<Toast.Base status=\"info\" title=\"Content just updated\" description=\"This lesson has a new version, reload to see it.\" />",
+                        render: (
+                            <Toast.Base
+                                status="info"
+                                title="Content just updated"
+                                description="This lesson has a new version, reload to see it."
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
-/** Leaf props `action` / `onClose` — mọc thêm node Action + nút × thật. */
+/** Leaf props `action` / `onClose` — mọc thêm node Action + nút × thật. Migrated to `states` 2026-07-27. */
 export const WithAction: Story = {
     render: () => (
         <div className="max-w-md p-8">
@@ -88,23 +109,28 @@ export const WithAction: Story = {
                 name="Toast.Base"
                 tier="atom"
                 leaf="Props `action` / `onClose`"
-                reason="`action` sits before the × close button, and `onClose` is what turns the × on. `action` is content — a ReactNode this atom keeps on purpose, unlike `children`, which it does not accept at all."
-                note="Pass closeLabel so a screen reader hears what is being dismissed, not just a bare 'close'."
-                code={"<Toast.Base status=\"info\" title=\"Card removed\" action={<Button>Undo</Button>} onClose={fn} />"}
-            >
-                <Toast.Base
-                    status="info"
-                    title="Flashcard removed"
-                    action={
-                        <HeroButton size="sm" variant="tertiary">
-                            Undo
-                        </HeroButton>
-                    }
-                    onClose={() => {}}
-                    closeLabel="Dismiss notification"
-                    showAnatomy
-                />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "action set, onClose set",
+                        why: "An `Action` node mounts before a real `×` close button, both new nodes that don't exist in the bare toast. `action` sits before the close control because it is content this atom keeps on purpose — unlike `children`, which it never accepts at all.",
+                        code: "<Toast.Base status=\"info\" title=\"Card removed\" action={<Button>Undo</Button>} onClose={fn} />",
+                        render: (
+                            <Toast.Base
+                                status="info"
+                                title="Flashcard removed"
+                                action={
+                                    <HeroButton size="sm" variant="tertiary">
+                                        Undo
+                                    </HeroButton>
+                                }
+                                onClose={() => {}}
+                                closeLabel="Dismiss notification"
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

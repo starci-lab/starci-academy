@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Progress, type ProgressColor, type ProgressSize } from "@sb-components/atoms/display/Progress/Progress"
+import { Progress } from "@sb-components/atoms/display/Progress/Progress"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -34,40 +34,6 @@ export default meta
 
 type Story = StoryObj<typeof Progress.Meter>
 
-/** One row of the `Colors` demo table — a single `ProgressColor` tone plus its sample reading. */
-interface ColorRow {
-    /** The `ProgressColor` tone this row demonstrates. */
-    color: ProgressColor
-    /** Aria label describing what the reading means. */
-    label: string
-    /** Meter value (0-100) shown for this tone. */
-    value: number
-}
-
-/** ĐỦ union `ProgressColor` — 5 tone. Với Meter, màu tải nghĩa NGƯỠNG chứ không trang trí. */
-const METER_COLORS: Array<ColorRow> = [
-    { color: "accent", label: "Storage used", value: 55 },
-    { color: "success", label: "Well within limit", value: 30 },
-    { color: "warning", label: "Approaching the cap", value: 65 },
-    { color: "danger", label: "Almost full", value: 92 },
-    { color: "default", label: "Unrated measurement", value: 48 },
-]
-
-/** One row of the `Sizes` demo table — a single `ProgressSize` tier plus its aria label. */
-interface SizeRow {
-    /** The `ProgressSize` tier this row demonstrates. */
-    size: ProgressSize
-    /** Aria label describing this row's meter. */
-    label: string
-}
-
-/** ĐỦ union `ProgressSize` — 3 mốc chiều cao. */
-const METER_SIZES: Array<SizeRow> = [
-    { size: "sm", label: "Compact row" },
-    { size: "md", label: "Default row" },
-    { size: "lg", label: "Prominent row" },
-]
-
 /**
  * Leaf props `value` / `max` — HAI prop nhưng MỘT hình: cả hai chỉ đẩy cùng một vạch
  * fill. Tách đôi sẽ ra hai khung y hệt, nên gộp (neo: `Chip.Base` leaf `Dot`).
@@ -79,16 +45,22 @@ export const Value: Story = {
                 name="Progress.Meter"
                 tier="atom"
                 leaf="Props `value` / `max`"
-                reason="A meter is a static measurement, not a task running — so there is no indeterminate state. The fill is always the value read against its own ceiling."
-                note="Both rows sit at 72, but the second one measures against a ceiling of 200 — same number, half the bar. Read the pair together or the fill means nothing."
-                code={`<Progress.Meter value={72} />           // max defaults to 100
-<Progress.Meter value={72} max={200} />`}
-            >
-                <div className="flex w-72 flex-col gap-4">
-                    <Progress.Meter value={72} ariaLabel="Disk usage out of 100" showAnatomy />
-                    <Progress.Meter value={72} max={200} ariaLabel="Disk usage out of 200" />
-                </div>
-            </BlockAnatomy>
+                reason="A meter is a static measurement, not a task running, so there is no indeterminate state. The fill is always the value read against its own ceiling."
+                states={[
+                    {
+                        name: "value = 72, max = 100 (default)",
+                        why: "The fill sits at 72% of the track's width. `max` defaults to 100, so a bare `value` reads directly as a percentage.",
+                        code: "<Progress.Meter value={72} />   // max defaults to 100",
+                        render: <Progress.Meter value={72} ariaLabel="Disk usage out of 100" showAnatomy />,
+                    },
+                    {
+                        name: "value = 72, max = 200",
+                        why: "The fill sits at only 36% of the track's width even though the raw number is the same 72. Reading the fill without knowing `max` gives the wrong answer, so the two props always have to be read together.",
+                        code: "<Progress.Meter value={72} max={200} />",
+                        render: <Progress.Meter value={72} max={200} ariaLabel="Disk usage out of 200" />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -101,26 +73,40 @@ export const Colors: Story = {
                 name="Progress.Meter"
                 tier="atom"
                 leaf="Prop `color`"
-                reason="On a meter the tone is information, not decoration: the same measurement reads as safe, watch-it, or act-now depending on which band it lands in. Pick the tone from the number, and let it change as the number moves."
-                note="Only the Fill takes the tone; the Track stays neutral in all five, so a column of meters still reads as one family. Use `default` when the reading carries no verdict yet."
-                code={`<Progress.Meter color="accent" value={55} />
-<Progress.Meter color="success" value={30} />
-<Progress.Meter color="warning" value={65} />
-<Progress.Meter color="danger" value={92} />
-<Progress.Meter color="default" value={48} />`}
-            >
-                <div className="flex w-72 flex-col gap-4">
-                    {METER_COLORS.map(({ color, label, value }, index) => (
-                        <Progress.Meter
-                            key={color}
-                            color={color}
-                            value={value}
-                            ariaLabel={label}
-                            showAnatomy={index === 0}
-                        />
-                    ))}
-                </div>
-            </BlockAnatomy>
+                reason="On a meter the tone is information, not decoration: the same measurement reads as safe, watch-it, or act-now depending on which band it lands in. Only the Fill takes the tone; the Track stays neutral in all five, so a column of meters still reads as one family."
+                states={[
+                    {
+                        name: "color = accent",
+                        why: "The fill renders in the neutral accent tone. This is the default reading, used when the number carries no verdict of its own yet.",
+                        code: "<Progress.Meter color=\"accent\" value={55} />",
+                        render: <Progress.Meter color="accent" value={55} ariaLabel="Storage used" showAnatomy />,
+                    },
+                    {
+                        name: "color = success",
+                        why: "The fill renders green. This band tells the reader the measurement is comfortably within its limit.",
+                        code: "<Progress.Meter color=\"success\" value={30} />",
+                        render: <Progress.Meter color="success" value={30} ariaLabel="Well within limit" />,
+                    },
+                    {
+                        name: "color = warning",
+                        why: "The fill renders amber. This band tells the reader the measurement is approaching its cap.",
+                        code: "<Progress.Meter color=\"warning\" value={65} />",
+                        render: <Progress.Meter color="warning" value={65} ariaLabel="Approaching the cap" />,
+                    },
+                    {
+                        name: "color = danger",
+                        why: "The fill renders red. This band tells the reader the measurement is almost full and needs action.",
+                        code: "<Progress.Meter color=\"danger\" value={92} />",
+                        render: <Progress.Meter color="danger" value={92} ariaLabel="Almost full" />,
+                    },
+                    {
+                        name: "color = default",
+                        why: "The fill renders in the plain neutral tone, with no verdict attached at all. Use this when the reading has not yet been classified into a band.",
+                        code: "<Progress.Meter color=\"default\" value={48} />",
+                        render: <Progress.Meter color="default" value={48} ariaLabel="Unrated measurement" />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -133,23 +119,28 @@ export const Sizes: Story = {
                 name="Progress.Meter"
                 tier="atom"
                 leaf="Prop `size`"
-                note="Same reading at all three heights — the atom owns the scale, so a caller never hand-sets a bar height."
-                code={`<Progress.Meter size="sm" value={62} />
-<Progress.Meter value={62} />          // md = default
-<Progress.Meter size="lg" value={62} />`}
-            >
-                <div className="flex w-72 flex-col gap-4">
-                    {METER_SIZES.map(({ size, label }, index) => (
-                        <Progress.Meter
-                            key={size}
-                            size={size}
-                            value={62}
-                            ariaLabel={label}
-                            showAnatomy={index === 0}
-                        />
-                    ))}
-                </div>
-            </BlockAnatomy>
+                reason="Height is picked from a fixed 3-step scale so the atom owns it, and a caller never hand-sets a bar height with a class."
+                states={[
+                    {
+                        name: "size = sm",
+                        why: "The track renders at its shortest height. Use this in a compact row where several meters sit close together.",
+                        code: "<Progress.Meter size=\"sm\" value={62} />",
+                        render: <Progress.Meter size="sm" value={62} ariaLabel="Compact row" showAnatomy />,
+                    },
+                    {
+                        name: "size = md (default)",
+                        why: "The track renders at its default height. This is the height a caller gets without passing `size` at all.",
+                        code: "<Progress.Meter value={62} />          // md = default",
+                        render: <Progress.Meter size="md" value={62} ariaLabel="Default row" />,
+                    },
+                    {
+                        name: "size = lg",
+                        why: "The track renders at its tallest height. Use this when the reading is the single most prominent element on the screen.",
+                        code: "<Progress.Meter size=\"lg\" value={62} />",
+                        render: <Progress.Meter size="lg" value={62} ariaLabel="Prominent row" />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -162,13 +153,15 @@ export const Loading: Story = {
                 name="Progress.Meter"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
-                note="The atom draws its own shimmer bar at the same height as the real track, so nothing shifts once the measurement lands."
-                code={"<Progress.Meter isSkeleton />"}
-            >
-                <div className="w-72">
-                    <Progress.Meter isSkeleton showAnatomy />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "The track is replaced by a shimmer bar at the same height as the real track, no fill and no value. Since the atom draws its own shimmer, nothing shifts once the measurement lands and the real fill appears.",
+                        code: "<Progress.Meter isSkeleton />",
+                        render: <Progress.Meter isSkeleton showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }

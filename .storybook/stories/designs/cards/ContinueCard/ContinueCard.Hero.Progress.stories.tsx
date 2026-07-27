@@ -16,6 +16,9 @@ const WarningDuotone = (props: SVGProps<SVGSVGElement>) => <WarningIcon {...prop
  * DESIGN — the "resume an in-progress session" hero card with progress. Each state below
  * is its OWN leaf and carries its OWN BlockAnatomy axis (Diagram + Tree) reflecting
  * the parts THAT leaf composes — there is no separate consolidated "Anatomy" story.
+ *
+ * 2026-07-27: di trú toàn bộ leaf sang API `states[]` (§8/§4a); `role` viết lại
+ * TIẾNG ANH theo luật B (bỏ dấu — ↔ → làm dấu nối).
  */
 const meta: Meta<typeof ContinueCard> = {
     title: "Designs/Cards/ContinueCard/Hero/Progress",
@@ -63,7 +66,7 @@ const CONTENT_PARTS: Array<AnatomyNode> = [
     {
         name: "SurfaceCard",
         tier: "composite",
-        role: "card surface — `isHighlight` turns on the hero accent glow. The frame STAYS PUT across every state, so switching state never shifts the layout",
+        role: "The card surface; isHighlight turns on the hero accent glow, and the frame stays put across every state so switching state never shifts the layout.",
         storyId: "composites-cards-surfacecard-surfacecard-base--default",
         children: [
             // ⭐ 2026-07-27: the two `layouts`-tier frames now SHOW UP in the tree — this
@@ -72,32 +75,32 @@ const CONTENT_PARTS: Array<AnatomyNode> = [
             {
                 name: "Stack.H",
                 tier: "frame",
-                role: "outer row — one horizontal track (children are ARBITRARY ⇒ `Stack`, not `Cluster`, §13b)",
+                role: "The outer row, one horizontal track; children are arbitrary, which is why this uses Stack rather than Cluster (§13b).",
                 storyId: "frames-stack-stack-h--default",
                 children: [
                     {
                         name: "Stack.V",
                         tier: "frame",
-                        role: "text column — title on top, meta/subtitle underneath",
+                        role: "The text column, title on top with the meta and subtitle underneath.",
                         storyId: "frames-stack-stack-v--default",
                         children: [
-                            { name: "Title", tier: "atom", role: "name of the session in progress — `Typography.Base` medium + truncate", storyId: "atoms-text-typography-typography-base--plain" },
-                            { name: "Skeleton.Meta", tier: "atom", role: "mirror bar standing in for the meta row while loading — `Typography.Base isSkeleton`", storyId: "atoms-text-typography-typography-base--plain" },
+                            { name: "Title", tier: "atom", role: "The name of the session in progress, a Typography.Base node set to medium weight with truncate.", storyId: "atoms-text-typography-typography-base--plain" },
+                            { name: "Skeleton.Meta", tier: "atom", role: "A mirror bar standing in for the meta row while loading, a Typography.Base node with isSkeleton.", storyId: "atoms-text-typography-typography-base--plain" },
                             {
                                 name: "List.Meta",
                                 tier: "composite",
-                                role: "meta row: muted fragments joined by · plus the time chip",
+                                role: "The meta row: muted fragments joined by a middle dot, plus the time chip.",
                                 storyId: "composites-lists-list-list-meta--with-chip",
                                 children: [
-                                    { name: "Chip.Base", tier: "atom", role: "time-remaining chip — tone neutral↔warning depending on urgency", state: "neutral↔warning", storyId: "atoms-chips-chip-chip-base--default" },
+                                    { name: "Chip.Base", tier: "atom", role: "The time-remaining chip, whose tone switches between neutral and warning depending on urgency.", state: "neutral or warning", storyId: "atoms-chips-chip-chip-base--default" },
                                 ],
                             },
                         ],
                     },
                 ],
             },
-            { name: "ProgressMeter", tier: "composite", role: "progress bar — the DEFINING trait of the has-progress shape", storyId: "composites-stats-progressmeter--half" },
-            { name: "Button", tier: "atom", role: "resume CTA (onPress + ArrowRight, iconSlide)", storyId: "atoms-buttons-button-button-base--default" },
+            { name: "ProgressMeter", tier: "composite", role: "The progress bar, the defining trait of the has-progress shape.", storyId: "composites-stats-progressmeter--half" },
+            { name: "Button", tier: "atom", role: "The resume CTA (onPress plus a sliding ArrowRight icon).", storyId: "atoms-buttons-button-button-base--default" },
         ],
     },
 ]
@@ -107,17 +110,17 @@ const ERROR_PARTS: Array<AnatomyNode> = [
     {
         name: "SurfaceCard",
         tier: "composite",
-        role: "the very SAME frame — an error must never make the frame disappear",
+        role: "The very same frame as the loaded leaf; an error must never make the frame itself disappear.",
         storyId: "composites-cards-surfacecard-surfacecard-base--default",
         children: [
             {
                 name: "Feedback.Empty",
                 tier: "composite",
-                role: "danger tone + icon + description + a Retry button",
+                role: "The danger-tone message: icon, description, and a Retry button.",
                 state: "danger",
                 storyId: "composites-feedback-feedback-feedback-empty--action",
                 children: [
-                    { name: "Button", tier: "atom", role: "retry button (secondary, inside the `action` prop — built by the STORY, so it is still declared, §11a.1)", storyId: "atoms-buttons-button-button-base--default" },
+                    { name: "Button", tier: "atom", role: "The retry button (secondary), built by the story inside the action prop, so it is still declared per §11a.1.", storyId: "atoms-buttons-button-button-base--default" },
                 ],
             },
         ],
@@ -133,20 +136,24 @@ export const NotUrgent: Story = {
                 tier="design"
                 leaf="NotUrgent"
                 parts={CONTENT_PARTS}
-                reason="Card for resuming an in-progress session. Each LEAF has a different composition: the loaded leaf bundles hero chrome + ProgressMeter; loading swaps to a Skeleton mirroring the exact footprint; error falls back to Feedback.Empty inside the frame. SectionCard acting as the shared frame keeps the frame from jumping when the state changes."
-                code={`<ContinueCard.Hero
+                renderClassName="w-96"
+                reason="Card for resuming an in-progress session. Each LEAF has a different composition: the loaded leaf bundles hero chrome with ProgressMeter, loading swaps to a Skeleton mirroring the exact footprint, and error falls back to Feedback.Empty inside the frame. SurfaceCard acting as the shared frame is what keeps the frame from jumping whenever the state changes."
+                states={[
+                    {
+                        name: "urgent = false, value = 2, max = 8",
+                        why: "The time chip reads neutral and the progress bar fills to roughly a quarter, since question 2 of 8 leaves plenty of time on the clock. Not urgent is the resting shape every other state in this leaf compares against.",
+                        code: `<ContinueCard.Hero
     title="Mock interview: Design a rate limiter"
     meta={["Question 2 / 8", "Middle"]}
     timeLeft="40 minutes left"
     onPress={handleResume}
     value={2}
     max={8}
-/>`}
-            >
-                <div className="w-96">
-                    <ContinueCard.Hero {...progressBase} value={2} max={8} />
-                </div>
-            </BlockAnatomy>,
+/>`,
+                        render: <ContinueCard.Hero {...progressBase} value={2} max={8} />,
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -159,8 +166,12 @@ export const Urgent: Story = {
                 tier="design"
                 leaf="Urgent"
                 parts={CONTENT_PARTS}
-                note="urgent/not-urgent share the SAME parts — only the time chip TONE differs (neutral → warning) + the bar is near-full."
-                code={`<ContinueCard.Hero
+                renderClassName="w-96"
+                states={[
+                    {
+                        name: "urgent = true, value = 7, max = 8",
+                        why: "The exact same time chip switches from neutral to warning tone and the progress bar fills to near-full, on the same composition NotUrgent already uses. Urgent and not-urgent share every part on purpose, so escalating time pressure never rearranges the card, it only recolours one chip and advances the bar.",
+                        code: `<ContinueCard.Hero
     title="Mock interview: Design a rate limiter"
     meta={["Question 7 / 8", "Middle"]}
     timeLeft="2 minutes left"
@@ -168,12 +179,11 @@ export const Urgent: Story = {
     urgent
     value={7}
     max={8}
-/>`}
-            >
-                <div className="w-96">
-                    <ContinueCard.Hero {...progressBase} meta={["Question 7 / 8", "Middle"]} timeLeft="2 minutes left" urgent value={7} max={8} />
-                </div>
-            </BlockAnatomy>,
+/>`,
+                        render: <ContinueCard.Hero {...progressBase} meta={["Question 7 / 8", "Middle"]} timeLeft="2 minutes left" urgent value={7} max={8} />,
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -190,7 +200,12 @@ export const Skeleton: Story = {
                 tier="design"
                 leaf="Prop `isSkeleton`"
                 parts={CONTENT_PARTS}
-                code={`<ContinueCard.Hero
+                renderClassName="w-96"
+                states={[
+                    {
+                        name: "isSkeleton = true, value = 2, max = 8",
+                        why: "Every part, including the progress bar itself, renders its own shimmer instead of real content, while the composition stays exactly the parts tree the loaded leaf already declares. isSkeleton flips a state rather than the structure (§11f), which is why this leaf reuses CONTENT_PARTS instead of hand-rolling a separate skeleton tree.",
+                        code: `<ContinueCard.Hero
     title="Mock interview: Design a rate limiter"
     meta={["Question 2 / 8", "Middle"]}
     timeLeft="40 minutes left"
@@ -198,13 +213,11 @@ export const Skeleton: Story = {
     value={2}
     max={8}
     isSkeleton
-/>`}
-                note="`isSkeleton` flips STATE, not structure (§11f) — SAME parts as the loaded leaf (bar included); each one renders its shimmer instead of content."
-            >
-                <div className="w-96">
-                    <ContinueCard.Hero {...progressBase} value={2} max={8} isSkeleton />
-                </div>
-            </BlockAnatomy>,
+/>`,
+                        render: <ContinueCard.Hero {...progressBase} value={2} max={8} isSkeleton />,
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -217,30 +230,35 @@ export const LoadError: Story = {
                 tier="design"
                 leaf="LoadError"
                 parts={ERROR_PARTS}
-                note="Network drop → only Feedback.Empty inside the frame; NOT a part of the loaded leaf."
-                code={`<SurfaceCard.Base>
+                renderClassName="w-96"
+                states={[
+                    {
+                        name: "network request failed",
+                        why: "Only Feedback.Empty renders inside the SurfaceCard frame, replacing the title, meta, and progress bar entirely rather than sitting alongside them. This is not a smaller version of the loaded leaf, a dropped connection is a different branch of the card, not a missing piece of the has-progress shape.",
+                        code: `<SurfaceCard.Base>
     <Feedback.Empty
         tone="danger"
         title="Connection lost"
         description="The network seems to have dropped. Check your connection and try again."
         action={<Button.Base variant="secondary" label="Retry" />}
     />
-</SurfaceCard.Base>`}
-            >
-                <div className="w-96">
-                    <SurfaceCard.Base anatPart="SurfaceCard">
-                        <Feedback.Empty
-                            anatPart="Feedback.Empty"
-                            tone="danger"
-                            icon={WarningDuotone}
-                            title="Connection lost"
-                            description="The network seems to have dropped. Check your connection and try again."
-                            action={
-                                <Button.Base variant="secondary" size="sm" label="Retry" onPress={() => {}} anatPart="Button" />
-                            }
-                        />
-                    </SurfaceCard.Base>
-                </div>
-            </BlockAnatomy>,
+</SurfaceCard.Base>`,
+                        render: (
+                            <SurfaceCard.Base anatPart="SurfaceCard">
+                                <Feedback.Empty
+                                    anatPart="Feedback.Empty"
+                                    tone="danger"
+                                    icon={WarningDuotone}
+                                    title="Connection lost"
+                                    description="The network seems to have dropped. Check your connection and try again."
+                                    action={
+                                        <Button.Base variant="secondary" size="sm" label="Retry" onPress={() => {}} anatPart="Button" />
+                                    }
+                                />
+                            </SurfaceCard.Base>
+                        ),
+                    },
+                ]}
+            />,
         ),
 }

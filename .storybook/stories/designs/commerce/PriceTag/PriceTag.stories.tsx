@@ -33,7 +33,7 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 // itself (own `type`/`weight`), so it's a badged node even with no other parts.
 const TYPOGRAPHY_STORY = "atoms-text-typography-typography-base--plain"
 
-const AMOUNT: AnatomyNode = { name: "Typography", tier: "atom", role: "amount to pay (bold) — no discount", storyId: TYPOGRAPHY_STORY }
+const AMOUNT: AnatomyNode = { name: "Typography", tier: "atom", role: "the amount to pay (bold), rendered alone when there is no discount to compare it against", storyId: TYPOGRAPHY_STORY }
 
 // The −X% chip → popover subtree, shared by every on-sale leaf. NOTE: the "Popover"
 // wrapper itself is CUT from the tree — HeroUI's `PopoverRoot` is just a context
@@ -47,7 +47,7 @@ const PRICE_POPOVER_PARTS: Array<AnatomyNode> = [
     {
         name: "Popover.Trigger",
         tier: "composite",
-        role: "button that opens the popover (react-aria: role=button, aria-expanded/controls) — exactly ONE interactive element, wraps the −X% chip",
+        role: "the button that opens the popover (react-aria: role=button, aria-expanded/controls), the one interactive element in this cluster, wrapping the −X% chip",
         children: [
             {
                 // Node name = the REAL name of the component (`Chip.Base`), not a dead name:
@@ -56,7 +56,7 @@ const PRICE_POPOVER_PARTS: Array<AnatomyNode> = [
                 // `primitive` was mis-declared.
                 name: "Chip.Base",
                 tier: "atom",
-                role: "\"−X%\" saving label (soft-success) — just a label, not itself a button",
+                role: "the \"−X%\" saving label (soft-success), just a label rather than a button itself",
                 state: "success",
                 storyId: "atoms-chips-chip-chip-base--default",
             },
@@ -75,7 +75,7 @@ const PRICE_POPOVER_PARTS: Array<AnatomyNode> = [
                 // is decided by the composite, the same across every price table.
                 name: "KeyValue.List",
                 tier: "composite",
-                role: "a column of label↔value pairs built from `items`; the TOTAL row turns on `emphasis`",
+                role: "a column of label and value pairs built from `items`, with the TOTAL row turning on `emphasis`",
                 storyId: "composites-data-keyvalue-keyvalue-list--with-total",
             },
         ],
@@ -95,11 +95,11 @@ const SAVING_LINE: AnatomyNode = { name: "SavingLine", tier: "atom", role: "the 
 // ⭐ 2026-07-27 — the tree now reflects the real FRAME (teacher: "layout is built from
 // layouts components"): `Stack.V` (outer column) ⊃ `Cluster` (price row, baseline aligned)
 // ⊃ three elements, then `SavingLine` is the column's second line.
-const STACK: AnatomyNode = { name: "Stack.V", tier: "frame", role: "outer column — the price row on top, the \"Save\" line beneath", storyId: "frames-stack-stack-v--default" }
+const STACK: AnatomyNode = { name: "Stack.V", tier: "frame", role: "the outer column that stacks the price row on top and the \"Save\" line beneath it", storyId: "frames-stack-stack-v--default" }
 const CLUSTER = (items: Array<AnatomyNode>): AnatomyNode => ({
     name: "Cluster",
     tier: "frame",
-    role: "price row — BASELINE aligned (big number, struck number and chip share a baseline) and wraps when space runs out",
+    role: "the price row, baseline aligned so the big number, the struck number, and the chip share one baseline, wrapping onto a new line when space runs out",
     storyId: "frames-cluster-cluster-base--default",
     children: items,
 })
@@ -127,11 +127,16 @@ export const Default: Story = {
                 tier="design"
                 leaf="Default"
                 parts={NO_DISCOUNT_PARTS}
-                reason="A displayed price needs to pack MULTIPLE signals into one spot: the amount to pay (bold), the struck original price, and the saving amount. The saving amount uses a `Chip.Base` (tone success) as both the label and the button that opens the price-breakdown popover (original → phase → membership → you pay). Bundling it into one block keeps the discount logic from drifting across the places a price is shown."
-                code={"<PriceTag discounted={1990000} />"}
-            >
-                <PriceTag discounted={1990000} showAnatomy />
-            </BlockAnatomy>,
+                reason="A displayed price needs to pack multiple signals into one spot: the amount to pay in bold, the struck original price, and the saving amount. The saving amount uses a `Chip.Base` (tone success) as both the label and the button that opens the price-breakdown popover, which walks from the original price, through the phase price and membership discount, down to what the buyer actually pays. Bundling all of this into one block keeps the discount logic from drifting across every place a price gets shown."
+                states={[
+                    {
+                        name: "original = undefined",
+                        why: "Only the bold amount to pay renders, with no struck price, chip, or popover anywhere in the tree. A price with nothing to compare it against needs none of that scaffolding, so leaving it out keeps a plain price looking exactly like a plain price.",
+                        code: "<PriceTag discounted={1990000} />",
+                        render: <PriceTag discounted={1990000} showAnatomy />,
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -144,20 +149,26 @@ export const WithDiscount: Story = {
                 tier="design"
                 leaf="WithDiscount"
                 parts={DISCOUNT_PARTS}
-                note="With a discount → adds the struck original price, the −X% chip (opens the popover), and the 'Save N₫' line."
-                code={`<PriceTag
+                states={[
+                    {
+                        name: "original set, breakdown set",
+                        why: "Alongside the amount to pay, the tree adds the struck original price, the −X% chip that opens the popover, and the \"Save N₫\" line beneath. Together these four pieces let a buyer see the discount, open where it came from, and read the exact amount saved without leaving the price itself.",
+                        code: `<PriceTag
     discounted={1290000}
     original={1990000}
     breakdown={{ phase: 1590000, phaseLabel: "Early-bird", loyaltyPercent: 15, loyaltyNote: "owns 2 courses" }}
-/>`}
-            >
-                <PriceTag
-                    discounted={1290000}
-                    original={1990000}
-                    breakdown={{ phase: 1590000, phaseLabel: "Early-bird", loyaltyPercent: 15, loyaltyNote: "owns 2 courses" }}
-                    showAnatomy
-                />
-            </BlockAnatomy>,
+/>`,
+                        render: (
+                            <PriceTag
+                                discounted={1290000}
+                                original={1990000}
+                                breakdown={{ phase: 1590000, phaseLabel: "Early-bird", loyaltyPercent: 15, loyaltyNote: "owns 2 courses" }}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -176,11 +187,15 @@ export const Skeleton: Story = {
                 tier="design"
                 leaf={"Prop `isSkeleton`"}
                 parts={DISCOUNT_PARTS}
-                note="Every bar keeps the real line box (amount, struck original, chip, saving line) so nothing shifts when the price lands (§8). The −X% chip keeps its slot but drops the Popover — there is nothing to open yet, and a pressable control while loading is a promise the card cannot keep."
-                code={"<PriceTag.Prominent isSkeleton discounted={0} original={0} />"}
-            >
-                <PriceTag.Prominent isSkeleton discounted={1290000} original={1990000} showAnatomy />
-            </BlockAnatomy>,
+                states={[
+                    {
+                        name: "isSkeleton",
+                        why: "Every bar keeps the real line's box, the amount, the struck original, the chip, and the saving line, so nothing shifts once the price lands (§8). The −X% chip keeps its slot in the row but drops the popover, since there is nothing to open yet and a pressable control while loading is a promise the card cannot keep.",
+                        code: "<PriceTag.Prominent isSkeleton discounted={0} original={0} />",
+                        render: <PriceTag.Prominent isSkeleton discounted={1290000} original={1990000} showAnatomy />,
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -193,25 +208,35 @@ export const Sizes: Story = {
                 tier="design"
                 leaf="Sizes"
                 parts={DISCOUNT_PARTS}
-                note="Two ROLES for a price: Inline (one line inside a card) vs Prominent (the focal point of the buy CTA). Only the amount's type-scale differs — SAME composition."
-                code={`<PriceTag.Inline discounted={1490000} original={1990000} />
-<PriceTag.Prominent discounted={1490000} original={1990000} />`}
-            >
-                <div className="flex flex-col items-start gap-6">
-                    <PriceTag.Inline
-                        discounted={1490000}
-                        original={1990000}
-                        breakdown={{ phase: 1690000, phaseLabel: "Early-bird", loyaltyPercent: 12 }}
-                        showAnatomy
-                    />
-                    <PriceTag.Prominent
-                        discounted={1490000}
-                        original={1990000}
-                        breakdown={{ phase: 1690000, phaseLabel: "Early-bird", loyaltyPercent: 12 }}
-                        showAnatomy
-                    />
-                </div>
-            </BlockAnatomy>,
+                states={[
+                    {
+                        name: "PriceTag.Inline",
+                        why: "The amount renders at the smaller type scale meant to sit as one line inside a card, while every other part, the struck price, the chip, the popover, and the saving line, stays identical to the discounted composition. This size fits a dense list where the price is one signal among several, not the page's sole focus.",
+                        code: "<PriceTag.Inline discounted={1490000} original={1990000} />",
+                        render: (
+                            <PriceTag.Inline
+                                discounted={1490000}
+                                original={1990000}
+                                breakdown={{ phase: 1690000, phaseLabel: "Early-bird", loyaltyPercent: 12 }}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                    {
+                        name: "PriceTag.Prominent",
+                        why: "The amount renders at a larger type scale meant to be the focal point of a buy CTA, with the same composition underneath it as the Inline size. This size fits a hero section or checkout, where the price itself is the thing the page wants the eye to land on first.",
+                        code: "<PriceTag.Prominent discounted={1490000} original={1990000} />",
+                        render: (
+                            <PriceTag.Prominent
+                                discounted={1490000}
+                                original={1990000}
+                                breakdown={{ phase: 1690000, phaseLabel: "Early-bird", loyaltyPercent: 12 }}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -224,22 +249,28 @@ export const CurrencyUsd: Story = {
                 tier="design"
                 leaf="CurrencyUsd"
                 parts={DISCOUNT_PARTS}
-                note="Only the currency symbol & format change — SAME composition as the 'On sale' leaf."
-                code={`<PriceTag
+                states={[
+                    {
+                        name: "currency = \"USD\"",
+                        why: "Only the currency symbol and the number format change, from a ₫ suffix to a $ prefix with USD grouping, while the composition stays identical to the discounted leaf. No conversion happens in this component, it only formats whatever number and currency the caller already decided on.",
+                        code: `<PriceTag
     discounted={79}
     original={129}
     currency="USD"
     breakdown={{ phase: 99, phaseLabel: "Early-bird", loyaltyPercent: 20 }}
-/>`}
-            >
-                <PriceTag
-                    discounted={79}
-                    original={129}
-                    currency="USD"
-                    breakdown={{ phase: 99, phaseLabel: "Early-bird", loyaltyPercent: 20 }}
-                    showAnatomy
-                />
-            </BlockAnatomy>,
+/>`,
+                        render: (
+                            <PriceTag
+                                discounted={79}
+                                original={129}
+                                currency="USD"
+                                breakdown={{ phase: 99, phaseLabel: "Early-bird", loyaltyPercent: 20 }}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -252,21 +283,27 @@ export const NoSavingLine: Story = {
                 tier="design"
                 leaf="NoSavingLine"
                 parts={NO_SAVING_LINE_PARTS}
-                note="showSavingLine={false} → REMOVES the 'Save N₫' line; the −X% chip + popover stay (differs from the 'On sale' leaf)."
-                code={`<PriceTag
+                states={[
+                    {
+                        name: "showSavingLine = false",
+                        why: "The \"Save N₫\" line drops out of the tree while the −X% chip and its popover stay in place and stay clickable. A dense card context wants the chip's shorthand without spending a whole second line spelling out the same fact in currency.",
+                        code: `<PriceTag
     discounted={1290000}
     original={1990000}
     showSavingLine={false}
-/>`}
-            >
-                <PriceTag
-                    discounted={1290000}
-                    original={1990000}
-                    showSavingLine={false}
-                    breakdown={{ phase: 1590000, phaseLabel: "Early-bird", loyaltyPercent: 15, loyaltyNote: "owns 2 courses" }}
-                    showAnatomy
-                />
-            </BlockAnatomy>,
+/>`,
+                        render: (
+                            <PriceTag
+                                discounted={1290000}
+                                original={1990000}
+                                showSavingLine={false}
+                                breakdown={{ phase: 1590000, phaseLabel: "Early-bird", loyaltyPercent: 15, loyaltyNote: "owns 2 courses" }}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -279,11 +316,15 @@ export const DiscountWithoutBreakdown: Story = {
                 tier="design"
                 leaf="DiscountWithoutBreakdown"
                 parts={DISCOUNT_PARTS}
-                note="No breakdown passed → the popover only shows 'original price → you pay'; composition is still like the 'On sale' leaf."
-                code={"<PriceTag discounted={1290000} original={1990000} />"}
-            >
-                <PriceTag discounted={1290000} original={1990000} showAnatomy />
-            </BlockAnatomy>,
+                states={[
+                    {
+                        name: "breakdown = undefined",
+                        why: "The composition matches the discounted leaf exactly, and the chip still opens a popover, but that popover now shows only the original price resolving down to what the buyer pays, with no phase or loyalty rows in between. Without a breakdown object there is nothing more granular to show, so the popover falls back to the two numbers it always has.",
+                        code: "<PriceTag discounted={1290000} original={1990000} />",
+                        render: <PriceTag discounted={1290000} original={1990000} showAnatomy />,
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -296,20 +337,26 @@ export const BreakdownOpen: Story = {
                 tier="design"
                 leaf="BreakdownOpen"
                 parts={DISCOUNT_PARTS}
-                note="Click the −X% chip → Popover opens, shows the price breakdown; composition like the 'On sale' leaf."
-                code={`<PriceTag
+                states={[
+                    {
+                        name: "breakdown set, popover opened by the play test",
+                        why: "Clicking the −X% chip opens the popover to show the full price breakdown, with the same composition underneath it as the discounted leaf. The `play` function drives a real button click rather than a hover, matching how a touch or keyboard user actually opens this popover.",
+                        code: `<PriceTag
     discounted={1290000}
     original={1990000}
     breakdown={{ phase: 1590000, phaseLabel: "Early-bird", loyaltyPercent: 15, loyaltyNote: "owns 2 courses" }}
-/>`}
-            >
-                <PriceTag
-                    discounted={1290000}
-                    original={1990000}
-                    breakdown={{ phase: 1590000, phaseLabel: "Early-bird", loyaltyPercent: 15, loyaltyNote: "owns 2 courses" }}
-                    showAnatomy
-                />
-            </BlockAnatomy>,
+/>`,
+                        render: (
+                            <PriceTag
+                                discounted={1290000}
+                                original={1990000}
+                                breakdown={{ phase: 1590000, phaseLabel: "Early-bird", loyaltyPercent: 15, loyaltyNote: "owns 2 courses" }}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />,
         ),
     play: async ({ canvasElement }) => {
         const canvas = within(canvasElement)

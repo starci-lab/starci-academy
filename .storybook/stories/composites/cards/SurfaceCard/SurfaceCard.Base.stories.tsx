@@ -53,7 +53,7 @@ type Story = StoryObj<typeof SurfaceCard.Base>
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Link.SeeMore": {
         tier: "atom",
-        role: "the see-more affordance — SurfaceCardHeader builds it from `Link.SeeMore`, sized to match the label",
+        role: "the see-more affordance, which SurfaceCardHeader builds from Link.SeeMore, sized to match the label",
         storyId: "atoms-navigation-link-link-seemore--default",
     },
 }
@@ -96,13 +96,18 @@ export const Default: Story = {
                 name="SurfaceCard.Base"
                 tier="composite"
                 leaf="Default"
-                reason="The general bg-surface frame of the SurfaceCard namespace, with an OPTIONAL header section baked in — drop `label` and it renders bare. It is a WRAPPER frame, so `children` stays open (the shorthand for `body`); with no `header` or `footer` the DOM is exactly one surface div around the content."
-                code={`<SurfaceCard.Base>
+                reason="The general bg-surface frame of the SurfaceCard namespace, with an OPTIONAL header section baked in. It is a WRAPPER frame, so `children` stays open as the shorthand for `body`; with no `header`/`footer` passed, the DOM is exactly one surface div around the content."
+                states={[
+                    {
+                        name: "no label, header, or footer passed",
+                        why: "The header section drops out entirely and the surface div wraps only the content. This is the bare shape a caller reaches for when the surrounding page already carries its own heading.",
+                        code: `<SurfaceCard.Base>
   <ProfileRow />
-</SurfaceCard.Base>`}
-            >
-                <SurfaceCard.Base showAnatomy><ProfileRow /></SurfaceCard.Base>
-            </BlockAnatomy>
+</SurfaceCard.Base>`,
+                        render: <SurfaceCard.Base showAnatomy><ProfileRow /></SurfaceCard.Base>,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -115,20 +120,26 @@ export const Slots: Story = {
                 name="SurfaceCard.Base"
                 tier="composite"
                 leaf="Slots"
-                note="With `header` or `footer` the frame builds a `flex flex-col gap-3` column carrying all three slots. `body` wins over `children` when both are passed."
-                code={`<SurfaceCard.Base
+                states={[
+                    {
+                        name: "header, body, and footer all passed",
+                        why: "The frame builds a `flex flex-col gap-3` column carrying all three named slots instead of the single `children` body. `body` wins over `children` when both are passed, so a caller that needs an explicit footer reaches for the named slots.",
+                        code: `<SurfaceCard.Base
   header={<AtomTypography.Base size="sm" weight="medium" text="Profile" />}
   body={<ProfileRow />}
   footer={<AtomButton.Base size="sm" variant="secondary" label="View profile" onPress={() => {}} />}
-/>`}
-            >
-                <SurfaceCard.Base
-                    showAnatomy
-                    header={<AtomTypography.Base size="sm" weight="medium" text="Profile" />}
-                    body={<ProfileRow />}
-                    footer={<AtomButton.Base size="sm" variant="secondary" label="View profile" onPress={() => {}} />}
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <SurfaceCard.Base
+                                showAnatomy
+                                header={<AtomTypography.Base size="sm" weight="medium" text="Profile" />}
+                                body={<ProfileRow />}
+                                footer={<AtomButton.Base size="sm" variant="secondary" label="View profile" onPress={() => {}} />}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -140,13 +151,17 @@ export const WithLabel: Story = {
                 name="SurfaceCard.Base"
                 tier="composite"
                 leaf="WithLabel"
-                note="`label` turns on SurfaceCardHeader OUTSIDE (above) the surface frame, gap-3."
-                code={`<SurfaceCard.Base label="My courses">
+                states={[
+                    {
+                        name: "label passed",
+                        why: "`label` turns on SurfaceCardHeader above the surface frame, gap-3 between the two. This is how a card earns its own heading without the caller hand-rolling a title row.",
+                        code: `<SurfaceCard.Base label="My courses">
   <ProfileRow />
-</SurfaceCard.Base>`}
-            >
-                <SurfaceCard.Base label="My courses" showAnatomy><ProfileRow /></SurfaceCard.Base>
-            </BlockAnatomy>
+</SurfaceCard.Base>`,
+                        render: <SurfaceCard.Base label="My courses" showAnatomy><ProfileRow /></SurfaceCard.Base>,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -159,13 +174,17 @@ export const SeeMore: Story = {
                 tier="composite"
                 leaf="SeeMore"
                 annotate={ANNOTATE}
-                note="`onSeeMore` makes SurfaceCardHeader render a `Link.SeeMore` in place of `labelEnd` — still the same single header node. The frame builds that atom itself, so it shows up under **Deps**; `action` would not, because that node comes from the caller."
-                code={`<SurfaceCard.Base label="Featured courses" onSeeMore={() => {}}>
+                states={[
+                    {
+                        name: "onSeeMore passed",
+                        why: "SurfaceCardHeader renders a `Link.SeeMore` in place of `labelEnd`, still inside the same single header node. The frame builds that atom itself rather than taking it from the caller, so it shows up under Deps; `action` would not, because that node always comes from the caller.",
+                        code: `<SurfaceCard.Base label="Featured courses" onSeeMore={() => {}}>
   <ProfileRow />
-</SurfaceCard.Base>`}
-            >
-                <SurfaceCard.Base label="Featured courses" onSeeMore={() => {}} showAnatomy><ProfileRow /></SurfaceCard.Base>
-            </BlockAnatomy>
+</SurfaceCard.Base>`,
+                        render: <SurfaceCard.Base label="Featured courses" onSeeMore={() => {}} showAnatomy><ProfileRow /></SurfaceCard.Base>,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -177,13 +196,17 @@ export const LabelEnd: Story = {
                 name="SurfaceCard.Base"
                 tier="composite"
                 leaf="LabelEnd"
-                note="`labelEnd` is a muted tag on the right (a unit or a count), not an action."
-                code={`<SurfaceCard.Base label="Remaining tuition" labelEnd="VND">
+                states={[
+                    {
+                        name: "labelEnd passed",
+                        why: "`labelEnd` renders a muted tag to the right of the label, in the same header node. This is for a unit or a count that belongs next to the label, not an action a viewer could press.",
+                        code: `<SurfaceCard.Base label="Remaining tuition" labelEnd="VND">
   <ProfileRow />
-</SurfaceCard.Base>`}
-            >
-                <SurfaceCard.Base label="Remaining tuition" labelEnd="VND" showAnatomy><ProfileRow /></SurfaceCard.Base>
-            </BlockAnatomy>
+</SurfaceCard.Base>`,
+                        render: <SurfaceCard.Base label="Remaining tuition" labelEnd="VND" showAnatomy><ProfileRow /></SurfaceCard.Base>,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -195,22 +218,28 @@ export const WithAction: Story = {
                 name="SurfaceCard.Base"
                 tier="composite"
                 leaf="WithAction"
-                note="`action` wins over `onSeeMore` and `labelEnd` — still the same right-hand slot of SurfaceCardHeader."
-                code={`<SurfaceCard.Base
+                states={[
+                    {
+                        name: "action passed",
+                        why: "`action` wins over `onSeeMore` and `labelEnd`, filling the same right-hand slot of SurfaceCardHeader. This is for a card that needs a real control next to its label, such as a button that manages a setting shown below.",
+                        code: `<SurfaceCard.Base
   label="Payment method"
   action={<AtomButton.Base variant="secondary" size="sm" label="Manage" onPress={() => {}} />}
 >
   <ProfileRow />
-</SurfaceCard.Base>`}
-            >
-                <SurfaceCard.Base
-                    label="Payment method"
-                    action={<AtomButton.Base variant="secondary" size="sm" label="Manage" onPress={() => {}} />}
-                    showAnatomy
-                >
-                    <ProfileRow />
-                </SurfaceCard.Base>
-            </BlockAnatomy>
+</SurfaceCard.Base>`,
+                        render: (
+                            <SurfaceCard.Base
+                                label="Payment method"
+                                action={<AtomButton.Base variant="secondary" size="sm" label="Manage" onPress={() => {}} />}
+                                showAnatomy
+                            >
+                                <ProfileRow />
+                            </SurfaceCard.Base>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -226,13 +255,17 @@ export const SubtleLabel: Story = {
                     name="SurfaceCard.Base"
                     tier="composite"
                     leaf="SubtleLabel"
-                    note="`subtleLabel` makes SurfaceCardHeader render the label as a muted text-xs eyebrow instead of a bold Label, gap-2 instead of gap-3 — same node."
-                    code={`<SurfaceCard.Base label="Today" subtleLabel>
+                    states={[
+                        {
+                            name: "subtleLabel = true",
+                            why: "The label switches from a bold Label to a muted text-xs eyebrow, with the gap under it tightening from 3 to 2 — still the same single header node. This is for a card sitting under a primary section label, where a second bold heading would compete with it.",
+                            code: `<SurfaceCard.Base label="Today" subtleLabel>
   <ProfileRow />
-</SurfaceCard.Base>`}
-                >
-                    <SurfaceCard.Base label="Today" subtleLabel showAnatomy><ProfileRow /></SurfaceCard.Base>
-                </BlockAnatomy>
+</SurfaceCard.Base>`,
+                            render: <SurfaceCard.Base label="Today" subtleLabel showAnatomy><ProfileRow /></SurfaceCard.Base>,
+                        },
+                    ]}
+                />
                 <SurfaceCard.Base label="Yesterday" subtleLabel><ProfileRow /></SurfaceCard.Base>
                 <SurfaceCard.Base label="Last week" subtleLabel><ProfileRow /></SurfaceCard.Base>
             </div>
@@ -247,22 +280,28 @@ export const Description: Story = {
                 name="SurfaceCard.Base"
                 tier="composite"
                 leaf="Description"
-                note="`description` renders OUTSIDE (below) Content, gap-2 — a caption or prompt, not chrome that belongs to Content."
-                code={`<SurfaceCard.Base
+                states={[
+                    {
+                        name: "description passed",
+                        why: "`description` renders below Content, outside the surface frame, gap-2 under it. This is for a caption or a prompt that explains the card, not chrome that belongs inside Content.",
+                        code: `<SurfaceCard.Base
   label="Weekly quest"
   description="Complete all three to earn the reward."
 >
   <ProfileRow />
-</SurfaceCard.Base>`}
-            >
-                <SurfaceCard.Base
-                    label="Weekly quest"
-                    description="Complete all three to earn the reward."
-                    showAnatomy
-                >
-                    <ProfileRow />
-                </SurfaceCard.Base>
-            </BlockAnatomy>
+</SurfaceCard.Base>`,
+                        render: (
+                            <SurfaceCard.Base
+                                label="Weekly quest"
+                                description="Complete all three to earn the reward."
+                                showAnatomy
+                            >
+                                <ProfileRow />
+                            </SurfaceCard.Base>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -277,6 +316,10 @@ export const Description: Story = {
  * side.
  *
  * 2026-07-26 (teacher): changed from `bordered?: boolean` (`bordered=true` → `variant="nested"`).
+ *
+ * The `variant="surface"` reference card beside the panel is a plain sibling, not
+ * a state of this leaf: only ONE render sits inside `BlockAnatomy` here, so this
+ * leaf carries exactly one state.
  */
 export const Variant: Story = {
     render: () => (
@@ -291,15 +334,21 @@ export const Variant: Story = {
                     name="SurfaceCard.Base"
                     tier="composite"
                     leaf="Variant"
-                    note={"`variant=\"nested\"` (right, inside a bg-surface parent) switches Content to a border instead of a shadow (surface-in-surface, §1a); `variant=\"surface\"` (left, the default) keeps its own shadow when it sits directly on the background — the composition is identical."}
-                    code={`<SurfaceCard.Base label="Questions" variant="nested">
+                    states={[
+                        {
+                            name: "variant = \"nested\"",
+                            why: "Content switches from a shadow to a border (surface-in-surface, §1a), because a shadow stacked on a parent surface's own shadow is nearly invisible. The card at the left shows the default `variant=\"surface\"` for comparison — same composition, only the edge treatment differs.",
+                            code: `<SurfaceCard.Base label="Questions" variant="nested">
   <ProfileRow />
-</SurfaceCard.Base>`}
-                >
-                    <SurfaceCard.Base label="Questions" variant="nested" showAnatomy>
-                        <ProfileRow />
-                    </SurfaceCard.Base>
-                </BlockAnatomy>
+</SurfaceCard.Base>`,
+                            render: (
+                                <SurfaceCard.Base label="Questions" variant="nested" showAnatomy>
+                                    <ProfileRow />
+                                </SurfaceCard.Base>
+                            ),
+                        },
+                    ]}
+                />
             </div>
         </div>
     ),
@@ -317,6 +366,9 @@ export const Variant: Story = {
  * (`flushContent=true` → `padding={0}`). An axis INDEPENDENT of `variant` — a
  * `nested` card AND `padding={0}` is a real combination (an edge-to-edge image
  * inside a nested card); merging them would kill that combination.
+ *
+ * Same shape as `Variant`: only `padding={0}` sits inside `BlockAnatomy`, the
+ * `padding={3}` card at the left is a plain reference sibling.
  */
 export const Padding: Story = {
     render: () => (
@@ -331,17 +383,23 @@ export const Padding: Story = {
                     name="SurfaceCard.Base"
                     tier="composite"
                     leaf="Padding"
-                    note="`padding={0}` (right) drops `p-3` and turns on `overflow-hidden`; the child owns its own padding so an image or table edge follows the frame's corners. `padding={3}` (left, the default) is the standard inset — the two most-used values of the §10c scale on this axis."
-                    code={`<SurfaceCard.Base label="Featured course" padding={0}>
+                    states={[
+                        {
+                            name: "padding = 0",
+                            why: "The card drops its `p-3` inset and turns on `overflow-hidden`, so a child now owns its own padding and its edges follow the frame's own corners. The card at the left shows the default `padding={3}` for comparison, the standard inset used on the §10c scale.",
+                            code: `<SurfaceCard.Base label="Featured course" padding={0}>
   <div className="h-28 bg-accent-soft" />
   <div className="p-3"><ProfileRow /></div>
-</SurfaceCard.Base>`}
-                >
-                    <SurfaceCard.Base label="Featured course" padding={0} showAnatomy>
-                        <div className="h-28 w-full bg-accent-soft" aria-hidden />
-                        <div className="p-3"><ProfileRow /></div>
-                    </SurfaceCard.Base>
-                </BlockAnatomy>
+</SurfaceCard.Base>`,
+                            render: (
+                                <SurfaceCard.Base label="Featured course" padding={0} showAnatomy>
+                                    <div className="h-28 w-full bg-accent-soft" aria-hidden />
+                                    <div className="p-3"><ProfileRow /></div>
+                                </SurfaceCard.Base>
+                            ),
+                        },
+                    ]}
+                />
             </div>
         </div>
     ),
@@ -357,6 +415,9 @@ export const Padding: Story = {
  * forwards the flag down — here that's `ProfileRow`, which is built from three
  * atoms so the flag flows straight to `Avatar.Base` + two `Typography.Base`. No
  * second skeleton tree to keep in sync (§12c).
+ *
+ * Only the skeleton card sits inside `BlockAnatomy`; the plain card at the left
+ * is a reference sibling, so this leaf carries exactly one state.
  */
 export const Skeleton: Story = {
     render: () => (
@@ -368,20 +429,26 @@ export const Skeleton: Story = {
                 name="SurfaceCard.Base"
                 tier="composite"
                 leaf="Prop `isSkeleton`"
-                note="Every bar keeps the real line box (label `sm`, caption `xs`, the row's own two lines) so nothing shifts when the data lands (§8). The frame owns the label and the caption; the row owns itself."
-                code={`<SurfaceCard.Base isSkeleton label="My courses" description={…}>
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "Every line keeps its real box, the label at `sm`, the caption at `xs`, and the row's own two lines, so nothing shifts once the data lands (§8). The frame owns the label and the caption bars; `ProfileRow` owns its own two bars because the flag is forwarded down as a prop.",
+                        code: `<SurfaceCard.Base isSkeleton label="My courses" description={…}>
   <ProfileRow isSkeleton />
-</SurfaceCard.Base>`}
-            >
-                <SurfaceCard.Base
-                    isSkeleton
-                    showAnatomy
-                    label="My courses"
-                    description="Three left to finish this month."
-                >
-                    <ProfileRow isSkeleton />
-                </SurfaceCard.Base>
-            </BlockAnatomy>
+</SurfaceCard.Base>`,
+                        render: (
+                            <SurfaceCard.Base
+                                isSkeleton
+                                showAnatomy
+                                label="My courses"
+                                description="Three left to finish this month."
+                            >
+                                <ProfileRow isSkeleton />
+                            </SurfaceCard.Base>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

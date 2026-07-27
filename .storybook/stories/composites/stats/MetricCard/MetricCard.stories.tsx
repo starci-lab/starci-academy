@@ -15,16 +15,17 @@ export default meta
 
 type Story = StoryObj<typeof MetricCard>
 
-// SectionCard (frame) ⊃ Value (h4 bold) · Label (body-sm, prominent line) · Hint (body-xs muted, optional).
+// SectionCard (frame) contains Value (h4 bold), Label (body-sm, the prominent line), and an
+// optional Hint (body-xs muted).
 const FULL_PARTS: Array<AnatomyNode> = [
     {
         name: "SectionCard",
         tier: "composite",
-        role: "khung card (border + bg + radius)",
+        role: "the card frame, giving the value its border, background fill and rounded corners",
         children: [
-            { name: "Value", tier: "composite", role: "con số nổi bật (h4 semibold)" },
-            { name: "Label", tier: "composite", role: "mô tả — dòng NỔI BẬT, foreground" },
-            { name: "Hint", tier: "composite", role: "ghi chú phụ — dòng LẶNG, muted body-xs" },
+            { name: "Value", tier: "composite", role: "the highlighted number, rendered semibold at h4 size" },
+            { name: "Label", tier: "composite", role: "the description underneath, the prominent foreground line" },
+            { name: "Hint", tier: "composite", role: "a quiet supplementary note, muted and one size smaller than the label" },
         ],
     },
 ]
@@ -32,10 +33,10 @@ const NO_HINT_PARTS: Array<AnatomyNode> = [
     {
         name: "SectionCard",
         tier: "composite",
-        role: "khung card (border + bg + radius)",
+        role: "the card frame, giving the value its border, background fill and rounded corners",
         children: [
-            { name: "Value", tier: "composite", role: "con số nổi bật (h4 semibold)" },
-            { name: "Label", tier: "composite", role: "mô tả — dòng NỔI BẬT, foreground" },
+            { name: "Value", tier: "composite", role: "the highlighted number, rendered semibold at h4 size" },
+            { name: "Label", tier: "composite", role: "the description underneath, the prominent foreground line" },
         ],
     },
 ]
@@ -48,15 +49,23 @@ export const Default: Story = {
                 tier="composite"
                 leaf="Default"
                 parts={FULL_PARTS}
-                code={"<MetricCard value=\"1,204\" label=\"Total enrolled students\" hint=\"Updated daily\" />"}
-            >
-                <MetricCard
-                    showAnatomy
-                    value="1,204"
-                    label="Total enrolled students"
-                    hint="Updated daily"
-                />
-            </BlockAnatomy>
+                reason="A standalone, framed presentation of one data point: a value, a label describing it, and an optional hint. Every part arrives through props, so the card never invents a number or a description of its own."
+                states={[
+                    {
+                        name: "value, label, hint all set",
+                        why: "All three parts render: the value large at the top, the label right below it, and the hint as a small muted line under that. This is the full shape, the one every other leaf below narrows down from.",
+                        code: "<MetricCard value=\"1,204\" label=\"Total enrolled students\" hint=\"Updated daily\" />",
+                        render: (
+                            <MetricCard
+                                showAnatomy
+                                value="1,204"
+                                label="Total enrolled students"
+                                hint="Updated daily"
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -69,15 +78,22 @@ export const WithHint: Story = {
                 tier="composite"
                 leaf="WithHint"
                 parts={FULL_PARTS}
-                code={"<MetricCard value=\"98%\" label=\"Course completion rate\" hint=\"Vs. last week\" />"}
-            >
-                <MetricCard
-                    showAnatomy
-                    value="98%"
-                    label="Course completion rate"
-                    hint="Vs. last week"
-                />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "value, label, hint all set",
+                        why: "The hint line reads as context for the value rather than a caveat, since a completion rate benefits from knowing what it's compared against. The tree stays identical to `Default`, only the wording of the three strings changes.",
+                        code: "<MetricCard value=\"98%\" label=\"Course completion rate\" hint=\"Vs. last week\" />",
+                        render: (
+                            <MetricCard
+                                showAnatomy
+                                value="98%"
+                                label="Course completion rate"
+                                hint="Vs. last week"
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -91,11 +107,15 @@ export const WithoutHint: Story = {
                 tier="composite"
                 leaf="WithoutHint"
                 parts={NO_HINT_PARTS}
-                note="Không truyền `hint` — SectionCard chỉ còn Value + Label."
-                code={"<MetricCard value=\"42\" label=\"Certificates issued\" />"}
-            >
-                <MetricCard showAnatomy value="42" label="Certificates issued" />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "hint not passed",
+                        why: "The `Hint` node disappears entirely and the card ends right after the label, one node fewer than `Default`. A certificate count needs no extra caveat, so the card doesn't reserve empty space for one.",
+                        code: "<MetricCard value=\"42\" label=\"Certificates issued\" />",
+                        render: <MetricCard showAnatomy value="42" label="Certificates issued" />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -109,15 +129,22 @@ export const LongText: Story = {
                 tier="composite"
                 leaf="LongText"
                 parts={FULL_PARTS}
-                code={"<MetricCard value=\"3,750\" label=\"Total assignment submissions graded this month\" hint=\"Includes submissions from both trial and paid students\" />"}
-            >
-                <MetricCard
-                    showAnatomy
-                    value="3,750"
-                    label="Total assignment submissions graded this month"
-                    hint="Includes submissions from both trial and paid students"
-                />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "label and hint both long sentences",
+                        why: "The label and hint wrap onto multiple lines instead of truncating or overflowing the frame, so the tree stays the same shape as `Default` at any text length. A metric card has to hold a real sentence, not just a short tag, without breaking its layout.",
+                        code: "<MetricCard value=\"3,750\" label=\"Total assignment submissions graded this month\" hint=\"Includes submissions from both trial and paid students\" />",
+                        render: (
+                            <MetricCard
+                                showAnatomy
+                                value="3,750"
+                                label="Total assignment submissions graded this month"
+                                hint="Includes submissions from both trial and paid students"
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

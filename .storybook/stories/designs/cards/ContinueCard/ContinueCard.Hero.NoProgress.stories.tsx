@@ -60,7 +60,7 @@ const NO_PROGRESS_PARTS: Array<AnatomyNode> = [
     {
         name: "SurfaceCard",
         tier: "composite",
-        role: "card surface — `isHighlight` turns on the hero accent glow. The frame STAYS PUT across every state, so switching state never shifts the layout",
+        role: "card surface, where `isHighlight` turns on the hero accent glow. The frame stays put across every state, so switching state never shifts the layout",
         storyId: "composites-cards-surfacecard-surfacecard-base--default",
         children: [
             // ⭐ 2026-07-27: two frames from the `layouts` tier now APPEAR in the tree —
@@ -69,24 +69,24 @@ const NO_PROGRESS_PARTS: Array<AnatomyNode> = [
             {
                 name: "Stack.H",
                 tier: "frame",
-                role: "outer row — one horizontal track (children are ARBITRARY ⇒ `Stack`, not `Cluster`, §13b)",
+                role: "outer row, one horizontal track (children are arbitrary, so it uses `Stack`, not `Cluster`, §13b)",
                 storyId: "frames-stack-stack-h--default",
                 children: [
                     {
                         name: "Stack.V",
                         tier: "frame",
-                        role: "text column — title on top, meta/subtitle underneath",
+                        role: "text column, title on top and meta/subtitle underneath",
                         storyId: "frames-stack-stack-v--default",
                         children: [
-                            { name: "Title", tier: "atom", role: "name of the session in progress — `Typography.Base` medium + truncate", storyId: "atoms-text-typography-typography-base--plain" },
-                            { name: "Skeleton.Meta", tier: "atom", role: "mirror bar standing in for the meta row while loading — `Typography.Base isSkeleton`", storyId: "atoms-text-typography-typography-base--plain" },
+                            { name: "Title", tier: "atom", role: "name of the session in progress, a `Typography.Base` medium + truncate", storyId: "atoms-text-typography-typography-base--plain" },
+                            { name: "Skeleton.Meta", tier: "atom", role: "mirror bar standing in for the meta row while loading, a `Typography.Base isSkeleton`", storyId: "atoms-text-typography-typography-base--plain" },
                             {
                                 name: "List.Meta",
                                 tier: "composite",
                                 role: "meta row: muted fragments joined by ·",
                                 storyId: "composites-lists-list-list-meta--with-chip",
                                 children: [
-                                    { name: "Chip.Base", tier: "atom", role: "time-remaining chip (the `chip` slot → it grows INSIDE List.Meta)", state: "neutral", storyId: "atoms-chips-chip-chip-base--default" },
+                                    { name: "Chip.Base", tier: "atom", role: "time-remaining chip, the `chip` slot that grows inside List.Meta", state: "neutral", storyId: "atoms-chips-chip-chip-base--default" },
                                 ],
                             },
                         ],
@@ -103,7 +103,7 @@ const ERROR_PARTS: Array<AnatomyNode> = [
     {
         name: "SurfaceCard",
         tier: "composite",
-        role: "the very SAME frame — an error must never make the frame disappear",
+        role: "the very same frame, since an error must never make the frame disappear",
         storyId: "composites-cards-surfacecard-surfacecard-base--default",
         children: [
             {
@@ -113,7 +113,7 @@ const ERROR_PARTS: Array<AnatomyNode> = [
                 state: "danger",
                 storyId: "composites-feedback-feedback-feedback-empty--action",
                 children: [
-                    { name: "Button", tier: "atom", role: "retry button (secondary, inside the `action` prop — built by the STORY, so it is still declared, §11a.1)", storyId: "atoms-buttons-button-button-base--default" },
+                    { name: "Button", tier: "atom", role: "retry button (secondary, inside the `action` prop, built by the STORY, so it is still declared, §11a.1)", storyId: "atoms-buttons-button-button-base--default" },
                 ],
             },
         ],
@@ -129,18 +129,25 @@ export const NotStarted: Story = {
                 tier="design"
                 leaf="NotStarted"
                 parts={NO_PROGRESS_PARTS}
-                reason="Anatomy of the loaded LEAF 'No progress' — ONLY the parts this leaf composes (NO ProgressMeter: that's the SHAPE difference from 'Progress'). Loading/error are SEPARATE leaves with their own composition — NOT included here."
-                code={`<ContinueCard.Hero
+                reason="Anatomy of the loaded LEAF 'No progress': ONLY the parts this leaf composes (NO ProgressMeter, that's the SHAPE difference from 'Progress'). Loading/error are SEPARATE leaves with their own composition, not included here."
+                states={[
+                    {
+                        name: "value not passed (no progress yet)",
+                        why: "No ProgressMeter renders at all; the card stops at title, meta chip, and the resume button. The bar's absence IS the mark distinguishing a session that has not started from one already tracking a percentage.",
+                        code: `<ContinueCard.Hero
     title="Mock interview: Design a rate limiter"
     meta={["Question 2 / 8", "Middle"]}
     timeLeft="40 minutes left"
     onPress={handleResume}
-/>`}
-            >
-                <div className="w-96">
-                    <ContinueCard.Hero {...noProgressBase} />
-                </div>
-            </BlockAnatomy>,
+/>`,
+                        render: (
+                            <div className="w-96">
+                                <ContinueCard.Hero {...noProgressBase} />
+                            </div>
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -157,19 +164,25 @@ export const Skeleton: Story = {
                 tier="design"
                 leaf="Prop `isSkeleton`"
                 parts={NO_PROGRESS_PARTS}
-                code={`<ContinueCard.Hero
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "Every node from the loaded 'No progress' leaf renders its own shimmer in place of content, the exact same parts, none added or removed. isSkeleton flips state, not structure (§11f), which is what keeps the layout from jumping once the real content lands.",
+                        code: `<ContinueCard.Hero
     title="Mock interview: Design a rate limiter"
     meta={["Question 2 / 8", "Middle"]}
     timeLeft="40 minutes left"
     onPress={handleResume}
     isSkeleton
-/>`}
-                note="`isSkeleton` flips STATE, not structure (§11f) — SAME parts as the loaded 'No progress' leaf; each one renders its shimmer instead of content."
-            >
-                <div className="w-96">
-                    <ContinueCard.Hero {...noProgressBase} isSkeleton />
-                </div>
-            </BlockAnatomy>,
+/>`,
+                        render: (
+                            <div className="w-96">
+                                <ContinueCard.Hero {...noProgressBase} isSkeleton />
+                            </div>
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -182,30 +195,36 @@ export const LoadError: Story = {
                 tier="design"
                 leaf="LoadError"
                 parts={ERROR_PARTS}
-                note="Network drop → SectionCard frame stays unchanged, body swaps to Feedback.Empty tone danger + retry button (no card content)."
-                code={`<SurfaceCard.Base>
+                states={[
+                    {
+                        name: "load fails (network drop)",
+                        why: "The card's own frame stays unchanged while its body swaps to Feedback.Empty tone danger with a retry button, dropping every other card node. An error must never make the frame itself disappear, so the reader always sees the same card outline, just with a different message inside it.",
+                        code: `<SurfaceCard.Base>
     <Feedback.Empty
         tone="danger"
         title="Connection lost"
         description="The network seems to have dropped. Check your connection and try again."
         action={<Button.Base variant="secondary" label="Retry" />}
     />
-</SurfaceCard.Base>`}
-            >
-                <div className="w-96 p-8">
-                    <SurfaceCard.Base anatPart="SurfaceCard">
-                        <Feedback.Empty
-                            anatPart="Feedback.Empty"
-                            tone="danger"
-                            icon={WarningDuotone}
-                            title="Connection lost"
-                            description="The network seems to have dropped. Check your connection and try again."
-                            action={
-                                <Button.Base variant="secondary" size="sm" label="Retry" onPress={() => {}} anatPart="Button" />
-                            }
-                        />
-                    </SurfaceCard.Base>
-                </div>
-            </BlockAnatomy>,
+</SurfaceCard.Base>`,
+                        render: (
+                            <div className="w-96 p-8">
+                                <SurfaceCard.Base anatPart="SurfaceCard">
+                                    <Feedback.Empty
+                                        anatPart="Feedback.Empty"
+                                        tone="danger"
+                                        icon={WarningDuotone}
+                                        title="Connection lost"
+                                        description="The network seems to have dropped. Check your connection and try again."
+                                        action={
+                                            <Button.Base variant="secondary" size="sm" label="Retry" onPress={() => {}} anatPart="Button" />
+                                        }
+                                    />
+                                </SurfaceCard.Base>
+                            </div>
+                        ),
+                    },
+                ]}
+            />,
         ),
 }

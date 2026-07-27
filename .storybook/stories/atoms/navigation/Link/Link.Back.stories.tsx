@@ -54,18 +54,24 @@ export const Default: Story = {
                 name="Link.Back"
                 tier="atom"
                 leaf="Bare link"
-                reason="The one back affordance in the system, wrapping HeroUI Link. `label` and `target` only swap the string inside the same span — the DOM never changes shape, so neither prop earns its own leaf."
-                note="Generic 'Back' when neither prop is set; `target` composes 'Back to {target}'; `label` overrides the whole string. Hover slides the arrow left and underlines the label — that motion is fixed, not prop-driven."
-                code={`<Link.Back onPress={goBack} />
+                reason="The one back affordance in the system, wrapping HeroUI Link. `label` and `target` only swap the string inside the same span, the DOM never changes shape, so neither prop earns its own leaf."
+                states={[
+                    {
+                        name: "label unset, target unset | target set | label set (three call shapes)",
+                        why: "Only the string inside the same span changes across the three lines: generic \"Back\" with neither prop set, \"Back to {target}\" once target is set, and the label overriding the whole string once it is set. Hover slides the arrow left and underlines the label on every line the same way, because that motion is fixed rather than prop-driven.",
+                        code: `<Link.Back onPress={goBack} />
 <Link.Back target="challenge" onPress={goBack} />
-<Link.Back label="Back to all courses" onPress={goBack} />`}
-            >
-                <div className="flex flex-col gap-4">
-                    <Link.Back onPress={() => {}} />
-                    <Link.Back target="challenge" onPress={() => {}} />
-                    <Link.Back label="Back to all courses" onPress={() => {}} />
-                </div>
-            </BlockAnatomy>
+<Link.Back label="Back to all courses" onPress={goBack} />`,
+                        render: (
+                            <div className="flex flex-col gap-4">
+                                <Link.Back onPress={() => {}} />
+                                <Link.Back target="challenge" onPress={() => {}} />
+                                <Link.Back label="Back to all courses" onPress={() => {}} />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

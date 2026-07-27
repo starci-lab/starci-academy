@@ -58,7 +58,7 @@ const ACTION_PARTS: Array<AnatomyNode> = [
         role: "centered frame for the error state",
         state: "danger",
         children: [
-            { name: "Action", tier: "composite", role: "general-purpose action slot — any node the caller passes" },
+            { name: "Action", tier: "composite", role: "the general-purpose action slot, holding whatever node the caller passes" },
         ],
     },
 ]
@@ -72,13 +72,18 @@ export const Basic: Story = {
                 tier="composite"
                 leaf="Basic"
                 parts={MESSAGE_PARTS}
-                reason={"The error state of an async data region needs exactly the anatomy of Feedback.Empty tone=\"danger\" (warning icon + title + description + centered action). AsyncContent.Error only adds a default WarningIcon and wraps onRetry/retryLabel into the action slot — a thin layer over Feedback.Empty, it doesn't redraw anything."}
-                code={`<AsyncContent.Error
+                reason={"The error state of an async data region needs exactly the anatomy of `Feedback.Empty tone=\"danger\"` (warning icon, title, description, centered action). AsyncContent.Error only adds a default WarningIcon and wraps onRetry/retryLabel into the action slot, staying a thin layer over Feedback.Empty rather than redrawing anything."}
+                states={[
+                    {
+                        name: "description unset, onRetry unset, action unset",
+                        why: "Only the default warning icon and the title render, since neither the description slot nor the action slot has anything to show. This is the leanest error message, used when the title alone already says what went wrong.",
+                        code: `<AsyncContent.Error
   title="Đã có lỗi xảy ra"
-/>`}
-            >
-                <AsyncContent.Error title="Đã có lỗi xảy ra" showAnatomy />
-            </BlockAnatomy>,
+/>`,
+                        render: <AsyncContent.Error title="Đã có lỗi xảy ra" showAnatomy />,
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -91,18 +96,24 @@ export const WithDescription: Story = {
                 tier="composite"
                 leaf="WithDescription"
                 parts={MESSAGE_PARTS}
-                note="Adds a muted description line under the title — still no action button."
-                code={`<AsyncContent.Error
+                states={[
+                    {
+                        name: "description set, onRetry unset, action unset",
+                        why: "A muted description line appears under the title while the action slot stays empty, so there is still no button to press. This is the shape a caller reaches for when the title alone doesn't say enough about the cause or what to do next.",
+                        code: `<AsyncContent.Error
   title="Không tải được dữ liệu"
   description="Máy chủ tạm thời không phản hồi. Vui lòng thử lại sau."
-/>`}
-            >
-                <AsyncContent.Error
-                    title="Không tải được dữ liệu"
-                    description="Máy chủ tạm thời không phản hồi. Vui lòng thử lại sau."
-                    showAnatomy
-                />
-            </BlockAnatomy>,
+/>`,
+                        render: (
+                            <AsyncContent.Error
+                                title="Không tải được dữ liệu"
+                                description="Máy chủ tạm thời không phản hồi. Vui lòng thử lại sau."
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -115,22 +126,28 @@ export const WithRetry: Story = {
                 tier="composite"
                 leaf="WithRetry"
                 parts={RETRY_PARTS}
-                note="onRetry + retryLabel → the frame builds a Button secondary size sm for the action slot ITSELF. Missing either one → no button (several real sources currently fall into this case)."
-                code={`<AsyncContent.Error
+                states={[
+                    {
+                        name: "onRetry set, retryLabel set",
+                        why: "The frame itself builds a secondary, size-sm Button for the action slot from the onRetry and retryLabel pair, so the caller never constructs the button by hand. Missing either prop leaves the action slot empty instead, which is the shape several real sources currently fall into.",
+                        code: `<AsyncContent.Error
   title="Không tải được dữ liệu"
   description="Đã có lỗi xảy ra khi tải nội dung."
   onRetry={() => {}}
   retryLabel="Thử lại"
-/>`}
-            >
-                <AsyncContent.Error
-                    title="Không tải được dữ liệu"
-                    description="Đã có lỗi xảy ra khi tải nội dung."
-                    onRetry={() => {}}
-                    retryLabel="Thử lại"
-                    showAnatomy
-                />
-            </BlockAnatomy>,
+/>`,
+                        render: (
+                            <AsyncContent.Error
+                                title="Không tải được dữ liệu"
+                                description="Đã có lỗi xảy ra khi tải nội dung."
+                                onRetry={() => {}}
+                                retryLabel="Thử lại"
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -143,20 +160,26 @@ export const WithAction: Story = {
                 tier="composite"
                 leaf="WithAction"
                 parts={ACTION_PARTS}
-                note="When an error needs an action that isn't just a plain 'retry' (reload the page, contact support…), pass a node straight through `action` — it wins over the onRetry/retryLabel pair."
-                code={`<AsyncContent.Error
+                states={[
+                    {
+                        name: "action set to a custom node",
+                        why: "The caller's node fills the action slot directly and wins over the onRetry/retryLabel shorthand, so a bespoke button (reload the page, contact support) can stand where a plain retry button would otherwise go. Reach for this whenever the way out of the error isn't a plain retry.",
+                        code: `<AsyncContent.Error
   title="Phiên làm việc đã hết hạn"
   description="Đăng nhập lại để tiếp tục."
   action={<Button size="sm" variant="secondary" icon={<ArrowClockwiseIcon />}>Tải lại trang</Button>}
-/>`}
-            >
-                <AsyncContent.Error
-                    title="Phiên làm việc đã hết hạn"
-                    description="Đăng nhập lại để tiếp tục."
-                    action={<Button size="sm" variant="secondary" icon={<ArrowClockwiseIcon />}>Tải lại trang</Button>}
-                    showAnatomy
-                />
-            </BlockAnatomy>,
+/>`,
+                        render: (
+                            <AsyncContent.Error
+                                title="Phiên làm việc đã hết hạn"
+                                description="Đăng nhập lại để tiếp tục."
+                                action={<Button size="sm" variant="secondary" icon={<ArrowClockwiseIcon />}>Tải lại trang</Button>}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -169,23 +192,29 @@ export const CustomIcon: Story = {
                 tier="composite"
                 leaf="CustomIcon"
                 parts={RETRY_PARTS}
-                note="Same full shape (description + retry button), only swaps the default icon for the one the caller passes in — the icon is a prop value so the parts tree doesn't change."
-                code={`<AsyncContent.Error
+                states={[
+                    {
+                        name: "icon set to WifiSlashIcon",
+                        why: "The caller's icon replaces the default warning glyph while the description and retry button keep their full shape from WithRetry, since icon is a prop value rather than a node the parts tree needs to account for. Swap in a more specific glyph like this when the cause of the error is known, a dropped network connection here rather than a generic failure.",
+                        code: `<AsyncContent.Error
   icon={<WifiSlashIcon weight="duotone" />}
   title="Mất kết nối mạng"
   description="Kiểm tra kết nối rồi thử lại."
   onRetry={() => {}}
   retryLabel="Thử lại"
-/>`}
-            >
-                <AsyncContent.Error
-                    icon={WifiSlashIcon}
-                    title="Mất kết nối mạng"
-                    description="Kiểm tra kết nối rồi thử lại."
-                    onRetry={() => {}}
-                    retryLabel="Thử lại"
-                    showAnatomy
-                />
-            </BlockAnatomy>,
+/>`,
+                        render: (
+                            <AsyncContent.Error
+                                icon={WifiSlashIcon}
+                                title="Mất kết nối mạng"
+                                description="Kiểm tra kết nối rồi thử lại."
+                                onRetry={() => {}}
+                                retryLabel="Thử lại"
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />,
         ),
 }

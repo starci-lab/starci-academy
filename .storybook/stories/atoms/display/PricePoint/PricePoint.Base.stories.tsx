@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { PricePoint, type PricePointSize } from "@sb-components/atoms/display/PricePoint/PricePoint"
+import { PricePoint } from "@sb-components/atoms/display/PricePoint/PricePoint"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -28,6 +28,9 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * `original`/`period` used to be locked to a fixed small size regardless of `size` —
  * now they ride the SAME per-size token table as `amount`, so `size="lg"` reads as one
  * coherent, larger unit instead of a big number next to leftover tiny text.
+ *
+ * 2026-07-27: migrated to the `states` API (§8) — each prop's demonstrated values
+ * are now `states[]` entries instead of a stacked flex row under one shared `note`.
  */
 
 /** Doc shown at the top of the autodocs page. UI copy stays English (2026-07-26 house style). */
@@ -98,12 +101,16 @@ export const Default: Story = {
                 tier="atom"
                 leaf="Bare price"
                 reason="The baseline unit: just the amount, at the default md scale. Every leaf below differs by exactly one prop, so this is what you compare the others against."
-                note="No struck original, no period, size defaults to md (h3). The DOM is one flex row holding just the amount."
                 annotate={{ Amount: PART_AMOUNT }}
-                code={"<PricePoint.Base amount=\"$19\" />"}
-            >
-                <PricePoint.Base amount="$19" showAnatomy />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "original and period both unset, size unset",
+                        why: "The DOM is one flex row holding just the amount, at the default `md` scale. No `Original` or `Period` node exists in the tree, since neither prop was passed.",
+                        code: "<PricePoint.Base amount=\"$19\" />",
+                        render: <PricePoint.Base amount="$19" showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -117,16 +124,22 @@ export const Original: Story = {
                 tier="atom"
                 leaf="Prop `original`"
                 reason="The struck price only earns its spot when there is a real discount — it lets the reader see the drop for themselves instead of trusting a badge that claims one."
-                note="original now rides the same per-size token table as the amount (secondary, not fixed-tiny), so it stays legible next to a lg amount instead of shrinking to nothing."
                 annotate={{ Amount: PART_AMOUNT, Original: PART_ORIGINAL }}
-                code={`<PricePoint.Base amount="$19" />
-<PricePoint.Base amount="$19" original="$29" />`}
-            >
-                <div className="flex flex-wrap items-center gap-8">
-                    <PricePoint.Base amount="$19" showAnatomy />
-                    <PricePoint.Base amount="$19" original="$29" />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "original unset",
+                        why: "Only the `Amount` node renders — the same bare shape as `Default`. This is the baseline you compare the next state against.",
+                        code: "<PricePoint.Base amount=\"$19\" />",
+                        render: <PricePoint.Base amount="$19" showAnatomy />,
+                    },
+                    {
+                        name: "original set",
+                        why: "An `Original` node grows beside the amount, struck through and rendered at the size table's secondary size rather than a fixed tiny one. It stays legible next to a `lg` amount instead of shrinking to nothing, because it now rides the same per-size token table as the amount.",
+                        code: "<PricePoint.Base amount=\"$19\" original=\"$29\" />",
+                        render: <PricePoint.Base amount="$19" original="$29" showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -140,46 +153,30 @@ export const Period: Story = {
                 tier="atom"
                 leaf="Prop `period`"
                 reason="A recurring price needs the cadence right next to the number, or the reader has to hunt the page for a `/month` disclaimer somewhere else."
-                note="period rides the size table's smallest, most muted size — it reads as a unit suffix, never as competing with the amount for attention."
                 annotate={{ Amount: PART_AMOUNT, Period: PART_PERIOD }}
-                code={`<PricePoint.Base amount="$19" />
-<PricePoint.Base amount="$19" period="/month" />`}
-            >
-                <div className="flex flex-wrap items-center gap-8">
-                    <PricePoint.Base amount="$19" showAnatomy />
-                    <PricePoint.Base amount="$19" period="/month" />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "period unset",
+                        why: "Only the `Amount` node renders — the same bare shape as `Default`. This is the baseline you compare the next state against.",
+                        code: "<PricePoint.Base amount=\"$19\" />",
+                        render: <PricePoint.Base amount="$19" showAnatomy />,
+                    },
+                    {
+                        name: "period set",
+                        why: "A `Period` node grows right after the amount, at the size table's smallest, most muted size. It reads as a unit suffix rather than competing with the amount for attention, so the reader never mistakes the price for a one-time charge.",
+                        code: "<PricePoint.Base amount=\"$19\" period=\"/month\" />",
+                        render: <PricePoint.Base amount="$19" period="/month" showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
 /**
- * ĐỦ union `PricePointSize` — thiếu một giá trị là giá trị đó mọc thành leaf lạc chỗ.
- * Kèm `original` + `period` ở CẢ BA cỡ để leaf thấy rõ cả hai giãn theo `size`, không
- * chỉ amount (trước đây chúng khoá cứng sm/xs bất kể size).
+ * Leaf prop `size` — ĐỦ union `PricePointSize`, mỗi state kèm `original` + `period`
+ * để thấy cả ba part cùng giãn theo `size`, không chỉ `amount`.
  */
-/**
- * One row of the size demo table.
- */
-interface SizeRow {
-    /** the size token this row demonstrates */
-    size: PricePointSize
-    /** current price amount rendered at this size */
-    amount: string
-    /** original (struck-through) price rendered at this size */
-    original: string
-    /** short note explaining when this size applies */
-    hint: string
-}
-
-const SIZES: Array<SizeRow> = [
-    { size: "sm", amount: "$9", original: "$14", hint: "a price inside a denser row" },
-    { size: "md", amount: "$19", original: "$29", hint: "the default amount scale" },
-    { size: "lg", amount: "$49", original: "$69", hint: "the price anchoring a pricing page" },
-]
-
-/** Leaf prop `size` — 3 CỠ, render ĐỦ union. */
 export const Sizes: Story = {
     render: () => (
         <div className="p-8">
@@ -187,26 +184,29 @@ export const Sizes: Story = {
                 name="PricePoint.Base"
                 tier="atom"
                 leaf="Prop `size`"
-                reason="Pick size from where the price sits, not from the number's own weight — a pricing page hero and a compact plan row both show plain dollar amounts."
-                note="size now scales all THREE parts off one shared token table — at lg, original reads at base and period at sm instead of staying pinned to xs like at sm/md. The unit grows as one coherent piece, not a big number next to leftover tiny text."
+                reason="Pick size from where the price sits, not from the number's own weight — a pricing page hero and a compact plan row both show plain dollar amounts. `size` drives all three parts off one shared token table, so the unit grows as one coherent piece instead of a big number next to leftover tiny text."
                 annotate={{ Amount: PART_AMOUNT, Original: PART_ORIGINAL, Period: PART_PERIOD }}
-                code={`<PricePoint.Base size="sm" amount="$9" original="$14" period="/month" />
-<PricePoint.Base size="md" amount="$19" original="$29" period="/month" />
-<PricePoint.Base size="lg" amount="$49" original="$69" period="/month" />`}
-            >
-                <div className="flex flex-wrap items-end gap-8">
-                    {SIZES.map(({ size, amount, original }, index) => (
-                        <PricePoint.Base
-                            key={size}
-                            size={size}
-                            amount={amount}
-                            original={original}
-                            period="/month"
-                            showAnatomy={index === 0}
-                        />
-                    ))}
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "size = \"sm\"",
+                        why: "All three parts render at the smallest step on the table — the compact scale for a price sitting inside a denser row rather than standing alone.",
+                        code: "<PricePoint.Base size=\"sm\" amount=\"$9\" original=\"$14\" period=\"/month\" />",
+                        render: <PricePoint.Base size="sm" amount="$9" original="$14" period="/month" showAnatomy />,
+                    },
+                    {
+                        name: "size = \"md\" (default)",
+                        why: "All three parts render at the default scale — the same step the `Default` leaf's bare amount uses. This is the size for a price in an ordinary card or row.",
+                        code: "<PricePoint.Base size=\"md\" amount=\"$19\" original=\"$29\" period=\"/month\" />",
+                        render: <PricePoint.Base size="md" amount="$19" original="$29" period="/month" showAnatomy />,
+                    },
+                    {
+                        name: "size = \"lg\"",
+                        why: "All three parts render at the largest step — the original reads at `base` and the period at `sm` instead of staying pinned to `xs` like at `sm`/`md`. This is the scale for the price that anchors a pricing page.",
+                        code: "<PricePoint.Base size=\"lg\" amount=\"$49\" original=\"$69\" period=\"/month\" />",
+                        render: <PricePoint.Base size="lg" amount="$49" original="$69" period="/month" showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -219,7 +219,7 @@ export const Sizes: Story = {
  * `isSkeleton: true` (§12c), và bar không đọc nó nên truyền vào cũng vô nghĩa.
  *
  * `original` KHÔNG ảnh hưởng hình skeleton — component chỉ xét `period`, nên không
- * có ô riêng cho "có original" ở đây (không phải hình do `isSkeleton` sinh ra).
+ * có state riêng cho "có original" ở đây (không phải hình do `isSkeleton` sinh ra).
  */
 export const Skeleton: Story = {
     render: () => (
@@ -228,21 +228,35 @@ export const Skeleton: Story = {
                 name="PricePoint.Base"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
-                reason="Whoever owns the shape owns its resting state, so the price draws its own shimmer instead of a shared generic placeholder."
-                note="The amount bar's height follows size, same as the real amount. The second bar only shows up when period is set — it mirrors the /month slot at that size's periodBarH so the row doesn't jump once data lands. original has no placeholder of its own: passing it during isSkeleton changes nothing, and amount itself is optional here — the union only requires it once isSkeleton is false or omitted."
+                reason="Whoever owns the shape owns its resting state, so the price draws its own shimmer instead of a shared generic placeholder. `original` has no placeholder of its own — passing it during `isSkeleton` changes nothing, since the bar only ever reads `period`."
                 annotate={{ Amount: PART_AMOUNT, Period: PART_PERIOD }}
-                code={`<PricePoint.Base isSkeleton size="sm" />
-<PricePoint.Base isSkeleton size="md" />
-<PricePoint.Base isSkeleton size="lg" />
-<PricePoint.Base isSkeleton size="md" period="/month" />`}
-            >
-                <div className="flex flex-wrap items-end gap-8">
-                    <PricePoint.Base isSkeleton size="sm" showAnatomy />
-                    <PricePoint.Base isSkeleton size="md" />
-                    <PricePoint.Base isSkeleton size="lg" />
-                    <PricePoint.Base isSkeleton size="md" period="/month" />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isSkeleton = true, size = \"sm\", period unset",
+                        why: "A single shimmer bar renders at the `sm` height, mirroring where the amount would sit. No second bar exists, since no `period` was passed.",
+                        code: "<PricePoint.Base isSkeleton size=\"sm\" />",
+                        render: <PricePoint.Base isSkeleton size="sm" showAnatomy />,
+                    },
+                    {
+                        name: "isSkeleton = true, size = \"md\", period unset",
+                        why: "The same single bar renders taller, matching the `md` amount height. Only the bar's height changes between size states, not its count.",
+                        code: "<PricePoint.Base isSkeleton size=\"md\" />",
+                        render: <PricePoint.Base isSkeleton size="md" showAnatomy />,
+                    },
+                    {
+                        name: "isSkeleton = true, size = \"lg\", period unset",
+                        why: "The bar grows to its tallest height, matching the `lg` amount. This is the largest single-bar shape the shimmer ever takes.",
+                        code: "<PricePoint.Base isSkeleton size=\"lg\" />",
+                        render: <PricePoint.Base isSkeleton size="lg" showAnatomy />,
+                    },
+                    {
+                        name: "isSkeleton = true, size = \"md\", period set",
+                        why: "A second, shorter bar appears after the first, mirroring the `/month` slot at this size's period height. It exists so the row's footprint doesn't jump once the real period text lands.",
+                        code: "<PricePoint.Base isSkeleton size=\"md\" period=\"/month\" />",
+                        render: <PricePoint.Base isSkeleton size="md" period="/month" showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }

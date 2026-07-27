@@ -33,7 +33,7 @@ const TITLE_ONLY_PARTS: Array<AnatomyNode> = [
     {
         name: "Header",
         tier: "composite",
-        role: "the group's opening block — title only",
+        role: "the group's opening block, carrying the title alone",
         children: [{ name: "Title", tier: "atom", role: "the group title (Typography.Sm medium, §9b)" }],
     },
     { name: "Body", tier: "composite", role: "the field column (`body`/`children`) on the `gap` rhythm" },
@@ -43,7 +43,7 @@ const WITH_DESCRIPTION_PARTS: Array<AnatomyNode> = [
     {
         name: "Header",
         tier: "composite",
-        role: "the group's opening block — title plus description, gap-1 tight (§10b)",
+        role: "the group's opening block, carrying the title and its description together on a tight `gap-1` (§10b)",
         children: [
             { name: "Title", tier: "atom", role: "the group title (Typography.Sm medium)" },
             { name: "Description", tier: "atom", role: "the group description (Typography.Xs muted, §9a)" },
@@ -79,18 +79,25 @@ export const Default: Story = {
                 tier="composite"
                 leaf="Default"
                 parts={TITLE_ONLY_PARTS}
-                reason="The frame that gathers fields into a NAMED GROUP — layout plus text through the Typography atom (§9c), nothing else. The title here is NOT a field `label`: label, hint, error, and required belong to the form atoms (§12e), and the frame never grows its own."
-                code={`<Form.Section title="Billing details">
+                reason="The frame that gathers fields into a named group draws layout plus text through the Typography atom (§9c) and nothing else. The title here is not a field `label`; label, hint, error, and required all belong to the form atoms (§12e), and the frame never grows its own copy of them."
+                states={[
+                    {
+                        name: "description unset",
+                        why: "The Header block carries only the Title node, so the group opens with a single line before the field column starts. This is the shape a group reaches for when its title already says everything the reader needs.",
+                        code: `<Form.Section title="Billing details">
   <Input.Text label="Company name" isRequired value={company} onValueChange={setCompany} />
   <Input.Text label="Tax code" errorMessage="A tax code must be 10 or 13 digits." value={taxCode} onValueChange={setTaxCode} />
-</Form.Section>`}
-            >
-                <div className="w-96">
-                    <Form.Section showAnatomy title="Billing details">
-                        <BillingFields />
-                    </Form.Section>
-                </div>
-            </BlockAnatomy>
+</Form.Section>`,
+                        render: (
+                            <div className="w-96">
+                                <Form.Section showAnatomy title="Billing details">
+                                    <BillingFields />
+                                </Form.Section>
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         )
         return <div className="p-8"><Demo /></div>
     },
@@ -104,25 +111,31 @@ export const WithDescription: Story = {
                 name="Form.Section"
                 tier="composite"
                 leaf="WithDescription"
-                parts={WITH_DESCRIPTION_PARTS}
-                note="`description` opens exactly ONE more node inside Header (gap-1 tight against the title) — the group's own `gap` rhythm does not change."
-                code={`<Form.Section
+                states={[
+                    {
+                        name: "description = \"These details are printed on the e-invoice...\"",
+                        why: "Passing `description` opens exactly one more node inside Header, a muted line sitting on a tight `gap-1` under the title. The group's own `gap` rhythm toward the field column below does not change, because the new line only grows the header block.",
+                        code: `<Form.Section
   title="Billing details"
   description="These details are printed on the e-invoice; changing them later means requesting a reissue."
 >
   …
-</Form.Section>`}
-            >
-                <div className="w-96">
-                    <Form.Section
-                        showAnatomy
-                        title="Billing details"
-                        description="These details are printed on the e-invoice; changing them later means requesting a reissue."
-                    >
-                        <BillingFields />
-                    </Form.Section>
-                </div>
-            </BlockAnatomy>
+</Form.Section>`,
+                        render: (
+                            <div className="w-96">
+                                <Form.Section
+                                    showAnatomy
+                                    title="Billing details"
+                                    description="These details are printed on the e-invoice; changing them later means requesting a reissue."
+                                >
+                                    <BillingFields />
+                                </Form.Section>
+                            </div>
+                        ),
+                    },
+                ]}
+                parts={WITH_DESCRIPTION_PARTS}
+            />
         )
         return <div className="p-8"><Demo /></div>
     },

@@ -154,22 +154,26 @@ export const Default: Story = {
                 name="Button.RadioGroup"
                 tier="atom"
                 leaf="Prop `items`"
-                reason="Every option is a real HeroUI Button laid out in a wrapping flex row — buttons wrap to the next line, never scroll. Selected reads as a filled neutral `tertiary` button (never `primary` — a config toggle isn't the page's one accent CTA), unselected stays a hollow `ghost` outline, and a locked option (`isDisabled`) dims and stops accepting presses while staying visible in place."
-                note="items is the whole surface worth reading here — give it N entries and it renders N buttons. isDisabled lives on the individual item, not the group, so one array already shows every shape items can take."
-                code={`<Button.RadioGroup
-  items={[
-    { value: "easy", content: "Easy" },
-    { value: "medium", content: "Medium" },
-    { value: "hard", content: "Hard" },
-    { value: "expert", content: "Expert", isDisabled: true },
-  ]}
-  value={value}
-  onChange={setValue}
-  ariaLabel="Select difficulty"
-/>`}
-            >
-                <Controlled items={DEFAULT_ITEMS} initialValue="medium" ariaLabel="Select difficulty" />
-            </BlockAnatomy>
+                reason="Every option renders as a real HeroUI button inside a wrapping flex row, wrapping onto a new line instead of ever scrolling. A selected option fills in as a neutral `tertiary` button rather than `primary`, since a config toggle is never the page's one accent call to action, an unselected option stays a hollow `ghost` outline, and a locked option dims while it stays visible and stops accepting presses."
+                states={[
+                    {
+                        name: "value = \"medium\", items include one isDisabled entry",
+                        why: "This one items array renders four buttons, with `medium` filled in as the selected option and `expert` dimmed and inert as the disabled option. `isDisabled` is an optional field of a single item rather than a separate axis, so one data set already covers every shape `items` can take without a second leaf.",
+                        code: `<Button.RadioGroup
+    items={[
+        { value: "easy", content: "Easy" },
+        { value: "medium", content: "Medium" },
+        { value: "hard", content: "Hard" },
+        { value: "expert", content: "Expert", isDisabled: true },
+    ]}
+    value={value}
+    onChange={setValue}
+    ariaLabel="Select difficulty"
+/>`,
+                        render: <Controlled items={DEFAULT_ITEMS} initialValue="medium" ariaLabel="Select difficulty" />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -186,18 +190,22 @@ export const Multiple: Story = {
                 name="Button.RadioGroup"
                 tier="atom"
                 leaf="Prop `multiple`"
-                reason="Flip multiple and the group becomes a set of independent toggles instead of one radio — the one pixel signature single-select can never produce: two or more buttons filled at once (here, TypeScript and Go both selected while Java and C# stay hollow)."
-                note="The caller owns the set (values + onToggle). This story enforces 'keep at least one selected' just to show a realistic caller, not a rule the component itself imposes."
-                code={`<Button.RadioGroup
-  multiple
-  items={languageItems}
-  values={["typescript", "go"]}
-  onToggle={toggle}
-  ariaLabel="Select languages"
-/>`}
-            >
-                <ControlledMulti items={LANGUAGE_ITEMS} initialValues={["typescript", "go"]} ariaLabel="Select languages" />
-            </BlockAnatomy>
+                reason="Flipping `multiple` turns the group into a set of independent toggles instead of one radio, producing the one pixel signature single-select can never reach: two or more buttons filled at once."
+                states={[
+                    {
+                        name: "multiple, values = [\"typescript\", \"go\"]",
+                        why: "TypeScript and Go both render filled and selected at the same time while Java and C# stay hollow, a combination the `value: T` structure of single-select can never produce. The caller owns the whole set through `values`/`onToggle`, this story only enforces \"keep at least one selected\" to show a realistic caller, not a rule the component itself imposes.",
+                        code: `<Button.RadioGroup
+    multiple
+    items={languageItems}
+    values={["typescript", "go"]}
+    onToggle={toggle}
+    ariaLabel="Select languages"
+/>`,
+                        render: <ControlledMulti items={LANGUAGE_ITEMS} initialValues={["typescript", "go"]} ariaLabel="Select languages" />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -213,23 +221,29 @@ export const Trailing: Story = {
                 name="Button.RadioGroup"
                 tier="atom"
                 leaf="Prop `trailing`"
-                reason="trailing is an escape hatch for one non-option action that has to sit on the SAME row as the buttons — e.g. a '+N' overflow trigger. It's not part of the group's value; the component never treats it as an item, so pressing it never fires onChange."
-                note="Rendered as-is right after the last item, inside the same flex-wrap row, so it wraps together with the buttons instead of floating on its own line."
-                code={`<Button.RadioGroup
-  items={difficultyItems}
-  value={value}
-  onChange={setValue}
-  ariaLabel="Select difficulty"
-  trailing={<Button size="sm" variant="ghost">+2</Button>}
-/>`}
-            >
-                <Controlled
-                    items={DIFFICULTY_ITEMS}
-                    initialValue="easy"
-                    ariaLabel="Select difficulty"
-                    trailing={<Button size="sm" variant="ghost">+2</Button>}
-                />
-            </BlockAnatomy>
+                reason="`trailing` is an escape hatch for one non-option action that must sit on the same row as the buttons, for example a `+N` overflow trigger. It is not part of the group's value: the component never treats it as an item, so pressing it never fires `onChange`."
+                states={[
+                    {
+                        name: "trailing != null",
+                        why: "An extra `+2` button renders right after the last option, inside the same flex-wrap row, so it wraps together with the buttons instead of floating on a line of its own. It never joins the selectable set, so its press only fires its own handler and leaves the current selection untouched.",
+                        code: `<Button.RadioGroup
+    items={difficultyItems}
+    value={value}
+    onChange={setValue}
+    ariaLabel="Select difficulty"
+    trailing={<Button size="sm" variant="ghost">+2</Button>}
+/>`,
+                        render: (
+                            <Controlled
+                                items={DIFFICULTY_ITEMS}
+                                initialValue="easy"
+                                ariaLabel="Select difficulty"
+                                trailing={<Button size="sm" variant="ghost">+2</Button>}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -245,37 +259,43 @@ export const ItemAction: Story = {
                 name="Button.RadioGroup"
                 tier="atom"
                 leaf="Prop `itemAction`"
-                reason="Give an item action buttons and it stops being a standalone Button: the select button plus every action fuse into ONE connected ButtonGroup, so the actions read as belonging to that option instead of floating beside it as separate controls."
-                note="Actions never change selection — pressing the trash or kebab fires their own handler, not onChange. The seam between segments is HeroUI's ButtonGroup.Separator, recoloured to the border token and forced full-height."
-                code={`<Button.RadioGroup
-  items={attemptItems}
-  value={value}
-  onChange={setValue}
-  ariaLabel="Select attempt"
-  itemAction={(item) => [
-    <Button key="delete" size="sm" variant="tertiary" isIconOnly aria-label={\`Delete \${item.value}\`}>
-      <TrashIcon className="size-4" />
-    </Button>,
-    <Button key="more" size="sm" variant="tertiary" isIconOnly aria-label={\`More options for \${item.value}\`}>
-      <DotsThreeVerticalIcon className="size-4" />
-    </Button>,
-  ]}
-/>`}
-            >
-                <Controlled
-                    items={ATTEMPT_ITEMS}
-                    initialValue="attempt-1"
-                    ariaLabel="Select attempt"
-                    itemAction={(item) => [
-                        <Button key="delete" size="sm" variant="tertiary" isIconOnly aria-label={`Delete ${item.value}`}>
-                            <TrashIcon className="size-4" />
-                        </Button>,
-                        <Button key="more" size="sm" variant="tertiary" isIconOnly aria-label={`More options for ${item.value}`}>
-                            <DotsThreeVerticalIcon className="size-4" />
-                        </Button>,
-                    ]}
-                />
-            </BlockAnatomy>
+                reason="Giving an item action buttons stops it from being a standalone `Button`: the select button plus every action fuse into one connected `ButtonGroup`, so the actions read as belonging to that option instead of floating beside it as separate controls. The seam between segments is HeroUI's `ButtonGroup.Separator`, recoloured to the border token and forced full height."
+                states={[
+                    {
+                        name: "itemAction != null (delete + more per item)",
+                        why: "Each attempt row fuses into one ButtonGroup of three segments: the select button, a trash icon, and a kebab menu trigger, all sharing one continuous outline. Pressing the trash or the kebab fires its own handler rather than `onChange`, so an action can never change which attempt is selected.",
+                        code: `<Button.RadioGroup
+    items={attemptItems}
+    value={value}
+    onChange={setValue}
+    ariaLabel="Select attempt"
+    itemAction={(item) => [
+        <Button key="delete" size="sm" variant="tertiary" isIconOnly aria-label={\`Delete \${item.value}\`}>
+            <TrashIcon className="size-4" />
+        </Button>,
+        <Button key="more" size="sm" variant="tertiary" isIconOnly aria-label={\`More options for \${item.value}\`}>
+            <DotsThreeVerticalIcon className="size-4" />
+        </Button>,
+    ]}
+/>`,
+                        render: (
+                            <Controlled
+                                items={ATTEMPT_ITEMS}
+                                initialValue="attempt-1"
+                                ariaLabel="Select attempt"
+                                itemAction={(item) => [
+                                    <Button key="delete" size="sm" variant="tertiary" isIconOnly aria-label={`Delete ${item.value}`}>
+                                        <TrashIcon className="size-4" />
+                                    </Button>,
+                                    <Button key="more" size="sm" variant="tertiary" isIconOnly aria-label={`More options for ${item.value}`}>
+                                        <DotsThreeVerticalIcon className="size-4" />
+                                    </Button>,
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

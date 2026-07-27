@@ -30,23 +30,23 @@ type Story = StoryObj<typeof ModalShell.Base>
 // hoặc custom `header`) + Body + Footer?. CloseTrigger/Body luôn có mặt; Title+Description chỉ ở
 // nhánh header đơn giản, Header (opaque) chỉ ở nhánh custom, Footer chỉ khi truyền slot `footer`.
 const TITLE_DESC_FOOTER_PARTS: Array<AnatomyNode> = [
-    { name: "CloseTrigger", tier: "composite", role: "nút đóng (góc phải trên)" },
-    { name: "Title", tier: "composite", role: "tiêu đề modal (body, bold)" },
-    { name: "Description", tier: "composite", role: "mô tả dưới tiêu đề (body-sm muted)" },
-    { name: "Body", tier: "composite", role: "nội dung thân modal" },
-    { name: "Footer", tier: "composite", role: "hàng CTA đáy (Modal.Footer: justify-end gap-2)" },
+    { name: "CloseTrigger", tier: "composite", role: "the close button, in the upper-right corner" },
+    { name: "Title", tier: "composite", role: "the modal's title, bold body text" },
+    { name: "Description", tier: "composite", role: "the description line under the title, muted body-sm text" },
+    { name: "Body", tier: "composite", role: "the modal's body content" },
+    { name: "Footer", tier: "composite", role: "the bottom CTA row, right-aligned with a gap-2 seam (Modal.Footer)" },
 ]
 
 const CUSTOM_HEADER_PARTS: Array<AnatomyNode> = [
-    { name: "CloseTrigger", tier: "composite", role: "nút đóng (góc phải trên)" },
-    { name: "Header", tier: "composite", role: "node header tuỳ ý do caller dựng — thay thế Title/Description" },
-    { name: "Body", tier: "composite", role: "nội dung thân modal" },
+    { name: "CloseTrigger", tier: "composite", role: "the close button, in the upper-right corner" },
+    { name: "Header", tier: "composite", role: "an arbitrary caller-built header node, replacing Title and Description" },
+    { name: "Body", tier: "composite", role: "the modal's body content" },
 ]
 
 const TITLE_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "CloseTrigger", tier: "composite", role: "nút đóng (góc phải trên)" },
-    { name: "Title", tier: "composite", role: "tiêu đề modal (body, bold)" },
-    { name: "Body", tier: "composite", role: "nội dung thân modal" },
+    { name: "CloseTrigger", tier: "composite", role: "the close button, in the upper-right corner" },
+    { name: "Title", tier: "composite", role: "the modal's title, bold body text" },
+    { name: "Body", tier: "composite", role: "the modal's body content" },
 ]
 
 /** Controlled wrapper — opens on mount; the trigger reopens after a close. Mirrors the legacy story helper. */
@@ -57,8 +57,9 @@ const ControlledModal = ({
     children,
     leaf,
     parts,
-    note,
     reason,
+    stateName,
+    why,
     code,
     ...rest
 }: {
@@ -69,8 +70,11 @@ const ControlledModal = ({
     children?: React.ReactNode
     leaf: string
     parts: Array<AnatomyNode>
-    note?: React.ReactNode
     reason?: React.ReactNode
+    /** The data condition that produces this leaf's one state. */
+    stateName: string
+    /** Why this state exists / what changes in it. */
+    why?: React.ReactNode
     code?: string
 } & Omit<React.ComponentProps<typeof ModalShell.Base>, "isOpen" | "onOpenChange" | "children">) => {
     const [isOpen, setIsOpen] = useState(true)
@@ -83,11 +87,25 @@ const ControlledModal = ({
             <Button variant="secondary" size="sm" className="self-start" onClick={() => setIsOpen(true)}>
                 {trigger}
             </Button>
-            <BlockAnatomy name="ModalShell.Base" tier="composite" leaf={leaf} parts={parts} note={note} reason={reason} code={code}>
-                <ModalShell.Base isOpen={isOpen} onOpenChange={setIsOpen} showAnatomy {...rest}>
-                    {children}
-                </ModalShell.Base>
-            </BlockAnatomy>
+            <BlockAnatomy
+                name="ModalShell.Base"
+                tier="composite"
+                leaf={leaf}
+                parts={parts}
+                reason={reason}
+                states={[
+                    {
+                        name: stateName,
+                        why,
+                        code,
+                        render: (
+                            <ModalShell.Base isOpen={isOpen} onOpenChange={setIsOpen} showAnatomy {...rest}>
+                                {children}
+                            </ModalShell.Base>
+                        ),
+                    },
+                ]}
+            />
         </div>
     )
 }
@@ -211,7 +229,9 @@ export const Default: Story = {
                 description="You will lose all your learning progress for this course. This action cannot be undone."
                 leaf="Default"
                 parts={TITLE_DESC_FOOTER_PARTS}
-                reason="Khung modal gom CloseTrigger·Header·Body·Footer về một chỗ, chuẩn hoá luôn khoảng cách header→body→footer (mt-4) thay vì để mỗi modal tự chế."
+                reason="The shell gathers CloseTrigger, Header, Body, and Footer into one scaffold and standardizes the header-to-body-to-footer spacing (mt-4) instead of leaving every modal to hand-roll its own."
+                stateName="title, description, and footer all set"
+                why="CloseTrigger, Title, Description, Body, and Footer all render as named slots, so the caller writes no layout div anywhere in the modal. The CTA pair passed bare into `footer` picks up the row's own right-aligned gap-2 layout instead of being wrapped by hand."
                 code={`<ModalShell.Base
   title="Confirm unenrollment"
   description="You will lose all your learning progress. This cannot be undone."
@@ -250,7 +270,8 @@ export const CustomHeader: Story = {
                 }
                 leaf="CustomHeader"
                 parts={CUSTOM_HEADER_PARTS}
-                note="`header` opaque thay thế Title/Description — chính caller phải tự chừa pr-8 cho CloseTrigger. Không truyền `footer` → không có part Footer."
+                stateName="header set (custom node), footer = undefined"
+                why="Header replaces Title and Description with one opaque node the caller assembled itself, and no Footer slot renders since none was passed. Because the header is caller-built it must leave its own room for the close button, which is why the node carries `pr-8` rather than the shell adding it automatically."
                 code={`<ModalShell.Base header={<InviteHeader />}>
   <Typography color="muted">Enter student emails, one address per line.</Typography>
 </ModalShell.Base>`}
@@ -276,7 +297,8 @@ export const ScrollableBody: Story = {
                 scroll="inside"
                 leaf="ScrollableBody"
                 parts={TITLE_ONLY_PARTS}
-                note="Không description, không footer → chỉ Title trong Header. scroll=inside chỉ đổi max-height của Container, không đổi part."
+                stateName="title only, scroll = 'inside', size = 'lg'"
+                why="Only Title appears in the header, with no Description or Footer beside it, and the shell caps itself at `max-h-[85vh]` so the body scrolls instead of the page. The nested transaction rows draw their own border rather than a second shadowed card, a bordered surface sitting inside this one."
                 code={`<ModalShell.Base title="Transaction history" size="lg" scroll="inside">
   <BorderedList>{/* transaction rows */}</BorderedList>
 </ModalShell.Base>`}
@@ -308,7 +330,8 @@ export const WithLeadingTabs: Story = {
                 bodyClassName="flex flex-col gap-3"
                 leaf="WithLeadingTabs"
                 parts={TITLE_ONLY_PARTS}
-                note="bodyStartsWithTabs chỉ đổi gap Header→Body (gap-3 thay vì gap-4) — không thêm part mới."
+                stateName="bodyStartsWithTabs = true"
+                why="The tab strip sits fixed above the body content with a tighter gap-3 seam in place of the header's usual gap-4, and it stays put instead of scrolling away with the panel underneath it. A short panel still fills the fixed-height frame while a long one scrolls inside it."
                 code={`<ModalShell.Base title="Notification settings" bodyStartsWithTabs bodyClassName="flex flex-col gap-3">
   <Tabs>{/* Email / Push panels */}</Tabs>
 </ModalShell.Base>`}
@@ -331,7 +354,8 @@ export const PlainFormClusters: Story = {
                 description="Buy once to unlock every lesson, exercise, and support in the course."
                 leaf="PlainFormClusters"
                 parts={TITLE_DESC_FOOTER_PARTS}
-                note="Cùng nhánh header đơn giản như Default — Body giờ chỉ còn cluster list, CTA nằm ở Footer (state khác, không phải part khác)."
+                stateName="title, description, and footer all set (body = check list)"
+                why="The header carries both a Title and a Description exactly as in Default, but the Body now holds only the check-list cluster while the two CTAs moved out into the Footer slot. It is the same named slots arranged differently, not a different part of the shell."
                 code={`<ModalShell.Base
   title="Unlock the course"
   description="Buy once to unlock every lesson, exercise, and support."

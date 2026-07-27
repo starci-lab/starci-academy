@@ -3,7 +3,6 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Avatar, AvatarFallback, Chip } from "@heroui/react"
 import { FolderOpenIcon } from "@phosphor-icons/react"
 import { SurfaceCard, type SurfaceCardAccordionItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import type { SurfaceCardVariant } from "@sb-components/composites/cards/surface-card-header"
 import { Feedback } from "@sb-components/composites/feedback/Feedback/Feedback"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
@@ -79,7 +78,7 @@ const items: ReadonlyArray<SurfaceCardAccordionItem> = [
  * `parts={...}` line used to declare them, creating dead entries (unclickable).
  */
 const PART_FEEDBACK_EMPTY: AnatomyAnnotation = {
-    role: "Fills the Surface when items is empty — icon + title + description.",
+    role: "Fills the surface when items is empty, showing an icon with a title and description.",
     tier: "composite",
     storyId: "composites-feedback-feedback-feedback-empty--description",
 }
@@ -91,17 +90,22 @@ export const Default: Story = {
                 name="SurfaceCard.Accordion"
                 tier="composite"
                 leaf="Default"
-                reason="No `label`/`description` (bare) → renders the Surface wrapping the Rows directly, no Header. Default `allowsMultipleExpanded=false`: opening another Row auto-closes the one that was open."
-                code={`<SurfaceCard.Accordion
+                reason="No `label`/`description` (bare) renders the Surface wrapping the Rows directly, with no Header above it."
+                states={[
+                    {
+                        name: "label = undefined, allowsMultipleExpanded = false (default)",
+                        why: "The Surface wraps the three Rows directly with no Header above them, since neither `label` nor `description` was passed. Opening a second Row auto-closes whichever one was already open, the default single-open behaviour.",
+                        code: `<SurfaceCard.Accordion
   items={[
     { id: "rest", title: "REST semantics", subtitle: "3 resources", body: <Panel /> },
     { id: "input", title: "Input contract", subtitle: "2 resources", body: <Panel /> },
   ]}
   defaultExpandedKeys={new Set(["rest"])}
-/>`}
-            >
-                <SurfaceCard.Accordion showAnatomy items={items} defaultExpandedKeys={new Set(["rest"])} />
-            </BlockAnatomy>
+/>`,
+                        render: <SurfaceCard.Accordion showAnatomy items={items} defaultExpandedKeys={new Set(["rest"])} />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -113,15 +117,19 @@ export const WithLabel: Story = {
                 name="SurfaceCard.Accordion"
                 tier="composite"
                 leaf="WithLabel"
-                note="`label` turns on the Header above (gap-3 between Header and Surface). The full header slot set (see-more/action/labelEnd/subtleLabel/description) is demonstrated in the SurfaceCard.Base story."
-                code={`<SurfaceCard.Accordion
+                states={[
+                    {
+                        name: "label = \"Resources\"",
+                        why: "A Header appears above the Surface, separated from it by a gap-3 seam, carrying the label text. The full header slot set (see-more, action, labelEnd, subtleLabel, description) is demonstrated separately on the SurfaceCard.Base story.",
+                        code: `<SurfaceCard.Accordion
   label="Resources"
   items={[…]}
   defaultExpandedKeys={new Set(["rest"])}
-/>`}
-            >
-                <SurfaceCard.Accordion showAnatomy label="Resources" items={items} defaultExpandedKeys={new Set(["rest"])} />
-            </BlockAnatomy>
+/>`,
+                        render: <SurfaceCard.Accordion showAnatomy label="Resources" items={items} defaultExpandedKeys={new Set(["rest"])} />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -136,21 +144,6 @@ export const WithLabel: Story = {
  * 2026-07-26 (teacher): merged from the `Bordered` leaf (changed from
  * `bordered?: boolean` to `variant?: SurfaceCardVariant`).
  */
-/**
- * One row of the variant demo table.
- */
-interface VariantRow {
-    /** the variant token this row demonstrates */
-    variant: SurfaceCardVariant
-    /** short note explaining when this variant applies */
-    hint: string
-}
-
-const VARIANTS: ReadonlyArray<VariantRow> = [
-    { variant: "surface", hint: "on bare bg-background — the default shadow-surface frame" },
-    { variant: "nested", hint: "inside a parent surface — a border replaces the shadow (surface-in-surface, §1a)" },
-]
-
 export const Variants: Story = {
     render: () => (
         <div className="p-8">
@@ -158,35 +151,39 @@ export const Variants: Story = {
                 name="SurfaceCard.Accordion"
                 tier="composite"
                 leaf="Prop `variant`"
-                note={"`variant=\"surface\"` (default) draws shadow-surface on bare bg-background; `variant=\"nested\"` swaps that shadow for a border when this frame sits inside another surface (a panel/modal/drawer) — shadow is nearly invisible there (§1a)."}
-                code={`<SurfaceCard.Accordion label="Resources" items={[…]} />
-<SurfaceCard.Accordion label="Resources" variant="nested" items={[…]} />`}
-            >
-                <div className="flex flex-col gap-6">
-                    {VARIANTS.map(({ variant, hint }, index) => (
-                        variant === "nested" ? (
-                            <div key={variant} className="rounded-3xl bg-surface p-3 shadow-surface" title={hint}>
+                reason="`variant` is one of three independent axes shared with SurfaceCard.Base/.List/.CrossList: it answers whether this frame sits directly on the page background or nested inside another surface, never both at once (§1a)."
+                states={[
+                    {
+                        name: "variant = \"surface\" (default)",
+                        why: "The frame draws its own `shadow-surface` shadow while sitting on the bare page background. This is the default look for an accordion that is the outermost surface at its spot on the page.",
+                        code: "<SurfaceCard.Accordion label=\"Resources\" items={[…]} />",
+                        render: (
+                            <SurfaceCard.Accordion
+                                showAnatomy
+                                label="Resources"
+                                variant="surface"
+                                items={items}
+                                defaultExpandedKeys={new Set(["rest"])}
+                            />
+                        ),
+                    },
+                    {
+                        name: "variant = \"nested\"",
+                        why: "The shadow disappears and a border takes its place, since a shadow reads as nearly invisible once this frame is already sitting inside a parent surface such as a panel, modal, or drawer. Everything else about the accordion's composition stays the same as the surface state.",
+                        code: "<SurfaceCard.Accordion label=\"Resources\" variant=\"nested\" items={[…]} />",
+                        render: (
+                            <div className="rounded-3xl bg-surface p-3 shadow-surface">
                                 <SurfaceCard.Accordion
-                                    showAnatomy={index === 0}
                                     label="Resources"
-                                    variant={variant}
+                                    variant="nested"
                                     items={items}
                                     defaultExpandedKeys={new Set(["rest"])}
                                 />
                             </div>
-                        ) : (
-                            <SurfaceCard.Accordion
-                                key={variant}
-                                showAnatomy={index === 0}
-                                label="Resources"
-                                variant={variant}
-                                items={items}
-                                defaultExpandedKeys={new Set(["rest"])}
-                            />
-                        )
-                    ))}
-                </div>
-            </BlockAnatomy>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -203,25 +200,31 @@ export const WithTitleEnd: Story = {
                 name="SurfaceCard.Accordion"
                 tier="composite"
                 leaf="WithTitleEnd"
-                note="`titleEnd` (a status Chip) shows before the caret; the title truncates itself to make room."
-                code={`<SurfaceCard.Accordion
+                states={[
+                    {
+                        name: "items[].titleEnd set (status Chip)",
+                        why: "A status chip appears right inside the collapsed trigger, to the left of the caret, and the title text truncates itself to leave room for it. Each row's `titleEnd` keeps its own full width regardless of how long its neighbour's title runs.",
+                        code: `<SurfaceCard.Accordion
   label="Milestones"
   items={[
     { id: "m1", title: "1/1. Project kickoff", titleEnd: <Chip size="sm" variant="soft" color="success"><Chip.Label>Done</Chip.Label></Chip>, body: <Panel /> },
   ]}
-/>`}
-            >
-                <SurfaceCard.Accordion
-                    showAnatomy
-                    label="Milestones"
-                    defaultExpandedKeys={new Set(["m2"])}
-                    items={[
-                        { id: "m1", title: "1/1. Project kickoff", titleEnd: <Chip size="sm" variant="soft" color="success"><Chip.Label>Done</Chip.Label></Chip>, body: panel() },
-                        { id: "m2", title: "2/2. Build the API", titleEnd: <Chip size="sm" variant="soft" color="warning"><Chip.Label>In progress</Chip.Label></Chip>, body: panel() },
-                        { id: "m3", title: "3/3. Deploy", titleEnd: <Chip size="sm" variant="soft" color="default"><Chip.Label>Not started</Chip.Label></Chip>, body: panel() },
-                    ]}
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <SurfaceCard.Accordion
+                                showAnatomy
+                                label="Milestones"
+                                defaultExpandedKeys={new Set(["m2"])}
+                                items={[
+                                    { id: "m1", title: "1/1. Project kickoff", titleEnd: <Chip size="sm" variant="soft" color="success"><Chip.Label>Done</Chip.Label></Chip>, body: panel() },
+                                    { id: "m2", title: "2/2. Build the API", titleEnd: <Chip size="sm" variant="soft" color="warning"><Chip.Label>In progress</Chip.Label></Chip>, body: panel() },
+                                    { id: "m3", title: "3/3. Deploy", titleEnd: <Chip size="sm" variant="soft" color="default"><Chip.Label>Not started</Chip.Label></Chip>, body: panel() },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -234,16 +237,22 @@ export const MultipleExpand: Story = {
                 name="SurfaceCard.Accordion"
                 tier="composite"
                 leaf="MultipleExpand"
-                note="`allowsMultipleExpanded` → more than one Row can be open at once; the composition doesn't change."
-                code={`<SurfaceCard.Accordion
+                states={[
+                    {
+                        name: "allowsMultipleExpanded = true",
+                        why: "More than one Row stays open at the same time instead of the newest one closing its neighbour. The composition of Surface, Header, and Rows does not change, only how many can be expanded together.",
+                        code: `<SurfaceCard.Accordion
   label="Multiple open"
   allowsMultipleExpanded
   items={[…]}
   defaultExpandedKeys={new Set(["rest", "error"])}
-/>`}
-            >
-                <SurfaceCard.Accordion showAnatomy label="Multiple open" allowsMultipleExpanded items={items} defaultExpandedKeys={new Set(["rest", "error"])} />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <SurfaceCard.Accordion showAnatomy label="Multiple open" allowsMultipleExpanded items={items} defaultExpandedKeys={new Set(["rest", "error"])} />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -256,15 +265,19 @@ export const NoneExpand: Story = {
                 name="SurfaceCard.Accordion"
                 tier="composite"
                 leaf="NoneExpand"
-                note="An empty `defaultExpandedKeys` — every Row starts collapsed on mount."
-                code={`<SurfaceCard.Accordion
+                states={[
+                    {
+                        name: "defaultExpandedKeys = new Set()",
+                        why: "Every Row starts collapsed on mount, since the set naming which keys should already be open is empty. No Row's body renders until the learner clicks one open themselves.",
+                        code: `<SurfaceCard.Accordion
   label="All collapsed"
   items={[…]}
   defaultExpandedKeys={new Set()}
-/>`}
-            >
-                <SurfaceCard.Accordion showAnatomy label="All collapsed" items={items} defaultExpandedKeys={new Set()} />
-            </BlockAnatomy>
+/>`,
+                        render: <SurfaceCard.Accordion showAnatomy label="All collapsed" items={items} defaultExpandedKeys={new Set()} />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -278,27 +291,33 @@ export const Empty: Story = {
                 tier="composite"
                 leaf="Empty"
                 annotate={{ "Feedback.Empty": PART_FEEDBACK_EMPTY }}
-                note="`items={[]}` → `emptyState` fills the Surface (p-8) instead of leaving it blank."
-                code={`<SurfaceCard.Accordion
+                states={[
+                    {
+                        name: "items = []",
+                        why: "`Feedback.Empty` fills the surface with an icon, a title, and a description instead of leaving a blank card. No Row or Header renders since there is nothing to list.",
+                        code: `<SurfaceCard.Accordion
   label="Resources"
   items={[]}
   emptyState={<Feedback.Empty icon={FolderOpenDuotone} title="No resources yet" … />}
-/>`}
-            >
-                <SurfaceCard.Accordion
-                    showAnatomy
-                    label="Resources"
-                    items={[]}
-                    emptyState={
-                        <Feedback.Empty
-                            icon={FolderOpenDuotone}
-                            title="No resources yet"
-                            description="Docs for this topic will show up here."
-                            anatPart="Feedback.Empty"
-                        />
-                    }
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <SurfaceCard.Accordion
+                                showAnatomy
+                                label="Resources"
+                                items={[]}
+                                emptyState={
+                                    <Feedback.Empty
+                                        icon={FolderOpenDuotone}
+                                        title="No resources yet"
+                                        description="Docs for this topic will show up here."
+                                        anatPart="Feedback.Empty"
+                                    />
+                                }
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -311,15 +330,19 @@ export const Loading: Story = {
                 name="SurfaceCard.Accordion"
                 tier="composite"
                 leaf="Loading"
-                note="`isSkeleton` swaps the ENTIRE Surface/Row for `Skeleton.Accordion` (one mirror node); the Header above stays unchanged (still the real label)."
-                code={`<SurfaceCard.Accordion
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "The entire Surface and Row region swaps for a single `Skeleton.Accordion` mirror node, while the Header above stays unchanged and still shows the real label. No separate Skeleton component was built for this leaf, the accordion draws its own resting shape.",
+                        code: `<SurfaceCard.Accordion
   label="Resources"
   items={[…]}
   isSkeleton
-/>`}
-            >
-                <SurfaceCard.Accordion showAnatomy label="Resources" items={items} isSkeleton />
-            </BlockAnatomy>
+/>`,
+                        render: <SurfaceCard.Accordion showAnatomy label="Resources" items={items} isSkeleton />,
+                    },
+                ]}
+            />
         </div>
     ),
 }

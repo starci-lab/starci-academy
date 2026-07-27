@@ -32,8 +32,10 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * entirely here — DON'T make up a key — see this pass's `issues` to wire up
  * `anatPart` in `Choice.tsx` before adding it back.
  *
- * ✍️ Text shown on the panel (`leaf`/`reason`/`note`/`code`) and demo labels in the
+ * ✍️ Text shown on the panel (`leaf`/`reason`/`why`/`code`) and demo labels in the
  * render frame are written in ENGLISH; JSDoc/comments stay in Vietnamese.
+ *
+ * 2026-07-27: di trú toàn bộ leaf sang API `states[]` (§8/§4a).
  */
 const meta: Meta<typeof Choice.RadioGroup> = {
     title: "Atoms/Forms/Choice/Choice.RadioGroup",
@@ -62,14 +64,20 @@ export const Default: Story = {
                     name="Choice.RadioGroup"
                     tier="atom"
                     leaf="No prop turned on"
-                    reason="The one radio-group atom in the system, wrapping HeroUI RadioGroup. It rebuilds one Choice.Radio per entry from options — data, not JSX children, so a caller can't mismatch a row's shape with the rest."
-                    note="No heading, no hint, no error — just the rows."
-                    code={"<Choice.RadioGroup value={value} onValueChange={setValue} options={OPTIONS} ariaLabel=\"Skill level\" />"}
-                >
-                    <div className="w-72">
-                        <Choice.RadioGroup value={value} onValueChange={setValue} options={OPTIONS} ariaLabel="Skill level" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    reason="The one radio-group atom in the system, wrapping HeroUI RadioGroup. It rebuilds one Choice.Radio per entry from options, data, not JSX children, so a caller can never mismatch a row's shape with the rest."
+                    states={[
+                        {
+                            name: "value = \"\", groupLabel not set",
+                            why: "Three rows render with none of them selected and no heading above the group. This is the bare control with nothing else turned on, so a caller can see exactly what the group needs to work with just options and a value.",
+                            code: "<Choice.RadioGroup value={value} onValueChange={setValue} options={OPTIONS} ariaLabel=\"Skill level\" />",
+                            render: (
+                                <div className="w-72">
+                                    <Choice.RadioGroup value={value} onValueChange={setValue} options={OPTIONS} ariaLabel="Skill level" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -86,14 +94,20 @@ export const Selected: Story = {
                     name="Choice.RadioGroup"
                     tier="atom"
                     leaf="Selected"
-                    reason="value is controlled — the caller owns which option is picked and hands it back through onValueChange, so the group never drifts from the form state around it."
-                    note="Exactly one row's dot fills; the group enforces mutual exclusion, no row tracks the others itself."
-                    code={"<Choice.RadioGroup value=\"intermediate\" onValueChange={setValue} options={OPTIONS} ariaLabel=\"Skill level\" />"}
-                >
-                    <div className="w-72">
-                        <Choice.RadioGroup value={value} onValueChange={setValue} options={OPTIONS} ariaLabel="Skill level" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    reason="value is controlled, the caller owns which option is picked and hands it back through onValueChange, so the group never drifts from the form state around it."
+                    states={[
+                        {
+                            name: "value = \"intermediate\"",
+                            why: "Exactly the Intermediate row's dot fills while the other two stay empty, because the group enforces mutual exclusion rather than each row tracking its neighbours. Reading value back out of the group is how a form knows which option the reader actually picked.",
+                            code: "<Choice.RadioGroup value=\"intermediate\" onValueChange={setValue} options={OPTIONS} ariaLabel=\"Skill level\" />",
+                            render: (
+                                <div className="w-72">
+                                    <Choice.RadioGroup value={value} onValueChange={setValue} options={OPTIONS} ariaLabel="Skill level" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -110,20 +124,26 @@ export const WithLabel: Story = {
                     name="Choice.RadioGroup"
                     tier="atom"
                     leaf="Prop `groupLabel`"
-                    reason="A group of options usually needs one line saying what they're options FOR — groupLabel is that line, sitting above every row."
-                    note="Without groupLabel the group still needs an accessible name, which is what ariaLabel is for — the two aren't the same prop."
-                    code={"<Choice.RadioGroup value={value} onValueChange={setValue} options={OPTIONS} groupLabel=\"Current skill level\" />"}
-                >
-                    <div className="w-72">
-                        <Choice.RadioGroup
-                            value={value}
-                            onValueChange={setValue}
-                            options={OPTIONS}
-                            groupLabel="Current skill level"
-                            showAnatomy
-                        />
-                    </div>
-                </BlockAnatomy>
+                    reason="A group of options usually needs one line saying what they are options for, groupLabel is that line, sitting above every row. Without it the group still needs an accessible name, which is what ariaLabel supplies instead, the two props are not the same thing."
+                    states={[
+                        {
+                            name: "groupLabel = \"Current skill level\"",
+                            why: "A heading line appears above the three rows, on top of the same bare composition as Default. The heading gives the reader a plain-language answer to what these options are for, before they even scan the rows.",
+                            code: "<Choice.RadioGroup value={value} onValueChange={setValue} options={OPTIONS} groupLabel=\"Current skill level\" />",
+                            render: (
+                                <div className="w-72">
+                                    <Choice.RadioGroup
+                                        value={value}
+                                        onValueChange={setValue}
+                                        options={OPTIONS}
+                                        groupLabel="Current skill level"
+                                        showAnatomy
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -140,21 +160,27 @@ export const WithHint: Story = {
                     name="Choice.RadioGroup"
                     tier="atom"
                     leaf="Prop `hint`"
-                    reason="A choice with a downstream effect gets a sentence, not just a heading — hint stays visible below the label whatever the reader picks."
-                    note="Requires groupLabel to sit under — a hint with no heading above it reads as floating text."
-                    code={"<Choice.RadioGroup value={value} onValueChange={setValue} options={OPTIONS} groupLabel=\"Skill level\" hint=\"Used to personalize your learning path.\" />"}
-                >
-                    <div className="w-72">
-                        <Choice.RadioGroup
-                            value={value}
-                            onValueChange={setValue}
-                            options={OPTIONS}
-                            groupLabel="Current skill level"
-                            hint="Used to personalize your learning path."
-                            showAnatomy
-                        />
-                    </div>
-                </BlockAnatomy>
+                    reason="A choice with a downstream effect earns a full sentence, not just a heading, hint stays visible below the label no matter which option the reader ends up picking."
+                    states={[
+                        {
+                            name: "groupLabel set, hint set",
+                            why: "A muted sentence sits beneath the heading and above the rows, requiring groupLabel to already be present since a hint with no heading above it would read as floating text. The sentence explains the consequence of the choice before the reader commits to a row.",
+                            code: "<Choice.RadioGroup value={value} onValueChange={setValue} options={OPTIONS} groupLabel=\"Skill level\" hint=\"Used to personalize your learning path.\" />",
+                            render: (
+                                <div className="w-72">
+                                    <Choice.RadioGroup
+                                        value={value}
+                                        onValueChange={setValue}
+                                        options={OPTIONS}
+                                        groupLabel="Current skill level"
+                                        hint="Used to personalize your learning path."
+                                        showAnatomy
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -171,21 +197,27 @@ export const Required: Story = {
                     name="Choice.RadioGroup"
                     tier="atom"
                     leaf="Prop `isRequired`"
-                    reason="Some questions can't be skipped — the asterisk on the heading flags that before the reader tries to move on."
-                    note="The mark rides on groupLabel, so it only shows once the group has a heading to attach to."
-                    code={"<Choice.RadioGroup value={value} onValueChange={setValue} options={OPTIONS} groupLabel=\"Skill level\" isRequired />"}
-                >
-                    <div className="w-72">
-                        <Choice.RadioGroup
-                            value={value}
-                            onValueChange={setValue}
-                            options={OPTIONS}
-                            groupLabel="Current skill level"
-                            isRequired
-                            showAnatomy
-                        />
-                    </div>
-                </BlockAnatomy>
+                    reason="Some questions cannot be skipped, the asterisk on the heading flags that before the reader tries to move on to the next step."
+                    states={[
+                        {
+                            name: "groupLabel set, isRequired = true",
+                            why: "A red asterisk rides right after the heading text, and nothing else in the composition changes from the WithLabel leaf. The mark only shows because it rides on groupLabel, so a required group still needs a heading for the mark to attach to.",
+                            code: "<Choice.RadioGroup value={value} onValueChange={setValue} options={OPTIONS} groupLabel=\"Skill level\" isRequired />",
+                            render: (
+                                <div className="w-72">
+                                    <Choice.RadioGroup
+                                        value={value}
+                                        onValueChange={setValue}
+                                        options={OPTIONS}
+                                        groupLabel="Current skill level"
+                                        isRequired
+                                        showAnatomy
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -200,21 +232,27 @@ export const Disabled: Story = {
                 name="Choice.RadioGroup"
                 tier="atom"
                 leaf="Prop `isDisabled`"
-                reason="A whole question can be off the table — a step the reader hasn't unlocked yet, a field pre-filled and locked by policy."
-                note="Forwarded to every row at once: all dots and labels dim, every row blocks the pointer."
-                code={"<Choice.RadioGroup isDisabled value=\"beginner\" onValueChange={setValue} options={OPTIONS} ariaLabel=\"Skill level\" />"}
-            >
-                <div className="w-72">
-                    <Choice.RadioGroup
-                        value="beginner"
-                        onValueChange={() => {}}
-                        options={OPTIONS}
-                        ariaLabel="Skill level"
-                        isDisabled
-                        showAnatomy
-                    />
-                </div>
-            </BlockAnatomy>
+                reason="A whole question can be off the table, a step the reader has not unlocked yet, or a field pre-filled and locked by policy."
+                states={[
+                    {
+                        name: "isDisabled = true, value = \"beginner\"",
+                        why: "Every dot and label dims together and the pointer is blocked on all three rows at once, because isDisabled forwards to the whole group rather than one row at a time. The picked option, beginner, stays visibly selected even while the group cannot be changed.",
+                        code: "<Choice.RadioGroup isDisabled value=\"beginner\" onValueChange={setValue} options={OPTIONS} ariaLabel=\"Skill level\" />",
+                        render: (
+                            <div className="w-72">
+                                <Choice.RadioGroup
+                                    value="beginner"
+                                    onValueChange={() => {}}
+                                    options={OPTIONS}
+                                    ariaLabel="Skill level"
+                                    isDisabled
+                                    showAnatomy
+                                />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -229,21 +267,27 @@ export const Error: Story = {
                     name="Choice.RadioGroup"
                     tier="atom"
                     leaf="Prop `errorMessage`"
-                    reason="A required choice left blank is easy to miss on a long form — the red border and the line beneath the group stop the eye at the exact question that needs an answer."
-                    note="Setting errorMessage flips the whole group invalid on its own; there's no separate isInvalid to remember."
-                    code={"<Choice.RadioGroup value={value} onValueChange={setValue} options={OPTIONS} groupLabel=\"Skill level\" errorMessage=\"Please choose a skill level.\" />"}
-                >
-                    <div className="w-72">
-                        <Choice.RadioGroup
-                            value={value}
-                            onValueChange={setValue}
-                            options={OPTIONS}
-                            groupLabel="Current skill level"
-                            errorMessage="Please choose your current skill level."
-                            showAnatomy
-                        />
-                    </div>
-                </BlockAnatomy>
+                    reason="A required choice left blank is easy to miss on a long form, the red border and the line beneath the group stop the eye at the exact question that still needs an answer."
+                    states={[
+                        {
+                            name: "errorMessage set",
+                            why: "The whole group's border turns to the danger colour and a red line with the message text appears under the rows. Setting errorMessage alone is enough to flip the group invalid, there is no separate isInvalid flag to remember alongside it.",
+                            code: "<Choice.RadioGroup value={value} onValueChange={setValue} options={OPTIONS} groupLabel=\"Skill level\" errorMessage=\"Please choose a skill level.\" />",
+                            render: (
+                                <div className="w-72">
+                                    <Choice.RadioGroup
+                                        value={value}
+                                        onValueChange={setValue}
+                                        options={OPTIONS}
+                                        groupLabel="Current skill level"
+                                        errorMessage="Please choose your current skill level."
+                                        showAnatomy
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -258,14 +302,20 @@ export const Loading: Story = {
                 name="Choice.RadioGroup"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
-                reason="Whoever owns the shape owns its resting state, so the group draws its own shimmer — no shared skeleton component to keep in sync."
-                note="Row count follows options.length by default (override with skeletonRows), so the group doesn't jump when the real rows land."
-                code={"<Choice.RadioGroup value=\"\" onValueChange={setValue} options={OPTIONS} isSkeleton />"}
-            >
-                <div className="w-72">
-                    <Choice.RadioGroup value="" onValueChange={() => {}} options={OPTIONS} isSkeleton showAnatomy />
-                </div>
-            </BlockAnatomy>
+                reason="Whoever owns the shape owns its resting state, so the group draws its own shimmer, no shared skeleton component to keep in sync by hand."
+                states={[
+                    {
+                        name: "isSkeleton = true, options.length = 3",
+                        why: "Three shimmer rows render, each a dot plus a label bar, because the row count follows options.length by default. Matching the real row count means the group does not jump once the real rows land, unless a caller overrides it with skeletonRows.",
+                        code: "<Choice.RadioGroup value=\"\" onValueChange={setValue} options={OPTIONS} isSkeleton />",
+                        render: (
+                            <div className="w-72">
+                                <Choice.RadioGroup value="" onValueChange={() => {}} options={OPTIONS} isSkeleton showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

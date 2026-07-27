@@ -25,10 +25,10 @@ const CHECKOUT_STEPS: Array<StepperStep> = [
 // and a Connector sits between every pair of steps (all 3 checkout steps have a
 // description, so Description is present in every leaf here too).
 const STEPPER_PARTS: Array<AnatomyNode> = [
-    { name: "Indicator", tier: "composite", role: "step's circular badge — check icon when done, 1-based number otherwise (lặp ×N)" },
-    { name: "Label", tier: "composite", role: "step's short label text (lặp ×N)" },
-    { name: "Description", tier: "composite", role: "step's optional one-line description under the label (lặp ×N)" },
-    { name: "Connector", tier: "composite", role: "line between two adjacent steps, success-toned once passed" },
+    { name: "Indicator", tier: "composite", role: "the step's circular badge, showing a check icon once the step is done and a 1-based number otherwise (repeats per step)" },
+    { name: "Label", tier: "composite", role: "the step's short label text (repeats per step)" },
+    { name: "Description", tier: "composite", role: "the step's optional one-line description under the label (repeats per step)" },
+    { name: "Connector", tier: "composite", role: "the line between two adjacent steps, turning success-toned once the flow has passed it" },
 ]
 
 /** Horizontal, mid-flow: done = check, current = accent ring, upcoming = muted. */
@@ -40,11 +40,16 @@ export const HorizontalMidFlow: Story = {
                 tier="composite"
                 leaf="HorizontalMidFlow"
                 parts={STEPPER_PARTS}
-                reason="Stepper gom indicator + label + description + connector của N bước thành MỘT track thay vì mỗi flow tự dàn tay — track ngang, bước giữa (currentIndex=1) nên có cả done/current/upcoming."
-                code={"<Stepper.Base steps={[{ id: \"info\", label: \"Details\", description: \"Fill in your info\" }]} currentIndex={1} />"}
-            >
-                <Stepper.Base steps={CHECKOUT_STEPS} currentIndex={1} showAnatomy />
-            </BlockAnatomy>
+                reason="Stepper bundles the indicator, label, description, and connector of N steps into ONE shared track instead of every flow hand-rolling its own. The track direction and the current position are both props, so a checkout flow and a long vertical wizard can share the exact same component."
+                states={[
+                    {
+                        name: "currentIndex = 1 (mid-flow)",
+                        why: "The track lays three Indicator/Label/Description groups end to end with a Connector between each pair, and with `currentIndex=1` the first step shows its done check, the second carries the current accent ring, and the third stays muted as upcoming. Showing all three states together in one track lets a reader compare done, current, and upcoming without switching leaves.",
+                        code: "<Stepper.Base steps={CHECKOUT_STEPS} currentIndex={1} />",
+                        render: <Stepper.Base steps={CHECKOUT_STEPS} currentIndex={1} showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -58,11 +63,23 @@ export const Vertical: Story = {
                 tier="composite"
                 leaf="Vertical"
                 parts={STEPPER_PARTS}
-                note={"orientation=\"vertical\" — CÙNG 4 part, chỉ đổi rail dọc; onStepPress khiến bước done trở thành <button> (không thêm part mới, chỉ đổi thẻ bọc)."}
-                code={"<Stepper.Base steps={[{ id: \"info\", label: \"Details\", description: \"Fill in your info\" }]} currentIndex={1} orientation=\"vertical\" onStepPress={handleStepPress} />"}
-            >
-                <Stepper.Base steps={CHECKOUT_STEPS} currentIndex={1} orientation="vertical" onStepPress={() => {}} showAnatomy />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "orientation = \"vertical\", onStepPress set",
+                        why: "The same four parts stack along a vertical rail instead of a horizontal track, and passing `onStepPress` turns the done step into a `<button>` without adding a new part. A vertical stepper fits a narrow shell or a long step list where a horizontal track would run out of width.",
+                        code: "<Stepper.Base steps={CHECKOUT_STEPS} currentIndex={1} orientation=\"vertical\" onStepPress={handleStepPress} />",
+                        render: (
+                            <Stepper.Base
+                                steps={CHECKOUT_STEPS}
+                                currentIndex={1}
+                                orientation="vertical"
+                                onStepPress={() => {}}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -76,11 +93,15 @@ export const AllComplete: Story = {
                 tier="composite"
                 leaf="AllComplete"
                 parts={STEPPER_PARTS}
-                note="currentIndex === steps.length — CÙNG 4 part, mọi Indicator đều 'done' (check) và mọi Connector đều success."
-                code={"<Stepper.Base steps={CHECKOUT_STEPS} currentIndex={CHECKOUT_STEPS.length} />"}
-            >
-                <Stepper.Base steps={CHECKOUT_STEPS} currentIndex={CHECKOUT_STEPS.length} showAnatomy />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "currentIndex = steps.length",
+                        why: "Every Indicator switches to its done check and every Connector turns success-toned, because `currentIndex` has moved past the last step. This is the terminal state a checkout flow reaches right before it hands the learner off to a receipt or confirmation screen.",
+                        code: "<Stepper.Base steps={CHECKOUT_STEPS} currentIndex={CHECKOUT_STEPS.length} />",
+                        render: <Stepper.Base steps={CHECKOUT_STEPS} currentIndex={CHECKOUT_STEPS.length} showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }

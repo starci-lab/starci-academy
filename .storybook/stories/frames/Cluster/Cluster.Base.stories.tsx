@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
-import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -11,6 +10,10 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * (that's its definition) — a row that may-or-may-not wrap is `Stack.H`. An
  * EMPTY list just leaves an empty track: the "nothing here" copy belongs to the
  * caller, not the frame (§13 — a frame carries no content).
+ *
+ * 2026-07-27: migrated to the `states` API (§8) — the `Gaps`/`Justify` demo rows
+ * are now `states[]` entries, one per scale step, instead of a hand-stacked column
+ * under a single shared `note`.
  */
 const meta: Meta<typeof Cluster.Base> = {
     title: "Frames/Cluster/Cluster.Base",
@@ -35,15 +38,10 @@ const TAGS = ["Docker", "Kubernetes", "CI/CD", "Terraform", "Observability", "Gi
 const tagItems = (tags: ReadonlyArray<string>) =>
     tags.map((tag) => ({ key: tag, content: <Chip.Base text={tag} /> }))
 
-/** The six VALID steps of §10 — `gap` is a union literal so there's no seventh step. */
-const SCALE = [
-    { gap: 0, name: "flush (0)" },
-    { gap: 1, name: "tight (1)" },
-    { gap: 2, name: "related (2)" },
-    { gap: 3, name: "grouped (3)" },
-    { gap: 6, name: "section (6)" },
-    { gap: 8, name: "page (8)" },
-] as const
+/** The wrapping surface every state below renders inside, so the wrap boundary reads the same across all of them. */
+const surface = (node: React.ReactNode) => (
+    <div className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">{node}</div>
+)
 
 /** Default — a wrapping chip row at the `related(2)` seam: the standard rhythm for a same-kind cluster. */
 export const Default: Story = {
@@ -55,15 +53,18 @@ export const Default: Story = {
                 leaf="Default"
                 parts={ITEM_PARTS}
                 reason="The content is N repeating elements of the SAME KIND ⇒ per the §13b test, the API is `items` DATA and `children` is FORBIDDEN — children would allow sneaking a stray node into a row whose premise is uniformity. `gap` applies to both axes, so wrapped rows stay evenly spaced too."
-                code={`<Cluster.Base
-  gap={2}
-  items={tags.map((tag) => ({ key: tag, content: <Chip.Base text={tag} /> }))}
-/>`}
-            >
-                <div className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
-                    <Cluster.Base showAnatomy gap={2} items={tagItems(TAGS)} />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "gap = 2 (related)",
+                        why: "The chips wrap onto a second line at the container's edge, each pair spaced at the `related(2)` step on both axes. This is the standard rhythm for a same-kind cluster like a tag row.",
+                        code: `<Cluster.Base
+    gap={2}
+    items={tags.map((tag) => ({ key: tag, content: <Chip.Base text={tag} /> }))}
+/>`,
+                        render: surface(<Cluster.Base showAnatomy gap={2} items={tagItems(TAGS)} />),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -81,23 +82,46 @@ export const Gaps: Story = {
                 tier="frame"
                 leaf="Gaps"
                 parts={ITEM_PARTS}
-                note="Large steps (6/8) break the cluster apart into loose elements — a false signal for a cluster of the SAME kind; kept here to show why the scale is stepped rather than an arbitrary number."
-                code={`<Cluster.Base
-  gap={2}
-  items={…}
-/>`}
-            >
-                <div className="flex flex-col gap-6">
-                    {SCALE.map((step, index) => (
-                        <div key={step.gap} className="flex flex-col gap-2">
-                            <Typography.Base size="xs" text={step.name} color="muted" />
-                            <div className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
-                                <Cluster.Base showAnatomy={index === 0} gap={step.gap} items={tagItems(TAGS.slice(0, 4))} />
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </BlockAnatomy>
+                reason="`gap` is REQUIRED and type-forced onto exactly six steps `0·1·2·3·6·8` (§10c) — `gap={4}` is a compile error, not a runtime choice. This is the reason the frame exists at all instead of a hand-typed `flex flex-wrap gap-*`."
+                states={[
+                    {
+                        name: "gap = 0 (flush)",
+                        why: "The chips sit edge to edge with no space between them. At this step the elements read as one continuous strip rather than a cluster of separate tags.",
+                        code: "<Cluster.Base gap={0} items={…} />",
+                        render: surface(<Cluster.Base showAnatomy gap={0} items={tagItems(TAGS.slice(0, 4))} />),
+                    },
+                    {
+                        name: "gap = 1 (tight)",
+                        why: "A hairline gap separates each chip, just enough to tell them apart without reading as loose. This step still keeps the cluster feeling like one unit.",
+                        code: "<Cluster.Base gap={1} items={…} />",
+                        render: surface(<Cluster.Base showAnatomy gap={1} items={tagItems(TAGS.slice(0, 4))} />),
+                    },
+                    {
+                        name: "gap = 2 (related)",
+                        why: "The spacing widens to the step this frame is built for — the correct default for a chip or tag cluster, the same rhythm `Default` demonstrates.",
+                        code: "<Cluster.Base gap={2} items={…} />",
+                        render: surface(<Cluster.Base showAnatomy gap={2} items={tagItems(TAGS.slice(0, 4))} />),
+                    },
+                    {
+                        name: "gap = 3 (grouped)",
+                        why: "The gap grows enough that the chips start to read as separately grouped rather than one flowing set. Still legible as a cluster, but visually looser than the related step.",
+                        code: "<Cluster.Base gap={3} items={…} />",
+                        render: surface(<Cluster.Base showAnatomy gap={3} items={tagItems(TAGS.slice(0, 4))} />),
+                    },
+                    {
+                        name: "gap = 6 (section)",
+                        why: "The chips break apart into loose, individually-spaced elements — a false signal for a cluster of the SAME kind, kept here only to show why the scale is a stepped set rather than an arbitrary number.",
+                        code: "<Cluster.Base gap={6} items={…} />",
+                        render: surface(<Cluster.Base showAnatomy gap={6} items={tagItems(TAGS.slice(0, 4))} />),
+                    },
+                    {
+                        name: "gap = 8 (page)",
+                        why: "The gap widens to the largest step on the scale, pulling each chip far enough apart that the row no longer reads as a cluster at all. This extreme exists to bound the scale, not as a realistic choice for this frame.",
+                        code: "<Cluster.Base gap={8} items={…} />",
+                        render: surface(<Cluster.Base showAnatomy gap={8} items={tagItems(TAGS.slice(0, 4))} />),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -114,29 +138,34 @@ export const Justify: Story = {
                 tier="frame"
                 leaf="Justify"
                 parts={ITEM_PARTS}
-                note="Few elements so there's leftover space to read the distribution; `between` applies to EACH row, so once a cluster has wrapped the last row will look uneven — that's flexbox behaviour, not a bug in the frame."
-                code={`<Cluster.Base
-  gap={2}
-  justify="between"
-  items={…}
-/>`}
-            >
-                <div className="flex flex-col gap-6">
-                    {(["start", "center", "end", "between"] as const).map((justify, index) => (
-                        <div key={justify} className="flex flex-col gap-2">
-                            <Typography.Base size="xs" text={justify} color="muted" />
-                            <div className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
-                                <Cluster.Base
-                                    showAnatomy={index === 0}
-                                    gap={2}
-                                    justify={justify}
-                                    items={tagItems(TAGS.slice(0, 3))}
-                                />
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </BlockAnatomy>
+                reason="`justify` distributes elements on EACH wrapped row independently, so once a cluster has wrapped onto more than one line the last row can look uneven under `between` — that is flexbox's own behaviour, not a bug in the frame. Only three items are used here so there is leftover space to actually read the distribution."
+                states={[
+                    {
+                        name: "justify = \"start\" (default)",
+                        why: "The three chips pack against the leading edge, leaving the remaining space empty on the trailing side. This is the default because most clusters read left-to-right with no reason to spread out.",
+                        code: "<Cluster.Base gap={2} justify=\"start\" items={…} />",
+                        render: surface(<Cluster.Base showAnatomy gap={2} justify="start" items={tagItems(TAGS.slice(0, 3))} />),
+                    },
+                    {
+                        name: "justify = \"center\"",
+                        why: "The three chips gather at the row's midpoint with equal empty space on both sides. This suits a cluster that stands alone as a centred group rather than reading in-line with other content.",
+                        code: "<Cluster.Base gap={2} justify=\"center\" items={…} />",
+                        render: surface(<Cluster.Base showAnatomy gap={2} justify="center" items={tagItems(TAGS.slice(0, 3))} />),
+                    },
+                    {
+                        name: "justify = \"end\"",
+                        why: "The three chips pack against the trailing edge instead, leaving the leading side empty. This mirrors `start` for a right-aligned context.",
+                        code: "<Cluster.Base gap={2} justify=\"end\" items={…} />",
+                        render: surface(<Cluster.Base showAnatomy gap={2} justify="end" items={tagItems(TAGS.slice(0, 3))} />),
+                    },
+                    {
+                        name: "justify = \"between\"",
+                        why: "The three chips spread with equal space carved out between them, touching both edges of the row. This distribution only makes sense once the cluster spans the full width of its container — squeezed into a narrow box it would look identical to `start`.",
+                        code: "<Cluster.Base gap={2} justify=\"between\" items={…} />",
+                        render: surface(<Cluster.Base showAnatomy gap={2} justify="between" items={tagItems(TAGS.slice(0, 3))} />),
+                    },
+                ]}
+            />
         </div>
     ),
 }

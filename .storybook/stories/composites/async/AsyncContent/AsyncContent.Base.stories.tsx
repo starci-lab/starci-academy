@@ -13,6 +13,8 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * the empty/error branches only take the MINIMAL shape to prove the switch runs
  * correctly; the full set of message variants lives in story `AsyncContent.Empty` /
  * `AsyncContent.Error`, NOT repeated here.
+ *
+ * 2026-07-27: di trú toàn bộ leaf sang API `states[]` (§8/§4a).
  */
 const meta: Meta<typeof AsyncContent.Base> = {
     title: "Composites/Async/AsyncContent/AsyncContent.Base",
@@ -72,16 +74,16 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
  * CHOOSES one of the four nodes.
  */
 const CONTENT_PARTS: Array<AnatomyNode> = [
-    { name: "Content", tier: "composite", role: "content branch — the node the caller passes in (slot `content` / `children`)" },
+    { name: "Content", tier: "composite", role: "The content branch, the node the caller passed in through slot content or children." },
 ]
 const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton", tier: "composite", role: "loading branch — the skeleton mirror tree the caller passes via slot `skeleton`" },
+    { name: "Skeleton", tier: "composite", role: "The loading branch, the skeleton mirror tree the caller passed through slot skeleton." },
 ]
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "AsyncContent.Empty", tier: "composite", role: "empty branch — the scaffold builds it from PROPS `emptyContent`, not a node" },
+    { name: "AsyncContent.Empty", tier: "composite", role: "The empty branch, built by the scaffold from props emptyContent rather than a node." },
 ]
 const ERROR_PARTS: Array<AnatomyNode> = [
-    { name: "AsyncContent.Error", tier: "composite", role: "error branch — the scaffold builds it from PROPS `errorContent`; highest priority" },
+    { name: "AsyncContent.Error", tier: "composite", role: "The error branch, built by the scaffold from props errorContent; it has the highest priority of the four." },
 ]
 const SILENT_PARTS: Array<AnatomyNode> = []
 
@@ -94,15 +96,22 @@ export const Content: Story = {
                 tier="composite"
                 leaf="Content"
                 parts={CONTENT_PARTS}
-                reason="Every async data region needs EXACTLY ONE place holding SWR's render contract: error → loading → empty → content. Bundling the four branches into one scaffold means no surface rewrites its own if/else chain, and the skeleton always mirrors the real layout instead of a generic spinner."
-                code={`<AsyncContent.Base isLoading={false} skeleton={<ProfileCardSkeleton />}>
-  <ProfileCard />
-</AsyncContent.Base>`}
-            >
-                <AsyncContent.Base isLoading={false} skeleton={<ProfileCardSkeleton />} showAnatomy>
-                    <ProfileCard />
-                </AsyncContent.Base>
-            </BlockAnatomy>,
+                reason="Every async data region needs exactly one place holding SWR's render contract, error, then loading, then empty, then content. Bundling the four branches into one scaffold means no surface rewrites its own if/else chain, and the skeleton always mirrors the real layout instead of a generic spinner."
+                states={[
+                    {
+                        name: "isLoading = false, children set",
+                        why: "The resolved ProfileCard renders through children, which is a shortcut for the content branch. The scaffold has already picked the content branch over loading, empty, or error because none of their conditions are true.",
+                        code: `<AsyncContent.Base isLoading={false} skeleton={<ProfileCardSkeleton />}>
+    <ProfileCard />
+</AsyncContent.Base>`,
+                        render: (
+                            <AsyncContent.Base isLoading={false} skeleton={<ProfileCardSkeleton />} showAnatomy>
+                                <ProfileCard />
+                            </AsyncContent.Base>
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -115,20 +124,26 @@ export const ContentSlot: Story = {
                 tier="composite"
                 leaf="ContentSlot"
                 parts={CONTENT_PARTS}
-                note="Same content branch but goes through the NAMED slot `content` instead of `children` — §13b: the wrapping scaffold treats the named slot as the main path, `children` is just a shortcut."
-                code={`<AsyncContent.Base
-  isLoading={false}
-  skeleton={<ProfileCardSkeleton />}
-  content={<ProfileCard />}
-/>`}
-            >
-                <AsyncContent.Base
-                    isLoading={false}
-                    skeleton={<ProfileCardSkeleton />}
-                    content={<ProfileCard />}
-                    showAnatomy
-                />
-            </BlockAnatomy>,
+                states={[
+                    {
+                        name: "isLoading = false, content set (named slot, not children)",
+                        why: "The same ProfileCard renders, but this time through the named slot content instead of the children shortcut. §13b treats a wrapping scaffold's named slot as the main path, so content wins whenever both content and children are present.",
+                        code: `<AsyncContent.Base
+    isLoading={false}
+    skeleton={<ProfileCardSkeleton />}
+    content={<ProfileCard />}
+/>`,
+                        render: (
+                            <AsyncContent.Base
+                                isLoading={false}
+                                skeleton={<ProfileCardSkeleton />}
+                                content={<ProfileCard />}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -141,15 +156,21 @@ export const Loading: Story = {
                 tier="composite"
                 leaf="Loading"
                 parts={LOADING_PARTS}
-                note="`isLoading` → the scaffold renders exactly the `skeleton` node; composition differs from the content leaf (mirror instead of the real card)."
-                code={`<AsyncContent.Base isLoading skeleton={<ProfileCardSkeleton />}>
-  <ProfileCard />
-</AsyncContent.Base>`}
-            >
-                <AsyncContent.Base isLoading skeleton={<ProfileCardSkeleton />} showAnatomy>
-                    <ProfileCard />
-                </AsyncContent.Base>
-            </BlockAnatomy>,
+                states={[
+                    {
+                        name: "isLoading = true",
+                        why: "The scaffold renders exactly the skeleton node instead of children, swapping every content piece for a same-sized shimmer. The composition differs from the content leaf on purpose, a mirror tree rather than the real card, so the layout never collapses while data is still in flight.",
+                        code: `<AsyncContent.Base isLoading skeleton={<ProfileCardSkeleton />}>
+    <ProfileCard />
+</AsyncContent.Base>`,
+                        render: (
+                            <AsyncContent.Base isLoading skeleton={<ProfileCardSkeleton />} showAnatomy>
+                                <ProfileCard />
+                            </AsyncContent.Base>
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -162,29 +183,35 @@ export const Empty: Story = {
                 tier="composite"
                 leaf="Empty"
                 parts={EMPTY_PARTS}
-                note="`isEmpty` → the scaffold builds `AsyncContent.Empty` FROM PROPS. The minimal shape (title + description) is enough to see the switch run — button/icon variants live in story AsyncContent.Empty."
-                code={`<AsyncContent.Base
-  isLoading={false}
-  isEmpty
-  emptyContent={{ title: "Chưa có nội dung", description: "Khi có bài học liên quan, chúng sẽ hiện ở đây." }}
-  skeleton={<ProfileCardSkeleton />}
+                states={[
+                    {
+                        name: "isEmpty = true, emptyContent = { title, description }",
+                        why: "The scaffold builds an AsyncContent.Empty node from the emptyContent props rather than rendering a node the caller passed in. This minimal title-plus-description shape is only enough to prove the switch lands on the empty branch, the full set of empty message variants lives in the AsyncContent.Empty story instead of here.",
+                        code: `<AsyncContent.Base
+    isLoading={false}
+    isEmpty
+    emptyContent={{ title: "Chưa có nội dung", description: "Khi có bài học liên quan, chúng sẽ hiện ở đây." }}
+    skeleton={<ProfileCardSkeleton />}
 >
-  <ProfileCard />
-</AsyncContent.Base>`}
-            >
-                <AsyncContent.Base
-                    isLoading={false}
-                    isEmpty
-                    emptyContent={{
-                        title: "Chưa có nội dung",
-                        description: "Khi có bài học liên quan, chúng sẽ hiện ở đây.",
-                    }}
-                    skeleton={<ProfileCardSkeleton />}
-                    showAnatomy
-                >
-                    <ProfileCard />
-                </AsyncContent.Base>
-            </BlockAnatomy>,
+    <ProfileCard />
+</AsyncContent.Base>`,
+                        render: (
+                            <AsyncContent.Base
+                                isLoading={false}
+                                isEmpty
+                                emptyContent={{
+                                    title: "Chưa có nội dung",
+                                    description: "Khi có bài học liên quan, chúng sẽ hiện ở đây.",
+                                }}
+                                skeleton={<ProfileCardSkeleton />}
+                                showAnatomy
+                            >
+                                <ProfileCard />
+                            </AsyncContent.Base>
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -200,15 +227,21 @@ export const EmptySilent: Story = {
                 tier="composite"
                 leaf="EmptySilent"
                 parts={SILENT_PARTS}
-                note="Empty but `emptyContent` left blank → NO node renders (empty parts tree). Use when a section must vanish entirely instead of showing a message."
-                code={`<AsyncContent.Base isLoading={false} isEmpty skeleton={<ProfileCardSkeleton />}>
-  <ProfileCard />
-</AsyncContent.Base>`}
-            >
-                <AsyncContent.Base isLoading={false} isEmpty skeleton={<ProfileCardSkeleton />} showAnatomy>
-                    <ProfileCard />
-                </AsyncContent.Base>
-            </BlockAnatomy>,
+                states={[
+                    {
+                        name: "isEmpty = true, emptyContent not passed",
+                        why: "No node renders at all, the parts tree is empty because the scaffold has nothing to build an AsyncContent.Empty from. Use this branch when a section must vanish entirely rather than show any message, this is a separate branch of the switch, not a smaller variant of the message leaf above.",
+                        code: `<AsyncContent.Base isLoading={false} isEmpty skeleton={<ProfileCardSkeleton />}>
+    <ProfileCard />
+</AsyncContent.Base>`,
+                        render: (
+                            <AsyncContent.Base isLoading={false} isEmpty skeleton={<ProfileCardSkeleton />} showAnatomy>
+                                <ProfileCard />
+                            </AsyncContent.Base>
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -221,30 +254,36 @@ export const Error: Story = {
                 tier="composite"
                 leaf="Error"
                 parts={ERROR_PARTS}
-                note="`error` truthy + `errorContent` present → the scaffold skips even `isLoading` (still on here) to render the error branch. ⚠️ Without `errorContent` the error branch does NOT activate — the scaffold falls through to loading."
-                code={`<AsyncContent.Base
-  isLoading
-  error={new Error("network")}
-  errorContent={{ title: "Không tải được nội dung", onRetry: () => {}, retryLabel: "Thử lại" }}
-  skeleton={<ProfileCardSkeleton />}
+                states={[
+                    {
+                        name: "error set, errorContent = { title, onRetry, retryLabel }, isLoading = true",
+                        why: "The error branch renders even though isLoading is still true, because a real error and a real errorContent together outrank every other branch, including loading. Without errorContent the error branch would not activate at all and the scaffold would fall through to loading instead, so both error and errorContent must be present together.",
+                        code: `<AsyncContent.Base
+    isLoading
+    error={new Error("network")}
+    errorContent={{ title: "Không tải được nội dung", onRetry: () => {}, retryLabel: "Thử lại" }}
+    skeleton={<ProfileCardSkeleton />}
 >
-  <ProfileCard />
-</AsyncContent.Base>`}
-            >
-                <AsyncContent.Base
-                    isLoading
-                    error={new globalThis.Error("network")}
-                    errorContent={{
-                        title: "Không tải được nội dung",
-                        description: "Kiểm tra kết nối rồi thử lại.",
-                        onRetry: () => {},
-                        retryLabel: "Thử lại",
-                    }}
-                    skeleton={<ProfileCardSkeleton />}
-                    showAnatomy
-                >
-                    <ProfileCard />
-                </AsyncContent.Base>
-            </BlockAnatomy>,
+    <ProfileCard />
+</AsyncContent.Base>`,
+                        render: (
+                            <AsyncContent.Base
+                                isLoading
+                                error={new globalThis.Error("network")}
+                                errorContent={{
+                                    title: "Không tải được nội dung",
+                                    description: "Kiểm tra kết nối rồi thử lại.",
+                                    onRetry: () => {},
+                                    retryLabel: "Thử lại",
+                                }}
+                                skeleton={<ProfileCardSkeleton />}
+                                showAnatomy
+                            >
+                                <ProfileCard />
+                            </AsyncContent.Base>
+                        ),
+                    },
+                ]}
+            />,
         ),
 }

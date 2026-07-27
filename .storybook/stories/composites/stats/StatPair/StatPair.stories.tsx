@@ -26,14 +26,14 @@ const STATS = [
 
 /**
  * ANATOMY IS PER-LEAF: every story below wraps its render in its OWN BlockAnatomy
- * axis. `StatPair` renders its `value`/`label` `Typography` DIRECTLY itself
- * (canon granularity rule — a component that renders `Typography` inline gets
- * its OWN tagged node), so both are direct parts. Frameless — the surrounding
- * `Card`/divider/grid belongs to the CALLER, not this composite.
+ * axis. `StatPair` renders its `value`/`label` `Typography` DIRECTLY itself (canon
+ * granularity rule, a component that renders `Typography` inline gets its OWN tagged
+ * node), so both are direct parts. Frameless — the surrounding `Card`/divider/grid
+ * belongs to the CALLER, not this composite.
  */
 const STAT_PARTS: Array<AnatomyNode> = [
-    { name: "Typography.Value", tier: "composite", role: "số liệu chính, semibold" },
-    { name: "Typography.Label", tier: "composite", role: "chú thích muted dưới value" },
+    { name: "Typography.Value", tier: "composite", role: "the main figure, semibold" },
+    { name: "Typography.Label", tier: "composite", role: "the muted caption under the value" },
 ]
 
 export const Single: Story = {
@@ -44,11 +44,16 @@ export const Single: Story = {
                 tier="composite"
                 leaf="Single"
                 parts={STAT_PARTS}
-                reason="Cặp value+label xếp dọc, không khung riêng — để card/hàng stat bên ngoài quyết định surface + divider."
-                code={"<StatPair value=\"1,204\" label=\"Followers\" />"}
-            >
-                <StatPair value="1,204" label="Followers" showAnatomy />
-            </BlockAnatomy>
+                reason="The value and label stack vertically as one pair with no surface of its own, so the surrounding card or stat row decides the surface and the divider, not this composite."
+                states={[
+                    {
+                        name: "value = \"1,204\", label = \"Followers\"",
+                        why: "The render is just one value/label pair with no border or padding around it. Dropping the frame here means a caller wrapping four of these in a Card with `divide-x` gets clean dividers with no doubled-up borders.",
+                        code: "<StatPair value=\"1,204\" label=\"Followers\" />",
+                        render: <StatPair value="1,204" label="Followers" showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -61,22 +66,26 @@ export const Row: Story = {
                 tier="composite"
                 leaf="Row"
                 parts={STAT_PARTS}
-                note="4 StatPair trong 1 Card chia cột bằng divide-x — Card/divider là của caller, mỗi StatPair vẫn cùng 2 node."
-                code={`<Card className="flex divide-x divide-default">
-  {stats.map((stat) => <StatPair key={stat.label} value={stat.value} label={stat.label} />)}
-</Card>`}
-            >
-                {/* Parent owns the card + full-height vertical dividers; StatPair is frameless. */}
-                <Card variant="default" className="w-fit">
-                    <div className="flex items-stretch divide-x divide-default">
-                        {STATS.map((stat) => (
-                            <div key={stat.label} className="px-6 first:pl-0 last:pr-0">
-                                <StatPair value={stat.value} label={stat.label} showAnatomy />
-                            </div>
-                        ))}
-                    </div>
-                </Card>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "4 StatPair inside one Card, divide-x",
+                        why: "Four StatPair pairs sit side by side inside one Card, divided by the caller's own `divide-x` borders rather than by StatPair itself. Each pair still renders the same two nodes, proving the frameless composite composes cleanly into a caller-owned row layout.",
+                        code: "<Card className=\"flex divide-x divide-default\">\n  {stats.map((stat) => <StatPair key={stat.label} value={stat.value} label={stat.label} />)}\n</Card>",
+                        render: (
+                            // Parent owns the card + full-height vertical dividers; StatPair is frameless.
+                            <Card variant="default" className="w-fit">
+                                <div className="flex items-stretch divide-x divide-default">
+                                    {STATS.map((stat) => (
+                                        <div key={stat.label} className="px-6 first:pl-0 last:pr-0">
+                                            <StatPair value={stat.value} label={stat.label} showAnatomy />
+                                        </div>
+                                    ))}
+                                </div>
+                            </Card>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -89,20 +98,24 @@ export const Grid: Story = {
                 tier="composite"
                 leaf="Grid"
                 parts={STAT_PARTS}
-                note="Cùng 4 stat, đổi sang grid 2 cột (widget hẹp) — vẫn cùng composition mỗi StatPair."
-                code={`<Card className="grid grid-cols-2 gap-x-8 gap-y-6">
-  {stats.map((stat) => <StatPair key={stat.label} value={stat.value} label={stat.label} />)}
-</Card>`}
-            >
-                {/* Narrow width (sidebar/widget): the same stats fall into a 2-col grid. */}
-                <Card variant="default" className="w-[420px]">
-                    <div className="grid grid-cols-2 gap-x-8 gap-y-6">
-                        {STATS.map((stat) => (
-                            <StatPair key={stat.label} value={stat.value} label={stat.label} showAnatomy />
-                        ))}
-                    </div>
-                </Card>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "same 4 stats, 2-column grid (narrow width)",
+                        why: "The same four stats now sit in a 2-column grid instead of a divided row, because the narrower Card (a sidebar widget) has no room for four columns side by side. Every StatPair still renders the identical value/label composition, the grid only changes how the caller arranges the pairs.",
+                        code: "<Card className=\"grid grid-cols-2 gap-x-8 gap-y-6\">\n  {stats.map((stat) => <StatPair key={stat.label} value={stat.value} label={stat.label} />)}\n</Card>",
+                        render: (
+                            // Narrow width (sidebar/widget): the same stats fall into a 2-col grid.
+                            <Card variant="default" className="w-[420px]">
+                                <div className="grid grid-cols-2 gap-x-8 gap-y-6">
+                                    {STATS.map((stat) => (
+                                        <StatPair key={stat.label} value={stat.value} label={stat.label} showAnatomy />
+                                    ))}
+                                </div>
+                            </Card>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

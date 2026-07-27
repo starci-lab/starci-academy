@@ -4,6 +4,7 @@ import {
     ALIGN_CLASS,
     GAP_CLASS,
     JUSTIFY_CLASS,
+    PADDING_CLASS,
     type LayoutAlign,
     type LayoutJustify,
     type SpaceScale,
@@ -40,6 +41,19 @@ export interface FlexBaseProps {
     direction?: FlexDirection
     /** Space between children, pinned to the 10 scale. Required so nobody leaves it to chance. */
     gap: SpaceScale
+    /**
+     * Space INSIDE the box, pinned to the same scale as the gap.
+     *
+     * Added 2026-07-27 for the same reason the gap is typed. Padding was a rule that lived only
+     * in prose: no frame offered it, so anyone who needed inner space wrote `p-5` by hand and
+     * nothing objected. Measured at the time: 816 padding classes across the drawing, 48 of them
+     * off the scale, against zero off scale gaps. A rule with no typed path is a rule people
+     * route around, so the path exists here now.
+     *
+     * Leaving it out renders no padding class at all, which keeps a plain layout box free of
+     * inner space and matches how the frame behaved before.
+     */
+    padding?: SpaceScale
     /** Cross axis alignment. `stretch` on a column, `center` on a row, matching the old Stack defaults. */
     align?: LayoutAlign
     /** Main axis distribution. Left out means the browser default, which is `start`. */
@@ -74,6 +88,7 @@ const DIRECTION_CLASS: Record<FlexDirection, string> = {
 const FlexBase = ({
     direction = "row",
     gap,
+    padding,
     align,
     justify,
     wrap = false,
@@ -88,6 +103,7 @@ const FlexBase = ({
             "flex",
             DIRECTION_CLASS[direction],
             GAP_CLASS[gap],
+            padding != null && PADDING_CLASS[padding],
             align != null && ALIGN_CLASS[align],
             justify != null && JUSTIFY_CLASS[justify],
             // A column already grows without bound, so wrapping it would emit a class that can

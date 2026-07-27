@@ -52,13 +52,18 @@ export const TitleOnly: Story = {
                 name="Feedback.Empty"
                 tier="composite"
                 leaf="TitleOnly"
-                reason="The frame that FILLS AN EMPTY SPOT: every 'nothing here' in the app should read the same — centered, same slot order — whether it's plain-empty or broken (tone), compact/default/page. This leaf has the fewest slots."
-                code={`<Feedback.Empty
+                reason="This is the frame that fills an empty spot: every 'nothing here' in the app reads the same, centered, in the same slot order, whether it's plain-empty or broken (tone), compact, default, or page-sized."
+                states={[
+                    {
+                        name: "icon unset, description unset, action unset",
+                        why: "Only the title text renders, since none of the optional slots have content to show. This leaf has the fewest slots of the whole family, the shape to reach for when the title alone already says enough.",
+                        code: `<Feedback.Empty
   title="No data yet"
-/>`}
-            >
-                <Feedback.Empty showAnatomy title="No data yet" />
-            </BlockAnatomy>,
+/>`,
+                        render: <Feedback.Empty showAnatomy title="No data yet" />,
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -70,14 +75,18 @@ export const IconAndTitle: Story = {
                 name="Feedback.Empty"
                 tier="composite"
                 leaf="IconAndTitle"
-                note="`icon` takes a COMPONENT (not JSX) — the frame owns the size and colour, the caller never sets an icon class (§4/§5)."
-                code={`<Feedback.Empty
+                states={[
+                    {
+                        name: "icon set, description unset, action unset",
+                        why: "An icon node appears above the title, sized and colored by the frame itself rather than by classes the caller sets. `icon` takes a component reference, not JSX, which is why the frame owns the size and color instead of the caller (§4/§5).",
+                        code: `<Feedback.Empty
   icon={PackageIcon}
   title="No courses yet"
-/>`}
-            >
-                <Feedback.Empty showAnatomy icon={PackageIcon} title="No courses yet" />
-            </BlockAnatomy>,
+/>`,
+                        render: <Feedback.Empty showAnatomy icon={PackageIcon} title="No courses yet" />,
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -89,20 +98,26 @@ export const Description: Story = {
                 name="Feedback.Empty"
                 tier="composite"
                 leaf="Description"
-                note="Adding `description` — a muted supporting line, smaller than the title."
-                code={`<Feedback.Empty
+                states={[
+                    {
+                        name: "icon set, description set, action unset",
+                        why: "A muted supporting line appears under the title, smaller than the title itself. The action slot still holds nothing, so this shape says more about the empty state without yet offering a way out of it.",
+                        code: `<Feedback.Empty
   icon={MagnifyingGlassIcon}
   title="No results found"
   description="…"
-/>`}
-            >
-                <Feedback.Empty
-                    showAnatomy
-                    icon={MagnifyingGlassIcon}
-                    title="No results found"
-                    description="Try different filters or a shorter search term."
-                />
-            </BlockAnatomy>,
+/>`,
+                        render: (
+                            <Feedback.Empty
+                                showAnatomy
+                                icon={MagnifyingGlassIcon}
+                                title="No results found"
+                                description="Try different filters or a shorter search term."
+                            />
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -120,31 +135,50 @@ export const Action: Story = {
                 name="Feedback.Empty"
                 tier="composite"
                 leaf="Action"
-                note={"`action` is the way out of an empty state (don't leave the reader stuck). The row below is the SAME shape with `tone=\"danger\"` — only the icon colour differs."}
-                code={`<Feedback.Empty
+                reason="`action` is the way out of an empty state, so nothing should ever leave the reader stuck at a dead end with no next step."
+                states={[
+                    {
+                        name: "tone unset (default), action set",
+                        why: "A button node fills the action slot below the description, giving the reader a next step for a plain empty state. The icon keeps the frame's default color, since nothing here is broken.",
+                        code: `<Feedback.Empty
   icon={PackageIcon}
   title="This list is empty"
   description="…"
   action={<Button.Base label="Add an item" />}
-/>`}
-            >
-                <div className="flex flex-col gap-8">
-                    <Feedback.Empty
-                        showAnatomy
-                        icon={PackageIcon}
-                        title="This list is empty"
-                        description="You haven't saved any items to this list yet."
-                        action={<Button.Base label="Add an item" />}
-                    />
-                    <Feedback.Empty
-                        tone="danger"
-                        icon={WarningCircleIcon}
-                        title="Couldn't load the data"
-                        description="Something went wrong. Please try again."
-                        action={<Button.Base label="Retry" variant="danger" prefixIcon={ArrowCounterClockwiseIcon} />}
-                    />
-                </div>
-            </BlockAnatomy>,
+/>`,
+                        render: (
+                            <Feedback.Empty
+                                showAnatomy
+                                icon={PackageIcon}
+                                title="This list is empty"
+                                description="You haven't saved any items to this list yet."
+                                action={<Button.Base label="Add an item" />}
+                            />
+                        ),
+                    },
+                    {
+                        name: "tone = \"danger\", action set",
+                        why: "The same shape as the default tone carries over untouched, only the icon recolors to the danger tone because something actually went wrong here. tone changes color alone, never the node tree, which is why this stays a state of the Action leaf instead of a leaf of its own.",
+                        code: `<Feedback.Empty
+  tone="danger"
+  icon={WarningCircleIcon}
+  title="Couldn't load the data"
+  description="…"
+  action={<Button.Base label="Retry" variant="danger" prefixIcon={ArrowCounterClockwiseIcon} />}
+/>`,
+                        render: (
+                            <Feedback.Empty
+                                showAnatomy
+                                tone="danger"
+                                icon={WarningCircleIcon}
+                                title="Couldn't load the data"
+                                description="Something went wrong. Please try again."
+                                action={<Button.Base label="Retry" variant="danger" prefixIcon={ArrowCounterClockwiseIcon} />}
+                            />
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -156,29 +190,36 @@ export const WithBody: Story = {
                 name="Feedback.Empty"
                 tier="composite"
                 leaf="WithBody"
-                note="The frame WRAPS (§13b): `body` is the free-form body slot, `children` is its shorthand — here it's a hint list before the CTA."
-                code={`<Feedback.Empty
+                reason="The frame wraps (§13b): `body` is the free-form body slot and `children` is its shorthand, sitting between the description and the action so a caller can drop in anything richer than one more line of text."
+                states={[
+                    {
+                        name: "body set to a hint list",
+                        why: "A bullet list of hints slots in between the description and the action button, content richer than a single line of text. This is the shape a caller reaches for when a plain description isn't enough to guide the reader back to results.",
+                        code: `<Feedback.Empty
   icon={MagnifyingGlassIcon}
   title="No results found"
   description="…"
   body={<ul>…</ul>}
   action={…}
-/>`}
-            >
-                <Feedback.Empty
-                    showAnatomy
-                    icon={MagnifyingGlassIcon}
-                    title="No results found"
-                    description="A few things that usually help:"
-                    body={(
-                        <ul className="list-disc space-y-1 pl-4 text-left">
-                            <li><Typography.Base size="xs" text="Clear some active filters" color="muted" /></li>
-                            <li><Typography.Base size="xs" text="Use a shorter search term" color="muted" /></li>
-                        </ul>
-                    )}
-                    action={<Button.Base label="Clear filters" variant="secondary" size="sm" />}
-                />
-            </BlockAnatomy>,
+/>`,
+                        render: (
+                            <Feedback.Empty
+                                showAnatomy
+                                icon={MagnifyingGlassIcon}
+                                title="No results found"
+                                description="A few things that usually help:"
+                                body={(
+                                    <ul className="list-disc space-y-1 pl-4 text-left">
+                                        <li><Typography.Base size="xs" text="Clear some active filters" color="muted" /></li>
+                                        <li><Typography.Base size="xs" text="Use a shorter search term" color="muted" /></li>
+                                    </ul>
+                                )}
+                                action={<Button.Base label="Clear filters" variant="secondary" size="sm" />}
+                            />
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -195,37 +236,59 @@ export const FullPage: Story = {
             name="Feedback.Empty"
             tier="composite"
             leaf="FullPage"
-            note={"`size=\"page\"` gives the frame a 70vh height + a larger title + room for a `code` numeral. The row below has 2 buttons in `action` — the frame centers and wraps them automatically (size=\"page\" only)."}
-            code={`<Feedback.Empty
+            reason={"`size=\"page\"` gives the frame a 70vh height, a larger title, and room for a `code` numeral, the shape for a route that failed to load at all rather than a section within a working page."}
+            states={[
+                {
+                    name: "size = \"page\", code = \"404\", action = 1 button",
+                    why: "One button sits in the centered action row below the code numeral and title, enough for a route that simply doesn't exist. size=\"page\" centers and wraps the action row automatically, so the frame never has to know in advance how many buttons will land there.",
+                    code: `<Feedback.Empty
   size="page"
   code="404"
   title="Page not found"
   action={<Button.Base label="Go home" prefixIcon={HouseIcon} />}
-/>`}
-        >
-            <div className="flex flex-col">
-                <Feedback.Empty
-                    showAnatomy
-                    size="page"
-                    code="404"
-                    title="Page not found"
-                    description="The page you're looking for doesn't exist or has moved."
-                    action={<Button.Base label="Go home" prefixIcon={HouseIcon} />}
-                />
-                <Feedback.Empty
-                    size="page"
-                    code="500"
-                    title="Something went wrong"
-                    description="The server ran into a problem handling your request. Try again in a moment."
-                    action={(
-                        <>
-                            <Button.Base label="Retry" prefixIcon={ArrowCounterClockwiseIcon} />
-                            <Button.Base label="Go home" variant="secondary" prefixIcon={HouseIcon} />
-                        </>
-                    )}
-                />
-            </div>
-        </BlockAnatomy>
+/>`,
+                    render: (
+                        <Feedback.Empty
+                            showAnatomy
+                            size="page"
+                            code="404"
+                            title="Page not found"
+                            description="The page you're looking for doesn't exist or has moved."
+                            action={<Button.Base label="Go home" prefixIcon={HouseIcon} />}
+                        />
+                    ),
+                },
+                {
+                    name: "size = \"page\", code = \"500\", action = 2 buttons",
+                    why: "Two buttons sit in the same action row this time, retry first and go home second, since the caller's node tree simply carries more content. The count of buttons is content the caller decides, so it never opens a leaf of its own.",
+                    code: `<Feedback.Empty
+  size="page"
+  code="500"
+  title="Something went wrong"
+  action={(
+    <>
+      <Button.Base label="Retry" prefixIcon={ArrowCounterClockwiseIcon} />
+      <Button.Base label="Go home" variant="secondary" prefixIcon={HouseIcon} />
+    </>
+  )}
+/>`,
+                    render: (
+                        <Feedback.Empty
+                            size="page"
+                            code="500"
+                            title="Something went wrong"
+                            description="The server ran into a problem handling your request. Try again in a moment."
+                            action={(
+                                <>
+                                    <Button.Base label="Retry" prefixIcon={ArrowCounterClockwiseIcon} />
+                                    <Button.Base label="Go home" variant="secondary" prefixIcon={HouseIcon} />
+                                </>
+                            )}
+                        />
+                    ),
+                },
+            ]}
+        />
     ),
 }
 
@@ -233,25 +296,32 @@ export const FullPage: Story = {
 export const Compact: Story = {
     render: () =>
         shell(
-            <BlockAnatomy
-                name="Feedback.Empty"
-                tier="composite"
-                leaf="Compact"
-                note={"`size=\"compact\"` drops EVERY icon/description/body/CTA — a different shape from the default. Merged from the deleted `SimpleEmptyState` frame."}
-                code={`<Feedback.Empty
+            <div className="w-64">
+                <BlockAnatomy
+                    name="Feedback.Empty"
+                    tier="composite"
+                    leaf="Compact"
+                    reason={"`size=\"compact\"` was merged from the deleted `SimpleEmptyState` frame, and it drops every icon, description, body, and CTA down to one muted line, a different shape from the default reserved for a tight spot like a tab or panel body."}
+                    states={[
+                        {
+                            name: "size = \"compact\"",
+                            why: "Only the title text renders as a single muted line, even though icon and description are passed in, because compact drops every secondary slot on purpose. The frame chooses this shrink over letting a full-size empty state crowd a narrow container.",
+                            code: `<Feedback.Empty
   size="compact"
   title="No submissions yet for this assignment."
-/>`}
-            >
-                <div className="w-64">
-                    <Feedback.Empty
-                        showAnatomy
-                        size="compact"
-                        title="No submissions yet for this assignment."
-                        icon={WarningIcon}
-                        description="This line does NOT render — compact drops every secondary slot."
-                    />
-                </div>
-            </BlockAnatomy>,
+/>`,
+                            render: (
+                                <Feedback.Empty
+                                    showAnatomy
+                                    size="compact"
+                                    title="No submissions yet for this assignment."
+                                    icon={WarningIcon}
+                                    description="This line does NOT render — compact drops every secondary slot."
+                                />
+                            ),
+                        },
+                    ]}
+                />
+            </div>,
         ),
 }

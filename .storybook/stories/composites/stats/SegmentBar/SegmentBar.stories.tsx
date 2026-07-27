@@ -17,45 +17,52 @@ type Story = StoryObj<typeof SegmentBar>
 
 // leaf có legend (Proportional/WithMax/ManyGroups/Empty): track + legend, không caption.
 const BAR_LEGEND_PARTS: Array<AnatomyNode> = [
-    { name: "Bar", tier: "composite", role: "track chia slice theo tỉ lệ (role=img)" },
-    { name: "Legend", tier: "composite", role: "dot màu + label + count dưới track" },
+    { name: "Bar", tier: "composite", role: "the track that divides into slices by proportion (role=img)" },
+    { name: "Legend", tier: "composite", role: "the colour dot + label + count row under the track" },
 ]
 
 // leaf HideLegend: chỉ còn track, legend bị ẩn hẳn.
 const BAR_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "Bar", tier: "composite", role: "track chia slice theo tỉ lệ (role=img)" },
+    { name: "Bar", tier: "composite", role: "the track that divides into slices by proportion (role=img)" },
 ]
 
 // leaf InlineLabels: có cả legend + caption (câu takeaway muted dưới cùng).
 const BAR_LEGEND_CAPTION_PARTS: Array<AnatomyNode> = [
-    { name: "Bar", tier: "composite", role: "track dạng ladder dày, in %+label ngay trên dải" },
-    { name: "Legend", tier: "composite", role: "dot màu + label dưới track (không suffix count, đã in trên dải)" },
-    { name: "Caption", tier: "composite", role: "câu takeaway muted, tuỳ chọn" },
+    { name: "Bar", tier: "composite", role: "a thick ladder track that prints its own %+label directly on each band" },
+    { name: "Legend", tier: "composite", role: "the colour dot + label row under the track (no count suffix, already printed on the band)" },
+    { name: "Caption", tier: "composite", role: "an optional muted takeaway sentence below everything" },
 ]
 
 /** No shared total — slices always fill 100% as shares of each other. */
 export const Proportional: Story = {
     render: () => (
         <div className="p-8">
-            <div className="w-80">
-                <BlockAnatomy
-                    name="SegmentBar"
-                    tier="composite"
-                    leaf="Proportional"
-                    parts={BAR_LEGEND_PARTS}
-                    code={"<SegmentBar ariaLabel=\"Distribution of answers by difficulty\" segments={[{ key: \"easy\", label: \"Easy\", value: 12 }]} />"}
-                >
-                    <SegmentBar
-                        ariaLabel="Distribution of answers by difficulty"
-                        showAnatomy
-                        segments={[
-                            { key: "easy", label: "Easy", value: 12 },
-                            { key: "medium", label: "Medium", value: 20 },
-                            { key: "hard", label: "Hard", value: 8 },
-                        ]}
-                    />
-                </BlockAnatomy>
-            </div>
+            <BlockAnatomy
+                name="SegmentBar"
+                tier="composite"
+                leaf="Proportional"
+                renderClassName="w-80"
+                parts={BAR_LEGEND_PARTS}
+                reason="No shared `max` means every slice's width is its own share of the sum of all slices, so the track always fills edge to edge — there is no honest notion of leftover space without a ceiling to measure against."
+                states={[
+                    {
+                        name: "max unset, 3 segments",
+                        why: "The track fills completely, each slice's width proportional to its own share of the total. The legend lists each segment's colour dot, label, and raw count below the track.",
+                        code: "<SegmentBar ariaLabel=\"Distribution of answers by difficulty\" segments={[{ key: \"easy\", label: \"Easy\", value: 12 }]} />",
+                        render: (
+                            <SegmentBar
+                                ariaLabel="Distribution of answers by difficulty"
+                                showAnatomy
+                                segments={[
+                                    { key: "easy", label: "Easy", value: 12 },
+                                    { key: "medium", label: "Medium", value: 20 },
+                                    { key: "hard", label: "Hard", value: 8 },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -64,26 +71,32 @@ export const Proportional: Story = {
 export const WithMax: Story = {
     render: () => (
         <div className="p-8">
-            <div className="w-80">
-                <BlockAnatomy
-                    name="SegmentBar"
-                    tier="composite"
-                    leaf="WithMax"
-                    parts={BAR_LEGEND_PARTS}
-                    note="max set → track chừa phần dư (progress thật), cùng composition với Proportional."
-                    code={"<SegmentBar ariaLabel=\"Lesson completion progress\" max={50} segments={[{ key: \"done\", label: \"Completed\", value: 18, color: \"var(--success)\" }]} />"}
-                >
-                    <SegmentBar
-                        ariaLabel="Lesson completion progress"
-                        max={50}
-                        showAnatomy
-                        segments={[
-                            { key: "done", label: "Completed", value: 18, color: "var(--success)" },
-                            { key: "in-progress", label: "In progress", value: 5, color: "var(--warning)" },
-                        ]}
-                    />
-                </BlockAnatomy>
-            </div>
+            <BlockAnatomy
+                name="SegmentBar"
+                tier="composite"
+                leaf="WithMax"
+                renderClassName="w-80"
+                parts={BAR_LEGEND_PARTS}
+                reason="`max` gives the track a real ceiling to measure against, turning it from a pure proportion chart into a true progress bar."
+                states={[
+                    {
+                        name: "max set (max = 50)",
+                        why: "Each slice's width becomes `value / max` instead of a share of the other slices, so the track can leave a real empty remainder. This is what makes the bar read as actual progress toward a target rather than a breakdown of a fixed whole.",
+                        code: "<SegmentBar ariaLabel=\"Lesson completion progress\" max={50} segments={[{ key: \"done\", label: \"Completed\", value: 18, color: \"var(--success)\" }]} />",
+                        render: (
+                            <SegmentBar
+                                ariaLabel="Lesson completion progress"
+                                max={50}
+                                showAnatomy
+                                segments={[
+                                    { key: "done", label: "Completed", value: 18, color: "var(--success)" },
+                                    { key: "in-progress", label: "In progress", value: 5, color: "var(--warning)" },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -92,26 +105,32 @@ export const WithMax: Story = {
 export const HideLegend: Story = {
     render: () => (
         <div className="p-8">
-            <div className="w-80">
-                <BlockAnatomy
-                    name="SegmentBar"
-                    tier="composite"
-                    leaf="HideLegend"
-                    parts={BAR_ONLY_PARTS}
-                    note="hideLegend → chỉ còn track, không render Legend."
-                    code={"<SegmentBar hideLegend ariaLabel=\"Ratio of correct and incorrect answers\" segments={[{ key: \"correct\", label: \"Correct\", value: 34, color: \"var(--success)\" }]} />"}
-                >
-                    <SegmentBar
-                        hideLegend
-                        ariaLabel="Ratio of correct and incorrect answers"
-                        showAnatomy
-                        segments={[
-                            { key: "correct", label: "Correct", value: 34, color: "var(--success)" },
-                            { key: "incorrect", label: "Incorrect", value: 6, color: "var(--danger)" },
-                        ]}
-                    />
-                </BlockAnatomy>
-            </div>
+            <BlockAnatomy
+                name="SegmentBar"
+                tier="composite"
+                leaf="HideLegend"
+                renderClassName="w-80"
+                parts={BAR_ONLY_PARTS}
+                reason="`hideLegend` exists for a caller whose surrounding block already carries its own legend, so this bar can stay a pure visual summary without repeating the same labels twice."
+                states={[
+                    {
+                        name: "hideLegend = true",
+                        why: "Only the `Bar` track renders — the `Legend` node drops out of the tree entirely, not just visually hidden. The track keeps its `role=\"img\"` so the proportions are still announced to assistive tech even without the visible legend.",
+                        code: "<SegmentBar hideLegend ariaLabel=\"Ratio of correct and incorrect answers\" segments={[{ key: \"correct\", label: \"Correct\", value: 34, color: \"var(--success)\" }]} />",
+                        render: (
+                            <SegmentBar
+                                hideLegend
+                                ariaLabel="Ratio of correct and incorrect answers"
+                                showAnatomy
+                                segments={[
+                                    { key: "correct", label: "Correct", value: 34, color: "var(--success)" },
+                                    { key: "incorrect", label: "Incorrect", value: 6, color: "var(--danger)" },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -120,28 +139,34 @@ export const HideLegend: Story = {
 export const ManyGroups: Story = {
     render: () => (
         <div className="p-8">
-            <div className="w-80">
-                <BlockAnatomy
-                    name="SegmentBar"
-                    tier="composite"
-                    leaf="ManyGroups"
-                    parts={BAR_LEGEND_PARTS}
-                    note="Nhiều slice hơn — legend wrap, cùng composition với Proportional."
-                    code={"<SegmentBar ariaLabel=\"Distribution of assessed skills\" segments={[{ key: \"frontend\", label: \"Frontend\", value: 9 }, { key: \"backend\", label: \"Backend\", value: 14 }]} />"}
-                >
-                    <SegmentBar
-                        ariaLabel="Distribution of assessed skills"
-                        showAnatomy
-                        segments={[
-                            { key: "frontend", label: "Frontend", value: 9 },
-                            { key: "backend", label: "Backend", value: 14 },
-                            { key: "database", label: "Database", value: 6 },
-                            { key: "devops", label: "DevOps", value: 4 },
-                            { key: "testing", label: "Testing", value: 7 },
-                        ]}
-                    />
-                </BlockAnatomy>
-            </div>
+            <BlockAnatomy
+                name="SegmentBar"
+                tier="composite"
+                leaf="ManyGroups"
+                renderClassName="w-80"
+                parts={BAR_LEGEND_PARTS}
+                reason="The legend is a wrapping row, not a fixed grid, so it has to keep reading cleanly whether the caller passes three segments or many more."
+                states={[
+                    {
+                        name: "segments = 5 entries",
+                        why: "The legend wraps onto a second line instead of overflowing or truncating, while the track above it still fills with five proportional slices. This is the same composition as `Proportional`, just stress-tested with more entries.",
+                        code: "<SegmentBar ariaLabel=\"Distribution of assessed skills\" segments={[{ key: \"frontend\", label: \"Frontend\", value: 9 }, { key: \"backend\", label: \"Backend\", value: 14 }]} />",
+                        render: (
+                            <SegmentBar
+                                ariaLabel="Distribution of assessed skills"
+                                showAnatomy
+                                segments={[
+                                    { key: "frontend", label: "Frontend", value: 9 },
+                                    { key: "backend", label: "Backend", value: 14 },
+                                    { key: "database", label: "Database", value: 6 },
+                                    { key: "devops", label: "DevOps", value: 4 },
+                                    { key: "testing", label: "Testing", value: 7 },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -150,33 +175,39 @@ export const ManyGroups: Story = {
 export const InlineLabels: Story = {
     render: () => (
         <div className="p-8">
-            <div className="w-80">
-                <BlockAnatomy
-                    name="SegmentBar"
-                    tier="composite"
-                    leaf="InlineLabels"
-                    parts={BAR_LEGEND_CAPTION_PARTS}
-                    note="inlineLabels → track dày tự in label+%; caption thêm câu takeaway muted dưới cùng."
-                    code={`<SegmentBar
-  inlineLabels
-  ariaLabel="Card maturity breakdown"
-  caption="Only 8% of cards have matured — that's the real progress."
-  segments={[{ key: "mature", label: "Mature", value: 8, color: "var(--success)" }]}
-/>`}
-                >
-                    <SegmentBar
-                        inlineLabels
-                        ariaLabel="Card maturity breakdown"
-                        caption="Only 8% of cards have matured (retained over a long gap) — that's the real progress, not the raw card count seen."
-                        showAnatomy
-                        segments={[
-                            { key: "non", label: "Non", value: 52, color: "var(--default)" },
-                            { key: "maturing", label: "Maturing", value: 40, color: "var(--warning)" },
-                            { key: "mature", label: "Mature", value: 8, color: "var(--success)" },
-                        ]}
-                    />
-                </BlockAnatomy>
-            </div>
+            <BlockAnatomy
+                name="SegmentBar"
+                tier="composite"
+                leaf="InlineLabels"
+                renderClassName="w-80"
+                parts={BAR_LEGEND_CAPTION_PARTS}
+                reason="`inlineLabels` trades the thin track + external legend for a thick ladder strip that carries its own label and percentage on each band, so a reader can take in a slice's identity and its share in one glance instead of cross-referencing a legend below."
+                states={[
+                    {
+                        name: "inlineLabels = true, caption set",
+                        why: "The track grows into a thick ladder where each band prints its own label and percentage; the legend below drops the count suffix since that number is already on the band. An optional muted `Caption` sentence closes the block with the one takeaway worth stating in words.",
+                        code: `<SegmentBar
+    inlineLabels
+    ariaLabel="Card maturity breakdown"
+    caption="Only 8% of cards have matured — that's the real progress."
+    segments={[{ key: "mature", label: "Mature", value: 8, color: "var(--success)" }]}
+/>`,
+                        render: (
+                            <SegmentBar
+                                inlineLabels
+                                ariaLabel="Card maturity breakdown"
+                                caption="Only 8% of cards have matured (retained over a long gap) — that's the real progress, not the raw card count seen."
+                                showAnatomy
+                                segments={[
+                                    { key: "non", label: "Non", value: 52, color: "var(--default)" },
+                                    { key: "maturing", label: "Maturing", value: 40, color: "var(--warning)" },
+                                    { key: "mature", label: "Mature", value: 8, color: "var(--success)" },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -185,26 +216,32 @@ export const InlineLabels: Story = {
 export const Empty: Story = {
     render: () => (
         <div className="p-8">
-            <div className="w-80">
-                <BlockAnatomy
-                    name="SegmentBar"
-                    tier="composite"
-                    leaf="Empty"
-                    parts={BAR_LEGEND_PARTS}
-                    note="Mọi value=0 → track rỗng (tránh chia 0), legend vẫn liệt kê tên slice."
-                    code={"<SegmentBar ariaLabel=\"No assessment data yet\" segments={[{ key: \"easy\", label: \"Easy\", value: 0 }]} />"}
-                >
-                    <SegmentBar
-                        ariaLabel="No assessment data yet"
-                        showAnatomy
-                        segments={[
-                            { key: "easy", label: "Easy", value: 0 },
-                            { key: "medium", label: "Medium", value: 0 },
-                            { key: "hard", label: "Hard", value: 0 },
-                        ]}
-                    />
-                </BlockAnatomy>
-            </div>
+            <BlockAnatomy
+                name="SegmentBar"
+                tier="composite"
+                leaf="Empty"
+                renderClassName="w-80"
+                parts={BAR_LEGEND_PARTS}
+                reason="A proportional track divides by the sum of all values — with every segment at zero, that sum is zero, so the component has to special-case an empty track instead of dividing by it."
+                states={[
+                    {
+                        name: "every segment value = 0",
+                        why: "The track renders as an empty, uncoloured strip instead of attempting a division by zero. The legend still lists every segment name below it, so the reader knows what is being measured even though nothing has a share yet.",
+                        code: "<SegmentBar ariaLabel=\"No assessment data yet\" segments={[{ key: \"easy\", label: \"Easy\", value: 0 }]} />",
+                        render: (
+                            <SegmentBar
+                                ariaLabel="No assessment data yet"
+                                showAnatomy
+                                segments={[
+                                    { key: "easy", label: "Easy", value: 0 },
+                                    { key: "medium", label: "Medium", value: 0 },
+                                    { key: "hard", label: "Hard", value: 0 },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

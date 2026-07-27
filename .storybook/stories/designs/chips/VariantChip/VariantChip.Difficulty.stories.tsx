@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { VariantChip, type Difficulty } from "@sb-components/designs/chips/VariantChip/VariantChip"
-import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation, type AnatomyState } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — `VariantChip.Difficulty`: applies the **DIFFICULTY** semantic role
@@ -20,7 +20,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *
  * 📐 **ONE SINGLE LEAF** (§11f): leaves split by STRUCTURE. All four difficulty
  * levels share the same DOM tree, differing only in content ⇒ they're STATES,
- * not four leaves. So one leaf, rendering all four levels inside it.
+ * not four leaves. So one leaf, with every difficulty level as its own state.
  *
  * Skeleton is ALSO not a separate leaf — same structure, just swaps text for
  * bars. (The `isSkeleton` prop still exists, §12c — two different things.)
@@ -47,8 +47,24 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     },
 }
 
+/** One state per difficulty level, resting (not skeleton). */
+const LEVEL_STATES: Array<AnatomyState> = LEVELS.map((level) => ({
+    name: `difficulty = "${level}"`,
+    why: "The label and dot colour come from a level on the palette ramp rather than from one of the five semantic tokens, because difficulty is a level, not a state, and forcing four levels into semantic tokens would collide twice on danger. Every level shares the same pill shape from Chip.Base, so the level only ever changes what's written and what colour reads it.",
+    code: `<VariantChip.Difficulty difficulty="${level}" />`,
+    render: <VariantChip.Difficulty difficulty={level} showAnatomy />,
+}))
+
+/** One state per difficulty level, `isSkeleton`. */
+const SKELETON_STATES: Array<AnatomyState> = LEVELS.map((level) => ({
+    name: `difficulty = "${level}", isSkeleton = true`,
+    why: "The same pill swaps its label for a shimmer bar while keeping the level's own footprint, so the ramp never shifts width once the real label lands. The pill shape is still the atom's own default, since design never opens a shape axis even for the loading mirror.",
+    code: `<VariantChip.Difficulty difficulty="${level}" isSkeleton />`,
+    render: <VariantChip.Difficulty difficulty={level} isSkeleton showAnatomy />,
+}))
+
 /**
- * The single leaf — all 4 levels + a skeleton row (a state, not a leaf).
+ * The single leaf — every level, resting and skeleton, each its own state.
  *
  * The ramp uses the palette, NOT the 5 semantic tokens: difficulty is a
  * **LEVEL**, not a **STATE** — forcing 4 levels into tokens would collide
@@ -61,28 +77,10 @@ export const Levels: Story = {
                 name="VariantChip.Difficulty"
                 tier="design"
                 leaf="Difficulty chip"
-                parts={[]}
                 annotate={ANNOTATE}
-                note="The pill shape is the atom's own default — design never opens a shape axis."
-                code={"<VariantChip.Difficulty difficulty=\"intermediate\" />"}
-            >
-                <div className="flex flex-col gap-4">
-                    <div className="flex flex-wrap items-center gap-3">
-                        {LEVELS.map((level, index) => (
-                            <VariantChip.Difficulty
-                                key={level}
-                                difficulty={level}
-                                showAnatomy={index === 0}
-                            />
-                        ))}
-                    </div>
-                    <div className="flex flex-wrap items-center gap-3">
-                        {LEVELS.map((level) => (
-                            <VariantChip.Difficulty key={level} difficulty={level} isSkeleton />
-                        ))}
-                    </div>
-                </div>
-            </BlockAnatomy>
+                reason="difficulty decides both the label and the color together, and every level renders through the exact same Chip.Base shape, so the four levels plus their skeleton mirrors are states of one leaf rather than eight separate leaves."
+                states={[...LEVEL_STATES, ...SKELETON_STATES]}
+            />
         </div>
     ),
 }

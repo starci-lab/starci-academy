@@ -16,6 +16,10 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * `radius?: "xl" | "3xl"`. The two old single-value leaves (`Bordered`, `Compact`)
  * merge into two leaves named after the PROP (`Variant`, `Radius`), each rendering
  * the full union side by side instead of just the value that differs from default.
+ *
+ * 2026-07-27: migrated to the `states` API (§8) — each leaf's stacked renders are
+ * now `states[]` entries with their own `why`/`code`, instead of hand-labelled
+ * siblings inside `children`.
  */
 const meta: Meta<typeof SurfaceCard.Nested> = {
     title: "Composites/Cards/SurfaceCard/SurfaceCard.Nested",
@@ -58,23 +62,27 @@ const relatedItems: ReadonlyArray<SurfaceCardNestedSection> = [
 export const Default: Story = {
     render: () => (
         <div className="p-8">
-            <div className="max-w-md">
-                <BlockAnatomy
-                    name="SurfaceCard.Nested"
-                    tier="composite"
-                    leaf="Default"
-                    reason="The card-in-card frame WITH A HEADER: a compact header bar sitting INSIDE the frame, over a flush section column separated by dividers (no per-row corners). `items` is data because the Body is a REPEATING list."
-                    code={`<SurfaceCard.Nested
-  title="Related lessons"
-  items={[
-    { key: "normalization", eyebrow: "Relational databases", title: "Data normalization…", content: <Typography …/> },
-    { key: "denormalize", eyebrow: "Database review deck", title: "When should you denormalize…" },
-  ]}
-/>`}
-                >
-                    <SurfaceCard.Nested title="Related lessons" items={relatedItems} showAnatomy />
-                </BlockAnatomy>
-            </div>
+            <BlockAnatomy
+                name="SurfaceCard.Nested"
+                tier="composite"
+                leaf="Default"
+                renderClassName="max-w-md"
+                reason="The card-in-card frame WITH A HEADER: a compact header bar sitting INSIDE the frame, over a flush section column separated by dividers (no per-row corners). `items` is data because the Body is a REPEATING list."
+                states={[
+                    {
+                        name: "variant unset (defaults to \"surface\"), items = 2 sections",
+                        why: "The header bar shows a plain eyebrow-less title, and the body renders as a flush column of two sections divided by a hairline, with no footer bar. This is the baseline shape a card-in-card takes when it sits directly on the page's bare background.",
+                        code: `<SurfaceCard.Nested
+    title="Related lessons"
+    items={[
+        { key: "normalization", eyebrow: "Relational databases", title: "Data normalization…", content: <Typography …/> },
+        { key: "denormalize", eyebrow: "Database review deck", title: "When should you denormalize…" },
+    ]}
+/>`,
+                        render: <SurfaceCard.Nested title="Related lessons" items={relatedItems} showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -93,34 +101,52 @@ export const Default: Story = {
  */
 export const Variant: Story = {
     render: () => (
-        <div className="flex flex-wrap items-start gap-6 p-8">
-            <div className="max-w-md flex-1">
-                <SurfaceCard.Nested title="Related lessons" variant="surface" items={relatedItems} />
-            </div>
-            <div className="flex max-w-md flex-1 flex-col overflow-hidden rounded-2xl border border-default bg-surface">
-                <div className="flex flex-col gap-2 p-3">
-                    <div className="max-w-[85%] rounded-2xl bg-surface-secondary px-3 py-2">
-                        <Typography type="body-sm">
-                            It&apos;s usually when you see data repeated across many rows, or a column that depends on a non-primary-key column.
-                        </Typography>
-                    </div>
-                    <div className="max-w-[85%]">
-                        <BlockAnatomy
-                            name="SurfaceCard.Nested"
-                            tier="composite"
-                            leaf="Variant"
-                            note={"`variant=\"nested\"` (right, inside a bubble panel) switches the frame to a border instead of a shadow (surface-in-surface); `variant=\"surface\"` (left, the default) keeps its own background and shadow when it sits directly on bg-background — the composition is identical."}
-                            code={`<SurfaceCard.Nested
-  title="Related lessons"
-  variant="nested"
-  items={[…]}
-/>`}
-                        >
-                            <SurfaceCard.Nested title="Related lessons" variant="nested" items={relatedItems} showAnatomy />
-                        </BlockAnatomy>
-                    </div>
-                </div>
-            </div>
+        <div className="p-8">
+            <BlockAnatomy
+                name="SurfaceCard.Nested"
+                tier="composite"
+                leaf="Variant"
+                reason="`variant` decides where the card's edge comes from — its own shadow, or a border borrowed from sitting inside an already-filled parent. The composition underneath (header, divided sections, footer) never changes between the two values."
+                states={[
+                    {
+                        name: "variant = \"surface\" (default)",
+                        why: "The frame keeps its own `bg-surface` background and drop shadow, the same shape as `Default`. This is the correct shell whenever the card sits directly on the page's bare background rather than inside another filled panel.",
+                        code: `<SurfaceCard.Nested
+    title="Related lessons"
+    variant="surface"
+    items={items}
+/>`,
+                        render: (
+                            <div className="max-w-md">
+                                <SurfaceCard.Nested title="Related lessons" variant="surface" items={relatedItems} showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "variant = \"nested\"",
+                        why: "The frame swaps its own shadow for a border on a transparent background, because it now sits inside a filled parent panel — here, a chat bubble column that already carries a background. A shadow would barely register against that surface, so a border reads instead.",
+                        code: `<SurfaceCard.Nested
+    title="Related lessons"
+    variant="nested"
+    items={items}
+/>`,
+                        render: (
+                            <div className="flex max-w-md flex-col overflow-hidden rounded-2xl border border-default bg-surface">
+                                <div className="flex flex-col gap-2 p-3">
+                                    <div className="max-w-[85%] rounded-2xl bg-surface-secondary px-3 py-2">
+                                        <Typography type="body-sm">
+                                            It&apos;s usually when you see data repeated across many rows, or a column that depends on a non-primary-key column.
+                                        </Typography>
+                                    </div>
+                                    <div className="max-w-[85%]">
+                                        <SurfaceCard.Nested title="Related lessons" variant="nested" items={relatedItems} showAnatomy />
+                                    </div>
+                                </div>
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -135,30 +161,36 @@ export const Variant: Story = {
 export const InteractiveSections: Story = {
     render: () => (
         <div className="p-8">
-            <div className="max-w-md">
-                <BlockAnatomy
-                    name="SurfaceCard.Nested"
-                    tier="composite"
-                    leaf="InteractiveSections"
-                    note="The composition does not change — only the Section inside Body becomes an <a>/<button> when an item carries `href`/`onPress` (ROW ≠ CARD, §7b)."
-                    code={`<SurfaceCard.Nested
-  title="Related lessons"
-  items={[
-    { key: "normalization", title: "Data normalization…", onPress: () => {} },
-    { key: "denormalize", title: "When should you denormalize…", href: "#denormalize" },
-  ]}
-/>`}
-                >
-                    <SurfaceCard.Nested
-                        title="Related lessons"
-                        showAnatomy
-                        items={[
-                            { ...relatedItems[0], onPress: () => alert("Open: Data normalization") },
-                            { ...relatedItems[1], href: "#denormalize" },
-                        ]}
-                    />
-                </BlockAnatomy>
-            </div>
+            <BlockAnatomy
+                name="SurfaceCard.Nested"
+                tier="composite"
+                leaf="InteractiveSections"
+                renderClassName="max-w-md"
+                reason="ROW ≠ CARD (§7b): a section only becomes a real interactive control when the caller hands it `onPress`/`href` — the frame never guesses intent from a hover style alone."
+                states={[
+                    {
+                        name: "items[].onPress or items[].href set",
+                        why: "Each interactive section renders as a native `<button>` or `<a>` instead of a plain `<div>`, so it is focusable and keyboard-operable, with the title underlining on hover. No press-scale or ripple is added, because that affordance belongs to the outer card, not to a row inside it.",
+                        code: `<SurfaceCard.Nested
+    title="Related lessons"
+    items={[
+        { key: "normalization", title: "Data normalization…", onPress: () => {} },
+        { key: "denormalize", title: "When should you denormalize…", href: "#denormalize" },
+    ]}
+/>`,
+                        render: (
+                            <SurfaceCard.Nested
+                                title="Related lessons"
+                                showAnatomy
+                                items={[
+                                    { ...relatedItems[0], onPress: () => alert("Open: Data normalization") },
+                                    { ...relatedItems[1], href: "#denormalize" },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -167,28 +199,34 @@ export const InteractiveSections: Story = {
 export const WithIconMeta: Story = {
     render: () => (
         <div className="p-8">
-            <div className="max-w-md">
-                <BlockAnatomy
-                    name="SurfaceCard.Nested"
-                    tier="composite"
-                    leaf="WithIconMeta"
-                    note="`icon` comes in BARE — the frame pins size-4 and the muted colour itself (§4/§5). `meta` is its own node, pinned right, never shrinking."
-                    code={`<SurfaceCard.Nested
-  icon={<FolderOpenIcon />}
-  title="Related lessons"
-  meta={<Typography type="body-xs" color="muted">2 items</Typography>}
-  items={[…]}
-/>`}
-                >
-                    <SurfaceCard.Nested
-                        icon={<FolderOpenIcon />}
-                        title="Related lessons"
-                        meta={<Typography type="body-xs" color="muted">2 items</Typography>}
-                        items={relatedItems}
-                        showAnatomy
-                    />
-                </BlockAnatomy>
-            </div>
+            <BlockAnatomy
+                name="SurfaceCard.Nested"
+                tier="composite"
+                leaf="WithIconMeta"
+                renderClassName="max-w-md"
+                reason="The header bar's two remaining slots — an eyebrow icon before the title, a meta node pinned to the trailing edge — read as one row, so both are demonstrated together rather than as separate leaves."
+                states={[
+                    {
+                        name: "icon and meta set",
+                        why: "The header bar gains a leading eyebrow icon before the title and a meta node pinned to the right edge that never shrinks. Both come in bare from the caller — the frame pins their size-4 dimension and muted colour itself, per §4/§5, so the caller never has to restate those choices.",
+                        code: `<SurfaceCard.Nested
+    icon={<FolderOpenIcon />}
+    title="Related lessons"
+    meta={<Typography type="body-xs" color="muted">2 items</Typography>}
+    items={[…]}
+/>`,
+                        render: (
+                            <SurfaceCard.Nested
+                                icon={<FolderOpenIcon />}
+                                title="Related lessons"
+                                meta={<Typography type="body-xs" color="muted">2 items</Typography>}
+                                items={relatedItems}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -197,26 +235,32 @@ export const WithIconMeta: Story = {
 export const WithFooter: Story = {
     render: () => (
         <div className="p-8">
-            <div className="max-w-md">
-                <BlockAnatomy
-                    name="SurfaceCard.Nested"
-                    tier="composite"
-                    leaf="WithFooter"
-                    note="`footer` renders INSIDE the frame (border-t), not as a caption outside the card — that is `.Base`'s `description`."
-                    code={`<SurfaceCard.Nested
-  title="Related lessons"
-  items={[…]}
-  footer={<Button size="sm" variant="tertiary">View all</Button>}
-/>`}
-                >
-                    <SurfaceCard.Nested
-                        title="Related lessons"
-                        items={relatedItems}
-                        footer={<Button size="sm" variant="tertiary">View all</Button>}
-                        showAnatomy
-                    />
-                </BlockAnatomy>
-            </div>
+            <BlockAnatomy
+                name="SurfaceCard.Nested"
+                tier="composite"
+                leaf="WithFooter"
+                renderClassName="max-w-md"
+                reason="`footer` is a closing bar owned by this frame, distinct from `.Base`'s `description` caption which sits outside the card entirely."
+                states={[
+                    {
+                        name: "footer set",
+                        why: "A closing bar renders inside the frame below the body, separated from it by a top border. It exists to hold a single trailing action (here, `View all`) without that action competing for space inside the divided section column above it.",
+                        code: `<SurfaceCard.Nested
+    title="Related lessons"
+    items={[…]}
+    footer={<Button size="sm" variant="tertiary">View all</Button>}
+/>`,
+                        render: (
+                            <SurfaceCard.Nested
+                                title="Related lessons"
+                                items={relatedItems}
+                                footer={<Button size="sm" variant="tertiary">View all</Button>}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -225,19 +269,23 @@ export const WithFooter: Story = {
 export const Headerless: Story = {
     render: () => (
         <div className="p-8">
-            <div className="max-w-md">
-                <BlockAnatomy
-                    name="SurfaceCard.Nested"
-                    tier="composite"
-                    leaf="Headerless"
-                    note="Drop all four header slots and the frame drops the header bar with them (no empty rule left behind) — the Header node falls out of the DOM tree."
-                    code={`<SurfaceCard.Nested
-  items={[…]}
-/>`}
-                >
-                    <SurfaceCard.Nested items={relatedItems} showAnatomy />
-                </BlockAnatomy>
-            </div>
+            <BlockAnatomy
+                name="SurfaceCard.Nested"
+                tier="composite"
+                leaf="Headerless"
+                renderClassName="max-w-md"
+                reason="`hasHeader` only ever turns on when at least one of `header`/`title`/`icon`/`meta` is present, so dropping all four is a real, supported shape rather than an edge case."
+                states={[
+                    {
+                        name: "title, icon, meta, header all unset",
+                        why: "The header bar drops out of the DOM entirely, leaving only the frame and the section column below it. No empty rule or blank strip is left behind where the header would have sat.",
+                        code: `<SurfaceCard.Nested
+    items={[…]}
+/>`,
+                        render: <SurfaceCard.Nested items={relatedItems} showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -246,27 +294,33 @@ export const Headerless: Story = {
 export const FreeBody: Story = {
     render: () => (
         <div className="p-8">
-            <div className="max-w-md">
-                <BlockAnatomy
-                    name="SurfaceCard.Nested"
-                    tier="composite"
-                    leaf="FreeBody"
-                    note="When Body is one free-form block rather than a repeat, use `children`/`body` — the DOM carries no Section because there are no repeating rows."
-                    code={`<SurfaceCard.Nested title="Notes">
-  <div className="p-3">
-    <Typography type="body-sm">…</Typography>
-  </div>
-</SurfaceCard.Nested>`}
-                >
-                    <SurfaceCard.Nested title="Notes" showAnatomy>
-                        <div className="p-3">
-                            <Typography type="body-sm">
-                                Normalize to 3NF first, only denormalize once you&apos;ve measured a real read bottleneck.
-                            </Typography>
-                        </div>
-                    </SurfaceCard.Nested>
-                </BlockAnatomy>
-            </div>
+            <BlockAnatomy
+                name="SurfaceCard.Nested"
+                tier="composite"
+                leaf="FreeBody"
+                renderClassName="max-w-md"
+                reason="`items` wins when both are given — `children` only takes over the Body when there is no repeating list to divide into sections."
+                states={[
+                    {
+                        name: "children set, items unset",
+                        why: "The body renders whatever free-form node the caller passes as `children`, instead of mapping `items` into a divided row of sections. No `Section` node appears in this tree because there is nothing repeating here to divide.",
+                        code: `<SurfaceCard.Nested title="Notes">
+    <div className="p-3">
+        <Typography type="body-sm">…</Typography>
+    </div>
+</SurfaceCard.Nested>`,
+                        render: (
+                            <SurfaceCard.Nested title="Notes" showAnatomy>
+                                <div className="p-3">
+                                    <Typography type="body-sm">
+                                        Normalize to 3NF first, only denormalize once you&apos;ve measured a real read bottleneck.
+                                    </Typography>
+                                </div>
+                            </SurfaceCard.Nested>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -283,26 +337,44 @@ export const FreeBody: Story = {
  */
 export const Radius: Story = {
     render: () => (
-        <div className="flex flex-wrap items-start gap-6 p-8">
-            <div className="max-w-md flex-1">
-                <SurfaceCard.Nested title="Related lessons" radius="3xl" items={relatedItems} />
-            </div>
-            <div className="max-w-sm flex-1 rounded-2xl bg-surface p-3 shadow-surface">
-                <BlockAnatomy
-                    name="SurfaceCard.Nested"
-                    tier="composite"
-                    leaf="Radius"
-                    note={"`radius=\"xl\"` (right, inside a bubble panel) drops the corner one step, pairing with `variant=\"nested\"` for a radius concentric with the parent; `radius=\"3xl\"` (left, the default) is the standard for an outer frame."}
-                    code={`<SurfaceCard.Nested
-  title="Related lessons"
-  radius="xl"
-  variant="nested"
-  items={[…]}
-/>`}
-                >
-                    <SurfaceCard.Nested title="Related lessons" radius="xl" variant="nested" items={relatedItems} showAnatomy />
-                </BlockAnatomy>
-            </div>
+        <div className="p-8">
+            <BlockAnatomy
+                name="SurfaceCard.Nested"
+                tier="composite"
+                leaf="Radius"
+                reason={"`radius` only tightens the outer corner by one step — it never touches the header, body, or footer composition, and it is usually paired with `variant=\"nested\"` so the corner stays concentric with the parent it sits inside."}
+                states={[
+                    {
+                        name: "radius = \"3xl\" (default)",
+                        why: "The frame's outer corner rounds at the standard 24px used for an outer card, the same shape as `Default`. This is the default because most `SurfaceCard.Nested` instances stand as the outermost frame on the page.",
+                        code: `<SurfaceCard.Nested
+    title="Related lessons"
+    radius="3xl"
+    items={items}
+/>`,
+                        render: (
+                            <div className="max-w-md">
+                                <SurfaceCard.Nested title="Related lessons" radius="3xl" items={relatedItems} showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "radius = \"xl\", variant = \"nested\"",
+                        why: "The frame's corner drops one step to 16px, tightened to sit concentric with a `variant=\"nested\"` parent panel. Pairing the two props keeps the nested card's border and corner reading as one continuous shape with its host surface, instead of two independently rounded rectangles.",
+                        code: `<SurfaceCard.Nested
+    title="Related lessons"
+    radius="xl"
+    variant="nested"
+    items={items}
+/>`,
+                        render: (
+                            <div className="max-w-sm rounded-2xl bg-surface p-3 shadow-surface">
+                                <SurfaceCard.Nested title="Related lessons" radius="xl" variant="nested" items={relatedItems} showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

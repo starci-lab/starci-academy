@@ -30,13 +30,19 @@ export const Default: Story = {
                     name="Input.Currency"
                     tier="atom"
                     leaf="Default"
-                    note="Bare — no label, hint, or error. The atom owns the currency formatting."
-                    code={"<Input.Currency value={v} onValueChange={setV} currency=\"VND\" />"}
-                >
-                    <div className="w-72">
-                        <Input.Currency value={value} onValueChange={setValue} ariaLabel="Amount" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "value = 0, no label",
+                            why: "The field renders as a bare stepper-and-input box with no label, hint, or error text around it. The atom formats the amount as currency itself, so nothing on screen is a raw unformatted number.",
+                            code: "<Input.Currency value={v} onValueChange={setV} currency=\"VND\" />",
+                            render: (
+                                <div className="w-72">
+                                    <Input.Currency value={value} onValueChange={setValue} ariaLabel="Amount" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -53,13 +59,19 @@ export const WithLabel: Story = {
                     name="Input.Currency"
                     tier="atom"
                     leaf="WithLabel"
-                    note="Label + hint."
-                    code={"<Input.Currency label=\"Tuition\" hint=\"In VND\" value={v} onValueChange={setV} />"}
-                >
-                    <div className="w-72">
-                        <Input.Currency label="Tuition" hint="In VND" value={value} onValueChange={setValue} showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "label and hint set",
+                            why: "A label appears above the stepper box and a hint line appears beneath it, telling the payer what the amount is for before they touch the field. The stepper and formatting stay exactly as in Default.",
+                            code: "<Input.Currency label=\"Tuition\" hint=\"In VND\" value={v} onValueChange={setV} />",
+                            render: (
+                                <div className="w-72">
+                                    <Input.Currency label="Tuition" hint="In VND" value={value} onValueChange={setValue} showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -76,13 +88,19 @@ export const Required: Story = {
                     name="Input.Currency"
                     tier="atom"
                     leaf="Required"
-                    note="isRequired adds an asterisk after the label."
-                    code={"<Input.Currency label=\"Tuition\" isRequired value={v} onValueChange={setV} />"}
-                >
-                    <div className="w-72">
-                        <Input.Currency label="Tuition" isRequired value={value} onValueChange={setValue} showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "isRequired = true",
+                            why: "The label gains a trailing asterisk mark while every other part of the field stays the same as the plain labelled case. The mark is the only signal that this amount cannot be left unset.",
+                            code: "<Input.Currency label=\"Tuition\" isRequired value={v} onValueChange={setV} />",
+                            render: (
+                                <div className="w-72">
+                                    <Input.Currency label="Tuition" isRequired value={value} onValueChange={setValue} showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -99,13 +117,19 @@ export const Filled: Story = {
                     name="Input.Currency"
                     tier="atom"
                     leaf="Filled"
-                    note="value holds real data — the atom formats it as currency."
-                    code={"<Input.Currency label=\"Tuition\" value={1500000} onValueChange={setV} currency=\"VND\" />"}
-                >
-                    <div className="w-72">
-                        <Input.Currency label="Tuition" value={value} onValueChange={setValue} showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "value = 1500000",
+                            why: "The box shows the real amount grouped and prefixed with the currency symbol instead of a bare stepper at zero. This is the field's steady resting look once a real tuition figure has landed in it.",
+                            code: "<Input.Currency label=\"Tuition\" value={1500000} onValueChange={setV} currency=\"VND\" />",
+                            render: (
+                                <div className="w-72">
+                                    <Input.Currency label="Tuition" value={value} onValueChange={setValue} showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -122,13 +146,19 @@ export const Disabled: Story = {
                     name="Input.Currency"
                     tier="atom"
                     leaf="Disabled"
-                    note="isDisabled locks the stepper and the input."
-                    code={"<Input.Currency label=\"Tuition\" value={1500000} onValueChange={setV} isDisabled />"}
-                >
-                    <div className="w-72">
-                        <Input.Currency label="Tuition" value={value} onValueChange={setValue} isDisabled showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "isDisabled = true, value set",
+                            why: "Both the increment/decrement stepper and the input lock against further changes, and the label fades to the disabled tone. The field still shows the amount, it simply refuses new input.",
+                            code: "<Input.Currency label=\"Tuition\" value={1500000} onValueChange={setV} isDisabled />",
+                            render: (
+                                <div className="w-72">
+                                    <Input.Currency label="Tuition" value={value} onValueChange={setValue} isDisabled showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -145,13 +175,19 @@ export const Error: Story = {
                     name="Input.Currency"
                     tier="atom"
                     leaf="Error"
-                    note="label + errorMessage → label, red message, and border all together."
-                    code={"<Input.Currency label=\"Tuition\" errorMessage=\"Tuition must be greater than 0\" value={0} onValueChange={setV} />"}
-                >
-                    <div className="w-72">
-                        <Input.Currency label="Tuition" errorMessage="Tuition must be greater than 0" value={value} onValueChange={setValue} showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "errorMessage set",
+                            why: "A red message line appears under the field and its border turns red at the same time, both driven by the same `errorMessage` string. The label above stays neutral, so only the amount field itself reports the problem.",
+                            code: "<Input.Currency label=\"Tuition\" errorMessage=\"Tuition must be greater than 0\" value={0} onValueChange={setV} />",
+                            render: (
+                                <div className="w-72">
+                                    <Input.Currency label="Tuition" errorMessage="Tuition must be greater than 0" value={value} onValueChange={setValue} showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -166,13 +202,19 @@ export const Loading: Story = {
                 name="Input.Currency"
                 tier="atom"
                 leaf="Loading"
-                note="isSkeleton + label → the label mirrors above the box."
-                code={"<Input.Currency label=\"Tuition\" isSkeleton />"}
-            >
-                <div className="w-72">
-                    <Input.Currency label="Tuition" value={0} onValueChange={() => {}} isSkeleton showAnatomy />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isSkeleton = true, label set",
+                        why: "The label mirrors into a shimmer bar sitting above a shimmer box the same size as the real stepper field. Nothing about the eventual label or field size shifts the layout once the real amount arrives.",
+                        code: "<Input.Currency label=\"Tuition\" isSkeleton />",
+                        render: (
+                            <div className="w-72">
+                                <Input.Currency label="Tuition" value={0} onValueChange={() => {}} isSkeleton showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

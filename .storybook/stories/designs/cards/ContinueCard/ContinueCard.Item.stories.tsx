@@ -20,6 +20,11 @@ const WarningDuotone = (props: SVGProps<SVGSVGElement>) => <WarningIcon {...prop
  * ANATOMY IS PER-LEAF: each state below is its OWN leaf and carries its OWN
  * BlockAnatomy axis (Diagram + Tree) reflecting the parts THAT leaf composes — there
  * is no separate consolidated "Anatomy" story.
+ *
+ * MIGRATED TO `states` (2026-07-27): each leaf below renders exactly one shape, so
+ * each carries a single `states[]` entry. The `mx-auto max-w-4xl` that used to wrap
+ * `BlockAnatomy` itself moved into `renderClassName` — the panel now keeps its own
+ * full width instead of inheriting the card's cap.
  */
 const meta: Meta<typeof ContinueCard> = {
     title: "Designs/Cards/ContinueCard/ContinueCard.Item",
@@ -34,8 +39,8 @@ export default meta
 
 type Story = StoryObj<typeof ContinueCard>
 
-/** Frame each leaf's anatomy panel with breathing room. */
-const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
+/** Canvas padding only — the card's own width goes through `renderClassName`. */
+const frame = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
 // ⭐ 2026-07-27 (deep-scan from the `CourseContents` screen): this tree PREVIOUSLY described a
 // DEAD structure — `HighlightCard` (now the `isHighlight` prop on `SurfaceCard`) · `SectionCard`
@@ -105,7 +110,7 @@ const ERROR_PARTS: Array<AnatomyNode> = [
     },
 ]
 
-/** The loaded item card — one representative (grid is the consumer's concern). */
+/** The loaded item card — one representative (grid is the consumer's concern). Migrated to `states` 2026-07-27. */
 export const Content: Story = {
     render: () =>
         frame(
@@ -114,26 +119,34 @@ export const Content: Story = {
                 tier="design"
                 leaf="Content"
                 parts={ITEM_PARTS}
+                renderClassName="mx-auto max-w-4xl"
                 reason={
                     "The \"item\" variant (1-of-N — the story shows 1 representative card, the grid is the consumer's concern). Each state is 1 leaf in the folder: Item (content, SeeMoreLink CTA) · Loading (Skeleton mirrors the item LAYOUT, NO progress/sweep) · Network-drop error (Feedback.Empty tone=\"danger\" inside SectionCard). Skeleton mirrors layout, no pulse/animation."
                 }
-                code={`<ContinueCard.Item
+                states={[
+                    {
+                        name: "title, subtitle, href all set (loaded)",
+                        why: "The card mounts `Title`, `Subtitle`, and a `SeeMoreLink` CTA on its own row inside a flat `SurfaceCard`. This is the everyday shape shown once the caller's data has actually arrived.",
+                        code: `<ContinueCard.Item
     title="Building a RESTful API with NestJS"
     subtitle="Reading"
     href="/courses/nestjs-api/lessons/5"
-/>`}
-            >
-                <div className="w-80">
-                    <ContinueCard.Item title="Building a RESTful API with NestJS" subtitle="Reading" href="/courses/nestjs-api/lessons/5" showAnatomy />
-                </div>
-            </BlockAnatomy>,
+/>`,
+                        render: (
+                            <div className="w-80">
+                                <ContinueCard.Item title="Building a RESTful API with NestJS" subtitle="Reading" href="/courses/nestjs-api/lessons/5" showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
 /**
  * STATE isSkeleton — mirror shimmer via the component's OWN `isSkeleton` prop.
  * Same COMPOSITION as the loaded item leaf (§11f: state, not structure) — reuses
- * `ITEM_PARTS`, no hand-rolled skeleton tree.
+ * `ITEM_PARTS`, no hand-rolled skeleton tree. Migrated to `states` 2026-07-27.
  */
 export const Skeleton: Story = {
     render: () =>
@@ -143,28 +156,35 @@ export const Skeleton: Story = {
                 tier="design"
                 leaf="Prop `isSkeleton`"
                 parts={ITEM_PARTS}
-                code={`<ContinueCard.Item
+                renderClassName="mx-auto max-w-4xl"
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "The same `SurfaceCard` ⊃ `Stack.H` ⊃ `Stack.V` tree mounts as the loaded state, but each text part renders its shimmer bar instead of real content — the composition never changes, only its state does (§11f). The layout has to hold still while data loads, which is only possible if the skeleton reuses the exact same structure as the real card.",
+                        code: `<ContinueCard.Item
     title="Building a RESTful API with NestJS"
     subtitle="Reading"
     href="/courses/nestjs-api/lessons/5"
     isSkeleton
-/>`}
-                note="`isSkeleton` flips STATE, not structure (§11f) — SAME parts as the loaded item leaf; each one renders its shimmer instead of content."
-            >
-                <div className="w-80">
-                    <ContinueCard.Item
-                        title="Building a RESTful API with NestJS"
-                        subtitle="Reading"
-                        href="/courses/nestjs-api/lessons/5"
-                        isSkeleton
-                        showAnatomy
-                    />
-                </div>
-            </BlockAnatomy>,
+/>`,
+                        render: (
+                            <div className="w-80">
+                                <ContinueCard.Item
+                                    title="Building a RESTful API with NestJS"
+                                    subtitle="Reading"
+                                    href="/courses/nestjs-api/lessons/5"
+                                    isSkeleton
+                                    showAnatomy
+                                />
+                            </div>
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
-/** Network drop — error rendered INSIDE the card frame (not a blank card). */
+/** Network drop — error rendered INSIDE the card frame (not a blank card). Migrated to `states` 2026-07-27. */
 export const LoadError: Story = {
     render: () =>
         frame(
@@ -173,30 +193,37 @@ export const LoadError: Story = {
                 tier="design"
                 leaf="LoadError"
                 parts={ERROR_PARTS}
-                note={"Network drop → Feedback.Empty tone=\"danger\" + Retry button render INSIDE SectionCard, no blank card left behind."}
-                code={`<SurfaceCard.Base>
+                renderClassName="mx-auto max-w-4xl"
+                states={[
+                    {
+                        name: "network request for this card failed",
+                        why: "`Title`/`Subtitle`/`SeeMoreLink` disappear and `Feedback.Empty` mounts in their place, danger-toned, with a Retry button inside the same `SurfaceCard` frame. The frame itself must never vanish on error, so the reader still sees a card-shaped region instead of a hole in the grid.",
+                        code: `<SurfaceCard.Base>
     <Feedback.Empty
         tone="danger"
         title="Connection lost"
         description="The network seems to have dropped. Check your connection and try again."
         action={<Button.Base variant="secondary" label="Retry" />}
     />
-</SurfaceCard.Base>`}
-            >
-                <div className="w-80">
-                    <SurfaceCard.Base anatPart="SurfaceCard">
-                        <Feedback.Empty
-                            anatPart="Feedback.Empty"
-                            tone="danger"
-                            icon={WarningDuotone}
-                            title="Connection lost"
-                            description="The network seems to have dropped. Check your connection and try again."
-                            action={
-                                <Button.Base variant="secondary" size="sm" label="Retry" onPress={() => {}} anatPart="Button" />
-                            }
-                        />
-                    </SurfaceCard.Base>
-                </div>
-            </BlockAnatomy>,
+</SurfaceCard.Base>`,
+                        render: (
+                            <div className="w-80">
+                                <SurfaceCard.Base anatPart="SurfaceCard">
+                                    <Feedback.Empty
+                                        anatPart="Feedback.Empty"
+                                        tone="danger"
+                                        icon={WarningDuotone}
+                                        title="Connection lost"
+                                        description="The network seems to have dropped. Check your connection and try again."
+                                        action={
+                                            <Button.Base variant="secondary" size="sm" label="Retry" onPress={() => {}} anatPart="Button" />
+                                        }
+                                    />
+                                </SurfaceCard.Base>
+                            </div>
+                        ),
+                    },
+                ]}
+            />,
         ),
 }

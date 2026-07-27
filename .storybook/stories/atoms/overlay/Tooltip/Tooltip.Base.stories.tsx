@@ -3,20 +3,22 @@ import { Tooltip } from "@sb-components/atoms/overlay/Tooltip/Tooltip"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Tooltip.Base`: hover-hint DUY NHẤT bọc HeroUI Tooltip.
+ * ATOM — `Tooltip.Base`: the ONE hover-hint atom, wrapping HeroUI Tooltip.
  *
- * ⚠️ GIỮ `children` là ĐÚNG (§12b, lý do ghi ở header `Tooltip.tsx`): atom-wrapper
- * buộc bọc phần tử bất kỳ để react-aria gắn hover/focus/aria-describedby thẳng lên
- * nó. Cùng giới hạn PORTAL như Menu/Popover — `Content`/`Arrow` render ra body nên
- * BlockAnatomy (leo ancestor trong render-box) không leo tới được.
+ * Keeping `children` here is CORRECT (§12b, rationale documented in `Tooltip.tsx`'s own
+ * header): the atom wrapper must wrap an arbitrary element so react-aria can attach
+ * hover/focus/`aria-describedby` straight onto it. It shares the same PORTAL limitation
+ * as Menu/Popover, `Content`/`Arrow` render into `body`, so `BlockAnatomy` (which walks
+ * the ancestor chain inside the render box) can never reach them.
  *
- * ⚠️ KHÔNG có `annotate`: phần DOM duy nhất còn nằm TRONG render-box là `Trigger` —
- * chính là `children` do story truyền vào (`TriggerBox`, một span demo không có
- * story riêng). `Content`/`Arrow` portal ra ngoài nên không bao giờ vào được cây dù
- * có khai `storyId`. Không có node nào trỏ tới được một story thật ⇒ bỏ hẳn prop.
+ * NO `annotate`: the only DOM that stays INSIDE the render box is the Trigger, which is
+ * the `children` the story passes in (`TriggerBox`, a demo span with no story of its
+ * own). `Content`/`Arrow` portal outside, so they can never reach the tree even with a
+ * declared `storyId`. No node here can point at a real story, so the prop is dropped
+ * entirely.
  *
- * 📐 Hai leaf theo prop CÓ HÌNH: `Default` (trần, baseline) + `Placements` (union
- * `placement` render đủ 4 hướng trong CÙNG một leaf, không tách theo từng giá trị).
+ * Two leaves cover the props that actually have a shape: `Default` (bare baseline) and
+ * `Placements` (the full `placement` union rendered in ONE leaf, not split per value).
  */
 const meta: Meta<typeof Tooltip.Base> = {
     title: "Atoms/Overlay/Tooltip/Tooltip.Base",
@@ -50,21 +52,27 @@ export const Default: Story = {
                 name="Tooltip.Base"
                 tier="atom"
                 leaf="Default"
-                reason="The one tooltip atom, wrapping HeroUI Tooltip. It owns the inset, max-width and arrow — callers just hand it a label and a trigger."
-                note="defaultOpen pins the panel open on load so you can inspect it; placement defaults to top. Tooltip.Base is one of only two atoms allowed to keep children (the other is Badge) — it has to wrap whatever element it explains, so react-aria can attach hover/focus/aria-describedby straight onto that element. Every other atom is barred from taking children."
-                code={"<Tooltip.Base label=\"Weekly XP ranking\" placement=\"top\">\n  <TermChip />\n</Tooltip.Base>"}
-            >
-                <div className="flex justify-center py-12">
-                    <Tooltip.Base label="Ranked by total XP earned this week" placement="top" defaultOpen showAnatomy>
-                        <TriggerBox label="Weekly rank" />
-                    </Tooltip.Base>
-                </div>
-            </BlockAnatomy>
+                reason="The one tooltip atom, wrapping HeroUI Tooltip. It owns the inset, max-width and arrow, callers just hand it a label and a trigger."
+                states={[
+                    {
+                        name: "defaultOpen, placement default (top)",
+                        why: "The panel is pinned open with `defaultOpen` so its hover state can be inspected without a mouse, and it sits above the trigger since `placement` defaults to top. A tooltip has to explain the exact element beside it, which is why this atom is one of only two allowed to keep `children` (the other is Badge) instead of taking a separate trigger prop.",
+                        code: "<Tooltip.Base label=\"Weekly XP ranking\" placement=\"top\">\n  <TermChip />\n</Tooltip.Base>",
+                        render: (
+                            <div className="flex justify-center py-12">
+                                <Tooltip.Base label="Ranked by total XP earned this week" placement="top" defaultOpen showAnatomy>
+                                    <TriggerBox label="Weekly rank" />
+                                </Tooltip.Base>
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
-/** Placements — top · bottom · left · right, mỗi phía một trigger pinned mở. */
+/** Placements — top · bottom · left · right, each side gets a trigger pinned open. */
 export const Placements: Story = {
     render: () => (
         <div className="p-8">
@@ -72,32 +80,38 @@ export const Placements: Story = {
                 name="Tooltip.Base"
                 tier="atom"
                 leaf="Prop `placement`"
-                note="Same atom, different placement. The panel portals to the body and anchors itself around the trigger."
-                code={"<Tooltip.Base label=\"…\" placement=\"top | bottom | left | right\">…</Tooltip.Base>"}
-            >
-                <div className="grid grid-cols-2 gap-x-24 gap-y-20 px-16 py-24">
-                    <div className="flex justify-center">
-                        <Tooltip.Base label="Placement top" placement="top" defaultOpen showAnatomy>
-                            <TriggerBox label="Top" />
-                        </Tooltip.Base>
-                    </div>
-                    <div className="flex justify-center">
-                        <Tooltip.Base label="Placement bottom" placement="bottom" defaultOpen showAnatomy>
-                            <TriggerBox label="Bottom" />
-                        </Tooltip.Base>
-                    </div>
-                    <div className="flex justify-center">
-                        <Tooltip.Base label="Placement left" placement="left" defaultOpen showAnatomy>
-                            <TriggerBox label="Left" />
-                        </Tooltip.Base>
-                    </div>
-                    <div className="flex justify-center">
-                        <Tooltip.Base label="Placement right" placement="right" defaultOpen showAnatomy>
-                            <TriggerBox label="Right" />
-                        </Tooltip.Base>
-                    </div>
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "placement = top | bottom | left | right",
+                        why: "Four triggers are pinned open at once, one per `placement` value, so the panel visibly anchors itself to a different edge of each trigger: top, bottom, left, then right. Every panel is pinned open together instead of relying on hover, since a reader cannot hover four triggers at the same time.",
+                        code: "<Tooltip.Base label=\"…\" placement=\"top | bottom | left | right\">…</Tooltip.Base>",
+                        render: (
+                            <div className="grid grid-cols-2 gap-x-24 gap-y-20 px-16 py-24">
+                                <div className="flex justify-center">
+                                    <Tooltip.Base label="Placement top" placement="top" defaultOpen showAnatomy>
+                                        <TriggerBox label="Top" />
+                                    </Tooltip.Base>
+                                </div>
+                                <div className="flex justify-center">
+                                    <Tooltip.Base label="Placement bottom" placement="bottom" defaultOpen showAnatomy>
+                                        <TriggerBox label="Bottom" />
+                                    </Tooltip.Base>
+                                </div>
+                                <div className="flex justify-center">
+                                    <Tooltip.Base label="Placement left" placement="left" defaultOpen showAnatomy>
+                                        <TriggerBox label="Left" />
+                                    </Tooltip.Base>
+                                </div>
+                                <div className="flex justify-center">
+                                    <Tooltip.Base label="Placement right" placement="right" defaultOpen showAnatomy>
+                                        <TriggerBox label="Right" />
+                                    </Tooltip.Base>
+                                </div>
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

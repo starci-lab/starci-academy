@@ -138,9 +138,12 @@ export const Default: Story = {
                 name="SurfaceCard.SelectableGroup"
                 tier="composite"
                 leaf="Prop `items`"
-                reason="The group is a cluster built from data, not JSX children — items is the whole surface worth reading. Free carries only a label, Pro adds a description and an identifying icon, Team adds a badge, and Enterprise is dimmed and unselectable — one array, four shapes an item can take."
-                note="value/onChange make the group fully controlled — this story just owns the state locally so the ring can move when you click a card. ariaLabel never reaches the screen; it only feeds the RadioGroup's accessible name, so it gets no leaf of its own."
-                code={`<SurfaceCard.SelectableGroup
+                reason="The group is a cluster built from data, not JSX children, so items is the whole surface worth reading. value/onChange make the group fully controlled, which is why this story just owns the state locally so the ring can move when you click a card, and ariaLabel never reaches the screen because it only feeds the RadioGroup's accessible name, so neither prop earns a leaf of its own."
+                states={[
+                    {
+                        name: "items = mixed shapes (label only, description+icon, description+badge, description+isDisabled)",
+                        why: "Each card renders a different shape from the same array: Free shows only a label, Pro adds a description and an identifying icon, Team adds a description and a badge, and Enterprise adds a description and turns dimmed and unselectable. The array is written this way so every optional field an item can carry shows up at least once, contrasted against a card that lacks it.",
+                        code: `<SurfaceCard.SelectableGroup
   items={[
     { value: "free", label: "Free" },
     { value: "pro", label: "Pro", description: "For solo developers shipping side projects", icon: <StarIcon /> },
@@ -150,10 +153,11 @@ export const Default: Story = {
   value={value}
   onChange={setValue}
   ariaLabel="Select plan"
-/>`}
-            >
-                <ControlledGroup items={PLAN_ITEMS} initialValue="pro" ariaLabel="Select plan" columns={2} showAnatomy />
-            </BlockAnatomy>
+/>`,
+                        render: <ControlledGroup items={PLAN_ITEMS} initialValue="pro" ariaLabel="Select plan" columns={2} showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -169,18 +173,28 @@ export const Columns: Story = {
                 name="SurfaceCard.SelectableGroup"
                 tier="composite"
                 leaf="Prop `columns`"
-                reason="columns is the group's own grid: stack cards in a sidebar with 1, pair them at 2 (the default), or line up more options side by side at 3."
-                note="All three rows use the same PLAN_ITEMS array — the only thing that changes on screen is the grid-template-columns count, nothing about item shape."
-                code={`<SurfaceCard.SelectableGroup items={PLAN_ITEMS} value={value} onChange={setValue} ariaLabel="Select plan" columns={1} />
-<SurfaceCard.SelectableGroup items={PLAN_ITEMS} value={value} onChange={setValue} ariaLabel="Select plan" columns={2} />  // default
-<SurfaceCard.SelectableGroup items={PLAN_ITEMS} value={value} onChange={setValue} ariaLabel="Select plan" columns={3} />`}
-            >
-                <div className="flex flex-col gap-6">
-                    <ControlledGroup items={PLAN_ITEMS} initialValue="free" ariaLabel="Select plan (1 column)" columns={1} width="360px" showAnatomy />
-                    <ControlledGroup items={PLAN_ITEMS} initialValue="pro" ariaLabel="Select plan (2 columns)" columns={2} width="480px" />
-                    <ControlledGroup items={PLAN_ITEMS} initialValue="team" ariaLabel="Select plan (3 columns)" columns={3} width="720px" />
-                </div>
-            </BlockAnatomy>
+                reason="columns is the group's own grid, stacking cards in a sidebar with 1, pairing them at 2 (the default), or lining up more options side by side at 3. All three states below share the same PLAN_ITEMS array, so the grid-template-columns count is the only thing that changes on screen, nothing about item shape."
+                states={[
+                    {
+                        name: "columns = 1",
+                        why: "The cards stack straight down in a single column. This is the shape for a narrow sidebar where the group has no room to sit side by side.",
+                        code: "<SurfaceCard.SelectableGroup items={PLAN_ITEMS} value={value} onChange={setValue} ariaLabel=\"Select plan\" columns={1} />",
+                        render: <ControlledGroup items={PLAN_ITEMS} initialValue="free" ariaLabel="Select plan (1 column)" columns={1} width="360px" showAnatomy />,
+                    },
+                    {
+                        name: "columns = 2",
+                        why: "The grid pairs cards two to a row, the default column count. Two columns balance most plan pickers without shrinking any single card too much.",
+                        code: "<SurfaceCard.SelectableGroup items={PLAN_ITEMS} value={value} onChange={setValue} ariaLabel=\"Select plan\" columns={2} />  // default",
+                        render: <ControlledGroup items={PLAN_ITEMS} initialValue="pro" ariaLabel="Select plan (2 columns)" columns={2} width="480px" />,
+                    },
+                    {
+                        name: "columns = 3",
+                        why: "The grid lines up three cards in a row. This suits a wider surface where more options can sit side by side for a direct comparison.",
+                        code: "<SurfaceCard.SelectableGroup items={PLAN_ITEMS} value={value} onChange={setValue} ariaLabel=\"Select plan\" columns={3} />",
+                        render: <ControlledGroup items={PLAN_ITEMS} initialValue="team" ariaLabel="Select plan (3 columns)" columns={3} width="720px" />,
+                    },
+                ]}
+            />
         </div>
     ),
 }

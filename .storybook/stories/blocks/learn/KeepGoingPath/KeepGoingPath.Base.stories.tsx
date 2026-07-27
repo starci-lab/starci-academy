@@ -18,9 +18,9 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *
  * 📐 **ONE LEAF** (§11f + §14d.2): every variant below shares the SAME DOM tree
  * (`SurfaceCard.List` → rows), differing only in content ⇒ they're all
- * **STATE**, rendered inside one leaf. Previously `AllRead`/`AllDifficulties`/
- * `Bordered` were split into separate stories — wrong, since none of them
- * add or remove a node.
+ * **STATE**, rendered inside one leaf's `states[]` (thầy chốt bố cục C,
+ * 2026-07-27). Previously `AllRead`/`AllDifficulties`/`Bordered` were split into
+ * separate stories — wrong, since none of them add or remove a node.
  */
 const meta: Meta<typeof KeepGoingPath.Base> = {
     title: "Blocks/Learn/KeepGoingPath/KeepGoingPath.Base",
@@ -45,12 +45,12 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard.List": {
         storyId: "composites-cards-surfacecard-surfacecard-list--default",
         tier: "composite",
-        role: "frame + row rhythm — SHARED with LearnNudges so no second render path is born",
+        role: "the frame and row rhythm, shared with LearnNudges so no second render path gets born",
     },
     "VariantChip.Difficulty": {
         storyId: "designs-chips-variantchip-variantchip-difficulty--levels",
         tier: "design",
-        role: "difficulty role — a 4-step ramp, not a status token",
+        role: "a 4-step difficulty ramp, not a status token",
     },
 }
 
@@ -65,26 +65,33 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  */
 export const Path: Story = {
     render: () => (
-        <div className="mx-auto max-w-3xl p-8">
+        <div className="p-8">
             <BlockAnatomy
                 name="KeepGoingPath.Base"
                 tier="block"
                 leaf="Path ahead"
                 parts={[]}
                 annotate={ANNOTATE}
-                note="Four difficulty steps + three states + a locked lesson — every variant inside ONE frame."
-                code={`<KeepGoingPath.Base
+                renderClassName="mx-auto max-w-3xl"
+                states={[
+                    {
+                        name: "contents mixes done/active/todo across all 4 difficulty steps, one locked",
+                        why: "Every row-level variant renders inside the same `SurfaceCard.List` frame at once: three lesson states, all four difficulty steps, and a locked lesson at the bottom. One mixed data set is enough to show every shape a row can take, since none of these differences add or remove a node from the tree.",
+                        code: `<KeepGoingPath.Base
     module={{ index: 2, name: "Container hoá" }}
     contents={contents}
-/>`}
-            >
-                <KeepGoingPath.Base
-                    anatPart="SurfaceCard.List"
-                    showAnatomy
-                    module={{ index: 2, name: "Container hoá" }}
-                    contents={MIXED}
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <KeepGoingPath.Base
+                                anatPart="SurfaceCard.List"
+                                showAnatomy
+                                module={{ index: 2, name: "Container hoá" }}
+                                contents={MIXED}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -98,24 +105,31 @@ export const Path: Story = {
  */
 export const Skeleton: Story = {
     render: () => (
-        <div className="mx-auto max-w-3xl p-8">
+        <div className="p-8">
             <BlockAnatomy
                 name="KeepGoingPath.Base"
                 tier="block"
                 leaf="Prop `isSkeleton`"
                 parts={[]}
                 annotate={ANNOTATE}
-                note="isSkeleton with empty contents → assume 3 rows so the frame keeps its height."
-                code={"<KeepGoingPath.Base isSkeleton module={{ index: 2, name: \"Container hoá\" }} contents={[]} />"}
-            >
-                <KeepGoingPath.Base
-                    anatPart="SurfaceCard.List"
-                    showAnatomy
-                    isSkeleton
-                    module={{ index: 2, name: "Container hoá" }}
-                    contents={[]}
-                />
-            </BlockAnatomy>
+                renderClassName="mx-auto max-w-3xl"
+                states={[
+                    {
+                        name: "isSkeleton, contents = []",
+                        why: "The same `SurfaceCard.List` frame renders three shimmer rows instead of real lesson rows. Three is this pass's convention for a repeated list's resting row count, chosen so the frame keeps its height instead of collapsing while the real contents are still loading.",
+                        code: "<KeepGoingPath.Base isSkeleton module={{ index: 2, name: \"Container hoá\" }} contents={[]} />",
+                        render: (
+                            <KeepGoingPath.Base
+                                anatPart="SurfaceCard.List"
+                                showAnatomy
+                                isSkeleton
+                                module={{ index: 2, name: "Container hoá" }}
+                                contents={[]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

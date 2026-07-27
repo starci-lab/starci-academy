@@ -13,6 +13,9 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * KHÔNG có state nào ở đây thuộc về nội dung: khung không format tiền/ngày/trạng thái
  * — mọi ô là `ReactNode` consumer truyền vào (dưới đây là `Chip.Base`, một atom).
  * State của chính `Chip` sống ở story `Chip.Base`, không lặp lại ở đây.
+ *
+ * 2026-07-27: di trú toàn bộ leaf sang API `states[]` (§8/§4a). Chữ hiện ra panel
+ * (`why`/`reason`/`role`) viết TIẾNG ANH theo luật B; JSDoc/comment giữ nguyên tiếng Việt.
  */
 const meta: Meta<typeof Table.Base> = {
     title: "Composites/Data/Table/Table.Base",
@@ -48,17 +51,17 @@ const TABLE_PARTS: Array<AnatomyNode> = [
     {
         name: "Header",
         tier: "composite",
-        role: "hàng tiêu đề — khung dựng từ `columns`",
+        role: "The header row, built entirely from columns.",
         children: [
-            { name: "Column", tier: "composite", role: "một cột: `header` + canh lề + bề rộng" },
+            { name: "Column", tier: "composite", role: "One column: its header text, alignment, and width." },
         ],
     },
     {
         name: "Body",
         tier: "composite",
-        role: "thân bảng — khung dựng từ `items`",
+        role: "The table body, built entirely from items.",
         children: [
-            { name: "Row", tier: "composite", role: "một hàng; mỗi ô đọc `item[column.key]`" },
+            { name: "Row", tier: "composite", role: "One row; each cell reads item[column.key]." },
         ],
     },
 ]
@@ -68,14 +71,14 @@ const EMPTY_PARTS: Array<AnatomyNode> = [
     {
         name: "Header",
         tier: "composite",
-        role: "hàng tiêu đề vẫn giữ nguyên (cột là cấu hình, không phụ thuộc dữ liệu)",
-        children: [{ name: "Column", tier: "composite", role: "một cột" }],
+        role: "The header row stays exactly as is, since columns are configuration and never depend on the data.",
+        children: [{ name: "Column", tier: "composite", role: "One column." }],
     },
     {
         name: "Body",
         tier: "composite",
-        role: "thân bảng rỗng",
-        children: [{ name: "Empty", tier: "composite", role: "`emptyContent` trải hết bề ngang thân bảng" }],
+        role: "An empty table body.",
+        children: [{ name: "Empty", tier: "composite", role: "emptyContent spans the full width of the body." }],
     },
 ]
 
@@ -84,14 +87,14 @@ const SKELETON_PARTS: Array<AnatomyNode> = [
     {
         name: "Header",
         tier: "composite",
-        role: "header THẬT (không skeleton hoá) — cột đã biết trước khi dữ liệu về",
-        children: [{ name: "Column", tier: "composite", role: "một cột" }],
+        role: "The real header, not skeletoned, since the columns are already known before the data arrives.",
+        children: [{ name: "Column", tier: "composite", role: "One column." }],
     },
     {
         name: "Body",
         tier: "composite",
-        role: "thân bảng mirror",
-        children: [{ name: "Row", tier: "composite", role: "hàng mirror — mỗi ô là một thanh `Skeleton.Typography`" }],
+        role: "A mirror table body.",
+        children: [{ name: "Row", tier: "composite", role: "A mirror row; each cell is a Skeleton.Typography bar." }],
     },
 ]
 
@@ -104,22 +107,27 @@ export const Default: Story = {
                 tier="composite"
                 leaf="Default"
                 parts={TABLE_PARTS}
-                reason="Bảng là DANH SÁCH LẶP ⇒ §13b bắt buộc `items`, cấm children: consumer không lắp `<Column>`/`<Row>` bằng tay nên không thể lệch số ô với số cột. Khung chỉ bố trí — nội dung ô là node đã format (ở đây có `Chip.Base`), khung không biết gì về domain."
-                code={`<Table.Base
-  ariaLabel="Danh sách học viên"
-  columns={[
-    { key: "name", header: "Học viên" },
-    { key: "status", header: "Trạng thái" },
-    { key: "lessons", header: "Bài đã học" },
-  ]}
-  items={[
-    { key: "an", name: "Nguyễn Văn An", status: <Chip.Base tone="success" text="Đang học" />, lessons: "12/40" },
-    …
-  ]}
-/>`}
-            >
-                <Table.Base showAnatomy ariaLabel="Danh sách học viên" columns={COLUMNS} items={ITEMS} />
-            </BlockAnatomy>
+                reason="A table is a repeating list, so §13b requires items as data and forbids children: a caller who cannot hand-place a Column or a Row can never let the cell count drift from the column count. The frame only lays cells out; content such as the Chip.Base below is a node the caller already formatted, so the frame itself knows nothing about the domain."
+                states={[
+                    {
+                        name: "items = 3 students, columns = 3",
+                        why: "The frame builds a three-column header from columns and three rows from items, dropping each caller-formatted cell, including a Chip.Base status badge, straight into place. Both columns and items arrive as data rather than JSX children, so their counts can never come apart.",
+                        code: `<Table.Base
+    ariaLabel="Danh sách học viên"
+    columns={[
+        { key: "name", header: "Học viên" },
+        { key: "status", header: "Trạng thái" },
+        { key: "lessons", header: "Bài đã học" },
+    ]}
+    items={[
+        { key: "an", name: "Nguyễn Văn An", status: <Chip.Base tone="success" text="Đang học" />, lessons: "12/40" },
+        …
+    ]}
+/>`,
+                        render: <Table.Base showAnatomy ariaLabel="Danh sách học viên" columns={COLUMNS} items={ITEMS} />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -133,24 +141,31 @@ export const Alignment: Story = {
                 tier="composite"
                 leaf="Alignment"
                 parts={TABLE_PARTS}
-                note="`align: end` dồn cột số về mép phải (đọc số so cột dễ hơn), `width` khoá bề ngang. Khai báo MỘT LẦN ở `columns` — không call-site nào tự canh lề từng ô (§4)."
-                code={`columns={[
-  { key: "name", header: "Học viên" },
-  { key: "status", header: "Trạng thái", width: "160px" },
-  { key: "lessons", header: "Bài đã học", align: "end", width: "120px" },
-]}`}
-            >
-                <Table.Base
-                    showAnatomy
-                    ariaLabel="Danh sách học viên theo cột canh phải"
-                    columns={[
-                        { key: "name", header: "Học viên" },
-                        { key: "status", header: "Trạng thái", width: "160px" },
-                        { key: "lessons", header: "Bài đã học", align: "end", width: "120px" },
-                    ]}
-                    items={ITEMS}
-                />
-            </BlockAnatomy>
+                reason="align and width are declared once on the column, in columns, and the frame applies them to the header and to every cell beneath it, so no call site ever aligns one cell by hand while its neighbours drift."
+                states={[
+                    {
+                        name: "columns[2].align = \"end\", columns[1].width and columns[2].width set",
+                        why: "The lessons column pins its numbers to the right edge while status gets a fixed width, and both rules apply to the header and every row cell alike. Right-aligning a number column makes the digits easier to compare down the list than a left-aligned one would.",
+                        code: `columns={[
+    { key: "name", header: "Học viên" },
+    { key: "status", header: "Trạng thái", width: "160px" },
+    { key: "lessons", header: "Bài đã học", align: "end", width: "120px" },
+]}`,
+                        render: (
+                            <Table.Base
+                                showAnatomy
+                                ariaLabel="Danh sách học viên theo cột canh phải"
+                                columns={[
+                                    { key: "name", header: "Học viên" },
+                                    { key: "status", header: "Trạng thái", width: "160px" },
+                                    { key: "lessons", header: "Bài đã học", align: "end", width: "120px" },
+                                ]}
+                                items={ITEMS}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -164,22 +179,28 @@ export const Empty: Story = {
                 tier="composite"
                 leaf="Empty"
                 parts={EMPTY_PARTS}
-                note="Rỗng phải ĐỌC RA CHỦ Ý, không phải một khung trắng: khung giữ header (cột là cấu hình, không phụ thuộc dữ liệu) và trải `emptyContent` hết bề ngang thân bảng."
-                code={`<Table.Base
-  ariaLabel="Danh sách học viên"
-  columns={COLUMNS}
-  items={[]}
-  emptyContent={<Typography.Base size="sm" color="muted" text="Chưa có học viên nào." />}
-/>`}
-            >
-                <Table.Base
-                    showAnatomy
-                    ariaLabel="Danh sách học viên"
-                    columns={COLUMNS}
-                    items={[]}
-                    emptyContent={<Typography.Base size="sm" color="muted" text="Chưa có học viên nào." />}
-                />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "items = []",
+                        why: "The header stays because columns is configuration, unrelated to how many rows exist, while the body drops every Row and renders emptyContent spread across the full width instead. An empty state has to read as intentional, not as a blank frame the reader has to guess about.",
+                        code: `<Table.Base
+    ariaLabel="Danh sách học viên"
+    columns={COLUMNS}
+    items={[]}
+    emptyContent={<Typography.Base size="sm" color="muted" text="Chưa có học viên nào." />}
+/>`,
+                        render: (
+                            <Table.Base
+                                showAnatomy
+                                ariaLabel="Danh sách học viên"
+                                columns={COLUMNS}
+                                items={[]}
+                                emptyContent={<Typography.Base size="sm" color="muted" text="Chưa có học viên nào." />}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -193,22 +214,28 @@ export const Loading: Story = {
                 tier="composite"
                 leaf="Loading"
                 parts={SKELETON_PARTS}
-                note="Số hàng mirror = `items.length` (rỗng → 3), nên footprint không nhảy khi dữ liệu về. Consumer chỉ bật cờ — mirror KHÔNG phụ thuộc nội dung ô thật."
-                code={`<Table.Base
-  isSkeleton
-  ariaLabel="Đang tải danh sách học viên"
-  columns={COLUMNS}
-  items={ITEMS}
-/>`}
-            >
-                <Table.Base
-                    showAnatomy
-                    isSkeleton
-                    ariaLabel="Đang tải danh sách học viên"
-                    columns={COLUMNS}
-                    items={ITEMS}
-                />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "The real header stays put while the body mirrors items.length rows of shimmer bars, three here because items still holds three entries even though isSkeleton is on. Mirroring the real row count keeps the table's footprint from jumping the moment the real data lands.",
+                        code: `<Table.Base
+    isSkeleton
+    ariaLabel="Đang tải danh sách học viên"
+    columns={COLUMNS}
+    items={ITEMS}
+/>`,
+                        render: (
+                            <Table.Base
+                                showAnatomy
+                                isSkeleton
+                                ariaLabel="Đang tải danh sách học viên"
+                                columns={COLUMNS}
+                                items={ITEMS}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -222,22 +249,29 @@ export const Pressable: Story = {
                 tier="composite"
                 leaf="Pressable"
                 parts={TABLE_PARTS}
-                note="Hàng nhận `item.key` khi bấm. ROW ≠ CARD (§7b): hàng KHÔNG lún/scale — phản hồi là tô nền hover + focus ring, a11y do react-aria row action lo (Enter/Space, con trỏ bàn phím)."
-                code={`<Table.Base
-  ariaLabel="Danh sách học viên"
-  columns={COLUMNS}
-  items={ITEMS}
-  onRowPress={(key) => console.log(key)}
-/>`}
-            >
-                <Table.Base
-                    showAnatomy
-                    ariaLabel="Danh sách học viên bấm được"
-                    columns={COLUMNS}
-                    items={ITEMS}
-                    onRowPress={() => {}}
-                />
-            </BlockAnatomy>
+                reason="A row is not a card (§7b): it never lifts or scales on press, its feedback is a hover background plus a focus ring, and the keyboard behaviour comes from react-aria's row action rather than a hand-rolled handler."
+                states={[
+                    {
+                        name: "onRowPress set",
+                        why: "Every row becomes a press target that hands item.key to onRowPress when clicked or activated from the keyboard, on the exact same header and cell composition as Default. Making the whole row pressable, not just one cell, is what lets a learner open a student's detail from anywhere in the row.",
+                        code: `<Table.Base
+    ariaLabel="Danh sách học viên"
+    columns={COLUMNS}
+    items={ITEMS}
+    onRowPress={(key) => console.log(key)}
+/>`,
+                        render: (
+                            <Table.Base
+                                showAnatomy
+                                ariaLabel="Danh sách học viên bấm được"
+                                columns={COLUMNS}
+                                items={ITEMS}
+                                onRowPress={() => {}}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

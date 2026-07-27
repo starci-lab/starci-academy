@@ -78,17 +78,24 @@ export const WithSuggestions: Story = {
                         name="SearchAutocomplete"
                         tier="atom"
                         leaf="WithSuggestions"
-                        code={"<SearchAutocomplete.Base items={items} inputValue={q} onInputChange={setQ} onSelect={fn} />"}
-                        reason="Suggest-as-you-type needs the real free-text anatomy of the HeroUI ComboBox — InputGroup (field + icon) and Popover (dropdown) are the two top-level parts; the parent only hands over items/inputValue, and the block does no filtering itself, so it stays reusable for any data source."
-                    >
-                        <SearchAutocomplete.Base
-                            items={items}
-                            inputValue={inputValue}
-                            onInputChange={setInputValue}
-                            onSelect={() => undefined}
-                            showAnatomy
-                        />
-                    </BlockAnatomy>
+                        reason="Suggest-as-you-type needs the real free-text anatomy of the HeroUI ComboBox, where InputGroup carries the field and its icon while Popover carries the dropdown. The parent only hands over items and inputValue, and the block does no filtering itself, so it stays reusable for any data source."
+                        states={[
+                            {
+                                name: "items = matching CATALOG rows, isLoading unset",
+                                why: "The Popover's ListBox renders one row per item, each with a label and an optional muted description line beneath it. This is the everyday reading state, reached once the parent has filtered the catalog down to whatever the typed query matches.",
+                                code: "<SearchAutocomplete.Base items={items} inputValue={q} onInputChange={setQ} onSelect={fn} />",
+                                render: (
+                                    <SearchAutocomplete.Base
+                                        items={items}
+                                        inputValue={inputValue}
+                                        onInputChange={setInputValue}
+                                        onSelect={() => undefined}
+                                        showAnatomy
+                                    />
+                                ),
+                            },
+                        ]}
+                    />
                 </div>
             </div>
         )
@@ -110,18 +117,24 @@ export const Loading: Story = {
                         name="SearchAutocomplete"
                         tier="atom"
                         leaf="Loading"
-                        code={"<SearchAutocomplete.Base isLoading items={[]} inputValue={q} onInputChange={setQ} onSelect={fn} />"}
-                        note="isLoading only changes what the Popover shows inside — a spinner instead of rows — same InputGroup + Popover shape as the WithSuggestions leaf."
-                    >
-                        <SearchAutocomplete.Base
-                            items={CATALOG}
-                            inputValue={inputValue}
-                            onInputChange={setInputValue}
-                            onSelect={() => undefined}
-                            isLoading
-                            showAnatomy
-                        />
-                    </BlockAnatomy>
+                        states={[
+                            {
+                                name: "isLoading = true",
+                                why: "The ListBox's collection is emptied so its renderEmptyState branch fires, swapping in a spinner and a Searching caption in place of the suggestion rows. The InputGroup and Popover shell stay exactly the shape they have in WithSuggestions, since only the dropdown's own content is waiting.",
+                                code: "<SearchAutocomplete.Base isLoading items={[]} inputValue={q} onInputChange={setQ} onSelect={fn} />",
+                                render: (
+                                    <SearchAutocomplete.Base
+                                        items={CATALOG}
+                                        inputValue={inputValue}
+                                        onInputChange={setInputValue}
+                                        onSelect={() => undefined}
+                                        isLoading
+                                        showAnatomy
+                                    />
+                                ),
+                            },
+                        ]}
+                    />
                 </div>
             </div>
         )
@@ -140,18 +153,24 @@ export const Skeleton: Story = {
                 name="SearchAutocomplete"
                 tier="atom"
                 leaf="Skeleton"
-                code={"<SearchAutocomplete.Base isSkeleton />"}
-                note="isSkeleton swaps the whole ComboBox for a single field-box mirror — the dropdown has no resting shape, so nothing mirrors it."
-            >
-                <SearchAutocomplete.Base
-                    items={[]}
-                    inputValue=""
-                    onInputChange={() => undefined}
-                    onSelect={() => undefined}
-                    isSkeleton
-                    showAnatomy
-                />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "The whole ComboBox is replaced by one field-box skeleton bar, and the dropdown never mounts because a popover has no resting shape to mirror. This is what the field shows before the parent has any query result ready to control it with.",
+                        code: "<SearchAutocomplete.Base isSkeleton />",
+                        render: (
+                            <SearchAutocomplete.Base
+                                items={[]}
+                                inputValue=""
+                                onInputChange={() => undefined}
+                                onSelect={() => undefined}
+                                isSkeleton
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -170,18 +189,24 @@ export const NoResults: Story = {
                         name="SearchAutocomplete"
                         tier="atom"
                         leaf="NoResults"
-                        code={"<SearchAutocomplete.Base items={[]} inputValue={q} onInputChange={setQ} onSelect={fn} />"}
-                        note="Empty items with no loading flag makes the Popover show emptyLabel instead of rows — same InputGroup + Popover shape as the other leaves."
-                    >
-                        <SearchAutocomplete.Base
-                            items={[]}
-                            inputValue={inputValue}
-                            onInputChange={setInputValue}
-                            onSelect={() => undefined}
-                            emptyLabel="No matching course or topic found"
-                            showAnatomy
-                        />
-                    </BlockAnatomy>
+                        states={[
+                            {
+                                name: "items = [], isLoading unset",
+                                why: "With an empty item list and no loading flag, the ListBox's empty-state branch falls through to the emptyLabel caption instead of the spinner. The parent lands here once a real fetch finishes and turns up nothing for the typed query.",
+                                code: "<SearchAutocomplete.Base items={[]} inputValue={q} onInputChange={setQ} onSelect={fn} />",
+                                render: (
+                                    <SearchAutocomplete.Base
+                                        items={[]}
+                                        inputValue={inputValue}
+                                        onInputChange={setInputValue}
+                                        onSelect={() => undefined}
+                                        emptyLabel="No matching course or topic found"
+                                        showAnatomy
+                                    />
+                                ),
+                            },
+                        ]}
+                    />
                 </div>
             </div>
         )

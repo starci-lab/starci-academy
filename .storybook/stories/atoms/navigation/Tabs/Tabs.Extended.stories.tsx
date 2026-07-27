@@ -56,6 +56,9 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * khung slot-trơ (`frame`) hơn là atom nội dung. Cũng KHÔNG có `showAnatomy`/
  * `data-anat-part` như `Chip.Base`/`Tabs.Base`/`Tooltip.Base` — bỏ ngỏ, không thêm ở
  * đợt soát leaf này vì không ảnh hưởng tính đúng của bộ leaf.
+ *
+ * 2026-07-27: migrated to the `states` API (§8) — `Variant`/`Size` now render their
+ * union as `states[]` tabs instead of a stacked column under one shared `note`.
  */
 const meta: Meta<typeof Tabs.Extended> = {
     title: "Atoms/Navigation/Tabs/Tabs.Extended",
@@ -98,37 +101,43 @@ export const Default: Story = {
                 name="Tabs.Extended"
                 tier="atom"
                 leaf="Default"
-                reason="The StarCi tab strip — a thin wrapper over the HeroUI Tabs root. `secondary` (the default) bakes in the underline look and hugs its own label width; this is the bare rendering before `variant`/`size` are touched."
-                note="`children` stays the caller's own `Tabs.ListContainer > Tabs.List > Tabs.Tab (+ Tabs.Indicator)` tree — a NAMED §12b exception (atom-wrapper), because each tab may carry chrome only the caller knows: accent/muted classes, a label hidden on mobile. Reach for `Tabs.Base` (`items`) when the tabs are plain content. Every leaf below only flips `variant`/`size`; the tree shape stays the same."
-                code={`<Tabs.Extended selectedKey="overview" onSelectionChange={setKey}>
-  <HeroTabs.ListContainer>
-    <HeroTabs.List aria-label="Content filter">
-      <HeroTabs.Tab id="overview">Overview<HeroTabs.Indicator /></HeroTabs.Tab>
-      <HeroTabs.Tab id="reviews">Reviews<HeroTabs.Indicator /></HeroTabs.Tab>
-      <HeroTabs.Tab id="qna">Q&A<HeroTabs.Indicator /></HeroTabs.Tab>
-    </HeroTabs.List>
-  </HeroTabs.ListContainer>
-</Tabs.Extended>`}
-            >
-                <Controlled defaultKey="overview">
-                    <HeroTabs.ListContainer>
-                        <HeroTabs.List aria-label="Content filter">
-                            <HeroTabs.Tab id="overview" aria-controls="panel-overview">
-                                Overview
-                                <HeroTabs.Indicator />
-                            </HeroTabs.Tab>
-                            <HeroTabs.Tab id="reviews" aria-controls="panel-reviews">
-                                Reviews
-                                <HeroTabs.Indicator />
-                            </HeroTabs.Tab>
-                            <HeroTabs.Tab id="qna" aria-controls="panel-qna">
-                                Q&A
-                                <HeroTabs.Indicator />
-                            </HeroTabs.Tab>
-                        </HeroTabs.List>
-                    </HeroTabs.ListContainer>
-                </Controlled>
-            </BlockAnatomy>
+                reason="The StarCi tab strip — a thin wrapper over the HeroUI Tabs root. `children` stays the caller's own `Tabs.ListContainer > Tabs.List > Tabs.Tab (+ Tabs.Indicator)` tree — a NAMED §12b exception (atom-wrapper), because each tab may carry chrome only the caller knows: accent/muted classes, a label hidden on mobile. Reach for `Tabs.Base` (`items`) when the tabs are plain content."
+                states={[
+                    {
+                        name: "variant and size both unset",
+                        why: "`secondary` (the default variant) bakes in the underline look and hugs its own label width rather than stretching full-width. This is the bare rendering before either `variant` or `size` is touched — every leaf below only flips one of those two props on top of it.",
+                        code: `<Tabs.Extended selectedKey="overview" onSelectionChange={setKey}>
+    <HeroTabs.ListContainer>
+        <HeroTabs.List aria-label="Content filter">
+            <HeroTabs.Tab id="overview">Overview<HeroTabs.Indicator /></HeroTabs.Tab>
+            <HeroTabs.Tab id="reviews">Reviews<HeroTabs.Indicator /></HeroTabs.Tab>
+            <HeroTabs.Tab id="qna">Q&A<HeroTabs.Indicator /></HeroTabs.Tab>
+        </HeroTabs.List>
+    </HeroTabs.ListContainer>
+</Tabs.Extended>`,
+                        render: (
+                            <Controlled defaultKey="overview">
+                                <HeroTabs.ListContainer>
+                                    <HeroTabs.List aria-label="Content filter">
+                                        <HeroTabs.Tab id="overview" aria-controls="panel-overview">
+                                            Overview
+                                            <HeroTabs.Indicator />
+                                        </HeroTabs.Tab>
+                                        <HeroTabs.Tab id="reviews" aria-controls="panel-reviews">
+                                            Reviews
+                                            <HeroTabs.Indicator />
+                                        </HeroTabs.Tab>
+                                        <HeroTabs.Tab id="qna" aria-controls="panel-qna">
+                                            Q&A
+                                            <HeroTabs.Indicator />
+                                        </HeroTabs.Tab>
+                                    </HeroTabs.List>
+                                </HeroTabs.ListContainer>
+                            </Controlled>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -141,61 +150,71 @@ export const Variant: Story = {
                 name="Tabs.Extended"
                 tier="atom"
                 leaf="Prop `variant`"
-                reason="`primary` renders HeroUI's own default Tabs — a full-width segmented pill for a page-level FEATURE switch that swaps the entire panel. `secondary` drops the built-in baseline and hugs content, for a content filter riding alongside a reading column."
-                note="Pick `primary` for top-level section switches (e.g. Overview/Explore/Courses); `secondary` for a filter or language-switcher that shouldn't claim the full row baseline. The second row also carries a responsive label (hidden below `md`) — a realistic `secondary` composition, not a new prop value."
-                code={`<Tabs.Extended variant="primary" selectedKey={key} onSelectionChange={setKey}>…</Tabs.Extended>
-<Tabs.Extended variant="secondary" selectedKey={key} onSelectionChange={setKey}>…</Tabs.Extended>`}
-            >
-                <div className="flex flex-col gap-8">
-                    <Controlled defaultKey="overview" variant="primary">
-                        <HeroTabs.ListContainer>
-                            <HeroTabs.List aria-label="Dashboard navigation">
-                                <HeroTabs.Tab id="overview" aria-controls="panel-overview">
-                                    <span className="flex items-center gap-2">
-                                        <HouseIcon aria-hidden focusable="false" className="size-5 shrink-0" />
-                                        <span>Overview</span>
-                                    </span>
-                                    <HeroTabs.Indicator />
-                                </HeroTabs.Tab>
-                                <HeroTabs.Tab id="explore" aria-controls="panel-explore">
-                                    <span className="flex items-center gap-2">
-                                        <CompassIcon aria-hidden focusable="false" className="size-5 shrink-0" />
-                                        <span>Explore</span>
-                                    </span>
-                                    <HeroTabs.Indicator />
-                                </HeroTabs.Tab>
-                                <HeroTabs.Tab id="courses" aria-controls="panel-courses">
-                                    <span className="flex items-center gap-2">
-                                        <GraduationCapIcon aria-hidden focusable="false" className="size-5 shrink-0" />
-                                        <span>Courses</span>
-                                    </span>
-                                    <HeroTabs.Indicator />
-                                </HeroTabs.Tab>
-                            </HeroTabs.List>
-                        </HeroTabs.ListContainer>
-                    </Controlled>
-                    <Controlled defaultKey="courses" variant="secondary">
-                        <HeroTabs.ListContainer>
-                            <HeroTabs.List aria-label="Learning categories">
-                                <HeroTabs.Tab id="courses" aria-controls="panel-courses">
-                                    <span className="flex items-center gap-2">
-                                        <GraduationCapIcon aria-hidden focusable="false" className="size-5 shrink-0" />
-                                        <span className="hidden @app-md:inline">Courses</span>
-                                    </span>
-                                    <HeroTabs.Indicator />
-                                </HeroTabs.Tab>
-                                <HeroTabs.Tab id="explore" aria-controls="panel-explore">
-                                    <span className="flex items-center gap-2">
-                                        <CompassIcon aria-hidden focusable="false" className="size-5 shrink-0" />
-                                        <span className="hidden @app-md:inline">Explore</span>
-                                    </span>
-                                    <HeroTabs.Indicator />
-                                </HeroTabs.Tab>
-                            </HeroTabs.List>
-                        </HeroTabs.ListContainer>
-                    </Controlled>
-                </div>
-            </BlockAnatomy>
+                reason="`variant` decides whether the strip claims a full-width baseline row or hugs its own content — the underlying `Tabs.ListContainer > Tabs.List > Tabs.Tab` tree the caller supplies stays the same shape either way."
+                states={[
+                    {
+                        name: "variant = \"primary\"",
+                        why: "The strip renders HeroUI's own default Tabs look: a full-width segmented pill spanning the row. Pick this for a page-level FEATURE switch that swaps the entire panel below it, such as Overview/Explore/Courses.",
+                        code: "<Tabs.Extended variant=\"primary\" selectedKey={key} onSelectionChange={setKey}>…</Tabs.Extended>",
+                        render: (
+                            <Controlled defaultKey="overview" variant="primary">
+                                <HeroTabs.ListContainer>
+                                    <HeroTabs.List aria-label="Dashboard navigation">
+                                        <HeroTabs.Tab id="overview" aria-controls="panel-overview">
+                                            <span className="flex items-center gap-2">
+                                                <HouseIcon aria-hidden focusable="false" className="size-5 shrink-0" />
+                                                <span>Overview</span>
+                                            </span>
+                                            <HeroTabs.Indicator />
+                                        </HeroTabs.Tab>
+                                        <HeroTabs.Tab id="explore" aria-controls="panel-explore">
+                                            <span className="flex items-center gap-2">
+                                                <CompassIcon aria-hidden focusable="false" className="size-5 shrink-0" />
+                                                <span>Explore</span>
+                                            </span>
+                                            <HeroTabs.Indicator />
+                                        </HeroTabs.Tab>
+                                        <HeroTabs.Tab id="courses" aria-controls="panel-courses">
+                                            <span className="flex items-center gap-2">
+                                                <GraduationCapIcon aria-hidden focusable="false" className="size-5 shrink-0" />
+                                                <span>Courses</span>
+                                            </span>
+                                            <HeroTabs.Indicator />
+                                        </HeroTabs.Tab>
+                                    </HeroTabs.List>
+                                </HeroTabs.ListContainer>
+                            </Controlled>
+                        ),
+                    },
+                    {
+                        name: "variant = \"secondary\"",
+                        why: "The strip drops the built-in full-width baseline and hugs its content instead, with a responsive label hidden below `md`. Pick this for a content filter or language switcher riding alongside a reading column, one that shouldn't claim the full row.",
+                        code: "<Tabs.Extended variant=\"secondary\" selectedKey={key} onSelectionChange={setKey}>…</Tabs.Extended>",
+                        render: (
+                            <Controlled defaultKey="courses" variant="secondary">
+                                <HeroTabs.ListContainer>
+                                    <HeroTabs.List aria-label="Learning categories">
+                                        <HeroTabs.Tab id="courses" aria-controls="panel-courses">
+                                            <span className="flex items-center gap-2">
+                                                <GraduationCapIcon aria-hidden focusable="false" className="size-5 shrink-0" />
+                                                <span className="hidden @app-md:inline">Courses</span>
+                                            </span>
+                                            <HeroTabs.Indicator />
+                                        </HeroTabs.Tab>
+                                        <HeroTabs.Tab id="explore" aria-controls="panel-explore">
+                                            <span className="flex items-center gap-2">
+                                                <CompassIcon aria-hidden focusable="false" className="size-5 shrink-0" />
+                                                <span className="hidden @app-md:inline">Explore</span>
+                                            </span>
+                                            <HeroTabs.Indicator />
+                                        </HeroTabs.Tab>
+                                    </HeroTabs.List>
+                                </HeroTabs.ListContainer>
+                            </Controlled>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -208,44 +227,54 @@ export const Size: Story = {
                 name="Tabs.Extended"
                 tier="atom"
                 leaf="Prop `size`"
-                reason={"`size` only shows up on `variant=\"primary\"` — `secondary` is already hug-content via the `.extended-tabs` override, so `size` has no visible effect there."}
-                note={"`sm` shrinks the strip to `w-fit` — segments size to their own label, for a compact choice that shouldn't claim the full row (e.g. a setting nested in a modal). `md` (default) stretches to `w-full` and splits evenly; inside a squeezed container a segment truncates its label instead of wrapping, since every `Tabs.Tab` is forced `whitespace-nowrap`."}
-                code={`<Tabs.Extended variant="primary" size="sm" selectedKey={key} onSelectionChange={setKey}>…</Tabs.Extended>
-<Tabs.Extended variant="primary" size="md" selectedKey={key} onSelectionChange={setKey}>…</Tabs.Extended>`}
-            >
-                <div className="flex flex-col gap-8">
-                    <Controlled defaultKey="monthly" variant="primary" size="sm">
-                        <HeroTabs.ListContainer>
-                            <HeroTabs.List aria-label="Billing cycle">
-                                <HeroTabs.Tab id="monthly" aria-controls="panel-monthly">
-                                    Monthly
-                                    <HeroTabs.Indicator />
-                                </HeroTabs.Tab>
-                                <HeroTabs.Tab id="yearly" aria-controls="panel-yearly">
-                                    Yearly
-                                    <HeroTabs.Indicator />
-                                </HeroTabs.Tab>
-                            </HeroTabs.List>
-                        </HeroTabs.ListContainer>
-                    </Controlled>
-                    <div className="w-64">
-                        <Controlled defaultKey="grid" variant="primary" size="md">
-                            <HeroTabs.ListContainer>
-                                <HeroTabs.List aria-label="View mode">
-                                    <HeroTabs.Tab id="grid" aria-controls="panel-grid" aria-label="Detailed grid view" className="min-w-0">
-                                        <span className="block truncate">Detailed grid view</span>
-                                        <HeroTabs.Indicator />
-                                    </HeroTabs.Tab>
-                                    <HeroTabs.Tab id="list" aria-controls="panel-list" aria-label="Compact list view" className="min-w-0">
-                                        <span className="block truncate">Compact list view</span>
-                                        <HeroTabs.Indicator />
-                                    </HeroTabs.Tab>
-                                </HeroTabs.List>
-                            </HeroTabs.ListContainer>
-                        </Controlled>
-                    </div>
-                </div>
-            </BlockAnatomy>
+                reason={"`size` only shows up on `variant=\"primary\"` — `secondary` is already hug-content via its own override, so `size` has no visible effect there, and both states below are demonstrated on `primary`."}
+                states={[
+                    {
+                        name: "variant = \"primary\", size = \"sm\"",
+                        why: "The strip shrinks to `w-fit` — segments size to their own label instead of splitting the row evenly. Reach for this in a compact choice that shouldn't claim the full row width, such as a setting nested in a modal.",
+                        code: "<Tabs.Extended variant=\"primary\" size=\"sm\" selectedKey={key} onSelectionChange={setKey}>…</Tabs.Extended>",
+                        render: (
+                            <Controlled defaultKey="monthly" variant="primary" size="sm">
+                                <HeroTabs.ListContainer>
+                                    <HeroTabs.List aria-label="Billing cycle">
+                                        <HeroTabs.Tab id="monthly" aria-controls="panel-monthly">
+                                            Monthly
+                                            <HeroTabs.Indicator />
+                                        </HeroTabs.Tab>
+                                        <HeroTabs.Tab id="yearly" aria-controls="panel-yearly">
+                                            Yearly
+                                            <HeroTabs.Indicator />
+                                        </HeroTabs.Tab>
+                                    </HeroTabs.List>
+                                </HeroTabs.ListContainer>
+                            </Controlled>
+                        ),
+                    },
+                    {
+                        name: "variant = \"primary\", size = \"md\"",
+                        why: "The strip stretches to `w-full` and splits its segments evenly (the default). Inside a squeezed container a segment truncates its label instead of wrapping, since every `Tabs.Tab` is forced `whitespace-nowrap`.",
+                        code: "<Tabs.Extended variant=\"primary\" size=\"md\" selectedKey={key} onSelectionChange={setKey}>…</Tabs.Extended>",
+                        render: (
+                            <div className="w-64">
+                                <Controlled defaultKey="grid" variant="primary" size="md">
+                                    <HeroTabs.ListContainer>
+                                        <HeroTabs.List aria-label="View mode">
+                                            <HeroTabs.Tab id="grid" aria-controls="panel-grid" aria-label="Detailed grid view" className="min-w-0">
+                                                <span className="block truncate">Detailed grid view</span>
+                                                <HeroTabs.Indicator />
+                                            </HeroTabs.Tab>
+                                            <HeroTabs.Tab id="list" aria-controls="panel-list" aria-label="Compact list view" className="min-w-0">
+                                                <span className="block truncate">Compact list view</span>
+                                                <HeroTabs.Indicator />
+                                            </HeroTabs.Tab>
+                                        </HeroTabs.List>
+                                    </HeroTabs.ListContainer>
+                                </Controlled>
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

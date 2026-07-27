@@ -8,11 +8,12 @@ export default meta
 type Story = StoryObj
 
 /**
- * ATOM LÁ — `Input.Text` bọc thẳng HeroUI `TextField`/`Input` + `FieldFrame` nội bộ
- * (§11a: nhãn/mô tả/lỗi tính vào atom, không tách Field atom). Mọi part nó phát
- * ra (`Label`/`Description`/`Field`/`Error`/`Skeleton`) là KHE nội bộ, không phải
- * component có story riêng ⇒ KHÔNG có deps ⇒ bỏ hẳn prop `annotate` (thầy chốt
- * 2026-07-26 lần 2).
+ * LEAF ATOM — `Input.Text` wraps HeroUI `TextField`/`Input` directly plus its own
+ * internal `FieldFrame` (§11a: label/description/error count as part of the atom,
+ * there is no separate Field atom). Every part it emits (`Label`/`Description`/
+ * `Field`/`Error`/`Skeleton`) is an internal slot, not a component with its own story,
+ * so it has NO deps, the `annotate` prop is dropped entirely (teacher confirmed
+ * 2026-07-26, second pass).
  */
 
 /** Default — bare field: empty box, no label/hint/error/placeholder. */
@@ -25,13 +26,15 @@ export const Default: Story = {
                     name="Input.Text"
                     tier="atom"
                     leaf="Default"
-                    note="Bare — no label, hint, error, or placeholder ghost text."
-                    code={"<Input.Text value={v} onValueChange={setV} />"}
-                >
-                    <div className="w-72">
-                        <Input.Text value={value} onValueChange={setValue} ariaLabel="Course name" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "no label, no hint, no error, no placeholder",
+                            why: "The field renders as an empty box: no label above it, no hint or error line below it, and no placeholder ghost text inside it. This is the baseline every other leaf below adds exactly one prop to.",
+                            code: "<Input.Text value={v} onValueChange={setV} />",
+                            render: <div className="w-72"><Input.Text value={value} onValueChange={setValue} ariaLabel="Course name" showAnatomy /></div>,
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -51,13 +54,15 @@ export const Placeholder: Story = {
                     name="Input.Text"
                     tier="atom"
                     leaf="Prop `placeholder`"
-                    note="Ghost text only shows while value is empty; it disappears the moment real text lands."
-                    code={"<Input.Text placeholder=\"Course name\" value={v} onValueChange={setV} />"}
-                >
-                    <div className="w-72">
-                        <Input.Text placeholder="Course name" value={value} onValueChange={setValue} ariaLabel="Course name" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "placeholder set, value = \"\"",
+                            why: "A dimmed ghost word sits inside the otherwise bare box, visible only while `value` is empty. The moment a real character is typed the ghost text disappears, since its only job is to hint at the expected content before anything is typed.",
+                            code: "<Input.Text placeholder=\"Course name\" value={v} onValueChange={setV} />",
+                            render: <div className="w-72"><Input.Text placeholder="Course name" value={value} onValueChange={setValue} ariaLabel="Course name" showAnatomy /></div>,
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -74,13 +79,15 @@ export const WithLabel: Story = {
                     name="Input.Text"
                     tier="atom"
                     leaf="WithLabel"
-                    note="label + hint."
-                    code={"<Input.Text label=\"Course name\" hint=\"Shown on the course card\" value={v} onValueChange={setV} />"}
-                >
-                    <div className="w-72">
-                        <Input.Text label="Course name" hint="Shown on the course card" value={value} onValueChange={setValue} placeholder="Course name" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "label + hint set",
+                            why: "A label appears above the field and a hint line appears below it, while the box itself is unchanged from Default. The label names the field for screen readers and sighted users alike, and the hint spells out a constraint the placeholder alone could not carry, since it stays visible even once the field is filled.",
+                            code: "<Input.Text label=\"Course name\" hint=\"Shown on the course card\" value={v} onValueChange={setV} />",
+                            render: <div className="w-72"><Input.Text label="Course name" hint="Shown on the course card" value={value} onValueChange={setValue} placeholder="Course name" showAnatomy /></div>,
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -97,13 +104,15 @@ export const Required: Story = {
                     name="Input.Text"
                     tier="atom"
                     leaf="Required"
-                    note="isRequired → * mark after the label."
-                    code={"<Input.Text label=\"Course name\" isRequired value={v} onValueChange={setV} />"}
-                >
-                    <div className="w-72">
-                        <Input.Text label="Course name" isRequired value={value} onValueChange={setValue} placeholder="Course name" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "isRequired = true",
+                            why: "A `*` mark appears right after the label text, with nothing else in the field changing. It tells the learner this field cannot be left blank before they ever try to submit the form.",
+                            code: "<Input.Text label=\"Course name\" isRequired value={v} onValueChange={setV} />",
+                            render: <div className="w-72"><Input.Text label="Course name" isRequired value={value} onValueChange={setValue} placeholder="Course name" showAnatomy /></div>,
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -120,13 +129,15 @@ export const Filled: Story = {
                     name="Input.Text"
                     tier="atom"
                     leaf="Filled"
-                    note="value holds text."
-                    code={"<Input.Text label=\"Course name\" value=\"Fullstack Mastery\" onValueChange={setV} />"}
-                >
-                    <div className="w-72">
-                        <Input.Text label="Course name" value={value} onValueChange={setValue} showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "value = \"Fullstack Mastery\"",
+                            why: "The box now shows real text instead of standing empty, and since a value is present the placeholder never gets a chance to show. This is the shape the field settles into once the learner, or an edit form pre-filling from saved data, has actually typed something.",
+                            code: "<Input.Text label=\"Course name\" value=\"Fullstack Mastery\" onValueChange={setV} />",
+                            render: <div className="w-72"><Input.Text label="Course name" value={value} onValueChange={setValue} showAnatomy /></div>,
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -143,13 +154,15 @@ export const Disabled: Story = {
                     name="Input.Text"
                     tier="atom"
                     leaf="Disabled"
-                    note="isDisabled → locked + dimmed."
-                    code={"<Input.Text label=\"Course name\" value=\"Fullstack Mastery\" isDisabled onValueChange={setV} />"}
-                >
-                    <div className="w-72">
-                        <Input.Text label="Course name" value={value} onValueChange={setValue} isDisabled showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "isDisabled = true",
+                            why: "The whole field dims and stops accepting focus or typing, while the label and its existing value stay visible but muted. Use it when the field's value is fixed by something else in the form, so editing it here would be misleading.",
+                            code: "<Input.Text label=\"Course name\" value=\"Fullstack Mastery\" isDisabled onValueChange={setV} />",
+                            render: <div className="w-72"><Input.Text label="Course name" value={value} onValueChange={setValue} isDisabled showAnatomy /></div>,
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -169,13 +182,15 @@ export const Invalid: Story = {
                     name="Input.Text"
                     tier="atom"
                     leaf="Prop `isInvalid`"
-                    note="isInvalid alone only reddens the border — no errorMessage means no line underneath. Compare with Error below."
-                    code={"<Input.Text label=\"Course name\" isInvalid value={v} onValueChange={setV} placeholder=\"Course name\" />"}
-                >
-                    <div className="w-72">
-                        <Input.Text label="Course name" isInvalid value={value} onValueChange={setValue} placeholder="Course name" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "isInvalid = true, no errorMessage",
+                            why: "The border turns red while no error line appears underneath it, because `isInvalid` alone carries no message to print. Compare it against `Error` next: that leaf adds `errorMessage`, which is the only thing that grows a red text line below the same red border.",
+                            code: "<Input.Text label=\"Course name\" isInvalid value={v} onValueChange={setV} placeholder=\"Course name\" />",
+                            render: <div className="w-72"><Input.Text label="Course name" isInvalid value={value} onValueChange={setValue} placeholder="Course name" showAnatomy /></div>,
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -192,13 +207,15 @@ export const Error: Story = {
                     name="Input.Text"
                     tier="atom"
                     leaf="Error"
-                    note="label + errorMessage → label, red line, border."
-                    code={"<Input.Text label=\"Course name\" errorMessage=\"Name is required\" value={v} onValueChange={setV} />"}
-                >
-                    <div className="w-72">
-                        <Input.Text label="Course name" errorMessage="Name is required" value={value} onValueChange={setValue} placeholder="Course name" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "errorMessage set",
+                            why: "The border turns red exactly as in `Invalid`, and now a red message line also appears below the field explaining what is wrong. Printing the actual reason, not just a red border, is what lets the learner fix the problem without guessing.",
+                            code: "<Input.Text label=\"Course name\" errorMessage=\"Name is required\" value={v} onValueChange={setV} />",
+                            render: <div className="w-72"><Input.Text label="Course name" errorMessage="Name is required" value={value} onValueChange={setValue} placeholder="Course name" showAnatomy /></div>,
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -213,13 +230,15 @@ export const Loading: Story = {
                 name="Input.Text"
                 tier="atom"
                 leaf="Loading"
-                note="isSkeleton + label → label mirrored above the box."
-                code={"<Input.Text label=\"Course name\" isSkeleton />"}
-            >
-                <div className="w-72">
-                    <Input.Text label="Course name" value="" onValueChange={() => {}} isSkeleton showAnatomy />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isSkeleton = true, label set",
+                        why: "A shimmering bar mirrors the label's position above a shimmering box, standing in for both before any data has arrived. Mirroring the label's own position, rather than skipping it, is what keeps the field from jumping once the real label and value land.",
+                        code: "<Input.Text label=\"Course name\" isSkeleton />",
+                        render: <div className="w-72"><Input.Text label="Course name" value="" onValueChange={() => {}} isSkeleton showAnatomy /></div>,
+                    },
+                ]}
+            />
         </div>
     ),
 }

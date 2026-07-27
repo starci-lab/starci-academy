@@ -30,8 +30,8 @@ type Story = StoryObj<typeof List.ToggleRow>
  * every leaf, including `isSkeleton` (each swaps to its own mirror, same names).
  */
 const ROW_PARTS: Array<AnatomyNode> = [
-    { name: "TitledText", tier: "composite", role: "label + description muted, stacked" },
-    { name: "Switch", tier: "composite", role: "on/off switch, pinned right" },
+    { name: "TitledText", tier: "composite", role: "the label with an optional muted description, stacked as one node" },
+    { name: "Switch", tier: "composite", role: "the on/off switch, pinned to the right edge of the row" },
 ]
 
 /** Default: label + description, unchecked. */
@@ -45,22 +45,29 @@ export const Default: Story = {
                     tier="composite"
                     leaf="Default"
                     parts={ROW_PARTS}
-                    reason="Generalizes the repeating settings toggle row (PrivacySettings): TitledText + Switch, gap-3, so every settings surface shares one row scaffold."
-                    code={`<List.ToggleRow
+                    reason="Generalizes the repeating settings toggle row seen in PrivacySettings: a TitledText paired with a Switch at gap-3, so every settings surface shares one row scaffold instead of hand-rolling its own."
+                    states={[
+                        {
+                            name: "checked = false, description set",
+                            why: "The row shows a label with a muted description line beneath it and the switch sits off. This is the row's resting shape before the learner has touched the toggle.",
+                            code: `<List.ToggleRow
   label="Hiển thị dự án"
   description="Cho phép khách xem tab Dự án trên hồ sơ công khai của bạn"
   checked={checked}
   onCheckedChange={setChecked}
-/>`}
-                >
-                    <List.ToggleRow
-                        label="Hiển thị dự án"
-                        description="Cho phép khách xem tab Dự án trên hồ sơ công khai của bạn"
-                        checked={checked}
-                        onCheckedChange={setChecked}
-                        showAnatomy
-                    />
-                </BlockAnatomy>
+/>`,
+                            render: (
+                                <List.ToggleRow
+                                    label="Hiển thị dự án"
+                                    description="Cho phép khách xem tab Dự án trên hồ sơ công khai của bạn"
+                                    checked={checked}
+                                    onCheckedChange={setChecked}
+                                    showAnatomy
+                                />
+                            ),
+                        },
+                    ]}
+                />
             </div>
         )
     },
@@ -77,21 +84,28 @@ export const Selected: Story = {
                     tier="composite"
                     leaf="Selected"
                     parts={ROW_PARTS}
-                    code={`<List.ToggleRow
+                    states={[
+                        {
+                            name: "checked = true",
+                            why: "Only the switch's thumb and track flip to the on position, while the label and description stay exactly as in Default. No node appears or disappears, the toggle simply reports the other boolean.",
+                            code: `<List.ToggleRow
   label="Show projects"
   description="Allow visitors to see the Projects tab on your public profile"
   checked={checked}
   onCheckedChange={setChecked}
-/>`}
-                >
-                    <List.ToggleRow
-                        label="Hiển thị dự án"
-                        description="Cho phép khách xem tab Dự án trên hồ sơ công khai của bạn"
-                        checked={checked}
-                        onCheckedChange={setChecked}
-                        showAnatomy
-                    />
-                </BlockAnatomy>
+/>`,
+                            render: (
+                                <List.ToggleRow
+                                    label="Hiển thị dự án"
+                                    description="Cho phép khách xem tab Dự án trên hồ sơ công khai của bạn"
+                                    checked={checked}
+                                    onCheckedChange={setChecked}
+                                    showAnatomy
+                                />
+                            ),
+                        },
+                    ]}
+                />
             </div>
         )
     },
@@ -108,11 +122,17 @@ export const NoDescription: Story = {
                     tier="composite"
                     leaf="NoDescription"
                     parts={ROW_PARTS}
-                    note="description left blank → TitledText keeps only the title, still the same node."
-                    code={"<List.ToggleRow label=\"Dark mode\" checked={checked} onCheckedChange={setChecked} />"}
-                >
-                    <List.ToggleRow label="Chế độ tối" checked={checked} onCheckedChange={setChecked} showAnatomy />
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "description = undefined",
+                            why: "TitledText keeps only the title line and the description line drops out entirely, yet the row still stays vertically centred against the switch. The node is still the same TitledText, it simply renders one line instead of two.",
+                            code: "<List.ToggleRow label=\"Dark mode\" checked={checked} onCheckedChange={setChecked} />",
+                            render: (
+                                <List.ToggleRow label="Chế độ tối" checked={checked} onCheckedChange={setChecked} showAnatomy />
+                            ),
+                        },
+                    ]}
+                />
             </div>
         )
     },
@@ -131,23 +151,29 @@ export const Disabled: Story = {
                 tier="composite"
                 leaf="Disabled"
                 parts={ROW_PARTS}
-                note="isDisabled only dims the row + locks the Switch, composition doesn't change."
-                code={`<List.ToggleRow
+                states={[
+                    {
+                        name: "isDisabled = true, checked = false",
+                        why: "The whole row dims to half opacity and the switch stops accepting clicks, while the composition stays the same TitledText plus Switch pair. This is the shape a per-section row takes when a parent lock overrides it.",
+                        code: `<List.ToggleRow
   label="Show projects"
   description="Locked by profile lock mode"
   checked={false}
   isDisabled
-/>`}
-            >
-                <List.ToggleRow
-                    label="Hiển thị dự án"
-                    description="Đang bị khoá bởi chế độ khoá hồ sơ"
-                    checked={false}
-                    onCheckedChange={() => {}}
-                    isDisabled
-                    showAnatomy
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <List.ToggleRow
+                                label="Hiển thị dự án"
+                                description="Đang bị khoá bởi chế độ khoá hồ sơ"
+                                checked={false}
+                                onCheckedChange={() => {}}
+                                isDisabled
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -161,18 +187,24 @@ export const Loading: Story = {
                 tier="composite"
                 leaf="Loading"
                 parts={ROW_PARTS}
-                note="isSkeleton → TitledText and Switch each swap to their own mirror, still the same 2 nodes."
-                code={"<List.ToggleRow label=\"Show projects\" description=\"Allow visitors to see the Projects tab\" isSkeleton />"}
-            >
-                <List.ToggleRow
-                    label="Hiển thị dự án"
-                    description="Cho phép khách xem tab Dự án trên hồ sơ công khai của bạn"
-                    checked={false}
-                    onCheckedChange={() => {}}
-                    isSkeleton
-                    showAnatomy
-                />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "TitledText and Switch each swap to their own shimmer mirror at the same size the real label, description, and switch would occupy. The row stays the same two nodes, so nothing shifts once the real settings arrive.",
+                        code: "<List.ToggleRow label=\"Show projects\" description=\"Allow visitors to see the Projects tab\" isSkeleton />",
+                        render: (
+                            <List.ToggleRow
+                                label="Hiển thị dự án"
+                                description="Cho phép khách xem tab Dự án trên hồ sơ công khai của bạn"
+                                checked={false}
+                                onCheckedChange={() => {}}
+                                isSkeleton
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

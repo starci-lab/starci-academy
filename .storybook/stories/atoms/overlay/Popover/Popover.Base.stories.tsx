@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { InfoIcon } from "@phosphor-icons/react"
-import { Popover, type PopoverBaseProps } from "@sb-components/atoms/overlay/Popover/Popover"
+import { Popover } from "@sb-components/atoms/overlay/Popover/Popover"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -24,7 +24,7 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * một dải trống cao — panel bung lên/xuống/trái/phải không đè lên hàng kế bên. Leaf
  * `TriggerVariant` thì ngược lại: khác biệt nằm ở NÚT (đóng), không cần mở panel.
  *
- * ✍️ Chữ hiện ra UI (`triggerLabel`, `content`, `reason`/`note`) viết TIẾNG ANH
+ * ✍️ Chữ hiện ra UI (`triggerLabel`, `content`, `reason`/`why`) viết TIẾNG ANH
  * (thầy chốt 2026-07-26) — kể cả nội dung demo, không riêng phần chú giải panel.
  */
 
@@ -39,12 +39,6 @@ export default meta
 
 type Story = StoryObj<typeof Popover.Base>
 
-/** Union thật của prop `triggerVariant`, lấy từ component — không tự bịa. */
-type TriggerVariantValue = NonNullable<PopoverBaseProps["triggerVariant"]>
-
-/** Union thật của prop `placement` (8 giá trị), lấy từ component — không tự bịa. */
-type PlacementValue = NonNullable<PopoverBaseProps["placement"]>
-
 /** Leaf TRẦN — trigger button + panel mở sẵn, không heading. */
 export const Default: Story = {
     render: () => (
@@ -54,19 +48,25 @@ export const Default: Story = {
                 tier="atom"
                 leaf="Default"
                 reason="The one click-panel atom wrapping HeroUI Popover plus a Button trigger (react-aria's DialogTrigger requires a pressable trigger). The atom owns the panel's surface, placement, and arrow."
-                note="defaultOpen pins the panel open so you can see it here. placement defaults to bottom. The trigger label goes through triggerLabel — the atom does not accept children; content is the panel's body, so it stays a ReactNode."
-                code={"<Popover.Base triggerLabel=\"Details\" content={<p>…</p>} placement=\"bottom\" />"}
-            >
-                <div className="flex justify-center py-16">
-                    <Popover.Base
-                        triggerLabel="Streak details"
-                        content="Last session was 2 days ago. Keep the streak alive by studying every day."
-                        placement="bottom"
-                        defaultOpen
-                        showAnatomy
-                    />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "no heading, defaultOpen = true",
+                        why: "The trigger button and its panel render with no heading line above the body text. `defaultOpen` pins the panel open here only so it can be seen; `placement` defaults to bottom and the trigger label goes through `triggerLabel` since the atom takes no `children`.",
+                        code: "<Popover.Base triggerLabel=\"Details\" content={<p>…</p>} placement=\"bottom\" />",
+                        render: (
+                            <div className="flex justify-center py-16">
+                                <Popover.Base
+                                    triggerLabel="Streak details"
+                                    content="Last session was 2 days ago. Keep the streak alive by studying every day."
+                                    placement="bottom"
+                                    defaultOpen
+                                    showAnatomy
+                                />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -79,20 +79,26 @@ export const WithHeading: Story = {
                 name="Popover.Base"
                 tier="atom"
                 leaf="Prop `heading`"
-                note="heading renders a bold line (Popover.Heading) above content — use it when the panel needs a short title of its own instead of leading straight with the body text."
-                code={"<Popover.Base triggerLabel=\"Details\" heading=\"12-day streak\" content={<p>…</p>} />"}
-            >
-                <div className="flex justify-center py-16">
-                    <Popover.Base
-                        triggerLabel="Streak details"
-                        heading="12-day streak"
-                        content="Study today to keep it going. Miss one day and it resets to zero."
-                        placement="bottom"
-                        defaultOpen
-                        showAnatomy
-                    />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "heading passed",
+                        why: "A bold line (Popover.Heading) renders above the body text, inside the same panel. This is for a panel that needs a short title of its own instead of leading straight with the body copy.",
+                        code: "<Popover.Base triggerLabel=\"Details\" heading=\"12-day streak\" content={<p>…</p>} />",
+                        render: (
+                            <div className="flex justify-center py-16">
+                                <Popover.Base
+                                    triggerLabel="Streak details"
+                                    heading="12-day streak"
+                                    content="Study today to keep it going. Miss one day and it resets to zero."
+                                    placement="bottom"
+                                    defaultOpen
+                                    showAnatomy
+                                />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -105,43 +111,34 @@ export const WithTriggerIcon: Story = {
                 name="Popover.Base"
                 tier="atom"
                 leaf="Prop `triggerIcon`"
-                note="triggerIcon is a Phosphor COMPONENT (§5.0); the atom pins it to size-3.5 — the trigger's own text size — plus the fixed stroke weight from §5.0a, so callers never pass weight themselves."
-                code={"<Popover.Base triggerLabel=\"How scoring works\" triggerIcon={InfoIcon} content={<p>…</p>} />"}
-            >
-                <div className="flex justify-center py-16">
-                    <Popover.Base
-                        triggerLabel="How scoring works"
-                        triggerIcon={InfoIcon}
-                        content="Score = number of criteria passed divided by the total criteria in the question's checklist."
-                        placement="bottom"
-                        defaultOpen
-                        showAnatomy
-                    />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "triggerIcon passed",
+                        why: "A leading glyph renders on the trigger button before its label. `triggerIcon` takes a Phosphor COMPONENT (§5.0) so the atom itself pins it to `size-3.5`, the trigger's own text size, plus the fixed stroke weight from §5.0a — callers never choose the weight themselves.",
+                        code: "<Popover.Base triggerLabel=\"How scoring works\" triggerIcon={InfoIcon} content={<p>…</p>} />",
+                        render: (
+                            <div className="flex justify-center py-16">
+                                <Popover.Base
+                                    triggerLabel="How scoring works"
+                                    triggerIcon={InfoIcon}
+                                    content="Score = number of criteria passed divided by the total criteria in the question's checklist."
+                                    placement="bottom"
+                                    defaultOpen
+                                    showAnatomy
+                                />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
-/** One row of the `TriggerVariant` demo table — a single trigger variant plus its display label. */
-interface TriggerVariantRow {
-    /** The `triggerVariant` value this row demonstrates. */
-    variant: TriggerVariantValue
-    /** Display label shown on the trigger button. */
-    label: string
-}
-
-/** ĐỦ union `triggerVariant` (4 giá trị) — thiếu một giá trị là giá trị đó sẽ mọc thành leaf lạc chỗ. */
-const TRIGGER_VARIANTS: Array<TriggerVariantRow> = [
-    { variant: "primary", label: "Primary" },
-    { variant: "secondary", label: "Secondary" },
-    { variant: "tertiary", label: "Tertiary" },
-    { variant: "ghost", label: "Ghost" },
-]
-
 /**
- * Leaf prop `triggerVariant` — ĐỦ 4 giá trị. Khác biệt nằm HOÀN TOÀN ở nút trigger,
- * panel không đổi hình theo variant, nên leaf này giữ mọi popover ĐÓNG.
+ * Leaf prop `triggerVariant` — ĐỦ 4 giá trị, mỗi giá trị là MỘT state. Khác biệt nằm
+ * HOÀN TOÀN ở nút trigger, panel không đổi hình theo variant, nên mọi state giữ panel
+ * ĐÓNG.
  */
 export const TriggerVariant: Story = {
     render: () => (
@@ -150,57 +147,61 @@ export const TriggerVariant: Story = {
                 name="Popover.Base"
                 tier="atom"
                 leaf="Prop `triggerVariant`"
-                reason="The trigger's weight tells the reader how loud the panel is before they even open it — a toolbar filter can stay quiet (secondary/ghost), a call-to-action popover can afford to be louder (primary)."
-                note="Every panel here stays closed on purpose: triggerVariant only changes the button chrome, so the four triggers side by side already show the whole story."
-                code={`<Popover.Base triggerVariant="primary" triggerLabel="Primary" content="..." />
-<Popover.Base triggerVariant="secondary" triggerLabel="Secondary" content="..." />
-<Popover.Base triggerVariant="tertiary" triggerLabel="Tertiary" content="..." />
-<Popover.Base triggerVariant="ghost" triggerLabel="Ghost" content="..." />`}
-            >
-                <div className="flex flex-wrap items-center gap-3">
-                    {TRIGGER_VARIANTS.map(({ variant, label }, index) => (
-                        <Popover.Base
-                            key={variant}
-                            triggerVariant={variant}
-                            triggerLabel={label}
-                            content="Additional detail appears here when this trigger opens."
-                            showAnatomy={index === 0}
-                        />
-                    ))}
-                </div>
-            </BlockAnatomy>
+                reason="The trigger's weight tells the reader how loud the panel is before they even open it — a toolbar filter can stay quiet (secondary/ghost), a call-to-action popover can afford to be louder (primary). Only the button chrome changes across the four values; the panel itself never differs, so every state here keeps the panel closed."
+                states={[
+                    {
+                        name: "triggerVariant = \"primary\"",
+                        why: "The trigger button renders with primary chrome, the loudest weight available. This is for a popover that behaves like a genuine call to action, not a quiet filter or a secondary control.",
+                        code: "<Popover.Base triggerVariant=\"primary\" triggerLabel=\"Primary\" content=\"...\" />",
+                        render: (
+                            <div className="flex flex-wrap items-center gap-3">
+                                <Popover.Base triggerVariant="primary" triggerLabel="Primary" content="Additional detail appears here when this trigger opens." showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "triggerVariant = \"secondary\"",
+                        why: "The trigger button renders with secondary chrome, a step down from primary. This is the everyday weight for a popover trigger that isn't the main action on the page.",
+                        code: "<Popover.Base triggerVariant=\"secondary\" triggerLabel=\"Secondary\" content=\"...\" />",
+                        render: (
+                            <div className="flex flex-wrap items-center gap-3">
+                                <Popover.Base triggerVariant="secondary" triggerLabel="Secondary" content="Additional detail appears here when this trigger opens." showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "triggerVariant = \"tertiary\"",
+                        why: "The trigger button renders with tertiary chrome, quieter still than secondary. This is for a popover trigger that should read as a minor, optional affordance next to louder controls.",
+                        code: "<Popover.Base triggerVariant=\"tertiary\" triggerLabel=\"Tertiary\" content=\"...\" />",
+                        render: (
+                            <div className="flex flex-wrap items-center gap-3">
+                                <Popover.Base triggerVariant="tertiary" triggerLabel="Tertiary" content="Additional detail appears here when this trigger opens." showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "triggerVariant = \"ghost\"",
+                        why: "The trigger button renders with ghost chrome, the quietest weight of the four. This is for a popover tucked inside a toolbar or a dense row, where the trigger shouldn't draw the eye until it's pressed.",
+                        code: "<Popover.Base triggerVariant=\"ghost\" triggerLabel=\"Ghost\" content=\"...\" />",
+                        render: (
+                            <div className="flex flex-wrap items-center gap-3">
+                                <Popover.Base triggerVariant="ghost" triggerLabel="Ghost" content="Additional detail appears here when this trigger opens." showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
-/** One row of the `Placement` demo table — a single placement direction plus its display label. */
-interface PlacementRow {
-    /** The `placement` value this row demonstrates. */
-    placement: PlacementValue
-    /** Display label shown on the trigger button. */
-    label: string
-}
-
-/** ĐỦ union `placement` (8 giá trị) — thiếu một giá trị là giá trị đó sẽ mọc thành leaf lạc chỗ. */
-const PLACEMENTS: Array<PlacementRow> = [
-    { placement: "top", label: "Top" },
-    { placement: "top start", label: "Top start" },
-    { placement: "top end", label: "Top end" },
-    { placement: "bottom", label: "Bottom" },
-    { placement: "bottom start", label: "Bottom start" },
-    { placement: "bottom end", label: "Bottom end" },
-    { placement: "left", label: "Left" },
-    { placement: "right", label: "Right" },
-]
-
 /**
- * Leaf prop `placement` — ĐỦ 8 hướng đặt panel quanh trigger.
+ * Leaf prop `placement` — ĐỦ 8 hướng đặt panel quanh trigger, mỗi hướng là MỘT state.
  *
  * `Popover.Content` render qua PORTAL ra ngoài render-box, đóng thì không có gì để soi
- * → mỗi popover bắt buộc `defaultOpen`. Xếp CỘT DỌC, mỗi hàng cao `min-h-[16rem]`
- * (256px, bằng đúng bề ngang panel `w-64`) + `gap-20` (80px) giữa hai hàng: panel dù
- * bung lên hay xuống cũng không chạm hàng kế bên; trục ngang không ai tranh chỗ vì chỉ
- * có một cột.
+ * → mỗi popover bắt buộc `defaultOpen`. Mỗi state chừa một dải trống cao quanh trigger
+ * (`min-h-[16rem]`, 256px, bằng đúng bề ngang panel `w-64`) để panel dù bung hướng nào
+ * cũng không chạm mép khung.
  */
 export const Placement: Story = {
     render: () => (
@@ -209,38 +210,97 @@ export const Placement: Story = {
                 name="Popover.Base"
                 tier="atom"
                 leaf="Prop `placement`"
-                reason="The panel opens toward whichever side has room around the trigger — pick the direction that matches where the trigger actually sits on the screen, not 'bottom' out of habit."
-                note="defaultOpen pins every panel open here just to make all eight directions visible at once; in the real app only one is open at a time, chosen by where the trigger lives on the page. Each row gets its own tall band of empty space so neighbouring panels never touch."
-                code={`<Popover.Base placement="top" ... />
-<Popover.Base placement="top start" ... />
-<Popover.Base placement="top end" ... />
-<Popover.Base placement="bottom" ... />
-<Popover.Base placement="bottom start" ... />
-<Popover.Base placement="bottom end" ... />
-<Popover.Base placement="left" ... />
-<Popover.Base placement="right" ... />`}
-            >
-                <div className="flex flex-col gap-20">
-                    {PLACEMENTS.map(({ placement, label }, index) => (
-                        <div key={placement} className="flex min-h-[16rem] items-center justify-center">
-                            <Popover.Base
-                                triggerLabel={label}
-                                content="The panel repositions to the space around the trigger."
-                                placement={placement}
-                                defaultOpen
-                                showAnatomy={index === 0}
-                            />
-                        </div>
-                    ))}
-                </div>
-            </BlockAnatomy>
+                reason="The panel opens toward whichever side has room around the trigger — pick the direction that matches where the trigger actually sits on the screen, not bottom out of habit. `defaultOpen` pins every state's panel open only so it can be seen here; in the real app only one is open at a time, chosen by where the trigger lives on the page."
+                states={[
+                    {
+                        name: "placement = \"top\"",
+                        why: "The panel opens directly above the trigger, arrow pointing down. This is for a trigger that sits near the bottom of the screen, where there's no room for the panel to open downward.",
+                        code: "<Popover.Base placement=\"top\" ... />",
+                        render: (
+                            <div className="flex min-h-[16rem] items-center justify-center">
+                                <Popover.Base triggerLabel="Top" content="The panel repositions to the space around the trigger." placement="top" defaultOpen showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "placement = \"top start\"",
+                        why: "The panel opens above the trigger, its left edge aligned with the trigger's left edge. This is for a trigger near the top-right of a narrow area, where a centred panel would overflow past the left edge.",
+                        code: "<Popover.Base placement=\"top start\" ... />",
+                        render: (
+                            <div className="flex min-h-[16rem] items-center justify-center">
+                                <Popover.Base triggerLabel="Top start" content="The panel repositions to the space around the trigger." placement="top start" defaultOpen showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "placement = \"top end\"",
+                        why: "The panel opens above the trigger, its right edge aligned with the trigger's right edge. This is for a trigger near the top-left of a narrow area, where a centred panel would overflow past the right edge.",
+                        code: "<Popover.Base placement=\"top end\" ... />",
+                        render: (
+                            <div className="flex min-h-[16rem] items-center justify-center">
+                                <Popover.Base triggerLabel="Top end" content="The panel repositions to the space around the trigger." placement="top end" defaultOpen showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "placement = \"bottom\"",
+                        why: "The panel opens directly below the trigger, arrow pointing up. This is the everyday direction, used whenever the trigger has open space beneath it.",
+                        code: "<Popover.Base placement=\"bottom\" ... />",
+                        render: (
+                            <div className="flex min-h-[16rem] items-center justify-center">
+                                <Popover.Base triggerLabel="Bottom" content="The panel repositions to the space around the trigger." placement="bottom" defaultOpen showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "placement = \"bottom start\"",
+                        why: "The panel opens below the trigger, its left edge aligned with the trigger's left edge. This is for a trigger near the bottom-right of a narrow area, where a centred panel would overflow past the left edge.",
+                        code: "<Popover.Base placement=\"bottom start\" ... />",
+                        render: (
+                            <div className="flex min-h-[16rem] items-center justify-center">
+                                <Popover.Base triggerLabel="Bottom start" content="The panel repositions to the space around the trigger." placement="bottom start" defaultOpen showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "placement = \"bottom end\"",
+                        why: "The panel opens below the trigger, its right edge aligned with the trigger's right edge. This is for a trigger near the bottom-left of a narrow area, where a centred panel would overflow past the right edge.",
+                        code: "<Popover.Base placement=\"bottom end\" ... />",
+                        render: (
+                            <div className="flex min-h-[16rem] items-center justify-center">
+                                <Popover.Base triggerLabel="Bottom end" content="The panel repositions to the space around the trigger." placement="bottom end" defaultOpen showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "placement = \"left\"",
+                        why: "The panel opens to the left of the trigger, arrow pointing right. This is for a trigger that sits near the right edge of the screen, where the panel would otherwise run off the viewport.",
+                        code: "<Popover.Base placement=\"left\" ... />",
+                        render: (
+                            <div className="flex min-h-[16rem] items-center justify-center">
+                                <Popover.Base triggerLabel="Left" content="The panel repositions to the space around the trigger." placement="left" defaultOpen showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "placement = \"right\"",
+                        why: "The panel opens to the right of the trigger, arrow pointing left. This is for a trigger that sits near the left edge of the screen, such as a rail or a sidebar item.",
+                        code: "<Popover.Base placement=\"right\" ... />",
+                        render: (
+                            <div className="flex min-h-[16rem] items-center justify-center">
+                                <Popover.Base triggerLabel="Right" content="The panel repositions to the space around the trigger." placement="right" defaultOpen showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
 /**
  * Leaf prop `showArrow` — atom mặc định `true` (mọi leaf khác trong file này đã có sẵn
- * mũi tên), nên leaf này bù thêm ca `false` và đặt cạnh `true` để so trực tiếp.
+ * mũi tên), nên leaf này khai đúng HAI state: có mũi tên và không.
  */
 export const ShowArrow: Story = {
     render: () => (
@@ -249,31 +309,30 @@ export const ShowArrow: Story = {
                 name="Popover.Base"
                 tier="atom"
                 leaf="Prop `showArrow`"
-                reason="The arrow ties the panel back to the exact trigger that opened it — turn it off only when the panel already sits flush against the trigger and the connection reads on its own."
-                note="showArrow defaults to true, so every other leaf in this file already carries the arrow — this leaf pins defaultOpen on both rows and adds the false case underneath for a direct compare."
-                code={`<Popover.Base showArrow content="..." />
-<Popover.Base showArrow={false} content="..." />`}
-            >
-                <div className="flex flex-col gap-20">
-                    <div className="flex min-h-[16rem] items-center justify-center">
-                        <Popover.Base
-                            triggerLabel="Arrow shown"
-                            content="The arrow points back to the trigger that opened this panel."
-                            showArrow
-                            defaultOpen
-                            showAnatomy
-                        />
-                    </div>
-                    <div className="flex min-h-[16rem] items-center justify-center">
-                        <Popover.Base
-                            triggerLabel="Arrow hidden"
-                            content="The arrow points back to the trigger that opened this panel."
-                            showArrow={false}
-                            defaultOpen
-                        />
-                    </div>
-                </div>
-            </BlockAnatomy>
+                reason="The arrow ties the panel back to the exact trigger that opened it — turn it off only when the panel already sits flush against the trigger and the connection reads on its own. `showArrow` defaults to true, so every other leaf in this file already carries it; this leaf is the only place the `false` case is demonstrated."
+                states={[
+                    {
+                        name: "showArrow = true (default)",
+                        why: "A small arrow renders on the panel's edge, pointing back at the trigger. This is the default, kept on whenever the panel doesn't sit flush against the trigger it belongs to.",
+                        code: "<Popover.Base showArrow content=\"...\" />",
+                        render: (
+                            <div className="flex min-h-[16rem] items-center justify-center">
+                                <Popover.Base triggerLabel="Arrow shown" content="The arrow points back to the trigger that opened this panel." showArrow defaultOpen showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "showArrow = false",
+                        why: "The arrow is dropped entirely, leaving the panel edge plain. This is only for a panel that already sits flush against its trigger, where the connection between the two is obvious without an arrow.",
+                        code: "<Popover.Base showArrow={false} content=\"...\" />",
+                        render: (
+                            <div className="flex min-h-[16rem] items-center justify-center">
+                                <Popover.Base triggerLabel="Arrow hidden" content="The arrow points back to the trigger that opened this panel." showArrow={false} defaultOpen showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

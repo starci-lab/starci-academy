@@ -48,7 +48,7 @@ const EMPHASIS_PARTS: Array<AnatomyNode> = [
     { name: "Value", tier: "atom", role: "Typography.Base BOLD + tabular-nums (a large number, §9b)" },
 ]
 
-/** Default — muted label left, medium value right; `justify-between` holds both edges. */
+/** Default — muted label left, medium value right; `justify-between` holds both edges. Migrated to `states` 2026-07-27. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
@@ -57,18 +57,25 @@ export const Default: Story = {
                 tier="composite"
                 leaf="Default"
                 parts={ROW_PARTS}
-                reason="The frame for one semantic unit: 'one name, one number'. It only lays out + ranks text through the Typography atom (label muted / value medium, §9), does NOT format and does NOT compute — `value` is a node the consumer hands in already formatted."
-                code={"<KeyValue.Row label=\"Học phí\" value=\"1.200.000 ₫\" />"}
-            >
-                <div className="max-w-sm">
-                    <KeyValue.Row showAnatomy label="Học phí" value="1.200.000 ₫" />
-                </div>
-            </BlockAnatomy>
+                reason="The frame for one semantic unit: 'one name, one number'. It only lays out and ranks text through the Typography atom (label muted / value medium, §9), does NOT format and does NOT compute — `value` is a node the consumer hands in already formatted."
+                states={[
+                    {
+                        name: "no hint, emphasis = false (bare pair)",
+                        why: "The row renders exactly two `Typography` nodes, a muted `Label` and a medium `Value`, held apart by `justify-between`. A plain spec line — a fee, a quantity — never needs anything heavier than that.",
+                        code: "<KeyValue.Row label=\"Học phí\" value=\"1.200.000 ₫\" />",
+                        render: (
+                            <div className="max-w-sm">
+                                <KeyValue.Row showAnatomy label="Học phí" value="1.200.000 ₫" />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
-/** WithHint — `hint` is a secondary line UNDER the label (condition/unit), tight gap-1 cluster. */
+/** WithHint — `hint` is a secondary line UNDER the label (condition/unit), tight gap-1 cluster. Migrated to `states` 2026-07-27. */
 export const WithHint: Story = {
     render: () => (
         <div className="p-8">
@@ -77,22 +84,28 @@ export const WithHint: Story = {
                 tier="composite"
                 leaf="WithHint"
                 parts={HINT_PARTS}
-                note="`hint` belongs to the LABEL COLUMN (not the value column) so it stacks under `Label` with `gap-1` (§10b `tight`); the value still anchors `items-start` at the right edge, not pulled down to center."
-                code={`<KeyValue.Row
+                states={[
+                    {
+                        name: "hint set",
+                        why: "A third `Hint` node appears in a tight `gap-1` stack directly under `Label`, while `Value` still anchors `items-start` at the right edge. The hint explains a condition or unit the label alone can't carry, like the date a discount stops applying.",
+                        code: `<KeyValue.Row
   label="Giảm giá"
   hint="Áp dụng đến 31/12"
   value="-200.000 ₫"
-/>`}
-            >
-                <div className="max-w-sm">
-                    <KeyValue.Row showAnatomy label="Giảm giá" hint="Áp dụng đến 31/12" value="-200.000 ₫" />
-                </div>
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <div className="max-w-sm">
+                                <KeyValue.Row showAnatomy label="Giảm giá" hint="Áp dụng đến 31/12" value="-200.000 ₫" />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
-/** Emphasis — the EMPHASIS tier for the total row: label steps up to foreground medium, value to base bold. */
+/** Emphasis — the EMPHASIS tier for the total row: label steps up to foreground medium, value to base bold. Migrated to `states` 2026-07-27. */
 export const Emphasis: Story = {
     render: () => (
         <div className="p-8">
@@ -101,13 +114,19 @@ export const Emphasis: Story = {
                 tier="composite"
                 leaf="Emphasis"
                 parts={EMPHASIS_PARTS}
-                note="`emphasis` only changes the TEXT TIER (§9: label muted→foreground medium, value sm-medium→base-bold) — it does NOT change the structure, doesn't sum a total itself. The number still comes from the consumer."
-                code={"<KeyValue.Row emphasis label=\"Tổng cộng\" value=\"1.000.000 ₫\" />"}
-            >
-                <div className="max-w-sm">
-                    <KeyValue.Row showAnatomy emphasis label="Tổng cộng" value="1.000.000 ₫" />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "emphasis = true",
+                        why: "The same two nodes render, but `Label` steps up to foreground medium and `Value` steps up to base bold — no new node mounts. A total row needs to visually outrank the line items above it without turning into a different composition, and the number itself still comes from the consumer, never computed here.",
+                        code: "<KeyValue.Row emphasis label=\"Tổng cộng\" value=\"1.000.000 ₫\" />",
+                        render: (
+                            <div className="max-w-sm">
+                                <KeyValue.Row showAnatomy emphasis label="Tổng cộng" value="1.000.000 ₫" />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

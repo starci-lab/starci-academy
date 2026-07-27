@@ -27,7 +27,7 @@ export default meta
 
 type Story = StoryObj<typeof StatGridCard>
 
-const CELL: AnatomyNode = { name: "Cell", tier: "composite", role: "1 ô lưới (lặp ×N, nội dung tự do); ô cuối span 2 cột khi tổng số lẻ" }
+const CELL: AnatomyNode = { name: "Cell", tier: "composite", role: "one grid cell, repeated per item, with free-form content; the last cell spans both columns when the total count is odd" }
 const PARTS: Array<AnatomyNode> = [CELL]
 
 /** One cell: an icon + label row, a count, and a mini progress bar — the exact shape `WeeklyGoals` feeds in. */
@@ -63,24 +63,31 @@ export const Even: Story = {
                     tier="composite"
                     leaf="Even"
                     parts={PARTS}
-                    reason="Khung grid 2 cột với seam border; mỗi Cell là 1 ô lặp, nội dung (icon+label+count+bar) là slot tự do do story lắp, không phải node của StatGridCard."
-                    code={`<StatGridCard
+                    reason="A 2-column grid frame with seam borders between cells; each Cell is a repeated slot whose content (icon, label, count, bar) is assembled freely by the caller, not a node StatGridCard itself owns."
+                    states={[
+                        {
+                            name: "items.length = 4 (even)",
+                            why: "Four cells fill the grid in two complete rows with no dangling slot at the end. This is the baseline shape the grid takes whenever the item count already divides evenly by the column count.",
+                            code: `<StatGridCard
   items={[
     { key: "lessons", content: statCell(<BookOpenIcon />, "Lessons", 2, 5) },
     { key: "studyDays", content: statCell(<FlameIcon />, "Study days", 4, 5) },
   ]}
-/>`}
-                >
-                    <StatGridCard
-                        showAnatomy
-                        items={[
-                            { key: "lessons", content: statCell(icon(BookOpenIcon), "Nội dung", 2, 5) },
-                            { key: "studyDays", content: statCell(icon(FlameIcon), "Ngày học", 4, 5) },
-                            { key: "challenges", content: statCell(icon(PuzzlePieceIcon), "Challenge", 0, 3) },
-                            { key: "coding", content: statCell(icon(CodeIcon), "Coding", 0, 3) },
-                        ]}
-                    />
-                </BlockAnatomy>
+/>`,
+                            render: (
+                                <StatGridCard
+                                    showAnatomy
+                                    items={[
+                                        { key: "lessons", content: statCell(icon(BookOpenIcon), "Nội dung", 2, 5) },
+                                        { key: "studyDays", content: statCell(icon(FlameIcon), "Ngày học", 4, 5) },
+                                        { key: "challenges", content: statCell(icon(PuzzlePieceIcon), "Challenge", 0, 3) },
+                                        { key: "coding", content: statCell(icon(CodeIcon), "Coding", 0, 3) },
+                                    ]}
+                                />
+                            ),
+                        },
+                    ]}
+                />
             </div>
         </div>
     ),
@@ -96,25 +103,31 @@ export const OddOverflow: Story = {
                     tier="composite"
                     leaf="OddOverflow"
                     parts={PARTS}
-                    note="Tổng số lẻ (5) → Cell cuối tự `col-span-2`, không để trống 1 ô — vẫn cùng 1 loại node Cell."
-                    code={`<StatGridCard
+                    states={[
+                        {
+                            name: "items.length = 5 (odd)",
+                            why: "The fifth and last cell stretches to span both columns instead of leaving an empty slot beside it. The cell is still the same Cell node as every other one, only its width changes.",
+                            code: `<StatGridCard
   items={[
     { key: "lessons", content: statCell(<BookOpenIcon />, "Lessons", 2, 5) },
     { key: "flashcards", content: statCell(<CardsIcon />, "Flashcards", 12, 20) },
   ]}
-/>`}
-                >
-                    <StatGridCard
-                        showAnatomy
-                        items={[
-                            { key: "lessons", content: statCell(icon(BookOpenIcon), "Nội dung", 2, 5) },
-                            { key: "studyDays", content: statCell(icon(FlameIcon), "Ngày học", 4, 5) },
-                            { key: "challenges", content: statCell(icon(PuzzlePieceIcon), "Challenge", 0, 3) },
-                            { key: "coding", content: statCell(icon(CodeIcon), "Coding", 0, 3) },
-                            { key: "flashcards", content: statCell(icon(CardsIcon), "Flashcard", 12, 20) },
-                        ]}
-                    />
-                </BlockAnatomy>
+/>`,
+                            render: (
+                                <StatGridCard
+                                    showAnatomy
+                                    items={[
+                                        { key: "lessons", content: statCell(icon(BookOpenIcon), "Nội dung", 2, 5) },
+                                        { key: "studyDays", content: statCell(icon(FlameIcon), "Ngày học", 4, 5) },
+                                        { key: "challenges", content: statCell(icon(PuzzlePieceIcon), "Challenge", 0, 3) },
+                                        { key: "coding", content: statCell(icon(CodeIcon), "Coding", 0, 3) },
+                                        { key: "flashcards", content: statCell(icon(CardsIcon), "Flashcard", 12, 20) },
+                                    ]}
+                                />
+                            ),
+                        },
+                    ]}
+                />
             </div>
         </div>
     ),
@@ -130,16 +143,22 @@ export const Single: Story = {
                     tier="composite"
                     leaf="Single"
                     parts={PARTS}
-                    note="1 item (lẻ suy biến) → Cell duy nhất span full-width, không border-r/b thừa."
-                    code={"<StatGridCard items={[{ key: \"lessons\", content: statCell(<BookOpenIcon />, \"Lessons\", 2, 5) }]} />"}
-                >
-                    <StatGridCard
-                        showAnatomy
-                        items={[
-                            { key: "lessons", content: statCell(icon(BookOpenIcon), "Nội dung", 2, 5) },
-                        ]}
-                    />
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "items.length = 1",
+                            why: "The one cell spans the full width of the grid alone, with no border-right or border-bottom left dangling against an empty neighbour. This is the smallest case that still exercises the same odd-count span rule as OddOverflow.",
+                            code: "<StatGridCard items={[{ key: \"lessons\", content: statCell(<BookOpenIcon />, \"Lessons\", 2, 5) }]} />",
+                            render: (
+                                <StatGridCard
+                                    showAnatomy
+                                    items={[
+                                        { key: "lessons", content: statCell(icon(BookOpenIcon), "Nội dung", 2, 5) },
+                                    ]}
+                                />
+                            ),
+                        },
+                    ]}
+                />
             </div>
         </div>
     ),

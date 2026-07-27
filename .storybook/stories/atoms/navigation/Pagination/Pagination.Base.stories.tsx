@@ -17,6 +17,9 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * `Button.Base` hay `collapseFrom` của `Breadcrumbs.Base` (caller biết trước,
  * độc lập với data), windowing ở đây KHÔNG thể biết trước ⇒ một hình đại diện
  * (dải ô vuông) là đủ, không phải lỗi bỏ sót nấc.
+ *
+ * MIGRATED TO `states` (2026-07-27): each leaf below still renders exactly one
+ * shape, so each carries a single `states[]` entry.
  */
 
 const meta: Meta<typeof Pagination.Base> = {
@@ -30,7 +33,7 @@ export default meta
 
 type Story = StoryObj<typeof Pagination.Base>
 
-/** Default — ít trang → hiện đủ mọi trang, không '…'. */
+/** Default — ít trang → hiện đủ mọi trang, không '…'. Migrated to `states` 2026-07-27. */
 export const Default: Story = {
     render: () => {
         const [page, setPage] = useState(2)
@@ -41,16 +44,21 @@ export const Default: Story = {
                     tier="atom"
                     leaf="Default"
                     reason="The one page-nav atom wrapping HeroUI Pagination — windowing and the '…' ellipsis are a leaf (prop-driven) for large page counts, not a separate component."
-                    code={"<Pagination.Base currentPage={page} totalPages={5} onPageChange={setPage} />"}
-                >
-                    <Pagination.Base currentPage={page} totalPages={5} onPageChange={setPage} showAnatomy />
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "totalPages = 5 (under the collapse threshold)",
+                            why: "Every page link from 1 to 5 renders in a row, with no `Ellipsis` node anywhere in it. Below the collapse threshold there is nothing worth hiding, so showing every page keeps the whole range one glance away.",
+                            code: "<Pagination.Base currentPage={page} totalPages={5} onPageChange={setPage} />",
+                            render: <Pagination.Base currentPage={page} totalPages={5} onPageChange={setPage} showAnatomy />,
+                        },
+                    ]}
+                />
             </div>
         )
     },
 }
 
-/** ManyPages — nhiều trang → gộp phần xa thành '…' (đầu · … · current±1 · … · cuối). */
+/** ManyPages — nhiều trang → gộp phần xa thành '…' (đầu · … · current±1 · … · cuối). Migrated to `states` 2026-07-27. */
 export const ManyPages: Story = {
     render: () => {
         const [page, setPage] = useState(12)
@@ -60,17 +68,21 @@ export const ManyPages: Story = {
                     name="Pagination.Base"
                     tier="atom"
                     leaf="ManyPages"
-                    note="totalPages=24, current=12 → 1 · … · 11 12 13 · … · 24. siblings=1 (default)."
-                    code={"<Pagination.Base currentPage={12} totalPages={24} onPageChange={setPage} />"}
-                >
-                    <Pagination.Base currentPage={page} totalPages={24} onPageChange={setPage} showAnatomy />
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "totalPages = 24, currentPage = 12 (over the collapse threshold)",
+                            why: "Two `Ellipsis` nodes appear, collapsing the run between page 1 and page 11, and between page 13 and page 24, into `1 · … · 11 12 13 · … · 24`. Listing all 24 links would make the current page hard to find, so only the first, last, and immediate neighbours of the current page stay visible.",
+                            code: "<Pagination.Base currentPage={12} totalPages={24} onPageChange={setPage} />",
+                            render: <Pagination.Base currentPage={page} totalPages={24} onPageChange={setPage} showAnatomy />,
+                        },
+                    ]}
+                />
             </div>
         )
     },
 }
 
-/** Skeleton — atom tự vẽ leaf skeleton (hàng ô vuông); không dùng Skeleton.*. */
+/** Skeleton — atom tự vẽ leaf skeleton (hàng ô vuông); không dùng Skeleton.*. Migrated to `states` 2026-07-27. */
 export const Skeleton: Story = {
     render: () => (
         <div className="p-8">
@@ -78,11 +90,15 @@ export const Skeleton: Story = {
                 name="Pagination.Base"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
-                note="isSkeleton renders a row of shimmer squares OWNED by the atom (hybrid C) while the total page count is still unknown — windowing can't be previewed since totalPages is exactly what hasn't loaded yet."
-                code={"<Pagination.Base isSkeleton currentPage={1} totalPages={5} onPageChange={fn} />"}
-            >
-                <Pagination.Base isSkeleton currentPage={1} totalPages={5} onPageChange={() => {}} showAnatomy />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "The whole page-link row is replaced by a row of shimmer squares owned by this atom, instead of any real `Previous`/`Link`/`Next` node. Windowing can't be previewed here because `totalPages` is exactly the number that hasn't loaded yet, so a single representative shape is all a caller can show.",
+                        code: "<Pagination.Base isSkeleton currentPage={1} totalPages={5} onPageChange={fn} />",
+                        render: <Pagination.Base isSkeleton currentPage={1} totalPages={5} onPageChange={() => {}} showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }

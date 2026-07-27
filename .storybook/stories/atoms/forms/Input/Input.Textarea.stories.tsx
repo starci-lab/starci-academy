@@ -24,13 +24,19 @@ export const Default: Story = {
                     name="Input.Textarea"
                     tier="atom"
                     leaf="Default"
-                    note="Bare — no label, hint, error, or placeholder ghost text."
-                    code={"<Input.Textarea value={v} onValueChange={setV} rows={3} />"}
-                >
-                    <div className="w-72">
-                        <Input.Textarea value={value} onValueChange={setValue} rows={3} ariaLabel="Notes" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "value = \"\", no label/hint/placeholder",
+                            why: "The field renders as a bare empty box with no label above it and no hint or error line below it. This is the raw multi-line control for a spot where the surrounding layout already explains what the field is for.",
+                            code: "<Input.Textarea value={v} onValueChange={setV} rows={3} />",
+                            render: (
+                                <div className="w-72">
+                                    <Input.Textarea value={value} onValueChange={setValue} rows={3} ariaLabel="Notes" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -50,13 +56,19 @@ export const Placeholder: Story = {
                     name="Input.Textarea"
                     tier="atom"
                     leaf="Prop `placeholder`"
-                    note="Ghost text only shows while value is empty; it disappears the moment real text lands."
-                    code={"<Input.Textarea placeholder=\"Lesson notes…\" value={v} onValueChange={setV} rows={3} />"}
-                >
-                    <div className="w-72">
-                        <Input.Textarea placeholder="Lesson notes…" value={value} onValueChange={setValue} rows={3} ariaLabel="Notes" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "value = \"\", placeholder = \"Lesson notes…\"",
+                            why: "A muted ghost sentence sits inside the otherwise empty box, giving a content hint without pre-filling the field. It disappears the instant the value stops being empty, so it never gets mistaken for real text.",
+                            code: "<Input.Textarea placeholder=\"Lesson notes…\" value={v} onValueChange={setV} rows={3} />",
+                            render: (
+                                <div className="w-72">
+                                    <Input.Textarea placeholder="Lesson notes…" value={value} onValueChange={setValue} rows={3} ariaLabel="Notes" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -73,13 +85,19 @@ export const WithLabel: Story = {
                     name="Input.Textarea"
                     tier="atom"
                     leaf="WithLabel"
-                    note="label + hint."
-                    code={"<Input.Textarea label=\"Notes\" hint=\"Only visible to you\" value={v} onValueChange={setV} rows={3} />"}
-                >
-                    <div className="w-72">
-                        <Input.Textarea label="Notes" hint="Only visible to you" value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "label and hint set, value = \"\"",
+                            why: "A label appears above the box and a hint line appears beneath it, while the placeholder ghost text still shows inside the empty field. The three lines together tell the writer what to enter and why, before they have typed anything.",
+                            code: "<Input.Textarea label=\"Notes\" hint=\"Only visible to you\" value={v} onValueChange={setV} rows={3} />",
+                            render: (
+                                <div className="w-72">
+                                    <Input.Textarea label="Notes" hint="Only visible to you" value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -96,13 +114,19 @@ export const Required: Story = {
                     name="Input.Textarea"
                     tier="atom"
                     leaf="Required"
-                    note="isRequired → * mark after the label."
-                    code={"<Input.Textarea label=\"Notes\" isRequired value={v} onValueChange={setV} rows={3} />"}
-                >
-                    <div className="w-72">
-                        <Input.Textarea label="Notes" isRequired value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "isRequired = true",
+                            why: "The label gains a trailing asterisk mark while every other part of the field stays the same as the plain labelled case. The mark is the only signal that this field cannot be submitted empty.",
+                            code: "<Input.Textarea label=\"Notes\" isRequired value={v} onValueChange={setV} rows={3} />",
+                            render: (
+                                <div className="w-72">
+                                    <Input.Textarea label="Notes" isRequired value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -119,13 +143,19 @@ export const Filled: Story = {
                     name="Input.Textarea"
                     tier="atom"
                     leaf="Filled"
-                    note="value holds multi-line content."
-                    code={"<Input.Textarea label=\"Notes\" value=\"This session covers…\" onValueChange={setV} rows={3} />"}
-                >
-                    <div className="w-72">
-                        <Input.Textarea label="Notes" value={value} onValueChange={setValue} rows={3} showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "value = multi-line real text",
+                            why: "The box fills with the learner's actual multi-line note instead of the empty box, and since the value is non-empty the placeholder never appears. This is the field's steady resting look once someone has already written something in it.",
+                            code: "<Input.Textarea label=\"Notes\" value=\"This session covers…\" onValueChange={setV} rows={3} />",
+                            render: (
+                                <div className="w-72">
+                                    <Input.Textarea label="Notes" value={value} onValueChange={setValue} rows={3} showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -142,13 +172,19 @@ export const Disabled: Story = {
                     name="Input.Textarea"
                     tier="atom"
                     leaf="Disabled"
-                    note="isDisabled → locked + dimmed."
-                    code={"<Input.Textarea label=\"Notes\" value=\"This session…\" isDisabled onValueChange={setV} rows={3} />"}
-                >
-                    <div className="w-72">
-                        <Input.Textarea label="Notes" value={value} onValueChange={setValue} rows={3} isDisabled showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "isDisabled = true, value set",
+                            why: "The control locks against further typing and both the label and the text inside dim to the disabled tone. The field still shows its content, it simply refuses new input.",
+                            code: "<Input.Textarea label=\"Notes\" value=\"This session…\" isDisabled onValueChange={setV} rows={3} />",
+                            render: (
+                                <div className="w-72">
+                                    <Input.Textarea label="Notes" value={value} onValueChange={setValue} rows={3} isDisabled showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -168,13 +204,19 @@ export const Invalid: Story = {
                     name="Input.Textarea"
                     tier="atom"
                     leaf="Prop `isInvalid`"
-                    note="isInvalid alone only reddens the border — no errorMessage means no line underneath. Compare with Error below."
-                    code={"<Input.Textarea label=\"Notes\" isInvalid value={v} onValueChange={setV} rows={3} placeholder=\"Lesson notes…\" />"}
-                >
-                    <div className="w-72">
-                        <Input.Textarea label="Notes" isInvalid value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "isInvalid = true, errorMessage = undefined",
+                            why: "Only the field's border reddens, since `isInvalid` carries no companion `errorMessage` to print underneath it. Compare with the Error state below, where the same red border comes with a written reason.",
+                            code: "<Input.Textarea label=\"Notes\" isInvalid value={v} onValueChange={setV} rows={3} placeholder=\"Lesson notes…\" />",
+                            render: (
+                                <div className="w-72">
+                                    <Input.Textarea label="Notes" isInvalid value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -191,13 +233,19 @@ export const Error: Story = {
                     name="Input.Textarea"
                     tier="atom"
                     leaf="Error"
-                    note="label + errorMessage → label, red line, border."
-                    code={"<Input.Textarea label=\"Notes\" errorMessage=\"Notes cannot be empty\" value={v} onValueChange={setV} rows={3} />"}
-                >
-                    <div className="w-72">
-                        <Input.Textarea label="Notes" errorMessage="Notes cannot be empty" value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "errorMessage set",
+                            why: "A red message line appears under the field and the border turns red at the same time, both driven by the same `errorMessage` string. The label above stays neutral, so only the field itself reports the problem.",
+                            code: "<Input.Textarea label=\"Notes\" errorMessage=\"Notes cannot be empty\" value={v} onValueChange={setV} rows={3} />",
+                            render: (
+                                <div className="w-72">
+                                    <Input.Textarea label="Notes" errorMessage="Notes cannot be empty" value={value} onValueChange={setValue} rows={3} placeholder="Lesson notes…" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -212,13 +260,19 @@ export const Loading: Story = {
                 name="Input.Textarea"
                 tier="atom"
                 leaf="Loading"
-                note="isSkeleton + label → label mirrored above the tall box."
-                code={"<Input.Textarea label=\"Notes\" isSkeleton />"}
-            >
-                <div className="w-72">
-                    <Input.Textarea label="Notes" value="" onValueChange={() => {}} isSkeleton showAnatomy />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isSkeleton = true, label set",
+                        why: "The label mirrors into a shimmer bar sitting above a taller shimmer box matching the multi-line field's height. Nothing about the eventual label or field size shifts the layout once the real data arrives.",
+                        code: "<Input.Textarea label=\"Notes\" isSkeleton />",
+                        render: (
+                            <div className="w-72">
+                                <Input.Textarea label="Notes" value="" onValueChange={() => {}} isSkeleton showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

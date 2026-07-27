@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Container, type ContainerSize } from "@sb-components/frames/Container/Container"
+import { Container } from "@sb-components/frames/Container/Container"
 import { Grid } from "@sb-components/frames/Grid/Grid"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
@@ -14,6 +14,10 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *
  * Leaves at the frame tier split by the frame's STRUCTURE/prop axis (§14d.2), not by
  * the atom tier's 1-prop-1-leaf rule (§12g).
+ *
+ * MIGRATED TO `states` (2026-07-27): leaves that used to stack several renders by
+ * hand in one `children` block (`Sizes`, `Padding`, `ContainerQuery`) now carry one
+ * `states[]` entry per rendered value, each with its own `why` and `code`.
  */
 
 /** Props for the demo tile. */
@@ -49,24 +53,7 @@ export default meta
 
 type Story = StoryObj<typeof Container.Base>
 
-/** One row of the size demo grid. */
-interface SizeRow {
-    /** The `ContainerSize` value this row demonstrates. */
-    size: ContainerSize
-    /** The token width this size resolves to. */
-    width: string
-}
-
-/** FULL `ContainerSize` union, with the token width alongside for comparing against the `@app-*` steps. */
-const SIZES: Array<SizeRow> = [
-    { size: "sm", width: "40rem" },
-    { size: "md", width: "48rem — default" },
-    { size: "lg", width: "64rem" },
-    { size: "xl", width: "80rem" },
-    { size: "full", width: "no cap" },
-]
-
-/** Bare leaf — default `md` column, padding `6`, `body` only. */
+/** Bare leaf — default `md` column, padding `6`, `body` only. Migrated to `states` 2026-07-27. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
@@ -75,18 +62,24 @@ export const Default: Story = {
                 tier="frame"
                 leaf="Default"
                 reason="A content column is a real concept, so it gets a frame with a name. Before this, every page hand-wrote the same `mx-auto w-full max-w-3xl` string — 72 of them across the app."
-                note="Defaults to the 48rem column with p-6 padding, centred in whatever it sits in. The grey band is the parent, not part of the frame."
-                code={"<Container.Base body={<Tile label=\"Body\" />} />"}
-            >
-                <Bleed>
-                    <Container.Base showAnatomy body={<Tile label="Body — max-w-app-md, centred" />} />
-                </Bleed>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "size = \"md\" (default), padding = 6 (default)",
+                        why: "The tile centers inside a 48rem column with `p-6` padding — the grey band around it is the parent, not part of the frame itself. This is the column width every page gets for free without hand-writing `mx-auto w-full max-w-3xl` again.",
+                        code: "<Container.Base body={<Tile label=\"Body\" />} />",
+                        render: (
+                            <Bleed>
+                                <Container.Base showAnatomy body={<Tile label="Body — max-w-app-md, centred" />} />
+                            </Bleed>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
-/** Leaf prop `size` — FULL 5 steps, each pointing straight at a `--container-app-*` token. */
+/** Leaf prop `size` — FULL 5 steps, each pointing straight at a `--container-app-*` token. Migrated to `states` 2026-07-27. */
 export const Sizes: Story = {
     render: () => (
         <div className="p-8">
@@ -94,32 +87,65 @@ export const Sizes: Story = {
                 name="Container.Base"
                 tier="frame"
                 leaf="Prop `size`"
-                reason="Each step points at the same `--container-app-*` token that drives the `@app-*` breakpoints, so the column width and the breakpoint scale can never drift apart. Picking `md` means 'exactly one app-md wide', not 'about 48rem'."
-                note="Read it the other way round too: inside a `md` column the `@app-lg` step can never fire, so asking a grid for 4 columns there is asking for a step that never arrives."
-                code={`<Container.Base size="sm" … />   // 40rem
-<Container.Base size="md" … />   // 48rem — default
-<Container.Base size="lg" … />   // 64rem
-<Container.Base size="xl" … />   // 80rem
-<Container.Base size="full" … /> // no cap`}
-            >
-                <div className="flex flex-col gap-3">
-                    {SIZES.map(({ size, width }, index) => (
-                        <Bleed key={size}>
-                            <Container.Base
-                                size={size}
-                                padding={3}
-                                showAnatomy={index === 0}
-                                body={<Tile label={`size="${size}" · ${width}`} />}
-                            />
-                        </Bleed>
-                    ))}
-                </div>
-            </BlockAnatomy>
+                reason="Each step points at the same `--container-app-*` token that drives the `@app-*` breakpoints, so the column width and the breakpoint scale can never drift apart. Picking `md` means 'exactly one app-md wide', not 'about 48rem' — and inside a `md` column the `@app-lg` step can never fire, so asking a grid for 4 columns there is asking for a step that never arrives."
+                states={[
+                    {
+                        name: "size = \"sm\"",
+                        why: "The column caps at 40rem, the narrowest of the five steps. This is the tightest reading column, for content that reads worse wide, like a single-column form.",
+                        code: "<Container.Base size=\"sm\" body={<Tile label='size=\"sm\" · 40rem' />} />",
+                        render: (
+                            <Bleed>
+                                <Container.Base size="sm" padding={3} showAnatomy body={<Tile label='size="sm" · 40rem' />} />
+                            </Bleed>
+                        ),
+                    },
+                    {
+                        name: "size = \"md\" (default)",
+                        why: "The column caps at 48rem, one step wider than `sm`. This is the default column used across most pages when no narrower or wider reading width is called for.",
+                        code: "<Container.Base size=\"md\" body={<Tile label='size=\"md\" · 48rem — default' />} />",
+                        render: (
+                            <Bleed>
+                                <Container.Base size="md" padding={3} body={<Tile label='size="md" · 48rem — default' />} />
+                            </Bleed>
+                        ),
+                    },
+                    {
+                        name: "size = \"lg\"",
+                        why: "The column caps at 64rem. A page that needs to hold a wider table or a two-column layout inside the column reaches for this step instead of `md`.",
+                        code: "<Container.Base size=\"lg\" body={<Tile label='size=\"lg\" · 64rem' />} />",
+                        render: (
+                            <Bleed>
+                                <Container.Base size="lg" padding={3} body={<Tile label='size="lg" · 64rem' />} />
+                            </Bleed>
+                        ),
+                    },
+                    {
+                        name: "size = \"xl\"",
+                        why: "The column caps at 80rem, the widest bounded step. A dashboard or a data-dense screen that genuinely needs the extra room reaches this step.",
+                        code: "<Container.Base size=\"xl\" body={<Tile label='size=\"xl\" · 80rem' />} />",
+                        render: (
+                            <Bleed>
+                                <Container.Base size="xl" padding={3} body={<Tile label='size="xl" · 80rem' />} />
+                            </Bleed>
+                        ),
+                    },
+                    {
+                        name: "size = \"full\"",
+                        why: "No cap applies at all — the column stretches to fill its parent completely. This step is for a region that must bleed to the edge of whatever holds it, like a full-width hero band.",
+                        code: "<Container.Base size=\"full\" body={<Tile label='size=\"full\" · no cap' />} />",
+                        render: (
+                            <Bleed>
+                                <Container.Base size="full" padding={3} body={<Tile label='size="full" · no cap' />} />
+                            </Bleed>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
-/** Leaf prop `padding` — the §10c scale, default `6` (the web column). */
+/** Leaf prop `padding` — the §10c scale, default `6` (the web column). Migrated to `states` 2026-07-27. */
 export const Padding: Story = {
     render: () => (
         <div className="p-8">
@@ -127,29 +153,54 @@ export const Padding: Story = {
                 name="Container.Base"
                 tier="frame"
                 leaf="Prop `padding`"
-                note="Padding sits inside the width cap, so the readable line shortens as it grows. Drop to 0 when a child owns the edge — a full-bleed cover image or a table that scrolls sideways."
-                code={`<Container.Base padding={0} … />
-<Container.Base padding={3} … />
-<Container.Base … />            // 6 = default
-<Container.Base padding={8} … />`}
-            >
-                <div className="flex flex-col gap-3">
-                    {([0, 3, 6, 8] as const).map((padding, index) => (
-                        <Bleed key={padding}>
-                            <Container.Base
-                                padding={padding}
-                                showAnatomy={index === 0}
-                                body={<Tile label={`padding={${padding}}`} />}
-                            />
-                        </Bleed>
-                    ))}
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "padding = 0",
+                        why: "The tile sits flush against the column's own edge, with no inset at all. Drop to 0 when a child already owns the edge itself, like a full-bleed cover image or a table that scrolls sideways.",
+                        code: "<Container.Base padding={0} body={<Tile label=\"padding={0}\" />} />",
+                        render: (
+                            <Bleed>
+                                <Container.Base padding={0} showAnatomy body={<Tile label="padding={0}" />} />
+                            </Bleed>
+                        ),
+                    },
+                    {
+                        name: "padding = 3",
+                        why: "A moderate inset separates the tile from the column edge. This step suits a card-like region that still wants some breathing room without the full page gutter.",
+                        code: "<Container.Base padding={3} body={<Tile label=\"padding={3}\" />} />",
+                        render: (
+                            <Bleed>
+                                <Container.Base padding={3} body={<Tile label="padding={3}" />} />
+                            </Bleed>
+                        ),
+                    },
+                    {
+                        name: "padding = 6 (default)",
+                        why: "The default page gutter applies, the widest inset most pages ever need. This is what every page gets automatically without passing the prop at all.",
+                        code: "<Container.Base body={<Tile label=\"padding={6} — default\" />} />",
+                        render: (
+                            <Bleed>
+                                <Container.Base body={<Tile label="padding={6} — default" />} />
+                            </Bleed>
+                        ),
+                    },
+                    {
+                        name: "padding = 8",
+                        why: "An even wider inset applies, shortening the readable line further inside the same column cap. Content that wants extra breathing room on top of the size cap reaches for this step.",
+                        code: "<Container.Base padding={8} body={<Tile label=\"padding={8}\" />} />",
+                        render: (
+                            <Bleed>
+                                <Container.Base padding={8} body={<Tile label="padding={8}" />} />
+                            </Bleed>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
-/** Leaf slot — three regions `header`/`body`/`footer`, spaced by the PAGE rhythm. */
+/** Leaf slot — three regions `header`/`body`/`footer`, spaced by the PAGE rhythm. Migrated to `states` 2026-07-27. */
 export const Slots: Story = {
     render: () => (
         <div className="p-8">
@@ -157,22 +208,28 @@ export const Slots: Story = {
                 name="Container.Base"
                 tier="frame"
                 leaf="Slots `header` / `body` / `footer`"
-                note="With neither header nor footer the body renders raw — a children-only call produces no extra wrapper at all. The gap between regions defaults to the page rhythm (8), deliberately wider than the rhythm inside a card."
-                code={`<Container.Base
+                states={[
+                    {
+                        name: "header, body, footer all set",
+                        why: "Three tiles stack with the page rhythm (`gap-8`) between them instead of the tighter gap used inside a card. With neither `header` nor `footer` passed, the body renders raw with no extra wrapper at all, so a `children`-only call produces the exact same DOM as before this slot set existed.",
+                        code: `<Container.Base
   header={<Page.Header title="Courses" />}
   body={<CourseList />}
   footer={<Pagination />}
-/>`}
-            >
-                <Bleed>
-                    <Container.Base
-                        showAnatomy
-                        header={<Tile label="Header" />}
-                        body={<Tile label="Body" />}
-                        footer={<Tile label="Footer" />}
-                    />
-                </Bleed>
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <Bleed>
+                                <Container.Base
+                                    showAnatomy
+                                    header={<Tile label="Header" />}
+                                    body={<Tile label="Body" />}
+                                    footer={<Tile label="Footer" />}
+                                />
+                            </Bleed>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -194,6 +251,9 @@ const QUERY_ANNOTATE: Record<string, AnatomyAnnotation> = {
  * column reaches `@app-lg` (4 columns). Before opening the container, both listened
  * to the app column and would jump to 4 columns together even though the left one
  * is only 48rem wide.
+ *
+ * Migrated to `states` 2026-07-27: each column width is its own state so the reader
+ * can flip between "2 columns" and "4 columns" and read the matching `why` for each.
  */
 export const ContainerQuery: Story = {
     render: () => {
@@ -210,27 +270,41 @@ export const ContainerQuery: Story = {
                     leaf="Opening `@container`"
                     annotate={QUERY_ANNOTATE}
                     reason="The `@app-*` breakpoints are container queries — they measure the nearest container. This frame opens one, so a grid inside answers to the column it actually sits in instead of to the whole app shell."
-                    note="Both columns hold the identical grid with identical props. The narrow one stops at 2 because `@app-lg` never fires inside 48rem; the wide one reaches 4. Asking for `lg: 4` inside a md column is asking for a step that never arrives — not a bug, just a page too narrow for four."
-                    code={`const columns = { base: 1, sm: 2, md: 2, lg: 4 }
+                    states={[
+                        {
+                            name: "size = \"md\" (48rem column)",
+                            why: "The grid inside settles at 2 columns because the column only reaches the `@app-md` step — `@app-lg` never fires inside 48rem. Asking this same grid for `lg: 4` here is asking for a breakpoint that never arrives, not a bug — the page is just too narrow for four.",
+                            code: `const columns = { base: 1, sm: 2, md: 2, lg: 4 }
 
-<Container.Base size="md" body={<Grid.Base columns={columns} gap={3} items={cells} />} />
-<Container.Base size="xl" body={<Grid.Base columns={columns} gap={3} items={cells} />} />`}
-                >
-                    <div className="flex flex-col gap-6">
-                        {(["md", "xl"] as const).map((size, index) => (
-                            <div key={size} className="flex flex-col gap-2">
-                                <p className="text-xs text-muted">{`size="${size}"`}</p>
+<Container.Base size="md" body={<Grid.Base columns={columns} gap={3} items={cells} />} />`,
+                            render: (
                                 <Bleed>
-                                    <Container.Base size={size} padding={3} showAnatomy={index === 0}>
+                                    <Container.Base size="md" padding={3} showAnatomy>
                                         <span className="block" data-anat-part="Grid.Base">
                                             <Grid.Base columns={columns} gap={3} items={cells} />
                                         </span>
                                     </Container.Base>
                                 </Bleed>
-                            </div>
-                        ))}
-                    </div>
-                </BlockAnatomy>
+                            ),
+                        },
+                        {
+                            name: "size = \"xl\" (80rem column)",
+                            why: "The identical grid with the identical `columns` prop settles at 4 columns instead, because this wider column reaches the `@app-lg` step. Same grid, same props — the only thing that changed is which container it's measuring against.",
+                            code: `const columns = { base: 1, sm: 2, md: 2, lg: 4 }
+
+<Container.Base size="xl" body={<Grid.Base columns={columns} gap={3} items={cells} />} />`,
+                            render: (
+                                <Bleed>
+                                    <Container.Base size="xl" padding={3}>
+                                        <span className="block" data-anat-part="Grid.Base">
+                                            <Grid.Base columns={columns} gap={3} items={cells} />
+                                        </span>
+                                    </Container.Base>
+                                </Bleed>
+                            ),
+                        },
+                    ]}
+                />
             </div>
         )
     },

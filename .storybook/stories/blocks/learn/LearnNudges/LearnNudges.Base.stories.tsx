@@ -13,9 +13,10 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * look alike must share one render path.
  *
  * 📐 **ONE LEAF** (§14d.2): full-3-things · single-thing · bordered all use the
- * SAME `SurfaceCard.List` tree ⇒ **STATE**, not a separate story. `isSkeleton`
- * alone gets its OWN LEAF (§12g.0a, teacher's call 2026-07-27) even though the DOM
- * tree is identical — the rule for this prop is an exception that overrides §14d.2.
+ * SAME `SurfaceCard.List` tree ⇒ **STATE**, rendered inside one leaf's `states[]`
+ * (thầy chốt bố cục C, 2026-07-27), not a separate story. `isSkeleton` alone gets
+ * its OWN LEAF (§12g.0a, teacher's call 2026-07-27) even though the DOM tree is
+ * identical — the rule for this prop is an exception that overrides §14d.2.
  */
 const meta: Meta<typeof LearnNudges.Base> = {
     title: "Blocks/Learn/LearnNudges/LearnNudges.Base",
@@ -39,32 +40,42 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SurfaceCard.List": {
         storyId: "composites-cards-surfacecard-surfacecard-list--default",
         tier: "composite",
-        role: "frame + row rhythm — the SAME layout as KeepGoingPath",
+        role: "the frame and row rhythm, the same layout KeepGoingPath uses",
     },
 }
 
 /** The one and only leaf — full 3 kinds of work plus the single-thing case. The **pending** state lives in the `Skeleton` leaf below. */
 export const Nudges: Story = {
     render: () => (
-        <div className="mx-auto max-w-3xl p-8">
+        <div className="p-8">
             <BlockAnatomy
                 name="LearnNudges.Base"
                 tier="block"
                 leaf="Things to do"
                 parts={[]}
                 annotate={ANNOTATE}
-                note="The `pending` bars pour straight into `items` — still ONE render path, no second branch drawing a frame."
-                code={"<LearnNudges.Base items={nudges} />"}
-            >
-                <div className="flex flex-col gap-6">
-                    <LearnNudges.Base
-                        anatPart="SurfaceCard.List"
-                        showAnatomy
-                        items={NUDGES}
-                    />
-                    <LearnNudges.Base items={[NUDGES[0]]} />
-                </div>
-            </BlockAnatomy>
+                renderClassName="mx-auto max-w-3xl"
+                states={[
+                    {
+                        name: "items.length = 3 (flashcards, interview, league)",
+                        why: "Three rows render inside the `SurfaceCard.List` frame, one per kind, each with the icon its own `kind` maps to. Showing all three kinds together is what proves the block owns the `kind → icon` table rather than the caller choosing an icon itself.",
+                        code: "<LearnNudges.Base items={nudges} />",
+                        render: (
+                            <LearnNudges.Base
+                                anatPart="SurfaceCard.List"
+                                showAnatomy
+                                items={NUDGES}
+                            />
+                        ),
+                    },
+                    {
+                        name: "items.length = 1",
+                        why: "The same frame renders with just one row instead of three, and no row is drawn any differently for being alone. A viewer with only one thing left to do today should not see empty space standing in for the two nudges that no longer apply.",
+                        code: "<LearnNudges.Base items={[nudges[0]]} />",
+                        render: <LearnNudges.Base items={[NUDGES[0]]} />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -76,23 +87,30 @@ export const Nudges: Story = {
  */
 export const Skeleton: Story = {
     render: () => (
-        <div className="mx-auto max-w-3xl p-8">
+        <div className="p-8">
             <BlockAnatomy
                 name="LearnNudges.Base"
                 tier="block"
                 leaf="Prop `isSkeleton`"
                 parts={[]}
                 annotate={ANNOTATE}
-                note="`pending`/empty while waiting on `dueSwr`/`leaderboardSwr` — holds the space so nothing flashes (source notes 2026-07-12)."
-                code={"<LearnNudges.Base isSkeleton items={[]} />"}
-            >
-                <LearnNudges.Base
-                    anatPart="SurfaceCard.List"
-                    showAnatomy
-                    isSkeleton
-                    items={[]}
-                />
-            </BlockAnatomy>
+                renderClassName="mx-auto max-w-3xl"
+                states={[
+                    {
+                        name: "isSkeleton, items = []",
+                        why: "The same `SurfaceCard.List` frame renders shimmer rows in place of real nudges while `dueSwr`/`leaderboardSwr` are still resolving. Holding the frame's space during that wait is what stops the page from flashing once the real nudges land (source notes 2026-07-12).",
+                        code: "<LearnNudges.Base isSkeleton items={[]} />",
+                        render: (
+                            <LearnNudges.Base
+                                anatPart="SurfaceCard.List"
+                                showAnatomy
+                                isSkeleton
+                                items={[]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

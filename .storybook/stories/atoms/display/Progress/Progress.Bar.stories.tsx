@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Progress, type ProgressColor, type ProgressSize } from "@sb-components/atoms/display/Progress/Progress"
+import { Progress } from "@sb-components/atoms/display/Progress/Progress"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Progress.Bar> = {
@@ -28,12 +28,19 @@ export const Value: Story = {
                 tier="atom"
                 leaf="Value"
                 reason="The linear progress bar wrapping react-aria ProgressBar; determinate (value) or indeterminate."
-                code={"<Progress.Bar value={62} max={100} />"}
-            >
-                <div className="w-72">
-                    <Progress.Bar value={62} ariaLabel="Course progress" showAnatomy />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "value = 62, max = 100",
+                        why: "The Fill span's width is set to the percentage of value over max, landing at 62% wide. A determinate bar is used whenever the caller can compute a real fraction of work done, so the width itself carries the information.",
+                        code: "<Progress.Bar value={62} max={100} />",
+                        render: (
+                            <div className="w-72">
+                                <Progress.Bar value={62} ariaLabel="Course progress" showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -46,13 +53,19 @@ export const Indeterminate: Story = {
                 name="Progress.Bar"
                 tier="atom"
                 leaf="Indeterminate"
-                note="isIndeterminate animates the fill on its own; react-aria ignores value."
-                code={"<Progress.Bar isIndeterminate />"}
-            >
-                <div className="w-72">
-                    <Progress.Bar isIndeterminate ariaLabel="Processing" showAnatomy />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isIndeterminate = true",
+                        why: "The Fill switches from a fixed-width bar to a CSS animation that runs on its own, since react-aria ignores value in this mode. This is for a run whose duration nobody can predict, so a moving bar is more honest than a fake percentage.",
+                        code: "<Progress.Bar isIndeterminate />",
+                        render: (
+                            <div className="w-72">
+                                <Progress.Bar isIndeterminate ariaLabel="Processing" showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -65,37 +78,24 @@ export const Loading: Story = {
                 name="Progress.Bar"
                 tier="atom"
                 leaf="Loading"
-                note="isSkeleton draws its own shimmer bar (hybrid C) — before the value is known."
-                code={"<Progress.Bar isSkeleton />"}
-            >
-                <div className="w-72">
-                    <Progress.Bar isSkeleton showAnatomy />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "The whole bar swaps to its own shimmering placeholder (hybrid C) instead of the real track/fill pair. This lets a progress row hold its place on the page before the real value is known, rather than popping in once it lands.",
+                        code: "<Progress.Bar isSkeleton />",
+                        render: (
+                            <div className="w-72">
+                                <Progress.Bar isSkeleton showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
-/** One row of the `color` demo table. */
-interface BarColorRow {
-    /** which color value this row demonstrates */
-    color: ProgressColor
-    /** aria label describing what the bar tracks */
-    label: string
-    /** progress value shown on the bar */
-    value: number
-}
-
-/** ĐỦ union `ProgressColor` — thiếu một giá trị là giá trị đó sẽ mọc thành leaf lạc chỗ. */
-const BAR_COLORS: Array<BarColorRow> = [
-    { color: "accent", label: "Course progress", value: 55 },
-    { color: "success", label: "Upload complete", value: 100 },
-    { color: "warning", label: "Sync needs attention", value: 40 },
-    { color: "danger", label: "Deploy failed", value: 20 },
-    { color: "default", label: "Idle queue", value: 65 },
-]
-
-/** Leaf prop `color` — 5 tone, render ĐỦ union. */
+/** Leaf prop `color` — 5 tone, mỗi tone là MỘT state (điều kiện: `color` truyền vào). */
 export const Colors: Story = {
     render: () => (
         <div className="p-8">
@@ -103,46 +103,65 @@ export const Colors: Story = {
                 name="Progress.Bar"
                 tier="atom"
                 leaf="Prop `color`"
-                reason="The fill tone carries meaning — accent for a plain run, success/warning/danger for an outcome the value implies, default when the tone should stay silent."
-                note="Only the Fill part takes the tone; the Track stays neutral in every case, so five bars side by side still read as one family."
-                code={`<Progress.Bar color="accent" value={55} />
-<Progress.Bar color="success" value={100} />
-<Progress.Bar color="warning" value={40} />
-<Progress.Bar color="danger" value={20} />
-<Progress.Bar color="default" value={65} />`}
-            >
-                <div className="flex w-72 flex-col gap-4">
-                    {BAR_COLORS.map(({ color, label, value }, index) => (
-                        <Progress.Bar
-                            key={color}
-                            color={color}
-                            value={value}
-                            ariaLabel={label}
-                            showAnatomy={index === 0}
-                        />
-                    ))}
-                </div>
-            </BlockAnatomy>
+                reason="The fill tone carries meaning — accent for a plain run, success/warning/danger for an outcome the value implies, default when the tone should stay silent. Only the Fill part ever takes the tone; the Track stays neutral in every case, so bars in different tones still read as one family."
+                states={[
+                    {
+                        name: "color = \"accent\"",
+                        why: "The Fill renders in the accent tone while the Track stays neutral. This is the plain tone for a run that has not yet finished or failed, with no verdict implied.",
+                        code: "<Progress.Bar color=\"accent\" value={55} />",
+                        render: (
+                            <div className="w-72">
+                                <Progress.Bar color="accent" value={55} ariaLabel="Course progress" showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "color = \"success\"",
+                        why: "The Fill renders in the success tone. This marks a value that already stands for a completed or positive outcome, such as an upload that finished.",
+                        code: "<Progress.Bar color=\"success\" value={100} />",
+                        render: (
+                            <div className="w-72">
+                                <Progress.Bar color="success" value={100} ariaLabel="Upload complete" showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "color = \"warning\"",
+                        why: "The Fill renders in the warning tone. This flags a value the caller wants the viewer to notice before it turns into a failure, such as a sync that needs attention.",
+                        code: "<Progress.Bar color=\"warning\" value={40} />",
+                        render: (
+                            <div className="w-72">
+                                <Progress.Bar color="warning" value={40} ariaLabel="Sync needs attention" showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "color = \"danger\"",
+                        why: "The Fill renders in the danger tone. This marks a value tied to an outcome that already failed, such as a deploy that errored out.",
+                        code: "<Progress.Bar color=\"danger\" value={20} />",
+                        render: (
+                            <div className="w-72">
+                                <Progress.Bar color="danger" value={20} ariaLabel="Deploy failed" showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "color = \"default\"",
+                        why: "The Fill renders in the neutral default tone, the same shape as every other tone. This is for a value the UI shows without implying any verdict at all, such as an idle queue length.",
+                        code: "<Progress.Bar color=\"default\" value={65} />",
+                        render: (
+                            <div className="w-72">
+                                <Progress.Bar color="default" value={65} ariaLabel="Idle queue" showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
-/** One row of the `size` demo table. */
-interface BarSizeRow {
-    /** which size value this row demonstrates */
-    size: ProgressSize
-    /** aria label describing what the bar tracks */
-    label: string
-}
-
-/** ĐỦ union `ProgressSize` — thiếu một giá trị là giá trị đó sẽ mọc thành leaf lạc chỗ. */
-const BAR_SIZES: Array<BarSizeRow> = [
-    { size: "sm", label: "Compact row" },
-    { size: "md", label: "Default row" },
-    { size: "lg", label: "Prominent row" },
-]
-
-/** Leaf prop `size` — 3 mốc chiều cao, render ĐỦ union. */
+/** Leaf prop `size` — 3 mốc chiều cao, mỗi mốc là MỘT state. */
 export const Sizes: Story = {
     render: () => (
         <div className="p-8">
@@ -150,24 +169,40 @@ export const Sizes: Story = {
                 name="Progress.Bar"
                 tier="atom"
                 leaf="Prop `size`"
-                reason="Height signals how much weight the progress deserves on the page — a compact row inside a dense list vs. a prominent bar carrying the whole screen's attention."
-                note="Only the track height changes; the fill colour and rounding stay identical across sizes."
-                code={`<Progress.Bar size="sm" value={62} />
-<Progress.Bar size="md" value={62} />
-<Progress.Bar size="lg" value={62} />`}
-            >
-                <div className="flex w-72 flex-col gap-4">
-                    {BAR_SIZES.map(({ size, label }, index) => (
-                        <Progress.Bar
-                            key={size}
-                            size={size}
-                            value={62}
-                            ariaLabel={label}
-                            showAnatomy={index === 0}
-                        />
-                    ))}
-                </div>
-            </BlockAnatomy>
+                reason="Height signals how much weight the progress deserves on the page, a compact row inside a dense list versus a prominent bar carrying the whole screen's attention. Only the track height changes across sizes; the fill colour and rounding stay identical."
+                states={[
+                    {
+                        name: "size = \"sm\"",
+                        why: "The Track height drops to its most compact setting. This is for a bar sitting inside a dense list, where a tall bar would crowd its neighbours.",
+                        code: "<Progress.Bar size=\"sm\" value={62} />",
+                        render: (
+                            <div className="w-72">
+                                <Progress.Bar size="sm" value={62} ariaLabel="Compact row" showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "size = \"md\"",
+                        why: "The Track renders at its default height. This is the middle ground for a bar standing on its own in a regular row, neither cramped nor oversized.",
+                        code: "<Progress.Bar size=\"md\" value={62} />",
+                        render: (
+                            <div className="w-72">
+                                <Progress.Bar size="md" value={62} ariaLabel="Default row" showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "size = \"lg\"",
+                        why: "The Track grows to its tallest setting. This is for a bar meant to carry the whole screen's attention on its own, where a thin bar would read as an afterthought.",
+                        code: "<Progress.Bar size=\"lg\" value={62} />",
+                        render: (
+                            <div className="w-72">
+                                <Progress.Bar size="lg" value={62} ariaLabel="Prominent row" showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

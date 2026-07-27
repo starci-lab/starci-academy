@@ -30,7 +30,7 @@ type Story = StoryObj<typeof Form.Base>
 
 /** Hai part TRỰC TIẾP của khung: cột nội dung và slot hàng nút (§11a). */
 const PARTS: Array<AnatomyNode> = [
-    { name: "Body", tier: "composite", role: "the content column (`body`/`children`) — Form.Sections and fields, spaced by `gap`" },
+    { name: "Body", tier: "composite", role: "the content column (`body`/`children`), holding Form.Sections and fields, spaced by `gap`" },
     { name: "Actions", tier: "composite", role: "the button-row slot at the BOTTOM of the form (usually Form.Actions)" },
 ]
 
@@ -55,8 +55,12 @@ export const Default: Story = {
                 tier="composite"
                 leaf="Default"
                 parts={PARTS}
-                reason="The form frame of the composite tier: it builds a real `<form>` (ENTER inside a field submits, a11y), stacks content into a column on the `gap` rhythm (§10c), and keeps one `actions` slot at the bottom. The frame knows nothing about the fields inside — no validation, no values, no errors (that is the block tier); labels and errors come from the form atoms themselves (§12e)."
-                code={`<Form.Base
+                reason="The form frame of the composite tier: it builds a real `<form>` (ENTER inside a field submits, a11y), stacks content into a column on the `gap` rhythm (§10c), and keeps one `actions` slot at the bottom. The frame knows nothing about the fields inside, no validation, no values, no errors (that is the block tier); labels and errors come from the form atoms themselves (§12e)."
+                states={[
+                    {
+                        name: "isDisabled not set, children shorthand fills body",
+                        why: "The frame renders as a live, editable form: the fieldset stays enabled and `children` fills the `body` slot as the shorthand for it, while `actions` sits in its own slot at the bottom. This is the resting shape a reader lands on before anything is submitted or locked.",
+                        code: `<Form.Base
   gap={6}
   onSubmit={() => save()}
   actions={<Form.Actions items={[{ key: "cancel", label: "Cancel", variant: "secondary" }, { key: "save", label: "Save" }]} />}
@@ -65,27 +69,30 @@ export const Default: Story = {
     <Input.Text label="Full name" isRequired value={name} onValueChange={setName} />
     <Input.Text label="Email" value={email} onValueChange={setEmail} />
   </Form.Section>
-</Form.Base>`}
-            >
-                <div className="w-96">
-                    <Form.Base
-                        showAnatomy
-                        onSubmit={() => {}}
-                        actions={(
-                            <Form.Actions
-                                items={[
-                                    { key: "cancel", label: "Cancel", variant: "secondary" },
-                                    { key: "save", label: "Save changes" },
-                                ]}
-                            />
-                        )}
-                    >
-                        <Form.Section title="Account">
-                            <AccountFields />
-                        </Form.Section>
-                    </Form.Base>
-                </div>
-            </BlockAnatomy>
+</Form.Base>`,
+                        render: (
+                            <div className="w-96">
+                                <Form.Base
+                                    showAnatomy
+                                    onSubmit={() => {}}
+                                    actions={(
+                                        <Form.Actions
+                                            items={[
+                                                { key: "cancel", label: "Cancel", variant: "secondary" },
+                                                { key: "save", label: "Save changes" },
+                                            ]}
+                                        />
+                                    )}
+                                >
+                                    <Form.Section title="Account">
+                                        <AccountFields />
+                                    </Form.Section>
+                                </Form.Base>
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         )
         return <div className="p-8"><Demo /></div>
     },
@@ -104,34 +111,40 @@ export const Submitting: Story = {
                 tier="composite"
                 leaf="Submitting"
                 parts={PARTS}
-                note="`isDisabled` maps to a native `<fieldset disabled>`, which switches off EVERY control inside (fields and buttons) at once — the frame never threads a flag down to each field."
-                code={`<Form.Base
+                states={[
+                    {
+                        name: "isDisabled = true, one action isPending",
+                        why: "Every control inside locks at once, because `isDisabled` maps to a native `<fieldset disabled>` covering both fields and buttons, while the save button's own spinner marks which action is running. The frame never threads a flag down to each field individually, so this single switch is what keeps the whole form from being edited mid-submit.",
+                        code: `<Form.Base
   isDisabled
   actions={<Form.Actions items={[{ key: "cancel", label: "Cancel", variant: "secondary" }, { key: "save", label: "Saving", isPending: true }]} />}
 >
   …
-</Form.Base>`}
-            >
-                <div className="w-96">
-                    <Form.Base
-                        showAnatomy
-                        isDisabled
-                        onSubmit={() => {}}
-                        actions={(
-                            <Form.Actions
-                                items={[
-                                    { key: "cancel", label: "Cancel", variant: "secondary" },
-                                    { key: "save", label: "Saving", isPending: true },
-                                ]}
-                            />
-                        )}
-                    >
-                        <Form.Section title="Account">
-                            <AccountFields />
-                        </Form.Section>
-                    </Form.Base>
-                </div>
-            </BlockAnatomy>
+</Form.Base>`,
+                        render: (
+                            <div className="w-96">
+                                <Form.Base
+                                    showAnatomy
+                                    isDisabled
+                                    onSubmit={() => {}}
+                                    actions={(
+                                        <Form.Actions
+                                            items={[
+                                                { key: "cancel", label: "Cancel", variant: "secondary" },
+                                                { key: "save", label: "Saving", isPending: true },
+                                            ]}
+                                        />
+                                    )}
+                                >
+                                    <Form.Section title="Account">
+                                        <AccountFields />
+                                    </Form.Section>
+                                </Form.Base>
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         )
         return <div className="p-8"><Demo /></div>
     },
@@ -149,31 +162,37 @@ export const Disabled: Story = {
                 tier="composite"
                 leaf="Disabled"
                 parts={PARTS}
-                note="A static lock: the same `<fieldset disabled>` as Submitting, but no button is pending — the form reads, it just does not act."
-                code={`<Form.Base isDisabled actions={<Form.Actions items={[…]} />}>
+                states={[
+                    {
+                        name: "isDisabled = true, no action isPending",
+                        why: "Every control locks through the same `<fieldset disabled>` as the Submitting leaf, but none of the buttons carries a spinner. This is a static lock, not an in-flight one: the form reads and nothing on it is currently running, such as a step upstream that has not cleared yet.",
+                        code: `<Form.Base isDisabled actions={<Form.Actions items={[…]} />}>
   …
-</Form.Base>`}
-            >
-                <div className="w-96">
-                    <Form.Base
-                        showAnatomy
-                        isDisabled
-                        onSubmit={() => {}}
-                        actions={(
-                            <Form.Actions
-                                items={[
-                                    { key: "cancel", label: "Cancel", variant: "secondary" },
-                                    { key: "save", label: "Save changes" },
-                                ]}
-                            />
-                        )}
-                    >
-                        <Form.Section title="Account" description="Only an administrator can edit this profile.">
-                            <AccountFields />
-                        </Form.Section>
-                    </Form.Base>
-                </div>
-            </BlockAnatomy>
+</Form.Base>`,
+                        render: (
+                            <div className="w-96">
+                                <Form.Base
+                                    showAnatomy
+                                    isDisabled
+                                    onSubmit={() => {}}
+                                    actions={(
+                                        <Form.Actions
+                                            items={[
+                                                { key: "cancel", label: "Cancel", variant: "secondary" },
+                                                { key: "save", label: "Save changes" },
+                                            ]}
+                                        />
+                                    )}
+                                >
+                                    <Form.Section title="Account" description="Only an administrator can edit this profile.">
+                                        <AccountFields />
+                                    </Form.Section>
+                                </Form.Base>
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         )
         return <div className="p-8"><Demo /></div>
     },

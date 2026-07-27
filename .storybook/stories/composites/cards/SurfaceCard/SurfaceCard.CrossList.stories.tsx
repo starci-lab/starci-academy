@@ -53,22 +53,29 @@ export const Checks: Story = {
                 tier="composite"
                 leaf="Checks"
                 reason="A marked (✓/✗) brief list inside a bounded bg-surface frame, reused by PricingTable/CourseCard for value-props. `mark` defaults to 'check', so an item only needs `text`."
-                code={`<SurfaceCard.CrossList
+                states={[
+                    {
+                        name: "all items mark = check (default)",
+                        why: "Every row draws a green check ahead of its text. The default mark is `check`, so a list of achievements never has to repeat `mark: \"check\"` on each row.",
+                        code: `<SurfaceCard.CrossList
   items={[
     { key: "projects", text: <Typography type="body-sm">Build 3 real-world projects…</Typography> },
     { key: "grading", text: <Typography type="body-sm">AI-graded assignments…</Typography> },
   ]}
-/>`}
-            >
-                <SurfaceCard.CrossList
-                    showAnatomy
-                    items={[
-                        { key: "projects", mark: "check", text: row("Build 3 real-world projects from scratch to deployment") },
-                        { key: "grading", mark: "check", text: row("AI-graded assignments using real hiring checklists") },
-                        { key: "mock", mark: "check", text: row("Unlimited mock interviews") },
-                    ]}
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <SurfaceCard.CrossList
+                                showAnatomy
+                                items={[
+                                    { key: "projects", mark: "check", text: row("Build 3 real-world projects from scratch to deployment") },
+                                    { key: "grading", mark: "check", text: row("AI-graded assignments using real hiring checklists") },
+                                    { key: "mock", mark: "check", text: row("Unlimited mock interviews") },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -80,19 +87,25 @@ export const Crosses: Story = {
                 name="SurfaceCard.CrossList"
                 tier="composite"
                 leaf="Crosses"
-                note="`mark='cross'` → XCircleIcon, default tone 'muted' (not included — recede, not a warning)."
-                code={`<SurfaceCard.CrossList
+                states={[
+                    {
+                        name: "all items mark = cross",
+                        why: "Every row draws a muted cross ahead of its text instead of a green check. `mark: \"cross\"` defaults its tone to `muted` rather than a warning color, since a plan simply not including a feature is not a warning.",
+                        code: `<SurfaceCard.CrossList
   items={[{ key: "cert", mark: "cross", text: <Typography type="body-sm">No certificate…</Typography> }]}
-/>`}
-            >
-                <SurfaceCard.CrossList
-                    showAnatomy
-                    items={[
-                        { key: "cert", mark: "cross", text: row("No certificate to submit to employers") },
-                        { key: "mentor", mark: "cross", text: row("No 1-on-1 mentor support") },
-                    ]}
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <SurfaceCard.CrossList
+                                showAnatomy
+                                items={[
+                                    { key: "cert", mark: "cross", text: row("No certificate to submit to employers") },
+                                    { key: "mentor", mark: "cross", text: row("No 1-on-1 mentor support") },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -105,24 +118,30 @@ export const Mixed: Story = {
                 name="SurfaceCard.CrossList"
                 tier="composite"
                 leaf="Mixed"
-                note="One CrossList mixing both `mark: 'check'` and `mark: 'cross'` — mark lives on the ITEM, not the frame."
-                code={`<SurfaceCard.CrossList
+                states={[
+                    {
+                        name: "items mix mark = check and mark = cross",
+                        why: "Check rows and cross rows render inside the SAME list, in whatever order the caller passes them. `mark` lives on the item, not on the whole frame, so one plan's included and excluded features share a single list instead of two separate ones.",
+                        code: `<SurfaceCard.CrossList
   items={[
     { key: "content", mark: "check", text: <…/> },
     { key: "mentor", mark: "cross", text: <…/> },
   ]}
-/>`}
-            >
-                <SurfaceCard.CrossList
-                    showAnatomy
-                    items={[
-                        { key: "content", mark: "check", text: row("All 12 weeks of content + self-graded exercises") },
-                        { key: "mock", mark: "check", text: row("Unlimited mock interviews") },
-                        { key: "mentor", mark: "cross", text: row("Not included: 1-on-1 mentor review") },
-                        { key: "referral", mark: "cross", text: row("Not included: job referral support") },
-                    ]}
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <SurfaceCard.CrossList
+                                showAnatomy
+                                items={[
+                                    { key: "content", mark: "check", text: row("All 12 weeks of content + self-graded exercises") },
+                                    { key: "mock", mark: "check", text: row("Unlimited mock interviews") },
+                                    { key: "mentor", mark: "cross", text: row("Not included: 1-on-1 mentor review") },
+                                    { key: "referral", mark: "cross", text: row("Not included: job referral support") },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -135,19 +154,25 @@ export const NoMark: Story = {
                 name="SurfaceCard.CrossList"
                 tier="composite"
                 leaf="NoMark"
-                note="`mark: 'none'` → the row renders no icon, only content — still the same composition (1 row = 1 part)."
-                code={`<SurfaceCard.CrossList
+                states={[
+                    {
+                        name: "items mark = none",
+                        why: "No leading icon renders at all, only the row's text, one row = one part either way. A prerequisite is a plain requirement rather than an achievement, so it earns no tick and no cross.",
+                        code: `<SurfaceCard.CrossList
   items={[{ key: "lang", mark: "none", text: <Typography type="body-sm">Know any programming language</Typography> }]}
-/>`}
-            >
-                <SurfaceCard.CrossList
-                    showAnatomy
-                    items={[
-                        { key: "lang", mark: "none", text: row("Know any programming language") },
-                        { key: "node", mark: "none", text: row("A computer with Node.js installed") },
-                    ]}
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <SurfaceCard.CrossList
+                                showAnatomy
+                                items={[
+                                    { key: "lang", mark: "none", text: row("Know any programming language") },
+                                    { key: "node", mark: "none", text: row("A computer with Node.js installed") },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -164,45 +189,46 @@ export const NoMark: Story = {
  */
 export const Variant: Story = {
     render: () => (
-        <div className="flex flex-col gap-6 p-8">
-            <div className="flex flex-col gap-2">
-                <Typography type="body-xs" color="muted">variant=&quot;surface&quot; (default) — shadow-surface, rendered directly on bg-background</Typography>
-                <BlockAnatomy
-                    name="SurfaceCard.CrossList"
-                    tier="composite"
-                    leaf="Variant / surface"
-                    code={"<SurfaceCard.CrossList items={[…]} />"}
-                >
-                    <SurfaceCard.CrossList
-                        showAnatomy
-                        items={[
-                            { key: "included", mark: "check", text: row("Included: full course content") },
-                            { key: "excluded", mark: "cross", text: row("Not included: 1-on-1 mentor") },
-                        ]}
-                    />
-                </BlockAnatomy>
-            </div>
-            <div className="flex flex-col gap-2">
-                <Typography type="body-xs" color="muted">variant=&quot;nested&quot; — border instead of shadow, when nested inside another surface</Typography>
-                <div className="rounded-3xl bg-surface p-3 shadow-surface">
-                    <BlockAnatomy
-                        name="SurfaceCard.CrossList"
-                        tier="composite"
-                        leaf="Variant / nested"
-                        note={"`variant=\"nested\"` changes the outer frame (border instead of shadow) when nested in another surface — row composition stays the same."}
-                        code={"<SurfaceCard.CrossList variant=\"nested\" items={[…]} />"}
-                    >
-                        <SurfaceCard.CrossList
-                            variant="nested"
-                            showAnatomy
-                            items={[
-                                { key: "included", mark: "check", text: row("Included: full course content") },
-                                { key: "excluded", mark: "cross", text: row("Not included: 1-on-1 mentor") },
-                            ]}
-                        />
-                    </BlockAnatomy>
-                </div>
-            </div>
+        <div className="p-8">
+            <BlockAnatomy
+                name="SurfaceCard.CrossList"
+                tier="composite"
+                leaf="Variant"
+                reason="Surface-in-surface (§1a): the list needs to know whether it sits directly on the page background or inside another surface, since a shadow disappears against a surface of the same tone."
+                states={[
+                    {
+                        name: "variant = surface (default)",
+                        why: "The list draws its own drop shadow, since it is rendered directly on `bg-background` with nothing else behind it. This is the variant a list gets without passing `variant` at all.",
+                        code: "<SurfaceCard.CrossList items={[…]} />",
+                        render: (
+                            <SurfaceCard.CrossList
+                                showAnatomy
+                                items={[
+                                    { key: "included", mark: "check", text: row("Included: full course content") },
+                                    { key: "excluded", mark: "cross", text: row("Not included: 1-on-1 mentor") },
+                                ]}
+                            />
+                        ),
+                    },
+                    {
+                        name: "variant = nested",
+                        why: "The list draws a border instead of a shadow, so it stays legible sitting inside another surface (a modal, a drawer, a panel) where a shadow would be invisible. Row composition doesn't change between the two variants, only the outer frame does.",
+                        code: "<SurfaceCard.CrossList variant=\"nested\" items={[…]} />",
+                        render: (
+                            <div className="rounded-3xl bg-surface p-3 shadow-surface">
+                                <SurfaceCard.CrossList
+                                    variant="nested"
+                                    showAnatomy
+                                    items={[
+                                        { key: "included", mark: "check", text: row("Included: full course content") },
+                                        { key: "excluded", mark: "cross", text: row("Not included: 1-on-1 mentor") },
+                                    ]}
+                                />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -219,20 +245,26 @@ export const DangerTone: Story = {
                 name="SurfaceCard.CrossList"
                 tier="composite"
                 leaf="DangerTone"
-                note="`tone: 'danger'` only changes the mark icon's color inside the row — composition (1 row = 1 part) stays the same."
-                code={`<SurfaceCard.CrossList
+                states={[
+                    {
+                        name: "items mark = cross, tone = danger on the escalated rows",
+                        why: "Two rows draw a red cross instead of the usual muted one, while a third cross row beside them stays muted. The same mark element only escalates in tone (§2d) for a real loss or block, like the consequences of cancelling a plan, distinct from a plain not-included row.",
+                        code: `<SurfaceCard.CrossList
   items={[{ key: "progress", mark: "cross", tone: "danger", text: <…/> }]}
-/>`}
-            >
-                <SurfaceCard.CrossList
-                    showAnatomy
-                    items={[
-                        { key: "progress", mark: "cross", tone: "danger", text: row("Lose all AI-graded assignment progress") },
-                        { key: "mock", mark: "cross", tone: "danger", text: row("Lose unlimited mock interview access") },
-                        { key: "mentor", mark: "cross", text: row("Not included: 1-on-1 mentor (unchanged)") },
-                    ]}
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <SurfaceCard.CrossList
+                                showAnatomy
+                                items={[
+                                    { key: "progress", mark: "cross", tone: "danger", text: row("Lose all AI-graded assignment progress") },
+                                    { key: "mock", mark: "cross", tone: "danger", text: row("Lose unlimited mock interview access") },
+                                    { key: "mentor", mark: "cross", text: row("Not included: 1-on-1 mentor (unchanged)") },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -245,50 +277,51 @@ export const DangerTone: Story = {
  */
 export const MutedTone: Story = {
     render: () => (
-        <div className="flex flex-col gap-6 p-8">
-            <div className="flex flex-col gap-2">
-                <Typography type="body-xs" color="muted">tone=&quot;success&quot; (default) — green check, an &quot;included&quot; signal</Typography>
-                <BlockAnatomy
-                    name="SurfaceCard.CrossList"
-                    tier="composite"
-                    leaf="MutedTone / success"
-                    code={`<SurfaceCard.CrossList
+        <div className="p-8">
+            <BlockAnatomy
+                name="SurfaceCard.CrossList"
+                tier="composite"
+                leaf="MutedTone"
+                reason="Compares tone success (default, a real included signal, as in PricingTable) against tone muted (used for value-props living inside another card, e.g. CourseCard, to avoid color noise when the card already has another focal point like a price or a CTA). See principles.md §2."
+                states={[
+                    {
+                        name: "items mark = check, tone = success (default)",
+                        why: "Both checks render bright green. This is the tone a check gets without passing `tone` at all, a real included signal on its own.",
+                        code: `<SurfaceCard.CrossList
   variant="nested"
   items={[{ key: "projects", mark: "check", text: <…/> }]}
-/>`}
-                >
-                    <SurfaceCard.CrossList
-                        variant="nested"
-                        showAnatomy
-                        items={[
-                            { key: "projects", mark: "check", text: row("Build 3 real-world projects") },
-                            { key: "grading", mark: "check", text: row("AI-graded assignments") },
-                        ]}
-                    />
-                </BlockAnatomy>
-            </div>
-            <div className="flex flex-col gap-2">
-                <Typography type="body-xs" color="muted">tone=&quot;muted&quot; — faded check, text leads (value-props inside another card)</Typography>
-                <BlockAnatomy
-                    name="SurfaceCard.CrossList"
-                    tier="composite"
-                    leaf="MutedTone / muted"
-                    note="`tone: 'muted'` only changes the icon color — composition stays the same as the success leaf above."
-                    code={`<SurfaceCard.CrossList
+/>`,
+                        render: (
+                            <SurfaceCard.CrossList
+                                variant="nested"
+                                showAnatomy
+                                items={[
+                                    { key: "projects", mark: "check", text: row("Build 3 real-world projects") },
+                                    { key: "grading", mark: "check", text: row("AI-graded assignments") },
+                                ]}
+                            />
+                        ),
+                    },
+                    {
+                        name: "items mark = check, tone = muted",
+                        why: "Both checks fade to the muted tone so the text leads instead of the icon. Use this when the list lives inside another card that already has its own focal point, like a price or a CTA, and the check would otherwise add color noise.",
+                        code: `<SurfaceCard.CrossList
   variant="nested"
   items={[{ key: "projects", mark: "check", tone: "muted", text: <…/> }]}
-/>`}
-                >
-                    <SurfaceCard.CrossList
-                        variant="nested"
-                        showAnatomy
-                        items={[
-                            { key: "projects", mark: "check", tone: "muted", text: row("Build 3 real-world projects") },
-                            { key: "grading", mark: "check", tone: "muted", text: row("AI-graded assignments") },
-                        ]}
-                    />
-                </BlockAnatomy>
-            </div>
+/>`,
+                        render: (
+                            <SurfaceCard.CrossList
+                                variant="nested"
+                                showAnatomy
+                                items={[
+                                    { key: "projects", mark: "check", tone: "muted", text: row("Build 3 real-world projects") },
+                                    { key: "grading", mark: "check", tone: "muted", text: row("AI-graded assignments") },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -301,14 +334,18 @@ export const Loading: Story = {
                 name="SurfaceCard.CrossList"
                 tier="composite"
                 leaf="Loading"
-                note="`isSkeleton` → the frame self-generates `skeletonRows` rows in skeleton state (ignores `items`), same single part 'CrossListItem'."
-                code={`<SurfaceCard.CrossList
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "The frame self-generates `skeletonRows` mirror rows (a round dot + a text bar), ignoring `items` entirely, all sharing the same single `CrossListItem` part as the loaded rows. The caller never has to build placeholder items by hand while data hasn't landed yet.",
+                        code: `<SurfaceCard.CrossList
   items={[]}
   isSkeleton
-/>`}
-            >
-                <SurfaceCard.CrossList items={[]} isSkeleton showAnatomy />
-            </BlockAnatomy>
+/>`,
+                        render: <SurfaceCard.CrossList items={[]} isSkeleton showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }

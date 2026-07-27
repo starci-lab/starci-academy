@@ -10,6 +10,8 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * `Select.Trigger`/`Select.Value`/`Select.Popover`, khung nhãn/mô tả/lỗi là
  * `FieldFrame` NỘI BỘ (không có story riêng). Không component nào ở đây có
  * story riêng để nhảy tới ⇒ KHÔNG dùng `annotate`, bỏ hẳn prop (không phải `{}`).
+ *
+ * 2026-07-27: di trú toàn bộ leaf sang API `states[]` (§8/§4a).
  */
 
 const meta: Meta = { title: "Atoms/Forms/Select/Select.Single", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
@@ -32,19 +34,26 @@ export const Default: Story = {
                     name="Select.Single"
                     tier="atom"
                     leaf="Default"
-                    code={"<Select.Single value={v} onValueChange={setV} options={OPTIONS} placeholder=\"Choose a course\" />"}
-                >
-                    <div className="w-72">
-                        <Select.Single
-                            value={value}
-                            onValueChange={setValue}
-                            options={OPTIONS}
-                            placeholder="Choose a course"
-                            ariaLabel="Course"
-                            showAnatomy
-                        />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "value = null, no label",
+                            why: "The trigger shows only the muted placeholder text and FieldFrame renders no label or description around it. This is the bare control, so a caller checking the raw trigger shape does not have to scroll past a heading first.",
+                            code: "<Select.Single value={v} onValueChange={setV} options={OPTIONS} placeholder=\"Choose a course\" />",
+                            render: (
+                                <div className="w-72">
+                                    <Select.Single
+                                        value={value}
+                                        onValueChange={setValue}
+                                        options={OPTIONS}
+                                        placeholder="Choose a course"
+                                        ariaLabel="Course"
+                                        showAnatomy
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -61,20 +70,27 @@ export const WithLabel: Story = {
                     name="Select.Single"
                     tier="atom"
                     leaf="Props `label` / `hint`"
-                    code={"<Select.Single label=\"Course\" hint=\"Pick the track you want to follow.\" ... />"}
-                >
-                    <div className="w-72">
-                        <Select.Single
-                            value={value}
-                            onValueChange={setValue}
-                            options={OPTIONS}
-                            placeholder="Choose a course"
-                            label="Course"
-                            hint="Pick the track you want to follow."
-                            showAnatomy
-                        />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "label = \"Course\", hint set",
+                            why: "FieldFrame adds a label line above the trigger and a hint line below it, on top of the same bare trigger from Default. Both come from the same internal frame, so a caller reaches for label and hint together rather than composing two separate wrappers.",
+                            code: "<Select.Single label=\"Course\" hint=\"Pick the track you want to follow.\" ... />",
+                            render: (
+                                <div className="w-72">
+                                    <Select.Single
+                                        value={value}
+                                        onValueChange={setValue}
+                                        options={OPTIONS}
+                                        placeholder="Choose a course"
+                                        label="Course"
+                                        hint="Pick the track you want to follow."
+                                        showAnatomy
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -91,21 +107,27 @@ export const Required: Story = {
                     name="Select.Single"
                     tier="atom"
                     leaf="Prop `isRequired`"
-                    code={"<Select.Single label=\"Course\" isRequired ... />"}
-                    note="isRequired adds a * after the label."
-                >
-                    <div className="w-72">
-                        <Select.Single
-                            value={value}
-                            onValueChange={setValue}
-                            options={OPTIONS}
-                            placeholder="Choose a course"
-                            label="Course"
-                            isRequired
-                            showAnatomy
-                        />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "isRequired = true",
+                            why: "A red asterisk is appended right after the label text, with nothing else in the composition changing. The mark tells the reader this field cannot be left blank before they ever open the popover.",
+                            code: "<Select.Single label=\"Course\" isRequired ... />",
+                            render: (
+                                <div className="w-72">
+                                    <Select.Single
+                                        value={value}
+                                        onValueChange={setValue}
+                                        options={OPTIONS}
+                                        placeholder="Choose a course"
+                                        label="Course"
+                                        isRequired
+                                        showAnatomy
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -131,18 +153,29 @@ export const Value: Story = {
                     name="Select.Single"
                     tier="atom"
                     leaf="Prop `value`"
-                    code={"<Select.Single value={null} … />   // empty\n<Select.Single value=\"sd\" … />    // picked"}
-                    note="Empty falls back to the placeholder; picked swaps in that option's label. Same DOM either way."
-                >
-                    <div className="flex flex-col gap-4">
-                        <div className="w-72">
-                            <Select.Single value={empty} onValueChange={setEmpty} options={OPTIONS} placeholder="Choose a course" ariaLabel="Course" showAnatomy />
-                        </div>
-                        <div className="w-72">
-                            <Select.Single value={filled} onValueChange={setFilled} options={OPTIONS} placeholder="Choose a course" ariaLabel="Course" />
-                        </div>
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "value = null",
+                            why: "The trigger falls back to the muted placeholder text, using the exact same DOM as the picked state below. An empty value has to read as visibly unset, not as a stray blank box.",
+                            code: "<Select.Single value={null} onValueChange={setV} options={OPTIONS} placeholder=\"Choose a course\" ariaLabel=\"Course\" />",
+                            render: (
+                                <div className="w-72">
+                                    <Select.Single value={empty} onValueChange={setEmpty} options={OPTIONS} placeholder="Choose a course" ariaLabel="Course" showAnatomy />
+                                </div>
+                            ),
+                        },
+                        {
+                            name: "value = \"sd\"",
+                            why: "The trigger swaps in the matching option's own label, System Design Mastery, in the same node the placeholder just occupied. The trigger is controlled, so it can never drift from whatever value the caller holds in state.",
+                            code: "<Select.Single value=\"sd\" onValueChange={setV} options={OPTIONS} placeholder=\"Choose a course\" ariaLabel=\"Course\" />",
+                            render: (
+                                <div className="w-72">
+                                    <Select.Single value={filled} onValueChange={setFilled} options={OPTIONS} placeholder="Choose a course" ariaLabel="Course" />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -157,21 +190,27 @@ export const Disabled: Story = {
                 name="Select.Single"
                 tier="atom"
                 leaf="Prop `isDisabled`"
-                code={"<Select.Single label=\"Course\" value=\"fs\" isDisabled ... />"}
-                note="isDisabled dims the label and the trigger box together, and blocks the popover from opening."
-            >
-                <div className="w-72">
-                    <Select.Single
-                        value="fs"
-                        onValueChange={() => {}}
-                        options={OPTIONS}
-                        placeholder="Choose a course"
-                        label="Course"
-                        isDisabled
-                        showAnatomy
-                    />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isDisabled = true, value = \"fs\"",
+                        why: "The label and the trigger box both dim together and the popover no longer opens on click. Disabling has to read at a glance across the whole field, not just on the box the pointer happens to hover.",
+                        code: "<Select.Single label=\"Course\" value=\"fs\" isDisabled ... />",
+                        render: (
+                            <div className="w-72">
+                                <Select.Single
+                                    value="fs"
+                                    onValueChange={() => {}}
+                                    options={OPTIONS}
+                                    placeholder="Choose a course"
+                                    label="Course"
+                                    isDisabled
+                                    showAnatomy
+                                />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -188,21 +227,27 @@ export const Invalid: Story = {
                 name="Select.Single"
                 tier="atom"
                 leaf="Prop `isInvalid`"
-                code={"<Select.Single label=\"Course\" isInvalid ... />"}
-                note="isInvalid alone only switches the trigger border to danger — no error line under it. Pass errorMessage as well when the red line should show too."
-            >
-                <div className="w-72">
-                    <Select.Single
-                        value={null}
-                        onValueChange={() => {}}
-                        options={OPTIONS}
-                        placeholder="Choose a course"
-                        label="Course"
-                        isInvalid
-                        showAnatomy
-                    />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isInvalid = true, errorMessage not set",
+                        why: "Only the trigger's border switches to the danger colour, with no error line underneath it. FieldFrame never invents error text on its own, so isInvalid alone marks the field wrong without saying why.",
+                        code: "<Select.Single label=\"Course\" isInvalid ... />",
+                        render: (
+                            <div className="w-72">
+                                <Select.Single
+                                    value={null}
+                                    onValueChange={() => {}}
+                                    options={OPTIONS}
+                                    placeholder="Choose a course"
+                                    label="Course"
+                                    isInvalid
+                                    showAnatomy
+                                />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -217,21 +262,27 @@ export const Error: Story = {
                     name="Select.Single"
                     tier="atom"
                     leaf="Prop `errorMessage`"
-                    code={"<Select.Single label=\"Course\" errorMessage=\"Please choose a course.\" ... />"}
-                    note="errorMessage adds the label, a red line, and an invalid border."
-                >
-                    <div className="w-72">
-                        <Select.Single
-                            value={value}
-                            onValueChange={setValue}
-                            options={OPTIONS}
-                            placeholder="Choose a course"
-                            label="Course"
-                            errorMessage="Please choose a course."
-                            showAnatomy
-                        />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "errorMessage set",
+                            why: "The label stays, the trigger border turns to the danger colour, and a red line with the message text appears beneath it. Passing errorMessage is enough on its own to flip the field invalid, there is no separate flag to remember alongside it.",
+                            code: "<Select.Single label=\"Course\" errorMessage=\"Please choose a course.\" ... />",
+                            render: (
+                                <div className="w-72">
+                                    <Select.Single
+                                        value={value}
+                                        onValueChange={setValue}
+                                        options={OPTIONS}
+                                        placeholder="Choose a course"
+                                        label="Course"
+                                        errorMessage="Please choose a course."
+                                        showAnatomy
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
@@ -246,13 +297,19 @@ export const Skeleton: Story = {
                 name="Select.Single"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
-                code={"<Select.Single label=\"Course\" isSkeleton />"}
-                note="isSkeleton swaps in a label skeleton plus a trigger-box skeleton."
-            >
-                <div className="w-72">
-                    <Select.Single value={null} onValueChange={() => {}} options={OPTIONS} label="Course" isSkeleton showAnatomy />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "Both the label and the trigger box swap for shimmer bars sized to the space the real label and trigger will occupy. The atom draws its own resting shape so the field never jumps once the real options are ready.",
+                        code: "<Select.Single label=\"Course\" isSkeleton />",
+                        render: (
+                            <div className="w-72">
+                                <Select.Single value={null} onValueChange={() => {}} options={OPTIONS} label="Course" isSkeleton showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

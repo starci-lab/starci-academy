@@ -23,6 +23,10 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * DEPS — `Avatar.Base` và `Typography.Base` đều CÓ story riêng nên khai qua
  * `annotate` để bấm nhảy được. `Trailing` là khe tự do do caller đổ nội dung vào,
  * không có "hình chuẩn" của riêng nó nên không gắn `storyId`.
+ *
+ * MIGRATED TO `states` (2026-07-27): leaves that used to stack a "before/after"
+ * pair by hand in one `children` block now carry one `states[]` entry per value,
+ * each with its own `why` and its own `code`.
  */
 
 /** Hướng dẫn hiện đầu trang autodocs. Chữ trên UI viết TIẾNG ANH. */
@@ -111,7 +115,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     },
 }
 
-/** Leaf TRẦN — chưa bật prop nào: avatar rỗng (fallback), một dòng tên, không handle/trailing. */
+/** Leaf TRẦN — chưa bật prop nào: avatar rỗng (fallback), một dòng tên, không handle/trailing. Migrated to `states` 2026-07-27. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
@@ -120,17 +124,21 @@ export const Default: Story = {
                 tier="atom"
                 leaf="Bare cell"
                 reason="The one person-row in the system. Every leaf below it differs by exactly one prop, so this is the baseline you compare against."
-                note="No avatar URL, so the avatar atom falls back to its generated face. No handle, no trailing — just the name line."
                 annotate={ANNOTATE}
-                code={"<UserCell.Base username=\"oliviabennett\" displayName=\"Olivia Bennett\" />"}
-            >
-                <UserCell.Base username="oliviabennett" displayName="Olivia Bennett" avatar={null} showAnatomy />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "no avatar URL, no handle, no trailing",
+                        why: "The avatar falls back to its generated face and only one line of text — the name — renders below it. This is the baseline shape every other leaf on this page differs from by exactly one prop.",
+                        code: "<UserCell.Base username=\"oliviabennett\" displayName=\"Olivia Bennett\" />",
+                        render: <UserCell.Base username="oliviabennett" displayName="Olivia Bennett" avatar={null} showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
-/** Leaf prop `size` — HAI mật độ, render ĐỦ union. */
+/** Leaf prop `size` — HAI mật độ, render ĐỦ union. Migrated to `states` 2026-07-27. */
 export const Sizes: Story = {
     render: () => (
         <div className="p-8">
@@ -138,22 +146,27 @@ export const Sizes: Story = {
                 name="UserCell.Base"
                 tier="atom"
                 leaf="Prop `size`"
-                reason="Density follows the list it sits in. A comment thread or a member list stacks many rows, so sm keeps them tight; a profile header or a settings page has room to breathe, so md gives the row more air."
-                note="Only the avatar preset and the row's own gap change — the text scale stays put in both, so a size swap never reflows the name column width."
                 annotate={ANNOTATE}
-                code={`<UserCell.Base username="marcusreed" displayName="Marcus Reed" size="sm" />
-<UserCell.Base username="marcusreed" displayName="Marcus Reed" size="md" />`}
-            >
-                <div className="flex flex-col gap-4">
-                    <UserCell.Base username="marcusreed" displayName="Marcus Reed" avatar={null} size="sm" showAnatomy />
-                    <UserCell.Base username="marcusreed" displayName="Marcus Reed" avatar={null} size="md" />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "size = \"sm\"",
+                        why: "Only the avatar preset and the row's own gap shrink; the text scale stays put, so a size swap never reflows the name column width. A comment thread or a member list stacks many rows at once, so the tighter density keeps the list scannable.",
+                        code: "<UserCell.Base username=\"marcusreed\" displayName=\"Marcus Reed\" size=\"sm\" />",
+                        render: <UserCell.Base username="marcusreed" displayName="Marcus Reed" avatar={null} size="sm" showAnatomy />,
+                    },
+                    {
+                        name: "size = \"md\"",
+                        why: "The avatar preset and the row's gap grow one notch, again with the text scale staying put. A profile header or a settings page has room to breathe, so the larger density gives the row more air.",
+                        code: "<UserCell.Base username=\"marcusreed\" displayName=\"Marcus Reed\" size=\"md\" />",
+                        render: <UserCell.Base username="marcusreed" displayName="Marcus Reed" avatar={null} size="md" />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
-/** Leaf prop `handle` — có chuỗi thì mọc dòng `@handle` mờ dưới tên. */
+/** Leaf prop `handle` — có chuỗi thì mọc dòng `@handle` mờ dưới tên. Migrated to `states` 2026-07-27. */
 export const Handle: Story = {
     render: () => (
         <div className="p-8">
@@ -161,22 +174,27 @@ export const Handle: Story = {
                 name="UserCell.Base"
                 tier="atom"
                 leaf="Prop `handle`"
-                reason="A display name is friendly but not always unique. The handle line gives the row a stable identifier — a username, an email, a login — for the reader who needs to be sure which person this is."
-                note="The handle line only takes up space when you pass one; there is no reserved blank line under a nameless-only row."
                 annotate={ANNOTATE}
-                code={`<UserCell.Base username="nataliecross" displayName="Natalie Cross" />
-<UserCell.Base username="nataliecross" displayName="Natalie Cross" handle="@nataliecross" />`}
-            >
-                <div className="flex flex-col gap-4">
-                    <UserCell.Base username="nataliecross" displayName="Natalie Cross" avatar={null} showAnatomy />
-                    <UserCell.Base username="nataliecross" displayName="Natalie Cross" avatar={null} handle="@nataliecross" />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "handle = undefined",
+                        why: "Only one text line renders — the name — with no reserved blank line waiting under it. A row where the display name alone is enough to tell people apart doesn't need a second line taking up space.",
+                        code: "<UserCell.Base username=\"nataliecross\" displayName=\"Natalie Cross\" />",
+                        render: <UserCell.Base username="nataliecross" displayName="Natalie Cross" avatar={null} showAnatomy />,
+                    },
+                    {
+                        name: "handle = \"@nataliecross\"",
+                        why: "A second, muted text line mounts beneath the name carrying the handle string. A display name is friendly but not always unique, so the handle line gives the reader a stable identifier when they need to be sure which person this is.",
+                        code: "<UserCell.Base username=\"nataliecross\" displayName=\"Natalie Cross\" handle=\"@nataliecross\" />",
+                        render: <UserCell.Base username="nataliecross" displayName="Natalie Cross" avatar={null} handle="@nataliecross" />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
-/** Leaf prop `trailing` — khe phải tự do, chỉ mọc khi caller đổ nội dung vào. */
+/** Leaf prop `trailing` — khe phải tự do, chỉ mọc khi caller đổ nội dung vào. Migrated to `states` 2026-07-27. */
 export const Trailing: Story = {
     render: () => (
         <div className="p-8">
@@ -184,28 +202,35 @@ export const Trailing: Story = {
                 name="UserCell.Base"
                 tier="atom"
                 leaf="Prop `trailing`"
-                reason="A team list needs a role badge on the right; a follower list needs a follow button in the same spot. The slot is generic on purpose — the cell doesn't know or care what lands in it, only that it stays pinned to the far edge."
-                note="The slot pushes to the far right with ml-auto regardless of how short the name/handle column is, so a row of mixed name lengths still lines its trailing content up in one column."
                 annotate={ANNOTATE}
-                code={`<UserCell.Base username="emmafoster" displayName="Emma Foster" handle="@emmafoster" />
-<UserCell.Base
+                states={[
+                    {
+                        name: "trailing = undefined",
+                        why: "The row ends right after the name/handle column, with no reserved space on the right edge. Nothing renders in the slot because nothing was passed to it.",
+                        code: "<UserCell.Base username=\"emmafoster\" displayName=\"Emma Foster\" handle=\"@emmafoster\" />",
+                        render: <UserCell.Base username="emmafoster" displayName="Emma Foster" avatar={null} handle="@emmafoster" showAnatomy />,
+                    },
+                    {
+                        name: "trailing = <Chip.Base tone=\"accent\" text=\"Admin\" />",
+                        why: "A `Trailing` node mounts pinned to the far right with `ml-auto`, regardless of how short the name/handle column is. A team list needs a role badge on the right and a follower list needs a follow button in the same spot, and the slot is generic on purpose so it never cares which one lands there.",
+                        code: `<UserCell.Base
     username="emmafoster"
     displayName="Emma Foster"
     handle="@emmafoster"
     trailing={<Chip.Base tone="accent" text="Admin" />}
-/>`}
-            >
-                <div className="flex flex-col gap-4">
-                    <UserCell.Base username="emmafoster" displayName="Emma Foster" avatar={null} handle="@emmafoster" showAnatomy />
-                    <UserCell.Base
-                        username="emmafoster"
-                        displayName="Emma Foster"
-                        avatar={null}
-                        handle="@emmafoster"
-                        trailing={<Chip.Base tone="accent" text="Admin" />}
-                    />
-                </div>
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <UserCell.Base
+                                username="emmafoster"
+                                displayName="Emma Foster"
+                                avatar={null}
+                                handle="@emmafoster"
+                                trailing={<Chip.Base tone="accent" text="Admin" />}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -213,7 +238,8 @@ export const Trailing: Story = {
 /**
  * Leaf prop `isOwnRow` — MỚI (chặng 2, theo codemod chặng 1). Thay cho cửa hậu
  * `nameClassName` đã bị xoá: caller không còn truyền chuỗi class thô, chỉ bật cờ
- * ngữ nghĩa và atom tự đổi `Typography` sang `color="accent"`.
+ * ngữ nghĩa và atom tự đổi `Typography` sang `color="accent"`. Migrated to `states`
+ * 2026-07-27.
  */
 export const OwnRow: Story = {
     render: () => (
@@ -222,17 +248,22 @@ export const OwnRow: Story = {
                 name="UserCell.Base"
                 tier="atom"
                 leaf="Prop `isOwnRow`"
-                reason="A leaderboard or a comment thread is a list of peers — the one row that is you needs to jump out without a special layout. Flipping the name to the accent tone is enough; the avatar, the handle, and the trailing slot stay exactly as they are for everyone else."
-                note="This replaces the old nameClassName back door: a caller used to be able to hand the row any class string, which meant the tone the row could take on was whatever CSS existed, not a fixed set of meanings. isOwnRow only ever means one thing."
                 annotate={ANNOTATE}
-                code={`<UserCell.Base username="danielortiz" displayName="Daniel Ortiz" handle="@danielortiz" />
-<UserCell.Base username="danielortiz" displayName="Daniel Ortiz" handle="@danielortiz" isOwnRow />`}
-            >
-                <div className="flex flex-col gap-4">
-                    <UserCell.Base username="danielortiz" displayName="Daniel Ortiz" avatar={null} handle="@danielortiz" showAnatomy />
-                    <UserCell.Base username="danielortiz" displayName="Daniel Ortiz" avatar={null} handle="@danielortiz" isOwnRow />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isOwnRow = false (default)",
+                        why: "The `Name` node renders in the default foreground tone, no different from any other row in the list. This is the plain peer row, the shape every row in a leaderboard or a thread starts from.",
+                        code: "<UserCell.Base username=\"danielortiz\" displayName=\"Daniel Ortiz\" handle=\"@danielortiz\" />",
+                        render: <UserCell.Base username="danielortiz" displayName="Daniel Ortiz" avatar={null} handle="@danielortiz" showAnatomy />,
+                    },
+                    {
+                        name: "isOwnRow = true",
+                        why: "Only the `Name` node's colour flips to the accent tone — the avatar, the handle, and the trailing slot stay exactly as they are for everyone else. A leaderboard or a comment thread is a list of peers, and the one row that is the viewer needs to jump out without a special layout of its own.",
+                        code: "<UserCell.Base username=\"danielortiz\" displayName=\"Daniel Ortiz\" handle=\"@danielortiz\" isOwnRow />",
+                        render: <UserCell.Base username="danielortiz" displayName="Daniel Ortiz" avatar={null} handle="@danielortiz" isOwnRow />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -242,7 +273,8 @@ export const OwnRow: Story = {
  * để CHỨNG MINH bug đã sửa ở chặng 1: trước atom khoá cứng avatar shimmer ở `size-9`
  * bất kể `size`, nên hai hàng ra pixel y hệt nhau (lỗi ATOM, không phải story). Nay
  * `isSkeleton` uỷ quyền thẳng `Avatar.Base isSkeleton size={size}` nên vòng tròn đổi
- * theo đúng preset — hai ô dưới đây khác nhau thật (avatar `size-8` vs `size-10`).
+ * theo đúng preset. Migrated to `states` 2026-07-27 — each size is its own state so
+ * the reader can flip between the two and see the circle change.
  */
 export const Skeleton: Story = {
     render: () => (
@@ -251,17 +283,22 @@ export const Skeleton: Story = {
                 name="UserCell.Base"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
-                reason="Whoever owns the row shape owns its resting state, so the cell draws its own shimmer instead of the caller assembling one from separate skeleton atoms."
-                note="The avatar circle is delegated to Avatar.Base's own isSkeleton, so it mirrors size instead of locking to one width — the sm row below has a visibly smaller circle than the md row. The name and (when handle is set) handle bars mirror the live row's two-line shape the same way for both sizes."
                 annotate={ANNOTATE}
-                code={`<UserCell.Base username="placeholder" handle="@placeholder" size="sm" isSkeleton />
-<UserCell.Base username="placeholder" handle="@placeholder" size="md" isSkeleton />`}
-            >
-                <div className="flex flex-col gap-4">
-                    <UserCell.Base username="placeholder" handle="@placeholder" size="sm" isSkeleton showAnatomy />
-                    <UserCell.Base username="placeholder" handle="@placeholder" size="md" isSkeleton />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isSkeleton = true, size = \"sm\"",
+                        why: "The avatar circle mirrors the `sm` preset instead of a hard-coded width, because the shimmer delegates straight to `Avatar.Base isSkeleton size={size}`. The name and (when a handle is set) handle bars mirror the live row's two-line shape at the same density.",
+                        code: "<UserCell.Base username=\"placeholder\" handle=\"@placeholder\" size=\"sm\" isSkeleton />",
+                        render: <UserCell.Base username="placeholder" handle="@placeholder" size="sm" isSkeleton showAnatomy />,
+                    },
+                    {
+                        name: "isSkeleton = true, size = \"md\"",
+                        why: "The avatar circle grows to the `md` preset, visibly larger than the `sm` state's circle, because the shimmer follows `size` instead of locking to one fixed width. Whoever owns the row shape owns its resting state, so the cell draws its own shimmer instead of the caller assembling one from separate skeleton atoms.",
+                        code: "<UserCell.Base username=\"placeholder\" handle=\"@placeholder\" size=\"md\" isSkeleton />",
+                        render: <UserCell.Base username="placeholder" handle="@placeholder" size="md" isSkeleton />,
+                    },
+                ]}
+            />
         </div>
     ),
 }

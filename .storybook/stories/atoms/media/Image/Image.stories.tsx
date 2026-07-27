@@ -47,43 +47,70 @@ export const WithImage: Story = {
                 name="Image"
                 tier="atom"
                 leaf="With image"
-                reason="A media atom that wraps <img>, owning its own loading skeleton and error fallback — media atoms (like CoverImage) only ever pass src/alt down to it."
-                note="Loading / fallbackSrc / ratio never change the tree (still Frame > Img), so they're states inside one leaf, per §14d.2."
-                code={`<Image src={url} alt="Course cover" ratio="video" />
-<Image isSkeleton src={url} alt="Loading" ratio="video" />
-<Image src={null} fallbackSrc={defaultUrl} alt="Avatar" ratio="video" />
-<Image src={url} alt="…" ratio="square" radius="full" />`}
-            >
-                <div className="flex flex-col gap-6">
-                    {/* Row 1 — three states of the same tree: loaded · loading · fallbackSrc. */}
-                    <div className="flex items-start gap-4">
-                        <div className="w-40">
-                            <Image src={OK_SRC} alt="Course cover" ratio="video" loading="eager" showAnatomy />
-                        </div>
-                        <div className="w-40">
-                            {/* isSkeleton forces the skeleton from outside; the image stays opacity-0 until onLoad. */}
-                            <Image isSkeleton src={OK_SRC} alt="Loading" ratio="video" showAnatomy />
-                        </div>
-                        <div className="w-40">
-                            {/* Empty src + a fallbackSrc → still renders an <img>, just from a different source. */}
-                            <Image src={null} fallbackSrc={FALLBACK_SRC} alt="Avatar" ratio="video" loading="eager" />
-                        </div>
-                    </div>
-
-                    {/* Row 2 — shape variants: ratio · radius · fit. */}
-                    <div className="flex items-start gap-4">
-                        <div className="w-24">
-                            <Image src={OK_SRC} alt="Square, full radius" ratio="square" radius="full" loading="eager" />
-                        </div>
-                        <div className="w-40">
-                            <Image src={OK_SRC} alt="Video ratio" ratio="video" loading="eager" />
-                        </div>
-                        <div className="w-24">
-                            <Image src={OK_SRC} alt="Portrait, contain" ratio="portrait" fit="contain" loading="eager" />
-                        </div>
-                    </div>
-                </div>
-            </BlockAnatomy>
+                reason="A media atom that wraps <img>, owning its own loading skeleton and error fallback: media atoms (like CoverImage) only ever pass src/alt down to it. Loading, fallbackSrc and ratio never change the tree, still Frame containing Img, so they live as states inside this one leaf per §14d.2."
+                states={[
+                    {
+                        name: "src set, image loaded",
+                        why: "The real `<img>` renders at full opacity inside the frame. This is the resting shape every other state below is compared against.",
+                        code: "<Image src={url} alt=\"Course cover\" ratio=\"video\" />",
+                        render: (
+                            <div className="w-40">
+                                <Image src={OK_SRC} alt="Course cover" ratio="video" loading="eager" showAnatomy />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "isSkeleton = true (forced from outside)",
+                        why: "A skeleton shimmer covers the frame and the `<img>` itself sits underneath at opacity-0 until it fires `onLoad`. The atom manages this on its own so a parent that's still fetching data only has to flip one flag.",
+                        code: "<Image isSkeleton src={url} alt=\"Loading\" ratio=\"video\" />",
+                        render: (
+                            <div className="w-40">
+                                <Image isSkeleton src={OK_SRC} alt="Loading" ratio="video" />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "src = null, fallbackSrc set",
+                        why: "An `<img>` still renders, just sourced from `fallbackSrc` instead of the missing `src`. The tree stays the same shape as the loaded state, only which URL feeds the tag differs.",
+                        code: "<Image src={null} fallbackSrc={defaultUrl} alt=\"Avatar\" ratio=\"video\" />",
+                        render: (
+                            <div className="w-40">
+                                <Image src={null} fallbackSrc={FALLBACK_SRC} alt="Avatar" ratio="video" loading="eager" />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "ratio = square, radius = full",
+                        why: "The frame becomes a perfect circle instead of the default rounded rectangle. This shape is used for avatar-style images.",
+                        code: "<Image src={url} alt=\"…\" ratio=\"square\" radius=\"full\" />",
+                        render: (
+                            <div className="w-24">
+                                <Image src={OK_SRC} alt="Square, full radius" ratio="square" radius="full" loading="eager" />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "ratio = video",
+                        why: "The frame locks to a 16:9 box. This is the ratio used for course covers and thumbnails.",
+                        code: "<Image src={url} alt=\"Course cover\" ratio=\"video\" />",
+                        render: (
+                            <div className="w-40">
+                                <Image src={OK_SRC} alt="Video ratio" ratio="video" loading="eager" />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "ratio = portrait, fit = contain",
+                        why: "The frame locks to a tall 3:4 box and the image shrinks to fit entirely inside it instead of cropping to cover the box. Use `contain` when clipping the image would cut off meaningful content.",
+                        code: "<Image src={url} alt=\"…\" ratio=\"portrait\" fit=\"contain\" />",
+                        render: (
+                            <div className="w-24">
+                                <Image src={OK_SRC} alt="Portrait, contain" ratio="portrait" fit="contain" loading="eager" />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -96,11 +123,15 @@ export const FallbackGlyph: Story = {
                 name="Image"
                 tier="atom"
                 leaf="Fallback glyph"
-                note="Empty src / onError with no fallbackSrc shows an ImageIcon glyph, and alt moves into sr-only text. The frame is never left blank."
-                code={"<Image src={null} alt=\"Course cover\" ratio=\"video\" />   // or a broken image src — same branch"}
-            >
-                <Image src={null} alt="Course cover" ratio="video" showAnatomy />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "src = null, fallbackSrc not set",
+                        why: "The `Img` node disappears entirely and a `Fallback` node with an image glyph takes its place, with `alt` moving into screen-reader-only text. A genuinely broken image, an `onError` from a 404 or a decode failure, takes this same branch, so the frame is never left blank.",
+                        code: "<Image src={null} alt=\"Course cover\" ratio=\"video\" />   // or a broken image src — same branch",
+                        render: <Image src={null} alt="Course cover" ratio="video" showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }

@@ -18,14 +18,14 @@ const TrayDuotone = (props: SVGProps<SVGSVGElement>) => <TrayIcon {...props} wei
  * cases, and the loading mirror.
  *
  * The header section set (`label`/`labelEnd`/`onSeeMore`/`action`/`subtleLabel`/
- * `description`) SHARES `SurfaceCardHeader` with `SurfaceCard.Base` — here only ONE leaf
+ * `description`) SHARES `SurfaceCardHeader` with `SurfaceCard.Base`, so here only ONE leaf
  * `WithLabel` is kept to prove the header can turn on; the full header state set lives in
  * the `SurfaceCard.Base` story.
  *
- * ⚠️ `variant` (§1a, `.List` also has this prop — 2026-07-26) has NO leaf of its own here:
- * that state is the surface-in-surface AXIS, the same `Variants` leaf already demonstrated
- * on `SurfaceCard.Base`/`.Accordion` — it is not repeated again for every member of the
- * same frame.
+ * ⚠️ `variant` (§1a, `.List` also has this prop, added 2026-07-26) has NO leaf of its own
+ * here: that state is the surface-in-surface AXIS, the same `Variants` leaf already
+ * demonstrated on `SurfaceCard.Base`/`.Accordion`, so it is not repeated again for every
+ * member of the same frame.
  */
 const meta: Meta<typeof SurfaceCard.List> = {
     title: "Composites/Cards/SurfaceCard/SurfaceCard.List",
@@ -45,8 +45,8 @@ const caret = <CaretRightIcon className="size-3 text-muted" aria-hidden focusabl
 /**
  * Standard mock content (C-fixture) for the item's FREE-FORM `content` slot: avatar +
  * title + description. The item is ALREADY a row box (its own padding + hover +
- * separator) so it does NOT wrap an extra outer `Card` (avoids card-in-card) — just keeps
- * the row.
+ * separator) so it does NOT wrap an extra outer `Card` (avoids card-in-card), it just
+ * keeps the row.
  */
 const profileRow = (initials: string, title: string, description: string) => (
     <div className="flex items-center gap-3">
@@ -67,14 +67,14 @@ const courseItems: ReadonlyArray<SurfaceCardListItem> = [
 ]
 
 /**
- * `Feedback.Empty` is a REAL DEP of the `Empty` leaf (its own story, clickable) — it
- * matches the icon+title+description+action shape rendered by this leaf ⇒ it points at
+ * `Feedback.Empty` is a REAL DEP of the `Empty` leaf (its own story, clickable), it
+ * matches the icon+title+description+action shape rendered by this leaf, so it points at
  * the right `Action` leaf over there. Every other part of the frame (`Surface`/`Header`/
- * `Row`/`Item`) has no story of its own, so it's NOT declared — the old `parts={...}` path
+ * `Row`/`Item`) has no story of its own, so it's NOT declared, the old `parts={...}` path
  * that used to declare them only created dead entries (not clickable).
  */
 const PART_FEEDBACK_EMPTY: AnatomyAnnotation = {
-    role: "Fills the Surface when items is empty — icon + title + description + action.",
+    role: "Fills the Surface when `items` is empty: icon, title, description, and action.",
     tier: "composite",
     storyId: "composites-feedback-feedback-feedback-empty--action",
 }
@@ -86,16 +86,21 @@ export const Default: Story = {
                 name="SurfaceCard.List"
                 tier="composite"
                 leaf="Default"
-                reason="A BOUNDED list frame: one large-radius surface holds edge-to-edge rows, each separated by a full-bleed divider (the last row hides its own). No `label` → renders bare, no Header."
-                code={`<SurfaceCard.List
+                reason="A BOUNDED list frame: one large-radius surface holds edge-to-edge rows, each separated by a full-bleed divider (the last row hides its own)."
+                states={[
+                    {
+                        name: "3 course items, no label",
+                        why: "Three rows sit inside one bounded, large-radius surface, edge to edge, with a full-bleed divider between each pair and the last row hiding its own. With no `label` passed the frame renders bare, with no Header above the rows.",
+                        code: `<SurfaceCard.List
   items={[
     { key: "fundamentals", title: "Programming fundamentals", subtitle: "12 lessons · 4 hours", onPress: () => {}, trailing: caret },
     { key: "dsa", title: "Data structures & algorithms", subtitle: "18 lessons · 7 hours", onPress: () => {}, trailing: caret },
   ]}
-/>`}
-            >
-                <SurfaceCard.List items={courseItems} showAnatomy />
-            </BlockAnatomy>
+/>`,
+                        render: <SurfaceCard.List items={courseItems} showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -108,14 +113,18 @@ export const WithLabel: Story = {
                 name="SurfaceCard.List"
                 tier="composite"
                 leaf="WithLabel"
-                note="`label` turns on the Header above (gap-3). Drop both `label` and `description` → the frame returns a bare surface div directly. The full header slot set (see-more/action/labelEnd/subtleLabel) is demonstrated in the SurfaceCard.Base story."
-                code={`<SurfaceCard.List
+                states={[
+                    {
+                        name: "label set",
+                        why: "Passing `label` turns on the Header region above the rows, with a `gap-3` seam between them. Dropping both `label` and `description` returns the frame to a bare surface div directly, and the full header slot set (see-more/action/labelEnd/subtleLabel) is demonstrated separately in the `SurfaceCard.Base` story rather than repeated here.",
+                        code: `<SurfaceCard.List
   label="My learning path"
   items={[…]}
-/>`}
-            >
-                <SurfaceCard.List label="My learning path" items={courseItems} showAnatomy />
-            </BlockAnatomy>
+/>`,
+                        render: <SurfaceCard.List label="My learning path" items={courseItems} showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -128,46 +137,52 @@ export const LeadingMeta: Story = {
                 name="SurfaceCard.List"
                 tier="composite"
                 leaf="LeadingMeta"
-                note="The row also takes `leading` (a round icon) + `meta` (a Chip) — still ONE Row node (leading/meta are INTERNAL slots of Row, not separate frame parts)."
-                code={`<SurfaceCard.List
+                states={[
+                    {
+                        name: "leading + meta set",
+                        why: "Each row now also carries `leading` (a round icon) and `meta` (a Chip) beside the title, and both stay inside the same single Row node rather than becoming separate frame parts. Leading and meta are internal slots of Row, so a row can grow richer content without the frame itself gaining new parts.",
+                        code: `<SurfaceCard.List
   items={[
     { key: "once", leading: <IconCircle/>, title: "One-time payment", subtitle: "Pay the full tuition now",
       meta: <Chip size="sm" variant="soft" color="success">Save 10%</Chip>, onPress: () => {} },
   ]}
-/>`}
-            >
-                <SurfaceCard.List
-                    showAnatomy
-                    items={[
-                        {
-                            key: "once",
-                            leading: (
-                                <div className="flex size-10 items-center justify-center rounded-full bg-default">
-                                    <CreditCardIcon className="size-5 text-muted" aria-hidden focusable="false" />
-                                </div>
-                            ),
-                            title: "One-time payment",
-                            subtitle: "Pay the full tuition now",
-                            meta: <Chip size="sm" variant="soft" color="success" className="shrink-0">Save 10%</Chip>,
-                            onPress: () => {},
-                            anatPart: "Row",
-                        },
-                        {
-                            key: "installments",
-                            leading: (
-                                <div className="flex size-10 items-center justify-center rounded-full bg-default">
-                                    <WalletIcon className="size-5 text-muted" aria-hidden focusable="false" />
-                                </div>
-                            ),
-                            title: "Installments over 3 months",
-                            subtitle: "No interest",
-                            trailing: caret,
-                            onPress: () => {},
-                            anatPart: "Row",
-                        },
-                    ]}
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <SurfaceCard.List
+                                showAnatomy
+                                items={[
+                                    {
+                                        key: "once",
+                                        leading: (
+                                            <div className="flex size-10 items-center justify-center rounded-full bg-default">
+                                                <CreditCardIcon className="size-5 text-muted" aria-hidden focusable="false" />
+                                            </div>
+                                        ),
+                                        title: "One-time payment",
+                                        subtitle: "Pay the full tuition now",
+                                        meta: <Chip size="sm" variant="soft" color="success" className="shrink-0">Save 10%</Chip>,
+                                        onPress: () => {},
+                                        anatPart: "Row",
+                                    },
+                                    {
+                                        key: "installments",
+                                        leading: (
+                                            <div className="flex size-10 items-center justify-center rounded-full bg-default">
+                                                <WalletIcon className="size-5 text-muted" aria-hidden focusable="false" />
+                                            </div>
+                                        ),
+                                        title: "Installments over 3 months",
+                                        subtitle: "No interest",
+                                        trailing: caret,
+                                        onPress: () => {},
+                                        anatPart: "Row",
+                                    },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -184,32 +199,38 @@ export const FreeForm: Story = {
                 name="SurfaceCard.List"
                 tier="composite"
                 leaf="FreeForm"
-                note="An item with `content` (instead of Row's `title`) skips the forced leading/title/subtitle shape — content is entirely free-form (here: avatar + title + description, the C-fixture)."
-                code={`<SurfaceCard.List
+                states={[
+                    {
+                        name: "content set (instead of title)",
+                        why: "Passing `content` instead of `title` skips Row's forced leading/title/subtitle shape entirely, and the item lays out whatever the caller hands it, here the avatar + title + description C-fixture. `content` wins over `title` whenever both are passed, so a row can escape the fixed shape when the fixed shape doesn't fit the data.",
+                        code: `<SurfaceCard.List
   items={[
     { key: "starci", content: profileRow("SC", "StarCi Academy", "…"), onPress: () => {} },
     { key: "quang", content: profileRow("QN", "Mentor Quang", "…"), onPress: () => {} },
   ]}
-/>`}
-            >
-                <SurfaceCard.List
-                    showAnatomy
-                    items={[
-                        {
-                            key: "starci",
-                            content: profileRow("SC", "StarCi Academy", "Learn fullstack, system design, and DevOps along an interview-prep path."),
-                            onPress: () => {},
-                            anatPart: "Item",
-                        },
-                        {
-                            key: "quang",
-                            content: profileRow("QN", "Mentor Quang", "Fullstack mentor — reviews projects and runs mock interviews."),
-                            onPress: () => {},
-                            anatPart: "Item",
-                        },
-                    ]}
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <SurfaceCard.List
+                                showAnatomy
+                                items={[
+                                    {
+                                        key: "starci",
+                                        content: profileRow("SC", "StarCi Academy", "Learn fullstack, system design, and DevOps along an interview-prep path."),
+                                        onPress: () => {},
+                                        anatPart: "Item",
+                                    },
+                                    {
+                                        key: "quang",
+                                        content: profileRow("QN", "Mentor Quang", "Fullstack mentor — reviews projects and runs mock interviews."),
+                                        onPress: () => {},
+                                        anatPart: "Item",
+                                    },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -222,22 +243,28 @@ export const Selected: Story = {
                 name="SurfaceCard.List"
                 tier="composite"
                 leaf="Selected"
-                note="Row `selected` → a trailing accent CheckCircleIcon + `aria-current` — still one Row node, no drilling into the icon."
-                code={`<SurfaceCard.List
+                states={[
+                    {
+                        name: "selected = true (one row)",
+                        why: "The selected row grows a trailing accent CheckCircleIcon and an `aria-current` attribute, while staying the same single Row node as every other row. This marks the option currently in use inside a single-select group without tinting the whole row, which would read as a hover state instead of a selection.",
+                        code: `<SurfaceCard.List
   items={[
     { key: "vi", title: "Vietnamese", onPress: () => {} },
     { key: "en", title: "English", selected: true, onPress: () => {} },
   ]}
-/>`}
-            >
-                <SurfaceCard.List
-                    showAnatomy
-                    items={[
-                        { key: "vi", title: "Vietnamese", onPress: () => {}, anatPart: "Row" },
-                        { key: "en", title: "English", selected: true, onPress: () => {}, anatPart: "Row" },
-                    ]}
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <SurfaceCard.List
+                                showAnatomy
+                                items={[
+                                    { key: "vi", title: "Vietnamese", onPress: () => {}, anatPart: "Row" },
+                                    { key: "en", title: "English", selected: true, onPress: () => {}, anatPart: "Row" },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -250,29 +277,35 @@ export const Disabled: Story = {
                 name="SurfaceCard.List"
                 tier="composite"
                 leaf="Disabled"
-                note="One Row with `isDisabled` — stays visible, dimmed + non-interactive (not hidden from the list)."
-                code={`<SurfaceCard.List
+                states={[
+                    {
+                        name: "isDisabled = true (one row)",
+                        why: "The disabled row stays fully visible in the list, only dimmed and stripped of interaction, rather than being hidden or removed. An option that exists but isn't unlocked yet should still be seen, so the learner knows it's coming rather than wondering why it's missing.",
+                        code: `<SurfaceCard.List
   items={[
     { key: "pdf", title: "Export PDF invoice", onPress: () => {} },
     { key: "xlsx", title: "Export Excel report (coming soon)", isDisabled: true, onPress: () => {} },
   ]}
-/>`}
-            >
-                <SurfaceCard.List
-                    showAnatomy
-                    items={[
-                        { key: "pdf", title: "Export PDF invoice", onPress: () => {}, anatPart: "Row" },
-                        {
-                            key: "xlsx",
-                            title: "Export Excel report (coming soon)",
-                            subtitle: "Not yet available on the current plan",
-                            isDisabled: true,
-                            onPress: () => {},
-                            anatPart: "Row",
-                        },
-                    ]}
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <SurfaceCard.List
+                                showAnatomy
+                                items={[
+                                    { key: "pdf", title: "Export PDF invoice", onPress: () => {}, anatPart: "Row" },
+                                    {
+                                        key: "xlsx",
+                                        title: "Export Excel report (coming soon)",
+                                        subtitle: "Not yet available on the current plan",
+                                        isDisabled: true,
+                                        onPress: () => {},
+                                        anatPart: "Row",
+                                    },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -285,21 +318,27 @@ export const HoverUnderline: Story = {
                 name="SurfaceCard.List"
                 tier="composite"
                 leaf="HoverUnderline"
-                note={"`hover=\"underline\"` + `href` → the Row renders as an `<a>`, the title underlines on hover (no row background tint)."}
-                code={`<SurfaceCard.List
+                states={[
+                    {
+                        name: "hover = \"underline\", href set",
+                        why: "With `hover=\"underline\"` and `href` set, the Row renders as a real `<a>` and only the title underlines on hover, with no row background tint. This suits a row that behaves like an inline text link, navigating away, rather than a card-like clickable surface.",
+                        code: `<SurfaceCard.List
   items={[
     { key: "dropout", title: "Why do learners drop out of courses?", subtitle: "12.4k reads", hover: "underline", href: "#" },
   ]}
-/>`}
-            >
-                <SurfaceCard.List
-                    showAnatomy
-                    items={[
-                        { key: "dropout", title: "Why do learners drop out of courses?", subtitle: "12.4k reads", hover: "underline", href: "#", anatPart: "Row" },
-                        { key: "senior", title: "The path to becoming a Senior Backend engineer", subtitle: "9.1k reads", hover: "underline", href: "#", anatPart: "Row" },
-                    ]}
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <SurfaceCard.List
+                                showAnatomy
+                                items={[
+                                    { key: "dropout", title: "Why do learners drop out of courses?", subtitle: "12.4k reads", hover: "underline", href: "#", anatPart: "Row" },
+                                    { key: "senior", title: "The path to becoming a Senior Backend engineer", subtitle: "9.1k reads", hover: "underline", href: "#", anatPart: "Row" },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -312,22 +351,28 @@ export const Static: Story = {
                 name="SurfaceCard.List"
                 tier="composite"
                 leaf="Static"
-                note="No `onPress`/`href` → the Row renders a static `<div>` (no fake hover/focus/cursor)."
-                code={`<SurfaceCard.List
+                states={[
+                    {
+                        name: "no onPress, no href",
+                        why: "With neither `onPress` nor `href` passed, the Row renders a plain, static `<div>` with no hover background, no focus ring, and no pointer cursor. Faking any of those on a row that cannot actually be activated would mislead a keyboard or screen-reader user into expecting an action.",
+                        code: `<SurfaceCard.List
   items={[
     { key: "resilience", title: "Resilience", meta: <Chip size="sm" variant="soft" color="danger">25% recall</Chip> },
   ]}
-/>`}
-            >
-                <SurfaceCard.List
-                    showAnatomy
-                    items={[
-                        { key: "resilience", title: "Resilience", meta: <Chip size="sm" variant="soft" color="danger" className="shrink-0">25% recall</Chip>, anatPart: "Row" },
-                        { key: "errors", title: "Error Handling", meta: <Chip size="sm" variant="soft" color="warning" className="shrink-0">33% recall</Chip>, anatPart: "Row" },
-                        { key: "authz", title: "Authorization", meta: <Chip size="sm" variant="soft" color="success" className="shrink-0">57% recall</Chip>, anatPart: "Row" },
-                    ]}
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <SurfaceCard.List
+                                showAnatomy
+                                items={[
+                                    { key: "resilience", title: "Resilience", meta: <Chip size="sm" variant="soft" color="danger" className="shrink-0">25% recall</Chip>, anatPart: "Row" },
+                                    { key: "errors", title: "Error Handling", meta: <Chip size="sm" variant="soft" color="warning" className="shrink-0">33% recall</Chip>, anatPart: "Row" },
+                                    { key: "authz", title: "Authorization", meta: <Chip size="sm" variant="soft" color="success" className="shrink-0">57% recall</Chip>, anatPart: "Row" },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -340,24 +385,30 @@ export const Verdict: Story = {
                 name="SurfaceCard.List"
                 tier="composite"
                 leaf="Verdict"
-                note="`tone` is shorthand for `withVerdict={{ enable: true, variant: tone }}` → a left inset-shadow band right on the Row, not a separate part."
-                code={`<SurfaceCard.List
+                states={[
+                    {
+                        name: "tone = success | warning | danger",
+                        why: "Each row grows a left inset-shadow band coloured by `tone`, since `tone` is shorthand for `withVerdict={{ enable: true, variant: tone }}` rather than a separate part. The band lets a row carry a data-driven verdict, like a pass/warn/fail tier, directly on its own edge.",
+                        code: `<SurfaceCard.List
   items={[
     { key: "shell", title: "Shell & file system", tone: "success", onPress: () => {} },
     { key: "pipe", title: "Redirect & pipe", tone: "warning", onPress: () => {} },
     { key: "perm", title: "Basic file permissions", tone: "danger", onPress: () => {} },
   ]}
-/>`}
-            >
-                <SurfaceCard.List
-                    showAnatomy
-                    items={[
-                        { key: "shell", title: "Shell & file system", tone: "success", onPress: () => {}, anatPart: "Row" },
-                        { key: "pipe", title: "Redirect & pipe", tone: "warning", onPress: () => {}, anatPart: "Row" },
-                        { key: "perm", title: "Basic file permissions", tone: "danger", onPress: () => {}, anatPart: "Row" },
-                    ]}
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <SurfaceCard.List
+                                showAnatomy
+                                items={[
+                                    { key: "shell", title: "Shell & file system", tone: "success", onPress: () => {}, anatPart: "Row" },
+                                    { key: "pipe", title: "Redirect & pipe", tone: "warning", onPress: () => {}, anatPart: "Row" },
+                                    { key: "perm", title: "Basic file permissions", tone: "danger", onPress: () => {}, anatPart: "Row" },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -370,16 +421,22 @@ export const SingleRow: Story = {
                 name="SurfaceCard.List"
                 tier="composite"
                 leaf="SingleRow"
-                note="Just one Row — the separator hides itself on the last row (edge case: no need for ≥2 rows to be valid)."
-                code={`<SurfaceCard.List
+                states={[
+                    {
+                        name: "items has exactly 1 entry",
+                        why: "With only one Row in the list, no divider line appears below it, since the separator always hides itself on the last row. A list frame does not need two or more rows to be a valid render, one row is still a complete, correctly-drawn list.",
+                        code: `<SurfaceCard.List
   items={[{ key: "only", title: "Just one item", onPress: () => {}, trailing: caret }]}
-/>`}
-            >
-                <SurfaceCard.List
-                    showAnatomy
-                    items={[{ key: "only", title: "Just one item", subtitle: "The separator hides itself on the last row", onPress: () => {}, trailing: caret, anatPart: "Row" }]}
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <SurfaceCard.List
+                                showAnatomy
+                                items={[{ key: "only", title: "Just one item", subtitle: "The separator hides itself on the last row", onPress: () => {}, trailing: caret, anatPart: "Row" }]}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -393,28 +450,34 @@ export const Empty: Story = {
                 tier="composite"
                 leaf="Empty"
                 annotate={{ "Feedback.Empty": PART_FEEDBACK_EMPTY }}
-                note="`items={[]}` → `emptyState` fills the Surface (p-8) instead of leaving it blank."
-                code={`<SurfaceCard.List
+                states={[
+                    {
+                        name: "items = []",
+                        why: "With `items` empty, `emptyState` (a `Feedback.Empty` icon, title, description, and action) fills the surface's own padding instead of leaving a blank card. A list that can be empty needs to say so, not just render nothing where rows used to be.",
+                        code: `<SurfaceCard.List
   label="My courses"
   items={[]}
   emptyState={<Feedback.Empty icon={TrayDuotone} title="No courses yet" … />}
-/>`}
-            >
-                <SurfaceCard.List
-                    label="My courses"
-                    items={[]}
-                    emptyState={
-                        <Feedback.Empty
-                            icon={TrayDuotone}
-                            title="No courses yet"
-                            description="Enroll in a course to see it here."
-                            action={<Button variant="primary" size="sm">Explore courses</Button>}
-                            anatPart="Feedback.Empty"
-                        />
-                    }
-                    showAnatomy
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <SurfaceCard.List
+                                label="My courses"
+                                items={[]}
+                                emptyState={
+                                    <Feedback.Empty
+                                        icon={TrayDuotone}
+                                        title="No courses yet"
+                                        description="Enroll in a course to see it here."
+                                        action={<Button variant="primary" size="sm">Explore courses</Button>}
+                                        anatPart="Feedback.Empty"
+                                    />
+                                }
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -433,22 +496,28 @@ export const Loading: Story = {
                 name="SurfaceCard.List"
                 tier="composite"
                 leaf="Loading"
-                note="Skeleton MIRRORS the real tree: Header + Surface + real Row stay exactly as-is, only the title inside each Row swaps for a Skeleton bar."
-                code={`<SurfaceCard.List
+                states={[
+                    {
+                        name: "title swapped for a Skeleton bar per row",
+                        why: "The Header, Surface, and real Row nodes stay exactly as they are, and only the `title` inside each Row swaps for a Skeleton bar. Mirroring the real tree instead of drawing a separate skeleton shape is what keeps the list from jumping once the real titles arrive.",
+                        code: `<SurfaceCard.List
   label="My courses"
   items={[0, 1, 2].map((i) => ({ key: String(i), title: <HeroSkeleton className="h-[14px] w-1/2 rounded" /> }))}
-/>`}
-            >
-                <SurfaceCard.List
-                    label="My courses"
-                    showAnatomy
-                    items={[0, 1, 2].map((i) => ({
-                        key: String(i),
-                        title: <HeroSkeleton className="h-[14px] w-1/2 rounded" />,
-                        anatPart: "Row",
-                    }))}
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <SurfaceCard.List
+                                label="My courses"
+                                showAnatomy
+                                items={[0, 1, 2].map((i) => ({
+                                    key: String(i),
+                                    title: <HeroSkeleton className="h-[14px] w-1/2 rounded" />,
+                                    anatPart: "Row",
+                                }))}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

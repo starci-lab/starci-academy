@@ -21,7 +21,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     Chip: { tier: "atom", role: "each tag renders as a removable Chip.Base", storyId: "atoms-chips-chip-chip-base--default" },
 }
 
-/** Leaf TRẦN — trống, gõ + Enter để thêm thẻ. Chưa có token nên chưa có Chip deps. */
+/** Leaf TRẦN — trống, gõ + Enter để thêm thẻ. Chưa có token nên chưa có Chip deps. Migrated to `states` 2026-07-27. */
 export const Default: Story = {
     render: () => {
         const Demo = () => {
@@ -31,20 +31,26 @@ export const Default: Story = {
                     name="Input.Tags"
                     tier="atom"
                     leaf="Default"
-                    note="Bare — no label, hint, or error."
-                    code={"<Input.Tags value={value} onValueChange={setValue} placeholder=\"Add a tag…\" />"}
-                >
-                    <div className="w-80">
-                        <Input.Tags value={value} onValueChange={setValue} placeholder="Add a tag…" ariaLabel="Tags" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "value = [] (no tags yet)",
+                            why: "The field renders as an empty bordered box holding just the draft text input, with no `Chip.Base` tokens and no label or hint above it. Typing a token and pressing Enter is how the first tag gets added, so this bare box is the field's true resting state before any data exists.",
+                            code: "<Input.Tags value={value} onValueChange={setValue} placeholder=\"Add a tag…\" />",
+                            render: (
+                                <div className="w-80">
+                                    <Input.Tags value={value} onValueChange={setValue} placeholder="Add a tag…" ariaLabel="Tags" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf props `label` + `hint` — nhãn trên, mô tả dưới nhãn. */
+/** Leaf props `label` + `hint` — nhãn trên, mô tả dưới nhãn. Migrated to `states` 2026-07-27. */
 export const WithLabel: Story = {
     render: () => {
         const Demo = () => {
@@ -54,20 +60,26 @@ export const WithLabel: Story = {
                     name="Input.Tags"
                     tier="atom"
                     leaf="Props `label` + `hint`"
-                    note="Label plus hint."
-                    code={"<Input.Tags label=\"Skills\" hint=\"Press Enter to add\" value={value} onValueChange={setValue} />"}
-                >
-                    <div className="w-80">
-                        <Input.Tags label="Skills" hint="Press Enter to add" value={value} onValueChange={setValue} placeholder="Add a tag…" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "label + hint set, value = []",
+                            why: "A `label` line appears above the box and a `hint` line appears beneath it, while the tag box itself stays exactly as empty as the Default state. The hint spells out the Enter-to-add gesture that the bare box alone can't communicate.",
+                            code: "<Input.Tags label=\"Skills\" hint=\"Press Enter to add\" value={value} onValueChange={setValue} />",
+                            render: (
+                                <div className="w-80">
+                                    <Input.Tags label="Skills" hint="Press Enter to add" value={value} onValueChange={setValue} placeholder="Add a tag…" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `isRequired` — dấu `*` sau nhãn. */
+/** Leaf prop `isRequired` — dấu `*` sau nhãn. Migrated to `states` 2026-07-27. */
 export const Required: Story = {
     render: () => {
         const Demo = () => {
@@ -77,20 +89,26 @@ export const Required: Story = {
                     name="Input.Tags"
                     tier="atom"
                     leaf="Prop `isRequired`"
-                    note="isRequired adds a * after the label."
-                    code={"<Input.Tags label=\"Skills\" isRequired value={value} onValueChange={setValue} />"}
-                >
-                    <div className="w-80">
-                        <Input.Tags label="Skills" isRequired value={value} onValueChange={setValue} placeholder="Add a tag…" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "isRequired = true",
+                            why: "A `*` mark attaches to the end of the label; nothing else about the box or its tokens changes. Some tag fields aren't optional, so the asterisk has to appear before the caller ever tries to submit the surrounding form.",
+                            code: "<Input.Tags label=\"Skills\" isRequired value={value} onValueChange={setValue} />",
+                            render: (
+                                <div className="w-80">
+                                    <Input.Tags label="Skills" isRequired value={value} onValueChange={setValue} placeholder="Add a tag…" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `value` filled — vài token, mỗi token là một `Chip.Base` (dep thật). */
+/** Leaf prop `value` filled — vài token, mỗi token là một `Chip.Base` (dep thật). Migrated to `states` 2026-07-27. */
 export const Filled: Story = {
     render: () => {
         const Demo = () => {
@@ -100,21 +118,27 @@ export const Filled: Story = {
                     name="Input.Tags"
                     tier="atom"
                     leaf="Prop `value` (filled)"
-                    note="value holds tokens — each one renders as a Chip.Base."
                     annotate={ANNOTATE}
-                    code={"<Input.Tags label=\"Skills\" value={[\"React\", \"TypeScript\", \"GraphQL\"]} onValueChange={setValue} />"}
-                >
-                    <div className="w-80">
-                        <Input.Tags label="Skills" value={value} onValueChange={setValue} placeholder="Add a tag…" removeLabel="Remove tag" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "value = [\"React\", \"TypeScript\", \"GraphQL\"]",
+                            why: "Each string in `value` mounts as its own removable `Chip.Base` inside the box, which is the one real dependency this atom composes. Rendering tags as chips instead of plain comma-joined text is what makes each one individually removable.",
+                            code: "<Input.Tags label=\"Skills\" value={[\"React\", \"TypeScript\", \"GraphQL\"]} onValueChange={setValue} />",
+                            render: (
+                                <div className="w-80">
+                                    <Input.Tags label="Skills" value={value} onValueChange={setValue} placeholder="Add a tag…" removeLabel="Remove tag" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `isDisabled` — khoá hộp, nhãn nhạt; Chip vẫn hiện nhưng không xoá được. */
+/** Leaf prop `isDisabled` — khoá hộp, nhãn nhạt; Chip vẫn hiện nhưng không xoá được. Migrated to `states` 2026-07-27. */
 export const Disabled: Story = {
     render: () => {
         const Demo = () => {
@@ -124,21 +148,27 @@ export const Disabled: Story = {
                     name="Input.Tags"
                     tier="atom"
                     leaf="Prop `isDisabled`"
-                    note="isDisabled locks the box — tags stay visible but the Chip cannot be removed."
                     annotate={ANNOTATE}
-                    code={"<Input.Tags label=\"Skills\" isDisabled value={[\"React\", \"TypeScript\"]} onValueChange={setValue} />"}
-                >
-                    <div className="w-80">
-                        <Input.Tags label="Skills" value={value} onValueChange={setValue} placeholder="Add a tag…" removeLabel="Remove tag" isDisabled showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "isDisabled = true, value = [\"React\", \"TypeScript\"]",
+                            why: "The chips stay visible and the label dims, but the × on each chip stops responding and the draft input can no longer take focus. The tags must still read even though editing is locked, for example while a field the tags depend on is still loading.",
+                            code: "<Input.Tags label=\"Skills\" isDisabled value={[\"React\", \"TypeScript\"]} onValueChange={setValue} />",
+                            render: (
+                                <div className="w-80">
+                                    <Input.Tags label="Skills" value={value} onValueChange={setValue} placeholder="Add a tag…" removeLabel="Remove tag" isDisabled showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `errorMessage` — cùng `label` → dòng đỏ + viền lỗi. */
+/** Leaf prop `errorMessage` — cùng `label` → dòng đỏ + viền lỗi. Migrated to `states` 2026-07-27. */
 export const Error: Story = {
     render: () => {
         const Demo = () => {
@@ -148,21 +178,27 @@ export const Error: Story = {
                     name="Input.Tags"
                     tier="atom"
                     leaf="Prop `errorMessage`"
-                    note="label plus errorMessage adds the red line and the invalid border."
                     annotate={ANNOTATE}
-                    code={"<Input.Tags label=\"Skills\" errorMessage=\"Add at least 3 tags\" value={[\"React\"]} onValueChange={setValue} />"}
-                >
-                    <div className="w-80">
-                        <Input.Tags label="Skills" errorMessage="Add at least 3 tags" value={value} onValueChange={setValue} placeholder="Add a tag…" removeLabel="Remove tag" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "errorMessage set, value = [\"React\"]",
+                            why: "A red line appears under the box and the border switches to the danger tone, while the existing chip keeps rendering unchanged. The message has to sit right at the field that failed validation, not float somewhere else on the form.",
+                            code: "<Input.Tags label=\"Skills\" errorMessage=\"Add at least 3 tags\" value={[\"React\"]} onValueChange={setValue} />",
+                            render: (
+                                <div className="w-80">
+                                    <Input.Tags label="Skills" errorMessage="Add at least 3 tags" value={value} onValueChange={setValue} placeholder="Add a tag…" removeLabel="Remove tag" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `isSkeleton` — nhãn mirror trên field-box skeleton. */
+/** Leaf prop `isSkeleton` — nhãn mirror trên field-box skeleton. Migrated to `states` 2026-07-27. */
 export const Loading: Story = {
     render: () => (
         <div className="p-8">
@@ -170,13 +206,19 @@ export const Loading: Story = {
                 name="Input.Tags"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
-                note="isSkeleton with a label mirrors the label above the shimmer box."
-                code={"<Input.Tags label=\"Skills\" isSkeleton />"}
-            >
-                <div className="w-80">
-                    <Input.Tags label="Skills" value={[]} onValueChange={() => {}} isSkeleton showAnatomy />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isSkeleton = true, label set",
+                        why: "The label text still renders above a shimmer bar that stands in for the whole box — chips, draft input, and all. The atom draws its own resting shape instead of the caller assembling a placeholder box by hand.",
+                        code: "<Input.Tags label=\"Skills\" isSkeleton />",
+                        render: (
+                            <div className="w-80">
+                                <Input.Tags label="Skills" value={[]} onValueChange={() => {}} isSkeleton showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

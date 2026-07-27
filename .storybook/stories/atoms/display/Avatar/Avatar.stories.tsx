@@ -16,12 +16,12 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * DiceBear into its fallback chain (see the header of `AvatarBase.tsx`):
  *
  * The OLD version split 4 leaves (`Image`/`Initials`/`Fallback`/`Empty`) by IMAGE
- * SOURCE — that's ONE axis, not four — so they fold into one `Source` leaf.
+ * SOURCE, that's ONE axis, not four, so they fold into one `Source` leaf.
  * In exchange, the old version was flat-out MISSING a leaf for `size` and `color`
  * even though both produce their own shape (size changes the box, the status dot,
  * and the glyph weight; color changes the fallback background).
  *
- * The new leaf set — exactly the props of `AvatarBaseProps` that HAVE a shape:
+ * The new leaf set, exactly the props of `AvatarBaseProps` that HAVE a shape:
  *   `Default` (bare) · `Source` (the src→generated→initials→icon chain, including
  *   the failed-load-src case) · `Fallback` (which face to show without a src) ·
  *   `Status` (4 tones) · `Sizes` (3 tiers) · `Colors` (5 tints) · `Skeleton`
@@ -29,7 +29,7 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  *
  * A prop that produces no shape (`className`, `showAnatomy`) gets no leaf.
  *
- * 🎨 Icon = Phosphor (§5.0), pass the COMPONENT (`icon={UserIcon}`) not JSX —
+ * 🎨 Icon = Phosphor (§5.0), pass the COMPONENT (`icon={UserIcon}`) not JSX,
  * the atom forces the scale + weight itself based on `size` (§5.0a).
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -110,11 +110,15 @@ export const Default: Story = {
                 tier="atom"
                 leaf="Bare avatar"
                 reason="The one avatar in the system. Every leaf below it differs by exactly one prop, so this is the baseline you compare against."
-                note="No src, no name, no icon — the atom still has to draw something, so it falls through to fallback=&quot;generated&quot; and asks DiceBear for a face using its built-in placeholder seed. Size defaults to md, no status dot."
-                code={"<Avatar.Base />"}
-            >
-                <Avatar.Base showAnatomy />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "no src, no name, no icon",
+                        why: "With no `src`, `name`, or `icon` passed, the atom still has to draw something, so it falls through to `fallback=\"generated\"` and asks DiceBear for a face using its own built-in placeholder seed. Size defaults to `md` and no status dot is drawn, since neither was requested.",
+                        code: "<Avatar.Base />",
+                        render: <Avatar.Base showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -133,21 +137,27 @@ export const Source: Story = {
                 tier="atom"
                 leaf="Source chain"
                 reason="An avatar tries harder before it gives up: a real photo, then a generated face so the person still looks like someone, then initials, then a plain icon. Which step you land on depends on what data you actually have."
-                note="The broken-image cell is the one that used to be missing: HeroUI/Radix only mounts the <img> after it loads, so the atom listens for the load error instead and steps down to the generated face — not straight to initials."
-                code={`<Avatar.Base src="${REAL_IMG}" name="Mai Chi" />
+                states={[
+                    {
+                        name: "src set | seed set | name only | icon only | broken src + seed",
+                        why: "Five cells render the full fallback chain side by side: a real photo, a generated face, initials, a plain icon, and a broken `src` that still lands on the generated face rather than skipping straight to initials. HeroUI/Radix only mounts the `<img>` once it has loaded, so the atom has to listen for the load error itself to catch that last case, which used to be the missing cell in this chain.",
+                        code: `<Avatar.Base src="${REAL_IMG}" name="Mai Chi" />
 <Avatar.Base seed="mai.chi@starci.vn" name="Mai Chi" />
 <Avatar.Base name="Mai Chi" fallback="initials" />
 <Avatar.Base icon={UserIcon} fallback="icon" />
-<Avatar.Base src="https://example.com/nope.png" seed="mai.chi@starci.vn" name="Mai Chi" />`}
-            >
-                <div className="flex flex-wrap items-end gap-4">
-                    <Avatar.Base src={REAL_IMG} name={NAME} showAnatomy />
-                    <Avatar.Base seed={SEED} name={NAME} />
-                    <Avatar.Base name={NAME} fallback="initials" />
-                    <Avatar.Base icon={UserIcon} fallback="icon" />
-                    <Avatar.Base src={BROKEN_IMG} seed={SEED} name={NAME} />
-                </div>
-            </BlockAnatomy>
+<Avatar.Base src="https://example.com/nope.png" seed="mai.chi@starci.vn" name="Mai Chi" />`,
+                        render: (
+                            <div className="flex flex-wrap items-end gap-4">
+                                <Avatar.Base src={REAL_IMG} name={NAME} showAnatomy />
+                                <Avatar.Base seed={SEED} name={NAME} />
+                                <Avatar.Base name={NAME} fallback="initials" />
+                                <Avatar.Base icon={UserIcon} fallback="icon" />
+                                <Avatar.Base src={BROKEN_IMG} seed={SEED} name={NAME} />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -164,18 +174,22 @@ export const Fallback: Story = {
                 name="Avatar.Base"
                 tier="atom"
                 leaf="Prop `fallback`"
-                reason="This prop only matters when there is no photo — it decides how far down the chain the avatar is allowed to fall. Leave it alone and you get the generated face; turn it off when you need a plain, non-identifying mark."
-                note="No src on any of these three — with a real photo present all three would render the same picture, which would say nothing about the prop."
-                code={`<Avatar.Base fallback="generated" name="Mai Chi" />
-<Avatar.Base fallback="initials" name="Mai Chi" />
-<Avatar.Base fallback="icon" icon={UserIcon} />`}
-            >
-                <div className="flex flex-wrap items-end gap-4">
-                    <Avatar.Base fallback="generated" name={NAME} showAnatomy />
-                    <Avatar.Base fallback="initials" name={NAME} />
-                    <Avatar.Base fallback="icon" icon={UserIcon} />
-                </div>
-            </BlockAnatomy>
+                reason="This prop only matters when there is no photo: it decides how far down the chain the avatar is allowed to fall. Leave it alone and you get the generated face, turn it off when you need a plain, non-identifying mark."
+                states={[
+                    {
+                        name: "fallback = generated | initials | icon",
+                        why: "Three cells render the same three fallback values with no `src` on any of them, since a real photo would beat every fallback and make all three render the same picture. Leaving `src` out is what actually lets the prop's own effect show through.",
+                        code: "<Avatar.Base fallback=\"generated\" name=\"Mai Chi\" />\n<Avatar.Base fallback=\"initials\" name=\"Mai Chi\" />\n<Avatar.Base fallback=\"icon\" icon={UserIcon} />",
+                        render: (
+                            <div className="flex flex-wrap items-end gap-4">
+                                <Avatar.Base fallback="generated" name={NAME} showAnatomy />
+                                <Avatar.Base fallback="initials" name={NAME} />
+                                <Avatar.Base fallback="icon" icon={UserIcon} />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -192,29 +206,35 @@ export const Status: Story = {
                 tier="atom"
                 leaf="Prop `status`"
                 reason="The dot tells the reader whether this person is reachable right now, without them opening a profile. It sits at the same corner and scales with the avatar at every size."
-                note="Each row is one status shown at all three sizes — the dot diameter is supposed to grow with the avatar (size-2 → 2.5 → 3); a row that looks the same size throughout means that table drifted."
-                code={`<Avatar.Base src="${REAL_IMG}" name="Mai Chi" status="online" size="sm" />
+                states={[
+                    {
+                        name: "status × size (4 tones × 3 sizes)",
+                        why: "Four rows, one status each, run through all three sizes so the dot diameter can be checked growing with the avatar from size-2 to 2.5 to size-3. A row where the dot looks the same size across all three columns means that scaling table has drifted out of sync with the avatar's own size steps.",
+                        code: `<Avatar.Base src="${REAL_IMG}" name="Mai Chi" status="online" size="sm" />
 <Avatar.Base src="${REAL_IMG}" name="Mai Chi" status="offline" size="md" />
 <Avatar.Base src="${REAL_IMG}" name="Mai Chi" status="busy" size="lg" />
-<Avatar.Base src="${REAL_IMG}" name="Mai Chi" status="away" />`}
-            >
-                <div className="flex flex-col gap-4">
-                    {STATUSES.map(({ status }, statusIndex) => (
-                        <div key={status} className="flex items-end gap-4">
-                            {SIZES.map(({ size }, sizeIndex) => (
-                                <Avatar.Base
-                                    key={size}
-                                    src={REAL_IMG}
-                                    name={NAME}
-                                    status={status}
-                                    size={size}
-                                    showAnatomy={statusIndex === 0 && sizeIndex === 0}
-                                />
-                            ))}
-                        </div>
-                    ))}
-                </div>
-            </BlockAnatomy>
+<Avatar.Base src="${REAL_IMG}" name="Mai Chi" status="away" />`,
+                        render: (
+                            <div className="flex flex-col gap-4">
+                                {STATUSES.map(({ status }, statusIndex) => (
+                                    <div key={status} className="flex items-end gap-4">
+                                        {SIZES.map(({ size }, sizeIndex) => (
+                                            <Avatar.Base
+                                                key={size}
+                                                src={REAL_IMG}
+                                                name={NAME}
+                                                status={status}
+                                                size={size}
+                                                showAnatomy={statusIndex === 0 && sizeIndex === 0}
+                                            />
+                                        ))}
+                                    </div>
+                                ))}
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -231,25 +251,29 @@ export const Sizes: Story = {
                 name="Avatar.Base"
                 tier="atom"
                 leaf="Prop `size`"
-                reason="Three presets cover every place an avatar shows up — a dense row, a default card, a profile header — and the atom owns the exact pixels, so no call-site ever picks a size in between."
-                note="Every cell carries the same fallback icon on purpose: the box grows across sm/md/lg, and so does the glyph's stroke weight — the sm glyph is bold to survive being drawn small, md/lg switch to regular."
-                code={`<Avatar.Base icon={UserIcon} size="sm" />
-<Avatar.Base icon={UserIcon} size="md" />
-<Avatar.Base icon={UserIcon} size="lg" />`}
-            >
-                <div className="flex items-end gap-4">
-                    {SIZES.map(({ size }, sizeIndex) => (
-                        <Avatar.Base key={size} icon={UserIcon} size={size} showAnatomy={sizeIndex === 0} />
-                    ))}
-                </div>
-            </BlockAnatomy>
+                reason="Three presets cover every place an avatar shows up: a dense row, a default card, a profile header, and the atom owns the exact pixels, so no call-site ever picks a size in between."
+                states={[
+                    {
+                        name: "size = sm | md | lg",
+                        why: "Every cell carries the same fallback icon on purpose, so the box is seen growing across sm, md, and lg, and the glyph's stroke weight grows with it: the sm glyph turns bold to survive being drawn small, while md and lg switch to a regular weight. Seeing all three side by side is what proves the weight compensation, not just the box size, actually changes per step.",
+                        code: "<Avatar.Base icon={UserIcon} size=\"sm\" />\n<Avatar.Base icon={UserIcon} size=\"md\" />\n<Avatar.Base icon={UserIcon} size=\"lg\" />",
+                        render: (
+                            <div className="flex items-end gap-4">
+                                {SIZES.map(({ size }, sizeIndex) => (
+                                    <Avatar.Base key={size} icon={UserIcon} size={size} showAnatomy={sizeIndex === 0} />
+                                ))}
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
 /**
  * Leaf prop `color` — the tint of the FALLBACK BACKGROUND. Renders all 5 tints ×
- * both fallbacks that have a background (initials, icon) — `color` never touches
+ * both fallbacks that have a background (initials, icon), `color` never touches
  * a real photo, so no cell needs a `src`.
  */
 export const Colors: Story = {
@@ -259,9 +283,12 @@ export const Colors: Story = {
                 name="Avatar.Base"
                 tier="atom"
                 leaf="Prop `color`"
-                reason="Color only paints the fallback surface — it gives an initials or icon avatar a bit of identity when there is no photo to carry it. A photographed avatar ignores it entirely, which is why every cell below has no src."
-                note="Two rows, same five tints: the top row is initials, the bottom is the icon fallback — proving the tint applies to the surface, not to the glyph or the letters drawn on it."
-                code={`<Avatar.Base color="accent" name="Mai Chi" fallback="initials" />
+                reason="Color only paints the fallback surface: it gives an initials or icon avatar a bit of identity when there is no photo to carry it. A photographed avatar ignores it entirely, which is why every cell below has no `src`."
+                states={[
+                    {
+                        name: "color × fallback (5 tints × initials/icon)",
+                        why: "Two rows repeat the same five tints, initials on top and the icon fallback below, and in both rows only the background surface changes colour. Repeating the sweep across both fallback kinds is what proves the tint paints the surface itself, not the glyph or the letters drawn on it.",
+                        code: `<Avatar.Base color="accent" name="Mai Chi" fallback="initials" />
 <Avatar.Base color="danger" name="Mai Chi" fallback="initials" />
 <Avatar.Base color="default" name="Mai Chi" fallback="initials" />
 <Avatar.Base color="success" name="Mai Chi" fallback="initials" />
@@ -271,27 +298,30 @@ export const Colors: Story = {
 <Avatar.Base color="danger" icon={UserIcon} fallback="icon" />
 <Avatar.Base color="default" icon={UserIcon} fallback="icon" />
 <Avatar.Base color="success" icon={UserIcon} fallback="icon" />
-<Avatar.Base color="warning" icon={UserIcon} fallback="icon" />`}
-            >
-                <div className="flex flex-col gap-4">
-                    <div className="flex items-end gap-4">
-                        {COLORS.map(({ color }, colorIndex) => (
-                            <Avatar.Base
-                                key={color}
-                                color={color}
-                                name={NAME}
-                                fallback="initials"
-                                showAnatomy={colorIndex === 0}
-                            />
-                        ))}
-                    </div>
-                    <div className="flex items-end gap-4">
-                        {COLORS.map(({ color }) => (
-                            <Avatar.Base key={color} color={color} icon={UserIcon} fallback="icon" />
-                        ))}
-                    </div>
-                </div>
-            </BlockAnatomy>
+<Avatar.Base color="warning" icon={UserIcon} fallback="icon" />`,
+                        render: (
+                            <div className="flex flex-col gap-4">
+                                <div className="flex items-end gap-4">
+                                    {COLORS.map(({ color }, colorIndex) => (
+                                        <Avatar.Base
+                                            key={color}
+                                            color={color}
+                                            name={NAME}
+                                            fallback="initials"
+                                            showAnatomy={colorIndex === 0}
+                                        />
+                                    ))}
+                                </div>
+                                <div className="flex items-end gap-4">
+                                    {COLORS.map(({ color }) => (
+                                        <Avatar.Base key={color} color={color} icon={UserIcon} fallback="icon" />
+                                    ))}
+                                </div>
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -301,7 +331,7 @@ export const Colors: Story = {
  * all 3 sizes × (with `status` / without `status`).
  *
  * The atom draws a NEUTRAL status dot (`bg-default-300`) right inside the
- * skeleton branch when `status` is set — it doesn't know online/offline yet so
+ * skeleton branch when `status` is set, it doesn't know online/offline yet so
  * it doesn't paint a state color, but HAVING a dot is the atom's real loading
  * shape (without it, the "has status" and "no status" cells would render
  * identical pixels, violating §D). So the two columns in every row below MUST
@@ -314,24 +344,25 @@ export const Skeleton: Story = {
                 name="Avatar.Base"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
-                reason="Whoever owns the shape owns its resting state, so the avatar draws its own shimmer instead of a shared skeleton wrapper — a circle sized to match the size it will resolve to, plus a neutral dot when a status will eventually show."
-                note="Each row is one size, no-status vs status-set: the status column always carries an extra neutral gray dot at the corner, even before we know whether the person is online — the two cells are never identical, which is what keeps the footprint from jumping once real data (and its real status colour) lands."
-                code={`<Avatar.Base isSkeleton size="sm" />
-<Avatar.Base isSkeleton size="sm" status="online" />
-<Avatar.Base isSkeleton size="md" />
-<Avatar.Base isSkeleton size="md" status="online" />
-<Avatar.Base isSkeleton size="lg" />
-<Avatar.Base isSkeleton size="lg" status="online" />`}
-            >
-                <div className="flex flex-col gap-4">
-                    {SIZES.map(({ size }, sizeIndex) => (
-                        <div key={size} className="flex items-end gap-4">
-                            <Avatar.Base isSkeleton size={size} showAnatomy={sizeIndex === 0} />
-                            <Avatar.Base isSkeleton size={size} status="online" />
-                        </div>
-                    ))}
-                </div>
-            </BlockAnatomy>
+                reason="Whoever owns the shape owns its resting state, so the avatar draws its own shimmer instead of a shared skeleton wrapper: a circle sized to match the size it will resolve to, plus a neutral dot when a status will eventually show."
+                states={[
+                    {
+                        name: "isSkeleton = true, size × status-presence (3 × 2)",
+                        why: "Three rows, one size each, pair a no-status shimmer against a status-set shimmer, and the status column always carries an extra neutral grey dot at the corner even before anyone knows whether the person is online. The two cells in every row are never identical on purpose, which is what keeps the footprint from jumping once real data, and its real status colour, actually lands.",
+                        code: "<Avatar.Base isSkeleton size=\"sm\" />\n<Avatar.Base isSkeleton size=\"sm\" status=\"online\" />\n<Avatar.Base isSkeleton size=\"md\" />\n<Avatar.Base isSkeleton size=\"md\" status=\"online\" />\n<Avatar.Base isSkeleton size=\"lg\" />\n<Avatar.Base isSkeleton size=\"lg\" status=\"online\" />",
+                        render: (
+                            <div className="flex flex-col gap-4">
+                                {SIZES.map(({ size }, sizeIndex) => (
+                                    <div key={size} className="flex items-end gap-4">
+                                        <Avatar.Base isSkeleton size={size} showAnatomy={sizeIndex === 0} />
+                                        <Avatar.Base isSkeleton size={size} status="online" />
+                                    </div>
+                                ))}
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

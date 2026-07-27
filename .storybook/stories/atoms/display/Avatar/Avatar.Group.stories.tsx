@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Avatar, type AvatarSize } from "@sb-components/atoms/display/Avatar/Avatar"
+import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -36,21 +36,6 @@ const members = [
     { key: "khoa.dinh", name: "Lucas Dean" },
 ]
 
-/** One row of the `Sizes` demo table — a single `AvatarSize` tier plus its explanatory hint. */
-interface SizeRow {
-    /** The `AvatarSize` tier this row demonstrates. */
-    size: AvatarSize
-    /** Short explanation of when to use this size. */
-    hint: string
-}
-
-/** FULL `AvatarSize` union (§12d — size sits at the CLUSTER LEVEL, items don't carry their own size). */
-const SIZES: Array<SizeRow> = [
-    { size: "sm", hint: "compact — table rows, comment threads" },
-    { size: "md", hint: "default — cards, panels" },
-    { size: "lg", hint: "hero — profile headers" },
-]
-
 /**
  * `Avatar` = an edge-overlapping member (repeats ×N, has its own story to jump to).
  * `Overflow` only has SHAPE at leaf `Overflow` so it needs no `storyId` — there's
@@ -60,11 +45,11 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     Avatar: {
         storyId: "atoms-display-avatar-avatar-base--default",
         tier: "atom",
-        role: "One Avatar.Base per person, overlapped — the ring separates it from the one beneath.",
+        role: "one Avatar.Base per person, overlapped, the ring separating it from the one beneath",
     },
     Overflow: {
         tier: "atom",
-        role: "The \"+N\" chip counts the rest. It is a number, not a person, so it is not an Avatar.Base.",
+        role: "the plus-N chip counting the rest, a number rather than a person, so it is not an Avatar.Base",
     },
 }
 
@@ -88,12 +73,16 @@ export const Default: Story = {
                 tier="atom"
                 leaf="Default"
                 annotate={ANNOTATE}
-                reason="The overlapping row is a MEMBER of the Avatar atom (§13c), not its own scaffold — the group builds every Avatar.Base itself from `items`; callers never pass children."
-                note="Each avatar rides a ring-2 ring-background so it separates from the one underneath. No cap, no cut — four people fit, so no '+N' chip shows up."
-                code={"<Avatar.Group items={[{ key: \"u1\", name: \"Noah\", src: \"…\" }, …]} />"}
-            >
-                <Avatar.Group items={members.slice(0, 4)} showAnatomy />
-            </BlockAnatomy>
+                reason="The overlapping row is a MEMBER of the Avatar atom (§13c), not its own scaffold: the group builds every Avatar.Base itself from `items`, and callers never pass children."
+                states={[
+                    {
+                        name: "items = 4 members, no max/total",
+                        why: "Four avatars render in a row, each riding a ring so it separates from the one underneath it. Four fit without any cap, so no plus-N chip shows up at the end.",
+                        code: "<Avatar.Group items={[{ key: \"u1\", name: \"Noah\", src: \"…\" }, …]} />",
+                        render: <Avatar.Group items={members.slice(0, 4)} showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -110,22 +99,22 @@ export const Overflow: Story = {
                 tier="atom"
                 leaf="Props `max` / `total`"
                 annotate={ANNOTATE}
-                reason="The '+N' chip is a count, not a face, and it has two different triggers. `max` cuts a row you already hold in full. `total` covers the page-one case — you only fetched a handful of members but the server told you the real count."
-                note="Both roads land on the exact same Overflow chip; nothing distinguishes which one fired. That is by design — the reader only needs to know more exist, not why."
-                code={`<Avatar.Group max={3} items={/* 6 members */} />
-<Avatar.Group items={/* first 4 loaded */} total={12} />`}
-            >
-                <div className="flex flex-wrap items-start gap-10">
-                    <div className="flex flex-col gap-2">
-                        <p className="text-xs text-muted">max=3 on a six-person row</p>
-                        <Avatar.Group max={3} items={members} showAnatomy />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        <p className="text-xs text-muted">total=12, only 4 loaded</p>
-                        <Avatar.Group items={members.slice(0, 4)} total={12} />
-                    </div>
-                </div>
-            </BlockAnatomy>
+                reason="The plus-N chip is a count, not a face, and it has two different triggers. `max` cuts a row already held in full. `total` covers the page-one case, where only a handful of members were fetched but the server reported the real count. Both roads land on the exact same chip; nothing distinguishes which one fired, because the reader only needs to know more exist, not why."
+                states={[
+                    {
+                        name: "max = 3, items = 6 members",
+                        why: "The row cuts to three avatars and a plus-3 chip grows at the end. `max` caps a row the caller already holds in full.",
+                        code: "<Avatar.Group max={3} items={/* 6 members */} />",
+                        render: <Avatar.Group max={3} items={members} showAnatomy />,
+                    },
+                    {
+                        name: "total = 12, items = 4 loaded",
+                        why: "All four loaded avatars render and a plus-8 chip grows at the end, reading off `total` rather than counting `items`. `total` covers the page-one case, where only a handful of members were fetched but the server already reported the real count.",
+                        code: "<Avatar.Group items={/* first 4 loaded */} total={12} />",
+                        render: <Avatar.Group items={members.slice(0, 4)} total={12} />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -139,18 +128,28 @@ export const Sizes: Story = {
                 tier="atom"
                 leaf="Prop `size`"
                 annotate={ANNOTATE}
-                reason="Size lives on the group, not the member — a row of mismatched avatars would read as a layout bug, not a feature. `Avatar.Base` itself never sees a size prop from here; the group hands the same value to every one it builds."
-                note="All three tiers share the exact same DOM shape (row of rings + optional chip), so they live in one leaf instead of three."
-                code={`<Avatar.Group size="sm" items={[…]} />
-<Avatar.Group size="md" items={[…]} />
-<Avatar.Group size="lg" items={[…]} />`}
-            >
-                <div className="flex flex-col gap-4">
-                    {SIZES.map(({ size }, index) => (
-                        <Avatar.Group key={size} size={size} items={members.slice(0, 3)} showAnatomy={index === 0} />
-                    ))}
-                </div>
-            </BlockAnatomy>
+                reason="Size lives on the group, not the member, because a row of mismatched avatars would read as a layout bug rather than a feature. `Avatar.Base` never sees a size prop from here; the group hands the same value to every avatar it builds."
+                states={[
+                    {
+                        name: "size = sm, items = 3",
+                        why: "All three avatars render at the smallest tier. This size suits compact contexts like table rows or comment threads.",
+                        code: "<Avatar.Group size=\"sm\" items={[…]} />",
+                        render: <Avatar.Group size="sm" items={members.slice(0, 3)} showAnatomy />,
+                    },
+                    {
+                        name: "size = md, items = 3",
+                        why: "All three avatars render at the default tier. This is the size a group gets without passing `size` at all, used in cards and panels.",
+                        code: "<Avatar.Group size=\"md\" items={[…]} />",
+                        render: <Avatar.Group size="md" items={members.slice(0, 3)} />,
+                    },
+                    {
+                        name: "size = lg, items = 3",
+                        why: "All three avatars render at the largest tier. This size suits a hero context like a profile header.",
+                        code: "<Avatar.Group size=\"lg\" items={[…]} />",
+                        render: <Avatar.Group size="lg" items={members.slice(0, 3)} />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -174,22 +173,22 @@ export const Skeleton: Story = {
                 tier="atom"
                 leaf="Prop `isSkeleton`"
                 annotate={ANNOTATE}
-                reason="The group does not own a shimmer shape of its own — it flips isSkeleton down to every Avatar.Base it builds, so the whole row mirrors as circles instead of growing a separate loading component to keep in sync. The overflow chip mirrors too, so no real count sneaks into a loading row."
-                note="Left: 4 of 4, no overflow, row of plain circles. Right: max=4 on a six-person row — the '+2' chip that would normally show a real number is a matching circle shimmer instead, same size and ring as every avatar slot."
-                code={`<Avatar.Group isSkeleton items={/* 4 members */} />
-<Avatar.Group isSkeleton max={4} items={/* 6 members */} />`}
-            >
-                <div className="flex flex-wrap items-start gap-10">
-                    <div className="flex flex-col gap-2">
-                        <p className="text-xs text-muted">no overflow</p>
-                        <Avatar.Group isSkeleton items={members.slice(0, 4)} showAnatomy />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        <p className="text-xs text-muted">max=4, extra=2</p>
-                        <Avatar.Group isSkeleton max={4} items={members} />
-                    </div>
-                </div>
-            </BlockAnatomy>
+                reason="The group does not own a shimmer shape of its own; it flips isSkeleton down to every Avatar.Base it builds, so the whole row mirrors as circles instead of growing a separate loading component to keep in sync. The overflow chip mirrors too, so no real count sneaks into a loading row."
+                states={[
+                    {
+                        name: "isSkeleton = true, items = 4 members, no max",
+                        why: "All four slots mirror into plain circle shimmers and no chip shows up, matching `Default`'s no-overflow shape. Nothing is cut here, so the resting shape carries no plus-N placeholder either.",
+                        code: "<Avatar.Group isSkeleton items={/* 4 members */} />",
+                        render: <Avatar.Group isSkeleton items={members.slice(0, 4)} showAnatomy />,
+                    },
+                    {
+                        name: "isSkeleton = true, max = 4, items = 6 members",
+                        why: "Four circle shimmers render plus a fifth shimmer standing in for the plus-2 chip, matching `Overflow`'s cut shape. The chip that would normally show a real number becomes a matching circle shimmer instead, the same size and ring as every avatar slot, so no real count leaks into a loading row.",
+                        code: "<Avatar.Group isSkeleton max={4} items={/* 6 members */} />",
+                        render: <Avatar.Group isSkeleton max={4} items={members} />,
+                    },
+                ]}
+            />
         </div>
     ),
 }

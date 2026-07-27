@@ -22,14 +22,14 @@ type Story = StoryObj<typeof Page.Header>
 
 // Bare set: no breadcrumb, no meta, no actions.
 const TITLE_DESCRIPTION_PARTS: Array<AnatomyNode> = [
-    { name: "Title", tier: "composite", role: "primary title (H3 heading, or body-bold when size=\"compact\")" },
+    { name: "Title", tier: "composite", role: "primary title, an H3 heading, or body-bold text when size=\"compact\"" },
     { name: "Description", tier: "composite", role: "supporting line under the title, muted, clamps to 2 lines on mobile" },
 ]
 
 // Full set leaf: breadcrumb row + actions slot + a meta chip/stat strip below.
 const FULL_PARTS: Array<AnatomyNode> = [
     { name: "Breadcrumb", tier: "composite", role: "breadcrumb row above the main title row" },
-    { name: "Title", tier: "composite", role: "primary title (H3 heading)" },
+    { name: "Title", tier: "composite", role: "primary title, an H3 heading" },
     { name: "Description", tier: "composite", role: "supporting line under the title, muted" },
     { name: "Actions", tier: "composite", role: "right-aligned control slot, shrink-0" },
     { name: "Meta", tier: "composite", role: "stat/meta chip row below the title block" },
@@ -45,15 +45,21 @@ export const Minimal: Story = {
                     tier="composite"
                     leaf="Minimal"
                     parts={TITLE_DESCRIPTION_PARTS}
-                    note="Only title + description — no breadcrumb/actions/meta passed."
-                    code={"<Page.Header title=\"Manage students\" description=\"View and edit every enrolled student.\" />"}
-                >
-                    <Page.Header
-                        title="Manage students"
-                        description="View and edit every enrolled student."
-                        showAnatomy
-                    />
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "only title and description passed",
+                            why: "Only the Title and Description nodes render; Breadcrumb/Actions/Meta are all absent because no prop for them was passed. This is for a page a learner reaches straight from a menu, where a breadcrumb trail would have nothing meaningful to show.",
+                            code: "<Page.Header title=\"Manage students\" description=\"View and edit every enrolled student.\" />",
+                            render: (
+                                <Page.Header
+                                    title="Manage students"
+                                    description="View and edit every enrolled student."
+                                    showAnatomy
+                                />
+                            ),
+                        },
+                    ]}
+                />
             </div>
         </div>
     ),
@@ -69,36 +75,43 @@ export const Full: Story = {
                     tier="composite"
                     leaf="Full"
                     parts={FULL_PARTS}
-                    reason="This frame gathers breadcrumb·title·description·actions·meta into ONE place instead of every page laying out its own — this leaf turns on all 5 slots."
-                    code={`<Page.Header
+                    reason="This frame gathers breadcrumb, title, description, actions, and meta into ONE place instead of every page laying out its own header by hand."
+                    states={[
+                        {
+                            name: "all five slots passed",
+                            why: "All five slots turn on at once: the breadcrumb row above the title, the actions control at the right, and the meta chip/stat strip below. This is for a page deep in the site hierarchy, where the breadcrumb tells the learner how they got there and the meta strip surfaces a quick summary.",
+                            code: `<Page.Header
   breadcrumb={<Breadcrumbs><Breadcrumbs.Item href="#">Courses</Breadcrumbs.Item><Breadcrumbs.Item>Fullstack Mastery</Breadcrumbs.Item></Breadcrumbs>}
   title="Fullstack Mastery"
   description="A path from the fundamentals to shipping a real product, graded by AI."
   actions={<Button variant="secondary" size="sm">Edit course</Button>}
   meta={<Typography type="body-xs" color="muted">24 Modules · 87 Lessons · 32 hours</Typography>}
-/>`}
-                >
-                    <Page.Header
-                        breadcrumb={
-                            // TODO: swap for ResponsiveBreadcrumb local when ported.
-                            <Breadcrumbs>
-                                <Breadcrumbs.Item href="#">Courses</Breadcrumbs.Item>
-                                <Breadcrumbs.Item>Fullstack Mastery</Breadcrumbs.Item>
-                            </Breadcrumbs>
-                        }
-                        title="Fullstack Mastery"
-                        description="A path from the fundamentals to shipping a real product, graded by AI."
-                        actions={<Button variant="secondary" size="sm" onPress={() => {}}>Edit course</Button>}
-                        meta={
-                            <div className="flex flex-wrap items-center gap-2">
-                                {/* status chip leading (far left); stat strip = dot-separated TEXT */}
-                                <Chip size="sm" variant="soft" color="success"><Chip.Label>Open</Chip.Label></Chip>
-                                <Typography type="body-xs" color="muted">24 Modules · 87 Lessons · 32 hours</Typography>
-                            </div>
-                        }
-                        showAnatomy
-                    />
-                </BlockAnatomy>
+/>`,
+                            render: (
+                                <Page.Header
+                                    breadcrumb={
+                                        // TODO: swap for ResponsiveBreadcrumb local when ported.
+                                        <Breadcrumbs>
+                                            <Breadcrumbs.Item href="#">Courses</Breadcrumbs.Item>
+                                            <Breadcrumbs.Item>Fullstack Mastery</Breadcrumbs.Item>
+                                        </Breadcrumbs>
+                                    }
+                                    title="Fullstack Mastery"
+                                    description="A path from the fundamentals to shipping a real product, graded by AI."
+                                    actions={<Button variant="secondary" size="sm" onPress={() => {}}>Edit course</Button>}
+                                    meta={
+                                        <div className="flex flex-wrap items-center gap-2">
+                                            {/* status chip leading (far left); stat strip = dot-separated TEXT */}
+                                            <Chip size="sm" variant="soft" color="success"><Chip.Label>Open</Chip.Label></Chip>
+                                            <Typography type="body-xs" color="muted">24 Modules · 87 Lessons · 32 hours</Typography>
+                                        </div>
+                                    }
+                                    showAnatomy
+                                />
+                            ),
+                        },
+                    ]}
+                />
             </div>
         </div>
     ),
@@ -114,15 +127,21 @@ export const DescriptionClamped: Story = {
                     tier="composite"
                     leaf="DescriptionClamped"
                     parts={TITLE_DESCRIPTION_PARTS}
-                    note="Same composition as Minimal — description is longer than the narrow frame so it gets line-clamp-2."
-                    code={"<Page.Header title=\"Configure payment gateways\" description=\"Set up SePay and PayOS, choose the default gateway…\" />"}
-                >
-                    <Page.Header
-                        title="Configure payment gateways"
-                        description="Set up SePay and PayOS, choose the default gateway for new students, configure installment plans applied per course, and track transaction status in real time."
-                        showAnatomy
-                    />
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "description longer than the frame width",
+                            why: "The composition stays identical to Minimal, but the description text now runs past two lines inside this narrow frame, so `line-clamp-2` cuts it off. This proves the description never pushes the header taller no matter how long the copy runs.",
+                            code: "<Page.Header title=\"Configure payment gateways\" description=\"Set up SePay and PayOS, choose the default gateway…\" />",
+                            render: (
+                                <Page.Header
+                                    title="Configure payment gateways"
+                                    description="Set up SePay and PayOS, choose the default gateway for new students, configure installment plans applied per course, and track transaction status in real time."
+                                    showAnatomy
+                                />
+                            ),
+                        },
+                    ]}
+                />
             </div>
         </div>
     ),
@@ -137,15 +156,21 @@ export const SizePage: Story = {
                 tier="composite"
                 leaf="SizePage"
                 parts={TITLE_DESCRIPTION_PARTS}
-                note={"size=\"page\" (default) — Title uses Typography.Heading level 3."}
-                code={"<Page.Header title=\"Set up your machine\" description=\"Before entering the playground, install the CLI and connect the StarCi Agent.\" />"}
-            >
-                <Page.Header
-                    title="Chuẩn bị máy"
-                    description="Trước khi vào playground, cài công cụ dòng lệnh rồi nối StarCi Agent."
-                    showAnatomy
-                />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "size = \"page\" (default)",
+                        why: "Title renders through `Typography.Heading` at level 3. This is for a header that owns an entire route on its own, where the title should read as the page's real heading.",
+                        code: "<Page.Header title=\"Set up your machine\" description=\"Before entering the playground, install the CLI and connect the StarCi Agent.\" />",
+                        render: (
+                            <Page.Header
+                                title="Chuẩn bị máy"
+                                description="Trước khi vào playground, cài công cụ dòng lệnh rồi nối StarCi Agent."
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -159,16 +184,22 @@ export const SizeCompact: Story = {
                 tier="composite"
                 leaf="SizeCompact"
                 parts={TITLE_DESCRIPTION_PARTS}
-                note={"size=\"compact\" — SAME 2 parts Title/Description, Title switches to body-bold instead of H3."}
-                code={"<Page.Header size=\"compact\" title=\"Set up your machine\" description=\"Before entering the playground, install the CLI and connect the StarCi Agent.\" />"}
-            >
-                <Page.Header
-                    size="compact"
-                    title="Chuẩn bị máy"
-                    description="Trước khi vào playground, cài công cụ dòng lệnh rồi nối StarCi Agent."
-                    showAnatomy
-                />
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "size = \"compact\"",
+                        why: "The same two nodes, Title and Description, still render, but Title switches from an H3 heading to body-bold text. This is for a header labelling a pane or a phase inside a page that already has its own H3 elsewhere, so this title doesn't compete with it.",
+                        code: "<Page.Header size=\"compact\" title=\"Set up your machine\" description=\"Before entering the playground, install the CLI and connect the StarCi Agent.\" />",
+                        render: (
+                            <Page.Header
+                                size="compact"
+                                title="Chuẩn bị máy"
+                                description="Trước khi vào playground, cài công cụ dòng lệnh rồi nối StarCi Agent."
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

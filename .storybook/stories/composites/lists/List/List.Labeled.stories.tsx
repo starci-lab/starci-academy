@@ -82,9 +82,9 @@ const shortcuts: ReadonlyArray<ListLabeledItem> = [
 ]
 
 /** Header (icon+Label) + List (a column of List.Row built from `items`) — Action only appears when there's a CTA. */
-const ROW: AnatomyNode = { name: "List.Row", tier: "composite", role: "1 row (repeated ×N) — built from `items`", storyId: "composites-lists-list-list-row--title-only" }
+const ROW: AnatomyNode = { name: "List.Row", tier: "composite", role: "1 row, repeated ×N, built from items", storyId: "composites-lists-list-list-row--title-only" }
 const BASE_PARTS: Array<AnatomyNode> = [
-    { name: "Header", tier: "composite", role: "icon (optional) + section Label" },
+    { name: "Header", tier: "composite", role: "icon (optional) plus section Label" },
     { name: "List", tier: "composite", role: "gap-2 column of rows", children: [ROW] },
 ]
 
@@ -97,14 +97,19 @@ export const SingleItem: Story = {
                 tier="composite"
                 leaf="SingleItem"
                 parts={BASE_PARTS}
-                reason="A 'label + short list (+CTA)' rail/panel with NO card frame — lighter than SurfaceCard.List for secondary panels (review, practice next to a lesson). `items` is data because this is a REPEATED list (§13b)."
-                code={`<List.Labeled
+                reason="A label plus a short list, with an optional CTA, and no card frame — lighter than SurfaceCard.List for secondary panels such as a review or practice rail next to a lesson. `items` is data because this is a REPEATED list (§13b)."
+                states={[
+                    {
+                        name: "items has 1 entry",
+                        why: "The List column renders exactly one row and no Action node appears. This is the lightest shape of the frame, a single related deck surfaced next to a lesson with nothing else competing for attention.",
+                        code: `<List.Labeled
   label="Ôn tập bài này"
   items={[{ key: "closures", title: "JavaScript Closures", subtitle: "12 thẻ" }]}
-/>`}
-            >
-                <List.Labeled label="Ôn tập bài này" items={decks.slice(0, 1)} showAnatomy />
-            </BlockAnatomy>
+/>`,
+                        render: <List.Labeled label="Ôn tập bài này" items={decks.slice(0, 1)} showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -123,24 +128,30 @@ export const MultipleWithAction: Story = {
                 tier="composite"
                 leaf="MultipleWithAction"
                 parts={ACTION_PARTS}
-                note="`action` adds a 3rd CTA group (gap-3 from List) — 3 groups: Header · List · Action."
-                code={`<List.Labeled
+                states={[
+                    {
+                        name: "items has 3 entries, action passed",
+                        why: "A third group, Action, appears below List with a gap-3 seam, giving the panel Header · List · Action stacked in that order. This is for a panel that ends in a real call to action, such as jumping straight into practice.",
+                        code: `<List.Labeled
   label="Luyện tập bài này"
   items={[{ key: "two-sum", title: "Two Sum", meta: <DifficultyChip … /> }, …]}
   action={<Button size="sm" variant="primary">Luyện tập ngay</Button>}
-/>`}
-            >
-                <List.Labeled
-                    label="Luyện tập bài này"
-                    items={challenges}
-                    action={
-                        <Button size="sm" variant="primary" className="self-start">
-                            Luyện tập ngay
-                        </Button>
-                    }
-                    showAnatomy
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <List.Labeled
+                                label="Luyện tập bài này"
+                                items={challenges}
+                                action={
+                                    <Button size="sm" variant="primary" className="self-start">
+                                        Luyện tập ngay
+                                    </Button>
+                                }
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -154,20 +165,26 @@ export const WithIcon: Story = {
                 tier="composite"
                 leaf="WithIcon"
                 parts={BASE_PARTS}
-                note="`icon` renders BEFORE Label, in the same one Header node (icon isn't split into its own part)."
-                code={`<List.Labeled
+                states={[
+                    {
+                        name: "icon passed",
+                        why: "The icon renders before Label, still inside the same single Header node rather than as a part of its own. This gives an adjacent panel a visual marker to tell it apart from its neighbours at a glance.",
+                        code: `<List.Labeled
   label="Thẻ ghi nhớ liên quan"
   icon={<CardsIcon className="size-5" />}
   items={[…]}
-/>`}
-            >
-                <List.Labeled
-                    label="Thẻ ghi nhớ liên quan"
-                    icon={<CardsIcon aria-hidden focusable="false" className="size-5" />}
-                    items={decks}
-                    showAnatomy
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <List.Labeled
+                                label="Thẻ ghi nhớ liên quan"
+                                icon={<CardsIcon aria-hidden focusable="false" className="size-5" />}
+                                items={decks}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -181,21 +198,25 @@ export const NavigationItems: Story = {
                 tier="composite"
                 leaf="NavigationItems"
                 parts={BASE_PARTS}
-                note="Composition doesn't change — items carry `href`/`trailing`, so each List.Row switches to an <a> with a hover surface."
-                code={`<List.Labeled
+                states={[
+                    {
+                        name: "items carry href and trailing",
+                        why: "The composition doesn't change, but each List.Row switches to rendering as an `<a>` with a hover surface because the item itself carries `href`/`trailing`, not because the frame decided to. This is for a panel whose rows are pure navigation, such as quick links to other pages.",
+                        code: `<List.Labeled
   label="Truy cập nhanh"
   items={[{ key: "courses", title: "Khoá học", href: "/courses", trailing: <CaretRightIcon /> }, …]}
-/>`}
-            >
-                <List.Labeled label="Truy cập nhanh" items={shortcuts} showAnatomy />
-            </BlockAnatomy>
+/>`,
+                        render: <List.Labeled label="Truy cập nhanh" items={shortcuts} showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "Header", tier: "composite", role: "icon (optional) + section Label" },
-    { name: "List", tier: "composite", role: "gap-2 column — empty, so it holds emptyState instead of rows" },
+    { name: "Header", tier: "composite", role: "icon (optional) plus section Label" },
+    { name: "List", tier: "composite", role: "gap-2 column, empty, so it holds emptyState instead of rows" },
 ]
 
 /**
@@ -211,37 +232,43 @@ export const Empty: Story = {
                 tier="composite"
                 leaf="Empty"
                 parts={EMPTY_PARTS}
-                note="items=[] → the List slot renders `emptyState`; the parts tree drops the List.Row node."
-                code={`<List.Labeled
+                states={[
+                    {
+                        name: "items = []",
+                        why: "The List slot pours in `emptyState` instead of a row, dropping the List.Row node from the tree, while Header still stands above it. This keeps the panel from disappearing outright when a related deck or practice set genuinely has nothing to show yet.",
+                        code: `<List.Labeled
   label="Ôn tập bài này"
   items={[]}
   emptyState={<Feedback.Empty title="Chưa có mục nào" … />}
-/>`}
-            >
-                <List.Labeled
-                    label="Ôn tập bài này"
-                    items={[]}
-                    emptyState={
-                        <Feedback.Empty
-                            icon={TrayDuotone}
-                            title="Chưa có mục nào"
-                            description="Chưa tìm thấy thẻ ghi nhớ liên quan cho bài học này."
-                        />
-                    }
-                    showAnatomy
-                />
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <List.Labeled
+                                label="Ôn tập bài này"
+                                items={[]}
+                                emptyState={
+                                    <Feedback.Empty
+                                        icon={TrayDuotone}
+                                        title="Chưa có mục nào"
+                                        description="Chưa tìm thấy thẻ ghi nhớ liên quan cho bài học này."
+                                    />
+                                }
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
 const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "Header", tier: "composite", role: "icon (optional) + section Label" },
+    { name: "Header", tier: "composite", role: "icon (optional) plus section Label" },
     {
         name: "List",
         tier: "composite",
         role: "gap-2 column, frame kept as-is",
-        children: [{ name: "List.Row", tier: "composite", role: "row mirror (×skeletonRows)", storyId: "composites-lists-list-list-row--leading-subtitle" }],
+        children: [{ name: "List.Row", tier: "composite", role: "row mirror, repeated ×skeletonRows", storyId: "composites-lists-list-list-row--leading-subtitle" }],
     },
 ]
 
@@ -258,15 +285,19 @@ export const Loading: Story = {
                 tier="composite"
                 leaf="Loading"
                 parts={LOADING_PARTS}
-                note="isSkeleton ignores `items` (no data yet while loading) and draws `skeletonRows` mirror rows — default 3."
-                code={`<List.Labeled
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "The Label header and the gap-2 List frame stay exactly as they are, and only each row switches to a List.Row mirror, `skeletonRows` of them by default (`items` is ignored while loading). This keeps the panel from jumping in size once the real rows land.",
+                        code: `<List.Labeled
   label="Luyện tập bài này"
   items={[]}
   isSkeleton
-/>`}
-            >
-                <List.Labeled label="Luyện tập bài này" items={[]} isSkeleton showAnatomy />
-            </BlockAnatomy>
+/>`,
+                        render: <List.Labeled label="Luyện tập bài này" items={[]} isSkeleton showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }

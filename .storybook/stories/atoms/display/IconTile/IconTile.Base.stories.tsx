@@ -5,11 +5,7 @@ import {
     GraduationCapIcon,
     RocketLaunchIcon,
 } from "@phosphor-icons/react"
-import {
-    IconTile,
-    type IconTileSize,
-    type IconTileTone,
-} from "@sb-components/atoms/display/IconTile/IconTile"
+import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -76,38 +72,6 @@ export default meta
 
 type Story = StoryObj<typeof IconTile.Base>
 
-/** One row of the tone demo grid. */
-interface ToneRow {
-    /** The `IconTileTone` value this row demonstrates. */
-    tone: IconTileTone
-    /** One-line explanation of when this tone applies. */
-    hint: string
-}
-
-/** FULL `IconTileTone` union — the SAME icon throughout so tone is the only variable changing the visual. */
-const TONES: Array<ToneRow> = [
-    { tone: "accent", hint: "the default identity colour" },
-    { tone: "success", hint: "a completed or passed item" },
-    { tone: "warning", hint: "needs attention before it's done" },
-    { tone: "danger", hint: "blocked or failed" },
-    { tone: "neutral", hint: "archived — low emphasis" },
-]
-
-/** One row of the size demo grid. */
-interface SizeRow {
-    /** The `IconTileSize` value this row demonstrates. */
-    size: IconTileSize
-    /** One-line explanation of when this size applies. */
-    hint: string
-}
-
-/** FULL `IconTileSize` union. */
-const SIZES: Array<SizeRow> = [
-    { size: "sm", hint: "40px — pairs with a TitledText row" },
-    { size: "md", hint: "64px — a list row or card header" },
-    { size: "lg", hint: "80px — the top of a detail page" },
-]
-
 /** A REAL cover image — deterministic (DiceBear, fixed seed), no external asset needed. */
 const COURSE_COVER = "https://api.dicebear.com/9.x/shapes/svg?seed=ReactPatterns"
 /** A URL deliberately pointed wrong to prove the fallback branch when the image 404s. */
@@ -121,12 +85,16 @@ export const Default: Story = {
                 name="IconTile.Base"
                 tier="atom"
                 leaf="Bare tile"
-                reason="The one framed icon-tile in the system — the avatar of a course, a project, a section. Every leaf below it differs by exactly one prop, so this is the baseline you compare against."
-                note="Defaults to `tone=accent`, `size=sm` (40px). The frame is always round — there is no shape axis to pick. The icon auto-sizes to the box; nothing about it is caller-controlled."
-                code={"<IconTile.Base icon={GraduationCapIcon} />"}
-            >
-                <IconTile.Base icon={GraduationCapIcon} showAnatomy />
-            </BlockAnatomy>
+                reason="The one framed icon-tile in the system, the avatar of a course, a project, a section. Every leaf below it differs by exactly one prop, so this is the baseline every other leaf is compared against."
+                states={[
+                    {
+                        name: "tone = \"accent\", size = \"sm\"",
+                        why: "A round tile renders at 40px with the accent tint and the graduation-cap glyph centred inside it. The frame is always round, there is no shape axis to pick, and the icon auto-sizes to the box with nothing caller-controlled.",
+                        code: "<IconTile.Base icon={GraduationCapIcon} />",
+                        render: <IconTile.Base icon={GraduationCapIcon} showAnatomy />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -139,20 +107,40 @@ export const Tones: Story = {
                 name="IconTile.Base"
                 tier="atom"
                 leaf="Prop `tone`"
-                reason="Tone is meaning, not decoration. A project tile that is always accent reads as neutral identity; switching it to danger says something happened to that project, without adding a badge."
-                note="Every tone lands on the same soft tint — one step of opacity over its own colour, same recipe as Chip.Base's soft surface."
-                code={`<IconTile.Base tone="accent" icon={FolderIcon} />
-<IconTile.Base tone="success" icon={FolderIcon} />
-<IconTile.Base tone="warning" icon={FolderIcon} />
-<IconTile.Base tone="danger" icon={FolderIcon} />
-<IconTile.Base tone="neutral" icon={FolderIcon} />`}
-            >
-                <div className="flex flex-wrap items-center gap-3">
-                    {TONES.map(({ tone }, index) => (
-                        <IconTile.Base key={tone} tone={tone} icon={FolderIcon} showAnatomy={index === 0} />
-                    ))}
-                </div>
-            </BlockAnatomy>
+                reason="Tone is meaning, not decoration. A project tile that is always accent reads as neutral identity; switching it to danger says something happened to that project, without adding a separate badge."
+                states={[
+                    {
+                        name: "tone = \"accent\"",
+                        why: "The tile lands on a soft accent tint, the default identity colour used when nothing special has happened to the thing it represents. Every other tone below keeps the same folder glyph and only swaps this tint.",
+                        code: "<IconTile.Base tone=\"accent\" icon={FolderIcon} />",
+                        render: <IconTile.Base tone="accent" icon={FolderIcon} showAnatomy />,
+                    },
+                    {
+                        name: "tone = \"success\"",
+                        why: "The tile lands on a soft success tint, the colour used for a completed or passed item. Only the tint differs from the accent state.",
+                        code: "<IconTile.Base tone=\"success\" icon={FolderIcon} />",
+                        render: <IconTile.Base tone="success" icon={FolderIcon} />,
+                    },
+                    {
+                        name: "tone = \"warning\"",
+                        why: "The tile lands on a soft warning tint, for a thing that needs attention before it counts as done. Only the tint differs from the accent state.",
+                        code: "<IconTile.Base tone=\"warning\" icon={FolderIcon} />",
+                        render: <IconTile.Base tone="warning" icon={FolderIcon} />,
+                    },
+                    {
+                        name: "tone = \"danger\"",
+                        why: "The tile lands on a soft danger tint, for a thing that is blocked or has failed. Only the tint differs from the accent state.",
+                        code: "<IconTile.Base tone=\"danger\" icon={FolderIcon} />",
+                        render: <IconTile.Base tone="danger" icon={FolderIcon} />,
+                    },
+                    {
+                        name: "tone = \"neutral\"",
+                        why: "The tile lands on a soft neutral tint, the low-emphasis colour for something archived. Only the tint differs from the accent state.",
+                        code: "<IconTile.Base tone=\"neutral\" icon={FolderIcon} />",
+                        render: <IconTile.Base tone="neutral" icon={FolderIcon} />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -165,18 +153,28 @@ export const Sizes: Story = {
                 name="IconTile.Base"
                 tier="atom"
                 leaf="Prop `size`"
-                reason="The tile owns its own scale (§4) — a caller never pins a pixel box or picks the glyph size separately; it just says which of the three sizes this spot needs."
-                note="The icon inside grows with the box (§12d) — sm/md/lg carry their own glyph size, so the pairing never looks off."
-                code={`<IconTile.Base size="sm" icon={RocketLaunchIcon} />
-<IconTile.Base size="md" icon={RocketLaunchIcon} />
-<IconTile.Base size="lg" icon={RocketLaunchIcon} />`}
-            >
-                <div className="flex flex-wrap items-end gap-4">
-                    {SIZES.map(({ size }, index) => (
-                        <IconTile.Base key={size} size={size} icon={RocketLaunchIcon} showAnatomy={index === 0} />
-                    ))}
-                </div>
-            </BlockAnatomy>
+                reason="The tile owns its own scale (§4). A caller never pins a pixel box or picks the glyph size separately, it just names which of the three sizes this spot needs, and the icon inside grows with the box automatically."
+                states={[
+                    {
+                        name: "size = \"sm\"",
+                        why: "The frame renders at 40px, the step that pairs with a TitledText row or sits inside a compact empty state. The rocket glyph inside scales down to match the smaller frame.",
+                        code: "<IconTile.Base size=\"sm\" icon={RocketLaunchIcon} />",
+                        render: <IconTile.Base size="sm" icon={RocketLaunchIcon} showAnatomy />,
+                    },
+                    {
+                        name: "size = \"md\"",
+                        why: "The frame steps up to 64px, the size reached for in a list row or a card header. The glyph grows along with the frame so the pairing never looks off.",
+                        code: "<IconTile.Base size=\"md\" icon={RocketLaunchIcon} />",
+                        render: <IconTile.Base size="md" icon={RocketLaunchIcon} />,
+                    },
+                    {
+                        name: "size = \"lg\"",
+                        why: "The frame reaches 80px, the size for the top of a detail page where the tile carries more visual weight on its own. The glyph again grows to match.",
+                        code: "<IconTile.Base size=\"lg\" icon={RocketLaunchIcon} />",
+                        render: <IconTile.Base size="lg" icon={RocketLaunchIcon} />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -193,23 +191,35 @@ export const CoverImage: Story = {
                 name="IconTile.Base"
                 tier="atom"
                 leaf="Prop `src`"
-                reason="Once a thing has a real thumbnail — a course cover, a project banner — the image should carry the identity instead of a generic glyph. The icon stays as the safety net."
-                note="A failed image request (404, unsynced asset) falls back to the icon instead of a broken-image glyph — the middle and right tiles here both start from the same broken URL/no-URL state and land on the same icon."
-                code={`<IconTile.Base icon={BookOpenIcon} />
-<IconTile.Base icon={BookOpenIcon} src="${COURSE_COVER}" alt="React Patterns course cover" />
-<IconTile.Base icon={BookOpenIcon} src="${BROKEN_COVER}" alt="Broken cover" />`}
-            >
-                <div className="flex flex-wrap items-center gap-4">
-                    <IconTile.Base icon={BookOpenIcon} size="lg" showAnatomy />
-                    <IconTile.Base
-                        icon={BookOpenIcon}
-                        size="lg"
-                        src={COURSE_COVER}
-                        alt="React Patterns course cover"
-                    />
-                    <IconTile.Base icon={BookOpenIcon} size="lg" src={BROKEN_COVER} alt="Broken cover" />
-                </div>
-            </BlockAnatomy>
+                reason="Once a thing has a real thumbnail, a course cover, a project banner, the image should carry the identity instead of a generic glyph. The icon stays underneath as the safety net for whenever that image is missing or broken."
+                states={[
+                    {
+                        name: "src = undefined",
+                        why: "With no `src` passed, the tile falls back to its plain icon glyph on the tinted background. This is the same bare tile every other leaf in this file starts from.",
+                        code: "<IconTile.Base icon={BookOpenIcon} />",
+                        render: <IconTile.Base icon={BookOpenIcon} size="lg" showAnatomy />,
+                    },
+                    {
+                        name: "src = valid cover URL",
+                        why: "The image fills the whole frame and the icon glyph disappears completely behind it. The cover takes over the tile's identity the moment a real thumbnail exists.",
+                        code: `<IconTile.Base icon={BookOpenIcon} src="${COURSE_COVER}" alt="React Patterns course cover" />`,
+                        render: (
+                            <IconTile.Base
+                                icon={BookOpenIcon}
+                                size="lg"
+                                src={COURSE_COVER}
+                                alt="React Patterns course cover"
+                            />
+                        ),
+                    },
+                    {
+                        name: "src = broken/404 URL",
+                        why: "The image request fails and the tile falls back to the same icon glyph as the no-src state instead of showing a broken-image icon. A failed thumbnail therefore never looks different from having no thumbnail at all.",
+                        code: `<IconTile.Base icon={BookOpenIcon} src="${BROKEN_COVER}" alt="Broken cover" />`,
+                        render: <IconTile.Base icon={BookOpenIcon} size="lg" src={BROKEN_COVER} alt="Broken cover" />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -228,18 +238,28 @@ export const Skeleton: Story = {
                 name="IconTile.Base"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
-                reason="Whoever owns the shape owns its resting state — the tile draws its own shimmer at its own box size instead of a shared skeleton component."
-                note="The shimmer keeps whatever size the tile would render — the three circles below are the same `sm`/`md`/`lg` boxes as the Sizes leaf, just filled with shimmer instead of an icon."
-                code={`<IconTile.Base isSkeleton size="sm" />
-<IconTile.Base isSkeleton size="md" />
-<IconTile.Base isSkeleton size="lg" />`}
-            >
-                <div className="flex flex-wrap items-end gap-4">
-                    {SIZES.map(({ size }, index) => (
-                        <IconTile.Base key={size} isSkeleton size={size} showAnatomy={index === 0} />
-                    ))}
-                </div>
-            </BlockAnatomy>
+                reason="Whoever owns the shape owns its resting state, so the tile draws its own shimmer at its own box size instead of borrowing a shared skeleton component."
+                states={[
+                    {
+                        name: "isSkeleton = true, size = \"sm\"",
+                        why: "A round shimmer fills the same 40px circle the real icon would occupy, with no glyph drawn inside it. The size this shimmer commits to matches exactly what the real tile will render once data lands.",
+                        code: "<IconTile.Base isSkeleton size=\"sm\" />",
+                        render: <IconTile.Base isSkeleton size="sm" showAnatomy />,
+                    },
+                    {
+                        name: "isSkeleton = true, size = \"md\"",
+                        why: "The shimmer circle grows to the 64px box, matching the md size step exactly. Nothing else about the shimmer changes across the three sizes.",
+                        code: "<IconTile.Base isSkeleton size=\"md\" />",
+                        render: <IconTile.Base isSkeleton size="md" />,
+                    },
+                    {
+                        name: "isSkeleton = true, size = \"lg\"",
+                        why: "The shimmer circle reaches the 80px box, matching the lg size step exactly. This is the largest resting shape the tile ever commits to before data arrives.",
+                        code: "<IconTile.Base isSkeleton size=\"lg\" />",
+                        render: <IconTile.Base isSkeleton size="lg" />,
+                    },
+                ]}
+            />
         </div>
     ),
 }

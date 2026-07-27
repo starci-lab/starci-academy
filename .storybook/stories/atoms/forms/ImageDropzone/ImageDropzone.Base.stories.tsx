@@ -71,18 +71,23 @@ export const Default: Story = {
                 name="ImageDropzone.Base"
                 tier="atom"
                 leaf="Bare dropzone"
-                reason="The one dropzone shape in the system. Every leaf below it differs by exactly one prop, so this is the baseline you compare against."
-                note="Defaults to the plain image glyph with no hint line — just the icon and the CTA label stacked in a dashed box. Drop a file or click anywhere in the box to pick one."
-                code={"<ImageDropzone.Base onFile={handleFile} label=\"Drag and drop a photo here, or click to browse\" />"}
-            >
-                <div className="max-w-sm">
-                    <ImageDropzone.Base
-                        showAnatomy
-                        onFile={() => {}}
-                        label="Drag and drop a photo here, or click to browse"
-                    />
-                </div>
-            </BlockAnatomy>
+                reason="This is the one dropzone shape in the system, and every leaf below it differs by exactly one prop, so this is the baseline to compare against."
+                renderClassName="max-w-sm"
+                states={[
+                    {
+                        name: "hint unset, icon unset, isDragActive unset",
+                        why: "The box falls back to the plain image glyph with no hint line, just the icon and the CTA label stacked inside the dashed border. Dropping a file or clicking anywhere in the box picks one, so the bare shape already carries the whole call to action.",
+                        code: "<ImageDropzone.Base onFile={handleFile} label=\"Drag and drop a photo here, or click to browse\" />",
+                        render: (
+                            <ImageDropzone.Base
+                                showAnatomy
+                                onFile={() => {}}
+                                label="Drag and drop a photo here, or click to browse"
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -95,28 +100,34 @@ export const Hint: Story = {
                 name="ImageDropzone.Base"
                 tier="atom"
                 leaf="Prop `hint`"
-                reason="A hint earns its line when the accepted formats or the size limit aren't obvious from the label alone — spell out the rule instead of letting the reader find out by failing an upload."
-                note="The hint sits directly under the label as a smaller, muted line. There's no boolean to turn it on — an empty hint would just be a blank line, so the atom shows it only when you pass content."
-                code={`<ImageDropzone.Base onFile={handleFile} label="Click to choose an image" />
-<ImageDropzone.Base
+                reason="A hint earns its line whenever the accepted formats or the size limit aren't obvious from the label alone, spelling out the rule instead of letting the reader find out by failing an upload."
+                renderClassName="max-w-sm"
+                states={[
+                    {
+                        name: "hint unset",
+                        why: "No hint line appears under the label, since there is no boolean to switch it on: an empty hint would just be a blank line. This is the shape a caller reaches for when the label alone already says enough.",
+                        code: "<ImageDropzone.Base onFile={handleFile} label=\"Click to choose an image\" />",
+                        render: <ImageDropzone.Base showAnatomy onFile={() => {}} label="Click to choose an image" />,
+                    },
+                    {
+                        name: "hint = \"PNG, JPG, WEBP, GIF · up to 5 MB\"",
+                        why: "The hint sits directly under the label as a smaller, muted line, and the atom shows it only because content was passed in. This is the shape a caller reaches for when the accepted formats or the size limit aren't obvious from the label on its own.",
+                        code: `<ImageDropzone.Base
     onFile={handleFile}
     label="Drag and drop a photo here, or click to browse"
     hint="PNG, JPG, WEBP, GIF · up to 5 MB"
-/>`}
-            >
-                <div className="flex flex-wrap items-start gap-4">
-                    <div className="max-w-sm">
-                        <ImageDropzone.Base showAnatomy onFile={() => {}} label="Click to choose an image" />
-                    </div>
-                    <div className="max-w-sm">
-                        <ImageDropzone.Base
-                            onFile={() => {}}
-                            label="Drag and drop a photo here, or click to browse"
-                            hint="PNG, JPG, WEBP, GIF · up to 5 MB"
-                        />
-                    </div>
-                </div>
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <ImageDropzone.Base
+                                showAnatomy
+                                onFile={() => {}}
+                                label="Drag and drop a photo here, or click to browse"
+                                hint="PNG, JPG, WEBP, GIF · up to 5 MB"
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -129,34 +140,42 @@ export const Icon: Story = {
                 name="ImageDropzone.Base"
                 tier="atom"
                 leaf="Prop `icon`"
-                reason="Swap the glyph in when the surrounding feature has a more specific idea of what's being uploaded than 'an image' — a camera for a profile photo, say."
-                note="Pass a component reference (icon={CameraIcon}), not JSX — the atom owns the size (size-8) and, being ≥ size-5, leaves the weight at the default regular (§5.0a). The override sits in the same slot and inherits the same drag-over recolor as the default glyph."
-                code={`<ImageDropzone.Base onFile={handleFile} label="Drag and drop a photo here, or click to browse" />
-<ImageDropzone.Base
+                reason="Swap the glyph in when the surrounding feature has a more specific idea of what's being uploaded than an image in general, a camera for a profile photo, say."
+                renderClassName="max-w-sm"
+                states={[
+                    {
+                        name: "icon unset (default image glyph)",
+                        why: "The box shows the plain image glyph the atom falls back to when no override is passed. It is the same recolor-on-drag glyph slot that `icon` replaces in the next state, just holding its default value.",
+                        code: "<ImageDropzone.Base onFile={handleFile} label=\"Drag and drop a photo here, or click to browse\" />",
+                        render: (
+                            <ImageDropzone.Base
+                                showAnatomy
+                                onFile={() => {}}
+                                label="Drag and drop a photo here, or click to browse"
+                            />
+                        ),
+                    },
+                    {
+                        name: "icon = CameraIcon",
+                        why: "The override sits in the exact same glyph slot as the default icon and inherits the same drag-over recolor. Passing a component reference rather than JSX lets the atom keep owning the size (`size-8`) and, being at or above `size-5`, leave the stroke weight at its default regular (§5.0a).",
+                        code: `<ImageDropzone.Base
     onFile={handleFile}
     label="Add a profile photo"
     hint="Square images look best"
     icon={CameraIcon}
-/>`}
-            >
-                <div className="flex flex-wrap items-start gap-4">
-                    <div className="max-w-sm">
-                        <ImageDropzone.Base
-                            showAnatomy
-                            onFile={() => {}}
-                            label="Drag and drop a photo here, or click to browse"
-                        />
-                    </div>
-                    <div className="max-w-sm">
-                        <ImageDropzone.Base
-                            onFile={() => {}}
-                            label="Add a profile photo"
-                            hint="Square images look best"
-                            icon={CameraIcon}
-                        />
-                    </div>
-                </div>
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <ImageDropzone.Base
+                                showAnatomy
+                                onFile={() => {}}
+                                label="Add a profile photo"
+                                hint="Square images look best"
+                                icon={CameraIcon}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -173,32 +192,40 @@ export const DragActive: Story = {
                 name="ImageDropzone.Base"
                 tier="atom"
                 leaf="Prop `isDragActive`"
-                reason="This is what the reader sees mid-drag, right before they let go of the file. Pinning it here is the only way to review that moment without actually dragging a file over the canvas."
-                note="Solid accent border, soft accent tint behind it, and the icon plus label recolor together — one state, three parts moving at once. Leave the prop unset in real use and the atom drives this itself from react-dropzone."
-                code={`<ImageDropzone.Base onFile={handleFile} label="Drag and drop a photo here, or click to browse" />
-<ImageDropzone.Base
+                reason="This is what the reader sees mid-drag, right before they let go of the file; pinning it here is the only way to review that moment without actually dragging a file over the canvas."
+                renderClassName="max-w-sm"
+                states={[
+                    {
+                        name: "isDragActive unset",
+                        why: "The box sits at rest with a dashed border and no tint, the resting counterpart to the pinned drag state in the next tab. In real use this is what a visitor sees before their cursor ever crosses the box.",
+                        code: "<ImageDropzone.Base onFile={handleFile} label=\"Drag and drop a photo here, or click to browse\" />",
+                        render: (
+                            <ImageDropzone.Base
+                                showAnatomy
+                                onFile={() => {}}
+                                label="Drag and drop a photo here, or click to browse"
+                            />
+                        ),
+                    },
+                    {
+                        name: "isDragActive = true",
+                        why: "The border turns solid accent, a soft accent tint fills the background, and the icon plus label recolor together as one state moving three parts at once. Leave the prop unset in real use and the atom drives this itself from react-dropzone; the prop only exists so this moment can be pinned for review.",
+                        code: `<ImageDropzone.Base
     onFile={handleFile}
     label="Drag and drop a photo here, or click to browse"
     isDragActive
-/>`}
-            >
-                <div className="flex flex-wrap items-start gap-4">
-                    <div className="max-w-sm">
-                        <ImageDropzone.Base
-                            showAnatomy
-                            onFile={() => {}}
-                            label="Drag and drop a photo here, or click to browse"
-                        />
-                    </div>
-                    <div className="max-w-sm">
-                        <ImageDropzone.Base
-                            onFile={() => {}}
-                            label="Drag and drop a photo here, or click to browse"
-                            isDragActive
-                        />
-                    </div>
-                </div>
-            </BlockAnatomy>
+/>`,
+                        render: (
+                            <ImageDropzone.Base
+                                showAnatomy
+                                onFile={() => {}}
+                                label="Drag and drop a photo here, or click to browse"
+                                isDragActive
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

@@ -24,6 +24,11 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * `AnatomyNode` prop (the old path, structure declared by hand) → `annotate` (only
  * annotates WHY, structure is inferred from the DOM), keeping only entries with a REAL
  * `storyId`.
+ *
+ * 2026-07-27 (teacher, §8/§4a) — migrated every leaf below to the `states[]` API. Two
+ * leaves (`Columns`, `Gap`) used to stack two renders side by side inside one `div` with
+ * a hand-typed `Typography` label above each; those labels are gone now, their meaning
+ * moved into each state's own `why`, and each render is its own selectable state tab.
  */
 const meta: Meta<typeof SurfaceCard.PressableGroup> = {
     title: "Composites/Cards/SurfaceCard/SurfaceCard.PressableGroup",
@@ -69,8 +74,8 @@ const profileItems: Array<SurfaceCardPressableGroupItem> = MENTORS.map((m) => ({
     content: profileTile(m.initials, m.title, m.description),
 }))
 
-/** Plain canvas for each leaf's anatomy panel. */
-const shell = (node: ReactNode) => <div className="p-8"><div className="max-w-2xl">{node}</div></div>
+/** Canvas padding only. Bề ngang của chủ thể đi qua `renderClassName` của từng leaf, không bọc ở đây. */
+const shell = (node: ReactNode) => <div className="p-8">{node}</div>
 
 /**
  * Live grid leaf: each cell is a REPEATED `Item` — a `SurfaceCard.Pressable` whose
@@ -85,7 +90,7 @@ const shell = (node: ReactNode) => <div className="p-8"><div className="max-w-2x
 const ITEM_ANNOTATE: Record<string, AnatomyAnnotation> = {
     Item: {
         tier: "composite",
-        role: "SurfaceCard.Pressable repeated — its own story lives at SurfaceCard.Pressable/Default.",
+        role: "SurfaceCard.Pressable repeated once per entry, with its own story at SurfaceCard.Pressable Default.",
         storyId: "composites-cards-surfacecard-surfacecard-pressable--default",
     },
 }
@@ -101,64 +106,87 @@ export const Default: Story = {
                 tier="composite"
                 leaf="Default"
                 annotate={ITEM_ANNOTATE}
-                reason="Grid of SurfaceCard.Pressable cards: the whole group is ONE labelled unit (role=group + aria-label), and each cell is a repeated Item. A REPEATING list → `items` must be DATA, never children (khung API law)."
-                code={`<SurfaceCard.PressableGroup
-  ariaLabel="Mentors"
-  columns={{ base: 1, sm: 2 }}
-  items={[
-    { key: "SC", label: "StarCi Academy", onPress: () => {}, content: profileTile(…) },
-    { key: "QN", label: "Quang Nguyen", onPress: () => {}, content: profileTile(…) },
-  ]}
-/>`}
-            >
-                <SurfaceCard.PressableGroup ariaLabel="Mentors" columns={{ base: 1, sm: 2 }} items={profileItems} showAnatomy />
-            </BlockAnatomy>,
+                renderClassName="max-w-2xl"
+                reason="The whole group renders as one labelled unit through role group plus an aria-label, and each cell is a repeated Item. Because the list repeats, items must arrive as data rather than JSX children, so a caller can never let the row count drift from the item count."
+                states={[
+                    {
+                        name: "items = 4 mentor entries",
+                        why: "Each object in items produces one repeated SurfaceCard.Pressable tile, so the four mentors lay out as four cards under the chosen columns. What each tile shows stays free-form, here a profile row built from a shared fixture, because the group only owns layout, never a cell's content.",
+                        code: `<SurfaceCard.PressableGroup
+    ariaLabel="Mentors"
+    columns={{ base: 1, sm: 2 }}
+    items={[
+        { key: "SC", label: "StarCi Academy", onPress: () => {}, content: profileTile(…) },
+        { key: "QN", label: "Quang Nguyen", onPress: () => {}, content: profileTile(…) },
+    ]}
+/>`,
+                        render: <SurfaceCard.PressableGroup ariaLabel="Mentors" columns={{ base: 1, sm: 2 }} items={profileItems} showAnatomy />,
+                    },
+                ]}
+            />,
         ),
 }
 
 /**
  * `columns` — column count follows CONTAINER WIDTH (container query `@app-sm`/`@app-md`/
  * `@app-lg`…), NOT viewport: the same grid can sit in a wide page column or a 256px
- * rail. Narrow the window to see the two frames below reflow INDEPENDENTLY of each
- * other.
+ * rail. Pick a state below to see the SAME `columns` config settle at a different
+ * column count purely from the container it stands in.
  */
 export const Columns: Story = {
-    render: () => (
-        <div className="flex flex-col gap-6 p-8">
+    render: () =>
+        shell(
             <BlockAnatomy
                 name="SurfaceCard.PressableGroup"
                 tier="composite"
                 leaf="Columns"
                 annotate={ITEM_ANNOTATE}
-                note="Same composition as leaf Default — `columns` only swaps the grid-template by CONTAINER width, no new part."
-                code={`<SurfaceCard.PressableGroup
-  ariaLabel="Mentors"
-  columns={{ base: 1, sm: 2, lg: 4 }}
-  items={[…]}
-/>`}
-            >
-                <div className="flex flex-col gap-4">
-                    <div className="max-w-2xl">
-                        <Typography type="body-xs" color="muted">wide container → up to 4 columns</Typography>
-                        <SurfaceCard.PressableGroup
-                            ariaLabel="Mentors (wide container)"
-                            columns={{ base: 1, sm: 2, lg: 4 }}
-                            items={profileItems}
-                            showAnatomy
-                        />
-                    </div>
-                    <div className="max-w-xs">
-                        <Typography type="body-xs" color="muted">narrow container → still 1 column, even on a wide viewport</Typography>
-                        <SurfaceCard.PressableGroup
-                            ariaLabel="Mentors (narrow container)"
-                            columns={{ base: 1, sm: 2, lg: 4 }}
-                            items={profileItems.slice(0, 2)}
-                        />
-                    </div>
-                </div>
-            </BlockAnatomy>
-        </div>
-    ),
+                reason="Column count answers to the container's own width, not the viewport, so the same grid config can sit in a wide page column or a narrow rail and reflow independently of everything else on the page."
+                states={[
+                    {
+                        name: "container width = wide (max-w-2xl)",
+                        why: "All four mentor tiles lay out across four columns because the surrounding container is wide enough to satisfy the @app-lg breakpoint. Reaching a real four-column arrangement needs a genuinely wide host, which is why this state pins the container to max-w-2xl rather than leaving it unconstrained.",
+                        code: `<div className="max-w-2xl">
+    <SurfaceCard.PressableGroup
+        ariaLabel="Mentors (wide container)"
+        columns={{ base: 1, sm: 2, lg: 4 }}
+        items={[…]}
+    />
+</div>`,
+                        render: (
+                            <div className="max-w-2xl">
+                                <SurfaceCard.PressableGroup
+                                    ariaLabel="Mentors (wide container)"
+                                    columns={{ base: 1, sm: 2, lg: 4 }}
+                                    items={profileItems}
+                                    showAnatomy
+                                />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "container width = narrow (max-w-xs)",
+                        why: "The same columns config stays at a single column because the container never reaches the @app-sm breakpoint, even though the story runs on a wide viewport. Column count is a property of the box the grid stands in, not of the screen, so this state deliberately narrows only the container.",
+                        code: `<div className="max-w-xs">
+    <SurfaceCard.PressableGroup
+        ariaLabel="Mentors (narrow container)"
+        columns={{ base: 1, sm: 2, lg: 4 }}
+        items={[…].slice(0, 2)}
+    />
+</div>`,
+                        render: (
+                            <div className="max-w-xs">
+                                <SurfaceCard.PressableGroup
+                                    ariaLabel="Mentors (narrow container)"
+                                    columns={{ base: 1, sm: 2, lg: 4 }}
+                                    items={profileItems.slice(0, 2)}
+                                />
+                            </div>
+                        ),
+                    },
+                ]}
+            />,
+        ),
 }
 
 /** `gap` — spacing between cells is set at the GROUP LEVEL (the grid is always even), items don't adjust it themselves. */
@@ -170,15 +198,23 @@ export const Gap: Story = {
                 tier="composite"
                 leaf="Gap"
                 annotate={ITEM_ANNOTATE}
-                note="`gap` is a prop of the GROUP (items don't have one) — the grid always keeps an even gap; `2` for a dense grid, `3` (default) for a normal one."
-                code={`<SurfaceCard.PressableGroup gap={2} ariaLabel="Mentors" items={[…]} />
-<SurfaceCard.PressableGroup gap={3} ariaLabel="Mentors" items={[…]} />  // default`}
-            >
-                <div className="flex flex-col gap-4">
-                    <SurfaceCard.PressableGroup ariaLabel="Mentors (gap 2)" columns={{ base: 1, sm: 2 }} gap={2} items={profileItems.slice(0, 2)} showAnatomy />
-                    <SurfaceCard.PressableGroup ariaLabel="Mentors (gap 3)" columns={{ base: 1, sm: 2 }} gap={3} items={profileItems.slice(2)} />
-                </div>
-            </BlockAnatomy>,
+                renderClassName="max-w-2xl"
+                reason="gap is a prop of the group, never of an item, so the grid always keeps one even spacing across every cell instead of letting a single tile push its neighbours around."
+                states={[
+                    {
+                        name: "gap = 2",
+                        why: "Every cell sits closer to its neighbours because 2 is the dense end of the spacing scale. A dense grid reads well when the tiles are already visually distinct, such as short profile rows with an avatar.",
+                        code: "<SurfaceCard.PressableGroup gap={2} ariaLabel=\"Mentors\" columns={{ base: 1, sm: 2 }} items={[…].slice(0, 2)} />",
+                        render: <SurfaceCard.PressableGroup ariaLabel="Mentors (gap 2)" columns={{ base: 1, sm: 2 }} gap={2} items={profileItems.slice(0, 2)} showAnatomy />,
+                    },
+                    {
+                        name: "gap = 3 (default)",
+                        why: "Every cell stands with more breathing room than the gap 2 state, using the same repeated-Item composition. 3 is the default because it is the spacing the rest of the grid family already settles on.",
+                        code: "<SurfaceCard.PressableGroup gap={3} ariaLabel=\"Mentors\" columns={{ base: 1, sm: 2 }} items={[…].slice(2)} />  // default",
+                        render: <SurfaceCard.PressableGroup ariaLabel="Mentors (gap 3)" columns={{ base: 1, sm: 2 }} gap={3} items={profileItems.slice(2)} />,
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -191,36 +227,45 @@ export const WithIcon: Story = {
                 tier="composite"
                 leaf="WithIcon"
                 annotate={ITEM_ANNOTATE}
-                note="`icon` is passed BARE, the group owns its size/color; `iconPosition` only flips the side (leading default / trailing) — still one Item part."
-                code={`<SurfaceCard.PressableGroup
-  ariaLabel="Resources"
-  items={[
-    { key: "docs", icon: <FolderOpenIcon />, content: <Typography type="body-sm">Docs</Typography>, onPress: () => {} },
-    { key: "labs", icon: <FolderOpenIcon />, iconPosition: "trailing", content: <Typography type="body-sm">Labs</Typography>, onPress: () => {} },
-  ]}
-/>`}
-            >
-                <SurfaceCard.PressableGroup
-                    ariaLabel="Resources"
-                    columns={{ base: 1, sm: 2 }}
-                    showAnatomy
-                    items={[
-                        {
-                            key: "docs",
-                            icon: <FolderOpenIcon />,
-                            content: <Typography type="body-sm" weight="medium">Docs</Typography>,
-                            onPress: () => {},
-                        },
-                        {
-                            key: "labs",
-                            icon: <FolderOpenIcon />,
-                            iconPosition: "trailing",
-                            content: <Typography type="body-sm" weight="medium">Labs</Typography>,
-                            onPress: () => {},
-                        },
-                    ]}
-                />
-            </BlockAnatomy>,
+                renderClassName="max-w-2xl"
+                reason="icon is passed bare, so the group owns its size and colour in one place; iconPosition only flips which side it sits on, and every cell in the grid still composes the exact same Item part."
+                states={[
+                    {
+                        name: "item.icon set, iconPosition = leading (default) and trailing",
+                        why: "Each tile shows a folder glyph beside its label, leading on the first item and trailing on the second, both drawn by the group at a fixed size and colour rather than a class the caller writes. The composition stays a single repeated Item either way, only the icon's side flips.",
+                        code: `<SurfaceCard.PressableGroup
+    ariaLabel="Resources"
+    columns={{ base: 1, sm: 2 }}
+    items={[
+        { key: "docs", icon: <FolderOpenIcon />, content: <Typography type="body-sm">Docs</Typography>, onPress: () => {} },
+        { key: "labs", icon: <FolderOpenIcon />, iconPosition: "trailing", content: <Typography type="body-sm">Labs</Typography>, onPress: () => {} },
+    ]}
+/>`,
+                        render: (
+                            <SurfaceCard.PressableGroup
+                                ariaLabel="Resources"
+                                columns={{ base: 1, sm: 2 }}
+                                showAnatomy
+                                items={[
+                                    {
+                                        key: "docs",
+                                        icon: <FolderOpenIcon />,
+                                        content: <Typography type="body-sm" weight="medium">Docs</Typography>,
+                                        onPress: () => {},
+                                    },
+                                    {
+                                        key: "labs",
+                                        icon: <FolderOpenIcon />,
+                                        iconPosition: "trailing",
+                                        content: <Typography type="body-sm" weight="medium">Labs</Typography>,
+                                        onPress: () => {},
+                                    },
+                                ]}
+                            />
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -237,21 +282,30 @@ export const KeyboardShortcut: Story = {
                 tier="composite"
                 leaf="KeyboardShortcut"
                 annotate={ITEM_ANNOTATE}
-                note="Same composition as leaf Default — `keyboardShortcut` only adds a GROUP-level 1–N shortcut, no change to the parts tree."
-                code={`<SurfaceCard.PressableGroup
-  ariaLabel="Select a mentor by number key"
-  keyboardShortcut
-  items={[…]}
-/>`}
-            >
-                <SurfaceCard.PressableGroup
-                    ariaLabel="Select a mentor by number key"
-                    columns={{ base: 1, sm: 2 }}
-                    items={profileItems}
-                    keyboardShortcut
-                    showAnatomy
-                />
-            </BlockAnatomy>,
+                renderClassName="max-w-2xl"
+                reason="keyboardShortcut is opt-in because its listener lives on window, so only the one group that is genuinely the screen's main action should claim the number keys."
+                states={[
+                    {
+                        name: "keyboardShortcut = true",
+                        why: "Each tile gains a visible number badge from 1 through 4 and pressing that key activates the matching card, on top of the exact same repeated-Item composition as the Default leaf. The group can carry this because it is the main action on the screen, not a secondary widget competing for the same keys.",
+                        code: `<SurfaceCard.PressableGroup
+    ariaLabel="Select a mentor by number key"
+    keyboardShortcut
+    columns={{ base: 1, sm: 2 }}
+    items={[…]}
+/>`,
+                        render: (
+                            <SurfaceCard.PressableGroup
+                                ariaLabel="Select a mentor by number key"
+                                columns={{ base: 1, sm: 2 }}
+                                items={profileItems}
+                                keyboardShortcut
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -268,22 +322,31 @@ export const Verdict: Story = {
                 tier="composite"
                 leaf="Verdict"
                 annotate={ITEM_ANNOTATE}
-                note="Same composition as leaf Default — `withVerdict` only overlays a DATA color band on each Item's edge, no new part."
-                code={`<SurfaceCard.PressableGroup
-  ariaLabel="Mentors by status"
-  items={items.map((item, i) => ({ ...item, withVerdict: { enable: true, variant: VERDICTS[i] } }))}
-/>`}
-            >
-                <SurfaceCard.PressableGroup
-                    ariaLabel="Mentors by status"
-                    columns={{ base: 1, sm: 2 }}
-                    items={profileItems.map((item, index) => ({
-                        ...item,
-                        withVerdict: { enable: true, variant: VERDICTS[index] },
-                    }))}
-                    showAnatomy
-                />
-            </BlockAnatomy>,
+                renderClassName="max-w-2xl"
+                reason="withVerdict overlays the same canonical status band used by SectionCard and SurfaceCard.List, so a status signal reads identically wherever a card family shows one, instead of every composite inventing its own colour."
+                states={[
+                    {
+                        name: "item.withVerdict.enable = true, one variant per item",
+                        why: "Each of the four tiles gains a coloured edge band, success, warning, danger, and accent in turn, layered on top of the same profile content as every other leaf. The band overlays the existing Item rather than replacing it, so it never changes what a tile's content can be.",
+                        code: `<SurfaceCard.PressableGroup
+    ariaLabel="Mentors by status"
+    columns={{ base: 1, sm: 2 }}
+    items={items.map((item, i) => ({ ...item, withVerdict: { enable: true, variant: VERDICTS[i] } }))}
+/>`,
+                        render: (
+                            <SurfaceCard.PressableGroup
+                                ariaLabel="Mentors by status"
+                                columns={{ base: 1, sm: 2 }}
+                                items={profileItems.map((item, index) => ({
+                                    ...item,
+                                    withVerdict: { enable: true, variant: VERDICTS[index] },
+                                }))}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
@@ -301,44 +364,49 @@ export const Verdict: Story = {
  * fires at the wrong tier compared to when the grid actually switches to 2 columns.
  */
 export const PagerPinRight: Story = {
-    render: () => (
-        <div className="p-8">
-            <div className="max-w-md">
-                <BlockAnatomy
-                    name="SurfaceCard.PressableGroup"
-                    tier="composite"
-                    leaf="PagerPinRight"
-                    annotate={ITEM_ANNOTATE}
-                    note="Only 1 Item pinned via `@app-sm:col-start-2` — still the same Item part; the pin class must be the CONTAINER variant matching `columns` (`@app-sm:`), not a viewport one."
-                    code={`<SurfaceCard.PressableGroup
-  ariaLabel="Go to previous or next content"
-  columns={{ base: 1, sm: 2 }}
-  items={[{ key: "next", href: "#", className: "@app-sm:col-start-2", content: <…/> }]}
-/>`}
-                >
-                    <SurfaceCard.PressableGroup
-                        ariaLabel="Go to previous or next content"
-                        columns={{ base: 1, sm: 2 }}
-                        items={[
-                            {
-                                key: "next",
-                                href: "#",
-                                className: "@app-sm:col-start-2",
-                                content: (
-                                    <div className="flex items-center justify-between gap-3">
-                                        <Typography type="body-sm" weight="medium">Next content</Typography>
-                                        {/* Navigation caret: phosphor CaretRightIcon size-3 muted, does NOT slide (§5a/§5b). */}
-                                        <CaretRightIcon className="size-3 shrink-0 text-muted" aria-hidden focusable="false" />
-                                    </div>
-                                ),
-                            },
-                        ]}
-                        showAnatomy
-                    />
-                </BlockAnatomy>
-            </div>
-        </div>
-    ),
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="SurfaceCard.PressableGroup"
+                tier="composite"
+                leaf="PagerPinRight"
+                annotate={ITEM_ANNOTATE}
+                renderClassName="max-w-md"
+                reason="The pin class must match the same container-query tier that columns itself uses, @app-sm rather than Tailwind's half-size @sm, otherwise the card would jump to the right column at a different moment than the grid actually reaches two columns."
+                states={[
+                    {
+                        name: "items.length = 1, className = \"@app-sm:col-start-2\"",
+                        why: "The single next-content card sits in the right-hand column once the container reaches two columns, and stays full width below that, because it is the only item and carries the column-start class itself. This is still one repeated Item, so the same composition covers a full grid or a lone pager card.",
+                        code: `<SurfaceCard.PressableGroup
+    ariaLabel="Go to previous or next content"
+    columns={{ base: 1, sm: 2 }}
+    items={[{ key: "next", href: "#", className: "@app-sm:col-start-2", content: <…/> }]}
+/>`,
+                        render: (
+                            <SurfaceCard.PressableGroup
+                                ariaLabel="Go to previous or next content"
+                                columns={{ base: 1, sm: 2 }}
+                                items={[
+                                    {
+                                        key: "next",
+                                        href: "#",
+                                        className: "@app-sm:col-start-2",
+                                        content: (
+                                            <div className="flex items-center justify-between gap-3">
+                                                <Typography type="body-sm" weight="medium">Next content</Typography>
+                                                {/* Navigation caret: phosphor CaretRightIcon size-3 muted, does NOT slide (§5a/§5b). */}
+                                                <CaretRightIcon className="size-3 shrink-0 text-muted" aria-hidden focusable="false" />
+                                            </div>
+                                        ),
+                                    },
+                                ]}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />,
+        ),
 }
 
 /**
@@ -354,21 +422,29 @@ export const Loading: Story = {
                 name="SurfaceCard.PressableGroup"
                 tier="composite"
                 leaf="Loading"
-                note="`isSkeleton` swaps every Item for a GENERIC SkeletonTile (avatar + 2 lines), keeping columns/gap/tile-chrome — it does not assume the real content's shape."
-                code={`<SurfaceCard.PressableGroup
-  ariaLabel="Mentors"
-  columns={{ base: 1, sm: 2 }}
-  items={[…]}
-  isSkeleton
-/>`}
-            >
-                <SurfaceCard.PressableGroup
-                    ariaLabel="Mentors"
-                    columns={{ base: 1, sm: 2 }}
-                    items={profileItems}
-                    isSkeleton
-                    showAnatomy
-                />
-            </BlockAnatomy>,
+                renderClassName="max-w-2xl"
+                reason="Whoever owns a shape owns its resting state, so the group draws its own generic shimmer instead of pulling in a shared skeleton component that would need to be kept in sync by hand."
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "Every Item is replaced by a generic SkeletonTile that keeps the same columns, gap, and tile chrome as the real grid. The mirror stays generic rather than copying the real content's shape, because the group never assumes what a cell will eventually hold.",
+                        code: `<SurfaceCard.PressableGroup
+    ariaLabel="Mentors"
+    columns={{ base: 1, sm: 2 }}
+    items={[…]}
+    isSkeleton
+/>`,
+                        render: (
+                            <SurfaceCard.PressableGroup
+                                ariaLabel="Mentors"
+                                columns={{ base: 1, sm: 2 }}
+                                items={profileItems}
+                                isSkeleton
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />,
         ),
 }

@@ -25,6 +25,9 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  *
  * ✍️ Text shown in the panel (`leaf`/`reason`/`note`/`code`) and the demo labels
  * inside the render frame are written in ENGLISH; JSDoc/comments stay Vietnamese.
+ *
+ * MIGRATED TO `states` (2026-07-27): every leaf below has exactly one shape, so
+ * each carries a single `states[]` entry.
  */
 const meta: Meta<typeof Choice.Checkbox> = {
     title: "Atoms/Forms/Choice/Choice.Checkbox",
@@ -37,7 +40,7 @@ export default meta
 
 type Story = StoryObj<typeof Choice.Checkbox>
 
-/** Bare leaf — no prop turned on: unticked, no hint, no error. */
+/** Bare leaf — no prop turned on: unticked, no hint, no error. Migrated to `states` 2026-07-27. */
 export const Default: Story = {
     render: () => {
         const Demo = () => {
@@ -48,20 +51,26 @@ export const Default: Story = {
                     tier="atom"
                     leaf="No prop turned on"
                     reason="The one checkbox atom in the system, wrapping HeroUI Checkbox. This leaf is the baseline: unticked, no hint, no error."
-                    note="The label sits beside the box — Checkbox.Content owns it, not a separate FieldFrame label."
-                    code={"<Choice.Checkbox isSelected={value} onValueChange={setValue} label=\"Receive email updates\" />"}
-                >
-                    <div className="w-72">
-                        <Choice.Checkbox isSelected={value} onValueChange={setValue} label="Receive email updates" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "isSelected = false (unticked)",
+                            why: "The box renders empty and the label sits inline beside it — `Checkbox.Content` owns the label, there is no separate `FieldFrame` label. This is the baseline every other leaf below differs from by exactly one prop.",
+                            code: "<Choice.Checkbox isSelected={value} onValueChange={setValue} label=\"Receive email updates\" />",
+                            render: (
+                                <div className="w-72">
+                                    <Choice.Checkbox isSelected={value} onValueChange={setValue} label="Receive email updates" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `isSelected` — the shape when ticked (false = the Default leaf above). */
+/** Leaf prop `isSelected` — the shape when ticked (false = the Default leaf above). Migrated to `states` 2026-07-27. */
 export const Checked: Story = {
     render: () => {
         const Demo = () => {
@@ -71,21 +80,26 @@ export const Checked: Story = {
                     name="Choice.Checkbox"
                     tier="atom"
                     leaf="Prop `isSelected`"
-                    reason="isSelected is controlled — the caller owns the value and hands it back through onValueChange, so the box never drifts from the form state around it."
-                    note="Ticked fills the box and swaps the icon; nothing else in the row moves."
-                    code={"<Choice.Checkbox isSelected onValueChange={setValue} label=\"Receive email updates\" />"}
-                >
-                    <div className="w-72">
-                        <Choice.Checkbox isSelected={value} onValueChange={setValue} label="Receive email updates" showAnatomy />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "isSelected = true (ticked)",
+                            why: "The box fills and the tick icon swaps in; nothing else in the row moves. `isSelected` is controlled, so the caller owns the value and hands it back through `onValueChange`, which keeps the box from ever drifting out of sync with the form state around it.",
+                            code: "<Choice.Checkbox isSelected onValueChange={setValue} label=\"Receive email updates\" />",
+                            render: (
+                                <div className="w-72">
+                                    <Choice.Checkbox isSelected={value} onValueChange={setValue} label="Receive email updates" showAnatomy />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `hint` — a secondary description line under the label, via the internal FieldFrame scaffold. */
+/** Leaf prop `hint` — a secondary description line under the label, via the internal FieldFrame scaffold. Migrated to `states` 2026-07-27. */
 export const WithHint: Story = {
     render: () => {
         const Demo = () => {
@@ -95,27 +109,32 @@ export const WithHint: Story = {
                     name="Choice.Checkbox"
                     tier="atom"
                     leaf="Prop `hint`"
-                    reason="A checkbox with a consequence needs a sentence, not just a label — hint is that sentence, always visible below the row."
-                    note="Routed through FieldFrame internally — the atom stays a single call, no separate Field wrapper at the call site."
-                    code={"<Choice.Checkbox isSelected={value} onValueChange={setValue} label=\"Receive email updates\" hint=\"You can turn this off anytime in Settings.\" />"}
-                >
-                    <div className="w-72">
-                        <Choice.Checkbox
-                            isSelected={value}
-                            onValueChange={setValue}
-                            label="Receive email updates"
-                            hint="You can turn this off anytime in Settings."
-                            showAnatomy
-                        />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "hint set",
+                            why: "A muted sentence appears below the row, routed through the internal `FieldFrame` scaffold rather than a separate wrapper at the call site. A checkbox with a real consequence needs more than a label, so the hint stays visible at all times instead of hiding behind a tooltip.",
+                            code: "<Choice.Checkbox isSelected={value} onValueChange={setValue} label=\"Receive email updates\" hint=\"You can turn this off anytime in Settings.\" />",
+                            render: (
+                                <div className="w-72">
+                                    <Choice.Checkbox
+                                        isSelected={value}
+                                        onValueChange={setValue}
+                                        label="Receive email updates"
+                                        hint="You can turn this off anytime in Settings."
+                                        showAnatomy
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `isRequired` — a `*` mark attached to the inline label. */
+/** Leaf prop `isRequired` — a `*` mark attached to the inline label. Migrated to `states` 2026-07-27. */
 export const Required: Story = {
     render: () => {
         const Demo = () => {
@@ -125,27 +144,32 @@ export const Required: Story = {
                     name="Choice.Checkbox"
                     tier="atom"
                     leaf="Prop `isRequired`"
-                    reason="Some agreements aren't optional — the asterisk on the inline label says so before the form is even submitted."
-                    note="The mark rides on the same label as the box, not on a separate FieldFrame heading — this control has no heading of its own."
-                    code={"<Choice.Checkbox isSelected={value} onValueChange={setValue} label=\"Agree to the Terms of Service\" isRequired />"}
-                >
-                    <div className="w-72">
-                        <Choice.Checkbox
-                            isSelected={value}
-                            onValueChange={setValue}
-                            label="Agree to the Terms of Service"
-                            isRequired
-                            showAnatomy
-                        />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "isRequired = true",
+                            why: "A `*` mark attaches to the end of the inline label; the label carries it since this control has no separate heading of its own. Some agreements aren't optional, so the asterisk has to say so before the form is ever submitted.",
+                            code: "<Choice.Checkbox isSelected={value} onValueChange={setValue} label=\"Agree to the Terms of Service\" isRequired />",
+                            render: (
+                                <div className="w-72">
+                                    <Choice.Checkbox
+                                        isSelected={value}
+                                        onValueChange={setValue}
+                                        label="Agree to the Terms of Service"
+                                        isRequired
+                                        showAnatomy
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `isDisabled` — locks the control, faded color. */
+/** Leaf prop `isDisabled` — locks the control, faded color. Migrated to `states` 2026-07-27. */
 export const Disabled: Story = {
     render: () => (
         <div className="p-8">
@@ -153,25 +177,30 @@ export const Disabled: Story = {
                 name="Choice.Checkbox"
                 tier="atom"
                 leaf="Prop `isDisabled`"
-                reason="Not allowed yet — a step upstream isn't done, or the setting is locked by policy. The box stays visible so the reader knows the option exists."
-                note="Forwarded straight to HeroUI: press is blocked and both box and label dim."
-                code={"<Choice.Checkbox isDisabled isSelected onValueChange={setValue} label=\"Agree to the Terms of Service\" />"}
-            >
-                <div className="w-72">
-                    <Choice.Checkbox
-                        isSelected
-                        onValueChange={() => {}}
-                        label="Agree to the Terms of Service"
-                        isDisabled
-                        showAnatomy
-                    />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isDisabled = true, isSelected = true",
+                        why: "Both the box and its label dim and stop responding to press, forwarded straight to HeroUI's own disabled handling. The box has to stay visible so the reader still knows the option exists, even though a step upstream isn't done yet or policy has locked it.",
+                        code: "<Choice.Checkbox isDisabled isSelected onValueChange={setValue} label=\"Agree to the Terms of Service\" />",
+                        render: (
+                            <div className="w-72">
+                                <Choice.Checkbox
+                                    isSelected
+                                    onValueChange={() => {}}
+                                    label="Agree to the Terms of Service"
+                                    isDisabled
+                                    showAnatomy
+                                />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
 
-/** Leaf prop `errorMessage` — inline label + error border + red error line, via FieldFrame. */
+/** Leaf prop `errorMessage` — inline label + error border + red error line, via FieldFrame. Migrated to `states` 2026-07-27. */
 export const Error: Story = {
     render: () => {
         const Demo = () => {
@@ -181,27 +210,32 @@ export const Error: Story = {
                     name="Choice.Checkbox"
                     tier="atom"
                     leaf="Prop `errorMessage`"
-                    reason="A blank required checkbox is easy to miss on a long form — the red border and the line beneath it stop the eye at the exact row that needs attention."
-                    note="Setting errorMessage flips the control invalid on its own; there's no separate isInvalid to remember."
-                    code={"<Choice.Checkbox isSelected={value} onValueChange={setValue} label=\"Agree to the Terms of Service\" errorMessage=\"You must agree to continue.\" />"}
-                >
-                    <div className="w-72">
-                        <Choice.Checkbox
-                            isSelected={value}
-                            onValueChange={setValue}
-                            label="Agree to the Terms of Service"
-                            errorMessage="You must agree to continue."
-                            showAnatomy
-                        />
-                    </div>
-                </BlockAnatomy>
+                    states={[
+                        {
+                            name: "errorMessage set",
+                            why: "The control flips to its invalid style and a red line appears beneath it — setting `errorMessage` alone does this, with no separate `isInvalid` to remember. A blank required checkbox is easy to miss on a long form, so the red border and the line under it stop the eye at the exact row that needs attention.",
+                            code: "<Choice.Checkbox isSelected={value} onValueChange={setValue} label=\"Agree to the Terms of Service\" errorMessage=\"You must agree to continue.\" />",
+                            render: (
+                                <div className="w-72">
+                                    <Choice.Checkbox
+                                        isSelected={value}
+                                        onValueChange={setValue}
+                                        label="Agree to the Terms of Service"
+                                        errorMessage="You must agree to continue."
+                                        showAnatomy
+                                    />
+                                </div>
+                            ),
+                        },
+                    ]}
+                />
             )
         }
         return <div className="p-8"><Demo /></div>
     },
 }
 
-/** Leaf prop `isSkeleton` — CO-LOCATED shimmer (§12c): square box + label bar. */
+/** Leaf prop `isSkeleton` — CO-LOCATED shimmer (§12c): square box + label bar. Migrated to `states` 2026-07-27. */
 export const Loading: Story = {
     render: () => (
         <div className="p-8">
@@ -209,14 +243,19 @@ export const Loading: Story = {
                 name="Choice.Checkbox"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
-                reason="Whoever owns the shape owns its resting state, so the checkbox draws its own shimmer — no shared skeleton component to keep in sync."
-                note="The shimmer mirrors box + label width so the row doesn't jump when the real content lands."
-                code={"<Choice.Checkbox isSkeleton />"}
-            >
-                <div className="w-72">
-                    <Choice.Checkbox isSelected={false} onValueChange={() => {}} label="" isSkeleton showAnatomy />
-                </div>
-            </BlockAnatomy>
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "The whole row is replaced by a shimmer box plus a shimmer label bar sized to match the live row, instead of any real checkbox control. Whoever owns the shape owns its resting state, so the checkbox draws its own shimmer rather than the caller assembling one from a shared skeleton component.",
+                        code: "<Choice.Checkbox isSkeleton />",
+                        render: (
+                            <div className="w-72">
+                                <Choice.Checkbox isSelected={false} onValueChange={() => {}} label="" isSkeleton showAnatomy />
+                            </div>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

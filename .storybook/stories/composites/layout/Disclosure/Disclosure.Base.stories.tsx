@@ -11,6 +11,9 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * `CaretDownIcon` rotated 180° on open, `text-muted hover:text-foreground`,
  * `w-fit` trigger). A multi-panel accordion is a different khung
  * (`SurfaceCard.Accordion`, items-driven), not a member of this family.
+ *
+ * 2026-07-27: migrated to the `states` API (§8) — each leaf below is a single
+ * `states` entry, since none of them stacks more than one rendering.
  */
 const meta: Meta<typeof Disclosure.Base> = {
     title: "Composites/Layout/Disclosure/Disclosure.Base",
@@ -38,14 +41,14 @@ const SampleContent = () => (
  * leaves show just `Trigger`.
  */
 const CLOSED_PARTS: Array<AnatomyNode> = [
-    { name: "Trigger", tier: "composite", role: "hàng caret + title, bấm để toggle" },
+    { name: "Trigger", tier: "composite", role: "the caret-plus-title row the reader presses to toggle the disclosure" },
 ]
 const OPEN_PARTS: Array<AnatomyNode> = [
-    { name: "Trigger", tier: "composite", role: "hàng caret (xoay 180°) + title" },
-    { name: "Content", tier: "composite", role: "vùng nội dung (slot `body`), chỉ mount khi mở" },
+    { name: "Trigger", tier: "composite", role: "the caret-plus-title row, its caret rotated 180° now that the content is showing" },
+    { name: "Content", tier: "composite", role: "the content region carried in the `body` slot, mounted only while expanded" },
 ]
 const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton", tier: "composite", role: "mirror hàng trigger lúc chưa sẵn sàng", state: "skeleton" },
+    { name: "Skeleton", tier: "composite", role: "a mirror of the trigger row while the section is not ready yet", state: "skeleton" },
 ]
 
 /** Default: uncontrolled, closed on mount — click the trigger to expand it. `children` shorthand for `body`. */
@@ -57,13 +60,20 @@ export const Default: Story = {
                 tier="composite"
                 leaf="Default"
                 parts={CLOSED_PARTS}
-                reason="Collapsible chung: Trigger toggle một Content mount/unmount, không có animation exit."
-                code={"<Disclosure.Base title=\"Customize session\"><SampleContent /></Disclosure.Base>"}
-            >
-                <Disclosure.Base title="Tùy chỉnh phiên" showAnatomy>
-                    <SampleContent />
-                </Disclosure.Base>
-            </BlockAnatomy>
+                reason="The generic collapsible khung: a `Trigger` toggles ONE `Content` region that mounts and unmounts, with no exit animation. Uncontrolled is the default path — the component holds its own open/closed boolean, so the caller never has to declare `isOpen`/`onOpenChange` just to use it."
+                states={[
+                    {
+                        name: "isOpen unset (uncontrolled, closed on mount)",
+                        why: "Only the `Trigger` row mounts — the caret points down and the content below it does not exist in the DOM yet. Clicking the trigger flips the component's own internal open state, since no `isOpen` prop was passed to control it.",
+                        code: "<Disclosure.Base title=\"Customize session\"><SampleContent /></Disclosure.Base>",
+                        render: (
+                            <Disclosure.Base title="Tùy chỉnh phiên" showAnatomy>
+                                <SampleContent />
+                            </Disclosure.Base>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -77,16 +87,23 @@ export const Open: Story = {
                 tier="composite"
                 leaf="Open"
                 parts={OPEN_PARTS}
-                note="defaultOpen → Content mount ngay từ đầu, thêm 1 node so với leaf đóng. Ở đây dùng slot `body` thay cho children."
-                code={"<Disclosure.Base title=\"Customize session\" defaultOpen body={<SampleContent />} />"}
-            >
-                <Disclosure.Base
-                    title="Tùy chỉnh phiên"
-                    defaultOpen
-                    showAnatomy
-                    body={<SampleContent />}
-                />
-            </BlockAnatomy>
+                reason="The generic collapsible khung: a `Trigger` toggles ONE `Content` region that mounts and unmounts, with no exit animation. Whatever starts the disclosure open, the composition it lands on is the same two-node tree the trigger toggles into by hand."
+                states={[
+                    {
+                        name: "defaultOpen = true",
+                        why: "The `Content` node mounts from the start and the trigger's caret starts rotated 180°, one extra node compared to the closed leaf above. This is for a disclosure the caller wants expanded on first paint, using the slot `body` instead of `children`.",
+                        code: "<Disclosure.Base title=\"Customize session\" defaultOpen body={<SampleContent />} />",
+                        render: (
+                            <Disclosure.Base
+                                title="Tùy chỉnh phiên"
+                                defaultOpen
+                                showAnatomy
+                                body={<SampleContent />}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -110,11 +127,16 @@ export const Controlled: Story = {
                 tier="composite"
                 leaf="Controlled"
                 parts={CLOSED_PARTS}
-                note="isOpen/onOpenChange do cha sở hữu — canvas mount ở trạng thái đóng, cùng composition với Default."
-                code={"<Disclosure.Base title=\"Customize session\" isOpen={open} onOpenChange={setOpen}><SampleContent /></Disclosure.Base>"}
-            >
-                <ControlledExample />
-            </BlockAnatomy>
+                reason="The generic collapsible khung: a `Trigger` toggles ONE `Content` region that mounts and unmounts, with no exit animation. Controlled mode changes who owns the boolean, not what the tree looks like at either end."
+                states={[
+                    {
+                        name: "isOpen and onOpenChange set (starts false)",
+                        why: "The composition on mount is identical to the uncontrolled `Default` leaf — only `Trigger` exists, closed. The difference is invisible to the eye: the parent, not the component, now owns which boolean flips when the trigger is clicked.",
+                        code: "<Disclosure.Base title=\"Customize session\" isOpen={open} onOpenChange={setOpen}><SampleContent /></Disclosure.Base>",
+                        render: <ControlledExample />,
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -128,13 +150,20 @@ export const Disabled: Story = {
                 tier="composite"
                 leaf="Disabled"
                 parts={CLOSED_PARTS}
-                note="isDisabled chỉ đổi style/khả năng bấm của Trigger, composition không đổi."
-                code={"<Disclosure.Base title=\"Customize session\" isDisabled><SampleContent /></Disclosure.Base>"}
-            >
-                <Disclosure.Base title="Tùy chỉnh phiên" isDisabled showAnatomy>
-                    <SampleContent />
-                </Disclosure.Base>
-            </BlockAnatomy>
+                reason="The generic collapsible khung: a `Trigger` toggles ONE `Content` region that mounts and unmounts, with no exit animation. `isDisabled` only touches how the trigger looks and behaves — it never changes the shape either state renders."
+                states={[
+                    {
+                        name: "isDisabled = true",
+                        why: "The trigger dims and switches to `cursor-not-allowed`, and it drops out of the tab order, but the composition otherwise matches the closed `Default` leaf. This exists for a disclosure the caller wants visible but temporarily not interactive, rather than hidden entirely.",
+                        code: "<Disclosure.Base title=\"Customize session\" isDisabled><SampleContent /></Disclosure.Base>",
+                        render: (
+                            <Disclosure.Base title="Tùy chỉnh phiên" isDisabled showAnatomy>
+                                <SampleContent />
+                            </Disclosure.Base>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }
@@ -148,13 +177,20 @@ export const Skeleton: Story = {
                 tier="composite"
                 leaf="Skeleton"
                 parts={SKELETON_PARTS}
-                note="isSkeleton → render thẳng Skeleton.Disclosure, Trigger/Content thật chưa tồn tại."
-                code={"<Disclosure.Base title=\"Customize session\" isSkeleton />"}
-            >
-                <Disclosure.Base title="Tùy chỉnh phiên" isSkeleton showAnatomy>
-                    <SampleContent />
-                </Disclosure.Base>
-            </BlockAnatomy>
+                reason="The generic collapsible khung: a `Trigger` toggles ONE `Content` region that mounts and unmounts, with no exit animation. Loading is a separate resting shape entirely, owned by this component rather than borrowed from a shared skeleton."
+                states={[
+                    {
+                        name: "isSkeleton = true",
+                        why: "The component renders straight to a `Skeleton.Disclosure` mirror of the trigger row — neither the real `Trigger` nor `Content` node exists yet. This is the resting shape while the caller doesn't yet know whether the section has content worth expanding.",
+                        code: "<Disclosure.Base title=\"Customize session\" isSkeleton />",
+                        render: (
+                            <Disclosure.Base title="Tùy chỉnh phiên" isSkeleton showAnatomy>
+                                <SampleContent />
+                            </Disclosure.Base>
+                        ),
+                    },
+                ]}
+            />
         </div>
     ),
 }

@@ -13,7 +13,14 @@ import React from "react"
  */
 
 /** Which tier the annotated part is — drives dot/badge colour across the anatomy tools. */
-export type AnatomyTier = "atom" | "primitive" | "design" | "block"
+/**
+ * The five tiers of the tree. `primitive` is the OLD name of the `layout` tier (§13).
+ *
+ * ⭐ `screen` added 2026-07-27 (teacher: "the 5 layers are identical in form"): the union
+ * only had four, so a screen had to masquerade as `block` — the panel then printed the
+ * wrong badge on the very node that anchors the whole tree.
+ */
+export type AnatomyTier = "atom" | "primitive" | "design" | "block" | "screen"
 
 /** Value provided by {@link BlockAnatomy} to the overlays nested under it. */
 export interface AnatomyPanelValue {

@@ -6,11 +6,12 @@ import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCar
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ PHẠM VI STATE: `Stack.V` là KHUNG một-trục DỌC. State nó SINH RA = những gì
- * chính nó quyết định: `gap` (thang §10 — lý do khung này tồn tại), `align` (trục
- * ngang), `divider` (kẻ giữa các con). `wrap` KHÔNG có ở đây (cột không tràn dòng —
- * đó là state của `Stack.H`), và `justify` chỉ đọc được khi cột có chiều cao dư nên
- * để `Stack.H` demo — không lặp state của member khác.
+ * ⚠️ STATE SCOPE: `Stack.V` is a single-axis VERTICAL frame. The state it PRODUCES =
+ * whatever it decides itself: `gap` (the §10 scale — the reason this frame exists),
+ * `align` (the horizontal axis), `divider` (a line between children). `wrap` is NOT here
+ * (a column doesn't overflow into rows — that's `Stack.H`'s state), and `justify` is only
+ * readable when the column has extra height, so leave it to `Stack.H`'s demo — don't
+ * repeat another member's state.
  */
 const meta: Meta<typeof Stack.V> = {
     title: "Layouts/Layout/Stack/Stack.V",
@@ -25,7 +26,7 @@ export default meta
 
 type Story = StoryObj<typeof Stack.V>
 
-/** Khung không mang nội dung — fixture là card thật để thấy seam giữa hai con. */
+/** The frame carries no content — the fixture is a real card so the seam between two children is visible. */
 const Panel = ({ text }: { text: string }) => (
     <SurfaceCard.Base>
         <Typography.Base size="sm" text={text} />
@@ -33,14 +34,14 @@ const Panel = ({ text }: { text: string }) => (
 )
 
 const TRACK_PARTS: Array<AnatomyNode> = [
-    { name: "Track", tier: "primitive", role: "trục flex dọc — sở hữu gap (§10), align, justify" },
+    { name: "Track", tier: "primitive", role: "vertical flex axis — owns gap (§10), align, justify" },
 ]
 const DIVIDER_PARTS: Array<AnatomyNode> = [
-    { name: "Track", tier: "primitive", role: "trục flex dọc — sở hữu gap (§10)" },
-    { name: "Line", tier: "atom", role: "Divider.Base chèn GIỮA hai con (N con → N−1 kẻ)" },
+    { name: "Track", tier: "primitive", role: "vertical flex axis — owns gap (§10)" },
+    { name: "Line", tier: "atom", role: "Divider.Base inserted BETWEEN two children (N children → N−1 lines)" },
 ]
 
-/** Sáu nấc HỢP LỆ của §10 — `gap` là union literal nên không có nấc thứ bảy. */
+/** The six VALID steps of §10 — `gap` is a union literal, so there is no seventh step. */
 const SCALE = [
     { gap: 0, name: "flush (0)" },
     { gap: 1, name: "tight (1)" },
@@ -50,7 +51,7 @@ const SCALE = [
     { gap: 8, name: "page (8)" },
 ] as const
 
-/** Default — cột với seam `grouped(3)`: nhịp mặc định của các khối trong một card. */
+/** Default — a column with a `grouped(3)` seam: the default rhythm between blocks inside a card. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
@@ -59,7 +60,7 @@ export const Default: Story = {
                 tier="primitive"
                 leaf="Default"
                 parts={TRACK_PARTS}
-                reason="Khung một-trục DỌC: chỉ quyết định hướng, seam và canh lề — không mang nội dung hay chức năng (§13). Là khung BỌC nên nhận `children` (một trục chỉ có ĐÚNG MỘT slot, nên không có bộ header/body/footer để đặt tên)."
+                reason="A single-axis VERTICAL frame: it only decides direction, seam, and alignment — it carries no content or function (§13). It's a WRAPPING frame so it takes `children` (a single axis has EXACTLY ONE slot, so there's no header/body/footer set to name)."
                 code={`<Stack.V gap={3}>
   <Panel text="Tổng quan" />
   <Panel text="Lộ trình" />
@@ -79,8 +80,8 @@ export const Default: Story = {
 }
 
 /**
- * Gaps — LÝ DO khung này tồn tại: `gap` nhận ĐÚNG sáu nấc `0·1·2·3·6·8` (§10c).
- * `gap={4}` hay `gap={5}` là LỖI BIÊN DỊCH, không phải góp ý review.
+ * Gaps — the REASON this frame exists: `gap` only accepts EXACTLY six steps `0·1·2·3·6·8` (§10c).
+ * `gap={4}` or `gap={5}` is a COMPILE ERROR, not a review comment.
  */
 export const Gaps: Story = {
     render: () => (
@@ -90,7 +91,7 @@ export const Gaps: Story = {
                 tier="primitive"
                 leaf="Gaps"
                 parts={TRACK_PARTS}
-                note="`gap` là union literal `0|1|2|3|6|8` và BẮT BUỘC — không có default để lỡ tay chọn nhầm seam (§10a: mỗi seam đúng một chủ, có chủ đích)."
+                note="`gap` is a required union literal `0|1|2|3|6|8` — there's no default, so a seam can't be picked wrong by accident (§10a: every seam has exactly one owner, chosen on purpose)."
                 code={`<Stack.V gap={0}>…</Stack.V>   // flush
 <Stack.V gap={2}>…</Stack.V>   // related
 <Stack.V gap={6}>…</Stack.V>   // section`}
@@ -112,8 +113,9 @@ export const Gaps: Story = {
 }
 
 /**
- * WithDivider — `divider` chèn `Divider.Base` (ATOM) vào GIỮA các con: N con → N−1
- * kẻ, không có kẻ ở đầu/cuối. Khung KHÔNG tự vẽ đường kẻ (§13c: trùng atom ⇒ dùng atom).
+ * WithDivider — `divider` inserts `Divider.Base` (an ATOM) BETWEEN children: N children →
+ * N−1 lines, none at the start/end. The frame does NOT draw the line itself (§13c: overlaps
+ * an atom ⇒ use the atom).
  */
 export const WithDivider: Story = {
     render: () => (
@@ -123,7 +125,7 @@ export const WithDivider: Story = {
                 tier="primitive"
                 leaf="WithDivider"
                 parts={DIVIDER_PARTS}
-                note="Kẻ NGANG (cắt ngang trục dọc) do `Divider.Base` vẽ — khung chỉ xen vào giữa. `gap` vẫn áp cho cả con lẫn kẻ nên hai bên đường kẻ luôn cân."
+                note="The HORIZONTAL line (cutting across the vertical axis) is drawn by `Divider.Base` — the frame only inserts it in between. `gap` still applies to both children and the line, so both sides of the line always balance."
                 code={`<Stack.V gap={3} divider>
   <Typography.Base size="sm" text="Đã hoàn thành 12 bài" />
   <Typography.Base size="sm" text="Chuỗi 5 ngày" />
@@ -143,8 +145,9 @@ export const WithDivider: Story = {
 }
 
 /**
- * Align — trên trục DỌC, `align` canh theo chiều NGANG. `stretch` (mặc định) kéo con
- * đầy bề ngang; `start`/`center`/`end` để con giữ bề ngang tự nhiên của nó.
+ * Align — on the VERTICAL axis, `align` aligns along the HORIZONTAL direction. `stretch`
+ * (default) stretches children to full width; `start`/`center`/`end` let children keep
+ * their natural width.
  */
 export const Align: Story = {
     render: () => (
@@ -154,7 +157,7 @@ export const Align: Story = {
                 tier="primitive"
                 leaf="Align"
                 parts={TRACK_PARTS}
-                note="Fixture là nút (có bề ngang tự thân) nên khác biệt đọc được: `stretch` phá bề ngang tự thân, ba giá trị còn lại giữ nguyên."
+                note="The fixture is a button (has its own natural width), so the difference reads clearly: `stretch` overrides its natural width, the other three values keep it."
                 code={`<Stack.V gap={2} align="center">
   …
 </Stack.V>`}

@@ -38,7 +38,13 @@ export const Proportional: Story = {
     render: () => (
         <div className="p-8">
             <div className="w-80">
-                <BlockAnatomy name="SegmentBar" tier="primitive" leaf="Proportional" parts={BAR_LEGEND_PARTS}>
+                <BlockAnatomy
+                    name="SegmentBar"
+                    tier="primitive"
+                    leaf="Proportional"
+                    parts={BAR_LEGEND_PARTS}
+                    code={"<SegmentBar ariaLabel=\"Distribution of answers by difficulty\" segments={[{ key: \"easy\", label: \"Easy\", value: 12 }]} />"}
+                >
                     <SegmentBar
                         ariaLabel="Distribution of answers by difficulty"
                         showAnatomy
@@ -59,7 +65,14 @@ export const WithMax: Story = {
     render: () => (
         <div className="p-8">
             <div className="w-80">
-                <BlockAnatomy name="SegmentBar" tier="primitive" leaf="WithMax" parts={BAR_LEGEND_PARTS} note="max set → track chừa phần dư (progress thật), cùng composition với Proportional.">
+                <BlockAnatomy
+                    name="SegmentBar"
+                    tier="primitive"
+                    leaf="WithMax"
+                    parts={BAR_LEGEND_PARTS}
+                    note="max set → track chừa phần dư (progress thật), cùng composition với Proportional."
+                    code={"<SegmentBar ariaLabel=\"Lesson completion progress\" max={50} segments={[{ key: \"done\", label: \"Completed\", value: 18, color: \"var(--success)\" }]} />"}
+                >
                     <SegmentBar
                         ariaLabel="Lesson completion progress"
                         max={50}
@@ -80,7 +93,14 @@ export const HideLegend: Story = {
     render: () => (
         <div className="p-8">
             <div className="w-80">
-                <BlockAnatomy name="SegmentBar" tier="primitive" leaf="HideLegend" parts={BAR_ONLY_PARTS} note="hideLegend → chỉ còn track, không render Legend.">
+                <BlockAnatomy
+                    name="SegmentBar"
+                    tier="primitive"
+                    leaf="HideLegend"
+                    parts={BAR_ONLY_PARTS}
+                    note="hideLegend → chỉ còn track, không render Legend."
+                    code={"<SegmentBar hideLegend ariaLabel=\"Ratio of correct and incorrect answers\" segments={[{ key: \"correct\", label: \"Correct\", value: 34, color: \"var(--success)\" }]} />"}
+                >
                     <SegmentBar
                         hideLegend
                         ariaLabel="Ratio of correct and incorrect answers"
@@ -101,7 +121,14 @@ export const ManyGroups: Story = {
     render: () => (
         <div className="p-8">
             <div className="w-80">
-                <BlockAnatomy name="SegmentBar" tier="primitive" leaf="ManyGroups" parts={BAR_LEGEND_PARTS} note="Nhiều slice hơn — legend wrap, cùng composition với Proportional.">
+                <BlockAnatomy
+                    name="SegmentBar"
+                    tier="primitive"
+                    leaf="ManyGroups"
+                    parts={BAR_LEGEND_PARTS}
+                    note="Nhiều slice hơn — legend wrap, cùng composition với Proportional."
+                    code={"<SegmentBar ariaLabel=\"Distribution of assessed skills\" segments={[{ key: \"frontend\", label: \"Frontend\", value: 9 }, { key: \"backend\", label: \"Backend\", value: 14 }]} />"}
+                >
                     <SegmentBar
                         ariaLabel="Distribution of assessed skills"
                         showAnatomy
@@ -124,7 +151,19 @@ export const InlineLabels: Story = {
     render: () => (
         <div className="p-8">
             <div className="w-80">
-                <BlockAnatomy name="SegmentBar" tier="primitive" leaf="InlineLabels" parts={BAR_LEGEND_CAPTION_PARTS} note="inlineLabels → track dày tự in label+%; caption thêm câu takeaway muted dưới cùng.">
+                <BlockAnatomy
+                    name="SegmentBar"
+                    tier="primitive"
+                    leaf="InlineLabels"
+                    parts={BAR_LEGEND_CAPTION_PARTS}
+                    note="inlineLabels → track dày tự in label+%; caption thêm câu takeaway muted dưới cùng."
+                    code={`<SegmentBar
+  inlineLabels
+  ariaLabel="Card maturity breakdown"
+  caption="Only 8% of cards have matured — that's the real progress."
+  segments={[{ key: "mature", label: "Mature", value: 8, color: "var(--success)" }]}
+/>`}
+                >
                     <SegmentBar
                         inlineLabels
                         ariaLabel="Card maturity breakdown"
@@ -147,7 +186,14 @@ export const Empty: Story = {
     render: () => (
         <div className="p-8">
             <div className="w-80">
-                <BlockAnatomy name="SegmentBar" tier="primitive" leaf="Empty" parts={BAR_LEGEND_PARTS} note="Mọi value=0 → track rỗng (tránh chia 0), legend vẫn liệt kê tên slice.">
+                <BlockAnatomy
+                    name="SegmentBar"
+                    tier="primitive"
+                    leaf="Empty"
+                    parts={BAR_LEGEND_PARTS}
+                    note="Mọi value=0 → track rỗng (tránh chia 0), legend vẫn liệt kê tên slice."
+                    code={"<SegmentBar ariaLabel=\"No assessment data yet\" segments={[{ key: \"easy\", label: \"Easy\", value: 0 }]} />"}
+                >
                     <SegmentBar
                         ariaLabel="No assessment data yet"
                         showAnatomy

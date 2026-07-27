@@ -3,20 +3,22 @@ import { AvatarGroup } from "./AvatarGroup"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Avatar.*`: namespace của họ avatar. File này CHỈ gom, không có logic.
+ * ATOM — `Avatar.*`: namespace for the avatar family. This file ONLY re-exports,
+ * no logic of its own.
  *
- * Mỗi member một FILE riêng (tách 2026-07-26, gộp `UserAvatar` — xem header của
- * `AvatarBase.tsx`) để quan hệ giữa chúng là `import` THẬT, đọc được:
- *   • `Avatar.Base`  → ./AvatarBase   — avatar DUY NHẤT; chuỗi fallback ảnh →
- *     ảnh sinh (DiceBear) → initials → icon, status-dot, leaf skeleton.
- *   • `Avatar.Group` → ./AvatarGroup  — HÀNG avatar chồng mép; **import
- *     AvatarBase** ⇒ component duy nhất trong họ có deps.
+ * Each member has its OWN file (split 2026-07-26, folding in `UserAvatar` — see
+ * the header of `AvatarBase.tsx`) so the relationship between them is a REAL,
+ * readable `import`:
+ *   • `Avatar.Base`  → ./AvatarBase   — the ONE avatar; fallback chain: image →
+ *     generated image (DiceBear) → initials → icon, status-dot, leaf skeleton.
+ *   • `Avatar.Group` → ./AvatarGroup  — a ROW of overlapping avatars; **imports
+ *     AvatarBase** ⇒ the only component in the family with deps.
  *
- * ⚠️ `UserAvatar` (block `identity/UserAvatar`) ĐÃ XOÁ (2026-07-26): năng lực
- * DiceBear + xử lý ảnh lỗi của nó chuyển hết vào `Avatar.Base` (mặc định
- * `fallback="generated"`) — không còn hai atom làm cùng một việc.
+ * ⚠️ `UserAvatar` (block `identity/UserAvatar`) is DELETED (2026-07-26): its
+ * DiceBear generation + broken-image handling moved entirely into `Avatar.Base`
+ * (default `fallback="generated"`) — no more two atoms doing the same job.
  *
- * Call-site bên ngoài KHÔNG đổi đường import: vẫn `.../Avatar/Avatar`.
+ * External call-sites keep the SAME import path: still `.../Avatar/Avatar`.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 export const Avatar = Object.assign(AvatarBase, {

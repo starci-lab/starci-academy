@@ -1,0 +1,332 @@
+import React from "react"
+import { Popover, Typography, cn } from "@heroui/react"
+import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
+import { Cluster } from "@sb-components/layouts/layout/Cluster/Cluster"
+import { Stack } from "@sb-components/layouts/layout/Stack/Stack"
+import { KeyValue } from "@sb-components/layouts/data/KeyValue/KeyValue"
+import { Typography as TypographyAtom } from "@sb-components/atoms/text/Typography/Typography"
+
+/**
+ * STORYBOOK-LOCAL DESIGN SPEC — BLOCK ported faithfully from
+ * `@/components/blocks/commerce/PriceTag`. The `next-intl` `useTranslations` strings are
+ * INLINED locally (vi). The `−X%` saving chip — a raw `<Chip variant="soft"
+ * color="success">` in `src` — is COMPOSED from the local `StatusChip` primitive
+ * (`tone="success"` yields the byte-identical soft-success chip), so the block genuinely
+ * composes a primitive instead of re-drawing one. Synced to `src` later.
+ */
+
+/** Currency a price is shown in. */
+export type PriceCurrency = "VND" | "USD"
+
+/**
+ * The role a price plays on a surface — decides the amount's font size. INTERNAL,
+ * not exposed as a prop (§14d.1): the caller picks a MEMBER (`PriceTag.Inline` /
+ * `PriceTag.Prominent`), not a size.
+ */
+type PriceRole = "inline" | "prominent"
+
+/** Breakdown rows for the breakdown popover (amounts in the SAME currency as the price). */
+export interface PriceBreakdown {
+    /** Active-phase price BEFORE loyalty (the middle step list → phase → charge). */
+    phase: number
+    /** Localised phase name (e.g. "Early-bird") shown on the phase row. */
+    phaseLabel?: string
+    /** Loyalty discount percent (0 = no loyalty row). */
+    loyaltyPercent: number
+    /** Localised loyalty note (e.g. "already owns 2 courses") appended to the loyalty row. */
+    loyaltyNote?: string
+}
+
+/** Props for the {@link PriceTag} block. */
+export interface PriceTagProps {
+    /** The price the user actually pays. */
+    discounted: number
+    /** The pre-discount (list/MSRP) price; struck through when greater than discounted. */
+    original?: number | null
+    /** Currency to format in. Defaults to "VND". */
+    currency?: PriceCurrency
+    /**
+     * `true` → the price is in its RESTING state: the amount, the struck-through
+     * original price, the `−X%` chip, and the saving line all turn to shimmer,
+     * KEEPING the same line boxes so nothing jumps in layout (§8).
+     *
+     * The flag FLOWS DOWN into the atoms that render each part (`Typography.Base`,
+     * `Chip.Base`), instead of building a second shimmer tree (§12c). The popover
+     * is TURNED OFF while resting — there is no data to open yet, and a pressable
+     * control while loading is a false promise.
+     */
+    isSkeleton?: boolean
+    /**
+     * Optional phase-tier + loyalty rows for the breakdown {@link Popover}. Whenever
+     * there IS a saving the `−X%` chip is ALWAYS a button that opens the popover (at
+     * minimum list price → "you pay"); `breakdown` just adds the middle steps that
+     * explain WHERE the drop came from. Click/tap (not hover) so it works on touch too.
+     */
+    breakdown?: PriceBreakdown
+    /**
+     * Show the concrete "save N₫" line under the price (the real VND saved, not just
+     * the percent). Defaults to `true`; set `false` where space is tight (dense cards).
+     */
+    showSavingLine?: boolean
+    /** Extra classes on the root. */
+    className?: string
+    /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
+    anatPart?: string
+    /** When on, emit `data-anat-part` on each composed part so a BlockAnatomy panel can badge it on-render. */
+    showAnatomy?: boolean
+}
+
+/**
+ * Role → amount font size.
+ *
+ * ⚠️ DROPPED the `lg` step (2026-07-26): neither `src` nor the design uses it —
+ * it only lived in its own story — §14d.3 (*which screen in the app needs it?*).
+ */
+const AMOUNT_TYPE: Record<PriceRole, "base" | "h4"> = {
+    inline: "base",
+    prominent: "h4",
+}
+
+/** Role → struck-through original-price line size, placed next to {@link AMOUNT_TYPE} so the two scales don't drift apart. */
+const ORIGINAL_TYPE: Record<PriceRole, "xs" | "sm"> = {
+    inline: "xs",
+    prominent: "sm",
+}
+
+/** Format an amount in the given currency. */
+const formatPrice = (amount: number, currency: PriceCurrency): string =>
+    currency === "USD"
+        ? amount.toLocaleString("en-US", { style: "currency", currency: "USD" })
+        : `${amount.toLocaleString("vi-VN")}₫`
+
+/** Whole-percent saving between a "before" and an "after" amount (0 when none). */
+const savingPercent = (before: number, after: number): number =>
+    before > after ? Math.round((1 - after / before) * 100) : 0
+
+/**
+ * The single source of truth for rendering a course/product price: the discounted
+ * amount (bold), the list price struck through (only when there IS a saving), and a
+ * `−X%` success chip whose percent is the REAL list → charge gap (phase tier +
+ * loyalty). Whenever there is a saving the chip is a clickable button opening a
+ * {@link Popover} (at minimum list price → you pay; `breakdown` adds the phase +
+ * loyalty steps). Works in VND or USD.
+ *
+ * @param props - {@link PriceTagProps}
+ */
+const PriceTagBase = ({
+    discounted,
+    original,
+    currency = "VND",
+    role,
+    isSkeleton = false,
+    breakdown,
+    showSavingLine = true,
+    className,
+    anatPart,
+    showAnatomy,
+}: PriceTagProps & { role: PriceRole }) => {
+    const hasSaving = original != null && original > discounted
+    const savePercent = hasSaving ? savingPercent(original, discounted) : 0
+
+    // the −X% saving chip — composed from the StatusChip primitive (tone success →
+    // soft-success chip, matching src's raw `<Chip variant="soft" color="success">`).
+    // The pressable/focusable button role lives on the canonical `Popover.Trigger`
+    // wrapper (react-aria: role=button, aria-expanded/controls, tabindex), so there is
+    // exactly ONE interactive element. No caret; the whole chip is the affordance.
+    const chip =
+        savePercent > 0 ? (
+            <Chip.Base
+                tone="success"
+                anatPart={showAnatomy ? "Chip.Base" : undefined}
+                text={`−${savePercent}%`}
+            />
+        ) : null
+
+    // phase saving = list → phase ; loyalty saving = phase → charge
+    const phaseSave = original != null ? savingPercent(original, breakdown?.phase ?? discounted) : 0
+    // Popover content — shown for EVERY saving (so the chip is always clickable), at
+    // minimum list price → you pay. The phase-tier & loyalty rows only appear when a
+    // full `breakdown` is supplied.
+    const breakdownContent = hasSaving ? (
+        // ⭐ 2026-07-27 (teacher: "layouts are built from layout components"): this used
+        // to be FOUR hand-typed `<div className="flex items-center justify-between
+        // gap-3">`, all identical, plus a hand-drawn `border-t border-default pt-1` for
+        // the total row.
+        //
+        // Those four rows are all ONE shape: label left ↔ value right, repeated ⇒
+        // exactly `KeyValue.List` (§13b: a repeated list ⇒ `items` is DATA). The "you
+        // pay" row is the TOTAL row ⇒ `emphasis`, not a hand-drawn rule: the frame
+        // already knows how to emphasise a total row, and that emphasis looks the same
+        // across every price table in the system.
+        //
+        // ⚠️ The frame does NOT format for you (§13): every money string coming in here
+        // has already gone through `formatPrice`.
+        // ⚠️ This column is NOT badged: the panel groups nodes BY NAME (`firstEl` keeps
+        // only the first element of each name), so two `Stack.V`s with the same name
+        // would MERGE into one node and the tree would read wrong. The node that
+        // matters inside the popover is `KeyValue.List` — that one is badged; the
+        // wrapping column is just `p-3` padding.
+        <Stack.V gap={1} className="p-3">
+            <TypographyAtom.Base size="xs" color="muted" text="Chi tiết giá" />
+            <KeyValue.List
+                gap={1}
+                anatPart={showAnatomy ? "KeyValue.List" : undefined}
+                items={[
+                    {
+                        key: "list",
+                        label: "Giá gốc",
+                        value: formatPrice(original ?? discounted, currency),
+                    },
+                    ...(breakdown && original != null && original > breakdown.phase
+                        ? [{
+                            key: "phase",
+                            label: breakdown.phaseLabel ? `Giai đoạn ${breakdown.phaseLabel}` : "Ưu đãi giai đoạn",
+                            value: (
+                                <TypographyAtom.Base
+                                    size="sm"
+                                    className="text-success-soft-foreground"
+                                    text={`−${formatPrice(original - breakdown.phase, currency)} (−${phaseSave}%)`}
+                                />
+                            ),
+                        }]
+                        : []),
+                    ...(breakdown && breakdown.loyaltyPercent > 0 && breakdown.phase > discounted
+                        ? [{
+                            key: "loyalty",
+                            label: breakdown.loyaltyNote ? `Ưu đãi thành viên · ${breakdown.loyaltyNote}` : "Ưu đãi thành viên",
+                            value: (
+                                <TypographyAtom.Base
+                                    size="sm"
+                                    className="shrink-0 text-success-soft-foreground"
+                                    text={`−${formatPrice(breakdown.phase - discounted, currency)} (−${breakdown.loyaltyPercent}%)`}
+                                />
+                            ),
+                        }]
+                        : []),
+                    {
+                        key: "total",
+                        label: "Bạn trả",
+                        value: formatPrice(discounted, currency),
+                        // the TOTAL row: the frame handles the emphasis, replacing a hand-typed `border-t … pt-1`
+                        emphasis: true,
+                    },
+                ]}
+            />
+        </Stack.V>
+    ) : null
+
+    return (
+        // The outer column = two DIFFERENT lines (the price row · the "saving" line) ⇒
+        // `Stack.V`, NOT `Cluster`: a cluster is ONE track of N PEER elements (§13b).
+        <Stack.V
+            gap={1}
+            className={className}
+            anatPart={anatPart ?? (showAnatomy ? "Stack.V" : undefined)}
+        >
+            {/* The price row aligns on BASELINE (big number, struck number, chip share the
+                same text baseline) and wraps on its own when tight ⇒ exactly `Cluster`.
+                The three elements are THREE separate items, not merged into one
+                fragment — merging them leaves the frame's `gap` with nowhere to apply. */}
+            <Cluster.Base
+                gap={2}
+                align="baseline"
+                anatPart={showAnatomy ? "Cluster" : undefined}
+                items={[
+                    {
+                        key: "amount",
+                        // The amount goes through the ATOM `Typography.Base` (§9c), NOT raw
+                        // HeroUI — thanks to that, `isSkeleton` flows straight into it instead
+                        // of branching off to build a separate shimmer bar.
+                        content: (
+                            <TypographyAtom.Base
+                                size={AMOUNT_TYPE[role]}
+                                weight="bold"
+                                isSkeleton={isSkeleton}
+                                className={isSkeleton ? "w-28" : undefined}
+                                anatPart={showAnatomy ? (hasSaving ? "Typography.Amount" : "Typography") : undefined}
+                                text={formatPrice(discounted, currency)}
+                            />
+                        ),
+                    },
+                    ...(hasSaving
+                        ? [{
+                            key: "original",
+                            content: (
+                                <TypographyAtom.Base
+                                    size={ORIGINAL_TYPE[role]}
+                                    color="muted"
+                                    isSkeleton={isSkeleton}
+                                    className={cn("line-through", isSkeleton && "w-16")}
+                                    anatPart={showAnatomy ? "OriginalPrice" : undefined}
+                                    text={formatPrice(original, currency)}
+                                />
+                            ),
+                        }]
+                        : []),
+                    // While resting: the chip still holds its place but is NOT wrapped in a
+                    // Popover — there's no data yet to open, and a pressable control while
+                    // loading is a false promise.
+                    ...(isSkeleton
+                        ? [{
+                            key: "chip",
+                            content: <Chip.Base isSkeleton anatPart={showAnatomy ? "Chip.Base" : undefined} />,
+                        }]
+                        : savePercent > 0
+                            ? [{
+                                key: "chip",
+                                content: (
+                                    <Popover>
+                                        <Popover.Trigger
+                                            aria-label="Chi tiết giá"
+                                            className="cursor-pointer rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                                            data-anat-part={showAnatomy ? "Popover.Trigger" : undefined}
+                                        >
+                                            {chip}
+                                        </Popover.Trigger>
+                                        <Popover.Content
+                                            className="max-w-xs"
+                                            data-anat-part={showAnatomy ? "Popover.Content" : undefined}
+                                        >
+                                            {breakdownContent}
+                                        </Popover.Content>
+                                    </Popover>
+                                ),
+                            }]
+                            : []),
+                ]}
+            />
+            {showSavingLine && (isSkeleton || hasSaving) ? (
+                <TypographyAtom.Base
+                    size="xs"
+                    color="muted"
+                    isSkeleton={isSkeleton}
+                    className={isSkeleton ? "w-24" : undefined}
+                    anatPart={showAnatomy ? "SavingLine" : undefined}
+                    text={hasSaving ? `Tiết kiệm ${formatPrice(original - discounted, currency)}` : undefined}
+                />
+            ) : null}
+        </Stack.V>
+    )
+}
+
+/**
+ * `PriceTag.*` — namespace (§12a). Members are named by the ROLE a price plays
+ * on a surface, not by font size (teacher's call 2026-07-26, §14d.1: a design
+ * doesn't expose a shape axis to the caller).
+ *
+ * | Member | Used in | Price plays |
+ * |---|---|---|
+ * | `.Prominent` | `TrialConversionStrip` | the FOCAL POINT of a course-purchase CTA |
+ * | `.Inline` | `CourseCard` | ONE LINE of info inside a card |
+ *
+ * These two cases differ in WHY, not in size for its own sake, so §14d says
+ * SPLIT them. Before this it was `size?: "sm" | "md" | "lg"` — the caller
+ * chose the shape, and nobody ever used the `lg` step.
+ */
+export const PriceTag = Object.assign(
+    (props: PriceTagProps) => <PriceTagBase {...props} role="prominent" />,
+    {
+        Prominent: (props: PriceTagProps) => <PriceTagBase {...props} role="prominent" />,
+        Inline: (props: PriceTagProps) => <PriceTagBase {...props} role="inline" />,
+    },
+)

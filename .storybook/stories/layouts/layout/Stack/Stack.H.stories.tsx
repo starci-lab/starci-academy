@@ -5,10 +5,11 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ PHẠM VI STATE: `Stack.H` là KHUNG một-trục NGANG. State riêng của nó = `wrap`
- * (chỉ hàng ngang mới tràn dòng) và `justify` (đọc được vì hàng luôn có bề ngang dư),
- * cộng kẻ DỌC của `divider`. `gap` (thang §10) và `align` đã demo ở `Stack.V` —
- * cùng một prop, không lặp lại ở đây.
+ * ⚠️ STATE SCOPE: `Stack.H` is the single-axis HORIZONTAL frame. Its own states =
+ * `wrap` (only a horizontal row overflows into new lines) and `justify` (legible
+ * because a row always has leftover width), plus the VERTICAL rule from
+ * `divider`. `gap` (§10 scale) and `align` were already demoed in `Stack.V` —
+ * same prop, not repeated here.
  */
 const meta: Meta<typeof Stack.H> = {
     title: "Layouts/Layout/Stack/Stack.H",
@@ -24,14 +25,14 @@ export default meta
 type Story = StoryObj<typeof Stack.H>
 
 const TRACK_PARTS: Array<AnatomyNode> = [
-    { name: "Track", tier: "primitive", role: "trục flex ngang — sở hữu gap (§10), align, justify, wrap" },
+    { name: "Track", tier: "primitive", role: "the horizontal flex axis — owns gap (§10), align, justify, wrap" },
 ]
 const DIVIDER_PARTS: Array<AnatomyNode> = [
-    { name: "Track", tier: "primitive", role: "trục flex ngang — sở hữu gap (§10)" },
-    { name: "Line", tier: "atom", role: "Divider.Base dọc (`self-stretch`) chèn GIỮA hai con" },
+    { name: "Track", tier: "primitive", role: "the horizontal flex axis — owns gap (§10)" },
+    { name: "Line", tier: "atom", role: "a vertical Divider.Base (`self-stretch`) inserted BETWEEN two children" },
 ]
 
-/** Default — hàng ngang, seam `related(2)`: các phần tử CÙNG một cụm. */
+/** Default — a horizontal row, seam `related(2)`: elements belonging to the SAME cluster. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
@@ -40,7 +41,7 @@ export const Default: Story = {
                 tier="primitive"
                 leaf="Default"
                 parts={TRACK_PARTS}
-                reason="Cùng khung một-trục với `Stack.V`, đổi hướng thành hàng — và CHỈ hàng mới có `wrap`. Nhận `children` bất kỳ; nếu nội dung là N phần tử CÙNG KIỂU lặp lại thì đó là `Cluster`/`Grid` (§13b), không phải khung này."
+                reason="The same single-axis frame as `Stack.V`, turned into a row — and ONLY a row gets `wrap`. Accepts ARBITRARY `children`; if the content is N repeating elements of the SAME kind, that's `Cluster`/`Grid` (§13b), not this frame."
                 code={`<Stack.H gap={2}>
   <Button.Base label="Bắt đầu" />
   <Button.Base label="Xem đề cương" variant="secondary" />
@@ -56,8 +57,9 @@ export const Default: Story = {
 }
 
 /**
- * Wrap — state CHỈ `Stack.H` có: khi hàng hết bề ngang, con xuống dòng mới thay vì
- * co lại. `gap` áp cho CẢ hai trục nên khoảng giữa các dòng bằng khoảng giữa các con.
+ * Wrap — a state ONLY `Stack.H` has: when the row runs out of width, children flow
+ * onto a new line instead of shrinking. `gap` applies to BOTH axes, so the space
+ * between lines matches the space between children.
  */
 export const Wrap: Story = {
     render: () => (
@@ -67,7 +69,7 @@ export const Wrap: Story = {
                 tier="primitive"
                 leaf="Wrap"
                 parts={TRACK_PARTS}
-                note="Khung hẹp cố ý (`w-80`) để hàng phải tràn dòng. Không `wrap` → các nút co/tràn khỏi khung; có `wrap` → xuống dòng, giữ nguyên bề ngang tự thân."
+                note="The frame is deliberately narrow (`w-80`) so the row is forced to overflow. Without `wrap` → the buttons shrink/spill outside the frame; with `wrap` → they flow onto a new line, keeping their own width."
                 code={`<Stack.H gap={2} wrap>
   …
 </Stack.H>`}
@@ -85,7 +87,7 @@ export const Wrap: Story = {
                         </div>
                     </div>
                     <div className="flex flex-col gap-2">
-                        <Typography.Base size="xs" text="không wrap (mặc định)" color="muted" />
+                        <Typography.Base size="xs" text="no wrap (default)" color="muted" />
                         <div className="w-80 rounded-3xl border border-dashed border-default p-3">
                             <Stack.H gap={2}>
                                 <Button.Base label="Tất cả" variant="secondary" size="sm" />
@@ -102,8 +104,9 @@ export const Wrap: Story = {
 }
 
 /**
- * Justify — phân bố theo trục CHÍNH (ngang). `between` đẩy hai đầu ra mép; khi hàng
- * chỉ có ĐÚNG HAI phía có tên thì dùng `Split.Base` (khung riêng), không phải cái này.
+ * Justify — distributes along the MAIN axis (horizontal). `between` pushes both
+ * ends to the edges; when a row has EXACTLY TWO named sides, use `Split.Base` (a
+ * separate frame) instead of this one.
  */
 export const Justify: Story = {
     render: () => (
@@ -113,7 +116,7 @@ export const Justify: Story = {
                 tier="primitive"
                 leaf="Justify"
                 parts={TRACK_PARTS}
-                note="`justify` chỉ đọc được khi trục chính còn dư chỗ — nên nó là state của hàng, không phải của cột."
+                note="`justify` only reads legibly when the main axis has leftover space — so it's a row's state, not a column's."
                 code={`<Stack.H gap={2} justify="between">
   …
 </Stack.H>`}
@@ -137,8 +140,9 @@ export const Justify: Story = {
 }
 
 /**
- * WithDivider — trên hàng ngang, kẻ là DỌC và `self-stretch` (cao bằng hàng) dù hàng
- * đang `items-center`. Cùng một prop `divider`, nhưng hình dạng kẻ do TRỤC quyết định.
+ * WithDivider — on a horizontal row, the rule is VERTICAL and `self-stretch`
+ * (as tall as the row) even while the row is `items-center`. Same `divider` prop,
+ * but the rule's shape is decided by the AXIS.
  */
 export const WithDivider: Story = {
     render: () => (
@@ -148,7 +152,7 @@ export const WithDivider: Story = {
                 tier="primitive"
                 leaf="WithDivider"
                 parts={DIVIDER_PARTS}
-                note="`align-self: stretch` thắng `items-center` của hàng, nên đường kẻ luôn cao trọn hàng — không cần caller đặt chiều cao."
+                note="`align-self: stretch` wins over the row's `items-center`, so the rule is always the row's full height — no need for the caller to set a height."
                 code={`<Stack.H gap={3} divider>
   <Typography.Base size="sm" text="12 bài" />
   <Typography.Base size="sm" text="4 giờ" />

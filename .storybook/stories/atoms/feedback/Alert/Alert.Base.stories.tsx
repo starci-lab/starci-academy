@@ -5,19 +5,22 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Alert.Base`: port DUY NHẤT xuống HeroUI Alert (`Feedback.Callout` và
- * `Toast.Base` đều compose từ đây).
+ * ATOM — `Alert.Base`: the ONE port down to HeroUI Alert (`Feedback.Callout`
+ * and `Toast.Base` both compose from here).
  *
- * 📐 **1 PROP = 1 LEAF** (§12g — luật của TẦNG ATOM). Bản trước file này dùng lý lẽ
- * §14d.2 ("leaf = cấu trúc, state gộp chung leaf") — SAI cho một atom: §14d.2 dành
- * cho design/block/screen (xem cảnh báo ở đầu `Chip.Base.stories.tsx`). Ở tầng atom,
- * `tone`/`icon`/`body`/`action`/`onClose` mỗi cái đổi một HÌNH thật (fill khác, thêm
- * node khác) nên mỗi cái một leaf; hai leaf cũ (`Statuses`, `WithActionAndClose`) bỏ
- * sót hẳn `icon` và `body` — hai prop có hình chưa từng lên hình ở đâu.
+ * 📐 **1 PROP = 1 LEAF** (§12g — the law of the ATOM TIER). This file's earlier
+ * version used §14d.2's reasoning ("leaf = structure, state shares a leaf") —
+ * WRONG for an atom: §14d.2 is for design/block/screen (see the warning at
+ * the top of `Chip.Base.stories.tsx`). At the atom tier, `tone`/`icon`/`body`/
+ * `action`/`onClose` each change a real SHAPE (a different fill, a different
+ * added node), so each gets its own leaf; the two old leaves (`Statuses`,
+ * `WithActionAndClose`) completely missed `icon` and `body` — two props whose
+ * shape had never once been shown anywhere.
  *
- * DEPS thật DUY NHẤT: node `Close` — atom TỰ dựng nút × bằng `Button.Base` (không
- * phải slot caller đưa vào) nên bấm nhảy được sang story của nó. `action` là slot
- * caller đưa NODE TUỲ Ý (không riêng gì `Button.Base`) nên không tính là dep.
+ * The ONE true DEP: the `Close` node — the atom builds the × button ITSELF
+ * from `Button.Base` (not a slot the caller supplies), so it's clickable
+ * through to its story. `action` is a slot where the caller supplies ANY node
+ * (not specifically `Button.Base`), so it does not count as a dep.
  */
 const meta: Meta<typeof Alert.Base> = {
     title: "Atoms/Feedback/Alert/Alert.Base",
@@ -30,7 +33,7 @@ export default meta
 
 type Story = StoryObj<typeof Alert.Base>
 
-/** Node duy nhất trỏ sang story KHÁC: nút × luôn là `Button.Base` (atom tự dựng, không phải slot caller). */
+/** The one node pointing to ANOTHER story: the × button is always `Button.Base` (the atom builds it itself, not a caller slot). */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     Close: {
         tier: "atom",
@@ -39,7 +42,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     },
 }
 
-/** ĐỦ union `AlertStatus` — thiếu một giá trị là giá trị đó mọc thành leaf lạc chỗ. */
+/** The FULL `AlertStatus` union — miss one value and it grows into a stray leaf somewhere else. */
 const STATUSES: Array<{ status: AlertStatus; title: string; description: string }> = [
     { status: "default", title: "Neutral note", description: "Carries no valence — for supporting information." },
     { status: "accent", title: "Study tip", description: "Review the cards due today before starting a new lesson." },
@@ -48,7 +51,7 @@ const STATUSES: Array<{ status: AlertStatus; title: string; description: string 
     { status: "danger", title: "Couldn't load the content", description: "The connection dropped — try again in a moment." },
 ]
 
-/** Leaf TRẦN — chỉ `title`, mọi prop khác giữ mặc định (status=default, tone=soft, không icon/description/body/action/close). */
+/** The BARE leaf — only `title`, every other prop stays default (status=default, tone=soft, no icon/description/body/action/close). */
 export const Default: Story = {
     render: () => (
         <div className="max-w-xl p-8">
@@ -57,8 +60,8 @@ export const Default: Story = {
                 tier="atom"
                 leaf="Bare alert"
                 annotate={ANNOTATE}
-                reason="Port DUY NHẤT xuống HeroUI Alert — Feedback.Callout và Toast.Base đều compose từ đây. Mỗi leaf dưới đây khác đúng MỘT prop so với cái này, nên đây là mốc so sánh."
-                note="Chỉ `title` — status mặc định, tone mặc định soft, không description/body/icon riêng/action/close."
+                reason="The one port down to HeroUI Alert — Feedback.Callout and Toast.Base both compose from here. Every leaf below differs by exactly one prop, so this is the baseline you compare against."
+                note="Only `title` — default status, default soft tone, no description, body, custom icon, action, or close."
                 code={"<Alert.Base title=\"Note saved\" />"}
             >
                 <Alert.Base title="Note saved" showAnatomy />
@@ -67,7 +70,7 @@ export const Default: Story = {
     ),
 }
 
-/** Leaf prop `status` — 5 Ý NGHĨA, render ĐỦ union. Đổi tint + icon mặc định + màu Title cùng lúc. */
+/** Leaf prop `status` — 5 MEANINGS, renders the FULL union. Changes the tint + default icon + Title colour all at once. */
 export const Statuses: Story = {
     render: () => (
         <div className="max-w-xl p-8">
@@ -76,8 +79,8 @@ export const Statuses: Story = {
                 tier="atom"
                 leaf="Prop `status`"
                 annotate={ANNOTATE}
-                reason="`status` chọn tint + icon mặc định + màu tiêu đề CÙNG LÚC — không thể lỡ ghép icon sai valence với chữ."
-                note="Năm status dùng chung một cây DOM, chỉ khác tint/icon/màu — không tách leaf theo giá trị."
+                reason="`status` picks the tint, the default icon, and the title colour at once — so you cannot accidentally pair a glyph with the wrong valence of text."
+                note="All five statuses share one DOM tree and differ only in tint, glyph, and colour — a value never earns its own leaf."
                 code={STATUSES.map(({ status, title, description }) => `<Alert.Base status="${status}" title="${title}" description="${description}" />`).join("\n")}
             >
                 <div className="flex w-full flex-col gap-3">
@@ -90,7 +93,7 @@ export const Statuses: Story = {
     ),
 }
 
-/** Leaf prop `tone` — chỗ ĐẶT, không phải màu mới: `soft` phẳng TRONG surface, `plain` giữ tint HeroUI để alert nổi (toast). */
+/** Leaf prop `tone` — about WHERE it sits, not a new colour: `soft` is flat, INSIDE a surface; `plain` keeps HeroUI's own tint so the alert floats (toast). */
 export const Tone: Story = {
     render: () => (
         <div className="max-w-xl p-8">
@@ -99,8 +102,8 @@ export const Tone: Story = {
                 tier="atom"
                 leaf="Prop `tone`"
                 annotate={ANNOTATE}
-                reason="`tone` là CHỖ ĐẶT chứ không phải một màu mới — cùng status, hai tone vẫn đọc ra hai NGỮ CẢNH khác nhau."
-                note="`soft` là hình `Feedback.Callout` dùng (dải tint phẳng trong surface). `plain` là hình `Toast.Base` dùng (tint mặc định HeroUI, alert nổi)."
+                reason="`tone` is about WHERE the alert sits, not a new colour — same status, two tones, two different contexts to read."
+                note="`soft` is the shape Feedback.Callout uses (a flat tint strip inside a surface). `plain` is the shape Toast.Base uses (HeroUI's own tint, meant to float)."
                 code={"<Alert.Base tone=\"soft\" status=\"warning\" title=\"…\" />\n<Alert.Base tone=\"plain\" status=\"warning\" title=\"…\" />"}
             >
                 <div className="flex flex-col gap-3">
@@ -112,7 +115,7 @@ export const Tone: Story = {
     ),
 }
 
-/** Leaf prop `icon` — thay glyph mặc định của status bằng một icon COMPONENT khác. */
+/** Leaf prop `icon` — replaces the status's default glyph with a different icon COMPONENT. */
 export const Icon: Story = {
     render: () => (
         <div className="max-w-xl p-8">
@@ -121,7 +124,7 @@ export const Icon: Story = {
                 tier="atom"
                 leaf="Prop `icon`"
                 annotate={ANNOTATE}
-                note="Bỏ trống → icon mặc định của status. Truyền `icon` → atom vẫn tự ép size-5 (§4/§5), chỉ đổi glyph."
+                note="Leave it out and the status glyph shows. Pass `icon` and the atom still pins size-5 itself (§4/§5) — only the glyph changes."
                 code={"<Alert.Base status=\"warning\" title=\"…\" />\n<Alert.Base status=\"warning\" icon={GithubLogoIcon} title=\"…\" />"}
             >
                 <div className="flex flex-col gap-3">
@@ -133,7 +136,7 @@ export const Icon: Story = {
     ),
 }
 
-/** Leaf prop `body` (§12b) — vùng tự do dưới description, đường DUY NHẤT vì atom không mở `children`. */
+/** Leaf prop `body` (§12b) — the free-form area under the description, the ONLY way in since the atom does not open `children`. */
 export const Body: Story = {
     render: () => (
         <div className="max-w-xl p-8">
@@ -142,8 +145,8 @@ export const Body: Story = {
                 tier="atom"
                 leaf="Prop `body`"
                 annotate={ANNOTATE}
-                reason="Atom không mở `children` (§12b) — `body` là đường DUY NHẤT nhét nội dung tự do (list ngắn, meta row) dưới description."
-                note="`body` render ngay dưới Description, thụt cùng cột với Content."
+                reason="The atom does not open `children` (§12b) — `body` is the only way in for free-form content (a short list, a meta row) under the description."
+                note="`body` renders directly below Description, indented to the same column as Content."
                 code={"<Alert.Base status=\"warning\" title=\"…\" description=\"…\" body={<ul>…</ul>} />"}
             >
                 <Alert.Base
@@ -163,7 +166,7 @@ export const Body: Story = {
     ),
 }
 
-/** Leaf prop `action` — slot NODE tuỳ ý từ caller, đặt trước nút ×. KHÔNG phải dep vì atom không sở hữu nội dung bên trong. */
+/** Leaf prop `action` — a free-form NODE slot from the caller, placed before the × button. NOT a dep since the atom owns nothing inside it. */
 export const Action: Story = {
     render: () => (
         <div className="max-w-xl p-8">
@@ -172,7 +175,7 @@ export const Action: Story = {
                 tier="atom"
                 leaf="Prop `action`"
                 annotate={ANNOTATE}
-                note="`action` nhận NODE tuỳ ý (thường là `Button.Base`, nhưng atom không ép) — atom chỉ đặt nó trước nút ×, không sở hữu ruột bên trong nên không phải dep."
+                note="`action` takes any node (usually `Button.Base`, but the atom does not force it) — the atom only places it before the ×, and owns nothing inside, so it is not a dep."
                 code={"<Alert.Base status=\"warning\" title=\"…\" action={<Button.Base size=\"sm\" label=\"Join team\" onPress={fn} />} />"}
             >
                 <Alert.Base
@@ -187,7 +190,7 @@ export const Action: Story = {
     ),
 }
 
-/** Leaf prop `onClose` — atom TỰ dựng nút × từ `Button.Base`. Node `Close` là DEP THẬT duy nhất của atom này. */
+/** Leaf prop `onClose` — the atom builds the × button ITSELF from `Button.Base`. The `Close` node is this atom's ONE true DEP. */
 export const Close: Story = {
     render: () => (
         <div className="max-w-xl p-8">
@@ -213,7 +216,7 @@ export const Close: Story = {
     ),
 }
 
-/** Leaf prop `isSkeleton` — shimmer CO-LOCATED (§12c): khung + icon giữ THẬT, chỉ chữ thành gạch. */
+/** Leaf prop `isSkeleton` — CO-LOCATED shimmer (§12c): the frame + icon stay REAL, only the text turns to bars. */
 export const Skeleton: Story = {
     render: () => (
         <div className="max-w-xl p-8">
@@ -223,7 +226,7 @@ export const Skeleton: Story = {
                 leaf="Prop `isSkeleton`"
                 annotate={ANNOTATE}
                 reason="Whoever owns the shape owns its resting state — the atom draws its own shimmer instead of leaning on a shared skeleton component."
-                note="Bar khớp đúng hộp dòng thật (title 24px, description 20px) nên không nhảy layout khi dữ liệu tới (§8). `title` trở thành optional khi `isSkeleton` (union type)."
+                note="The bars match the real line boxes (title 24px, description 20px) so the layout does not jump when the data lands (§8). `title` becomes optional under `isSkeleton` (union type)."
                 code={"<Alert.Base status=\"accent\" isSkeleton />\n<Alert.Base status=\"danger\" tone=\"plain\" isSkeleton />"}
             >
                 <div className="flex flex-col gap-3">

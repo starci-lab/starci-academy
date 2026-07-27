@@ -7,12 +7,12 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
- * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `AsyncContent.Base` là KHUNG CHUYỂN
- * TRẠNG THÁI — tài sản riêng của nó là VIỆC CHỌN NHÁNH (error → loading → empty →
- * content) chứ không phải hình hài của từng thông điệp. Nên ở đây mỗi story là MỘT
- * nhánh, và nhánh rỗng/lỗi chỉ lấy shape TỐI GIẢN để chứng minh switch chạy đúng;
- * đủ bộ biến thể của thông điệp nằm ở story `AsyncContent.Empty` / `AsyncContent.Error`,
- * KHÔNG lặp lại tại đây.
+ * ⚠️ STATE SCOPE (teacher finalized 2026-07-25): `AsyncContent.Base` is a STATE-
+ * TRANSITION SCAFFOLD — its own asset is BRANCH SELECTION (error → loading → empty →
+ * content), not the shape of each message. So here every story is ONE branch, and
+ * the empty/error branches only take the MINIMAL shape to prove the switch runs
+ * correctly; the full set of message variants lives in story `AsyncContent.Empty` /
+ * `AsyncContent.Error`, NOT repeated here.
  */
 const meta: Meta<typeof AsyncContent.Base> = {
     title: "Layouts/Async/AsyncContent/AsyncContent.Base",
@@ -28,8 +28,8 @@ export default meta
 type Story = StoryObj<typeof AsyncContent.Base>
 
 /**
- * Fixture chuẩn (C-fixture) cho MỌI ví dụ content: một Card thật gồm avatar +
- * title + description.
+ * The standard fixture (C-fixture) for EVERY content example: a real Card made of
+ * avatar + title + description.
  */
 const ProfileCard = () => (
     <Card>
@@ -40,7 +40,7 @@ const ProfileCard = () => (
             <div className="flex min-w-0 flex-col">
                 <span className="truncate text-sm font-medium">StarCi Academy</span>
                 <span className="truncate text-xs text-muted">
-                    Học fullstack, system design và DevOps theo lộ trình phỏng vấn.
+                    Learn fullstack, system design, and DevOps on an interview-prep roadmap.
                 </span>
             </div>
         </CardContent>
@@ -48,9 +48,9 @@ const ProfileCard = () => (
 )
 
 /**
- * Skeleton MIRROR của ProfileCard — giữ nguyên cây layout (Card + CardContent,
- * gap, cột text), chỉ swap từng node nội dung sang `Skeleton.<Piece>` cùng cỡ,
- * nên khi resolve card không giật chiều cao.
+ * Skeleton MIRROR of ProfileCard — keeps the exact layout tree (Card + CardContent,
+ * gap, text column), just swaps each content node for a same-sized
+ * `Skeleton.<Piece>`, so the card doesn't jump height when it resolves.
  */
 const ProfileCardSkeleton = () => (
     <Card>
@@ -67,24 +67,25 @@ const ProfileCardSkeleton = () => (
 const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
 /**
- * ANATOMY IS PER-LEAF: mỗi nhánh render một cây KHÁC HẲN, nên mỗi story mang bộ
- * parts của riêng nó. Khung không tự vẽ gì cả — nó chỉ CHỌN một trong bốn node.
+ * ANATOMY IS PER-LEAF: each branch renders a COMPLETELY DIFFERENT tree, so every
+ * story carries its own set of parts. The scaffold draws nothing itself — it only
+ * CHOOSES one of the four nodes.
  */
 const CONTENT_PARTS: Array<AnatomyNode> = [
-    { name: "Content", tier: "primitive", role: "nhánh content — node caller truyền vào (slot `content` / `children`)" },
+    { name: "Content", tier: "primitive", role: "content branch — the node the caller passes in (slot `content` / `children`)" },
 ]
 const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton", tier: "primitive", role: "nhánh loading — cây skeleton mirror do caller truyền qua slot `skeleton`" },
+    { name: "Skeleton", tier: "primitive", role: "loading branch — the skeleton mirror tree the caller passes via slot `skeleton`" },
 ]
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "AsyncContent.Empty", tier: "primitive", role: "nhánh rỗng — khung dựng từ PROPS `emptyContent`, không phải node" },
+    { name: "AsyncContent.Empty", tier: "primitive", role: "empty branch — the scaffold builds it from PROPS `emptyContent`, not a node" },
 ]
 const ERROR_PARTS: Array<AnatomyNode> = [
-    { name: "AsyncContent.Error", tier: "primitive", role: "nhánh lỗi — khung dựng từ PROPS `errorContent`; ưu tiên cao nhất" },
+    { name: "AsyncContent.Error", tier: "primitive", role: "error branch — the scaffold builds it from PROPS `errorContent`; highest priority" },
 ]
 const SILENT_PARTS: Array<AnatomyNode> = []
 
-/** CONTENT — resolve xong, có dữ liệu: `children` là lối rút gọn của slot `content`. */
+/** CONTENT — resolved, has data: `children` is a shortcut for slot `content`. */
 export const Content: Story = {
     render: () =>
         shell(
@@ -93,7 +94,7 @@ export const Content: Story = {
                 tier="primitive"
                 leaf="Content"
                 parts={CONTENT_PARTS}
-                reason="Mọi vùng dữ liệu async cần đúng MỘT chỗ giữ hợp đồng render của SWR: error → loading → empty → content. Gom bốn nhánh vào một khung để không bề mặt nào tự viết lại chuỗi if/else, và để skeleton luôn mirror đúng layout thật thay vì một spinner chung chung."
+                reason="Every async data region needs EXACTLY ONE place holding SWR's render contract: error → loading → empty → content. Bundling the four branches into one scaffold means no surface rewrites its own if/else chain, and the skeleton always mirrors the real layout instead of a generic spinner."
                 code={`<AsyncContent.Base isLoading={false} skeleton={<ProfileCardSkeleton />}>
   <ProfileCard />
 </AsyncContent.Base>`}
@@ -105,7 +106,7 @@ export const Content: Story = {
         ),
 }
 
-/** CONTENT (slot có tên) — `content` là đường CHÍNH của tầng khung; thắng `children`. */
+/** CONTENT (named slot) — `content` is the MAIN path of the scaffold tier; wins over `children`. */
 export const ContentSlot: Story = {
     render: () =>
         shell(
@@ -114,7 +115,7 @@ export const ContentSlot: Story = {
                 tier="primitive"
                 leaf="ContentSlot"
                 parts={CONTENT_PARTS}
-                note="Cùng nhánh content nhưng đi qua slot CÓ TÊN `content` thay vì `children` — §13b: khung BỌC lấy slot tên làm đường chính, `children` chỉ là lối rút gọn."
+                note="Same content branch but goes through the NAMED slot `content` instead of `children` — §13b: the wrapping scaffold treats the named slot as the main path, `children` is just a shortcut."
                 code={`<AsyncContent.Base
   isLoading={false}
   skeleton={<ProfileCardSkeleton />}
@@ -131,7 +132,7 @@ export const ContentSlot: Story = {
         ),
 }
 
-/** LOADING — lần load đầu: khung đổi sang cây skeleton mirror, không sập chiều cao. */
+/** LOADING — first load: the scaffold switches to the skeleton mirror tree, no height collapse. */
 export const Loading: Story = {
     render: () =>
         shell(
@@ -140,7 +141,7 @@ export const Loading: Story = {
                 tier="primitive"
                 leaf="Loading"
                 parts={LOADING_PARTS}
-                note="`isLoading` → khung render đúng node `skeleton`; composition khác leaf content (mirror thay vì card thật)."
+                note="`isLoading` → the scaffold renders exactly the `skeleton` node; composition differs from the content leaf (mirror instead of the real card)."
                 code={`<AsyncContent.Base isLoading skeleton={<ProfileCardSkeleton />}>
   <ProfileCard />
 </AsyncContent.Base>`}
@@ -152,7 +153,7 @@ export const Loading: Story = {
         ),
 }
 
-/** EMPTY — load xong nhưng rỗng: `emptyContent` nhận PROPS (không phải node). */
+/** EMPTY — load finished but empty: `emptyContent` takes PROPS (not a node). */
 export const Empty: Story = {
     render: () =>
         shell(
@@ -161,7 +162,7 @@ export const Empty: Story = {
                 tier="primitive"
                 leaf="Empty"
                 parts={EMPTY_PARTS}
-                note="`isEmpty` → khung dựng `AsyncContent.Empty` TỪ PROPS. Shape tối giản (tiêu đề + mô tả) là đủ để thấy switch chạy — biến thể nút/icon nằm ở story AsyncContent.Empty."
+                note="`isEmpty` → the scaffold builds `AsyncContent.Empty` FROM PROPS. The minimal shape (title + description) is enough to see the switch run — button/icon variants live in story AsyncContent.Empty."
                 code={`<AsyncContent.Base
   isLoading={false}
   isEmpty
@@ -188,8 +189,8 @@ export const Empty: Story = {
 }
 
 /**
- * EMPTY IM LẶNG — `isEmpty` nhưng KHÔNG truyền `emptyContent`: khung render null,
- * section tự ẩn. Đây là một nhánh RIÊNG của switch, không phải biến thể thông điệp.
+ * SILENT EMPTY — `isEmpty` but `emptyContent` is NOT passed: the scaffold renders
+ * null, the section hides itself. This is a SEPARATE branch of the switch, not a message variant.
  */
 export const EmptySilent: Story = {
     render: () =>
@@ -199,7 +200,7 @@ export const EmptySilent: Story = {
                 tier="primitive"
                 leaf="EmptySilent"
                 parts={SILENT_PARTS}
-                note="Rỗng mà bỏ trống `emptyContent` → KHÔNG node nào được render (cây parts trống). Dùng khi một section phải biến mất hẳn thay vì hiện lời nhắn."
+                note="Empty but `emptyContent` left blank → NO node renders (empty parts tree). Use when a section must vanish entirely instead of showing a message."
                 code={`<AsyncContent.Base isLoading={false} isEmpty skeleton={<ProfileCardSkeleton />}>
   <ProfileCard />
 </AsyncContent.Base>`}
@@ -211,7 +212,7 @@ export const EmptySilent: Story = {
         ),
 }
 
-/** ERROR — ưu tiên CAO NHẤT, thắng cả loading; `errorContent` cũng nhận PROPS. */
+/** ERROR — HIGHEST priority, beats even loading; `errorContent` also takes PROPS. */
 export const Error: Story = {
     render: () =>
         shell(
@@ -220,7 +221,7 @@ export const Error: Story = {
                 tier="primitive"
                 leaf="Error"
                 parts={ERROR_PARTS}
-                note="`error` truthy + có `errorContent` → khung bỏ qua cả `isLoading` (ở đây vẫn đang bật) để render nhánh lỗi. ⚠️ Thiếu `errorContent` thì nhánh lỗi KHÔNG kích hoạt — khung rơi tiếp xuống loading."
+                note="`error` truthy + `errorContent` present → the scaffold skips even `isLoading` (still on here) to render the error branch. ⚠️ Without `errorContent` the error branch does NOT activate — the scaffold falls through to loading."
                 code={`<AsyncContent.Base
   isLoading
   error={new Error("network")}

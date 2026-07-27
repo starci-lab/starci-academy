@@ -4,10 +4,11 @@ import { List } from "@sb-components/layouts/lists/List/List"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `List.ToggleRow` là khung MỘT HÀNG CÀI ĐẶT.
- * Thứ nó đẻ ra: công tắc tắt/bật, có/không dòng mô tả, khoá (`isDisabled`), và mirror
- * `isSkeleton` của CHÍNH hàng. Việc XẾP nhiều hàng thành danh sách (nhãn phần, gap, CTA)
- * là tài sản của `List.Labeled` — KHÔNG lặp ở đây.
+ * ⚠️ STATE SCOPE (teacher finalized 2026-07-25): `List.ToggleRow` is a ONE SETTINGS
+ * ROW scaffold. What it produces: the on/off switch, with/without a description
+ * line, locked (`isDisabled`), and the `isSkeleton` mirror of THIS row itself.
+ * ARRANGING multiple rows into a list (section label, gap, CTA) belongs to
+ * `List.Labeled` — NOT repeated here.
  */
 const meta: Meta<typeof List.ToggleRow> = {
     title: "Layouts/Lists/List/List.ToggleRow",
@@ -30,7 +31,7 @@ type Story = StoryObj<typeof List.ToggleRow>
  */
 const ROW_PARTS: Array<AnatomyNode> = [
     { name: "TitledText", tier: "primitive", role: "label + description muted, stacked" },
-    { name: "Switch", tier: "primitive", role: "công tắc bật/tắt, pinned phải" },
+    { name: "Switch", tier: "primitive", role: "on/off switch, pinned right" },
 ]
 
 /** Default: label + description, unchecked. */
@@ -44,7 +45,7 @@ export const Default: Story = {
                     tier="primitive"
                     leaf="Default"
                     parts={ROW_PARTS}
-                    reason="Tổng quát hoá row toggle cài đặt lặp lại (PrivacySettings): TitledText + Switch, gap-3, để mọi surface settings dùng chung 1 khung hàng."
+                    reason="Generalizes the repeating settings toggle row (PrivacySettings): TitledText + Switch, gap-3, so every settings surface shares one row scaffold."
                     code={`<List.ToggleRow
   label="Hiển thị dự án"
   description="Cho phép khách xem tab Dự án trên hồ sơ công khai của bạn"
@@ -71,7 +72,18 @@ export const Selected: Story = {
         const [checked, setChecked] = useState(true)
         return (
             <div className="p-8">
-                <BlockAnatomy name="List.ToggleRow" tier="primitive" leaf="Selected" parts={ROW_PARTS}>
+                <BlockAnatomy
+                    name="List.ToggleRow"
+                    tier="primitive"
+                    leaf="Selected"
+                    parts={ROW_PARTS}
+                    code={`<List.ToggleRow
+  label="Show projects"
+  description="Allow visitors to see the Projects tab on your public profile"
+  checked={checked}
+  onCheckedChange={setChecked}
+/>`}
+                >
                     <List.ToggleRow
                         label="Hiển thị dự án"
                         description="Cho phép khách xem tab Dự án trên hồ sơ công khai của bạn"
@@ -96,7 +108,8 @@ export const NoDescription: Story = {
                     tier="primitive"
                     leaf="NoDescription"
                     parts={ROW_PARTS}
-                    note="description bỏ trống → TitledText chỉ còn title, vẫn cùng 1 node."
+                    note="description left blank → TitledText keeps only the title, still the same node."
+                    code={"<List.ToggleRow label=\"Dark mode\" checked={checked} onCheckedChange={setChecked} />"}
                 >
                     <List.ToggleRow label="Chế độ tối" checked={checked} onCheckedChange={setChecked} showAnatomy />
                 </BlockAnatomy>
@@ -118,7 +131,13 @@ export const Disabled: Story = {
                 tier="primitive"
                 leaf="Disabled"
                 parts={ROW_PARTS}
-                note="isDisabled chỉ dim row + khoá Switch, composition không đổi."
+                note="isDisabled only dims the row + locks the Switch, composition doesn't change."
+                code={`<List.ToggleRow
+  label="Show projects"
+  description="Locked by profile lock mode"
+  checked={false}
+  isDisabled
+/>`}
             >
                 <List.ToggleRow
                     label="Hiển thị dự án"
@@ -142,7 +161,8 @@ export const Loading: Story = {
                 tier="primitive"
                 leaf="Loading"
                 parts={ROW_PARTS}
-                note="isSkeleton → TitledText và Switch tự swap sang mirror riêng, vẫn cùng 2 node."
+                note="isSkeleton → TitledText and Switch each swap to their own mirror, still the same 2 nodes."
+                code={"<List.ToggleRow label=\"Show projects\" description=\"Allow visitors to see the Projects tab\" isSkeleton />"}
             >
                 <List.ToggleRow
                     label="Hiển thị dự án"

@@ -5,66 +5,72 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `LearnNudges.Base`: VIỆC NÊN LÀM HÔM NAY.
+ * BLOCK — `LearnNudges.Base`: WHAT TO DO TODAY.
  *
- * LÝ DO TỒN TẠI (§14a): mỗi CHỨC NĂNG của screen là MỘT block. "Hôm nay nên làm
- * gì" là một chức năng, nên nó phải có tên. Trước 2026-07-25 screen `/learn/content`
- * gọi thẳng `SurfaceCard.List` (tầng LAYOUT) rồi tự nhét items + tự chọn icon —
- * screen lắp chi tiết thay cho block, đọc code screen không ra được trang làm gì.
+ * WHY IT EXISTS (§14a): every FUNCTION of a screen is ONE block. "What should I
+ * do today" is a function, so it needs a name. Before 2026-07-25 the
+ * `/learn/content` screen called `SurfaceCard.List` (LAYOUT tier) directly and
+ * plugged in items + picked icons itself — the screen was wiring up details on
+ * the block's behalf, so reading the screen's code couldn't tell you what the
+ * page does.
  *
- * §14b — CALLER CHỈ ĐƯA DỮ LIỆU: `kind` là ENUM, không phải icon. Block sở hữu bảng
- * `kind → icon`; screen KHÔNG được biết "ôn thẻ" trông ra sao. Nếu prop là
- * `leadingIcon` thì screen lại phải cầm atom/icon ⇒ thủng luật.
+ * §14b — THE CALLER ONLY GIVES DATA: `kind` is an ENUM, not an icon. The block
+ * owns the `kind → icon` table; the screen must NOT know what "review
+ * flashcards" looks like. If the prop were `leadingIcon`, the screen would have
+ * to hold an atom/icon again ⇒ breaking the rule.
  *
- * §14c — block chỉ LẮP: vỏ và nhịp đi qua `SurfaceCard.List`, CÙNG layout với
- * `KeepGoingPath` ngay dưới nó. Không tự vẽ khung, không tự chọn border.
+ * §14c — the block only ASSEMBLES: shell and rhythm flow through
+ * `SurfaceCard.List`, the SAME layout as `KeepGoingPath` right below it. It
+ * doesn't draw its own frame or pick its own border.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** Loại việc — ENUM dữ liệu; block tự quyết nó trông thế nào. */
+/** Task type — a data ENUM; the block alone decides how it looks. */
 export type LearnNudgeKind = "flashcards" | "interview" | "league"
 
-/** Icon theo loại việc — block SỞ HỮU bảng này, caller không chọn được. */
+/** Icon by task type — the block OWNS this table, the caller can't pick one. */
 const NUDGE_ICON: Record<LearnNudgeKind, typeof CardsIcon> = {
     flashcards: CardsIcon,
     interview: MicrophoneStageIcon,
     league: TrophyIcon,
 }
 
-/** Một việc nên làm — DỮ LIỆU thuần. */
+/** One task to do — plain DATA. */
 export interface LearnNudge {
     /** Stable React key. */
     id: string
-    /** Loại việc → quyết định icon dẫn đầu. */
+    /** Task type → decides the leading icon. */
     kind: LearnNudgeKind
     /**
-     * Dòng chữ của hàng.
+     * The row's text.
      *
-     * ⛔ KHÔNG có `count` riêng (thầy chốt 2026-07-26): tiêu đề đã chứa số rồi
-     * ("Ôn 12 thẻ đến hạn"), hiện thêm chip `12` bên phải là **nói hai lần**.
-     * Một dữ kiện chỉ được xuất hiện MỘT chỗ trong một hàng.
+     * ⛔ NO separate `count` field (teacher's call 2026-07-26): the title
+     * already contains the number ("Review 12 due flashcards"); showing a `12`
+     * chip on the right too is **saying it twice**. One fact only ever appears
+     * in ONE place within a row.
      */
     title: string
-    /** Bấm vào hàng. */
+    /** Press the row. */
     onPress?: () => void
 }
 
 /** Props for {@link LearnNudges.Base}. */
 export interface LearnNudgesBaseProps {
-    /** Các việc nên làm. */
+    /** The tasks to do. */
     items: Array<LearnNudge>
     /**
-     * ⏳ Nguồn của dải này VỀ SAU dữ liệu chính của trang → giai đoạn chờ phải giữ
-     * CHỖ, không được biến mất rồi hiện lại.
+     * ⏳ This strip's source is LATER the page's main data → the waiting stage
+     * must hold its PLACE, not disappear and reappear.
      *
-     * Neo bug thật (src ghi 2026-07-12): `dueSwr`/`leaderboardSwr` resolve sau
-     * `outline`, nên trong lúc chờ `dueCount`/`rank` mặc định 0/null → block từng
-     * `return null` rồi bật lại ⇒ **dải NHẤP NHÁY**. Đó là lý do state này tồn tại;
-     * bỏ nó đi là dựng lại đúng con bug đó.
+     * Real-bug anchor (source noted 2026-07-12): `dueSwr`/`leaderboardSwr`
+     * resolve AFTER `outline`, so while waiting `dueCount`/`rank` default to
+     * 0/null → the block used to `return null` then pop back in ⇒ **the strip
+     * FLICKERED**. That's why this state exists; dropping it recreates that
+     * exact bug.
      */
-    isPending?: boolean
-    /** Số hàng giả khi `isPending`. Default 2 — đúng số nudge hay gặp nhất. */
-    pendingRows?: number
+    isSkeleton?: boolean
+    /** Number of placeholder rows when `isSkeleton`. Default 2 — the most common nudge count. */
+    skeletonRows?: number
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
     showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
@@ -72,29 +78,30 @@ export interface LearnNudgesBaseProps {
 }
 
 /**
- * Việc nên làm hôm nay — danh sách lối tắt sang việc học kế tiếp.
+ * What to do today — a shortcut list into the next learning task.
  *
  * @param props - {@link LearnNudgesBaseProps}
  */
 const LearnNudgesBase = ({
     items,
-    isPending = false,
-    pendingRows = 2,
+    isSkeleton = false,
+    skeletonRows = 2,
     showAnatomy = false,
     anatPart,
 }: LearnNudgesBaseProps) => (
     <SurfaceCard.List
-        // Tiêu đề do BLOCK sở hữu — caller KHÔNG truyền `heading` (§14d.1, thầy chốt
-        // 2026-07-26). Cụm này luôn trả lời đúng một câu hỏi nên câu dẫn là hằng số.
+        // The heading is OWNED by the BLOCK — the caller does NOT pass `heading`
+        // (§14d.1, teacher's call 2026-07-26). This cluster always answers the
+        // same one question, so the lead-in is a constant.
         label="Việc nên làm hôm nay"
-        anatPart={anatPart}
-        showAnatomy={showAnatomy}
+        anatPart={anatPart ?? (showAnatomy ? "SurfaceCard.List" : undefined)}
         items={
-            isPending
-                // ĐI ĐÚNG MỘT ĐƯỜNG RENDER: vẫn là `SurfaceCard.List`, chỉ thay
-                // nội dung hàng bằng gạch. Không đẻ nhánh vẽ khung thứ hai —
-                // đúng bài học "hai đường render cho một hình" ở `KeepGoingPath`.
-                ? Array.from({ length: pendingRows }).map((_, index) => ({
+            isSkeleton
+                // GO THROUGH THE EXACT SAME RENDER PATH: still `SurfaceCard.List`,
+                // only the row content is swapped for bars. No second frame-drawing
+                // branch — the same lesson as "two render paths for one shape" from
+                // `KeepGoingPath`.
+                ? Array.from({ length: skeletonRows }).map((_, index) => ({
                     key: `pending-${index}`,
                     title: <Typography size="sm" isSkeleton className="w-2/3" />,
                 }))
@@ -109,7 +116,7 @@ const LearnNudgesBase = ({
     />
 )
 
-/** `LearnNudges.*` — namespace một-component ⇒ chỉ có `.Base`. */
+/** `LearnNudges.*` — single-component namespace ⇒ only `.Base`. */
 export const LearnNudges = Object.assign(LearnNudgesBase, {
     Base: LearnNudgesBase,
 })

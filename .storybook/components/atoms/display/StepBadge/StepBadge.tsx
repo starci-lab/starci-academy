@@ -69,6 +69,21 @@ const SIZE: Record<StepBadgeSize, string> = {
     md: "size-6 text-sm [&_svg]:size-5",
 }
 
+/**
+ * size → WEIGHT của glyph, bảng đặt NGAY CẠNH {@link SIZE} để hai thang không lệch.
+ *
+ * §5.0a: `sm` render icon `size-4` (16px < 20px) ⇒ `bold` bù nét; `md` render `size-5`
+ * (20px, đúng cỡ chuẩn) ⇒ `regular`.
+ *
+ * ❌ neo (2026-07-26): trước đó `weight="bold"` ép CỨNG cho cả hai — nấc `md` vì thế
+ * đậm hơn mọi glyph `size-5` khác trong hệ. Đây là ca NGƯỢC với lỗi thường gặp (quên
+ * bold ở cỡ nhỏ), nên quét theo hướng "thiếu bold" sẽ không bao giờ thấy nó.
+ */
+const ICON_WEIGHT: Record<StepBadgeSize, "regular" | "bold"> = {
+    sm: "bold",
+    md: "regular",
+}
+
 /** size → skeleton box (mirrors {@link SIZE} without the text/icon scale). */
 const SKELETON_SIZE: Record<StepBadgeSize, string> = {
     sm: "size-5",
@@ -115,7 +130,7 @@ const StepBadgeBase = ({
         >
             {state === "done" ? (
                 <span aria-hidden data-anat-part={showAnatomy ? "Icon" : undefined} className="inline-flex shrink-0">
-                    <CheckIcon weight="bold" />
+                    <CheckIcon weight={ICON_WEIGHT[size]} />
                 </span>
             ) : (
                 number

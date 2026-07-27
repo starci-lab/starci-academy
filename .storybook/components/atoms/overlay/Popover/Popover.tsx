@@ -27,7 +27,13 @@ import { Popover as HeroPopover, Button as HeroButton } from "@heroui/react"
  */
 
 /** An icon passed as a COMPONENT (e.g. `CircleInfo`), rendered by the atom at trigger scale. */
-export type IconComponent = ComponentType<SVGProps<SVGSVGElement>>
+export type IconComponent = ComponentType<SVGProps<SVGSVGElement> & { weight?: "regular" | "bold" }>
+
+/**
+ * Nét glyph của trigger: `size-3.5` (14px) nhỏ hơn `size-5` ⇒ `bold` bù nét (§5.0a).
+ * Cỡ đã ép bằng class trên span bọc (cần `!` vì HeroUI `.button svg` specificity cao hơn).
+ */
+const TRIGGER_ICON_WEIGHT = "bold" as const
 
 /** Props for {@link PopoverBase}. */
 export interface PopoverBaseProps {
@@ -86,7 +92,7 @@ const PopoverBase = ({
                         data-anat-part={showAnatomy ? "TriggerIcon" : undefined}
                         className="inline-flex shrink-0 [&_svg]:!size-3.5"
                     >
-                        <TriggerIcon />
+                        <TriggerIcon weight={TRIGGER_ICON_WEIGHT} />
                     </span>
                 ) : null}
                 {triggerLabel}

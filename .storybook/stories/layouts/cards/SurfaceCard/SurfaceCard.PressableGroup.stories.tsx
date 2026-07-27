@@ -7,21 +7,23 @@ import type { VerdictBandVariant } from "@sb-components/layouts/cards/verdict-ba
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `SurfaceCard.PressableGroup` KHÔNG đẻ nghĩa
- * mới cho từng ô — nó chỉ LAYOUT + dựng lại `SurfaceCard.Pressable` từ `items`. Nên story
- * ở đây CHỈ render state THUỘC VỀ CỤM: mapping `items` · `columns` (container query) ·
- * `gap` cấp cụm · slot `icon` do cụm sở hữu cỡ/màu · phím tắt 1–N · dải verdict ·
- * ghim vị trí trong grid · skeleton CẢ CỤM.
+ * ⚠️ STATE SCOPE (teacher's call, 2026-07-25): `SurfaceCard.PressableGroup` does NOT
+ * create new meaning per cell — it only LAYS OUT + rebuilds `SurfaceCard.Pressable`
+ * from `items`. So the stories here ONLY render state that BELONGS TO THE GROUP:
+ * `items` mapping · `columns` (container query) · group-level `gap` · the `icon` slot
+ * whose size/colour the group owns · the 1–N keyboard shortcut · the verdict band ·
+ * pinning a position in the grid · skeleton for the WHOLE GROUP.
  *
- * State của TỪNG Ô (`selected` · `isDisabled` · `href` vs `onPress`) sống ở story
- * `SurfaceCard.Pressable` — KHÔNG lặp lại ở đây.
+ * State PER CELL (`selected` · `isDisabled` · `href` vs `onPress`) lives in the
+ * `SurfaceCard.Pressable` story — NOT repeated here.
  *
- * 2026-07-26 (thầy) — hệ lưới riêng của member này (`SurfaceCardPressableGroupColumns`
- * 7 bậc, thang container NỬA CỠ `@sm`/`@md`) bị xoá; `columns`/`gap` nay dùng
- * {@link GridColumns}/`SpaceScale` DÙNG CHUNG của `Grid.Base` (§13) — thang ĐẦY CỠ
- * `@app-sm`/`@app-md`/`@app-lg`. Panel anatomy cũng đổi: prop `parts`/`AnatomyNode`
- * (đường cũ, khai cấu trúc bằng tay) → `annotate` (chỉ chú giải WHY, cấu trúc suy từ
- * DOM), và chỉ giữ entry có `storyId` THẬT.
+ * 2026-07-26 (teacher) — this member's own grid system (`SurfaceCardPressableGroupColumns`,
+ * 7 tiers, HALF-SIZE container scale `@sm`/`@md`) was removed; `columns`/`gap` now use
+ * the SHARED {@link GridColumns}/`SpaceScale` from `Grid.Base` (§13) — the FULL-SIZE
+ * scale `@app-sm`/`@app-md`/`@app-lg`. The anatomy panel also changed: the `parts`/
+ * `AnatomyNode` prop (the old path, structure declared by hand) → `annotate` (only
+ * annotates WHY, structure is inferred from the DOM), keeping only entries with a REAL
+ * `storyId`.
  */
 const meta: Meta<typeof SurfaceCard.PressableGroup> = {
     title: "Layouts/Cards/SurfaceCard/SurfaceCard.PressableGroup",
@@ -37,9 +39,9 @@ export default meta
 type Story = StoryObj<typeof SurfaceCard.PressableGroup>
 
 /**
- * Mock-content chuẩn (C-fixture) cho MỌI story: khi ô `content` là một card có children
- * bên trong, đổ bằng ProfileCard — avatar + title + description. Avatar đi TRONG
- * `content` (slot `icon` chỉ dành cho icon thường).
+ * Standard mock content (C-fixture) for EVERY story: when the `content` cell is a card
+ * with children inside, fill it with a ProfileCard — avatar + title + description. The
+ * avatar goes INSIDE `content` (the `icon` slot is for plain icons only).
  */
 const profileTile = (initials: string, title: string, description: string) => (
     <div className="flex flex-row items-center gap-3">
@@ -55,7 +57,7 @@ const profileTile = (initials: string, title: string, description: string) => (
 
 const MENTORS = [
     { initials: "SC", title: "StarCi Academy", description: "Learn fullstack, system design, and DevOps on an interview-prep roadmap." },
-    { initials: "QN", title: "Thầy Quang", description: "Fullstack mentor — reviews projects and runs mock interviews." },
+    { initials: "QN", title: "Quang Nguyen", description: "Fullstack mentor — reviews projects and runs mock interviews." },
     { initials: "MM", title: "Mia Mia English", description: "Practice test sets and phrases with the SM-2 method." },
     { initials: "DV", title: "DevOps Lab", description: "Hands-on 4-cloud practice with real credentials." },
 ]
@@ -71,13 +73,14 @@ const profileItems: Array<SurfaceCardPressableGroupItem> = MENTORS.map((m) => ({
 const shell = (node: ReactNode) => <div className="p-8"><div className="max-w-2xl">{node}</div></div>
 
 /**
- * Live grid leaf: mỗi ô là một `Item` LẶP — một `SurfaceCard.Pressable` mà `content` do
- * caller compose tự do (ProfileCard ở đây). `Item` CÓ story riêng
- * (`SurfaceCard.Pressable/Default`) nên khai `storyId` để bấm nhảy sang được.
+ * Live grid leaf: each cell is a REPEATED `Item` — a `SurfaceCard.Pressable` whose
+ * `content` the caller composes freely (a ProfileCard here). `Item` HAS its own story
+ * (`SurfaceCard.Pressable/Default`), so it declares `storyId` to jump to it.
  *
- * 2026-07-26 (thầy): đổi từ mảng `parts: Array<AnatomyNode>` viết tay sang bảng
- * `annotate: Record<string, AnatomyAnnotation>` — cấu trúc cây nay suy từ DOM
- * (`data-anat-part="Item"` do chính story gắn ở dưới), phần khai tay chỉ còn WHY.
+ * 2026-07-26 (teacher): switched from a hand-written `parts: Array<AnatomyNode>` array
+ * to the `annotate: Record<string, AnatomyAnnotation>` table — the tree structure is
+ * now inferred from the DOM (`data-anat-part="Item"` attached by the story itself
+ * below), and the hand-declared part is now only the WHY.
  */
 const ITEM_ANNOTATE: Record<string, AnatomyAnnotation> = {
     Item: {
@@ -89,7 +92,7 @@ const ITEM_ANNOTATE: Record<string, AnatomyAnnotation> = {
 
 const VERDICTS: Array<VerdictBandVariant> = ["success", "warning", "danger", "accent"]
 
-/** Default — `items` là DỮ LIỆU (danh sách LẶP thì cấm children); cả grid là MỘT unit có nhãn. */
+/** Default — `items` is DATA (a REPEATING list forbids children); the whole grid is ONE labelled unit. */
 export const Default: Story = {
     render: () =>
         shell(
@@ -104,7 +107,7 @@ export const Default: Story = {
   columns={{ base: 1, sm: 2 }}
   items={[
     { key: "SC", label: "StarCi Academy", onPress: () => {}, content: profileTile(…) },
-    { key: "QN", label: "Thầy Quang", onPress: () => {}, content: profileTile(…) },
+    { key: "QN", label: "Quang Nguyen", onPress: () => {}, content: profileTile(…) },
   ]}
 />`}
             >
@@ -114,9 +117,10 @@ export const Default: Story = {
 }
 
 /**
- * `columns` — số cột theo BỀ RỘNG CONTAINER (container query `@app-sm`/`@app-md`/`@app-lg`…),
- * KHÔNG phải viewport: cùng một grid có thể nằm trong cột trang rộng hay trong rail 256px.
- * Kéo hẹp cửa sổ để thấy hai khung dưới đây reflow ĐỘC LẬP với nhau.
+ * `columns` — column count follows CONTAINER WIDTH (container query `@app-sm`/`@app-md`/
+ * `@app-lg`…), NOT viewport: the same grid can sit in a wide page column or a 256px
+ * rail. Narrow the window to see the two frames below reflow INDEPENDENTLY of each
+ * other.
  */
 export const Columns: Story = {
     render: () => (
@@ -157,7 +161,7 @@ export const Columns: Story = {
     ),
 }
 
-/** `gap` — khoảng cách giữa các ô đặt ở CẤP CỤM (grid luôn đều), item không tự chỉnh. */
+/** `gap` — spacing between cells is set at the GROUP LEVEL (the grid is always even), items don't adjust it themselves. */
 export const Gap: Story = {
     render: () =>
         shell(
@@ -178,7 +182,7 @@ export const Gap: Story = {
         ),
 }
 
-/** `item.icon` — slot icon TRẦN: cụm tự ép `size-5` + màu muted một chỗ (§4/§5a), call-site không tự set class. */
+/** `item.icon` — a BARE icon slot: the group pins `size-5` + a muted colour in one place (§4/§5a), the call site never sets a class itself. */
 export const WithIcon: Story = {
     render: () =>
         shell(
@@ -221,8 +225,9 @@ export const WithIcon: Story = {
 }
 
 /**
- * `keyboardShortcut` — cả group là hành động CHÍNH của màn hình: phím số `1`–`N` chọn ô
- * không cần chuột. Bấm 1 đến 4 để thử. Opt-in vì listener nằm ở `window`.
+ * `keyboardShortcut` — the whole group is the screen's MAIN action: number keys `1`–`N`
+ * pick a cell without the mouse. Press 1 through 4 to try it. Opt-in because the
+ * listener lives on `window`.
  */
 export const KeyboardShortcut: Story = {
     render: () =>
@@ -251,8 +256,9 @@ export const KeyboardShortcut: Story = {
 }
 
 /**
- * `item.withVerdict` — dải TÍN HIỆU DATA bên trái mỗi tile (cùng band canonical với
- * `SectionCard` / `SurfaceCard.List`), phủ lên content ProfileCard.
+ * `item.withVerdict` — a DATA SIGNAL band on the left edge of each tile (the same
+ * canonical band as `SectionCard` / `SurfaceCard.List`), overlaid on the ProfileCard
+ * content.
  */
 export const Verdict: Story = {
     render: () =>
@@ -282,14 +288,17 @@ export const Verdict: Story = {
 }
 
 /**
- * `item.className` với biến CONTAINER (`@app-sm:col-start-2`) — một pager card lẻ ghim vào
- * cột phải (card trước bị thiếu). Phải dùng biến container ĐÚNG bậc mà `Grid.Base` dùng
- * cho `columns` (`@app-sm`/`@app-md`/`@app-lg`, KHÔNG phải `@sm`/`@md`/`@lg` nửa-cỡ của
- * Tailwind) nên nó bật ĐÚNG lúc grid đạt 2 cột. Thu hẹp cửa sổ: nó vẫn full-width khi còn 1 cột.
+ * `item.className` with a CONTAINER variant (`@app-sm:col-start-2`) — a single leftover
+ * pager card pinned to the right column (the previous card is missing). Must use the
+ * container variant at the SAME tier `Grid.Base` uses for `columns` (`@app-sm`/`@app-md`/
+ * `@app-lg`, NOT Tailwind's HALF-SIZE `@sm`/`@md`/`@lg`) so it kicks in AT THE RIGHT
+ * MOMENT the grid reaches 2 columns. Narrow the window: it stays full-width while still
+ * at 1 column.
  *
- * 2026-07-26 (thầy): đổi từ `@sm:col-start-2` → `@app-sm:col-start-2` — `.PressableGroup`
- * nay dựng lưới bằng `Grid.Base` (thang container ĐẦY CỠ `@app-*`), nên biến ghim cột
- * phải khớp CÙNG thang, không thì bật sai bậc so với lúc grid thật sự chuyển 2 cột.
+ * 2026-07-26 (teacher): changed from `@sm:col-start-2` → `@app-sm:col-start-2` —
+ * `.PressableGroup` now builds its grid with `Grid.Base` (the FULL-SIZE `@app-*`
+ * container scale), so the column-pin variant must match the SAME scale, otherwise it
+ * fires at the wrong tier compared to when the grid actually switches to 2 columns.
  */
 export const PagerPinRight: Story = {
     render: () => (
@@ -318,7 +327,7 @@ export const PagerPinRight: Story = {
                                 content: (
                                     <div className="flex items-center justify-between gap-3">
                                         <Typography type="body-sm" weight="medium">Next content</Typography>
-                                        {/* Caret điều hướng: phosphor CaretRightIcon size-3 muted, KHÔNG trượt (§5a/§5b). */}
+                                        {/* Navigation caret: phosphor CaretRightIcon size-3 muted, does NOT slide (§5a/§5b). */}
                                         <CaretRightIcon className="size-3 shrink-0 text-muted" aria-hidden focusable="false" />
                                     </div>
                                 ),
@@ -333,9 +342,10 @@ export const PagerPinRight: Story = {
 }
 
 /**
- * Loading — `isSkeleton` tự vẽ mirror grid GENERIC, giữ đúng columns/gap/tile-chrome.
- * Không Skeleton rời ngoài. `SkeletonTile` không có story riêng (mirror nội bộ) nên
- * KHÔNG có `storyId` để trỏ tới — panel bỏ hẳn prop deps ở leaf này.
+ * Loading — `isSkeleton` draws its own GENERIC mirror grid, keeping the same
+ * columns/gap/tile-chrome. No separate Skeleton outside it. `SkeletonTile` has no
+ * story of its own (an internal mirror), so there's NO `storyId` to point at — the
+ * panel drops the deps prop entirely for this leaf.
  */
 export const Loading: Story = {
     render: () =>

@@ -5,6 +5,8 @@
 import { useEffect, useRef, useState } from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
+import ReactMarkdown from "react-markdown"
+import remarkGfm from "remark-gfm"
 import { type AnatomyTier } from "@sb-utils/AnatomyOverlay/anatomy-context"
 import { CodeSnippet } from "@sb-utils/BlockAnatomy/CodeSnippet"
 
@@ -27,6 +29,10 @@ import { CodeSnippet } from "@sb-utils/BlockAnatomy/CodeSnippet"
  *
  * ✍️ Chữ HIỆN RA MÀN HÌNH viết TIẾNG ANH (thầy chốt 2026-07-26: panel nửa Việt
  * nửa thuật-ngữ đọc rất khó). JSDoc/comment thì vẫn tiếng Việt, và neo § nằm ở đây.
+ *
+ * 📝 `reason`/`note`/`role` viết bằng MARKDOWN (thầy chốt 2026-07-26) — chúng vốn
+ * đã đầy `` `backtick` `` quanh tên prop, trước đây hiện ra dấu huyền thô trên màn
+ * hình. Xem {@link Prose}.
  *
  * ⚠️ GIỚI HẠN — part render qua PORTAL (popover/dropdown) nằm ngoài render-box nên
  * không leo được ancestor chain; chúng không xuất hiện trong cây.
@@ -118,6 +124,7 @@ export interface BlockAnatomyProps {
  * dùng thẳng token `success`/`danger`.
  */
 const TIER_PILL: Record<AnatomyTier, string> = {
+    screen: "bg-rose-100 text-rose-800 dark:bg-rose-900 dark:text-rose-100",
     block: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100",
     primitive: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100",
     design: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-100",
@@ -126,6 +133,7 @@ const TIER_PILL: Record<AnatomyTier, string> = {
 
 /** Thanh dẫn dọc — cùng hệ màu với pill, nhạt hơn một nấc. */
 const TIER_RAIL: Record<AnatomyTier, string> = {
+    screen: "border-rose-400",
     block: "border-purple-400",
     primitive: "border-blue-400",
     design: "border-emerald-400",
@@ -134,6 +142,7 @@ const TIER_RAIL: Record<AnatomyTier, string> = {
 
 /** Nhãn tầng hiện ra — `primitive` là tên CŨ của tầng layout (§13). */
 const TIER_NAME: Record<AnatomyTier, string> = {
+    screen: "screen",
     block: "block",
     primitive: "layout",
     design: "design",
@@ -156,6 +165,69 @@ const TAB_LABEL: Record<PanelTab, string> = {
 
 /** Pill nhỏ dùng chung cho tier/state — gom lại để ba chỗ không lệch nhau. */
 const PILL = "rounded-full px-2 text-[11px] font-medium leading-5"
+
+/**
+ * Bản đồ thẻ cho {@link Prose} — dựng SẴN ở module scope, không tạo lại mỗi render
+ * (react-markdown so sánh tham chiếu; object mới mỗi lượt sẽ ép parse lại).
+ *
+ * `p` → `<span className="block">` chứ KHÔNG phải `<p>`: mấy chỗ gọi đang nằm sẵn
+ * trong `<p>`/`<span>` (dòng `role` trong cây), mà `<p>` lồng `<p>` thì trình duyệt
+ * tự cắt thẻ và cây DOM vỡ ngay.
+ */
+const PROSE_MARKS = {
+    code: ({ children }: { children?: ReactNode }) => (
+        <code className="rounded bg-default px-1 py-0.5 font-mono text-[0.9em] text-foreground">{children}</code>
+    ),
+    strong: ({ children }: { children?: ReactNode }) => (
+        <strong className="font-semibold text-foreground">{children}</strong>
+    ),
+    em: ({ children }: { children?: ReactNode }) => <em className="italic">{children}</em>,
+    a: ({ href, children }: { href?: string; children?: ReactNode }) => (
+        <a href={href} target="_top" className="text-accent underline-offset-2 hover:underline">
+            {children}
+        </a>
+    ),
+    ul: ({ children }: { children?: ReactNode }) => <ul className="list-disc pl-4">{children}</ul>,
+    ol: ({ children }: { children?: ReactNode }) => <ol className="list-decimal pl-4">{children}</ol>,
+}
+
+/**
+ * BLOCK — đoạn văn đứng riêng (`reason`/`note` dưới panel). `p` → `<span
+ * className="block">` chứ KHÔNG phải `<p>`: chỗ gọi có khi đã nằm trong `<p>`/`<span>`,
+ * mà `<p>` lồng `<p>` thì trình duyệt tự cắt thẻ và cây DOM vỡ.
+ */
+const PROSE_COMPONENTS = {
+    ...PROSE_MARKS,
+    p: ({ children }: { children?: ReactNode }) => <span className="block">{children}</span>,
+}
+
+/**
+ * INLINE — chữ nằm CÙNG DÒNG với thứ khác (`· {leaf}` trên header, `· {role}` trong
+ * cây). Để `block` ở đó thì dấu `·` bị đẩy lên một dòng riêng.
+ */
+const PROSE_COMPONENTS_INLINE = {
+    ...PROSE_MARKS,
+    p: ({ children }: { children?: ReactNode }) => <>{children}</>,
+}
+
+/**
+ * Chữ giải thích của panel, render MARKDOWN (thầy chốt 2026-07-26).
+ *
+ * Chỉ string mới đi qua markdown; `reason`/`note` khai kiểu `ReactNode` nên story
+ * nào đưa JSX vẫn render y nguyên — không ép chuỗi hoá thứ vốn đã là node.
+ */
+const Prose = ({ children, className, inline = false }: { children?: ReactNode; className?: string; inline?: boolean }) => {
+    if (typeof children !== "string") {
+        return <span className={className}>{children}</span>
+    }
+    return (
+        <span className={className}>
+            <ReactMarkdown remarkPlugins={[remarkGfm]} components={inline ? PROSE_COMPONENTS_INLINE : PROSE_COMPONENTS}>
+                {children}
+            </ReactMarkdown>
+        </span>
+    )
+}
 
 /**
  * Rút mảng `parts` VIẾT TAY (đường cũ) thành bảng chú giải phẳng.
@@ -286,6 +358,13 @@ const BlockAnatomyDerived = ({
             // So chuỗi TRƯỚC khi set — nếu không sẽ setState mỗi lượt render → lặp.
             setDerived((prev) => (JSON.stringify(prev) === JSON.stringify(next) ? prev : next))
         }
+        // Quét NGAY, rAF chỉ là lượt bù (bắt phần DOM còn đang lắp dở).
+        //
+        // ⚠️ 2026-07-26: trước đây quét CHỈ nằm trong `requestAnimationFrame`. Iframe
+        // preview bị trình duyệt throttle (tab nền, cửa sổ không vẽ) thì rAF KHÔNG BAO
+        // GIỜ fire → `derived` rỗng vĩnh viễn → tab Deps biến mất dù story khai đúng.
+        // Nhìn ra đúng như một lỗi cấu hình story, mà thật ra là panel không chạy.
+        scan()
         raf = requestAnimationFrame(scan)
         const ro = new ResizeObserver(() => {
             cancelAnimationFrame(raf)
@@ -330,7 +409,11 @@ const BlockAnatomyDerived = ({
                         {node.state}
                     </span>
                 ) : null}
-                {node.role ? <span className="text-xs text-muted">· {node.role}</span> : null}
+                {node.role ? (
+                    <span className="text-xs text-muted">
+                        · <Prose inline>{node.role}</Prose>
+                    </span>
+                ) : null}
             </div>
             {node.children?.map((child) => (
                 <Branch key={child.name} node={child} depth={depth + 1} />
@@ -382,7 +465,12 @@ const BlockAnatomyDerived = ({
                 <div className="flex flex-wrap items-baseline gap-2 border-b border-default px-4 py-3">
                     <span className="font-mono text-sm text-foreground">{name}</span>
                     <span className={cn(PILL, TIER_PILL[tier])}>{TIER_NAME[tier]}</span>
-                    {leaf ? <span className="text-[11px] text-muted">· {leaf}</span> : null}
+                    {/* `leaf` cũng đầy `` `tên prop` `` nên đi qua markdown như reason/note. */}
+                    {leaf ? (
+                        <span className="text-[11px] text-muted">
+                            · <Prose inline>{leaf}</Prose>
+                        </span>
+                    ) : null}
                 </div>
 
                 {/* Một tab thì khỏi bày thanh tab — story cũ (chỉ có Deps) trông y như trước. */}
@@ -441,8 +529,8 @@ const BlockAnatomyDerived = ({
                 {/* WHY của cả leaf — nằm NGOÀI tab để đổi tab không mất mạch đọc. */}
                 {reason || note ? (
                     <div className="flex flex-col gap-1.5 border-t border-default px-4 py-3">
-                        {reason ? <p className="text-xs text-foreground">{reason}</p> : null}
-                        {note ? <p className="text-xs text-muted">{note}</p> : null}
+                        {reason ? <Prose className="text-xs text-foreground">{reason}</Prose> : null}
+                        {note ? <Prose className="text-xs text-muted">{note}</Prose> : null}
                     </div>
                 ) : null}
             </div>

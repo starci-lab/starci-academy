@@ -30,18 +30,18 @@ type Story = StoryObj<typeof Form.Base>
 
 /** Hai part TRỰC TIẾP của khung: cột nội dung và slot hàng nút (§11a). */
 const PARTS: Array<AnatomyNode> = [
-    { name: "Body", tier: "primitive", role: "cột nội dung (`body`/`children`) — các Form.Section / field, nhịp `gap`" },
-    { name: "Actions", tier: "primitive", role: "slot hàng nút ở ĐÁY form (thường là Form.Actions)" },
+    { name: "Body", tier: "primitive", role: "the content column (`body`/`children`) — Form.Sections and fields, spaced by `gap`" },
+    { name: "Actions", tier: "primitive", role: "the button-row slot at the BOTTOM of the form (usually Form.Actions)" },
 ]
 
 /** Fixture field thật — atom `Input.*` TỰ mang label/hint/required (§12e). */
 const AccountFields = () => {
-    const [name, setName] = useState("Nguyễn Minh Quang")
+    const [name, setName] = useState("Quang Nguyen")
     const [email, setEmail] = useState("quang@starci.dev")
     return (
         <>
-            <Input.Text label="Họ và tên" isRequired value={name} onValueChange={setName} placeholder="Họ và tên" />
-            <Input.Text label="Email" hint="Dùng để nhận thông báo khoá học." value={email} onValueChange={setEmail} placeholder="you@example.com" />
+            <Input.Text label="Full name" isRequired value={name} onValueChange={setName} placeholder="Full name" />
+            <Input.Text label="Email" hint="Where course notifications are sent." value={email} onValueChange={setEmail} placeholder="you@example.com" />
         </>
     )
 }
@@ -55,14 +55,14 @@ export const Default: Story = {
                 tier="primitive"
                 leaf="Default"
                 parts={PARTS}
-                reason="Khung form của tầng layout: dựng thẻ `<form>` thật (ENTER trong field = submit, a11y), xếp nội dung thành cột theo `gap` §10c, và giữ một slot `actions` ở đáy. Khung KHÔNG biết field bên trong — không validation, không giá trị, không lỗi (đó là tầng block); nhãn/lỗi do atom form tự mang (§12e)."
+                reason="The form frame of the layout tier: it builds a real `<form>` (ENTER inside a field submits, a11y), stacks content into a column on the `gap` rhythm (§10c), and keeps one `actions` slot at the bottom. The frame knows nothing about the fields inside — no validation, no values, no errors (that is the block tier); labels and errors come from the form atoms themselves (§12e)."
                 code={`<Form.Base
   gap={6}
   onSubmit={() => save()}
-  actions={<Form.Actions items={[{ key: "cancel", label: "Huỷ", variant: "secondary" }, { key: "save", label: "Lưu" }]} />}
+  actions={<Form.Actions items={[{ key: "cancel", label: "Cancel", variant: "secondary" }, { key: "save", label: "Save" }]} />}
 >
-  <Form.Section title="Tài khoản">
-    <Input.Text label="Họ và tên" isRequired value={name} onValueChange={setName} />
+  <Form.Section title="Account">
+    <Input.Text label="Full name" isRequired value={name} onValueChange={setName} />
     <Input.Text label="Email" value={email} onValueChange={setEmail} />
   </Form.Section>
 </Form.Base>`}
@@ -74,13 +74,13 @@ export const Default: Story = {
                         actions={(
                             <Form.Actions
                                 items={[
-                                    { key: "cancel", label: "Huỷ", variant: "secondary" },
-                                    { key: "save", label: "Lưu thay đổi" },
+                                    { key: "cancel", label: "Cancel", variant: "secondary" },
+                                    { key: "save", label: "Save changes" },
                                 ]}
                             />
                         )}
                     >
-                        <Form.Section title="Tài khoản">
+                        <Form.Section title="Account">
                             <AccountFields />
                         </Form.Section>
                     </Form.Base>
@@ -104,10 +104,10 @@ export const Submitting: Story = {
                 tier="primitive"
                 leaf="Submitting"
                 parts={PARTS}
-                note="`isDisabled` → `<fieldset disabled>` native tắt MỌI control con (field + nút) cùng lúc; khung không phải thread cờ xuống từng field."
+                note="`isDisabled` maps to a native `<fieldset disabled>`, which switches off EVERY control inside (fields and buttons) at once — the frame never threads a flag down to each field."
                 code={`<Form.Base
   isDisabled
-  actions={<Form.Actions items={[{ key: "cancel", label: "Huỷ", variant: "secondary" }, { key: "save", label: "Đang lưu", isPending: true }]} />}
+  actions={<Form.Actions items={[{ key: "cancel", label: "Cancel", variant: "secondary" }, { key: "save", label: "Saving", isPending: true }]} />}
 >
   …
 </Form.Base>`}
@@ -120,13 +120,13 @@ export const Submitting: Story = {
                         actions={(
                             <Form.Actions
                                 items={[
-                                    { key: "cancel", label: "Huỷ", variant: "secondary" },
-                                    { key: "save", label: "Đang lưu", isPending: true },
+                                    { key: "cancel", label: "Cancel", variant: "secondary" },
+                                    { key: "save", label: "Saving", isPending: true },
                                 ]}
                             />
                         )}
                     >
-                        <Form.Section title="Tài khoản">
+                        <Form.Section title="Account">
                             <AccountFields />
                         </Form.Section>
                     </Form.Base>
@@ -149,7 +149,7 @@ export const Disabled: Story = {
                 tier="primitive"
                 leaf="Disabled"
                 parts={PARTS}
-                note="Khoá tĩnh: cùng `<fieldset disabled>` như Submitting nhưng không nút nào pending — form chỉ đọc được, không thao tác được."
+                note="A static lock: the same `<fieldset disabled>` as Submitting, but no button is pending — the form reads, it just does not act."
                 code={`<Form.Base isDisabled actions={<Form.Actions items={[…]} />}>
   …
 </Form.Base>`}
@@ -162,13 +162,13 @@ export const Disabled: Story = {
                         actions={(
                             <Form.Actions
                                 items={[
-                                    { key: "cancel", label: "Huỷ", variant: "secondary" },
-                                    { key: "save", label: "Lưu thay đổi" },
+                                    { key: "cancel", label: "Cancel", variant: "secondary" },
+                                    { key: "save", label: "Save changes" },
                                 ]}
                             />
                         )}
                     >
-                        <Form.Section title="Tài khoản" description="Chỉ quản trị viên mới sửa được hồ sơ này.">
+                        <Form.Section title="Account" description="Only an administrator can edit this profile.">
                             <AccountFields />
                         </Form.Section>
                     </Form.Base>

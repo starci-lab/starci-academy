@@ -4,18 +4,20 @@ import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCar
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * KHUNG (Layouts) — danh sách "brief" TĨNH các hàng CÓ DẤU (✓ / ✗ / none) trong một khung
- * `bg-surface` bounded với divider full-bleed: MỘT danh sách có thể trộn cả ✓ (gồm) lẫn ✗
- * (chưa gồm). Chỉ-đọc; muốn hàng BẤM ĐƯỢC thì dùng `SurfaceCard.List`.
+ * KHUNG (Layouts) — a STATIC "brief" list of MARKED rows (✓ / ✗ / none) inside a
+ * bounded `bg-surface` khung with a full-bleed divider: ONE list can mix both ✓
+ * (included) and ✗ (not included). Read-only; for CLICKABLE rows use `SurfaceCard.List`.
  *
- * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): là danh sách LẶP nên `items` BẮT BUỘC là dữ liệu
- * (cấm children). Story ở đây chỉ render state của CHÍNH nó: `mark` (check/cross/none),
- * `tone` (success/muted/danger), `variant`, và mirror `isSkeleton`.
+ * ⚠️ STATE SCOPE (teacher's call, 2026-07-25): this is a REPEATING list, so `items`
+ * is REQUIRED data (children forbidden). Stories here only render the states of
+ * ITS OWN props: `mark` (check/cross/none), `tone` (success/muted/danger), `variant`,
+ * and the `isSkeleton` mirror.
  *
- * 2026-07-26 (thầy, BA TRỤC ĐỘC LẬP): `bordered?: boolean` → `variant?: SurfaceCardVariant`
- * (`"surface" | "nested"`, mặc định `"surface"`). Ánh xạ 1-1: `bordered=true` →
- * `variant="nested"`. Leaf trước đây tách riêng `Bordered` nay gộp thành MỘT leaf `Variant`
- * render đủ hai giá trị cạnh nhau (§ union side-by-side, cùng nếp với `MutedTone`).
+ * 2026-07-26 (teacher, THREE INDEPENDENT AXES): `bordered?: boolean` → `variant?:
+ * SurfaceCardVariant` (`"surface" | "nested"`, default `"surface"`). 1-1 mapping:
+ * `bordered=true` → `variant="nested"`. The leaf previously split out as `Bordered`
+ * is now merged into ONE `Variant` leaf rendering both values side by side (§ union
+ * side-by-side, same mold as `MutedTone`).
  */
 const meta: Meta<typeof SurfaceCard.CrossList> = {
     title: "Layouts/Cards/SurfaceCard/SurfaceCard.CrossList",
@@ -33,12 +35,14 @@ type Story = StoryObj<typeof SurfaceCard.CrossList>
 const row = (text: string) => <Typography type="body-sm">{text}</Typography>
 
 /**
- * ANATOMY IS PER-LEAF: mỗi story bọc render của chính nó trong một BlockAnatomy riêng.
+ * ANATOMY IS PER-LEAF: each story wraps its own render in its own BlockAnatomy.
  *
- * 2026-07-26 (thầy): bỏ hẳn prop `parts` (đường CŨ, `type AnatomyNode`) — leaf lặp
- * `CrossListItem` của khung này không có story riêng nên không có `storyId` THẬT; theo
- * luật whitelist mới của panel (chỉ nhận entry có `storyId` bấm-nhảy-được), khai `parts`/
- * `annotate` ở đây chỉ tạo ra một "dep" không bấm đi đâu được. Bỏ hẳn prop thay vì khai rỗng.
+ * 2026-07-26 (teacher): drop the `parts` prop entirely (the OLD road, `type
+ * AnatomyNode`) — this khung's repeating `CrossListItem` leaf has no story of its
+ * own, so it has no REAL `storyId`; under the panel's new whitelist rule (only
+ * accepts entries with a clickable `storyId`), declaring `parts`/`annotate` here
+ * would just create a "dep" that clicks nowhere. Drop the prop entirely instead of
+ * declaring it empty.
  */
 
 export const Checks: Story = {
@@ -93,7 +97,7 @@ export const Crosses: Story = {
     ),
 }
 
-/** Lý do gộp: MỘT danh sách trộn cả hàng gồm (✓) lẫn hàng chưa gồm (✗). */
+/** Why merged: ONE list mixing both an included row (✓) and a not-included row (✗). */
 export const Mixed: Story = {
     render: () => (
         <div className="p-8">
@@ -123,7 +127,7 @@ export const Mixed: Story = {
     ),
 }
 
-/** `mark="none"` — hàng trơn (vd một điều kiện tiên quyết, KHÔNG phải thành tích nên không tick). */
+/** `mark="none"` — a plain row (e.g. a prerequisite, NOT an achievement, so no tick). */
 export const NoMark: Story = {
     render: () => (
         <div className="p-8">
@@ -149,13 +153,14 @@ export const NoMark: Story = {
 }
 
 /**
- * `variant` — surface-in-surface (§1a). `"surface"` (mặc định) khi render THẲNG trên
- * `bg-background`; `"nested"` (border thay shadow) khi khung này lồng trong một mặt khác
- * (modal/drawer/panel).
+ * `variant` — surface-in-surface (§1a). `"surface"` (default) when rendered DIRECTLY
+ * on `bg-background`; `"nested"` (border instead of shadow) when this khung is
+ * nested inside another surface (modal/drawer/panel).
  *
- * 2026-07-26 (thầy): gộp từ leaf `Bordered` cũ (chỉ render MỘT giá trị `bordered=true`)
- * thành MỘT leaf `Variant` render đủ union cạnh nhau — composition hàng không đổi giữa
- * hai giá trị, chỉ khung ngoài đổi.
+ * 2026-07-26 (teacher): merged from the old `Bordered` leaf (which only rendered
+ * ONE value, `bordered=true`) into ONE `Variant` leaf rendering the full union side
+ * by side — row composition doesn't change between the two values, only the outer
+ * khung changes.
  */
 export const Variant: Story = {
     render: () => (
@@ -166,7 +171,7 @@ export const Variant: Story = {
                     name="SurfaceCard.CrossList"
                     tier="primitive"
                     leaf="Variant / surface"
-                    code={`<SurfaceCard.CrossList items={[…]} />`}
+                    code={"<SurfaceCard.CrossList items={[…]} />"}
                 >
                     <SurfaceCard.CrossList
                         showAnatomy
@@ -185,7 +190,7 @@ export const Variant: Story = {
                         tier="primitive"
                         leaf="Variant / nested"
                         note={"`variant=\"nested\"` changes the outer frame (border instead of shadow) when nested in another surface — row composition stays the same."}
-                        code={`<SurfaceCard.CrossList variant="nested" items={[…]} />`}
+                        code={"<SurfaceCard.CrossList variant=\"nested\" items={[…]} />"}
                     >
                         <SurfaceCard.CrossList
                             variant="nested"
@@ -203,8 +208,9 @@ export const Variant: Story = {
 }
 
 /**
- * `tone="danger"` — mark ĐỎ cho hàng tiêu cực CỨNG (mất/chặn/cảnh báo thật), khác cross muted
- * "chỉ là chưa gồm". Cùng element mark, chỉ leo TONE (§2d) — vd danh sách hậu quả khi huỷ gói.
+ * `tone="danger"` — a RED mark for a hard-negative row (a real loss/block/warning),
+ * distinct from a muted cross which just means "not included". Same mark element,
+ * only the TONE escalates (§2d) — e.g. a list of consequences when cancelling a plan.
  */
 export const DangerTone: Story = {
     render: () => (
@@ -232,9 +238,10 @@ export const DangerTone: Story = {
 }
 
 /**
- * `tone="muted"` — check MỜ đi để chữ dẫn (dùng cho value-props NẰM TRONG card khác, vd CourseCard):
- * tránh nhiễu sắc khi card đã có điểm nổi khác (giá/CTA). So với `tone="success"` (mặc định, xanh — tín
- * hiệu "gồm" thật, như PricingTable). Xem `principles.md` §2.
+ * `tone="muted"` — the check fades so the text leads (used for value-props living
+ * INSIDE another card, e.g. CourseCard): avoids color noise when the card already
+ * has another focal point (price/CTA). Compare with `tone="success"` (default,
+ * green — a real "included" signal, as in PricingTable). See `principles.md` §2.
  */
 export const MutedTone: Story = {
     render: () => (
@@ -286,7 +293,7 @@ export const MutedTone: Story = {
     ),
 }
 
-/** `isSkeleton` — `skeletonRows` hàng mirror (chấm tròn + vạch chữ) trong lúc danh sách chưa tải xong. */
+/** `isSkeleton` — `skeletonRows` mirror rows (round dot + text bar) while the list hasn't loaded yet. */
 export const Loading: Story = {
     render: () => (
         <div className="p-8">

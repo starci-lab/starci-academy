@@ -12,42 +12,43 @@ import { FieldFrame } from "@sb-components/atoms/forms/_field/FieldFrame"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Choice.*`: the boolean / single-select control atom namespace (bọc
+ * ATOM — `Choice.*`: the boolean / single-select control atom namespace (wraps
  * HeroUI Checkbox · Radio · RadioGroup · Switch).
  *
- * Đây là các control INLINE — nhãn nằm BÊN CẠNH control (Checkbox.Content /
- * Radio.Content owns nhãn native; Switch nhãn = sibling `<Label>` per house note).
- * Đó là ô TRẦN (không group heading / hint / error) — primitive field (FieldShell)
- * COMPOSE atom này để thêm nhãn nhóm / mô tả / lỗi.
+ * These are INLINE controls — the label sits BESIDE the control (Checkbox.Content /
+ * Radio.Content owns the native label; Switch's label = sibling `<Label>` per house note).
+ * It's a BARE field (no group heading / hint / error) — the primitive field (FieldShell)
+ * COMPOSES this atom to add a group label / description / error.
  *
- * Rules chung (Chip/Input):
- *   • Bọc HeroUI TỐI ĐA (Checkbox/RadioGroup/Radio/Switch), alias `Hero*`.
- *   • STRICT §4: `isSelected|value` + `onValueChange` TRẦN — consumer không đụng
- *     structure (không Checkbox.Control/Indicator/Content thủ công).
- *   • KHÔNG `children` (luật thầy chốt 2026-07-25): control không bọc phần tử nào
- *     nên nhãn đi bằng prop `label`; nhóm radio mô tả bằng `options` DỮ LIỆU.
+ * Shared rules (Chip/Input):
+ *   • Wrap HeroUI to the MAX (Checkbox/RadioGroup/Radio/Switch), alias `Hero*`.
+ *   • STRICT §4: `isSelected|value` + `onValueChange` BARE — the consumer doesn't touch
+ *     structure (no manual Checkbox.Control/Indicator/Content).
+ *   • NO `children` (rule decided 2026-07-25): the control doesn't wrap any element
+ *     so the label goes via the `label` prop; a radio group is described via `options` DATA.
  *   • `isSkeleton` → control-shaped skeleton co-located (hybrid C, `HeroSkeleton`
- *     kích thước control — KHÔNG import `Skeleton.*` compound).
- *   • Anatomy tier `atom` (part `Control` · `Label`; state loading = `Skeleton`).
+ *     sized to the control — NO importing the `Skeleton.*` compound).
+ *   • Anatomy tier `atom` (part `Control` · `Label`; loading state = `Skeleton`).
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 /**
- * Field-frame props các control INLINE nhận thêm (thầy chốt 2026-07-25): `hint` +
- * `errorMessage` render qua FieldFrame quanh control (nhãn chính vẫn INLINE cạnh
- * control — KHÔNG truyền vào FieldFrame `label`). `isRequired` gắn dấu `*` vào nhãn
- * inline. Bỏ hết → control trần như cũ (FieldFrame render thẳng children).
+ * Extra field-frame props INLINE controls take (decided 2026-07-25): `hint` +
+ * `errorMessage` render via FieldFrame around the control (the main label stays
+ * INLINE next to the control — NOT passed into FieldFrame's `label`). `isRequired`
+ * attaches a `*` mark to the inline label. Leave them all off → the control stays
+ * bare as before (FieldFrame renders children straight through).
  */
 interface InlineFrameProps {
-    /** Mô tả phụ (qua FieldFrame). */
+    /** Secondary description (via FieldFrame). */
     hint?: ReactNode
-    /** Dòng lỗi (qua FieldFrame → viền + text-danger). */
+    /** Error line (via FieldFrame → border + text-danger). */
     errorMessage?: ReactNode
-    /** Thêm dấu `*` vào nhãn inline. */
+    /** Adds a `*` mark to the inline label. */
     isRequired?: boolean
 }
 
-/** Nhãn inline + dấu `*` khi bắt buộc (khớp FieldFrame). */
+/** Inline label + `*` mark when required (matches FieldFrame). */
 const withRequired = (label: ReactNode, isRequired?: boolean) =>
     isRequired ? (
         <>
@@ -65,11 +66,11 @@ export interface ChoiceCheckboxProps extends InlineFrameProps {
     isSelected: boolean
     /** Fires with the new checked state. */
     onValueChange: (value: boolean) => void
-    /** Nhãn nằm BÊN CẠNH ô (Checkbox.Content). */
+    /** Label sits BESIDE the box (Checkbox.Content). */
     label: ReactNode
     isDisabled?: boolean
     isInvalid?: boolean
-    /** Render the control-shaped skeleton (square + nhãn bar) instead of the checkbox. */
+    /** Render the control-shaped skeleton (square + label bar) instead of the checkbox. */
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
@@ -79,7 +80,7 @@ export interface ChoiceCheckboxProps extends InlineFrameProps {
 /** `Choice.Checkbox` — single boolean checkbox with an inline label (HeroUI Checkbox compound). */
 const ChoiceCheckbox = ({ isSelected, onValueChange, label, isDisabled, isInvalid, isSkeleton, showAnatomy, className, hint, errorMessage, isRequired }: ChoiceCheckboxProps) => {
     const invalid = isInvalid || errorMessage != null
-    // Control = size-4 rounded-md · label = body-sm glyph bar (14/24), row gap-3 (khớp Checkbox.Content gap).
+    // Control = size-4 rounded-md · label = body-sm glyph bar (14/24), row gap-3 (matches Checkbox.Content gap).
     const skeletonControl = (
         <div className={cn("flex items-center gap-3", className)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
             <HeroSkeleton className="size-4 shrink-0 rounded-md" />
@@ -104,18 +105,18 @@ const ChoiceCheckbox = ({ isSelected, onValueChange, label, isDisabled, isInvali
  * Props for {@link ChoiceRadio} — ONE option row; must live inside a
  * {@link ChoiceRadioGroup}.
  *
- * ⚠️ KHÔNG có `hint`/`errorMessage`/`isRequired` (thầy chốt 2026-07-25): radio LẺ
- * không sống độc lập được — mô tả phụ · lỗi · bắt buộc là chuyện của NHÓM, nên 3
- * prop đó nằm ở {@link ChoiceRadioGroup}.
+ * ⚠️ NO `hint`/`errorMessage`/`isRequired` (decided 2026-07-25): a lone radio
+ * can't stand on its own — description · error · required are the GROUP's
+ * business, so those 3 props live on {@link ChoiceRadioGroup}.
  */
 export interface ChoiceRadioProps {
     /** Value reported to the group's `onValueChange` when this option is picked. */
     value: string
-    /** Nhãn nằm BÊN CẠNH dot (Radio.Content). */
+    /** Label sits BESIDE the dot (Radio.Content). */
     label: ReactNode
     /** Disable just this option row. */
     isDisabled?: boolean
-    /** Render the control-shaped skeleton — one radio-row shimmer (dot + nhãn bar). */
+    /** Render the control-shaped skeleton — one radio-row shimmer (dot + label bar). */
     isSkeleton?: boolean
     /** `true` → tag `Control` · `Label` for BlockAnatomy. */
     showAnatomy?: boolean
@@ -163,13 +164,13 @@ export interface ChoiceRadioGroupProps extends InlineFrameProps {
     /** Fires with the newly selected option's value. */
     onValueChange: (value: string) => void
     /**
-     * Danh sách option bằng DỮ LIỆU — atom tự dựng một {@link ChoiceRadio} mỗi
-     * entry. KHÔNG có `children`: consumer không lắp JSX con (§4 STRICT).
+     * List of options as DATA — the atom builds one {@link ChoiceRadio} per
+     * entry. NO `children`: the consumer doesn't attach child JSX (§4 STRICT).
      */
     options: Array<ChoiceRadioOption>
-    /** Nhãn heading TRÊN nhóm (map vào FieldFrame `label`) — bỏ trống → chỉ `ariaLabel`. */
+    /** Heading label ABOVE the group (maps to FieldFrame's `label`) — leave blank → `ariaLabel` only. */
     groupLabel?: ReactNode
-    /** Accessible name for the group (dùng khi không có `groupLabel` hiển thị). */
+    /** Accessible name for the group (used when there's no visible `groupLabel`). */
     ariaLabel?: string
     isDisabled?: boolean
     isInvalid?: boolean
@@ -243,17 +244,22 @@ const ChoiceRadioGroup = ({
 
 /** Props for {@link ChoiceSwitch}. */
 export interface ChoiceSwitchProps extends InlineFrameProps {
+    /**
+     * Anatomy tag for THIS control itself — so the PARENT can badge it as ONE node (§11a.1).
+     * Without this prop the parent is forced to pass `showAnatomy` down, i.e. OPEN UP the child's insides.
+     */
+    anatPart?: string
     /** On/off state (controlled). */
     isSelected: boolean
     /** Fires with the new on/off state. */
     onValueChange: (value: boolean) => void
-    /** Nhãn nằm BÊN CẠNH track (sibling `<Label>` — NOT via Switch.Content, per house note). */
+    /** Label sits BESIDE the track (sibling `<Label>` — NOT via Switch.Content, per house note). */
     label?: ReactNode
     isDisabled?: boolean
     isInvalid?: boolean
     /** Track size — HeroUI Switch supports sm/md/lg. */
     size?: "sm" | "md" | "lg"
-    /** Render the control-shaped skeleton — a switch-track pill (+ nhãn bar). */
+    /** Render the control-shaped skeleton — a switch-track pill (+ label bar). */
     isSkeleton?: boolean
     /** `true` → tag `Control` · `Label` for BlockAnatomy. */
     showAnatomy?: boolean
@@ -261,18 +267,18 @@ export interface ChoiceSwitchProps extends InlineFrameProps {
 }
 
 /** `Choice.Switch` — boolean toggle with the label BESIDE the track (HeroUI Switch compound). */
-const ChoiceSwitch = ({ isSelected, onValueChange, label, isDisabled, isInvalid, size, isSkeleton, showAnatomy, className, hint, errorMessage, isRequired }: ChoiceSwitchProps) => {
+const ChoiceSwitch = ({ isSelected, onValueChange, label, isDisabled, isInvalid, size, isSkeleton, showAnatomy, anatPart, className, hint, errorMessage, isRequired }: ChoiceSwitchProps) => {
     const invalid = isInvalid || errorMessage != null
     // Track = h-9 w-16 pill (app override) · optional label bar (body-sm).
     const skeletonControl = (
-        <div className={cn("flex items-center gap-3", className)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
+        <div className={cn("flex items-center gap-3", className)} data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}>
             <HeroSkeleton className="h-9 w-16 shrink-0 rounded-full" />
             {label != null ? <HeroSkeleton className="my-[5px] h-[14px] w-32 rounded" /> : null}
         </div>
     )
     return (
         <FieldFrame.Base hint={hint} errorMessage={errorMessage} isDisabled={isDisabled} isSkeleton={isSkeleton} showAnatomy={showAnatomy} skeletonControl={skeletonControl}>
-            <div className={cn("flex items-center gap-3", className)}>
+            <div data-anat-part={anatPart} className={cn("flex items-center gap-3", className)}>
                 <HeroSwitch
                     data-anat-part={showAnatomy ? "Control" : undefined}
                     size={size}
@@ -303,10 +309,11 @@ const ChoiceSwitch = ({ isSelected, onValueChange, label, isDisabled, isInvalid,
  * bare inline control; primitive fields (FieldShell) compose them for the group
  * heading / hint / error column.
  *
- * §12a: khai bằng `Object.assign` như 42 atom còn lại (KHÔNG object literal trần) —
- * root phải là callable-namespace. Root gọi thẳng = `Choice.Checkbox`, hình thái
- * cơ bản nhất của họ (cùng lối `Select` lấy `Select.Single` làm root). API các
- * member GIỮ NGUYÊN, chỉ đổi HÌNH export.
+ * §12a: declared via `Object.assign` like the other 42 atoms (NOT a bare object
+ * literal) — the root must be a callable namespace. Calling the root directly =
+ * `Choice.Checkbox`, the most basic shape of the family (same approach as
+ * `Select` taking `Select.Single` as its root). Every member's API STAYS THE
+ * SAME, only the export SHAPE changes.
  */
 export const Choice = Object.assign(ChoiceCheckbox, {
     Checkbox: ChoiceCheckbox,

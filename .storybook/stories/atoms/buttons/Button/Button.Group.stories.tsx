@@ -4,27 +4,30 @@ import { Button, type ButtonGroupItem, type ButtonSize } from "@sb-components/at
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `Button.Group` KHÔNG đẻ nghĩa mới — nó
- * chỉ layout + `import { ButtonBase }` rồi dựng lại từ `items`. Nên story ở đây CHỈ
- * render state THUỘC VỀ CỤM: mapping items · `size` cấp cụm · skeleton cả cụm.
- * Các state của TỪNG NÚT (prefixIcon · Pending · Disabled · variant) sống ở story
- * `Button.Base` — KHÔNG lặp lại ở đây.
+ * ⚠️ STATE SCOPE (teacher's call 2026-07-25): `Button.Group` does NOT grow new meaning —
+ * it only lays out + `import { ButtonBase }` and rebuilds from `items`. So the stories
+ * here ONLY render state that BELONGS TO THE CLUSTER: items mapping · cluster-level
+ * `size` · skeleton for the whole cluster. Per-BUTTON state (prefixIcon · Pending ·
+ * Disabled · variant) lives in the `Button.Base` story — NOT repeated here.
  *
- * 📐 **1 PROP = 1 LEAF** (§12g — tầng atom): `items` · `size` · `isSkeleton`, mỗi prop
- * một leaf. Đây là bộ prop ĐẦY ĐỦ của cụm — ít hơn `Button.Base` vì §12f: prop nào chỉ
- * chuyển tiếp xuống từng nút (`variant`/`prefixIcon`/`isPending`/`isDisabled`) thì thuộc
- * về `Button.Base`, cụm KHÔNG được mở leaf cho chúng.
+ * 📐 **1 PROP = 1 LEAF** (§12g — atom tier): `items` · `size` · `isSkeleton`, each prop
+ * one leaf. This is the FULL prop set of the cluster — smaller than `Button.Base`
+ * because of §12f: any prop that just forwards down to each button
+ * (`variant`/`prefixIcon`/`isPending`/`isDisabled`) belongs to `Button.Base`, the cluster
+ * must NOT open a leaf for it.
  *
- * ⚠️ Bản trước viện §14d.2 để gộp cả ba vào một leaf — luật đó của design/block/screen.
+ * ⚠️ The previous version invoked §14d.2 to merge all three into one leaf — that rule
+ * belongs to design/block/screen.
  *
- * ⚠️ Tab States đã BỎ (thầy chốt 2026-07-26, lần 2). §12f vẫn đúng — cụm không kê
- * lại state của `Button.Base` (`variant`/`isPending`…) — chỉ là không còn ô nào tự
- * nhắc, đọc kỹ khi viết leaf.
+ * ⚠️ Tab States was REMOVED (teacher's call 2026-07-26, second time). §12f still holds —
+ * the cluster doesn't re-list `Button.Base`'s state (`variant`/`isPending`…) — there's
+ * just no cell reminding you anymore, read carefully when writing a leaf.
  *
- * ✍️ Chữ hiện trên panel (`leaf`/`reason`/`note`/`role`/`hint`/`code`) và nhãn demo
- * trong khung render viết TIẾNG ANH; JSDoc/comment giữ tiếng Việt, neo § nằm ở đây.
+ * ✍️ Text shown on the panel (`leaf`/`reason`/`note`/`role`/`hint`/`code`) and demo labels
+ * in the render frame are written in ENGLISH; JSDoc/comments stay in Vietnamese, §
+ * anchors live here.
  *
- * 🎨 Icon = Phosphor (§5.0); nét do atom ép theo `size` cụm (§5.0a).
+ * 🎨 Icons = Phosphor (§5.0); stroke weight is enforced by the atom per cluster `size` (§5.0a).
  */
 const meta: Meta<typeof Button.Group> = {
     title: "Atoms/Buttons/Button/Button.Group",
@@ -38,15 +41,16 @@ export default meta
 type Story = StoryObj<typeof Button.Group>
 
 /**
- * DEPS = story KHÁC mà cụm này dựa vào (thầy chốt 2026-07-26). CHỈ liệt kê component
- * có story riêng — `Label`/`Icon`/`Spinner` là span BÊN TRONG atom, không có story nên
- * không phải deps. `Button.Base` để deps RỖNG (nó bọc thẳng HeroUI); cụm này thì CÓ,
- * và là component duy nhất trong họ có deps.
+ * DEPS = OTHER stories this cluster depends on (teacher's call 2026-07-26). ONLY list
+ * components that have their OWN story — `Label`/`Icon`/`Spinner` are spans INSIDE the
+ * atom with no story of their own, so they aren't deps. `Button.Base` leaves deps EMPTY
+ * (it wraps HeroUI directly); this cluster DOES have deps, and is the only component in
+ * the family that does.
  *
- * Key PHẢI trùng `data-anat-part` mà `ButtonGroup` phát ra — nó luôn gắn tên
- * `"Button.Base"` lên gốc mỗi nút con (xem `ButtonGroup.tsx`), kể cả khi `isSkeleton`.
- * Chỉ MỘT entry: từ 2026-07-26 `Button.Icon` đã xoá, item không nhãn cũng là
- * `ButtonBase` với `isIconOnly`.
+ * The key MUST match the `data-anat-part` that `ButtonGroup` emits — it always attaches
+ * the name `"Button.Base"` to the root of every child button (see `ButtonGroup.tsx`),
+ * even when `isSkeleton`. Only ONE entry: since 2026-07-26 `Button.Icon` was removed, an
+ * item with no label is also `ButtonBase` with `isIconOnly`.
  */
 const GROUP_ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Button.Base": {
@@ -56,17 +60,17 @@ const GROUP_ANNOTATE: Record<string, AnatomyAnnotation> = {
     },
 }
 
-/** Ba bậc tỉ lệ — `size` đặt ở CẤP CỤM, item chỉ mang vai trò/hành vi. */
+/** Three scale steps — `size` is set at the CLUSTER level, an item only carries role/behavior. */
 const SIZES: Array<ButtonSize> = ["sm", "md", "lg"]
 
-/** Cùng một bộ `items` cho mọi hàng — khác nhau chỉ là prop của CỤM. */
+/** The same `items` set for every row — the only difference is the CLUSTER's prop. */
 const items = (suffix: string): Array<ButtonGroupItem> => [
     { key: "cancel", label: "Cancel", variant: "ghost" },
     { key: "save", label: "Save", prefixIcon: FloppyDiskIcon, variant: "primary" },
     { key: "delete", prefixIcon: TrashIcon, ariaLabel: `Delete ${suffix}`, variant: "danger" },
 ]
 
-/** Leaf prop `items` — cụm dựng từ DỮ LIỆU; item không có `label` thành nút chỉ-icon. */
+/** Leaf prop `items` — the cluster is built from DATA; an item with no `label` becomes an icon-only button. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
@@ -91,7 +95,7 @@ export const Default: Story = {
     ),
 }
 
-/** Leaf prop `size` — đặt ở CẤP CỤM: hàng nút luôn đồng cỡ (§12d). */
+/** Leaf prop `size` — set at the CLUSTER level: a row of buttons is always the same size (§12d). */
 export const Sizes: Story = {
     render: () => (
         <div className="p-8">
@@ -121,7 +125,7 @@ export const Sizes: Story = {
     ),
 }
 
-/** Leaf prop `isSkeleton` — bật ở cấp cụm, từng item tự vẽ shimmer của mình. */
+/** Leaf prop `isSkeleton` — turned on at the cluster level, each item draws its own shimmer. */
 export const Skeleton: Story = {
     render: () => (
         <div className="p-8">
@@ -141,9 +145,10 @@ export const Skeleton: Story = {
                             size={size}
                             isSkeleton
                             items={items(`(${size})`)}
-                            // Skeleton VẪN đi qua ButtonBase (cụm chỉ chuyển cờ xuống) nên
-                            // phải bật showAnatomy ở đây, không thì cây báo "0 part" và
-                            // trông như cụm tự vẽ shimmer — sai hẳn nguồn.
+                            // Skeleton STILL goes through ButtonBase (the cluster only forwards
+                            // the flag), so showAnatomy must be turned on here — otherwise the
+                            // tree reports "0 part" and looks like the cluster draws the shimmer
+                            // itself, which is flat-out wrong about the source.
                             showAnatomy={size === "sm"}
                         />
                     ))}

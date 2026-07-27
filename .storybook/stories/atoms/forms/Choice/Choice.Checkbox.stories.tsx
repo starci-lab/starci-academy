@@ -4,24 +4,27 @@ import { Choice } from "@sb-components/atoms/forms/Choice/Choice"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Choice.Checkbox`: ô tick boolean, nhãn nằm INLINE cạnh ô (bọc HeroUI Checkbox).
+ * ATOM — `Choice.Checkbox`: boolean tick box, label sits INLINE next to the box
+ * (wraps HeroUI Checkbox).
  *
- * 📐 **1 PROP = 1 LEAF** (§12g — luật TẦNG ATOM). Bộ leaf đủ prop CÓ HÌNH: `isSelected`
- * (`Default`/`Checked`) · `hint` (`WithHint`) · `isRequired` (`Required`) · `isDisabled`
- * (`Disabled`) · `errorMessage` (`Error`) · `isSkeleton` (`Loading`). `label`/
- * `onValueChange`/`className`/`showAnatomy` không sinh hình riêng nên không có leaf.
+ * 📐 **1 PROP = 1 LEAF** (§12g — ATOM TIER law). Leaf set for props WITH their own
+ * shape: `isSelected` (`Default`/`Checked`) · `hint` (`WithHint`) · `isRequired`
+ * (`Required`) · `isDisabled` (`Disabled`) · `errorMessage` (`Error`) · `isSkeleton`
+ * (`Loading`). `label`/`onValueChange`/`className`/`showAnatomy` don't produce a
+ * shape of their own, so they get no leaf.
  *
- * ⭐ DEPS: atom này bọc thẳng HeroUI Checkbox — không dựng lại atom nào khác có story
- * riêng, nên KHÔNG có prop `annotate` (§12g: "atom lá bọc thẳng HeroUI ⇒ deps RỖNG,
- * bỏ hẳn prop"). `Control`/`Label` trong DOM là khe nội bộ của chính Checkbox;
- * `Description`/`Error` là khe của `FieldFrame` (scaffold nội bộ, không có story riêng)
- * — không cái nào có nhà để nhảy tới.
+ * ⭐ DEPS: this atom wraps HeroUI Checkbox directly — it doesn't build on top of
+ * any other atom that has its own story, so it has NO `annotate` prop (§12g: "a
+ * leaf atom that wraps HeroUI directly ⇒ deps is EMPTY, drop the prop entirely").
+ * `Control`/`Label` in the DOM are Checkbox's own internal slots; `Description`/
+ * `Error` are slots of `FieldFrame` (an internal scaffold with no story of its
+ * own) — none of them have a home to jump to.
  *
- * ⚠️ Tab States đã BỎ (thầy chốt 2026-07-26, lần 2). Panel còn Deps · Code — file này
- * không có Deps nên panel chỉ còn Code.
+ * ⚠️ The States tab is REMOVED (teacher's call, 2026-07-26, second pass). Panel
+ * keeps Deps · Code — this file has no Deps, so the panel is Code only.
  *
- * ✍️ Chữ hiện trên panel (`leaf`/`reason`/`note`/`code`) và nhãn demo trong khung
- * render viết TIẾNG ANH; JSDoc/comment giữ tiếng Việt.
+ * ✍️ Text shown in the panel (`leaf`/`reason`/`note`/`code`) and the demo labels
+ * inside the render frame are written in ENGLISH; JSDoc/comments stay Vietnamese.
  */
 const meta: Meta<typeof Choice.Checkbox> = {
     title: "Atoms/Forms/Choice/Choice.Checkbox",
@@ -34,7 +37,7 @@ export default meta
 
 type Story = StoryObj<typeof Choice.Checkbox>
 
-/** Leaf TRẦN — chưa bật prop nào: bỏ tick, không hint, không lỗi. */
+/** Bare leaf — no prop turned on: unticked, no hint, no error. */
 export const Default: Story = {
     render: () => {
         const Demo = () => {
@@ -58,7 +61,7 @@ export const Default: Story = {
     },
 }
 
-/** Leaf prop `isSelected` — hình khi đã tick (false = leaf Default ở trên). */
+/** Leaf prop `isSelected` — the shape when ticked (false = the Default leaf above). */
 export const Checked: Story = {
     render: () => {
         const Demo = () => {
@@ -82,7 +85,7 @@ export const Checked: Story = {
     },
 }
 
-/** Leaf prop `hint` — dòng mô tả phụ dưới nhãn, qua scaffold nội bộ FieldFrame. */
+/** Leaf prop `hint` — a secondary description line under the label, via the internal FieldFrame scaffold. */
 export const WithHint: Story = {
     render: () => {
         const Demo = () => {
@@ -112,7 +115,7 @@ export const WithHint: Story = {
     },
 }
 
-/** Leaf prop `isRequired` — dấu `*` gắn vào nhãn inline. */
+/** Leaf prop `isRequired` — a `*` mark attached to the inline label. */
 export const Required: Story = {
     render: () => {
         const Demo = () => {
@@ -142,7 +145,7 @@ export const Required: Story = {
     },
 }
 
-/** Leaf prop `isDisabled` — khoá control, nhạt màu. */
+/** Leaf prop `isDisabled` — locks the control, faded color. */
 export const Disabled: Story = {
     render: () => (
         <div className="p-8">
@@ -168,7 +171,7 @@ export const Disabled: Story = {
     ),
 }
 
-/** Leaf prop `errorMessage` — nhãn inline + viền lỗi + dòng lỗi đỏ, qua FieldFrame. */
+/** Leaf prop `errorMessage` — inline label + error border + red error line, via FieldFrame. */
 export const Error: Story = {
     render: () => {
         const Demo = () => {
@@ -198,7 +201,7 @@ export const Error: Story = {
     },
 }
 
-/** Leaf prop `isSkeleton` — shimmer CO-LOCATED (§12c): ô vuông + thanh nhãn. */
+/** Leaf prop `isSkeleton` — CO-LOCATED shimmer (§12c): square box + label bar. */
 export const Loading: Story = {
     render: () => (
         <div className="p-8">

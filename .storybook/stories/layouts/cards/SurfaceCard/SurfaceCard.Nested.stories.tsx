@@ -5,16 +5,17 @@ import { SurfaceCard, type SurfaceCardNestedSection } from "@sb-components/layou
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `SurfaceCard.Nested` là khung CARD-TRONG-CARD
- * — thứ duy nhất nó đẻ ra so với `.Base` là: một HEADER BAR nằm TRONG khung (eyebrow icon
- * + title + meta), một BODY chia section bằng divider (`items`), một FOOTER bar, và nấc
- * bo góc `radius`. Header section NGOÀI card (label/see-more/action) là tài sản của
- * `.Base` — KHÔNG lặp ở đây.
+ * ⚠️ STATE SCOPE (teacher's call, 2026-07-25): `SurfaceCard.Nested` is the
+ * CARD-IN-CARD frame — the only thing it adds over `.Base` is: a HEADER BAR sitting
+ * INSIDE the frame (eyebrow icon + title + meta), a BODY split into sections by
+ * dividers (`items`), a FOOTER bar, and a `radius` corner tier. The header section
+ * OUTSIDE the card (label/see-more/action) belongs to `.Base` — NOT repeated here.
  *
- * 2026-07-26 (thầy, BA TRỤC ĐỘC LẬP): `bordered?: boolean` → `variant?: SurfaceCardVariant`
- * (`"surface" | "nested"`), `compact?: boolean` → `radius?: "xl" | "3xl"`. Hai leaf
- * đơn-giá-trị cũ (`Bordered`, `Compact`) gộp thành hai leaf mang TÊN PROP (`Variant`,
- * `Radius`), mỗi leaf render đủ union cạnh nhau thay vì chỉ mỗi giá trị lệch mặc định.
+ * 2026-07-26 (teacher, THREE INDEPENDENT AXES): `bordered?: boolean` →
+ * `variant?: SurfaceCardVariant` (`"surface" | "nested"`), `compact?: boolean` →
+ * `radius?: "xl" | "3xl"`. The two old single-value leaves (`Bordered`, `Compact`)
+ * merge into two leaves named after the PROP (`Variant`, `Radius`), each rendering
+ * the full union side by side instead of just the value that differs from default.
  */
 const meta: Meta<typeof SurfaceCard.Nested> = {
     title: "Layouts/Cards/SurfaceCard/SurfaceCard.Nested",
@@ -50,8 +51,9 @@ const relatedItems: ReadonlyArray<SurfaceCardNestedSection> = [
 ]
 
 /**
- * Default — `variant="surface"` (mặc định): card đứng TRỰC TIẾP trên `bg-background` nên
- * tự sở hữu nền + shadow. Body dựng từ `items` (danh sách LẶP → dữ liệu, không children).
+ * Default — `variant="surface"` (default): the card sits DIRECTLY on `bg-background`
+ * so it owns its own background + shadow. Body is built from `items` (a REPEATING
+ * list → data, not children).
  */
 export const Default: Story = {
     render: () => (
@@ -61,7 +63,7 @@ export const Default: Story = {
                     name="SurfaceCard.Nested"
                     tier="primitive"
                     leaf="Default"
-                    reason="Khung card-trong-card CÓ HEADER: thanh header thu gọn nằm TRONG khung + một cột section flush ngăn bằng divider (không bo góc từng hàng). `items` là dữ liệu vì Body là danh sách LẶP."
+                    reason="The card-in-card frame WITH A HEADER: a compact header bar sitting INSIDE the frame, over a flush section column separated by dividers (no per-row corners). `items` is data because the Body is a REPEATING list."
                     code={`<SurfaceCard.Nested
   title="Related lessons"
   items={[
@@ -78,13 +80,16 @@ export const Default: Story = {
 }
 
 /**
- * `variant` — trục ĐỘC LẬP đầu tiên (§1a): `"surface"` (mặc định) tự có nền + shadow khi
- * đứng TRỰC TIẾP trên `bg-background`; `"nested"` đổi sang border khi mặt này nằm TRONG
- * một mặt cha ĐÃ CÓ NỀN (chat panel / bubble / modal / page card) — shadow gần như vô
- * hình trên nền đó. Gộp từ hai leaf đơn-giá-trị cũ (`Default` ngầm định `surface`,
- * `Bordered`) thành MỘT leaf `Variant` render cả hai cạnh nhau.
+ * `variant` — the first INDEPENDENT axis (§1a): `"surface"` (default) carries its
+ * own background + shadow when sitting DIRECTLY on `bg-background`; `"nested"`
+ * switches to a border when this surface sits INSIDE a parent surface that
+ * ALREADY HAS a background (chat panel / bubble / modal / page card) — a shadow
+ * is nearly invisible on that background. Merged from two old single-value
+ * leaves (`Default` implying `surface`, `Bordered`) into ONE `Variant` leaf
+ * rendering both side by side.
  *
- * 2026-07-26 (thầy): đổi từ `bordered?: boolean` (`bordered=true` → `variant="nested"`).
+ * 2026-07-26 (teacher): changed from `bordered?: boolean` (`bordered=true` →
+ * `variant="nested"`).
  */
 export const Variant: Story = {
     render: () => (
@@ -104,7 +109,7 @@ export const Variant: Story = {
                             name="SurfaceCard.Nested"
                             tier="primitive"
                             leaf="Variant"
-                            note={"`variant=\"nested\"` (phải, trong bubble panel) đổi khung sang border thay shadow (surface-in-surface); `variant=\"surface\"` (trái, mặc định) tự có nền + shadow khi đứng trực tiếp trên bg-background — composition không đổi."}
+                            note={"`variant=\"nested\"` (right, inside a bubble panel) switches the frame to a border instead of a shadow (surface-in-surface); `variant=\"surface\"` (left, the default) keeps its own background and shadow when it sits directly on bg-background — the composition is identical."}
                             code={`<SurfaceCard.Nested
   title="Related lessons"
   variant="nested"
@@ -121,10 +126,11 @@ export const Variant: Story = {
 }
 
 /**
- * Section tương tác (ROW ≠ CARD, principles §7b) — item nhận `onPress` (native `<button>`)
- * hoặc `href` (native `<a>`). Mỗi hàng focusable + điều khiển được bằng bàn phím với
- * `focus-visible` ring và title underline khi hover (nav-link affordance). KHÔNG
- * press-scale/ripple — đó là của card, không phải của row. Tab thử để soi a11y.
+ * Interactive section (ROW ≠ CARD, principles §7b) — an item takes `onPress`
+ * (native `<button>`) or `href` (native `<a>`). Every row is focusable + keyboard
+ * operable with a `focus-visible` ring and a title underline on hover (nav-link
+ * affordance). NO press-scale/ripple — that belongs to the card, not the row. Tab
+ * through it to check a11y.
  */
 export const InteractiveSections: Story = {
     render: () => (
@@ -134,7 +140,7 @@ export const InteractiveSections: Story = {
                     name="SurfaceCard.Nested"
                     tier="primitive"
                     leaf="InteractiveSections"
-                    note="Composition không đổi — chỉ Section trong Body chuyển thành <a>/<button> khi item có `href`/`onPress` (ROW ≠ CARD, §7b)."
+                    note="The composition does not change — only the Section inside Body becomes an <a>/<button> when an item carries `href`/`onPress` (ROW ≠ CARD, §7b)."
                     code={`<SurfaceCard.Nested
   title="Related lessons"
   items={[
@@ -157,7 +163,7 @@ export const InteractiveSections: Story = {
     ),
 }
 
-/** `icon` + `meta` — hai slot còn lại của header bar: eyebrow icon bên trái, meta ghim bên phải. */
+/** `icon` + `meta` — the header bar's remaining two slots: an eyebrow icon on the left, meta pinned on the right. */
 export const WithIconMeta: Story = {
     render: () => (
         <div className="p-8">
@@ -166,7 +172,7 @@ export const WithIconMeta: Story = {
                     name="SurfaceCard.Nested"
                     tier="primitive"
                     leaf="WithIconMeta"
-                    note="`icon` đi TRẦN — khung tự ép size-4 + màu muted (§4/§5). `meta` là node riêng, ghim phải, không co."
+                    note="`icon` comes in BARE — the frame pins size-4 and the muted colour itself (§4/§5). `meta` is its own node, pinned right, never shrinking."
                     code={`<SurfaceCard.Nested
   icon={<FolderOpenIcon />}
   title="Related lessons"
@@ -187,7 +193,7 @@ export const WithIconMeta: Story = {
     ),
 }
 
-/** `footer` — thanh cuối NẰM TRONG khung (ngăn bằng `border-t`), khác `description` ở ngoài của `.Base`. */
+/** `footer` — a closing bar sitting INSIDE the frame (separated by `border-t`), unlike `.Base`'s `description`, which sits outside. */
 export const WithFooter: Story = {
     render: () => (
         <div className="p-8">
@@ -196,7 +202,7 @@ export const WithFooter: Story = {
                     name="SurfaceCard.Nested"
                     tier="primitive"
                     leaf="WithFooter"
-                    note="`footer` render TRONG khung (border-t), không phải caption ngoài card — đó là `description` của `.Base`."
+                    note="`footer` renders INSIDE the frame (border-t), not as a caption outside the card — that is `.Base`'s `description`."
                     code={`<SurfaceCard.Nested
   title="Related lessons"
   items={[…]}
@@ -215,7 +221,7 @@ export const WithFooter: Story = {
     ),
 }
 
-/** Không `header`/`title`/`icon`/`meta` → thanh header KHÔNG render: còn đúng khung + cột section. */
+/** No `header`/`title`/`icon`/`meta` → the header bar does NOT render: only the frame + section column are left. */
 export const Headerless: Story = {
     render: () => (
         <div className="p-8">
@@ -224,7 +230,7 @@ export const Headerless: Story = {
                     name="SurfaceCard.Nested"
                     tier="primitive"
                     leaf="Headerless"
-                    note="Bỏ hết 4 slot header → khung bỏ luôn thanh header (không để lại viền rỗng), cây DOM rụng node Header."
+                    note="Drop all four header slots and the frame drops the header bar with them (no empty rule left behind) — the Header node falls out of the DOM tree."
                     code={`<SurfaceCard.Nested
   items={[…]}
 />`}
@@ -236,7 +242,7 @@ export const Headerless: Story = {
     ),
 }
 
-/** `children` — khung-BỌC vẫn nhận nội dung tự do khi Body KHÔNG phải danh sách lặp (`items` thắng nếu có cả hai). */
+/** `children` — the WRAPPER frame still accepts free-form content when the Body is NOT a repeating list (`items` wins if both are given). */
 export const FreeBody: Story = {
     render: () => (
         <div className="p-8">
@@ -245,7 +251,7 @@ export const FreeBody: Story = {
                     name="SurfaceCard.Nested"
                     tier="primitive"
                     leaf="FreeBody"
-                    note="Body là một khối tự do (không lặp) → dùng `children`/`body`; DOM không có Section vì không có hàng lặp."
+                    note="When Body is one free-form block rather than a repeat, use `children`/`body` — the DOM carries no Section because there are no repeating rows."
                     code={`<SurfaceCard.Nested title="Notes">
   <div className="p-3">
     <Typography type="body-sm">…</Typography>
@@ -266,13 +272,14 @@ export const FreeBody: Story = {
 }
 
 /**
- * `radius` — trục ĐỘC LẬP thứ hai: `"3xl"` (mặc định) chuẩn cho khung ngoài;
- * `"xl"` hạ một nấc bo góc cho ngữ cảnh hẹp (bong bóng chat), thường đi kèm
- * `variant="nested"` (concentric radius với bubble cha). Gộp từ hai leaf đơn-giá-trị
- * cũ (`Default` ngầm định `3xl`, `Compact`) thành MỘT leaf `Radius` render cả hai
- * cạnh nhau.
+ * `radius` — the second INDEPENDENT axis: `"3xl"` (default) is the standard for an
+ * outer frame; `"xl"` drops the corner one tier for tight contexts (a chat
+ * bubble), usually paired with `variant="nested"` (a radius concentric with the
+ * parent bubble). Merged from two old single-value leaves (`Default` implying
+ * `3xl`, `Compact`) into ONE `Radius` leaf rendering both side by side.
  *
- * 2026-07-26 (thầy): đổi từ `compact?: boolean` (`compact=true` → `radius="xl"`).
+ * 2026-07-26 (teacher): changed from `compact?: boolean` (`compact=true` →
+ * `radius="xl"`).
  */
 export const Radius: Story = {
     render: () => (
@@ -285,7 +292,7 @@ export const Radius: Story = {
                     name="SurfaceCard.Nested"
                     tier="primitive"
                     leaf="Radius"
-                    note={"`radius=\"xl\"` (phải, trong bubble panel) hạ bo góc một nấc, kết hợp `variant=\"nested\"` cho concentric radius với cha; `radius=\"3xl\"` (trái, mặc định) chuẩn cho khung ngoài."}
+                    note={"`radius=\"xl\"` (right, inside a bubble panel) drops the corner one step, pairing with `variant=\"nested\"` for a radius concentric with the parent; `radius=\"3xl\"` (left, the default) is the standard for an outer frame."}
                     code={`<SurfaceCard.Nested
   title="Related lessons"
   radius="xl"

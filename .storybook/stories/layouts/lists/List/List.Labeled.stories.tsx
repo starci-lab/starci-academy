@@ -6,16 +6,18 @@ import { List, type ListLabeledItem } from "@sb-components/layouts/lists/List/Li
 import { Feedback } from "@sb-components/layouts/feedback/Feedback/Feedback"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
-// `Feedback.Empty` nhận icon là COMPONENT ref và tự ép `size-8` (§4/§5) — phosphor
-// `weight="duotone"` không đi kèm được nữa, nên bọc thành component để GIỮ NGUYÊN nét vẽ.
+// `Feedback.Empty` takes the icon as a COMPONENT ref and forces `size-8` itself
+// (§4/§5) — the phosphor `weight="duotone"` can no longer tag along, so wrap it
+// in a component to KEEP the stroke style.
 const TrayDuotone = (props: SVGProps<SVGSVGElement>) => <TrayIcon {...props} weight="duotone" />
 
 /**
- * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `List.Labeled` là khung DANH SÁCH LẶP không có
- * khung card. Thứ nó đẻ ra: nhãn phần (icon + Label), cột `gap-2` dựng từ `items`, CTA
- * footer, và hai trạng thái của CHÍNH danh sách — RỖNG (`emptyState`) + ĐANG TẢI
- * (`isSkeleton`). Các biến thể slot của một HÀNG (leading/meta/trailing/divider/href) là
- * tài sản của `List.Row` — KHÔNG lặp ở đây.
+ * ⚠️ STATE SCOPE (teacher's call 2026-07-25): `List.Labeled` is a REPEATED-LIST
+ * frame with no card frame. What it produces: a section label (icon + Label),
+ * a `gap-2` column built from `items`, a footer CTA, and the two states of the
+ * list ITSELF — EMPTY (`emptyState`) + LOADING (`isSkeleton`). Slot variants of
+ * a single ROW (leading/meta/trailing/divider/href) belong to `List.Row` —
+ * NOT repeated here.
  */
 const meta: Meta<typeof List.Labeled> = {
     title: "Layouts/Lists/List/List.Labeled",
@@ -63,11 +65,11 @@ const shortcuts: ReadonlyArray<ListLabeledItem> = [
     { key: "practice", title: "Luyện tập", href: "/practice", trailing: <CaretRightIcon className="size-3 text-muted" aria-hidden focusable="false" /> },
 ]
 
-/** Header (icon+Label) + List (cột List.Row dựng từ `items`) — Action chỉ xuất hiện khi có CTA. */
-const ROW: AnatomyNode = { name: "List.Row", tier: "primitive", role: "1 hàng (lặp ×N) — dựng từ `items`", storyId: "layouts-lists-list-list-row--title-only" }
+/** Header (icon+Label) + List (a column of List.Row built from `items`) — Action only appears when there's a CTA. */
+const ROW: AnatomyNode = { name: "List.Row", tier: "primitive", role: "1 row (repeated ×N) — built from `items`", storyId: "layouts-lists-list-list-row--title-only" }
 const BASE_PARTS: Array<AnatomyNode> = [
-    { name: "Header", tier: "primitive", role: "icon (tuỳ chọn) + Label phần" },
-    { name: "List", tier: "primitive", role: "cột gap-2 các hàng", children: [ROW] },
+    { name: "Header", tier: "primitive", role: "icon (optional) + section Label" },
+    { name: "List", tier: "primitive", role: "gap-2 column of rows", children: [ROW] },
 ]
 
 /** One related deck, no CTA — the lightest review panel. */
@@ -79,7 +81,7 @@ export const SingleItem: Story = {
                 tier="primitive"
                 leaf="SingleItem"
                 parts={BASE_PARTS}
-                reason="Rail/panel 'label + list ngắn (+CTA)' KHÔNG có khung card — nhẹ hơn SurfaceCard.List cho các panel phụ (ôn tập, luyện tập cạnh bài học). `items` là dữ liệu vì đây là danh sách LẶP (§13b)."
+                reason="A 'label + short list (+CTA)' rail/panel with NO card frame — lighter than SurfaceCard.List for secondary panels (review, practice next to a lesson). `items` is data because this is a REPEATED list (§13b)."
                 code={`<List.Labeled
   label="Ôn tập bài này"
   items={[{ key: "closures", title: "JavaScript Closures", subtitle: "12 thẻ" }]}
@@ -93,7 +95,7 @@ export const SingleItem: Story = {
 
 const ACTION_PARTS: Array<AnatomyNode> = [
     ...BASE_PARTS,
-    { name: "Action", tier: "primitive", role: "CTA footer (Button), cách List gap-3" },
+    { name: "Action", tier: "primitive", role: "footer CTA (Button), gap-3 from List" },
 ]
 
 /** Multiple rows (title + difficulty meta) with a footer `action` CTA — the lesson-rail practice panel. */
@@ -105,7 +107,7 @@ export const MultipleWithAction: Story = {
                 tier="primitive"
                 leaf="MultipleWithAction"
                 parts={ACTION_PARTS}
-                note="`action` thêm nhóm CTA thứ 3 (gap-3 với List) — 3 nhóm: Header · List · Action."
+                note="`action` adds a 3rd CTA group (gap-3 from List) — 3 groups: Header · List · Action."
                 code={`<List.Labeled
   label="Luyện tập bài này"
   items={[{ key: "two-sum", title: "Two Sum", meta: <DifficultyChip … /> }, …]}
@@ -136,7 +138,7 @@ export const WithIcon: Story = {
                 tier="primitive"
                 leaf="WithIcon"
                 parts={BASE_PARTS}
-                note="`icon` render TRƯỚC Label, cùng 1 node Header (không tách icon thành part riêng)."
+                note="`icon` renders BEFORE Label, in the same one Header node (icon isn't split into its own part)."
                 code={`<List.Labeled
   label="Thẻ ghi nhớ liên quan"
   icon={<CardsIcon className="size-5" />}
@@ -154,7 +156,7 @@ export const WithIcon: Story = {
     ),
 }
 
-/** Điều hướng: mỗi item có `href` + chevron → cả hàng là `<a>` (khung không tự chọn, item quyết định). */
+/** Navigation: each item has `href` + chevron → the whole row is an `<a>` (the frame doesn't decide this, the item does). */
 export const NavigationItems: Story = {
     render: () => (
         <div className="p-8">
@@ -163,7 +165,7 @@ export const NavigationItems: Story = {
                 tier="primitive"
                 leaf="NavigationItems"
                 parts={BASE_PARTS}
-                note="Composition không đổi — item mang `href`/`trailing` nên mỗi List.Row đổi sang <a> có hover surface."
+                note="Composition doesn't change — items carry `href`/`trailing`, so each List.Row switches to an <a> with a hover surface."
                 code={`<List.Labeled
   label="Truy cập nhanh"
   items={[{ key: "courses", title: "Khoá học", href: "/courses", trailing: <CaretRightIcon /> }, …]}
@@ -176,14 +178,14 @@ export const NavigationItems: Story = {
 }
 
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "Header", tier: "primitive", role: "icon (tuỳ chọn) + Label phần" },
-    { name: "List", tier: "primitive", role: "cột gap-2 — rỗng nên chứa emptyState thay cho hàng" },
+    { name: "Header", tier: "primitive", role: "icon (optional) + section Label" },
+    { name: "List", tier: "primitive", role: "gap-2 column — empty, so it holds emptyState instead of rows" },
 ]
 
 /**
- * Empty — `items` rỗng: khung đổ `emptyState` vào đúng slot danh sách, Header vẫn đứng
- * nguyên nên panel không biến mất. Trạng thái RỖNG thuộc về khung danh sách (không phải
- * của `List.Row`).
+ * Empty — `items` is empty: the frame pours `emptyState` into the list slot,
+ * Header still stands, so the panel doesn't disappear. The EMPTY state
+ * belongs to the list frame (not to `List.Row`).
  */
 export const Empty: Story = {
     render: () => (
@@ -193,7 +195,7 @@ export const Empty: Story = {
                 tier="primitive"
                 leaf="Empty"
                 parts={EMPTY_PARTS}
-                note="items=[] → slot List render `emptyState`; cây parts rụng node List.Row."
+                note="items=[] → the List slot renders `emptyState`; the parts tree drops the List.Row node."
                 code={`<List.Labeled
   label="Ôn tập bài này"
   items={[]}
@@ -218,18 +220,19 @@ export const Empty: Story = {
 }
 
 const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "Header", tier: "primitive", role: "icon (tuỳ chọn) + Label phần" },
+    { name: "Header", tier: "primitive", role: "icon (optional) + section Label" },
     {
         name: "List",
         tier: "primitive",
-        role: "cột gap-2 giữ nguyên khung",
-        children: [{ name: "List.Row", tier: "primitive", role: "mirror hàng (×skeletonRows)", storyId: "layouts-lists-list-list-row--loading" }],
+        role: "gap-2 column, frame kept as-is",
+        children: [{ name: "List.Row", tier: "primitive", role: "row mirror (×skeletonRows)", storyId: "layouts-lists-list-list-row--leading-subtitle" }],
     },
 ]
 
 /**
- * Loading — `isSkeleton` MIRROR cây thật: `Label` header + khung List `gap-2` giữ nguyên,
- * chỉ mỗi hàng đổi sang mirror của `List.Row`, nên panel không nhảy khi dữ liệu về.
+ * Loading — `isSkeleton` MIRRORS the real tree: the `Label` header + the
+ * `gap-2` List frame stay as-is, only each row switches to a `List.Row`
+ * mirror, so the panel doesn't jump once data lands.
  */
 export const Loading: Story = {
     render: () => (
@@ -239,7 +242,7 @@ export const Loading: Story = {
                 tier="primitive"
                 leaf="Loading"
                 parts={LOADING_PARTS}
-                note="isSkeleton bỏ qua `items` (lúc tải chưa có dữ liệu) và vẽ `skeletonRows` hàng mirror — mặc định 3."
+                note="isSkeleton ignores `items` (no data yet while loading) and draws `skeletonRows` mirror rows — default 3."
                 code={`<List.Labeled
   label="Luyện tập bài này"
   items={[]}

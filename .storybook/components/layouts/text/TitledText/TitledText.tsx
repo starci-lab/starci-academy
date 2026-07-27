@@ -33,8 +33,9 @@ interface SizeConfig {
     subColor?: "muted"
     subWeight?: "medium"
     /**
-     * Bề rộng thanh skeleton của từng dòng — ghi NGUYÊN class (`w-1/2`), không ghép
-     * động `w-${…}`, vì Tailwind quét chuỗi literal trong source mới sinh ra class.
+     * Skeleton bar width for each line — write the class LITERALLY (`w-1/2`), don't
+     * build it dynamically (`w-${…}`), since Tailwind only generates a class from a
+     * literal string it scans in the source.
      */
     skeleton: { title: string; sub: string; hint: string }
 }
@@ -82,6 +83,16 @@ export interface TitledTextProps {
     isSkeleton?: boolean
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
+    /**
+     * `true` → EACH inner line also emits `data-anat-part` (`Title` · `Subtitle` ·
+     * `Hint`), so the deps tree can go DOWN TO THE ATOM instead of stopping at the frame.
+     *
+     * ⭐ 2026-07-27 (teacher: "render all the way down to the atom level, including
+     * typography, don't skip any component"): the tree ABOVE depends on the tree BELOW,
+     * so the frame has to clear the way for its children to show. A frame that swallows
+     * its children makes the panel lie about what it actually builds.
+     */
+    showAnatomy?: boolean
     /** Extra classes on the root (e.g. `flex-1` for row layouts). */
     className?: string
 }
@@ -103,30 +114,33 @@ export const TitledText = ({
     truncate = false,
     isSkeleton = false,
     anatPart,
+    showAnatomy = false,
     className,
 }: TitledTextProps) => {
     const cfg = SIZE_CONFIG[size]
+    /** Each line is ONE `Typography.Base` — named so the deps tree can go down to the atom. */
+    const part = (name: string) => (showAnatomy ? name : undefined)
 
     if (isSkeleton) {
         return (
             <div className={cn("flex min-w-0 flex-col gap-0", className)} data-anat-part={anatPart}>
-                {/* §12c: chủ của hình là chủ của skeleton — mỗi dòng tự vẽ gạch bằng chính atom của nó. */}
-                <Typography.Base size={cfg.titleSize} isSkeleton className={cfg.skeleton.title} />
-                {subtitle ? <Typography.Base size={cfg.subSize} isSkeleton className={cfg.skeleton.sub} /> : null}
-                {hint ? <Typography.Base size="xs" isSkeleton className={cfg.skeleton.hint} /> : null}
+                {/* §12c: whoever owns the shape owns the skeleton — each line draws its own bar with its own atom. */}
+                <Typography.Base size={cfg.titleSize} isSkeleton className={cfg.skeleton.title} anatPart={part("Title")} />
+                {subtitle ? <Typography.Base size={cfg.subSize} isSkeleton className={cfg.skeleton.sub} anatPart={part("Subtitle")} /> : null}
+                {hint ? <Typography.Base size="xs" isSkeleton className={cfg.skeleton.hint} anatPart={part("Hint")} /> : null}
             </div>
         )
     }
 
     return (
         <div className={cn("flex min-w-0 flex-col gap-0", className)} data-anat-part={anatPart}>
-            {/* Chữ đi qua ATOM `Typography` (cùng trục `size` với nhánh skeleton ở trên), không raw HeroUI. */}
-            <Typography.Base size={cfg.titleSize} weight={weight ?? cfg.titleWeight} truncate={truncate} text={title} />
+            {/* Text goes through the `Typography` ATOM (same `size` axis as the skeleton branch above), not raw HeroUI. */}
+            <Typography.Base size={cfg.titleSize} weight={weight ?? cfg.titleWeight} truncate={truncate} text={title} anatPart={part("Title")} />
             {subtitle ? (
-                <Typography.Base size={cfg.subSize} color={cfg.subColor} weight={cfg.subWeight} truncate={truncate} text={subtitle} />
+                <Typography.Base size={cfg.subSize} color={cfg.subColor} weight={cfg.subWeight} truncate={truncate} text={subtitle} anatPart={part("Subtitle")} />
             ) : null}
             {hint ? (
-                <Typography.Base size="xs" color="muted" truncate={truncate} text={hint} />
+                <Typography.Base size="xs" color="muted" truncate={truncate} text={hint} anatPart={part("Hint")} />
             ) : null}
         </div>
     )

@@ -4,62 +4,66 @@ import { Label, Skeleton as HeroSkeleton, cn } from "@heroui/react"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * ATOM-INTERNAL — `FieldFrame`: the label · hint · control · error SCAFFOLD that
- * every form atom composes so the atom itself IS the full field (thầy chốt
- * 2026-07-25: "label/errorMessage tính vào atom", KHÔNG tách Field primitive).
+ * every form atom composes so the atom itself IS the full field (teacher decided
+ * 2026-07-25: "label/errorMessage count toward the atom", NO separate Field
+ * primitive).
  *
- * Self-contained in the atom layer (chỉ HeroUI — KHÔNG import blocks/, vì atom là
- * tầng thấp nhất). Owns the vertical rhythm (`flex flex-col gap-1.5`): label trên,
- * hint dưới label, control, dòng lỗi cuối — và mirror đúng hình khi `isSkeleton`.
+ * Self-contained in the atom layer (HeroUI only — NO importing blocks/, since the
+ * atom is the lowest layer). Owns the vertical rhythm (`flex flex-col gap-1.5`):
+ * label on top, hint below the label, control, error line last — and mirrors the
+ * exact shape when `isSkeleton`.
  *
- * "Trần" mode: khi KHÔNG có label/hint/errorMessage/required (và không skeleton),
- * FieldFrame render THẲNG children — zero wrapper, để atom vẫn dùng làm ô trần
- * lồng trong thứ khác.
+ * "Bare" mode: when there is NO label/hint/errorMessage/required (and not
+ * skeleton), FieldFrame renders children DIRECTLY — zero wrapper, so the atom can
+ * still be used as a bare cell nested inside something else.
  *
- * Anatomy parts (§11a — atom tự badge phần trực tiếp): Label · Description ·
- * Error. Ô control tự badge phần của nó (`Field`/`Skeleton`) — FieldFrame KHÔNG
- * badge wrapper Control để tránh nest 2 tầng badge.
+ * Anatomy parts (§11a — an atom badges its own direct parts): Label · Description ·
+ * Error. The control cell badges its own part (`Field`/`Skeleton`) — FieldFrame does
+ * NOT badge the Control wrapper, to avoid nesting two badge tiers.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 export interface FieldFrameProps {
-    /** Nhãn trên control (`text-sm font-medium`). Bỏ trống → không nhãn. */
+    /** Label above the control (`text-sm font-medium`). Omit → no label. */
     label?: ReactNode
-    /** Mô tả dưới nhãn (`text-xs text-muted`) — LUÔN hiện (khác errorMessage). */
+    /** Description below the label (`text-xs text-muted`) — ALWAYS shown (unlike errorMessage). */
     hint?: ReactNode
-    /** Dòng lỗi dưới control (`text-sm text-danger`) — set → field invalid. */
+    /** Error line below the control (`text-sm text-danger`) — set → field invalid. */
     errorMessage?: ReactNode
-    /** Thêm dấu `*` (text-danger) sau nhãn. */
+    /** Adds a `*` mark (text-danger) after the label. */
     isRequired?: boolean
-    /** Nhạt nhãn (khoá control là việc của atom). */
+    /** Dims the label (locking the control itself is the atom's job). */
     isDisabled?: boolean
-    /** Mirror loading: label-width skeleton trên control-skeleton, giữ đúng cột. */
+    /** Loading mirror: a label-width skeleton over a control-skeleton, keeping the same column. */
     isSkeleton?: boolean
-    /** Control-shaped skeleton khi `isSkeleton` (atom truyền hộp của chính nó). */
+    /** Control-shaped skeleton for `isSkeleton` (the atom passes its own box). */
     skeletonControl?: ReactNode
     /**
-     * Control thật (ô HeroUI đã bọc). Ngoại lệ hợp lệ §12b (atom-WRAPPER thật):
-     * `FieldFrame` là khung bọc, phải nhận NGUYÊN control tuỳ ý của atom gọi nó
-     * (Input/Select/Choice/…) — không thể thay bằng prop dữ liệu vì control không
-     * phải "nội dung" mà là một cây component hoàn chỉnh.
+     * The real control (an already-wrapped HeroUI cell). A valid exception under
+     * §12b (a true atom-WRAPPER): `FieldFrame` is a wrapping frame that must accept
+     * the calling atom's ARBITRARY control as-is (Input/Select/Choice/…) — it can't
+     * be swapped for a data prop, since the control isn't "content" but a whole
+     * component tree.
      */
     children?: ReactNode
-    /** `id` control để `htmlFor` nhãn trỏ đúng — atom truyền cùng id xuống control. */
+    /** The control's `id` so the label's `htmlFor` points correctly — the atom passes the same id down to the control. */
     id?: string
-    /** Class ngoài cột. */
+    /** Class for outside the column. */
     className?: string
-    /** Storybook: badge Label/Description/Control/Error cho BlockAnatomy. */
+    /** Storybook: badges Label/Description/Control/Error for BlockAnatomy. */
     showAnatomy?: boolean
 }
 
 /**
- * Accessible NAME cho control: khi `label` là chuỗi thì dùng chính nó (đảm bảo control
- * luôn có tên đọc được — kể cả compound control Number/Date/Otp không nối `htmlFor`
- * được), ngược lại rơi về `fallback` (ariaLabel/placeholder). Tránh a11y-gap "control
- * không tên" khi field có nhãn nhưng nhãn không associate được.
+ * Accessible NAME for the control: when `label` is a string, use it directly
+ * (guarantees the control always has a readable name — even a compound control
+ * like Number/Date/Otp that can't wire up `htmlFor`), otherwise falls back to
+ * `fallback` (ariaLabel/placeholder). Avoids the a11y gap of an "unnamed control"
+ * when a field has a label that can't be associated.
  */
 export const fieldName = (label: ReactNode, fallback?: string): string | undefined =>
     typeof label === "string" ? label : fallback
 
-/** Nhãn + dấu `*` khi bắt buộc. */
+/** Label + `*` mark when required. */
 const withRequired = (label: ReactNode, isRequired?: boolean) =>
     isRequired ? (
         <>
@@ -70,7 +74,7 @@ const withRequired = (label: ReactNode, isRequired?: boolean) =>
     )
 
 /**
- * `FieldFrame` — label/hint/control/error column shared by mọi form atom.
+ * `FieldFrame` — label/hint/control/error column shared by every form atom.
  * @param props - {@link FieldFrameProps}
  */
 const FieldFrameBase = ({
@@ -90,7 +94,7 @@ const FieldFrameBase = ({
 
     // ── Loading mirror ────────────────────────────────────────────────────────
     if (isSkeleton) {
-        // Bare skeleton (no label frame) → chỉ hộp control skeleton (tự badge Skeleton).
+        // Bare skeleton (no label frame) → just the control skeleton box (badges Skeleton itself).
         if (!hasFrame && label == null) {
             return <>{skeletonControl}</>
         }
@@ -104,7 +108,7 @@ const FieldFrameBase = ({
         )
     }
 
-    // ── "Trần" — không frame → render thẳng control ────────────────────────────
+    // ── "Bare" — no frame → renders the control directly ───────────────────────
     if (!hasFrame) {
         return <>{children}</>
     }

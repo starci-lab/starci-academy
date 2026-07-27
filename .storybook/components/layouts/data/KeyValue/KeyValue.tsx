@@ -6,65 +6,74 @@ import { GAP_CLASS, type SpaceScale } from "@sb-components/layouts/_spacing"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * LAYOUT TIER (§13) — `KeyValue.*`: KHUNG cặp NHÃN–GIÁ TRỊ.
+ * LAYOUT TIER (§13) — `KeyValue.*`: the LABEL–VALUE pair FRAME.
  *
- * | Member | Hình thái | Kênh nội dung |
+ * | Member | Shape | Content channel |
  * |---|---|---|
- * | `.Row`  | MỘT cặp nhãn–giá trị | prop dữ liệu (`label`/`value`/`hint`) |
- * | `.List` | N cặp xếp dọc | **`items` DỮ LIỆU — CẤM children** (§13b) |
+ * | `.Row`  | ONE label–value pair | data props (`label`/`value`/`hint`) |
+ * | `.List` | N pairs stacked vertically | **`items` DATA — children FORBIDDEN** (§13b) |
  *
- * Dùng cho bảng thông số, tóm tắt đơn hàng, hoá đơn — chỗ nào "một cái tên, một
- * con số" lặp lại thành khối.
+ * Use for spec tables, order summaries, invoices — anywhere "one name, one number"
+ * repeats into a block.
  *
- * KHUNG API LAW:
- *   • Khung KHÔNG mang nội dung domain và **KHÔNG tự format** tiền/ngày/đơn vị —
- *     consumer truyền node ĐÃ format vào `value` (`"1.200.000 ₫"`, `<Chip.Base/>`…).
- *   • Khung KHÔNG đẻ chức năng (không tự tính tổng): `emphasis` chỉ là NHẤN thị
- *     giác cho hàng tổng, con số vẫn do consumer đưa vào.
- *   • `.List` là danh sách lặp ⇒ BẮT BUỘC `items`, cấm children.
+ * FRAME API LAW:
+ *   • The frame carries NO domain content and **does NOT format** money/dates/units —
+ *     the consumer passes an ALREADY-formatted node into `value` (`"1,200,000 ₫"`,
+ *     `<Chip.Base/>`…).
+ *   • The frame does NOT grow functionality (no self-computed totals): `emphasis` is
+ *     only a visual STRESS for a total row, the number is still supplied by the consumer.
+ *   • `.List` is a repeated list ⇒ `items` is REQUIRED, children are forbidden.
  *
- * COMPOSE (§13c): chữ đi HẾT qua atom `Typography.*` (§9 — không rải `text-*`/
- * `font-*`), đường kẻ qua atom `Divider.Base`. Khung chỉ lo BỐ CỤC + thang spacing.
+ * COMPOSE (§13c): text goes ENTIRELY through the `Typography.*` atom (§9 — no scattered
+ * `text-*`/`font-*`), rules go through the `Divider.Base` atom. The frame only handles
+ * LAYOUT + the spacing scale.
  *
- * §10 — thang gap bị ÉP BẰNG TYPE ({@link KeyValueGap}): chỉ `0·1·2·3·6·8`, khung
- * không nhận số tuỳ ý nên không thể trôi khỏi thang.
+ * §10 — the gap scale is ENFORCED BY TYPE ({@link KeyValueGap}): only `0·1·2·3·6·8`, the
+ * frame doesn't accept arbitrary numbers so it can't drift off the scale.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 /**
- * Thang §10c dùng CHUNG toàn tầng khung — import từ SSOT `blocks/_spacing.ts`.
- * KHÔNG khai lại tại chỗ (mỗi bản sao là một nguồn lệch tiềm tàng).
+ * The §10c scale is SHARED across the whole frame tier — imported from the SSOT
+ * `blocks/_spacing.ts`. Do NOT redeclare it locally (every copy is a potential drift source).
  */
 export type KeyValueGap = SpaceScale
 const GAP_CLS = GAP_CLASS
 
 // ─────────────────────────────────────────────────────────────────────────────
-// .Row — MỘT cặp nhãn–giá trị
+// .Row — ONE label–value pair
 // ─────────────────────────────────────────────────────────────────────────────
 
 /** Props for {@link KeyValue.Row}. */
 export interface KeyValueRowProps {
-    /** Nhãn (bên trái) — §9a chữ PHỤ ⇒ muted; `emphasis` kéo lên foreground medium. */
+    /** Label (left side) — §9a SECONDARY text ⇒ muted; `emphasis` pulls it up to foreground medium. */
     label: ReactNode
-    /** Giá trị (bên phải) — node ĐÃ format; khung không format hộ. */
+    /** Value (right side) — an ALREADY-formatted node; the frame does not format it. */
     value: ReactNode
-    /** Dòng phụ dưới nhãn (giải thích/đơn vị/điều kiện) — muted, cỡ nhỏ hơn. */
+    /** Sub-line below the label (explanation/unit/condition) — muted, smaller size. */
     hint?: ReactNode
-    /** `true` → hàng TỔNG: nhãn lên foreground medium, giá trị lên cỡ base + bold. */
+    /** `true` → a TOTAL row: label goes to foreground medium, value goes to base size + bold. */
     emphasis?: boolean
-    /** `true` → kẻ một đường NGĂN dưới hàng (seam giữa hàng này và hàng kế). */
+    /** `true` → draws a SEPARATOR line below the row (seam between this row and the next). */
     divider?: boolean
-    /** Khoảng giữa nội dung hàng và đường kẻ `divider` (§10). Default `3`. */
+    /** Gap between the row's content and the `divider` line (§10). Default `3`. */
     gap?: KeyValueGap
-    /** Extra classes trên hàng. */
+    /**
+     * Anatomy tag for THIS frame itself — lets the PARENT badge it as ONE node (§11a.1).
+     * Without this prop the frame doesn't make it into the Deps tree: using a `layouts`
+     * tier frame that the panel can't see counts as not using it.
+     */
+    anatPart?: string
+    /** Extra classes on the row. */
     className?: string
-    /** `true` → gắn `data-anat-part` cho từng part để BlockAnatomy badge. */
+    /** `true` → attach `data-anat-part` to each part for the BlockAnatomy badge. */
     showAnatomy?: boolean
 }
 
 /**
- * Một hàng nhãn–giá trị: nhãn (+`hint`) dạt trái, giá trị dạt phải, `tabular-nums`
- * để các con số thẳng cột khi xếp chồng (§3). `emphasis` là bậc NHẤN cho hàng tổng.
+ * One label–value row: label (+`hint`) sits left, value sits right, `tabular-nums`
+ * keeps the digits aligned in a column when rows stack (§3). `emphasis` is the
+ * STRESS level for a total row.
  *
  * @param props - {@link KeyValueRowProps}
  */
@@ -77,13 +86,14 @@ const KeyValueRow = ({
     gap = 3,
     className,
     showAnatomy = false,
+    anatPart,
 }: KeyValueRowProps) => {
     const row = (
         <div
             className={cn("flex items-start justify-between gap-2", className)}
-            data-anat-part={showAnatomy ? "Row" : undefined}
+            data-anat-part={anatPart ?? (showAnatomy ? "Row" : undefined)}
         >
-            {/* Cột nhãn: nhãn + hint là một cụm KHÍT (§10b `tight` = gap-1). */}
+            {/* Label column: label + hint form a TIGHT cluster (§10b `tight` = gap-1). */}
             <div className="flex min-w-0 flex-col gap-1">
                 <span data-anat-part={showAnatomy ? "Label" : undefined}>
                     <Typography.Base size="sm"
@@ -121,47 +131,54 @@ const KeyValueRow = ({
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// .List — N cặp xếp dọc (danh sách lặp ⇒ items)
+// .List — N pairs stacked vertically (repeated list ⇒ items)
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** MỘT hàng trong {@link KeyValue.List} — mô tả bằng DỮ LIỆU, không phải JSX. */
+/** ONE row in {@link KeyValue.List} — described as DATA, not JSX. */
 export interface KeyValueListItem {
-    /** Khoá React. */
+    /** React key. */
     key: string
-    /** Nhãn (bên trái). */
+    /** Label (left side). */
     label: ReactNode
-    /** Giá trị (bên phải) — node đã format. */
+    /** Value (right side) — an already-formatted node. */
     value: ReactNode
-    /** Dòng phụ dưới nhãn. */
+    /** Sub-line below the label. */
     hint?: ReactNode
-    /** `true` → hàng TỔNG (nhấn thị giác). */
+    /** `true` → a TOTAL row (visual emphasis). */
     emphasis?: boolean
 }
 
 /** Props for {@link KeyValue.List}. */
 export interface KeyValueListProps {
-    /** Các hàng, theo thứ tự đọc. BẮT BUỘC — danh sách lặp = dữ liệu (§13b). */
+    /** The rows, in reading order. REQUIRED — a repeated list = data (§13b). */
     items: ReadonlyArray<KeyValueListItem>
-    /** Gap giữa các hàng, ÉP theo thang §10. Default `3` (hàng dọc = `grouped`). */
+    /** Gap between rows, ENFORCED by the §10 scale. Default `3` (vertical rows = `grouped`). */
     gap?: KeyValueGap
-    /** `true` → kẻ đường ngăn GIỮA các hàng (hàng cuối không có). */
+    /** `true` → draws a separator line BETWEEN rows (the last row has none). */
     divider?: boolean
-    /** Extra classes trên cột. */
+    /**
+     * Anatomy tag for THIS frame itself — lets the PARENT badge it as ONE node (§11a.1).
+     * Without this prop the frame doesn't make it into the Deps tree: using a `layouts`
+     * tier frame that the panel can't see counts as not using it.
+     */
+    anatPart?: string
+    /** Extra classes on the column. */
     className?: string
-    /** `true` → gắn `data-anat-part` cho từng part để BlockAnatomy badge. */
+    /** `true` → attach `data-anat-part` to each part for the BlockAnatomy badge. */
     showAnatomy?: boolean
 }
 
 /**
- * Cột các hàng {@link KeyValue.Row} dựng từ `items`. Đường ngăn (nếu bật) do LIST
- * quyết định — hàng CUỐI không kẻ, nên seam luôn nằm GIỮA hai hàng chứ không thừa
- * một vạch treo ở đáy. Gap của hàng-và-vạch dùng chung `gap` của list ⇒ nhịp trên/
- * dưới đường kẻ luôn cân (§10a: một seam, một chủ).
+ * A column of {@link KeyValue.Row} rows built from `items`. The separator line (if
+ * enabled) is decided by the LIST — the LAST row has none, so the seam always sits
+ * BETWEEN two rows instead of leaving a stray line dangling at the bottom. The gap
+ * around each row-and-line shares the list's `gap` ⇒ the rhythm above/below the line
+ * is always even (§10a: one seam, one owner).
  *
  * @param props - {@link KeyValueListProps}
  */
-const KeyValueList = ({ items, gap = 3, divider = false, className, showAnatomy = false }: KeyValueListProps) => (
-    <div className={cn("flex flex-col", GAP_CLS[gap], className)}>
+const KeyValueList = ({ items, gap = 3, divider = false, className, showAnatomy = false, anatPart }: KeyValueListProps) => (
+    <div data-anat-part={anatPart} className={cn("flex flex-col", GAP_CLS[gap], className)}>
         {items.map(({ key, ...item }, index) => (
             <KeyValueRow
                 key={key}
@@ -175,8 +192,8 @@ const KeyValueList = ({ items, gap = 3, divider = false, className, showAnatomy 
 )
 
 /**
- * `KeyValue.*` — khung cặp nhãn–giá trị (tầng LAYOUT §13). `Row` (một cặp) ·
- * `List` (N cặp, `items`). Biến thể thị giác = PROP (`emphasis`/`divider`), §6b.
+ * `KeyValue.*` — the label–value pair frame (LAYOUT tier §13). `Row` (one pair) ·
+ * `List` (N pairs, `items`). Visual variants = PROP (`emphasis`/`divider`), §6b.
  */
 export const KeyValue = {
     Row: KeyValueRow,

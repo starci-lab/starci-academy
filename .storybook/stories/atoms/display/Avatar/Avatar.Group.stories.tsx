@@ -3,23 +3,24 @@ import { Avatar, type AvatarSize } from "@sb-components/atoms/display/Avatar/Ava
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Avatar.Group`: hàng avatar chồng mép ("who follows") + chip "+N".
+ * ATOM — `Avatar.Group`: a row of edge-overlapping avatars ("who follows") + a "+N" chip.
  *
- * 📐 **1 PROP = 1 LEAF** (§12g). `items`/mapping là leaf `Default` (trần, chưa bật
- * prop nào có hình). `max` và `total` CÙNG đẻ ra một hình — chip "+N" — nên đi
- * chung leaf `Overflow` thay vì tách đôi (giống ngoại lệ chấm ở `Chip.Base`, nơi
- * `dotColor`/`dotClassName` cũng gộp một leaf vì cùng một hình). `size` đặt ở CẤP
- * CỤM nên có leaf riêng `Sizes`. `isSkeleton` là ngoại lệ đúng luật: leaf của nó
- * render lại đúng HÌNH mà atom sinh ra khi đang tải — cả hàng mirror, giữ nguyên
- * footprint.
+ * 📐 **1 PROP = 1 LEAF** (§12g). `items`/mapping is the bare leaf `Default` (no
+ * shape-bearing prop turned on yet). `max` and `total` BOTH produce the same
+ * shape — the "+N" chip — so they share leaf `Overflow` instead of splitting in
+ * two (mirrors the dot exception on `Chip.Base`, where `dotColor`/`dotClassName`
+ * also merge into one leaf because they're the same shape). `size` sits at the
+ * CLUSTER LEVEL so it gets its own leaf `Sizes`. `isSkeleton` is the rule-correct
+ * exception: its leaf re-renders the exact SHAPE the atom produces while loading
+ * — the whole row mirrors, keeping the same footprint.
  *
- * ⛔ KHÔNG có leaf `Status`/`Colors`/`Fallback`: đó là state của member
- * `Avatar.Base`, cụm này không lặp lại (§12f) — bấm vào part `Avatar` ở tab Deps
- * để nhảy sang đúng chỗ những state đó sống.
+ * ⛔ NO leaf `Status`/`Colors`/`Fallback`: those are states of member
+ * `Avatar.Base`, this cluster doesn't repeat them (§12f) — click the `Avatar`
+ * part in the Deps tab to jump to where those states actually live.
  *
- * ⭐ DEPS thật: `Avatar.Group` `import { AvatarBase }` để dựng từng avatar — component
- * DUY NHẤT trong họ Avatar có deps, nên annotate part `Avatar` với storyId nhảy
- * sang `Avatar.Base`.
+ * ⭐ Real deps: `Avatar.Group` `import { AvatarBase }` to build each avatar — the
+ * ONLY component in the Avatar family with deps, so the `Avatar` part is
+ * annotated with a storyId that jumps to `Avatar.Base`.
  */
 
 // Stable local data-URI "photo" so image avatars render without an external host.
@@ -35,7 +36,7 @@ const members = [
     { key: "khoa.dinh", name: "Lucas Dean" },
 ]
 
-/** ĐỦ union `AvatarSize` (§12d — size đặt ở CẤP CỤM, item không mang size riêng). */
+/** FULL `AvatarSize` union (§12d — size sits at the CLUSTER LEVEL, items don't carry their own size). */
 const SIZES: Array<{ size: AvatarSize; hint: string }> = [
     { size: "sm", hint: "compact — table rows, comment threads" },
     { size: "md", hint: "default — cards, panels" },
@@ -43,9 +44,9 @@ const SIZES: Array<{ size: AvatarSize; hint: string }> = [
 ]
 
 /**
- * `Avatar` = một member chồng mép (lặp ×N, có story riêng để nhảy tới).
- * `Overflow` chỉ có HÌNH ở leaf `Overflow` nên không cần `storyId` — chưa có
- * story nào là chính chip "+N" đó để nhảy sang.
+ * `Avatar` = an edge-overlapping member (repeats ×N, has its own story to jump to).
+ * `Overflow` only has SHAPE at leaf `Overflow` so it needs no `storyId` — there's
+ * no story yet that IS that "+N" chip to jump to.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     Avatar: {
@@ -70,7 +71,7 @@ export default meta
 
 type Story = StoryObj<typeof Avatar.Group>
 
-/** Leaf TRẦN — `items` map thẳng ra hàng, chưa bật `max`/`total`/`size`/`isSkeleton`. */
+/** Bare leaf — `items` maps straight to the row, no `max`/`total`/`size`/`isSkeleton` turned on yet. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
@@ -90,8 +91,8 @@ export const Default: Story = {
 }
 
 /**
- * Leaf props `max` / `total` — HAI đường ra CÙNG MỘT hình (chip "+N"), nên gộp
- * chung một leaf thay vì tách đôi (song song với chấm ở `Chip.Base`).
+ * Leaf props `max` / `total` — TWO paths landing on the SAME shape (the "+N"
+ * chip), so they merge into one leaf instead of splitting in two (mirrors the dot exception on `Chip.Base`).
  */
 export const Overflow: Story = {
     render: () => (
@@ -121,7 +122,7 @@ export const Overflow: Story = {
     ),
 }
 
-/** Leaf prop `size` — CẤP CỤM (§12d), cả hàng luôn đồng cỡ. ĐỦ union 3 bậc. */
+/** Leaf prop `size` — CLUSTER LEVEL (§12d), the whole row is always same-sized. FULL 3-tier union. */
 export const Sizes: Story = {
     render: () => (
         <div className="p-8">
@@ -147,13 +148,15 @@ export const Sizes: Story = {
 }
 
 /**
- * Leaf prop `isSkeleton` — ngoại lệ đúng luật §12g: render lại đúng HÌNH mà chính
- * prop này sinh ra khi tải. Group không tự vẽ shimmer riêng, nó chuyển `isSkeleton`
- * xuống từng `Avatar.Base` nên mỗi slot mirror thành vòng tròn, giữ nguyên footprint.
+ * Leaf prop `isSkeleton` — a rule-correct exception to §12g: it re-renders the
+ * exact SHAPE this very prop produces while loading. The group doesn't draw its
+ * own shimmer — it passes `isSkeleton` down to every `Avatar.Base`, so each slot
+ * mirrors into a circle, keeping the same footprint.
  *
- * Hai ca: hàng KHÔNG dư (4/4, không chip) và hàng CÓ dư (`max` cắt bớt, `extra >
- * 0`) — ca sau mới lộ ra chip "+N" cũng phải shimmer (§D: một mẩu số thật lọt
- * giữa hàng đang tải là lỗi), không được để "+2" hiện chữ thật lúc loading.
+ * Two cases: a row with NO overflow (4/4, no chip) and a row WITH overflow
+ * (`max` cuts it, `extra > 0`) — the latter case, where the "+N" chip shows up,
+ * must shimmer too (§D: a real number sneaking into a loading row is a bug), no
+ * showing real text like "+2" during loading.
  */
 export const Skeleton: Story = {
     render: () => (

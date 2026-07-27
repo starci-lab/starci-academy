@@ -164,7 +164,13 @@ const RAIL_PARTS: Array<AnatomyNode> = [
 export const Default: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="ResizableRail.Base" tier="primitive" leaf="Default" parts={RAIL_PARTS}>
+            <BlockAnatomy
+                name="ResizableRail.Base"
+                tier="primitive"
+                leaf="Default"
+                parts={RAIL_PARTS}
+                code={"<ResizableRail.Base storageKey=\"practice.rail.width\" defaultWidth={300} minWidth={256} maxWidth={420} ariaLabel=\"Resize the topic list\"><TopicList /></ResizableRail.Base>"}
+            >
                 <PracticeShellDemo
                     storageKey="storybook.practice.rail.width"
                     heightClassName="h-[32rem]"
@@ -185,6 +191,7 @@ export const OverflowScrollsInRail: Story = {
                 leaf="OverflowScrollsInRail"
                 parts={RAIL_PARTS}
                 note="Cùng bộ part với Default — chỉ khác chiều cao/overflow BÊN TRONG Content (ScrollShadow tự cuộn)."
+                code={"<ResizableRail.Base storageKey=\"practice.rail.scroll.width\" defaultWidth={360} minWidth={256} maxWidth={420} ariaLabel=\"Resize the topic list\"><ScrollShadow><TopicList /></ScrollShadow></ResizableRail.Base>"}
             >
                 <PracticeShellDemo
                     storageKey="storybook.practice.rail.scroll.v2.width"

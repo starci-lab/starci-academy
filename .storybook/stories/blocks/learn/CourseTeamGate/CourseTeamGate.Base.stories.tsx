@@ -4,18 +4,19 @@ import { CourseTeamGate } from "@sb-components/blocks/learn/CourseTeamGate/Cours
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `CourseTeamGate.Base`: nhắc vào GitHub team của khoá.
+ * BLOCK — `CourseTeamGate.Base`: a nudge to join the course's GitHub team.
  *
- * 🔴 **ĐỐI TƯỢNG = NGƯỜI ĐÃ MUA.** Backend scope team theo `is_enrolled = true`, nên
- * chưa mua thì không có team nào để vào. Block **tự ẩn** với trial và với người đã ở
- * trong team — screen không phải hỏi (§14b).
+ * 🔴 **AUDIENCE = SOMEONE WHO'S PAID.** The backend scopes the team by
+ * `is_enrolled = true`, so without a purchase there's no team to join. The block
+ * **self-hides** for trial and for someone already in the team — the screen
+ * doesn't have to ask (§14b).
  *
- * ⚠️ Bản screen dựng 2026-07-25 từng gate NGƯỢC (`viewer === "trial"`). Hai leaf dưới
- * đây khoá chặt đúng chiều để không lật lại lần nữa.
+ * ⚠️ The screen built 2026-07-25 once had the gate BACKWARDS (`viewer === "trial"`).
+ * The two leaves below lock in the correct direction so it doesn't flip back again.
  *
- * 📐 **HAI LEAF** (§14d.2): "hiện" và "ẩn" khác nhau về CẤU TRÚC (có node vs rỗng).
- * Còn hai lý do ẩn (trial · đã-trong-team) cho ra CÙNG cây rỗng ⇒ là STATE của cùng
- * một leaf, không tách hai story.
+ * 📐 **TWO LEAVES** (§14d.2): "shown" and "hidden" differ in STRUCTURE (a node vs
+ * empty). The two reasons for hiding (trial · already-in-team) produce the SAME
+ * empty tree ⇒ they're STATES of the same leaf, not split into two stories.
  */
 const meta: Meta<typeof CourseTeamGate.Base> = {
     title: "Blocks/Learn/CourseTeamGate.Base",
@@ -29,14 +30,16 @@ export default meta
 type Story = StoryObj<typeof CourseTeamGate.Base>
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    // The FRAME is also a DEP (§11a.1) — this block already declared the frame it uses, kept as-is.
+    "Alert.Base": { tier: "atom", role: "the RESTING branch reaches straight for the atom (the callout frame has no `isSkeleton` yet)", storyId: "atoms-feedback-alert-alert-base--action" },
     "Feedback.Callout": {
         storyId: "layouts-feedback-feedback-feedback-callout--default",
         tier: "primitive",
-        role: "toàn bộ HÌNH đến từ khung này — block chỉ đặt nội dung + điều kiện ẩn",
+        role: "every bit of the SHAPE comes from this frame — the block only supplies content and the hide condition",
     },
 }
 
-const leafShell = (leaf: string, node: ReactNode, note?: ReactNode) => (
+const leafShell = (leaf: string, node: ReactNode, note?: ReactNode, code?: string) => (
     <div className="mx-auto max-w-3xl p-8">
         <BlockAnatomy
             name="CourseTeamGate.Base"
@@ -45,17 +48,18 @@ const leafShell = (leaf: string, node: ReactNode, note?: ReactNode) => (
             parts={[]}
             annotate={ANNOTATE}
             note={note}
+            code={code}
         >
             {node}
         </BlockAnatomy>
     </div>
 )
 
-/** LEAF — ĐÃ MUA + chưa vào team ⇒ hiện cảnh báo. Leaf duy nhất có node. */
+/** LEAF — PAID + not in the team yet ⇒ shows the warning. The only leaf with a node. */
 export const Warning: Story = {
     render: () =>
         leafShell(
-            "Đã mua, chưa vào team",
+            "Paid, not in team yet",
             <CourseTeamGate.Base
                 anatPart="Feedback.Callout"
                 showAnatomy
@@ -63,21 +67,46 @@ export const Warning: Story = {
                 isInTeam={false}
                 onJoin={() => {}}
             />,
+            undefined,
+            "<CourseTeamGate.Base isEnrolled isInTeam={false} onJoin={handleJoin} />",
         ),
 }
 
 /**
- * LEAF — **tự ẩn**, cây rỗng. Hai lý do cùng cho ra kết quả này:
- * trial (chưa mua thì làm gì có team) · đã ở trong team (nhắc nữa là phiền).
+ * LEAF prop `isSkeleton` — the tree is IDENTICAL to the `Warning` leaf (§12g.0a):
+ * `isSkeleton` only changes STATE (not knowing `isEnrolled`/`isInTeam` yet), it
+ * doesn't add/remove a node vs. the "shown" tree (§11f) ⇒ reuses the `ANNOTATE`
+ * above, no separate parts array declared.
+ */
+export const Skeleton: Story = {
+    render: () =>
+        leafShell(
+            "Prop `isSkeleton`",
+            <CourseTeamGate.Base
+                anatPart="Feedback.Callout"
+                showAnatomy
+                isSkeleton
+                isEnrolled={false}
+                isInTeam={false}
+            />,
+            "While waiting on SWR, the flag keeps the exact callout frame so nothing flashes when the result arrives.",
+            `<CourseTeamGate.Base isSkeleton isEnrolled={false} isInTeam={false} />`,
+        ),
+}
+
+/**
+ * LEAF — **self-hides**, empty tree. Two reasons land on the same result:
+ * trial (no purchase, so no team to join) · already in the team (nudging again would be annoying).
  */
 export const Hidden: Story = {
     render: () =>
         leafShell(
-            "Tự ẩn",
+            "Self-hides",
             <div className="flex flex-col gap-2">
                 <CourseTeamGate.Base isEnrolled={false} isInTeam={false} onJoin={() => {}} />
                 <CourseTeamGate.Base isEnrolled isInTeam onJoin={() => {}} />
             </div>,
-            "Không part nào — im lặng là hợp đồng nghiệp vụ, không phải lỗi.",
+            "No part at all — silence is the business contract here, not a bug.",
+            "<CourseTeamGate.Base isEnrolled={false} isInTeam={false} onJoin={handleJoin} />",
         ),
 }

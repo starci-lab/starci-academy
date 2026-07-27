@@ -4,7 +4,7 @@ import { Page } from "@sb-components/layouts/layout/Page/Page"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * `Page.Header` — the breadcrumb/title/description/actions/meta khung of a route.
+ * `Page.Header` — the breadcrumb/title/description/actions/meta frame of a route.
  * NOT a generic wrapper: it takes no `children`, only its own semantic slots.
  */
 const meta: Meta<typeof Page.Header> = {
@@ -45,7 +45,8 @@ export const Minimal: Story = {
                     tier="primitive"
                     leaf="Minimal"
                     parts={TITLE_DESCRIPTION_PARTS}
-                    note="Chỉ title + description — không breadcrumb/actions/meta được truyền."
+                    note="Only title + description — no breadcrumb/actions/meta passed."
+                    code={"<Page.Header title=\"Manage students\" description=\"View and edit every enrolled student.\" />"}
                 >
                     <Page.Header
                         title="Manage students"
@@ -68,7 +69,14 @@ export const Full: Story = {
                     tier="primitive"
                     leaf="Full"
                     parts={FULL_PARTS}
-                    reason="Khung này gom breadcrumb·title·description·actions·meta thành MỘT chỗ thay vì mỗi trang tự dàn layout riêng — leaf này bật đủ cả 5 slot."
+                    reason="This frame gathers breadcrumb·title·description·actions·meta into ONE place instead of every page laying out its own — this leaf turns on all 5 slots."
+                    code={`<Page.Header
+  breadcrumb={<Breadcrumbs><Breadcrumbs.Item href="#">Courses</Breadcrumbs.Item><Breadcrumbs.Item>Fullstack Mastery</Breadcrumbs.Item></Breadcrumbs>}
+  title="Fullstack Mastery"
+  description="A path from the fundamentals to shipping a real product, graded by AI."
+  actions={<Button variant="secondary" size="sm">Edit course</Button>}
+  meta={<Typography type="body-xs" color="muted">24 Modules · 87 Lessons · 32 hours</Typography>}
+/>`}
                 >
                     <Page.Header
                         breadcrumb={
@@ -106,7 +114,8 @@ export const DescriptionClamped: Story = {
                     tier="primitive"
                     leaf="DescriptionClamped"
                     parts={TITLE_DESCRIPTION_PARTS}
-                    note="Cùng composition với Minimal — description dài hơn khung hẹp nên bị line-clamp-2."
+                    note="Same composition as Minimal — description is longer than the narrow frame so it gets line-clamp-2."
+                    code={"<Page.Header title=\"Configure payment gateways\" description=\"Set up SePay and PayOS, choose the default gateway…\" />"}
                 >
                     <Page.Header
                         title="Configure payment gateways"
@@ -128,7 +137,8 @@ export const SizePage: Story = {
                 tier="primitive"
                 leaf="SizePage"
                 parts={TITLE_DESCRIPTION_PARTS}
-                note={"size=\"page\" (mặc định) — Title dùng Typography.Heading level 3."}
+                note={"size=\"page\" (default) — Title uses Typography.Heading level 3."}
+                code={"<Page.Header title=\"Set up your machine\" description=\"Before entering the playground, install the CLI and connect the StarCi Agent.\" />"}
             >
                 <Page.Header
                     title="Chuẩn bị máy"
@@ -149,7 +159,8 @@ export const SizeCompact: Story = {
                 tier="primitive"
                 leaf="SizeCompact"
                 parts={TITLE_DESCRIPTION_PARTS}
-                note={"size=\"compact\" — CÙNG 2 part Title/Description, Title đổi sang body-bold thay vì H3."}
+                note={"size=\"compact\" — SAME 2 parts Title/Description, Title switches to body-bold instead of H3."}
+                code={"<Page.Header size=\"compact\" title=\"Set up your machine\" description=\"Before entering the playground, install the CLI and connect the StarCi Agent.\" />"}
             >
                 <Page.Header
                     size="compact"

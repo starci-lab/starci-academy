@@ -1,44 +1,63 @@
 import React from "react"
 import { GithubLogoIcon } from "@phosphor-icons/react"
 import { Feedback } from "@sb-components/layouts/feedback/Feedback/Feedback"
+import { Alert } from "@sb-components/atoms/feedback/Alert/Alert"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `CourseTeamGate.Base`: nhắc học viên vào GitHub team của khoá.
+ * BLOCK — `CourseTeamGate.Base`: reminds the learner to join the course's GitHub team.
  *
- * LÝ DO TỒN TẠI (§14a): screen chỉ được liệt kê BLOCK. Trước đó screen
- * `/learn/content` gọi thẳng `Feedback.Callout` (tầng LAYOUT) và tự viết nội dung —
- * screen tự khai chi tiết một chức năng thay vì gọi tên nó. Block này mỏng, nhưng
- * nó tồn tại vì RANH GIỚI TẦNG + vì nó ôm ĐIỀU KIỆN HIỆN (dưới đây).
+ * REASON FOR EXISTING (§14a): a screen may only list BLOCKS. Before this, the
+ * `/learn/content` screen called `Feedback.Callout` (LAYOUT tier) directly and wrote
+ * the content itself — the screen was declaring a feature's details instead of just
+ * naming it. This block is thin, but it exists for the TIER BOUNDARY + because it
+ * owns the SHOW CONDITION (below).
  *
- * 🔴 ĐIỀU KIỆN HIỆN — dành cho người **ĐÃ MUA** (thầy chốt 2026-07-25).
- * Backend scope team theo `is_enrolled = true` (`features/auth/GithubTeamGate`), nên:
- *   • ĐÃ MUA + chưa vào team → HIỆN cảnh báo
- *   • Trial / đã ở trong team → TỰ ẨN
- * Chưa mua thì làm gì có team mà vào.
+ * 🔴 SHOW CONDITION — for learners who have **PAID** (teacher's call, 2026-07-25).
+ * The backend scopes the team by `is_enrolled = true` (`features/auth/GithubTeamGate`), so:
+ *   • PAID + not yet in the team → SHOW the warning
+ *   • Trial / already in the team → SELF-HIDE
+ * Not paid means there's no team to join in the first place.
  *
- * ⚠️ Bản screen dựng 2026-07-25 từng gate ngược (`viewer === "trial"`) — hiện cho
- * người chưa mua, ẩn với người đã mua. Đó là regression so với cây đã duyệt 24/07
- * (cây ghi rõ "paid chưa vào team"). Giữ ghi chú này để đừng lật lại lần nữa.
+ * ⚠️ The screen built on 2026-07-25 had the gate INVERTED (`viewer === "trial"`) —
+ * showing for people who hadn't paid, hiding for people who had. That was a regression
+ * from the tree approved on 07/24 (the tree explicitly says "paid, not yet in team").
+ * Keep this note so it doesn't flip back again.
  *
- * §14c — block chỉ LẮP: toàn bộ hình đi qua `Feedback.Callout`, không tự vẽ.
+ * §14c — the block only ASSEMBLES: all of its visuals go through `Feedback.Callout`,
+ * it draws nothing itself.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 /** Props for {@link CourseTeamGate.Base}. */
 export interface CourseTeamGateBaseProps {
     /**
-     * Người học ĐÃ MUA khoá chưa. Chỉ người đã mua mới có team để vào (xem header).
-     * Chưa biết (query chưa về) → truyền `false` để không nháy.
+     * Whether the learner has PAID for the course. Only paid learners have a team to
+     * join (see header). Not known yet (query hasn't returned) → pass `false` so it
+     * doesn't flicker.
      */
     isEnrolled: boolean
-    /** Đã ở trong GitHub team chưa. `true` → block tự ẩn. */
+    /** Whether they're already in the GitHub team. `true` → the block self-hides. */
     isInTeam: boolean
-    /** Bấm nút tham gia team. */
+    /** Fires when the join-team button is pressed. */
     onJoin?: () => void
     /**
-     * Truyền XUỐNG `Feedback.Callout` để panel anatomy thấy block này ref tới đâu.
-     * Không forward thì nhìn anatomy không biết nó dựng bằng gì.
+     * `true` → render the shimmer mirror INSTEAD of waiting on `isEnrolled`/`isInTeam`
+     * (not knowing yet means we can't decide whether to SELF-HIDE — the mirror must
+     * show to hold the slot in the loading tree).
+     *
+     * ⚠️ `Feedback.Callout` (the frame this block still uses on the live branch) does
+     * NOT have `isSkeleton` yet and sits OUTSIDE the 4 files touched this pass, so the
+     * flag can't be forwarded through it. But `Feedback.Callout` is just a thin wrapper
+     * over the `Alert.Base` atom — and THAT atom already has `isSkeleton` (§12c). The
+     * skeleton branch below calls `Alert.Base` DIRECTLY (same `status`/`icon` that
+     * `Feedback.Callout` will use on the live branch) instead of hand-rolling a parallel
+     * warning box.
+     */
+    isSkeleton?: boolean
+    /**
+     * Passed DOWN to `Feedback.Callout` so the anatomy panel can see what this block
+     * refs. Without forwarding it, the anatomy view can't tell what it's built from.
      */
     showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
@@ -46,8 +65,8 @@ export interface CourseTeamGateBaseProps {
 }
 
 /**
- * Cảnh báo không chặn: học viên đã mua nhưng chưa vào GitHub team của khoá (một số
- * bài lab cần quyền repo). Tự ẩn khi không đúng đối tượng.
+ * A non-blocking warning: the learner has paid but hasn't joined the course's
+ * GitHub team yet (some labs need repo access). Self-hides when it doesn't apply.
  *
  * @param props - {@link CourseTeamGateBaseProps}
  */
@@ -55,18 +74,33 @@ const CourseTeamGateBase = ({
     isEnrolled,
     isInTeam,
     onJoin,
+    isSkeleton = false,
     showAnatomy = false,
     anatPart,
 }: CourseTeamGateBaseProps) => {
-    // TỰ ẨN — block sở hữu điều kiện hiện của chính nó, screen không phải hỏi.
+    // Loading: `isEnrolled`/`isInTeam` haven't come back yet, so we can't decide
+    // whether to self-hide — show the `Alert.Base` atom's mirror (see the
+    // `isSkeleton` doc above for why it calls the atom directly instead of
+    // `Feedback.Callout`).
+    if (isSkeleton) {
+        return (
+            <Alert.Base
+                isSkeleton
+                status="warning"
+                icon={GithubLogoIcon}
+                anatPart={anatPart ?? (showAnatomy ? "Alert.Base" : undefined)}
+            />
+        )
+    }
+
+    // SELF-HIDE — the block owns its own show condition; the screen doesn't need to ask.
     if (!isEnrolled || isInTeam) {
         return null
     }
 
     return (
         <Feedback.Callout
-            anatPart={anatPart}
-            showAnatomy={showAnatomy}
+            anatPart={anatPart ?? (showAnatomy ? "Feedback.Callout" : undefined)}
             status="warning"
             icon={GithubLogoIcon}
             title="Bạn chưa vào GitHub team của khoá"
@@ -77,7 +111,7 @@ const CourseTeamGateBase = ({
     )
 }
 
-/** `CourseTeamGate.*` — namespace một-component ⇒ chỉ có `.Base`. */
+/** `CourseTeamGate.*` — a single-component namespace ⇒ only has `.Base`. */
 export const CourseTeamGate = Object.assign(CourseTeamGateBase, {
     Base: CourseTeamGateBase,
 })

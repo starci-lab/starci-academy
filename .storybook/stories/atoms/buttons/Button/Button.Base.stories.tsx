@@ -4,30 +4,34 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Button.Base`: nút có NHÃN.
+ * ATOM — `Button.Base`: a button with a LABEL.
  *
- * 📐 **1 PROP = 1 LEAF** (§12g — luật của TẦNG ATOM, thầy chốt 2026-07-26).
- * Mỗi prop có hình được một leaf, và leaf đó render ĐỦ giá trị của prop:
+ * 📐 **1 PROP = 1 LEAF** (§12g — the rule for the ATOM TIER, teacher's call 2026-07-26).
+ * Every prop with a visual gets its own leaf, and that leaf renders the FULL set of
+ * the prop's values:
  * `variant` · `size` · `prefixIcon` · `suffixIcon` · `iconSlide` · `isIconOnly` ·
  * `isDisabled` · `isPending` · `isSkeleton`.
  *
- * ⚠️ Đừng lẫn với §14d.2 (leaf = CẤU TRÚC) — luật đó dành cho design/block/screen.
- * Bản trước của file này viện §14d.2 để nhồi variant + disabled + skeleton vào chung
- * leaf `Default`; ở tầng atom thế là SAI: atom là bảng tra, người đọc đến để xem "prop
- * này làm được gì", nên mỗi prop phải đứng riêng.
+ * ⚠️ Don't confuse this with §14d.2 (leaf = STRUCTURE) — that rule is for
+ * design/block/screen. An earlier version of this file invoked §14d.2 to cram
+ * variant + disabled + skeleton into one shared `Default` leaf; at the atom tier
+ * that's WRONG: an atom is a lookup table, readers come to see "what does this
+ * prop do", so every prop must stand on its own.
  *
- * ⚠️ Tab **States** đã BỎ (thầy chốt 2026-07-26, lần 2 — soi thật thấy nó chỉ lặp
- * lại bằng chữ đúng thứ khung render trên đã hiện). Panel giờ còn hai tab: Deps ·
- * Code. Bài học `danger` sót khỏi mảng `VARIANTS` (trước khi nó mọc thành story
- * `Danger` lạc chỗ) vẫn còn giá trị — chỉ là bắt bằng cách ĐỌC kỹ mảng union khi
- * viết leaf, không còn ô đỏ tự động nhắc nữa.
+ * ⚠️ The **States** tab has been REMOVED (teacher's call 2026-07-26, second time —
+ * looking at it honestly it just repeated in words what the render frame above
+ * already showed). The panel now has two tabs left: Deps · Code. The lesson about
+ * `danger` missing from the `VARIANTS` array (before it grew into a stray `Danger`
+ * story) still holds — it's just caught by READING the union array carefully when
+ * writing a leaf, no more automatic red box to flag it.
  *
- * ✍️ Chữ hiện trên panel (`leaf`/`reason`/`note`/`hint`/`code`) viết TIẾNG ANH; nhãn
- * demo trong khung render cũng tiếng Anh để tab Code khớp đúng từng chữ với hình.
- * JSDoc/comment thì vẫn tiếng Việt, và neo § chỉ nằm ở đây.
+ * ✍️ Text shown on the panel (`leaf`/`reason`/`note`/`hint`/`code`) is written in
+ * ENGLISH; demo labels in the render frame are English too, so the Code tab matches
+ * the picture word for word. JSDoc/comments stay in Vietnamese, and the § anchors
+ * live only here.
  *
- * 🎨 Icon = Phosphor (§5.0). Atom ép cả scale lẫn `weight` theo `size` (§5.0a) —
- * story chỉ chọn "hình gì", không chọn cỡ.
+ * 🎨 Icons = Phosphor (§5.0). The atom forces both scale and `weight` off `size`
+ * (§5.0a) — the story only picks "which glyph", not "what size".
  */
 const meta: Meta<typeof Button.Base> = {
     title: "Atoms/Buttons/Button/Button.Base",
@@ -41,7 +45,7 @@ export default meta
 type Story = StoryObj<typeof Button.Base>
 
 
-/** ĐỦ giá trị của union `ButtonVariant` — thiếu một giá trị là giá trị đó sẽ mọc thành leaf lạc chỗ. */
+/** The FULL set of the `ButtonVariant` union — miss one value and it grows into a stray leaf. */
 const VARIANTS = [
     { variant: "primary", label: "Save draft" },
     { variant: "secondary", label: "Preview" },
@@ -52,7 +56,7 @@ const VARIANTS = [
 
 const SIZES = ["sm", "md", "lg"] as const
 
-/** Leaf TRẦN — chưa bật prop nào, để thấy hình mặc định (`variant="primary"`, `size="md"`). */
+/** Bare leaf — no prop turned on, showing the default look (`variant="primary"`, `size="md"`). */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
@@ -70,7 +74,7 @@ export const Default: Story = {
     ),
 }
 
-/** Leaf prop `variant` — 5 Ý NGHĨA hành động, render ĐỦ union. */
+/** Leaf for prop `variant` — 5 action MEANINGS, rendering the FULL union. */
 export const Variants: Story = {
     render: () => (
         <div className="p-8">
@@ -96,7 +100,7 @@ export const Variants: Story = {
     ),
 }
 
-/** Leaf prop `size` — 3 bậc TỈ LỆ, trục độc lập với `variant` (§12d). */
+/** Leaf for prop `size` — 3 SCALE tiers, an axis independent of `variant` (§12d). */
 export const Sizes: Story = {
     render: () => (
         <div className="p-8">
@@ -121,10 +125,11 @@ export const Sizes: Story = {
 }
 
 /**
- * Leaf prop `prefixIcon` — glyph DẪN ĐẦU, đứng trước nhãn.
+ * Leaf for prop `prefixIcon` — the LEADING glyph, sitting before the label.
  *
- * `prefixIcon` không phải union nên bảng phủ khai theo CÁCH GỌI: đổi glyph (prop nhận
- * COMPONENT, không nhận JSX) và đổi `size` để thấy atom tự suy scale/weight (§5.0a).
+ * `prefixIcon` isn't a union, so coverage is declared by CALL SHAPE instead: swap
+ * the glyph (the prop takes a COMPONENT, not JSX) and swap `size` to see the atom
+ * infer scale/weight on its own (§5.0a).
  */
 export const PrefixIcon: Story = {
     render: () => (
@@ -156,7 +161,7 @@ export const PrefixIcon: Story = {
     ),
 }
 
-/** Leaf prop `suffixIcon` — glyph ĐUÔI. Node `SuffixIcon` đứng SAU `Label`. */
+/** Leaf for prop `suffixIcon` — the TRAILING glyph. The `SuffixIcon` node sits AFTER `Label`. */
 export const SuffixIcon: Story = {
     render: () => (
         <div className="p-8">
@@ -183,7 +188,7 @@ export const SuffixIcon: Story = {
     ),
 }
 
-/** Leaf prop `iconSlide` (§5b) — mũi tên TRƯỢT khi hover. Rê chuột mới thấy. */
+/** Leaf for prop `iconSlide` (§5b) — the arrow SLIDES on hover. Hover to see it. */
 export const IconSlide: Story = {
     render: () => (
         <div className="p-8">
@@ -206,11 +211,12 @@ export const IconSlide: Story = {
 }
 
 /**
- * Leaf prop `isIconOnly` — nút bỏ nhãn, chỉ còn glyph.
+ * Leaf for prop `isIconOnly` — a button that drops the label, glyph only.
  *
- * Gộp 2026-07-26: trước đó là component RIÊNG `Button.Icon`. Nhưng nút chỉ-icon không
- * phải hình thái khác — nó là cùng cái nút bỏ nhãn đi. Nuôi hai component song song
- * nghĩa là mọi luật (variant · size · weight · skeleton) phải sửa hai chỗ.
+ * Merged 2026-07-26: this used to be a SEPARATE component, `Button.Icon`. But an
+ * icon-only button isn't a different shape — it's the same button with the label
+ * dropped. Keeping two parallel components meant every rule (variant · size ·
+ * weight · skeleton) had to be fixed in two places.
  */
 export const IsIconOnly: Story = {
     render: () => (
@@ -249,7 +255,7 @@ export const IsIconOnly: Story = {
     ),
 }
 
-/** Leaf prop `isDisabled` — khoá press, KHÔNG kèm Spinner (khác `isPending`). */
+/** Leaf for prop `isDisabled` — locks press, NO Spinner attached (unlike `isPending`). */
 export const Disabled: Story = {
     render: () => (
         <div className="p-8">
@@ -271,7 +277,7 @@ export const Disabled: Story = {
     ),
 }
 
-/** Leaf prop `isPending` — Spinner THAY glyph dẫn đầu (không chồng hai tín hiệu cùng chỗ). */
+/** Leaf for prop `isPending` — a Spinner REPLACES the leading glyph (never stack two signals in one spot). */
 export const Pending: Story = {
     render: () => (
         <div className="p-8">
@@ -294,11 +300,13 @@ export const Pending: Story = {
 }
 
 /**
- * Leaf prop `isSkeleton` — shimmer CO-LOCATED, khớp hộp nút từng size (§12c).
+ * Leaf for prop `isSkeleton` — a CO-LOCATED shimmer, matching the button box at
+ * each size (§12c).
  *
- * Render ĐỦ HAI HÌNH: pill (nút có nhãn) và vuông (`isIconOnly`) — đó là toàn bộ tập
- * state mà prop này sinh ra. Hàng vuông trước nằm nhầm trong leaf `IsIconOnly`; skeleton
- * là prop RIÊNG nên phải về đây, không trộn hai prop trong một leaf (§12g).
+ * Renders BOTH SHAPES in full: pill (labelled button) and square (`isIconOnly`) —
+ * that's the entire state set this prop produces. The square row used to sit,
+ * misplaced, inside the `IsIconOnly` leaf; skeleton is its OWN prop so it belongs
+ * here, not mixed with another prop in one leaf (§12g).
  */
 export const Skeleton: Story = {
     render: () => (

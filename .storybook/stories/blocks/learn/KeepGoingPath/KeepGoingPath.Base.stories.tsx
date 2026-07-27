@@ -6,18 +6,21 @@ import {
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `KeepGoingPath.Base`: đường học tiếp của **chương hiện tại**.
+ * BLOCK — `KeepGoingPath.Base`: the continue-learning path for the **current
+ * chapter**.
  *
- * Cố ý KHÔNG vẽ lại cây module đầy đủ — cây đó sống ở rail trái, vẽ hai lần là hai
- * nguồn sự thật. Ở đây chỉ trả lời "đang ở đâu + bài kế là gì".
+ * Deliberately does NOT redraw the full module tree — that tree lives in the
+ * left rail, drawing it twice would be two sources of truth. This block only
+ * answers "where am I + what's next".
  *
- * BLOCK SỞ HỮU hình: icon trạng thái (play/check/circle) · chip độ khó · ổ khoá.
- * Caller chỉ đưa DỮ LIỆU — không node, không class.
+ * The BLOCK OWNS the shape: state icon (play/check/circle) · difficulty chip ·
+ * lock. The caller only supplies DATA — no node, no class.
  *
- * 📐 **MỘT LEAF** (§11f + §14d.2): mọi biến thể dưới đây dùng CHUNG một cây DOM
- * (`SurfaceCard.List` → rows), chỉ khác nội dung ⇒ đều là **STATE**, render trong
- * cùng một leaf. Trước đó trò tách `AllRead`/`AllDifficulties`/`Bordered` thành
- * story riêng — sai, vì không cái nào làm mất/thêm node.
+ * 📐 **ONE LEAF** (§11f + §14d.2): every variant below shares the SAME DOM tree
+ * (`SurfaceCard.List` → rows), differing only in content ⇒ they're all
+ * **STATE**, rendered inside one leaf. Previously `AllRead`/`AllDifficulties`/
+ * `Bordered` were split into separate stories — wrong, since none of them
+ * add or remove a node.
  */
 const meta: Meta<typeof KeepGoingPath.Base> = {
     title: "Blocks/Learn/KeepGoingPath.Base",
@@ -38,41 +41,79 @@ const MIXED: Array<KeepGoingContent> = [
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    // A FRAME is also a DEP (§11a.1) — this block already declares the frame it uses, kept as-is.
     "SurfaceCard.List": {
         storyId: "layouts-cards-surfacecard-surfacecard-list--default",
         tier: "primitive",
-        role: "khung + nhịp hàng — dùng CHUNG với LearnNudges, không đẻ đường render thứ hai",
+        role: "frame + row rhythm — SHARED with LearnNudges so no second render path is born",
     },
     "VariantChip.Difficulty": {
         storyId: "designs-chips-variantchip-difficulty--levels",
         tier: "design",
-        role: "vai độ khó — ramp 4 bậc, không phải token trạng thái",
+        role: "difficulty role — a 4-step ramp, not a status token",
     },
 }
 
 /**
- * Leaf duy nhất — render **MỘT** khung, đủ biến thể bên trong: 3 trạng thái bài
- * (đã xong · đang học · chưa học) · đủ 4 bậc độ khó · bài khoá.
+ * The single leaf — renders **ONE** frame, with every variant inside it: 3
+ * lesson states (done · active · todo) · all 4 difficulty steps · a locked
+ * lesson.
  *
- * ⛔ KHÔNG render hai bản để khoe `bordered` (thầy chốt 2026-07-26): app KHÔNG có
- * ca surface-in-surface ⇒ `bordered` là case BỊA. Block không bịa case cho đủ bộ.
+ * ⛔ Do NOT render two copies to show off `bordered` (teacher's call
+ * 2026-07-26): the app has NO surface-in-surface case ⇒ `bordered` would be a
+ * MADE-UP case. A block doesn't invent cases just to round out the set.
  */
 export const Path: Story = {
     render: () => (
-        <div className="mx-auto flex max-w-3xl flex-col gap-6 p-8">
+        <div className="mx-auto max-w-3xl p-8">
             <BlockAnatomy
                 name="KeepGoingPath.Base"
                 tier="block"
-                leaf="Đường học tiếp"
+                leaf="Path ahead"
                 parts={[]}
                 annotate={ANNOTATE}
-                note="Bốn bậc độ khó + ba trạng thái + bài khoá — đủ biến thể trong MỘT khung."
+                note="Four difficulty steps + three states + a locked lesson — every variant inside ONE frame."
+                code={`<KeepGoingPath.Base
+    module={{ index: 2, name: "Container hoá" }}
+    contents={contents}
+/>`}
             >
                 <KeepGoingPath.Base
                     anatPart="SurfaceCard.List"
                     showAnatomy
-                    moduleTitle="Chương 2 · Container hoá"
+                    module={{ index: 2, name: "Container hoá" }}
                     contents={MIXED}
+                />
+            </BlockAnatomy>
+        </div>
+    ),
+}
+
+/**
+ * LEAF prop `isSkeleton` — the tree is IDENTICAL to the `Path` leaf (§12g.0a):
+ * same `SurfaceCard.List` frame, same row count, only the content STATE changes
+ * (§11f) ⇒ reuses the `ANNOTATE` above, no separate parts array declared for the
+ * skeleton state. Empty → assume 3 rows (this pass's convention for a repeated
+ * list).
+ */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="mx-auto max-w-3xl p-8">
+            <BlockAnatomy
+                name="KeepGoingPath.Base"
+                tier="block"
+                leaf="Prop `isSkeleton`"
+                parts={[]}
+                annotate={ANNOTATE}
+                note="isSkeleton with empty contents → assume 3 rows so the frame keeps its height."
+                code={`<KeepGoingPath.Base isSkeleton module={{ index: 2, name: "Container hoá" }} contents={[]} />`}
+            >
+                <KeepGoingPath.Base
+                    anatPart="SurfaceCard.List"
+                    showAnatomy
+                    isSkeleton
+                    module={{ index: 2, name: "Container hoá" }}
+                    contents={[]}
                 />
             </BlockAnatomy>
         </div>

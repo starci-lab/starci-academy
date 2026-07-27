@@ -6,12 +6,12 @@ import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `AsyncContent.Error` là KHUNG THÔNG ĐIỆP
- * LỖI — cùng bộ slot với `.Empty` nhưng `tone="danger"`. State ở đây sinh ra từ việc
- * BẬT/TẮT slot của chính nó (description · action · icon). Thứ tự ưu tiên nhánh
- * (lỗi thắng loading) là state của `AsyncContent.Base`, KHÔNG lặp lại tại đây.
+ * ⚠️ STATE SCOPE (decided 2026-07-25): `AsyncContent.Error` is the ERROR MESSAGE
+ * FRAME — the same slot set as `.Empty` but with `tone="danger"`. State here comes
+ * from TOGGLING its own slots (description · action · icon). Branch priority
+ * (error wins over loading) is a state of `AsyncContent.Base`, NOT repeated here.
  *
- * ANATOMY IS PER-LEAF: mỗi story là một leaf riêng, mang cây parts của chính nó.
+ * ANATOMY IS PER-LEAF: each story is its own leaf, carrying its own parts tree.
  */
 const meta: Meta<typeof AsyncContent.Error> = {
     title: "Layouts/Async/AsyncContent/AsyncContent.Error",
@@ -29,13 +29,14 @@ type Story = StoryObj<typeof AsyncContent.Error>
 /** Frame each leaf's anatomy panel with breathing room. */
 const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
 
-// Lớp MỎNG trên primitive `Feedback.Empty` (tone danger). Icon cảnh báo/title/description
-// là GIÁ TRỊ truyền vào prop nên KHÔNG tách node; chỉ `action` là node được compose vào.
+// A THIN layer over the `Feedback.Empty` primitive (tone danger). The warning
+// icon/title/description are VALUES passed into props so they're NOT split into
+// nodes; only `action` is a node that gets composed in.
 const MESSAGE_PARTS: Array<AnatomyNode> = [
     {
         name: "Feedback.Empty",
         tier: "primitive",
-        role: "khung căn giữa cho trạng thái lỗi",
+        role: "centered frame for the error state",
         state: "danger",
     },
 ]
@@ -43,10 +44,10 @@ const RETRY_PARTS: Array<AnatomyNode> = [
     {
         name: "Feedback.Empty",
         tier: "primitive",
-        role: "khung căn giữa cho trạng thái lỗi",
+        role: "centered frame for the error state",
         state: "danger",
         children: [
-            { name: "Button", tier: "primitive", role: "shorthand onRetry + retryLabel → nút thử lại trong slot action", state: "secondary" },
+            { name: "Button", tier: "primitive", role: "shorthand onRetry + retryLabel → retry button in the action slot", state: "secondary" },
         ],
     },
 ]
@@ -54,15 +55,15 @@ const ACTION_PARTS: Array<AnatomyNode> = [
     {
         name: "Feedback.Empty",
         tier: "primitive",
-        role: "khung căn giữa cho trạng thái lỗi",
+        role: "centered frame for the error state",
         state: "danger",
         children: [
-            { name: "Action", tier: "primitive", role: "slot action tổng quát — node bất kỳ do caller truyền" },
+            { name: "Action", tier: "primitive", role: "general-purpose action slot — any node the caller passes" },
         ],
     },
 ]
 
-/** BASIC — chỉ tiêu đề: icon cảnh báo mặc định + title, không mô tả, không nút. */
+/** BASIC — title only: default warning icon + title, no description, no button. */
 export const Basic: Story = {
     render: () =>
         frame(
@@ -71,7 +72,7 @@ export const Basic: Story = {
                 tier="primitive"
                 leaf="Basic"
                 parts={MESSAGE_PARTS}
-                reason={"Trạng thái lỗi của một vùng dữ liệu async cần đúng anatomy của Feedback.Empty tone=\"danger\" (icon cảnh báo + tiêu đề + mô tả + hành động canh giữa). AsyncContent.Error chỉ thêm WarningIcon mặc định và gói onRetry/retryLabel vào slot action — một lớp mỏng trên Feedback.Empty, không tự vẽ lại."}
+                reason={"The error state of an async data region needs exactly the anatomy of Feedback.Empty tone=\"danger\" (warning icon + title + description + centered action). AsyncContent.Error only adds a default WarningIcon and wraps onRetry/retryLabel into the action slot — a thin layer over Feedback.Empty, it doesn't redraw anything."}
                 code={`<AsyncContent.Error
   title="Đã có lỗi xảy ra"
 />`}
@@ -81,7 +82,7 @@ export const Basic: Story = {
         ),
 }
 
-/** WITH DESCRIPTION — bật slot `description`: thêm dòng muted nói nguyên nhân/việc cần làm. */
+/** WITH DESCRIPTION — turns on the `description` slot: adds a muted line stating the cause/what to do. */
 export const WithDescription: Story = {
     render: () =>
         frame(
@@ -90,7 +91,7 @@ export const WithDescription: Story = {
                 tier="primitive"
                 leaf="WithDescription"
                 parts={MESSAGE_PARTS}
-                note="Thêm dòng mô tả muted dưới tiêu đề — vẫn chưa có nút hành động."
+                note="Adds a muted description line under the title — still no action button."
                 code={`<AsyncContent.Error
   title="Không tải được dữ liệu"
   description="Máy chủ tạm thời không phản hồi. Vui lòng thử lại sau."
@@ -105,7 +106,7 @@ export const WithDescription: Story = {
         ),
 }
 
-/** WITH RETRY — shorthand `onRetry` + `retryLabel` tự gói thành Button vào slot action. */
+/** WITH RETRY — the `onRetry` + `retryLabel` shorthand wraps itself into a Button in the action slot. */
 export const WithRetry: Story = {
     render: () =>
         frame(
@@ -114,7 +115,7 @@ export const WithRetry: Story = {
                 tier="primitive"
                 leaf="WithRetry"
                 parts={RETRY_PARTS}
-                note="onRetry + retryLabel → khung TỰ dựng Button secondary size sm cho slot action. Thiếu một trong hai → không có nút (nhiều nguồn thật đang rơi vào ca này)."
+                note="onRetry + retryLabel → the frame builds a Button secondary size sm for the action slot ITSELF. Missing either one → no button (several real sources currently fall into this case)."
                 code={`<AsyncContent.Error
   title="Không tải được dữ liệu"
   description="Đã có lỗi xảy ra khi tải nội dung."
@@ -133,7 +134,7 @@ export const WithRetry: Story = {
         ),
 }
 
-/** WITH ACTION — slot `action` tổng quát: node bất kỳ, THẮNG shorthand retry. */
+/** WITH ACTION — the general-purpose `action` slot: any node, WINS over the retry shorthand. */
 export const WithAction: Story = {
     render: () =>
         frame(
@@ -142,7 +143,7 @@ export const WithAction: Story = {
                 tier="primitive"
                 leaf="WithAction"
                 parts={ACTION_PARTS}
-                note="Khi lỗi cần một hành động không phải 'thử lại' đơn thuần (tải lại trang, liên hệ hỗ trợ…) thì truyền thẳng node qua `action` — nó thắng cặp onRetry/retryLabel."
+                note="When an error needs an action that isn't just a plain 'retry' (reload the page, contact support…), pass a node straight through `action` — it wins over the onRetry/retryLabel pair."
                 code={`<AsyncContent.Error
   title="Phiên làm việc đã hết hạn"
   description="Đăng nhập lại để tiếp tục."
@@ -159,7 +160,7 @@ export const WithAction: Story = {
         ),
 }
 
-/** CUSTOM ICON — ghi đè slot `icon`; các slot còn lại giữ nguyên shape đầy đủ. */
+/** CUSTOM ICON — overrides the `icon` slot; the remaining slots keep their full shape. */
 export const CustomIcon: Story = {
     render: () =>
         frame(
@@ -168,7 +169,7 @@ export const CustomIcon: Story = {
                 tier="primitive"
                 leaf="CustomIcon"
                 parts={RETRY_PARTS}
-                note="Cùng shape đầy đủ (mô tả + nút thử lại), chỉ thay icon mặc định bằng icon caller truyền vào — icon là giá trị prop nên cây parts không đổi."
+                note="Same full shape (description + retry button), only swaps the default icon for the one the caller passes in — the icon is a prop value so the parts tree doesn't change."
                 code={`<AsyncContent.Error
   icon={<WifiSlashIcon weight="duotone" />}
   title="Mất kết nối mạng"

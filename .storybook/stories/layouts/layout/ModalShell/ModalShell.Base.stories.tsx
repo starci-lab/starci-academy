@@ -59,6 +59,7 @@ const ControlledModal = ({
     parts,
     note,
     reason,
+    code,
     ...rest
 }: {
     label: string
@@ -70,6 +71,7 @@ const ControlledModal = ({
     parts: Array<AnatomyNode>
     note?: React.ReactNode
     reason?: React.ReactNode
+    code?: string
 } & Omit<React.ComponentProps<typeof ModalShell.Base>, "isOpen" | "onOpenChange" | "children">) => {
     const [isOpen, setIsOpen] = useState(true)
     return (
@@ -81,7 +83,7 @@ const ControlledModal = ({
             <Button variant="secondary" size="sm" className="self-start" onClick={() => setIsOpen(true)}>
                 {trigger}
             </Button>
-            <BlockAnatomy name="ModalShell.Base" tier="primitive" leaf={leaf} parts={parts} note={note} reason={reason}>
+            <BlockAnatomy name="ModalShell.Base" tier="primitive" leaf={leaf} parts={parts} note={note} reason={reason} code={code}>
                 <ModalShell.Base isOpen={isOpen} onOpenChange={setIsOpen} showAnatomy {...rest}>
                     {children}
                 </ModalShell.Base>
@@ -189,6 +191,12 @@ export const Default: Story = {
                 leaf="Default"
                 parts={TITLE_DESC_FOOTER_PARTS}
                 reason="Khung modal gom CloseTrigger·Header·Body·Footer về một chỗ, chuẩn hoá luôn khoảng cách header→body→footer (mt-4) thay vì để mỗi modal tự chế."
+                code={`<ModalShell.Base
+  title="Confirm unenrollment"
+  description="You will lose all your learning progress. This cannot be undone."
+  body={<Typography color="muted">Your submissions and grades will be removed too.</Typography>}
+  footer={<Button variant="danger">Unenroll</Button>}
+/>`}
                 body={(
                     <Typography type="body-sm" color="muted">
                         Your submissions and grades for this course will be removed as well.
@@ -222,6 +230,9 @@ export const CustomHeader: Story = {
                 leaf="CustomHeader"
                 parts={CUSTOM_HEADER_PARTS}
                 note="`header` opaque thay thế Title/Description — chính caller phải tự chừa pr-8 cho CloseTrigger. Không truyền `footer` → không có part Footer."
+                code={`<ModalShell.Base header={<InviteHeader />}>
+  <Typography color="muted">Enter student emails, one address per line.</Typography>
+</ModalShell.Base>`}
             >
                 <Typography type="body-sm" color="muted">
                     Enter student emails, one address per line.
@@ -245,6 +256,9 @@ export const ScrollableBody: Story = {
                 leaf="ScrollableBody"
                 parts={TITLE_ONLY_PARTS}
                 note="Không description, không footer → chỉ Title trong Header. scroll=inside chỉ đổi max-height của Container, không đổi part."
+                code={`<ModalShell.Base title="Transaction history" size="lg" scroll="inside">
+  <BorderedList>{/* transaction rows */}</BorderedList>
+</ModalShell.Base>`}
             >
                 <BorderedList>
                     {Array.from({ length: 12 }).map((_, index) => (
@@ -274,6 +288,9 @@ export const WithLeadingTabs: Story = {
                 leaf="WithLeadingTabs"
                 parts={TITLE_ONLY_PARTS}
                 note="bodyStartsWithTabs chỉ đổi gap Header→Body (gap-3 thay vì gap-4) — không thêm part mới."
+                code={`<ModalShell.Base title="Notification settings" bodyStartsWithTabs bodyClassName="flex flex-col gap-3">
+  <Tabs>{/* Email / Push panels */}</Tabs>
+</ModalShell.Base>`}
             >
                 <LeadingTabsDemo />
             </ControlledModal>
@@ -294,6 +311,13 @@ export const PlainFormClusters: Story = {
                 leaf="PlainFormClusters"
                 parts={TITLE_DESC_FOOTER_PARTS}
                 note="Cùng nhánh header đơn giản như Default — Body giờ chỉ còn cluster list, CTA nằm ở Footer (state khác, không phải part khác)."
+                code={`<ModalShell.Base
+  title="Unlock the course"
+  description="Buy once to unlock every lesson, exercise, and support."
+  footer={<Button variant="primary">Continue to payment</Button>}
+>
+  <CheckList items={["The full learning path", "AI grading", "Course community"]} />
+</ModalShell.Base>`}
                 footer={(
                     <>
                         <Button variant="tertiary" size="sm">Later</Button>

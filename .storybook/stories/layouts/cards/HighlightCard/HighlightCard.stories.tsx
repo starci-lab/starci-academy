@@ -27,7 +27,7 @@ const ProfileCard = () => (
             <div className="flex min-w-0 flex-col">
                 <span className="truncate text-sm font-medium">StarCi Academy</span>
                 <span className="truncate text-xs text-muted">
-                    Học fullstack, system design và DevOps theo lộ trình phỏng vấn.
+                    Learn fullstack, system design, and DevOps on an interview-prep roadmap.
                 </span>
             </div>
         </CardContent>

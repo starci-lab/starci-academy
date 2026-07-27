@@ -18,5 +18,5 @@ export default meta
 type Story = StoryObj<typeof CourseContents>
 
 export const Default: Story = {
-    render: () => deviceLeaf({ state: "content", viewer: "trial", leaf: "Default", reason: "Chưa mua — cây có THÊM Feedback.Callout (gate GitHub-team) + TrialConversionStrip. Khác cây so với Paid nên là story riêng." }),
+    render: () => deviceLeaf({ viewer: "trial", leaf: "Default", reason: "Not purchased — the tree ADDS CourseTeamGate (GitHub-team gate) + TrialConversionStrip. A different tree from Paid, so it earns its own story." }),
 }

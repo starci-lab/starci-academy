@@ -15,10 +15,10 @@ import { ArrowLeftIcon } from "@phosphor-icons/react"
  * single non-pressable "…" crumb (first + ellipsis + tail) — NOT a separate
  * component (§6 granularity).
  *
- * RESPONSIVE COLLAPSE also lives here (khung `ResponsiveBreadcrumb` xoá
- * 2026-07-25 — §13c "atom mặc áo"): a narrow column can't hold a trail, and a
+ * RESPONSIVE COLLAPSE also lives here (the `ResponsiveBreadcrumb` scaffold
+ * removed 2026-07-25 — §13c "atom wears the coat"): a narrow column can't hold a trail, and a
  * deep trail wraps and eats vertical space, so the atom can swap the WHOLE trail
- * for a single back affordance ("← Trở lại") pointing at the deepest pressable
+ * for a single back affordance ("← Back") pointing at the deepest pressable
  * ancestor:
  *   • `collapseOnMobile` → back link below `@app-sm`, trail from `@app-sm` up.
  *   • `collapseFrom={n}` → back link at EVERY width once the trail has ≥ n crumbs.
@@ -27,14 +27,16 @@ import { ArrowLeftIcon } from "@phosphor-icons/react"
  * so it does NOT reuse the `BackLink` block.
  *
  * Rules (Chip/Input):
- *   • NAMESPACE bắt buộc — chỉ export `Breadcrumbs = { Base }`, không export
- *     component trần (thầy chốt 2026-07-25).
- *   • KHÔNG `children` — crumb truyền qua `items` dữ liệu; `label` là prop
- *     `ReactNode` (nhãn), không phải children.
- *   • Bọc HeroUI TỐI ĐA (`Breadcrumbs`), alias `Hero*`.
+ *   • NAMESPACE required — export ONLY `Breadcrumbs = { Base }`, no bare
+ *     component exported (teacher finalized 2026-07-25).
+ *   • NO `children` — crumbs pass through `items` data; `label` is a
+ *     `ReactNode` prop (the label), not children.
+ *   • Wrap HeroUI to the MAX (`Breadcrumbs`), alias `Hero*`.
  *   • STRICT §4: `items` + per-item `onPress` TRẦN — the atom owns separators,
  *     truncation, current-crumb styling; the consumer never touches structure.
- *   • `isSkeleton` → trail skeleton co-located (HeroSkeleton, hybrid C).
+ *   • `isSkeleton` → trail skeleton co-located (HeroSkeleton, hybrid C); shape
+ *     follows `collapseFrom`/`collapseOnMobile` (bar-row vs back-link vs both,
+ *     responsive) — fixed 2026-07-27, see prop doc below.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -69,9 +71,14 @@ export interface BreadcrumbsBaseProps {
      * ancestors are already reachable from top nav. Omit to never collapse by length.
      */
     collapseFrom?: number
-    /** Label of the collapsed back link. Default `"Trở lại"`. */
+    /** Label of the collapsed back link. Default `"Back"`. */
     backLabel?: string
-    /** Render the trail skeleton (a row of bar shimmers) instead of the crumbs. */
+    /**
+     * Render the trail shimmer instead of the crumbs. Shape follows
+     * `collapseFrom`/`collapseOnMobile` + trail depth — a back-link shimmer when
+     * the config resolves to the collapsed form, bar-row shimmer otherwise — so
+     * the loading shape matches what the real trail is about to become.
+     */
     isSkeleton?: boolean
     /** `true` → tag each part with `data-anat-part` so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
@@ -97,14 +104,45 @@ const BreadcrumbsBase = ({
     className,
 }: BreadcrumbsBaseProps) => {
     if (isSkeleton) {
-        // Leaf skeleton OWNED by the atom (hybrid C) — a few crumb-width bars.
-        return (
+        // Collapse shape is STRUCTURAL — driven by `collapseFrom`/`collapseOnMobile`
+        // (caller config) + trail depth, both known BEFORE crumb text loads. The
+        // shimmer must pick the same shape the real trail resolves to; a bar-row
+        // shimmer in front of a back-link real render is a layout jump when data
+        // lands, the same bug class fixed on `Button.Base` (§12g: skeleton must
+        // track every known-ahead axis, not one fixed shape for every config).
+        // `items.length` stands in for "has a navigable ancestor" since skeleton
+        // items rarely carry real `onPress` yet.
+        const canCollapse = items.length > 1
+        const isLongTrail = collapseFrom !== undefined && items.length >= collapseFrom
+        const collapseAlways = canCollapse && isLongTrail
+        const collapseMobile = canCollapse && collapseOnMobile && !collapseAlways
+
+        const trailBars = (
             <div className={cn("flex items-center gap-2", className)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
                 <HeroSkeleton className="h-4 w-14 rounded-md" />
                 <HeroSkeleton className="h-4 w-16 rounded-md" />
                 <HeroSkeleton className="h-4 w-20 rounded-md" />
             </div>
         )
+        const backBar = (
+            <div className={cn("flex w-fit items-center gap-2", className)} data-anat-part={showAnatomy ? "SkeletonBack" : undefined}>
+                <HeroSkeleton className="size-3.5 rounded-full" />
+                <HeroSkeleton className="h-4 w-12 rounded-md" />
+            </div>
+        )
+
+        if (collapseAlways) {
+            return backBar
+        }
+        if (collapseMobile) {
+            return (
+                <>
+                    <div className="hidden @app-sm:flex">{trailBars}</div>
+                    <div className="@app-sm:hidden">{backBar}</div>
+                </>
+            )
+        }
+        return trailBars
     }
 
     // Truncate: keep the first crumb + the last two, drop the middle behind a "…".
@@ -149,10 +187,10 @@ const BreadcrumbsBase = ({
             {collapseAlways ? null : trail}
             {/*
               Collapsed LEAF of this atom: one quiet back affordance, not a pill.
-              Arrow slides left on hover (§5b — arrow = action icon); glyph Phosphor
-              ở `size-3.5` cho khớp `text-sm`, nhỏ hơn `size-5` nên phải
-              `weight="bold"` bù nét (§5.0a). Tailwind v4: `translate` là property
-              riêng → transition `[translate]`.
+              Arrow slides left on hover (§5b — arrow = action icon); the Phosphor
+              glyph sits at `size-3.5` to match `text-sm`, smaller than `size-5` so
+              it needs `weight="bold"` to compensate the stroke (§5.0a). Tailwind
+              v4: `translate` is its own property → transition `[translate]`.
             */}
             <HeroLink
                 data-anat-part={showAnatomy ? "Back" : undefined}

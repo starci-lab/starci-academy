@@ -4,23 +4,24 @@ import { Grid } from "@sb-components/layouts/layout/Grid/Grid"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * LAYOUT (khung) — `Container.Base`: KHỔ NỘI DUNG (căn giữa + chặn bề rộng + đệm).
+ * LAYOUT (frame) — `Container.Base`: the CONTENT COLUMN (centered + width cap + padding).
  *
- * ⭐ Điểm đáng soi nhất là leaf `ContainerQuery`: khung này MỞ `@container`, nên lưới
- * nằm trong nó đo BỀ RỘNG KHỔ chứ không đo cột app nữa. Hai khổ khác `size` ôm cùng
- * một `Grid` cùng `columns` sẽ ra số cột KHÁC nhau — đó chính là lý do thầy chốt mở
- * container (2026-07-26).
+ * ⭐ The most notable leaf is `ContainerQuery`: this frame OPENS `@container`, so a
+ * grid inside it measures the COLUMN WIDTH instead of the app's column anymore. Two
+ * columns with a different `size` wrapping the SAME `Grid` with the same `columns`
+ * end up with a DIFFERENT column count — that's exactly why the teacher decided to
+ * open the container (2026-07-26).
  *
- * Leaf ở tầng khung tách theo CẤU TRÚC/trục prop của khung (§14d.2), không theo luật
- * 1-prop-1-leaf của tầng atom (§12g).
+ * Leaves at the frame tier split by the frame's STRUCTURE/prop axis (§14d.2), not by
+ * the atom tier's 1-prop-1-leaf rule (§12g).
  */
 
-/** Ô mẫu — chỉ để nhìn ra mép khổ và số cột, không mang nội dung domain (§13). */
+/** A sample tile — just to see the column edge and count, carries no domain content (§13). */
 const Tile = ({ label }: { label: string }) => (
     <div className="rounded-xl border border-default bg-surface p-3 text-sm text-foreground">{label}</div>
 )
 
-/** Dải kẻ nền để thấy khổ được căn giữa trong vùng cha rộng hơn. */
+/** A ruled background band, to see the column centered inside a wider parent area. */
 const Bleed = ({ children }: { children: React.ReactNode }) => (
     <div className="w-full bg-default/40 py-4">{children}</div>
 )
@@ -36,7 +37,7 @@ export default meta
 
 type Story = StoryObj<typeof Container.Base>
 
-/** ĐỦ union `ContainerSize`, kèm bề rộng token để đối chiếu với bậc `@app-*`. */
+/** FULL `ContainerSize` union, with the token width alongside for comparing against the `@app-*` steps. */
 const SIZES: Array<{ size: ContainerSize; width: string }> = [
     { size: "sm", width: "40rem" },
     { size: "md", width: "48rem — default" },
@@ -45,7 +46,7 @@ const SIZES: Array<{ size: ContainerSize; width: string }> = [
     { size: "full", width: "no cap" },
 ]
 
-/** Leaf trần — khổ mặc định `md`, đệm `6`, chỉ có `body`. */
+/** Bare leaf — default `md` column, padding `6`, `body` only. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
@@ -65,7 +66,7 @@ export const Default: Story = {
     ),
 }
 
-/** Leaf prop `size` — ĐỦ 5 bậc, mỗi bậc trỏ thẳng vào một token `--container-app-*`. */
+/** Leaf prop `size` — FULL 5 steps, each pointing straight at a `--container-app-*` token. */
 export const Sizes: Story = {
     render: () => (
         <div className="p-8">
@@ -98,7 +99,7 @@ export const Sizes: Story = {
     ),
 }
 
-/** Leaf prop `padding` — thang §10c, mặc định `6` (khổ web). */
+/** Leaf prop `padding` — the §10c scale, default `6` (the web column). */
 export const Padding: Story = {
     render: () => (
         <div className="p-8">
@@ -128,7 +129,7 @@ export const Padding: Story = {
     ),
 }
 
-/** Leaf slot — ba vùng `header`/`body`/`footer`, cách nhau bằng nhịp TRANG. */
+/** Leaf slot — three regions `header`/`body`/`footer`, spaced by the PAGE rhythm. */
 export const Slots: Story = {
     render: () => (
         <div className="p-8">
@@ -156,7 +157,7 @@ export const Slots: Story = {
     ),
 }
 
-/** Part `Grid.Base` có story riêng ⇒ khai `storyId` để bấm nhảy sang được. */
+/** Part `Grid.Base` has its own story ⇒ `storyId` is declared so it's clickable. */
 const QUERY_ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Grid.Base": {
         tier: "primitive",
@@ -166,11 +167,13 @@ const QUERY_ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /**
- * Leaf ⭐ — bằng chứng của quyết định "khung này MỞ `@container`".
+ * Leaf ⭐ — the evidence for the decision "this frame OPENS `@container`".
  *
- * Hai khổ, CÙNG một `Grid` với CÙNG `columns`, ra số cột khác nhau: khổ `md` đứng ở
- * bậc `@app-md` (2 cột), khổ `xl` với tới `@app-lg` (4 cột). Trước khi mở container,
- * cả hai đều nghe theo cột app nên cùng nhảy 4 cột dù khổ trái chỉ rộng 48rem.
+ * Two columns, the SAME `Grid` with the SAME `columns`, end up with a different
+ * column count: the `md` column sits at the `@app-md` step (2 columns), the `xl`
+ * column reaches `@app-lg` (4 columns). Before opening the container, both listened
+ * to the app column and would jump to 4 columns together even though the left one
+ * is only 48rem wide.
  */
 export const ContainerQuery: Story = {
     render: () => {

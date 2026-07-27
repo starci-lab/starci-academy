@@ -3,17 +3,20 @@ import { Divider, type DividerVariant } from "@sb-components/atoms/display/Divid
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Divider.Base`: bọc thẳng HeroUI `Separator` (HeroUI không có "Divider",
- * đổi tên cho ngữ vựng app). Atom lá — không dựng lại atom nào khác nên KHÔNG có
- * deps: bỏ hẳn prop `annotate` (§12g, thầy chốt 2026-07-26 lần 2). `Line`/`Label`
- * là span NỘI BỘ của chính atom này (khe, không có nhà để nhảy tới), không phải deps.
+ * ATOM — `Divider.Base`: wraps HeroUI `Separator` directly (HeroUI has no
+ * "Divider", renamed for the app's vocabulary). A leaf atom — it doesn't build
+ * any other atom so it has NO deps: the `annotate` prop is dropped entirely
+ * (§12g, decided 2026-07-26, second pass). `Line`/`Label` are INTERNAL spans of
+ * this very atom (a slot, nowhere else to jump to), not deps.
  *
- * 📐 **1 PROP = 1 LEAF** (§12g): `orientation` · `variant` · `label`, mỗi prop một
- * leaf, leaf render ĐỦ mọi giá trị. Bản trước tách `Horizontal`/`Vertical` thành hai
- * leaf riêng — đó là tách theo GIÁ TRỊ của CÙNG một prop `orientation`, đúng cái
- * §12g cấm (nêu thẳng ví dụ `Small`/`Medium`/`OnDark` là sai) — gộp lại thành một
- * leaf `Orientation` render đủ cả hai giá trị. `variant` trước đây chưa có leaf nào
- * cả, dù nó cũng là prop có hình — thêm `Variants` cho đủ bộ.
+ * 📐 **1 PROP = 1 LEAF** (§12g): `orientation` · `variant` · `label`, each prop
+ * one leaf, and the leaf renders EVERY value in full. The previous version split
+ * `Horizontal`/`Vertical` into two separate leaves — that's splitting by the
+ * VALUE of the SAME prop `orientation`, exactly what §12g forbids (its own
+ * example calls out `Small`/`Medium`/`OnDark` as wrong) — merged back into one
+ * `Orientation` leaf rendering both values in full. `variant` previously had no
+ * leaf at all, even though it's also a prop with a visible shape — added
+ * `Variants` to complete the set.
  */
 const meta: Meta<typeof Divider.Base> = {
     title: "Atoms/Display/Divider/Divider.Base",
@@ -26,10 +29,10 @@ export default meta
 
 type Story = StoryObj<typeof Divider.Base>
 
-/** ĐỦ union `DividerVariant` — thiếu một giá trị là giá trị đó sẽ mọc leaf lạc chỗ. */
+/** The FULL `DividerVariant` union — miss one value and it'll grow a leaf in the wrong place. */
 const VARIANTS: Array<DividerVariant> = ["default", "secondary", "tertiary"]
 
-/** Leaf TRẦN — orientation mặc định (horizontal), variant mặc định, không nhãn. */
+/** Bare leaf — default orientation (horizontal), default variant, no label. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
@@ -49,7 +52,7 @@ export const Default: Story = {
     ),
 }
 
-/** Leaf prop `orientation` — ĐỦ 2 giá trị: ngang (mặc định) và dọc. */
+/** Leaf prop `orientation` — BOTH values: horizontal (default) and vertical. */
 export const Orientation: Story = {
     render: () => (
         <div className="p-8">
@@ -78,7 +81,7 @@ export const Orientation: Story = {
     ),
 }
 
-/** Leaf prop `variant` — ĐỦ union weight/tone của đường kẻ. */
+/** Leaf prop `variant` — the FULL weight/tone union of the line. */
 export const Variants: Story = {
     render: () => (
         <div className="p-8">
@@ -101,7 +104,7 @@ export const Variants: Story = {
     ),
 }
 
-/** Leaf prop `label` — chỉ hợp lệ ngang: rule · nhãn · rule. */
+/** Leaf prop `label` — horizontal only: rule · label · rule. */
 export const WithLabel: Story = {
     render: () => (
         <div className="p-8">

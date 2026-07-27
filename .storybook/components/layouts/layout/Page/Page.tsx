@@ -5,13 +5,13 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `Page.*`, the ONE page-chrome KHUNG namespace
- * (thầy 2026-07-25, canon §13a). Sibling frames that used to live as loose
+ * STORYBOOK-LOCAL DESIGN SPEC — `Page.*`, the ONE page-chrome frame namespace
+ * (teacher's call, 2026-07-25, canon §13a). Sibling frames that used to live as loose
  * folders (`PageHeader` · `StickyBottomBar`) are now MEMBERS of one namespace
- * — same tier (khung / layout), same họ (chrome of a ROUTE: what sits above
+ * — same tier (frame / layout), same family (chrome of a ROUTE: what sits above
  * the content and pinned under it), one import.
  *
- * KHUNG API LAW (§13b):
+ * FRAME API LAW (§13b):
  * - `Page.BottomBar` is a WRAPPER frame → named slots `body`/`actions` (a bar
  *   is a horizontal row, so `header`/`footer` would be a lie); `children`
  *   stays as shorthand for `body`.
@@ -25,10 +25,10 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * this is an API refactor, not a visual one. Synced to `src` later. No
  * `@/components` imports (design-spec ports stay self-contained).
  *
- * LỊCH SỬ — `.Container` đã chuyển thành `Container.Base` (`@sb-components/layouts/layout/Container/Container`)
- * ngày 2026-07-26: khung cũ không `mx-auto`, không `max-w`, chỉ đệm bên phải —
- * là bản nửa vời của khái niệm "khổ nội dung" mà `Container.Base` đã làm đúng
- * (§13c: khung trùng thì xoá).
+ * HISTORY — `.Container` was moved to `Container.Base` (`@sb-components/layouts/layout/Container/Container`)
+ * on 2026-07-26: the old frame had no `mx-auto`, no `max-w`, only right padding —
+ * a half-baked version of the "content width" concept that `Container.Base` already
+ * does correctly (§13c: a duplicate frame gets deleted).
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -38,6 +38,16 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /** Props for {@link Page.Header}. */
 export interface PageHeaderProps {
+    /**
+     * Anatomy tag for THIS component itself — so the PARENT can badge it as ONE node (§11a.1).
+     *
+     * ⭐ 2026-07-27 (deep-scan): without this prop the parent can't name it, so the parent
+     * is forced to pass `showAnatomy` down — and that OPENS UP the child's guts, leaking
+     * grandchildren out as if they were siblings. This is the ROOT cause of that whole
+     * class of bugs, not a symptom.
+     */
+    anatPart?: string
+
     /**
      * Primary page or section title. Rendered at `text-xl font-medium` in the
      * foreground tone. Accept a string or any inline React node (e.g. a
@@ -63,7 +73,7 @@ export interface PageHeaderProps {
     actions?: ReactNode
     /**
      * Optional meta row placed BELOW the title/description — typically a row of
-     * stat/meta chips ("24 Module · 87 Nội dung …"). Rendered `gap-3` from the
+     * stat/meta chips ("24 Modules · 87 Content items …"). Rendered `gap-3` from the
      * title block. Omit when the header carries no stats.
      */
     meta?: ReactNode
@@ -102,11 +112,12 @@ const Header = ({
     size = "page",
     className,
     showAnatomy,
+    anatPart,
 }: PageHeaderProps) => {
     return (
         // outer gap-3: breadcrumb ↔ title-block ↔ meta (different header tiers);
         // title ↔ description stay a tight gap-2 pair inside the title block.
-        <div className={cn("flex flex-col gap-3", className)}>
+        <div data-anat-part={anatPart} className={cn("flex flex-col gap-3", className)}>
             {/* Breadcrumb row — rendered only when provided, sits above the main title row */}
             {breadcrumb ? (
                 <div data-anat-part={showAnatomy ? "Breadcrumb" : undefined}>{breadcrumb}</div>
@@ -117,16 +128,16 @@ const Header = ({
                 {/* Left column: stacked title and optional description */}
                 <div className="flex min-w-0 flex-col gap-2">
                     {size === "compact" ? (
-                        <Typography.Base weight="bold" showAnatomy={showAnatomy} text={title} />
+                        <Typography.Base weight="bold" anatPart={showAnatomy ? "Title" : undefined} text={title} />
                     ) : (
-                        <Typography.Base size="h3" weight="bold" showAnatomy={showAnatomy} text={title} />
+                        <Typography.Base size="h3" weight="bold" anatPart={showAnatomy ? "Title" : undefined} text={title} />
                     )}
                     {description ? (
                         // clamp to 2 lines on mobile (keep the header short on a phone); full on sm+
                         <Typography.Base size="sm"
                             color="muted"
                             className="line-clamp-2 @app-sm:line-clamp-none"
-                            showAnatomy={showAnatomy}
+                            anatPart={showAnatomy ? "Description" : undefined}
                             text={description}
                         />
                     ) : null}

@@ -3,17 +3,19 @@ import { LearnNudges, type LearnNudge } from "@sb-components/blocks/learn/LearnN
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `LearnNudges.Base`: việc nên làm hôm nay.
+ * BLOCK — `LearnNudges.Base`: things to do today.
  *
- * §14b — caller chỉ đưa `kind` (ENUM), **block sở hữu bảng `kind → icon`**. Screen
- * không được biết "ôn thẻ" trông ra sao; nếu prop là `leadingIcon` thì screen lại
- * phải cầm atom ⇒ thủng luật.
+ * §14b — the caller only passes `kind` (ENUM), **the block owns the `kind → icon`
+ * table**. The screen must not know what "review a card" looks like; if the prop
+ * were `leadingIcon`, the screen would have to hold an atom ⇒ breaks the law.
  *
- * Đi CÙNG layout `SurfaceCard.List` với `KeepGoingPath` — hai cụm trông giống nhau
- * thì phải chung một đường render.
+ * Shares its `SurfaceCard.List` layout with `KeepGoingPath` — two clusters that
+ * look alike must share one render path.
  *
- * 📐 **MỘT LEAF** (§14d.2): đủ-3-việc · một-việc · đang-chờ · bordered đều dùng CHUNG
- * cây `SurfaceCard.List` ⇒ **STATE**, không tách story.
+ * 📐 **ONE LEAF** (§14d.2): full-3-things · single-thing · bordered all use the
+ * SAME `SurfaceCard.List` tree ⇒ **STATE**, not a separate story. `isSkeleton`
+ * alone gets its OWN LEAF (§12g.0a, teacher's call 2026-07-27) even though the DOM
+ * tree is identical — the rule for this prop is an exception that overrides §14d.2.
  */
 const meta: Meta<typeof LearnNudges.Base> = {
     title: "Blocks/Learn/LearnNudges.Base",
@@ -33,30 +35,26 @@ const NUDGES: Array<LearnNudge> = [
 ]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    // A KHUNG is also a DEP (§11a.1) — this block already declares the khung it uses, kept as-is.
     "SurfaceCard.List": {
         storyId: "layouts-cards-surfacecard-surfacecard-list--default",
         tier: "primitive",
-        role: "khung + nhịp hàng — CÙNG layout với KeepGoingPath",
+        role: "frame + row rhythm — the SAME layout as KeepGoingPath",
     },
 }
 
-/**
- * Leaf duy nhất — đủ 3 loại việc, ca chỉ-một-việc, và state **đang chờ**.
- *
- * `pending` neo bug thật (src ghi 2026-07-12): `dueSwr`/`leaderboardSwr` resolve SAU
- * `outline` nên trong lúc chờ, `dueCount`/`rank` mặc định 0/null → block từng
- * `return null` rồi bật lại ⇒ **dải NHẤP NHÁY**. State này giữ CHỖ để hết nháy.
- */
+/** The one and only leaf — full 3 kinds of work plus the single-thing case. The **pending** state lives in the `Skeleton` leaf below. */
 export const Nudges: Story = {
     render: () => (
         <div className="mx-auto max-w-3xl p-8">
             <BlockAnatomy
                 name="LearnNudges.Base"
                 tier="block"
-                leaf="Việc nên làm"
+                leaf="Things to do"
                 parts={[]}
                 annotate={ANNOTATE}
-                note="Gạch của `pending` đổ thẳng vào `items` — vẫn MỘT đường render, không nhánh vẽ khung thứ hai."
+                note="The `pending` bars pour straight into `items` — still ONE render path, no second branch drawing a frame."
+                code={"<LearnNudges.Base items={nudges} />"}
             >
                 <div className="flex flex-col gap-6">
                     <LearnNudges.Base
@@ -65,8 +63,35 @@ export const Nudges: Story = {
                         items={NUDGES}
                     />
                     <LearnNudges.Base items={[NUDGES[0]]} />
-                    <LearnNudges.Base items={[]} isPending />
                 </div>
+            </BlockAnatomy>
+        </div>
+    ),
+}
+
+/**
+ * LEAF prop `isSkeleton` — tree IDENTICAL to the `Nudges` leaf (§12g.0a): same
+ * `SurfaceCard.List` khung, only the STATE changes (`items` not known yet), no
+ * node added/removed (§11f) ⇒ reuses the `ANNOTATE` above, no separate part array.
+ */
+export const Skeleton: Story = {
+    render: () => (
+        <div className="mx-auto max-w-3xl p-8">
+            <BlockAnatomy
+                name="LearnNudges.Base"
+                tier="block"
+                leaf="Prop `isSkeleton`"
+                parts={[]}
+                annotate={ANNOTATE}
+                note="`pending`/empty while waiting on `dueSwr`/`leaderboardSwr` — holds the space so nothing flashes (source notes 2026-07-12)."
+                code={`<LearnNudges.Base isSkeleton items={[]} />`}
+            >
+                <LearnNudges.Base
+                    anatPart="SurfaceCard.List"
+                    showAnatomy
+                    isSkeleton
+                    items={[]}
+                />
             </BlockAnatomy>
         </div>
     ),

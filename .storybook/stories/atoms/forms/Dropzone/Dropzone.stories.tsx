@@ -71,6 +71,7 @@ export const Empty: Story = {
                 name="Dropzone"
                 tier="atom"
                 leaf="Empty"
+                code={"<Dropzone.Base hint=\"PDF or DOCX, up to 5MB\" acceptedMimeTypes={[…]} maxSizeInBytes={…} />"}
                 reason="A drag-drop box, not a labeled field — the hint renders as placeholder text INSIDE the box, replaced by the file name once one is picked."
             >
                 <Controlled hint={HINT} acceptedMimeTypes={ACCEPT} maxSizeInBytes={MAX} />
@@ -87,6 +88,7 @@ export const WithFile: Story = {
                 name="Dropzone"
                 tier="atom"
                 leaf="Prop `file`"
+                code={"<Dropzone.Base file={cvFile} hint=\"PDF or DOCX, up to 5MB\" />"}
                 note="file != null swaps the hint for the file name — same box, same composition, just different content."
             >
                 <Controlled hint={HINT} initialFile={cvFile} acceptedMimeTypes={ACCEPT} maxSizeInBytes={MAX} />
@@ -103,6 +105,7 @@ export const Error: Story = {
                 name="Dropzone"
                 tier="atom"
                 leaf="Prop `errorMessage`"
+                code={"<Dropzone.Base errorMessage=\"File is larger than 5MB\" hint=\"PDF or DOCX, up to 5MB\" />"}
                 note="Passing errorMessage adds an error line under the box and switches its border to danger."
             >
                 <Controlled
@@ -124,6 +127,7 @@ export const Skeleton: Story = {
                 name="Dropzone"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
+                code={"<Dropzone.Base isSkeleton />"}
                 note="isSkeleton swaps in a single shimmer block sized to the dashed box — it does not try to separately mirror the box and the error line."
             >
                 <Dropzone

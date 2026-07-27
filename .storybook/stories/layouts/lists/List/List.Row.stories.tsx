@@ -1,9 +1,9 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Chip, Typography } from "@heroui/react"
-// MỘT BỘ ICON DUY NHẤT = Phosphor (§5.0). Thang size theo §5a: leading ↔ title
-// `text-sm` → `size-5` (regular); glyph nhỏ hơn `size-5` (lock cạnh chip `text-xs`
-// → `size-4`, caret điều hướng → `size-3`) phải bù `weight="bold"` (§5.0a).
+// ONE ICON SET ONLY = Phosphor (§5.0). Size scale per §5a: leading ↔ title
+// `text-sm` → `size-5` (regular); a glyph smaller than `size-5` (lock next to a
+// `text-xs` chip → `size-4`, navigation caret → `size-3`) must compensate with `weight="bold"` (§5.0a).
 import {
     CaretRightIcon,
     FileTextIcon,
@@ -19,10 +19,11 @@ import { DifficultyChip } from "@sb-components/_legacy/designs/chips/DifficultyC
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `List.Row` là khung MỘT HÀNG. Thứ nó đẻ ra:
- * bật/tắt từng slot (`leading`/`subtitle`/`meta`/`trailing`), viền ngăn `divider`, đổi thẻ
- * bọc khi tương tác (`href`/`onPress`), và mirror `isSkeleton` của CHÍNH hàng. Nhãn phần
- * (`label` + CTA) và trạng thái RỖNG của danh sách là tài sản của `List.Labeled` — KHÔNG lặp ở đây.
+ * ⚠️ STATE SCOPE (teacher confirmed 2026-07-25): `List.Row` is a SINGLE-ROW frame. What
+ * it produces: toggling each slot on/off (`leading`/`subtitle`/`meta`/`trailing`), the
+ * `divider` separator line, swapping the wrapper tag on interaction (`href`/`onPress`),
+ * and mirroring `isSkeleton` for THIS row itself. The section label (`label` + CTA) and
+ * the list's EMPTY state belong to `List.Labeled` — NOT repeated here.
  */
 const meta: Meta<typeof List.Row> = {
     title: "Layouts/Lists/List/List.Row",
@@ -37,30 +38,30 @@ export default meta
 
 type Story = StoryObj<typeof List.Row>
 
-// Caret điều hướng = `size-3` CỐ ĐỊNH (ngoại lệ §5a) → nhỏ hơn `size-5` ⇒ `weight="bold"` (§5.0a).
+// Navigation caret = `size-3` FIXED (exception to §5a) → smaller than `size-5` ⇒ `weight="bold"` (§5.0a).
 const chevron = <CaretRightIcon className="size-3 text-muted" weight="bold" aria-hidden focusable="false" />
 
-// DOM thật: List.Row ⊃ Leading?(icon/avatar, không co) · TitledText(title+subtitle
-// gộp — 1 semantic unit, KHÔNG tách Title/Subtitle riêng, xem TitledText.tsx) ·
-// MetaTrailing?(cụm meta+trailing, chia sẻ 1 hàng gap-2 bên phải).
+// Real DOM: List.Row ⊃ Leading?(icon/avatar, doesn't shrink) · TitledText(title+subtitle
+// merged — 1 semantic unit, does NOT split Title/Subtitle separately, see TitledText.tsx) ·
+// MetaTrailing?(meta+trailing cluster, sharing 1 gap-2 row on the right).
 const TITLE_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "TitledText", tier: "primitive", role: "title (body-sm medium), không subtitle/leading/meta", storyId: "primitives-texts-titledtext--row" },
+    { name: "TitledText", tier: "primitive", role: "title (body-sm medium), no subtitle/leading/meta", storyId: "layouts-texts-titledtext--row" },
 ]
 
 const LEADING_SUBTITLE_PARTS: Array<AnatomyNode> = [
-    { name: "Leading", tier: "primitive", role: "icon loại bài (không co giãn)" },
-    { name: "TitledText", tier: "primitive", role: "title + subtitle (breadcrumb module)", storyId: "primitives-texts-titledtext--row" },
+    { name: "Leading", tier: "primitive", role: "lesson-type icon (does not shrink)" },
+    { name: "TitledText", tier: "primitive", role: "title + subtitle (module breadcrumb)", storyId: "layouts-texts-titledtext--row" },
 ]
 
 const META_TRAILING_PARTS: Array<AnatomyNode> = [
-    { name: "TitledText", tier: "primitive", role: "title + subtitle (ngày nộp)", storyId: "primitives-texts-titledtext--row" },
-    { name: "MetaTrailing", tier: "primitive", role: "chip trạng thái + chevron điều hướng, chung 1 hàng phải" },
+    { name: "TitledText", tier: "primitive", role: "title + subtitle (submission date)", storyId: "layouts-texts-titledtext--row" },
+    { name: "MetaTrailing", tier: "primitive", role: "status chip + navigation chevron, sharing 1 right-side row" },
 ]
 
 const LEADING_META_TRAILING_PARTS: Array<AnatomyNode> = [
-    { name: "Leading", tier: "primitive", role: "icon trạng thái/loại (không co giãn)" },
-    { name: "TitledText", tier: "primitive", role: "title + subtitle", storyId: "primitives-texts-titledtext--row" },
-    { name: "MetaTrailing", tier: "primitive", role: "cụm meta (chip/đếm) + trailing, chung 1 hàng phải" },
+    { name: "Leading", tier: "primitive", role: "status/type icon (does not shrink)" },
+    { name: "TitledText", tier: "primitive", role: "title + subtitle", storyId: "layouts-texts-titledtext--row" },
+    { name: "MetaTrailing", tier: "primitive", role: "meta cluster (chip/count) + trailing, sharing 1 right-side row" },
 ]
 
 /** The simplest row — just a title. Used when the list has no subtitle, icon, or trailing action. */
@@ -72,7 +73,7 @@ export const TitleOnly: Story = {
                 tier="primitive"
                 leaf="TitleOnly"
                 parts={TITLE_ONLY_PARTS}
-                reason="Khung hàng danh sách tái dùng cao: leading/TitledText/meta-trailing đều optional theo props — leaf này chỉ bật title."
+                reason="A highly reusable list-row frame: leading/TitledText/meta-trailing are all optional via props — this leaf only turns on title."
                 code={`<List.Row
   title="Bài tập buổi 1: Vòng lặp và điều kiện"
 />`}
@@ -86,11 +87,12 @@ export const TitleOnly: Story = {
 }
 
 /**
- * `leading` (icon loại bài) + `subtitle` (breadcrumb module) dưới title.
+ * `leading` (lesson-type icon) + `subtitle` (module breadcrumb) under the title.
  *
- * GỘP MỘT LEAF (§14d.2): `isSkeleton` KHÔNG phải leaf — mirror giữ NGUYÊN bộ node
- * (`Leading` + `TitledText`), chỉ thay icon bằng ô vuông và chữ bằng hai thanh. Nó là
- * STATE của chính hàng nên render ngay trong leaf này, hàng dưới cùng.
+ * MERGED INTO ONE LEAF (§14d.2): `isSkeleton` is NOT a leaf — the mirror KEEPS the exact
+ * same node set (`Leading` + `TitledText`), only swapping the icon for a square and the
+ * text for two bars. It's a STATE of this row itself so it renders right in this leaf,
+ * the bottom row.
  */
 export const LeadingSubtitle: Story = {
     render: () => (
@@ -100,13 +102,13 @@ export const LeadingSubtitle: Story = {
                 tier="primitive"
                 leaf="LeadingSubtitle"
                 parts={LEADING_SUBTITLE_PARTS}
-                note="leading bật thêm 1 part; subtitle gộp CHUNG node TitledText (không tách Title/Subtitle). Hàng cuối là `isSkeleton` — cùng khung `gap-3 py-2`, cùng bộ node, nên hàng không nhảy khi dữ liệu về. Mirror bám theo SLOT CÓ MẶT: không truyền `leading` thì mirror cũng không vẽ ô vuông."
+                note="leading turns on 1 more part; subtitle shares the SAME TitledText node (Title/Subtitle are not split). The last row is `isSkeleton` — same `gap-3 py-2` frame, same node set, so the row doesn't jump once data lands. The mirror follows WHICHEVER SLOT IS PRESENT: skip `leading` and the mirror won't draw a square either."
                 code={`<List.Row
   leading={<FileTextIcon className="size-5 text-muted" />}
   title="Chuẩn hoá dữ liệu quan hệ tới 3NF"
   subtitle="Module 4 · Thiết kế cơ sở dữ liệu"
 />
-{/* cùng hàng đó lúc đang tải */}
+{/* the same row while it's loading */}
 <List.Row leading={…} title="…" subtitle="…" isSkeleton />`}
             >
                 <div className="flex w-full max-w-md flex-col rounded-2xl border border-default px-3">
@@ -139,7 +141,7 @@ export const MetaTrailing: Story = {
                 tier="primitive"
                 leaf="MetaTrailing"
                 parts={META_TRAILING_PARTS}
-                note="meta + trailing render CHUNG 1 div (`ml-auto flex ... gap-2`) — không phải 2 cluster tách biệt, nên gộp 1 part."
+                note="meta + trailing render into THE SAME 1 div (`ml-auto flex ... gap-2`) — not 2 separate clusters, so they merge into 1 part."
                 code={`<List.Row
   title="Viết migration thêm unique index cho email"
   subtitle="Nộp ngày 15/03/2026"
@@ -174,7 +176,7 @@ export const DividerList: Story = {
                 tier="primitive"
                 leaf="DividerList"
                 parts={TITLE_ONLY_PARTS}
-                note="3 hàng CÙNG composition (chỉ TitledText) — cùng 1 tên part lặp lại, `divider` chỉ thêm viền dưới, không phải part riêng."
+                note="3 rows with the SAME composition (TitledText only) — the same part name repeats, `divider` only adds a bottom border, it's not a separate part."
                 code={`<List.Row title="Buổi 1…" subtitle="Hoàn thành" divider />
 <List.Row title="Buổi 2…" subtitle="Hoàn thành" divider />
 <List.Row title="Buổi 3…" subtitle="Đang học" />`}
@@ -198,7 +200,7 @@ export const LinkRow: Story = {
                 tier="primitive"
                 leaf="LinkRow"
                 parts={META_TRAILING_PARTS}
-                note="Chỉ trailing (chevron), không meta — vẫn gộp vào cùng part MetaTrailing (1 div phải)."
+                note="Only trailing (chevron), no meta — still merges into the same MetaTrailing part (1 right-side div)."
                 code={`<List.Row
   title="Xem lại chứng chỉ hoàn thành khoá"
   subtitle="Cấp ngày 01/02/2026"
@@ -224,7 +226,7 @@ export const LinkRow: Story = {
 export const Clickable: Story = {
     render: () => {
         const ClickableRows = () => {
-            const [lastClicked, setLastClicked] = useState("(chưa bấm dòng nào)")
+            const [lastClicked, setLastClicked] = useState("(no row clicked yet)")
             const rows = [
                 "Bài tập buổi 1: Vòng lặp và điều kiện",
                 "Bài tập buổi 2: Hàm và phạm vi biến",
@@ -237,7 +239,7 @@ export const Clickable: Story = {
                         tier="primitive"
                         leaf="Clickable"
                         parts={TITLE_ONLY_PARTS}
-                        note="onPress đổi root sang role=button (hover/focus surface) — không thêm part, chỉ đổi thẻ bọc."
+                        note="onPress switches the root to role=button (hover/focus surface) — adds no part, only changes the wrapper tag."
                         code={`<List.Row
   title="Bài tập buổi 1…"
   onPress={() => …}
@@ -281,10 +283,10 @@ export const AsLessonRow: Story = {
             const [lastClicked, setLastClicked] = useState("(chưa bấm bài nào)")
             const lessons = [
                 {
-                    // Ba icon trạng thái CÙNG KHUÔN tròn (§5.0a): done = tròn ĐẶC
-                    // (`weight="fill"`), đang học = tròn có ▶, chưa mở = tròn rỗng.
-                    // Cả ba `size-5` (cạnh title `text-sm`, thang Phosphor §5a) nên
-                    // KHÔNG bù `weight="bold"`.
+                    // Three status icons SHARE THE SAME round mold (§5.0a): done = FILLED
+                    // circle (`weight="fill"`), in progress = circle with ▶, not opened =
+                    // empty circle. All three are `size-5` (next to `text-sm` title,
+                    // Phosphor scale §5a) so they do NOT need `weight="bold"` compensation.
                     leading: <CheckCircleIcon className="size-5 text-success" weight="fill" aria-hidden />,
                     title: "Vòng lặp và điều kiện",
                     subtitle: "8 phút đọc",
@@ -313,7 +315,14 @@ export const AsLessonRow: Story = {
                         tier="primitive"
                         leaf="AsLessonRow"
                         parts={LEADING_META_TRAILING_PARTS}
-                        reason="PROOF: List.Row một mình phủ 'lesson row' — leading state icon · TitledText · meta (DifficultyChip+lock) — không cần LessonRow riêng."
+                        reason="PROOF: List.Row alone covers a 'lesson row' — leading state icon · TitledText · meta (DifficultyChip+lock) — no separate LessonRow needed."
+                        code={`<List.Row
+  leading={<CheckCircleIcon weight="fill" />}
+  title="Loops and conditionals"
+  subtitle="8 min read"
+  meta={<DifficultyChip difficulty="beginner" />}
+  divider
+/>`}
                     >
                         <div className="flex flex-col rounded-2xl border border-default px-3">
                             {lessons.map((lesson, index) => (
@@ -326,8 +335,8 @@ export const AsLessonRow: Story = {
                                         <>
                                             <DifficultyChip difficulty={lesson.difficulty} />
                                             {lesson.locked ? (
-                                                // Cạnh chip `text-xs` → `size-4` (thang Phosphor §5a);
-                                                // nhỏ hơn `size-5` ⇒ bù `weight="bold"` (§5.0a).
+                                                // Next to a `text-xs` chip → `size-4` (Phosphor scale §5a);
+                                                // smaller than `size-5` ⇒ compensate with `weight="bold"` (§5.0a).
                                                 <LockIcon className="size-4 text-muted" weight="bold" aria-hidden />
                                             ) : null}
                                         </>
@@ -356,7 +365,7 @@ export const AsLessonRow: Story = {
 /**
  * PROOF: `List.Row` also covers a "nudge row" (leading icon · label title ·
  * meta count · trailing arrow · href) — no dedicated `NudgeRow` component
- * needed. Same khung, different props.
+ * needed. Same frame, different props.
  */
 export const AsNudgeRow: Story = {
     render: () => (
@@ -366,7 +375,15 @@ export const AsNudgeRow: Story = {
                 tier="primitive"
                 leaf="AsNudgeRow"
                 parts={LEADING_META_TRAILING_PARTS}
-                reason="PROOF: List.Row cũng phủ 'nudge row' — leading icon · TitledText (label) · meta count · trailing arrow · href — không cần NudgeRow riêng."
+                reason="PROOF: List.Row also covers a 'nudge row' — leading icon · TitledText (label) · meta count · trailing arrow · href — no separate NudgeRow needed."
+                code={`<List.Row
+  leading={<BellIcon />}
+  title="Pending assignments"
+  href="/dashboard/assignments?status=pending"
+  meta={<Chip size="sm" variant="soft" color="warning"><Chip.Label>3</Chip.Label></Chip>}
+  trailing={<ArrowRightIcon />}
+  divider
+/>`}
             >
                 <div className="w-full max-w-md rounded-2xl border border-default px-3">
                     <List.Row

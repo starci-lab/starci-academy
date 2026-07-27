@@ -6,11 +6,12 @@ import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCar
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ PHẠM VI STATE: `Grid.Base` là KHUNG DANH SÁCH LẶP hai chiều. State nó sinh ra =
- * `columns` (số cột theo mốc CONTAINER — state đặc trưng, không khung nào khác có),
- * và `gap` (§10). Không có `align`/`justify`: ô lưới mặc định kéo đầy ô, việc canh
- * bên trong ô là của component trong ô. Danh sách rỗng → track rỗng, câu chữ "chưa có
- * gì" thuộc caller (§13 — khung không mang nội dung).
+ * ⚠️ STATE SCOPE: `Grid.Base` is a two-dimensional REPEATED-LIST FRAME. The state it
+ * produces = `columns` (column count by CONTAINER breakpoint — a distinctive state no
+ * other frame has), and `gap` (§10). No `align`/`justify`: a grid cell stretches to
+ * fill by default, aligning content inside the cell is the job of the component
+ * inside it. An empty list → an empty track, the "nothing here yet" copy belongs to
+ * the caller (§13 — a frame carries no content).
  */
 const meta: Meta<typeof Grid.Base> = {
     title: "Layouts/Layout/Grid/Grid.Base",
@@ -25,7 +26,7 @@ export default meta
 
 type Story = StoryObj<typeof Grid.Base>
 
-/** Khung không mang nội dung — fixture là card thật để thấy ô và seam. */
+/** A frame carries no content — the fixture is a real card so cells and seams are visible. */
 const cellItems = (labels: ReadonlyArray<string>) =>
     labels.map((label) => ({
         key: label,
@@ -39,9 +40,9 @@ const cellItems = (labels: ReadonlyArray<string>) =>
 const MODULES = ["Nhập môn", "Container", "Orchestration", "CI/CD", "Quan trắc", "Bảo mật"]
 
 /**
- * `@app-*` đo CONTAINER gần nhất, không đo cửa sổ — muốn demo mốc thì phải tự mở một
- * `@container` đúng bề ngang (đúng như app shell làm). `--container-app-sm = 40rem`,
- * `-md = 48rem`, `-lg = 64rem`.
+ * `@app-*` measures the NEAREST CONTAINER, not the viewport — to demo a breakpoint
+ * you have to open your own `@container` at the right width (exactly what the app
+ * shell does). `--container-app-sm = 40rem`, `-md = 48rem`, `-lg = 64rem`.
  */
 const Frame = ({ width, label, children }: { width: string; label: string; children: ReactNode }) => (
     <div className="flex flex-col gap-2">
@@ -52,7 +53,7 @@ const Frame = ({ width, label, children }: { width: string; label: string; child
     </div>
 )
 
-/** Sáu nấc HỢP LỆ của §10 — `gap` là union literal nên không có nấc thứ bảy. */
+/** The six VALID steps of §10 — `gap` is a literal union so there's no seventh step. */
 const SCALE = [
     { gap: 0, name: "flush (0)" },
     { gap: 1, name: "tight (1)" },
@@ -62,7 +63,7 @@ const SCALE = [
     { gap: 8, name: "page (8)" },
 ] as const
 
-/** Default — lưới card 1 cột hẹp → 2 cột từ `@app-sm` → 3 cột từ `@app-md`. */
+/** Default — a card grid: 1 column narrow → 2 columns from `@app-sm` → 3 columns from `@app-md`. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
@@ -70,14 +71,14 @@ export const Default: Story = {
                 name="Grid.Base"
                 tier="primitive"
                 leaf="Default"
-                reason="Danh sách lặp hai chiều ⇒ `items` DỮ LIỆU, CẤM children (§13b) — tiền đề của lưới là mọi ô cùng một loại. Mốc reflow là CONTAINER QUERY `@app-*` chứ không phải `md:`: app shell là cột trái mà rail AI bóp được bất cứ lúc nào, lưới phải nghe theo cột của chính nó, không nghe cửa sổ."
+                reason="A two-dimensional repeated list ⇒ `items` is DATA, `children` is FORBIDDEN (§13b) — the grid's premise is that every cell is the same kind of thing. The reflow breakpoint is a CONTAINER QUERY `@app-*`, not `md:`: the app shell has a left rail that the AI panel can squeeze at any time, so the grid must listen to its own column, not the viewport."
                 code={`<Grid.Base
   gap={3}
   columns={{ base: 1, sm: 2, md: 3 }}
   items={modules.map((m) => ({ key: m, content: <ModuleCard name={m} /> }))}
 />`}
             >
-                <Frame width="48rem" label="container 768px — mốc @app-md → 3 cột">
+                <Frame width="48rem" label="container 768px — @app-md breakpoint → 3 columns">
                     <Grid.Base showAnatomy gap={3} columns={{ base: 1, sm: 2, md: 3 }} items={cellItems(MODULES)} />
                 </Frame>
             </BlockAnatomy>
@@ -86,9 +87,10 @@ export const Default: Story = {
 }
 
 /**
- * Span — `GridItem.span` (việc 1, họ Grid): một ô chiếm 2 cột thay vì 1, cho ô cần
- * nổi bật (banner, ô tổng) giữa các ô thường. Union chỉ dừng ở `1 | 2` — căn cứ ghi
- * ở JSDoc `GridItem.span` trong `Grid.tsx`.
+ * Span — `GridItem.span` (job 1 of the Grid family): one cell spans 2 columns
+ * instead of 1, for a cell that needs to stand out (a banner, a summary cell)
+ * among regular cells. The union stops at `1 | 2` — the rationale is in the
+ * `GridItem.span` JSDoc in `Grid.tsx`.
  */
 export const Span: Story = {
     render: () => {
@@ -102,7 +104,7 @@ export const Span: Story = {
                     name="Grid.Base"
                     tier="primitive"
                     leaf="Span"
-                    note="Ô đầu `span: 2` chiếm hai cột trong lưới 3 cột; các ô còn lại giữ `span` mặc định (1). Ô span luôn có wrapper thật để đeo `col-span-2`, kể cả khi `showAnatomy` tắt."
+                    note="The first cell `span: 2` occupies two columns in the 3-column grid; the rest keep the default `span` (1). A spanned cell always has a real wrapper to carry `col-span-2`, even when `showAnatomy` is off."
                     code={`<Grid.Base
   gap={3}
   columns={{ base: 1, sm: 2, md: 3 }}
@@ -113,7 +115,7 @@ export const Span: Story = {
   ]}
 />`}
                 >
-                    <Frame width="48rem" label="container 768px — @app-md → 3 cột, ô đầu chiếm 2">
+                    <Frame width="48rem" label="container 768px — @app-md → 3 columns, first cell spans 2">
                         <Grid.Base showAnatomy gap={3} columns={{ base: 1, sm: 2, md: 3 }} items={items} />
                     </Frame>
                 </BlockAnatomy>
@@ -123,9 +125,10 @@ export const Span: Story = {
 }
 
 /**
- * Columns — state ĐẶC TRƯNG của lưới: CÙNG một `columns`, chỉ đổi bề ngang container
- * là số cột đổi theo. Mỗi mốc KẾ THỪA mốc nhỏ hơn liền trước, nên `{base:1, md:3}`
- * nghĩa là 1 cột cho tới `@app-md` rồi 3 cột từ đó lên.
+ * Columns — the grid's DISTINCTIVE state: the SAME `columns`, just change the
+ * container's width and the column count changes with it. Each breakpoint
+ * INHERITS the smaller one right before it, so `{base:1, md:3}` means 1 column
+ * up to `@app-md`, then 3 columns from there up.
  */
 export const Columns: Story = {
     render: () => (
@@ -134,7 +137,7 @@ export const Columns: Story = {
                 name="Grid.Base"
                 tier="primitive"
                 leaf="Columns"
-                note="Số cột bị CHẶN theo mốc bằng TYPE (`sm` tối đa 3, `base` tối đa 2): 4 cột trong một shell hẹp thì không đọc được, nên type từ chối thẳng thay vì để review bắt."
+                note="Column count is CAPPED per breakpoint by the TYPE (`sm` max 3, `base` max 2): 4 columns in a narrow shell is unreadable, so the type rejects it outright instead of leaving it for review to catch."
                 code={`<Grid.Base
   gap={3}
   columns={{ base: 1, sm: 2, md: 3, lg: 4 }}
@@ -142,16 +145,16 @@ export const Columns: Story = {
 />`}
             >
                 <div className="flex flex-col gap-6">
-                    <Frame width="20rem" label="container 320px — dưới @app-sm → base = 1 cột">
+                    <Frame width="20rem" label="container 320px — below @app-sm → base = 1 column">
                         <Grid.Base showAnatomy gap={3} columns={{ base: 1, sm: 2, md: 3, lg: 4 }} items={cellItems(MODULES.slice(0, 4))} />
                     </Frame>
-                    <Frame width="40rem" label="container 640px — @app-sm → 2 cột">
+                    <Frame width="40rem" label="container 640px — @app-sm → 2 columns">
                         <Grid.Base gap={3} columns={{ base: 1, sm: 2, md: 3, lg: 4 }} items={cellItems(MODULES.slice(0, 4))} />
                     </Frame>
-                    <Frame width="48rem" label="container 768px — @app-md → 3 cột">
+                    <Frame width="48rem" label="container 768px — @app-md → 3 columns">
                         <Grid.Base gap={3} columns={{ base: 1, sm: 2, md: 3, lg: 4 }} items={cellItems(MODULES.slice(0, 4))} />
                     </Frame>
-                    <Frame width="64rem" label="container 1024px — @app-lg → 4 cột">
+                    <Frame width="64rem" label="container 1024px — @app-lg → 4 columns">
                         <Grid.Base gap={3} columns={{ base: 1, sm: 2, md: 3, lg: 4 }} items={cellItems(MODULES.slice(0, 4))} />
                     </Frame>
                 </div>
@@ -161,8 +164,9 @@ export const Columns: Story = {
 }
 
 /**
- * Gaps — `gap` nhận ĐÚNG sáu nấc `0·1·2·3·6·8` (§10c) và BẮT BUỘC; `gap={4}` là LỖI
- * BIÊN DỊCH. Áp cho CẢ hai trục nên khoảng giữa các hàng bằng khoảng giữa các cột.
+ * Gaps — `gap` accepts EXACTLY the six steps `0·1·2·3·6·8` (§10c) and is
+ * REQUIRED; `gap={4}` is a COMPILE ERROR. Applied to BOTH axes so the gap
+ * between rows equals the gap between columns.
  */
 export const Gaps: Story = {
     render: () => (
@@ -171,7 +175,7 @@ export const Gaps: Story = {
                 name="Grid.Base"
                 tier="primitive"
                 leaf="Gaps"
-                note="Lưới card thường ở `grouped(3)`; `section(6)` dành cho lưới các VÙNG lớn (§10b), không dùng cho lưới thẻ thường."
+                note="A regular card grid sits at `grouped(3)`; `section(6)` is for grids of large REGIONS (§10b), not for a plain card grid."
                 code={`<Grid.Base
   gap={3}
   columns={{ base: 2 }}

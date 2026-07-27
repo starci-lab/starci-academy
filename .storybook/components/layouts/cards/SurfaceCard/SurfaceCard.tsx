@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import type { ComponentType, ReactNode, SVGProps } from "react"
 import Link from "next/link"
-import { Accordion, cn, Skeleton as HeroSkeleton } from "@heroui/react"
+import { Accordion, Card, cn, Radio, RadioGroup, Skeleton as HeroSkeleton } from "@heroui/react"
 import { AnimatePresence, motion } from "framer-motion"
 import { CheckCircleIcon, PlusIcon, XCircleIcon } from "@phosphor-icons/react"
 import { SurfaceCardHeader, surfaceSectionGap, surfaceFrame, type SurfaceLabelProps, type SurfaceCardVariant } from "@sb-components/layouts/cards/surface-card-header"
@@ -15,34 +15,57 @@ import { Grid, type GridColumns } from "@sb-components/layouts/layout/Grid/Grid"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — `SurfaceCard.*`, the ONE card KHUNG namespace
- * (thầy 2026-07-25). Eight sibling card frames that used to live as eight loose
+ * (instructor's call, 2026-07-25). Eight sibling card frames that used to live as eight loose
  * folders (`SurfaceCard` · `NestedCard` · `PressableCard` · `GroupPressableCard`
  * · `SurfaceListCard` · `SurfaceAccordionCard` · `CrossListCard` ·
  * `DashedPlaceholderCard`) are now MEMBERS of one namespace — same tier, same
- * job (bố trí nội dung trong một mặt card), one import.
+ * job (laying out content within one card face), one import.
  *
  * KHUNG API LAW:
  * - Named slots are the main road: `header` / `body` / `footer`.
  * - `children` stays allowed on WRAPPER frames (`.Base` / `.Nested` /
  *   `.Pressable`) — it is shorthand for `body`.
  * - A REPEATING LIST must take DATA via `items`; children are forbidden there
- *   (`.List` · `.PressableGroup` · `.Accordion` · `.CrossList`).
+ *   (`.List` · `.PressableGroup` · `.SelectableGroup` · `.Accordion` · `.CrossList`).
  * - Namespace only — no bare component export.
  *
  * Behaviour/skin of every member is carried over VERBATIM from its old folder;
  * this is an API refactor, not a visual one. Synced to `src` later.
  *
- * ⭐ BA TRỤC ĐỘC LẬP (thầy chốt 2026-07-26) — ba prop `boolean` cũ tưởng là một
- * ý ("thẻ nhỏ hơn/nhẹ hơn") hoá ra là BA CHIỀU không liên quan nhau. Gộp lại sẽ
- * giết những tổ hợp có thật (một thẻ lồng VÀ có ảnh tràn viền là hợp lệ):
+ * ⭐ NINTH MEMBER (decided 2026-07-26): `.SelectableGroup` — moved in from the
+ * atom tier (`atoms/navigation/SelectableCardGroup`). It composes several cards
+ * into ONE bounded, laid-out cluster, which is a layout-tier job, not an atom's
+ * (§12a/§6b — an atom is a single leaf, not a composed grid). It is the SIBLING
+ * of `.PressableGroup` — same "grid of cards" shape — differing in exactly one
+ * axis: `.PressableGroup` is an ACTIONS grid of independent press targets
+ * (`role="group"`, each tile its own `<button>`/`<a>`, optional decorative
+ * `selected` ring with no enforced exclusivity); `.SelectableGroup` is a REAL
+ * single-select control (`role="radiogroup"` via HeroUI `RadioGroup`/`Radio` —
+ * React Aria roving tabindex + arrow-key navigation + enforced one-of-N value).
+ * That is a DOM/interaction-contract difference, not a stylistic one, so it is
+ * its own member (option A over folding a `selectedKey` prop into
+ * `.PressableGroup` — the two can't share one underlying element shape).
  *
- * | Prop cũ | Prop mới | Union | Mặc định | Có ở member |
+ * ⚠️ KNOWN DRIFT (do not fix in this pass): `.SelectableGroup` calls HeroUI
+ * `Radio`/`RadioGroup` directly instead of going through the design system's
+ * own `Choice.Radio`/`Choice.RadioGroup` atom
+ * (`.storybook/components/atoms/forms/Choice/Choice.tsx`, which has its own
+ * story). Every other member of this namespace composes lower-tier atoms; this
+ * one reaches past them straight to HeroUI. Left as-is per instruction —
+ * flagged here for a future pass.
+ *
+ * ⭐ THREE INDEPENDENT AXES (decided 2026-07-26) — three old `boolean` props that
+ * looked like one idea ("smaller/lighter card") turned out to be THREE UNRELATED
+ * dimensions. Merging them would kill real combinations (a nested card WITH a
+ * bleed-edge image is a valid combo):
+ *
+ * | Old prop | New prop | Union | Default | Present on member |
  * |---|---|---|---|---|
  * | `bordered?: boolean` | `variant` | `"surface" \| "nested"` | `"surface"` | `.Base` `.Nested` `.List` `.Accordion` `.CrossList` |
- * | `flushContent?: boolean` | `padding` | `SpaceScale` (từ `_spacing`) | `3` | `.Base` |
+ * | `flushContent?: boolean` | `padding` | `SpaceScale` (from `_spacing`) | `3` | `.Base` |
  * | `compact?: boolean` | `radius` | `"xl" \| "3xl"` | `"3xl"` | `.Nested` |
  *
- * Ánh xạ 1-1: `bordered` → `variant="nested"` · `flushContent` → `padding={0}` ·
+ * 1-1 mapping: `bordered` → `variant="nested"` · `flushContent` → `padding={0}` ·
  * `compact` → `radius="xl"`.
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -113,24 +136,80 @@ const RowAnchor = ({
 
 /** Props for {@link SurfaceCard.Base}. */
 export interface SurfaceCardBaseProps extends SurfaceLabelProps, SlotProps {
-    /** Secondary node rendered OUTSIDE (below) the card, `gap-2` — a caption/prompt. */
-    description?: ReactNode
     /**
-     * Khung mặt: `"surface"` (mặc định) `shadow-surface`, hoặc `"nested"` — border
-     * THAY CHO shadow khi mặt này nằm TRONG một mặt khác (§1a).
+     * Caption text placed OUTSIDE (below) the card, `gap-2` — a hint/note, not
+     * chrome inside the card.
      *
-     * 2026-07-26 (thầy): đổi từ `bordered?: boolean`. `bordered=true` → `variant="nested"`.
+     * This is the DATA PATH (§4): the caller passes a string, the FRAME wraps
+     * `Typography` itself and picks the size + tone (`xs` muted). Before 2026-07-26
+     * it took a `ReactNode`, so the call-site had to hand-write
+     * `<Typography type="body-xs" color="muted">…` — the caller holding
+     * scale/tone is exactly what §4 forbids, and it also blocked `isSkeleton`
+     * from flowing through (the frame had to branch off to build a separate
+     * shimmer bar instead of passing the flag down to the very atom rendering
+     * this text).
+     */
+    description?: string
+    /**
+     * Face frame: `"surface"` (default) `shadow-surface`, or `"nested"` — border
+     * INSTEAD OF shadow when this face sits INSIDE another face (§1a).
+     *
+     * 2026-07-26 (instructor): changed from `bordered?: boolean`. `bordered=true` → `variant="nested"`.
      */
     variant?: SurfaceCardVariant
     /**
-     * Đệm quanh nội dung, thang §10c. Mặc định `3`. Đặt `0` khi con tự ôm mép (ảnh
-     * bìa tràn viền) — vẫn giữ `overflow-hidden` để bo góc cắt đúng con tràn mép.
+     * Padding around the content, §10c scale. Default `3`. Set `0` when the child
+     * hugs the edge itself (a bleed-edge cover image) — still keeps
+     * `overflow-hidden` so rounding clips a bleeding child correctly.
      *
-     * 2026-07-26 (thầy): đổi từ `flushContent?: boolean` (`flushContent=true` →
-     * `padding={0}`). Trục ĐỘC LẬP với `variant` — một thẻ `nested` VÀ `padding={0}`
-     * là tổ hợp có thật (ảnh tràn viền trong thẻ lồng), gộp chung sẽ giết tổ hợp đó.
+     * 2026-07-26 (instructor): changed from `flushContent?: boolean` (`flushContent=true` →
+     * `padding={0}`). An INDEPENDENT axis from `variant` — a `nested` card AND
+     * `padding={0}` is a real combination (a bleed-edge image inside a nested
+     * card); merging them would kill that combo.
      */
     padding?: SpaceScale
+    /**
+     * `true` → the parts the frame OWNS ITSELF (`label` · right slot ·
+     * `description`) switch to shimmer. `children`/`body` are NOT drawn for you
+     * by the frame.
+     *
+     * ⭐ A COMPOSITE'S FLAG, NOT its own separate shape (decided 2026-07-26). The
+     * frame is only responsible for what IT ITSELF renders (§12c) — content is
+     * built by the caller, and the caller already holds that flag so it passes
+     * it on to its own children:
+     *
+     * ```tsx
+     * <SurfaceCard.Base isSkeleton={loading} label="My courses">
+     *   <ProfileRow isSkeleton={loading} />
+     * </SurfaceCard.Base>
+     * ```
+     *
+     * Since the flag only changes the STATE of an already-existing tree (not the
+     * structure), the story does NOT split a separate `leaf` for it — it sits
+     * beside the real version inside the `Default` leaf (§11f).
+     */
+    isSkeleton?: boolean
+    /**
+     * `true` → an accent arc SWEEPS around the card face, sitting on a SEPARATE
+     * layer BEHIND it (peeking out 2px past the edge). Pure "featured"
+     * decoration, NOT a data signal.
+     *
+     * Use on EXACTLY ONE card that needs to stand out on a face — two cards
+     * both highlighted cancel each other's emphasis out.
+     *
+     * ⭐ 2026-07-26 (instructor: "just add isHighlight"): this used to be a
+     * separate component, `HighlightCard`, wrapping OUTSIDE the card. But it
+     * built no card chrome of its own — it just inserted an effect `div` — so
+     * filing it under the `Cards` family meant filing a *decorator* under the
+     * *card-face frame* family, and the caller had to nest two layers for one
+     * thing. As a prop, the outer layer disappears.
+     *
+     * ⚠️ The visual lives in the GLOBAL class `.highlight-card-sweep`
+     * (`src/app/globals.css`), not in this file — fixing the sweep effect means
+     * going to `src` (§0). This is the only node in the `SurfaceCard` tree in
+     * that situation.
+     */
+    isHighlight?: boolean
     /** Extra classes on the section wrapper. */
     className?: string
     /** Extra classes on the surface (content) wrapper. */
@@ -168,6 +247,8 @@ const Base = ({
     description,
     variant = "surface",
     padding = 3,
+    isSkeleton = false,
+    isHighlight = false,
     className,
     contentClassName,
     anatPart,
@@ -186,12 +267,26 @@ const Base = ({
             {content}
         </div>
     )
-    const cardWithCaption = description != null ? (
-        <div className="flex flex-col gap-2">
+    // The sweep sits on a SEPARATE layer BEHIND the card face (peeking out 2px past
+    // the edge), so it needs a `relative` wrapper to anchor to. Off while
+    // `isSkeleton`: at rest there's nothing worth emphasizing yet — running the
+    // sweep around a shimmer block would just be noise.
+    const highlighted = isHighlight ? (
+        <div className="relative" data-anat-part={showAnatomy ? "Highlight" : undefined}>
+            {isSkeleton ? null : <div aria-hidden className="highlight-card-sweep" />}
             {card}
-            {showAnatomy ? <div data-anat-part="Description">{description}</div> : description}
         </div>
     ) : card
+    // The frame owns this text so it wraps the atom (§4) — and so the flag simply
+    // flows straight into that same atom, instead of branching off to build a
+    // separate shimmer bar.
+    const caption = <Typography.Base size="xs" color="muted" isSkeleton={isSkeleton} text={description} />
+    const cardWithCaption = description != null ? (
+        <div className="flex flex-col gap-2">
+            {highlighted}
+            {showAnatomy ? <div data-anat-part="Description">{caption}</div> : caption}
+        </div>
+    ) : highlighted
     const labelRow = (
         <SurfaceCardHeader
             label={label}
@@ -200,6 +295,8 @@ const Base = ({
             seeMoreLabel={seeMoreLabel}
             action={action}
             subtleLabel={subtleLabel}
+            isSkeleton={isSkeleton}
+            showAnatomy={showAnatomy}
         />
     )
     return (
@@ -236,7 +333,7 @@ export interface SurfaceCardNestedSection {
 
 /** Props for {@link SurfaceCard.Nested}. */
 export interface SurfaceCardNestedProps extends SlotProps {
-    /** Header title (quiet eyebrow label, e.g. "Bài liên quan"). Omit when passing `header`. */
+    /** Header title (quiet eyebrow label, e.g. "Related posts"). Omit when passing `header`. */
     title?: ReactNode
     /** Optional leading eyebrow icon in the header (passed BARE — the card owns its size-4, §4/§5). */
     icon?: ReactNode
@@ -248,21 +345,33 @@ export interface SurfaceCardNestedProps extends SlotProps {
      */
     items?: ReadonlyArray<SurfaceCardNestedSection>
     /**
-     * Bo góc: `"3xl"` (mặc định) hoặc `"xl"` (chật hơn, cho ngữ cảnh hẹp như bong
-     * bóng chat).
+     * Corner radius: `"3xl"` (default) or `"xl"` (tighter, for cramped contexts
+     * like a chat bubble).
      *
-     * 2026-07-26 (thầy): đổi từ `compact?: boolean` (`compact=true` → `radius="xl"`).
+     * 2026-07-26 (instructor): changed from `compact?: boolean` (`compact=true` → `radius="xl"`).
      */
     radius?: "xl" | "3xl"
     /**
      * Surface-in-surface: `variant="nested"` → `border border-default bg-transparent`
-     * — khi cha ĐÃ có mặt riêng (panel `bg-surface`, bubble `bg-surface-secondary`,
-     * modal/page card). Chỉ để `variant="surface"` (mặc định) khi render THẲNG trên
-     * `bg-background`, không có mặt cha.
+     * — when the parent ALREADY has its own face (a `bg-surface` panel, a
+     * `bg-surface-secondary` bubble, a modal/page card). Only leave
+     * `variant="surface"` (default) when rendering DIRECTLY on
+     * `bg-background`, with no parent face.
      *
-     * 2026-07-26 (thầy): đổi từ `bordered?: boolean`. `bordered=true` → `variant="nested"`.
+     * 2026-07-26 (instructor): changed from `bordered?: boolean`. `bordered=true` → `variant="nested"`.
      */
     variant?: SurfaceCardVariant
+    /**
+     * `true` → `title` in the header bar and the rows built from `items` switch
+     * to shimmer. `children`/`body` are NOT drawn for you by the frame — the
+     * caller passes the flag on to its own children.
+     *
+     * ⭐ This branch is a hybrid of two shapes: going via `items`, the frame
+     * KNOWS the row shape so it passes the flag straight down; going via
+     * `children`, the child belongs to the caller. NEITHER path spawns a new
+     * `leaf` — this is a STATE of the already-existing tree (§11f, §12c).
+     */
+    isSkeleton?: boolean
     /** Extra classes on the card root. */
     className?: string
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
@@ -280,17 +389,18 @@ export interface SurfaceCardNestedProps extends SlotProps {
  * title (nav-link affordance) — NO press-scale/ripple. Non-interactive → plain
  * `<div>` with no `cursor-pointer` (no false click affordance).
  */
-const NestedSection = ({ title, eyebrow, content, onPress, href, className, anatPart }: Omit<SurfaceCardNestedSection, "key">) => {
+const NestedSection = ({ title, eyebrow, content, onPress, href, className, anatPart, isSkeleton = false }: Omit<SurfaceCardNestedSection, "key"> & { isSkeleton?: boolean }) => {
     const interactive = Boolean(onPress || href)
     // §10: parent owns the gap (tight) — eyebrow/title/content no longer self-margin.
     const body = (
         <div className="flex min-w-0 flex-col gap-1">
             {eyebrow ? (
-                <Typography.Base size="xs" color="muted" truncate text={eyebrow} />
+                <Typography.Base size="xs" color="muted" truncate isSkeleton={isSkeleton} text={eyebrow} />
             ) : null}
             <Typography.Base size="sm"
                 weight="medium"
                 truncate
+                isSkeleton={isSkeleton}
                 className={cn(
                     "underline-offset-4 decoration-[var(--separator-tertiary)]",
                     interactive && "group-hover:underline",
@@ -359,13 +469,18 @@ const Nested = ({
     footer,
     radius = "3xl",
     variant = "surface",
+    isSkeleton = false,
     className,
     anatPart,
     showAnatomy,
 }: SurfaceCardNestedProps) => {
     const hasHeader = header != null || title != null || icon != null || meta != null
+    // The `items` path = the frame builds the row ⇒ the flag FLOWS ON straight into
+    // that row (the row switches its own text to shimmer). The `children` path =
+    // the caller builds it ⇒ the frame passes it back unchanged, and the flag is
+    // the caller's own to pass on. No second row shape is built anywhere.
     const innerBody = items != null
-        ? items.map(({ key, ...section }) => <NestedSection key={key} {...section} />)
+        ? items.map(({ key, ...section }) => <NestedSection key={key} {...section} isSkeleton={isSkeleton} />)
         : (body ?? children)
     return (
         <div
@@ -386,7 +501,9 @@ const Nested = ({
                             data-anat-part={showAnatomy ? "Header" : undefined}
                         >
                             {icon}
-                            <Typography.Base size="xs" color="muted" truncate text={title} />
+                            {isSkeleton
+                                ? <Typography.Base size="xs" isSkeleton className="w-28" />
+                                : <Typography.Base size="xs" color="muted" truncate text={title} />}
                         </span>
                     )}
                     {meta ? <span className="shrink-0" data-anat-part={showAnatomy ? "Meta" : undefined}>{meta}</span> : null}
@@ -491,8 +608,8 @@ interface PressableBaseProps extends SlotProps {
     isSelected?: boolean
     /**
      * `true` → render a generic skeleton mirror (tile-shaped placeholder) instead
-     * of the real press target. Consumer chỉ bật cờ — mirror không phụ thuộc
-     * `children`/`actions` thật (giống base `Button`).
+     * of the real press target. The consumer just flips the flag — the mirror
+     * doesn't depend on the real `children`/`actions` (same as base `Button`).
      */
     isSkeleton?: boolean
     /** Extra classes on the card surface. */
@@ -584,26 +701,27 @@ const Pressable = ({
             >
                 <HeroSkeleton className="size-10 shrink-0 rounded-xl" />
                 <div className="flex min-w-0 flex-1 flex-col gap-2">
-                    <Typography size="sm" isSkeleton className="w-2/3" />
-                    <Typography size="xs" isSkeleton className="w-1/3" />
+                    <Typography.Base size="sm" isSkeleton className="w-2/3" />
+                    <Typography.Base size="xs" isSkeleton className="w-1/3" />
                 </div>
             </div>
         )
     }
 
     // Shared card surface + disabled dim, identical across both render paths.
-    // NO hover effect (như HeroUI pressable card — hover trơ); phản hồi DUY NHẤT
-    // là PRESS: lún `active:scale-[0.97]` + ripple. ⚠️ Tailwind v4: `scale-*` set
-    // property `scale:` (KHÔNG phải `transform:`), nên transition PHẢI liệt kê
-    // `scale` — để `transform` thì scale đổi tức thì (giật). `duration-200
-    // ease-out` cho lún mượt; `motion-reduce` tắt; tap-highlight ẩn mobile.
+    // NO hover effect (like a HeroUI pressable card — hover is inert); the ONLY
+    // feedback is the PRESS: a `active:scale-[0.97]` push-in + ripple. ⚠️ Tailwind
+    // v4: `scale-*` sets the `scale:` property (NOT `transform:`), so the
+    // transition MUST list `scale` — listing `transform` instead makes scale
+    // change instantly (a jump cut). `duration-200 ease-out` for a smooth
+    // push-in; `motion-reduce` turns it off; tap-highlight hidden on mobile.
     // Shared LOOK only — press-scale is added PER-VARIANT below (simple = element's
     // own `:active`; stretched = only when the OVERLAY is pressed, NOT the inner
     // actions — a Continue/menu click must NOT scale the whole card).
     const surface = cn(
         "rounded-3xl bg-surface p-3 text-left shadow-surface [-webkit-tap-highlight-color:transparent]",
         "transition-[scale] duration-200 ease-out motion-reduce:transition-none",
-        // Selected = accent ring quanh card (card-equivalent của check ở row).
+        // Selected = accent ring around the card (the card-equivalent of a row's check).
         isSelected && "ring-2 ring-accent",
         isDisabled && "cursor-not-allowed opacity-60",
         className,
@@ -658,8 +776,8 @@ const Pressable = ({
     return (
         // Scale the WHOLE card ONLY when the stretched overlay (`data-card-press`) is
         // pressed — NOT when an inner action is. Plain `active:scale` would fire on
-        // ANY descendant press (Continue/menu → whole card zooms, sai). `:has()` giới
-        // hạn về đúng vùng card.
+        // ANY descendant press (Continue/menu → whole card zooms, wrong). `:has()`
+        // scopes it to just the card region.
         <div
             className={cn(
                 "relative w-full",
@@ -698,14 +816,15 @@ const Pressable = ({
 // .PressableGroup — a grid of press targets (was `GroupPressableCard`)
 // ─────────────────────────────────────────────────────────────────────────────
 
-// Cột theo bậc container: dùng thẳng {@link GridColumns} của `Grid.Base` — hệ lưới
-// DUY NHẤT của tầng layout (§13).
+// Columns by container step: use {@link GridColumns} from `Grid.Base` directly —
+// the ONE grid system of the layout tier (§13).
 //
-// 2026-07-26 (thầy): xoá bảng riêng `SurfaceCardPressableGroupColumns` (7 bậc
-// `base/sm/md/lg/xl/xl3/xl4`, dựng bằng `@sm:`/`@md:`…) — đó là thang CONTAINER
-// NỬA CỠ của Tailwind (`@sm` = 24rem), khác hẳn thang `@app-*` (`@app-sm` = 40rem)
-// mà `Container.Base`/`Grid.Base` và cả hệ đang dùng. Mọi breakpoint của bảng cũ
-// âm thầm bắn sai chỗ so với phần còn lại của app.
+// 2026-07-26 (instructor): removed the local `SurfaceCardPressableGroupColumns`
+// table (7 steps `base/sm/md/lg/xl/xl3/xl4`, built with `@sm:`/`@md:`…) — that
+// was Tailwind's HALF-SIZE container scale (`@sm` = 24rem), completely
+// different from the `@app-*` scale (`@app-sm` = 40rem) that `Container.Base`/
+// `Grid.Base` and the rest of the system use. Every breakpoint in the old table
+// was silently firing at the wrong point compared to the rest of the app.
 
 /** One pressable card inside a {@link SurfaceCard.PressableGroup}. */
 export interface SurfaceCardPressableGroupItem {
@@ -760,18 +879,18 @@ export interface SurfaceCardPressableGroupProps {
      */
     ariaLabel: string
     /**
-     * Responsive column count — dựng lưới bằng `Grid.Base` (§13). Defaults to a
+     * Responsive column count — grid built with `Grid.Base` (§13). Defaults to a
      * single column.
      *
-     * 2026-07-26 (thầy): đổi từ `SurfaceCardPressableGroupColumns` cục bộ (7 bậc,
-     * thang container nửa cỡ) sang {@link GridColumns} dùng chung toàn tầng (4 bậc
-     * `base/sm/md/lg`, thang `@app-*`).
+     * 2026-07-26 (instructor): changed from the local `SurfaceCardPressableGroupColumns`
+     * (7 steps, half-size container scale) to the shared {@link GridColumns}
+     * used tier-wide (4 steps `base/sm/md/lg`, `@app-*` scale).
      */
     columns?: GridColumns
     /**
-     * Gap between cards, thang §10c. Defaults to `3`.
+     * Gap between cards, §10c scale. Defaults to `3`.
      *
-     * 2026-07-26 (thầy): đổi kiểu từ `2 | 3` cục bộ sang {@link SpaceScale} dùng chung.
+     * 2026-07-26 (instructor): changed the type from a local `2 | 3` to the shared {@link SpaceScale}.
      */
     gap?: SpaceScale
     /**
@@ -795,9 +914,9 @@ export interface SurfaceCardPressableGroupProps {
     showAnatomy?: boolean
 }
 
-// Compact grid cell, not a standalone top-level card: one nấc down from
+// Compact grid cell, not a standalone top-level card: one step down from
 // `.Pressable`'s own `rounded-3xl`/`shadow-surface` default (concentric
-// radius: card 24px − 1 step → 16px) and one nấc UP from the flat button.
+// radius: card 24px − 1 step → 16px) and one step UP from the flat button.
 const TILE_CHROME = "rounded-2xl shadow-field"
 
 // §5a: tile body defaults to body-sm/text-sm → icon size-5, muted (list-icon convention).
@@ -822,15 +941,15 @@ const itemBody = (item: SurfaceCardPressableGroupItem) => {
 /**
  * One skeleton placeholder tile — mirrors {@link TILE_CHROME} + the standard
  * ProfileCard content shape (avatar + title + description), so the loading grid
- * holds the real shape these card-grids carry (thầy chốt 2026-07-22: skeleton
- * theo pattern ProfileCard).
+ * holds the real shape these card-grids carry (decided 2026-07-22: skeleton
+ * follows the ProfileCard pattern).
  */
 const PressableGroupSkeletonTile = ({ className }: { className?: string }) => (
     <div className={cn(TILE_CHROME, "flex items-center gap-3 p-3", className)}>
         <Avatar.Base isSkeleton size="md" className="shrink-0" />
         <div className="flex min-w-0 flex-1 flex-col">
-            <Typography size="sm" isSkeleton className="w-1/3" />
-            <Typography size="xs" isSkeleton className="w-2/3" />
+            <Typography.Base size="sm" isSkeleton className="w-1/3" />
+            <Typography.Base size="xs" isSkeleton className="w-2/3" />
         </div>
     </div>
 )
@@ -921,10 +1040,10 @@ const PressableGroup = ({
         )
     }
 
-    // 2026-07-26 (thầy): bỏ `<div className="@container">` tự mở riêng — từ nay
-    // `Container.Base` là chỗ MỞ container của tầng layout (một khung, không mỗi
-    // khung tự mở lấy một cái). Lưới dựng bằng `Grid.Base` (§13, hệ lưới DUY NHẤT
-    // của tầng) thay vì tự khai `grid`/`grid-cols-*`.
+    // 2026-07-26 (instructor): removed the self-opened `<div className="@container">`
+    // — from now on `Container.Base` is where the layout tier OPENS a container
+    // (one frame, not every frame opening its own). Grid built with `Grid.Base`
+    // (§13, the tier's ONE grid system) instead of hand-declaring `grid`/`grid-cols-*`.
     return (
         <div role="group" aria-label={ariaLabel} className={className}>
             <Grid.Base
@@ -963,6 +1082,133 @@ const PressableGroup = ({
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// .SelectableGroup — single-select grid of surface cards (was `SelectableCardGroup`)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** One selectable card in a {@link SurfaceCard.SelectableGroup}. */
+export interface SurfaceCardSelectableGroupItem<T extends string> {
+    /** Value selected when this card is chosen. */
+    value: T
+    /** Primary label (text / icon + text). */
+    label: ReactNode
+    /** Optional secondary line under the label. */
+    description?: ReactNode
+    /** Optional leading icon (rendered decorative). */
+    icon?: ReactNode
+    /** When true the card is dimmed and not selectable. */
+    isDisabled?: boolean
+    /** Optional trailing node (e.g. a "coming soon" tag) shown on the right. */
+    badge?: ReactNode
+}
+
+/** Props for {@link SurfaceCard.SelectableGroup}. */
+export interface SurfaceCardSelectableGroupProps<T extends string> {
+    /** The selectable cards (2+). */
+    items: Array<SurfaceCardSelectableGroupItem<T>>
+    /** Currently selected value. */
+    value: T
+    /** Fired with the chosen value when a card is selected. */
+    onChange: (value: T) => void
+    /** Accessible label for the group. */
+    ariaLabel: string
+    /** Grid column count. Defaults to `2`. */
+    columns?: 1 | 2 | 3
+    /** Extra classes on the grid. */
+    className?: string
+    /**
+     * Dev/spec: tag each card's own direct parts (`Icon` / `Label` / `Badge`) so a
+     * BlockAnatomy panel can badge them.
+     */
+    showAnatomy?: boolean
+}
+
+/** Tailwind grid-template class per supported column count. */
+const SELECTABLE_GROUP_COLUMNS_CLASS: Record<1 | 2 | 3, string> = {
+    1: "grid-cols-1",
+    2: "grid-cols-2",
+    3: "grid-cols-3",
+}
+
+/**
+ * A single-select group of surface cards: each option is a canonical HeroUI `Card`;
+ * choosing one draws an accent OUTLINE ring around it (never a fill / colour change,
+ * so the card stays neutral `bg-surface`). Built on HeroUI `RadioGroup`/`Radio`
+ * (React Aria) so it is a real radio group — arrow-key roving, single-select
+ * semantics, focus ring — not a hand-rolled toggle-button grid. This is the
+ * SELECTION sibling of `.PressableGroup` (§ note at the top of this file):
+ * `.PressableGroup`'s `selected` flag is a decorative ring with no enforced
+ * exclusivity; this member enforces true one-of-N via a controlled `value`.
+ *
+ * Selection/focus use `outline` (its own CSS property) rather than a Tailwind
+ * `ring-*` — the `.card` base bakes an unlayered `shadow-surface` box-shadow that
+ * would swallow a box-shadow ring, but never touches `outline`. That same shadow is
+ * dropped (`!shadow-none`) while the ring is up so the two don't stack.
+ *
+ * ⚠️ Calls HeroUI `Radio`/`RadioGroup` directly rather than the design system's
+ * `Choice.Radio`/`Choice.RadioGroup` atom — known drift, carried over verbatim
+ * from `atoms/navigation/SelectableCardGroup` (not refactored in this move).
+ *
+ * @param props - {@link SurfaceCardSelectableGroupProps}
+ */
+const SelectableGroup = <T extends string>({
+    items,
+    value,
+    onChange,
+    ariaLabel,
+    columns = 2,
+    className,
+    showAnatomy = false,
+}: SurfaceCardSelectableGroupProps<T>) => (
+        <RadioGroup
+            aria-label={ariaLabel}
+            value={value}
+            onChange={(next) => onChange(next as T)}
+            className={cn("grid gap-2", SELECTABLE_GROUP_COLUMNS_CLASS[columns], className)}
+        >
+            {items.map((item) => (
+                <Radio key={item.value} value={item.value} isDisabled={item.isDisabled} className="w-full">
+                    <Radio.Content className="block w-full">
+                        {({ isSelected, isDisabled, isFocusVisible }) => (
+                            <Card
+                                variant="default"
+                                className={cn(
+                                    "w-full text-sm text-foreground transition-colors",
+                                    // selection & keyboard focus = an accent OUTLINE ring, NO
+                                    // fill / colour change. Drop the card's `shadow-surface`
+                                    // while the ring is up so the two elevations don't stack.
+                                    (isSelected || isFocusVisible) &&
+                                    "outline outline-2 outline-accent outline-offset-0 !shadow-none",
+                                    !isSelected && !isDisabled && "hover:bg-default",
+                                    isDisabled && "opacity-60",
+                                )}
+                            >
+                                <div className="flex w-full items-center gap-2">
+                                    {item.icon ? (
+                                        <span className="shrink-0" aria-hidden data-anat-part={showAnatomy ? "Icon" : undefined}>
+                                            {item.icon}
+                                        </span>
+                                    ) : null}
+                                    <span className="flex min-w-0 flex-col" data-anat-part={showAnatomy ? "Label" : undefined}>
+                                        <span className="truncate">{item.label}</span>
+                                        {item.description ? (
+                                            <span className="truncate text-xs text-muted">{item.description}</span>
+                                        ) : null}
+                                    </span>
+                                    {item.badge ? (
+                                        <span className="ml-auto shrink-0" data-anat-part={showAnatomy ? "Badge" : undefined}>
+                                            {item.badge}
+                                        </span>
+                                    ) : null}
+                                </div>
+                            </Card>
+                        )}
+                    </Radio.Content>
+                </Radio>
+            ))}
+        </RadioGroup>
+    )
+
+// ─────────────────────────────────────────────────────────────────────────────
 // .List — bounded surface list of rows (was `SurfaceListCard` + its two rows)
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -983,26 +1229,27 @@ export interface SurfaceCardListItem {
     /** Optional leading node (thumbnail/icon), kept at intrinsic size. */
     leading?: ReactNode
     /**
-     * Icon dẫn đầu dạng COMPONENT REF — khung tự dựng và tự ép `size-5`, màu ăn theo
-     * chữ (foreground) chứ KHÔNG hạ muted.
-     * Đường dành cho caller KHÔNG được cầm atom/JSX (SCREEN, §"only block": thầy chốt
-     * 2026-07-25). Thua `leading` khi truyền cả hai; block khác vẫn dùng `leading`.
+     * Leading icon as a COMPONENT REF — the frame builds it and forces
+     * `size-5`, colour follows the text (foreground), NOT downgraded to muted.
+     * The path for callers who must NOT hold an atom/JSX (SCREEN, §"only block":
+     * decided 2026-07-25). Loses to `leading` when both are passed; other
+     * blocks still use `leading`.
      */
-    leadingIcon?: ComponentType<SVGProps<SVGSVGElement>>
+    leadingIcon?: ComponentType<SVGProps<SVGSVGElement> & { weight?: "regular" | "bold" }>
     /** Optional right-aligned metadata (chips/counts) before the trailing node. */
     meta?: ReactNode
     /**
-     * Meta dạng CHỮ — khung tự bọc `Typography` accent. Đường dữ liệu song song với
-     * `meta` (node), cùng lý do như {@link SurfaceCardListItem.leadingIcon}.
+     * Meta as TEXT — the frame wraps `Typography` accent itself. The data path
+     * parallel to `meta` (node), same reasoning as {@link SurfaceCardListItem.leadingIcon}.
      */
     metaText?: string
     /** Optional far-right node (caret / inline action). */
     trailing?: ReactNode
     /**
-     * Icon đuôi dạng COMPONENT REF — khung tự ép `size-4 text-muted`. Đường dữ liệu
-     * song song với `trailing` (node).
+     * Trailing icon as a COMPONENT REF — the frame forces `size-4 text-muted`.
+     * The data path parallel to `trailing` (node).
      */
-    trailingIcon?: ComponentType<SVGProps<SVGSVGElement>>
+    trailingIcon?: ComponentType<SVGProps<SVGSVGElement> & { weight?: "regular" | "bold" }>
     /** FREE-FORM row body — replaces the fixed leading/title/subtitle slots entirely. */
     content?: ReactNode
     /** Link target → renders an `<a>`/`<Link>` row that navigates on click. */
@@ -1042,14 +1289,26 @@ export interface SurfaceCardListProps extends SurfaceLabelProps {
     /** Shown (padded) INSIDE the surface when there are no rows — so empty reads as intentional. */
     emptyState?: ReactNode
     /**
-     * `"surface"` (mặc định) `shadow-surface`, hoặc `"nested"` — border THAY CHO
-     * shadow khi mặt này nằm TRONG một mặt khác (§1a).
+     * `"surface"` (default) `shadow-surface`, or `"nested"` — border INSTEAD OF
+     * shadow when this face sits INSIDE another face (§1a).
      *
-     * 2026-07-26 (thầy): đổi từ `bordered?: boolean`. `bordered=true` → `variant="nested"`.
+     * 2026-07-26 (instructor): changed from `bordered?: boolean`. `bordered=true` → `variant="nested"`.
      */
     variant?: SurfaceCardVariant
-    /** Secondary node rendered OUTSIDE (below) the list, `gap-2` — a caption/prompt. */
-    description?: ReactNode
+    /** Caption text under the list, `gap-2` — the DATA path, the frame wraps `Typography` itself (§4). */
+    description?: string
+    /**
+     * `true` → the frame SELF-renders its own mirror (same face, same row box,
+     * same divider) INSTEAD OF `items`, and `label`/`description` also switch to
+     * shimmer.
+     *
+     * ⭐ This branch receives `items` as DATA so the frame builds the row — the
+     * flag FLOWS ON straight into that row, the row keeps its box/padding/divider
+     * and only its text switches to shimmer. There's no second skeleton tree
+     * anywhere (§12c), so no row-count prop is needed either: the row count IS
+     * `items.length`.
+     */
+    isSkeleton?: boolean
     /** Extra classes on the outer section / surface. */
     className?: string
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
@@ -1068,7 +1327,7 @@ const itemVerdict = (item: { tone?: VerdictBandVariant; withVerdict?: VerdictBan
  * `onPress`/`href` make the whole row a tappable `<button>`/`<a>` with
  * `hover:bg-default` + focus ring.
  */
-const ListRow = ({ item }: { item: SurfaceCardListItem }) => {
+const ListRow = ({ item, isSkeleton = false }: { item: SurfaceCardListItem; isSkeleton?: boolean }) => {
     const {
         leading,
         leadingIcon: LeadingIcon,
@@ -1102,26 +1361,31 @@ const ListRow = ({ item }: { item: SurfaceCardListItem }) => {
         withVerdict?.enable && "first:rounded-t-3xl last:rounded-b-3xl",
         className,
     )
-    // §4/§5: khi caller đi đường DỮ LIỆU (`leadingIcon`/`metaText`/`trailingIcon`),
-    // khung sở hữu scale + tone — caller không bôi class, không cầm atom.
-    // Icon dẫn đầu CÙNG MÀU CHỮ (foreground) — thầy chốt: icon đi kèm nhãn thì ăn
-    // theo màu nhãn, không tự hạ xuống muted (nếu không nó đọc như bị mờ/vô hiệu).
+    // §4/§5: when the caller goes the DATA path (`leadingIcon`/`metaText`/`trailingIcon`),
+    // the frame owns scale + tone — the caller doesn't paint classes, doesn't hold an atom.
+    // The leading icon matches the TEXT COLOUR (foreground) — decided: an icon
+    // paired with a label follows the label's colour, it doesn't drop to muted on
+    // its own (otherwise it reads as dim/disabled).
     const leadingSlot = leading ?? (LeadingIcon ? <LeadingIcon aria-hidden focusable="false" className="size-5" /> : null)
     const metaSlot = meta ?? (metaText != null
         ? <Typography.Base size="sm" weight="medium" className="text-accent-soft-foreground" text={metaText} />
         : null)
-    const trailingSlot = trailing ?? (TrailingIcon ? <TrailingIcon aria-hidden focusable="false" className="size-4 text-muted" /> : null)
+    // §5.0a: `size-4` < `size-5` ⇒ the stroke gets thinner, so `weight="bold"` must be
+    // forced to compensate — otherwise the trailing glyph reads noticeably fainter
+    // than the `LeadingIcon` (`size-5`, regular) at the start of the same row.
+    const trailingSlot = trailing ?? (TrailingIcon ? <TrailingIcon aria-hidden focusable="false" weight="bold" className="size-4 text-muted" /> : null)
     const content = (
         <>
             {leadingSlot ? <div className="shrink-0">{leadingSlot}</div> : null}
             <div className="flex min-w-0 flex-col gap-0">
                 <Typography.Base size="sm"
                     truncate
+                    isSkeleton={isSkeleton}
                     className={cn(underlineHover && "underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline", titleClassName)}
                     text={title}
                 />
                 {subtitle ? (
-                    <Typography.Base size="xs" color="muted" truncate text={subtitle} />
+                    <Typography.Base size="xs" color="muted" truncate isSkeleton={isSkeleton} text={subtitle} />
                 ) : null}
             </div>
             {metaSlot || trailingSlot || selected ? (
@@ -1187,6 +1451,7 @@ const List = ({
     emptyState,
     variant = "surface",
     description,
+    isSkeleton = false,
     className,
     label,
     labelEnd,
@@ -1198,12 +1463,15 @@ const List = ({
     showAnatomy = false,
 }: SurfaceCardListProps) => {
     const isEmpty = items.length === 0
+    // The flag FLOWS ON straight into the real row — the row keeps its box/padding/
+    // divider and only its text switches to shimmer, so there's no second row to
+    // keep in sync (§12c).
     const rows = items.map((item) => (
         item.content != null
             ? <ListFreeRow key={item.key} item={item} />
-            : <ListRow key={item.key} item={item} />
+            : <ListRow key={item.key} item={item} isSkeleton={isSkeleton} />
     ))
-    const inner = isEmpty && emptyState != null ? <div className="p-8">{emptyState}</div> : rows
+    const inner = !isSkeleton && isEmpty && emptyState != null ? <div className="p-8">{emptyState}</div> : rows
     const bare = label == null && description == null
     const surface = (
         <div
@@ -1218,10 +1486,11 @@ const List = ({
         </div>
     )
     if (bare) return surface
+    const caption = <Typography.Base size="xs" color="muted" isSkeleton={isSkeleton} text={description} />
     const withCaption = description != null ? (
         <div className="flex flex-col gap-2">
             {surface}
-            <div data-anat-part={showAnatomy ? "Description" : undefined}>{description}</div>
+            <div data-anat-part={showAnatomy ? "Description" : undefined}>{caption}</div>
         </div>
     ) : surface
     return (
@@ -1234,6 +1503,8 @@ const List = ({
                     seeMoreLabel={seeMoreLabel}
                     action={action}
                     subtleLabel={subtleLabel}
+                    isSkeleton={isSkeleton}
+                    showAnatomy={showAnatomy}
                 />
             </div>
             {withCaption}
@@ -1268,10 +1539,10 @@ export interface SurfaceCardAccordionProps extends SurfaceLabelProps {
     /** Sections expanded on mount, keyed by item `id` (a `Set`). */
     defaultExpandedKeys?: Set<string>
     /**
-     * `"surface"` (mặc định) `shadow-surface`, hoặc `"nested"` — border THAY CHO
-     * shadow khi mặt này nằm TRONG một mặt khác (§1a).
+     * `"surface"` (default) `shadow-surface`, or `"nested"` — border INSTEAD OF
+     * shadow when this face sits INSIDE another face (§1a).
      *
-     * 2026-07-26 (thầy): đổi từ `bordered?: boolean`. `bordered=true` → `variant="nested"`.
+     * 2026-07-26 (instructor): changed from `bordered?: boolean`. `bordered=true` → `variant="nested"`.
      */
     variant?: SurfaceCardVariant
     /**
@@ -1279,12 +1550,24 @@ export interface SurfaceCardAccordionProps extends SurfaceLabelProps {
      * accordion reads as an intentional empty state, not a blank card.
      */
     emptyState?: ReactNode
-    /** Secondary node rendered OUTSIDE (below) the card, `gap-2` — a caption/prompt. */
-    description?: ReactNode
+    /**
+     * Caption text placed OUTSIDE (below) the card, `gap-2` — a hint/note, not
+     * chrome inside the card.
+     *
+     * This is the DATA PATH (§4): the caller passes a string, the FRAME wraps
+     * `Typography` itself and picks the size + tone (`xs` muted). Before 2026-07-26
+     * it took a `ReactNode`, so the call-site had to hand-write
+     * `<Typography type="body-xs" color="muted">…` — the caller holding
+     * scale/tone is exactly what §4 forbids, and it also blocked `isSkeleton`
+     * from flowing through (the frame had to branch off to build a separate
+     * shimmer bar instead of passing the flag down to the very atom rendering
+     * this text).
+     */
+    description?: string
     /**
      * `true` → SELF-render this card's own mirror (same surface frame, same trigger
      * row, row count = `items.length` — 3 when empty) INSTEAD of the real accordion:
-     * chủ của hình là chủ của skeleton (§12c). Consumer just flips the flag; there is
+     * the owner of the shape is the owner of the skeleton (§12c). Consumer just flips the flag; there is
      * NO shared skeleton component to place outside (mirrors `Button.isSkeleton`).
      */
     isSkeleton?: boolean
@@ -1297,8 +1580,8 @@ export interface SurfaceCardAccordionProps extends SurfaceLabelProps {
 }
 
 /**
- * Màu vạch ngăn giữa hai hàng accordion — SSOT DÙNG CHUNG cho hàng THẬT và hàng
- * skeleton, để hai bên không trôi khỏi nhau (§12c).
+ * Divider colour between two accordion rows — SHARED SSOT for the REAL row and the
+ * skeleton row, so the two never drift apart (§12c).
  */
 const ACCORDION_SEPARATOR_STYLE = {
     "--separator": "color-mix(in oklab, var(--surface-foreground) 6%, transparent)",
@@ -1351,15 +1634,17 @@ const AccordionFrame = ({
 )
 
 /**
- * Mirror skeleton của CHÍNH {@link AccordionFrame} — chủ của hình là chủ của
- * skeleton (§12c), không mượn component skeleton dùng chung.
+ * Mirror skeleton of {@link AccordionFrame} ITSELF — the owner of the shape is
+ * the owner of the skeleton (§12c), it doesn't borrow a shared skeleton component.
  *
- * KHUNG RENDER THẬT: cùng `surfaceFrame(variant)` + `overflow-hidden`, cùng hàng
- * trigger (`px-4 py-4`, hộp dòng cao đúng line-height chữ thật), cùng vạch ngăn
- * `h-px` giữa hai hàng (hàng cuối không có) — CHỈ chữ và caret thành thanh shimmer.
+ * MATCHES THE REAL RENDER: same `surfaceFrame(variant)` + `overflow-hidden`, same
+ * trigger row (`px-4 py-4`, row box height matching the real text's line-height),
+ * same `h-px` divider between rows (the last row has none) — ONLY the text and
+ * caret turn into shimmer bars.
  *
- * Số hàng lấy từ `items` thật khi có (mirror luôn dòng `subtitle` của từng hàng, để
- * chiều cao khớp bản thật); chưa có `items` thì 3 hàng mặc định.
+ * Row count comes from the real `items` when present (the mirror always mirrors
+ * each row's `subtitle` line too, so the height matches the real version); with no
+ * `items` yet, defaults to 3 rows.
  */
 const AccordionFrameSkeleton = ({
     items,
@@ -1367,7 +1652,7 @@ const AccordionFrameSkeleton = ({
     showAnatomy,
     anatPart,
 }: Pick<SurfaceCardAccordionProps, "items" | "variant" | "showAnatomy"> & { anatPart?: string }) => {
-    // Chưa có dữ liệu → 3 hàng mặc định; có rồi thì soi gương đúng từng hàng.
+    // No data yet → default 3 rows; once there is, mirror each row exactly.
     const rows: ReadonlyArray<SurfaceCardAccordionItem | undefined> =
         items.length > 0 ? items : Array.from({ length: 3 }, () => undefined)
     return (
@@ -1380,18 +1665,19 @@ const AccordionFrameSkeleton = ({
                 <div key={item?.id ?? index} className="relative" data-anat-part={showAnatomy ? "Row" : undefined}>
                     <div className="flex items-center px-4 py-4">
                         <div className="flex min-w-0 flex-1 flex-col gap-0 text-left">
-                            {/* Hộp dòng cao ĐÚNG line-height chữ thật (sm=20px · xs=16px) — thanh
-                                shimmer chỉ cao bằng glyph, không bọc thì hàng loading thấp hơn hàng thật. */}
+                            {/* Row box height EXACTLY matches the real text's line-height (sm=20px · xs=16px) —
+                                the shimmer bar is only glyph-height, so without this wrapper the
+                                loading row would sit shorter than the real row. */}
                             <span className="flex h-5 items-center">
-                                <Typography size="sm" isSkeleton className="w-2/5" />
+                                <Typography.Base size="sm" isSkeleton className="w-2/5" />
                             </span>
                             {item?.subtitle != null ? (
                                 <span className="flex h-4 items-center">
-                                    <Typography size="xs" isSkeleton className="w-1/4" />
+                                    <Typography.Base size="xs" isSkeleton className="w-1/4" />
                                 </span>
                             ) : null}
                         </div>
-                        {/* Caret: hàng thật LUÔN có `Accordion.Indicator` (`ml-auto size-4`) → mirror giữ đúng ô đó. */}
+                        {/* Caret: the real row ALWAYS has `Accordion.Indicator` (`ml-auto size-4`) → the mirror keeps the exact same slot. */}
                         <HeroSkeleton className="ml-auto size-4 shrink-0 rounded" />
                     </div>
                     {index < rows.length - 1 ? (
@@ -1543,7 +1829,7 @@ export interface SurfaceCardCrossListItem {
      * included/done SIGNAL, e.g. PricingTable), `cross` → `"muted"` (excluded, recede).
      * `"muted"` on a check makes the TEXT lead (value-props INSIDE another card, see
      * `principles.md` §2); `"danger"` marks a hard NEGATIVE row (lost/blocked/warning —
-     * e.g. a red ✗ "mất toàn bộ tiến độ"), not mere absence. Ignored for `none`.
+     * e.g. a red ✗ "lost all progress"), not mere absence. Ignored for `none`.
      */
     tone?: MarkTone
     /** Anatomy tag: names this row so a BlockAnatomy panel can badge it on-render. */
@@ -1557,11 +1843,11 @@ export interface SurfaceCardCrossListProps {
     /** The rows. REQUIRED — repeat list = data, never children. Ignored when `isSkeleton`. */
     items: ReadonlyArray<SurfaceCardCrossListItem>
     /**
-     * `"surface"` (mặc định) `shadow-surface`, hoặc `"nested"` — border THAY CHO
-     * shadow khi list này nằm TRONG một mặt khác (modal/drawer/panel) — nơi shadow
-     * vô hình (§1a).
+     * `"surface"` (default) `shadow-surface`, or `"nested"` — border INSTEAD OF
+     * shadow when this list sits INSIDE another face (modal/drawer/panel) —
+     * where shadow is invisible (§1a).
      *
-     * 2026-07-26 (thầy): đổi từ `bordered?: boolean`. `bordered=true` → `variant="nested"`.
+     * 2026-07-26 (instructor): changed from `bordered?: boolean`. `bordered=true` → `variant="nested"`.
      */
     variant?: SurfaceCardVariant
     /** `true` → self-render `skeletonRows` placeholder rows (mark + text mirror) instead of `items`. */
@@ -1603,7 +1889,7 @@ const CrossListRow = ({
             <>
                 <HeroSkeleton className="size-5 shrink-0 rounded-full" />
                 <div className="min-w-0 flex-1">
-                    <Typography size="sm" isSkeleton className="w-3/4" />
+                    <Typography.Base size="sm" isSkeleton className="w-3/4" />
                 </div>
             </>
         ) : (
@@ -1664,7 +1950,7 @@ export interface SurfaceCardPlaceholderProps {
      * Defaults to {@link PlusIcon}.
      */
     icon?: ReactNode
-    /** Caption under the icon (e.g. "Tạo CV mới"). */
+    /** Caption under the icon (e.g. "Create new CV"). */
     label: ReactNode
     /** Press handler — creates/opens the new item. */
     onPress: () => void
@@ -1716,7 +2002,7 @@ const Placeholder = ({
                 )}
             >
                 <HeroSkeleton className="size-8 rounded-xl" />
-                <Typography size="sm" isSkeleton className="w-1/3" />
+                <Typography.Base size="sm" isSkeleton className="w-1/3" />
             </div>
         )
     }
@@ -1749,7 +2035,7 @@ const Placeholder = ({
 
 /**
  * The card KHUNG namespace — every bounded card surface of the design system,
- * one import, eight members:
+ * one import, nine members:
  *
  * | Member | Content channel |
  * |---|---|
@@ -1757,6 +2043,7 @@ const Placeholder = ({
  * | `.Nested` | slots + `children`, or `items` (sections) |
  * | `.Pressable` | slots + `children` |
  * | `.PressableGroup` | `items` |
+ * | `.SelectableGroup` | `items` (single-select, `value`/`onChange`) |
  * | `.List` | `items` |
  * | `.Accordion` | `items` |
  * | `.CrossList` | `items` |
@@ -1767,6 +2054,7 @@ export const SurfaceCard = {
     Nested,
     Pressable,
     PressableGroup,
+    SelectableGroup,
     List,
     Accordion: AccordionCard,
     CrossList,

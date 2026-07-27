@@ -32,18 +32,18 @@ type Story = StoryObj<typeof Page.BottomBar>
  */
 const IN_BOX = "absolute inset-x-0 bottom-0"
 
-// Both slots → khung dựng hàng justify-between (Body min-w-0 · Actions shrink-0).
+// Both slots → the khung builds a justify-between row (Body min-w-0 · Actions shrink-0).
 const BOTH_PARTS: Array<AnatomyNode> = [
-    { name: "Body", tier: "primitive", role: "nội dung dẫn đầu (thường là giá), min-w-0" },
-    { name: "Actions", tier: "primitive", role: "nút chính bên phải, shrink-0" },
+    { name: "Body", tier: "primitive", role: "leading content (usually price), min-w-0" },
+    { name: "Actions", tier: "primitive", role: "primary button on the right, shrink-0" },
 ]
 
-// One side only → nội dung render RAW để giữ chiến lược width của caller.
+// One side only → content renders RAW to keep the caller's own width strategy.
 const BODY_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "Body", tier: "primitive", role: "toàn bộ hàng bar do caller tự dàn (không có Actions để chia đôi)" },
+    { name: "Body", tier: "primitive", role: "the whole bar row laid out by the caller (no Actions to split against)" },
 ]
 const ACTIONS_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "Actions", tier: "primitive", role: "cụm nút chiếm cả bar, tự giữ w-full/flex-1 của caller" },
+    { name: "Actions", tier: "primitive", role: "button cluster fills the whole bar, keeps the caller's own w-full/flex-1" },
 ]
 
 // TODO: swap for PriceTag local when ported — a faithful mini price display.
@@ -86,7 +86,11 @@ export const PriceWithAction: Story = {
                 tier="primitive"
                 leaf="PriceWithAction"
                 parts={BOTH_PARTS}
-                reason="Có ĐỦ hai slot → khung tự dàn flex justify-between, caller không còn phải tự viết hàng flex đó nữa."
+                reason="With BOTH slots filled → the khung lays out flex justify-between itself, so the caller no longer has to hand-write that flex row."
+                code={`<Page.BottomBar
+  body={<PriceTag discounted={599000} original={899000} />}
+  actions={<Button variant="primary">Enroll now</Button>}
+/>`}
             >
                 <Screen
                     bar={(
@@ -112,7 +116,8 @@ export const FullWidthAction: Story = {
                 tier="primitive"
                 leaf="FullWidthAction"
                 parts={BODY_ONLY_PARTS}
-                note="Chỉ một phía → nội dung render RAW, không bọc shrink-0, nên w-full của nút vẫn ăn."
+                note="Only one side filled → content renders RAW, not wrapped in shrink-0, so the button's w-full still takes effect."
+                code={"<Page.BottomBar><Button variant=\"primary\" className=\"w-full\">Start learning for free</Button></Page.BottomBar>"}
             >
                 <Screen
                     bar={(
@@ -135,7 +140,15 @@ export const WithDecline: Story = {
                 tier="primitive"
                 leaf="WithDecline"
                 parts={ACTIONS_ONLY_PARTS}
-                note="body null → Actions chiếm cả bar và giữ nguyên flex-1 của hai nút (không bị shrink-0 bóp)."
+                note="body null → Actions fills the whole bar and keeps the two buttons' flex-1 intact (not squeezed by shrink-0)."
+                code={`<Page.BottomBar
+  actions={(
+    <>
+      <Button variant="secondary" className="flex-1">Decline</Button>
+      <Button variant="primary" className="flex-1">Accept all</Button>
+    </>
+  )}
+/>`}
             >
                 <Screen
                     bar={(

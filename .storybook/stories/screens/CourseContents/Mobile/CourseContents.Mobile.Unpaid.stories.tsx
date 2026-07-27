@@ -20,5 +20,5 @@ export default meta
 type Story = StoryObj<typeof CourseContents>
 
 export const Default: Story = {
-    render: () => deviceLeaf({ width: W, state: "content", viewer: "trial", leaf: "Default", reason: "Mobile 375px · chưa mua — cây có thêm Callout + TrialConversionStrip; layout dồn 1 cột, meta chips wrap." }),
+    render: () => deviceLeaf({ width: W, viewer: "trial", leaf: "Default", reason: "Mobile 375px · not purchased — the tree adds the gate + TrialConversionStrip; layout collapses to one column and meta chips wrap." }),
 }

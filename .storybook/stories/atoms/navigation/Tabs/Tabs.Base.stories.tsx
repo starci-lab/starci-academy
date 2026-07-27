@@ -9,6 +9,15 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * span nội bộ (`Icon` chỉ là glyph dẫn đầu, `Badge` gọi thẳng HeroUI `Badge`
  * chứ không phải atom `Badge.Base` của hệ) ⇒ KHÔNG có deps thật, nên KHÔNG
  * truyền `annotate` (thầy chốt 2026-07-26 lần 2).
+ *
+ * Leaf `Skeleton` đổi tên từ `Loading` (2026-07-27, thầy chốt: leaf mang TÊN
+ * PROP — prop sinh ra leaf này là `isSkeleton`). §12g: leaf `isSkeleton` phải
+ * render đủ mọi nấc CÓ HÌNH biết trước, và `variant` ("primary"/"secondary")
+ * chính là trục đó — biết trước lúc gọi, không phụ thuộc data. Trước sửa
+ * (2026-07-27) component bỏ qua `variant` trong nhánh `isSkeleton`, luôn ra
+ * cùng một pill bất kể variant — bug thật cùng dạng neo `Button.Base` skeleton
+ * khoá cứng `w-24` cho mọi size (§12g). Đã sửa `TabsBase.tsx`: `secondary` giờ
+ * ra shimmer nhãn+underline thay vì pill đặc.
  */
 
 const meta: Meta<typeof Tabs.Base> = {
@@ -129,18 +138,34 @@ export const WithBadge: Story = {
     ),
 }
 
-/** Loading — atom tự vẽ leaf skeleton (một pill mỗi tab); không dùng Skeleton.*. */
-export const Loading: Story = {
+/**
+ * Skeleton — atom tự vẽ leaf skeleton; không dùng Skeleton.*. Render ĐỦ HAI HÌNH
+ * (§12g): `primary` (pill đặc) · `secondary` (nhãn + underline mảnh) — khớp đúng
+ * hình mà mỗi variant sẽ ra khi data về, không còn một pill dùng chung cho cả hai.
+ */
+export const Skeleton: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
                 name="Tabs.Base"
                 tier="atom"
-                leaf="Loading"
-                note="isSkeleton renders a row of pill shimmers OWNED by the atom (hybrid C)."
-                code={"<Tabs.Base isSkeleton ariaLabel=\"…\" selectedKey=\"\" onSelectionChange={fn} items={[…]} />"}
+                leaf="Prop `isSkeleton`"
+                note="isSkeleton's shape follows variant — a filled pill shimmer for primary, a label-bar-plus-underline shimmer for secondary — the same pixel commitment `size` makes on Button.Base's skeleton."
+                code={`<Tabs.Base isSkeleton ariaLabel="…" selectedKey="" onSelectionChange={fn} items={[…]} />
+<Tabs.Base isSkeleton variant="secondary" … />`}
             >
-                <Tabs.Base isSkeleton ariaLabel="Course" selectedKey="overview" onSelectionChange={() => {}} items={BASE_ITEMS} showAnatomy />
+                <div className="flex flex-col items-start gap-6">
+                    <Tabs.Base isSkeleton ariaLabel="Course" selectedKey="overview" onSelectionChange={() => {}} items={BASE_ITEMS} showAnatomy />
+                    <Tabs.Base
+                        isSkeleton
+                        variant="secondary"
+                        ariaLabel="Course (secondary)"
+                        selectedKey="overview"
+                        onSelectionChange={() => {}}
+                        items={BASE_ITEMS}
+                        showAnatomy
+                    />
+                </div>
             </BlockAnatomy>
         </div>
     ),

@@ -16,7 +16,7 @@ import {
 } from "@heroui/react"
 import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
-import { PriceTag } from "@sb-components/_legacy/designs/commerce/PriceTag/PriceTag"
+import { PriceTag } from "@sb-components/designs/commerce/PriceTag/PriceTag"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
@@ -346,10 +346,9 @@ export const CourseCard = ({
                         {loyaltyPending ? (
                             <Typography size="sm" isSkeleton className="w-1/2" anatPart={showAnatomy ? "Skeleton" : undefined} />
                         ) : displayPrice != null ? (
-                            <PriceTag
+                            <PriceTag.Inline
                                 discounted={displayPrice}
                                 original={displayOriginal}
-                                size="sm"
                                 anatPart={showAnatomy ? "PriceTag" : undefined}
                                 showAnatomy={showAnatomy}
                             />
@@ -462,10 +461,9 @@ export const CourseCard = ({
                     {loyaltyPending ? (
                         <Typography size="sm" isSkeleton className="w-1/2" anatPart={showAnatomy ? "Skeleton.Price" : undefined} />
                     ) : displayPrice != null ? (
-                        <PriceTag
+                        <PriceTag.Inline
                             discounted={displayPrice}
                             original={displayOriginal}
-                            size="sm"
                             anatPart={showAnatomy ? "PriceTag" : undefined}
                             showAnatomy={showAnatomy}
                         />

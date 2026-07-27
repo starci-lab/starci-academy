@@ -1,5 +1,5 @@
 import React from "react"
-import { ContinueCard } from "@sb-components/_legacy/designs/cards/ContinueCard/ContinueCard"
+import { ContinueCard } from "@sb-components/designs/cards/ContinueCard/ContinueCard"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -29,8 +29,6 @@ export interface ContinueLearningProps {
     max?: number
     /** Các mẩu meta dạng CHỮ (vd "Đã đọc 8/23 bài") — block tự dựng hàng meta. */
     meta?: Array<string>
-    /** Nhãn nút. */
-    ctaLabel: string
     /** Bấm nút tiếp tục. */
     onContinue?: () => void
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
@@ -49,20 +47,17 @@ export const ContinueLearning = ({
     value,
     max = 100,
     meta,
-    ctaLabel,
     onContinue,
     anatPart,
     showAnatomy = false,
 }: ContinueLearningProps) => (
-    <ContinueCard
-        // Block quyết nguyên liệu: hero = MỘT điểm nhấn trên trang; không eyebrow
-        // vì khung hero + CTA "Tiếp tục" đã nói rồi (nói hai lần là thừa).
-        variant="hero"
+    // `.Hero` = MỘT điểm nhấn trên trang. 2026-07-26: `variant="hero"` → member riêng
+    // (§14d.1 cấm trục hình ở tầng design), `ctaLabel` bỏ vì nhãn CTA do design sở hữu.
+    <ContinueCard.Hero
         title={title}
         value={value}
         max={max}
         meta={meta}
-        ctaLabel={ctaLabel}
         onPress={onContinue}
         anatPart={anatPart}
         showAnatomy={showAnatomy}

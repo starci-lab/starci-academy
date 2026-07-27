@@ -5,36 +5,37 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Alert.Base`: the ONE "một thông điệp có valence + lối thoát" atom.
+ * ATOM — `Alert.Base`: the ONE "a message with a valence and an exit" atom.
  *
- * Thầy chốt 2026-07-25: `Feedback.Callout` và `Toast.Base` HOÁ RA là cùng một hạt
- * (alert có fill màu), chỉ khác CHỖ ĐẶT — callout nằm trong surface, toast nổi.
- * Trước đó mỗi bên tự `import { Alert } from "@heroui/react"` rồi tự nuôi bảng
- * màu/close riêng → "đổi 1 phải đổi hết" (drift C-compose). Atom này là port DUY
- * NHẤT xuống HeroUI Alert; hai bên kia compose từ đây, không cắt thẳng nữa.
+ * Teacher finalized 2026-07-25: `Feedback.Callout` and `Toast.Base` turned out to
+ * be the SAME atom (a color-filled alert), differing only in PLACEMENT — callout
+ * sits inside a surface, toast floats. Before this, each side had its own
+ * `import { Alert } from "@heroui/react"` and kept its own color/close table →
+ * "change one, change all" (C-compose drift). This atom is the ONE AND ONLY port
+ * down to HeroUI Alert; the other two compose from here, no more cutting straight through.
  *
- * ATOM SỞ HỮU: map `status`→tint · icon mặc định đúng valence · scale glyph (§4/§5)
- * · skin nút × theo status · layout Indicator/Content/Action/Close · skeleton của
- * chính hình này (§12c).
- * CONSUMER CHỈ ĐƯA: nội dung (`title`/`description`/`body`) + `action` + `onClose`.
+ * ATOM OWNS: `status`→tint mapping · default icon per valence · glyph scale (§4/§5)
+ * · × button skin per status · Indicator/Content/Action/Close layout · this
+ * shape's own skeleton (§12c).
+ * CONSUMER ONLY SUPPLIES: content (`title`/`description`/`body`) + `action` + `onClose`.
  *
- * ICON (§5.0, thầy chốt 2026-07-26): MỘT bộ duy nhất `@phosphor-icons/react`.
- * Weight theo size (§5.0a): glyph chỉ báo `size-5` ⇒ regular (không truyền
- * `weight`); glyph × trong `Button.Base size="sm"` bị ép `size-3.5` ⇒ `weight="bold"`.
+ * ICON (§5.0, teacher finalized 2026-07-26): ONE single set, `@phosphor-icons/react`.
+ * Weight follows size (§5.0a): the indicator glyph at `size-5` ⇒ regular (no
+ * `weight` passed); the × glyph inside `Button.Base size="sm"` gets forced to `size-3.5` ⇒ `weight="bold"`.
  *
- * NAMESPACE (§13a): KHÔNG export component trần — mọi thành viên qua `Alert.*`.
+ * NAMESPACE (§13a): do NOT export a bare component — every member goes through `Alert.*`.
  *
- * §12b: KHÔNG mở `children` — `body` là đường DUY NHẤT để nhét nội dung tự do
- * (list ngắn, meta row) dưới description. `Alert.Base` không phải wrapper thật
- * (không có "nội dung của caller" nào cần bọc ngoài data props sẵn có), nên
- * children ở đây chỉ là escape hatch trùng lặp với `body` — bỏ.
+ * §12b: do NOT open `children` — `body` is the ONE path for free-form content
+ * (a short list, a meta row) under description. `Alert.Base` isn't a real wrapper
+ * (there's no "caller content" that needs wrapping beyond the data props already
+ * given), so `children` here would just be an escape hatch duplicating `body` — dropped.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 /**
  * An icon passed as a COMPONENT (Phosphor), rendered by the atom at its own scale (§4/§5).
- * Kiểu để TRẦN `ComponentType<SVGProps<SVGSVGElement>>` (§5.0) — không khai kiểu
- * riêng của thư viện icon, kẻo khoá cả cây vào một nhà cung cấp.
+ * The type stays BARE as `ComponentType<SVGProps<SVGSVGElement>>` (§5.0) — no
+ * library-specific icon type declared, so the whole tree doesn't lock into one provider.
  */
 export type AlertIcon = ComponentType<SVGProps<SVGSVGElement>>
 
@@ -42,15 +43,15 @@ export type AlertIcon = ComponentType<SVGProps<SVGSVGElement>>
 export type AlertStatus = "default" | "accent" | "success" | "warning" | "danger"
 
 /**
- * Fill strategy. `soft` ép dải tint phẳng `bg-<status>-soft` (đọc như highlight
- * strip, KHÔNG như card-in-card — dùng khi alert nằm TRONG một surface). `plain`
- * để nguyên tint mặc định của HeroUI (alert đứng trên canvas / nổi).
+ * Fill strategy. `soft` forces a flat `bg-<status>-soft` tint strip (reads like a
+ * highlight strip, NOT a card-in-card — use when the alert sits INSIDE a
+ * surface). `plain` keeps HeroUI's default tint (alert stands on canvas / floats).
  */
 export type AlertTone = "soft" | "plain"
 
 /**
- * Default indicator icon per status — Phosphor regular (§5.0). Cùng KHUÔN tròn cho
- * 4/5 status; `warning` giữ tam giác vì đó là ngữ nghĩa cảnh báo chuẩn.
+ * Default indicator icon per status — Phosphor regular (§5.0). Same round shape
+ * for 4 of the 5 statuses; `warning` keeps a triangle because that's the standard warning semantic.
  */
 const STATUS_ICON: Record<AlertStatus, AlertIcon> = {
     default: InfoIcon,
@@ -83,21 +84,22 @@ const STATUS_CLOSE_TONE: Record<AlertStatus, string> = {
 }
 
 /**
- * Glyph scale — MỘT cỡ cho mọi alert (thầy chốt 2026-07-25, soi mắt trên story
- * `Tones`). Trước đó atom có trục `size` sm/md chỉ để giữ nguyên hình cũ của
- * Callout (size-6) vs Toast (size-5); thầy chốt cả hai về size-5 ⇒ trục đó thừa,
- * gỡ luôn (§6: đừng nuôi prop không mang khác biệt thật).
+ * Glyph scale — ONE size for every alert (teacher finalized 2026-07-25, eyeballed
+ * on story `Tones`). Before this the atom carried a `size` axis sm/md just to
+ * preserve the old shape of Callout (size-6) vs Toast (size-5); teacher locked
+ * both to size-5 ⇒ that axis became redundant, removed (§6: don't keep a prop that carries no real difference).
  */
 const GLYPH_SCALE = "[&_svg]:size-5!"
 
 /**
- * Glyph × của nút đóng. `Button.Base size="sm"` ép icon xuống `size-3.5` — nhỏ hơn
- * `size-5` nên §5.0a bắt bù `weight="bold"`; để regular thì nét × mảnh hơn ~33% so
- * với glyph chỉ báo `size-5` đứng cùng hàng, nhìn ra hai độ đậm khác nhau.
+ * The × glyph of the close button. `Button.Base size="sm"` forces the icon down
+ * to `size-3.5` — smaller than `size-5`, so §5.0a requires compensating with
+ * `weight="bold"`; left at regular, the × stroke reads ~33% thinner than the
+ * `size-5` indicator glyph sitting on the same row, showing two different weights.
  */
 const CloseGlyph = (props: SVGProps<SVGSVGElement>) => <XIcon {...props} weight="bold" />
 
-/** Props RIÊNG của {@link Alert.Base} — TRỪ cặp `title`/`isSkeleton` (xem {@link AlertBaseProps}). */
+/** Props SPECIFIC to {@link Alert.Base} — EXCEPT the `title`/`isSkeleton` pair (see {@link AlertBaseProps}). */
 interface AlertBaseOwnProps {
     /** Semantic tone — drives tint + default icon + close skin. Default `"default"`. */
     status?: AlertStatus
@@ -126,10 +128,10 @@ interface AlertBaseOwnProps {
 /**
  * Props for {@link Alert.Base}.
  *
- * §12c: `isSkeleton` là state CO-LOCATED — atom này là bản gốc DUY NHẤT của hình
- * alert nên nó tự vẽ luôn hình loading của mình (không có compound `Skeleton.*`).
- * Khi `isSkeleton`, `title` thành OPTIONAL bằng UNION (không hạ optional đại trà —
- * nhánh sống vẫn BẮT BUỘC có tiêu đề).
+ * §12c: `isSkeleton` is a CO-LOCATED state — this atom is the ONE AND ONLY origin
+ * shape of the alert, so it draws its own loading shape too (no `Skeleton.*`
+ * compound). When `isSkeleton`, `title` becomes OPTIONAL via a UNION (not
+ * optional across the board — the live branch still REQUIRES a title).
  */
 export type AlertBaseProps = AlertBaseOwnProps &
     (
@@ -164,16 +166,16 @@ const AlertBase = ({
             className={cn("shadow-none", tone === "soft" && STATUS_TINT[status], className)}
             data-anat-part={anatPart}
         >
-            {/* §4: khung sở hữu scale glyph — caller đưa icon TRẦN (component ref). */}
+            {/* §4: the scaffold owns the glyph scale — the caller hands a BARE icon (component ref). */}
             <HeroAlert.Indicator className={GLYPH_SCALE} data-anat-part={showAnatomy ? "Icon" : undefined}>
                 <Icon aria-hidden />
             </HeroAlert.Indicator>
             <HeroAlert.Content data-anat-part={showAnatomy ? "Content" : undefined}>
-                {/* §12c: nhánh skeleton xét TRƯỚC mọi nhánh rẽ hình của phần chữ. */}
+                {/* §12c: the skeleton branch is checked BEFORE any other text-rendering branch. */}
                 {isSkeleton ? (
-                    // KHUNG (tint · radius · shadow · gap) và ICON render THẬT — chỉ CHỮ
-                    // thành gạch. Bar khớp đúng hộp dòng nên không nhảy layout (§8):
-                    // title `text-sm leading-6` → my-1 + h-4 = 24px; description
+                    // The FRAME (tint · radius · shadow · gap) and the ICON render FOR REAL — only
+                    // the TEXT turns into bars. Each bar matches the real line-box so layout never
+                    // jumps (§8): title `text-sm leading-6` → my-1 + h-4 = 24px; description
                     // `text-sm` (leading-5) → my-1 + h-3 = 20px.
                     <>
                         <HeroSkeleton
@@ -203,11 +205,11 @@ const AlertBase = ({
                 <div className="shrink-0" data-anat-part={showAnatomy ? "Action" : undefined}>{action}</div>
             ) : null}
             {onClose ? (
-                // §11a: badge dừng ở node "Close" (atom `Button.Base`) — không drill vào ruột atom.
+                // §11a: the badge stops at the "Close" node (atom `Button.Base`) — don't drill into the atom's guts.
                 <span className="shrink-0" data-anat-part={showAnatomy ? "Close" : undefined}>
                     <Button.Base isIconOnly
                         prefixIcon={CloseGlyph}
-                        ariaLabel={closeAriaLabel ?? "Đóng"}
+                        ariaLabel={closeAriaLabel ?? "Close"}
                         variant="ghost"
                         size="sm"
                         onPress={onClose}
@@ -220,8 +222,8 @@ const AlertBase = ({
 }
 
 /**
- * `Alert.*` — the alert ATOM namespace. `Alert.Base` là bề mặt alert DUY NHẤT của
- * hệ; `Feedback.Callout` (đặt trong surface) và `Toast.Base` (nổi) đều compose từ nó.
+ * `Alert.*` — the alert ATOM namespace. `Alert.Base` is the ONE AND ONLY alert
+ * surface of the system; `Feedback.Callout` (placed inside a surface) and `Toast.Base` (floating) both compose from it.
  */
 export const Alert = Object.assign(AlertBase, {
     Base: AlertBase,

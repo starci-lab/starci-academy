@@ -5,28 +5,31 @@ import { Choice } from "@sb-components/atoms/forms/Choice/Choice"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Choice.Radio`: MỘT hàng option, nhãn nằm INLINE cạnh dot (bọc HeroUI Radio).
+ * ATOM — `Choice.Radio`: ONE option row, label sits INLINE beside the dot (wraps HeroUI Radio).
  *
- * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `Choice.Radio` KHÔNG sống độc lập — nó phải
- * nằm trong một radio-context. Mô tả phụ (`hint`) · lỗi (`errorMessage`) · bắt buộc
- * (`isRequired`) là chuyện của NHÓM nên các state đó có nhà ở story `Choice.RadioGroup`
- * — KHÔNG lặp lại ở đây (§12f). Story này chỉ giữ state SINH RA TỪ chính hàng option.
+ * ⚠️ STATE SCOPE (confirmed by the mentor 2026-07-25): `Choice.Radio` does NOT live
+ * standalone — it must sit inside a radio-context. Helper text (`hint`) · error
+ * (`errorMessage`) · required (`isRequired`) belong to the GROUP, so those states
+ * live in the `Choice.RadioGroup` story — NOT repeated here (§12f). This story only
+ * keeps states that come FROM the option row itself.
  *
- * 📐 **1 PROP = 1 LEAF** (§12g). Bộ leaf đủ prop CÓ HÌNH của chính component này:
- * chọn hay chưa (`Default`/`Selected`, đến từ `value` khớp của nhóm) · `isDisabled`
- * (`Disabled`) · `isSkeleton` (`Loading`). `value`/`label`/`className`/`showAnatomy`
- * không có leaf riêng (`value`/`label` là dữ liệu bắt buộc, không phải state bật/tắt).
+ * 📐 **1 PROP = 1 LEAF** (§12g). The leaf set covers every prop with a VISUAL shape
+ * on this component: selected or not (`Default`/`Selected`, driven by the group's
+ * `value` matching) · `isDisabled` (`Disabled`) · `isSkeleton` (`Loading`).
+ * `value`/`label`/`className`/`showAnatomy` get no leaf of their own (`value`/`label`
+ * are required data, not an on/off state).
  *
- * ⚠️ HARNESS: `Choice.RadioGroup` chỉ nhận `options` DỮ LIỆU (không `children`), nên để
- * soi MỘT hàng option ta bọc bằng HeroUI `RadioGroup` trần — đây là giàn giáo của story
- * để có radio-context, KHÔNG phải cách dùng trong app.
+ * ⚠️ HARNESS: `Choice.RadioGroup` only accepts `options` DATA (no `children`), so to
+ * inspect ONE option row it's wrapped in a bare HeroUI `RadioGroup` — this is
+ * scaffolding for the story to have a radio-context, NOT how it's used in the app.
  *
- * ⭐ DEPS: atom này bọc thẳng HeroUI Radio — không dựng lại atom nào khác có story
- * riêng, nên KHÔNG có prop `annotate` (§12g: "atom lá bọc thẳng HeroUI ⇒ deps RỖNG").
- * `Control`/`Label` trong DOM là khe nội bộ của chính hàng option này.
+ * ⭐ DEPS: this atom wraps HeroUI Radio directly — it doesn't build on any other atom
+ * with its own story, so it has NO `annotate` prop (§12g: "a leaf atom that wraps
+ * HeroUI directly ⇒ deps is EMPTY"). `Control`/`Label` in the DOM are internal slots
+ * of this option row itself.
  *
- * ✍️ Chữ hiện trên panel (`leaf`/`reason`/`note`/`code`) và nhãn demo trong khung
- * render viết TIẾNG ANH; JSDoc/comment giữ tiếng Việt.
+ * ✍️ Text shown on the panel (`leaf`/`reason`/`note`/`code`) and demo labels inside
+ * the render frame are written in ENGLISH; JSDoc/comments stay in Vietnamese.
  */
 const meta: Meta<typeof Choice.Radio> = {
     title: "Atoms/Forms/Choice/Choice.Radio",
@@ -39,7 +42,7 @@ export default meta
 
 type Story = StoryObj<typeof Choice.Radio>
 
-/** Leaf TRẦN — một option chưa chọn (bọc trong radio-context để chạy được). */
+/** Bare leaf — an unselected option (wrapped in a radio-context so it runs). */
 export const Default: Story = {
     render: () => {
         const Demo = () => {
@@ -65,7 +68,7 @@ export const Default: Story = {
     },
 }
 
-/** Leaf — option đã chọn (value của nhóm khớp value của hàng; hàng KHÔNG tự giữ state chọn). */
+/** Leaf — a selected option (the group's value matches the row's value; the row does NOT hold its own selection state). */
 export const Selected: Story = {
     render: () => {
         const Demo = () => {
@@ -91,7 +94,7 @@ export const Selected: Story = {
     },
 }
 
-/** Leaf prop `isDisabled` — khoá RIÊNG một hàng (khoá cả nhóm là state của RadioGroup). */
+/** Leaf prop `isDisabled` — locks ONE row individually (locking the whole group is a RadioGroup state). */
 export const Disabled: Story = {
     render: () => (
         <div className="p-8">
@@ -113,7 +116,7 @@ export const Disabled: Story = {
     ),
 }
 
-/** Leaf prop `isSkeleton` — shimmer CO-LOCATED (§12c): dot + thanh nhãn. Không cần radio-context. */
+/** Leaf prop `isSkeleton` — CO-LOCATED shimmer (§12c): dot + label bar. No radio-context needed. */
 export const Loading: Story = {
     render: () => (
         <div className="p-8">

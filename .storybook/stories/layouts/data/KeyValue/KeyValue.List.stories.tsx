@@ -4,17 +4,18 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
- * ⚠️ PHẠM VI STATE (§12f/§13) — `KeyValue.List` là khung DANH SÁCH LẶP: nó chỉ sở
- * hữu những gì sinh ra khi NHIỀU hàng đứng cạnh nhau — mapping `items`, nhịp `gap`
- * (§10), đường ngăn GIỮA các hàng (`divider`), và hình thái tóm tắt "N dòng + 1 dòng
- * tổng" (`emphasis` ở item cuối).
+ * ⚠️ STATE SCOPE (§12f/§13) — `KeyValue.List` is a REPEATING-LIST scaffold: it only
+ * owns what emerges when MULTIPLE rows stand side by side — mapping `items`, the
+ * `gap` rhythm (§10), the divider BETWEEN rows (`divider`), and the summary shape
+ * "N lines + 1 total line" (`emphasis` on the last item).
  *
- * Bố cục/bậc chữ của MỘT hàng (nhãn muted · giá trị medium · `hint`) là state của
- * `KeyValue.Row` → sống ở story `KeyValue.Row`, KHÔNG lặp lại ở đây.
+ * The layout/type scale of ONE row (muted label · medium value · `hint`) is a state
+ * of `KeyValue.Row` → lives in story `KeyValue.Row`, NOT repeated here.
  *
- * `Loading`: khung KHÔNG có cờ `isSkeleton` (nó không biết giá trị là gì, và số hàng
- * là do consumer quyết) — caller MIRROR bằng cách đổ `Skeleton.Typography` vào đúng
- * hai ô `label`/`value`, giữ nguyên khung + số hàng (§8, không nhảy layout).
+ * `Loading`: the scaffold has NO `isSkeleton` flag (it doesn't know what the value
+ * is, and the row count is the consumer's call) — the caller MIRRORS by pouring
+ * `Skeleton.Typography` into exactly the `label`/`value` cells, keeping the same
+ * scaffold + row count (§8, no layout jump).
  */
 const meta: Meta<typeof KeyValue.List> = {
     title: "Layouts/Data/KeyValue/KeyValue.List",
@@ -27,7 +28,7 @@ export default meta
 
 type Story = StoryObj<typeof KeyValue.List>
 
-/** Tóm tắt đơn hàng — `value` là chuỗi ĐÃ format (khung không đổi đơn vị/tiền tệ). */
+/** Order summary — `value` is an ALREADY-formatted string (the scaffold doesn't convert units/currency). */
 const ITEMS = [
     { key: "tuition", label: "Học phí", value: "1.200.000 ₫" },
     { key: "discount", label: "Giảm giá", hint: "Mã STARCI20", value: "-200.000 ₫" },
@@ -35,15 +36,16 @@ const ITEMS = [
 ]
 
 /**
- * ANATOMY IS PER-LEAF. Con TRỰC TIẾP của list là `KeyValue.Row` — cùng tầng khung
- * (§11a: mỗi tầng chỉ badge con trực tiếp ở tier cao nhất). Nội tạng của một hàng
- * (`Label`/`Hint`/`Value`) là cây của `KeyValue.Row`, xem story riêng của nó.
+ * ANATOMY IS PER-LEAF. The DIRECT child of the list is `KeyValue.Row` — same
+ * scaffold tier (§11a: each tier only badges its direct child at the highest
+ * tier). The internals of one row (`Label`/`Hint`/`Value`) are `KeyValue.Row`'s
+ * own tree, see its own story.
  */
 const LIST_PARTS: Array<AnatomyNode> = [
     {
         name: "Row",
         tier: "primitive",
-        role: "một `KeyValue.Row` dựng từ `items[i]`",
+        role: "one `KeyValue.Row` built from `items[i]`",
         storyId: "layouts-data-keyvalue-keyvalue-row--default",
     },
 ]
@@ -51,13 +53,13 @@ const DIVIDER_PARTS: Array<AnatomyNode> = [
     {
         name: "Row",
         tier: "primitive",
-        role: "một `KeyValue.Row` dựng từ `items[i]`",
+        role: "one `KeyValue.Row` built from `items[i]`",
         storyId: "layouts-data-keyvalue-keyvalue-row--default",
     },
-    { name: "Divider", tier: "atom", role: "`Divider.Base` GIỮA hai hàng — hàng cuối không kẻ" },
+    { name: "Divider", tier: "atom", role: "`Divider.Base` BETWEEN two rows — the last row doesn't get a line" },
 ]
 
-/** Default — `items` là DỮ LIỆU (§13b cấm children); gap mặc định `3` (hàng dọc). */
+/** Default — `items` is DATA (§13b forbids children); default gap `3` (vertical rows). */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
@@ -66,7 +68,7 @@ export const Default: Story = {
                 tier="primitive"
                 leaf="Default"
                 parts={LIST_PARTS}
-                reason="N cặp nhãn–giá trị CÙNG KIỂU ⇒ §13b bắt buộc `items`, cấm children. `gap` bị ÉP BẰNG TYPE về thang §10 (`0·1·2·3·6·8`) nên nhịp dọc không thể trôi khỏi thang — đây là lý do khung này tồn tại thay vì `flex flex-col` hand-roll ở call-site."
+                reason="N label–value pairs of the SAME KIND ⇒ §13b requires `items`, forbids children. `gap` is TYPE-FORCED onto the §10 scale (`0·1·2·3·6·8`) so the vertical rhythm can never drift off the scale — this is why this scaffold exists instead of a hand-rolled `flex flex-col` at the call site."
                 code={`<KeyValue.List
   items={[
     { key: "tuition", label: "Học phí", value: "1.200.000 ₫" },
@@ -83,7 +85,7 @@ export const Default: Story = {
     ),
 }
 
-/** WithDivider — đường ngăn là SEAM giữa hai hàng: hàng CUỐI không kẻ. */
+/** WithDivider — the divider line is the SEAM between two rows: the LAST row gets no line. */
 export const WithDivider: Story = {
     render: () => (
         <div className="p-8">
@@ -92,7 +94,7 @@ export const WithDivider: Story = {
                 tier="primitive"
                 leaf="WithDivider"
                 parts={DIVIDER_PARTS}
-                note="LIST quyết định đường kẻ, không phải hàng — nên không bao giờ thừa một vạch treo ở đáy. Khoảng trên/dưới vạch dùng CHUNG `gap` của list ⇒ nhịp luôn cân (§10a: một seam, một chủ)."
+                note="The LIST decides the divider line, not the row — so there's never a stray line hanging at the bottom. The space above/below the line SHARES the list's `gap` ⇒ the rhythm always balances (§10a: one seam, one owner)."
                 code={"<KeyValue.List divider items={ITEMS} />"}
             >
                 <div className="max-w-sm">
@@ -103,7 +105,7 @@ export const WithDivider: Story = {
     ),
 }
 
-/** WithTotal — hình thái tóm tắt: N dòng thường + dòng cuối `emphasis`, tách bằng kẻ. */
+/** WithTotal — summary shape: N regular lines + a final `emphasis` line, separated by a divider. */
 export const WithTotal: Story = {
     render: () => (
         <div className="p-8">
@@ -112,7 +114,7 @@ export const WithTotal: Story = {
                 tier="primitive"
                 leaf="WithTotal"
                 parts={DIVIDER_PARTS}
-                note="Dòng tổng chỉ là một item có `emphasis` — khung KHÔNG tự cộng (không mang chức năng, §13). Consumer đưa vào con số đã tính + đã format."
+                note="The total line is just an item with `emphasis` — the scaffold does NOT sum on its own (carries no logic, §13). The consumer hands in an already-computed, already-formatted number."
                 code={`<KeyValue.List
   divider
   items={[
@@ -133,7 +135,7 @@ export const WithTotal: Story = {
     ),
 }
 
-/** Loading — caller MIRROR: giữ khung + số hàng, chỉ đổ thanh skeleton vào 2 ô. */
+/** Loading — caller MIRRORS: keeps the scaffold + row count, only pours skeleton bars into the 2 cells. */
 export const Loading: Story = {
     render: () => (
         <div className="p-8">
@@ -142,7 +144,7 @@ export const Loading: Story = {
                 tier="primitive"
                 leaf="Loading"
                 parts={LIST_PARTS}
-                note="Khung không sở hữu state tải (không có `isSkeleton`): số hàng và ý nghĩa từng ô là của consumer. Mirror giữ ĐÚNG cây thật — vẫn là `KeyValue.Row`, chỉ swap `label`/`value` sang `Skeleton.Typography` nên footprint không nhảy khi dữ liệu về."
+                note="The scaffold doesn't own loading state (no `isSkeleton`): row count and each cell's meaning belong to the consumer. The mirror keeps the EXACT real tree — still `KeyValue.Row`, just swapping `label`/`value` for `Skeleton.Typography` so the footprint doesn't jump when data lands."
                 code={`<KeyValue.List
   items={ITEMS.map((item) => ({
     key: item.key,

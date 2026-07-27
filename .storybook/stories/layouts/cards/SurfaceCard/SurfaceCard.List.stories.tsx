@@ -6,23 +6,26 @@ import { SurfaceCard, type SurfaceCardListItem } from "@sb-components/layouts/ca
 import { Feedback } from "@sb-components/layouts/feedback/Feedback/Feedback"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
-// `Feedback.Empty` nhận icon là COMPONENT ref và tự ép `size-8` (§4/§5) — phosphor
-// `weight="duotone"` không đi kèm được nữa, nên bọc thành component để GIỮ NGUYÊN nét vẽ.
+// `Feedback.Empty` accepts icon as a COMPONENT ref and forces `size-8` itself (§4/§5) —
+// phosphor's `weight="duotone"` can no longer tag along, so it's wrapped in a component to KEEP the artwork.
 const TrayDuotone = (props: SVGProps<SVGSVGElement>) => <TrayIcon {...props} weight="duotone" />
 
 /**
- * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `SurfaceCard.List` là khung DANH SÁCH LẶP nên
- * `items` BẮT BUỘC là dữ liệu (cấm children). Story ở đây chỉ render state do CHÍNH nó đẻ:
- * hai shape hàng (`title` cố định vs `content` tự do), các cờ hàng (`selected`/`isDisabled`/
- * `hover`/`tone`), biên rỗng + 1 hàng, và mirror loading.
+ * ⚠️ STATE SCOPE (confirmed by the mentor 2026-07-25): `SurfaceCard.List` is a REPEATING
+ * LIST frame, so `items` MUST be data (children forbidden). The stories here only render
+ * states that this component itself produces: two row shapes (fixed `title` vs free-form
+ * `content`), row flags (`selected`/`isDisabled`/`hover`/`tone`), the empty + 1-row edge
+ * cases, and the loading mirror.
  *
- * Bộ header section (`label`/`labelEnd`/`onSeeMore`/`action`/`subtleLabel`/`description`)
- * dùng CHUNG `SurfaceCardHeader` với `SurfaceCard.Base` — ở đây chỉ giữ MỘT leaf `WithLabel`
- * để chứng minh header bật được; cả bộ state của header sống ở story `SurfaceCard.Base`.
+ * The header section set (`label`/`labelEnd`/`onSeeMore`/`action`/`subtleLabel`/
+ * `description`) SHARES `SurfaceCardHeader` with `SurfaceCard.Base` — here only ONE leaf
+ * `WithLabel` is kept to prove the header can turn on; the full header state set lives in
+ * the `SurfaceCard.Base` story.
  *
- * ⚠️ `variant` (§1a, `.List` cũng có prop này — 2026-07-26) KHÔNG có leaf riêng ở đây: state
- * đó là TRỤC surface-in-surface, cùng leaf `Variants` đã diễn ở `SurfaceCard.Base`/`.Accordion`,
- * không lặp lại một lần nữa cho mỗi member cùng khung.
+ * ⚠️ `variant` (§1a, `.List` also has this prop — 2026-07-26) has NO leaf of its own here:
+ * that state is the surface-in-surface AXIS, the same `Variants` leaf already demonstrated
+ * on `SurfaceCard.Base`/`.Accordion` — it is not repeated again for every member of the
+ * same frame.
  */
 const meta: Meta<typeof SurfaceCard.List> = {
     title: "Layouts/Cards/SurfaceCard/SurfaceCard.List",
@@ -40,9 +43,10 @@ type Story = StoryObj<typeof SurfaceCard.List>
 const caret = <CaretRightIcon className="size-3 text-muted" aria-hidden focusable="false" />
 
 /**
- * Mock-content chuẩn (C-fixture) cho ô `content` TỰ DO của item: avatar + title +
- * description. Item ĐÃ LÀ hộp row (padding + hover + separator riêng) nên KHÔNG bọc thêm
- * `Card` ngoài (tránh card-in-card) — chỉ giữ row.
+ * Standard mock content (C-fixture) for the item's FREE-FORM `content` slot: avatar +
+ * title + description. The item is ALREADY a row box (its own padding + hover +
+ * separator) so it does NOT wrap an extra outer `Card` (avoids card-in-card) — just keeps
+ * the row.
  */
 const profileRow = (initials: string, title: string, description: string) => (
     <div className="flex items-center gap-3">
@@ -63,10 +67,11 @@ const courseItems: ReadonlyArray<SurfaceCardListItem> = [
 ]
 
 /**
- * `Feedback.Empty` là DEP THẬT của leaf `Empty` (story riêng, bấm nhảy được) — khớp shape
- * icon+title+description+action đang render ở leaf này ⇒ trỏ đúng leaf `Action` bên đó.
- * Mọi part khác của khung (`Surface`/`Header`/`Row`/`Item`) KHÔNG có story riêng nên
- * KHÔNG khai — đường cũ `parts={...}` từng khai chúng chỉ tạo entry chết (không bấm được).
+ * `Feedback.Empty` is a REAL DEP of the `Empty` leaf (its own story, clickable) — it
+ * matches the icon+title+description+action shape rendered by this leaf ⇒ it points at
+ * the right `Action` leaf over there. Every other part of the frame (`Surface`/`Header`/
+ * `Row`/`Item`) has no story of its own, so it's NOT declared — the old `parts={...}` path
+ * that used to declare them only created dead entries (not clickable).
  */
 const PART_FEEDBACK_EMPTY: AnatomyAnnotation = {
     role: "Fills the Surface when items is empty — icon + title + description + action.",
@@ -95,7 +100,7 @@ export const Default: Story = {
     ),
 }
 
-/** Có label: Header (SurfaceCardHeader) + Surface + Row. Cả bộ slot header xem ở `SurfaceCard.Base`. */
+/** With label: Header (SurfaceCardHeader) + Surface + Row. See the full header slot set in `SurfaceCard.Base`. */
 export const WithLabel: Story = {
     render: () => (
         <div className="p-8">
@@ -115,7 +120,7 @@ export const WithLabel: Story = {
     ),
 }
 
-/** `leading` (thumbnail/icon) + `meta` (tag ngắn theo hàng) + `trailing` — hàng là một composition, không phẳng. */
+/** `leading` (thumbnail/icon) + `meta` (a short per-row tag) + `trailing` — the row is a composition, not flat. */
 export const LeadingMeta: Story = {
     render: () => (
         <div className="p-8">
@@ -168,8 +173,9 @@ export const LeadingMeta: Story = {
 }
 
 /**
- * Shape thứ hai của item: `content` thay cho bộ slot cố định — khung vẫn giữ padding +
- * separator inset, caller tự bố trí bên trong. `content` THẮNG `title` khi truyền cả hai.
+ * The item's second shape: `content` replaces the fixed slot set — the frame still keeps
+ * padding + separator inset, the caller lays out the inside itself. `content` WINS over
+ * `title` when both are passed.
  */
 export const FreeForm: Story = {
     render: () => (
@@ -208,7 +214,7 @@ export const FreeForm: Story = {
     ),
 }
 
-/** `selected` — lựa chọn ĐANG DÙNG trong nhóm single-select: CheckCircleIcon accent ở cuối hàng (không tint cả hàng). */
+/** `selected` — the option CURRENTLY IN USE within a single-select group: accent CheckCircleIcon at the end of the row (does not tint the whole row). */
 export const Selected: Story = {
     render: () => (
         <div className="p-8">
@@ -236,7 +242,7 @@ export const Selected: Story = {
     ),
 }
 
-/** `isDisabled` — một lựa chọn TỒN TẠI nhưng chưa mở khoá: dim + tắt tương tác, vẫn hiện (không ẩn khỏi danh sách). */
+/** `isDisabled` — an option that EXISTS but isn't unlocked yet: dimmed + interaction off, still shown (not hidden from the list). */
 export const Disabled: Story = {
     render: () => (
         <div className="p-8">
@@ -271,7 +277,7 @@ export const Disabled: Story = {
     ),
 }
 
-/** `hover="underline"` — hàng LÀ một link (điều hướng đi): TITLE underline khi hover, không tint nền hàng. */
+/** `hover="underline"` — the row IS a link (navigates away): TITLE underlines on hover, no row background tint. */
 export const HoverUnderline: Story = {
     render: () => (
         <div className="p-8">
@@ -298,7 +304,7 @@ export const HoverUnderline: Story = {
     ),
 }
 
-/** Static (chỉ đọc): không `onPress`/`href` → `<div>` thuần, không hover/focus/cursor (đừng giả vờ bấm được). */
+/** Static (read-only): no `onPress`/`href` → a plain `<div>`, no hover/focus/cursor (don't pretend it's clickable). */
 export const Static: Story = {
     render: () => (
         <div className="p-8">
@@ -326,7 +332,7 @@ export const Static: Story = {
     ),
 }
 
-/** `tone` — dải inset bên trái mang NGHĨA TỪ DATA (một tier / vùng promote-demote). Rút gọn của `withVerdict`. */
+/** `tone` — the left inset band carries MEANING FROM DATA (a tier / promote-demote zone). Shorthand for `withVerdict`. */
 export const Verdict: Story = {
     render: () => (
         <div className="p-8">
@@ -356,7 +362,7 @@ export const Verdict: Story = {
     ),
 }
 
-/** Biên: đúng 1 hàng — separator tự ẩn ở hàng cuối (không cần ≥2 hàng để hợp lệ). */
+/** Edge case: exactly 1 row — the separator hides itself on the last row (no need for ≥2 rows to be valid). */
 export const SingleRow: Story = {
     render: () => (
         <div className="p-8">
@@ -378,7 +384,7 @@ export const SingleRow: Story = {
     ),
 }
 
-/** Empty: `items` rỗng → {@link Feedback.Empty} lấp đầy surface (không để card trắng trơn). */
+/** Empty: `items` is empty → {@link Feedback.Empty} fills the surface (no bare blank card). */
 export const Empty: Story = {
     render: () => (
         <div className="p-8">
@@ -414,10 +420,11 @@ export const Empty: Story = {
 }
 
 /**
- * Loading: khung danh sách KHÔNG có cờ `isSkeleton` — caller MIRROR cây thật: vẫn cùng
- * `SurfaceCard.List` + item THẬT (giữ separator full-bleed + frame), chỉ `title` đổi thành
- * một thanh `Skeleton` (skeleton.md: mirror cây layout, giữ node cấu trúc — list skeleton =
- * card liền khối, KHÔNG rã thành hàng rời rạc).
+ * Loading: the list frame has NO `isSkeleton` flag — the caller MIRRORS the real tree:
+ * still the same `SurfaceCard.List` + REAL items (keeping the full-bleed separator +
+ * frame), only `title` swaps for a `Skeleton` bar (skeleton.md: mirror the layout tree,
+ * keep the structural nodes — a list skeleton = one solid card, NOT broken apart into
+ * separate rows).
  */
 export const Loading: Story = {
     render: () => (

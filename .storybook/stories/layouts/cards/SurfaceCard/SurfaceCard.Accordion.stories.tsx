@@ -7,26 +7,30 @@ import type { SurfaceCardVariant } from "@sb-components/layouts/cards/surface-ca
 import { Feedback } from "@sb-components/layouts/feedback/Feedback/Feedback"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
-// `Feedback.Empty` nhận icon là COMPONENT ref và tự ép `size-8` (§4/§5) — phosphor
-// `weight="duotone"` không đi kèm được nữa, nên bọc thành component để GIỮ NGUYÊN nét vẽ.
+// `Feedback.Empty` takes the icon as a COMPONENT ref and forces `size-8` itself
+// (§4/§5) — phosphor's `weight="duotone"` can no longer ride along, so it's wrapped
+// into a component to KEEP the artwork as-is.
 const FolderOpenDuotone = (props: SVGProps<SVGSVGElement>) => <FolderOpenIcon {...props} weight="duotone" />
 
 /**
- * KHUNG (Layouts) — một khung `bg-surface` bounded ôm các section GẬP ĐƯỢC, separator chạy
- * full-bleed tới mép card: cùng skin với `SurfaceCard.List`, khác ở chỗ mỗi hàng mở ra được.
+ * FRAME (Layouts) — a bounded `bg-surface` frame wrapping COLLAPSIBLE sections, the
+ * separator running full-bleed to the card edge: same skin as `SurfaceCard.List`,
+ * differing in that each row expands.
  *
- * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): story ở đây chỉ render state do CHÍNH nó đẻ —
- * `items` (danh sách LẶP → dữ liệu, cấm children), `titleEnd`, chế độ mở
- * (`allowsMultipleExpanded` / `defaultExpandedKeys`), `variant`, rỗng, và mirror loading.
- * Bộ slot header section dùng chung `SurfaceCardHeader` với `SurfaceCard.Base` → ở đây chỉ
- * giữ MỘT leaf `WithLabel`, không lặp cả bộ.
+ * ⚠️ STATE SCOPE (teacher decided 2026-07-25): stories here only render state that
+ * THIS component itself produces — `items` (a REPEATED list → data, children
+ * forbidden), `titleEnd`, expand mode (`allowsMultipleExpanded` /
+ * `defaultExpandedKeys`), `variant`, empty, and the loading mirror. The section
+ * header slot set shares `SurfaceCardHeader` with `SurfaceCard.Base` → here we keep
+ * only ONE leaf `WithLabel`, not the whole set repeated.
  *
- * ⭐ 2026-07-26 (thầy): `bordered?: boolean` đổi thành `variant?: SurfaceCardVariant`
- * (`"surface" | "nested"`, một trong BA TRỤC ĐỘC LẬP cùng `SurfaceCard.Base`/`.List`/
- * `.CrossList`). Leaf `Bordered` (chỉ diễn nửa union) gộp thành `Variants` — render ĐỦ
- * union `surface`/`nested` cạnh nhau thay vì tách theo GIÁ TRỊ boolean cũ.
+ * ⭐ 2026-07-26 (teacher): `bordered?: boolean` changed to `variant?: SurfaceCardVariant`
+ * (`"surface" | "nested"`, one of THREE INDEPENDENT AXES shared with
+ * `SurfaceCard.Base`/`.List`/`.CrossList`). The `Bordered` leaf (which only acted out
+ * half the union) merged into `Variants` — rendering the FULL `surface`/`nested`
+ * union side by side instead of splitting by the old boolean VALUE.
  *
- * ANATOMY IS PER-LEAF: mỗi story là leaf riêng, mang BlockAnatomy riêng.
+ * ANATOMY IS PER-LEAF: each story is its own leaf, carrying its own BlockAnatomy.
  */
 const meta: Meta<typeof SurfaceCard.Accordion> = {
     title: "Layouts/Cards/SurfaceCard/SurfaceCard.Accordion",
@@ -42,9 +46,10 @@ export default meta
 type Story = StoryObj<typeof SurfaceCard.Accordion>
 
 /**
- * Mock-content chuẩn (C-fixture) = ProfileCard: avatar + title + description. `items[].body`
- * mở ra BÊN TRONG khung accordion (đã là 1 `bg-surface`) nên KHÔNG bọc thêm `Card` ngoài —
- * tránh card-in-card (§1a) — chỉ giữ row avatar+title+desc.
+ * Standard mock content (C-fixture) = ProfileCard: avatar + title + description.
+ * `items[].body` opens INSIDE the accordion frame (already a `bg-surface`), so NO
+ * extra outer `Card` wrapper — avoiding card-in-card (§1a) — just the
+ * avatar+title+desc row.
  */
 const panel = () => (
     <div className="flex flex-row items-center gap-3">
@@ -67,10 +72,11 @@ const items: ReadonlyArray<SurfaceCardAccordionItem> = [
 ]
 
 /**
- * `Feedback.Empty` là DEP THẬT của leaf `Empty` (story riêng, bấm nhảy được) — khớp shape
- * icon+title+description (KHÔNG action) đang render ở leaf này ⇒ trỏ đúng leaf `Description`
- * bên đó. Mọi part khác của khung (`Surface`/`Header`/`Row`) KHÔNG có story riêng nên KHÔNG
- * khai — đường cũ `parts={...}` từng khai chúng chỉ tạo entry chết (không bấm được).
+ * `Feedback.Empty` is a REAL DEP of the `Empty` leaf (its own story, clickable) —
+ * matches the icon+title+description shape (NO action) rendering at this leaf ⇒
+ * points to the right `Description` leaf over there. Every other part of the frame
+ * (`Surface`/`Header`/`Row`) has NO story of its own, so NONE are declared — the old
+ * `parts={...}` line used to declare them, creating dead entries (unclickable).
  */
 const PART_FEEDBACK_EMPTY: AnatomyAnnotation = {
     role: "Fills the Surface when items is empty — icon + title + description.",
@@ -121,13 +127,14 @@ export const WithLabel: Story = {
 }
 
 /**
- * `variant` — TRỤC surface-in-surface (§1a), độc lập với mọi trục khác. Render ĐỦ union
- * `"surface"` (mặc định, `shadow-surface` trên nền trơn) / `"nested"` (border thay shadow,
- * khi khung này nằm TRONG một mặt cha) cạnh nhau — thay cho leaf `Bordered` cũ chỉ diễn
- * một nửa union.
+ * `variant` — the surface-in-surface AXIS (§1a), independent of every other axis.
+ * Renders the FULL union side by side: `"surface"` (default, `shadow-surface` on a
+ * bare background) / `"nested"` (a border replaces the shadow, when this frame sits
+ * INSIDE a parent surface) — replacing the old `Bordered` leaf that only acted out
+ * half the union.
  *
- * 2026-07-26 (thầy): gộp từ leaf `Bordered` (đổi từ `bordered?: boolean` sang
- * `variant?: SurfaceCardVariant`).
+ * 2026-07-26 (teacher): merged from the `Bordered` leaf (changed from
+ * `bordered?: boolean` to `variant?: SurfaceCardVariant`).
  */
 const VARIANTS: ReadonlyArray<{ variant: SurfaceCardVariant; hint: string }> = [
     { variant: "surface", hint: "on bare bg-background — the default shadow-surface frame" },
@@ -175,8 +182,9 @@ export const Variants: Story = {
 }
 
 /**
- * `items[].titleEnd` — node bên phải tiêu đề (trái caret): chip trạng thái / điểm số ngay
- * trong trigger đang gập. Tiêu đề tự truncate nhường chỗ; `titleEnd` giữ nguyên bề rộng.
+ * `items[].titleEnd` — a node to the right of the title (left of the caret): a
+ * status chip / score right inside the collapsed trigger. The title truncates
+ * itself to make room; `titleEnd` keeps its full width.
  */
 export const WithTitleEnd: Story = {
     render: () => (
@@ -208,7 +216,7 @@ export const WithTitleEnd: Story = {
     ),
 }
 
-/** `allowsMultipleExpanded` — nhiều section mở cùng lúc (mặc định là single-open, xem leaf Default). */
+/** `allowsMultipleExpanded` — multiple sections open at once (default is single-open, see leaf Default). */
 export const MultipleExpand: Story = {
     render: () => (
         <div className="p-8">
@@ -230,7 +238,7 @@ export const MultipleExpand: Story = {
     ),
 }
 
-/** Đóng hết: `defaultExpandedKeys` rỗng — mọi section gập khi mount. */
+/** All collapsed: an empty `defaultExpandedKeys` — every section starts collapsed on mount. */
 export const NoneExpand: Story = {
     render: () => (
         <div className="p-8">
@@ -251,7 +259,7 @@ export const NoneExpand: Story = {
     ),
 }
 
-/** Empty: `items` rỗng → {@link Feedback.Empty} lấp đầy surface (không để card trắng trơn). */
+/** Empty: an empty `items` → {@link Feedback.Empty} fills the surface (instead of a blank card). */
 export const Empty: Story = {
     render: () => (
         <div className="p-8">
@@ -285,7 +293,7 @@ export const Empty: Story = {
     ),
 }
 
-/** Loading: `isSkeleton` tự vẽ mirror `Skeleton.Accordion` (giữ vỏ surface) — không dựng Skeleton rời. */
+/** Loading: `isSkeleton` draws its own `Skeleton.Accordion` mirror (keeping the surface shell) — no separate Skeleton built. */
 export const Loading: Story = {
     render: () => (
         <div className="p-8">

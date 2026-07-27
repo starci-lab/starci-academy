@@ -17,5 +17,5 @@ export default meta
 type Story = StoryObj<typeof CourseContents>
 
 export const Default: Story = {
-    render: () => deviceLeaf({ state: "empty", leaf: "Default", reason: "Khoá chưa có bài — AsyncContent.Empty thay TOÀN BỘ spine, không còn block nào của dashboard." }),
+    render: () => deviceLeaf({ isEmpty: true, leaf: "Default", reason: "Course has no lessons yet — AsyncContent.Empty replaces the ENTIRE spine; not one dashboard block is left." }),
 }

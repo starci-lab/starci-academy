@@ -58,6 +58,7 @@ export const Default: Story = {
                 leaf="Default"
                 parts={CLOSED_PARTS}
                 reason="Collapsible chung: Trigger toggle một Content mount/unmount, không có animation exit."
+                code={"<Disclosure.Base title=\"Customize session\"><SampleContent /></Disclosure.Base>"}
             >
                 <Disclosure.Base title="Tùy chỉnh phiên" showAnatomy>
                     <SampleContent />
@@ -77,6 +78,7 @@ export const Open: Story = {
                 leaf="Open"
                 parts={OPEN_PARTS}
                 note="defaultOpen → Content mount ngay từ đầu, thêm 1 node so với leaf đóng. Ở đây dùng slot `body` thay cho children."
+                code={"<Disclosure.Base title=\"Customize session\" defaultOpen body={<SampleContent />} />"}
             >
                 <Disclosure.Base
                     title="Tùy chỉnh phiên"
@@ -109,6 +111,7 @@ export const Controlled: Story = {
                 leaf="Controlled"
                 parts={CLOSED_PARTS}
                 note="isOpen/onOpenChange do cha sở hữu — canvas mount ở trạng thái đóng, cùng composition với Default."
+                code={"<Disclosure.Base title=\"Customize session\" isOpen={open} onOpenChange={setOpen}><SampleContent /></Disclosure.Base>"}
             >
                 <ControlledExample />
             </BlockAnatomy>
@@ -126,6 +129,7 @@ export const Disabled: Story = {
                 leaf="Disabled"
                 parts={CLOSED_PARTS}
                 note="isDisabled chỉ đổi style/khả năng bấm của Trigger, composition không đổi."
+                code={"<Disclosure.Base title=\"Customize session\" isDisabled><SampleContent /></Disclosure.Base>"}
             >
                 <Disclosure.Base title="Tùy chỉnh phiên" isDisabled showAnatomy>
                     <SampleContent />
@@ -145,6 +149,7 @@ export const Skeleton: Story = {
                 leaf="Skeleton"
                 parts={SKELETON_PARTS}
                 note="isSkeleton → render thẳng Skeleton.Disclosure, Trigger/Content thật chưa tồn tại."
+                code={"<Disclosure.Base title=\"Customize session\" isSkeleton />"}
             >
                 <Disclosure.Base title="Tùy chỉnh phiên" isSkeleton showAnatomy>
                     <SampleContent />

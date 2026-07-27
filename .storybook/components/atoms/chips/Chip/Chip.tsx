@@ -3,27 +3,28 @@ import { ChipGroup } from "./ChipGroup"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Chip.*`: namespace của họ chip. File này CHỈ gom, không có logic.
+ * ATOM — `Chip.*`: namespace for the chip family. This file ONLY aggregates, no logic.
  *
- * Mỗi member một FILE riêng (tách 2026-07-26) để quan hệ giữa chúng là `import` THẬT,
- * đọc được:
- *   • `Chip.Base`  → ./ChipBase   — viên chip DUY NHẤT; chấm trạng thái là PROP
- *     (`dotColor`/`dotClassName`), không phải member riêng.
- *   • `Chip.Group` → ./ChipGroup  — HÀNG chip cắt tại `maxVisible` + chip `+N` mở
- *     Tooltip; **import ChipBase** ⇒ component duy nhất trong họ có deps.
+ * Each member gets its OWN FILE (split 2026-07-26) so the relationship between them is
+ * a REAL `import`, readable:
+ *   • `Chip.Base`  → ./ChipBase   — the ONE chip; the status dot is a PROP
+ *     (`dotColor`/`dotClassName`), not a separate member.
+ *   • `Chip.Group` → ./ChipGroup  — a ROW of chips truncated at `maxVisible` + a `+N`
+ *     chip that opens a Tooltip; **imports ChipBase** ⇒ the only component in the
+ *     family with deps.
  *
- * ⚠️ ĐÃ XOÁ 2026-07-26 — ba thứ, ba lý do khác nhau:
- *   • `Chip.Dot` — chấm không phải hình thái chip khác, chỉ là ô glyph dẫn đầu đổi
- *     hình ⇒ `<Chip.Base dotClassName="text-success" text="Đang chạy" />`.
- *   • `StatusChip` — chip này khoá cứng `tone`, không thêm hành vi nào ⇒ gọi thẳng
- *     `<Chip.Base tone="success" … />`.
- *   • `TagChips` — CÓ hành vi thật (đếm · cắt · tràn) nên không xoá mà đưa vào
- *     namespace thành `Chip.Group`.
- *   • `chip-tone.ts` — bảng tone về sống trong `ChipBase.tsx`. File token riêng chỉ có
- *     lý do khi ≥2 component NGANG HÀNG cùng cần; ở đây `ChipGroup` dựng lại `ChipBase`
- *     nên cứ import thẳng, không cần file trung gian.
+ * ⚠️ REMOVED 2026-07-26 — three things, three different reasons:
+ *   • `Chip.Dot` — the dot isn't a different chip shape, just the leading glyph slot
+ *     changing appearance ⇒ `<Chip.Base dotClassName="text-success" text="Running" />`.
+ *   • `StatusChip` — this chip hard-locked `tone` and added no other behavior ⇒ call
+ *     `<Chip.Base tone="success" … />` directly.
+ *   • `TagChips` — DOES have real behavior (count · truncate · overflow) so it wasn't
+ *     removed, just moved into the namespace as `Chip.Group`.
+ *   • `chip-tone.ts` — the tone table now lives in `ChipBase.tsx`. A separate token file
+ *     only makes sense when ≥2 SIBLING components both need it; here `ChipGroup` builds
+ *     on `ChipBase` directly, so a direct import is enough, no intermediate file needed.
  *
- * Call-site bên ngoài KHÔNG đổi đường import: vẫn `.../Chip/Chip`.
+ * Outside call sites do NOT change their import path: still `.../Chip/Chip`.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 export const Chip = Object.assign(ChipBase, {

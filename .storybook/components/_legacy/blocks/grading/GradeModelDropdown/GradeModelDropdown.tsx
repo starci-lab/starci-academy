@@ -17,7 +17,7 @@ import {
 } from "@heroui/react"
 import { AiCategoryChip, AiModelCategory } from "@sb-components/_legacy/designs/chips/AiCategoryChip/AiCategoryChip"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
-import { FlexWrapButtonRadio } from "@sb-components/atoms/navigation/FlexWrapButtonRadio/FlexWrapButtonRadio"
+import { Button as AtomButton } from "@sb-components/atoms/buttons/Button/Button"
 import { SelfHostGpuMark } from "@sb-components/_legacy/designs/grading/SelfHostGpuMark/SelfHostGpuMark"
 
 /**
@@ -27,7 +27,7 @@ import { SelfHostGpuMark } from "@sb-components/_legacy/designs/grading/SelfHost
  * `src`); synced to `src` later.
  *
  * NO `@/components` imports — it COMPOSES the local primitives `AiCategoryChip`,
- * `FlexWrapButtonRadio`, and `SelfHostGpuMark` (imported relatively). The
+ * `Button.RadioGroup`, and `SelfHostGpuMark` (imported relatively). The
  * `@/modules` enums/types (`ModelProvider`, `AiModelTask`, `AiGradableModel`) are
  * INLINED, the `t(...)` copy is inlined as Vietnamese literals, and the live
  * `useAiModelLatency` socket hook is replaced by a STUB that returns an empty map
@@ -508,10 +508,10 @@ export const GradeModelDropdown = ({
                             </SearchField.Group>
                         </SearchField>
                     </div>
-                    {/* tier filter — FlexWrapButtonRadio inside popover surface */}
+                    {/* tier filter — Button.RadioGroup inside popover surface */}
                     {tierChips.length > 1 ? (
                         <div className="px-2 pt-2">
-                            <FlexWrapButtonRadio.Base
+                            <AtomButton.RadioGroup
                                 ariaLabel="Lọc theo hạng"
                                 value={tierFilter}
                                 onChange={setTierFilter}

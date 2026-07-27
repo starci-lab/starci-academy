@@ -4,27 +4,27 @@ import { Chip, type ChipTone } from "@sb-components/atoms/chips/Chip/Chip"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Chip.Base`: viên chip DUY NHẤT của hệ.
+ * ATOM — `Chip.Base`: the ONLY chip in the system.
  *
- * 📐 **1 PROP = 1 LEAF** (§12g — luật của TẦNG ATOM). Mỗi prop có hình một leaf, và
- * leaf đó render ĐỦ mọi state prop ấy sinh ra: `tone` · `icon` · chấm màu · `onRemove`
- * · `isSkeleton`. Prop không sinh hình (`removeLabel`, `className`, `showAnatomy`,
- * `anatPart`) KHÔNG có leaf.
+ * 📐 **1 PROP = 1 LEAF** (§12g — the law for the ATOM TIER). Each prop gets one leaf,
+ * and that leaf renders EVERY state the prop can produce: `tone` · `icon` · colour dot
+ * · `onRemove` · `isSkeleton`. Props that produce no visual (`removeLabel`, `className`,
+ * `showAnatomy`, `anatPart`) get NO leaf.
  *
- * ⚠️ Đừng lẫn với §14d.2 (leaf = CẤU TRÚC) — luật đó dành cho design/block/screen.
- * Bản trước của file này tách leaf theo "composition" (`Base`/`WithIcon`/`Removable`/
- * `Loading`) nên `tone` không có chỗ nào render đủ union, còn chấm màu thì không có
- * mặt ở đâu cả.
+ * ⚠️ Don't confuse this with §14d.2 (leaf = STRUCTURE) — that law is for
+ * design/block/screen. The previous version of this file split leaves by
+ * "composition" (`Base`/`WithIcon`/`Removable`/`Loading`), so `tone` had nowhere to
+ * render its full union, and the colour dot had no home at all.
  *
- * ⚠️ ĐÃ XOÁ 2026-07-26: story `Chip.Dot`, `StatusChip`, `TagChips`. Chấm là PROP của
- * chính chip này (leaf `Dot`); `StatusChip` chỉ khoá cứng `tone`; `TagChips` có hành
- * vi thật nên thành `Chip.Group`, story riêng.
+ * ⚠️ REMOVED 2026-07-26: the `Chip.Dot`, `StatusChip`, `TagChips` stories. The dot is a
+ * PROP of this same chip (leaf `Dot`); `StatusChip` only hard-locked `tone`; `TagChips`
+ * had real behaviour so it became `Chip.Group`, its own story.
  *
- * 🎨 Icon = Phosphor (§5.0). Atom ép cả scale (`size-3`, bằng cỡ chữ chip) lẫn `weight`
- * (§5.0a) — story chỉ chọn "hình gì".
+ * 🎨 Icon = Phosphor (§5.0). The atom pins both the scale (`size-3`, matching the
+ * chip's text size) and the `weight` (§5.0a) — a story only picks "which glyph".
  */
 
-/** Hướng dẫn hiện đầu trang autodocs. Chữ trên UI viết TIẾNG ANH (thầy chốt 2026-07-26). */
+/** Guide shown at the top of the autodocs page. UI copy is written in ENGLISH (teacher's call, 2026-07-26). */
 const CHIP_DOC = `
 ## Leading slot: icon, dot, or nothing
 
@@ -65,7 +65,7 @@ export default meta
 
 type Story = StoryObj<typeof Chip.Base>
 
-/** ĐỦ union `ChipTone` — thiếu một giá trị là giá trị đó sẽ mọc thành leaf lạc chỗ. */
+/** The FULL `ChipTone` union — missing one value means that value will sprout as a stray leaf elsewhere. */
 const TONES: Array<{ tone: ChipTone; text: string; hint: string }> = [
     { tone: "neutral", text: "Draft", hint: "no signal — plain token" },
     { tone: "success", text: "Passed", hint: "the good outcome" },
@@ -74,7 +74,7 @@ const TONES: Array<{ tone: ChipTone; text: string; hint: string }> = [
     { tone: "accent", text: "New", hint: "worth a look" },
 ]
 
-/** Leaf TRẦN — chưa bật prop nào, để thấy hình mặc định (`tone="neutral"`, không glyph, không ×). */
+/** BARE leaf — no prop turned on, to see the default look (`tone="neutral"`, no glyph, no ×). */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
@@ -92,7 +92,7 @@ export const Default: Story = {
     ),
 }
 
-/** Leaf prop `tone` — 5 Ý NGHĨA, render ĐỦ union. */
+/** Leaf prop `tone` — 5 MEANINGS, render the FULL union. */
 export const Tones: Story = {
     render: () => (
         <div className="p-8">
@@ -118,7 +118,7 @@ export const Tones: Story = {
     ),
 }
 
-/** Leaf prop `icon` — glyph DẪN ĐẦU, nhận COMPONENT chứ không phải JSX. */
+/** Leaf prop `icon` — the LEADING glyph, takes a COMPONENT, not JSX. */
 export const Icon: Story = {
     render: () => (
         <div className="p-8">
@@ -145,10 +145,12 @@ export const Icon: Story = {
 }
 
 /**
- * Leaf CHẤM — hai prop `dotColor`/`dotClassName` nhưng MỘT hình: cùng một ô glyph dẫn đầu,
- * chỉ khác đường cấp màu (class token vs hex thô). Tách hai leaf sẽ ra hai khung y hệt.
+ * The DOT leaf — two props (`dotColor`/`dotClassName`) but ONE look: the same leading
+ * glyph slot, differing only in how the colour is supplied (class token vs raw hex).
+ * Splitting them into two leaves would just give two identical frames.
  *
- * Thay cho member `Chip.Dot` cũ (xoá 2026-07-26): chấm không phải hình thái chip khác.
+ * Replaces the old `Chip.Dot` member (removed 2026-07-26): the dot isn't a different
+ * chip shape.
  */
 export const Dot: Story = {
     render: () => (
@@ -177,7 +179,7 @@ export const Dot: Story = {
     ),
 }
 
-/** Leaf prop `onRemove` — có hàm thì chip mọc nút × ở đuôi. */
+/** Leaf prop `onRemove` — pass a handler and the chip grows a × at the tail. */
 export const Removable: Story = {
     render: () => (
         <div className="p-8">
@@ -207,10 +209,12 @@ export const Removable: Story = {
 }
 
 /**
- * Leaf prop `isSkeleton` — shimmer CO-LOCATED (§12c), bề ngang theo SỐ Ô chip thật đang có.
+ * Leaf prop `isSkeleton` — CO-LOCATED shimmer (§12c), width follows the actual chip's
+ * SLOT COUNT.
  *
- * Render đủ BỐN cách gọi. Hai viên giữa ra bằng nhau là ĐÚNG: shimmer đếm số ô, không
- * quan tâm ô nằm bên nào — nên đây không phải hai ô trùng để bớt đi.
+ * Renders all FOUR call shapes. The two middle pills coming out equal is CORRECT: the
+ * shimmer counts slots, not which side they're on — so these aren't two duplicate
+ * pills to trim.
  */
 export const Skeleton: Story = {
     render: () => (

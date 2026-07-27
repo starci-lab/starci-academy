@@ -6,40 +6,42 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `Feedback.*`, the ONE "nói cho người dùng biết
- * chuyện gì đang xảy ra" KHUNG namespace (thầy chốt 2026-07-25, canon §13a).
+ * STORYBOOK-LOCAL DESIGN SPEC — `Feedback.*`, the ONE "tell the user what's
+ * happening" KHUNG namespace (teacher confirmed 2026-07-25, canon §13a).
  *
- * Ba khung anh em từng nằm rời ở ba thư mục (`Callout` · `EmptyState` ·
- * `ConfirmDialog`) giờ là MEMBER của một namespace — cùng tier, cùng việc (đặt
- * một THÔNG ĐIỆP + lối thoát vào một khung có sẵn hình), một import:
+ * Three sibling frames that used to live in three separate folders (`Callout` ·
+ * `EmptyState` · `ConfirmDialog`) are now MEMBERS of one namespace — same tier,
+ * same job (put a MESSAGE + an exit into an already-shaped frame), one import:
  *
- * | Member | Khung | Kênh nội dung |
+ * | Member | Frame | Content channel |
  * |---|---|---|
- * | `.Callout` | dải tint phẳng NẰM TRONG một surface | `title`/`description`/`body`(+`children`)/`action` |
- * | `.Empty`   | chồng dọc CANH GIỮA lấp chỗ trống/lỗi | `code`/`icon`/`title`/`description`/`body`(+`children`)/`action` |
- * | `.Confirm` | vỏ dialog chặn-đường cho hành động không lùi được | `title`/`description` + `confirmLabel`/`cancelLabel` |
+ * | `.Callout` | flat tint strip LIVING INSIDE a surface | `title`/`description`/`body`(+`children`)/`action` |
+ * | `.Empty`   | centered vertical stack filling an empty/error spot | `code`/`icon`/`title`/`description`/`body`(+`children`)/`action` |
+ * | `.Confirm` | blocking dialog shell for an action that can't be undone | `title`/`description` + `confirmLabel`/`cancelLabel` |
  *
- * ⚠️ `InfoTooltip` KHÔNG có mặt ở đây — đã XOÁ theo §13c (xem cuối file).
+ * ⚠️ `InfoTooltip` is NOT present here — REMOVED per §13c (see end of file).
  *
- * KHUNG API LAW (§13b):
- * - Không member nào là DANH SÁCH LẶP → không có khung nào nhận `items`.
- * - Slot CÓ TÊN là đường chính. `title` = header, `description`/`body` = body,
- *   `action` = footer — ba khung này có HÌNH CỐ ĐỊNH nên slot mang tên theo vai
- *   (không đổi thành header/body/footer trần, sẽ mất nghĩa).
- * - `children` chỉ là shorthand của `body` (khung BỌC), và CHỈ ở `.Callout`/`.Empty`
- *   — `.Confirm` là vỏ dialog dựng sẵn header/body/footer nên KHÔNG mở children.
- * - Namespace only — KHÔNG export component trần (§13a).
+ * FRAME API LAW (§13b):
+ * - No member is a REPEATED LIST → no frame accepts `items`.
+ * - A NAMED slot is the main path. `title` = header, `description`/`body` = body,
+ *   `action` = footer — these three frames have a FIXED SHAPE so slots are named
+ *   by role (not renamed to bare header/body/footer, which would lose the meaning).
+ * - `children` is just a shorthand for `body` (WRAPPING frames), and ONLY on
+ *   `.Callout`/`.Empty` — `.Confirm` is a dialog shell built with a fixed
+ *   header/body/footer so it does NOT open up children.
+ * - Namespace only — does NOT export a bare component (§13a).
  *
- * ATOM COMPOSITION (§12): chữ đi qua `Typography.*`, nút đi qua `Button.*`, icon
- * lấy từ `@phosphor-icons/react` — MỘT BỘ DUY NHẤT (§5⃣0), truyền dạng component
- * ref, khung tự ép size/weight (§4/§5).
- * NGOẠI LỆ CÓ CHỦ Ý: `.Callout` giữ `Alert.Title`/`Alert.Description` của HeroUI
- * vì chính HeroUI mang hợp đồng MÀU-THEO-STATUS (`.alert--warning .alert__title`
- * → `text-warning-soft-foreground`). Thay bằng `Typography` sẽ phải tự nuôi một
- * bảng màu tay — đó mới là "tự vẽ". Khi có atom `Alert.Base` thì đổi sang atom.
+ * ATOM COMPOSITION (§12): text goes through `Typography.*`, buttons through
+ * `Button.*`, icons come from `@phosphor-icons/react` — ONE SET ONLY (§5⃣0),
+ * passed as a component ref, the frame forces size/weight itself (§4/§5).
+ * DELIBERATE EXCEPTION: `.Callout` keeps HeroUI's `Alert.Title`/`Alert.Description`
+ * because HeroUI itself carries the COLOR-BY-STATUS contract (`.alert--warning
+ * .alert__title` → `text-warning-soft-foreground`). Swapping in `Typography` would
+ * mean hand-feeding a color table — that's the real "hand-rolled". Switch to the
+ * atom once an `Alert.Base` atom exists.
  *
- * Hành vi/skin của mỗi member giữ NGUYÊN từ thư mục cũ; đây là refactor API +
- * hạ tầng atom, không phải đổi thị giác. Sync sang `src` sau.
+ * Behavior/skin of each member is KEPT AS-IS from the old folders; this is an API
+ * + atom-infra refactor, not a visual change. Sync to `src` later.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -55,9 +57,10 @@ export type FeedbackCalloutStatus = AlertStatus
 
 /**
  * Action button bg/text per status — SOLID `bg-<status>` CTA against the lighter
- * tint. NỘI BỘ (thầy chốt 2026-07-25): trước đây export vì CTA nằm ở slot `action`
- * của caller, nên caller phải tự cầm `Button` + tự bôi skin. Nay khung TỰ dựng nút
- * từ `actionLabel`/`onAction` ⇒ caller (nhất là SCREEN) không phải chạm atom nữa.
+ * tint. INTERNAL (teacher confirmed 2026-07-25): previously exported because the
+ * CTA lived in the caller's `action` slot, so the caller had to hold `Button` and
+ * apply the skin itself. Now the frame builds the button ITSELF from
+ * `actionLabel`/`onAction` ⇒ the caller (especially a SCREEN) no longer touches the atom.
  */
 const CALLOUT_ACTION_CLASS: Record<FeedbackCalloutStatus, string> = {
     default: "bg-foreground text-background",
@@ -85,11 +88,12 @@ export interface FeedbackCalloutProps {
     /** Optional custom indicator icon as a COMPONENT; omit for the status default. */
     icon?: FeedbackIcon
     /**
-     * Nhãn CTA (slot footer). Khung TỰ dựng nút và tự bôi skin theo `status` —
-     * caller chỉ đưa CHỮ, không đưa `Button` (screen không được cầm atom).
+     * CTA label (footer slot). The frame builds the button ITSELF and applies the
+     * skin per `status` — the caller only supplies TEXT, not a `Button` (a screen
+     * must not hold the atom).
      */
     actionLabel?: string
-    /** Handler cho CTA; cần cả `actionLabel` thì nút mới hiện. */
+    /** Handler for the CTA; the button only shows once `actionLabel` is also present. */
     onAction?: () => void
     /** When provided, renders a status-coloured close (×) wired to this. */
     onClose?: () => void
@@ -108,10 +112,11 @@ export interface FeedbackCalloutProps {
  * `bg-<status>-soft` + `shadow-none` highlight strip, so it doesn't read as a
  * card-in-card.
  *
- * KHUNG mỏng quanh atom `Alert.Base` (thầy chốt 2026-07-25): callout = alert ĐẶT
- * TRONG surface, nên frame chỉ chọn `tone="soft"` + glyph `md` rồi giao toàn bộ
- * skin (tint · icon theo valence · nút ×) cho atom. Trước đây frame tự nuôi ba
- * bảng màu song song với `Toast` — đó là drift, nay gỡ.
+ * A thin FRAME around the `Alert.Base` atom (teacher confirmed 2026-07-25): callout =
+ * an alert PLACED INSIDE a surface, so the frame only picks `tone="soft"` + glyph
+ * `md` and hands the whole skin (tint · icon per valence · × button) to the atom.
+ * The frame used to hand-feed three color tables in parallel with `Toast` — that
+ * was drift, now removed.
  *
  * @param props - {@link FeedbackCalloutProps}
  */
@@ -139,7 +144,7 @@ const Callout = ({
         icon={icon}
         action={
             actionLabel ? (
-                // Khung sở hữu CTA: tự dựng nút + tự bôi skin theo status. Caller chỉ đưa chữ.
+                // The frame owns the CTA: builds the button + applies skin per status itself. Caller only supplies text.
                 <Button.Base label={actionLabel} size="sm" onPress={onAction} className={CALLOUT_ACTION_CLASS[status]} />
             ) : undefined
         }
@@ -147,7 +152,6 @@ const Callout = ({
         closeAriaLabel={closeAriaLabel}
         className={className}
         anatPart={anatPart}
-        showAnatomy={showAnatomy}
     />
 )
 
@@ -205,15 +209,15 @@ export interface FeedbackEmptyProps {
      * When on, each composed part emits `data-anat-part` (`Code`/`Icon`/`Title`/
      * `Description`/`Body`/`Action`) for a BlockAnatomy panel.
      *
-     * ⚠️ Thay cho bộ 5 prop `codeAnatPart`/`iconAnatPart`/… của `EmptyState` cũ —
-     * một cờ, tên part CỐ ĐỊNH (khớp mọi khung khác của hệ).
+     * ⚠️ Replaces the old `EmptyState`'s set of 5 props `codeAnatPart`/`iconAnatPart`/… —
+     * one flag, FIXED part names (matching every other frame in the system).
      */
     showAnatomy?: boolean
 }
 
 /**
  * Centered placeholder for lists, panels, sections, or whole routes with no content —
- * and for the "tải hỏng" variant of the same hole (`tone="danger"` + a retry `action`).
+ * and for the "failed to load" variant of the same hole (`tone="danger"` + a retry `action`).
  * A vertical, centered stack: optional `code` → optional icon → title → optional
  * description → optional body → optional action. Omits a card wrapper — the caller
  * wraps it in a surface (e.g. `SurfaceCard.List emptyState={…}`) when a frame is wanted.
@@ -235,8 +239,8 @@ const Empty = ({
     showAnatomy = false,
 }: FeedbackEmptyProps) => {
     if (size === "compact") {
-        // ⚠️ Atom `Typography.*` KHÔNG nhận prop lạ (không spread rest) → mọi tag
-        // anatomy phải nằm trên một phần tử BỌC, không nhét vào atom.
+        // ⚠️ The `Typography.*` atom does NOT accept unknown props (no rest spread) → every
+        // anatomy tag must sit on a WRAPPING element, not be stuffed into the atom.
         return (
             <span className={cn("block", className)} data-anat-part={showAnatomy ? "Title" : anatPart}>
                 <Typography.Base size="sm" text={title} color="muted" />
@@ -258,9 +262,10 @@ const Empty = ({
             )}
         >
             {code != null ? (
-                // ⚠️ HeroUI Typography (KHÔNG phải atom) cho HAI slot cỡ heading của
-                // `size="page"`: atom `Typography.*` dừng ở `Lg` (text-lg) nên ép cỡ
-                // bằng className thô sẽ đụng luật `no-hero-heading-class`. Xem GAP cuối file.
+                // ⚠️ HeroUI Typography (NOT the atom) for the TWO heading-size slots of
+                // `size="page"`: the `Typography.*` atom tops out at `Lg` (text-lg) so
+                // forcing a size via a raw className would break the `no-hero-heading-class`
+                // lint rule. See the GAP note at the end of the file.
                 <div data-anat-part={showAnatomy ? "Code" : undefined}>
                     <HeroTypography type="h1" weight="bold" color="muted">{code}</HeroTypography>
                 </div>
@@ -355,12 +360,12 @@ export interface FeedbackConfirmProps {
 }
 
 /**
- * A controlled confirmation dialog for irreversible actions (huỷ ghi danh, xoá bài
- * nộp) built on HeroUI `AlertDialog`. Khung thuần trình bày — open state và mọi
- * callback vào bằng prop; khung không giữ state, không fetch.
+ * A controlled confirmation dialog for irreversible actions (unenroll from a course,
+ * delete a submission) built on HeroUI `AlertDialog`. A purely presentational frame —
+ * open state and every callback come in via props; the frame holds no state, does no fetching.
  *
- * Vỏ dựng sẵn ĐỦ header/body/footer (footer = `Button.Group` huỷ + xác nhận) nên
- * KHÔNG mở `children`: nội dung đi bằng `title`/`description`.
+ * The shell already builds a FULL header/body/footer (footer = `Button.Group` cancel +
+ * confirm) so it does NOT open up `children`: content goes through `title`/`description`.
  *
  * @param props - {@link FeedbackConfirmProps}
  */
@@ -383,7 +388,7 @@ const Confirm = ({
             <AlertDialog.Backdrop>
                 <AlertDialog.Container size="sm">
                     <AlertDialog.Dialog className={cn(className)}>
-                        {/* No status icon — text-only; layout GIỮ NGUYÊN (heading/body trái, footer phải) — thầy chốt 2026-07-23. */}
+                        {/* No status icon — text-only; layout UNCHANGED (heading/body left, footer right) — teacher confirmed 2026-07-23. */}
                         <AlertDialog.Header data-anat-part={showAnatomy ? "Header" : undefined}>
                             <AlertDialog.Heading>{title}</AlertDialog.Heading>
                         </AlertDialog.Header>
@@ -393,7 +398,7 @@ const Confirm = ({
                             </AlertDialog.Body>
                         ) : null}
                         <AlertDialog.Footer className="w-full" data-anat-part={showAnatomy ? "Footer" : undefined}>
-                            {/* §11a: badge dừng ở Footer — ruột `Button.Group` là story của atom. */}
+                            {/* §11a: badge stops at Footer — the innards of `Button.Group` are the atom's own story. */}
                             <Button.Group
                                 className="w-full justify-end"
                                 items={[
@@ -422,27 +427,28 @@ const Confirm = ({
 }
 
 /**
- * `Feedback.*` — the feedback KHUNG namespace: ba khung đặt một THÔNG ĐIỆP vào
- * đúng chỗ của nó.
+ * `Feedback.*` — the feedback KHUNG namespace: three frames that put a MESSAGE in
+ * its right place.
  *
- * | Member | Kênh nội dung |
+ * | Member | Content channel |
  * |---|---|
  * | `.Callout` | `title` · `description` · `body`/`children` · `action` · `onClose` |
  * | `.Empty`   | `code` · `icon` · `title` · `description` · `body`/`children` · `action` |
- * | `.Confirm` | `title` · `description` · `confirmLabel`/`cancelLabel` (không children) |
+ * | `.Confirm` | `title` · `description` · `confirmLabel`/`cancelLabel` (no children) |
  *
- * ⛔ ĐÃ XOÁ khỏi họ này — `InfoTooltip` (§13c): nó chỉ là `Tooltip.Base` (atom)
- * khoác thêm một trigger gạch-chân-chấm + một chồng 2 dòng chữ, KHÔNG thêm khái
- * niệm khung nào. Consumer dùng thẳng `Tooltip.Base` với `label` là nội dung
- * (một hoặc hai dòng `Typography.*`). Nếu muốn giữ quy ước "thuật ngữ khó gạch
- * chân chấm" thì đó là component TẦNG DESIGN (ví dụ `GlossaryTerm`) — mang nghĩa
- * nội dung, không phải khung — nằm ngoài tầng này.
+ * ⛔ REMOVED from this family — `InfoTooltip` (§13c): it's just `Tooltip.Base` (the
+ * atom) dressed with a dotted-underline trigger + a two-line text stack, adding NO
+ * frame concept at all. Consumers use `Tooltip.Base` directly with `label` as the
+ * content (one or two lines of `Typography.*`). If the "dotted underline for hard
+ * terms" convention needs to be kept, that's a component at the DESIGN TIER (e.g.
+ * `GlossaryTerm`) — it carries content meaning, not a frame — and sits outside this tier.
  *
- * ⚠️ GAP đã biết (ngoài vùng, cần chốt riêng): atom `Typography.*` dừng ở `Lg`
- * (text-lg) và chỉ có `weight` medium|bold → KHÔNG diễn được cỡ heading. Vì vậy
- * đúng HAI slot của `.Empty size="page"` (`code` = h1, `title` = h4) vẫn dùng
- * HeroUI `Typography` — ép cỡ bằng className thô sẽ vi phạm luật lint
- * `starci-fe/no-hero-heading-class`. Khi atom mở member cỡ heading thì đổi 2 chỗ này.
+ * ⚠️ Known GAP (out of scope, needs its own decision): the `Typography.*` atom tops
+ * out at `Lg` (text-lg) and only has `weight` medium|bold → it CANNOT express heading
+ * sizes. So exactly TWO slots of `.Empty size="page"` (`code` = h1, `title` = h4) still
+ * use HeroUI `Typography` — forcing the size via a raw className would violate the
+ * `starci-fe/no-hero-heading-class` lint rule. Switch these 2 spots once the atom opens a
+ * heading-size member.
  */
 export const Feedback = {
     Callout,

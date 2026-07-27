@@ -3,24 +3,27 @@ import { VariantChip, type Difficulty } from "@sb-components/designs/chips/Varia
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * DESIGN — `VariantChip.Difficulty`: áp vai nghĩa **ĐỘ KHÓ** lên atom `Chip.Base`.
+ * DESIGN — `VariantChip.Difficulty`: applies the **DIFFICULTY** semantic role
+ * onto the `Chip.Base` atom.
  *
- * ⚠️ 2026-07-26: atom bỏ member `Chip.Dot` — chấm là PROP của viên chip duy nhất
- * (`dotClassName`). Design này không đổi hình, chỉ đổi cái nó gọi xuống.
+ * ⚠️ 2026-07-26: the atom dropped the `Chip.Dot` member — the dot is now a
+ * PROP of the single chip (`dotClassName`). This design doesn't change shape,
+ * only what it calls down into.
  *
- * Member của họ `VariantChip.*` chia theo **VAI** (§14d), không theo hình — đó là
- * chỗ tầng design khác tầng atom.
+ * Members of the `VariantChip.*` family split by **ROLE** (§14d), not by
+ * shape — that's where the design tier differs from the atom tier.
  *
- * ⛔ **KHÔNG `custom`, KHÔNG `bare`** (thầy chốt 2026-07-26): từ tầng design trở lên
- * không mở lối tự đặt nhãn hay đổi hình. Hở một lối là caller lách được, bản chuẩn
- * hết còn chuẩn. Muốn chip tự do → gọi thẳng atom `Chip.*`.
+ * ⛔ **NO `custom`, NO `bare`** (teacher's call 2026-07-26): from the design
+ * tier up, nothing opens a lane for picking your own label or changing shape.
+ * Open one lane and callers exploit it, and the standard stops being a
+ * standard. Want a free-form chip → call the `Chip.*` atom directly.
  *
- * 📐 **MỘT LEAF DUY NHẤT** (§11f): leaf chia theo CẤU TRÚC. Bốn bậc độ khó cùng một
- * cây DOM, chỉ khác nội dung ⇒ chúng là STATE, không phải bốn leaf. Nên một leaf,
- * render ĐỦ bốn bậc trong đó.
+ * 📐 **ONE SINGLE LEAF** (§11f): leaves split by STRUCTURE. All four difficulty
+ * levels share the same DOM tree, differing only in content ⇒ they're STATES,
+ * not four leaves. So one leaf, rendering all four levels inside it.
  *
- * Skeleton cũng KHÔNG phải leaf riêng — cùng cấu trúc, chỉ thay chữ bằng gạch.
- * (Prop `isSkeleton` thì vẫn có, §12c — hai chuyện khác nhau.)
+ * Skeleton is ALSO not a separate leaf — same structure, just swaps text for
+ * bars. (The `isSkeleton` prop still exists, §12c — two different things.)
  */
 const meta: Meta<typeof VariantChip.Difficulty> = {
     title: "Designs/Chips/VariantChip.Difficulty",
@@ -33,7 +36,7 @@ export default meta
 
 type Story = StoryObj<typeof VariantChip.Difficulty>
 
-/** Trục DUY NHẤT của design này — `difficulty` quyết cả nhãn lẫn màu. */
+/** The SINGLE axis of this design — `difficulty` decides both the label and the color. */
 const LEVELS: Array<Difficulty> = ["beginner", "intermediate", "advanced", "insane"]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
@@ -45,10 +48,11 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 }
 
 /**
- * Leaf duy nhất — đủ 4 bậc + hàng skeleton (state, không phải leaf).
+ * The single leaf — all 4 levels + a skeleton row (a state, not a leaf).
  *
- * Ramp dùng palette CHỨ KHÔNG dùng 5 token ngữ nghĩa: độ khó là **BẬC**, không phải
- * **TRẠNG THÁI** — ép 4 bậc vào token sẽ đụng `danger` hai lần.
+ * The ramp uses the palette, NOT the 5 semantic tokens: difficulty is a
+ * **LEVEL**, not a **STATE** — forcing 4 levels into tokens would collide
+ * on `danger` twice.
  */
 export const Levels: Story = {
     render: () => (
@@ -56,10 +60,11 @@ export const Levels: Story = {
             <BlockAnatomy
                 name="VariantChip.Difficulty"
                 tier="design"
-                leaf="Chip độ khó"
+                leaf="Difficulty chip"
                 parts={[]}
                 annotate={ANNOTATE}
                 note="The pill shape is the atom's own default — design never opens a shape axis."
+                code={"<VariantChip.Difficulty difficulty=\"intermediate\" />"}
             >
                 <div className="flex flex-col gap-4">
                     <div className="flex flex-wrap items-center gap-3">

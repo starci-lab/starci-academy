@@ -10,9 +10,15 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  *
  * Bộ leaf = `Default` (trần, prop `items`) + `Single`/`Multiple` (prop `allowsMultiple`,
  * mỗi ô dùng `defaultExpandedKeys` để MỞ SẴN panel — vì `allowsMultiple` chỉ đổi HÀNH VI
- * lúc tương tác, không dựng state thì hai ô mount y hệt nhau) + `Loading` (prop
+ * lúc tương tác, không dựng state thì hai ô mount y hệt nhau) + `Skeleton` (prop
  * `isSkeleton`). Leaf `DefaultOpen` cũ đã GỘP vào `Single` — cùng cơ chế
  * `defaultExpandedKeys` mở một panel, tách riêng sẽ ra hai ô trùng hình (2026-07-26).
+ *
+ * `Skeleton` đổi tên từ `Loading` (2026-07-27, thầy chốt: leaf mang TÊN PROP, không
+ * mang tên tình huống — prop sinh ra leaf này là `isSkeleton`). Atom không có trục
+ * size/variant nào khác cho skeleton bám vào (chỉ `items`/`allowsMultiple`, không
+ * đổi hình lúc `isSkeleton`) nên MỘT cách render là đủ theo §12g — không có nấc nào
+ * bị bỏ sót.
  */
 
 const meta: Meta<typeof Accordion.Base> = {
@@ -90,14 +96,14 @@ export const Multiple: Story = {
     ),
 }
 
-/** Loading — atom tự vẽ leaf skeleton (hàng trigger đóng); không dùng Skeleton.*. */
-export const Loading: Story = {
+/** Skeleton — atom tự vẽ leaf skeleton (hàng trigger đóng); không dùng Skeleton.*. */
+export const Skeleton: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
                 name="Accordion.Base"
                 tier="atom"
-                leaf="Loading"
+                leaf="Prop `isSkeleton`"
                 note="isSkeleton renders a shimmer row per item, owned by the atom, while the FAQ data hasn't loaded yet."
                 code={"<Accordion.Base isSkeleton items={FAQ_ITEMS} />"}
             >

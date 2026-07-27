@@ -33,23 +33,23 @@ const TITLE_ONLY_PARTS: Array<AnatomyNode> = [
     {
         name: "Header",
         tier: "primitive",
-        role: "khối đầu nhóm — chỉ còn tiêu đề",
-        children: [{ name: "Title", tier: "atom", role: "tiêu đề nhóm (Typography.Sm medium, §9b)" }],
+        role: "the group's opening block — title only",
+        children: [{ name: "Title", tier: "atom", role: "the group title (Typography.Sm medium, §9b)" }],
     },
-    { name: "Body", tier: "primitive", role: "cột field (`body`/`children`) theo nhịp `gap`" },
+    { name: "Body", tier: "primitive", role: "the field column (`body`/`children`) on the `gap` rhythm" },
 ]
 
 const WITH_DESCRIPTION_PARTS: Array<AnatomyNode> = [
     {
         name: "Header",
         tier: "primitive",
-        role: "khối đầu nhóm — tiêu đề + mô tả, gap-1 tight (§10b)",
+        role: "the group's opening block — title plus description, gap-1 tight (§10b)",
         children: [
-            { name: "Title", tier: "atom", role: "tiêu đề nhóm (Typography.Sm medium)" },
-            { name: "Description", tier: "atom", role: "mô tả nhóm (Typography.Xs muted, §9a)" },
+            { name: "Title", tier: "atom", role: "the group title (Typography.Sm medium)" },
+            { name: "Description", tier: "atom", role: "the group description (Typography.Xs muted, §9a)" },
         ],
     },
-    { name: "Body", tier: "primitive", role: "cột field (`body`/`children`) theo nhịp `gap`" },
+    { name: "Body", tier: "primitive", role: "the field column (`body`/`children`) on the `gap` rhythm" },
 ]
 
 /** Fixture field thật — atom tự mang label/hint/errorMessage/isRequired (§12e). */
@@ -58,10 +58,10 @@ const BillingFields = () => {
     const [taxCode, setTaxCode] = useState("")
     return (
         <>
-            <Input.Text label="Tên công ty" isRequired value={company} onValueChange={setCompany} placeholder="Tên trên hoá đơn" />
+            <Input.Text label="Company name" isRequired value={company} onValueChange={setCompany} placeholder="Name printed on the invoice" />
             <Input.Text
-                label="Mã số thuế"
-                errorMessage="Mã số thuế phải có 10 hoặc 13 chữ số."
+                label="Tax code"
+                errorMessage="A tax code must be 10 or 13 digits."
                 value={taxCode}
                 onValueChange={setTaxCode}
                 placeholder="0123456789"
@@ -79,14 +79,14 @@ export const Default: Story = {
                 tier="primitive"
                 leaf="Default"
                 parts={TITLE_ONLY_PARTS}
-                reason="Khung gom field thành NHÓM CÓ TÊN — chỉ bố cục + chữ qua atom Typography (§9c). Tiêu đề ở đây KHÔNG phải `label` của field: label/hint/lỗi/required thuộc atom form (§12e), khung không đẻ lại."
-                code={`<Form.Section title="Thông tin xuất hoá đơn">
-  <Input.Text label="Tên công ty" isRequired value={company} onValueChange={setCompany} />
-  <Input.Text label="Mã số thuế" errorMessage="Mã số thuế phải có 10 hoặc 13 chữ số." value={taxCode} onValueChange={setTaxCode} />
+                reason="The frame that gathers fields into a NAMED GROUP — layout plus text through the Typography atom (§9c), nothing else. The title here is NOT a field `label`: label, hint, error, and required belong to the form atoms (§12e), and the frame never grows its own."
+                code={`<Form.Section title="Billing details">
+  <Input.Text label="Company name" isRequired value={company} onValueChange={setCompany} />
+  <Input.Text label="Tax code" errorMessage="A tax code must be 10 or 13 digits." value={taxCode} onValueChange={setTaxCode} />
 </Form.Section>`}
             >
                 <div className="w-96">
-                    <Form.Section showAnatomy title="Thông tin xuất hoá đơn">
+                    <Form.Section showAnatomy title="Billing details">
                         <BillingFields />
                     </Form.Section>
                 </div>
@@ -105,10 +105,10 @@ export const WithDescription: Story = {
                 tier="primitive"
                 leaf="WithDescription"
                 parts={WITH_DESCRIPTION_PARTS}
-                note="`description` chỉ mở thêm MỘT node trong Header (gap-1 tight với tiêu đề) — nhịp `gap` của nhóm không đổi."
+                note="`description` opens exactly ONE more node inside Header (gap-1 tight against the title) — the group's own `gap` rhythm does not change."
                 code={`<Form.Section
-  title="Thông tin xuất hoá đơn"
-  description="Thông tin này in trên hoá đơn điện tử, sửa sau sẽ phải xin cấp lại."
+  title="Billing details"
+  description="These details are printed on the e-invoice; changing them later means requesting a reissue."
 >
   …
 </Form.Section>`}
@@ -116,8 +116,8 @@ export const WithDescription: Story = {
                 <div className="w-96">
                     <Form.Section
                         showAnatomy
-                        title="Thông tin xuất hoá đơn"
-                        description="Thông tin này in trên hoá đơn điện tử, sửa sau sẽ phải xin cấp lại."
+                        title="Billing details"
+                        description="These details are printed on the e-invoice; changing them later means requesting a reissue."
                     >
                         <BillingFields />
                     </Form.Section>

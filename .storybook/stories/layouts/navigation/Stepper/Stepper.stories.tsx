@@ -41,6 +41,7 @@ export const HorizontalMidFlow: Story = {
                 leaf="HorizontalMidFlow"
                 parts={STEPPER_PARTS}
                 reason="Stepper gom indicator + label + description + connector của N bước thành MỘT track thay vì mỗi flow tự dàn tay — track ngang, bước giữa (currentIndex=1) nên có cả done/current/upcoming."
+                code={"<Stepper.Base steps={[{ id: \"info\", label: \"Details\", description: \"Fill in your info\" }]} currentIndex={1} />"}
             >
                 <Stepper.Base steps={CHECKOUT_STEPS} currentIndex={1} showAnatomy />
             </BlockAnatomy>
@@ -58,6 +59,7 @@ export const Vertical: Story = {
                 leaf="Vertical"
                 parts={STEPPER_PARTS}
                 note={"orientation=\"vertical\" — CÙNG 4 part, chỉ đổi rail dọc; onStepPress khiến bước done trở thành <button> (không thêm part mới, chỉ đổi thẻ bọc)."}
+                code={"<Stepper.Base steps={[{ id: \"info\", label: \"Details\", description: \"Fill in your info\" }]} currentIndex={1} orientation=\"vertical\" onStepPress={handleStepPress} />"}
             >
                 <Stepper.Base steps={CHECKOUT_STEPS} currentIndex={1} orientation="vertical" onStepPress={() => {}} showAnatomy />
             </BlockAnatomy>
@@ -75,6 +77,7 @@ export const AllComplete: Story = {
                 leaf="AllComplete"
                 parts={STEPPER_PARTS}
                 note="currentIndex === steps.length — CÙNG 4 part, mọi Indicator đều 'done' (check) và mọi Connector đều success."
+                code={"<Stepper.Base steps={CHECKOUT_STEPS} currentIndex={CHECKOUT_STEPS.length} />"}
             >
                 <Stepper.Base steps={CHECKOUT_STEPS} currentIndex={CHECKOUT_STEPS.length} showAnatomy />
             </BlockAnatomy>

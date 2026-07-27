@@ -71,6 +71,7 @@ export const WithSuggestions: Story = {
                         name="SearchAutocomplete"
                         tier="atom"
                         leaf="WithSuggestions"
+                        code={"<SearchAutocomplete.Base items={items} inputValue={q} onInputChange={setQ} onSelect={fn} />"}
                         reason="Suggest-as-you-type needs the real free-text anatomy of the HeroUI ComboBox — InputGroup (field + icon) and Popover (dropdown) are the two top-level parts; the parent only hands over items/inputValue, and the block does no filtering itself, so it stays reusable for any data source."
                     >
                         <SearchAutocomplete.Base
@@ -102,6 +103,7 @@ export const Loading: Story = {
                         name="SearchAutocomplete"
                         tier="atom"
                         leaf="Loading"
+                        code={"<SearchAutocomplete.Base isLoading items={[]} inputValue={q} onInputChange={setQ} onSelect={fn} />"}
                         note="isLoading only changes what the Popover shows inside — a spinner instead of rows — same InputGroup + Popover shape as the WithSuggestions leaf."
                     >
                         <SearchAutocomplete.Base
@@ -131,6 +133,7 @@ export const Skeleton: Story = {
                 name="SearchAutocomplete"
                 tier="atom"
                 leaf="Skeleton"
+                code={"<SearchAutocomplete.Base isSkeleton />"}
                 note="isSkeleton swaps the whole ComboBox for a single field-box mirror — the dropdown has no resting shape, so nothing mirrors it."
             >
                 <SearchAutocomplete.Base
@@ -160,6 +163,7 @@ export const NoResults: Story = {
                         name="SearchAutocomplete"
                         tier="atom"
                         leaf="NoResults"
+                        code={"<SearchAutocomplete.Base items={[]} inputValue={q} onInputChange={setQ} onSelect={fn} />"}
                         note="Empty items with no loading flag makes the Popover show emptyLabel instead of rows — same InputGroup + Popover shape as the other leaves."
                     >
                         <SearchAutocomplete.Base

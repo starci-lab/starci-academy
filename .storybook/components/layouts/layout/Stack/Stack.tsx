@@ -13,17 +13,17 @@ import {
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * LAYOUT (khung) — `Stack.*`: the base one-axis track. Two members = two AXES,
+ * LAYOUT (frame) — `Stack.*`: the base one-axis track. Two members = two AXES,
  * the only real shapes a stack has:
- *   • `Stack.V` — xếp DỌC (column).
- *   • `Stack.H` — xếp NGANG (row); only this axis can `wrap`.
+ *   • `Stack.V` — stacks VERTICALLY (column).
+ *   • `Stack.H` — stacks HORIZONTALLY (row); only this axis can `wrap`.
  *
- * KHUNG API LAW (§13b): a stack WRAPS arbitrary content — it is not a repeating
+ * FRAME API LAW (§13b): a stack WRAPS arbitrary content — it is not a repeating
  * list — so `children` is the road (there is no `header`/`body`/`footer` trio to
  * name: a track has exactly ONE slot, its content). `items` would be wrong here;
  * see `Cluster`/`Grid` for the repeat-list frames of this folder.
  *
- * ⭐ WHY THIS KHUNG EXISTS (§10): `gap` is typed {@link SpaceScale} — a UNION
+ * ⭐ WHY THIS FRAME EXISTS (§10): `gap` is typed {@link SpaceScale} — a UNION
  * LITERAL of `0·1·2·3·6·8`. Off-scale (`gap-4`, `gap-5`, `gap-1.5`) cannot even
  * be typed, so the §10 scale is enforced by the COMPILER instead of by review.
  * `gap` is REQUIRED for the same reason: an implicit default would let the seam
@@ -31,7 +31,7 @@ import {
  *
  * §13 boundaries respected: no domain content, no feature behaviour — the track
  * only decides direction / gap / alignment / an optional rule between children.
- * `divider` COMPOSES the existing `Divider.Base` atom (§13c: khung never
+ * `divider` COMPOSES the existing `Divider.Base` atom (§13c: a frame never
  * hand-rolls what an atom already owns).
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -48,12 +48,17 @@ export interface StackBaseProps {
     align?: LayoutAlign
     /** Main-axis distribution (`V` → vertical, `H` → horizontal). */
     justify?: LayoutJustify
-    /** `true` → chèn `Divider.Base` GIỮA các con (never before the first / after the last). */
+    /** `true` → inserts `Divider.Base` BETWEEN children (never before the first / after the last). */
     divider?: boolean
-    /** The stacked content. A wrapper khung takes children (§13b). */
+    /**
+     * Anatomy tag for THIS frame itself — so the PARENT can badge it as ONE node (§11a.1).
+     * Missing this prop means the `layouts`-tier frame is used but the panel cannot see it.
+     */
+    anatPart?: string
+    /** The stacked content. A wrapper frame takes children (§13b). */
     children: ReactNode
     className?: string
-    /** `true` → tag this khung's parts with `data-anat-part` for a BlockAnatomy panel. */
+    /** `true` → tag this frame's parts with `data-anat-part` for a BlockAnatomy panel. */
     showAnatomy?: boolean
 }
 
@@ -73,7 +78,7 @@ export interface StackHProps extends StackBaseProps {
 /**
  * Interleaves `Divider.Base` between children — NOT around them: N children get
  * N−1 rules. The atom carries its own `showAnatomy` (part name `Line`), so the
- * khung adds no wrapper element and the DOM is identical with badges on or off.
+ * frame adds no wrapper element and the DOM is identical with badges on or off.
  *
  * On a ROW the rule is vertical and gets `self-stretch`: `align-self` overrides
  * the track's `items-*`, so the line spans the row's full height even when the
@@ -91,7 +96,7 @@ const interleaveDividers = (children: ReactNode, axis: "vertical" | "horizontal"
                     key={`stack-divider-${index}`}
                     orientation={ruleOrientation}
                     className={ruleOrientation === "vertical" ? "self-stretch" : undefined}
-                    showAnatomy={showAnatomy}
+                    anatPart={showAnatomy ? "Divider.Base" : undefined}
                 />,
                 child,
             ],
@@ -111,9 +116,10 @@ const StackV = ({
     children,
     className,
     showAnatomy = false,
+    anatPart,
 }: StackVProps) => (
     <div
-        data-anat-part={showAnatomy ? "Track" : undefined}
+        data-anat-part={anatPart ?? (showAnatomy ? "Track" : undefined)}
         className={cn(
             "flex flex-col",
             GAP_CLASS[gap],
@@ -140,9 +146,10 @@ const StackH = ({
     children,
     className,
     showAnatomy = false,
+    anatPart,
 }: StackHProps) => (
     <div
-        data-anat-part={showAnatomy ? "Track" : undefined}
+        data-anat-part={anatPart ?? (showAnatomy ? "Track" : undefined)}
         className={cn(
             "flex flex-row",
             wrap && "flex-wrap",
@@ -157,7 +164,7 @@ const StackH = ({
 )
 
 /**
- * `Stack.*` — the one-axis track khung namespace. `V` (dọc) · `H` (ngang).
+ * `Stack.*` — the one-axis track frame namespace. `V` (vertical) · `H` (horizontal).
  * Namespace only — no bare component export (§13a).
  */
 export const Stack = {

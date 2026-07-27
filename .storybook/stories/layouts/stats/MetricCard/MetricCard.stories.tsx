@@ -43,7 +43,13 @@ const NO_HINT_PARTS: Array<AnatomyNode> = [
 export const Default: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="MetricCard" tier="primitive" leaf="Default" parts={FULL_PARTS}>
+            <BlockAnatomy
+                name="MetricCard"
+                tier="primitive"
+                leaf="Default"
+                parts={FULL_PARTS}
+                code={"<MetricCard value=\"1,204\" label=\"Total enrolled students\" hint=\"Updated daily\" />"}
+            >
                 <MetricCard
                     showAnatomy
                     value="1,204"
@@ -58,7 +64,13 @@ export const Default: Story = {
 export const WithHint: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="MetricCard" tier="primitive" leaf="WithHint" parts={FULL_PARTS}>
+            <BlockAnatomy
+                name="MetricCard"
+                tier="primitive"
+                leaf="WithHint"
+                parts={FULL_PARTS}
+                code={"<MetricCard value=\"98%\" label=\"Course completion rate\" hint=\"Vs. last week\" />"}
+            >
                 <MetricCard
                     showAnatomy
                     value="98%"
@@ -80,6 +92,7 @@ export const WithoutHint: Story = {
                 leaf="WithoutHint"
                 parts={NO_HINT_PARTS}
                 note="Không truyền `hint` — SectionCard chỉ còn Value + Label."
+                code={"<MetricCard value=\"42\" label=\"Certificates issued\" />"}
             >
                 <MetricCard showAnatomy value="42" label="Certificates issued" />
             </BlockAnatomy>
@@ -91,7 +104,13 @@ export const WithoutHint: Story = {
 export const LongText: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="MetricCard" tier="primitive" leaf="LongText" parts={FULL_PARTS}>
+            <BlockAnatomy
+                name="MetricCard"
+                tier="primitive"
+                leaf="LongText"
+                parts={FULL_PARTS}
+                code={"<MetricCard value=\"3,750\" label=\"Total assignment submissions graded this month\" hint=\"Includes submissions from both trial and paid students\" />"}
+            >
                 <MetricCard
                     showAnatomy
                     value="3,750"

@@ -3,27 +3,33 @@ import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * DESIGN — `VariantChip.*`: họ chip ÁP MỘT VAI NGHĨA lên atom `Chip.*`.
+ * DESIGN — `VariantChip.*`: chip family that APPLIES ONE MEANINGFUL ROLE on top of
+ * the `Chip.*` atom.
  *
- * Đúng tầng `design` (§14d — design mang WHY): không đẻ hình mới, chỉ gắn Ý NGHĨA
- * + thang màu của vai đó lên hình đã có ở atom. Đổi HÌNH chip = việc của atom;
- * đổi Ý NGHĨA "độ khó" / "ngôn ngữ" / "nền tảng" = việc của file này.
+ * True to the `design` tier (§14d — design carries WHY): it doesn't invent a new
+ * shape, it just attaches the MEANING + the color scale of that role onto the
+ * shape the atom already has. Changing the chip's SHAPE is the atom's job;
+ * changing the MEANING "difficulty" / "language" / "platform" is this file's job.
  *
- * MEMBER = VAI NGHĨA, không phải hình thái. Đây là chỗ tầng design khác tầng atom:
- * atom chỉ có MỘT viên chip (`Chip.Base`) và chia theo PROP, design chia theo WHY.
+ * MEMBER = MEANINGFUL ROLE, not shape. This is where the design tier differs from
+ * the atom tier: the atom has only ONE chip (`Chip.Base`) split by PROP, while
+ * design splits by WHY.
  *
- * ⛔ **DESIGN TUYỆT ĐỐI KHÔNG MỞ `custom` VÀ `bare`** (thầy chốt 2026-07-26):
- * không nhãn tự đặt, không đổi hình. Mở hai thứ đó ra thì caller đổi được cả chữ
- * lẫn dáng — lúc ấy nó thôi là VAI NGHĨA, chỉ còn là một cái chip. Design phải là
- * BẢN CHUẨN DUY NHẤT của vai đó; muốn chip tự do thì gọi thẳng atom `Chip.*`.
+ * ⛔ **DESIGN MUST NEVER EXPOSE `custom` OR `bare`** (teacher's call, 2026-07-26):
+ * no caller-chosen label, no shape swap. Opening those two up would let the caller
+ * change both the text and the look — at that point it stops being a MEANINGFUL
+ * ROLE and is just a chip again. Design must be the ONE CANONICAL FORM of that
+ * role; anyone who wants a free-form chip should call the atom `Chip.*` directly.
  *
- * Hệ quả: `difficulty` là trục DUY NHẤT — nó quyết cả nhãn lẫn màu.
+ * Consequence: `difficulty` is the ONE axis — it decides both the label and the
+ * color.
  *
- * KHÔNG có member `Base`: một "variant chip" không mang vai nào thì chính là
- * `Chip.Base` có chấm — đẻ `Base` rỗng ở đây là namespace rỗng (§12a cấm).
+ * NO `Base` member: a "variant chip" carrying no role IS `Chip.Base` with a dot —
+ * adding an empty `Base` here would be an empty namespace (§12a forbids it).
  *
- * Họ này sẽ còn `.Language` · `.HostPlatform` · `.AiCategory` (đang ở `_legacy`).
- * Chỉ dựng thành viên nào SCREEN ĐANG CẦN — không nuôi member không ai gọi.
+ * This family will also grow `.Language` · `.HostPlatform` · `.AiCategory`
+ * (currently in `_legacy`). Only build the member a SCREEN ACTUALLY NEEDS — don't
+ * feed a member nobody calls.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -31,11 +37,13 @@ import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 export type Difficulty = "beginner" | "intermediate" | "advanced" | "insane"
 
 /**
- * Thang màu chấm theo bậc độ khó — SSOT của ramp này, import chứ đừng khai lại.
+ * Dot color scale by difficulty tier — the SSOT for this ramp, import it, don't
+ * redeclare it.
  *
- * Dùng ramp palette Tailwind (tuần tự, càng nóng càng khó) CHỨ KHÔNG dùng 5 token
- * ngữ nghĩa (`accent`/`success`/`warning`/`danger`/`default`): độ khó là **BẬC**,
- * không phải **TRẠNG THÁI** — ép 4 bậc vào token ngữ nghĩa sẽ đụng `danger` hai lần.
+ * Uses a sequential Tailwind palette ramp (hotter = harder) INSTEAD OF the 5
+ * semantic tokens (`accent`/`success`/`warning`/`danger`/`default`): difficulty is
+ * a **TIER**, not a **STATE** — forcing 4 tiers into semantic tokens would collide
+ * on `danger` twice.
  */
 export const DIFFICULTY_COLOR: Record<Difficulty, string> = {
     beginner: "text-emerald-500",
@@ -46,15 +54,15 @@ export const DIFFICULTY_COLOR: Record<Difficulty, string> = {
 
 /** Props for {@link VariantChip.Difficulty}. */
 export interface VariantChipDifficultyProps {
-    /** Bậc độ khó — quyết CẢ nhãn LẪN màu chấm. Đây là trục DUY NHẤT. */
+    /** Difficulty tier — decides BOTH the label AND the dot color. The one axis. */
     difficulty: Difficulty
     /** Extra classes on the wrapper. */
     className?: string
-    /** `true` → gạch skeleton mirror đúng hình chấm+nhãn (atom tự vẽ). */
+    /** `true` → shimmer bar mirroring the exact dot+label shape (the atom draws it itself). */
     isSkeleton?: boolean
-    /** Dev/spec: phủ nhãn anatomy lên chip này. */
+    /** Dev/spec: overlay anatomy labels on this chip. */
     showAnatomy?: boolean
-    /** Anatomy tag: đặt tên part để BlockAnatomy badge được. */
+    /** Anatomy tag: name the part so a BlockAnatomy panel can badge it. */
     anatPart?: string
 }
 
@@ -62,15 +70,16 @@ export interface VariantChipDifficultyProps {
 const capitalize = (value: Difficulty): string => value.charAt(0).toUpperCase() + value.slice(1)
 
 /**
- * `VariantChip.Difficulty` — chấm màu theo bậc + chữ độ khó (kiểu GitHub language
- * dot). Bọc mỏng atom `Chip.Base`; màu lấy từ {@link DIFFICULTY_COLOR}.
+ * `VariantChip.Difficulty` — a color dot by tier + a difficulty word (GitHub
+ * language-dot style). A thin wrapper over the `Chip.Base` atom; color comes from
+ * {@link DIFFICULTY_COLOR}.
  *
- * ⚠️ Đổi 2026-07-26: trước đây gọi `Chip.Dot`. Atom đã gộp chấm thành PROP của viên
- * chip DUY NHẤT, nên chấm giờ là `dotClassName` trên `Chip.Base` — không có member
- * riêng nữa. Hình không đổi, chỉ đổi lối gọi.
+ * ⚠️ Changed 2026-07-26: this used to call `Chip.Dot`. The atom folded the dot
+ * into a PROP of the ONE chip, so the dot is now `dotClassName` on `Chip.Base` —
+ * no separate member anymore. The shape didn't change, only how you call it.
  *
- * Hình LUÔN là viên pill — đúng mặc định của atom, và design không mở trục hình ra
- * cho caller (xem ⛔ ở doc đầu file).
+ * The shape is ALWAYS a pill — the atom's default, and design doesn't expose a
+ * shape axis to the caller (see the ⛔ note at the top of this file).
  *
  * @param props - {@link VariantChipDifficultyProps}
  */
@@ -81,13 +90,17 @@ const VariantChipDifficulty = ({
     showAnatomy = false,
     anatPart,
 }: VariantChipDifficultyProps) => {
-    // Tên part để cây anatomy gọi đúng cái design này dựng lại — cây đọc từ DOM nên
-    // không gắn tên thì nhìn story không biết nó làm bằng gì (thầy bắt 2026-07-25).
-    // Nhãn phải là tên NAMESPACE (`Chip.Base`) vì người đọc tra theo tên story.
+    // Part name so the anatomy tree can call out exactly what this design builds —
+    // the tree reads off the DOM, so without a name the story reveals nothing
+    // about what it's made of (teacher caught this 2026-07-25).
+    // The label must be the NAMESPACE name (`Chip.Base`) because readers look it
+    // up by story name.
     const chipPart = showAnatomy ? "Chip.Base" : undefined
-    // Hai nhánh vì `isSkeleton` của atom là union rời (skeleton thì `text` không bắt
-    // buộc): truyền một biến `boolean | undefined` vào chung một chỗ là không khớp kiểu.
-    // Nhánh skeleton VẪN giữ `dotClassName` để atom đếm đủ ô mà chừa chỗ cho chấm.
+    // Two branches because the atom's `isSkeleton` is a disjoint union (when
+    // skeleton, `text` isn't required): passing a single `boolean | undefined`
+    // into one call site wouldn't type-check. The skeleton branch STILL keeps
+    // `dotClassName` so the atom sizes the box correctly while leaving room for
+    // the dot.
     const chip = isSkeleton ? (
         <Chip.Base
             isSkeleton
@@ -100,16 +113,18 @@ const VariantChipDifficulty = ({
             dotClassName={DIFFICULTY_COLOR[difficulty]}
             text={capitalize(difficulty)}
             className={className}
-            showAnatomy={showAnatomy}
             anatPart={chipPart}
         />
     )
-    // Tên part đặt lên chính span BỌC chip — KHÔNG qua `AnatomyOverlay`.
+    // Part name goes on the span that WRAPS the chip itself — NOT through
+    // `AnatomyOverlay`.
     //
-    // Overlay phát một span `inset-0` nằm CẠNH chip chứ không bọc nó, nên `Dot`/`Label`
-    // (bên trong chip) leo tổ tiên KHÔNG gặp được `VariantChip.Difficulty` → cây anatomy
-    // ra phẳng sai, hai atom nhảy lên ngang hàng với design (thầy bắt 2026-07-26).
-    // Cây suy từ DOM nên tên phải nằm trên node THẬT SỰ chứa con.
+    // The overlay emits an `inset-0` span sitting NEXT TO the chip rather than
+    // wrapping it, so `Dot`/`Label` (inside the chip) walking up the ancestor
+    // chain never reach `VariantChip.Difficulty` → the anatomy tree flattens
+    // wrong, with the two atoms jumping up to sit level with design (teacher
+    // caught this 2026-07-26). The tree is inferred from the DOM, so the name
+    // must sit on the node that ACTUALLY contains the children.
     return showAnatomy ? (
         <span className="inline-flex" data-anat-part={anatPart ?? "VariantChip.Difficulty"}>
             {chip}
@@ -118,8 +133,9 @@ const VariantChipDifficulty = ({
 }
 
 /**
- * `VariantChip.*` — họ chip mang vai nghĩa. Member đặt theo VAI (§14d), không theo
- * hình. Không có `Base` (xem doc đầu file).
+ * `VariantChip.*` — the family of chips carrying a meaningful role. Members are
+ * named by ROLE (§14d), not by shape. No `Base` (see the doc at the top of this
+ * file).
  */
 export const VariantChip = {
     Difficulty: VariantChipDifficulty,

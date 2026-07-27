@@ -58,7 +58,19 @@ export const Even: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <BlockAnatomy name="StatGridCard" tier="primitive" leaf="Even" parts={PARTS} reason="Khung grid 2 cột với seam border; mỗi Cell là 1 ô lặp, nội dung (icon+label+count+bar) là slot tự do do story lắp, không phải node của StatGridCard.">
+                <BlockAnatomy
+                    name="StatGridCard"
+                    tier="primitive"
+                    leaf="Even"
+                    parts={PARTS}
+                    reason="Khung grid 2 cột với seam border; mỗi Cell là 1 ô lặp, nội dung (icon+label+count+bar) là slot tự do do story lắp, không phải node của StatGridCard."
+                    code={`<StatGridCard
+  items={[
+    { key: "lessons", content: statCell(<BookOpenIcon />, "Lessons", 2, 5) },
+    { key: "studyDays", content: statCell(<FlameIcon />, "Study days", 4, 5) },
+  ]}
+/>`}
+                >
                     <StatGridCard
                         showAnatomy
                         items={[
@@ -79,7 +91,19 @@ export const OddOverflow: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <BlockAnatomy name="StatGridCard" tier="primitive" leaf="OddOverflow" parts={PARTS} note="Tổng số lẻ (5) → Cell cuối tự `col-span-2`, không để trống 1 ô — vẫn cùng 1 loại node Cell.">
+                <BlockAnatomy
+                    name="StatGridCard"
+                    tier="primitive"
+                    leaf="OddOverflow"
+                    parts={PARTS}
+                    note="Tổng số lẻ (5) → Cell cuối tự `col-span-2`, không để trống 1 ô — vẫn cùng 1 loại node Cell."
+                    code={`<StatGridCard
+  items={[
+    { key: "lessons", content: statCell(<BookOpenIcon />, "Lessons", 2, 5) },
+    { key: "flashcards", content: statCell(<CardsIcon />, "Flashcards", 12, 20) },
+  ]}
+/>`}
+                >
                     <StatGridCard
                         showAnatomy
                         items={[
@@ -101,7 +125,14 @@ export const Single: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <BlockAnatomy name="StatGridCard" tier="primitive" leaf="Single" parts={PARTS} note="1 item (lẻ suy biến) → Cell duy nhất span full-width, không border-r/b thừa.">
+                <BlockAnatomy
+                    name="StatGridCard"
+                    tier="primitive"
+                    leaf="Single"
+                    parts={PARTS}
+                    note="1 item (lẻ suy biến) → Cell duy nhất span full-width, không border-r/b thừa."
+                    code={"<StatGridCard items={[{ key: \"lessons\", content: statCell(<BookOpenIcon />, \"Lessons\", 2, 5) }]} />"}
+                >
                     <StatGridCard
                         showAnatomy
                         items={[

@@ -3,7 +3,7 @@ import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { EntityResultRow, type SearchCourseContentItem } from "@sb-components/_legacy/blocks/learn/EntityResultRow/EntityResultRow"
 import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
-import { SeeMoreLink } from "@sb-components/atoms/navigation/SeeMoreLink/SeeMoreLink"
+import { Link } from "@sb-components/atoms/navigation/Link/Link"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported from
@@ -118,7 +118,7 @@ export const ChatToolResult = ({
             }
             footer={
                 !isLoading && onViewAll ? (
-                    <SeeMoreLink.Base
+                    <Link.SeeMore
                         size="xs"
                         onPress={onViewAll}
                         anatPart={showAnatomy ? "SeeMoreLink" : undefined}

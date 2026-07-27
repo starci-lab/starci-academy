@@ -4,65 +4,70 @@ import { GAP_CLASS, PADDING_CLASS, type SpaceScale } from "@sb-components/layout
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * LAYOUT (khung) — `Container.*`: KHỔ NỘI DUNG. Một member, `Container.Base`
- * (một khổ chỉ có một hình; bề rộng và đệm là PROP, §6b).
+ * LAYOUT (khung) — `Container.*`: CONTENT MEASURE. One member, `Container.Base`
+ * (one measure has one shape; width and padding are PROPS, §6b).
  *
- * KHUNG API LAW (§13b): khung BỌC ⇒ slot có tên `header`/`body`/`footer` là đường
- * chính, `children` là shorthand của `body`. Không có danh sách lặp nên không có
- * `items`.
+ * KHUNG API LAW (§13b): a wrapping khung ⇒ named slots `header`/`body`/`footer`
+ * are the main road, `children` is a shorthand for `body`. No repeating list, so
+ * no `items`.
  *
- * ⭐ VÌ SAO CÓ KHUNG NÀY (thầy chốt 2026-07-26). `Page.Container` cũ KHÔNG `mx-auto`,
- * KHÔNG `max-w`, và chỉ đệm BÊN PHẢI — nên mọi trang tự viết lấy khổ của mình:
- * `mx-auto flex w-full max-w-3xl flex-col gap-6` lặp 14 lần, `mx-auto w-full max-w-3xl`
- * 12 lần, và `max-w-3xl` xuất hiện 72 lần trong `src`. Khổ nội dung là một KHÁI NIỆM
- * có thật, nên nó phải là một khung có tên, không phải một chuỗi class chép tay.
+ * ⭐ WHY THIS KHUNG EXISTS (teacher's call, 2026-07-26). The old `Page.Container`
+ * had NO `mx-auto`, NO `max-w`, and padded only on the RIGHT side — so every page
+ * hand-rolled its own measure: `mx-auto flex w-full max-w-3xl flex-col gap-6`
+ * repeated 14 times, `mx-auto w-full max-w-3xl` 12 times, and `max-w-3xl` appeared
+ * 72 times across `src`. Content measure is a REAL concept, so it deserves a named
+ * khung, not a hand-copied class string.
  *
- * ⭐⭐ KHUNG NÀY MỞ `@container` (thầy chốt 2026-07-26) — đây là quyết định quan
- * trọng nhất của file, đọc kỹ trước khi sửa:
+ * ⭐⭐ THIS KHUNG OPENS `@container` (teacher's call, 2026-07-26) — the single most
+ * important decision in this file, read carefully before touching it:
  *
- * `@app-sm/md/lg/xl` là container query, chúng đo **`@container` gần nhất**. Trước
- * đây chỉ có shell (`InnerLayout`) mở một cái, nên mọi lưới trong app đều nghe theo
- * bề rộng CỘT APP — kể cả lưới nằm trong một khổ `max-w-3xl` hẹp hơn nhiều. Hậu quả:
- * một `Grid` xin 4 cột ở bậc `lg` vẫn nhảy lên 4 cột dù khổ chứa nó chỉ rộng 48rem.
+ * `@app-sm/md/lg/xl` are container queries — they measure the NEAREST `@container`.
+ * Before this, only the shell (`InnerLayout`) opened one, so every grid in the app
+ * listened to the APP COLUMN width — even a grid sitting inside a much narrower
+ * `max-w-3xl` measure. Result: a `Grid` asking for 4 columns at the `lg` tier still
+ * jumped to 4 columns even though its containing measure was only 48rem wide.
  *
- * Khung này mở `@container` của riêng nó ⇒ mọi `@app-*` bên trong đo **khổ này**,
- * không phải shell nữa. Lưới trong khổ hẹp tự biết mình hẹp.
+ * This khung opens its OWN `@container` ⇒ every `@app-*` inside it measures **this
+ * measure**, not the shell anymore. A grid in a narrow measure knows it's narrow.
  *
- * ⭐ HỆ QUẢ ĐẸP — `size` nói CÙNG NGÔN NGỮ với breakpoint. Cả hai đến từ MỘT bộ token
- * `--container-app-*` khai trong `globals.css` (Tailwind v4 `@theme`): cùng token đó
- * sinh ra biến thể `@app-md:` VÀ tiện ích `max-w-app-md`. Nên:
+ * ⭐ THE NICE PAYOFF — `size` speaks the SAME LANGUAGE as the breakpoint. Both come
+ * from ONE token set, `--container-app-*`, declared in `globals.css` (Tailwind v4
+ * `@theme`): that same token produces both the `@app-md:` variant AND the
+ * `max-w-app-md` utility. So:
  *
- * | `size` | bề rộng | bậc `@app-*` còn bắn được BÊN TRONG |
+ * | `size` | width | `@app-*` tiers still reachable INSIDE |
  * |---|---|---|
- * | `sm` | 40rem | `@app-sm` (đúng mép) |
- * | `md` | 48rem | `@app-sm` · `@app-md` (đúng mép) |
- * | `lg` | 64rem | thêm `@app-lg` |
- * | `xl` | 80rem | thêm `@app-xl` |
- * | `full` | không chặn | tuỳ cha |
+ * | `sm` | 40rem | `@app-sm` (exact edge) |
+ * | `md` | 48rem | `@app-sm` · `@app-md` (exact edge) |
+ * | `lg` | 64rem | plus `@app-lg` |
+ * | `xl` | 80rem | plus `@app-xl` |
+ * | `full` | unbounded | up to the parent |
  *
- * Đọc bảng này theo chiều NGƯỢC cũng đúng, và đó mới là chỗ nó có ích: xin
- * `columns={{ lg: 4 }}` bên trong `size="md"` là **xin một bậc không bao giờ tới** —
- * lưới sẽ đứng yên ở bậc `md`. Không phải bug, là khổ giấy quá hẹp cho 4 cột.
+ * Reading this table BACKWARDS also holds, and that's where it's actually useful:
+ * asking for `columns={{ lg: 4 }}` inside `size="md"` is **asking for a tier that
+ * never fires** — the grid will sit still at the `md` tier. Not a bug, just a
+ * measure too narrow for 4 columns.
  *
- * §10: `padding` và `gap` là {@link SpaceScale} union literal — off-scale là lỗi tsc
- * tại call-site, không phải phát hiện lúc review.
- * §13: không nội dung domain, không hành vi — chỉ bố trí.
+ * §10: `padding` and `gap` are {@link SpaceScale} union literals — off-scale is a
+ * tsc error at the call site, not something caught in review.
+ * §13: no domain content, no behavior — layout only.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 /**
- * Bề rộng khổ. Mỗi bậc trỏ THẲNG vào một token `--container-app-*`, nên khổ và
- * breakpoint không bao giờ lệch nhau (xem bảng ở header).
+ * Measure width. Each tier points DIRECTLY at a `--container-app-*` token, so the
+ * measure and the breakpoint never drift apart (see the table in the header).
  */
 export type ContainerSize = "sm" | "md" | "lg" | "xl" | "full"
 
 /**
- * Bậc → tiện ích `max-w-*` sinh từ chính token `--container-app-*`.
+ * Tier → `max-w-*` utility generated from the same `--container-app-*` token.
  *
- * Viết literal vì Tailwind không bao giờ emit chuỗi nội suy `max-w-app-${size}`.
- * ⚠️ ĐỪNG đổi sang `max-w-3xl`/`max-w-5xl` cho "gọn": số đó trùng giá trị hôm nay
- * (48rem/64rem) nhưng là NGUỒN KHÁC — token đổi thì khổ và breakpoint lệch nhau
- * âm thầm, không có lỗi nào bắt được.
+ * Written as literals because Tailwind never emits an interpolated string like
+ * `max-w-app-${size}`.
+ * ⚠️ DON'T swap these for `max-w-3xl`/`max-w-5xl` to "tidy up": those numbers match
+ * today's values (48rem/64rem) but are a DIFFERENT SOURCE — if the token changes,
+ * the measure and the breakpoint drift apart silently, with no error to catch it.
  */
 const SIZE_CLASS: Record<ContainerSize, string> = {
     sm: "max-w-app-sm",
@@ -72,46 +77,54 @@ const SIZE_CLASS: Record<ContainerSize, string> = {
     full: "max-w-none",
 }
 
-/** Props cho {@link Container.Base}. */
+/** Props for {@link Container.Base}. */
 export interface ContainerBaseProps {
     /**
-     * Bề rộng tối đa của khổ. Mặc định `md` (48rem) — đo trên app thật: `max-w-3xl`
-     * (đúng 48rem) là khổ được dùng nhiều nhất, 72 lần.
+     * Max width of the measure. Default `md` (48rem) — measured against the real app:
+     * `max-w-3xl` (exactly 48rem) is the most-used measure, 72 times.
      */
     size?: ContainerSize
     /**
-     * Đệm quanh nội dung, thang §10c. Mặc định `6` (thầy chốt: khổ web = `p-6`).
-     * Đặt `0` khi con tự ôm mép (ảnh bìa tràn viền, bảng tràn ngang).
+     * Padding around the content, §10c scale. Default `6` (teacher's call: web
+     * measure = `p-6`). Set `0` when the child hugs the edge itself (edge-to-edge
+     * cover image, a table that scrolls horizontally).
      */
     padding?: SpaceScale
     /**
-     * Seam dọc giữa `header` ↔ `body` ↔ `footer`. Mặc định `8` — nhịp TRANG, cố ý
-     * rộng hơn nhịp trong thẻ (§10b). Chỉ có tác dụng khi có nhiều hơn một vùng.
+     * Vertical seam between `header` ↔ `body` ↔ `footer`. Default `8` — PAGE rhythm,
+     * deliberately wider than the rhythm inside a card (§10b). Only takes effect when
+     * there's more than one region.
      */
     gap?: SpaceScale
-    /** Vùng trên — thường là một `Page.Header`. */
+    /** Top region — usually a `Page.Header`. */
     header?: ReactNode
-    /** Vùng chính. Tương đương `children`; thắng `children` khi truyền cả hai. */
+    /** Main region. Equivalent to `children`; wins over `children` when both are passed. */
     body?: ReactNode
-    /** Vùng dưới TRONG DÒNG (footer trang, hàng CTA kết). Không phải thanh ghim đáy. */
+    /** Bottom region IN FLOW (page footer, closing CTA row). Not a bottom-pinned bar. */
     footer?: ReactNode
-    /** Shorthand của {@link ContainerBaseProps.body} — khung bọc thì bọc được mọi thứ. */
+    /** Shorthand for {@link ContainerBaseProps.body} — a wrapping khung can wrap anything. */
     children?: ReactNode
-    /** Class thêm cho khổ. */
+    /** Extra class for the measure. */
     className?: string
     /**
-     * `true` → mỗi vùng phát `data-anat-part` để panel BlockAnatomy gắn badge.
-     * Tắt trong production.
+     * Name THIS measure itself in the BlockAnatomy panel — overrides the default name
+     * `"Container"`. Exists so the caller (screen) doesn't have to wrap an extra empty
+     * `div` just to attach `data-anat-part`; same mold as `SurfaceCard.*`.
+     */
+    anatPart?: string
+    /**
+     * `true` → each region emits `data-anat-part` so the BlockAnatomy panel can attach
+     * a badge. Off in production.
      */
     showAnatomy?: boolean
 }
 
 /**
- * Khổ nội dung: căn giữa, chặn bề rộng theo `size`, tự đệm, và MỞ `@container` để
- * mọi `@app-*` bên trong đo chính nó (xem header).
+ * Content measure: centered, width-capped by `size`, self-padding, and OPENS
+ * `@container` so every `@app-*` inside measures itself (see header).
  *
- * Không có `header` lẫn `footer` thì `body` render TRẦN — gọi kiểu chỉ-`children`
- * ra đúng cây DOM tối giản, không đẻ thêm một lớp `div` thừa.
+ * With no `header` and no `footer`, `body` renders RAW — a children-only call gets
+ * the minimal DOM tree, no extra wrapping `div`.
  *
  * @param props - {@link ContainerBaseProps}
  */
@@ -124,6 +137,7 @@ const ContainerBase = ({
     footer,
     children,
     className,
+    anatPart,
     showAnatomy = false,
 }: ContainerBaseProps) => {
     const main = body ?? children
@@ -138,10 +152,11 @@ const ContainerBase = ({
         )
 
     return (
-        // `@container` PHẢI nằm trên chính phần tử bị `max-w` chặn: container query
-        // đo hộp của phần tử mở container, nên đặt ở đây thì con mới đo đúng khổ.
+        // `@container` MUST sit on the same element capped by `max-w`: a container
+        // query measures the box of the element that opens the container, so
+        // placing it here is what lets children measure the actual measure.
         <div
-            data-anat-part={showAnatomy ? "Container" : undefined}
+            data-anat-part={anatPart ?? (showAnatomy ? "Container" : undefined)}
             className={cn(
                 "@container mx-auto w-full",
                 SIZE_CLASS[size],
@@ -155,9 +170,9 @@ const ContainerBase = ({
 }
 
 /**
- * `Container.*` — khung KHỔ NỘI DUNG. Namespace, không export component trần (§13a).
+ * `Container.*` — CONTENT MEASURE khung. Namespace, no bare component export (§13a).
  *
- * | Member | Đường vào nội dung |
+ * | Member | Content entry point |
  * |---|---|
  * | `.Base` | slot `header`/`body`/`footer` (+ `children` = body) |
  */

@@ -4,21 +4,21 @@ import { FilePlusIcon } from "@phosphor-icons/react"
 import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
 
 /**
- * KHUNG (Layouts) — ô "thêm mới": card bo `rounded-3xl` viền ĐỨT NÉT, bấm được, icon + nhãn
- * canh giữa, muted. Không mang chức năng nào ngoài việc CHỖ NÀY còn trống và bấm vào thì tạo.
+ * FRAME (Layouts) — the "add new" tile: a `rounded-3xl` card with a DASHED border, pressable,
+ * icon + label centered, muted. Carries no function beyond "this spot is empty, press to create."
  *
- * Hợp đồng press §7: chỉ `active:scale`, KHÔNG hover-bg — ô đứt nét nằm im lúc nghỉ và lúc
- * hover, phản hồi duy nhất là cú bấm.
+ * Press contract §7: only `active:scale`, NO hover-bg — the dashed tile sits still both at rest
+ * and on hover, the only feedback is the press itself.
  *
- * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): đây là member DUY NHẤT không nhận nội dung
- * (không slot, không `items`) — story chỉ có state của chính nó: icon mặc định vs thay icon,
- * `isSelected`, `isDisabled`, `isSkeleton`. Không có BlockAnatomy vì khung này không phơi
- * `showAnatomy`/`anatPart` (§11a: chỉ gắn cây anatomy khi có `data-anat-part` thật).
+ * ⚠️ STATE SCOPE (teacher's call 2026-07-25): this is the ONLY member that takes no content
+ * (no slot, no `items`) — the story only has its OWN state: default icon vs. swapped icon,
+ * `isSelected`, `isDisabled`, `isSkeleton`. No BlockAnatomy since this frame doesn't expose
+ * `showAnatomy`/`anatPart` (§11a: only attach an anatomy tree when there's a real `data-anat-part`).
  *
- * 2026-07-26 (thầy, BA TRỤC ĐỘC LẬP): `.Placeholder` KHÔNG nằm trong danh sách member đổi
- * `bordered`/`flushContent`/`compact` — `SurfaceCardPlaceholderProps` không có prop nào
- * trong ba trục đó (chỉ `icon`/`label`/`onPress`/`isSelected`/`isDisabled`/`isSkeleton`/
- * `className`), nên story này không đổi gì ở codemod prop.
+ * 2026-07-26 (teacher, THREE INDEPENDENT AXES): `.Placeholder` is NOT on the list of members
+ * that change `bordered`/`flushContent`/`compact` — `SurfaceCardPlaceholderProps` has none of
+ * the props in those three axes (only `icon`/`label`/`onPress`/`isSelected`/`isDisabled`/
+ * `isSkeleton`/`className`), so this story changes nothing in the prop codemod.
  */
 const meta: Meta<typeof SurfaceCard.Placeholder> = {
     title: "Layouts/Cards/SurfaceCard/SurfaceCard.Placeholder",
@@ -34,8 +34,8 @@ export default meta
 type Story = StoryObj<typeof SurfaceCard.Placeholder>
 
 /**
- * Ô lấp đầy chiều cao của cell trong grid — mọi story ghim tile vào một hộp cố định
- * (khớp cell ~19rem của gallery CV mà nó được port sang) để `h-full w-full` có chỗ để lấp.
+ * A cell that fills the height of a grid slot — every story pins the tile inside a fixed box
+ * (matching the ~19rem cell of the CV gallery it was ported for) so `h-full w-full` has room to fill.
  */
 const Cell = ({ children }: { children: ReactNode }) => (
     <div className="p-8">
@@ -43,7 +43,7 @@ const Cell = ({ children }: { children: ReactNode }) => (
     </div>
 )
 
-/** Default — `PlusIcon` trần + nhãn, thả được vào cuối bất kỳ grid "thêm mới" nào. */
+/** Default — bare `PlusIcon` + label, can be dropped at the end of any "add new" grid. */
 export const Default: Story = {
     render: () => (
         <Cell>
@@ -52,7 +52,7 @@ export const Default: Story = {
     ),
 }
 
-/** Icon tuỳ biến — caller đổi glyph dẫn đầu (vd file-plus cho grid tài liệu). Icon đi TRẦN, khung tự ép `size-8` (§4). */
+/** Custom icon — the caller swaps the leading glyph (e.g. file-plus for a document grid). The icon goes in BARE, the frame forces `size-8` itself (§4). */
 export const CustomIcon: Story = {
     render: () => (
         <Cell>
@@ -61,7 +61,7 @@ export const CustomIcon: Story = {
     ),
 }
 
-/** `isSelected` — ô được chọn trong grid chọn (ring accent), cùng hợp đồng với `SurfaceCard.Pressable`. */
+/** `isSelected` — the tile is selected within a selection grid (accent ring), same contract as `SurfaceCard.Pressable`. */
 export const Selected: Story = {
     render: () => (
         <Cell>
@@ -70,7 +70,7 @@ export const Selected: Story = {
     ),
 }
 
-/** `isDisabled` — vd trong lúc mutation tạo đang chạy, hoặc đã chạm giới hạn của gói. */
+/** `isDisabled` — e.g. while a create mutation is running, or the plan's limit has been hit. */
 export const Disabled: Story = {
     render: () => (
         <Cell>
@@ -79,7 +79,7 @@ export const Disabled: Story = {
     ),
 }
 
-/** `isSkeleton` — mirror tự vẽ (khối icon + 1 vạch chữ), cùng khung đứt nét, cùng footprint. */
+/** `isSkeleton` — a self-drawn mirror (icon block + 1 text bar), same dashed frame, same footprint. */
 export const Loading: Story = {
     render: () => (
         <Cell>

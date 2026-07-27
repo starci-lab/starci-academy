@@ -1,6 +1,6 @@
 import React, { type Key, type ReactNode } from "react"
 import { ListBox, Select, Tabs, cn } from "@heroui/react"
-import { ExtendedTabs } from "@sb-components/atoms/navigation/ExtendedTabs/ExtendedTabs"
+import { Tabs as AtomTabs } from "@sb-components/atoms/navigation/Tabs/Tabs"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 
 /**
@@ -160,7 +160,7 @@ const ToolbarBase = ({
 }: ToolbarBaseProps) => {
     /** Render one controlled tab group (`accent` = accent selected chrome, secondary-only). */
     const renderGroup = (group: ToolbarTabGroup, accent = true): ReactNode => (
-        <ExtendedTabs.Base
+        <AtomTabs.Extended
             variant={variant}
             size={size}
             selectedKey={group.selectedKey}
@@ -208,7 +208,7 @@ const ToolbarBase = ({
             {group.items.map((item) => (
                 <Tabs.Panel key={item.key} id={item.key} className="sr-only">{null}</Tabs.Panel>
             ))}
-        </ExtendedTabs.Base>
+        </AtomTabs.Extended>
     )
 
     /**

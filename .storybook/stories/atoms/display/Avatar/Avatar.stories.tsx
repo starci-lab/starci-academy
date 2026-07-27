@@ -10,25 +10,27 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Avatar.Base`: avatar DUY NHẤT của hệ, bọc thẳng HeroUI Avatar.
+ * ATOM — `Avatar.Base`: the system's ONE avatar, wrapping HeroUI Avatar directly.
  *
- * 📐 **1 PROP = 1 LEAF** (§12g). Viết lại 2026-07-26 sau khi `AvatarBase` gộp
- * DiceBear vào chuỗi fallback (xem header của `AvatarBase.tsx`):
+ * 📐 **1 PROP = 1 LEAF** (§12g). Rewritten 2026-07-26 after `AvatarBase` folded
+ * DiceBear into its fallback chain (see the header of `AvatarBase.tsx`):
  *
- * Bản CŨ tách 4 leaf (`Image`/`Initials`/`Fallback`/`Empty`) theo NGUỒN HÌNH —
- * đó là MỘT trục, không phải bốn — nên gộp về một leaf `Source`. Đổi lại bản cũ
- * THIẾU hẳn leaf cho `size` và `color` dù cả hai đều đẻ hình riêng (size đổi cả
- * box lẫn chấm status lẫn weight glyph; color đổi nền fallback).
+ * The OLD version split 4 leaves (`Image`/`Initials`/`Fallback`/`Empty`) by IMAGE
+ * SOURCE — that's ONE axis, not four — so they fold into one `Source` leaf.
+ * In exchange, the old version was flat-out MISSING a leaf for `size` and `color`
+ * even though both produce their own shape (size changes the box, the status dot,
+ * and the glyph weight; color changes the fallback background).
  *
- * Bộ leaf mới — đúng những prop CÓ HÌNH của `AvatarBaseProps`:
- *   `Default` (trần) · `Source` (chuỗi src→generated→initials→icon, gồm cả ca
- *   src lỗi tải) · `Fallback` (chọn mặt khi không có src) · `Status` (4 tone) ·
- *   `Sizes` (3 bậc) · `Colors` (5 tint) · `Skeleton` (leaf skeleton hybrid C).
+ * The new leaf set — exactly the props of `AvatarBaseProps` that HAVE a shape:
+ *   `Default` (bare) · `Source` (the src→generated→initials→icon chain, including
+ *   the failed-load-src case) · `Fallback` (which face to show without a src) ·
+ *   `Status` (4 tones) · `Sizes` (3 tiers) · `Colors` (5 tints) · `Skeleton`
+ *   (skeleton leaf, hybrid C).
  *
- * Prop không sinh hình (`className`, `showAnatomy`) không có leaf.
+ * A prop that produces no shape (`className`, `showAnatomy`) gets no leaf.
  *
- * 🎨 Icon = Phosphor (§5.0), truyền COMPONENT (`icon={UserIcon}`) không JSX —
- * atom tự ép scale + weight theo `size` (§5.0a).
+ * 🎨 Icon = Phosphor (§5.0), pass the COMPONENT (`icon={UserIcon}`) not JSX —
+ * the atom forces the scale + weight itself based on `size` (§5.0a).
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -51,7 +53,7 @@ const BROKEN_IMG = "https://example.com/nope.png"
 const SEED = "mai.chi@starci.vn"
 const NAME = "Mai Chi"
 
-/** ĐỦ union `AvatarStatus` — thiếu một giá trị là giá trị đó sẽ mọc thành leaf lạc chỗ. */
+/** FULL `AvatarStatus` union — missing a value means it sprouts as a stray leaf elsewhere. */
 const STATUSES: Array<{ status: AvatarStatus; hint: string }> = [
     { status: "online", hint: "active right now" },
     { status: "offline", hint: "not signed in" },
@@ -59,14 +61,14 @@ const STATUSES: Array<{ status: AvatarStatus; hint: string }> = [
     { status: "away", hint: "stepped away" },
 ]
 
-/** ĐỦ union `AvatarSize`. */
+/** FULL `AvatarSize` union. */
 const SIZES: Array<{ size: AvatarSize; hint: string }> = [
     { size: "sm", hint: "dense rows — tables, comment threads" },
     { size: "md", hint: "default — cards, lists" },
     { size: "lg", hint: "profile header, hero" },
 ]
 
-/** ĐỦ union `AvatarColor`. */
+/** FULL `AvatarColor` union. */
 const COLORS: Array<{ color: AvatarColor; hint: string }> = [
     { color: "accent", hint: "brand tint" },
     { color: "danger", hint: "something needs attention" },
@@ -75,7 +77,7 @@ const COLORS: Array<{ color: AvatarColor; hint: string }> = [
     { color: "warning", hint: "caution signal" },
 ]
 
-/** Leaf TRẦN — chưa bật prop nào, để thấy hình mặc định. */
+/** BARE leaf — no prop turned on yet, to show the default shape. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
@@ -94,9 +96,10 @@ export const Default: Story = {
 }
 
 /**
- * Leaf `Source` — trục NGUỒN HÌNH (gộp từ 4 leaf cũ). Render đủ chuỗi fallback:
- * ảnh thật → ảnh sinh (DiceBear, seed) → initials → icon, cộng ca src LỖI TẢI
- * tụt xuống ảnh sinh — năng lực vừa gộp vào, phải có mặt ở đây.
+ * Leaf `Source` — the IMAGE-SOURCE axis (folded from 4 old leaves). Renders the
+ * full fallback chain: real photo → generated face (DiceBear, seed) → initials →
+ * icon, plus the FAILED-LOAD src case stepping down to the generated face — the
+ * capability just folded in, so it has to show up here.
  */
 export const Source: Story = {
     render: () => (
@@ -126,8 +129,9 @@ export const Source: Story = {
 }
 
 /**
- * Leaf prop `fallback` — mặt khi KHÔNG có `src`. Cố ý bỏ `src` ở cả 3 ô: có
- * `src` thì cả 3 ra hình giống hệt nhau (ảnh thắng mọi fallback) ⇒ vô nghĩa.
+ * Leaf prop `fallback` — the face shown when there is NO `src`. `src` is
+ * deliberately dropped in all 3 cells: WITH a `src`, all three would render the
+ * same picture (the photo beats every fallback) ⇒ meaningless.
  */
 export const Fallback: Story = {
     render: () => (
@@ -153,8 +157,8 @@ export const Fallback: Story = {
 }
 
 /**
- * Leaf prop `status` — chấm hiện diện. Render ĐỦ 4 tone × cả 3 size để lộ bảng
- * đường kính chấm (`SIZE_MAP.dot`: size-2 / 2.5 / 3) nếu nó lệch theo size.
+ * Leaf prop `status` — the presence dot. Renders ALL 4 tones × all 3 sizes to
+ * expose the dot-diameter table (`SIZE_MAP.dot`: size-2 / 2.5 / 3) if it drifts by size.
  */
 export const Status: Story = {
     render: () => (
@@ -192,9 +196,9 @@ export const Status: Story = {
 }
 
 /**
- * Leaf prop `size` — 3 bậc, MỖI bậc kèm icon để thấy weight glyph đổi theo
- * size (§5.0a: `sm` → size-4 → `bold`; `md`/`lg` → `regular`). Không icon thì
- * không có gì để so weight.
+ * Leaf prop `size` — 3 tiers, EACH tier carries an icon so the glyph weight can
+ * be seen changing with size (§5.0a: `sm` → size-4 → `bold`; `md`/`lg` →
+ * `regular`). Without an icon there's nothing to compare the weight against.
  */
 export const Sizes: Story = {
     render: () => (
@@ -220,9 +224,9 @@ export const Sizes: Story = {
 }
 
 /**
- * Leaf prop `color` — tint của NỀN FALLBACK. Render đủ 5 tint × cả hai fallback
- * mà có nền (initials, icon) — `color` không chạm vào ảnh thật nên không cần
- * ô có `src`.
+ * Leaf prop `color` — the tint of the FALLBACK BACKGROUND. Renders all 5 tints ×
+ * both fallbacks that have a background (initials, icon) — `color` never touches
+ * a real photo, so no cell needs a `src`.
  */
 export const Colors: Story = {
     render: () => (
@@ -269,14 +273,15 @@ export const Colors: Story = {
 }
 
 /**
- * Leaf prop `isSkeleton` — shimmer OWNED bởi atom (hybrid C, §12c), render đủ
- * 3 size × (có `status` / không `status`).
+ * Leaf prop `isSkeleton` — shimmer OWNED by the atom (hybrid C, §12c), renders
+ * all 3 sizes × (with `status` / without `status`).
  *
- * Atom vẽ chấm status TRUNG TÍNH (`bg-default-300`) ngay trong nhánh skeleton
- * khi `status` có set — chưa biết online/offline nên chưa tô màu trạng thái,
- * nhưng CÓ chấm là hình thật của atom lúc loading (thiếu nó thì ô "có status"
- * và "không status" ra pixel y hệt nhau, sai §D). Vì vậy hai cột mỗi hàng dưới
- * đây PHẢI khác nhau: cột phải luôn có thêm một chấm xám ở góc.
+ * The atom draws a NEUTRAL status dot (`bg-default-300`) right inside the
+ * skeleton branch when `status` is set — it doesn't know online/offline yet so
+ * it doesn't paint a state color, but HAVING a dot is the atom's real loading
+ * shape (without it, the "has status" and "no status" cells would render
+ * identical pixels, violating §D). So the two columns in every row below MUST
+ * differ: the right column always carries an extra gray dot in the corner.
  */
 export const Skeleton: Story = {
     render: () => (

@@ -4,25 +4,27 @@ import { Choice } from "@sb-components/atoms/forms/Choice/Choice"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Choice.Switch`: track boolean, nhãn nằm INLINE cạnh track (bọc HeroUI Switch).
+ * ATOM — `Choice.Switch`: a boolean track, label sits INLINE next to the track (wraps HeroUI Switch).
  *
- * 📐 **1 PROP = 1 LEAF** (§12g). Bộ leaf đủ prop CÓ HÌNH: `isSelected` (`Default`/
- * `Selected`) · `size` (`Sizes`) · `hint` (`WithHint`) · `isRequired` (`Required`) ·
+ * 📐 **1 PROP = 1 LEAF** (§12g). The full set of leaf props WITH A DISTINCT SHAPE: `isSelected`
+ * (`Default`/`Selected`) · `size` (`Sizes`) · `hint` (`WithHint`) · `isRequired` (`Required`) ·
  * `isDisabled` (`Disabled`) · `errorMessage` (`Error`) · `isSkeleton` (`Loading`).
- * `label`/`onValueChange`/`className`/`showAnatomy` không sinh hình riêng nên không
- * có leaf.
+ * `label`/`onValueChange`/`className`/`showAnatomy` produce no distinct shape, so they get
+ * no leaf.
  *
- * ⚠️ Bản trước THIẾU HẲN leaf `Sizes` dù prop `size` có ba hình rõ rệt (sm/md/lg) —
- * bổ sung ở đây. Leaf `Loading` cũng phải render đủ ba size (§12g: "leaf isSkeleton
- * phải render skeleton của ĐỦ 3 size"), không chỉ một track mặc định.
+ * ⚠️ The previous version was MISSING the `Sizes` leaf entirely, even though the `size` prop
+ * has three clearly distinct shapes (sm/md/lg) — added here. The `Loading` leaf must also
+ * render all three sizes (§12g: "an isSkeleton leaf must render the skeleton at ALL 3
+ * sizes"), not just one default track.
  *
- * ⭐ DEPS: atom này bọc thẳng HeroUI Switch — không dựng lại atom nào khác có story
- * riêng, nên KHÔNG có prop `annotate` (§12g: "atom lá bọc thẳng HeroUI ⇒ deps RỖNG").
- * `Control`/`Label` là khe nội bộ của chính Switch; `Description`/`Error` là khe của
- * `FieldFrame` (scaffold nội bộ, không có story riêng).
+ * ⭐ DEPS: this atom wraps HeroUI Switch directly — it doesn't rebuild any other atom that
+ * has its own story, so it has NO `annotate` prop (§12g: "a leaf atom that wraps HeroUI
+ * directly ⇒ deps are EMPTY"). `Control`/`Label` are Switch's own internal slots;
+ * `Description`/`Error` are slots of `FieldFrame` (an internal scaffold with no story of
+ * its own).
  *
- * ✍️ Chữ hiện trên panel (`leaf`/`reason`/`note`/`code`) và nhãn demo trong khung
- * render viết TIẾNG ANH; JSDoc/comment giữ tiếng Việt.
+ * ✍️ Text shown on the panel (`leaf`/`reason`/`note`/`code`) and demo labels in the render
+ * frame are written in ENGLISH; JSDoc/comments stay in Vietnamese.
  */
 const meta: Meta<typeof Choice.Switch> = {
     title: "Atoms/Forms/Choice/Choice.Switch",
@@ -35,10 +37,10 @@ export default meta
 
 type Story = StoryObj<typeof Choice.Switch>
 
-/** ĐỦ union `size` — thiếu một giá trị là giá trị đó sẽ mọc thành leaf lạc chỗ. */
+/** The FULL `size` union — missing a value means that value grows into a stray leaf elsewhere. */
 const SIZES = ["sm", "md", "lg"] as const
 
-/** Leaf TRẦN — chưa bật prop nào: tắt, không hint, không lỗi. */
+/** BARE leaf — no prop turned on: off, no hint, no error. */
 export const Default: Story = {
     render: () => {
         const Demo = () => {
@@ -62,7 +64,7 @@ export const Default: Story = {
     },
 }
 
-/** Leaf prop `isSelected` — hình khi bật (false = leaf Default ở trên). */
+/** Leaf prop `isSelected` — the shape when on (false = the Default leaf above). */
 export const Selected: Story = {
     render: () => {
         const Demo = () => {
@@ -86,7 +88,7 @@ export const Selected: Story = {
     },
 }
 
-/** Leaf prop `size` — ba bậc TỈ LỆ của track, trục độc lập với `isSelected` (§12d). */
+/** Leaf prop `size` — three SCALE steps of the track, an axis independent of `isSelected` (§12d). */
 export const Sizes: Story = {
     render: () => {
         const Demo = () => {
@@ -114,7 +116,7 @@ export const Sizes: Story = {
     },
 }
 
-/** Leaf prop `hint` — dòng mô tả phụ dưới nhãn, qua scaffold nội bộ FieldFrame. */
+/** Leaf prop `hint` — a secondary description line below the label, via the internal FieldFrame scaffold. */
 export const WithHint: Story = {
     render: () => {
         const Demo = () => {
@@ -144,7 +146,7 @@ export const WithHint: Story = {
     },
 }
 
-/** Leaf prop `isRequired` — dấu `*` gắn vào nhãn inline. */
+/** Leaf prop `isRequired` — a `*` mark attached to the inline label. */
 export const Required: Story = {
     render: () => {
         const Demo = () => {
@@ -174,7 +176,7 @@ export const Required: Story = {
     },
 }
 
-/** Leaf prop `isDisabled` — khoá track, nhạt màu. */
+/** Leaf prop `isDisabled` — locks the track, dims the color. */
 export const Disabled: Story = {
     render: () => (
         <div className="p-8">
@@ -194,7 +196,7 @@ export const Disabled: Story = {
     ),
 }
 
-/** Leaf prop `errorMessage` — nhãn inline + track viền lỗi + dòng lỗi đỏ, qua FieldFrame. */
+/** Leaf prop `errorMessage` — inline label + error-bordered track + red error line, via FieldFrame. */
 export const Error: Story = {
     render: () => {
         const Demo = () => {
@@ -224,7 +226,7 @@ export const Error: Story = {
     },
 }
 
-/** Leaf prop `isSkeleton` — shimmer CO-LOCATED (§12c), đủ BA size (track pill + nhãn bar). */
+/** Leaf prop `isSkeleton` — CO-LOCATED shimmer (§12c), all THREE sizes (track pill + label bar). */
 export const Loading: Story = {
     render: () => (
         <div className="p-8">

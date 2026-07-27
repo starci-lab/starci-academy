@@ -37,7 +37,17 @@ export const GAP_CLASS: Record<SpaceScale, string> = {
 }
 
 /** Cross-axis alignment of a flex track. */
-export type LayoutAlign = "start" | "center" | "end" | "stretch"
+/**
+ * Canh theo TRỤC NGANG của một track.
+ *
+ * ⭐ `baseline` thêm 2026-07-27: hàng có chữ NHIỀU CỠ (giá `h4` cạnh giá gạch `sm` cạnh
+ * chip `xs`) phải canh theo CHÂN CHỮ, không phải theo tâm hộp — `center` làm ba con số
+ * lệch chân nhau. Trước đó khung KHÔNG diễn đạt được việc này, nên `PriceTag` phải gõ tay
+ * `items-baseline`; chuyển sang khung mà thiếu nấc này thì migration làm HỎNG hình.
+ * Thêm một giá trị vào union là ADDITIVE — không call-site nào đang chạy bị đổi, và
+ * compiler bắt mọi bảng `Record<LayoutAlign, …>` phải khai đủ.
+ */
+export type LayoutAlign = "start" | "center" | "end" | "stretch" | "baseline"
 
 /** Main-axis distribution of a flex track. */
 export type LayoutJustify = "start" | "center" | "end" | "between"
@@ -48,6 +58,7 @@ export const ALIGN_CLASS: Record<LayoutAlign, string> = {
     center: "items-center",
     end: "items-end",
     stretch: "items-stretch",
+    baseline: "items-baseline",
 }
 
 /** {@link LayoutJustify} → literal class. */

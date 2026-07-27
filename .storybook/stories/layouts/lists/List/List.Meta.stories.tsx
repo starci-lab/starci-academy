@@ -4,10 +4,10 @@ import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): `List.Meta` là khung MỘT DÒNG META inline.
- * Thứ nó đẻ ra: có/không chip tín hiệu dẫn đầu, nối các đoạn `items` bằng middot, và
- * truncate khi container hẹp. Hàng danh sách đầy đủ (leading/title/trailing) là tài sản
- * của `List.Row` — KHÔNG lặp ở đây.
+ * ⚠️ STATE SCOPE (teacher's call, 2026-07-25): `List.Meta` is a ONE-LINE inline META
+ * frame. What it produces: with/without a leading signal chip, joining `items` segments
+ * with a middot, and truncating when the container is narrow. The full list row
+ * (leading/title/trailing) belongs to `List.Row` — NOT repeated here.
  */
 const meta: Meta<typeof List.Meta> = {
     title: "Layouts/Lists/List/List.Meta",
@@ -25,12 +25,12 @@ type Story = StoryObj<typeof List.Meta>
 // With the leading signal chip — Chip + Meta side by side.
 const WITH_CHIP_PARTS: Array<AnatomyNode> = [
     { name: "Chip", tier: "atom", role: "The one leading signal — here a warning Chip.Base." },
-    { name: "Meta", tier: "primitive", role: "đoạn text mờ nối bằng middot ·" },
+    { name: "Meta", tier: "primitive", role: "muted text segments joined by a middot ·" },
 ]
 
 // No chip — only the muted meta line.
 const META_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "Meta", tier: "primitive", role: "đoạn text mờ nối bằng middot ·" },
+    { name: "Meta", tier: "primitive", role: "muted text segments joined by a middot ·" },
 ]
 
 /** Leading warning `Chip.Base` (the one signal) + dot-joined muted meta segments. */
@@ -42,7 +42,7 @@ export const WithChip: Story = {
                 tier="primitive"
                 leaf="WithChip"
                 parts={WITH_CHIP_PARTS}
-                reason="Consolidate dòng meta chấm-ngăn hand-roll khắp nơi: MỘT chip tín hiệu dẫn đầu (nếu có) rồi các đoạn meta trung tính nối middot, tất cả mờ trừ chip (principles §2 color-prominence). `items` là dữ liệu vì các đoạn meta LẶP (§13b)."
+                reason="Consolidates the middot-separated meta line that used to be hand-rolled everywhere: ONE leading signal chip (if any), then neutral meta segments joined by a middot, all muted except the chip (principles §2 color-prominence). `items` is data because the meta segments REPEAT (§13b)."
                 code={`<List.Meta
   chip={<Chip.Base tone="warning" text="2 phút còn lại" />}
   items={["Question 7 / 8", "Middle"]}
@@ -67,7 +67,7 @@ export const MetaOnly: Story = {
                 tier="primitive"
                 leaf="MetaOnly"
                 parts={META_ONLY_PARTS}
-                note="Bỏ `chip` → chỉ còn part Meta, dòng text mờ đơn thuần."
+                note="Drop `chip` → only the Meta part remains, a plain muted text line."
                 code={`<List.Meta
   items={["Question 2 / 8", "Middle", "40 minutes left"]}
 />`}
@@ -87,7 +87,10 @@ export const Overflow: Story = {
                 tier="primitive"
                 leaf="Overflow"
                 parts={META_ONLY_PARTS}
-                note="Cùng composition với leaf MetaOnly — container hẹp khiến Meta truncate thay vì wrap/overflow."
+                note="Same composition as leaf MetaOnly — a narrow container makes Meta truncate instead of wrap/overflow."
+                code={`<List.Meta
+  items={["Building a scalable distributed rate limiter", "Middle", "40 minutes left"]}
+/>`}
             >
                 <List.Meta items={["Building a scalable distributed rate limiter", "Middle", "40 minutes left"]} showAnatomy />
             </BlockAnatomy>

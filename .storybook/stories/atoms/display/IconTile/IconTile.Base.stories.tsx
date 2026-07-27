@@ -7,33 +7,39 @@ import {
 } from "@phosphor-icons/react"
 import {
     IconTile,
-    type IconTileShape,
     type IconTileSize,
     type IconTileTone,
 } from "@sb-components/atoms/display/IconTile/IconTile"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `IconTile.Base`: khung avatar của một THỨ (course, project, section…).
+ * ATOM — `IconTile.Base`: the avatar frame of a THING (course, project, section…).
  *
- * 📐 **1 PROP = 1 LEAF** (§12g). Mỗi prop có hình một leaf, render ĐỦ mọi state
- * prop ấy sinh ra: `tone` · `size` · `shape` · `src` (ảnh cover đè icon) ·
- * `isSkeleton`. Prop không sinh hình (`alt`, `anatPart`, `className`) KHÔNG có leaf.
+ * 📐 **1 PROP = 1 LEAF** (§12g). Every prop has one leaf, rendering EVERY state
+ * that prop produces: `tone` · `size` · `src` (a cover image over the icon) ·
+ * `isSkeleton`. A prop that produces no visual (`alt`, `anatPart`, `className`)
+ * has NO leaf.
  *
- * ⚠️ `icon` KHÔNG có leaf riêng — nó là NỘI DUNG bắt buộc (trừ lúc skeleton), không
- * phải một trục "hình" để bật/tắt như `Chip.Base`. Icon xuất hiện xuyên suốt mọi leaf,
- * đổi tuỳ leaf để dữ liệu mẫu đọc thật, nhưng bản thân việc "có icon hay không" không
- * phải là điều component này để caller chọn (luôn có trừ khi `isSkeleton`).
+ * ⚠️ REMOVED 2026-07-26: the `shape` axis (`circle`/`square`) + the `Shape` leaf.
+ * No consumer in the design tree ever passed `shape` — a choice nobody made.
+ * The tile is now ALWAYS round (teacher decided).
  *
- * 🎨 Icon nhận COMPONENT (`icon={GraduationCapIcon}`), KHÔNG phải JSX — atom tự render
- * + tự ép scale theo `size` (§5.0). Cả ba nấc (`sm`=size-5, `md`=size-6, `lg`=size-8) đều
- * ≥ `size-5` nên atom KHÔNG truyền `weight` (§5.0a — chỉ glyph < size-5 mới cần `bold`).
+ * ⚠️ `icon` has NO leaf of its own — it's REQUIRED CONTENT (except while skeleton),
+ * not a "visual" axis to toggle like `Chip.Base`. The icon appears throughout every
+ * leaf, changing per leaf so the sample data reads real, but "having an icon or
+ * not" itself isn't something this component leaves for the caller to choose
+ * (always present unless `isSkeleton`).
  *
- * Atom có `showAnatomy` — mỗi leaf bật ở tile ĐẦU TIÊN, badge 4 part namespace: `Tile`
- * (root) · `Cover` (ảnh) · `Icon` (glyph) · `Skeleton`.
+ * 🎨 The icon takes a COMPONENT (`icon={GraduationCapIcon}`), NOT JSX — the atom
+ * renders it and forces its own scale per `size` (§5.0). All three steps
+ * (`sm`=size-5, `md`=size-6, `lg`=size-8) are ≥ `size-5`, so the atom does NOT pass
+ * `weight` (§5.0a — only a glyph < size-5 needs `bold`).
+ *
+ * The atom has `showAnatomy` — each leaf turns it on at the FIRST tile, badging 4
+ * namespaced parts: `Tile` (root) · `Cover` (image) · `Icon` (glyph) · `Skeleton`.
  */
 
-/** Hướng dẫn hiện đầu trang autodocs. Chữ trên UI viết TIẾNG ANH. */
+/** Guide shown at the top of the autodocs page. UI-facing text is written in ENGLISH. */
 const ICON_TILE_DOC = `
 ## Icon or cover image
 
@@ -46,15 +52,14 @@ image URL 404s, so a broken asset never shows a broken-image glyph.
 ## Sizing
 
 Three sizes, one box each: the icon scales with the box, so callers never pick
-a glyph size themselves. \`sm\` is the default — it pairs with an empty state or
-a list row; reach for \`lg\` at the top of a detail page.
+a glyph size themselves. \`sm\` (40px) is the default — it pairs with a
+\`TitledText\` row or an empty state; reach for \`lg\` at the top of a detail page.
 
 ## Shape
 
-\`circle\` is the default — a tile standing alone (an empty state, the top of a
-dialog) has no straight edge nearby to line up against, so round reads softer.
-Switch to \`square\` when the tile sits in a grid or a row next to other
-square-cornered cards.
+Always round. There is no shape axis to pick: a tile usually stands on its own
+(an empty state, the head of a row) with no straight edge nearby to line up
+against, so round reads softer everywhere it appears.
 `
 
 const meta: Meta<typeof IconTile.Base> = {
@@ -71,7 +76,7 @@ export default meta
 
 type Story = StoryObj<typeof IconTile.Base>
 
-/** ĐỦ union `IconTileTone` — cùng MỘT icon để tone là biến duy nhất đổi hình. */
+/** FULL `IconTileTone` union — the SAME icon throughout so tone is the only variable changing the visual. */
 const TONES: Array<{ tone: IconTileTone; hint: string }> = [
     { tone: "accent", hint: "the default identity colour" },
     { tone: "success", hint: "a completed or passed item" },
@@ -80,25 +85,19 @@ const TONES: Array<{ tone: IconTileTone; hint: string }> = [
     { tone: "neutral", hint: "archived — low emphasis" },
 ]
 
-/** ĐỦ union `IconTileSize`. */
+/** FULL `IconTileSize` union. */
 const SIZES: Array<{ size: IconTileSize; hint: string }> = [
-    { size: "sm", hint: "48px — the empty-state pairing" },
+    { size: "sm", hint: "40px — pairs with a TitledText row" },
     { size: "md", hint: "64px — a list row or card header" },
     { size: "lg", hint: "80px — the top of a detail page" },
 ]
 
-/** ĐỦ union `IconTileShape`. */
-const SHAPES: Array<{ shape: IconTileShape; hint: string }> = [
-    { shape: "circle", hint: "default — reads soft standing alone" },
-    { shape: "square", hint: "lines up with straight edges nearby" },
-]
-
-/** Ảnh cover THẬT — deterministic (DiceBear, seed cố định), không cần asset ngoài. */
+/** A REAL cover image — deterministic (DiceBear, fixed seed), no external asset needed. */
 const COURSE_COVER = "https://api.dicebear.com/9.x/shapes/svg?seed=ReactPatterns"
-/** URL cố tình sai đường dẫn để chứng minh nhánh fallback khi ảnh 404. */
+/** A URL deliberately pointed wrong to prove the fallback branch when the image 404s. */
 const BROKEN_COVER = "/covers/does-not-exist.jpg"
 
-/** Leaf TRẦN — chưa bật prop nào: `tone="accent"`, `size="sm"`, `shape="circle"`. */
+/** BARE leaf — no prop turned on yet: `tone="accent"`, `size="sm"`. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
@@ -107,7 +106,7 @@ export const Default: Story = {
                 tier="atom"
                 leaf="Bare tile"
                 reason="The one framed icon-tile in the system — the avatar of a course, a project, a section. Every leaf below it differs by exactly one prop, so this is the baseline you compare against."
-                note="Defaults to tone=accent, size=sm (48px), shape=circle. The icon auto-sizes to the box; nothing about it is caller-controlled."
+                note="Defaults to `tone=accent`, `size=sm` (40px). The frame is always round — there is no shape axis to pick. The icon auto-sizes to the box; nothing about it is caller-controlled."
                 code={"<IconTile.Base icon={GraduationCapIcon} />"}
             >
                 <IconTile.Base icon={GraduationCapIcon} showAnatomy />
@@ -116,7 +115,7 @@ export const Default: Story = {
     ),
 }
 
-/** Leaf prop `tone` — 5 Ý NGHĨA, render ĐỦ union. Icon giữ nguyên để tone là biến duy nhất. */
+/** Leaf prop `tone` — 5 MEANINGS, rendering the FULL union. The icon stays the same so tone is the only variable. */
 export const Tones: Story = {
     render: () => (
         <div className="p-8">
@@ -142,7 +141,7 @@ export const Tones: Story = {
     ),
 }
 
-/** Leaf prop `size` — 3 bậc, render ĐỦ union. */
+/** Leaf prop `size` — 3 steps, rendering the FULL union. */
 export const Sizes: Story = {
     render: () => (
         <div className="p-8">
@@ -166,32 +165,10 @@ export const Sizes: Story = {
     ),
 }
 
-/** Leaf prop `shape` — 2 giá trị, render ĐỦ union. */
-export const Shape: Story = {
-    render: () => (
-        <div className="p-8">
-            <BlockAnatomy
-                name="IconTile.Base"
-                tier="atom"
-                leaf="Prop `shape`"
-                reason="A tile standing alone (an empty state, a dialog header) has no straight edge to line up against, so circle reads softer there. Square earns its place once the tile sits inside a grid of its own kind."
-                note="Only the corner radius changes — box size, tint, and icon scale stay identical between the two."
-                code={`<IconTile.Base shape="circle" icon={BookOpenIcon} />
-<IconTile.Base shape="square" icon={BookOpenIcon} />`}
-            >
-                <div className="flex flex-wrap items-center gap-4">
-                    {SHAPES.map(({ shape }, index) => (
-                        <IconTile.Base key={shape} shape={shape} icon={BookOpenIcon} showAnatomy={index === 0} />
-                    ))}
-                </div>
-            </BlockAnatomy>
-        </div>
-    ),
-}
-
 /**
- * Leaf prop `src` — ảnh cover ĐÈ icon; fallback quay lại icon khi ảnh lỗi (404).
- * Render đủ BA nhánh hành vi: không src, src hợp lệ, src gãy.
+ * Leaf prop `src` — a cover image OVERRIDES the icon; falls back to the icon when
+ * the image fails (404). Renders all THREE behavior branches: no src, valid src,
+ * broken src.
  */
 export const CoverImage: Story = {
     render: () => (
@@ -222,9 +199,11 @@ export const CoverImage: Story = {
 }
 
 /**
- * Leaf prop `isSkeleton` — shimmer CO-LOCATED (§12c), đúng cỡ + đúng shape của tile.
+ * Leaf prop `isSkeleton` — shimmer CO-LOCATED (§12c), exact size + same rounding
+ * as the tile.
  *
- * Render đủ BA size (§12g ngoại lệ isSkeleton: "đủ mọi HÌNH mà chính prop đó sinh ra").
+ * Renders all THREE sizes (§12g's isSkeleton exception: "every SHAPE that prop
+ * itself produces").
  */
 export const Skeleton: Story = {
     render: () => (
@@ -234,7 +213,7 @@ export const Skeleton: Story = {
                 tier="atom"
                 leaf="Prop `isSkeleton`"
                 reason="Whoever owns the shape owns its resting state — the tile draws its own shimmer at its own box size instead of a shared skeleton component."
-                note="The shimmer keeps whatever shape/size the tile would render — the three pills below are the same sm/md/lg boxes as the Sizes leaf, just filled with shimmer instead of an icon."
+                note="The shimmer keeps whatever size the tile would render — the three circles below are the same `sm`/`md`/`lg` boxes as the Sizes leaf, just filled with shimmer instead of an icon."
                 code={`<IconTile.Base isSkeleton size="sm" />
 <IconTile.Base isSkeleton size="md" />
 <IconTile.Base isSkeleton size="lg" />`}

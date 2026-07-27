@@ -4,34 +4,36 @@ import { Choice } from "@sb-components/atoms/forms/Choice/Choice"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Choice.RadioGroup`: nhóm chọn-một, dựng từ `options` DỮ LIỆU (bọc HeroUI
- * RadioGroup + lặp `Choice.Radio` cho mỗi option).
+ * ATOM — `Choice.RadioGroup`: a pick-one group, built from `options` DATA (wraps
+ * HeroUI RadioGroup + loops `Choice.Radio` for each option).
  *
- * 📐 **1 PROP = 1 LEAF** (§12g). Bộ leaf đủ prop CÓ HÌNH: đã chọn hay chưa (`Default`/
- * `Selected`, đến từ `value`) · `groupLabel` (`WithLabel`) · `hint` (`WithHint`) ·
- * `isRequired` (`Required`) · `isDisabled` (`Disabled`) · `errorMessage` (`Error`) ·
- * `isSkeleton` (`Loading`). `options`/`onValueChange`/`ariaLabel`/`skeletonRows`/
- * `className`/`showAnatomy` không có leaf riêng.
+ * 📐 **1 PROP = 1 LEAF** (§12g). The full leaf set for props WITH a visual: picked
+ * or not (`Default`/`Selected`, driven by `value`) · `groupLabel` (`WithLabel`) ·
+ * `hint` (`WithHint`) · `isRequired` (`Required`) · `isDisabled` (`Disabled`) ·
+ * `errorMessage` (`Error`) · `isSkeleton` (`Loading`). `options`/`onValueChange`/
+ * `ariaLabel`/`skeletonRows`/`className`/`showAnatomy` get no leaf of their own.
  *
- * ⛔ KHÔNG lặp state của TỪNG hàng (`Choice.Radio`'s own Disabled/Loading — §12f):
- * khoá một option riêng lẻ hay skeleton một hàng lẻ đọc ở story `Choice.Radio`.
+ * ⛔ DON'T repeat the state of EACH ROW (`Choice.Radio`'s own Disabled/Loading —
+ * §12f): locking a single option or skeleton-ing one lone row belongs in the
+ * `Choice.Radio` story.
  *
- * ⚠️⭐ DEPS — GAP đã ghi nhận, chưa bật được (đọc kỹ trước khi thêm lại `annotate`):
- * `Choice.RadioGroup` GỌI HÀM `ChoiceRadio` thật để dựng từng hàng (xem
- * `Choice.tsx`), nhưng component đó KHÔNG có prop kiểu `anatPart` để đổi tên
- * `data-anat-part` phát ra (khác `ButtonBase`/`AvatarGroup`, nơi cụm CÓ đường dây
- * này — xem `ButtonGroup.tsx` truyền `anatPart="Button.Base"` xuống mỗi
- * `ButtonBase`). Vì vậy mỗi hàng option chỉ phát ra `Control`/`Label` — hai khe NỘI
- * BỘ giống hệt tên dùng trong chính story `Choice.Radio` — DOM không có node nào
- * tên `"Radio"`/`"Choice.Radio"` để khoá `storyId` vào. Gắn `storyId` lên
- * `Control`/`Label` ở đây sẽ SAI: hai key đó ở ba file `Choice.*` còn lại đều là khe
- * (không link), gắn link riêng cho mỗi RadioGroup là không nhất quán và IM LẶNG sai
- * nếu ai đó đọc nhầm là "Control = cả hàng Radio". Do đó bỏ hẳn `annotate` ở đây,
- * KHÔNG bịa key — xem `issues` của lượt sửa này để bật dây `anatPart` ở `Choice.tsx`
- * trước khi thêm lại.
+ * ⚠️⭐ DEPS — a known GAP, not yet wired up (read carefully before re-adding
+ * `annotate`): `Choice.RadioGroup` CALLS the real `ChoiceRadio` function to build
+ * each row (see `Choice.tsx`), but that component has NO `anatPart`-style prop to
+ * rename the `data-anat-part` it emits (unlike `ButtonBase`/`AvatarGroup`, which DO
+ * have this wire — see `ButtonGroup.tsx` passing `anatPart="Button.Base"` down to
+ * each `ButtonBase`). So each option row only emits `Control`/`Label` — two
+ * INTERNAL slots with the exact same names used in the `Choice.Radio` story
+ * itself — the DOM has no node named `"Radio"`/`"Choice.Radio"` to anchor a
+ * `storyId` to. Attaching `storyId` to `Control`/`Label` here would be WRONG: in
+ * the other three `Choice.*` files those same two keys are slots (unlinked), so
+ * giving one RadioGroup its own link would be inconsistent and SILENTLY wrong if
+ * someone misreads it as "Control = the whole Radio row". So `annotate` is dropped
+ * entirely here — DON'T make up a key — see this pass's `issues` to wire up
+ * `anatPart` in `Choice.tsx` before adding it back.
  *
- * ✍️ Chữ hiện trên panel (`leaf`/`reason`/`note`/`code`) và nhãn demo trong khung
- * render viết TIẾNG ANH; JSDoc/comment giữ tiếng Việt.
+ * ✍️ Text shown on the panel (`leaf`/`reason`/`note`/`code`) and demo labels in the
+ * render frame are written in ENGLISH; JSDoc/comments stay in Vietnamese.
  */
 const meta: Meta<typeof Choice.RadioGroup> = {
     title: "Atoms/Forms/Choice/Choice.RadioGroup",
@@ -50,7 +52,7 @@ const OPTIONS = [
     { value: "advanced", label: "Advanced" },
 ]
 
-/** Leaf TRẦN — nhóm 3 lựa chọn, chưa chọn cái nào, không heading. */
+/** Bare leaf — a group of 3 options, none picked yet, no heading. */
 export const Default: Story = {
     render: () => {
         const Demo = () => {
@@ -74,7 +76,7 @@ export const Default: Story = {
     },
 }
 
-/** Leaf — đã chọn một option (value khớp options[].value). */
+/** Leaf — one option already picked (value matches options[].value). */
 export const Selected: Story = {
     render: () => {
         const Demo = () => {
@@ -98,7 +100,7 @@ export const Selected: Story = {
     },
 }
 
-/** Leaf prop `groupLabel` — heading TRÊN nhóm (map vào FieldFrame label). */
+/** Leaf for prop `groupLabel` — a heading ABOVE the group (maps to the FieldFrame label). */
 export const WithLabel: Story = {
     render: () => {
         const Demo = () => {
@@ -128,7 +130,7 @@ export const WithLabel: Story = {
     },
 }
 
-/** Leaf prop `hint` — dòng mô tả phụ dưới heading, qua FieldFrame. */
+/** Leaf for prop `hint` — a secondary description line below the heading, via FieldFrame. */
 export const WithHint: Story = {
     render: () => {
         const Demo = () => {
@@ -159,7 +161,7 @@ export const WithHint: Story = {
     },
 }
 
-/** Leaf prop `isRequired` — dấu `*` gắn vào heading. */
+/** Leaf for prop `isRequired` — a `*` mark attached to the heading. */
 export const Required: Story = {
     render: () => {
         const Demo = () => {
@@ -190,7 +192,7 @@ export const Required: Story = {
     },
 }
 
-/** Leaf prop `isDisabled` — khoá CẢ nhóm. */
+/** Leaf for prop `isDisabled` — locks the WHOLE group. */
 export const Disabled: Story = {
     render: () => (
         <div className="p-8">
@@ -217,7 +219,7 @@ export const Disabled: Story = {
     ),
 }
 
-/** Leaf prop `errorMessage` — heading + viền lỗi cả nhóm + dòng lỗi đỏ, qua FieldFrame. */
+/** Leaf for prop `errorMessage` — heading + error border on the whole group + a red error line, via FieldFrame. */
 export const Error: Story = {
     render: () => {
         const Demo = () => {
@@ -248,7 +250,7 @@ export const Error: Story = {
     },
 }
 
-/** Leaf prop `isSkeleton` — shimmer CO-LOCATED (§12c): stack dot + thanh nhãn. */
+/** Leaf for prop `isSkeleton` — a CO-LOCATED shimmer (§12c): a stack of dot + label bar. */
 export const Loading: Story = {
     render: () => (
         <div className="p-8">

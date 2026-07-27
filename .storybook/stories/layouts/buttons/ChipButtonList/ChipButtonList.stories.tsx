@@ -115,6 +115,7 @@ export const WrapWithIcon: Story = {
                 leaf="WrapWithIcon"
                 parts={WRAP_ICON_PARTS}
                 reason="4 nơi trong ContentAiChat (gợi ý rỗng-state, kỹ năng truy hồi, quick-ask khi bôi đen, menu kỹ năng) đều hand-roll MỘT danh sách secondary/ghost Button giống hệt nhau (leading icon trần + nhãn, justify-start text-start). Gom vào một primitive dùng chung để icon-size + layout sống ở một nơi, không lặp lại 4 lần."
+                code={"<ChipButtonList items={[{ label: \"Summarize this lesson\", icon: <SparkleIcon /> }]} direction=\"wrap\" />"}
             >
                 <ChipButtonList items={WRAP_ICON_ITEMS} direction="wrap" showAnatomy />
             </BlockAnatomy>,
@@ -131,6 +132,7 @@ export const WrapPlain: Story = {
                 leaf="WrapPlain"
                 parts={WRAP_PLAIN_PARTS}
                 note="items không truyền `icon` → mỗi Button chỉ còn nhãn trần (children trực tiếp), không Typography — giống cách base Button tự hiện nhãn của nó."
+                code={"<ChipButtonList items={[{ label: \"Summarize this lesson for me\" }]} direction=\"wrap\" />"}
             >
                 <ChipButtonList items={WRAP_PLAIN_ITEMS} direction="wrap" showAnatomy />
             </BlockAnatomy>,
@@ -147,6 +149,7 @@ export const ColumnMenu: Story = {
                 leaf="ColumnMenu"
                 parts={COLUMN_PARTS}
                 note={"direction=\"column\" → variant mặc định đổi sang ghost, mỗi hàng full-width; nhãn qua Typography (weight medium, truncate) thay vì className text-sm font-medium text-foreground tay ở bản gốc."}
+                code={"<ChipButtonList items={[{ label: \"Find related lesson\", icon: <BookOpenIcon /> }]} direction=\"column\" />"}
             >
                 <div className="rounded-2xl border border-default-200 bg-surface p-1">
                     <ChipButtonList items={COLUMN_ITEMS} direction="column" showAnatomy />
@@ -165,6 +168,7 @@ export const WithDisabledItem: Story = {
                 leaf="WithDisabledItem"
                 parts={DISABLED_PARTS}
                 note="`item.isDisabled` forward xuống Button.isDisabled — chip vẫn HIỆN (không ẩn), chỉ khoá tương tác, giữ nguyên vị trí trong cụm."
+                code={"<ChipButtonList items={[{ label: \"Coming soon\", icon: <MagnifyingGlassIcon />, isDisabled: true }]} direction=\"wrap\" />"}
             >
                 <ChipButtonList items={DISABLED_ITEMS} direction="wrap" showAnatomy />
             </BlockAnatomy>,
@@ -181,6 +185,7 @@ export const Loading: Story = {
                 leaf="Loading"
                 parts={SKELETON_PARTS}
                 note="Bật `isSkeleton` (không cần `items`) → container tự vẽ `skeletonCount` pill Skeleton.Button, đúng gap/layout của cụm chip thật."
+                code={"<ChipButtonList items={[]} direction=\"wrap\" isSkeleton skeletonCount={3} />"}
             >
                 <ChipButtonList items={[]} direction="wrap" isSkeleton skeletonCount={3} showAnatomy />
             </BlockAnatomy>,
@@ -197,6 +202,7 @@ export const SingleItem: Story = {
                 leaf="SingleItem"
                 parts={SINGLE_PARTS}
                 note="`items` chỉ 1 phần tử vẫn render đúng — không có ràng buộc tối thiểu về số lượng."
+                code={"<ChipButtonList items={[{ label: \"Summarize this lesson\", icon: <SparkleIcon /> }]} direction=\"wrap\" />"}
             >
                 <ChipButtonList items={ONE_ITEM} direction="wrap" showAnatomy />
             </BlockAnatomy>,

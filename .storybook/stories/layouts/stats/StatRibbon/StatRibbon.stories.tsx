@@ -30,6 +30,12 @@ export const FourStats: Story = {
                 leaf="FourStats"
                 parts={STAT_PARTS}
                 reason="Dải thống kê hero/profile: N StatPair trong MỘT Card — hàng ngang có divider dọc (sm+), fallback lưới 2 cột trên mobile. Card + divider sống ở đây để feature chỉ đổ `items`."
+                code={`<StatRibbon
+  items={[
+    { key: "passed", value: 12, label: "Passed" },
+    { key: "xp", value: "1,204", label: "XP" },
+  ]}
+/>`}
             >
                 <StatRibbon
                     items={[
@@ -49,7 +55,14 @@ export const FourStats: Story = {
 export const TwoStats: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="StatRibbon" tier="primitive" leaf="TwoStats" parts={STAT_PARTS} note="Chỉ 2 items — layout vẫn gọn, không ép tối thiểu 4 cell.">
+            <BlockAnatomy
+                name="StatRibbon"
+                tier="primitive"
+                leaf="TwoStats"
+                parts={STAT_PARTS}
+                note="Chỉ 2 items — layout vẫn gọn, không ép tối thiểu 4 cell."
+                code={"<StatRibbon items={[{ key: \"passed\", value: 0, label: \"Passed\" }, { key: \"xp\", value: 0, label: \"XP\" }]} />"}
+            >
                 <StatRibbon
                     items={[
                         { key: "passed", value: 0, label: "Passed" },
@@ -67,7 +80,20 @@ export const Bordered: Story = {
     render: () => (
         <div className="p-8">
             <div className="rounded-3xl bg-surface p-4 shadow-surface">
-                <BlockAnatomy name="StatRibbon" tier="primitive" leaf="Bordered" parts={STAT_PARTS} note="`bordered` đổi Card từ shadow-surface sang border (nested trên surface khác, shadow gần như vô hình).">
+                <BlockAnatomy
+                    name="StatRibbon"
+                    tier="primitive"
+                    leaf="Bordered"
+                    parts={STAT_PARTS}
+                    note="`bordered` đổi Card từ shadow-surface sang border (nested trên surface khác, shadow gần như vô hình)."
+                    code={`<StatRibbon
+  bordered
+  items={[
+    { key: "passed", value: 12, label: "Passed" },
+    { key: "xp", value: "1,204", label: "XP" },
+  ]}
+/>`}
+                >
                     <StatRibbon
                         bordered
                         items={[

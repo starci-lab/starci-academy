@@ -36,6 +36,7 @@ const SM_ALIGN_CLASS: Record<LayoutAlign, string> = {
     center: "@app-sm:items-center",
     end: "@app-sm:items-end",
     stretch: "@app-sm:items-stretch",
+    baseline: "@app-sm:items-baseline",
 }
 
 /** Props for {@link Split.Base}. */
@@ -63,6 +64,12 @@ export interface SplitBaseProps {
      * `@app-sm` up. For rows whose trailing side is too wide for a narrow shell.
      */
     stackOnMobile?: boolean
+    /**
+     * Anatomy tag cho CHÍNH khung này — để CHA badge nó như MỘT node (§11a.1).
+     * Thiếu prop này thì khung không vào được cây Deps: dùng khung tầng `layouts` mà
+     * panel không thấy nó thì coi như chưa dùng.
+     */
+    anatPart?: string
     className?: string
     /** `true` → tag this khung's parts with `data-anat-part` for a BlockAnatomy panel. */
     showAnatomy?: boolean
@@ -81,8 +88,10 @@ const SplitBase = ({
     stackOnMobile = false,
     className,
     showAnatomy = false,
+    anatPart,
 }: SplitBaseProps) => (
     <div
+        data-anat-part={anatPart}
         className={cn(
             "flex w-full",
             GAP_CLASS[gap],

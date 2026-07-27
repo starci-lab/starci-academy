@@ -41,7 +41,7 @@ const ProfileRow = () => (
         <Avatar.Base name="StarCi Academy" size="md" />
         <div className="flex min-w-0 flex-col">
             <Typography.Base size="sm" text="StarCi Academy" weight="medium" truncate />
-            <Typography.Base size="xs" text="Học fullstack, system design và DevOps theo lộ trình phỏng vấn." color="muted" truncate />
+            <Typography.Base size="xs" text="Learn fullstack, system design, and DevOps on an interview-prep roadmap." color="muted" truncate />
         </div>
     </div>
 )

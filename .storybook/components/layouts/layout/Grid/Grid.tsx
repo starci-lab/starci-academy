@@ -5,10 +5,10 @@ import { GAP_CLASS, type SpaceScale } from "@sb-components/layouts/_spacing"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * LAYOUT (khung) — `Grid.*`: the responsive lưới of equal cells. One member,
+ * LAYOUT (frame) — `Grid.*`: the responsive grid of equal cells. One member,
  * `Grid.Base` (a grid has one shape; density is a PROP, §6b).
  *
- * KHUNG API LAW (§13b) — REPEATING LIST ⇒ `items` DATA, `children` FORBIDDEN.
+ * FRAME API LAW (§13b) — REPEATING LIST ⇒ `items` DATA, `children` FORBIDDEN.
  * A grid's premise is that every cell is the same kind of thing; children would
  * let one cell be something else and quietly break the premise.
  *
@@ -20,7 +20,7 @@ import { GAP_CLASS, type SpaceScale } from "@sb-components/layouts/_spacing"
  * (Tailwind's built-in `@sm/@md/@lg` are a DIFFERENT, half-size scale — using
  * them here would silently halve every breakpoint.) These variants resolve
  * against the nearest `@container` ancestor, which the app shell (and the
- * Storybook preview) already provides — this khung deliberately does NOT open its
+ * Storybook preview) already provides — this frame deliberately does NOT open its
  * own container, or every grid would answer to its own width instead of the shell's.
  *
  * §10: `gap` is a {@link SpaceScale} union literal and REQUIRED.
@@ -39,8 +39,8 @@ export interface GridItem {
      * normal one-column track). Capped at `2`: an app-wide scan found only 7
      * `col-span` call sites (5×`col-span-2`, 2×`col-span-1`), so the union stops
      * there on purpose — a wider span or an arbitrary start position belongs to
-     * a real composition decision, not a khung prop (thầy chốt: no `Col` escape
-     * hatch, that is what let `col-start-2` break mobile in `GroupPressableCard`).
+     * a real composition decision, not a frame prop (decided by the mentor: no
+     * `Col` escape hatch, that is what let `col-start-2` break mobile in `GroupPressableCard`).
      */
     span?: 1 | 2
 }
@@ -102,7 +102,7 @@ export interface GridBaseProps {
     /**
      * The cells, in reading order. REQUIRED — repeat list = DATA, never children
      * (§13b). An empty array renders an empty track; the empty MESSAGE is the
-     * caller's to phrase, not the khung's.
+     * caller's to phrase, not the frame's.
      */
     items: ReadonlyArray<GridItem>
     /**
@@ -118,7 +118,7 @@ export interface GridBaseProps {
 }
 
 /**
- * The responsive lưới. See the file header for why the steps are container
+ * The responsive grid. See the file header for why the steps are container
  * queries and not viewport breakpoints.
  *
  * @param props - {@link GridBaseProps}
@@ -160,7 +160,7 @@ const GridBase = ({ items, columns, gap, className, showAnatomy = false }: GridB
 )
 
 /**
- * `Grid.*` — the responsive lưới khung namespace. Namespace only — no bare
+ * `Grid.*` — the responsive grid frame namespace. Namespace only — no bare
  * component export (§13a).
  */
 export const Grid = {

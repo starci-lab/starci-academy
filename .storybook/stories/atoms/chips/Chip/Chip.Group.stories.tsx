@@ -3,19 +3,20 @@ import { Chip, type ChipGroupItem, type ChipTone } from "@sb-components/atoms/ch
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Chip.Group`: HÀNG chip dựng từ `items` dữ liệu, cắt tại `maxVisible`, phần
- * dư gom vào một chip `+N` mở Tooltip.
+ * ATOM — `Chip.Group`: a ROW of chips built from `items` data, cut at `maxVisible`,
+ * the overflow gathered into a `+N` chip that opens a Tooltip.
  *
- * ⚠️ PHẠM VI STATE (§12f): cụm KHÔNG đẻ nghĩa mới — nó `import { ChipBase }` rồi dựng
- * lại. Nên story ở đây CHỈ render state THUỘC VỀ CỤM: `items` · `maxVisible` · `tone`
- * cấp cụm · `isSkeleton` cả hàng. State của TỪNG chip (glyph, chấm màu, nút ×) sống ở
- * story `Chip.Base` — KHÔNG lặp lại.
+ * ⚠️ STATE SCOPE (§12f): the cluster does NOT invent new meaning — it `import { ChipBase }`
+ * and rebuilds. So the story here ONLY renders state BELONGING TO THE CLUSTER: `items` ·
+ * `maxVisible` · cluster-level `tone` · `isSkeleton` for the whole row. State of EACH chip
+ * (glyph, color dot, × button) lives in the `Chip.Base` story — NOT repeated here.
  *
- * 📐 **1 PROP = 1 LEAF** (§12g). Bộ prop của cụm ít hơn `Chip.Base` đúng vì §12f.
+ * 📐 **1 PROP = 1 LEAF** (§12g). The cluster's prop set is smaller than `Chip.Base`'s, correctly, per §12f.
  *
- * ⚠️ Đây là `TagChips` cũ (đổi nhà 2026-07-26). Bản cũ gọi thẳng HeroUI Chip nên trôi
- * khỏi atom: chip trong hàng không theo tone, skeleton tự vẽ một cỡ khác. Giờ mọi viên
- * trong hàng là `Chip.Base` thật — xem tab Deps.
+ * ⚠️ This is the old `TagChips` (moved 2026-07-26). The old version called HeroUI Chip
+ * directly so it drifted away from the atom: chips in the row didn't follow tone, the
+ * skeleton drew a different size on its own. Now every pill in the row is a real
+ * `Chip.Base` — see the Deps tab.
  */
 const meta: Meta<typeof Chip.Group> = {
     title: "Atoms/Chips/Chip/Chip.Group",
@@ -29,12 +30,13 @@ export default meta
 type Story = StoryObj<typeof Chip.Group>
 
 /**
- * DEPS = story KHÁC mà cụm này dựng lại. Chỉ MỘT node: `Chip.Base`.
+ * DEPS = the OTHER story this cluster rebuilds. Only ONE node: `Chip.Base`.
  *
- * Tooltip của chip `+N` CÓ story riêng nhưng chưa vào được cây: `Tooltip.Base` mới chỉ
- * phát `data-anat-part="Trigger"`/`"Content"` (tên KHE, không phải tên namespace) và
- * không nhận `anatPart` để cụm gọi tên nó. Khai `Trigger` vào đây sẽ ra một node mang
- * tên sai, nên tạm để ngoài — cần thêm `anatPart` cho `Tooltip.Base` rồi mới khai.
+ * The `+N` chip's Tooltip HAS its own story but hasn't made it into the tree yet:
+ * `Tooltip.Base` currently only emits `data-anat-part="Trigger"`/`"Content"` (SLOT
+ * names, not namespace names) and doesn't accept an `anatPart` for the cluster to name
+ * it by. Declaring `Trigger` here would produce a node with the wrong name, so it's left
+ * out for now — `Tooltip.Base` needs an `anatPart` prop added before this can be declared.
  */
 const GROUP_DEPS: Record<string, AnatomyAnnotation> = {
     "Chip.Base": {
@@ -44,7 +46,7 @@ const GROUP_DEPS: Record<string, AnatomyAnnotation> = {
     },
 }
 
-/** Hàng tag mẫu — đủ dài để thấy chỗ cắt. */
+/** Sample tag row — long enough to see where the cut happens. */
 const ITEMS: Array<ChipGroupItem> = [
     { key: "ts", text: "TypeScript" },
     { key: "react", text: "React" },
@@ -54,7 +56,7 @@ const ITEMS: Array<ChipGroupItem> = [
     { key: "k8s", text: "Kubernetes" },
 ]
 
-/** Hàng ngắn — nằm gọn dưới `maxVisible` nên không có chip `+N`. */
+/** Short row — fits entirely under `maxVisible` so there's no `+N` chip. */
 const SHORT_ITEMS: Array<ChipGroupItem> = ITEMS.slice(0, 3)
 
 const TONES: Array<{ tone: ChipTone; hint: string }> = [
@@ -65,7 +67,7 @@ const TONES: Array<{ tone: ChipTone; hint: string }> = [
     { tone: "accent", hint: "highlighted set" },
 ]
 
-/** Leaf prop `items` — cụm dựng hàng từ DỮ LIỆU; hàng dài thì phần dư gom vào `+N`. */
+/** Leaf prop `items` — the cluster builds the row from DATA; a long row gathers the overflow into `+N`. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
@@ -93,7 +95,7 @@ export const Default: Story = {
     ),
 }
 
-/** Leaf prop `maxVisible` — chỗ CẮT của hàng. */
+/** Leaf prop `maxVisible` — where the row gets CUT. */
 export const MaxVisible: Story = {
     render: () => (
         <div className="p-8">
@@ -120,7 +122,7 @@ export const MaxVisible: Story = {
     ),
 }
 
-/** Leaf prop `tone` — đặt ở CẤP CỤM: hàng token phải đồng màu (§12d). */
+/** Leaf prop `tone` — set at the CLUSTER LEVEL: a row of tokens must share one color (§12d). */
 export const Tones: Story = {
     render: () => (
         <div className="p-8">
@@ -148,10 +150,12 @@ export const Tones: Story = {
 }
 
 /**
- * Leaf prop `isSkeleton` — cụm chỉ CHUYỂN cờ xuống, mỗi viên tự vẽ shimmer của mình (§12c).
+ * Leaf prop `isSkeleton` — the cluster only PASSES the flag down, each pill draws its
+ * own shimmer (§12c).
  *
- * Bật `showAnatomy` cả ở nhánh skeleton, nếu không cây báo "0 part" và trông như cụm tự
- * vẽ shimmer — sai hẳn nguồn (bẫy đã dính ở `Button.Group`).
+ * `showAnatomy` is on for the skeleton branch too — otherwise the tree reports "0 parts"
+ * and looks like the cluster draws its own shimmer — dead wrong about the source (this
+ * trap already bit `Button.Group`).
  */
 export const Skeleton: Story = {
     render: () => (

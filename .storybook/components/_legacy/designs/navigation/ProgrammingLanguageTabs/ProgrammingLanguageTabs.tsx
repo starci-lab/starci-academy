@@ -4,7 +4,7 @@ import type { IconType } from "react-icons"
 import { FaJava, FaGolang } from "react-icons/fa6"
 import { TbBrandTypescript } from "react-icons/tb"
 import { PiFileCSharp } from "react-icons/pi"
-import { ExtendedTabs } from "@sb-components/atoms/navigation/ExtendedTabs/ExtendedTabs"
+import { Tabs as AtomTabs } from "@sb-components/atoms/navigation/Tabs/Tabs"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -204,7 +204,7 @@ export const ProgrammingLanguageTabs = ({
         // anatPart/data-* prop — wrap it in a plain marker div so the panel can
         // badge it as ONE node without touching that shared foundation file.
         <div className="contents" data-anat-part={showAnatomy ? "ExtendedTabs" : undefined}>
-            <ExtendedTabs.Base
+            <AtomTabs.Extended
                 variant={isSecondary ? "secondary" : "primary"}
                 size={isSecondary ? "md" : "sm"}
                 selectedKey={activeKey}
@@ -247,7 +247,7 @@ export const ProgrammingLanguageTabs = ({
                         })}
                     </Tabs.List>
                 </Tabs.ListContainer>
-            </ExtendedTabs.Base>
+            </AtomTabs.Extended>
         </div>
     )
 

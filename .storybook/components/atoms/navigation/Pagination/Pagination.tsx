@@ -109,12 +109,12 @@ const PaginationBase = ({
 
     return (
         <div className={cn("flex justify-center", className)}>
-            <HeroPagination aria-label="Phân trang" size="sm">
+            <HeroPagination aria-label="Pagination" size="sm">
                 <HeroPagination.Content className="flex flex-wrap justify-center gap-1">
                     <HeroPagination.Item>
                         <HeroPagination.Previous
                             data-anat-part={showAnatomy ? "Previous" : undefined}
-                            aria-label="Trang trước"
+                            aria-label="Previous page"
                             isDisabled={currentPage <= 1}
                             onPress={onPrevious}
                         >

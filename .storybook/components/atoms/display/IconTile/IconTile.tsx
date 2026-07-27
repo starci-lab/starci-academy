@@ -16,27 +16,18 @@ export type IconTileTone = "accent" | "success" | "warning" | "danger" | "neutra
 /** Size of the tile. */
 export type IconTileSize = "sm" | "md" | "lg"
 
-/**
- * Hình khung — vuông bo góc hay TRÒN. Mặc định TRÒN (thầy chốt 2026-07-26:
- * "tròn tròn nhìn duyên hơn"): tile đứng MỘT MÌNH giữa khoảng trống (empty state,
- * đầu dialog) không có cạnh nào quanh để canh, nên tròn đọc mềm hơn vuông.
- *  hợp khi tile xếp hàng cùng cạnh thẳng khác.
- *
- * Đây là ATOM nên mở trục hình ở đây ĐÚNG chỗ — §14d.1 chỉ cấm design trở lên.
- */
-export type IconTileShape = "square" | "circle"
-
-/** Hai nấc weight cho glyph — khớp §5.0a (glyph nhỏ hơn `size-5` mới cần `bold`). */
+/** Two weight steps for the glyph — matches §5.0a (only a glyph smaller than `size-5` needs `bold`). */
 export type IconWeight = "regular" | "bold"
 
 /**
- * Icon truyền vào dạng COMPONENT (vd `GraduationCapIcon`), atom tự render + tự ép
- * scale ở cỡ tile. Kiểu để MỞ (`SVGProps` + `weight` tuỳ chọn), KHÔNG khai `Icon`
- * của Phosphor — khai chặt theo một thư viện là khoá cả cây vào một nhà cung cấp (§5.0).
+ * Icon is passed in as a COMPONENT (e.g. `GraduationCapIcon`); the atom renders it
+ * and forces its own scale at the tile's size. The type stays OPEN (`SVGProps` +
+ * optional `weight`), NOT typed against Phosphor's `Icon` — typing tightly against
+ * one library locks the whole tree to a single provider (§5.0).
  */
 export type IconComponent = ComponentType<SVGProps<SVGSVGElement> & { weight?: IconWeight }>
 
-/** Props chung — TRỪ cặp `icon`/`isSkeleton`, xem {@link IconTileProps}. */
+/** Shared props — EXCEPT the `icon`/`isSkeleton` pair, see {@link IconTileProps}. */
 interface IconTileOwnProps {
     /**
      * Optional cover image. When set, it FILLS the tile (`object-cover`, centered —
@@ -50,9 +41,7 @@ interface IconTileOwnProps {
     tone?: IconTileTone
     /** Tile size. Defaults to "md" (64px). */
     size?: IconTileSize
-    /** Hình khung — xem {@link IconTileShape}. Default . */
-    shape?: IconTileShape
-    /** `true` → gắn `data-anat-part` cho từng part để BlockAnatomy badge. */
+    /** `true` → attaches `data-anat-part` to each part for the BlockAnatomy badge. */
     showAnatomy?: boolean
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
@@ -60,14 +49,15 @@ interface IconTileOwnProps {
 }
 
 /**
- * `icon` BẮT BUỘC khi render tile thật, KHÔNG cần khi `isSkeleton` — ô shimmer
- * không có icon bên trong. Cùng khuôn union với `ChipBaseProps`/`TypographyProps`
- * (§12c: nội dung optional-khi-skeleton bằng UNION, không hạ optional đại trà).
+ * `icon` is REQUIRED when rendering the real tile, NOT needed when `isSkeleton` —
+ * the shimmer box has no icon inside. Same union shape as `ChipBaseProps`/
+ * `TypographyProps` (§12c: content optional-when-skeleton via a UNION, not a
+ * blanket optional).
  */
 export type IconTileProps = IconTileOwnProps &
     (
         | {
-            /** `true` → render ô shimmer đúng cỡ + đúng `shape` của tile, thay cho nội dung. */
+            /** `true` → renders a shimmer box at the exact tile size, in place of content. */
             isSkeleton: true
             /** The icon component (vd phosphor `*Icon`) — fallback when no {@link IconTileOwnProps.src}. */
             icon?: IconComponent
@@ -88,29 +78,43 @@ const TONE: Record<IconTileTone, string> = {
     neutral: "bg-default text-muted",
 }
 
-/** shape → bo góc. `circle` là MẶC ĐỊNH. */
-const SHAPE: Record<IconTileShape, string> = {
-    circle: "rounded-full",
-    square: "rounded-2xl",
-}
+/**
+ * Corner rounding — ROUND, a single shape (teacher decided 2026-07-26: "round
+ * reads nicer", then decided the same day to DROP the `shape` axis entirely).
+ *
+ * The old `square`/`circle` axis only lived inside its own story — no consumer in
+ * the design tree ever passed `shape`, so it was a choice nobody made. A tile
+ * usually stands ALONE in open space (an empty state, the top of a dialog) where
+ * there's no straight edge nearby to line up against, so round reads softer.
+ *
+ * ⚠️ `src` (the real app) currently uses hard square rounding by size
+ * (`rounded-xl`/`rounded-2xl`) and has NO `shape` prop — the design intentionally
+ * leads; sync comes later (§0).
+ */
+const SHAPE_CLASS = "rounded-full"
 
 /**
- * size → HỘP tile (bo góc do {@link SHAPE} lo, không trộn vào đây).
+ * size → the tile's BOX (corner rounding is {@link SHAPE_CLASS}'s job, not mixed
+ * in here).
  *
- * Mặc định `sm` = `size-12` + icon `size-5` (thầy chốt 2026-07-26) — cặp chuẩn cho
- * empty state. Icon là HÀM của size, caller không chỉnh riêng (§12d) — xem
- * {@link SIZE_ICON}.
+ * Default `sm` = `size-10` (40px) + icon `size-5` — the standard pairing for an
+ * `IconTile + TitledText` row and for an empty state. The icon is a FUNCTION of
+ * size — the caller never tunes it separately (§12d) — see {@link SIZE_ICON}.
+ *
+ * 🕰️ `sm` used to be `size-12` (48px, decided 2026-07-26) → lowered to `size-10`
+ * (teacher decided 2026-07-27): 48px overpowered an `sm`/`xs` text cluster — the
+ * tile read as the main character instead of an identity mark.
  */
 const SIZE_BOX: Record<IconTileSize, string> = {
-    sm: "size-12",
+    sm: "size-10",
     md: "size-16",
     lg: "size-20",
 }
 
 /**
- * size → cỡ ICON bên trong. Cả ba nấc đều `size-5` trở lên ⇒ theo §5.0a KHÔNG truyền
- * `weight` (glyph tự nhiên `regular`) — chỉ glyph dưới `size-5` mới cần ép `bold`, và
- * IconTile không có nấc nào nhỏ đến thế.
+ * size → the inner ICON size. All three steps are `size-5` or above ⇒ per §5.0a we
+ * do NOT pass `weight` (the glyph stays natural `regular`) — only a glyph under
+ * `size-5` needs `bold` forced, and IconTile has no step that small.
  */
 const SIZE_ICON: Record<IconTileSize, string> = {
     sm: "size-5",
@@ -132,7 +136,6 @@ const IconTileBase = ({
     src,
     alt = "",
     tone = "accent",
-    shape = "circle",
     size = "sm",
     isSkeleton = false,
     className,
@@ -145,14 +148,14 @@ const IconTileBase = ({
     useEffect(() => setFailed(false), [src])
     const showImage = Boolean(src) && !failed
 
-    // Skeleton CO-LOCATED (§12c): tile là một Ô ĐẶC (icon/ảnh lấp đầy nó), nên gạch
-    // shimmer chính là cả ô — đúng cỡ {@link SIZE_BOX} + đúng {@link SHAPE} (mặc định
-    // tròn). Xét TRƯỚC mọi nhánh rẽ hình (icon vs ảnh) để không lộ nội dung thật.
+    // Skeleton CO-LOCATED (§12c): the tile is a SOLID BOX (icon/image fills it), so
+    // the shimmer bar IS the whole box — exact {@link SIZE_BOX}, same rounding.
+    // Checked BEFORE any shape branch (icon vs image) so real content never leaks.
     if (isSkeleton) {
         return (
             <HeroSkeleton
                 data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
-                className={cn("shrink-0", SIZE_BOX[size], SHAPE[shape], className)}
+                className={cn("shrink-0", SIZE_BOX[size], SHAPE_CLASS, className)}
             />
         )
     }
@@ -164,7 +167,7 @@ const IconTileBase = ({
             className={cn(
                 "flex shrink-0 items-center justify-center overflow-hidden",
                 SIZE_BOX[size],
-                SHAPE[shape],
+                SHAPE_CLASS,
                 // skip the tint when a cover image fills the tile
                 showImage ? null : TONE[tone],
                 className,
@@ -180,8 +183,9 @@ const IconTileBase = ({
                 />
             ) : Icon ? (
                 <span aria-hidden data-anat-part={showAnatomy ? "Icon" : undefined} className="inline-flex shrink-0">
-                    {/* Atom sở hữu scale glyph (§4): SIZE_ICON đã ≥ size-5 ở cả ba nấc nên
-                        không truyền `weight` (§5.0a — chỉ glyph < size-5 mới ép "bold"). */}
+                    {/* The atom owns the glyph scale (§4): SIZE_ICON is already ≥ size-5
+                        at all three steps, so no `weight` is passed (§5.0a — only a
+                        glyph < size-5 forces "bold"). */}
                     <Icon className={SIZE_ICON[size]} />
                 </span>
             ) : null}

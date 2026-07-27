@@ -86,15 +86,6 @@ const DOT_PX = 6
  */
 const SKELETON_W = ["w-16", "w-20", "w-24"] as const
 
-/**
- * Chiều cao shimmer = hộp chip THẬT: HeroUI `.chip` là `py-0.5` + `leading-5` ⇒ 24px = `h-6`.
- *
- * ⚠️ Sửa 2026-07-26: trước đó là `h-7`, sai 4px so với chip thật — dấu vết còn nằm ngay ở
- * call-site (`EnumChip` phải đắp `className="h-6"` để kéo shimmer về đúng cỡ). Call-site
- * phải vá hình của atom chính là dấu hiệu atom sai, không phải call-site sai.
- */
-const SKELETON_H = "h-6"
-
 /** Props chung — TRỪ cụm `text`/`isSkeleton` và ô glyph dẫn đầu, xem {@link ChipBaseProps}. */
 interface ChipBaseOwnProps {
     /** Tone ngữ nghĩa → màu soft. Default `neutral`. */
@@ -164,12 +155,35 @@ export const ChipBase = ({
 
     if (isSkeleton) {
         // Nhánh skeleton xét TRƯỚC mọi nhánh rẽ hình (§12c).
+        //
+        // ⭐ 2026-07-27 (thầy: "đừng chế height riêng"): trước đây vẽ MỘT viên xám trần
+        // `h-6 rounded-2xl` — tức tự chế lại hộp chip bằng hằng số. Hai cái hại: (a) sai
+        // §8 (khung phải render THẬT, chỉ NỘI DUNG thành gạch); (b) hằng số ấy phải được
+        // tay giữ đồng bộ với `.chip` — nó đã từng lệch 4px (`h-7`) và call-site phải đắp
+        // `h-6` để vá.
+        //
+        // Nay dựng CHÍNH `HeroChip` rồi nhét gạch vào trong ⇒ chiều cao/bo góc/đệm đến
+        // thẳng từ `.chip`, KHÔNG còn con số nào ở đây phải trông chừng.
         const slots = (hasDot || Icon ? 1 : 0) + (onRemove ? 1 : 0)
         return (
-            <HeroSkeleton
-                className={cn(SKELETON_H, SKELETON_W[slots], "rounded-2xl", className)}
+            <HeroChip
+                color={TONE_COLOR[tone]}
+                variant="soft"
+                className={cn("w-fit", className)}
                 data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
-            />
+            >
+                {hasDot || Icon ? <HeroSkeleton className="size-3 shrink-0 rounded-full" /> : null}
+                <HeroChip.Label>
+                    {/* Bề NGANG phải đoán (chưa biết chữ dài bao nhiêu); bề CAO thì KHÔNG
+                        đoán: `h-5` = đúng `leading-5` mà `.chip` đặt cho chữ của nó.
+                        ⚠️ Đo thật: để `h-3` thì chip skeleton chỉ cao 16px trong khi chip
+                        thật 24px — vì `leading-5` chỉ áp cho CHỮ, một thanh shimmer không
+                        có line-height nên khung co lại. Thay dòng chữ thì phải thay bằng
+                        thứ CAO ĐÚNG BẰNG dòng chữ, rồi để `.chip` tự cộng `py-0.5`. */}
+                    <HeroSkeleton className={cn("h-5 rounded", SKELETON_W[slots])} />
+                </HeroChip.Label>
+                {onRemove ? <HeroSkeleton className="size-3 shrink-0 rounded-full" /> : null}
+            </HeroChip>
         )
     }
 
@@ -196,7 +210,15 @@ export const ChipBase = ({
         <HeroChip
             color={TONE_COLOR[tone]}
             variant="soft"
-            size="md"
+            // ⭐ KHÔNG truyền `size` — đây là CỠ GỐC của HeroUI (thầy chốt 2026-07-27).
+            //
+            // `chipVariants.defaultVariants` KHÔNG khai `size`, và `.chip--md` chỉ thêm
+            // `text-xs` — thứ `.chip` gốc đã có sẵn. Nên `size="md"` là một NO-OP đội lốt
+            // "atom đã chọn cỡ": đọc code tưởng có quyết định, thực ra không.
+            //
+            // ⛔ Và ĐỪNG hạ nấc để chữa hình ở MỘT call-site (§4a): atom có MỘT thang cỡ
+            // dùng chung; thấy chip "bự" ở một chỗ thì chỗ ĐÓ đặt sai ngữ cảnh. Neo: trò
+            // đã lỡ hạ `md`→`sm` + đắp `px-2` chỉ vì chip trong `PriceTag` trông to.
             // w-fit: chip là viên ôm nội dung — không có nó thì `align-items: stretch` của
             // flex-col cha kéo chip dài hết hàng.
             className={cn("w-fit", className)}

@@ -5,11 +5,12 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ⚠️ PHẠM VI STATE: `Cluster.Base` là KHUNG DANH SÁCH LẶP — hàng tràn dòng của N phần
- * tử CÙNG KIỂU (chip/tag/nút). State nó sinh ra = `gap` (§10), `justify`, `align`.
- * `wrap` KHÔNG phải state ở đây: cluster LUÔN tràn dòng (đó là định nghĩa của nó) —
- * hàng có-thể-không-wrap là `Stack.H`. Danh sách RỖNG chỉ ra track rỗng: câu chữ
- * "chưa có gì" thuộc về caller, không phải về khung (§13 — khung không mang nội dung).
+ * ⚠️ STATE SCOPE: `Cluster.Base` is a REPEATING-LIST FRAME — a wrapping row of N
+ * elements of the SAME KIND (chip/tag/button). The state it produces = `gap`
+ * (§10), `justify`, `align`. `wrap` is NOT a state here: a cluster ALWAYS wraps
+ * (that's its definition) — a row that may-or-may-not wrap is `Stack.H`. An
+ * EMPTY list just leaves an empty track: the "nothing here" copy belongs to the
+ * caller, not the frame (§13 — a frame carries no content).
  */
 const meta: Meta<typeof Cluster.Base> = {
     title: "Layouts/Layout/Cluster/Cluster.Base",
@@ -25,16 +26,16 @@ export default meta
 type Story = StoryObj<typeof Cluster.Base>
 
 const ITEM_PARTS: Array<AnatomyNode> = [
-    { name: "Item", tier: "primitive", role: "một phần tử của danh sách lặp — đến từ `items` DỮ LIỆU, không phải children" },
+    { name: "Item", tier: "primitive", role: "one element of the repeating list — comes from `items` DATA, not children" },
 ]
 
-/** Danh sách DỮ LIỆU — `items`, không phải JSX con (§13b). */
+/** DATA list — `items`, not child JSX (§13b). */
 const TAGS = ["Docker", "Kubernetes", "CI/CD", "Terraform", "Observability", "GitOps", "Helm"]
 
 const tagItems = (tags: ReadonlyArray<string>) =>
     tags.map((tag) => ({ key: tag, content: <Chip.Base text={tag} /> }))
 
-/** Sáu nấc HỢP LỆ của §10 — `gap` là union literal nên không có nấc thứ bảy. */
+/** The six VALID steps of §10 — `gap` is a union literal so there's no seventh step. */
 const SCALE = [
     { gap: 0, name: "flush (0)" },
     { gap: 1, name: "tight (1)" },
@@ -44,7 +45,7 @@ const SCALE = [
     { gap: 8, name: "page (8)" },
 ] as const
 
-/** Default — hàng chip tràn dòng ở seam `related(2)`: nhịp chuẩn của một cụm cùng loại. */
+/** Default — a wrapping chip row at the `related(2)` seam: the standard rhythm for a same-kind cluster. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
@@ -53,7 +54,7 @@ export const Default: Story = {
                 tier="primitive"
                 leaf="Default"
                 parts={ITEM_PARTS}
-                reason="Nội dung là N phần tử CÙNG KIỂU lặp lại ⇒ theo test §13b, API là `items` DỮ LIỆU và CẤM `children` — children sẽ cho phép lén một node lạc loài vào một hàng mà tiền đề là đồng nhất. `gap` áp cho cả hai trục nên các dòng đã tràn cũng cách đều."
+                reason="The content is N repeating elements of the SAME KIND ⇒ per the §13b test, the API is `items` DATA and `children` is FORBIDDEN — children would allow sneaking a stray node into a row whose premise is uniformity. `gap` applies to both axes, so wrapped rows stay evenly spaced too."
                 code={`<Cluster.Base
   gap={2}
   items={tags.map((tag) => ({ key: tag, content: <Chip.Base text={tag} /> }))}
@@ -68,8 +69,9 @@ export const Default: Story = {
 }
 
 /**
- * Gaps — LÝ DO khung này tồn tại: `gap` nhận ĐÚNG sáu nấc `0·1·2·3·6·8` (§10c) và
- * BẮT BUỘC; `gap={4}` là LỖI BIÊN DỊCH. Với cụm chip, `related(2)` là nấc đúng.
+ * Gaps — the REASON this frame exists: `gap` accepts EXACTLY six steps
+ * `0·1·2·3·6·8` (§10c) and is REQUIRED; `gap={4}` is a COMPILE ERROR. For a chip
+ * cluster, `related(2)` is the correct step.
  */
 export const Gaps: Story = {
     render: () => (
@@ -79,7 +81,7 @@ export const Gaps: Story = {
                 tier="primitive"
                 leaf="Gaps"
                 parts={ITEM_PARTS}
-                note="Nấc lớn (6/8) làm cụm rã ra thành các phần tử rời — đó là tín hiệu sai cho một cụm CÙNG loại; để đây để thấy vì sao thang có nấc chứ không phải số tuỳ ý."
+                note="Large steps (6/8) break the cluster apart into loose elements — a false signal for a cluster of the SAME kind; kept here to show why the scale is stepped rather than an arbitrary number."
                 code={`<Cluster.Base
   gap={2}
   items={…}
@@ -101,8 +103,8 @@ export const Gaps: Story = {
 }
 
 /**
- * Justify — phân bố các phần tử trên MỖI dòng. `start` (mặc định) là mặc định đọc
- * tự nhiên; `between` chỉ hợp lý khi cụm phủ trọn bề ngang.
+ * Justify — distributes elements on EACH row. `start` (default) reads naturally
+ * by default; `between` only makes sense when the cluster spans the full width.
  */
 export const Justify: Story = {
     render: () => (
@@ -112,7 +114,7 @@ export const Justify: Story = {
                 tier="primitive"
                 leaf="Justify"
                 parts={ITEM_PARTS}
-                note="Ít phần tử để còn chỗ trống mà đọc được phân bố; `between` áp cho TỪNG dòng, nên với cụm đã tràn dòng thì dòng cuối sẽ trông lệch — đó là hành vi của flexbox, không phải lỗi khung."
+                note="Few elements so there's leftover space to read the distribution; `between` applies to EACH row, so once a cluster has wrapped the last row will look uneven — that's flexbox behaviour, not a bug in the frame."
                 code={`<Cluster.Base
   gap={2}
   justify="between"

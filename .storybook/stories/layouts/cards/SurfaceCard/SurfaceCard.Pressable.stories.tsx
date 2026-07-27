@@ -5,24 +5,30 @@ import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCar
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * KHUNG (Layouts) — vỏ card BẤM-ĐƯỢC, slot-agnostic: khung surface + phản hồi press
- * (hover trơ, `active:scale-[0.97]` + ripple). Tồn tại vì HeroUI v3 `Card` là `<div>`
- * không tương tác — khung này đặt đúng bộ style card lên một `<button>`/`<a>` thật.
+ * FRAME (Layouts) — a PRESSABLE card shell, slot-agnostic: surface frame +
+ * press feedback (inert hover, `active:scale-[0.97]` + ripple). Exists because
+ * HeroUI v3 `Card` is a non-interactive `<div>` — this frame puts the exact
+ * card style set onto a real `<button>`/`<a>`.
  *
- * ⚠️ PHẠM VI STATE (thầy chốt 2026-07-25): story ở đây CHỈ render state do CHÍNH
- * `.Pressable` đẻ ra — đích press (`onPress`/`href`), stretched-link (`actions` + `label`),
- * `isSelected`, `isDisabled`, `isSkeleton`. Bộ slot `header`/`body`/`footer` là cơ chế
- * CHUNG của khung-bọc, đã diễn ở `SurfaceCard.Base` → không lặp lại.
+ * ⚠️ STATE SCOPE (teacher's call 2026-07-25): stories here ONLY render states
+ * that `.Pressable` ITSELF produces — press target (`onPress`/`href`),
+ * stretched-link (`actions` + `label`), `isSelected`, `isDisabled`,
+ * `isSkeleton`. The `header`/`body`/`footer` slot set is a SHARED mechanism of
+ * the wrapping frame, already demonstrated in `SurfaceCard.Base` → not
+ * repeated here.
  *
- * `.Pressable` KHÔNG nằm trong BA TRỤC `variant`/`padding`/`radius` (thầy chốt
- * 2026-07-26) — chỉ `.Base`/`.Nested`/`.List`/`.Accordion`/`.CrossList` có ba prop đó.
+ * `.Pressable` is NOT part of the THREE-AXIS `variant`/`padding`/`radius`
+ * (teacher's call 2026-07-26) — only `.Base`/`.Nested`/`.List`/`.Accordion`/
+ * `.CrossList` have those three props.
  *
- * ANATOMY: mỗi story là một leaf riêng với BlockAnatomy riêng. 2026-07-26 (thầy) —
- * panel bỏ prop `parts`/`AnatomyNode` (đường cũ, khai cấu trúc bằng tay) lẫn tab
- * States; cấu trúc nay suy từ DOM, chú giải qua `annotate` CHỈ khi part có `storyId`
- * THẬT (bấm nhảy được). `Content`/`Actions`/`Skeleton` ở đây là các slot NỘI BỘ của
- * chính `.Pressable`, không component nào trong số đó có story riêng để trỏ tới —
- * nên bỏ hẳn prop panel-parts, không thay bằng `annotate` rỗng.
+ * ANATOMY: each story is its own leaf with its own BlockAnatomy. 2026-07-26
+ * (teacher) — the panel dropped the `parts`/`AnatomyNode` prop (the old way,
+ * declaring structure by hand) and the States tab; structure is now inferred
+ * from the DOM, annotated via `annotate` ONLY when a part has a REAL
+ * `storyId` (clickable jump). `Content`/`Actions`/`Skeleton` here are INTERNAL
+ * slots of `.Pressable` itself — none of them has its own story to point to —
+ * so the panel-parts prop is dropped entirely, not replaced with an empty
+ * `annotate`.
  */
 const meta: Meta<typeof SurfaceCard.Pressable> = {
     title: "Layouts/Cards/SurfaceCard/SurfaceCard.Pressable",
@@ -41,9 +47,10 @@ type Story = StoryObj<typeof SurfaceCard.Pressable>
 const shell = (node: React.ReactNode) => <div className="p-8"><div className="max-w-md">{node}</div></div>
 
 /**
- * Fixture chuẩn (C-fixture) = ProfileCard (avatar + title + description). LƯU Ý:
- * `SurfaceCard.Pressable` tự vẽ khung card (surface/rounded-3xl/p-3/shadow-surface), nên
- * ở đây KHÔNG bọc thêm `Card`/`CardContent` ngoài — chỉ giữ row bên trong, tránh
+ * Standard fixture (C-fixture) = ProfileCard (avatar + title + description).
+ * NOTE: `SurfaceCard.Pressable` draws its own card frame
+ * (surface/rounded-3xl/p-3/shadow-surface), so no extra outer
+ * `Card`/`CardContent` wrapper here — just the inner row, avoiding
  * card-in-card.
  */
 const ProfileRow = () => (
@@ -60,7 +67,7 @@ const ProfileRow = () => (
     </div>
 )
 
-/** Default — tile điều hướng: cả thẻ là MỘT đích press, body của nó là nhãn a11y. */
+/** Default — a navigation tile: the whole card is ONE press target, its body doubles as the a11y label. */
 export const Default: Story = {
     render: () =>
         shell(
@@ -68,7 +75,7 @@ export const Default: Story = {
                 name="SurfaceCard.Pressable"
                 tier="primitive"
                 leaf="Default"
-                reason="Needs ONE card frame with press feedback (inert hover, a subtle press-in + ripple) shared by every pressable tile — instead of every call site re-writing surface/rounded-3xl/p-3/shadow-surface + ripple by hand. Slot-agnostic (free-form body), so it belongs at the khung tier; a second part (Actions) only appears once the card also needs its own independent buttons (stretched-link)."
+                reason="Needs ONE card frame with press feedback (inert hover, a subtle press-in + ripple) shared by every pressable tile — instead of every call site re-writing surface/rounded-3xl/p-3/shadow-surface + ripple by hand. Slot-agnostic (free-form body), so it belongs at the frame tier; a second part (Actions) only appears once the card also needs its own independent buttons (stretched-link)."
                 code={`<SurfaceCard.Pressable onPress={() => {}}>
   <ProfileRow />
 </SurfaceCard.Pressable>`}
@@ -80,7 +87,7 @@ export const Default: Story = {
         ),
 }
 
-/** `href` — cả thẻ là MỘT link a11y (điều hướng khi click). */
+/** `href` — the whole card is ONE a11y link (navigates on click). */
 export const AsLink: Story = {
     render: () =>
         shell(
@@ -101,9 +108,11 @@ export const AsLink: Story = {
 }
 
 /**
- * `actions` + `label` — vùng press thứ hai, độc lập, nằm TRONG thẻ (stretched-link):
- * overlay bấm-toàn-thẻ TRONG SUỐT nằm dưới, CTA + menu đứng trên nên bấm riêng được.
- * TypeScript ép `label` thành BẮT BUỘC ngay khi có `actions` (overlay không có chữ nào).
+ * `actions` + `label` — a second, independent press area INSIDE the card
+ * (stretched-link): a TRANSPARENT whole-card press overlay sits underneath,
+ * the CTA + menu sit above it so they stay separately pressable. TypeScript
+ * forces `label` to become REQUIRED as soon as `actions` is present (the
+ * overlay carries no text of its own).
  */
 export const WithActions: Story = {
     render: () =>
@@ -143,7 +152,7 @@ export const WithActions: Story = {
         ),
 }
 
-/** `isSelected` — ô ĐƯỢC CHỌN trong một lưới chọn: ring accent quanh thẻ (tương đương dấu check của row). */
+/** `isSelected` — a SELECTED tile in a selection grid: an accent ring around the card (the row's checkmark equivalent). */
 export const Selected: Story = {
     render: () =>
         shell(
@@ -163,7 +172,7 @@ export const Selected: Story = {
         ),
 }
 
-/** `isDisabled` — lựa chọn tạm thời không dùng được: dim + tắt tương tác, VẪN hiện để sự tồn tại của nó đọc được. */
+/** `isDisabled` — an option that's temporarily unavailable: dims + disables interaction, STILL shown so its existence still reads. */
 export const Disabled: Story = {
     render: () =>
         shell(
@@ -183,7 +192,7 @@ export const Disabled: Story = {
         ),
 }
 
-/** Đang tải — `isSkeleton` tự vẽ mirror (khối icon + 2 dòng chữ), không cần Skeleton rời. */
+/** Loading — `isSkeleton` draws its own mirror (icon block + 2 text lines), no separate Skeleton needed. */
 export const Loading: Story = {
     render: () =>
         shell(

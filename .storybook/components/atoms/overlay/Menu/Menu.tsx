@@ -41,7 +41,19 @@ import { Header as HeroMenuHeader } from "react-aria-components"
  */
 
 /** An icon passed as a COMPONENT (e.g. `Gear`), rendered by the atom at menu scale. */
-export type IconComponent = ComponentType<SVGProps<SVGSVGElement>>
+export type IconComponent = ComponentType<SVGProps<SVGSVGElement> & { weight?: "regular" | "bold" }>
+
+/**
+ * Glyph của Menu — cỡ + nét, MỘT chỗ duy nhất (§4: atom sở hữu scale, caller đưa icon TRẦN).
+ *
+ * Nhãn item VÀ nhãn trigger đều `text-sm` (14px, đo DOM 2026-07-26) ⇒ `size-3.5`
+ * (§5a — đối chiếu FONT-SIZE, 1:1) + `weight="bold"` (§5.0a — nhỏ hơn `size-5`).
+ *
+ * ❌ neo (2026-07-26): icon ITEM để `size-4` trần trong khi icon TRIGGER cùng file đã
+ * là `size-3.5` — hai thang sống trong MỘT atom mà không ai thấy.
+ */
+const MENU_ICON_CLASS = "size-3.5"
+const MENU_ICON_WEIGHT = "bold" as const
 
 /** One selectable menu row. */
 export interface MenuItemModel {
@@ -49,7 +61,7 @@ export interface MenuItemModel {
     key: string
     /** Row label. */
     label: string
-    /** Leading icon as a COMPONENT reference. Atom renders it at `size-4`. */
+    /** Leading icon as a COMPONENT reference. Atom renders it at `size-3.5` + `bold` (§5a/§5.0a). */
     icon?: IconComponent
     /** Non-selectable (dimmed) row. */
     isDisabled?: boolean
@@ -112,7 +124,7 @@ const renderItem = (item: MenuItemModel, showAnatomy: boolean) => {
             data-anat-part={showAnatomy ? (item.isDisabled ? "Item.Disabled" : "Item") : undefined}
         >
             <span className="flex items-center gap-2">
-                {Icon ? <Icon className="size-4 shrink-0" aria-hidden /> : null}
+                {Icon ? <Icon className={cn(MENU_ICON_CLASS, "shrink-0")} weight={MENU_ICON_WEIGHT} aria-hidden /> : null}
                 <span>{item.label}</span>
             </span>
         </HeroDropdownItem>
@@ -174,7 +186,7 @@ const MenuBase = ({
                             data-anat-part={showAnatomy ? "TriggerIcon" : undefined}
                             className="inline-flex shrink-0 [&_svg]:!size-3.5"
                         >
-                            <TriggerIcon />
+                            <TriggerIcon weight={MENU_ICON_WEIGHT} />
                         </span>
                     ) : null}
                     {triggerLabel}

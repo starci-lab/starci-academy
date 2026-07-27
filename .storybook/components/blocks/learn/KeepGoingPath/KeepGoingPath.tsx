@@ -1,67 +1,73 @@
 import React from "react"
+import { Skeleton as HeroSkeleton } from "@heroui/react"
 import { CheckCircleIcon, CircleIcon, LockIcon, PlayCircleIcon } from "@phosphor-icons/react"
 import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
 import { VariantChip, type Difficulty } from "@sb-components/designs/chips/VariantChip/VariantChip"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `KeepGoingPath.Base`: ĐƯỜNG HỌC TIẾP của chương hiện tại.
+ * BLOCK — `KeepGoingPath.Base`: the CONTINUE-LEARNING PATH for the current module.
  *
- * LÝ DO TỒN TẠI (thầy chốt 2026-07-25): **lên SCREEN tuyệt đối không xài atom —
- * only block.** Screen `/learn/content` từng tự viết tiêu đề bằng `Typography`,
- * tự `.map()` danh sách và tự chọn icon theo trạng thái bài.
+ * WHY IT EXISTS (teacher's call 2026-07-25): **a SCREEN must never reach for an
+ * atom — block only.** The `/learn/content` screen used to write its own heading
+ * with `Typography`, `.map()` the list itself, and pick the icon per content state
+ * itself.
  *
- * ⚠️ ĐỒNG NHẤT RENDER (thầy soi mắt 2026-07-25): **không chế thêm khái niệm render.**
- * Cụm này và `LearnNudges` ngay trên nó TRÔNG GIỐNG HỆT (danh sách hàng trong khung
- * viền) nên phải đi CÙNG một layout: `SurfaceCard.List`. Bản đầu tiên của block này
- * tự vẽ `div.rounded-2xl.border` rồi nhét `List.Row` vào — hai đường render cho một
- * hình, đúng thứ drift phải dẹp. Tiêu đề cũng đi `label` của SurfaceCard (render
- * NGOÀI/trên surface) chứ không phải một `Typography` rời.
+ * ⚠️ RENDER CONSISTENCY (teacher's eye-check 2026-07-25): **don't invent a new
+ * render concept.** This cluster and `LearnNudges` right above it LOOK IDENTICAL
+ * (a list of rows inside a bordered frame), so they must share ONE layout:
+ * `SurfaceCard.List`. The first version of this block drew its own
+ * `div.rounded-2xl.border` and stuffed `List.Row` into it — two render paths for
+ * one shape, exactly the drift that has to be swept away. The heading also goes
+ * through SurfaceCard's `label` (rendered OUTSIDE/above the surface), not a
+ * standalone `Typography`.
  *
- * BLOCK SỞ HỮU: map trạng thái → icon dẫn đầu · chip độ khó · dấu khoá premium ·
- * **VÀ CẢ CÂU TIÊU ĐỀ**. Caller chỉ đưa DỮ LIỆU MIỀN.
+ * THE BLOCK OWNS: state → leading icon map · difficulty chip · premium lock mark ·
+ * **AND THE HEADING SENTENCE ITSELF**. The caller only hands over DOMAIN DATA.
  *
- * ⛔ **KHÔNG nhận `heading`** (thầy chốt 2026-07-26): chữ tiêu đề là phần trình bày,
- * block sở hữu. Caller chỉ nói **tên chương** (`moduleTitle`) — dữ liệu; block tự
- * ghép thành "Tiếp tục · <tên chương>". Nhận `heading` là mở lối custom (§14d.1).
+ * ⛔ **DOES NOT accept `heading`** (teacher's call 2026-07-26): the heading text is
+ * presentation, the block owns it. The caller only states the **module name**
+ * (`module`) — an entity; the block assembles the whole heading itself.
+ * Accepting `heading` would open a custom escape hatch (§14d.1).
  *
- * 📛 **THUẬT NGỮ: `contents`, KHÔNG phải `lessons`** (thầy chốt 2026-07-26 —
- * strict mọi chỗ, ĐỪNG tin code cũ: `src/` vẫn gọi `lessons`, đó là chỗ sai).
+ * 📛 **TERMINOLOGY: `contents`, NOT `lessons`** (teacher's call 2026-07-26 — strict
+ * everywhere, DON'T trust the old code: `src/` still calls it `lessons`, that's
+ * the wrong spot).
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** Trạng thái học của một bài trong đường học. */
+/** Learning state of a content item in the path. */
 export type KeepGoingContentState = "done" | "active" | "todo"
 
-/** Một bài trong đường học — DỮ LIỆU thuần, block tự dựng hình. */
+/** A content item in the path — plain DATA, the block builds the shape itself. */
 export interface KeepGoingContent {
     /** Stable React key. */
     id: string
-    /** Tên bài. */
+    /** Content title. */
     title: string
-    /** Thời lượng đọc (phút) — block tự ghép thành dòng phụ. */
+    /** Reading time (minutes) — the block assembles it into the subtitle line. */
     minutes: number
-    /** Đã xong / đang học / chưa học — quyết định icon dẫn đầu. */
+    /** Done / in progress / not started — decides the leading icon. */
     state: KeepGoingContentState
-    /** Độ khó — block tự dựng `VariantChip.Difficulty`. */
+    /** Difficulty — the block builds `VariantChip.Difficulty` itself. */
     difficulty: Difficulty
-    /** Bài thuộc gói trả phí → hiện dấu khoá. */
+    /** Content belongs to a paid tier → shows the lock mark. */
     locked?: boolean
-    /** Bấm vào hàng. */
+    /** Row press handler. */
     onPress?: () => void
 }
 
 /**
- * Icon dẫn đầu theo trạng thái — block sở hữu bảng này, caller không tự chọn.
- * Đi đường `leading` (node) chứ không `leadingIcon`, vì mỗi trạng thái mang MỘT
- * MÀU riêng còn `leadingIcon` ép chung `text-muted`.
+ * Leading icon per state — the block owns this table, the caller doesn't pick.
+ * Goes through `leading` (a node) rather than `leadingIcon`, because each state
+ * carries its OWN COLOR while `leadingIcon` forces a shared `text-muted`.
  *
- * BA TRẠNG THÁI CÙNG MỘT KHUÔN TRÒN (thầy chốt 2026-07-26):  chứ
- * KHÔNG phải  tam giác trần — hai anh em /
- * đều là hình tròn, để một cái khác khuôn thì hàng đọc bị gãy nhịp.
+ * ALL THREE STATES SHARE ONE ROUND SHAPE (teacher's call 2026-07-26):  rather
+ * than  a bare triangle — the two siblings /
+ * are both circles, so one shape breaking the mold breaks the row's reading rhythm.
  *
- *  — cỡ icon dẫn đầu của hàng (thầy chốt 2026-07-26: heading icon = 5;
- * icon trong chip mới đi theo font).
+ *  — the row's leading icon size (teacher's call 2026-07-26: heading icon = 5;
+ * the icon inside the chip now follows the font instead).
  */
 const CONTENT_LEADING: Record<KeepGoingContentState, { Icon: typeof CircleIcon, className: string }> = {
     active: { Icon: PlayCircleIcon, className: "size-5 text-accent-soft-foreground" },
@@ -70,82 +76,134 @@ const CONTENT_LEADING: Record<KeepGoingContentState, { Icon: typeof CircleIcon, 
 }
 
 /**
- * Bài KHOÁ → ổ khoá **THAY** icon trạng thái ở đầu hàng, không treo thêm ở cuối
- * (thầy chốt 2026-07-26).
+ * A LOCKED content item → the lock icon **REPLACES** the state icon at the head of
+ * the row instead of hanging a second one on the tail (teacher's call 2026-07-26).
  *
- * MÀU: `warning` (thầy chốt 2026-07-26) — KHÔNG muted. Ổ khoá muted thì tàng hình,
- * mà đây không phải trang trí: nó là CỬA BÁN HÀNG, phải thấy được. Dùng nấc
- * `-soft-foreground` cho khớp anh em (accent/success), không phải `text-warning` đậm.
+ * COLOR: `warning` (teacher's call 2026-07-26) — NOT muted. A muted lock turns
+ * invisible, and this isn't decoration: it's a SALES DOOR, it has to be seen. Uses
+ * the `-soft-foreground` step to match its siblings (accent/success), not a bold
+ * `text-warning`.
  *
- * Lý do đặt ở ĐẦU hàng: hàng list chuẩn đã có đủ leading · title · subtitle · meta; nhét icon thứ
- * hai ở đuôi là đẻ thêm một vị trí không ai đọc. Và về nghĩa: bài chưa mở khoá thì
- * "đã đọc / đang đọc / chưa đọc" vô nghĩa — **khoá CHÍNH LÀ trạng thái của nó**.
+ * Why it sits at the HEAD of the row: a standard list row already has leading ·
+ * title · subtitle · meta; bolting a second icon onto the tail just creates a spot
+ * nobody reads. And semantically: for a not-yet-unlocked item, "read / reading /
+ * unread" is meaningless — **the lock IS its state**.
  */
 const LOCKED_LEADING = { Icon: LockIcon, className: "size-5 text-warning-soft-foreground" }
 
 /** Props for {@link KeepGoingPath.Base}. */
 export interface KeepGoingPathBaseProps {
     /**
-     * TÊN CHƯƠNG hiện tại — DỮ LIỆU, không phải câu tiêu đề. Block tự ghép thành
-     * "Tiếp tục · {moduleTitle}". Caller KHÔNG được đưa cả câu vào (§14d.1).
+     * The current MODULE as an ENTITY — never a pre-baked string.
+     *
+     * ⭐ 2026-07-27 (teacher: "pass the module, not the module title — at block tier you
+     * stop passing generic strings"): this used to be `moduleTitle: string`, and every
+     * caller shipped `"Chương 2 · Container hoá"`. That string is TWO decisions the
+     * caller had no business making — the word "Chương" and the `·` separator. The block
+     * only bolted "Tiếp tục ·" on the front, so the heading was assembled in two places.
+     *
+     * A `string` prop cannot be checked: nothing stops a caller sending `"chương 2-"` or
+     * a fully different sentence. `{ index, name }` makes the wrong shape UNTYPEABLE.
      */
-    moduleTitle: string
-    /** Các content trong đường học tiếp theo. */
+    module: { index: number; name: string }
+    /** The content items in the continue-learning path. */
     contents: Array<KeepGoingContent>
+    /**
+     * `true` → mirror shimmer INSTEAD OF waiting on `contents`. The flag FLOWS
+     * DOWN into `SurfaceCard.List` (keeps the box/row/divider, only the text turns
+     * to shimmer) and into `VariantChip.Difficulty` — both the atom and the frame
+     * already own their own `isSkeleton`.
+     *
+     * Empty while loading (`contents.length === 0`) → guesses **3** rows, matching
+     * this pass's convention for repeating lists.
+     *
+     * ⚠️ The leading icon (play/check/circle/lock) is chosen DIRECTLY by the block
+     * itself from the `CONTENT_LEADING`/`LOCKED_LEADING` table — it doesn't go
+     * through any atom — so this is exactly the §12c case that allows hand-rolling
+     * ONE shimmer dot in place of the icon, instead of branching off to build a
+     * whole separate row.
+     */
+    isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
     showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
 }
 
+/** Placeholder DATA for the 3 guessed rows when `contents` is empty while loading (§12c). */
+const SKELETON_ROWS: Array<KeepGoingContent> = Array.from({ length: 3 }, (_unused, index) => ({
+    id: `skeleton-${index}`,
+    title: "",
+    minutes: 0,
+    state: "todo",
+    difficulty: "beginner",
+}))
+
 /**
- * Đường học tiếp — tiêu đề chương + danh sách bài, cùng layout với `LearnNudges`.
+ * Continue-learning path — module heading + content list, sharing its layout with
+ * `LearnNudges`.
  *
  * @param props - {@link KeepGoingPathBaseProps}
  */
 const KeepGoingPathBase = ({
-    moduleTitle,
+    module,
     contents,
+    isSkeleton = false,
     showAnatomy = false,
     anatPart,
-}: KeepGoingPathBaseProps) => (
-    <SurfaceCard.List
-        // Câu tiêu đề do BLOCK ghép — caller chỉ đưa tên chương.
-        label={`Tiếp tục · ${moduleTitle}`}
-        anatPart={anatPart}
-        showAnatomy={showAnatomy}
-        items={contents.map((content) => {
-            // Khoá THAY icon trạng thái, không cộng thêm ở cuối hàng.
-            const { Icon, className } = content.locked
-                ? LOCKED_LEADING
-                : CONTENT_LEADING[content.state]
-            return {
-                key: content.id,
-                leading: (
-                    <Icon
-                        aria-label={content.locked ? "Nội dung trả phí" : undefined}
-                        aria-hidden={content.locked ? undefined : true}
-                        focusable="false"
-                        className={className}
-                    />
-                ),
-                title: content.title,
-                subtitle: `${content.minutes} phút đọc`,
-                onPress: content.onPress,
-                // Meta chỉ còn ĐÚNG MỘT thứ: độ khó. Hình do DESIGN sở hữu — block
-                // không đổi dáng chip (§14d.1).
-                meta: (
-                    <VariantChip.Difficulty
-                        difficulty={content.difficulty}
-                        showAnatomy={showAnatomy}
-                    />
-                ),
-            }
-        })}
-    />
-)
+}: KeepGoingPathBaseProps) => {
+    // Empty while loading (no real contents yet) → guess 3 rows, keeping the right
+    // shape for when real data arrives (§8). Once real `contents` exist, keep the
+    // EXACT row count already there.
+    const rows = isSkeleton && contents.length === 0 ? SKELETON_ROWS : contents
 
-/** `KeepGoingPath.*` — namespace một-component ⇒ chỉ có `.Base`. */
+    return (
+        <SurfaceCard.List
+            // The heading sentence is assembled by the BLOCK — the caller only hands over the module name.
+            // EVERY word of the heading is decided HERE — "Tiếp tục", "Chương", the `·`.
+            // The caller only supplies the number and the name.
+            label={`Tiếp tục · Chương ${module.index} · ${module.name}`}
+            anatPart={anatPart ?? (showAnatomy ? "SurfaceCard.List" : undefined)}
+            isSkeleton={isSkeleton}
+            items={rows.map((content) => {
+                // A lock REPLACES the state icon, it isn't added on top at the row's tail.
+                const { Icon, className } = content.locked
+                    ? LOCKED_LEADING
+                    : CONTENT_LEADING[content.state]
+                return {
+                    key: content.id,
+                    leading: isSkeleton ? (
+                        // The icon is chosen DIRECTLY by the block itself (no atom in between) —
+                        // hand-roll a single shimmer dot in place of the state/lock icon.
+                        <HeroSkeleton className="size-5 shrink-0 rounded-full" />
+                    ) : (
+                        <Icon
+                            aria-label={content.locked ? "Nội dung trả phí" : undefined}
+                            aria-hidden={content.locked ? undefined : true}
+                            focusable="false"
+                            className={className}
+                        />
+                    ),
+                    title: content.title,
+                    subtitle: `${content.minutes} phút đọc`,
+                    onPress: content.onPress,
+                    // Meta now holds EXACTLY ONE thing: difficulty. The shape is owned by
+                    // DESIGN — the block doesn't reshape the chip (§14d.1). The flag flows
+                    // straight down into the `VariantChip.Difficulty` atom.
+                    meta: (
+                        <VariantChip.Difficulty
+                            difficulty={content.difficulty}
+                            isSkeleton={isSkeleton}
+                            anatPart={showAnatomy ? "VariantChip.Difficulty" : undefined}
+                        />
+                    ),
+                }
+            })}
+        />
+    )
+}
+
+/** `KeepGoingPath.*` — single-component namespace ⇒ only `.Base`. */
 export const KeepGoingPath = Object.assign(KeepGoingPathBase, {
     Base: KeepGoingPathBase,
 })

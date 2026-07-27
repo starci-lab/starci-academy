@@ -45,6 +45,7 @@ export const Single: Story = {
                 leaf="Single"
                 parts={STAT_PARTS}
                 reason="Cặp value+label xếp dọc, không khung riêng — để card/hàng stat bên ngoài quyết định surface + divider."
+                code={"<StatPair value=\"1,204\" label=\"Followers\" />"}
             >
                 <StatPair value="1,204" label="Followers" showAnatomy />
             </BlockAnatomy>
@@ -61,6 +62,9 @@ export const Row: Story = {
                 leaf="Row"
                 parts={STAT_PARTS}
                 note="4 StatPair trong 1 Card chia cột bằng divide-x — Card/divider là của caller, mỗi StatPair vẫn cùng 2 node."
+                code={`<Card className="flex divide-x divide-default">
+  {stats.map((stat) => <StatPair key={stat.label} value={stat.value} label={stat.label} />)}
+</Card>`}
             >
                 {/* Parent owns the card + full-height vertical dividers; StatPair is frameless. */}
                 <Card variant="default" className="w-fit">
@@ -86,6 +90,9 @@ export const Grid: Story = {
                 leaf="Grid"
                 parts={STAT_PARTS}
                 note="Cùng 4 stat, đổi sang grid 2 cột (widget hẹp) — vẫn cùng composition mỗi StatPair."
+                code={`<Card className="grid grid-cols-2 gap-x-8 gap-y-6">
+  {stats.map((stat) => <StatPair key={stat.label} value={stat.value} label={stat.label} />)}
+</Card>`}
             >
                 {/* Narrow width (sidebar/widget): the same stats fall into a 2-col grid. */}
                 <Card variant="default" className="w-[420px]">

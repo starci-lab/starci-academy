@@ -8,27 +8,27 @@ import { Choice } from "@sb-components/atoms/forms/Choice/Choice"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — `List.*`, the ONE row/list KHUNG namespace
- * (thầy chốt 2026-07-25, canon §13). Four sibling frames that used to live as
+ * (teacher's call 2026-07-25, canon §13). Four sibling frames that used to live as
  * four loose folders (`lists/ListRow` · `lists/LabeledList` · `lists/MetaRow` ·
  * `list/SettingToggleRow`) are now MEMBERS of one namespace — same tier, same
- * job (bố trí phần tử thành HÀNG / thành DANH SÁCH), one import.
+ * job (arranging elements into a ROW / a LIST), one import.
  *
  * | Member | Shape | Content channel |
  * |---|---|---|
- * | `.Row` | 1 hàng danh sách chung | props dữ liệu (`leading`/`title`/`subtitle`/`meta`/`trailing`) |
- * | `.Labeled` | label + danh sách LẶP (+CTA) | **`items` — CẤM children** |
- * | `.Meta` | 1 hàng meta inline | `chip` + **`items`** (các đoạn meta) |
- * | `.ToggleRow` | 1 hàng cài đặt có công tắc | props dữ liệu (`label`/`description`/`checked`) |
+ * | `.Row` | 1 generic list row | data props (`leading`/`title`/`subtitle`/`meta`/`trailing`) |
+ * | `.Labeled` | label + REPEATING list (+CTA) | **`items` — children FORBIDDEN** |
+ * | `.Meta` | 1 inline meta row | `chip` + **`items`** (meta segments) |
+ * | `.ToggleRow` | 1 settings row with a switch | data props (`label`/`description`/`checked`) |
  *
  * KHUNG API LAW (§13b):
- * - Khung DANH SÁCH LẶP (`.Labeled`) BẮT BUỘC nhận `items` dữ liệu — children bị CẤM.
- * - Khung một-HÀNG (`.Row` / `.Meta` / `.ToggleRow`) nhận prop dữ liệu có tên, KHÔNG
- *   nhận children tự do: hàng là hình thái CỐ ĐỊNH (leading · text · meta/trailing),
- *   nội dung tự do là việc của tầng design/block.
+ * - A REPEATING-LIST frame (`.Labeled`) MUST receive `items` data — children are FORBIDDEN.
+ * - A single-ROW frame (`.Row` / `.Meta` / `.ToggleRow`) receives named data props, does NOT
+ *   accept free-form children: the row is a FIXED shape (leading · text · meta/trailing),
+ *   free-form content is the design/block tier's job.
  * - Namespace only — no bare component export.
  *
- * Behaviour/skin của mỗi member giữ NGUYÊN VĂN từ folder cũ; đây là refactor API,
- * không phải refactor thị giác. Synced to `src` later.
+ * Each member's behaviour/skin is kept VERBATIM from the old folder; this is an API
+ * refactor, not a visual refactor. Synced to `src` later.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -82,7 +82,7 @@ export interface ListRowProps {
     /**
      * `true` → render the skeleton mirror (leading tile only when `leading` is
      * passed, title bar + subtitle bar per the real text column) instead of the
-     * live row. Consumer chỉ bật cờ — giống `Button.isSkeleton`.
+     * live row. The consumer only flips the flag — same as `Button.isSkeleton`.
      */
     isSkeleton?: boolean
     /** Extra classes merged onto the root element via `cn`. */
@@ -246,7 +246,7 @@ export interface ListLabeledProps {
     /** Optional leading icon before the label (e.g. a phosphor `*Icon`). */
     icon?: ReactNode
     /**
-     * The rows, in reading order. REQUIRED — danh sách LẶP là DỮ LIỆU, không
+     * The rows, in reading order. REQUIRED — a REPEATING list is DATA, not
      * children (§13b). Empty → renders {@link ListLabeledProps.emptyState}.
      */
     items: ReadonlyArray<ListLabeledItem>
@@ -327,7 +327,7 @@ export interface ListMetaProps {
     chip?: ReactNode
     /**
      * Neutral secondary meta segments, rendered muted and joined by a middot `·`.
-     * REQUIRED — danh sách LẶP là dữ liệu (§13b). Each entry is one segment
+     * REQUIRED — a REPEATING list is data (§13b). Each entry is one segment
      * (e.g. `["Question 7 / 8", "Middle"]`).
      */
     items: ReadonlyArray<ReactNode>
@@ -452,7 +452,7 @@ const ToggleRow = ({
                     isSelected={false}
                     onValueChange={() => undefined}
                     className="shrink-0"
-                    showAnatomy={showAnatomy}
+                    anatPart={showAnatomy ? "Choice.Switch" : undefined}
                 />
             </div>
         )
@@ -485,15 +485,15 @@ const ToggleRow = ({
 }
 
 /**
- * The row/list KHUNG namespace — mọi khung "hàng · danh sách" của design system,
+ * The row/list KHUNG namespace — every "row · list" frame in the design system,
  * one import, four members:
  *
  * | Member | Content channel |
  * |---|---|
- * | `.Row` | props dữ liệu (`leading`/`title`/`subtitle`/`meta`/`trailing`) |
- * | `.Labeled` | `items` (CẤM children) |
+ * | `.Row` | data props (`leading`/`title`/`subtitle`/`meta`/`trailing`) |
+ * | `.Labeled` | `items` (children FORBIDDEN) |
  * | `.Meta` | `chip` + `items` |
- * | `.ToggleRow` | props dữ liệu (`label`/`description`/`checked`) |
+ * | `.ToggleRow` | data props (`label`/`description`/`checked`) |
  */
 export const List = {
     Row,

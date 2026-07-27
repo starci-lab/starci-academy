@@ -56,6 +56,15 @@ export interface ClusterBaseProps {
     align?: LayoutAlign
     /** Main-axis distribution of each line. Default `start`. */
     justify?: LayoutJustify
+    /**
+     * Anatomy tag for THIS khung itself — lets the PARENT badge it as ONE node (§11a.1).
+     *
+     * ⭐ 2026-07-27: without this prop the parent can't name the khung, so the khung
+     * doesn't make it into the Deps tree — use a `layouts`-tier khung and have the panel
+     * still not see it, and it counts as unused. Same gap already patched on
+     * `Page.Header`/`Divider.Base`/`Choice.Switch`.
+     */
+    anatPart?: string
     className?: string
     /** `true` → tag each item with `data-anat-part` for a BlockAnatomy panel. */
     showAnatomy?: boolean
@@ -75,8 +84,10 @@ const ClusterBase = ({
     justify = "start",
     className,
     showAnatomy = false,
+    anatPart,
 }: ClusterBaseProps) => (
     <div
+        data-anat-part={anatPart}
         className={cn(
             "flex flex-wrap",
             GAP_CLASS[gap],

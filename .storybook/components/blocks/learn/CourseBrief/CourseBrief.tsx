@@ -5,58 +5,78 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `CourseBrief.Base`: block ĐỊNH DANH KHOÁ.
+ * BLOCK — `CourseBrief.Base`: the COURSE IDENTITY block.
  *
- * LÝ DO TỒN TẠI (thầy chốt 2026-07-25): **lên SCREEN tuyệt đối không xài atom —
- * only block.** Trước đó screen `/learn/content` tự gọi khung `Page.Header` (layout)
- * và tự nhét `Breadcrumbs.Base` (atom) vào — sai tầng. Block này là thứ screen gọi
- * THAY cho cả hai. Nó tồn tại vì RANH GIỚI TẦNG, không phải vì nó có state riêng.
+ * WHY IT EXISTS (teacher's call 2026-07-25): **on a SCREEN, never reach for an
+ * atom directly — only blocks.** Before this, the `/learn/content` screen called
+ * the `Page.Header` frame (layout) itself and stuffed `Breadcrumbs.Base` (atom)
+ * straight in — wrong tier. This block is what the screen calls INSTEAD of both.
+ * It exists for the TIER BOUNDARY, not because it has its own state.
  *
- * ⚠️ KHÔNG có chip trạng thái (thầy soi mắt 2026-07-25 rồi bỏ). Trạng thái học của
- * khoá đã do `ContinueCard` bên dưới nói; nhắc lại ở đây là thừa.
+ * ⚠️ NO status chip (teacher eyeballed it 2026-07-25 and dropped it). The
+ * course's learning status is already told by `ContinueCard` below it; repeating
+ * it here is redundant.
  *
- * Tên đặt theo CHỨC NĂNG, không theo vị trí: KHÔNG `CourseContentsPageHeader` (vừa
- * là vị trí, vừa khoá vào một màn). `CourseBrief` = "tóm tắt khoá" nên trang bán
- * khoá / trang `/learn` đều dùng lại được.
+ * Named for FUNCTION, not for POSITION: NOT `CourseContentsPageHeader` (that's
+ * both a position and locks it to one screen). `CourseBrief` = "course summary",
+ * so the course-sales page / `/learn` page can both reuse it.
  *
- * HỢP ĐỒNG: block nhận **DỮ LIỆU**, không nhận atom dựng sẵn — `breadcrumbItems` là
- * mảng crumb, block tự dựng `Breadcrumbs.Base`. Nếu để prop `breadcrumb?: ReactNode`
- * thì caller (screen) lại phải cầm atom → thủng đúng cái luật này.
+ * CONTRACT: the block takes **DATA**, not a pre-built atom — `breadcrumbItems` is
+ * an array of crumbs, the block builds `Breadcrumbs.Base` itself. If the prop
+ * were `breadcrumb?: ReactNode` the caller (screen) would have to hold an atom
+ * again → breaking exactly this rule.
  *
- * COMPOSE: khung `Page.Header` (layout) + `Breadcrumbs.Base` (atom) + `Typography`.
- * Block KHÔNG tự vẽ khung — nó ĐẶT business vào khung có sẵn.
+ * COMPOSE: `Page.Header` frame (layout) + `Breadcrumbs.Base` (atom) + `Typography`.
+ * The block does NOT draw its own frame — it PLACES business content into an
+ * existing frame.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** Một mắt xích breadcrumb — dữ liệu thuần, block tự dựng atom từ nó. */
+/** One breadcrumb link — plain data, the block builds the atom from it. */
 export interface CourseBriefCrumb {
-    /** Khoá React. */
+    /** React key. */
     key: string
-    /** Nhãn hiển thị. */
+    /** Display label. */
     label: string
-    /** Có handler → crumb bấm được; crumb cuối (trang hiện tại) bỏ trống. */
+    /** Has a handler → crumb is pressable; the last crumb (current page) leaves it out. */
     onPress?: () => void
 }
 
 /** Props for {@link CourseBrief.Base}. */
 export interface CourseBriefBaseProps {
-    /** Đường dẫn breadcrumb dạng DỮ LIỆU — block tự dựng `Breadcrumbs.Base`. */
+    /** Breadcrumb trail as DATA — the block builds `Breadcrumbs.Base` itself. */
     breadcrumbItems?: Array<CourseBriefCrumb>
-    /** Tên khoá. */
+    /** Course name. */
     title: string
-    /** Một câu mô tả khoá. */
+    /** One-sentence course description. */
     description?: string
     /**
-     * ⛔ KHÔNG có prop `meta` chuỗi format sẵn (thầy chốt 2026-07-26).
-     * Truyền `meta="8 chương · ~14 giờ học · 2,481 học viên"` là **phá cấu trúc**:
-     * caller quyết luôn cách ghép, đơn vị, dấu ngăn — block hết sở hữu hình.
-     * Dưới đây là DỮ LIỆU SỐ rời; block tự ghép dải muted ngăn dấu `·`.
+     * ⛔ NO pre-formatted `meta` string prop (teacher's call 2026-07-26).
+     * Passing `meta="8 modules · ~14h · 2,481 learners"` is **breaking the
+     * structure**: the caller ends up deciding the join, units, and separator —
+     * the block loses ownership of its own shape. Below are separate NUMBER
+     * fields; the block joins them itself into a muted strip separated by `·`.
      */
     moduleCount?: number
-    /** Tổng giờ học (làm tròn) — block tự thêm `~` và chữ "giờ học". */
+    /** Total learning hours (rounded) — the block adds `~` and the "giờ học" word itself. */
     hours?: number
-    /** Số học viên đã tham gia — block tự phân tách hàng nghìn. */
+    /** Number of enrolled learners — the block formats the thousands separator itself. */
     learnerCount?: number
+    /**
+     * `true` → the cluster switches to a mirror shimmer INSTEAD OF waiting for
+     * data — the flag FLOWS DOWN to the actual text-rendering atoms
+     * (`Breadcrumbs.Base`/`Typography.Base`), not a parallel skeleton tree
+     * (§12c).
+     *
+     * ⚠️ `Page.Header` (the frame wrapping `title`/`description`) does NOT have
+     * `isSkeleton` yet and sits OUTSIDE the 4 files edited this round — the
+     * block can't pass the flag through it. For those two slots, the block
+     * calls the `Typography.Base isSkeleton` atom DIRECTLY (matching the
+     * size/weight `Page.Header` itself uses for `title`/`description`) and
+     * feeds the RESULT into the slot instead of a raw string — still "flag
+     * flows down to the atom", just a different PLACE that calls the atom.
+     */
+    isSkeleton?: boolean
     /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
     showAnatomy?: boolean
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
@@ -64,7 +84,8 @@ export interface CourseBriefBaseProps {
 }
 
 /**
- * Cụm định danh khoá ở đầu trang. Xem file header cho hợp đồng đầy đủ.
+ * Course identity cluster at the top of a page. See the file header for the
+ * full contract.
  *
  * @param props - {@link CourseBriefBaseProps}
  */
@@ -75,11 +96,12 @@ const CourseBriefBase = ({
     moduleCount,
     hours,
     learnerCount,
+    isSkeleton = false,
     showAnatomy = false,
     anatPart,
 }: CourseBriefBaseProps) => {
-    // Dải meta do BLOCK ghép từ SỐ — đơn vị, dấu ngăn, phân tách hàng nghìn đều là
-    // phần trình bày, caller không đụng vào (§14d.1).
+    // Meta strip joined by the BLOCK from NUMBERS — units, separators, thousands
+    // grouping are all presentation; the caller doesn't touch this (§14d.1).
     const metaParts = [
         moduleCount != null ? `${moduleCount} chương` : null,
         hours != null ? `~${hours} giờ học` : null,
@@ -89,27 +111,51 @@ const CourseBriefBase = ({
     return (
         <div data-anat-part={anatPart}>
             <Page.Header
-                showAnatomy={showAnatomy}
+                anatPart={showAnatomy ? "Page.Header" : undefined}
                 breadcrumb={
-                    breadcrumbItems?.length ? (
+                    isSkeleton || breadcrumbItems?.length ? (
                         <div className="w-fit" data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}>
-                            {/* collapse: dưới @app-sm hoặc trail ≥ 4 crumb → back-link (năng lực
-                        cũ của ResponsiveBreadcrumb, nay là prop của atom Breadcrumbs.Base). */}
+                            {/* collapse: below @app-sm or trail ≥ 4 crumbs → back-link (the old
+                        capability of ResponsiveBreadcrumb, now a prop of the Breadcrumbs.Base atom). */}
                             <Breadcrumbs.Base
                                 collapseOnMobile
                                 collapseFrom={4}
-                                items={breadcrumbItems}
-                                showAnatomy={showAnatomy}
+                                items={breadcrumbItems ?? []}
+                                isSkeleton={isSkeleton}
                             />
                         </div>
                     ) : undefined
                 }
-                title={<span data-anat-part={showAnatomy ? "Title" : undefined}>{title}</span>}
-                description={description}
+                title={
+                    isSkeleton ? (
+                        // `Page.Header` has no `isSkeleton` yet (outside this round's edit
+                        // boundary) — call the `Typography.Base` atom directly with the EXACT
+                        // size/weight `Page.Header` itself uses for `title` (size="h3"
+                        // weight="bold"), then feed the result into the slot.
+                        <Typography.Base size="h3" weight="bold" isSkeleton anatPart={showAnatomy ? "Skeleton.Title" : undefined} />
+                    ) : (
+                        <span data-anat-part={showAnatomy ? "Title" : undefined}>{title}</span>
+                    )
+                }
+                description={
+                    isSkeleton ? (
+                        // Same reasoning — `Page.Header` uses size="sm" color="muted" for
+                        // description; call that atom directly instead of a raw string. ALWAYS
+                        // show this line while loading (even when the final call site leaves
+                        // description empty) — it's the most common line in the cluster; keeping
+                        // the layout stable (§8) matters more than saving one shimmer line for
+                        // the rare case with no description.
+                        <Typography.Base size="sm" color="muted" isSkeleton anatPart={showAnatomy ? "Skeleton.Description" : undefined} />
+                    ) : (
+                        description
+                    )
+                }
                 meta={
-                    metaParts.length > 0 ? (
-                        <span data-anat-part={showAnatomy ? "Meta" : undefined}>
-                            <Typography.Base size="xs" color="muted" text={metaParts.join(" · ")} />
+                    isSkeleton ? (
+                        <Typography.Base size="xs" color="muted" isSkeleton className="w-40" anatPart={showAnatomy ? "Meta" : undefined} />
+                    ) : metaParts.length > 0 ? (
+                        <span>
+                            <Typography.Base size="xs" color="muted" text={metaParts.join(" · ")} anatPart={showAnatomy ? "Meta" : undefined} />
                         </span>
                     ) : undefined
                 }
@@ -118,7 +164,7 @@ const CourseBriefBase = ({
     )
 }
 
-/** `CourseBrief.*` — namespace một-component ⇒ chỉ có `.Base`. */
+/** `CourseBrief.*` — single-component namespace ⇒ only `.Base`. */
 export const CourseBrief = Object.assign(CourseBriefBase, {
     Base: CourseBriefBase,
 })

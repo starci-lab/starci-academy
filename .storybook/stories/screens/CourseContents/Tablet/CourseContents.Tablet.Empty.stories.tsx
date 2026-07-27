@@ -19,5 +19,5 @@ export default meta
 type Story = StoryObj<typeof CourseContents>
 
 export const Default: Story = {
-    render: () => deviceLeaf({ width: W, state: "empty", leaf: "Default", reason: "Tablet 768px · khoá chưa có bài — AsyncContent.Empty thay toàn bộ spine." }),
+    render: () => deviceLeaf({ width: W, isEmpty: true, leaf: "Default", reason: "Tablet 768px · no lessons yet — AsyncContent.Empty replaces the whole spine." }),
 }

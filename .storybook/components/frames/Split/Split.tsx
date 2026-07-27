@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
-import { ALIGN_CLASS, GAP_CLASS, type LayoutAlign, type SpaceScale } from "@sb-components/frames/_spacing"
+import { ALIGN_CLASS, GAP_CLASS, type LayoutAlign, type SeamScale } from "@sb-components/frames/_spacing"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -55,7 +55,7 @@ export interface SplitBaseProps {
      * Seam between the two sides on the §10 scale — REQUIRED, union literal only.
      * It is the MINIMUM distance: `justify-between` pushes the sides apart beyond it.
      */
-    gap: SpaceScale
+    gap: SeamScale
     /** Cross-axis alignment of the two sides. Default `center` (the split row's normal). */
     align?: LayoutAlign
     /**

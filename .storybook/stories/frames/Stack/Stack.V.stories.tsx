@@ -59,16 +59,16 @@ export const Default: Story = {
                 reason="A single-axis VERTICAL frame: it only decides direction, seam, and alignment, carrying no content or function of its own (§13). It's a WRAPPING frame so it takes `children` (a single axis has EXACTLY ONE slot, so there's no header/body/footer set to name)."
                 states={[
                     {
-                        name: "gap = 3 (grouped)",
-                        why: "Three panels stack with a `grouped(3)` seam between each. This is the default rhythm between blocks inside a card, the shape every other leaf below narrows down from.",
-                        code: `<Stack.V gap={3}>
+                        name: "rows inside one surface",
+                        why: "Three panels stack as rows of one card, the grouped relationship most stacked content has. This is the shape every gap state below either narrows down from or opens up from.",
+                        code: `<Stack.V gap="grouped">
   <Panel text="Tổng quan" />
   <Panel text="Lộ trình" />
   <Panel text="Bài tập" />
 </Stack.V>`,
                         render: (
                             <div className="w-96 max-w-full">
-                                <Stack.V gap={3} showAnatomy>
+                                <Stack.V gap="grouped" showAnatomy>
                                     <Panel text="Tổng quan" />
                                     <Panel text="Lộ trình" />
                                     <Panel text="Bài tập" />
@@ -83,8 +83,10 @@ export const Default: Story = {
 }
 
 /**
- * Gaps — the REASON this frame exists: `gap` only accepts EXACTLY six steps `0·1·2·3·6·8` (§10c).
- * `gap={4}` or `gap={5}` is a COMPILE ERROR, not a review comment.
+ * Gaps — the REASON this frame exists: `gap` names a RELATIONSHIP, never a number. The six
+ * words are the whole vocabulary (§10c), and a number like `gap={4}` is a COMPILE ERROR rather
+ * than a review comment. Each state below is titled by the relationship that earns the step,
+ * because a caller picking a seam is answering what these two things are to each other.
  */
 export const Gaps: Story = {
     render: () => (
@@ -94,69 +96,69 @@ export const Gaps: Story = {
                 tier="frame"
                 leaf="Gaps"
                 parts={TRACK_PARTS}
-                reason="`gap` is a required union literal `0|1|2|3|6|8`, with no default, so a seam can't be picked wrong by accident (§10a: every seam has exactly one owner, chosen on purpose)."
+                reason="`gap` is a required `SeamScale` word, with no default, so a seam can't be picked wrong by accident (§10a: every seam has exactly one owner, chosen on purpose). Naming the relationship instead of the number is what makes a wrong seam READABLE in review: a page seam between a label and its value is visibly the wrong claim, while `gap={8}` is just a number someone typed."
                 states={[
                     {
-                        name: "gap = 0",
-                        why: "The two panels touch with no seam between them at all. Use this only when the two children are meant to read as one visually continuous block.",
-                        code: "<Stack.V gap={0}>…</Stack.V>   // flush",
+                        name: "one continuous thing",
+                        why: "The two panels touch with no seam at all, so they read as a single surface rather than two children. Reach for flush only when a seam would be a lie about the content, as in a table body or a stack of rows sharing one border.",
+                        code: "<Stack.V gap=\"flush\">…</Stack.V>   // flush",
                         render: (
-                            <Stack.V gap={0} showAnatomy>
+                            <Stack.V gap="flush" showAnatomy>
                                 <Panel text="Một" />
                                 <Panel text="Hai" />
                             </Stack.V>
                         ),
                     },
                     {
-                        name: "gap = 1",
-                        why: "A tight seam separates the two panels, the smallest step on the scale above flush. This is the rhythm for elements that belong to the same small cluster.",
-                        code: "<Stack.V gap={1}>…</Stack.V>",
+                        name: "a mark and its label",
+                        why: "The seam is just wide enough to keep the two apart while the pair still reads as one thing, the relationship a badge has with the text it sits against. If either child could be read on its own, tight is too close.",
+                        code: "<Stack.V gap=\"tight\">…</Stack.V>",
                         render: (
-                            <Stack.V gap={1} showAnatomy>
+                            <Stack.V gap="tight" showAnatomy>
                                 <Panel text="Một" />
                                 <Panel text="Hai" />
                             </Stack.V>
                         ),
                     },
                     {
-                        name: "gap = 2",
-                        why: "A related seam separates the two panels, wider than tight but still reading as one family. This is the rhythm for elements that relate to each other without being one cluster.",
-                        code: "<Stack.V gap={2}>…</Stack.V>",
+                        name: "peers in one set",
+                        why: "The two panels read as members of the same set, each one whole but none of them standing alone. This is the step for a title with its supporting line, where the two are siblings rather than one unit.",
+                        code: "<Stack.V gap=\"related\">…</Stack.V>",
                         render: (
-                            <Stack.V gap={2} showAnatomy>
+                            <Stack.V gap="related" showAnatomy>
                                 <Panel text="Một" />
                                 <Panel text="Hai" />
                             </Stack.V>
                         ),
                     },
                     {
-                        name: "gap = 3",
-                        why: "A grouped seam separates the two panels, the default rhythm between blocks inside a card. This is the step `Default` above uses.",
-                        code: "<Stack.V gap={3}>…</Stack.V>",
+                        name: "rows inside one surface",
+                        why: "The two panels are separate rows that happen to live in the same card, the most common relationship in the whole system and the step `Default` above uses. Order matters here: if swapping the two children would confuse a reader they are peers, and peers belong at related instead.",
+                        code: "<Stack.V gap=\"grouped\">…</Stack.V>",
                         render: (
-                            <Stack.V gap={3} showAnatomy>
+                            <Stack.V gap="grouped" showAnatomy>
                                 <Panel text="Một" />
                                 <Panel text="Hai" />
                             </Stack.V>
                         ),
                     },
                     {
-                        name: "gap = 6",
-                        why: "A section seam separates the two panels, wide enough to read as two distinct regions rather than one group. This is the rhythm between whole sections of a page.",
-                        code: "<Stack.V gap={6}>…</Stack.V>   // section",
+                        name: "regions of one page",
+                        why: "The seam is wide enough that each panel reads as its own region with its own heading, no longer rows of a shared surface. Use it between the parts of a screen a reader would name separately.",
+                        code: "<Stack.V gap=\"section\">…</Stack.V>   // section",
                         render: (
-                            <Stack.V gap={6} showAnatomy>
+                            <Stack.V gap="section" showAnatomy>
                                 <Panel text="Một" />
                                 <Panel text="Hai" />
                             </Stack.V>
                         ),
                     },
                     {
-                        name: "gap = 8",
-                        why: "A page seam separates the two panels, the widest step on the scale. This is the rhythm reserved for the largest divisions of a page.",
-                        code: "<Stack.V gap={8}>…</Stack.V>",
+                        name: "features standing apart",
+                        why: "The widest step, for two things that merely share a page and have no relationship beyond that. If a reader can explain how the two connect, the honest step is narrower than page.",
+                        code: "<Stack.V gap=\"page\">…</Stack.V>",
                         render: (
-                            <Stack.V gap={8} showAnatomy>
+                            <Stack.V gap="page" showAnatomy>
                                 <Panel text="Một" />
                                 <Panel text="Hai" />
                             </Stack.V>
@@ -186,14 +188,14 @@ export const WithDivider: Story = {
                     {
                         name: "divider = true, 3 children",
                         why: "Two lines grow between the three children, one before the second and one before the third, with none at the very start or end. Three text rows read as one bounded group when the seams between them are visibly marked, instead of only implied by whitespace.",
-                        code: `<Stack.V gap={3} divider>
+                        code: `<Stack.V gap="grouped" divider>
   <Typography.Base size="sm" text="Đã hoàn thành 12 bài" />
   <Typography.Base size="sm" text="Chuỗi 5 ngày" />
   <Typography.Base size="sm" text="Xếp hạng 34/120" />
 </Stack.V>`,
                         render: (
                             <div className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
-                                <Stack.V gap={3} divider showAnatomy>
+                                <Stack.V gap="grouped" divider showAnatomy>
                                     <Typography.Base size="sm" text="Đã hoàn thành 12 bài" />
                                     <Typography.Base size="sm" text="Chuỗi 5 ngày" />
                                     <Typography.Base size="sm" text="Xếp hạng 34/120" />
@@ -225,12 +227,12 @@ export const Align: Story = {
                     {
                         name: "align = stretch (default)",
                         why: "Both buttons grow to the full width of the dashed frame around them. This is the alignment a column gets without passing `align` at all.",
-                        code: `<Stack.V gap={2} align="stretch">
+                        code: `<Stack.V gap="related" align="stretch">
   …
 </Stack.V>`,
                         render: (
                             <div className="w-56 rounded-3xl border border-dashed border-default p-3">
-                                <Stack.V gap={2} align="stretch" showAnatomy>
+                                <Stack.V gap="related" align="stretch" showAnatomy>
                                     <Button.Base label="Tiếp tục học" variant="secondary" size="sm" />
                                     <Button.Base label="Lưu" variant="secondary" size="sm" />
                                 </Stack.V>
@@ -240,12 +242,12 @@ export const Align: Story = {
                     {
                         name: "align = start",
                         why: "Both buttons keep their natural width and sit flush against the left edge of the frame. Neither button stretches to fill the column.",
-                        code: `<Stack.V gap={2} align="start">
+                        code: `<Stack.V gap="related" align="start">
   …
 </Stack.V>`,
                         render: (
                             <div className="w-56 rounded-3xl border border-dashed border-default p-3">
-                                <Stack.V gap={2} align="start">
+                                <Stack.V gap="related" align="start">
                                     <Button.Base label="Tiếp tục học" variant="secondary" size="sm" />
                                     <Button.Base label="Lưu" variant="secondary" size="sm" />
                                 </Stack.V>
@@ -255,12 +257,12 @@ export const Align: Story = {
                     {
                         name: "align = center",
                         why: "Both buttons keep their natural width and sit centered inside the frame. Neither button stretches, but both share the same horizontal midpoint.",
-                        code: `<Stack.V gap={2} align="center">
+                        code: `<Stack.V gap="related" align="center">
   …
 </Stack.V>`,
                         render: (
                             <div className="w-56 rounded-3xl border border-dashed border-default p-3">
-                                <Stack.V gap={2} align="center">
+                                <Stack.V gap="related" align="center">
                                     <Button.Base label="Tiếp tục học" variant="secondary" size="sm" />
                                     <Button.Base label="Lưu" variant="secondary" size="sm" />
                                 </Stack.V>
@@ -270,12 +272,12 @@ export const Align: Story = {
                     {
                         name: "align = end",
                         why: "Both buttons keep their natural width and sit flush against the right edge of the frame. Neither button stretches to fill the column.",
-                        code: `<Stack.V gap={2} align="end">
+                        code: `<Stack.V gap="related" align="end">
   …
 </Stack.V>`,
                         render: (
                             <div className="w-56 rounded-3xl border border-dashed border-default p-3">
-                                <Stack.V gap={2} align="end">
+                                <Stack.V gap="related" align="end">
                                     <Button.Base label="Tiếp tục học" variant="secondary" size="sm" />
                                     <Button.Base label="Lưu" variant="secondary" size="sm" />
                                 </Stack.V>

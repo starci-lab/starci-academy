@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
-import { GAP_CLASS, PADDING_CLASS, type SpaceScale } from "@sb-components/frames/_spacing"
+import { GAP_CLASS, PADDING_CLASS, type SeamScale, type SpaceScale } from "@sb-components/frames/_spacing"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -95,7 +95,7 @@ export interface ContainerBaseProps {
      * deliberately wider than the rhythm inside a card (§10b). Only takes effect when
      * there's more than one region.
      */
-    gap?: SpaceScale
+    gap?: SeamScale
     /** Top region — usually a `Page.Header`. */
     header?: ReactNode
     /** Main region. Equivalent to `children`; wins over `children` when both are passed. */
@@ -131,7 +131,7 @@ export interface ContainerBaseProps {
 const ContainerBase = ({
     size = "md",
     padding = 6,
-    gap = 8,
+    gap = "page",
     header,
     body,
     footer,

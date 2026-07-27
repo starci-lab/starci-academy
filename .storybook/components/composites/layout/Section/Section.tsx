@@ -2,7 +2,7 @@ import { isValidElement } from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { Typography, type TypographySize } from "@sb-components/atoms/text/Typography/Typography"
-import { GAP_CLASS, type SpaceScale } from "@sb-components/frames/_spacing"
+import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -32,7 +32,7 @@ import { GAP_CLASS, type SpaceScale } from "@sb-components/frames/_spacing"
  * - No repeating list here, so no `items` member (§13b list clause N/A).
  * - Namespace only — no bare component export.
  *
- * §10: the vertical rhythm is a TYPED token (`SectionGap`), not a free number —
+ * §10: the vertical rhythm is a TYPED token (`SeamScale`), not a free number —
  * the frame cannot be asked for an off-scale `gap-4`/`gap-5`.
  * §13c: text goes through the `Typography.*` ATOM, never a hand-rolled `<p>`;
  * `action` takes a `Button.*` atom node from the caller (the frame stays
@@ -43,12 +43,6 @@ import { GAP_CLASS, type SpaceScale } from "@sb-components/frames/_spacing"
 // ─────────────────────────────────────────────────────────────────────────────
 // Shared scale
 // ─────────────────────────────────────────────────────────────────────────────
-
-/**
- * Thang §10c dùng CHUNG toàn tầng khung — import từ SSOT `blocks/_spacing.ts`,
- * KHÔNG khai lại tại chỗ (khai lại = 2 nguồn sự thật, lệch lúc nào không hay).
- */
-export type SectionGap = SpaceScale
 
 // ─────────────────────────────────────────────────────────────────────────────
 // .Header — eyebrow · title · description · action
@@ -178,7 +172,7 @@ export interface SectionBaseProps {
      * Default `6` (`section`) — the rhythm between regions of a page. Drop to
      * `3` (`grouped`) when the header is just a label over a tight list.
      */
-    gap?: SectionGap
+    gap?: SeamScale
     /** Extra classes on the `<section>` element. */
     className?: string
     /** Anatomy tag: names this part so a parent's BlockAnatomy panel can badge it. */
@@ -207,8 +201,7 @@ const Base = ({
     body,
     footer,
     children,
-    gap = 6,
-    className,
+    gap = "section",    className,
     anatPart,
     showAnatomy = false,
 }: SectionBaseProps) => {

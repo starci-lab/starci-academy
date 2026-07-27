@@ -18,34 +18,63 @@
  */
 
 /**
- * The ONLY spacing steps a frame khung accepts (§10c):
- * `0` flush · `1` tight · `2` related · `3` grouped · `6` section · `8` page.
+ * The SEAM between two things, named by the RELATIONSHIP instead of by a number
+ * (teacher, 2026-07-27: the caller picks a variant, not a step).
+ *
+ * Why a word and not a number, with the measurement that settled it: 72 percent of every
+ * gap call-site in this tree sat on the two steps that are hardest to tell apart, 50 on
+ * `3` and 43 on `2`. A number lets the author pick what LOOKS right and the reasoning
+ * never reaches the code. A word forces the question, and a wrong answer becomes a wrong
+ * WORD that a reader can see: `gap="related"` on a stack of unlike rows is invisible in review,
+ * while `gap="related"` on that same stack reads as false at once.
+ *
+ * Pick by asking these in order, stopping at the first yes:
+ *
+ * | Ask | Step |
+ * |---|---|
+ * | are the two things ONE unit of meaning, such as a title and its subtitle? | `flush` |
+ * | is one a MARK attached to the other, such as an icon before its label? | `tight` |
+ * | are they PEERS in one set, such as a row of chips or two buttons? | `related` |
+ * | are they ROWS stacked inside one surface, such as list rows or a caption under its owner? | `grouped` |
+ * | are they different REGIONS of one thing, such as header, body and footer? | `section` |
+ * | are they separate FEATURES on a page, such as one block beside another? | `page` |
+ *
+ * For the `related` versus `grouped` case, where most call-sites live: could you reorder the
+ * two without changing the meaning? If yes they are peers, so `related`. If the order carries
+ * meaning, or each row is a different kind of thing, they are rows of a surface, so `grouped`.
+ */
+export type SeamScale = "flush" | "tight" | "related" | "grouped" | "section" | "page"
+
+/**
+ * Seam step → literal Tailwind class. Written out because Tailwind never emits an
+ * interpolated class; a table is the only way the class ships in CSS.
+ */
+export const GAP_CLASS: Record<SeamScale, string> = {
+    flush: "gap-0",
+    tight: "gap-1",
+    related: "gap-2",
+    grouped: "gap-3",
+    section: "gap-6",
+    page: "gap-8",
+}
+
+/**
+ * The INSET of a surface, still numeric on purpose. Padding is not a seam between two
+ * things, so the seam vocabulary does not describe it and `padding="related"` would say
+ * nothing. Naming the inset steps is a separate decision, left open.
  */
 export type SpaceScale = 0 | 1 | 2 | 3 | 6 | 8
 
 /**
- * Scale step → literal Tailwind class. Written out because Tailwind never emits
- * an interpolated `gap-${n}`; a table is the only way the class ships in CSS.
- */
-export const GAP_CLASS: Record<SpaceScale, string> = {
-    0: "gap-0",
-    1: "gap-1",
-    2: "gap-2",
-    3: "gap-3",
-    6: "gap-6",
-    8: "gap-8",
-}
-
-/** Cross-axis alignment of a flex track. */
-/**
- * Canh theo TRỤC NGANG của một track.
+ * Cross-axis alignment of a track.
  *
- * ⭐ `baseline` thêm 2026-07-27: hàng có chữ NHIỀU CỠ (giá `h4` cạnh giá gạch `sm` cạnh
- * chip `xs`) phải canh theo CHÂN CHỮ, không phải theo tâm hộp — `center` làm ba con số
- * lệch chân nhau. Trước đó khung KHÔNG diễn đạt được việc này, nên `PriceTag` phải gõ tay
- * `items-baseline`; chuyển sang khung mà thiếu nấc này thì migration làm HỎNG hình.
- * Thêm một giá trị vào union là ADDITIVE — không call-site nào đang chạy bị đổi, và
- * compiler bắt mọi bảng `Record<LayoutAlign, …>` phải khai đủ.
+ * `baseline` was added on 2026-07-27 for rows carrying text at SEVERAL sizes: a price in `h4`
+ * beside a struck-through price in `sm` beside a chip in `xs` must line up on the LETTER FEET
+ * rather than on the centre of each box, because `center` leaves the three numbers sitting at
+ * different heights. The frame could not express that before, so `PriceTag` hand-typed
+ * `items-baseline`, and migrating it onto a frame without this step would have BROKEN the
+ * layout. Adding a value to the union is additive: no live call-site changes, and the compiler
+ * forces every `Record<LayoutAlign, …>` table to cover the new member.
  */
 export type LayoutAlign = "start" | "center" | "end" | "stretch" | "baseline"
 

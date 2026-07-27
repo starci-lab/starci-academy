@@ -100,7 +100,7 @@ const PhaseScarcityNoteBase = ({
         // the §10 scale BY TYPE: hand-written it's `gap-2` today, `gap-1.5`
         // tomorrow, nothing stops that.
         <Cluster.Base
-            gap={2}
+            gap="related"
             align="center"
             // The PARENT's `anatPart` wins (the parent names this node); when
             // running in ITS OWN story it self-identifies as "Cluster" so the

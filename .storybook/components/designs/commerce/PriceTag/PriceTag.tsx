@@ -172,7 +172,7 @@ const PriceTagBase = ({
         // Two vertical rows inside a design (the eyebrow and the breakdown list) =
         // `grouped` (§10b), not `tight`. `tight` (1) is reserved for what sits INSIDE a
         // composite, e.g. the icon+label pair of `InlineIconLabel`.
-        <Stack.V gap={3} className="p-3">
+        <Stack.V gap="grouped" className="p-3">
             <TypographyAtom.Base size="xs" color="muted" text="Chi tiết giá" />
             {/* No `gap` passed: `KeyValue.List` already owns its row rhythm (its own default
                 is the §10b `grouped` step). Passing one from here overrides the composite's
@@ -231,7 +231,7 @@ const PriceTagBase = ({
             // `grouped` (§10b): the price row and the saving line are two DIFFERENT vertical
             // rows of one design. It was `tight` (1), which §10b reserves for pairs sitting
             // inside a lower-tier component — the saving line read as if it were glued under the number.
-            gap={3}
+            gap="grouped"
             className={className}
             anatPart={anatPart ?? (showAnatomy ? "Stack.V" : undefined)}
         >
@@ -240,7 +240,7 @@ const PriceTagBase = ({
                 The three elements are THREE separate items, not merged into one
                 fragment — merging them leaves the frame's `gap` with nowhere to apply. */}
             <Cluster.Base
-                gap={2}
+                gap="related"
                 align="baseline"
                 anatPart={showAnatomy ? "Cluster" : undefined}
                 items={[

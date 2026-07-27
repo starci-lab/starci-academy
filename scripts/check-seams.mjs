@@ -40,8 +40,10 @@ const LIST_FRAMES = ["KeyValue.List", "SurfaceCard.List", "SurfaceCard.CrossList
 
 /** Our own frames — a `gap={n}` prop is only on OUR scale when the tag is one of these. */
 const OWN_FRAMES = [...LIST_FRAMES, "Stack.V", "Stack.H", "Cluster.Base", "Grid.Base", "Container.Base"]
-/** §10c — the whole vocabulary. */
+/** §10c — the whole vocabulary of raw Tailwind steps still allowed in a className. */
 const SCALE = new Set(["0", "1", "2", "3", "6", "8"])
+/** §10c as the PROP says it: the seam is chosen by relationship, never by number. */
+const SEAM_WORDS = new Set(["flush", "tight", "related", "grouped", "section", "page"])
 
 const walk = (dir, out = []) => {
     for (const entry of readdirSync(dir)) {
@@ -55,12 +57,20 @@ const walk = (dir, out = []) => {
     return out
 }
 
-/** Which tier a file belongs to — the hand-rolled-layout rule only applies from design up. */
+/**
+ * Which tier a file belongs to — the hand-rolled-layout rule only applies from design up,
+ * because a frame or an atom has nothing lower to delegate its layout to (§13z).
+ *
+ * `frame` and `composite` are the real folder names since the `layouts` split. This function
+ * still read `/layouts/` afterwards, which meant every frame and composite fell through to
+ * `util` — the same exemption by accident rather than by rule.
+ */
 const tierOf = (rel) =>
     rel.includes("/screens/") ? "screen"
     : rel.includes("/blocks/") ? "block"
     : rel.includes("/designs/") ? "design"
-    : rel.includes("/layouts/") ? "layout"
+    : rel.includes("/composites/") ? "composite"
+    : rel.includes("/frames/") ? "frame"
     : rel.includes("/atoms/") ? "atom"
     : "util"
 
@@ -110,12 +120,22 @@ for (const file of files) {
             }
             findings.push({ ...at, rule: "off-scale", detail: `gap-${step}` })
         }
-        // A `gap={n}` PROP is only on OUR scale when the tag is one of our frames.
-        // `<Background gap={16}>` is ReactFlow's dot spacing in PIXELS; reading it as our
-        // token scale was a false positive in the first version of this gate.
+        // A NUMERIC `gap={n}` on one of our frames is now a violation whatever the number is:
+        // since 2026-07-27 the seam prop takes a RELATIONSHIP word (`SeamScale`) and the number
+        // is the old vocabulary. TypeScript already rejects it at our own call-sites, so this
+        // branch exists for the places tsc cannot see — prose in `code:` snippets, `_legacy`
+        // when it gets migrated, and any file a future `any` sneaks through.
+        //
+        // The tag check stays: `<Background gap={16}>` is ReactFlow's dot spacing in PIXELS, and
+        // reading it as our token scale was a false positive in the first version of this gate.
         for (const [, step] of line.matchAll(/\bgap=\{(\d+(?:\.\d+)?)\}/g)) {
             const onOurFrame = OWN_FRAMES.some((frame) => line.includes(`<${frame}`))
-            if (onOurFrame && !SCALE.has(step)) findings.push({ ...at, rule: "off-scale", detail: `gap={${step}}` })
+            if (onOurFrame) findings.push({ ...at, rule: "numeric-seam", detail: `gap={${step}}` })
+        }
+        // An unknown WORD is the new off-scale: `gap="cosy"` type-checks nowhere but can still
+        // be written into a `code:` snippet a reader will copy.
+        for (const [, word] of line.matchAll(/\bgap="([a-z]+)"/g)) {
+            if (!SEAM_WORDS.has(word)) findings.push({ ...at, rule: "off-scale", detail: `gap="${word}"` })
         }
     })
 
@@ -123,7 +143,10 @@ for (const file of files) {
     // opening tag and its `gap` prop are usually on different lines.
     const src = source
     for (const frame of LIST_FRAMES) {
-        const re = new RegExp(`<${frame.replace(".", "\\.")}\\b[^>]*?\\bgap=\\{(\\d+)\\}`, "gs")
+        // Matches BOTH vocabularies on purpose: `gap="related"` is the current form and
+        // `gap={2}` is the old one. Pinning this to `\d+` is what made the rule go quiet the
+        // day the scale became words — it kept passing while nothing was being checked.
+        const re = new RegExp(`<${frame.replace(".", "\\.")}\\b[^>]*?\\bgap=(?:\\{(\\d+)\\}|"([a-z]+)")`, "gs")
         for (const match of src.matchAll(re)) {
             const line = src.slice(0, match.index).split("\n").length
             findings.push({
@@ -131,7 +154,7 @@ for (const file of files) {
                 line,
                 tier,
                 rule: "gap-into-frame",
-                detail: `<${frame} gap={${match[1]}}>`,
+                detail: `<${frame} gap=${match[1] ? `{${match[1]}}` : `"${match[2]}"`}>`,
                 code: match[0].replace(/\s+/g, " ").slice(0, 110),
             })
         }
@@ -148,6 +171,7 @@ for (const f of findings) byRule[f.rule] = (byRule[f.rule] ?? 0) + 1
 
 const LABEL = {
     "hand-rolled-layout": "Bố cục viết TAY ở tầng design/block/screen — phải đi qua khung (§13z)",
+    "numeric-seam": "Bậc seam ghi bằng SỐ — thang seam là QUAN HỆ (§10c)",
     "gap-into-frame": "Truyền `gap` VÀO khung tự sở hữu nhịp — 2 chủ 1 seam (§10a)",
     "off-scale": "Bậc ngoài thang `0·1·2·3·6·8` (§10c)",
 }
@@ -155,7 +179,10 @@ const LABEL = {
 console.log(`File impl quét: ${files.length} | phát hiện: ${findings.length} | ngoại lệ đã khai: ${exempt.length}`)
 for (const [rule, count] of Object.entries(byRule)) console.log(`  ${String(count).padStart(3)}  ${LABEL[rule] ?? rule}`)
 
-for (const rule of ["hand-rolled-layout", "off-scale", "gap-into-frame"]) {
+// Iterate the rules that ACTUALLY fired rather than a hand-kept list. The list version printed
+// "✗ 2 chỗ" while showing only one of them, because `numeric-seam` was added to the checks and
+// not to the list — a report that counts more than it shows teaches a reader to distrust it.
+for (const rule of Object.keys(byRule)) {
     const rows = findings.filter((f) => f.rule === rule)
     if (!rows.length) continue
     console.log(`\n── ${LABEL[rule]}`)

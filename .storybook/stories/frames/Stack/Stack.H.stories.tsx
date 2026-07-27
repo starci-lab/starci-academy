@@ -46,9 +46,9 @@ export const Default: Story = {
                     {
                         name: "2 buttons, gap = 2",
                         why: "Two buttons sit in a single row with a `related(2)` gap between them, the spacing for elements that belong to the same cluster. A row this size needs nothing more than the default axis: no wrap, no justify, no divider.",
-                        code: "<Stack.H gap={2}>\n  <Button.Base label=\"Bắt đầu\" />\n  <Button.Base label=\"Xem đề cương\" variant=\"secondary\" />\n</Stack.H>",
+                        code: "<Stack.H gap=\"related\">\n  <Button.Base label=\"Bắt đầu\" />\n  <Button.Base label=\"Xem đề cương\" variant=\"secondary\" />\n</Stack.H>",
                         render: (
-                            <Stack.H gap={2} showAnatomy>
+                            <Stack.H gap="related" showAnatomy>
                                 <Button.Base label="Bắt đầu" />
                                 <Button.Base label="Xem đề cương" variant="secondary" />
                             </Stack.H>
@@ -78,10 +78,10 @@ export const Wrap: Story = {
                     {
                         name: "wrap = true",
                         why: "Inside the narrow `w-80` frame the four filter buttons flow onto a new line instead of shrinking, and each button keeps its own natural width. `gap` applies to both axes, so the space between the two lines matches the space between the buttons on each line.",
-                        code: "<Stack.H gap={2} wrap>\n  …\n</Stack.H>",
+                        code: "<Stack.H gap=\"related\" wrap>\n  …\n</Stack.H>",
                         render: (
                             <div className="w-80 rounded-3xl border border-dashed border-default p-3">
-                                <Stack.H gap={2} wrap showAnatomy>
+                                <Stack.H gap="related" wrap showAnatomy>
                                     <Button.Base label="Tất cả" variant="secondary" size="sm" />
                                     <Button.Base label="Đang học" variant="secondary" size="sm" />
                                     <Button.Base label="Đã hoàn thành" variant="secondary" size="sm" />
@@ -93,10 +93,10 @@ export const Wrap: Story = {
                     {
                         name: "wrap = false (default)",
                         why: "In the identical `w-80` frame the same four buttons shrink and spill past the dashed border instead of moving to a new line. A horizontal frame does not shrink or wrap its children on its own, so this is the shape every row falls back to unless `wrap` is turned on.",
-                        code: "<Stack.H gap={2}>\n  …\n</Stack.H>",
+                        code: "<Stack.H gap=\"related\">\n  …\n</Stack.H>",
                         render: (
                             <div className="w-80 rounded-3xl border border-dashed border-default p-3">
-                                <Stack.H gap={2} showAnatomy>
+                                <Stack.H gap="related" showAnatomy>
                                     <Button.Base label="Tất cả" variant="secondary" size="sm" />
                                     <Button.Base label="Đang học" variant="secondary" size="sm" />
                                     <Button.Base label="Đã hoàn thành" variant="secondary" size="sm" />
@@ -129,10 +129,10 @@ export const Justify: Story = {
                     {
                         name: "justify = start",
                         why: "The two buttons pack against the left edge of the row, leaving the leftover space empty on the right. Use it when the row's content should read as one left-aligned cluster instead of spreading across the available width.",
-                        code: "<Stack.H gap={2} justify=\"start\">\n  …\n</Stack.H>",
+                        code: "<Stack.H gap=\"related\" justify=\"start\">\n  …\n</Stack.H>",
                         render: (
                             <div className="w-96 max-w-full rounded-3xl border border-dashed border-default p-3">
-                                <Stack.H gap={2} justify="start" showAnatomy>
+                                <Stack.H gap="related" justify="start" showAnatomy>
                                     <Button.Base label="Huỷ" variant="secondary" size="sm" />
                                     <Button.Base label="Lưu" size="sm" />
                                 </Stack.H>
@@ -142,10 +142,10 @@ export const Justify: Story = {
                     {
                         name: "justify = center",
                         why: "The two buttons shift to the middle of the row, with equal empty space left on both sides. Centering suits a row that is not the layout's primary focus, so it does not need to claim either edge.",
-                        code: "<Stack.H gap={2} justify=\"center\">\n  …\n</Stack.H>",
+                        code: "<Stack.H gap=\"related\" justify=\"center\">\n  …\n</Stack.H>",
                         render: (
                             <div className="w-96 max-w-full rounded-3xl border border-dashed border-default p-3">
-                                <Stack.H gap={2} justify="center" showAnatomy>
+                                <Stack.H gap="related" justify="center" showAnatomy>
                                     <Button.Base label="Huỷ" variant="secondary" size="sm" />
                                     <Button.Base label="Lưu" size="sm" />
                                 </Stack.H>
@@ -155,10 +155,10 @@ export const Justify: Story = {
                     {
                         name: "justify = end",
                         why: "The two buttons pack against the right edge of the row, mirroring `start`. A form's cancel/save pair often sits here, aligned under content that itself reads out to the same edge.",
-                        code: "<Stack.H gap={2} justify=\"end\">\n  …\n</Stack.H>",
+                        code: "<Stack.H gap=\"related\" justify=\"end\">\n  …\n</Stack.H>",
                         render: (
                             <div className="w-96 max-w-full rounded-3xl border border-dashed border-default p-3">
-                                <Stack.H gap={2} justify="end" showAnatomy>
+                                <Stack.H gap="related" justify="end" showAnatomy>
                                     <Button.Base label="Huỷ" variant="secondary" size="sm" />
                                     <Button.Base label="Lưu" size="sm" />
                                 </Stack.H>
@@ -168,10 +168,10 @@ export const Justify: Story = {
                     {
                         name: "justify = between",
                         why: "The two buttons are pushed to opposite ends of the row, with all the leftover space landing between them instead of around them. `between` only reads legibly because a row always has space left over to distribute, which is exactly why this state lives on `Stack.H` and not `Stack.V`.",
-                        code: "<Stack.H gap={2} justify=\"between\">\n  …\n</Stack.H>",
+                        code: "<Stack.H gap=\"related\" justify=\"between\">\n  …\n</Stack.H>",
                         render: (
                             <div className="w-96 max-w-full rounded-3xl border border-dashed border-default p-3">
-                                <Stack.H gap={2} justify="between" showAnatomy>
+                                <Stack.H gap="related" justify="between" showAnatomy>
                                     <Button.Base label="Huỷ" variant="secondary" size="sm" />
                                     <Button.Base label="Lưu" size="sm" />
                                 </Stack.H>
@@ -201,10 +201,10 @@ export const WithDivider: Story = {
                     {
                         name: "divider = true, 3 children",
                         why: "A vertical rule appears between each pair of the three text items, standing the row's full height even though the row itself is `items-center`. `align-self: stretch` wins over that centering on purpose, so the rule always spans the row's full height without the caller ever having to set one.",
-                        code: "<Stack.H gap={3} divider>\n  <Typography.Base size=\"sm\" text=\"12 bài\" />\n  <Typography.Base size=\"sm\" text=\"4 giờ\" />\n  <Typography.Base size=\"sm\" text=\"Trung cấp\" />\n</Stack.H>",
+                        code: "<Stack.H gap=\"grouped\" divider>\n  <Typography.Base size=\"sm\" text=\"12 bài\" />\n  <Typography.Base size=\"sm\" text=\"4 giờ\" />\n  <Typography.Base size=\"sm\" text=\"Trung cấp\" />\n</Stack.H>",
                         render: (
                             <div className="w-fit rounded-3xl bg-surface p-3 shadow-surface">
-                                <Stack.H gap={3} divider showAnatomy>
+                                <Stack.H gap="grouped" divider showAnatomy>
                                     <Typography.Base size="sm" text="12 bài" color="muted" />
                                     <Typography.Base size="sm" text="4 giờ" color="muted" />
                                     <Typography.Base size="sm" text="Trung cấp" color="muted" />

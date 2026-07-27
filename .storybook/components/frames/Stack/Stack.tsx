@@ -1,11 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
-import {
-    type LayoutAlign,
-    type LayoutJustify,
-    type SpaceScale,
-} from "@sb-components/frames/_spacing"
+import { type LayoutAlign, type LayoutJustify, type SeamScale } from "@sb-components/frames/_spacing"
 import { Flex } from "@sb-components/frames/Flex/Flex"
 
 /**
@@ -40,7 +36,7 @@ export interface StackBaseProps {
      * (`0` flush · `1` tight · `2` related · `3` grouped · `6` section · `8` page).
      * The PARENT owns this seam (§10a), so children must not carry margin.
      */
-    gap: SpaceScale
+    gap: SeamScale
     /** Cross-axis alignment (`V` → horizontal, `H` → vertical). */
     align?: LayoutAlign
     /** Main-axis distribution (`V` → vertical, `H` → horizontal). */

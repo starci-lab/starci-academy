@@ -130,8 +130,8 @@ const CardBody = ({
             repeating list so NOT `Cluster` — §13b). The inner column = a vertical track ⇒ `Stack.V`.
             `min-w-0 flex-1` stays in `className`: that's its PLACEMENT within the parent row
             (§14d.1 allows `className` for placement), not the scaffold's own shape. */}
-        <Stack.H gap={3} align="center" className="relative" anatPart={showAnatomy ? "Stack.H" : undefined}>
-            <Stack.V gap={2} className="min-w-0 flex-1" anatPart={showAnatomy ? "Stack.V" : undefined}>
+        <Stack.H gap="grouped" align="center" className="relative" anatPart={showAnatomy ? "Stack.H" : undefined}>
+            <Stack.V gap="related" className="min-w-0 flex-1" anatPart={showAnatomy ? "Stack.V" : undefined}>
                 <Typography.Base weight="medium" truncate anatPart={showAnatomy ? "Title" : undefined} isSkeleton={isSkeleton} text={title} />
                 {isSkeleton ? (
                     // `List.Meta` (the scaffold the live branch uses here) has no `isSkeleton`

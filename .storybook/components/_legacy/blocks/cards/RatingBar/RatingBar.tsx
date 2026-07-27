@@ -117,7 +117,7 @@ export const RatingBar = ({
         <SurfaceCard.PressableGroup
             ariaLabel={ariaLabel}
             columns={{ base: 2, md: 4 }}
-            gap={3}
+            gap="grouped"
             keyboardShortcut
             className={className}
             items={options.map((option, position) => ({

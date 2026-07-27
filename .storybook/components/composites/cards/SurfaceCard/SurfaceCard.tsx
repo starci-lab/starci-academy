@@ -9,7 +9,7 @@ import { type VerdictBand, type VerdictBandVariant, verdictBandClassName } from 
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { PADDING_CLASS, type SpaceScale } from "@sb-components/frames/_spacing"
+import { PADDING_CLASS, type SeamScale, type SpaceScale } from "@sb-components/frames/_spacing"
 import { Grid, type GridColumns } from "@sb-components/frames/Grid/Grid"
 
 /**
@@ -900,7 +900,7 @@ export interface SurfaceCardPressableGroupProps {
      *
      * 2026-07-26 (instructor): changed the type from a local `2 | 3` to the shared {@link SpaceScale}.
      */
-    gap?: SpaceScale
+    gap?: SeamScale
     /**
      * Binds number keys `1`–`N` to the items in order, so the group can be driven
      * without the mouse. Off by default — only opt in where the group IS the
@@ -986,8 +986,7 @@ const PressableGroup = ({
     items,
     ariaLabel,
     columns = {},
-    gap = 3,
-    keyboardShortcut = false,
+    gap = "grouped",    keyboardShortcut = false,
     isSkeleton = false,
     className,
     showAnatomy = false,

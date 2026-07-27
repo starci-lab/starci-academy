@@ -2,7 +2,7 @@ import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
-import { GAP_CLASS, type SpaceScale } from "@sb-components/frames/_spacing"
+import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -28,17 +28,11 @@ import { GAP_CLASS, type SpaceScale } from "@sb-components/frames/_spacing"
  * `text-*`/`font-*`), rules go through the `Divider.Base` atom. The composite only handles
  * LAYOUT + the spacing scale.
  *
- * §10 — the gap scale is ENFORCED BY TYPE ({@link KeyValueGap}): only `0·1·2·3·6·8`, the
+ * §10 — the gap scale is ENFORCED BY TYPE ({@link SeamScale}): only `0·1·2·3·6·8`, the
  * composite doesn't accept arbitrary numbers so it can't drift off the scale.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/**
- * The §10c scale is SHARED across the whole frame tier — imported from the SSOT
- * `frames/_spacing.ts`. Do NOT redeclare it locally (every copy is a potential drift source).
- */
-export type KeyValueGap = SpaceScale
-const GAP_CLS = GAP_CLASS
 
 // ─────────────────────────────────────────────────────────────────────────────
 // .Row — ONE label–value pair
@@ -57,7 +51,7 @@ export interface KeyValueRowProps {
     /** `true` → draws a SEPARATOR line below the row (seam between this row and the next). */
     divider?: boolean
     /** Gap between the row's content and the `divider` line (§10). Default `3`. */
-    gap?: KeyValueGap
+    gap?: SeamScale
     /**
      * Anatomy tag for THIS composite itself — lets the PARENT badge it as ONE node (§11a.1).
      * Without this prop the composite doesn't make it into the Deps tree: using a
@@ -83,8 +77,7 @@ const KeyValueRow = ({
     hint,
     emphasis = false,
     divider = false,
-    gap = 3,
-    className,
+    gap = "grouped",    className,
     showAnatomy = false,
     anatPart,
 }: KeyValueRowProps) => {
@@ -121,7 +114,7 @@ const KeyValueRow = ({
         return row
     }
     return (
-        <div className={cn("flex flex-col", GAP_CLS[gap])}>
+        <div className={cn("flex flex-col", GAP_CLASS[gap])}>
             {row}
             <span className="block" data-anat-part={showAnatomy ? "Divider" : undefined}>
                 <Divider.Base variant="tertiary" />
@@ -153,7 +146,7 @@ export interface KeyValueListProps {
     /** The rows, in reading order. REQUIRED — a repeated list = data (§13b). */
     items: ReadonlyArray<KeyValueListItem>
     /** Gap between rows, ENFORCED by the §10 scale. Default `3` (vertical rows = `grouped`). */
-    gap?: KeyValueGap
+    gap?: SeamScale
     /** `true` → draws a separator line BETWEEN rows (the last row has none). */
     divider?: boolean
     /**
@@ -177,8 +170,8 @@ export interface KeyValueListProps {
  *
  * @param props - {@link KeyValueListProps}
  */
-const KeyValueList = ({ items, gap = 3, divider = false, className, showAnatomy = false, anatPart }: KeyValueListProps) => (
-    <div data-anat-part={anatPart} className={cn("flex flex-col", GAP_CLS[gap], className)}>
+const KeyValueList = ({ items, gap = "grouped", divider = false, className, showAnatomy = false, anatPart }: KeyValueListProps) => (
+    <div data-anat-part={anatPart} className={cn("flex flex-col", GAP_CLASS[gap], className)}>
         {items.map(({ key, ...item }, index) => (
             <KeyValueRow
                 key={key}

@@ -276,12 +276,12 @@ export const ContainerQuery: Story = {
                             why: "The grid inside settles at 2 columns because the column only reaches the `@app-md` step — `@app-lg` never fires inside 48rem. Asking this same grid for `lg: 4` here is asking for a breakpoint that never arrives, not a bug — the page is just too narrow for four.",
                             code: `const columns = { base: 1, sm: 2, md: 2, lg: 4 }
 
-<Container.Base size="md" body={<Grid.Base columns={columns} gap={3} items={cells} />} />`,
+<Container.Base size="md" body={<Grid.Base columns={columns} gap="grouped" items={cells} />} />`,
                             render: (
                                 <Bleed>
                                     <Container.Base size="md" padding={3} showAnatomy>
                                         <span className="block" data-anat-part="Grid.Base">
-                                            <Grid.Base columns={columns} gap={3} items={cells} />
+                                            <Grid.Base columns={columns} gap="grouped" items={cells} />
                                         </span>
                                     </Container.Base>
                                 </Bleed>
@@ -292,12 +292,12 @@ export const ContainerQuery: Story = {
                             why: "The identical grid with the identical `columns` prop settles at 4 columns instead, because this wider column reaches the `@app-lg` step. Same grid, same props — the only thing that changed is which container it's measuring against.",
                             code: `const columns = { base: 1, sm: 2, md: 2, lg: 4 }
 
-<Container.Base size="xl" body={<Grid.Base columns={columns} gap={3} items={cells} />} />`,
+<Container.Base size="xl" body={<Grid.Base columns={columns} gap="grouped" items={cells} />} />`,
                             render: (
                                 <Bleed>
                                     <Container.Base size="xl" padding={3}>
                                         <span className="block" data-anat-part="Grid.Base">
-                                            <Grid.Base columns={columns} gap={3} items={cells} />
+                                            <Grid.Base columns={columns} gap="grouped" items={cells} />
                                         </span>
                                     </Container.Base>
                                 </Bleed>

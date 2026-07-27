@@ -61,7 +61,7 @@ export const Default: Story = {
                         name: "isDisabled not set, children shorthand fills body",
                         why: "The frame renders as a live, editable form: the fieldset stays enabled and `children` fills the `body` slot as the shorthand for it, while `actions` sits in its own slot at the bottom. This is the resting shape a reader lands on before anything is submitted or locked.",
                         code: `<Form.Base
-  gap={6}
+  gap="section"
   onSubmit={() => save()}
   actions={<Form.Actions items={[{ key: "cancel", label: "Cancel", variant: "secondary" }, { key: "save", label: "Save" }]} />}
 >

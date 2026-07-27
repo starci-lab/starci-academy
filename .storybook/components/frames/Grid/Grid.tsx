@@ -1,7 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
-import { GAP_CLASS, type SpaceScale } from "@sb-components/frames/_spacing"
+import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -111,7 +111,7 @@ export interface GridBaseProps {
      */
     columns: GridColumns
     /** Seam between cells on the §10 scale — REQUIRED, union literal only. Both axes. */
-    gap: SpaceScale
+    gap: SeamScale
     className?: string
     /** `true` → tag each cell with `data-anat-part` for a BlockAnatomy panel. */
     showAnatomy?: boolean

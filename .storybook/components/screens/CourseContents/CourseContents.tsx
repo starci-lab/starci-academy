@@ -137,21 +137,21 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
         //     from the token `--container-app-md`, the same 768px but from the RIGHT SOURCE;
         //     `max-w-3xl` is a different scale, and if the token changes it drifts silently
         //     (see the `SIZE_CLASS` JSDoc).
-        //   • `gap-10` → `gap={8}`. `10` is NOT on the §10c scale (0·1·2·3·6·8) — the frame's
+        //   • `gap-10` → `gap="page"`. `10` is NOT on the §10c scale (0·1·2·3·6·8) — the frame's
         //     `SpaceScale` type means an off-scale value is now a TYPE ERROR at the call site,
         //     it can no longer slip through. This is exactly where the §10 rule gets enforced.
         // WARNING, 2026-07-27 — `gap` has been REMOVED from this call: `Container.Base` only applies
         // `gap` when using the `header`/`footer` slots; passing `children` directly means that
         // prop is DROPPED SILENTLY. Measured consequence: the seam between `CourseBrief` and
         // the block below it was EXACTLY 0 — the page read as if the title were stuck to the
-        // card. Writing `gap={8}` with nothing to receive it is worse than not writing it at
+        // card. Writing `gap="page"` with nothing to receive it is worse than not writing it at
         // all: reading the code makes it look like the rhythm was already set.
         <Container.Base size="md" padding={6} anatPart="Container">
             {/* VERTICAL rhythm owned by ONE party (§10a). Two deliberately different steps:
             `8` separates the course IDENTITY cluster from the content below (seam between two
             REGIONS), `6` is the rhythm between blocks within the same region — §10
             "sections-wide vs related-tight", uniform spacing is forbidden. */}
-            <Stack.V gap={8} anatPart="Stack.V.Page">
+            <Stack.V gap="page" anatPart="Stack.V.Page">
                 {/* 2026-07-26: dropped the old note "blocks have no `anatPart` yet so they need
             a div wrapper" — all six blocks now take `anatPart` directly, no wrapper left. */}
                 {/* §11a — the badge stops at the HIGHEST node `CourseBrief` (BLOCK). The
@@ -172,7 +172,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
                     isSkeleton={isSkeleton}
                 />
 
-                <Stack.V gap={6} anatPart="Stack.V">
+                <Stack.V gap="section" anatPart="Stack.V">
                     {/* Gate is for people who ALREADY BOUGHT (backend scopes the team by
                 is_enrolled). The old version gated it backwards, on `viewer === "trial"`. The
                 block hides itself, so the screen just hands over the facts. */}

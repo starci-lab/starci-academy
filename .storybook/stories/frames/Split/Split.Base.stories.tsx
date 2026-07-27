@@ -67,10 +67,10 @@ export const Default: Story = {
                 reason="Not a `Stack.H justify=between`: this is TWO NAMED sides with different width strategies, `start` can shrink and truncate, `end` cannot. Naming both sides enforces that rule in ONE place instead of at 43 call sites, and because the two slots already have names, the frame takes no `children` (§13b)."
                 states={[
                     {
-                        name: "gap = 3, start = label, end = action",
-                        why: "Start carries a truncating label on the left, End carries a button pinned to the right, seam `gap-3` between them. This is the shape used at roughly 43 call sites in the app for a row that pairs a name with its action.",
+                        name: "a name and the action on it",
+                        why: "Start carries a truncating label on the left and End carries a button pinned to the right, with a grouped seam between them because the two are separate things a reader treats separately. This is the shape used at roughly 43 call sites in the app for a row that pairs a name with its action.",
                         code: `<Split.Base
-  gap={3}
+  gap="grouped"
   start={<Typography.Base size="sm" text="Khoá System Design" weight="medium" />}
   end={<Button.Base label="Tiếp tục" size="sm" />}
 />`,
@@ -78,7 +78,7 @@ export const Default: Story = {
                             <div className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
                                 <Split.Base
                                     showAnatomy
-                                    gap={3}
+                                    gap="grouped"
                                     start={<Typography.Base size="sm" text="Khoá System Design" weight="medium" truncate />}
                                     end={<Button.Base label="Tiếp tục" size="sm" />}
                                 />
@@ -111,7 +111,7 @@ export const StackOnMobile: Story = {
                         why: "Start and End stack into a column, each full-width, and the row loses its left/right split. This is the shape when the row's own container has been squeezed narrower than the `@app-sm` breakpoint, whatever the window size actually is.",
                         code: `<Split.Base
   stackOnMobile
-  gap={3}
+  gap="grouped"
   start={…}
   end={…}
 />`,
@@ -120,7 +120,7 @@ export const StackOnMobile: Story = {
                                 <Split.Base
                                     showAnatomy
                                     stackOnMobile
-                                    gap={3}
+                                    gap="grouped"
                                     start={<Typography.Base size="sm" text="Gói Pro — thanh toán theo năm" weight="medium" />}
                                     end={<Button.Base label="Nâng cấp" size="sm" />}
                                 />
@@ -132,7 +132,7 @@ export const StackOnMobile: Story = {
                         why: "Start and End return to a single row split to the two ends. This is the same component and the same props as the stacked state above, only the container's own width crossed back over the `@app-sm` breakpoint.",
                         code: `<Split.Base
   stackOnMobile
-  gap={3}
+  gap="grouped"
   start={…}
   end={…}
 />`,
@@ -141,7 +141,7 @@ export const StackOnMobile: Story = {
                                 <Split.Base
                                     showAnatomy
                                     stackOnMobile
-                                    gap={3}
+                                    gap="grouped"
                                     start={<Typography.Base size="sm" text="Gói Pro — thanh toán theo năm" weight="medium" />}
                                     end={<Button.Base label="Nâng cấp" size="sm" />}
                                 />
@@ -172,7 +172,7 @@ export const Align: Story = {
                         name: "align = \"center\" (default)",
                         why: "Start and End sit centred on the row's cross axis, the button lining up with the middle of the two-line text block beside it. This is the standard alignment for a split row, used whenever the two sides don't need special vertical treatment.",
                         code: `<Split.Base
-  gap={3}
+  gap="grouped"
   align="center"
   start={…}
   end={…}
@@ -181,10 +181,10 @@ export const Align: Story = {
                             <div className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
                                 <Split.Base
                                     showAnatomy
-                                    gap={3}
+                                    gap="grouped"
                                     align="center"
                                     start={(
-                                        <Stack.V gap={0}>
+                                        <Stack.V gap="flush">
                                             <Typography.Base size="sm" text="Bài 4 — Consistent Hashing" weight="medium" />
                                             <Typography.Base size="xs" text="Còn 18 phút · 3 thử thách" color="muted" />
                                         </Stack.V>
@@ -198,7 +198,7 @@ export const Align: Story = {
                         name: "align = \"start\"",
                         why: "Start and End both pin to the top of the row instead of centring. This is for a left side carrying a long block of text, where centring the button against a growing block would keep moving it around.",
                         code: `<Split.Base
-  gap={3}
+  gap="grouped"
   align="start"
   start={…}
   end={…}
@@ -206,10 +206,10 @@ export const Align: Story = {
                         render: (
                             <div className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
                                 <Split.Base
-                                    gap={3}
+                                    gap="grouped"
                                     align="start"
                                     start={(
-                                        <Stack.V gap={0}>
+                                        <Stack.V gap="flush">
                                             <Typography.Base size="sm" text="Bài 4 — Consistent Hashing" weight="medium" />
                                             <Typography.Base size="xs" text="Còn 18 phút · 3 thử thách" color="muted" />
                                         </Stack.V>
@@ -223,7 +223,7 @@ export const Align: Story = {
                         name: "align = \"end\"",
                         why: "Start and End both pin to the bottom of the row instead of centring. This is for a case where the trailing side should line up with the last line of a taller leading block, such as a footnote sitting under a paragraph.",
                         code: `<Split.Base
-  gap={3}
+  gap="grouped"
   align="end"
   start={…}
   end={…}
@@ -231,10 +231,10 @@ export const Align: Story = {
                         render: (
                             <div className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
                                 <Split.Base
-                                    gap={3}
+                                    gap="grouped"
                                     align="end"
                                     start={(
-                                        <Stack.V gap={0}>
+                                        <Stack.V gap="flush">
                                             <Typography.Base size="sm" text="Bài 4 — Consistent Hashing" weight="medium" />
                                             <Typography.Base size="xs" text="Còn 18 phút · 3 thử thách" color="muted" />
                                         </Stack.V>
@@ -248,7 +248,7 @@ export const Align: Story = {
                         name: "align = \"stretch\"",
                         why: "Both Start and End are pulled to the full height of the row instead of sizing to their own content. This is for when the End side is something like a full-height divider or button that should always match the tallest side.",
                         code: `<Split.Base
-  gap={3}
+  gap="grouped"
   align="stretch"
   start={…}
   end={…}
@@ -256,10 +256,10 @@ export const Align: Story = {
                         render: (
                             <div className="w-96 max-w-full rounded-3xl bg-surface p-3 shadow-surface">
                                 <Split.Base
-                                    gap={3}
+                                    gap="grouped"
                                     align="stretch"
                                     start={(
-                                        <Stack.V gap={0}>
+                                        <Stack.V gap="flush">
                                             <Typography.Base size="sm" text="Bài 4 — Consistent Hashing" weight="medium" />
                                             <Typography.Base size="xs" text="Còn 18 phút · 3 thử thách" color="muted" />
                                         </Stack.V>

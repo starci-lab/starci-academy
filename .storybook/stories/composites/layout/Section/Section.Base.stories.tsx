@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ArrowRightIcon } from "@phosphor-icons/react"
-import { Section, type SectionGap } from "@sb-components/composites/layout/Section/Section"
+import { type SeamScale } from "@sb-components/frames/_spacing"
+import { Section } from "@sb-components/composites/layout/Section/Section"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
@@ -174,8 +175,8 @@ export const Slots: Story = {
 
 /** Props for the demo gap sample. */
 interface GapSampleProps {
-    /** The `SectionGap` value this sample demonstrates. */
-    gap: SectionGap
+    /** The `SeamScale` step this sample demonstrates. */
+    gap: SeamScale
     /** Caption text shown under the sample's header. */
     caption: string
     /** `true` → this is the sample currently inspected by the anatomy overlay. */
@@ -204,31 +205,31 @@ export const Gaps: Story = {
                 tier="composite"
                 leaf="Gaps"
                 parts={HEADER_BODY_PARTS}
-                reason="The vertical rhythm between header/body/footer, forced onto the §10c scale by a union literal (`0 · 1 · 2 · 3 · 6 · 8`). `gap-4`/`gap-5` are TYPE errors, not review comments."
+                reason="The vertical rhythm between header, body and footer, forced onto the six `SeamScale` words by a union literal (§10c). A number is a TYPE error rather than a review comment, and the word is chosen from what the header IS to the body: a heading over its own region, a label stuck to a list, or one half of a single composed unit."
                 states={[
                     {
-                        name: "gap = 6 (default, section rhythm)",
-                        why: "The default `gap=6` opens the widest rhythm between the header and the body, the spacing a page uses between its major regions. Reach for it whenever the region stands on its own rather than being visually grouped with something above or below it.",
-                        code: "<Section.Base gap={6} header={{ title: \"…\" }} body={…} />",
-                        render: <GapSample gap={6} caption="Default — the rhythm between the PAGE's regions." showAnatomy />,
+                        name: "a heading over its own region",
+                        why: "The default `gap=\"section\"` opens the widest rhythm between the header and the body, the spacing a page uses between its major regions. Reach for it whenever the region stands on its own rather than being visually grouped with something above or below it.",
+                        code: "<Section.Base gap=\"section\" header={{ title: \"…\" }} body={…} />",
+                        render: <GapSample gap="section" caption="Default — the rhythm between the PAGE's regions." showAnatomy />,
                     },
                     {
-                        name: "gap = 3 (grouped)",
-                        why: "Tightening to `gap=3` pulls the header right up against a list or a group of items below it. Use it when the header reads as a label stuck to what follows rather than a heading over a whole standalone region.",
-                        code: "<Section.Base gap={3} header={{ title: \"…\" }} body={…} />",
-                        render: <GapSample gap={3} caption="Grouped — the header sits stuck to a list/group." showAnatomy />,
+                        name: "a label stuck to the list below it",
+                        why: "Tightening to `gap=\"grouped\"` pulls the header right up against a list or a group of items below it. Use it when the header reads as a label stuck to what follows rather than a heading over a whole standalone region.",
+                        code: "<Section.Base gap=\"grouped\" header={{ title: \"…\" }} body={…} />",
+                        render: <GapSample gap="grouped" caption="Grouped — the header sits stuck to a list/group." showAnatomy />,
                     },
                     {
-                        name: "gap = 2 (related)",
-                        why: "At `gap=2` the header and body read as one cluster rather than two separate regions. This is the closest step on the scale, meant for a header and body that are really one composed unit.",
-                        code: "<Section.Base gap={2} header={{ title: \"…\" }} body={…} />",
-                        render: <GapSample gap={2} caption="Related — header and body are one cluster." showAnatomy />,
+                        name: "two halves of one composed unit",
+                        why: "At `gap=\"related\"` the header and body read as one cluster rather than two separate regions. This is the closest step on the scale, meant for a header and body that are really one composed unit.",
+                        code: "<Section.Base gap=\"related\" header={{ title: \"…\" }} body={…} />",
+                        render: <GapSample gap="related" caption="Related — header and body are one cluster." showAnatomy />,
                     },
                     {
-                        name: "gap = 8 (page)",
-                        why: "At `gap=8` the header opens the widest gap the scale allows. This is the step a page-level frame reaches for, wider than the default `section` rhythm.",
-                        code: "<Section.Base gap={8} header={{ title: \"…\" }} body={…} />",
-                        render: <GapSample gap={8} caption="Page — the widest step, used at the page frame." showAnatomy />,
+                        name: "a page frame holding separate features",
+                        why: "At `gap=\"page\"` the header opens the widest gap the scale allows. This is the step a page-level frame reaches for, wider than the default `section` rhythm.",
+                        code: "<Section.Base gap=\"page\" header={{ title: \"…\" }} body={…} />",
+                        render: <GapSample gap="page" caption="Page — the widest step, used at the page frame." showAnatomy />,
                     },
                 ]}
             />

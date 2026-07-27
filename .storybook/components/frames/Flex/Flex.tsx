@@ -1,14 +1,6 @@
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
-import {
-    ALIGN_CLASS,
-    GAP_CLASS,
-    JUSTIFY_CLASS,
-    PADDING_CLASS,
-    type LayoutAlign,
-    type LayoutJustify,
-    type SpaceScale,
-} from "@sb-components/frames/_spacing"
+import { ALIGN_CLASS, GAP_CLASS, JUSTIFY_CLASS, PADDING_CLASS, type LayoutAlign, type LayoutJustify, type SeamScale, type SpaceScale } from "@sb-components/frames/_spacing"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -40,7 +32,7 @@ export interface FlexBaseProps {
     /** Main axis. Defaults to `row`, the browser default, so the prop reads as an override. */
     direction?: FlexDirection
     /** Space between children, pinned to the 10 scale. Required so nobody leaves it to chance. */
-    gap: SpaceScale
+    gap: SeamScale
     /**
      * Space INSIDE the box, pinned to the same scale as the gap.
      *

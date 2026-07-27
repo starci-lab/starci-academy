@@ -2,7 +2,7 @@ import type { FormEvent, ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { Button, type ButtonGroupItem } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { GAP_CLASS, type SpaceScale } from "@sb-components/frames/_spacing"
+import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -35,18 +35,11 @@ import { GAP_CLASS, type SpaceScale } from "@sb-components/frames/_spacing"
  *   `block`. Khung chỉ biết "đang khoá hay không" (`isDisabled`) và "submit".
  * - ⛔ KHÔNG tự vẽ nút — `.Actions` COMPOSE atom `Button.Group` (§13c).
  *
- * SPACING (§10c): mọi khoảng đi qua {@link SpacingStep} — union literal `0·1·2·3·6·8`.
+ * SPACING (§10c): mọi khoảng đi qua {@link SeamScale} — union literal `0·1·2·3·6·8`.
  * Khung ÉP thang bằng TYPE, không nhận số tuỳ ý; off-scale (`gap-4/5/…`) không
  * gọi được. Khoảng đến từ **gap của parent**, KHÔNG margin của con (§10a).
  * ─────────────────────────────────────────────────────────────────────────────
  */
-
-/**
- * §10c — thang token spacing DUY NHẤT của cả design system:
- * `flush(0) · tight(1) · related(2) · grouped(3) · section(6) · page(8)`.
- * Là UNION LITERAL nên off-scale bị TypeScript chặn ngay tại call-site.
- */
-export type SpacingStep = SpaceScale
 
 // ─────────────────────────────────────────────────────────────────────────────
 // .Base — the `<form>` shell
@@ -75,7 +68,7 @@ export interface FormBaseProps {
      * Nhịp dọc giữa các vùng con của form. Default `6` (= `section`, §10b:
      * design ↔ design trong một block). Xuống `3` cho form ngắn trong modal.
      */
-    gap?: SpacingStep
+    gap?: SeamScale
     /**
      * `true` → KHOÁ CẢ FORM (đang submit / chờ server). Dùng `<fieldset disabled>`
      * native nên MỌI control con (kể cả nút trong `actions`) tắt theo — khung
@@ -103,8 +96,7 @@ const Base = ({
     body,
     children,
     actions,
-    gap = 6,
-    isDisabled = false,
+    gap = "section",    isDisabled = false,
     className,
     showAnatomy = false,
 }: FormBaseProps) => {
@@ -154,7 +146,7 @@ export interface FormSectionProps {
      * Default `3` (= `grouped`, §10b: hàng/khối xếp trong một khối). Một token,
      * một chủ — đổi nhịp của nhóm ở ĐÚNG một chỗ.
      */
-    gap?: SpacingStep
+    gap?: SeamScale
     /** Extra classes trên `<section>`. */
     className?: string
     /** `true` → gắn `data-anat-part` cho từng part để BlockAnatomy badge. */
@@ -175,8 +167,7 @@ const Section = ({
     description,
     body,
     children,
-    gap = 3,
-    className,
+    gap = "grouped",    className,
     showAnatomy = false,
 }: FormSectionProps) => {
     const main = body ?? children

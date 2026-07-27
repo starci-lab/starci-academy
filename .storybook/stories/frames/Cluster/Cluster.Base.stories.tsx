@@ -52,16 +52,16 @@ export const Default: Story = {
                 tier="frame"
                 leaf="Default"
                 parts={ITEM_PARTS}
-                reason="The content is N repeating elements of the SAME KIND ⇒ per the §13b test, the API is `items` DATA and `children` is FORBIDDEN — children would allow sneaking a stray node into a row whose premise is uniformity. `gap` applies to both axes, so wrapped rows stay evenly spaced too."
+                reason="The content is N repeating elements of the SAME KIND, so by the §13b test the API is `items` DATA and `children` is FORBIDDEN, because children would let a stray node into a row whose whole premise is uniformity. `gap` applies to both axes, so wrapped rows stay evenly spaced too."
                 states={[
                     {
-                        name: "gap = 2 (related)",
-                        why: "The chips wrap onto a second line at the container's edge, each pair spaced at the `related(2)` step on both axes. This is the standard rhythm for a same-kind cluster like a tag row.",
+                        name: "peers in one set, wrapped onto two lines",
+                        why: "The chips wrap at the container's edge and every pair keeps the same seam on both axes, so a chip beside another and a chip below another make the same claim. Peers in one set is the relationship a tag row always has, which is why this is the standard step for this frame.",
                         code: `<Cluster.Base
-    gap={2}
+    gap="related"
     items={tags.map((tag) => ({ key: tag, content: <Chip.Base text={tag} /> }))}
 />`,
-                        render: surface(<Cluster.Base showAnatomy gap={2} items={tagItems(TAGS)} />),
+                        render: surface(<Cluster.Base showAnatomy gap="related" items={tagItems(TAGS)} />),
                     },
                 ]}
             />
@@ -70,9 +70,10 @@ export const Default: Story = {
 }
 
 /**
- * Gaps — the REASON this frame exists: `gap` accepts EXACTLY six steps
- * `0·1·2·3·6·8` (§10c) and is REQUIRED; `gap={4}` is a COMPILE ERROR. For a chip
- * cluster, `related(2)` is the correct step.
+ * Gaps — the REASON this frame exists: `gap` names a RELATIONSHIP and is REQUIRED, so a number
+ * like `gap={4}` is a COMPILE ERROR (§10c). For a chip cluster the chips are peers in one set,
+ * which makes `related` the correct step; every state below is titled by the relationship it
+ * claims, so a wrong claim is visible without measuring anything.
  */
 export const Gaps: Story = {
     render: () => (
@@ -82,43 +83,43 @@ export const Gaps: Story = {
                 tier="frame"
                 leaf="Gaps"
                 parts={ITEM_PARTS}
-                reason="`gap` is REQUIRED and type-forced onto exactly six steps `0·1·2·3·6·8` (§10c) — `gap={4}` is a compile error, not a runtime choice. This is the reason the frame exists at all instead of a hand-typed `flex flex-wrap gap-*`."
+                reason="`gap` is REQUIRED and type-forced onto the six `SeamScale` words (§10c), so a number is a compile error rather than a runtime choice. This is the reason the frame exists at all instead of a hand-typed `flex flex-wrap gap-*`."
                 states={[
                     {
-                        name: "gap = 0 (flush)",
-                        why: "The chips sit edge to edge with no space between them. At this step the elements read as one continuous strip rather than a cluster of separate tags.",
-                        code: "<Cluster.Base gap={0} items={…} />",
-                        render: surface(<Cluster.Base showAnatomy gap={0} items={tagItems(TAGS.slice(0, 4))} />),
+                        name: "one continuous thing",
+                        why: "The chips sit edge to edge and read as one continuous strip rather than separate tags. For chips this is almost always the wrong claim, and it is shown here so the wrong end of the ladder stays recognisable.",
+                        code: "<Cluster.Base gap=\"flush\" items={…} />",
+                        render: surface(<Cluster.Base showAnatomy gap="flush" items={tagItems(TAGS.slice(0, 4))} />),
                     },
                     {
-                        name: "gap = 1 (tight)",
-                        why: "A hairline gap separates each chip, just enough to tell them apart without reading as loose. This step still keeps the cluster feeling like one unit.",
-                        code: "<Cluster.Base gap={1} items={…} />",
-                        render: surface(<Cluster.Base showAnatomy gap={1} items={tagItems(TAGS.slice(0, 4))} />),
+                        name: "a mark and its label",
+                        why: "A hairline seam tells the chips apart while the row still reads as one unit. It fits an icon sitting against its own text, not a set of independent tags.",
+                        code: "<Cluster.Base gap=\"tight\" items={…} />",
+                        render: surface(<Cluster.Base showAnatomy gap="tight" items={tagItems(TAGS.slice(0, 4))} />),
                     },
                     {
-                        name: "gap = 2 (related)",
-                        why: "The spacing widens to the step this frame is built for — the correct default for a chip or tag cluster, the same rhythm `Default` demonstrates.",
-                        code: "<Cluster.Base gap={2} items={…} />",
-                        render: surface(<Cluster.Base showAnatomy gap={2} items={tagItems(TAGS.slice(0, 4))} />),
+                        name: "peers in one set",
+                        why: "Each chip is a whole thing and none of them owns the others, which is exactly the relationship this frame is built for and the rhythm `Default` demonstrates. This is the honest step for any tag cluster.",
+                        code: "<Cluster.Base gap=\"related\" items={…} />",
+                        render: surface(<Cluster.Base showAnatomy gap="related" items={tagItems(TAGS.slice(0, 4))} />),
                     },
                     {
-                        name: "gap = 3 (grouped)",
-                        why: "The gap grows enough that the chips start to read as separately grouped rather than one flowing set. Still legible as a cluster, but visually looser than the related step.",
-                        code: "<Cluster.Base gap={3} items={…} />",
-                        render: surface(<Cluster.Base showAnatomy gap={3} items={tagItems(TAGS.slice(0, 4))} />),
+                        name: "rows inside one surface",
+                        why: "The seam grows until the chips read as separately grouped items rather than one flowing set. It fits a horizontal row of small cards, where each item is a surface of its own.",
+                        code: "<Cluster.Base gap=\"grouped\" items={…} />",
+                        render: surface(<Cluster.Base showAnatomy gap="grouped" items={tagItems(TAGS.slice(0, 4))} />),
                     },
                     {
-                        name: "gap = 6 (section)",
-                        why: "The chips break apart into loose, individually-spaced elements — a false signal for a cluster of the SAME kind, kept here only to show why the scale is a stepped set rather than an arbitrary number.",
-                        code: "<Cluster.Base gap={6} items={…} />",
-                        render: surface(<Cluster.Base showAnatomy gap={6} items={tagItems(TAGS.slice(0, 4))} />),
+                        name: "regions of one page",
+                        why: "The chips break apart into individually placed elements, a false signal for items of the same kind. It is kept here to show that the ladder can be climbed too far, not as a usable choice for a cluster.",
+                        code: "<Cluster.Base gap=\"section\" items={…} />",
+                        render: surface(<Cluster.Base showAnatomy gap="section" items={tagItems(TAGS.slice(0, 4))} />),
                     },
                     {
-                        name: "gap = 8 (page)",
-                        why: "The gap widens to the largest step on the scale, pulling each chip far enough apart that the row no longer reads as a cluster at all. This extreme exists to bound the scale, not as a realistic choice for this frame.",
-                        code: "<Cluster.Base gap={8} items={…} />",
-                        render: surface(<Cluster.Base showAnatomy gap={8} items={tagItems(TAGS.slice(0, 4))} />),
+                        name: "features standing apart",
+                        why: "The widest step pulls each chip so far apart that the row stops being a cluster and becomes separate things sharing a line. This extreme exists to bound the ladder, not as a realistic choice for this frame.",
+                        code: "<Cluster.Base gap=\"page\" items={…} />",
+                        render: surface(<Cluster.Base showAnatomy gap="page" items={tagItems(TAGS.slice(0, 4))} />),
                     },
                 ]}
             />
@@ -143,26 +144,26 @@ export const Justify: Story = {
                     {
                         name: "justify = \"start\" (default)",
                         why: "The three chips pack against the leading edge, leaving the remaining space empty on the trailing side. This is the default because most clusters read left-to-right with no reason to spread out.",
-                        code: "<Cluster.Base gap={2} justify=\"start\" items={…} />",
-                        render: surface(<Cluster.Base showAnatomy gap={2} justify="start" items={tagItems(TAGS.slice(0, 3))} />),
+                        code: "<Cluster.Base gap=\"related\" justify=\"start\" items={…} />",
+                        render: surface(<Cluster.Base showAnatomy gap="related" justify="start" items={tagItems(TAGS.slice(0, 3))} />),
                     },
                     {
                         name: "justify = \"center\"",
                         why: "The three chips gather at the row's midpoint with equal empty space on both sides. This suits a cluster that stands alone as a centred group rather than reading in-line with other content.",
-                        code: "<Cluster.Base gap={2} justify=\"center\" items={…} />",
-                        render: surface(<Cluster.Base showAnatomy gap={2} justify="center" items={tagItems(TAGS.slice(0, 3))} />),
+                        code: "<Cluster.Base gap=\"related\" justify=\"center\" items={…} />",
+                        render: surface(<Cluster.Base showAnatomy gap="related" justify="center" items={tagItems(TAGS.slice(0, 3))} />),
                     },
                     {
                         name: "justify = \"end\"",
                         why: "The three chips pack against the trailing edge instead, leaving the leading side empty. This mirrors `start` for a right-aligned context.",
-                        code: "<Cluster.Base gap={2} justify=\"end\" items={…} />",
-                        render: surface(<Cluster.Base showAnatomy gap={2} justify="end" items={tagItems(TAGS.slice(0, 3))} />),
+                        code: "<Cluster.Base gap=\"related\" justify=\"end\" items={…} />",
+                        render: surface(<Cluster.Base showAnatomy gap="related" justify="end" items={tagItems(TAGS.slice(0, 3))} />),
                     },
                     {
                         name: "justify = \"between\"",
                         why: "The three chips spread with equal space carved out between them, touching both edges of the row. This distribution only makes sense once the cluster spans the full width of its container — squeezed into a narrow box it would look identical to `start`.",
-                        code: "<Cluster.Base gap={2} justify=\"between\" items={…} />",
-                        render: surface(<Cluster.Base showAnatomy gap={2} justify="between" items={tagItems(TAGS.slice(0, 3))} />),
+                        code: "<Cluster.Base gap=\"related\" justify=\"between\" items={…} />",
+                        render: surface(<Cluster.Base showAnatomy gap="related" justify="between" items={tagItems(TAGS.slice(0, 3))} />),
                     },
                 ]}
             />

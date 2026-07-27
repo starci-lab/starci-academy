@@ -1,14 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
-import {
-    ALIGN_CLASS,
-    GAP_CLASS,
-    JUSTIFY_CLASS,
-    type LayoutAlign,
-    type LayoutJustify,
-    type SpaceScale,
-} from "@sb-components/frames/_spacing"
+import { ALIGN_CLASS, GAP_CLASS, JUSTIFY_CLASS, type LayoutAlign, type LayoutJustify, type SeamScale } from "@sb-components/frames/_spacing"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -51,7 +44,7 @@ export interface ClusterBaseProps {
      * Seam between items on the §10 scale — REQUIRED, union literal only. Applies
      * to BOTH axes (row gap and column gap), so wrapped lines breathe the same.
      */
-    gap: SpaceScale
+    gap: SeamScale
     /** Cross-axis alignment WITHIN a line (items of unequal height). Default `center`. */
     align?: LayoutAlign
     /** Main-axis distribution of each line. Default `start`. */

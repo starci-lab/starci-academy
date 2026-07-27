@@ -202,16 +202,16 @@ export const Gap: Story = {
                 reason="gap is a prop of the group, never of an item, so the grid always keeps one even spacing across every cell instead of letting a single tile push its neighbours around."
                 states={[
                     {
-                        name: "gap = 2",
-                        why: "Every cell sits closer to its neighbours because 2 is the dense end of the spacing scale. A dense grid reads well when the tiles are already visually distinct, such as short profile rows with an avatar.",
-                        code: "<SurfaceCard.PressableGroup gap={2} ariaLabel=\"Mentors\" columns={{ base: 1, sm: 2 }} items={[…].slice(0, 2)} />",
-                        render: <SurfaceCard.PressableGroup ariaLabel="Mentors (gap 2)" columns={{ base: 1, sm: 2 }} gap={2} items={profileItems.slice(0, 2)} showAnatomy />,
+                        name: "peers in one set",
+                        why: "The cells sit close enough to read as members of one set rather than separate cards, which works when each tile is already visually distinct on its own, as a short profile row with an avatar is. Pick this step from the relationship and not from how full the grid looks.",
+                        code: "<SurfaceCard.PressableGroup gap=\"related\" ariaLabel=\"Mentors\" columns={{ base: 1, sm: 2 }} items={[…].slice(0, 2)} />",
+                        render: <SurfaceCard.PressableGroup ariaLabel="Mentors (gap 2)" columns={{ base: 1, sm: 2 }} gap="related" items={profileItems.slice(0, 2)} showAnatomy />,
                     },
                     {
-                        name: "gap = 3 (default)",
-                        why: "Every cell stands with more breathing room than the gap 2 state, using the same repeated-Item composition. 3 is the default because it is the spacing the rest of the grid family already settles on.",
-                        code: "<SurfaceCard.PressableGroup gap={3} ariaLabel=\"Mentors\" columns={{ base: 1, sm: 2 }} items={[…].slice(2)} />  // default",
-                        render: <SurfaceCard.PressableGroup ariaLabel="Mentors (gap 3)" columns={{ base: 1, sm: 2 }} gap={3} items={profileItems.slice(2)} />,
+                        name: "rows inside one surface",
+                        why: "Each cell stands as its own surface inside the group, which is the default because a pressable tile is a thing a reader acts on separately. The composition is identical to the state above, so the only difference a reader sees is the claim the seam makes.",
+                        code: "<SurfaceCard.PressableGroup gap=\"grouped\" ariaLabel=\"Mentors\" columns={{ base: 1, sm: 2 }} items={[…].slice(2)} />  // default",
+                        render: <SurfaceCard.PressableGroup ariaLabel="Mentors (gap 3)" columns={{ base: 1, sm: 2 }} gap="grouped" items={profileItems.slice(2)} />,
                     },
                 ]}
             />,

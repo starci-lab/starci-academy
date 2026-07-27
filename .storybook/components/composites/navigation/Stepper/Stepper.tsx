@@ -111,7 +111,7 @@ const StepperBase = ({
         <div
             className={cn(
                 "flex",
-                isVertical ? "flex-col" : "items-start",
+                isVertical ? "flex-col gap-3" : "items-start",
                 className,
             )}
         >
@@ -153,13 +153,14 @@ const StepperBase = ({
                     return (
                         <React.Fragment key={step.id}>
                             {!isFirst ? (
-                                <span
-                                    aria-hidden
-                                    className={cn(
-                                        "mt-3 h-0.5 min-w-6 flex-1",
-                                        connectorPassed ? "bg-success" : "bg-default",
-                                    )}
-                                />
+                                <span aria-hidden className="flex h-8 min-w-6 flex-1 items-center">
+                                    <span
+                                        className={cn(
+                                            "h-0.5 w-full",
+                                            connectorPassed ? "bg-success" : "bg-default",
+                                        )}
+                                    />
+                                </span>
                             ) : null}
                             {isClickable ? (
                                 <button
@@ -202,7 +203,7 @@ const StepperBase = ({
                             <button
                                 type="button"
                                 onClick={() => onStepPress(index)}
-                                className="mb-3 flex flex-col gap-0 pt-1 text-left rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                                className="flex flex-col gap-0 pt-1 text-left rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                             >
                                 <span data-anat-part={showAnatomy ? "Typography" : undefined}>
                                     <Typography size="sm" text={step.label} />
@@ -214,7 +215,7 @@ const StepperBase = ({
                                 ) : null}
                             </button>
                         ) : (
-                            <div className="mb-3 flex flex-col gap-0 pt-1">
+                            <div className="flex flex-col gap-0 pt-1">
                                 <span data-anat-part={showAnatomy ? "Typography" : undefined}>
                                     <Typography size="sm"
                                         text={step.label}

@@ -71,12 +71,14 @@ const AccordionBase = ({
 }: AccordionBaseProps) => {
     if (isSkeleton) {
         // Leaf skeleton OWNED by the atom (hybrid C) — one collapsed trigger row per item.
+        // Real heroui renders are the two `HeroSkeleton` (`Skeleton`) elements themselves,
+        // NOT the plain wrapping `<div>` — tagging the div would be a made-up name (2026-07-27).
         return (
-            <div className={cn("flex flex-col gap-2", className)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
+            <div className={cn("flex flex-col gap-2", className)}>
                 {items.map((item) => (
                     <div key={item.key} className="flex items-center justify-between rounded-xl border border-default-200 px-4 py-3">
-                        <HeroSkeleton className="h-4 w-40 rounded-md" />
-                        <HeroSkeleton className="size-4 rounded-md" />
+                        <HeroSkeleton className="h-4 w-40 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                        <HeroSkeleton className="size-4 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                     </div>
                 ))}
             </div>
@@ -88,16 +90,17 @@ const AccordionBase = ({
             allowsMultipleExpanded={allowsMultiple}
             defaultExpandedKeys={defaultExpandedKeys}
             className={className}
+            data-anat-part={showAnatomy ? "DisclosureGroup" : undefined}
         >
             {items.map((item) => (
-                <HeroDisclosure key={item.key} id={item.key} isDisabled={item.isDisabled} data-anat-part={showAnatomy ? "Item" : undefined}>
+                <HeroDisclosure key={item.key} id={item.key} isDisabled={item.isDisabled} data-anat-part={showAnatomy ? "Disclosure" : undefined}>
                     <HeroDisclosure.Heading>
-                        <HeroDisclosure.Trigger data-anat-part={showAnatomy ? "Trigger" : undefined}>
+                        <HeroDisclosure.Trigger data-anat-part={showAnatomy ? "Disclosure.Trigger" : undefined}>
                             {item.title}
-                            <HeroDisclosure.Indicator data-anat-part={showAnatomy ? "Indicator" : undefined} />
+                            <HeroDisclosure.Indicator data-anat-part={showAnatomy ? "Disclosure.Indicator" : undefined} />
                         </HeroDisclosure.Trigger>
                     </HeroDisclosure.Heading>
-                    <HeroDisclosure.Content data-anat-part={showAnatomy ? "Content" : undefined}>
+                    <HeroDisclosure.Content data-anat-part={showAnatomy ? "Disclosure.Content" : undefined}>
                         <HeroDisclosure.Body>{item.content}</HeroDisclosure.Body>
                     </HeroDisclosure.Content>
                 </HeroDisclosure>

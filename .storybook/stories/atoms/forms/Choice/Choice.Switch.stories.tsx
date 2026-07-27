@@ -1,7 +1,17 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Choice } from "@sb-components/atoms/forms/Choice/Choice"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+
+/**
+ * `Switch`/`Label` — heroui's OWN components (imported `Switch as HeroSwitch` and
+ * `Label as HeroLabel`, rendered directly), so they enter the tree as tier
+ * `heroui` with no `storyId` (§ two-law pass, 2026-07-28).
+ */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    Switch: { tier: "heroui", role: "toggle track + thumb" },
+    Label: { tier: "heroui", role: "label beside the track" },
+}
 
 /**
  * ATOM — `Choice.Switch`: a boolean track, label sits INLINE next to the track (wraps HeroUI Switch).
@@ -46,6 +56,7 @@ export const Default: Story = {
                 <BlockAnatomy
                     name="Choice.Switch"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="No prop turned on"
                     reason="The one switch atom in the system, wrapping HeroUI Switch. This leaf is the baseline: off, no hint, no error."
                     states={[
@@ -76,6 +87,7 @@ export const Selected: Story = {
                 <BlockAnatomy
                     name="Choice.Switch"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `isSelected`"
                     reason="isSelected is controlled: the caller owns the value and hands it back through onValueChange, so the track never drifts from the setting it represents."
                     states={[
@@ -106,6 +118,7 @@ export const Sizes: Story = {
                 <BlockAnatomy
                     name="Choice.Switch"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `size`"
                     reason="size is scale only, it never changes what the switch means. Use it to match the switch to the row it sits in (a dense settings list vs. a spacious one)."
                     states={[
@@ -150,6 +163,7 @@ export const WithHint: Story = {
                 <BlockAnatomy
                     name="Choice.Switch"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `hint`"
                     reason="A switch with a side effect worth knowing gets a sentence, not just a label; hint stays visible below the row whether the switch is on or off."
                     states={[
@@ -186,6 +200,7 @@ export const Required: Story = {
                 <BlockAnatomy
                     name="Choice.Switch"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `isRequired`"
                     reason="Some toggles gate the rest of a form, so the asterisk on the inline label flags that before the reader tries to move on."
                     states={[
@@ -220,6 +235,7 @@ export const Disabled: Story = {
             <BlockAnatomy
                 name="Choice.Switch"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isDisabled`"
                 reason="Not allowed yet: a plan tier doesn't cover the setting, or a step upstream isn't done. The track stays visible so the reader knows the option exists."
                 states={[
@@ -248,6 +264,7 @@ export const Error: Story = {
                 <BlockAnatomy
                     name="Choice.Switch"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `errorMessage`"
                     reason="A safety toggle left off is easy to miss on a settings page, so the red border and the line beneath it stop the eye at the exact row that needs attention."
                     states={[

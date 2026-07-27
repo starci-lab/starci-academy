@@ -1,7 +1,7 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Input } from "@sb-components/atoms/forms/Input/Input"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta = { title: "Atoms/Forms/Input/Input.Otp", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
 export default meta
@@ -11,15 +11,19 @@ type Story = StoryObj
  * ATOM — `Input.Otp`: one-time-code cells (HeroUI InputOTP), `length` slots, bọc
  * qua `FieldFrame` nội bộ (§12e).
  *
- * ⭐ KHÔNG có `annotate` (thầy chốt 2026-07-26 lần 2: "deps không có thì thôi").
- * Atom này bọc THẲNG HeroUI, không compose atom nào khác có story riêng —
- * `Label`/`Description`/`Error`/`Skeleton` chỉ là khe của chính `FieldFrame`
- * (không có story để nhảy tới), không phải deps.
+ * Không component nào ở đây có story riêng ⇒ `annotate` không có `storyId` —
+ * nhưng heroui `InputOTP.Group` cùng `Label`/`Skeleton` của `FieldFrame` vẫn cần
+ * tier `heroui` để panel hai-luật không lặng lẽ bỏ sót chúng (2026-07-28).
  *
  * a11y: control COMPOUND (dãy ô, không phải một `<input>` đơn) không nối `htmlFor`
  * được → atom tự đổ `label`/`ariaLabel` vào `aria-label` qua helper `fieldName`
  * (§12e) — bắt buộc, vì mất kết nối này thì screen reader không đọc được tên field.
  */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "InputOTP.Group": { tier: "heroui", role: "one-time-code cell group" },
+    Label: { tier: "heroui", role: "field label line" },
+    Skeleton: { tier: "heroui", role: "loading placeholder" },
+}
 
 /** Default — six empty cells, no label yet. */
 export const Default: Story = {
@@ -30,6 +34,7 @@ export const Default: Story = {
                 <BlockAnatomy
                     name="Input.Otp"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Default"
                     states={[
                         {
@@ -59,6 +64,7 @@ export const WithLabel: Story = {
                 <BlockAnatomy
                     name="Input.Otp"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="WithLabel"
                     states={[
                         {
@@ -88,6 +94,7 @@ export const Required: Story = {
                 <BlockAnatomy
                     name="Input.Otp"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Required"
                     states={[
                         {
@@ -117,6 +124,7 @@ export const Filled: Story = {
                 <BlockAnatomy
                     name="Input.Otp"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Filled"
                     states={[
                         {
@@ -146,6 +154,7 @@ export const Disabled: Story = {
                 <BlockAnatomy
                     name="Input.Otp"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Disabled"
                     states={[
                         {
@@ -175,6 +184,7 @@ export const Error: Story = {
                 <BlockAnatomy
                     name="Input.Otp"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Error"
                     states={[
                         {
@@ -202,6 +212,7 @@ export const Loading: Story = {
             <BlockAnatomy
                 name="Input.Otp"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Loading"
                 states={[
                     {

@@ -38,9 +38,9 @@ const SAMPLE = {
 
 const PARTS: Array<AnatomyNode> = [
     {
-        name: "ContinueLearning",
+        name: "ContinueCard.Hero",
         tier: "design",
-        role: "the `ContinueCard.Hero` card, given `title`/`meta` already turned into copy by the block so the design tier only has to draw them",
+        role: "the design this block composes directly, given `title`/`meta` already turned into copy by the block so the design tier only has to draw them",
         storyId: "designs-cards-continuecard-hero-progress--not-urgent",
     },
 ]
@@ -69,7 +69,7 @@ export const Default: Story = {
     progressPercent={34}
     onResume={handleResume}
 />`,
-                        render: <ContinueLearning.Base {...SAMPLE} anatPart="ContinueLearning" onResume={() => {}} />,
+                        render: <ContinueLearning.Base {...SAMPLE} anatPart="ContinueCard.Hero" onResume={() => {}} />,
                     },
                 ]}
             />
@@ -92,7 +92,7 @@ export const Skeleton: Story = {
                         name: "isSkeleton",
                         why: "The tree stays exactly the same as the leaf above, since `isSkeleton` is a state rather than a separate leaf. The block does not draw shimmer bars itself, the flag flows straight down to `ContinueCard`, whose own owner decides its resting shape (§12c).",
                         code: "<ContinueLearning.Base {...data} isSkeleton />",
-                        render: <ContinueLearning.Base {...SAMPLE} anatPart="ContinueLearning" isSkeleton />,
+                        render: <ContinueLearning.Base {...SAMPLE} anatPart="ContinueCard.Hero" isSkeleton />,
                     },
                 ]}
             />

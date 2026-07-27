@@ -274,22 +274,25 @@ const ToolbarBase = ({
             {showAnatomy ? <AnatomyOverlay label="Toolbar" tier="composite" href="/?path=/docs/composites-navigation-toolbar-toolbar-base--docs" /> : null}
             {leftEnd ? (
                 <div className="flex min-w-0 items-center gap-1">
-                    <div data-anat-part={showAnatomy ? "LeftTabs" : undefined}>{renderGroup(leftTabs)}</div>
+                    <div data-anat-part={showAnatomy ? "Tabs.Extended" : undefined}>{renderGroup(leftTabs)}</div>
                     <div data-anat-part={showAnatomy ? "LeftEnd" : undefined}>{leftEnd}</div>
                 </div>
             ) : (
-                <div data-anat-part={showAnatomy ? "LeftTabs" : undefined}>{renderGroup(leftTabs)}</div>
+                <div data-anat-part={showAnatomy ? "Tabs.Extended" : undefined}>{renderGroup(leftTabs)}</div>
             )}
             {rightTabs
                 ? collapseRightOnMobile
                     ? (
-                        <div data-anat-part={showAnatomy ? "RightTabs" : undefined}>
-                            {/* mobile: collapse to a dropdown; sm+: inline tabs */}
-                            <div className="@app-sm:hidden">{renderSelect(rightTabs)}</div>
-                            <div className="hidden @app-sm:block">{renderGroup(rightTabs, !rightTabsNeutral)}</div>
+                        <div>
+                            {/* mobile: collapse to a dropdown (HeroUI Select.Root); sm+: inline tabs
+                                (atom Tabs.Extended) — BOTH real components mount at once (one hidden
+                                via CSS), so each gets its OWN badge instead of one wrapper name that
+                                could only honestly describe one of them. */}
+                            <div className="@app-sm:hidden" data-anat-part={showAnatomy ? "Select.Root" : undefined}>{renderSelect(rightTabs)}</div>
+                            <div className="hidden @app-sm:block" data-anat-part={showAnatomy ? "Tabs.Extended" : undefined}>{renderGroup(rightTabs, !rightTabsNeutral)}</div>
                         </div>
                     )
-                    : <div data-anat-part={showAnatomy ? "RightTabs" : undefined}>{renderGroup(rightTabs, !rightTabsNeutral)}</div>
+                    : <div data-anat-part={showAnatomy ? "Tabs.Extended" : undefined}>{renderGroup(rightTabs, !rightTabsNeutral)}</div>
                 : null}
         </div>
     )

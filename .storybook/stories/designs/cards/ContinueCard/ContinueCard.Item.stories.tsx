@@ -57,7 +57,7 @@ const frame = (node: React.ReactNode) => <div className="p-8">{node}</div>
 // one of N cards in a list, not the main character) ⊃ Title · Subtitle · SeeMoreLink.
 const ITEM_PARTS: Array<AnatomyNode> = [
     {
-        name: "SurfaceCard",
+        name: "SurfaceCard.Base",
         tier: "composite",
         role: "FLAT card surface — holds the info plus the CTA row",
         storyId: "composites-cards-surfacecard-surfacecard-base--default",
@@ -76,14 +76,13 @@ const ITEM_PARTS: Array<AnatomyNode> = [
                         role: "text column — title on top, meta/subtitle underneath",
                         storyId: "frames-stack-stack-v--default",
                         children: [
-                            { name: "Title", tier: "atom", role: "item name — `Typography.Base` medium + truncate", storyId: "atoms-text-typography-typography-base--plain" },
-                            { name: "Skeleton.Meta", tier: "atom", role: "mirror bar standing in for the meta row while loading — `Typography.Base isSkeleton`", storyId: "atoms-text-typography-typography-base--plain" },
-                            { name: "Subtitle", tier: "atom", role: "subtitle (muted, truncate) — shown ONLY when there is no meta/timeLeft", storyId: "atoms-text-typography-typography-base--plain" },
+                            { name: "Typography.Base", tier: "atom", role: "the item name — medium weight, truncate", storyId: "atoms-text-typography-typography-base--plain" },
+                            { name: "Typography.Base", tier: "atom", role: "the second line under the name — the subtitle (muted, truncate, shown only when there's no meta/timeLeft) real, or its mirror bar while loading", storyId: "atoms-text-typography-typography-base--plain" },
                         ],
                     },
                 ],
             },
-            { name: "SeeMoreLink", tier: "atom", role: "CTA \"Tiếp tục →\" on its own row — hover/click lives on the link ITSELF, not wrapping the whole card (wrapping would nest controls and steal hover)", storyId: "atoms-navigation-link-link-seemore--default" },
+            { name: "Link.SeeMore", tier: "atom", role: "CTA \"Tiếp tục →\" on its own row — hover/click lives on the link ITSELF, not wrapping the whole card (wrapping would nest controls and steal hover)", storyId: "atoms-navigation-link-link-seemore--default" },
         ],
     },
 ]
@@ -91,7 +90,7 @@ const ITEM_PARTS: Array<AnatomyNode> = [
 // error leaf: connection drop → `Feedback.Empty` sits INSIDE the frame, the Retry button is in the `action` prop.
 const ERROR_PARTS: Array<AnatomyNode> = [
     {
-        name: "SurfaceCard",
+        name: "SurfaceCard.Base",
         tier: "composite",
         role: "the very SAME frame — an error must never make the frame disappear",
         storyId: "composites-cards-surfacecard-surfacecard-base--default",
@@ -103,7 +102,7 @@ const ERROR_PARTS: Array<AnatomyNode> = [
                 state: "danger",
                 storyId: "composites-feedback-feedback-feedback-empty--action",
                 children: [
-                    { name: "Button", tier: "atom", role: "retry button (secondary, inside the `action` prop — built by the STORY, so it is still declared, §11a.1)", storyId: "atoms-buttons-button-button-base--default" },
+                    { name: "Button.Base", tier: "atom", role: "retry button (secondary, inside the `action` prop — built by the STORY, so it is still declared, §11a.1)", storyId: "atoms-buttons-button-button-base--default" },
                 ],
             },
         ],
@@ -208,7 +207,7 @@ export const LoadError: Story = {
 </SurfaceCard.Base>`,
                         render: (
                             <div className="w-80">
-                                <SurfaceCard.Base anatPart="SurfaceCard">
+                                <SurfaceCard.Base anatPart="SurfaceCard.Base">
                                     <Feedback.Empty
                                         anatPart="Feedback.Empty"
                                         tone="danger"
@@ -216,7 +215,7 @@ export const LoadError: Story = {
                                         title="Connection lost"
                                         description="The network seems to have dropped. Check your connection and try again."
                                         action={
-                                            <Button.Base variant="secondary" size="sm" label="Retry" onPress={() => {}} anatPart="Button" />
+                                            <Button.Base variant="secondary" size="sm" label="Retry" onPress={() => {}} anatPart="Button.Base" />
                                         }
                                     />
                                 </SurfaceCard.Base>

@@ -256,7 +256,7 @@ const Empty = ({
         // ⚠️ The `Typography.*` atom does NOT accept unknown props (no rest spread) → every
         // anatomy tag must sit on a WRAPPING element, not be stuffed into the atom.
         return (
-            <span className={cn("block", className)} data-anat-part={showAnatomy ? "Title" : anatPart}>
+            <span className={cn("block", className)} data-anat-part={showAnatomy ? "Typography.Base" : anatPart}>
                 <Typography.Base size="sm" text={title} color="muted" />
             </span>
         )
@@ -280,7 +280,7 @@ const Empty = ({
                 // `size="page"`: the `Typography.*` atom tops out at `Lg` (text-lg) so
                 // forcing a size via a raw className would break the `no-hero-heading-class`
                 // lint rule. See the GAP note at the end of the file.
-                <div data-anat-part={showAnatomy ? "Code" : undefined}>
+                <div data-anat-part={showAnatomy ? "Typography" : undefined}>
                     <HeroTypography type="h1" weight="bold" color="muted">{code}</HeroTypography>
                 </div>
             ) : null}
@@ -294,22 +294,22 @@ const Empty = ({
             ) : null}
             {isPage ? (
                 <div className="flex flex-col gap-2">
-                    <div data-anat-part={showAnatomy ? "Title" : undefined}>
+                    <div data-anat-part={showAnatomy ? "Typography" : undefined}>
                         <HeroTypography type="h4" weight="semibold" align="center">{title}</HeroTypography>
                     </div>
                     {description ? (
-                        <div data-anat-part={showAnatomy ? "Description" : undefined}>
+                        <div data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
                             <Typography.Base size="sm" text={description} color="muted" />
                         </div>
                     ) : null}
                 </div>
             ) : (
                 <>
-                    <div data-anat-part={showAnatomy ? "Title" : undefined}>
+                    <div data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
                         <Typography.Base text={title} weight="medium" />
                     </div>
                     {description ? (
-                        <div data-anat-part={showAnatomy ? "Description" : undefined}>
+                        <div data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
                             <Typography.Base size="xs" text={description} color="muted" />
                         </div>
                     ) : null}
@@ -399,22 +399,29 @@ const Confirm = ({
     const isDanger = tone === "danger"
     return (
         <AlertDialog isOpen={isOpen} onOpenChange={onOpenChange}>
-            <AlertDialog.Backdrop>
-                <AlertDialog.Container size="sm">
-                    <AlertDialog.Dialog className={cn(className)}>
+            {/* `AlertDialog` root = react-aria `DialogTrigger`: a LOGICAL wrapper, renders no DOM
+                node of its own, so it can't carry `data-anat-part` (nothing for the scan to find). */}
+            <AlertDialog.Backdrop data-anat-part={showAnatomy ? "AlertDialog.Backdrop" : undefined}>
+                <AlertDialog.Container size="sm" data-anat-part={showAnatomy ? "AlertDialog.Container" : undefined}>
+                    <AlertDialog.Dialog className={cn(className)} data-anat-part={showAnatomy ? "AlertDialog.Dialog" : undefined}>
                         {/* No status icon — text-only; layout UNCHANGED (heading/body left, footer right) — teacher confirmed 2026-07-23. */}
-                        <AlertDialog.Header data-anat-part={showAnatomy ? "Header" : undefined}>
-                            <AlertDialog.Heading>{title}</AlertDialog.Heading>
+                        <AlertDialog.Header data-anat-part={showAnatomy ? "AlertDialog.Header" : undefined}>
+                            <AlertDialog.Heading data-anat-part={showAnatomy ? "AlertDialog.Heading" : undefined}>{title}</AlertDialog.Heading>
                         </AlertDialog.Header>
                         {description != null ? (
-                            <AlertDialog.Body data-anat-part={showAnatomy ? "Body" : undefined}>
-                                <Typography.Base size="sm" text={description} color="muted" />
+                            <AlertDialog.Body data-anat-part={showAnatomy ? "AlertDialog.Body" : undefined}>
+                                {/* Typography.Base atom doesn't accept unknown props — tag the wrapper (§11a.1). */}
+                                <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
+                                    <Typography.Base size="sm" text={description} color="muted" />
+                                </span>
                             </AlertDialog.Body>
                         ) : null}
-                        <AlertDialog.Footer className="w-full" data-anat-part={showAnatomy ? "Footer" : undefined}>
-                            {/* §11a: badge stops at Footer — the innards of `Button.Group` are the atom's own story. */}
+                        <AlertDialog.Footer className="w-full" data-anat-part={showAnatomy ? "AlertDialog.Footer" : undefined}>
+                            {/* Footer forwards showAnatomy so the REAL nodes (Button.Base × 2) show up, instead of
+                                mislabeling this heroui Footer wrapper as if it were Button.Group itself. */}
                             <Button.Group
                                 className="w-full justify-end"
+                                showAnatomy={showAnatomy}
                                 items={[
                                     {
                                         key: "cancel",

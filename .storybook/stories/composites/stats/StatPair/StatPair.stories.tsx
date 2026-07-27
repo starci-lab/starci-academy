@@ -26,14 +26,17 @@ const STATS = [
 
 /**
  * ANATOMY IS PER-LEAF: every story below wraps its render in its OWN BlockAnatomy
- * axis. `StatPair` renders its `value`/`label` `Typography` DIRECTLY itself (canon
- * granularity rule, a component that renders `Typography` inline gets its OWN tagged
- * node), so both are direct parts. Frameless — the surrounding `Card`/divider/grid
- * belongs to the CALLER, not this composite.
+ * axis. `StatPair` renders its `value`/`label` straight through HeroUI `Typography`
+ * (canon granularity rule, a component that renders `Typography` inline gets its OWN
+ * tagged node), so both are direct parts, named for that real import — not
+ * role-suffixed fakes like `Typography.Value`/`Typography.Label` (no such members
+ * exist on HeroUI's `Typography`; dedup is by DOM element, not name, so reusing
+ * `Typography` twice here is exactly right). Frameless — the surrounding
+ * `Card`/divider/grid belongs to the CALLER, not this composite.
  */
 const STAT_PARTS: Array<AnatomyNode> = [
-    { name: "Typography.Value", tier: "composite", role: "the main figure, semibold" },
-    { name: "Typography.Label", tier: "composite", role: "the muted caption under the value" },
+    { name: "Typography", tier: "heroui", role: "the main figure, semibold" },
+    { name: "Typography", tier: "heroui", role: "the muted caption under the value" },
 ]
 
 export const Single: Story = {

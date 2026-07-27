@@ -80,12 +80,12 @@ const UserCellBase = ({
                 <div className="flex min-w-0 flex-col gap-0">
                     <HeroSkeleton
                         className="my-1 h-3 w-24 rounded"
-                        data-anat-part={showAnatomy ? "Name" : undefined}
+                        data-anat-part={showAnatomy ? "Skeleton" : undefined}
                     />
                     {handle ? (
                         <HeroSkeleton
                             className="my-0 h-3 w-16 rounded"
-                            data-anat-part={showAnatomy ? "Handle" : undefined}
+                            data-anat-part={showAnatomy ? "Skeleton" : undefined}
                         />
                     ) : null}
                 </div>
@@ -108,7 +108,7 @@ const UserCellBase = ({
                     color={isOwnRow ? "accent" : undefined}
                     truncate
                     showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "Name" : undefined}
+                    anatPart={showAnatomy ? "Typography.Base" : undefined}
                     className="leading-5"
                     text={name}
                 />
@@ -117,7 +117,7 @@ const UserCellBase = ({
                         color="muted"
                         truncate
                         showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "Handle" : undefined}
+                        anatPart={showAnatomy ? "Typography.Base" : undefined}
                         className="leading-4"
                         text={handle}
                     />

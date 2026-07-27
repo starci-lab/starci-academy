@@ -128,16 +128,16 @@ const Header = ({
                 {/* Left column: stacked title and optional description */}
                 <div className="flex min-w-0 flex-col gap-2">
                     {size === "compact" ? (
-                        <Typography.Base weight="bold" anatPart={showAnatomy ? "Title" : undefined} text={title} />
+                        <Typography.Base weight="bold" anatPart={showAnatomy ? "Typography.Base" : undefined} text={title} />
                     ) : (
-                        <Typography.Base size="h3" weight="bold" anatPart={showAnatomy ? "Title" : undefined} text={title} />
+                        <Typography.Base size="h3" weight="bold" anatPart={showAnatomy ? "Typography.Base" : undefined} text={title} />
                     )}
                     {description ? (
                         // clamp to 2 lines on mobile (keep the header short on a phone); full on sm+
                         <Typography.Base size="sm"
                             color="muted"
                             className="line-clamp-2 @app-sm:line-clamp-none"
-                            anatPart={showAnatomy ? "Description" : undefined}
+                            anatPart={showAnatomy ? "Typography.Base" : undefined}
                             text={description}
                         />
                     ) : null}

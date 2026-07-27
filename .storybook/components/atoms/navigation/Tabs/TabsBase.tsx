@@ -112,22 +112,24 @@ export const TabsBase = ({
         // BOTH variants rendered the identical pill shimmer — a real layout jump
         // once secondary's actual underline tabs mounted (same bug class as the
         // `Button.Base` skeleton once using one fixed width for every size).
+        // Real heroui render is each `HeroSkeleton` (`Skeleton`) bar itself, NOT the plain
+        // wrapping `<div>` — tagging the div would be a made-up name (2026-07-27).
         if (variant === "secondary") {
             return (
-                <div className={cn("flex items-center gap-2", className)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
+                <div className={cn("flex items-center gap-2", className)}>
                     {items.map((item) => (
                         <div key={item.key} className="flex flex-col items-center gap-2 px-1 py-2">
-                            <HeroSkeleton className="h-4 w-14 rounded-md" />
-                            <HeroSkeleton className="h-0.5 w-14 rounded-full" />
+                            <HeroSkeleton className="h-4 w-14 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                            <HeroSkeleton className="h-0.5 w-14 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                         </div>
                     ))}
                 </div>
             )
         }
         return (
-            <div className={cn("flex items-center gap-2", className)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
+            <div className={cn("flex items-center gap-2", className)}>
                 {items.map((item) => (
-                    <HeroSkeleton key={item.key} className="h-9 w-24 rounded-xl" />
+                    <HeroSkeleton key={item.key} className="h-9 w-24 rounded-xl" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                 ))}
             </div>
         )
@@ -148,12 +150,14 @@ export const TabsBase = ({
                                 key={item.key}
                                 id={item.key}
                                 isDisabled={item.isDisabled}
-                                data-anat-part={showAnatomy ? "Tab" : undefined}
+                                data-anat-part={showAnatomy ? "Tabs.Tab" : undefined}
                             >
                                 <span className="flex items-center gap-2">
                                     {Icon ? (
-                                        // Atom owns the glyph scale (§4/§5) — tab label scale.
-                                        <span aria-hidden data-anat-part={showAnatomy ? "Icon" : undefined} className="inline-flex shrink-0">
+                                        // Atom owns the glyph scale (§4/§5) — untagged: a plain span
+                                        // wrapping a caller-supplied Phosphor icon, not a real named
+                                        // component of ours or of heroui (§ two-rule pass, 2026-07-27).
+                                        <span aria-hidden className="inline-flex shrink-0">
                                             <Icon className={TAB_ICON_CLASS} weight={TAB_ICON_WEIGHT} />
                                         </span>
                                     ) : null}
@@ -168,9 +172,9 @@ export const TabsBase = ({
                                         // phương án đặt số CẠNH nhãn rồi bỏ): nhãn có badge bị đệm LỆCH một
                                         // bên, nên tab có badge rộng hơn tab không có ⇒ khoảng cách giữa các
                                         // tab không còn đều. Giữ vẻ "nổi" là lý do chọn cách này.
-                                        <HeroBadge.Anchor className="pr-4" data-anat-part={showAnatomy ? "Badge" : undefined}>
+                                        <HeroBadge.Anchor className="pr-4" data-anat-part={showAnatomy ? "Badge.Anchor" : undefined}>
                                             <span>{item.label}</span>
-                                            <HeroBadge size="sm" color="danger">
+                                            <HeroBadge size="sm" color="danger" data-anat-part={showAnatomy ? "Badge" : undefined}>
                                                 {item.badge}
                                             </HeroBadge>
                                         </HeroBadge.Anchor>
@@ -178,7 +182,7 @@ export const TabsBase = ({
                                         <span>{item.label}</span>
                                     )}
                                 </span>
-                                <HeroTabs.Indicator data-anat-part={showAnatomy ? "Indicator" : undefined} />
+                                <HeroTabs.Indicator data-anat-part={showAnatomy ? "Tabs.Indicator" : undefined} />
                             </HeroTabs.Tab>
                         )
                     })}

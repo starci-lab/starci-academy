@@ -76,7 +76,7 @@ export const AvatarGroup = ({
             {visible.map((item) => (
                 // One badge per MEMBER (§11a): the row names each avatar as ONE opaque
                 // part instead of drilling into Avatar.Base's own Image/Fallback parts.
-                <span key={item.key} className="inline-flex" data-anat-part={showAnatomy ? "Avatar" : undefined}>
+                <span key={item.key} className="inline-flex" data-anat-part={showAnatomy ? "Avatar.Base" : undefined}>
                     <AvatarBase
                         src={item.src}
                         seed={item.seed}
@@ -94,12 +94,12 @@ export const AvatarGroup = ({
                     // hiện "+3" thật giữa hàng đang loading là dữ liệu thật lọt vào state giả.
                     <HeroSkeleton
                         className={cn("rounded-full", SIZE_MAP[size].box, GROUP_RING)}
-                        data-anat-part={showAnatomy ? "Overflow" : undefined}
+                        data-anat-part={showAnatomy ? "Skeleton" : undefined}
                     />
                 ) : (
                     // "+N" is a COUNT, not a person — rendered here rather than through
                     // Avatar.Base, whose initials fallback would clip "+12" to "+1".
-                    <HeroAvatar size={size} className={GROUP_RING} data-anat-part={showAnatomy ? "Overflow" : undefined}>
+                    <HeroAvatar size={size} className={GROUP_RING} data-anat-part={showAnatomy ? "Avatar" : undefined}>
                         <HeroAvatarFallback>+{extra}</HeroAvatarFallback>
                     </HeroAvatar>
                 )

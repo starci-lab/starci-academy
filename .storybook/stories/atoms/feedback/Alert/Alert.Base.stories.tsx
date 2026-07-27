@@ -37,9 +37,38 @@ export default meta
 
 type Story = StoryObj<typeof Alert.Base>
 
-/** The one node pointing to ANOTHER story: the × button is always `Button.Base` (the atom builds it itself, not a caller slot). */
+/**
+ * `Alert.Indicator`/`Alert.Content`/`Alert.Title`/`Alert.Description` are direct
+ * HeroUI compound-component renders — `tier: "heroui"`, no `storyId`. `Skeleton`
+ * covers both shimmer bars (title + description), same HeroUI import either way.
+ * `Button.Base` is the one node pointing to ANOTHER story of ours: the × button
+ * is always built from it (the atom builds it itself, not a caller slot).
+ *
+ * ⚠️ 2026-07-28 (naming pass): renamed from role-words `Icon`/`Content`/`Title`/
+ * `Description`/`Close` to the real component each node renders.
+ */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Close: {
+    "Alert.Indicator": {
+        tier: "heroui",
+        role: "wraps the status glyph (default or caller-supplied icon) at a fixed size-5",
+    },
+    "Alert.Content": {
+        tier: "heroui",
+        role: "wraps the title, description, and optional body column",
+    },
+    "Alert.Title": {
+        tier: "heroui",
+        role: "the required title line, coloured by status",
+    },
+    "Alert.Description": {
+        tier: "heroui",
+        role: "the optional supporting line under the title",
+    },
+    Skeleton: {
+        tier: "heroui",
+        role: "shimmer bar mirroring either the title or the description line box — the frame and icon stay real",
+    },
+    "Button.Base": {
         tier: "atom",
         role: "the × button — Alert.Base always builds it from Button.Base, ghost variant toned to status",
         storyId: "atoms-buttons-button-button-base--default",

@@ -119,12 +119,18 @@ export const LinkSeeMore = ({
     showAnatomy = false,
     anatPart,
 }: LinkSeeMoreProps) => {
-    // Gốc luôn là MỘT part duy nhất ("Link") dù render ra thẻ nào (span/a/Link) — `href`
-    // vs `onPress` chỉ đổi THẺ, không đổi hình (§12g.1), nên cùng một tên part.
-    const rootPart = anatPart ?? (showAnatomy ? "Link" : undefined)
+    // Tên node PHẢI khớp CÁI ĐANG RENDER THẬT (2026-07-27, heroui tier): chỉ nhánh
+    // `HeroUILink` (không `href`, không `decorative`) thực sự là component heroui
+    // `Link` — hai nhánh kia render `<a>`/`<span>` trần, gắn tên "Link" ở đó là bịa
+    // (Rule 1). Fallback chỉ áp dụng cho đúng nhánh heroui; `anatPart` do composite
+    // cha forward vẫn thắng tuyệt đối, bất kể thẻ nào.
+    const isHeroUILinkBranch = !decorative && !href
+    const rootPart = anatPart ?? (showAnatomy && isHeroUILinkBranch ? "Link" : undefined)
 
+    // `Arrow` KHÔNG được tag: span nội bộ bọc glyph Phosphor, không phải component
+    // thật của ta lẫn heroui (cùng lý do `Icon` span của `Tabs.Base` không được tag).
     const arrow = (
-        <span aria-hidden data-anat-part={showAnatomy ? "Arrow" : undefined} className="inline-flex shrink-0">
+        <span aria-hidden className="inline-flex shrink-0">
             {/*
               Glyph Phosphor ở `size-3.5` cho khớp `text-sm`, nhỏ hơn `size-5` nên
               phải `weight="bold"` bù nét (§5.0a). Tailwind v4: `translate` là

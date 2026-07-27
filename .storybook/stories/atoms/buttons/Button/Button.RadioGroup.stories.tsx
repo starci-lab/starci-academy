@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button } from "@heroui/react"
 import { DotsThreeVerticalIcon, TrashIcon } from "@phosphor-icons/react"
 import { Button as ButtonNamespace, type ButtonRadioGroupItem } from "@sb-components/atoms/buttons/Button/Button"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — `Button.RadioGroup`: the system's ONE flex-wrap row of selectable
@@ -38,9 +38,11 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * namespace-consolidation round): `Default` / `Multiple` / `Trailing` /
  * `ItemAction`.
  *
- * Leaf atom wrapping HeroUI `Button`/`ButtonGroup` directly (no component in
- * the tree has its own story) ⇒ EMPTY deps — no `annotate` passed, no
- * `showAnatomy` added.
+ * Leaf atom wrapping HeroUI `Button`/`ButtonGroup` directly — no component in
+ * the tree has its OWN story, but the HeroUI renders themselves now get tagged
+ * (2026-07-27, heroui tier): `Button`/`ButtonGroup`/`ButtonGroup.Separator`,
+ * matching the identifiers imported from `@heroui/react`. No `storyId` — there's
+ * no story of ours to jump to for a library component.
  *
  * ✍️ Text shown on the panel (`leaf`/`reason`/`note`/`code`) and demo labels
  * are written in ENGLISH; JSDoc/comments stay in Vietnamese.
@@ -58,6 +60,13 @@ const meta: Meta<typeof ButtonNamespace.RadioGroup> = {
 export default meta
 
 type Story = StoryObj<typeof ButtonNamespace.RadioGroup>
+
+/** heroui TIER (2026-07-27) — the row's own raw HeroUI renders, tagged with the real identifier imported from `@heroui/react`. */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    Button: { tier: "heroui", role: "one selectable option — standalone, or the select segment inside a fused ButtonGroup" },
+    ButtonGroup: { tier: "heroui", role: "fuses one item's select button with its itemAction buttons into one connected row" },
+    "ButtonGroup.Separator": { tier: "heroui", role: "the seam between the select segment and an action segment" },
+}
 
 /**
  * The ONE item set for leaf `Default`, covering every optional shape of
@@ -111,6 +120,7 @@ const Controlled = <T extends string>(props: {
             ariaLabel={props.ariaLabel}
             trailing={props.trailing}
             itemAction={props.itemAction}
+            showAnatomy
         />
     )
 }
@@ -137,6 +147,7 @@ const ControlledMulti = <T extends string>(props: {
             values={values}
             onToggle={toggle}
             ariaLabel={props.ariaLabel}
+            showAnatomy
         />
     )
 }
@@ -153,6 +164,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="Button.RadioGroup"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `items`"
                 reason="Every option renders as a real HeroUI button inside a wrapping flex row, wrapping onto a new line instead of ever scrolling. A selected option fills in as a neutral `tertiary` button rather than `primary`, since a config toggle is never the page's one accent call to action, an unselected option stays a hollow `ghost` outline, and a locked option dims while it stays visible and stops accepting presses."
                 states={[
@@ -189,6 +201,7 @@ export const Multiple: Story = {
             <BlockAnatomy
                 name="Button.RadioGroup"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `multiple`"
                 reason="Flipping `multiple` turns the group into a set of independent toggles instead of one radio, producing the one pixel signature single-select can never reach: two or more buttons filled at once."
                 states={[
@@ -220,6 +233,7 @@ export const Trailing: Story = {
             <BlockAnatomy
                 name="Button.RadioGroup"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `trailing`"
                 reason="`trailing` is an escape hatch for one non-option action that must sit on the same row as the buttons, for example a `+N` overflow trigger. It is not part of the group's value: the component never treats it as an item, so pressing it never fires `onChange`."
                 states={[
@@ -238,7 +252,7 @@ export const Trailing: Story = {
                                 items={DIFFICULTY_ITEMS}
                                 initialValue="easy"
                                 ariaLabel="Select difficulty"
-                                trailing={<Button size="sm" variant="ghost">+2</Button>}
+                                trailing={<Button size="sm" variant="ghost" data-anat-part="Button">+2</Button>}
                             />
                         ),
                     },
@@ -258,6 +272,7 @@ export const ItemAction: Story = {
             <BlockAnatomy
                 name="Button.RadioGroup"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `itemAction`"
                 reason="Giving an item action buttons stops it from being a standalone `Button`: the select button plus every action fuse into one connected `ButtonGroup`, so the actions read as belonging to that option instead of floating beside it as separate controls. The seam between segments is HeroUI's `ButtonGroup.Separator`, recoloured to the border token and forced full height."
                 states={[
@@ -284,10 +299,10 @@ export const ItemAction: Story = {
                                 initialValue="attempt-1"
                                 ariaLabel="Select attempt"
                                 itemAction={(item) => [
-                                    <Button key="delete" size="sm" variant="tertiary" isIconOnly aria-label={`Delete ${item.value}`}>
+                                    <Button key="delete" size="sm" variant="tertiary" isIconOnly aria-label={`Delete ${item.value}`} data-anat-part="Button">
                                         <TrashIcon className="size-4" />
                                     </Button>,
-                                    <Button key="more" size="sm" variant="tertiary" isIconOnly aria-label={`More options for ${item.value}`}>
+                                    <Button key="more" size="sm" variant="tertiary" isIconOnly aria-label={`More options for ${item.value}`} data-anat-part="Button">
                                         <DotsThreeVerticalIcon className="size-4" />
                                     </Button>,
                                 ]}

@@ -25,6 +25,10 @@ export interface LinkBackProps {
     target?: string
     /** Fired when the link is pressed — the caller owns the routing. */
     onPress: () => void
+    /** `true` → tag the root with `data-anat-part="Link"` (heroui tier, 2026-07-27) so a BlockAnatomy panel can badge it. */
+    showAnatomy?: boolean
+    /** Anatomy tag override — a composite forwards its OWN atom name here (e.g. `"Link.Back"`) so the deps tree can jump to this atom's own story instead of the underlying HeroUI element. */
+    anatPart?: string
     /** Extra classes on the link. */
     className?: string
 }
@@ -38,12 +42,13 @@ export interface LinkBackProps {
  *
  * @param props - {@link LinkBackProps}
  */
-export const LinkBack = ({ label, target, onPress, className }: LinkBackProps) => {
+export const LinkBack = ({ label, target, onPress, showAnatomy = false, anatPart, className }: LinkBackProps) => {
     const text = label ?? (target ? `Back to ${target}` : "Back")
 
     return (
         <HeroUILink
             onPress={onPress}
+            data-anat-part={anatPart ?? (showAnatomy ? "Link" : undefined)}
             className={cn(
                 "group flex w-fit cursor-pointer items-center gap-2 text-sm text-muted no-underline transition-colors hover:text-foreground",
                 className,

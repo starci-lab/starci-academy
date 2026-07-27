@@ -1,13 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { BellIcon } from "@phosphor-icons/react"
 import { Badge } from "@sb-components/atoms/display/Badge/Badge"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — `Badge.Base`: bọc thẳng HeroUI `Badge` (+ `Badge.Anchor` khi có `children`).
- * Atom lá — không dựng lại atom nào khác nên KHÔNG có deps: bỏ hẳn prop `annotate`
- * (§12g, thầy chốt 2026-07-26 lần 2). `Anchor`/`Content`/`Badge`/`Skeleton` là span
- * NỘI BỘ của chính atom này (khe, không có nhà để nhảy tới), không phải deps.
+ * Atom lá — không dựng lại atom NÀO CỦA TA có story riêng ⇒ không có dep tầng atom.
+ * `Content` là span NỘI BỘ giữ `children` tự do (khe, không có nhà để nhảy tới),
+ * không phải dep.
+ *
+ * ⚠️ 2026-07-28 (naming pass): `Badge`/`Badge.Anchor`/`Skeleton` ĐỀU là import
+ * `@heroui/react` render trực tiếp ⇒ khai `tier: "heroui"` (không `storyId`) —
+ * trước đây bị bỏ sót hoàn toàn (annotate rỗng), cây nói dối bằng cách bỏ sót.
+ * `Anchor` đổi tên thật thành `Badge.Anchor` cho khớp compound HeroUI.
  *
  * `Badge.Base` là atom-WRAPPER hợp lệ giữ `children` (§12b) — anchor cần bọc phần tử
  * nó treo lên, không phải lỗ hổng cấm children.
@@ -19,6 +24,22 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * riêng, panel chỉ mount đúng state đang chọn nên cây deps và code snippet thuộc
  * đúng nó thay vì trộn lẫn cả hàng.
  */
+/** Every node this atom renders is a direct HeroUI import — all `tier: "heroui"`, no `storyId`. */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    Badge: {
+        tier: "heroui",
+        role: "the coloured pill itself — the count, the dot, or the capped label",
+    },
+    "Badge.Anchor": {
+        tier: "heroui",
+        role: "wraps the anchor content so the pill can hang off one of its corners",
+    },
+    Skeleton: {
+        tier: "heroui",
+        role: "the resting shimmer, drawn in place of the pill while isSkeleton is on",
+    },
+}
+
 const meta: Meta<typeof Badge.Base> = {
     title: "Atoms/Display/Badge/Badge.Base",
     component: Badge.Base,
@@ -47,6 +68,7 @@ export const Anchored: Story = {
                 name="Badge.Base"
                 tier="atom"
                 leaf="Props `count` / `dot` / `max`"
+                annotate={ANNOTATE}
                 reason="The one badge atom over HeroUI Badge covers count, dot, and cap through a single component, distinguished only by which prop the caller passes."
                 states={[
                     {
@@ -93,6 +115,7 @@ export const Colors: Story = {
                 name="Badge.Base"
                 tier="atom"
                 leaf="Prop `color`"
+                annotate={ANNOTATE}
                 reason="The badge renders standalone since no anchor child is passed, and each of the five tones carries a specific meaning, such as alert, new, or done, rather than acting as decoration."
                 states={[
                     {
@@ -139,6 +162,7 @@ export const Sizes: Story = {
                 name="Badge.Base"
                 tier="atom"
                 leaf="Prop `size`"
+                annotate={ANNOTATE}
                 reason="The badge renders standalone with no anchor, since size is easiest to compare without an icon attached, and the pill itself grows from small to large while the count value stays the same across every state."
                 states={[
                     {
@@ -173,6 +197,7 @@ export const Placement: Story = {
                 name="Badge.Base"
                 tier="atom"
                 leaf="Prop `placement`"
+                annotate={ANNOTATE}
                 reason="This prop is only meaningful with an anchor, since the badge hangs off a corner of whatever it decorates, so the corner has to be a caller choice; the same bell host and the same count are reused across every state, and only the anchor corner itself changes."
                 states={[
                     {
@@ -229,6 +254,7 @@ export const Skeleton: Story = {
                 name="Badge.Base"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
+                annotate={ANNOTATE}
                 states={[
                     {
                         name: "isSkeleton = true",

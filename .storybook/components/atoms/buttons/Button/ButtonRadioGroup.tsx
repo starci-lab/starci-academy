@@ -55,6 +55,8 @@ interface ButtonRadioGroupBaseProps<T extends string> {
      * `key`s) so each is an individual segment. Omit for a plain single-select row.
      */
     itemAction?: (item: ButtonRadioGroupItem<T>) => ReactNode
+    /** `true` → tag this row's own HeroUI renders (`Button`/`ButtonGroup`/`ButtonGroup.Separator`) with `data-anat-part` so a BlockAnatomy panel can badge them. */
+    showAnatomy?: boolean
     /** Extra classes on the row. */
     className?: string
 }
@@ -106,7 +108,7 @@ export type ButtonRadioGroupProps<T extends string> =
  * @param props - {@link ButtonRadioGroupProps}
  */
 export const ButtonRadioGroup = <T extends string>(props: ButtonRadioGroupProps<T>) => {
-    const { items, ariaLabel, trailing, itemAction, className } = props
+    const { items, ariaLabel, trailing, itemAction, showAnatomy = false, className } = props
     // narrow the discriminated union once — selection state + the press handler are
     // the only things that differ between single- and multi-select.
     const isSelected = (candidate: T): boolean =>
@@ -140,6 +142,7 @@ export const ButtonRadioGroup = <T extends string>(props: ButtonRadioGroupProps<
                             isDisabled={item.isDisabled}
                             aria-pressed={selected}
                             onPress={() => handlePress(item.value)}
+                            data-anat-part={showAnatomy ? "Button" : undefined}
                         >
                             {item.content}
                         </Button>
@@ -153,13 +156,19 @@ export const ButtonRadioGroup = <T extends string>(props: ButtonRadioGroupProps<
                 // injected at the head of its children (HeroUI's separator must sit
                 // INSIDE the following button), full-height.
                 return (
-                    <HeroButtonGroup key={item.value} size="sm" className="w-fit">
+                    <HeroButtonGroup
+                        key={item.value}
+                        size="sm"
+                        className="w-fit"
+                        data-anat-part={showAnatomy ? "ButtonGroup" : undefined}
+                    >
                         <Button
                             size="sm"
                             variant={selected ? "secondary" : "tertiary"}
                             isDisabled={item.isDisabled}
                             aria-pressed={selected}
                             onPress={() => handlePress(item.value)}
+                            data-anat-part={showAnatomy ? "Button" : undefined}
                         >
                             {item.content}
                         </Button>
@@ -168,7 +177,10 @@ export const ButtonRadioGroup = <T extends string>(props: ButtonRadioGroupProps<
                                 ? React.cloneElement(
                                     action,
                                     undefined,
-                                    <HeroButtonGroup.Separator className="!top-0 !h-full !bg-border !opacity-100" />,
+                                    <HeroButtonGroup.Separator
+                                        className="!top-0 !h-full !bg-border !opacity-100"
+                                        data-anat-part={showAnatomy ? "ButtonGroup.Separator" : undefined}
+                                    />,
                                     action.props.children,
                                 )
                                 : action,

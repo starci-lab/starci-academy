@@ -102,10 +102,15 @@ const PhaseScarcityNoteBase = ({
         <Cluster.Base
             gap="related"
             align="center"
+            // The `·` between the two clauses is drawn by the FRAME, not written as a text item.
+            // A mark that separates a track's items belongs to the track, the same way a rule
+            // does; written as content it also produced a `Separator` node in the structure tree
+            // whose link went to the generic Typography story.
+            separator
             // The PARENT's `anatPart` wins (the parent names this node); when
             // running in ITS OWN story it self-identifies as "Cluster" so the
             // Deps tree can see the frame it uses.
-            anatPart={anatPart ?? (showAnatomy ? "Cluster" : undefined)}
+            anatPart={anatPart ?? (showAnatomy ? "Cluster.Base" : undefined)}
             className={cn("text-warning-soft-foreground", className)}
             items={[
                 {
@@ -135,7 +140,7 @@ const PhaseScarcityNoteBase = ({
                             size="sm"
                             weight="medium"
                             text={`Còn ${seatsRemaining} suất giá ${PHASE_LABEL[currentPhase]}`}
-                            anatPart={showAnatomy ? "SeatCountLine" : undefined}
+                            anatPart={showAnatomy ? "Typography.Base" : undefined}
                         />
                     ),
                 },
@@ -151,7 +156,7 @@ const PhaseScarcityNoteBase = ({
                                 <Typography.Base
                                     size="sm"
                                     text={`giá tăng lên ${nextPhasePriceVnd.toLocaleString("vi-VN")}₫ sau đó`}
-                                    anatPart={showAnatomy ? "PriceRiseClause" : undefined}
+                                    anatPart={showAnatomy ? "Typography.Base" : undefined}
                                 />
                             ),
                         },

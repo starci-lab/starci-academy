@@ -149,7 +149,9 @@ const SearchAutocompleteBase = ({
                 onInputChange={onInputChange}
                 onSelectionChange={onSelectionChange}
             >
-                <ComboBox.InputGroup className="relative" data-anat-part={showAnatomy ? "InputGroup" : undefined}>
+                {/* Node name = the REAL heroui component rendered here (`ComboBox.InputGroup`) —
+                    NOT the shortened word "InputGroup" it used to carry. */}
+                <ComboBox.InputGroup className="relative" data-anat-part={showAnatomy ? "ComboBox.InputGroup" : undefined}>
                     <Input
                         id={controlId}
                         type="search"
@@ -159,7 +161,9 @@ const SearchAutocompleteBase = ({
                     />
                     <MagnifyingGlassIcon className="text-muted pointer-events-none absolute left-3 top-1/2 size-5 -translate-y-1/2" />
                 </ComboBox.InputGroup>
-                <ComboBox.Popover data-anat-part={showAnatomy ? "Popover" : undefined}>
+                {/* Node name = the REAL heroui component rendered here (`ComboBox.Popover`) —
+                    NOT the shortened word "Popover" it used to carry. */}
+                <ComboBox.Popover data-anat-part={showAnatomy ? "ComboBox.Popover" : undefined}>
                     <ListBox
                         // empty the collection while loading so `renderEmptyState` shows
                         // the spinner instead of a stale list

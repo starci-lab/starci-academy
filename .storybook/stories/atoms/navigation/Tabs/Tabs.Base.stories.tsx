@@ -1,14 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { HouseIcon, ChartBarIcon, ClockIcon } from "@phosphor-icons/react"
 import { Tabs } from "@sb-components/atoms/navigation/Tabs/Tabs"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — `Tabs.Base` bọc thẳng HeroUI `Tabs`. Các `data-anat-part` nó phát ra
- * (`Tab`/`Icon`/`Badge`/`Indicator`) đều là sub-part của compound HeroUI hoặc
- * span nội bộ (`Icon` chỉ là glyph dẫn đầu, `Badge` gọi thẳng HeroUI `Badge`
- * chứ không phải atom `Badge.Base` của hệ) ⇒ KHÔNG có deps thật, nên KHÔNG
- * truyền `annotate` (thầy chốt 2026-07-26 lần 2).
+ * (`Tabs.Tab`/`Tabs.Indicator`/`Badge.Anchor`/`Badge`/`Skeleton`) đều là sub-part
+ * của compound HeroUI THẬT — 2026-07-27 (heroui tier thêm vào canon): mỗi cái vẫn
+ * khai `tier: "heroui"` trong `ANNOTATE` bên dưới, tên khớp Y HỆT identifier import
+ * (không cần `storyId`). Đổi tên từ `Tab`/`Badge`/`Indicator` (tên vai, không phải
+ * tên component thật) sang tên dotted khớp compound. Span `Icon` bọc glyph Phosphor
+ * caller-supplied KHÔNG được tag — không phải component thật của ta lẫn heroui.
  *
  * Leaf `Skeleton` đổi tên từ `Loading` (2026-07-27, thầy chốt: leaf mang TÊN
  * PROP — prop sinh ra leaf này là `isSkeleton`). §12g: leaf `isSkeleton` phải
@@ -31,6 +33,14 @@ export default meta
 
 type Story = StoryObj<typeof Tabs.Base>
 
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "Tabs.Tab": { tier: "heroui", role: "one tab — selectable, or disabled per item.isDisabled" },
+    "Tabs.Indicator": { tier: "heroui", role: "the moving highlight/underline marking the selected tab" },
+    "Badge.Anchor": { tier: "heroui", role: "anchors the count badge to the corner of a tab's label" },
+    Badge: { tier: "heroui", role: "the floated unread/pending count" },
+    Skeleton: { tier: "heroui", role: "shimmer bar standing in for a tab's label or underline" },
+}
+
 const BASE_ITEMS = [
     { key: "overview", label: "Overview" },
     { key: "lessons", label: "Lessons" },
@@ -49,6 +59,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="Tabs.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Default"
                 reason="The one tab-strip atom wrapping HeroUI Tabs. Its variants (icon, badge, disabled) come from per-item props rather than separate components, so the leaf is the composition itself."
                 states={[
@@ -108,6 +119,7 @@ export const WithIcon: Story = {
             <BlockAnatomy
                 name="Tabs.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="WithIcon"
                 states={[
                     {
@@ -141,6 +153,7 @@ export const WithBadge: Story = {
             <BlockAnatomy
                 name="Tabs.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="WithBadge"
                 states={[
                     {
@@ -178,6 +191,7 @@ export const Skeleton: Story = {
             <BlockAnatomy
                 name="Tabs.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isSkeleton`"
                 reason="isSkeleton's shape follows variant instead of always drawing the same shimmer pill, the same pixel commitment `size` makes on Button.Base's own skeleton."
                 states={[

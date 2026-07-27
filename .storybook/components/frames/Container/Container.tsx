@@ -107,7 +107,7 @@ export interface ContainerBaseProps {
     className?: string
     /**
      * Name THIS measure itself in the BlockAnatomy panel — overrides the default name
-     * `"Container"`. Exists so the caller (screen) doesn't have to wrap an extra empty
+     * `"Container.Base"`. Exists so the caller (screen) doesn't have to wrap an extra empty
      * `div` just to attach `data-anat-part`; same mold as `SurfaceCard.*`.
      */
     anatPart?: string
@@ -146,7 +146,7 @@ const ContainerBase = ({
         // query measures the box of the element that opens the container, so
         // placing it here is what lets children measure the actual measure.
         <div
-            data-anat-part={anatPart ?? (showAnatomy ? "Container" : undefined)}
+            data-anat-part={anatPart ?? (showAnatomy ? "Container.Base" : undefined)}
             className={cn(
                 "@container mx-auto w-full",
                 SIZE_CLASS[size],

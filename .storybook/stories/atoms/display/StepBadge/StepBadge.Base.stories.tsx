@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { StepBadge } from "@sb-components/atoms/display/StepBadge/StepBadge"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — `StepBadge.Base`: viên tròn đánh số DUY NHẤT cho các luồng nhiều bước.
@@ -16,6 +16,12 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * `showAnatomy` để tab Deps của `BlockAnatomy` badge được — leaf `States` bật ở
  * ô `done` (không phải ô đầu tiên theo thứ tự khai) để cùng lúc lộ cả `Badge`
  * lẫn `Icon` trong một cây.
+ *
+ * ⚠️ 2026-07-28 (naming pass): `Badge` (root span) và `Icon` (wraps the passed
+ * `CheckIcon` glyph) are PLAIN elements, not fixed importable components — kept
+ * in the DOM for future use but given NO name in `annotate`, so neither becomes
+ * a fake node (§ luật 1). Only `Skeleton` is a real, direct HeroUI import —
+ * `tier: "heroui"`, no `storyId`.
  *
  * ⭐ Vớt state từ hai story CŨ (pre-canon, §12g cấm tách leaf theo GIÁ TRỊ):
  * `.storybook/stories/atoms/display/StepBadge/StepBadge.Base.stories.tsx` bản
@@ -53,6 +59,13 @@ atom replaces; \`md\` (24px) is for a badge that needs to read at a glance insid
 bigger callout. Size never changes tone or shape, only scale.
 `
 
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    Skeleton: {
+        tier: "heroui",
+        role: "the resting round shimmer, drawn in place of the badge while isSkeleton is on",
+    },
+}
+
 const meta: Meta<typeof StepBadge.Base> = {
     title: "Atoms/Display/StepBadge/StepBadge.Base",
     component: StepBadge.Base,
@@ -75,6 +88,7 @@ export const Default: Story = {
                 name="StepBadge.Base"
                 tier="atom"
                 leaf="Bare badge"
+                annotate={ANNOTATE}
                 reason="The one step badge in the system. Every leaf below it differs by exactly one prop, so this is the baseline you compare against."
                 states={[
                     {
@@ -97,6 +111,7 @@ export const States: Story = {
                 name="StepBadge.Base"
                 tier="atom"
                 leaf="Prop `state`"
+                annotate={ANNOTATE}
                 reason="State is where the badge sits in the flow, not a colour pick. Done and active both fill solid; muted stays on the flat default surface so a row of upcoming steps reads as calm, not as another live colour competing for attention."
                 states={[
                     {
@@ -131,6 +146,7 @@ export const Sizes: Story = {
                 name="StepBadge.Base"
                 tier="atom"
                 leaf="Prop `size`"
+                annotate={ANNOTATE}
                 reason="Size only scales the box, the text, and the check that stands in for a done step — the state logic underneath never changes."
                 states={[
                     {
@@ -163,6 +179,7 @@ export const Skeleton: Story = {
                 name="StepBadge.Base"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
+                annotate={ANNOTATE}
                 reason="Whoever owns the shape owns its resting state, so the badge draws its own round shimmer instead of sharing a generic skeleton component. A done/active/muted distinction has no shape once the content is gone, so this prop only tracks size."
                 states={[
                     {

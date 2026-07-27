@@ -18,12 +18,14 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *
  * This atom composes `Typography.Base` for ALL three parts now, amount included
  * (previously raw HeroUI `Typography`, kept only because `Typography.Base` did not
- * cover heading sizes yet). `showAnatomy`/`anatPart` forward down into those calls, so
- * `Amount`/`Original`/`Period` là DEPS THẬT: cả ba đều dựng lại `Typography.Base`, và
- * atom đó CÓ story riêng (`Atoms/Text/Typography/Typography.Base`) nên cả ba đều khai
- * `storyId` để bấm nhảy sang được — đúng luật "deps phải bấm được" (thầy chốt
- * 2026-07-26). ⚠️ Bản trước ghi "Typography.Base has no story of its own yet" là SAI
- * sự thật; hệ quả là ba node bị BlockAnatomy lọc bỏ và tab Deps không mọc ra.
+ * cover heading sizes yet). `showAnatomy`/`anatPart` forward down into those calls,
+ * and the atom tags all three with the SAME `anatPart="Typography.Base"` — the REAL
+ * component name (§ naming pass, 2026-07-28), not the role words `Amount`/
+ * `Original`/`Period` a previous pass used. The panel groups nodes by DOM element,
+ * not by name, so three same-named `Typography.Base` nodes still show up as three
+ * separate branches; only the label/story link they share is now honest about what
+ * they actually are. Same treatment for the skeleton branch's two `HeroSkeleton`
+ * bars, now both named `Skeleton` (real HeroUI import), `tier: "heroui"`.
  *
  * `original`/`period` used to be locked to a fixed small size regardless of `size` —
  * now they ride the SAME per-size token table as `amount`, so `size="lg"` reads as one
@@ -73,23 +75,22 @@ type Story = StoryObj<typeof PricePoint.Base>
 /** Story đích của cả ba part — chúng đều là `Typography.Base`, khác nhau ở cỡ/tone. */
 const TYPOGRAPHY_STORY = "atoms-text-typography-typography-base--plain"
 
-/** Chú giải phần Amount — composed từ `Typography.Base`, luôn có mặt khi render giá thật. */
-const PART_AMOUNT: AnatomyAnnotation = {
-    role: "The prominent number — a Typography.Base heading riding this atom's own per-size type scale.",
+/**
+ * Chú giải DÙNG CHUNG cho cả ba part (amount/original/period): tất cả đều là cùng
+ * MỘT real component, `Typography.Base`, nên chia sẻ một entry theo tên thật thay
+ * vì ba tên bịa `Amount`/`Original`/`Period` (§ naming pass, 2026-07-28) — panel
+ * gom node theo phần tử DOM nên ba lần xuất hiện vẫn ra ba nhánh riêng.
+ */
+const PART_TYPOGRAPHY: AnatomyAnnotation = {
+    role: "One of the three price parts (the prominent amount, the struck original, or the billing period) — each a Typography.Base instance riding this atom's own per-size type scale.",
     tier: "atom",
     storyId: TYPOGRAPHY_STORY,
 }
-/** Chú giải phần Original — struck-through, chỉ có mặt khi `original` được truyền. */
-const PART_ORIGINAL: AnatomyAnnotation = {
-    role: "The struck-through original price — Typography.Base at the size table's muted, secondary size.",
-    tier: "atom",
-    storyId: TYPOGRAPHY_STORY,
-}
-/** Chú giải phần Period — chỉ có mặt khi `period` được truyền. */
-const PART_PERIOD: AnatomyAnnotation = {
-    role: "The billing cadence suffix — Typography.Base at the size table's smallest, most muted size.",
-    tier: "atom",
-    storyId: TYPOGRAPHY_STORY,
+
+/** Chú giải cho bar shimmer — cùng một HeroUI `Skeleton` cho cả amount-bar lẫn period-bar. */
+const PART_SKELETON: AnatomyAnnotation = {
+    role: "A shimmer bar mirroring either the amount or the period box at this size.",
+    tier: "heroui",
 }
 
 /** Leaf TRẦN — chỉ `amount`, không `original`/`period`, `size` mặc định `"md"`. */
@@ -101,7 +102,7 @@ export const Default: Story = {
                 tier="atom"
                 leaf="Bare price"
                 reason="The baseline unit: just the amount, at the default md scale. Every leaf below differs by exactly one prop, so this is what you compare the others against."
-                annotate={{ Amount: PART_AMOUNT }}
+                annotate={{ "Typography.Base": PART_TYPOGRAPHY }}
                 states={[
                     {
                         name: "original and period both unset, size unset",
@@ -124,7 +125,7 @@ export const Original: Story = {
                 tier="atom"
                 leaf="Prop `original`"
                 reason="The struck price only earns its spot when there is a real discount — it lets the reader see the drop for themselves instead of trusting a badge that claims one."
-                annotate={{ Amount: PART_AMOUNT, Original: PART_ORIGINAL }}
+                annotate={{ "Typography.Base": PART_TYPOGRAPHY }}
                 states={[
                     {
                         name: "original unset",
@@ -153,7 +154,7 @@ export const Period: Story = {
                 tier="atom"
                 leaf="Prop `period`"
                 reason="A recurring price needs the cadence right next to the number, or the reader has to hunt the page for a `/month` disclaimer somewhere else."
-                annotate={{ Amount: PART_AMOUNT, Period: PART_PERIOD }}
+                annotate={{ "Typography.Base": PART_TYPOGRAPHY }}
                 states={[
                     {
                         name: "period unset",
@@ -185,7 +186,7 @@ export const Sizes: Story = {
                 tier="atom"
                 leaf="Prop `size`"
                 reason="Pick size from where the price sits, not from the number's own weight — a pricing page hero and a compact plan row both show plain dollar amounts. `size` drives all three parts off one shared token table, so the unit grows as one coherent piece instead of a big number next to leftover tiny text."
-                annotate={{ Amount: PART_AMOUNT, Original: PART_ORIGINAL, Period: PART_PERIOD }}
+                annotate={{ "Typography.Base": PART_TYPOGRAPHY }}
                 states={[
                     {
                         name: "size = \"sm\"",
@@ -229,7 +230,7 @@ export const Skeleton: Story = {
                 tier="atom"
                 leaf="Prop `isSkeleton`"
                 reason="Whoever owns the shape owns its resting state, so the price draws its own shimmer instead of a shared generic placeholder. `original` has no placeholder of its own — passing it during `isSkeleton` changes nothing, since the bar only ever reads `period`."
-                annotate={{ Amount: PART_AMOUNT, Period: PART_PERIOD }}
+                annotate={{ Skeleton: PART_SKELETON }}
                 states={[
                     {
                         name: "isSkeleton = true, size = \"sm\", period unset",

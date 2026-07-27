@@ -25,11 +25,11 @@ export default meta
 type Story = StoryObj<typeof Stack.H>
 
 const TRACK_PARTS: Array<AnatomyNode> = [
-    { name: "Track", tier: "composite", role: "the horizontal flex axis, owning gap (§10), align, justify, and wrap" },
+    { name: "Flex.Base", tier: "composite", role: "the horizontal flex axis, owning gap (§10), align, justify, and wrap" },
 ]
 const DIVIDER_PARTS: Array<AnatomyNode> = [
-    { name: "Track", tier: "composite", role: "the horizontal flex axis, owning gap (§10)" },
-    { name: "Line", tier: "atom", role: "a vertical Divider.Base (`self-stretch`) inserted between two children" },
+    { name: "Flex.Base", tier: "composite", role: "the horizontal flex axis, owning gap (§10)" },
+    { name: "Divider.Base", tier: "atom", role: "a vertical Divider.Base (`self-stretch`) inserted between two children" },
 ]
 
 /** Default — a horizontal row, seam `related(2)`: elements belonging to the SAME cluster. */

@@ -1,13 +1,15 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Pagination } from "@sb-components/atoms/navigation/Pagination/Pagination"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Pagination.Base` bọc thẳng HeroUI `Pagination` (`Previous`/`Link`/
- * `Ellipsis`/`Next` đều là sub-part của compound HeroUI, không phải atom nào
- * của hệ có story riêng) ⇒ KHÔNG có deps, nên KHÔNG truyền `annotate` (thầy
- * chốt 2026-07-26 lần 2: "atom lá bọc thẳng HeroUI thì bỏ hẳn prop").
+ * ATOM — `Pagination.Base` bọc thẳng HeroUI `Pagination` (`Pagination.Previous`/
+ * `Pagination.Link`/`Pagination.Ellipsis`/`Pagination.Next` đều là sub-part của
+ * compound HeroUI, không phải atom nào của hệ có story riêng). 2026-07-27: heroui
+ * tier thêm vào canon — mỗi sub-part đó vẫn là import THẬT, nên vẫn khai
+ * `tier: "heroui"` trong `ANNOTATE` bên dưới, tên khớp Y HỆT identifier import
+ * (không cần `storyId`, không có story CỦA TA để nhảy sang).
  *
  * Leaf `Skeleton` đổi tên từ `Loading` (2026-07-27, thầy chốt: leaf mang TÊN
  * PROP — prop sinh ra leaf này là `isSkeleton`). §12g đòi Skeleton render đủ
@@ -33,6 +35,14 @@ export default meta
 
 type Story = StoryObj<typeof Pagination.Base>
 
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "Pagination.Previous": { tier: "heroui", role: "steps back one page, disabled on page 1" },
+    "Pagination.Link": { tier: "heroui", role: "one concrete page number, filled when it's the active page" },
+    "Pagination.Ellipsis": { tier: "heroui", role: "collapses a run of distant pages between the visible ones" },
+    "Pagination.Next": { tier: "heroui", role: "steps forward one page, disabled on the last page" },
+    Skeleton: { tier: "heroui", role: "shimmer square standing in for a page link before totalPages is known" },
+}
+
 /** Default — ít trang → hiện đủ mọi trang, không '…'. Migrated to `states` 2026-07-27. */
 export const Default: Story = {
     render: () => {
@@ -42,6 +52,7 @@ export const Default: Story = {
                 <BlockAnatomy
                     name="Pagination.Base"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Default"
                     reason="The one page-nav atom wrapping HeroUI Pagination — windowing and the '…' ellipsis are a leaf (prop-driven) for large page counts, not a separate component."
                     states={[
@@ -67,6 +78,7 @@ export const ManyPages: Story = {
                 <BlockAnatomy
                     name="Pagination.Base"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="ManyPages"
                     states={[
                         {
@@ -89,6 +101,7 @@ export const Skeleton: Story = {
             <BlockAnatomy
                 name="Pagination.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isSkeleton`"
                 states={[
                     {

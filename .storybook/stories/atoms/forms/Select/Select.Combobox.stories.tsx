@@ -1,15 +1,23 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Select } from "@sb-components/atoms/forms/Select/Select"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — `Select.Combobox`: autocomplete gõ-lọc chọn MỘT, bọc thẳng HeroUI `ComboBox`.
  *
- * Atom lá (§12g cuối bài): field gõ + caret là HeroUI `ComboBox.InputGroup`/`Trigger`,
- * khung nhãn/mô tả/lỗi là `FieldFrame` NỘI BỘ (không có story riêng). Không component
- * nào ở đây có story riêng để nhảy tới ⇒ KHÔNG dùng `annotate`, bỏ hẳn prop.
+ * Atom lá: field gõ + caret là HeroUI `Input`/`ComboBox.Trigger`, khung nhãn/mô
+ * tả/lỗi là `FieldFrame` NỘI BỘ (không có story riêng). Không component nào ở
+ * đây có story riêng để nhảy tới ⇒ `annotate` không có `storyId` — nhưng bốn
+ * part heroui thật (`Input`/`ComboBox.Trigger`/`Label`/`Skeleton`) vẫn cần tier
+ * `heroui` để panel hai-luật không lặng lẽ bỏ sót chúng (2026-07-28).
  */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    Input: { tier: "heroui", role: "typed filter text field" },
+    "ComboBox.Trigger": { tier: "heroui", role: "caret button opening the list" },
+    Label: { tier: "heroui", role: "field label line" },
+    Skeleton: { tier: "heroui", role: "loading placeholder" },
+}
 
 const meta: Meta = { title: "Atoms/Forms/Select/Select.Combobox", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
 export default meta
@@ -32,6 +40,7 @@ export const Default: Story = {
                 <BlockAnatomy
                     name="Select.Combobox"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Default"
                     states={[
                         {
@@ -68,6 +77,7 @@ export const WithLabel: Story = {
                 <BlockAnatomy
                     name="Select.Combobox"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Props `label` / `hint`"
                     states={[
                         {
@@ -105,6 +115,7 @@ export const Required: Story = {
                 <BlockAnatomy
                     name="Select.Combobox"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `isRequired`"
                     states={[
                         {
@@ -150,6 +161,7 @@ export const Value: Story = {
                 <BlockAnatomy
                     name="Select.Combobox"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `value`"
                     states={[
                         {
@@ -187,6 +199,7 @@ export const Disabled: Story = {
             <BlockAnatomy
                 name="Select.Combobox"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isDisabled`"
                 states={[
                     {
@@ -224,6 +237,7 @@ export const Invalid: Story = {
             <BlockAnatomy
                 name="Select.Combobox"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isInvalid`"
                 states={[
                     {
@@ -259,6 +273,7 @@ export const Error: Story = {
                 <BlockAnatomy
                     name="Select.Combobox"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `errorMessage`"
                     states={[
                         {
@@ -294,6 +309,7 @@ export const Skeleton: Story = {
             <BlockAnatomy
                 name="Select.Combobox"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isSkeleton`"
                 states={[
                     {

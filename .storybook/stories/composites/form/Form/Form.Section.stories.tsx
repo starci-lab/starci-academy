@@ -34,7 +34,14 @@ const TITLE_ONLY_PARTS: Array<AnatomyNode> = [
         name: "Header",
         tier: "composite",
         role: "the group's opening block, carrying the title alone",
-        children: [{ name: "Title", tier: "atom", role: "the group title (Typography.Sm medium, §9b)" }],
+        children: [
+            {
+                name: "Typography.Base",
+                tier: "atom",
+                role: "the group title (Sm medium, §9b)",
+                storyId: "atoms-text-typography-typography-base--bold",
+            },
+        ],
     },
     { name: "Body", tier: "composite", role: "the field column (`body`/`children`) on the `gap` rhythm" },
 ]
@@ -45,8 +52,12 @@ const WITH_DESCRIPTION_PARTS: Array<AnatomyNode> = [
         tier: "composite",
         role: "the group's opening block, carrying the title and its description together on a tight `gap-1` (§10b)",
         children: [
-            { name: "Title", tier: "atom", role: "the group title (Typography.Sm medium)" },
-            { name: "Description", tier: "atom", role: "the group description (Typography.Xs muted, §9a)" },
+            {
+                name: "Typography.Base",
+                tier: "atom",
+                role: "the title (Sm medium) and the description (Xs muted, §9a) — same real component, two props",
+                storyId: "atoms-text-typography-typography-base--colors",
+            },
         ],
     },
     { name: "Body", tier: "composite", role: "the field column (`body`/`children`) on the `gap` rhythm" },

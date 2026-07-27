@@ -1,27 +1,45 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CaretDownIcon, CopyIcon, GearIcon, PencilSimpleIcon, SignOutIcon, TrashIcon, UserIcon } from "@phosphor-icons/react"
 import { Menu } from "@sb-components/atoms/overlay/Menu/Menu"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — `Menu.Base`: atom menu DUY NHẤT, bọc thẳng HeroUI `Dropdown` (Trigger ·
  * Popover · Menu · Section · Item). Không có atom con nào tách ra story riêng —
  * `items`/`sections`/icon/disabled đều là LEAF prop-driven của chính `Menu.Base`.
  *
- * ⛔ KHÔNG dùng `annotate`/`parts` (bỏ 2026-07-26) — hai lý do cộng lại:
- * 1. `DropdownPopover` render qua **PORTAL** ra `document.body`, nằm NGOÀI render-box
- *    mà {@link BlockAnatomy} quét (nó leo ancestor BÊN TRONG `hostRef`). Khai part cho
- *    `Menu`/`Item`/`Section`/`SectionHeader` chỉ tạo entry không bao giờ vào cây —
- *    trôi trong im lặng, không ai biết.
- * 2. `Trigger` tuy nằm TRONG render-box nhưng là `HeroButton` thô (không phải
- *    `Button.Base` có story riêng) — kể cả không bị chặn portal, nó cũng không có
- *    `storyId` thật để bấm nhảy tới. Atom lá bọc thẳng HeroUI ⇒ không có deps thật.
+ * 🌿 `annotate` (2026-07-28): mọi import HeroUI mà `Menu.tsx` render thẳng đều khai
+ * `tier: "heroui"` — tầng `heroui` KHÔNG cần `storyId` (không có story của TA để trỏ
+ * sang). Tên node đúng bằng tên import THẬT (`DropdownTrigger`/`DropdownPopover`/
+ * `DropdownMenu`/`DropdownSection`/`Header`/`DropdownItem`), không phải vai nó đóng.
+ *
+ * ⚠️ Vẫn còn GIỚI HẠN PORTAL: `DropdownPopover` (và mọi thứ lồng trong nó —
+ * `DropdownMenu`/`DropdownSection`/`Header`/`DropdownItem`) render ra `document.body`,
+ * NGOÀI render-box mà {@link BlockAnatomy} quét, nên dù đã khai `annotate` chúng vẫn
+ * KHÔNG hiện trong cây Structure — khai đúng tên vẫn cần, chỉ là honesty của DATA,
+ * không phải lời hứa sẽ THẤY được. Chỉ `DropdownTrigger` (không portal) và `Skeleton`
+ * (nhánh `isSkeleton`, không dựng Dropdown) thực sự lên cây.
  *
  * ✍️ Chữ hiện ra UI (label menu, `triggerLabel`, `why`/`reason`) viết TIẾNG ANH
  * (thầy chốt 2026-07-26) — kể cả nội dung demo, không riêng phần chú giải panel.
  *
  * 2026-07-27: di trú toàn bộ leaf sang API `states[]` (§8/§4a).
  */
+
+/**
+ * Mọi import `@heroui/react` (+ `Header` từ `react-aria-components`, cùng hoàn cảnh:
+ * thư viện ngoài, không có story của ta) mà `Menu.Base` render thẳng. Dùng CHUNG cho
+ * mọi leaf trong file — cây thật vẫn phụ thuộc leaf đang mở render gì.
+ */
+const MENU_ANNOTATE: Record<string, AnatomyAnnotation> = {
+    DropdownTrigger: { tier: "heroui", role: "Pressable trigger wrapper (react-aria DialogTrigger) around the HeroButton." },
+    DropdownPopover: { tier: "heroui", role: "Portal surface the menu opens into (renders into document.body — never reachable here)." },
+    DropdownMenu: { tier: "heroui", role: "The react-aria Menu collection (renders into document.body — never reachable here)." },
+    DropdownSection: { tier: "heroui", role: "A titled group of rows (renders into document.body — never reachable here)." },
+    Header: { tier: "heroui", role: "react-aria-components section label (renders into document.body — never reachable here)." },
+    DropdownItem: { tier: "heroui", role: "One selectable row, flat or grouped (renders into document.body — never reachable here)." },
+    Skeleton: { tier: "heroui", role: "Shimmer placeholder bar/circle standing in for one resting row." },
+}
 
 const meta: Meta<typeof Menu.Base> = {
     title: "Atoms/Overlay/Menu/Menu.Base",
@@ -41,6 +59,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="Menu.Base"
                 tier="atom"
+                annotate={MENU_ANNOTATE}
                 leaf="Default"
                 reason="The one action-menu atom wrapping HeroUI Dropdown. Callers pass data, items or sections plus a trigger label, and the atom builds every row itself, owning both layout and icon scale."
                 states={[
@@ -78,6 +97,7 @@ export const TriggerVariants: Story = {
             <BlockAnatomy
                 name="Menu.Base"
                 tier="atom"
+                annotate={MENU_ANNOTATE}
                 leaf="Prop `triggerVariant`"
                 reason="The trigger is a real HeroButton, so it carries the same four visuals as every button in the system. Picking the variant decides how loud the menu's entry point reads next to its neighbours, a toolbar full of primary triggers would shout."
                 states={[
@@ -174,6 +194,7 @@ export const WithIcons: Story = {
             <BlockAnatomy
                 name="Menu.Base"
                 tier="atom"
+                annotate={MENU_ANNOTATE}
                 leaf="Prop `icon` (per item)"
                 states={[
                     {
@@ -211,6 +232,7 @@ export const WithTriggerIcon: Story = {
             <BlockAnatomy
                 name="Menu.Base"
                 tier="atom"
+                annotate={MENU_ANNOTATE}
                 leaf="Prop `triggerIcon`"
                 states={[
                     {
@@ -248,6 +270,7 @@ export const WithSections: Story = {
             <BlockAnatomy
                 name="Menu.Base"
                 tier="atom"
+                annotate={MENU_ANNOTATE}
                 leaf="Prop `sections`"
                 states={[
                     {
@@ -294,6 +317,7 @@ export const DisabledItem: Story = {
             <BlockAnatomy
                 name="Menu.Base"
                 tier="atom"
+                annotate={MENU_ANNOTATE}
                 leaf="Prop `isDisabled` (per item)"
                 states={[
                     {
@@ -330,6 +354,7 @@ export const Skeleton: Story = {
             <BlockAnatomy
                 name="Menu.Base"
                 tier="atom"
+                annotate={MENU_ANNOTATE}
                 leaf="Prop `isSkeleton`"
                 reason="Whoever owns the popover shape owns its resting state, so the atom draws its own shimmer instead of pulling in a shared skeleton component."
                 states={[

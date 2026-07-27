@@ -74,13 +74,30 @@ const items: ReadonlyArray<SurfaceCardAccordionItem> = [
  * `Feedback.Empty` is a REAL DEP of the `Empty` leaf (its own story, clickable) —
  * matches the icon+title+description shape (NO action) rendering at this leaf ⇒
  * points to the right `Description` leaf over there. Every other part of the frame
- * (`Surface`/`Header`/`Row`) has NO story of its own, so NONE are declared — the old
+ * (`Surface`/`Header`) has NO story of its own, so NONE are declared — the old
  * `parts={...}` line used to declare them, creating dead entries (unclickable).
  */
 const PART_FEEDBACK_EMPTY: AnatomyAnnotation = {
     role: "Fills the surface when items is empty, showing an icon with a title and description.",
     tier: "composite",
     storyId: "composites-feedback-feedback-feedback-empty--description",
+}
+
+/**
+ * ⭐ 2026-07-27 — `Accordion.Item` renders straight from `@heroui/react` (this frame
+ * builds each trigger row on HeroUI's own `Accordion.Item`, no port of ours in
+ * between). It carries `data-anat-part="Accordion.Item"` directly, so it needs the
+ * `heroui` tier here to show up at all — a `heroui` node needs no `storyId` (there is
+ * no story of ours to jump to), the tier alone is what keeps the panel from hiding it.
+ * Previously named `"Row"`, a role label that hid which real component was rendering.
+ * Applies to every leaf below that mounts REAL (non-skeleton) items; `Loading` mounts
+ * `AccordionFrameSkeleton` instead, a plain mimic `<div>`, not this component.
+ */
+const ACCORDION_ITEM_ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "Accordion.Item": {
+        tier: "heroui",
+        role: "one collapsible trigger + panel row, rendered directly from HeroUI's Accordion.Item.",
+    },
 }
 
 export const Default: Story = {
@@ -90,6 +107,7 @@ export const Default: Story = {
                 name="SurfaceCard.Accordion"
                 tier="composite"
                 leaf="Default"
+                annotate={ACCORDION_ITEM_ANNOTATE}
                 reason="No `label`/`description` (bare) renders the Surface wrapping the Rows directly, with no Header above it."
                 states={[
                     {
@@ -117,6 +135,7 @@ export const WithLabel: Story = {
                 name="SurfaceCard.Accordion"
                 tier="composite"
                 leaf="WithLabel"
+                annotate={ACCORDION_ITEM_ANNOTATE}
                 states={[
                     {
                         name: "label = \"Resources\"",
@@ -151,6 +170,7 @@ export const Variants: Story = {
                 name="SurfaceCard.Accordion"
                 tier="composite"
                 leaf="Prop `variant`"
+                annotate={ACCORDION_ITEM_ANNOTATE}
                 reason="`variant` is one of three independent axes shared with SurfaceCard.Base/.List/.CrossList: it answers whether this frame sits directly on the page background or nested inside another surface, never both at once (§1a)."
                 states={[
                     {
@@ -200,6 +220,7 @@ export const WithTitleEnd: Story = {
                 name="SurfaceCard.Accordion"
                 tier="composite"
                 leaf="WithTitleEnd"
+                annotate={ACCORDION_ITEM_ANNOTATE}
                 states={[
                     {
                         name: "items[].titleEnd set (status Chip)",
@@ -237,6 +258,7 @@ export const MultipleExpand: Story = {
                 name="SurfaceCard.Accordion"
                 tier="composite"
                 leaf="MultipleExpand"
+                annotate={ACCORDION_ITEM_ANNOTATE}
                 states={[
                     {
                         name: "allowsMultipleExpanded = true",
@@ -265,6 +287,7 @@ export const NoneExpand: Story = {
                 name="SurfaceCard.Accordion"
                 tier="composite"
                 leaf="NoneExpand"
+                annotate={ACCORDION_ITEM_ANNOTATE}
                 states={[
                     {
                         name: "defaultExpandedKeys = new Set()",

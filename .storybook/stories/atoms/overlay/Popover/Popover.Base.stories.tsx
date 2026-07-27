@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { InfoIcon } from "@phosphor-icons/react"
 import { Popover } from "@sb-components/atoms/overlay/Popover/Popover"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — `Popover.Base`: atom click-panel DUY NHẤT, bọc thẳng HeroUI `Popover` +
@@ -10,14 +10,17 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * `triggerVariant`/`placement`/`showArrow` đều là LEAF prop-driven của chính
  * `Popover.Base` (§12g — audit 2026-07-26 bổ sung 3 leaf cuối, trước đó bị thiếu).
  *
- * ⛔ KHÔNG dùng `annotate`/`parts` (bỏ 2026-07-26) — hai lý do cộng lại:
- * 1. `Popover.Content` render qua **PORTAL** ra `document.body`, nằm NGOÀI render-box
- *    mà {@link BlockAnatomy} quét (nó leo ancestor BÊN TRONG `hostRef`). Khai part cho
- *    `Content`/`Arrow`/`Heading`/`Body` chỉ tạo entry không bao giờ vào cây — trôi
- *    trong im lặng, không ai biết.
- * 2. `Trigger` tuy nằm TRONG render-box nhưng là `HeroButton` thô (không phải
- *    `Button.Base` có story riêng) — kể cả không bị chặn portal, nó cũng không có
- *    `storyId` thật để bấm nhảy tới. Atom lá bọc thẳng HeroUI ⇒ không có deps thật.
+ * 🌿 `annotate` (2026-07-28): mọi import HeroUI mà `Popover.tsx` render thẳng đều
+ * khai `tier: "heroui"` — tầng `heroui` KHÔNG cần `storyId`. Tên node đúng bằng tên
+ * import THẬT (`Button` cho trigger; `Popover.Content`/`Popover.Arrow`/
+ * `Popover.Heading` — dot-access thật trên compound `HeroPopover` — cho panel), không
+ * phải vai nó đóng (KHÔNG còn gọi trigger là `"Trigger"` hay panel là `"Content"` trơn).
+ *
+ * ⚠️ Vẫn còn GIỚI HẠN PORTAL: `Popover.Content` (và `Popover.Arrow`/`Popover.Heading`
+ * lồng trong nó) render ra `document.body`, NGOÀI render-box mà {@link BlockAnatomy}
+ * quét, nên dù đã khai `annotate` chúng vẫn KHÔNG hiện trong cây Structure — khai
+ * đúng tên vẫn cần, chỉ là honesty của DATA, không phải lời hứa sẽ THẤY được. Chỉ
+ * `Button` (trigger, không portal) thực sự lên cây.
  *
  * 🧭 Leaf `Placement`/`ShowArrow` mở panel qua PORTAL nên phải `defaultOpen` mới THẤY
  * hình (đóng = không có gì để soi). Cả hai xếp các popover THEO CỘT DỌC, mỗi hàng chừa
@@ -27,6 +30,17 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * ✍️ Chữ hiện ra UI (`triggerLabel`, `content`, `reason`/`why`) viết TIẾNG ANH
  * (thầy chốt 2026-07-26) — kể cả nội dung demo, không riêng phần chú giải panel.
  */
+
+/**
+ * Mọi import `@heroui/react` mà `Popover.Base` render thẳng. Dùng CHUNG cho mọi leaf
+ * trong file — cây thật vẫn phụ thuộc leaf đang mở render gì.
+ */
+const POPOVER_ANNOTATE: Record<string, AnatomyAnnotation> = {
+    Button: { tier: "heroui", role: "Pressable trigger (react-aria DialogTrigger requires a pressable trigger)." },
+    "Popover.Content": { tier: "heroui", role: "Panel surface (renders into document.body — never reachable here)." },
+    "Popover.Arrow": { tier: "heroui", role: "Little arrow pointing at the trigger (renders into document.body — never reachable here)." },
+    "Popover.Heading": { tier: "heroui", role: "Optional bold heading line (renders into document.body — never reachable here)." },
+}
 
 const meta: Meta<typeof Popover.Base> = {
     title: "Atoms/Overlay/Popover/Popover.Base",
@@ -46,6 +60,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="Popover.Base"
                 tier="atom"
+                annotate={POPOVER_ANNOTATE}
                 leaf="Default"
                 reason="The one click-panel atom wrapping HeroUI Popover plus a Button trigger (react-aria's DialogTrigger requires a pressable trigger). The atom owns the panel's surface, placement, and arrow."
                 states={[
@@ -78,6 +93,7 @@ export const WithHeading: Story = {
             <BlockAnatomy
                 name="Popover.Base"
                 tier="atom"
+                annotate={POPOVER_ANNOTATE}
                 leaf="Prop `heading`"
                 states={[
                     {
@@ -110,6 +126,7 @@ export const WithTriggerIcon: Story = {
             <BlockAnatomy
                 name="Popover.Base"
                 tier="atom"
+                annotate={POPOVER_ANNOTATE}
                 leaf="Prop `triggerIcon`"
                 states={[
                     {
@@ -146,6 +163,7 @@ export const TriggerVariant: Story = {
             <BlockAnatomy
                 name="Popover.Base"
                 tier="atom"
+                annotate={POPOVER_ANNOTATE}
                 leaf="Prop `triggerVariant`"
                 reason="The trigger's weight tells the reader how loud the panel is before they even open it — a toolbar filter can stay quiet (secondary/ghost), a call-to-action popover can afford to be louder (primary). Only the button chrome changes across the four values; the panel itself never differs, so every state here keeps the panel closed."
                 states={[
@@ -209,6 +227,7 @@ export const Placement: Story = {
             <BlockAnatomy
                 name="Popover.Base"
                 tier="atom"
+                annotate={POPOVER_ANNOTATE}
                 leaf="Prop `placement`"
                 reason="The panel opens toward whichever side has room around the trigger — pick the direction that matches where the trigger actually sits on the screen, not bottom out of habit. `defaultOpen` pins every state's panel open only so it can be seen here; in the real app only one is open at a time, chosen by where the trigger lives on the page."
                 states={[
@@ -308,6 +327,7 @@ export const ShowArrow: Story = {
             <BlockAnatomy
                 name="Popover.Base"
                 tier="atom"
+                annotate={POPOVER_ANNOTATE}
                 leaf="Prop `showArrow`"
                 reason="The arrow ties the panel back to the exact trigger that opened it — turn it off only when the panel already sits flush against the trigger and the connection reads on its own. `showArrow` defaults to true, so every other leaf in this file already carries it; this leaf is the only place the `false` case is demonstrated."
                 states={[

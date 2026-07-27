@@ -170,7 +170,11 @@ export const ChipBase = ({
                 color={TONE_COLOR[tone]}
                 variant="soft"
                 className={cn("w-fit", className)}
-                data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}
+                // Node name = the REAL component rendered here (HeroUI `Chip`, in its
+                // loading look) — NOT the word "Skeleton" (that's a STATE, not an
+                // identity, and this element is the same `HeroChip` the real branch
+                // below renders).
+                data-anat-part={anatPart ?? (showAnatomy ? "Chip" : undefined)}
             >
                 {hasDot || Icon ? <HeroSkeleton className="size-3 shrink-0 rounded-full" /> : null}
                 <HeroChip.Label>
@@ -225,7 +229,9 @@ export const ChipBase = ({
             data-anat-part={anatPart}
         >
             {leading}
-            <HeroChip.Label data-anat-part={showAnatomy ? "Label" : undefined}>{text}</HeroChip.Label>
+            {/* Real component rendered here is HeroUI's `Chip.Label` compound member —
+                name the node after it, not the generic slot word "Label". */}
+            <HeroChip.Label data-anat-part={showAnatomy ? "Chip.Label" : undefined}>{text}</HeroChip.Label>
             {onRemove ? (
                 // Nút × cỡ CHIP (size-4 vùng bấm, size-3 glyph), ăn tone của chip qua
                 // `currentColor` — KHÔNG dùng `Button` isIconOnly (nút đó ~32px, thổi bay

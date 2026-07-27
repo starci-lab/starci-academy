@@ -43,68 +43,98 @@ const ITEMS = [
 ]
 
 /**
- * ANATOMY IS PER-LEAF. Cây DOM thật của khung: `Header` chứa N `Column` (dựng từ
- * `columns`), `Body` chứa N `Row` (dựng từ `items`). Ô nằm trong `Row` — chi tiết ô
- * không badge riêng vì nó chỉ là chỗ đổ node của consumer (§11a: badge con TRỰC TIẾP).
+ * ANATOMY IS PER-LEAF. Cây DOM thật là HeroUI `Table` NGUYÊN CON: `Table` (root) →
+ * `Table.ScrollContainer` → `Table.Content` → `Table.Header` (chứa N `Table.Column`) +
+ * `Table.Body` (chứa N `Table.Row`). Tất cả các node này là component CỦA HEROUI, không
+ * phải của ta ⇒ tier `heroui`, KHÔNG có `storyId` (không có story riêng để trỏ sang).
+ * Ô (`Table.Cell`) không badge riêng vì nó chỉ là chỗ đổ node của consumer (§11a: badge
+ * con TRỰC TIẾP) — giống `Empty` bên dưới.
  */
 const TABLE_PARTS: Array<AnatomyNode> = [
+    { name: "Table", tier: "heroui", role: "HeroUI's own table root — canvas, variant skin." },
+    { name: "Table.ScrollContainer", tier: "heroui", role: "Horizontal scroll wrapper around the table." },
     {
-        name: "Header",
-        tier: "composite",
-        role: "The header row, built entirely from columns.",
+        name: "Table.Content",
+        tier: "heroui",
+        role: "The real `<table>` (`ariaLabel` lives here).",
         children: [
-            { name: "Column", tier: "composite", role: "One column: its header text, alignment, and width." },
-        ],
-    },
-    {
-        name: "Body",
-        tier: "composite",
-        role: "The table body, built entirely from items.",
-        children: [
-            { name: "Row", tier: "composite", role: "One row; each cell reads item[column.key]." },
+            {
+                name: "Table.Header",
+                tier: "heroui",
+                role: "The header row, built entirely from columns.",
+                children: [
+                    { name: "Table.Column", tier: "heroui", role: "One column: its header text, alignment, and width." },
+                ],
+            },
+            {
+                name: "Table.Body",
+                tier: "heroui",
+                role: "The table body, built entirely from items.",
+                children: [
+                    { name: "Table.Row", tier: "heroui", role: "One row; each cell reads item[column.key]." },
+                ],
+            },
         ],
     },
 ]
 
-/** Leaf RỖNG: `Body` không có `Row` nào, thay bằng node `Empty`. */
+/** Leaf RỖNG: `Table.Body` không có `Table.Row` nào, thay bằng node `Empty`. */
 const EMPTY_PARTS: Array<AnatomyNode> = [
+    { name: "Table", tier: "heroui", role: "HeroUI's own table root." },
+    { name: "Table.ScrollContainer", tier: "heroui", role: "Horizontal scroll wrapper around the table." },
     {
-        name: "Header",
-        tier: "composite",
-        role: "The header row stays exactly as is, since columns are configuration and never depend on the data.",
-        children: [{ name: "Column", tier: "composite", role: "One column." }],
-    },
-    {
-        name: "Body",
-        tier: "composite",
-        role: "An empty table body.",
-        children: [{ name: "Empty", tier: "composite", role: "emptyContent spans the full width of the body." }],
+        name: "Table.Content",
+        tier: "heroui",
+        role: "The real `<table>`.",
+        children: [
+            {
+                name: "Table.Header",
+                tier: "heroui",
+                role: "The header row stays exactly as is, since columns are configuration and never depend on the data.",
+                children: [{ name: "Table.Column", tier: "heroui", role: "One column." }],
+            },
+            {
+                name: "Table.Body",
+                tier: "heroui",
+                role: "An empty table body.",
+                children: [{ name: "Empty", tier: "composite", role: "emptyContent spans the full width of the body." }],
+            },
+        ],
     },
 ]
 
 /** Leaf ĐANG TẢI: khung + header THẬT giữ nguyên, mỗi ô thành một thanh skeleton. */
 const SKELETON_PARTS: Array<AnatomyNode> = [
+    { name: "Table", tier: "heroui", role: "HeroUI's own table root." },
+    { name: "Table.ScrollContainer", tier: "heroui", role: "Horizontal scroll wrapper around the table." },
     {
-        name: "Header",
-        tier: "composite",
-        role: "The real header, not skeletoned, since the columns are already known before the data arrives.",
-        children: [{ name: "Column", tier: "composite", role: "One column." }],
-    },
-    {
-        name: "Body",
-        tier: "composite",
-        role: "A mirror table body.",
+        name: "Table.Content",
+        tier: "heroui",
+        role: "The real `<table>`.",
         children: [
             {
-                name: "Row",
-                tier: "composite",
-                role: "A mirror row; each cell is a Skeleton.Typography bar.",
+                name: "Table.Header",
+                tier: "heroui",
+                role: "The real header, not skeletoned, since the columns are already known before the data arrives.",
+                children: [{ name: "Table.Column", tier: "heroui", role: "One column." }],
+            },
+            {
+                name: "Table.Body",
+                tier: "heroui",
+                role: "A mirror table body.",
                 children: [
                     {
-                        name: "Typography",
-                        tier: "atom",
-                        role: "Typography.Base isSkeleton bar filling each cell so the row's shape doesn't jump when data lands.",
-                        storyId: "atoms-text-typography-typography-base--loading",
+                        name: "Table.Row",
+                        tier: "heroui",
+                        role: "A mirror row; each cell is a Typography.Base bar.",
+                        children: [
+                            {
+                                name: "Typography.Base",
+                                tier: "atom",
+                                role: "isSkeleton bar filling each cell so the row's shape doesn't jump when data lands.",
+                                storyId: "atoms-text-typography-typography-base--loading",
+                            },
+                        ],
                     },
                 ],
             },

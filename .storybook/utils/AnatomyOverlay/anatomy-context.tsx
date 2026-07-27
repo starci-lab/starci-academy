@@ -29,7 +29,16 @@ import React from "react"
  * one still claimed "five tiers" and "`primitive` is the OLD name of the `layout` tier",
  * both superseded by the six-tier split above.
  */
-export type AnatomyTier = "atom" | "frame" | "composite" | "design" | "block" | "screen"
+/**
+ * ⭐ `heroui` thêm 2026-07-27. Node đến thẳng từ `@heroui/react` không có story của TA để
+ * bấm sang, nên danh sách trắng cũ loại nó ra và cây NÓI DỐI BẰNG CÁCH BỎ SÓT: `PriceTag`
+ * render một `Popover` thật, mở được, mà cây không hiện gì.
+ *
+ * Gọi đúng tên tầng thư viện thì trung thực hơn là giấu. Nó còn làm DRIFT hiện ra: một node
+ * tầng design ngồi trên `heroui` nghĩa là atom layer đã bị bỏ qua — đúng thứ §12 sinh ra để
+ * chặn, và giờ NHÌN THẤY được thay vì phải grep import.
+ */
+export type AnatomyTier = "heroui" | "atom" | "frame" | "composite" | "design" | "block" | "screen"
 
 /** Value provided by {@link BlockAnatomy} to the overlays nested under it. */
 export interface AnatomyPanelValue {

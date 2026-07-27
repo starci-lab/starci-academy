@@ -1,7 +1,19 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Choice } from "@sb-components/atoms/forms/Choice/Choice"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+
+/**
+ * `Checkbox.Control`/`Checkbox.Content` — heroui's OWN compound parts (imported
+ * `Checkbox as HeroCheckbox` and rendered directly), so they enter the tree as
+ * tier `heroui` with no `storyId` (§ two-law pass, 2026-07-28): there is no story
+ * of ours to jump to, only a library component whose presence would otherwise be
+ * silently dropped.
+ */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "Checkbox.Control": { tier: "heroui", role: "tick box + check glyph" },
+    "Checkbox.Content": { tier: "heroui", role: "label wrapper beside the box" },
+}
 
 /**
  * ATOM — `Choice.Checkbox`: boolean tick box, label sits INLINE next to the box
@@ -49,6 +61,7 @@ export const Default: Story = {
                 <BlockAnatomy
                     name="Choice.Checkbox"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="No prop turned on"
                     reason="The one checkbox atom in the system, wrapping HeroUI Checkbox. This leaf is the baseline: unticked, no hint, no error."
                     states={[
@@ -79,6 +92,7 @@ export const Checked: Story = {
                 <BlockAnatomy
                     name="Choice.Checkbox"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `isSelected`"
                     states={[
                         {
@@ -108,6 +122,7 @@ export const WithHint: Story = {
                 <BlockAnatomy
                     name="Choice.Checkbox"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `hint`"
                     states={[
                         {
@@ -143,6 +158,7 @@ export const Required: Story = {
                 <BlockAnatomy
                     name="Choice.Checkbox"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `isRequired`"
                     states={[
                         {
@@ -176,6 +192,7 @@ export const Disabled: Story = {
             <BlockAnatomy
                 name="Choice.Checkbox"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isDisabled`"
                 states={[
                     {
@@ -209,6 +226,7 @@ export const Error: Story = {
                 <BlockAnatomy
                     name="Choice.Checkbox"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `errorMessage`"
                     states={[
                         {
@@ -242,6 +260,7 @@ export const Loading: Story = {
             <BlockAnatomy
                 name="Choice.Checkbox"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isSkeleton`"
                 states={[
                     {

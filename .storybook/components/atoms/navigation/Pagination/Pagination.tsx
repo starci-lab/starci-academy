@@ -43,7 +43,7 @@ export interface PaginationBaseProps {
     siblings?: number
     /** Render the control skeleton (a row of square shimmers) instead of the pager. */
     isSkeleton?: boolean
-    /** When on, emit `data-anat-part` on this control's own sub-parts (Previous · PageLink · Ellipsis · Next). */
+    /** When on, emit `data-anat-part` on this control's own sub-parts (`Pagination.Previous` · `Pagination.Link` · `Pagination.Ellipsis` · `Pagination.Next`). */
     showAnatomy?: boolean
     className?: string
 }
@@ -98,10 +98,12 @@ const PaginationBase = ({
 
     if (isSkeleton) {
         // Leaf skeleton OWNED by the atom (hybrid C) — prev + a few page squares + next.
+        // The real heroui render is each `HeroSkeleton` (`Skeleton`) square itself, NOT the
+        // plain wrapping `<div>` — tagging the div would be a made-up name (2026-07-27).
         return (
-            <div className={cn("flex items-center justify-center gap-1", className)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
+            <div className={cn("flex items-center justify-center gap-1", className)}>
                 {Array.from({ length: 5 }, (_, index) => (
-                    <HeroSkeleton key={index} className="size-9 rounded-xl" />
+                    <HeroSkeleton key={index} className="size-9 rounded-xl" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                 ))}
             </div>
         )
@@ -113,7 +115,7 @@ const PaginationBase = ({
                 <HeroPagination.Content className="flex flex-wrap justify-center gap-1">
                     <HeroPagination.Item>
                         <HeroPagination.Previous
-                            data-anat-part={showAnatomy ? "Previous" : undefined}
+                            data-anat-part={showAnatomy ? "Pagination.Previous" : undefined}
                             aria-label="Previous page"
                             isDisabled={currentPage <= 1}
                             onPress={onPrevious}
@@ -124,7 +126,7 @@ const PaginationBase = ({
                     {slots.map((slot, index) =>
                         slot === "ellipsis" ? (
                             <HeroPagination.Item key={`ellipsis-${index}`}>
-                                <HeroPagination.Ellipsis data-anat-part={showAnatomy ? "Ellipsis" : undefined} />
+                                <HeroPagination.Ellipsis data-anat-part={showAnatomy ? "Pagination.Ellipsis" : undefined} />
                             </HeroPagination.Item>
                         ) : (
                             <PaginationLink
@@ -138,7 +140,7 @@ const PaginationBase = ({
                     )}
                     <HeroPagination.Item>
                         <HeroPagination.Next
-                            data-anat-part={showAnatomy ? "Next" : undefined}
+                            data-anat-part={showAnatomy ? "Pagination.Next" : undefined}
                             aria-label="Trang sau"
                             isDisabled={currentPage >= totalPages}
                             onPress={onNext}
@@ -160,7 +162,7 @@ interface PaginationLinkProps {
     isActive: boolean
     /** Fired with this link's page number on press. */
     onPageChange: (pageNumber: number) => void
-    /** When on, emit `data-anat-part="PageLink"` for the parent `BlockAnatomy` panel. */
+    /** When on, emit `data-anat-part="Pagination.Link"` for the parent `BlockAnatomy` panel. */
     showAnatomy?: boolean
 }
 
@@ -173,7 +175,7 @@ const PaginationLink = ({ pageNumber, isActive, onPageChange, showAnatomy }: Pag
     const onPress = useCallback(() => onPageChange(pageNumber), [pageNumber, onPageChange])
     return (
         <HeroPagination.Item>
-            <HeroPagination.Link data-anat-part={showAnatomy ? "PageLink" : undefined} isActive={isActive} onPress={onPress}>
+            <HeroPagination.Link data-anat-part={showAnatomy ? "Pagination.Link" : undefined} isActive={isActive} onPress={onPress}>
                 {pageNumber}
             </HeroPagination.Link>
         </HeroPagination.Item>

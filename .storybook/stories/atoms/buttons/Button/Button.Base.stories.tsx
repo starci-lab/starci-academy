@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ArrowLeftIcon, ArrowRightIcon, FloppyDiskIcon, PlusIcon, TrashIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — `Button.Base`: a button with a LABEL.
@@ -44,6 +44,19 @@ export default meta
 
 type Story = StoryObj<typeof Button.Base>
 
+/**
+ * heroui TIER (2026-07-27, teacher's call): `Button.Base` is a leaf atom wrapping
+ * HeroUI directly, so its root DOM node IS a real HeroUI import, not a made-up
+ * role name — tagged `"Button"`/`"Skeleton"`/`"Spinner"`, matching the identifier
+ * imported from `@heroui/react` (`Button as HeroUIButton`, `Skeleton as
+ * HeroSkeleton`, `Spinner`). No `storyId`: there's no story of OURS to jump to for
+ * a library component.
+ */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    Button: { tier: "heroui", role: "the HeroUI button element this atom renders" },
+    Skeleton: { tier: "heroui", role: "loading shimmer standing in for the button" },
+    Spinner: { tier: "heroui", role: "busy indicator that replaces the leading glyph while isPending" },
+}
 
 /** Bare leaf — no prop turned on, showing the default look (`variant="primary"`, `size="md"`). */
 export const Default: Story = {
@@ -52,6 +65,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="Button.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="No prop turned on"
                 reason="The one button atom in the system, wrapping HeroUI Button. This leaf is the baseline: every leaf below differs from it by exactly one prop."
                 states={[
@@ -74,6 +88,7 @@ export const Variants: Story = {
             <BlockAnatomy
                 name="Button.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `variant`"
                 reason="variant is the meaning of the action, not a colour. `danger` maps onto the destructive variant of our HeroUI fork, it is not the `color` prop."
                 states={[
@@ -120,6 +135,7 @@ export const Sizes: Story = {
             <BlockAnatomy
                 name="Button.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `size`"
                 reason="size is scale only, it never changes what the button means. The box also shrinks with the container it sits in (@app-md), not with the viewport."
                 states={[
@@ -160,6 +176,7 @@ export const PrefixIcon: Story = {
             <BlockAnatomy
                 name="Button.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `prefixIcon` (leading)"
                 reason="Renamed from `icon`: with a `suffixIcon` on the other end, a bare `icon` no longer read as one half of a pair. Both glyph slots now say the same thing from both sides, matching how Typography names them."
                 states={[
@@ -212,6 +229,7 @@ export const SuffixIcon: Story = {
             <BlockAnatomy
                 name="Button.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `suffixIcon` (trailing)"
                 reason="Where the glyph sits carries meaning: leading says what kind of action this is (save, delete), trailing says where it takes you (onward, out to a doc). Without a trailing slot, a “Continue →” button gets hand-assembled at the call site, the thing this atom exists to stop."
                 states={[
@@ -250,6 +268,7 @@ export const IconSlide: Story = {
             <BlockAnatomy
                 name="Button.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `iconSlide`"
                 reason="The arrow slides the way it points: a leading arrow backs off to the left (go back), a trailing one moves right (keep going). Navigation arrows only; a caret or a static glyph doing this just fidgets."
                 states={[
@@ -285,6 +304,7 @@ export const IsIconOnly: Story = {
             <BlockAnatomy
                 name="Button.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isIconOnly`"
                 reason="Turn it on and `prefixIcon` + `ariaLabel` become required, enforced by the types, because a button with no text is silent to a screen reader. `label` and `suffixIcon` stop meaning anything, so the atom drops them."
                 states={[
@@ -343,6 +363,7 @@ export const Disabled: Story = {
             <BlockAnatomy
                 name="Button.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isDisabled`"
                 reason="isDisabled means not allowed yet, an invalid form, a missing permission. `isPending` means waiting on something already running. Two different messages; they don't stand in for each other."
                 states={[
@@ -389,6 +410,7 @@ export const Pending: Story = {
             <BlockAnatomy
                 name="Button.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isPending`"
                 reason="react-aria's `isPending` draws nothing on its own, so the atom renders the spinner itself, or the button goes silent for the whole wait."
                 states={[
@@ -431,6 +453,7 @@ export const Skeleton: Story = {
             <BlockAnatomy
                 name="Button.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isSkeleton`"
                 reason="Whoever owns the shape owns its loading state, so the atom draws its own shimmer at button size. There is no shared skeleton component to keep in sync."
                 states={[
@@ -438,37 +461,37 @@ export const Skeleton: Story = {
                         name: "isSkeleton = true, size = \"sm\" (pill)",
                         why: "A shimmer pill stands at 80px, tracking the width the real small labelled button will take. This is what stops a button jumping once the data lands and the real label replaces the shimmer.",
                         code: "<Button.Base size=\"sm\" isSkeleton />",
-                        render: <Button.Base size="sm" isSkeleton />,
+                        render: <Button.Base size="sm" isSkeleton showAnatomy />,
                     },
                     {
                         name: "isSkeleton = true, size = \"md\" (pill, default)",
                         why: "A shimmer pill stands at 96px, the default width a labelled button's placeholder takes before its data arrives. This is the shape most loading rows in the app actually show, since md is the button size most screens default to.",
                         code: "<Button.Base isSkeleton />",
-                        render: <Button.Base size="md" isSkeleton />,
+                        render: <Button.Base size="md" isSkeleton showAnatomy />,
                     },
                     {
                         name: "isSkeleton = true, size = \"lg\" (pill)",
                         why: "A shimmer pill stands at 112px, tracking the width the real large labelled button will take. The shimmer's own width rule scales with size instead of staying one fixed pill for every button.",
                         code: "<Button.Base size=\"lg\" isSkeleton />",
-                        render: <Button.Base size="lg" isSkeleton />,
+                        render: <Button.Base size="lg" isSkeleton showAnatomy />,
                     },
                     {
                         name: "isSkeleton = true, isIconOnly = true, size = \"sm\" (square)",
                         why: "A shimmer square stands at 36px instead of a pill, matching the small icon-only button's own box. The square shimmer is its own shape rather than a pill shrunk down, because that is the exact box the real icon-only button will occupy.",
                         code: "<Button.Base isIconOnly size=\"sm\" isSkeleton />",
-                        render: <Button.Base isIconOnly size="sm" isSkeleton />,
+                        render: <Button.Base isIconOnly size="sm" isSkeleton showAnatomy />,
                     },
                     {
                         name: "isSkeleton = true, isIconOnly = true, size = \"md\" (square, default)",
                         why: "A shimmer square stands at 40px, the default icon-only button's own box. This is the placeholder a loading toolbar icon shows before its glyph and press handler are ready.",
                         code: "<Button.Base isIconOnly isSkeleton />",
-                        render: <Button.Base isIconOnly size="md" isSkeleton />,
+                        render: <Button.Base isIconOnly size="md" isSkeleton showAnatomy />,
                     },
                     {
                         name: "isSkeleton = true, isIconOnly = true, size = \"lg\" (square)",
                         why: "A shimmer square stands at 44px, tracking the largest icon-only button's own box. The square scales with size the same way the pill shimmer does, so neither shape needs a size rule of its own.",
                         code: "<Button.Base isIconOnly size=\"lg\" isSkeleton />",
-                        render: <Button.Base isIconOnly size="lg" isSkeleton />,
+                        render: <Button.Base isIconOnly size="lg" isSkeleton showAnatomy />,
                     },
                 ]}
             />

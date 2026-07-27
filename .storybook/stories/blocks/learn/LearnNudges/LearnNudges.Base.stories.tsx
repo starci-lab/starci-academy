@@ -44,7 +44,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     },
     // Only renders in the `Skeleton` leaf (the `isSkeleton` row title) — harmless to
     // declare here too, it simply never appears in the `Nudges` leaf's derived tree.
-    "Skeleton.Title": {
+    "Typography.Base": {
         storyId: "atoms-text-typography-typography-base--plain",
         tier: "atom",
         role: "shimmer bar standing in for a row's title while waiting on data",

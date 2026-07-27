@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Tooltip } from "@sb-components/atoms/overlay/Tooltip/Tooltip"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — `Tooltip.Base`: the ONE hover-hint atom, wrapping HeroUI Tooltip.
@@ -8,18 +8,31 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * Keeping `children` here is CORRECT (§12b, rationale documented in `Tooltip.tsx`'s own
  * header): the atom wrapper must wrap an arbitrary element so react-aria can attach
  * hover/focus/`aria-describedby` straight onto it. It shares the same PORTAL limitation
- * as Menu/Popover, `Content`/`Arrow` render into `body`, so `BlockAnatomy` (which walks
- * the ancestor chain inside the render box) can never reach them.
+ * as Menu/Popover, `Tooltip.Content`/`Tooltip.Arrow` render into `body`, so `BlockAnatomy`
+ * (which walks the ancestor chain inside the render box) can never reach them.
  *
- * NO `annotate`: the only DOM that stays INSIDE the render box is the Trigger, which is
- * the `children` the story passes in (`TriggerBox`, a demo span with no story of its
- * own). `Content`/`Arrow` portal outside, so they can never reach the tree even with a
- * declared `storyId`. No node here can point at a real story, so the prop is dropped
- * entirely.
+ * 🌿 `annotate` (2026-07-28): every HeroUI import `Tooltip.tsx` renders directly is
+ * declared `tier: "heroui"` — real import names (`Tooltip.Trigger`/`Tooltip.Content`/
+ * `Tooltip.Arrow`, the real dot-access on the compound `HeroTooltip`), not the role each
+ * used to be labelled by (`"Trigger"`/`"Content"`/`"Arrow"` alone). `Tooltip.Trigger` is
+ * the only one that stays inside the render box (it wraps the `children` trigger, here
+ * the demo `TriggerBox`); `Tooltip.Content`/`Tooltip.Arrow` portal outside, so — same as
+ * Menu/Popover — declaring them is honesty about the DATA, not a promise they'll be SEEN.
  *
  * Two leaves cover the props that actually have a shape: `Default` (bare baseline) and
  * `Placements` (the full `placement` union rendered in ONE leaf, not split per value).
  */
+
+/**
+ * Every `@heroui/react` import `Tooltip.Base` renders directly. Shared across every leaf
+ * in this file — which nodes actually surface still depends on what that leaf renders.
+ */
+const TOOLTIP_ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "Tooltip.Trigger": { tier: "heroui", role: "Wraps the caller's trigger element (children) so react-aria can attach hover/focus/aria-describedby." },
+    "Tooltip.Content": { tier: "heroui", role: "The hint panel (renders into document.body — never reachable here)." },
+    "Tooltip.Arrow": { tier: "heroui", role: "Little arrow pointing at the trigger (renders into document.body — never reachable here)." },
+}
+
 const meta: Meta<typeof Tooltip.Base> = {
     title: "Atoms/Overlay/Tooltip/Tooltip.Base",
     component: Tooltip.Base,
@@ -51,6 +64,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="Tooltip.Base"
                 tier="atom"
+                annotate={TOOLTIP_ANNOTATE}
                 leaf="Default"
                 reason="The one tooltip atom, wrapping HeroUI Tooltip. It owns the inset, max-width and arrow, callers just hand it a label and a trigger."
                 states={[
@@ -79,6 +93,7 @@ export const Placements: Story = {
             <BlockAnatomy
                 name="Tooltip.Base"
                 tier="atom"
+                annotate={TOOLTIP_ANNOTATE}
                 leaf="Prop `placement`"
                 states={[
                     {

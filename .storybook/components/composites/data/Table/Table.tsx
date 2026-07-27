@@ -118,14 +118,14 @@ const TableBase = ({
     // Header là CẤU HÌNH (biết trước cả khi có dữ liệu) → skeleton giữ header THẬT,
     // chỉ ô mới thành thanh; khung/độ rộng cột không nhảy khi dữ liệu về (§8).
     const header = (
-        <HeroTable.Header data-anat-part={showAnatomy ? "Header" : undefined}>
+        <HeroTable.Header data-anat-part={showAnatomy ? "Table.Header" : undefined}>
             {columns.map((column, index) => (
                 <HeroTable.Column
                     key={column.key}
                     id={column.key}
                     isRowHeader={index === 0}
                     style={column.width != null ? { width: column.width } : undefined}
-                    data-anat-part={showAnatomy ? "Column" : undefined}
+                    data-anat-part={showAnatomy ? "Table.Column" : undefined}
                 >
                     <CellBox align={column.align}>{column.header}</CellBox>
                 </HeroTable.Column>
@@ -134,15 +134,16 @@ const TableBase = ({
     )
 
     const body = isSkeleton ? (
-        <HeroTable.Body data-anat-part={showAnatomy ? "Body" : undefined}>
+        <HeroTable.Body data-anat-part={showAnatomy ? "Table.Body" : undefined}>
             {Array.from({ length: items.length || SKELETON_ROWS_FALLBACK }).map((_, rowIndex) => (
-                <HeroTable.Row key={rowIndex} id={`skeleton-${rowIndex}`} data-anat-part={showAnatomy ? "Row" : undefined}>
+                <HeroTable.Row key={rowIndex} id={`skeleton-${rowIndex}`} data-anat-part={showAnatomy ? "Table.Row" : undefined}>
                     {columns.map((column) => (
                         <HeroTable.Cell key={column.key}>
                             {/* Thanh cao 14px < line-height 20px của ô thật → bọc trong hộp
                                 `h-5` để hàng mirror CAO ĐÚNG bằng hàng thật (§8, không nhảy
-                                layout). Căn bằng chiều cao + `items-center`, KHÔNG bằng margin (§10a). */}
-                            <span className="flex h-5 items-center">
+                                layout). Căn bằng chiều cao + `items-center`, KHÔNG bằng margin (§10a).
+                                Tag NGOÀI atom (atom không nhận rest props) — cùng lý do như CellBox. */}
+                            <span className="flex h-5 items-center" data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
                                 <Typography size="sm" isSkeleton className="w-2/3" />
                             </span>
                         </HeroTable.Cell>
@@ -152,7 +153,7 @@ const TableBase = ({
         </HeroTable.Body>
     ) : (
         <HeroTable.Body
-            data-anat-part={showAnatomy ? "Body" : undefined}
+            data-anat-part={showAnatomy ? "Table.Body" : undefined}
             renderEmptyState={
                 emptyContent != null
                     ? () => (
@@ -168,7 +169,7 @@ const TableBase = ({
                     key={item.key}
                     id={item.key}
                     onAction={onRowPress != null ? () => onRowPress(item.key) : undefined}
-                    data-anat-part={showAnatomy ? "Row" : undefined}
+                    data-anat-part={showAnatomy ? "Table.Row" : undefined}
                 >
                     {columns.map((column) => (
                         <HeroTable.Cell key={column.key}>
@@ -181,9 +182,9 @@ const TableBase = ({
     )
 
     return (
-        <HeroTable variant="primary" className={className}>
-            <HeroTable.ScrollContainer>
-                <HeroTable.Content aria-label={ariaLabel}>
+        <HeroTable variant="primary" className={className} data-anat-part={showAnatomy ? "Table" : undefined}>
+            <HeroTable.ScrollContainer data-anat-part={showAnatomy ? "Table.ScrollContainer" : undefined}>
+                <HeroTable.Content aria-label={ariaLabel} data-anat-part={showAnatomy ? "Table.Content" : undefined}>
                     {header}
                     {body}
                 </HeroTable.Content>

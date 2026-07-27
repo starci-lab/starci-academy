@@ -129,7 +129,7 @@ const StackV = ({
         align={align}
         justify={justify}
         className={className}
-        anatPart={anatPart ?? (showAnatomy ? "Track" : undefined)}
+        anatPart={anatPart ?? (showAnatomy ? "Flex.Base" : undefined)}
     >
         {divider ? interleaveDividers(children, "vertical", showAnatomy) : children}
     </Flex.Base>
@@ -155,7 +155,7 @@ const StackH = ({
         justify={justify}
         wrap={wrap}
         className={className}
-        anatPart={anatPart ?? (showAnatomy ? "Track" : undefined)}
+        anatPart={anatPart ?? (showAnatomy ? "Flex.Base" : undefined)}
     >
         {divider ? interleaveDividers(children, "horizontal", showAnatomy) : children}
     </Flex.Base>

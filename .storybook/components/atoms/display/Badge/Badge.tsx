@@ -98,7 +98,7 @@ const BadgeBase = ({
         return badge
     }
     return (
-        <HeroBadge.Anchor data-anat-part={showAnatomy ? "Anchor" : undefined}>
+        <HeroBadge.Anchor data-anat-part={showAnatomy ? "Badge.Anchor" : undefined}>
             <span data-anat-part={showAnatomy ? "Content" : undefined} className="inline-flex">
                 {children}
             </span>

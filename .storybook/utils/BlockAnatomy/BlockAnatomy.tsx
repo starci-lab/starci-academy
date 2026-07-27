@@ -167,20 +167,22 @@ export interface BlockAnatomyProps {
  * dùng thẳng token `success`/`danger`.
  */
 const TIER_PILL: Record<AnatomyTier, string> = {
-    screen: "bg-rose-100 text-rose-800 dark:bg-rose-900 dark:text-rose-100",
-    block: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100",
+    heroui: "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-100",
     frame: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100",
     composite: "bg-sky-100 text-sky-800 dark:bg-sky-900 dark:text-sky-100",
+    screen: "bg-rose-100 text-rose-800 dark:bg-rose-900 dark:text-rose-100",
+    block: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100",
     design: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-100",
     atom: "bg-default text-muted",
 }
 
 /** Thanh dẫn dọc — cùng hệ màu với pill, nhạt hơn một nấc. */
 const TIER_RAIL: Record<AnatomyTier, string> = {
-    screen: "border-rose-400",
-    block: "border-purple-400",
+    heroui: "border-amber-400",
     frame: "border-blue-400",
     composite: "border-sky-400",
+    screen: "border-rose-400",
+    block: "border-purple-400",
     design: "border-emerald-400",
     atom: "border-default",
 }
@@ -190,10 +192,11 @@ const TIER_RAIL: Record<AnatomyTier, string> = {
  * hai bản chất — 7 khung slot-trơ và 37 component sở hữu vai nội dung.
  */
 const TIER_NAME: Record<AnatomyTier, string> = {
-    screen: "screen",
-    block: "block",
+    heroui: "heroui",
     frame: "frame",
     composite: "composite",
+    screen: "screen",
+    block: "block",
     design: "design",
     atom: "atom",
 }
@@ -436,7 +439,10 @@ const BlockAnatomyDerived = ({
             // định danh.
             const nodeEls = els.filter((el) => {
                 const nm = el.getAttribute("data-anat-part") ?? ""
-                return Boolean(nm && annotate[nm]?.storyId)
+                // `heroui` vào cây mà KHÔNG cần `storyId`: nó là component của thư viện, không có
+                // story của ta để bấm sang. Giấu nó đi là để cây nói dối bằng cách bỏ sót.
+                const meta = annotate[nm]
+                return Boolean(nm && (meta?.storyId || meta?.tier === "heroui"))
             })
             const parentElOf = new Map<HTMLElement, HTMLElement | null>()
             nodeEls.forEach((el) => {

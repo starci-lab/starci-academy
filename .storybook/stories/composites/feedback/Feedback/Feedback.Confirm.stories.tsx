@@ -19,9 +19,11 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * `description`, `tone`, `isConfirming`. Spinner/disabled của từng nút là state
  * của `Button.*` (story atom), ở đây chỉ xem hệ quả ở tầng composite.
  *
- * DEPS thật: `Footer` — composite tự dựng `Button.Group` (data-driven `items`, không
- * phải node caller đưa vào) nên bấm nhảy được sang story của nó. `Header`/`Body`
- * chỉ bọc chữ (`AlertDialog.Heading`/`Typography.Base`) — ruột, không phải deps.
+ * Cây DOM thật là HeroUI `AlertDialog` NGUYÊN CON (`Backdrop → Container → Dialog →
+ * Header[→Heading] · Body[→Typography.Base] · Footer[→Button.Base × 2]`) — tier
+ * `heroui` cho mọi node của thư viện (2026-07-28, LUẬT node = tên component thật).
+ * `Footer` forward `showAnatomy` xuống `Button.Group` nên hai nút THẬT
+ * (`Button.Base`) hiện ra, thay vì dán nhãn "Footer" giả làm chính `Button.Group`.
  *
  * 2026-07-27: di trú toàn bộ leaf sang API `states[]` (§8/§4a).
  */
@@ -38,12 +40,28 @@ export default meta
 
 type Story = StoryObj<typeof Feedback.Confirm>
 
-/** Node THẬT duy nhất có story khác để nhảy tới: Footer luôn là `Button.Group` (khung tự dựng, data-driven). */
+/**
+ * Cây thật: mọi tầng khung là component HEROUI (`AlertDialog.*`, tier `heroui`, không
+ * `storyId` — không có story riêng của ta để trỏ sang). Node CÓ story riêng để bấm
+ * nhảy là `Typography.Base` (mô tả) và `Button.Base` (hai nút, do `Button.Group` dựng).
+ */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Footer: {
+    "AlertDialog.Backdrop": { tier: "heroui", role: "the modal overlay/backdrop." },
+    "AlertDialog.Container": { tier: "heroui", role: "sizes and places the dialog (`size=\"sm\"`)." },
+    "AlertDialog.Dialog": { tier: "heroui", role: "the dialog surface itself." },
+    "AlertDialog.Header": { tier: "heroui", role: "wraps the heading." },
+    "AlertDialog.Heading": { tier: "heroui", role: "the question text (`title`)." },
+    "AlertDialog.Body": { tier: "heroui", role: "wraps the consequence line — only when `description` is set." },
+    "Typography.Base": {
         tier: "atom",
-        role: "Cancel (secondary) plus Confirm (primary or danger), right-aligned; always a Button.Group.",
-        storyId: "atoms-buttons-button-button-group--default",
+        role: "the consequence sentence under the question",
+        storyId: "atoms-text-typography-typography-base--colors",
+    },
+    "AlertDialog.Footer": { tier: "heroui", role: "wraps the button row." },
+    "Button.Base": {
+        tier: "atom",
+        role: "Cancel (secondary) plus Confirm (primary or danger), right-aligned — built by `Button.Group`, which is not itself a DOM node.",
+        storyId: "atoms-buttons-button-button-base--variants",
     },
 }
 

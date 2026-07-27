@@ -117,17 +117,19 @@ const BreadcrumbsBase = ({
         const collapseAlways = canCollapse && isLongTrail
         const collapseMobile = canCollapse && collapseOnMobile && !collapseAlways
 
+        // Real heroui render is each `HeroSkeleton` (`Skeleton`) bar itself, NOT the plain
+        // wrapping `<div>` — tagging the div would be a made-up name (2026-07-27).
         const trailBars = (
-            <div className={cn("flex items-center gap-2", className)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
-                <HeroSkeleton className="h-4 w-14 rounded-md" />
-                <HeroSkeleton className="h-4 w-16 rounded-md" />
-                <HeroSkeleton className="h-4 w-20 rounded-md" />
+            <div className={cn("flex items-center gap-2", className)}>
+                <HeroSkeleton className="h-4 w-14 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                <HeroSkeleton className="h-4 w-16 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                <HeroSkeleton className="h-4 w-20 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
             </div>
         )
         const backBar = (
-            <div className={cn("flex w-fit items-center gap-2", className)} data-anat-part={showAnatomy ? "SkeletonBack" : undefined}>
-                <HeroSkeleton className="size-3.5 rounded-full" />
-                <HeroSkeleton className="h-4 w-12 rounded-md" />
+            <div className={cn("flex w-fit items-center gap-2", className)}>
+                <HeroSkeleton className="size-3.5 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                <HeroSkeleton className="h-4 w-12 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
             </div>
         )
 
@@ -166,11 +168,11 @@ const BreadcrumbsBase = ({
         >
             {rendered.map((entry) =>
                 entry === ELLIPSIS_KEY ? (
-                    <HeroBreadcrumbs.Item key={ELLIPSIS_KEY} data-anat-part={showAnatomy ? "Ellipsis" : undefined}>
+                    <HeroBreadcrumbs.Item key={ELLIPSIS_KEY} data-anat-part={showAnatomy ? "Breadcrumbs.Item" : undefined}>
                         …
                     </HeroBreadcrumbs.Item>
                 ) : (
-                    <HeroBreadcrumbs.Item key={entry.key} onPress={entry.onPress} data-anat-part={showAnatomy ? "Crumb" : undefined}>
+                    <HeroBreadcrumbs.Item key={entry.key} onPress={entry.onPress} data-anat-part={showAnatomy ? "Breadcrumbs.Item" : undefined}>
                         {entry.label}
                     </HeroBreadcrumbs.Item>
                 ),
@@ -193,7 +195,7 @@ const BreadcrumbsBase = ({
               v4: `translate` is its own property → transition `[translate]`.
             */}
             <HeroLink
-                data-anat-part={showAnatomy ? "Back" : undefined}
+                data-anat-part={showAnatomy ? "Link" : undefined}
                 onPress={parent?.onPress}
                 className={cn(
                     "group text-muted hover:text-foreground flex w-fit cursor-pointer items-center gap-2 text-sm no-underline transition-colors",

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Input } from "@sb-components/atoms/forms/Input/Input"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta = { title: "Atoms/Forms/Input/Input.Search", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
 export default meta
@@ -9,14 +9,20 @@ type Story = StoryObj
 
 /**
  * ATOM LÁ — `Input.Search` bọc thẳng HeroUI `SearchField` (leading icon + clear sẵn)
- * + `FieldFrame` nội bộ (§11a). Cùng lý do với các member khác: mọi part
- * (`Label`/`Description`/`Field`/`Error`/`Skeleton`) là KHE nội bộ, không phải story
- * riêng ⇒ KHÔNG có deps ⇒ bỏ hẳn prop `annotate`.
+ * + `FieldFrame` nội bộ (§11a). Không component nào ở đây có story riêng ⇒
+ * `annotate` không có `storyId` — nhưng heroui `SearchField.Group` cùng
+ * `Label`/`Skeleton` của `FieldFrame` vẫn cần tier `heroui` để panel hai-luật
+ * không lặng lẽ bỏ sót chúng (2026-07-28).
  *
  * ⭐ 2026-07-26 (§12g): leaf `Invalid` tách khỏi `Error` — `isInvalid` một mình chỉ
  * đổi viền (không dòng chữ), `errorMessage` mới kéo theo viền + dòng đỏ. Hai prop
  * khác pixel nhau nên phải là hai leaf khác nhau (§12g.1: đổi pixel = có leaf).
  */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "SearchField.Group": { tier: "heroui", role: "search field group with icon" },
+    Label: { tier: "heroui", role: "field label line" },
+    Skeleton: { tier: "heroui", role: "loading placeholder" },
+}
 
 /** Default — bare field, magnifier icon + clear button once there is text. */
 export const Default: Story = {
@@ -27,6 +33,7 @@ export const Default: Story = {
                 <BlockAnatomy
                     name="Input.Search"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Default"
                     states={[
                         {
@@ -59,6 +66,7 @@ export const Placeholder: Story = {
                 <BlockAnatomy
                     name="Input.Search"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `placeholder`"
                     states={[
                         {
@@ -88,6 +96,7 @@ export const WithLabel: Story = {
                 <BlockAnatomy
                     name="Input.Search"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="WithLabel"
                     states={[
                         {
@@ -117,6 +126,7 @@ export const Required: Story = {
                 <BlockAnatomy
                     name="Input.Search"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Required"
                     states={[
                         {
@@ -146,6 +156,7 @@ export const Filled: Story = {
                 <BlockAnatomy
                     name="Input.Search"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Filled"
                     states={[
                         {
@@ -175,6 +186,7 @@ export const Disabled: Story = {
                 <BlockAnatomy
                     name="Input.Search"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Disabled"
                     states={[
                         {
@@ -208,6 +220,7 @@ export const Invalid: Story = {
                 <BlockAnatomy
                     name="Input.Search"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Invalid"
                     states={[
                         {
@@ -237,6 +250,7 @@ export const Error: Story = {
                 <BlockAnatomy
                     name="Input.Search"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Error"
                     states={[
                         {
@@ -264,6 +278,7 @@ export const Loading: Story = {
             <BlockAnatomy
                 name="Input.Search"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Loading"
                 states={[
                     {

@@ -22,17 +22,20 @@ type Story = StoryObj<typeof Page.Header>
 
 // Bare set: no breadcrumb, no meta, no actions.
 const TITLE_DESCRIPTION_PARTS: Array<AnatomyNode> = [
-    { name: "Title", tier: "composite", role: "primary title, an H3 heading, or body-bold text when size=\"compact\"" },
-    { name: "Description", tier: "composite", role: "supporting line under the title, muted, clamps to 2 lines on mobile" },
+    { name: "Typography.Base", tier: "atom", role: "primary title, an H3 heading, or body-bold text when size=\"compact\"", storyId: "atoms-text-typography-typography-base--plain" },
+    { name: "Typography.Base", tier: "atom", role: "supporting line under the title, muted, clamps to 2 lines on mobile", storyId: "atoms-text-typography-typography-base--plain" },
 ]
 
-// Full set leaf: breadcrumb row + actions slot + a meta chip/stat strip below.
+// Full set leaf: breadcrumb row + actions slot + a meta chip/stat strip below. Breadcrumb/Actions/Meta
+// are arbitrary caller-supplied slots (ReactNode) — this leaf's own demo happens to fill them with a
+// HeroUI Breadcrumbs/Button/Chip, but the frame itself never fixes what renders there, so they stay
+// generic (no single real component to name).
 const FULL_PARTS: Array<AnatomyNode> = [
-    { name: "Breadcrumb", tier: "composite", role: "breadcrumb row above the main title row" },
-    { name: "Title", tier: "composite", role: "primary title, an H3 heading" },
-    { name: "Description", tier: "composite", role: "supporting line under the title, muted" },
-    { name: "Actions", tier: "composite", role: "right-aligned control slot, shrink-0" },
-    { name: "Meta", tier: "composite", role: "stat/meta chip row below the title block" },
+    { name: "Breadcrumb", tier: "composite", role: "breadcrumb row above the main title row (arbitrary caller node)" },
+    { name: "Typography.Base", tier: "atom", role: "primary title, an H3 heading", storyId: "atoms-text-typography-typography-base--plain" },
+    { name: "Typography.Base", tier: "atom", role: "supporting line under the title, muted", storyId: "atoms-text-typography-typography-base--plain" },
+    { name: "Actions", tier: "composite", role: "right-aligned control slot, shrink-0 (arbitrary caller node)" },
+    { name: "Meta", tier: "composite", role: "stat/meta chip row below the title block (arbitrary caller node)" },
 ]
 
 /** Minimal set: a title + one description line — a page entered straight from a menu, no breadcrumb. */

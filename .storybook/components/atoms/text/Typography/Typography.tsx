@@ -180,7 +180,13 @@ const TypographyBase = ({
     className,
     size = "base",
 }: TypographyProps) => {
-    const textPart = anatPart ?? (showAnatomy ? "Text" : undefined)
+    // Node name = the REAL component being rendered in that branch (not a role word):
+    // heading/code/link branches wrap a HeroUI component, so the default name must say
+    // which one — "Text" would hide that a `Typography.Heading`/`Typography`/`Link` is
+    // actually on screen. The plain body span isn't wrapping any named component, so it
+    // keeps the generic "Text" default.
+    const partName = (fallback: string) => anatPart ?? (showAnatomy ? fallback : undefined)
+    const textPart = partName("Text")
 
     // ── SKELETON branch — checked BEFORE any size branch, because heading/code also
     // need to render a shimmer bar, not empty text. (If placed under the heading branch,
@@ -206,7 +212,7 @@ const TypographyBase = ({
                     lineClamp ? CLAMP_CLS[lineClamp] : truncate ? "block truncate" : null,
                     className,
                 )}
-                data-anat-part={textPart}
+                data-anat-part={partName("Typography.Heading")}
             >
                 {text}
             </HeroTypography.Heading>
@@ -224,7 +230,7 @@ const TypographyBase = ({
                     lineClamp ? CLAMP_CLS[lineClamp] : truncate ? "block truncate" : null,
                     className,
                 )}
-                data-anat-part={textPart}
+                data-anat-part={partName("Typography")}
             >
                 {text}
             </HeroTypography>
@@ -250,7 +256,7 @@ const TypographyBase = ({
                     href={href}
                     onPress={onPress}
                     className={cn(TEXT_CLS[bodySize], "cursor-pointer text-accent underline-offset-2 hover:underline", className)}
-                    data-anat-part={textPart}
+                    data-anat-part={partName("Link")}
                 >
                     {text}
                 </HeroLink>

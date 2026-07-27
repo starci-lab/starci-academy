@@ -54,7 +54,7 @@ const SAMPLE_PRICE: TrialConversionStripPrice = {
 // flex `div`s. It now goes through `SurfaceCard.Base` ⊃ `Stack.V` ⊃ (`Stack.H` · `Split`) —
 // and the tree must SAY so, otherwise the reader still thinks this is a hand-rolled div.
 const SURFACE: AnatomyNode = {
-    name: "SurfaceCard",
+    name: "SurfaceCard.Base",
     tier: "composite",
     role: "card face — radius/shadow/`padding` (default 3, matching the card `p-3` rule) comes from the scaffold, not hand-rolled",
     storyId: "composites-cards-surfacecard-surfacecard-base--default",
@@ -73,7 +73,7 @@ const PRICE_ROW: AnatomyNode = {
 }
 
 const HEADER_PARTS: Array<AnatomyNode> = [
-    { name: "IconTile", tier: "atom", role: "the lock glyph in its tinted tile — accent tone, sm (40px)", storyId: "atoms-display-icontile-icontile-base--default" },
+    { name: "IconTile.Base", tier: "atom", role: "the lock glyph in its tinted tile — accent tone, sm (40px)", storyId: "atoms-display-icontile-icontile-base--default" },
     {
         name: "TitledText",
         tier: "composite",
@@ -84,7 +84,7 @@ const HEADER_PARTS: Array<AnatomyNode> = [
 
 // LOADING shape — price section mirrors the eventual PriceTag + PhaseScarcityNote box with
 // two Skeleton.Typography bars (h4 + body-xs) so layout never shifts once the price lands.
-const BUTTON: AnatomyNode = { name: "Button", tier: "atom", role: "unlock CTA — always renders, doesn't wait for the price", storyId: "atoms-buttons-button-button-base--default" }
+const BUTTON: AnatomyNode = { name: "Button.Base", tier: "atom", role: "unlock CTA — always renders, doesn't wait for the price", storyId: "atoms-buttons-button-button-base--default" }
 
 /** Wraps content in the EXACT scaffold set the block builds: SurfaceCard ⊃ Stack.V ⊃ (Stack.H · Split). */
 const framed = (priceSide: Array<AnatomyNode>): Array<AnatomyNode> => [
@@ -129,20 +129,19 @@ const framed = (priceSide: Array<AnatomyNode>): Array<AnatomyNode> => [
 const LOADING_PARTS: Array<AnatomyNode> = framed([
     // These two bars ARE `Typography.Base isSkeleton` — a real component, so they need
     // a door. Without a `storyId` they emit DOM but never enter the tree (§11a whitelist).
-    { name: "Skeleton.Price", tier: "atom", role: "mirrors the price line (h4, 1/3 width)", storyId: "atoms-text-typography-typography-base--plain" },
-    { name: "Skeleton.Seats", tier: "atom", role: "mirrors the seats line (body-xs, 1/2 width)", storyId: "atoms-text-typography-typography-base--plain" },
+    { name: "Typography.Base", tier: "atom", role: "mirrors one of the two waiting lines — the price (h4, 1/3 width) or the seats line (body-xs, 1/2 width)", storyId: "atoms-text-typography-typography-base--plain" },
 ])
 
 // LOADED shape — price landed: PriceTag owns the discount, PhaseScarcityNote sits as a
 // sibling below owning scarcity (orthogonal urgency, per PhaseScarcityNote's own doc).
 const LOADED_PARTS: Array<AnatomyNode> = framed([
-    { name: "PriceTag", tier: "design", role: "amount due + struck-through original price + savings chip", storyId: "designs-commerce-pricetag--with-discount" },
+    { name: "PriceTag.Prominent", tier: "design", role: "amount due + struck-through original price + savings chip", storyId: "designs-commerce-pricetag--with-discount" },
     // 2026-07-27: `PhaseScarcityNote` now HAS `anatPart` so it can merge into ONE node.
     // Before, it lacked that prop ⇒ the root emitted no `data-anat-part` ⇒ the amber
     // text line vanished from the tree even though it still rendered, while its four
     // internal spans leaked out as separate siblings.
     { name: "PhaseScarcityNote", tier: "design", role: "seats left in the current phase + the price it rises to", storyId: "designs-commerce-phasescarcitynote-phasescarcitynote-base--default" },
-    { name: "Button", tier: "composite", role: "CTA to unlock the whole course", storyId: "atoms-buttons-button-button-base--default" },
+    { name: "Button.Base", tier: "atom", role: "CTA to unlock the whole course", storyId: "atoms-buttons-button-button-base--default" },
 ])
 
 /**

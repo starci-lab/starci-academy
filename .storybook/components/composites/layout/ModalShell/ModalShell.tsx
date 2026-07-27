@@ -132,21 +132,23 @@ const Base = ({
                         footer), không phải để giành với cha.
                         Nay `gap-4` ở đây + `mt-0!` ở con: MỘT seam, MỘT chủ (§10a). */}
                     <Modal.Dialog className={cn("gap-3", dialogClassName, className)}>
-                        <Modal.CloseTrigger data-anat-part={showAnatomy ? "CloseTrigger" : undefined} />
+                        <Modal.CloseTrigger data-anat-part={showAnatomy ? "Modal.CloseTrigger" : undefined} />
                         {header ? (
-                            <Modal.Header data-anat-part={showAnatomy ? "Header" : undefined}>{header}</Modal.Header>
+                            <Modal.Header data-anat-part={showAnatomy ? "Modal.Header" : undefined}>{header}</Modal.Header>
                         ) : title != null ? (
                             <Modal.Header>
                                 <div className={cn("flex flex-col gap-1 pr-8", titleClassName)}>
                                     <Typography.Base
                                         weight="bold"
                                         showAnatomy={showAnatomy}
+                                        anatPart={showAnatomy ? "Typography.Base" : undefined}
                                         text={title}
                                     />
                                     {description != null ? (
                                         <Typography.Base size="sm"
                                             color="muted"
                                             showAnatomy={showAnatomy}
+                                            anatPart={showAnatomy ? "Typography.Base" : undefined}
                                             text={description}
                                         />
                                     ) : null}
@@ -160,7 +162,7 @@ const Base = ({
                             của `Tabs`, phải do chính nó lo (§13z), không phải để khung bù từ ngoài.
                             Hệ quả có thật: ca tabs đổi 12px thành 16px. */}
                         <Modal.Body
-                            data-anat-part={showAnatomy ? "Body" : undefined}
+                            data-anat-part={showAnatomy ? "Modal.Body" : undefined}
                             className={cn(
                                 // `mt-0!` chỉ để TẮT margin HeroUI ship sẵn; nhịp do `gap-4` của
                                 // Dialog quyết. Số 0 nằm trên thang nên không phải ngoại lệ.
@@ -175,7 +177,7 @@ const Base = ({
                             header→body and body→footer read as the SAME gap. */}
                         {footer != null ? (
                             <Modal.Footer
-                                data-anat-part={showAnatomy ? "Footer" : undefined}
+                                data-anat-part={showAnatomy ? "Modal.Footer" : undefined}
                                 className={cn("mt-0!", footerClassName)}
                             >
                                 {footer}

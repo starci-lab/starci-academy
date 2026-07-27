@@ -1,13 +1,19 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Breadcrumbs } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcrumbs"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — `Breadcrumbs.Base` wraps HeroUI `Breadcrumbs` directly, composing no
- * other atom with its own story (`Crumb`/`Ellipsis`/`Back`/`Skeleton` are just
- * internal SLOTS of this atom itself). Per canon §12g: a leaf atom wrapping
- * HeroUI directly ⇒ NO deps ⇒ DROP the `annotate` prop entirely on every leaf
- * below (teacher's call 2026-07-26).
+ * other atom of the SYSTEM with its own story. 2026-07-27 (heroui tier added to
+ * canon): every sub-part is still a REAL import from `@heroui/react`, so each one
+ * is declared `tier: "heroui"` in `ANNOTATE` below, named after the identifier it
+ * actually renders — `Breadcrumbs` (the trail) · `Breadcrumbs.Item` (one crumb, a
+ * real destination or the "…" placeholder) · `Link` (the collapsed back
+ * affordance) · `Skeleton` (a shimmer bar). No `storyId` — there's no story of
+ * ours to jump to for a library component. Renamed from the old role-shaped names
+ * `Crumb`/`Ellipsis`/`Back`/`SkeletonBack`, which pretended to be four different
+ * components when they're really the SAME two HeroUI imports wearing different
+ * hats (§ two-rule pass, 2026-07-27).
  *
  * Leaf `Skeleton` renamed from `Loading` (2026-07-27, teacher's call: a leaf
  * carries the PROP'S NAME — the prop that produces this leaf is `isSkeleton`).
@@ -36,6 +42,13 @@ export default meta
 
 type Story = StoryObj<typeof Breadcrumbs.Base>
 
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    Breadcrumbs: { tier: "heroui", role: "the trail root — lays out every crumb in order" },
+    "Breadcrumbs.Item": { tier: "heroui", role: "one crumb — a real destination, or the '…' placeholder when the trail is truncated" },
+    Link: { tier: "heroui", role: "the collapsed back affordance, shown once the trail gives way to a single back link" },
+    Skeleton: { tier: "heroui", role: "shimmer bar standing in for a crumb or the back link's glyph/label" },
+}
+
 /** Default — full trail; the last crumb is the current page (no `onPress`). */
 export const Default: Story = {
     render: () => (
@@ -43,6 +56,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="Breadcrumbs.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Default"
                 reason="The one breadcrumb atom, wrapping HeroUI's Breadcrumbs. Truncation is a leaf of the maxItems prop, not a separate component."
                 states={[
@@ -74,6 +88,7 @@ export const Truncated: Story = {
             <BlockAnatomy
                 name="Breadcrumbs.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Truncated"
                 states={[
                     {
@@ -107,6 +122,7 @@ export const CollapsedLongTrail: Story = {
             <BlockAnatomy
                 name="Breadcrumbs.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="CollapsedLongTrail"
                 states={[
                     {
@@ -140,6 +156,7 @@ export const CollapsedOnMobile: Story = {
             <BlockAnatomy
                 name="Breadcrumbs.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="CollapsedOnMobile"
                 states={[
                     {
@@ -186,6 +203,7 @@ export const Skeleton: Story = {
             <BlockAnatomy
                 name="Breadcrumbs.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isSkeleton`"
                 reason="The skeleton follows the exact shape the loaded trail would resolve to, computed from collapseFrom/collapseOnMobile and the trail depth, so the layout never jumps once real data lands."
                 states={[

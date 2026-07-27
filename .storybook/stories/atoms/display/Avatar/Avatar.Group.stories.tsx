@@ -37,19 +37,28 @@ const members = [
 ]
 
 /**
- * `Avatar` = an edge-overlapping member (repeats ×N, has its own story to jump to).
- * `Overflow` only has SHAPE at leaf `Overflow` so it needs no `storyId` — there's
- * no story yet that IS that "+N" chip to jump to.
+ * `Avatar.Base` = an edge-overlapping member (repeats ×N, has its own story to jump to).
+ * The "+N" chip is HeroUI's own `Avatar` reused to hold a count instead of a person
+ * (real name, `tier: "heroui"` — no `storyId`, there's no story of ours to jump to for
+ * a library component); its skeleton mirror is HeroUI `Skeleton`, same reasoning.
+ *
+ * ⚠️ 2026-07-28 (naming pass): renamed from role-words `Avatar`/`Overflow` to the REAL
+ * component each node renders — `Avatar.Base` (ours) vs bare `Avatar` (HeroUI's own),
+ * so the two no longer collide under one borrowed name.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Avatar: {
+    "Avatar.Base": {
         storyId: "atoms-display-avatar-avatar-base--default",
         tier: "atom",
         role: "one Avatar.Base per person, overlapped, the ring separating it from the one beneath",
     },
-    Overflow: {
-        tier: "atom",
-        role: "the plus-N chip counting the rest, a number rather than a person, so it is not an Avatar.Base",
+    Avatar: {
+        tier: "heroui",
+        role: "the plus-N overflow chip — HeroUI's own Avatar reused to hold a count instead of a person, so it is not an Avatar.Base",
+    },
+    Skeleton: {
+        tier: "heroui",
+        role: "the overflow chip's shimmer while loading, HeroUI Skeleton mirroring the same ring and size as every avatar slot",
     },
 }
 

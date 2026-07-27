@@ -114,7 +114,7 @@ const CourseBriefBase = ({
                 anatPart={showAnatomy ? "Page.Header" : undefined}
                 breadcrumb={
                     isSkeleton || breadcrumbItems?.length ? (
-                        <div className="w-fit" data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}>
+                        <div className="w-fit" data-anat-part={showAnatomy ? "Breadcrumbs.Base" : undefined}>
                             {/* collapse: below @app-sm or trail ≥ 4 crumbs → back-link (the old
                         capability of ResponsiveBreadcrumb, now a prop of the Breadcrumbs.Base atom). */}
                             <Breadcrumbs.Base
@@ -132,9 +132,9 @@ const CourseBriefBase = ({
                         // boundary) — call the `Typography.Base` atom directly with the EXACT
                         // size/weight `Page.Header` itself uses for `title` (size="h3"
                         // weight="bold"), then feed the result into the slot.
-                        <Typography.Base size="h3" weight="bold" isSkeleton anatPart={showAnatomy ? "Skeleton.Title" : undefined} />
+                        <Typography.Base size="h3" weight="bold" isSkeleton anatPart={showAnatomy ? "Typography.Base" : undefined} />
                     ) : (
-                        <span data-anat-part={showAnatomy ? "Title" : undefined}>{title}</span>
+                        <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>{title}</span>
                     )
                 }
                 description={
@@ -145,17 +145,17 @@ const CourseBriefBase = ({
                         // description empty) — it's the most common line in the cluster; keeping
                         // the layout stable (§8) matters more than saving one shimmer line for
                         // the rare case with no description.
-                        <Typography.Base size="sm" color="muted" isSkeleton anatPart={showAnatomy ? "Skeleton.Description" : undefined} />
+                        <Typography.Base size="sm" color="muted" isSkeleton anatPart={showAnatomy ? "Typography.Base" : undefined} />
                     ) : (
                         description
                     )
                 }
                 meta={
                     isSkeleton ? (
-                        <Typography.Base size="xs" color="muted" isSkeleton className="w-40" anatPart={showAnatomy ? "Meta" : undefined} />
+                        <Typography.Base size="xs" color="muted" isSkeleton className="w-40" anatPart={showAnatomy ? "Typography.Base" : undefined} />
                     ) : metaParts.length > 0 ? (
                         <span>
-                            <Typography.Base size="xs" color="muted" text={metaParts.join(" · ")} anatPart={showAnatomy ? "Meta" : undefined} />
+                            <Typography.Base size="xs" color="muted" text={metaParts.join(" · ")} anatPart={showAnatomy ? "Typography.Base" : undefined} />
                         </span>
                     ) : undefined
                 }

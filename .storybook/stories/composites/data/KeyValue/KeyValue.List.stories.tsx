@@ -46,7 +46,7 @@ const ITEMS = [
  */
 const LIST_PARTS: Array<AnatomyNode> = [
     {
-        name: "Row",
+        name: "KeyValue.Row",
         tier: "composite",
         role: "one `KeyValue.Row` built from `items[i]`",
         storyId: "composites-data-keyvalue-keyvalue-row--default",
@@ -54,15 +54,15 @@ const LIST_PARTS: Array<AnatomyNode> = [
 ]
 const DIVIDER_PARTS: Array<AnatomyNode> = [
     {
-        name: "Row",
+        name: "KeyValue.Row",
         tier: "composite",
         role: "one `KeyValue.Row` built from `items[i]`",
         storyId: "composites-data-keyvalue-keyvalue-row--default",
     },
     {
-        name: "Divider",
+        name: "Divider.Base",
         tier: "atom",
-        role: "`Divider.Base` BETWEEN two rows — the last row doesn't get a line",
+        role: "BETWEEN two rows — the last row doesn't get a line",
         storyId: "atoms-display-divider-divider-base--default",
     },
 ]

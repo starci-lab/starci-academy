@@ -1,18 +1,25 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Select } from "@sb-components/atoms/forms/Select/Select"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — `Select.Single`: dropdown chọn MỘT, bọc thẳng HeroUI `Select`.
  *
- * Atom lá (§12g cuối bài — "deps không có thì thôi"): control TRẦN là HeroUI
- * `Select.Trigger`/`Select.Value`/`Select.Popover`, khung nhãn/mô tả/lỗi là
- * `FieldFrame` NỘI BỘ (không có story riêng). Không component nào ở đây có
- * story riêng để nhảy tới ⇒ KHÔNG dùng `annotate`, bỏ hẳn prop (không phải `{}`).
+ * Atom lá: control TRẦN là HeroUI `Select.Trigger`/`Select.Value`/`Select.Popover`,
+ * khung nhãn/mô tả/lỗi là `FieldFrame` NỘI BỘ (không có story riêng). Không
+ * component nào ở đây có story riêng để nhảy tới ⇒ `annotate` không có `storyId`
+ * — nhưng bốn part heroui thật (`Select.Trigger`/`Select.Value`/`Label`/`Skeleton`)
+ * vẫn cần tier `heroui` để panel hai-luật không lặng lẽ bỏ sót chúng (2026-07-28).
  *
  * 2026-07-27: di trú toàn bộ leaf sang API `states[]` (§8/§4a).
  */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "Select.Trigger": { tier: "heroui", role: "dropdown trigger button" },
+    "Select.Value": { tier: "heroui", role: "trigger's selected-value text" },
+    Label: { tier: "heroui", role: "field label line" },
+    Skeleton: { tier: "heroui", role: "loading placeholder" },
+}
 
 const meta: Meta = { title: "Atoms/Forms/Select/Select.Single", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
 export default meta
@@ -33,6 +40,7 @@ export const Default: Story = {
                 <BlockAnatomy
                     name="Select.Single"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Default"
                     states={[
                         {
@@ -69,6 +77,7 @@ export const WithLabel: Story = {
                 <BlockAnatomy
                     name="Select.Single"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Props `label` / `hint`"
                     states={[
                         {
@@ -106,6 +115,7 @@ export const Required: Story = {
                 <BlockAnatomy
                     name="Select.Single"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `isRequired`"
                     states={[
                         {
@@ -152,6 +162,7 @@ export const Value: Story = {
                 <BlockAnatomy
                     name="Select.Single"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `value`"
                     states={[
                         {
@@ -189,6 +200,7 @@ export const Disabled: Story = {
             <BlockAnatomy
                 name="Select.Single"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isDisabled`"
                 states={[
                     {
@@ -226,6 +238,7 @@ export const Invalid: Story = {
             <BlockAnatomy
                 name="Select.Single"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isInvalid`"
                 states={[
                     {
@@ -261,6 +274,7 @@ export const Error: Story = {
                 <BlockAnatomy
                     name="Select.Single"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `errorMessage`"
                     states={[
                         {
@@ -296,6 +310,7 @@ export const Skeleton: Story = {
             <BlockAnatomy
                 name="Select.Single"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isSkeleton`"
                 states={[
                     {

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Input } from "@sb-components/atoms/forms/Input/Input"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta = { title: "Atoms/Forms/Input/Input.Currency", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
 export default meta
@@ -11,14 +11,18 @@ type Story = StoryObj
  * ATOM — `Input.Currency`: money-amount field (HeroUI NumberField + `formatOptions`
  * currency), bọc qua `FieldFrame` nội bộ (§12e).
  *
- * ⭐ KHÔNG có `annotate` (thầy chốt 2026-07-26 lần 2: "deps không có thì thôi").
- * Atom này bọc THẲNG HeroUI, không compose atom nào khác có story riêng —
- * `Label`/`Description`/`Error`/`Skeleton` chỉ là khe của chính `FieldFrame`
- * (không có story để nhảy tới), không phải deps.
+ * Không component nào ở đây có story riêng ⇒ `annotate` không có `storyId` —
+ * nhưng heroui `NumberField.Group` cùng `Label`/`Skeleton` của `FieldFrame` vẫn
+ * cần tier `heroui` để panel hai-luật không lặng lẽ bỏ sót chúng (2026-07-28).
  *
  * a11y: control COMPOUND (stepper + input) không nối `htmlFor` được → atom tự đổ
  * `label`/`ariaLabel` vào `aria-label` qua helper `fieldName` (§12e).
  */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "NumberField.Group": { tier: "heroui", role: "currency stepper group" },
+    Label: { tier: "heroui", role: "field label line" },
+    Skeleton: { tier: "heroui", role: "loading placeholder" },
+}
 
 /** Default — bare field; the atom renders the currency symbol and grouping itself. */
 export const Default: Story = {
@@ -29,6 +33,7 @@ export const Default: Story = {
                 <BlockAnatomy
                     name="Input.Currency"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Default"
                     states={[
                         {
@@ -58,6 +63,7 @@ export const WithLabel: Story = {
                 <BlockAnatomy
                     name="Input.Currency"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="WithLabel"
                     states={[
                         {
@@ -87,6 +93,7 @@ export const Required: Story = {
                 <BlockAnatomy
                     name="Input.Currency"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Required"
                     states={[
                         {
@@ -116,6 +123,7 @@ export const Filled: Story = {
                 <BlockAnatomy
                     name="Input.Currency"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Filled"
                     states={[
                         {
@@ -145,6 +153,7 @@ export const Disabled: Story = {
                 <BlockAnatomy
                     name="Input.Currency"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Disabled"
                     states={[
                         {
@@ -174,6 +183,7 @@ export const Error: Story = {
                 <BlockAnatomy
                     name="Input.Currency"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Error"
                     states={[
                         {
@@ -201,6 +211,7 @@ export const Loading: Story = {
             <BlockAnatomy
                 name="Input.Currency"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Loading"
                 states={[
                     {

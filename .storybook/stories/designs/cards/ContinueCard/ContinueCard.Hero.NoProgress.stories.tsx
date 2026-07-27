@@ -58,7 +58,7 @@ const noProgressBase = {
 // Progress version (§11f).
 const NO_PROGRESS_PARTS: Array<AnatomyNode> = [
     {
-        name: "SurfaceCard",
+        name: "SurfaceCard.Base",
         tier: "composite",
         role: "card surface, where `isHighlight` turns on the hero accent glow. The frame stays put across every state, so switching state never shifts the layout",
         storyId: "composites-cards-surfacecard-surfacecard-base--default",
@@ -78,8 +78,7 @@ const NO_PROGRESS_PARTS: Array<AnatomyNode> = [
                         role: "text column, title on top and meta/subtitle underneath",
                         storyId: "frames-stack-stack-v--default",
                         children: [
-                            { name: "Title", tier: "atom", role: "name of the session in progress, a `Typography.Base` medium + truncate", storyId: "atoms-text-typography-typography-base--plain" },
-                            { name: "Skeleton.Meta", tier: "atom", role: "mirror bar standing in for the meta row while loading, a `Typography.Base isSkeleton`", storyId: "atoms-text-typography-typography-base--plain" },
+                            { name: "Typography.Base", tier: "atom", role: "name of the session in progress, medium + truncate — or, while loading, a mirror bar standing in for the meta row (isSkeleton)", storyId: "atoms-text-typography-typography-base--plain" },
                             {
                                 name: "List.Meta",
                                 tier: "composite",
@@ -93,7 +92,7 @@ const NO_PROGRESS_PARTS: Array<AnatomyNode> = [
                     },
                 ],
             },
-            { name: "Button", tier: "atom", role: "resume CTA (primary, onPress + ArrowRight)", storyId: "atoms-buttons-button-button-base--default" },
+            { name: "Button.Base", tier: "atom", role: "resume CTA (primary, onPress + ArrowRight)", storyId: "atoms-buttons-button-button-base--default" },
         ],
     },
 ]
@@ -101,7 +100,7 @@ const NO_PROGRESS_PARTS: Array<AnatomyNode> = [
 // error leaf: network drop → `Feedback.Empty` SITS INSIDE the frame, the Retry button is in the `action` prop.
 const ERROR_PARTS: Array<AnatomyNode> = [
     {
-        name: "SurfaceCard",
+        name: "SurfaceCard.Base",
         tier: "composite",
         role: "the very same frame, since an error must never make the frame disappear",
         storyId: "composites-cards-surfacecard-surfacecard-base--default",
@@ -113,7 +112,7 @@ const ERROR_PARTS: Array<AnatomyNode> = [
                 state: "danger",
                 storyId: "composites-feedback-feedback-feedback-empty--action",
                 children: [
-                    { name: "Button", tier: "atom", role: "retry button (secondary, inside the `action` prop, built by the STORY, so it is still declared, §11a.1)", storyId: "atoms-buttons-button-button-base--default" },
+                    { name: "Button.Base", tier: "atom", role: "retry button (secondary, inside the `action` prop, built by the STORY, so it is still declared, §11a.1)", storyId: "atoms-buttons-button-button-base--default" },
                 ],
             },
         ],
@@ -209,7 +208,7 @@ export const LoadError: Story = {
 </SurfaceCard.Base>`,
                         render: (
                             <div className="w-96 p-8">
-                                <SurfaceCard.Base anatPart="SurfaceCard">
+                                <SurfaceCard.Base anatPart="SurfaceCard.Base">
                                     <Feedback.Empty
                                         anatPart="Feedback.Empty"
                                         tone="danger"
@@ -217,7 +216,7 @@ export const LoadError: Story = {
                                         title="Connection lost"
                                         description="The network seems to have dropped. Check your connection and try again."
                                         action={
-                                            <Button.Base variant="secondary" size="sm" label="Retry" onPress={() => {}} anatPart="Button" />
+                                            <Button.Base variant="secondary" size="sm" label="Retry" onPress={() => {}} anatPart="Button.Base" />
                                         }
                                     />
                                 </SurfaceCard.Base>

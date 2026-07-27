@@ -101,12 +101,12 @@ const PricePointBase = ({
             <div className={cn("flex flex-wrap items-baseline gap-2", className)} data-anat-part={anatPart}>
                 <HeroSkeleton
                     className={cn("w-1/3 rounded", SIZE_TO_BAR[size])}
-                    data-anat-part={showAnatomy ? "Amount" : undefined}
+                    data-anat-part={showAnatomy ? "Skeleton" : undefined}
                 />
                 {period ? (
                     <HeroSkeleton
                         className={cn("my-1 w-1/4 rounded", tokens.periodBarH)}
-                        data-anat-part={showAnatomy ? "Period" : undefined}
+                        data-anat-part={showAnatomy ? "Skeleton" : undefined}
                     />
                 ) : null}
             </div>
@@ -122,7 +122,7 @@ const PricePointBase = ({
                 weight="semibold"
                 text={amount}
                 showAnatomy={showAnatomy}
-                anatPart="Amount"
+                anatPart="Typography.Base"
             />
             {/* Struck-through original — line-through is text-decoration, allowed as className */}
             {original ? (
@@ -132,7 +132,7 @@ const PricePointBase = ({
                     className="line-through"
                     text={original}
                     showAnatomy={showAnatomy}
-                    anatPart="Original"
+                    anatPart="Typography.Base"
                 />
             ) : null}
             {/* Billing period — smallest muted text at this size */}
@@ -142,7 +142,7 @@ const PricePointBase = ({
                     color="muted"
                     text={period}
                     showAnatomy={showAnatomy}
-                    anatPart="Period"
+                    anatPart="Typography.Base"
                 />
             ) : null}
         </div>

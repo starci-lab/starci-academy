@@ -72,17 +72,17 @@ export const MetricCard = ({
 }: MetricCardProps) => {
     return (
         // SectionCard provides the framed card shell (border + bg + radius)
-        <SectionCard className={cn(className)} anatPart={showAnatomy ? "SectionCard" : undefined}>
+        <SectionCard className={cn(className)} anatPart={showAnatomy ? "Card" : undefined}>
             <div className="flex flex-col gap-2">
                 {/* Primary metric value — large and visually prominent */}
-                <Typography.Base size="h4" showAnatomy={showAnatomy} text={value} />
+                <Typography.Base size="h4" showAnatomy={showAnatomy} anatPart={showAnatomy ? "Typography.Base" : undefined} text={value} />
 
                 {/* Descriptive label — body-sm foreground, the prominent line */}
-                <Typography.Base size="sm" showAnatomy={showAnatomy} text={label} />
+                <Typography.Base size="sm" showAnatomy={showAnatomy} anatPart={showAnatomy ? "Typography.Base" : undefined} text={label} />
 
                 {/* Optional hint — small + muted footnote, DISTINCT from the label */}
                 {hint ? (
-                    <Typography.Base size="xs" color="muted" showAnatomy={showAnatomy} text={hint} />
+                    <Typography.Base size="xs" color="muted" showAnatomy={showAnatomy} anatPart={showAnatomy ? "Typography.Base" : undefined} text={hint} />
                 ) : null}
             </div>
         </SectionCard>

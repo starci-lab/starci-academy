@@ -29,7 +29,9 @@ import { FieldFrame } from "@sb-components/atoms/forms/_field/FieldFrame"
  *     so the label goes via the `label` prop; a radio group is described via `options` DATA.
  *   • `isSkeleton` → control-shaped skeleton co-located (hybrid C, `HeroSkeleton`
  *     sized to the control — NO importing the `Skeleton.*` compound).
- *   • Anatomy tier `atom` (part `Control` · `Label`; loading state = `Skeleton`).
+ *   • Anatomy tier `atom`; the composed heroui parts each badge under their OWN real
+ *     name (`Checkbox.Control`/`Checkbox.Content`, `Radio.Control`/`Radio.Content`,
+ *     `Switch`, `Label`) — never a generic slot word (§ two-law pass, 2026-07-28).
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -91,10 +93,12 @@ const ChoiceCheckbox = ({ isSelected, onValueChange, label, isDisabled, isInvali
     return (
         <FieldFrame.Base hint={hint} errorMessage={errorMessage} isDisabled={isDisabled} isSkeleton={isSkeleton} showAnatomy={showAnatomy} skeletonControl={skeletonControl}>
             <HeroCheckbox isSelected={isSelected} onChange={onValueChange} isInvalid={invalid} isDisabled={isDisabled} className={className}>
-                <HeroCheckbox.Control data-anat-part={showAnatomy ? "Control" : undefined}>
+                {/* Node name = the REAL heroui component rendered here (`Checkbox.Control`/
+                    `Checkbox.Content`) — NOT the slot word "Control"/"Label" it used to carry. */}
+                <HeroCheckbox.Control data-anat-part={showAnatomy ? "Checkbox.Control" : undefined}>
                     <HeroCheckbox.Indicator />
                 </HeroCheckbox.Control>
-                <HeroCheckbox.Content data-anat-part={showAnatomy ? "Label" : undefined}>{withRequired(label, isRequired)}</HeroCheckbox.Content>
+                <HeroCheckbox.Content data-anat-part={showAnatomy ? "Checkbox.Content" : undefined}>{withRequired(label, isRequired)}</HeroCheckbox.Content>
             </HeroCheckbox>
         </FieldFrame.Base>
     )
@@ -119,7 +123,7 @@ export interface ChoiceRadioProps {
     isDisabled?: boolean
     /** Render the control-shaped skeleton — one radio-row shimmer (dot + label bar). */
     isSkeleton?: boolean
-    /** `true` → tag `Control` · `Label` for BlockAnatomy. */
+    /** `true` → tag `Radio.Content` · `Radio.Control` for BlockAnatomy. */
     showAnatomy?: boolean
     className?: string
 }
@@ -137,11 +141,13 @@ const ChoiceRadio = ({ value, label, isDisabled, isSkeleton, showAnatomy, classN
     }
     return (
         <HeroRadio value={value} isDisabled={isDisabled} className={className}>
-            <HeroRadio.Content>
-                <HeroRadio.Control data-anat-part={showAnatomy ? "Control" : undefined}>
+            {/* Node name = the REAL heroui component rendered here (`Radio.Content` wraps
+                `Radio.Control` + the label span) — NOT the slot words "Control"/"Label". */}
+            <HeroRadio.Content data-anat-part={showAnatomy ? "Radio.Content" : undefined}>
+                <HeroRadio.Control data-anat-part={showAnatomy ? "Radio.Control" : undefined}>
                     <HeroRadio.Indicator />
                 </HeroRadio.Control>
-                <span className="min-w-0" data-anat-part={showAnatomy ? "Label" : undefined}>
+                <span className="min-w-0">
                     {label}
                 </span>
             </HeroRadio.Content>
@@ -179,7 +185,7 @@ export interface ChoiceRadioGroupProps extends InlineFrameProps {
     isSkeleton?: boolean
     /** Row count for the skeleton mirror (default = `options.length`). */
     skeletonRows?: number
-    /** `true` → tag each option's `Control` · `Label` for BlockAnatomy. */
+    /** `true` → tag each option's `Radio.Content` · `Radio.Control` for BlockAnatomy. */
     showAnatomy?: boolean
     className?: string
 }
@@ -262,7 +268,7 @@ export interface ChoiceSwitchProps extends InlineFrameProps {
     size?: "sm" | "md" | "lg"
     /** Render the control-shaped skeleton — a switch-track pill (+ label bar). */
     isSkeleton?: boolean
-    /** `true` → tag `Control` · `Label` for BlockAnatomy. */
+    /** `true` → tag `Switch` · `Label` for BlockAnatomy. */
     showAnatomy?: boolean
     className?: string
 }
@@ -281,7 +287,9 @@ const ChoiceSwitch = ({ isSelected, onValueChange, label, isDisabled, isInvalid,
         <FieldFrame.Base hint={hint} errorMessage={errorMessage} isDisabled={isDisabled} isSkeleton={isSkeleton} showAnatomy={showAnatomy} skeletonControl={skeletonControl}>
             <div data-anat-part={anatPart} className={cn("flex items-center gap-3", className)}>
                 <HeroSwitch
-                    data-anat-part={showAnatomy ? "Control" : undefined}
+                    // Node name = the REAL heroui component rendered here (`Switch`) — NOT
+                    // the slot word "Control" it used to carry.
+                    data-anat-part={showAnatomy ? "Switch" : undefined}
                     size={size}
                     isSelected={isSelected}
                     onChange={onValueChange}

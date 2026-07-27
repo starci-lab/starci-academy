@@ -40,11 +40,11 @@ const Panel = ({ text }: PanelProps) => (
 )
 
 const TRACK_PARTS: Array<AnatomyNode> = [
-    { name: "Track", tier: "composite", role: "the vertical flex axis, owning gap (§10), align, and justify" },
+    { name: "Flex.Base", tier: "composite", role: "the vertical flex axis, owning gap (§10), align, and justify" },
 ]
 const DIVIDER_PARTS: Array<AnatomyNode> = [
-    { name: "Track", tier: "composite", role: "the vertical flex axis, owning gap (§10)" },
-    { name: "Line", tier: "atom", role: "a Divider.Base inserted between two children, so N children produce N minus 1 lines" },
+    { name: "Flex.Base", tier: "composite", role: "the vertical flex axis, owning gap (§10)" },
+    { name: "Divider.Base", tier: "atom", role: "a Divider.Base inserted between two children, so N children produce N minus 1 lines" },
 ]
 
 /** Default — a column with a `grouped(3)` seam: the default rhythm between blocks inside a card. */

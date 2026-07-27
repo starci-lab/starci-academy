@@ -1,7 +1,7 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Input } from "@sb-components/atoms/forms/Input/Input"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta = { title: "Atoms/Forms/Input/Input.Password", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
 export default meta
@@ -10,10 +10,11 @@ type Story = StoryObj
 /**
  * LEAF ATOM — `Input.Password` wraps HeroUI `TextField`/`Input` (type="password")
  * plus a show/hide button (Phosphor `EyeIcon`/`EyeSlashIcon`) and its own internal
- * `FieldFrame` (§11a). The toggle is an INTERNAL button owned by the atom itself (not
- * a `Button.Base` with its own story), so every part (`Label`/`Description`/`Field`/
- * `Toggle`/`Error`/`Skeleton`) stays an internal slot, meaning NO deps, so the
- * `annotate` prop is dropped entirely.
+ * `FieldFrame` (§11a). No component here has a story of its own to jump to, so
+ * `annotate` carries no `storyId` — but the heroui `Input` it renders, and
+ * `FieldFrame`'s own heroui `Label`/`Skeleton`, still need tier `heroui` so the
+ * two-law panel doesn't silently drop them (2026-07-28). `Toggle` (the hand-rolled
+ * show/hide `<button>`) stays unannotated — plain markup, not a real component.
  *
  * ⭐ 2026-07-26 (§12g): leaf `Invalid` split off from `Error`, since `isInvalid` alone
  * only changes the border (no text line), while `errorMessage` adds the border AND the
@@ -24,6 +25,11 @@ type Story = StoryObj
  * "revealed" state from outside, so no leaf can be built for it without touching the
  * component (forbidden in this pass), noted as an issue instead of a leaf.
  */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    Input: { tier: "heroui", role: "masked text field" },
+    Label: { tier: "heroui", role: "field label line" },
+    Skeleton: { tier: "heroui", role: "loading placeholder" },
+}
 
 /** Default — bare masked field + the show/hide eye button. No prop turned on (§12g). */
 export const Default: Story = {
@@ -34,6 +40,7 @@ export const Default: Story = {
                 <BlockAnatomy
                     name="Input.Password"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Default"
                     states={[
                         {
@@ -64,6 +71,7 @@ export const Placeholder: Story = {
                 <BlockAnatomy
                     name="Input.Password"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `placeholder`"
                     states={[
                         {
@@ -89,6 +97,7 @@ export const WithLabel: Story = {
                 <BlockAnatomy
                     name="Input.Password"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="WithLabel"
                     states={[
                         {
@@ -114,6 +123,7 @@ export const Required: Story = {
                 <BlockAnatomy
                     name="Input.Password"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Required"
                     states={[
                         {
@@ -139,6 +149,7 @@ export const Filled: Story = {
                 <BlockAnatomy
                     name="Input.Password"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Filled"
                     states={[
                         {
@@ -164,6 +175,7 @@ export const Disabled: Story = {
                 <BlockAnatomy
                     name="Input.Password"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Disabled"
                     states={[
                         {
@@ -193,6 +205,7 @@ export const Invalid: Story = {
                 <BlockAnatomy
                     name="Input.Password"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Invalid"
                     states={[
                         {
@@ -218,6 +231,7 @@ export const Error: Story = {
                 <BlockAnatomy
                     name="Input.Password"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Error"
                     states={[
                         {
@@ -241,6 +255,7 @@ export const Loading: Story = {
             <BlockAnatomy
                 name="Input.Password"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Loading"
                 states={[
                     {

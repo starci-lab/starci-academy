@@ -4,7 +4,7 @@ import { ArrowCounterClockwiseIcon, HouseIcon, MagnifyingGlassIcon, PackageIcon,
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Feedback } from "@sb-components/composites/feedback/Feedback/Feedback"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * KHUNG (composite tier) — `Feedback.Empty`: chồng dọc CANH GIỮA lấp một chỗ trống
@@ -24,9 +24,12 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * `Description` · `Body` · `Action` · `Code`). `tone` chỉ đổi MÀU icon, và số nút
  * trong `action` là nội dung của slot ⇒ cả hai là STATE, nằm TRONG leaf.
  *
- * ⛔ KHÔNG có `annotate`: `action` là NODE tuỳ ý caller đưa vào (khung không tự
- * dựng `Button.Base` bên trong như `Feedback.Callout`), nên không có node nào ở
- * đây trỏ sang được một story khác — bỏ hẳn prop thay vì để rác.
+ * `icon`/`body`/`action` KHÔNG khai trong `parts`: đó là NODE tuỳ ý caller đưa vào
+ * (`icon` đổi hẳn mỗi lần gọi, `body`/`action` là slot tự do) nên không có MỘT
+ * component cố định nào để trỏ sang. `Title`/`Description`/`Code` thì NGƯỢC LẠI —
+ * chúng luôn là `Typography.Base` (của ta) hoặc HeroUI `Typography` (2 slot heading
+ * ở `size="page"`, §9 gap ghi ở cuối file), nên CÓ khai (2026-07-28, LUẬT node =
+ * tên component thật + heroui phải hiện tầng).
  */
 const meta: Meta<typeof Feedback.Empty> = {
     title: "Composites/Feedback/Feedback/Feedback.Empty",
@@ -44,6 +47,49 @@ type Story = StoryObj<typeof Feedback.Empty>
 /** Plain canvas for each leaf's anatomy panel. */
 const shell = (node: ReactNode) => <div className="p-8">{node}</div>
 
+/**
+ * `size="default"` leaves (TitleOnly/IconAndTitle/Description/Action/WithBody): title
+ * (+ description, when set) always renders through the atom `Typography.Base` — same
+ * real component for both, so ONE entry covers both occurrences (§11a.1).
+ */
+const DEFAULT_PARTS: Array<AnatomyNode> = [
+    {
+        name: "Typography.Base",
+        tier: "atom",
+        role: "the title (Base medium) and, when `description` is set, the muted `Xs` line under it",
+        storyId: "atoms-text-typography-typography-base--colors",
+    },
+]
+
+/**
+ * `size="page"` (FullPage): the `code` numeral and the page title go through HeroUI's
+ * OWN `Typography` (§9 gap noted at the end of this file — the atom tops out at `Lg`),
+ * `description` still goes through the atom.
+ */
+const PAGE_PARTS: Array<AnatomyNode> = [
+    {
+        name: "Typography",
+        tier: "heroui",
+        role: "the `code` numeral (`h1` bold) and the page title (`h4` semibold) — HeroUI's own component, NOT the atom",
+    },
+    {
+        name: "Typography.Base",
+        tier: "atom",
+        role: "the muted description line under the page title",
+        storyId: "atoms-text-typography-typography-base--colors",
+    },
+]
+
+/** `size="compact"`: every slot but the title is dropped; the title is still `Typography.Base`. */
+const COMPACT_PARTS: Array<AnatomyNode> = [
+    {
+        name: "Typography.Base",
+        tier: "atom",
+        role: "the single muted line left once every other slot is dropped",
+        storyId: "atoms-text-typography-typography-base--colors",
+    },
+]
+
 /** Biên gọn nhất: chỉ `title` — không icon, không mô tả, không CTA. */
 export const TitleOnly: Story = {
     render: () =>
@@ -52,6 +98,7 @@ export const TitleOnly: Story = {
                 name="Feedback.Empty"
                 tier="composite"
                 leaf="TitleOnly"
+                parts={DEFAULT_PARTS}
                 reason="This is the frame that fills an empty spot: every 'nothing here' in the app reads the same, centered, in the same slot order, whether it's plain-empty or broken (tone), compact, default, or page-sized."
                 states={[
                     {
@@ -75,6 +122,7 @@ export const IconAndTitle: Story = {
                 name="Feedback.Empty"
                 tier="composite"
                 leaf="IconAndTitle"
+                parts={DEFAULT_PARTS}
                 states={[
                     {
                         name: "icon set, description unset, action unset",
@@ -98,6 +146,7 @@ export const Description: Story = {
                 name="Feedback.Empty"
                 tier="composite"
                 leaf="Description"
+                parts={DEFAULT_PARTS}
                 states={[
                     {
                         name: "icon set, description set, action unset",
@@ -135,6 +184,7 @@ export const Action: Story = {
                 name="Feedback.Empty"
                 tier="composite"
                 leaf="Action"
+                parts={DEFAULT_PARTS}
                 reason="`action` is the way out of an empty state, so nothing should ever leave the reader stuck at a dead end with no next step."
                 states={[
                     {
@@ -190,6 +240,7 @@ export const WithBody: Story = {
                 name="Feedback.Empty"
                 tier="composite"
                 leaf="WithBody"
+                parts={DEFAULT_PARTS}
                 reason="The frame wraps (§13b): `body` is the free-form body slot and `children` is its shorthand, sitting between the description and the action so a caller can drop in anything richer than one more line of text."
                 states={[
                     {
@@ -236,6 +287,7 @@ export const FullPage: Story = {
             name="Feedback.Empty"
             tier="composite"
             leaf="FullPage"
+            parts={PAGE_PARTS}
             reason={"`size=\"page\"` gives the frame a 70vh height, a larger title, and room for a `code` numeral, the shape for a route that failed to load at all rather than a section within a working page."}
             states={[
                 {
@@ -301,6 +353,7 @@ export const Compact: Story = {
                     name="Feedback.Empty"
                     tier="composite"
                     leaf="Compact"
+                    parts={COMPACT_PARTS}
                     reason={"`size=\"compact\"` was merged from the deleted `SimpleEmptyState` frame, and it drops every icon, description, body, and CTA down to one muted line, a different shape from the default reserved for a tight spot like a tab or panel body."}
                     states={[
                         {

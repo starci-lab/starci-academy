@@ -2,7 +2,7 @@ import type { ComponentType, ReactNode } from "react"
 import type { StoryObj } from "@storybook/nextjs"
 import { CheckCircleIcon, ArrowRightIcon } from "@phosphor-icons/react"
 import type { TypographyProps } from "@sb-components/atoms/text/Typography/Typography"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * Shared story-leaf builder for the per-SIZE Typography components. NOT a `.stories`
@@ -32,10 +32,16 @@ One member: \`Typography.Base\`. Content goes through the \`text={...}\` prop, n
 type SizeComponent = ComponentType<TypographyProps>
 
 export const makeTypographyLeaves = (Comp: SizeComponent, label: string) => {
-    const leaf = (leafName: string, code: string, node: ReactNode, extra?: string): StoryObj => ({
+    const leaf = (
+        leafName: string,
+        code: string,
+        node: ReactNode,
+        extra?: string,
+        annotate?: Record<string, AnatomyAnnotation>,
+    ): StoryObj => ({
         render: () => (
             <div className="p-8">
-                <BlockAnatomy name={label} tier="atom" leaf={leafName} note={extra} code={code}>
+                <BlockAnatomy name={label} tier="atom" leaf={leafName} note={extra} code={code} annotate={annotate}>
                     {node}
                 </BlockAnatomy>
             </div>
@@ -101,7 +107,9 @@ export const makeTypographyLeaves = (Comp: SizeComponent, label: string) => {
         /** Link — HeroUI Link (§1 accent). */
         Link: leaf("Link", `<${label} text="View details" isLink />`, (
             <Comp text="View details" isLink showAnatomy />
-        ), "isLink renders as HeroUI Link — accent color with a hover underline."),
+        ), "isLink renders as HeroUI Link — accent color with a hover underline.", {
+            Link: { tier: "heroui", role: "renders the text as HeroUI's own `Link`, for the accent color + hover underline + a11y" },
+        }),
         /** WithPrefixIcon — leading icon; text tự font-medium. */
         WithPrefixIcon: leaf("WithPrefixIcon", `<${label} text="Passed" prefixIcon={CheckCircleIcon} />`, (
             <Comp text="Passed" prefixIcon={CheckCircleIcon} showAnatomy />
@@ -127,6 +135,8 @@ export const makeTypographyLeaves = (Comp: SizeComponent, label: string) => {
         /** Loading — atom tự vẽ text-bar skeleton. */
         Loading: leaf("Loading", `<${label} text="…" isSkeleton />`, (
             <Comp text="Grade assignments with the premium model" isSkeleton showAnatomy />
-        ), "isSkeleton draws its own shimmer bar — the atom owns its resting state."),
+        ), "isSkeleton draws its own shimmer bar — the atom owns its resting state.", {
+            Skeleton: { tier: "heroui", role: "the shimmer bar itself, HeroUI's own `Skeleton`" },
+        }),
     }
 }

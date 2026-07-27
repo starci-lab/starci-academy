@@ -101,7 +101,10 @@ const FieldFrameBase = ({
         return (
             <div className={cn("flex flex-col gap-1", className)}>
                 {label != null ? (
-                    <HeroSkeleton className="h-4 w-1/3 rounded-md" data-anat-part={showAnatomy ? "Label" : undefined} />
+                    // Node name = the REAL component rendered here (heroui `Skeleton`, in its
+                    // label-bar look) — NOT the word "Label" (that's the SLOT it stands in for,
+                    // not its identity; the atom's own control skeleton is also a `Skeleton`).
+                    <HeroSkeleton className="h-4 w-1/3 rounded-md" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                 ) : null}
                 {skeletonControl}
             </div>

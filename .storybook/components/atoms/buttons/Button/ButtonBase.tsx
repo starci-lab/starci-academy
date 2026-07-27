@@ -122,7 +122,7 @@ export const ButtonBase = ({
     /** Glyph dẫn đầu — hoặc Spinner thay chỗ nó khi BUSY (không chồng 2 tín hiệu một ô). */
     const leading = isPending ? (
         <span aria-hidden className="inline-flex shrink-0">
-            <Spinner size="sm" color="current" />
+            <Spinner size="sm" color="current" data-anat-part={showAnatomy ? "Spinner" : undefined} />
         </span>
     ) : PrefixIcon ? (
         <span
@@ -148,7 +148,7 @@ export const ButtonBase = ({
             isPending={isPending}
             isDisabled={isDisabled || isPending}
             className={cn("group", VARIANT_CLS[variant], className)}
-            data-anat-part={anatPart}
+            data-anat-part={anatPart ?? (showAnatomy ? "Button" : undefined)}
         >
             {leading}
             {isIconOnly ? null : <span>{label}</span>}

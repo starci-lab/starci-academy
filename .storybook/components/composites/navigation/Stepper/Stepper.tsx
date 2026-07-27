@@ -132,7 +132,7 @@ const StepperBase = ({
                                 isVertical ? "pt-1" : "items-center text-center",
                             )}
                         >
-                            <span data-anat-part={showAnatomy ? "Label" : undefined}>
+                            <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
                                 <Typography.Base size="sm"
                                     text={step.label}
                                     weight={state === "current" ? "medium" : undefined}
@@ -140,7 +140,7 @@ const StepperBase = ({
                                 />
                             </span>
                             {step.description ? (
-                                <span data-anat-part={showAnatomy ? "Description" : undefined}>
+                                <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
                                     <Typography.Base size="xs" text={step.description} color="muted" />
                                 </span>
                             ) : null}
@@ -207,18 +207,18 @@ const StepperBase = ({
                                 onClick={() => onStepPress(index)}
                                 className="mb-3 flex flex-col gap-0 pt-1 text-left rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                             >
-                                <span data-anat-part={showAnatomy ? "Label" : undefined}>
+                                <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
                                     <Typography.Base size="sm" text={step.label} />
                                 </span>
                                 {step.description ? (
-                                    <span data-anat-part={showAnatomy ? "Description" : undefined}>
+                                    <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
                                         <Typography.Base size="xs" text={step.description} color="muted" />
                                     </span>
                                 ) : null}
                             </button>
                         ) : (
                             <div className="mb-3 flex flex-col gap-0 pt-1">
-                                <span data-anat-part={showAnatomy ? "Label" : undefined}>
+                                <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
                                     <Typography.Base size="sm"
                                         text={step.label}
                                         weight={state === "current" ? "medium" : undefined}
@@ -226,7 +226,7 @@ const StepperBase = ({
                                     />
                                 </span>
                                 {step.description ? (
-                                    <span data-anat-part={showAnatomy ? "Description" : undefined}>
+                                    <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
                                         <Typography.Base size="xs" text={step.description} color="muted" />
                                     </span>
                                 ) : null}

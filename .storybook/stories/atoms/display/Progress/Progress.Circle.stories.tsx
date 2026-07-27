@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Progress } from "@sb-components/atoms/display/Progress/Progress"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Progress.Circle> = {
     title: "Atoms/Display/Progress/Progress.Circle",
@@ -14,10 +14,26 @@ export default meta
 type Story = StoryObj<typeof Progress.Circle>
 
 /**
- * NO `annotate` (teacher confirmed 2026-07-26): a leaf atom wrapping react-aria's
- * ProgressBar directly (circle variant). `Track`/`Fill` are internal spans (slots), not
- * components with their own story to jump to, so they are not real deps.
+ * `ProgressCircle.Track`/`ProgressCircle.FillCircle` are direct HeroUI
+ * compound-component renders (`tier: "heroui"`, no `storyId`). `Skeleton` is
+ * HeroUI's own `Skeleton`, same reasoning. Renamed from the role-words
+ * `Track`/`Fill` (§ naming pass, 2026-07-28) — `Fill` was doubly wrong here since
+ * the element it tagged is actually `FillCircle`, not `Fill`.
  */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "ProgressCircle.Track": {
+        tier: "heroui",
+        role: "wraps the neutral track-circle and the coloured fill-arc",
+    },
+    "ProgressCircle.FillCircle": {
+        tier: "heroui",
+        role: "the coloured arc — a fixed sweep at a value, or a continuous spin when indeterminate",
+    },
+    Skeleton: {
+        tier: "heroui",
+        role: "the resting circle shimmer, drawn in place of the whole ring while isSkeleton is on",
+    },
+}
 
 /** Value — a determinate ring (value/max). */
 export const Value: Story = {
@@ -27,6 +43,7 @@ export const Value: Story = {
                 name="Progress.Circle"
                 tier="atom"
                 leaf="Value"
+                annotate={ANNOTATE}
                 reason="The circular progress ring wrapping react-aria ProgressBar, same semantics as Bar."
                 states={[
                     {
@@ -49,6 +66,7 @@ export const Indeterminate: Story = {
                 name="Progress.Circle"
                 tier="atom"
                 leaf="Indeterminate"
+                annotate={ANNOTATE}
                 states={[
                     {
                         name: "isIndeterminate = true",
@@ -70,6 +88,7 @@ export const Loading: Story = {
                 name="Progress.Circle"
                 tier="atom"
                 leaf="Loading"
+                annotate={ANNOTATE}
                 states={[
                     {
                         name: "isSkeleton = true",
@@ -91,6 +110,7 @@ export const Colors: Story = {
                 name="Progress.Circle"
                 tier="atom"
                 leaf="Prop `color`"
+                annotate={ANNOTATE}
                 reason="Same tone semantics as Bar: the arc's colour carries the meaning of the number inside its ring, from a plain accent run to an explicit success, warning, or danger outcome."
                 states={[
                     {
@@ -137,6 +157,7 @@ export const Sizes: Story = {
                 name="Progress.Circle"
                 tier="atom"
                 leaf="Prop `size`"
+                annotate={ANNOTATE}
                 reason="Diameter signals weight: a compact ring fits inside a stat row, while a prominent ring can anchor a dashboard tile on its own."
                 states={[
                     {

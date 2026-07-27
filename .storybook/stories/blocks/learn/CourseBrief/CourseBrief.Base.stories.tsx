@@ -39,14 +39,13 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     // into the deps tree, then RECURSE into its children"): a FRAME is a DEP at
     // EVERY tier too. Without it the tree reads without knowing what this block
     // is laid out with — and the frame is exactly what decides the shape.
-    // The three nodes below ARE `Typography.Base` built by the block itself ⇒
-    // they have their own door, must be declared
-    // (decided 2026-07-27: "nothing is allowed to stand outside the tree").
-    "Skeleton.Title": { tier: "atom", role: "title mirror while loading (h3 bold)", storyId: "atoms-text-typography-typography-base--plain" },
-    "Skeleton.Description": { tier: "atom", role: "description mirror while loading (sm muted)", storyId: "atoms-text-typography-typography-base--plain" },
-    Meta: { tier: "atom", role: "the meta line that lists modules, study hours, and learners joined together by a middle dot", storyId: "atoms-text-typography-typography-base--plain" },
+    // The node below IS `Typography.Base` built by the block itself, for the title, the
+    // description, and the meta line alike (real content or its skeleton mirror) ⇒ it has
+    // its own door, must be declared (decided 2026-07-27: "nothing is allowed to stand
+    // outside the tree").
+    "Typography.Base": { tier: "atom", role: "one of the header's own text lines — the course title, its description, or the modules/hours/learners meta strip — real or its skeleton mirror", storyId: "atoms-text-typography-typography-base--plain" },
     "Page.Header": { tier: "composite", role: "the page-header frame that lines up the breadcrumb, title, description, and meta line, owning the type scale for all four", storyId: "composites-layout-page-page-header--full" },
-    Breadcrumbs: { tier: "atom", role: "the trail the block builds from crumb data handed down by the caller", storyId: "atoms-navigation-breadcrumbs-breadcrumbs-base--default" },
+    "Breadcrumbs.Base": { tier: "atom", role: "the trail the block builds from crumb data handed down by the caller", storyId: "atoms-navigation-breadcrumbs-breadcrumbs-base--default" },
 }
 
 /** LEAF — full set: breadcrumb → course name → description → meta strip. Includes the long-trail case (state). */

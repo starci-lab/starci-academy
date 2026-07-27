@@ -73,6 +73,12 @@ export interface TabsExtendedProps {
      * (already hug-content via `.extended-tabs`).
      */
     size?: "sm" | "md"
+    /**
+     * `true` → tag the root `HeroTabs` with `data-anat-part="Tabs"` so a BlockAnatomy
+     * panel can badge it (heroui tier, 2026-07-27). The `children` tree is the
+     * CALLER's own — it stays untagged here, since it isn't this atom's own render.
+     */
+    showAnatomy?: boolean
     /** Extra classes on the root `Tabs`. */
     className?: string
 }
@@ -94,6 +100,7 @@ export const TabsExtended = ({
     className,
     variant = "secondary",
     size = "md",
+    showAnatomy = false,
 }: TabsExtendedProps) => {
     return (
         <HeroTabs
@@ -108,6 +115,7 @@ export const TabsExtended = ({
                 variant === "secondary" ? "extended-tabs" : size === "sm" ? "w-fit" : "w-full",
                 className,
             )}
+            data-anat-part={showAnatomy ? "Tabs" : undefined}
         >
             {children}
         </HeroTabs>

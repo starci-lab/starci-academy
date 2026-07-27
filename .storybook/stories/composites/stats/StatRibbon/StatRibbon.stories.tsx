@@ -15,9 +15,9 @@ export default meta
 
 type Story = StoryObj<typeof StatRibbon>
 
-/** Cùng parts cho mọi leaf: N StatPair cells trong 1 Card. */
+/** Cùng parts cho mọi leaf: N StatPair cells trong 1 Card — the real `StatPair` composite. */
 const STAT_PARTS: Array<AnatomyNode> = [
-    { name: "StatPair", tier: "design", role: "one value+label cell, repeated ×N, with a full-height divider between cells on desktop" },
+    { name: "StatPair", tier: "composite", role: "one value+label cell, repeated ×N, with a full-height divider between cells on desktop", storyId: "composites-stats-statpair--single" },
 ]
 
 /** Full 4-stat strip: row with full-height dividers on wide screens, 2-col grid on mobile. */

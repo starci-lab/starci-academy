@@ -83,35 +83,48 @@ export default meta
 type Story = StoryObj<typeof UserCell.Base>
 
 /**
- * Bảng chú giải DOM dùng chung cho mọi leaf. `Avatar` và tên/handle có story riêng
- * (`Typography.Base`) nên nhảy được; `Trailing` là khe tự do (không "hình chuẩn").
+ * Bảng chú giải DOM dùng chung cho mọi leaf.
  *
- * `Name` và `Handle` là hai `data-anat-part` RIÊNG (đổi 2026-07-26) — trước cả hai
- * cùng phát `Text` nên cây suy từ DOM chỉ gom được một node dù có hai dòng chữ.
+ * ⚠️ 2026-07-28 (naming pass): `UserCell.Base` forwards `showAnatomy` straight
+ * into the composed `Avatar.Base` (no `anatPart` given to opaque it), so
+ * `Avatar.Base`'s OWN internal HeroUI nodes (`Avatar`/`AvatarImage`/
+ * `AvatarFallback`) surface directly inside THIS tree — real names, `tier:
+ * "heroui"`, no `storyId` (a library component has no story of ours to jump
+ * to). The previous `Avatar` entry (`tier: "atom"`, `storyId` to Avatar.Base's
+ * own story) was itself mislabeled: that key was never matched by an opaque
+ * "Avatar.Base" wrapper (none exists here), only by AvatarBase's own inner
+ * `Avatar` HeroUI node leaking through — so it needed `tier: "heroui"`, not
+ * `"atom"`, and no `storyId`. Fixing the FORWARDING itself (passing `anatPart`
+ * instead) is a structural change out of scope for a naming-only pass.
+ *
+ * `Name`/`Handle` renamed to `Typography.Base` (the real component both
+ * instances are, duplicate names allowed — the panel groups by DOM element).
+ * `Skeleton` now covers all three shimmer bars (avatar circle + name + handle),
+ * since all three resolve to the same real HeroUI `Skeleton`. `Trailing` stays
+ * OUT of `annotate` — it is a free slot the caller fills with ANY node, not a
+ * fixed component with a real name.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     Avatar: {
-        role: "avatar — uploaded → generated → initials → icon fallback chain, owned by Avatar.Base",
-        tier: "atom",
-        storyId: "atoms-display-avatar-avatar-base--default",
+        role: "the HeroUI avatar frame inside the composed Avatar.Base, surfacing here because showAnatomy forwards straight through",
+        tier: "heroui",
     },
-    Name: {
-        role: "primary label — displayName ?? username, accent tone when isOwnRow",
+    AvatarImage: {
+        role: "the real or generated photo inside Avatar.Base's fallback chain, when one is showing",
+        tier: "heroui",
+    },
+    AvatarFallback: {
+        role: "the initials/icon fallback inside Avatar.Base, when there is no photo to show",
+        tier: "heroui",
+    },
+    "Typography.Base": {
+        role: "the name and, when set, the muted @handle line — two separate Typography.Base instances",
         tier: "atom",
         storyId: "atoms-text-typography-typography-base--plain",
-    },
-    Handle: {
-        role: "muted @handle line, shown only when handle is passed",
-        tier: "atom",
-        storyId: "atoms-text-typography-typography-base--plain",
-    },
-    Trailing: {
-        role: "right-aligned slot the caller fills — role chip, button, status dot",
-        tier: "atom",
     },
     Skeleton: {
-        role: "avatar shimmer circle — delegated to Avatar.Base isSkeleton, so it matches size",
-        tier: "atom",
+        role: "shimmer bar — the avatar circle (delegated to Avatar.Base), the name bar, and the handle bar all resolve to this same HeroUI Skeleton",
+        tier: "heroui",
     },
 }
 

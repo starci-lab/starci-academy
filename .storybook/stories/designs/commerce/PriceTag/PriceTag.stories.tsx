@@ -33,20 +33,21 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 // itself (own `type`/`weight`), so it's a badged node even with no other parts.
 const TYPOGRAPHY_STORY = "atoms-text-typography-typography-base--plain"
 
-const AMOUNT: AnatomyNode = { name: "Typography", tier: "atom", role: "the amount to pay (bold), rendered alone when there is no discount to compare it against", storyId: TYPOGRAPHY_STORY }
+const AMOUNT: AnatomyNode = { name: "Typography.Base", tier: "atom", role: "the amount to pay (bold), rendered alone when there is no discount to compare it against", storyId: TYPOGRAPHY_STORY }
 
 // The −X% chip → popover subtree, shared by every on-sale leaf. NOTE: the "Popover"
 // wrapper itself is CUT from the tree — HeroUI's `PopoverRoot` is just a context
 // provider around react-aria's `DialogTrigger`, which renders NO DOM element of its
 // own (state-only, clones its children), so there is nothing to tag with
-// `data-anat-part="Popover"`. Only its two DOM-bearing children remain, as SIBLINGS:
-// `Popover.Trigger` (the actual clickable div — role=button, aria-expanded/controls —
-// wrapping the `Chip.Base`; the chip is NOT the button, just its soft-success label)
-// and `Popover.Content` (the breakdown rows).
+// `data-anat-part="Popover"`. Only its two DOM-bearing children remain, as SIBLINGS,
+// both tagged `tier: "heroui"` (no `storyId` — they're the library's own components,
+// not one of ours): `Popover.Trigger` (the actual clickable div — role=button,
+// aria-expanded/controls — wrapping the `Chip.Base`; the chip is NOT the button, just
+// its soft-success label) and `Popover.Content` (the breakdown rows).
 const PRICE_POPOVER_PARTS: Array<AnatomyNode> = [
     {
         name: "Popover.Trigger",
-        tier: "composite",
+        tier: "heroui",
         role: "the button that opens the popover (react-aria: role=button, aria-expanded/controls), the one interactive element in this cluster, wrapping the −X% chip",
         children: [
             {
@@ -64,7 +65,7 @@ const PRICE_POPOVER_PARTS: Array<AnatomyNode> = [
     },
     {
         name: "Popover.Content",
-        tier: "composite",
+        tier: "heroui",
         role: "the price-breakdown table",
         children: [
             {
@@ -82,22 +83,22 @@ const PRICE_POPOVER_PARTS: Array<AnatomyNode> = [
     },
 ]
 
-// On sale: amount (renamed "· amount to pay" once there's a saving to distinguish
-// it from the struck original) + struck list price + −X% chip → popover + a
-// saving line — PriceTag directly renders every one of these Typography itself.
-const AMOUNT_WITH_SAVING: AnatomyNode = { name: "Typography.Amount", tier: "atom", role: "amount to pay (bold)", storyId: TYPOGRAPHY_STORY }
-// ⚠️ Node names must match EXACTLY the `data-anat-part` the component emits — `Typography.Original`/
-// `Typography.Saving` are the OLD names, the DOM emits `OriginalPrice`/`SavingLine` ⇒ those two
-// nodes never matched anything (deep-scan 2026-07-27).
-const ORIGINAL: AnatomyNode = { name: "OriginalPrice", tier: "atom", role: "struck original price (muted, line-through)", storyId: TYPOGRAPHY_STORY }
-const SAVING_LINE: AnatomyNode = { name: "SavingLine", tier: "atom", role: "the \"Save N₫\" line (muted)", storyId: TYPOGRAPHY_STORY }
+// On sale: amount (distinguished from the struck original only by its ROLE, not its
+// name — both are the same `Typography.Base` atom) + struck list price + −X% chip →
+// popover + a saving line — PriceTag directly renders every one of these itself.
+const AMOUNT_WITH_SAVING: AnatomyNode = { name: "Typography.Base", tier: "atom", role: "the amount to pay (bold)", storyId: TYPOGRAPHY_STORY }
+// ⚠️ Node name must match EXACTLY the `data-anat-part` the component emits — this is the
+// SAME `Typography.Base` atom as every other text line here, distinguished only by ROLE
+// (§14d.1: role goes in the `role` field, never baked into the name).
+const ORIGINAL: AnatomyNode = { name: "Typography.Base", tier: "atom", role: "the struck original price (muted, line-through)", storyId: TYPOGRAPHY_STORY }
+const SAVING_LINE: AnatomyNode = { name: "Typography.Base", tier: "atom", role: "the \"Save N₫\" line (muted)", storyId: TYPOGRAPHY_STORY }
 
 // ⭐ 2026-07-27 — the tree now reflects the real FRAME (teacher: "layout is built from
-// layouts components"): `Stack.V` (outer column) ⊃ `Cluster` (price row, baseline aligned)
-// ⊃ three elements, then `SavingLine` is the column's second line.
+// layouts components"): `Stack.V` (outer column) ⊃ `Cluster.Base` (price row, baseline
+// aligned) ⊃ three elements, then the saving line is the column's second line.
 const STACK: AnatomyNode = { name: "Stack.V", tier: "frame", role: "the outer column that stacks the price row on top and the \"Save\" line beneath it", storyId: "frames-stack-stack-v--default" }
 const CLUSTER = (items: Array<AnatomyNode>): AnatomyNode => ({
-    name: "Cluster",
+    name: "Cluster.Base",
     tier: "frame",
     role: "the price row, baseline aligned so the big number, the struck number, and the chip share one baseline, wrapping onto a new line when space runs out",
     storyId: "frames-cluster-cluster-base--default",
@@ -200,18 +201,29 @@ export const Skeleton: Story = {
 }
 
 /** Pick size by context: `sm` dense lists, `md` default card, `lg` hero/checkout. */
-export const Sizes: Story = {
+/*
+ * ⭐ 2026-07-27: `Sizes` was ONE leaf holding two states named `PriceTag.Inline` and
+ * `PriceTag.Prominent`. Those are not two values of a prop, they are two MEMBERS of the
+ * namespace, so a caller types two different names to reach them. Two names is two doors, and
+ * a door is a leaf (§11f: a leaf is a composition, a state is that composition under a
+ * different DATA condition).
+ *
+ * Folded together they also lied about the API: the state tabs read as though a `size` prop
+ * switched, and no such prop exists. And one of the two entry points was invisible to anyone
+ * scanning the sidebar for what they can call.
+ */
+export const Inline: Story = {
     render: () =>
         shell(
             <BlockAnatomy
-                name="PriceTag"
+                name="PriceTag.Inline"
                 tier="design"
-                leaf="Sizes"
+                leaf="Inline"
                 parts={DISCOUNT_PARTS}
                 states={[
                     {
-                        name: "PriceTag.Inline",
-                        why: "The amount renders at the smaller type scale meant to sit as one line inside a card, while every other part, the struck price, the chip, the popover, and the saving line, stays identical to the discounted composition. This size fits a dense list where the price is one signal among several, not the page's sole focus.",
+                        name: "discounted = 1490000, original = 1990000",
+                        why: "The amount renders at the smaller type scale meant to sit as one line inside a card, while the struck price, the chip, the popover and the saving line stay identical to the discounted composition. This size fits a dense list where the price is one signal among several rather than the page's sole focus.",
                         code: "<PriceTag.Inline discounted={1490000} original={1990000} />",
                         render: (
                             <PriceTag.Inline
@@ -222,9 +234,23 @@ export const Sizes: Story = {
                             />
                         ),
                     },
+                ]}
+            />,
+        ),
+}
+
+export const Prominent: Story = {
+    render: () =>
+        shell(
+            <BlockAnatomy
+                name="PriceTag.Prominent"
+                tier="design"
+                leaf="Prominent"
+                parts={DISCOUNT_PARTS}
+                states={[
                     {
-                        name: "PriceTag.Prominent",
-                        why: "The amount renders at a larger type scale meant to be the focal point of a buy CTA, with the same composition underneath it as the Inline size. This size fits a hero section or checkout, where the price itself is the thing the page wants the eye to land on first.",
+                        name: "discounted = 1490000, original = 1990000",
+                        why: "The amount renders at a larger type scale meant to be the focal point of a buy CTA, with the same composition underneath it as the Inline member. This size fits a hero section or a checkout, where the price itself is the thing the page wants the eye to land on first.",
                         code: "<PriceTag.Prominent discounted={1490000} original={1990000} />",
                         render: (
                             <PriceTag.Prominent

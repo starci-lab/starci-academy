@@ -28,10 +28,14 @@ type Story = StoryObj<typeof List.ToggleRow>
  * axis. `List.ToggleRow` composes `TitledText` (label + optional muted
  * description, one stacked node) and a trailing `Switch` — same two nodes across
  * every leaf, including `isSkeleton` (each swaps to its own mirror, same names).
+ *
+ * ⭐ 2026-07-27 — `Switch` renders straight from `@heroui/react` (no port of ours
+ * wraps it), so it needs the `heroui` tier to show up in the tree at all: a `heroui`
+ * node needs no `storyId`, the tier alone is what keeps the panel from hiding it.
  */
 const ROW_PARTS: Array<AnatomyNode> = [
     { name: "TitledText", tier: "composite", role: "the label with an optional muted description, stacked as one node" },
-    { name: "Switch", tier: "composite", role: "the on/off switch, pinned to the right edge of the row" },
+    { name: "Switch", tier: "heroui", role: "the on/off switch, pinned to the right edge of the row" },
 ]
 
 /** Default: label + description, unchecked. */

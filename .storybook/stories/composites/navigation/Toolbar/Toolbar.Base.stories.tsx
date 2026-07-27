@@ -136,19 +136,25 @@ const addButton: ReactNode = (
 // cạnh nó) · RightTabs (nhóm phụ, inline hoặc thu gọn thành Select dưới `@app-sm`).
 // Mỗi leaf chỉ khai đúng thứ nó render.
 const LEFT_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "LeftTabs", tier: "composite", role: "the main tab group (ExtendedTabs), driving the whole panel below it" },
+    { name: "Tabs.Extended", tier: "atom", role: "the main tab group, driving the whole panel below it", storyId: "atoms-navigation-tabs-tabs-extended--default" },
 ]
 const TWO_GROUPS_PARTS: Array<AnatomyNode> = [
-    { name: "LeftTabs", tier: "composite", role: "the content tab group (accent), pinned left" },
-    { name: "RightTabs", tier: "composite", role: "the secondary tab group, pinned right" },
+    { name: "Tabs.Extended", tier: "atom", role: "the content tab group (accent), pinned left", storyId: "atoms-navigation-tabs-tabs-extended--default" },
+    { name: "Tabs.Extended", tier: "atom", role: "the secondary tab group, pinned right", storyId: "atoms-navigation-tabs-tabs-extended--default" },
 ]
+// Collapsed right group mounts BOTH real components at once (one hidden under `@app-sm` via CSS),
+// so it gets two nodes instead of one wrapper name that could only honestly describe one of them.
 const COLLAPSE_PARTS: Array<AnatomyNode> = [
-    { name: "LeftTabs", tier: "composite", role: "the content tab group (accent), pinned left" },
-    { name: "RightTabs", tier: "composite", role: "the language group (neutral), inline from `@app-sm` up, an icon-only Select below that" },
+    { name: "Tabs.Extended", tier: "atom", role: "the content tab group (accent), pinned left", storyId: "atoms-navigation-tabs-tabs-extended--default" },
+    { name: "Select.Root", tier: "heroui", role: "the collapsed language group below `@app-sm`, an icon-only dropdown" },
+    { name: "Tabs.Extended", tier: "atom", role: "the language group (neutral), inline from `@app-sm` up", storyId: "atoms-navigation-tabs-tabs-extended--default" },
 ]
+// `leftEnd` is an arbitrary caller-supplied slot (any node beside the left group) — the toolbar
+// never fixes what renders there, so it stays a generic label even though this demo fills it
+// with a `Button.Base`.
 const LEFT_END_PARTS: Array<AnatomyNode> = [
-    { name: "LeftTabs", tier: "composite", role: "the main tab group" },
-    { name: "LeftEnd", tier: "design", role: "the action cluster beside the left group, such as a plus button, a sibling of the tab list rather than nested inside a Tab" },
+    { name: "Tabs.Extended", tier: "atom", role: "the main tab group", storyId: "atoms-navigation-tabs-tabs-extended--default" },
+    { name: "LeftEnd", tier: "composite", role: "the action cluster beside the left group, such as a plus button, a sibling of the tab list rather than nested inside a Tab" },
 ]
 
 /** Một nhóm tab đổi TOÀN BỘ panel bên dưới (secondary, underline) — hình thái tối thiểu. */

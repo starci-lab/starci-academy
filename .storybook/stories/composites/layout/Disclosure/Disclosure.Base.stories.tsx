@@ -48,7 +48,7 @@ const OPEN_PARTS: Array<AnatomyNode> = [
     { name: "Content", tier: "composite", role: "the content region carried in the `body` slot, mounted only while expanded" },
 ]
 const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton", tier: "composite", role: "a mirror of the trigger row while the section is not ready yet", state: "skeleton" },
+    { name: "Skeleton", tier: "heroui", role: "a mirror of the trigger row while the section is not ready yet (HeroUI `Skeleton`, aliased `HeroSkeleton` in this file)", state: "skeleton" },
 ]
 
 /** Default: uncontrolled, closed on mount — click the trigger to expand it. `children` shorthand for `body`. */

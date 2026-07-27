@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Tabs as HeroTabs } from "@heroui/react"
 import { HouseIcon, CompassIcon, GraduationCapIcon } from "@phosphor-icons/react"
 import { Tabs } from "@sb-components/atoms/navigation/Tabs/Tabs"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — `Tabs.Extended`: StarCi tab strip, bọc HeroUI `Tabs` root. Chuyển vào
@@ -41,10 +41,13 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * `children`, không phải prop của atom này) — nội dung của nó chuyển vào làm ví dụ
  * `secondary` bên trong leaf `Variant` thay vì đứng tên leaf riêng.
  *
- * ⚠️ KHÔNG có `annotate`/deps: atom bọc thẳng HeroUI `Tabs` (không qua atom `Tabs.Base`
- * của hệ, alias `HeroTabs`), và phần DOM duy nhất nó SỞ HỮU là gốc `<Tabs>` — còn cây
- * `Tabs.ListContainer > Tabs.List > Tabs.Tab` là của STORY dựng (chính là `children`),
- * giống hệt lý do `Tooltip.Base` bỏ `annotate` (xem header file đó).
+ * `annotate` (2026-07-27, heroui tier thêm vào canon): atom bọc thẳng HeroUI `Tabs`
+ * (không qua atom `Tabs.Base` của hệ, alias `HeroTabs`), và phần DOM duy nhất nó SỞ
+ * HỮU là gốc `<Tabs>` — còn cây `Tabs.ListContainer > Tabs.List > Tabs.Tab` là của
+ * STORY dựng (chính là `children`), nên CHỈ gốc `<Tabs>` được tag (`"Tabs"`, tier
+ * heroui, khớp identifier import). Trước đây bỏ hẳn `showAnatomy`/`data-anat-part` —
+ * đúng là "cây nói dối bằng cách bỏ sót" (Popover mở được mà cây không hiện gì): atom
+ * này render một `HeroTabs` THẬT mà không nút nào của cây từng thấy nó.
  *
  * 🔎 GHI NHẬN (không sửa ở đây — ngoài phạm vi soát leaf, xem header component cho
  * bản đầy đủ): component tự khai trong header là "full port of
@@ -53,9 +56,7 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * `Tabs`) nên trùng lặp một phần bề mặt với `Tabs.Base`; so với `Tabs.Base` (nhận
  * `items`, tự dựng DOM, chọn-1-trong-N — đúng hình atom khép kín), `Tabs.Extended`
  * nhận `children` thô và không tự giới hạn N tab hay cấu trúc mỗi tab — gần hình một
- * khung slot-trơ (`frame`) hơn là atom nội dung. Cũng KHÔNG có `showAnatomy`/
- * `data-anat-part` như `Chip.Base`/`Tabs.Base`/`Tooltip.Base` — bỏ ngỏ, không thêm ở
- * đợt soát leaf này vì không ảnh hưởng tính đúng của bộ leaf.
+ * khung slot-trơ (`frame`) hơn là atom nội dung.
  *
  * 2026-07-27: migrated to the `states` API (§8) — `Variant`/`Size` now render their
  * union as `states[]` tabs instead of a stacked column under one shared `note`.
@@ -73,6 +74,11 @@ export default meta
 
 type Story = StoryObj<typeof Tabs.Extended>
 
+/** heroui TIER (2026-07-27) — the only DOM node this atom owns, the root `<Tabs>`. */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    Tabs: { tier: "heroui", role: "the root strip; the Tabs.ListContainer > Tabs.List > Tabs.Tab tree inside is the CALLER's own children" },
+}
+
 /** Owns the selected-tab state since `Tabs.Extended` is fully controlled. */
 const Controlled = ({
     defaultKey,
@@ -87,7 +93,7 @@ const Controlled = ({
 }) => {
     const [selectedKey, setSelectedKey] = useState(defaultKey)
     return (
-        <Tabs.Extended selectedKey={selectedKey} onSelectionChange={setSelectedKey} variant={variant} size={size}>
+        <Tabs.Extended selectedKey={selectedKey} onSelectionChange={setSelectedKey} variant={variant} size={size} showAnatomy>
             {children}
         </Tabs.Extended>
     )
@@ -100,6 +106,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="Tabs.Extended"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Default"
                 reason="The StarCi tab strip — a thin wrapper over the HeroUI Tabs root. `children` stays the caller's own `Tabs.ListContainer > Tabs.List > Tabs.Tab (+ Tabs.Indicator)` tree — a NAMED §12b exception (atom-wrapper), because each tab may carry chrome only the caller knows: accent/muted classes, a label hidden on mobile. Reach for `Tabs.Base` (`items`) when the tabs are plain content."
                 states={[
@@ -149,6 +156,7 @@ export const Variant: Story = {
             <BlockAnatomy
                 name="Tabs.Extended"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `variant`"
                 reason="`variant` decides whether the strip claims a full-width baseline row or hugs its own content — the underlying `Tabs.ListContainer > Tabs.List > Tabs.Tab` tree the caller supplies stays the same shape either way."
                 states={[
@@ -226,6 +234,7 @@ export const Size: Story = {
             <BlockAnatomy
                 name="Tabs.Extended"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `size`"
                 reason={"`size` only shows up on `variant=\"primary\"` — `secondary` is already hug-content via its own override, so `size` has no visible effect there, and both states below are demonstrated on `primary`."}
                 states={[

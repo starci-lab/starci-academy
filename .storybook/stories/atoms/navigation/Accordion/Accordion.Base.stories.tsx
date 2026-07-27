@@ -1,12 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Accordion } from "@sb-components/atoms/navigation/Accordion/Accordion"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — `Accordion.Base` bọc thẳng HeroUI `DisclosureGroup` + `Disclosure`, không
- * compose atom nào khác có story riêng (Item/Trigger/Indicator/Content/Skeleton
- * chỉ là KHE nội bộ). Theo canon §12g: atom lá bọc thẳng HeroUI ⇒ KHÔNG có deps
- * ⇒ BỎ HẲN prop `annotate` trên mọi leaf bên dưới (thầy chốt 2026-07-26).
+ * compose atom nào của HỆ có story riêng. NHƯNG (2026-07-27, heroui tier thêm vào
+ * canon): mọi sub-part đó vẫn là import THẬT từ `@heroui/react`, nên mỗi node vẫn
+ * khai `tier: "heroui"` trong `ANNOTATE` bên dưới — tên khớp Y HỆT identifier import
+ * (`DisclosureGroup`/`Disclosure`/`Disclosure.Trigger`/`Disclosure.Indicator`/
+ * `Disclosure.Content`/`Skeleton`), KHÔNG cần `storyId` vì không có story CỦA TA để
+ * nhảy sang. Trước 2026-07-27 các node này bị BỎ SÓT hoàn toàn (annotate rỗng) —
+ * cây "nói dối bằng cách bỏ sót" dù compound HeroUI vẫn render thật.
  *
  * Bộ leaf = `Default` (trần, prop `items`) + `Single`/`Multiple` (prop `allowsMultiple`,
  * mỗi ô dùng `defaultExpandedKeys` để MỞ SẴN panel — vì `allowsMultiple` chỉ đổi HÀNH VI
@@ -32,6 +36,15 @@ export default meta
 
 type Story = StoryObj<typeof Accordion.Base>
 
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    DisclosureGroup: { tier: "heroui", role: "owns single-open vs multi-open expansion across every panel" },
+    Disclosure: { tier: "heroui", role: "one FAQ panel — trigger row plus its collapsible content" },
+    "Disclosure.Trigger": { tier: "heroui", role: "the pressable row that opens/closes this panel" },
+    "Disclosure.Indicator": { tier: "heroui", role: "the chevron that rotates when the panel opens" },
+    "Disclosure.Content": { tier: "heroui", role: "the collapsible region holding this panel's body" },
+    Skeleton: { tier: "heroui", role: "shimmer bar standing in for a trigger row's title or chevron" },
+}
+
 const FAQ_ITEMS = [
     { key: "refund", title: "Refund policy?", content: "Full refund within the first 7 days if you haven't completed more than 20% of the content." },
     { key: "cert", title: "Do I get a certificate?", content: "You get a certificate of completion once you pass the final exam." },
@@ -45,6 +58,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="Accordion.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `items`"
                 reason="This is the one accordion atom in the system, wrapping HeroUI's DisclosureGroup and Disclosure directly with no other component composed inside it."
                 states={[
@@ -71,6 +85,7 @@ export const Single: Story = {
             <BlockAnatomy
                 name="Accordion.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Single"
                 reason="Single and Multiple share the same items and the same defaultExpandedKeys mechanism; only how many panels the group lets stay open at once tells them apart."
                 states={[
@@ -96,6 +111,7 @@ export const Multiple: Story = {
             <BlockAnatomy
                 name="Accordion.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Multiple"
                 states={[
                     {
@@ -117,6 +133,7 @@ export const Skeleton: Story = {
             <BlockAnatomy
                 name="Accordion.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isSkeleton`"
                 states={[
                     {

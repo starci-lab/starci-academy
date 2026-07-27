@@ -140,8 +140,10 @@ const SelectSingle = ({
                 fullWidth
                 className={className}
             >
-                <HeroSelect.Trigger data-anat-part={showAnatomy ? "Trigger" : undefined}>
-                    <HeroSelect.Value data-anat-part={showAnatomy ? "Field" : undefined}>
+                {/* Node names = the REAL heroui components rendered here (`Select.Trigger` /
+                    `Select.Value`) — NOT the slot words "Trigger"/"Field" they used to carry. */}
+                <HeroSelect.Trigger data-anat-part={showAnatomy ? "Select.Trigger" : undefined}>
+                    <HeroSelect.Value data-anat-part={showAnatomy ? "Select.Value" : undefined}>
                         {() => (
                             <span className={cn("text-sm", !selected && "text-field-placeholder")}>
                                 {selected ? selected.label : placeholder}
@@ -224,8 +226,12 @@ const SelectMulti = ({
                 fullWidth
                 className={className}
             >
-                <HeroSelect.Trigger data-anat-part={showAnatomy ? "Trigger" : undefined}>
-                    <span data-anat-part={showAnatomy ? "Field" : undefined} className={cn("text-sm", summary == null && "text-field-placeholder")}>
+                {/* Node name = the REAL heroui component rendered here (`Select.Trigger`) —
+                    NOT the slot word "Trigger" it used to carry. The summary `<span>` below
+                    stays untagged: it's a plain hand-rolled text slot, not a real component
+                    (Select.Multi doesn't compose `Select.Value` — see the JSDoc above). */}
+                <HeroSelect.Trigger data-anat-part={showAnatomy ? "Select.Trigger" : undefined}>
+                    <span className={cn("text-sm", summary == null && "text-field-placeholder")}>
                         {summary ?? placeholder}
                     </span>
                     <HeroSelect.Indicator>
@@ -304,10 +310,13 @@ const SelectCombobox = ({
                 className={cn("w-full", className)}
             >
                 <HeroComboBox.InputGroup className="relative">
-                    <HeroInput placeholder={placeholder} className="w-full pr-9" data-anat-part={showAnatomy ? "Field" : undefined} />
+                    {/* Node names = the REAL heroui components rendered here (`Input` /
+                        `ComboBox.Trigger`) — NOT the slot words "Field"/"Trigger" they used
+                        to carry. */}
+                    <HeroInput placeholder={placeholder} className="w-full pr-9" data-anat-part={showAnatomy ? "Input" : undefined} />
                     <HeroComboBox.Trigger
                         className="text-muted absolute right-1 top-1/2 -translate-y-1/2 inline-flex size-7 items-center justify-center rounded-lg [&_svg]:size-4"
-                        data-anat-part={showAnatomy ? "Trigger" : undefined}
+                        data-anat-part={showAnatomy ? "ComboBox.Trigger" : undefined}
                     >
                         <CaretDownIcon aria-hidden weight="bold" />
                     </HeroComboBox.Trigger>

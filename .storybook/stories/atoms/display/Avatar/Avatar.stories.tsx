@@ -6,7 +6,7 @@ import {
     type AvatarSize,
     type AvatarStatus,
 } from "@sb-components/atoms/display/Avatar/Avatar"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -41,6 +41,31 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
+/**
+ * Every part this atom renders is a DIRECT HeroUI import (no member of ours has its
+ * own story to jump to) — all four get `tier: "heroui"`, no `storyId` (§ heroui rule,
+ * 2026-07-28 naming pass). Renamed from role-words (`Image`/`Fallback`) to the REAL
+ * exported names (`AvatarImage`/`AvatarFallback`); `Avatar`/`Skeleton` already matched.
+ */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    Avatar: {
+        tier: "heroui",
+        role: "the HeroUI avatar frame holding whichever fallback candidate is currently showing",
+    },
+    AvatarImage: {
+        tier: "heroui",
+        role: "the real photo or the generated (DiceBear) face — whichever image candidate is currently loaded",
+    },
+    AvatarFallback: {
+        tier: "heroui",
+        role: "initials or a plain icon glyph, shown once every image candidate is exhausted",
+    },
+    Skeleton: {
+        tier: "heroui",
+        role: "the resting circle shimmer, drawn in place of the whole avatar while isSkeleton is on",
+    },
+}
+
 const meta: Meta<typeof Avatar.Base> = {
     title: "Atoms/Display/Avatar/Avatar.Base",
     component: Avatar.Base,
@@ -68,6 +93,7 @@ export const Default: Story = {
                 name="Avatar.Base"
                 tier="atom"
                 leaf="Bare avatar"
+                annotate={ANNOTATE}
                 reason="The one avatar in the system. Every leaf below it differs by exactly one prop, so this is the baseline you compare against."
                 states={[
                     {
@@ -95,6 +121,7 @@ export const Source: Story = {
                 name="Avatar.Base"
                 tier="atom"
                 leaf="Source chain"
+                annotate={ANNOTATE}
                 reason="An avatar tries harder before it gives up: a real photo, then a generated face so the person still looks like someone, then initials, then a plain icon. Which step you land on depends on what data you actually have."
                 states={[
                     {
@@ -145,6 +172,7 @@ export const Fallback: Story = {
                 name="Avatar.Base"
                 tier="atom"
                 leaf="Prop `fallback`"
+                annotate={ANNOTATE}
                 reason="This prop only matters when there is no photo: it decides how far down the chain the avatar is allowed to fall. Leave it alone and you get the generated face, turn it off when you need a plain, non-identifying mark."
                 states={[
                     {
@@ -184,6 +212,7 @@ export const Status: Story = {
                 name="Avatar.Base"
                 tier="atom"
                 leaf="Prop `status`"
+                annotate={ANNOTATE}
                 reason="The dot tells the reader whether this person is reachable right now, without them opening a profile. It sits at the same corner and scales with the avatar at every size."
                 states={[
                     {
@@ -276,6 +305,7 @@ export const Sizes: Story = {
                 name="Avatar.Base"
                 tier="atom"
                 leaf="Prop `size`"
+                annotate={ANNOTATE}
                 reason="Three presets cover every place an avatar shows up: a dense row, a default card, a profile header, and the atom owns the exact pixels, so no call-site ever picks a size in between."
                 states={[
                     {
@@ -315,6 +345,7 @@ export const Colors: Story = {
                 name="Avatar.Base"
                 tier="atom"
                 leaf="Prop `color`"
+                annotate={ANNOTATE}
                 reason="Color only paints the fallback surface: it gives an initials or icon avatar a bit of identity when there is no photo to carry it. A photographed avatar ignores it entirely, which is why no state below has a `src`."
                 states={[
                     {
@@ -402,6 +433,7 @@ export const Skeleton: Story = {
                 name="Avatar.Base"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
+                annotate={ANNOTATE}
                 reason="Whoever owns the shape owns its resting state, so the avatar draws its own shimmer instead of a shared skeleton wrapper: a circle sized to match the size it will resolve to, plus a neutral dot when a status will eventually show."
                 states={[
                     {

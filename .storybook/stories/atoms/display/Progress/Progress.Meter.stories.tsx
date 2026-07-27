@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Progress } from "@sb-components/atoms/display/Progress/Progress"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — `Progress.Meter`: ĐO LƯỜNG tĩnh (dung lượng, pin, hạn mức), bọc THẲNG
@@ -14,15 +14,32 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * lường không thể "không rõ" (khác `Progress.Bar`/`Circle`).
  * ⛔ `ariaLabel` KHÔNG có leaf (§12g.1): nó chỉ chạy vào `aria-label`, không đổi pixel.
  *
- * ⭐ DEPS RỖNG (thầy chốt 2026-07-26): `Meter` gọi `HeroMeter` riêng, KHÔNG compose lại
- * `Progress.Bar`. `Track`/`Fill` là khe nội tại, không có story riêng để nhảy tới ⇒ bỏ
- * hẳn prop `annotate`.
+ * ⭐ `Meter` gọi thẳng `HeroMeter` riêng, KHÔNG compose lại `Progress.Bar`.
+ * `Meter.Track`/`Meter.Fill` LÀ compound component thật của HeroUI (không phải
+ * khe nội tại) ⇒ `tier: "heroui"`, không `storyId` (§ naming pass, 2026-07-28) —
+ * đổi tên thật từ `Track`/`Fill`, tên đó từng đụng trùng `Progress.Bar`/
+ * `Progress.Circle`'s own `Track`/`Fill` (compound KHÁC NHAU dù cùng chữ).
  *
  * ⚠️ Sửa 2026-07-26: leaf `Bands` cũ chỉ render 3/5 giá trị `color` (thiếu `accent`,
  * `default`) — giá trị sót sẽ mọc thành story lạc chỗ, nên đổi thành leaf `Colors` phủ
  * đủ union; ý "tone = ngưỡng" chuyển vào `reason`. Leaf `Sizes` trước đây KHÔNG tồn tại
  * dù `size` đổi chiều cao thật.
  */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "Meter.Track": {
+        tier: "heroui",
+        role: "the neutral rail the fill sits inside",
+    },
+    "Meter.Fill": {
+        tier: "heroui",
+        role: "the filled portion, always a fixed width at a value — a meter is never indeterminate",
+    },
+    Skeleton: {
+        tier: "heroui",
+        role: "the resting shimmer bar, drawn in place of the whole track/fill pair while isSkeleton is on",
+    },
+}
+
 const meta: Meta<typeof Progress.Meter> = {
     title: "Atoms/Display/Progress/Progress.Meter",
     component: Progress.Meter,
@@ -45,6 +62,7 @@ export const Value: Story = {
                 name="Progress.Meter"
                 tier="atom"
                 leaf="Props `value` / `max`"
+                annotate={ANNOTATE}
                 reason="A meter is a static measurement, not a task running, so there is no indeterminate state. The fill is always the value read against its own ceiling."
                 states={[
                     {
@@ -73,6 +91,7 @@ export const Colors: Story = {
                 name="Progress.Meter"
                 tier="atom"
                 leaf="Prop `color`"
+                annotate={ANNOTATE}
                 reason="On a meter the tone is information, not decoration: the same measurement reads as safe, watch-it, or act-now depending on which band it lands in. Only the Fill takes the tone; the Track stays neutral in all five, so a column of meters still reads as one family."
                 states={[
                     {
@@ -119,6 +138,7 @@ export const Sizes: Story = {
                 name="Progress.Meter"
                 tier="atom"
                 leaf="Prop `size`"
+                annotate={ANNOTATE}
                 reason="Height is picked from a fixed 3-step scale so the atom owns it, and a caller never hand-sets a bar height with a class."
                 states={[
                     {
@@ -153,6 +173,7 @@ export const Loading: Story = {
                 name="Progress.Meter"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
+                annotate={ANNOTATE}
                 states={[
                     {
                         name: "isSkeleton = true",

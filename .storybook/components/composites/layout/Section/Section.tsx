@@ -122,15 +122,15 @@ const Header = ({
                 "inside a lower-tier component"), not the grouped gap-3 used BETWEEN regions. */}
             <div className="flex min-w-0 flex-col gap-1">
                 {eyebrow != null ? (
-                    <span className="min-w-0" data-anat-part={showAnatomy ? "Eyebrow" : undefined}>
+                    <span className="min-w-0" data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
                         <Typography.Base size={eyebrowSize} text={eyebrow} color="muted" truncate />
                     </span>
                 ) : null}
-                <span className="min-w-0" data-anat-part={showAnatomy ? "Title" : undefined}>
+                <span className="min-w-0" data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
                     <Typography.Base size={titleSize} text={title} weight={TITLE_WEIGHT[level]} />
                 </span>
                 {description != null ? (
-                    <span className="min-w-0" data-anat-part={showAnatomy ? "Description" : undefined}>
+                    <span className="min-w-0" data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
                         <Typography.Base size={descriptionSize} text={description} color="muted" />
                     </span>
                 ) : null}
@@ -209,7 +209,10 @@ const Base = ({
     const headerNode = header == null
         ? null
         : isHeaderProps(header)
-            ? <Header {...header} showAnatomy={showAnatomy} />
+            // props form → the frame builds ITS OWN Section.Header (a fixed internal
+            // choice, not arbitrary caller content) — badge that real component
+            // directly rather than the generic wrapping div below.
+            ? <Header {...header} showAnatomy={showAnatomy} anatPart={showAnatomy ? "Section.Header" : undefined} />
             : header
     return (
         <section className={cn("flex flex-col", GAP_CLASS[gap], className)} data-anat-part={anatPart}>

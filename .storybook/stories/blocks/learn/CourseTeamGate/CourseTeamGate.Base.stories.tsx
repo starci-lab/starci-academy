@@ -93,8 +93,13 @@ export const Skeleton: Story = {
                         why: "The callout frame keeps its exact shape while it waits on SWR to resolve `isEnrolled`/`isInTeam`. Holding the same frame stops the layout from flashing once the real answer arrives, whichever way it lands.",
                         code: "<CourseTeamGate.Base isSkeleton isEnrolled={false} isInTeam={false} />",
                         render: (
+                            // No `anatPart` override here (unlike the `Warning` leaf above): this
+                            // branch renders `Alert.Base`, not `Feedback.Callout` — hardcoding the
+                            // loaded leaf's name would tag the wrong component (caught while
+                            // applying the naming rule, 2026-07-27). Letting `showAnatomy` pick the
+                            // name lets the component's own ternary resolve to whichever of the two
+                            // it actually renders.
                             <CourseTeamGate.Base
-                                anatPart="Feedback.Callout"
                                 showAnatomy
                                 isSkeleton
                                 isEnrolled={false}

@@ -54,15 +54,15 @@ const DividerBase = ({ orientation = "horizontal", variant = "default", label, s
     if (label !== undefined && orientation === "horizontal") {
         return (
             <div data-anat-part={anatPart} className={cn("flex w-full items-center gap-3", className)}>
-                <HeroSeparator orientation="horizontal" variant={variant} className="flex-1" data-anat-part={showAnatomy ? "Line" : undefined} />
+                <HeroSeparator orientation="horizontal" variant={variant} className="flex-1" data-anat-part={showAnatomy ? "Separator" : undefined} />
                 <span className="text-muted shrink-0 text-xs" data-anat-part={showAnatomy ? "Label" : undefined}>
                     {label}
                 </span>
-                <HeroSeparator orientation="horizontal" variant={variant} className="flex-1" data-anat-part={showAnatomy ? "Line" : undefined} />
+                <HeroSeparator orientation="horizontal" variant={variant} className="flex-1" data-anat-part={showAnatomy ? "Separator" : undefined} />
             </div>
         )
     }
-    return <HeroSeparator orientation={orientation} variant={variant} className={cn(className)} data-anat-part={anatPart ?? (showAnatomy ? "Line" : undefined)} />
+    return <HeroSeparator orientation={orientation} variant={variant} className={cn(className)} data-anat-part={anatPart ?? (showAnatomy ? "Separator" : undefined)} />
 }
 
 /**

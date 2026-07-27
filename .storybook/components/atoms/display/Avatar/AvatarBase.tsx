@@ -214,7 +214,7 @@ export const AvatarBase = ({
                     <HeroAvatarImage
                         src={imageSrc}
                         alt={name ?? ""}
-                        data-anat-part={showAnatomy ? "Image" : undefined}
+                        data-anat-part={showAnatomy ? "AvatarImage" : undefined}
                         onLoadingStatusChange={(loadStatus) => {
                             if (loadStatus === "error") {
                                 setState({ signature, index: index + 1 })
@@ -222,7 +222,7 @@ export const AvatarBase = ({
                         }}
                     />
                 ) : null}
-                <HeroAvatarFallback data-anat-part={showAnatomy ? "Fallback" : undefined}>{fallbackContent}</HeroAvatarFallback>
+                <HeroAvatarFallback data-anat-part={showAnatomy ? "AvatarFallback" : undefined}>{fallbackContent}</HeroAvatarFallback>
             </HeroAvatar>
             {status ? (
                 <span

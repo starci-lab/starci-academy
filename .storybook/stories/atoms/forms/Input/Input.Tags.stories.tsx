@@ -9,16 +9,22 @@ type Story = StoryObj
 
 /**
  * DEP THẬT DUY NHẤT — mỗi token trong hộp là một `Chip.Base` removable (đọc
- * `.storybook/components/atoms/forms/Input/Input.tsx`, `InputTags`: map `value`
- * ra `<span data-anat-part="Chip"><Chip.Base onRemove … /></span>`). `storyId`
- * trỏ export `Default` của `Atoms/Chips/Chip/Chip.Base`.
+ * `.storybook/components/atoms/forms/Input/Input.tsx`, `InputTags`: `<Chip.Base
+ * onRemove … anatPart="Chip.Base" />` — node name = TÊN COMPONENT THẬT, không
+ * còn vai "Chip" của wrapping span cũ, § two-law pass 2026-07-28). `storyId` trỏ
+ * export `Removable` của `Atoms/Chips/Chip/Chip.Base` (khớp đúng shape đang render
+ * ở đây — có `onRemove`).
  *
- * `Field`/`Label`/`Description`/`Error`/`Skeleton` là RUỘT của `FieldFrame`
- * (atom-internal, không story riêng) nên KHÔNG khai ở đây — "deps không có thì
- * thôi" (thầy chốt 2026-07-26 lần 2).
+ * `Field` là RUỘT của `FieldFrame` (atom-internal, không story riêng) nên KHÔNG
+ * khai ở đây — "deps không có thì thôi" (thầy chốt 2026-07-26 lần 2). Nhưng
+ * `Label`/`Skeleton` của FieldFrame LÀ heroui THẬT (`Label`/`Skeleton` từ
+ * `@heroui/react`) nên vẫn cần tier `heroui` để panel không lặng lẽ bỏ sót
+ * (2026-07-28).
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Chip: { tier: "atom", role: "each tag renders as a removable Chip.Base", storyId: "atoms-chips-chip-chip-base--default" },
+    "Chip.Base": { tier: "atom", role: "each tag renders as a removable Chip.Base", storyId: "atoms-chips-chip-chip-base--removable" },
+    Label: { tier: "heroui", role: "field label line" },
+    Skeleton: { tier: "heroui", role: "loading placeholder" },
 }
 
 /** Leaf TRẦN — trống, gõ + Enter để thêm thẻ. Chưa có token nên chưa có Chip deps. Migrated to `states` 2026-07-27. */
@@ -30,6 +36,7 @@ export const Default: Story = {
                 <BlockAnatomy
                     name="Input.Tags"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Default"
                     states={[
                         {
@@ -59,6 +66,7 @@ export const WithLabel: Story = {
                 <BlockAnatomy
                     name="Input.Tags"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Props `label` + `hint`"
                     states={[
                         {
@@ -88,6 +96,7 @@ export const Required: Story = {
                 <BlockAnatomy
                     name="Input.Tags"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `isRequired`"
                     states={[
                         {
@@ -205,6 +214,7 @@ export const Loading: Story = {
             <BlockAnatomy
                 name="Input.Tags"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isSkeleton`"
                 states={[
                     {

@@ -1,7 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CameraIcon } from "@phosphor-icons/react"
 import { ImageDropzone } from "@sb-components/atoms/forms/ImageDropzone/ImageDropzone"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+
+/**
+ * `Typography.Base` — OUR OWN atom, with its own story to jump to (the label and,
+ * when set, the `hint` line both mount one each — see `ImageDropzone.tsx` passing
+ * `anatPart="Typography.Base"` explicitly, § two-law pass, 2026-07-28).
+ */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "Typography.Base": { tier: "atom", role: "label / hint text", storyId: "atoms-text-typography-typography-base--plain" },
+}
 
 /**
  * ATOM — `ImageDropzone.Base`: vùng thả/chọn MỘT ảnh duy nhất của hệ.
@@ -70,6 +79,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="ImageDropzone.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Bare dropzone"
                 reason="This is the one dropzone shape in the system, and every leaf below it differs by exactly one prop, so this is the baseline to compare against."
                 renderClassName="max-w-sm"
@@ -99,6 +109,7 @@ export const Hint: Story = {
             <BlockAnatomy
                 name="ImageDropzone.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `hint`"
                 reason="A hint earns its line whenever the accepted formats or the size limit aren't obvious from the label alone, spelling out the rule instead of letting the reader find out by failing an upload."
                 renderClassName="max-w-sm"
@@ -139,6 +150,7 @@ export const Icon: Story = {
             <BlockAnatomy
                 name="ImageDropzone.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `icon`"
                 reason="Swap the glyph in when the surrounding feature has a more specific idea of what's being uploaded than an image in general, a camera for a profile photo, say."
                 renderClassName="max-w-sm"
@@ -191,6 +203,7 @@ export const DragActive: Story = {
             <BlockAnatomy
                 name="ImageDropzone.Base"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isDragActive`"
                 reason="This is what the reader sees mid-drag, right before they let go of the file; pinning it here is the only way to review that moment without actually dragging a file over the canvas."
                 renderClassName="max-w-sm"

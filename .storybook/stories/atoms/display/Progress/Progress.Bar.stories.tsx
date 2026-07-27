@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Progress } from "@sb-components/atoms/display/Progress/Progress"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Progress.Bar> = {
     title: "Atoms/Display/Progress/Progress.Bar",
@@ -14,10 +14,27 @@ export default meta
 type Story = StoryObj<typeof Progress.Bar>
 
 /**
- * KHÔNG có `annotate` (thầy chốt 2026-07-26): atom lá bọc thẳng react-aria
- * ProgressBar. `Track`/`Fill` là span nội tại (khe), không phải component có
- * story riêng để nhảy tới — nên không phải deps thật.
+ * `ProgressBar.Track`/`ProgressBar.Fill` are direct HeroUI compound-component
+ * renders (`tier: "heroui"`, no `storyId` — there is no story of ours to jump
+ * to for a library component). `Skeleton` is HeroUI's own `Skeleton`, same
+ * reasoning. Renamed from the role-words `Track`/`Fill` (§ naming pass,
+ * 2026-07-28) — those names collided with `Progress.Circle`/`Progress.Meter`'s
+ * own `Track`/`Fill`, which are DIFFERENT real compound components.
  */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "ProgressBar.Track": {
+        tier: "heroui",
+        role: "the neutral rail the fill sits inside",
+    },
+    "ProgressBar.Fill": {
+        tier: "heroui",
+        role: "the filled portion — a fixed width at a value, or a running CSS animation when indeterminate",
+    },
+    Skeleton: {
+        tier: "heroui",
+        role: "the resting shimmer bar, drawn in place of the whole track/fill pair while isSkeleton is on",
+    },
+}
 
 /** Value — tiến trình xác định (value/max). */
 export const Value: Story = {
@@ -27,6 +44,7 @@ export const Value: Story = {
                 name="Progress.Bar"
                 tier="atom"
                 leaf="Value"
+                annotate={ANNOTATE}
                 reason="The linear progress bar wrapping react-aria ProgressBar; determinate (value) or indeterminate."
                 states={[
                     {
@@ -53,6 +71,7 @@ export const Indeterminate: Story = {
                 name="Progress.Bar"
                 tier="atom"
                 leaf="Indeterminate"
+                annotate={ANNOTATE}
                 states={[
                     {
                         name: "isIndeterminate = true",
@@ -78,6 +97,7 @@ export const Loading: Story = {
                 name="Progress.Bar"
                 tier="atom"
                 leaf="Loading"
+                annotate={ANNOTATE}
                 states={[
                     {
                         name: "isSkeleton = true",
@@ -103,6 +123,7 @@ export const Colors: Story = {
                 name="Progress.Bar"
                 tier="atom"
                 leaf="Prop `color`"
+                annotate={ANNOTATE}
                 reason="The fill tone carries meaning — accent for a plain run, success/warning/danger for an outcome the value implies, default when the tone should stay silent. Only the Fill part ever takes the tone; the Track stays neutral in every case, so bars in different tones still read as one family."
                 states={[
                     {
@@ -169,6 +190,7 @@ export const Sizes: Story = {
                 name="Progress.Bar"
                 tier="atom"
                 leaf="Prop `size`"
+                annotate={ANNOTATE}
                 reason="Height signals how much weight the progress deserves on the page, a compact row inside a dense list versus a prominent bar carrying the whole screen's attention. Only the track height changes across sizes; the fill colour and rounding stay identical."
                 states={[
                     {

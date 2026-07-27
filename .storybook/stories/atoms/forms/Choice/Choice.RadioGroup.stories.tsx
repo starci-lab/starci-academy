@@ -1,7 +1,18 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Choice } from "@sb-components/atoms/forms/Choice/Choice"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+
+/**
+ * `Label` — the internal `FieldFrame`'s real heading (heroui's own `Label`,
+ * rendered directly), only present when `groupLabel` is passed. Tier `heroui`,
+ * no `storyId` (§ two-law pass, 2026-07-28) — `FieldFrame` itself has no story of
+ * its own to jump to, but the library component underneath still deserves to
+ * show up rather than being silently dropped.
+ */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    Label: { tier: "heroui", role: "group heading above the rows" },
+}
 
 /**
  * ATOM — `Choice.RadioGroup`: a pick-one group, built from `options` DATA (wraps
@@ -123,6 +134,7 @@ export const WithLabel: Story = {
                 <BlockAnatomy
                     name="Choice.RadioGroup"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `groupLabel`"
                     reason="A group of options usually needs one line saying what they are options for, groupLabel is that line, sitting above every row. Without it the group still needs an accessible name, which is what ariaLabel supplies instead, the two props are not the same thing."
                     states={[
@@ -196,6 +208,7 @@ export const Required: Story = {
                 <BlockAnatomy
                     name="Choice.RadioGroup"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `isRequired`"
                     reason="Some questions cannot be skipped, the asterisk on the heading flags that before the reader tries to move on to the next step."
                     states={[
@@ -266,6 +279,7 @@ export const Error: Story = {
                 <BlockAnatomy
                     name="Choice.RadioGroup"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `errorMessage`"
                     reason="A required choice left blank is easy to miss on a long form, the red border and the line beneath the group stop the eye at the exact question that still needs an answer."
                     states={[

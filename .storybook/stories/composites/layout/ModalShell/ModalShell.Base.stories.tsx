@@ -30,23 +30,23 @@ type Story = StoryObj<typeof ModalShell.Base>
 // hoặc custom `header`) + Body + Footer?. CloseTrigger/Body luôn có mặt; Title+Description chỉ ở
 // nhánh header đơn giản, Header (opaque) chỉ ở nhánh custom, Footer chỉ khi truyền slot `footer`.
 const TITLE_DESC_FOOTER_PARTS: Array<AnatomyNode> = [
-    { name: "CloseTrigger", tier: "composite", role: "the close button, in the upper-right corner" },
-    { name: "Title", tier: "composite", role: "the modal's title, bold body text" },
-    { name: "Description", tier: "composite", role: "the description line under the title, muted body-sm text" },
-    { name: "Body", tier: "composite", role: "the modal's body content" },
-    { name: "Footer", tier: "composite", role: "the bottom CTA row, right-aligned with a gap-2 seam (Modal.Footer)" },
+    { name: "Modal.CloseTrigger", tier: "heroui", role: "the close button, in the upper-right corner" },
+    { name: "Typography.Base", tier: "atom", role: "the modal's title, bold body text", storyId: "atoms-text-typography-typography-base--plain" },
+    { name: "Typography.Base", tier: "atom", role: "the description line under the title, muted body-sm text", storyId: "atoms-text-typography-typography-base--plain" },
+    { name: "Modal.Body", tier: "heroui", role: "the modal's body content" },
+    { name: "Modal.Footer", tier: "heroui", role: "the bottom CTA row, right-aligned with a gap-2 seam" },
 ]
 
 const CUSTOM_HEADER_PARTS: Array<AnatomyNode> = [
-    { name: "CloseTrigger", tier: "composite", role: "the close button, in the upper-right corner" },
-    { name: "Header", tier: "composite", role: "an arbitrary caller-built header node, replacing Title and Description" },
-    { name: "Body", tier: "composite", role: "the modal's body content" },
+    { name: "Modal.CloseTrigger", tier: "heroui", role: "the close button, in the upper-right corner" },
+    { name: "Modal.Header", tier: "heroui", role: "an arbitrary caller-built header node, replacing Title and Description" },
+    { name: "Modal.Body", tier: "heroui", role: "the modal's body content" },
 ]
 
 const TITLE_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "CloseTrigger", tier: "composite", role: "the close button, in the upper-right corner" },
-    { name: "Title", tier: "composite", role: "the modal's title, bold body text" },
-    { name: "Body", tier: "composite", role: "the modal's body content" },
+    { name: "Modal.CloseTrigger", tier: "heroui", role: "the close button, in the upper-right corner" },
+    { name: "Typography.Base", tier: "atom", role: "the modal's title, bold body text", storyId: "atoms-text-typography-typography-base--plain" },
+    { name: "Modal.Body", tier: "heroui", role: "the modal's body content" },
 ]
 
 /** Controlled wrapper — opens on mount; the trigger reopens after a close. Mirrors the legacy story helper. */

@@ -53,14 +53,14 @@ export const StatPair = ({
             <Typography
                 type={valueType}
                 weight="semibold"
-                data-anat-part={showAnatomy ? "Typography.Value" : undefined}
+                data-anat-part={showAnatomy ? "Typography" : undefined}
             >
                 {value}
             </Typography>
             <Typography
                 type="body-xs"
                 color="muted"
-                data-anat-part={showAnatomy ? "Typography.Label" : undefined}
+                data-anat-part={showAnatomy ? "Typography" : undefined}
             >
                 {label}
             </Typography>

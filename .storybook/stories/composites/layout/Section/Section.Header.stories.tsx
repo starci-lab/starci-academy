@@ -33,24 +33,26 @@ type Story = StoryObj<typeof Section.Header>
  * `Description`/`Action` chỉ tồn tại ở leaf thực sự truyền slot đó.
  */
 const TITLE_PARTS: Array<AnatomyNode> = [
-    { name: "Title", tier: "composite", role: "the region's title, rendered at the size the level sets, always bold weight" },
+    { name: "Typography.Base", tier: "atom", role: "the region's title, rendered at the size the level sets, always bold weight", storyId: "atoms-text-typography-typography-base--plain" },
 ]
 const EYEBROW_PARTS: Array<AnatomyNode> = [
-    { name: "Eyebrow", tier: "composite", role: "a muted kicker sitting above the title, context rather than a second title" },
-    { name: "Title", tier: "composite", role: "the region's title" },
+    { name: "Typography.Base", tier: "atom", role: "a muted kicker sitting above the title, context rather than a second title", storyId: "atoms-text-typography-typography-base--plain" },
+    { name: "Typography.Base", tier: "atom", role: "the region's title", storyId: "atoms-text-typography-typography-base--plain" },
 ]
 const DESCRIPTION_PARTS: Array<AnatomyNode> = [
-    { name: "Title", tier: "composite", role: "the region's title" },
-    { name: "Description", tier: "composite", role: "a supporting line under the title, muted and one size smaller" },
+    { name: "Typography.Base", tier: "atom", role: "the region's title", storyId: "atoms-text-typography-typography-base--plain" },
+    { name: "Typography.Base", tier: "atom", role: "a supporting line under the title, muted and one size smaller", storyId: "atoms-text-typography-typography-base--plain" },
 ]
+// `Action` is an arbitrary caller-supplied slot (docs: "pass a Button.* atom node") — the frame
+// never fixes which one, so it stays a generic label rather than a hardcoded component name.
 const ACTION_PARTS: Array<AnatomyNode> = [
-    { name: "Title", tier: "composite", role: "the region's title" },
+    { name: "Typography.Base", tier: "atom", role: "the region's title", storyId: "atoms-text-typography-typography-base--plain" },
     { name: "Action", tier: "composite", role: "the right-pinned control slot, shrink-0, holding whatever Button.* node the caller passes" },
 ]
 const FULL_PARTS: Array<AnatomyNode> = [
-    { name: "Eyebrow", tier: "composite", role: "a muted kicker above the title" },
-    { name: "Title", tier: "composite", role: "the region's title" },
-    { name: "Description", tier: "composite", role: "a muted supporting line" },
+    { name: "Typography.Base", tier: "atom", role: "a muted kicker above the title", storyId: "atoms-text-typography-typography-base--plain" },
+    { name: "Typography.Base", tier: "atom", role: "the region's title", storyId: "atoms-text-typography-typography-base--plain" },
+    { name: "Typography.Base", tier: "atom", role: "a muted supporting line", storyId: "atoms-text-typography-typography-base--plain" },
     { name: "Action", tier: "composite", role: "the right-pinned control slot" },
 ]
 

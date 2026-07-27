@@ -90,7 +90,7 @@ const FlexBase = ({
     showAnatomy = false,
 }: FlexBaseProps) => (
     <div
-        data-anat-part={anatPart ?? (showAnatomy ? "Flex" : undefined)}
+        data-anat-part={anatPart ?? (showAnatomy ? "Flex.Base" : undefined)}
         className={cn(
             "flex",
             DIRECTION_CLASS[direction],

@@ -101,7 +101,7 @@ export interface MenuBaseProps {
     defaultOpen?: boolean
     /** Open-state change handler. */
     onOpenChange?: (isOpen: boolean) => void
-    /** Dev/spec: emit `data-anat-part` on Trigger/Popover/Menu/Item so a BlockAnatomy panel can badge it. */
+    /** Dev/spec: emit `data-anat-part` (real HeroUI import names — `DropdownTrigger`/`DropdownPopover`/`DropdownMenu`/`DropdownSection`/`Header`/`DropdownItem`/`Skeleton`) so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
     /**
      * Render the leaf skeleton (rows of icon + label bars) instead of the real dropdown — atom SỞ HỮU skeleton của
@@ -121,7 +121,7 @@ const renderItem = (item: MenuItemModel, showAnatomy: boolean) => {
             id={item.key}
             textValue={item.label}
             isDisabled={item.isDisabled}
-            data-anat-part={showAnatomy ? (item.isDisabled ? "Item.Disabled" : "Item") : undefined}
+            data-anat-part={showAnatomy ? "DropdownItem" : undefined}
         >
             <span className="flex items-center gap-2">
                 {Icon ? <Icon className={cn(MENU_ICON_CLASS, "shrink-0")} weight={MENU_ICON_WEIGHT} aria-hidden /> : null}
@@ -162,14 +162,11 @@ const MenuBase = ({
             ? sections.reduce((total, section) => total + section.items.length, 0)
             : (items?.length ?? 4)
         return (
-            <div
-                className={cn("flex w-full flex-col gap-1 p-1", className)}
-                data-anat-part={showAnatomy ? "Skeleton" : undefined}
-            >
+            <div className={cn("flex w-full flex-col gap-1 p-1", className)}>
                 {Array.from({ length: rowCount || 4 }).map((_, index) => (
                     <div key={index} className="flex items-center gap-2 px-2 py-2">
-                        <HeroSkeleton className="size-5 shrink-0 rounded-full" />
-                        <HeroSkeleton className="h-[14px] w-24 rounded" />
+                        <HeroSkeleton className="size-5 shrink-0 rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
+                        <HeroSkeleton className="h-[14px] w-24 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                     </div>
                 ))}
             </div>
@@ -177,34 +174,33 @@ const MenuBase = ({
     }
     return (
         <HeroDropdown isOpen={isOpen} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
-            <HeroDropdownTrigger className={className} data-anat-part={showAnatomy ? "Trigger" : undefined}>
+            <HeroDropdownTrigger className={className} data-anat-part={showAnatomy ? "DropdownTrigger" : undefined}>
                 <HeroButton variant={triggerVariant}>
                     {TriggerIcon ? (
                         // Atom sở hữu glyph scale — `!` bắt buộc vì HeroUI có rule `.button svg` specificity cao hơn.
-                        <span
-                            aria-hidden
-                            data-anat-part={showAnatomy ? "TriggerIcon" : undefined}
-                            className="inline-flex shrink-0 [&_svg]:!size-3.5"
-                        >
+                        // Span thuần bọc icon TRẦN (bất kỳ Phosphor nào caller đưa) — không phải một
+                        // component có tên riêng nên KHÔNG phát `data-anat-part` (§ luật ①: tên phải là
+                        // component thật, span glue này không phải).
+                        <span aria-hidden className="inline-flex shrink-0 [&_svg]:!size-3.5">
                             <TriggerIcon weight={MENU_ICON_WEIGHT} />
                         </span>
                     ) : null}
                     {triggerLabel}
                 </HeroButton>
             </HeroDropdownTrigger>
-            <HeroDropdownPopover placement={placement} className="w-56 max-w-[calc(100vw-2rem)]" data-anat-part={showAnatomy ? "Popover" : undefined}>
+            <HeroDropdownPopover placement={placement} className="w-56 max-w-[calc(100vw-2rem)]" data-anat-part={showAnatomy ? "DropdownPopover" : undefined}>
                 <HeroDropdownMenu
                     aria-label={ariaLabel}
                     onAction={onAction ? (key) => onAction(String(key)) : undefined}
-                    data-anat-part={showAnatomy ? "Menu" : undefined}
+                    data-anat-part={showAnatomy ? "DropdownMenu" : undefined}
                 >
                     {sections
                         ? sections.map((section) => (
-                            <HeroDropdownSection key={section.key} data-anat-part={showAnatomy ? "Section" : undefined}>
+                            <HeroDropdownSection key={section.key} data-anat-part={showAnatomy ? "DropdownSection" : undefined}>
                                 {section.title ? (
                                     <HeroMenuHeader
                                         className="px-2 py-2 text-xs font-semibold text-muted"
-                                        data-anat-part={showAnatomy ? "SectionHeader" : undefined}
+                                        data-anat-part={showAnatomy ? "Header" : undefined}
                                     >
                                         {section.title}
                                     </HeroMenuHeader>

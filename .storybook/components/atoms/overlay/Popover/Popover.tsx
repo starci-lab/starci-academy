@@ -57,7 +57,7 @@ export interface PopoverBaseProps {
     defaultOpen?: boolean
     /** Open-state change handler (uncontrolled/controlled). */
     onOpenChange?: (isOpen: boolean) => void
-    /** Dev/spec: emit `data-anat-part` on Trigger/Content/Heading so a BlockAnatomy panel can badge it. */
+    /** Dev/spec: emit `data-anat-part` (real HeroUI import names — `Button`/`Popover.Content`/`Popover.Arrow`/`Popover.Heading`) so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
     /** Extra classes on the trigger. */
     className?: string
@@ -84,14 +84,13 @@ const PopoverBase = ({
 }: PopoverBaseProps) => {
     return (
         <HeroPopover isOpen={isOpen} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
-            <HeroButton variant={triggerVariant} className={className} data-anat-part={showAnatomy ? "Trigger" : undefined}>
+            <HeroButton variant={triggerVariant} className={className} data-anat-part={showAnatomy ? "Button" : undefined}>
                 {TriggerIcon ? (
                     // Atom sở hữu glyph scale — `!` bắt buộc vì HeroUI có rule `.button svg` specificity cao hơn.
-                    <span
-                        aria-hidden
-                        data-anat-part={showAnatomy ? "TriggerIcon" : undefined}
-                        className="inline-flex shrink-0 [&_svg]:!size-3.5"
-                    >
+                    // Span thuần bọc icon TRẦN (bất kỳ Phosphor nào caller đưa) — không phải một
+                    // component có tên riêng nên KHÔNG phát `data-anat-part` (§ luật ①: tên phải là
+                    // component thật, span glue này không phải).
+                    <span aria-hidden className="inline-flex shrink-0 [&_svg]:!size-3.5">
                         <TriggerIcon weight={TRIGGER_ICON_WEIGHT} />
                     </span>
                 ) : null}
@@ -100,15 +99,17 @@ const PopoverBase = ({
             <HeroPopover.Content
                 placement={placement}
                 className="w-64 max-w-[calc(100vw-2rem)]"
-                data-anat-part={showAnatomy ? "Content" : undefined}
+                data-anat-part={showAnatomy ? "Popover.Content" : undefined}
             >
-                {showArrow ? <HeroPopover.Arrow data-anat-part={showAnatomy ? "Arrow" : undefined} /> : null}
+                {showArrow ? <HeroPopover.Arrow data-anat-part={showAnatomy ? "Popover.Arrow" : undefined} /> : null}
                 {heading ? (
-                    <HeroPopover.Heading className="mb-1 text-sm font-semibold text-foreground" data-anat-part={showAnatomy ? "Heading" : undefined}>
+                    <HeroPopover.Heading className="mb-1 text-sm font-semibold text-foreground" data-anat-part={showAnatomy ? "Popover.Heading" : undefined}>
                         {heading}
                     </HeroPopover.Heading>
                 ) : null}
-                <div className="text-sm text-muted" data-anat-part={showAnatomy ? "Body" : undefined}>
+                {/* Div thuần bọc `content` (ReactNode TỰ DO caller đưa) — không phải một component
+                    có tên riêng nên KHÔNG phát `data-anat-part` (cùng lý do với span icon ở trên). */}
+                <div className="text-sm text-muted">
                     {content}
                 </div>
             </HeroPopover.Content>

@@ -26,8 +26,8 @@ const CHECKOUT_STEPS: Array<StepperStep> = [
 // description, so Description is present in every leaf here too).
 const STEPPER_PARTS: Array<AnatomyNode> = [
     { name: "Indicator", tier: "composite", role: "the step's circular badge, showing a check icon once the step is done and a 1-based number otherwise (repeats per step)" },
-    { name: "Label", tier: "composite", role: "the step's short label text (repeats per step)" },
-    { name: "Description", tier: "composite", role: "the step's optional one-line description under the label (repeats per step)" },
+    { name: "Typography.Base", tier: "atom", role: "the step's short label text (repeats per step)", storyId: "atoms-text-typography-typography-base--plain" },
+    { name: "Typography.Base", tier: "atom", role: "the step's optional one-line description under the label (repeats per step)", storyId: "atoms-text-typography-typography-base--plain" },
     { name: "Connector", tier: "composite", role: "the line between two adjacent steps, turning success-toned once the flow has passed it" },
 ]
 

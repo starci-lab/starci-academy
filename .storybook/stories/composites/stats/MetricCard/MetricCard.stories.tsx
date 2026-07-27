@@ -17,26 +17,29 @@ type Story = StoryObj<typeof MetricCard>
 
 // SectionCard (frame) contains Value (h4 bold), Label (body-sm, the prominent line), and an
 // optional Hint (body-xs muted).
+// The local `SectionCard` helper (inlined in MetricCard.tsx, a TODO stand-in for the real
+// port) renders straight HeroUI `Card` — so the frame node is named for THAT real import,
+// not the placeholder helper's own name.
 const FULL_PARTS: Array<AnatomyNode> = [
     {
-        name: "SectionCard",
-        tier: "composite",
+        name: "Card",
+        tier: "heroui",
         role: "the card frame, giving the value its border, background fill and rounded corners",
         children: [
-            { name: "Value", tier: "composite", role: "the highlighted number, rendered semibold at h4 size" },
-            { name: "Label", tier: "composite", role: "the description underneath, the prominent foreground line" },
-            { name: "Hint", tier: "composite", role: "a quiet supplementary note, muted and one size smaller than the label" },
+            { name: "Typography.Base", tier: "atom", role: "the highlighted number, rendered semibold at h4 size", storyId: "atoms-text-typography-typography-base--plain" },
+            { name: "Typography.Base", tier: "atom", role: "the description underneath, the prominent foreground line", storyId: "atoms-text-typography-typography-base--plain" },
+            { name: "Typography.Base", tier: "atom", role: "a quiet supplementary note, muted and one size smaller than the label", storyId: "atoms-text-typography-typography-base--plain" },
         ],
     },
 ]
 const NO_HINT_PARTS: Array<AnatomyNode> = [
     {
-        name: "SectionCard",
-        tier: "composite",
+        name: "Card",
+        tier: "heroui",
         role: "the card frame, giving the value its border, background fill and rounded corners",
         children: [
-            { name: "Value", tier: "composite", role: "the highlighted number, rendered semibold at h4 size" },
-            { name: "Label", tier: "composite", role: "the description underneath, the prominent foreground line" },
+            { name: "Typography.Base", tier: "atom", role: "the highlighted number, rendered semibold at h4 size", storyId: "atoms-text-typography-typography-base--plain" },
+            { name: "Typography.Base", tier: "atom", role: "the description underneath, the prominent foreground line", storyId: "atoms-text-typography-typography-base--plain" },
         ],
     },
 ]

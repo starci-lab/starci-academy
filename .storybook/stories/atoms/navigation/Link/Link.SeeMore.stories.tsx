@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Link } from "@sb-components/atoms/navigation/Link/Link"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — `Link.SeeMore`: the system's ONE "See more →" / "Continue →" affordance,
@@ -30,6 +30,13 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * ⚠️ The story id changed with this merge (`atoms-navigation-seemorelink-base--*` →
  * `atoms-navigation-link-link-see-more--*`), whoever coordinates this needs to sweep
  * every `storyId` pinned to this atom (e.g. `SurfaceCard.Base`).
+ *
+ * `annotate` (2026-07-27, heroui tier added to canon): the root is HeroUI `Link`
+ * ONLY on the `onPress`/no-`href`/non-`decorative` branch — that's the only branch
+ * tagged `"Link"` (tier heroui) in `ANNOTATE` below. The `href` branch renders a
+ * plain `<a>` and the `decorative` branch a plain `<span>`; neither is a real HeroUI
+ * or system component, so neither gets a fallback tag (Rule 1 — a node's name must
+ * match what's actually rendered, not a role).
  */
 
 const meta: Meta<typeof Link.SeeMore> = {
@@ -45,6 +52,10 @@ export default meta
 
 type Story = StoryObj<typeof Link.SeeMore>
 
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    Link: { tier: "heroui", role: "the see-more affordance itself, on the onPress/interactive branch" },
+}
+
 /** The BARE leaf — `decorative` not on, `size` left at default. */
 export const Default: Story = {
     render: () => (
@@ -52,6 +63,7 @@ export const Default: Story = {
             <BlockAnatomy
                 name="Link.SeeMore"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Bare link"
                 reason="The one see-more affordance in the system: semibold accent text with an arrow that slides right on hover (§5b, an arrow slides, a caret would not). Every leaf below it differs by exactly one prop, so this is the baseline you compare against."
                 states={[
@@ -77,6 +89,7 @@ export const Decorative: Story = {
             <BlockAnatomy
                 name="Link.SeeMore"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `decorative`"
                 reason="Set it when the whole surface around this link is already the one press target (for example a ContinueCard item), since a nested `<a>`/`<button>` there would be invalid markup, two targets fighting for one click."
                 states={[
@@ -103,6 +116,7 @@ export const Size: Story = {
             <BlockAnatomy
                 name="Link.SeeMore"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `size`"
                 reason="The link matches the text row it sits beside: sm next to a full section label, xs next to a small eyebrow, so the caller never has to eyeball a pairing."
                 states={[

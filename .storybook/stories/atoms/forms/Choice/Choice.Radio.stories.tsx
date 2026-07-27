@@ -2,7 +2,17 @@ import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { RadioGroup as HeroRadioGroup } from "@heroui/react"
 import { Choice } from "@sb-components/atoms/forms/Choice/Choice"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+
+/**
+ * `Radio.Content`/`Radio.Control` — heroui's OWN compound parts (imported `Radio as
+ * HeroRadio` and rendered directly), so they enter the tree as tier `heroui` with
+ * no `storyId` (§ two-law pass, 2026-07-28).
+ */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "Radio.Content": { tier: "heroui", role: "row wrapping the dot + label" },
+    "Radio.Control": { tier: "heroui", role: "dot + fill glyph" },
+}
 
 /**
  * ATOM — `Choice.Radio`: ONE option row, label sits INLINE beside the dot (wraps HeroUI Radio).
@@ -55,6 +65,7 @@ export const Default: Story = {
                 <BlockAnatomy
                     name="Choice.Radio"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="No prop turned on"
                     reason="One radio option row, wrapping HeroUI Radio. It must live inside a radio-context — the app uses Choice.RadioGroup with options; this bare HeroRadioGroup is scaffolding for this story only."
                     states={[
@@ -87,6 +98,7 @@ export const Selected: Story = {
                 <BlockAnatomy
                     name="Choice.Radio"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Selected"
                     reason="Selection lives on the group's value rather than on this row, which is what keeps a set of radios mutually exclusive without each row tracking the others."
                     states={[
@@ -117,6 +129,7 @@ export const Disabled: Story = {
             <BlockAnatomy
                 name="Choice.Radio"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isDisabled`"
                 reason="One option can be off the table without locking the whole group, such as a plan tier that's sold out or a slot already taken."
                 states={[

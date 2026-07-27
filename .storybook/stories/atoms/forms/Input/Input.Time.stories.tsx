@@ -3,22 +3,27 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Time } from "@internationalized/date"
 import type { TimeValue } from "react-aria-components"
 import { Input } from "@sb-components/atoms/forms/Input/Input"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta = { title: "Atoms/Forms/Input/Input.Time", tags: ["autodocs"], parameters: { layout: "fullscreen" } }
 export default meta
 type Story = StoryObj
 
 /**
- * `Input.Time` KHÔNG có deps (2026-07-26): DOM chỉ phát `Field`/`Label`/
- * `Description`/`Error`/`Skeleton` — toàn bộ là RUỘT của `FieldFrame` (atom-
- * internal, không có story riêng) cộng HeroUI `TimeField` bọc thẳng. Không
- * component con nào có story để nhảy sang ⇒ BỎ HẲN prop `annotate` (đọc
- * `.storybook/components/atoms/forms/Input/Input.tsx`, `InputTime`).
+ * `Input.Time` KHÔNG compose atom nào có story riêng — DOM phát heroui
+ * `TimeField.Group` (bọc thẳng `TimeField`) cộng `Label`/`Skeleton` của
+ * `FieldFrame` nội bộ. Không có `storyId` nào để trỏ, nhưng ba part heroui này
+ * vẫn cần tier `heroui` để panel hai-luật không lặng lẽ bỏ sót chúng
+ * (2026-07-28; đọc `.storybook/components/atoms/forms/Input/Input.tsx`, `InputTime`).
  *
  * 2026-07-27: migrated to the `states` API (§8) — each leaf below is a single
  * `states` entry, since none of them stacks more than one rendering.
  */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "TimeField.Group": { tier: "heroui", role: "time segment input group" },
+    Label: { tier: "heroui", role: "field label line" },
+    Skeleton: { tier: "heroui", role: "loading placeholder" },
+}
 
 /** Leaf TRẦN — chưa có label/hint/error, chỉ segments giờ:phút, chưa chọn. */
 export const Default: Story = {
@@ -29,6 +34,7 @@ export const Default: Story = {
                 <BlockAnatomy
                     name="Input.Time"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Default"
                     renderClassName="w-72"
                     states={[
@@ -55,6 +61,7 @@ export const WithLabel: Story = {
                 <BlockAnatomy
                     name="Input.Time"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Props `label` + `hint`"
                     renderClassName="w-72"
                     states={[
@@ -81,6 +88,7 @@ export const Required: Story = {
                 <BlockAnatomy
                     name="Input.Time"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `isRequired`"
                     renderClassName="w-72"
                     states={[
@@ -107,6 +115,7 @@ export const Filled: Story = {
                 <BlockAnatomy
                     name="Input.Time"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `value` (filled)"
                     renderClassName="w-72"
                     states={[
@@ -133,6 +142,7 @@ export const Disabled: Story = {
                 <BlockAnatomy
                     name="Input.Time"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `isDisabled`"
                     renderClassName="w-72"
                     states={[
@@ -159,6 +169,7 @@ export const Error: Story = {
                 <BlockAnatomy
                     name="Input.Time"
                     tier="atom"
+                    annotate={ANNOTATE}
                     leaf="Prop `errorMessage`"
                     renderClassName="w-72"
                     states={[
@@ -183,6 +194,7 @@ export const Loading: Story = {
             <BlockAnatomy
                 name="Input.Time"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isSkeleton`"
                 renderClassName="w-72"
                 states={[

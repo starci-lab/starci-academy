@@ -3,18 +3,21 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { userEvent, within } from "storybook/test"
 import { SearchAutocomplete } from "@sb-components/atoms/forms/SearchAutocomplete/SearchAutocomplete"
 import type { SearchAutocompleteItem } from "@sb-components/atoms/forms/SearchAutocomplete/SearchAutocomplete"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — a suggest-as-you-type search field built on HeroUI `ComboBox`. Real
  * free-text anatomy: `ComboBox.InputGroup` (Input + leading icon) plus
  * `ComboBox.Popover` (ListBox of suggestion rows / spinner / empty state).
  *
- * Atom lá (§12g cuối bài): `InputGroup`/`Popover`/`Skeleton` là span nội bộ,
- * không component nào có story riêng để nhảy tới ⇒ KHÔNG dùng `annotate`, bỏ
- * hẳn prop. Tier sửa lại `atom` (trước là `primitive` — tên cũ của tầng khung
- * §13, nay tách frame/composite theo 2026-07-27 — sai vì đây là atom thật,
- * title đã là `Atoms/Forms/SearchAutocomplete`).
+ * Atom lá: `ComboBox.InputGroup`/`ComboBox.Popover`/`Skeleton` là component
+ * heroui THẬT (không phải khe nội bộ tự chế) — không component nào ở đây có
+ * story CỦA TA để nhảy tới nên `annotate` không có `storyId`, nhưng vẫn cần tier
+ * `heroui` để panel hai-luật không lặng lẽ bỏ sót chúng (2026-07-28; trước đây
+ * tên bị rút gọn thành "InputGroup"/"Popover" — sửa lại đúng tên compound thật).
+ * Tier sửa lại `atom` (trước là `primitive` — tên cũ của tầng khung §13, nay
+ * tách frame/composite theo 2026-07-27 — sai vì đây là atom thật, title đã là
+ * `Atoms/Forms/SearchAutocomplete`).
  *
  * ANATOMY IS PER-LEAF: each story below is its OWN leaf and wraps its render in
  * its OWN BlockAnatomy reflecting the parts THAT leaf composes — the field +
@@ -22,6 +25,11 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * dropdown's INTERNAL content changes, which is the Popover's own concern);
  * `Skeleton` collapses to a single field-box mirror with no dropdown at all.
  */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "ComboBox.InputGroup": { tier: "heroui", role: "search field + leading icon group" },
+    "ComboBox.Popover": { tier: "heroui", role: "suggestion dropdown container" },
+    Skeleton: { tier: "heroui", role: "loading placeholder" },
+}
 const meta: Meta<typeof SearchAutocomplete.Base> = {
     title: "Atoms/Forms/SearchAutocomplete",
     component: SearchAutocomplete.Base,
@@ -77,6 +85,7 @@ export const WithSuggestions: Story = {
                     <BlockAnatomy
                         name="SearchAutocomplete"
                         tier="atom"
+                        annotate={ANNOTATE}
                         leaf="WithSuggestions"
                         reason="Suggest-as-you-type needs the real free-text anatomy of the HeroUI ComboBox, where InputGroup carries the field and its icon while Popover carries the dropdown. The parent only hands over items and inputValue, and the block does no filtering itself, so it stays reusable for any data source."
                         states={[
@@ -116,6 +125,7 @@ export const Loading: Story = {
                     <BlockAnatomy
                         name="SearchAutocomplete"
                         tier="atom"
+                        annotate={ANNOTATE}
                         leaf="Loading"
                         states={[
                             {
@@ -152,6 +162,7 @@ export const Skeleton: Story = {
             <BlockAnatomy
                 name="SearchAutocomplete"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Skeleton"
                 states={[
                     {
@@ -188,6 +199,7 @@ export const NoResults: Story = {
                     <BlockAnatomy
                         name="SearchAutocomplete"
                         tier="atom"
+                        annotate={ANNOTATE}
                         leaf="NoResults"
                         states={[
                             {

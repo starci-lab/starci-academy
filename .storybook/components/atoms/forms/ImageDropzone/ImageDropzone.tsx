@@ -118,15 +118,26 @@ const ImageDropzoneBase = ({
                 {/* `size-8` >= `size-5` ⇒ KHÔNG truyền `weight` (§5.0a), glyph giữ nét `regular`. */}
                 {Icon ? <Icon /> : <ImageIcon focusable="false" />}
             </span>
+            {/* `anatPart` pinned explicitly — the REAL component rendered here is `Typography.Base`
+                itself; left unset it would fall back to Typography.Base's own generic default
+                name ("Text"), which describes a slot, not the component's real identity. */}
             <Typography.Base size="sm"
                 text={label}
                 weight="medium"
                 align="center"
                 className={cn(isDragActive && "text-accent-soft-foreground")}
                 showAnatomy={showAnatomy}
+                anatPart={showAnatomy ? "Typography.Base" : undefined}
             />
             {hint ? (
-                <Typography.Base size="xs" text={hint} color="muted" align="center" showAnatomy={showAnatomy} />
+                <Typography.Base
+                    size="xs"
+                    text={hint}
+                    color="muted"
+                    align="center"
+                    showAnatomy={showAnatomy}
+                    anatPart={showAnatomy ? "Typography.Base" : undefined}
+                />
             ) : null}
         </div>
     )

@@ -25,9 +25,19 @@ export default meta
 
 type Story = StoryObj<typeof Form.Actions>
 
-/** Con TRỰC TIẾP duy nhất = atom `Button.Group` (khung chỉ căn ngang + chrome dính đáy). */
+/**
+ * Con TRỰC TIẾP duy nhất = atom `Button.Group` (khung chỉ căn ngang + chrome dính đáy).
+ * `Button.Group` tự tag MỖI nút con là `Button.Base` (không tự tag chính nó — nó không
+ * mọc thêm một node "Group" nào trong DOM), nên node THẬT xuất hiện ở đây là `Button.Base`,
+ * lặp một lần cho mỗi item trong `items` (§11a.1 gom theo phần tử, không theo tên).
+ */
 const PARTS: Array<AnatomyNode> = [
-    { name: "Group", tier: "atom", role: "the button row, built from `items` by the atom `Button.Group` (gap-2, a related cluster per §10b)" },
+    {
+        name: "Button.Base",
+        tier: "atom",
+        role: "one button per `items[i]`, built by the atom `Button.Group` (gap-2, a related cluster per §10b)",
+        storyId: "atoms-buttons-button-button-base--variants",
+    },
 ]
 
 /** Cặp nút chuẩn của một form: huỷ (secondary) + lưu (primary). */

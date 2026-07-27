@@ -242,7 +242,7 @@ const PriceTagBase = ({
             <Cluster.Base
                 gap="related"
                 align="baseline"
-                anatPart={showAnatomy ? "Cluster" : undefined}
+                anatPart={showAnatomy ? "Cluster.Base" : undefined}
                 items={[
                     {
                         key: "amount",
@@ -255,7 +255,7 @@ const PriceTagBase = ({
                                 weight="bold"
                                 isSkeleton={isSkeleton}
                                 className={isSkeleton ? "w-28" : undefined}
-                                anatPart={showAnatomy ? (hasSaving ? "Typography.Amount" : "Typography") : undefined}
+                                anatPart={showAnatomy ? "Typography.Base" : undefined}
                                 text={formatPrice(discounted, currency)}
                             />
                         ),
@@ -269,7 +269,7 @@ const PriceTagBase = ({
                                     color="muted"
                                     isSkeleton={isSkeleton}
                                     className={cn("line-through", isSkeleton && "w-16")}
-                                    anatPart={showAnatomy ? "OriginalPrice" : undefined}
+                                    anatPart={showAnatomy ? "Typography.Base" : undefined}
                                     text={formatPrice(original, currency)}
                                 />
                             ),
@@ -313,7 +313,7 @@ const PriceTagBase = ({
                     color="muted"
                     isSkeleton={isSkeleton}
                     className={isSkeleton ? "w-24" : undefined}
-                    anatPart={showAnatomy ? "SavingLine" : undefined}
+                    anatPart={showAnatomy ? "Typography.Base" : undefined}
                     text={hasSaving ? `Tiết kiệm ${formatPrice(original - discounted, currency)}` : undefined}
                 />
             ) : null}

@@ -284,7 +284,7 @@ const Base = ({
     const cardWithCaption = description != null ? (
         <div className="flex flex-col gap-2">
             {highlighted}
-            {showAnatomy ? <div data-anat-part="Description">{caption}</div> : caption}
+            {showAnatomy ? <div data-anat-part="Typography.Base">{caption}</div> : caption}
         </div>
     ) : highlighted
     const labelRow = (
@@ -916,7 +916,7 @@ export interface SurfaceCardPressableGroupProps {
     /** Extra classes on the container wrapper. */
     className?: string
     /**
-     * Dev/spec: tag each direct tile (`Item` / `SkeletonTile`) with an
+     * Dev/spec: tag each direct tile (`SurfaceCard.Pressable` / `SkeletonTile`) with an
      * {@link AnatomyOverlay} anchor so a BlockAnatomy panel can badge it on-render.
      */
     showAnatomy?: boolean
@@ -956,13 +956,13 @@ const itemBody = (item: SurfaceCardPressableGroupItem) => {
 interface PressableGroupSkeletonTileProps {
     /** Placement class only. */
     className?: string
-    /** Storybook-only: names the Avatar mirror so a BlockAnatomy panel can badge/link it. Avatar has no anatPart of its own, so the frame wraps it instead. */
+    /** Storybook-only: names the Avatar.Base mirror so a BlockAnatomy panel can badge/link it. Avatar.Base has no anatPart of its own, so the frame wraps it instead. */
     showAnatomy?: boolean
 }
 
 const PressableGroupSkeletonTile = ({ className, showAnatomy }: PressableGroupSkeletonTileProps) => (
     <div className={cn(TILE_CHROME, "flex items-center gap-3 p-3", className)}>
-        <div className="shrink-0" data-anat-part={showAnatomy ? "Avatar" : undefined}>
+        <div className="shrink-0" data-anat-part={showAnatomy ? "Avatar.Base" : undefined}>
             <Avatar.Base isSkeleton size="md" />
         </div>
         <div className="flex min-w-0 flex-1 flex-col">
@@ -1037,7 +1037,7 @@ const PressableGroup = ({
 
     if (isSkeleton) {
         return (
-            <div role="group" aria-label={ariaLabel} className={className} data-anat-part={showAnatomy ? "Grid" : undefined}>
+            <div role="group" aria-label={ariaLabel} className={className} data-anat-part={showAnatomy ? "Grid.Base" : undefined}>
                 <Grid.Base
                     columns={columns}
                     gap={gap}
@@ -1062,7 +1062,7 @@ const PressableGroup = ({
     // (one frame, not every frame opening its own). Grid built with `Grid.Base`
     // (§13, the tier's ONE grid system) instead of hand-declaring `grid`/`grid-cols-*`.
     return (
-        <div role="group" aria-label={ariaLabel} className={className} data-anat-part={showAnatomy ? "Grid" : undefined}>
+        <div role="group" aria-label={ariaLabel} className={className} data-anat-part={showAnatomy ? "Grid.Base" : undefined}>
             <Grid.Base
                 columns={columns}
                 gap={gap}
@@ -1088,7 +1088,7 @@ const PressableGroup = ({
                         content: showAnatomy ? (
                             <div className="relative" data-anat>
                                 {tile}
-                                <AnatomyOverlay label="Item" tier="composite" />
+                                <AnatomyOverlay label="SurfaceCard.Pressable" tier="composite" />
                             </div>
                         ) : tile,
                     }
@@ -1532,7 +1532,7 @@ const List = ({
     const withCaption = description != null ? (
         <div className="flex flex-col gap-2">
             {surface}
-            <div data-anat-part={showAnatomy ? "Description" : undefined}>{caption}</div>
+            <div data-anat-part={showAnatomy ? "Typography.Base" : undefined}>{caption}</div>
         </div>
     ) : surface
     return (
@@ -1650,7 +1650,7 @@ const AccordionFrame = ({
                     key={item.id}
                     id={item.id}
                     aria-label={typeof item.title === "string" ? item.title : item.id}
-                    data-anat-part={showAnatomy ? "Row" : undefined}
+                    data-anat-part={showAnatomy ? "Accordion.Item" : undefined}
                 >
                     <Accordion.Heading>
                         <Accordion.Trigger>

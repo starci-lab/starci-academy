@@ -51,6 +51,13 @@ const TITLE_ONLY_PARTS: Array<AnatomyNode> = [
 const LEADING_SUBTITLE_PARTS: Array<AnatomyNode> = [
     { name: "Leading", tier: "composite", role: "lesson-type icon (does not shrink)" },
     { name: "TitledText", tier: "composite", role: "title + subtitle (module breadcrumb)", storyId: "composites-texts-titledtext--row" },
+    // ⭐ 2026-07-27 — while `isSkeleton`, the leading slot's placeholder box renders
+    // straight from HeroUI's `Skeleton` (aliased `HeroSkeleton` in the component),
+    // a DIFFERENT render than `Leading` above (which only ever wraps the caller's own
+    // icon). Kept as its own name — sharing "Leading" would have hidden that a real
+    // HeroUI component sits in that spot in the loading state. `heroui` needs no
+    // `storyId` to show up, only the tier.
+    { name: "Skeleton", tier: "heroui", role: "the shimmer placeholder standing in for the leading icon while isSkeleton" },
 ]
 
 const META_TRAILING_PARTS: Array<AnatomyNode> = [

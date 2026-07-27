@@ -146,7 +146,7 @@ export const SegmentBar = ({
                 </div>
             ) : null}
             {caption ? (
-                <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Caption" : undefined}>
+                <Typography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Typography" : undefined}>
                     {caption}
                 </Typography>
             ) : null}

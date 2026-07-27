@@ -106,7 +106,7 @@ const TrialConversionStripBase = ({
             // `anatPart` from the PARENT wins; running in ITS OWN story it names itself
             // so the Deps tree can see the surface FRAME (otherwise the root node is
             // missing and the tree reads as if the block still drew its own surface).
-            anatPart={anatPart ?? (showAnatomy ? "SurfaceCard" : undefined)}
+            anatPart={anatPart ?? (showAnatomy ? "SurfaceCard.Base" : undefined)}
             className={className}
         >
             <Stack.V gap="section" anatPart={showAnatomy ? "Stack.V" : undefined}>
@@ -115,7 +115,7 @@ const TrialConversionStripBase = ({
                         icon={LockIcon}
                         tone="accent"
                         size="sm"
-                        anatPart={showAnatomy ? "IconTile" : undefined}
+                        anatPart={showAnatomy ? "IconTile.Base" : undefined}
                     />
                     {/* The "title + description" cluster is ONE SEMANTIC UNIT ⇒ goes through
                     ONE frame, not two separate `Typography` (decided 2026-07-27).
@@ -175,8 +175,8 @@ const TrialConversionStripBase = ({
                         // resolves, but the price is a second fetch — mirror the price
                         // line instead of showing an empty gap until it lands.
                             <>
-                                <Typography size="h4" isSkeleton className="w-1/3" anatPart={showAnatomy ? "Skeleton.Price" : undefined} />
-                                <Typography size="xs" isSkeleton className="w-1/2" anatPart={showAnatomy ? "Skeleton.Seats" : undefined} />
+                                <Typography size="h4" isSkeleton className="w-1/3" anatPart={showAnatomy ? "Typography.Base" : undefined} />
+                                <Typography size="xs" isSkeleton className="w-1/2" anatPart={showAnatomy ? "Typography.Base" : undefined} />
                             </>
                         ) : price?.discountedPriceVnd != null ? (
                             <>
@@ -184,7 +184,7 @@ const TrialConversionStripBase = ({
                                     discounted={price.discountedPriceVnd}
                                     original={price.originalPriceVnd}
                                     breakdown={breakdown}
-                                    anatPart={showAnatomy ? "PriceTag" : undefined}
+                                    anatPart={showAnatomy ? "PriceTag.Prominent" : undefined}
                                 />
                                 <PhaseScarcityNote
                                     anatPart={showAnatomy ? "PhaseScarcityNote" : undefined}
@@ -208,7 +208,7 @@ const TrialConversionStripBase = ({
                         suffixIcon={ArrowRightIcon}
                         iconSlide
                         onPress={onEnroll}
-                        anatPart={showAnatomy ? "Button" : undefined}
+                        anatPart={showAnatomy ? "Button.Base" : undefined}
                     />
                 </Stack.H>
             </Stack.V>

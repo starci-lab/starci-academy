@@ -6,7 +6,7 @@ import {
     RocketLaunchIcon,
 } from "@phosphor-icons/react"
 import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — `IconTile.Base`: the avatar frame of a THING (course, project, section…).
@@ -31,9 +31,18 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * (`sm`=size-5, `md`=size-6, `lg`=size-8) are ≥ `size-5`, so the atom does NOT pass
  * `weight` (§5.0a — only a glyph < size-5 needs `bold`).
  *
- * The atom has `showAnatomy` — each leaf turns it on at the FIRST tile, badging 4
- * namespaced parts: `Tile` (root) · `Cover` (image) · `Icon` (glyph) · `Skeleton`.
+ * The atom has `showAnatomy` — each leaf turns it on at the FIRST tile. `Tile`
+ * (root div) · `Cover` (the `<img>`) · `Icon` (the caller's glyph) are plain
+ * elements/arbitrary content, not fixed importable components, so none of them
+ * gets a name in `annotate` (§ naming pass, 2026-07-28) — only `Skeleton`
+ * (a direct HeroUI import) is a real, nameable node, `tier: "heroui"`.
  */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    Skeleton: {
+        tier: "heroui",
+        role: "the resting shimmer box, drawn in place of the tile while isSkeleton is on",
+    },
+}
 
 /** Guide shown at the top of the autodocs page. UI-facing text is written in ENGLISH. */
 const ICON_TILE_DOC = `
@@ -85,6 +94,7 @@ export const Default: Story = {
                 name="IconTile.Base"
                 tier="atom"
                 leaf="Bare tile"
+                annotate={ANNOTATE}
                 reason="The one framed icon-tile in the system, the avatar of a course, a project, a section. Every leaf below it differs by exactly one prop, so this is the baseline every other leaf is compared against."
                 states={[
                     {
@@ -107,6 +117,7 @@ export const Tones: Story = {
                 name="IconTile.Base"
                 tier="atom"
                 leaf="Prop `tone`"
+                annotate={ANNOTATE}
                 reason="Tone is meaning, not decoration. A project tile that is always accent reads as neutral identity; switching it to danger says something happened to that project, without adding a separate badge."
                 states={[
                     {
@@ -153,6 +164,7 @@ export const Sizes: Story = {
                 name="IconTile.Base"
                 tier="atom"
                 leaf="Prop `size`"
+                annotate={ANNOTATE}
                 reason="The tile owns its own scale (§4). A caller never pins a pixel box or picks the glyph size separately, it just names which of the three sizes this spot needs, and the icon inside grows with the box automatically."
                 states={[
                     {
@@ -191,6 +203,7 @@ export const CoverImage: Story = {
                 name="IconTile.Base"
                 tier="atom"
                 leaf="Prop `src`"
+                annotate={ANNOTATE}
                 reason="Once a thing has a real thumbnail, a course cover, a project banner, the image should carry the identity instead of a generic glyph. The icon stays underneath as the safety net for whenever that image is missing or broken."
                 states={[
                     {
@@ -238,6 +251,7 @@ export const Skeleton: Story = {
                 name="IconTile.Base"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
+                annotate={ANNOTATE}
                 reason="Whoever owns the shape owns its resting state, so the tile draws its own shimmer at its own box size instead of borrowing a shared skeleton component."
                 states={[
                     {

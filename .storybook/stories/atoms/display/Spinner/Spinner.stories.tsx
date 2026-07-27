@@ -1,15 +1,23 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Spinner } from "@sb-components/atoms/display/Spinner/Spinner"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — `Spinner.Base`: bọc thẳng HeroUI Spinner, chỉ ép `size`/`tone` (§4).
  *
- * ⭐ Atom LÁ — không compose component nào có story riêng ⇒ DEPS RỖNG. Bản trước
- * tự khai một part "Spinner" TRỎ VÀO CHÍNH NÓ (không `storyId` nên không bấm đi
- * đâu được) — đúng thứ luật "deps không có thì thôi" cấm (thầy chốt 2026-07-26
- * lần 2). Bỏ hẳn `parts`/`annotate` ở đây, giống `Button.Base`.
+ * ⭐ Atom LÁ — không compose atom NÀO CỦA TA có story riêng, nên không có dep
+ * tầng atom. Nhưng `data-anat-part="Spinner"` đang gắn trên chính `HeroSpinner` —
+ * MỘT IMPORT `@heroui/react` render trực tiếp, nên vẫn vào cây với `tier: "heroui"`
+ * (không `storyId`, thư viện không có story của ta để nhảy tới) — §heroui, thầy
+ * chốt 2026-07-27/28. Bản trước bỏ hẳn `annotate` vì lẫn hai luật khác nhau: "dep
+ * không storyId thì thôi" (đúng, cho atom CỦA TA) áp nhầm sang cả node heroui.
  */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    Spinner: {
+        tier: "heroui",
+        role: "the spinning glyph itself — the only thing this atom renders",
+    },
+}
 const meta: Meta<typeof Spinner.Base> = {
     title: "Atoms/Display/Spinner/Spinner.Base",
     component: Spinner.Base,
@@ -29,6 +37,7 @@ export const Default: Story = {
                 name="Spinner.Base"
                 tier="atom"
                 leaf="Default"
+                annotate={ANNOTATE}
                 reason="A busy indicator: one spinning glyph wrapping HeroUI Spinner, size/tone set by prop. No isSkeleton branch here, the spin itself IS the loading signal."
                 states={[
                     {
@@ -51,6 +60,7 @@ export const Sizes: Story = {
                 name="Spinner.Base"
                 tier="atom"
                 leaf="Prop `size`"
+                annotate={ANNOTATE}
                 reason="The atom owns the size scale so callers never hand-set a diameter, matching the same rule Button.Base and IconTile.Base follow for their own scales."
                 states={[
                     {
@@ -91,6 +101,7 @@ export const Tones: Story = {
                 name="Spinner.Base"
                 tier="atom"
                 leaf="Prop `tone`"
+                annotate={ANNOTATE}
                 reason="Tone lets a spinner sitting inside a coloured surface (a danger button, a success banner) read as part of that surface instead of always shipping the same accent ring."
                 states={[
                     {

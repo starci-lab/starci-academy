@@ -84,11 +84,11 @@ const KeyValueRow = ({
     const row = (
         <div
             className={cn("flex items-start justify-between gap-2", className)}
-            data-anat-part={anatPart ?? (showAnatomy ? "Row" : undefined)}
+            data-anat-part={anatPart ?? (showAnatomy ? "KeyValue.Row" : undefined)}
         >
             {/* Label column: label + hint form a TIGHT cluster (§10b `tight` = gap-1). */}
             <div className="flex min-w-0 flex-col gap-1">
-                <span data-anat-part={showAnatomy ? "Label" : undefined}>
+                <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
                     <Typography.Base size="sm"
                         text={label}
                         color={emphasis ? undefined : "muted"}
@@ -96,12 +96,12 @@ const KeyValueRow = ({
                     />
                 </span>
                 {hint != null ? (
-                    <span data-anat-part={showAnatomy ? "Hint" : undefined}>
+                    <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
                         <Typography.Base size="xs" text={hint} color="muted" />
                     </span>
                 ) : null}
             </div>
-            <span className="shrink-0" data-anat-part={showAnatomy ? "Value" : undefined}>
+            <span className="shrink-0" data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
                 {emphasis ? (
                     <Typography.Base text={value} weight="bold" tabularNums />
                 ) : (
@@ -116,7 +116,7 @@ const KeyValueRow = ({
     return (
         <div className={cn("flex flex-col", GAP_CLASS[gap])}>
             {row}
-            <span className="block" data-anat-part={showAnatomy ? "Divider" : undefined}>
+            <span className="block" data-anat-part={showAnatomy ? "Divider.Base" : undefined}>
                 <Divider.Base variant="tertiary" />
             </span>
         </div>

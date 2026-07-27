@@ -64,7 +64,7 @@ const progressBase = {
 // declared here.
 const CONTENT_PARTS: Array<AnatomyNode> = [
     {
-        name: "SurfaceCard",
+        name: "SurfaceCard.Base",
         tier: "composite",
         role: "The card surface; isHighlight turns on the hero accent glow, and the frame stays put across every state so switching state never shifts the layout.",
         storyId: "composites-cards-surfacecard-surfacecard-base--default",
@@ -84,8 +84,7 @@ const CONTENT_PARTS: Array<AnatomyNode> = [
                         role: "The text column, title on top with the meta and subtitle underneath.",
                         storyId: "frames-stack-stack-v--default",
                         children: [
-                            { name: "Title", tier: "atom", role: "The name of the session in progress, a Typography.Base node set to medium weight with truncate.", storyId: "atoms-text-typography-typography-base--plain" },
-                            { name: "Skeleton.Meta", tier: "atom", role: "A mirror bar standing in for the meta row while loading, a Typography.Base node with isSkeleton.", storyId: "atoms-text-typography-typography-base--plain" },
+                            { name: "Typography.Base", tier: "atom", role: "The name of the session in progress, medium weight with truncate — or, while loading, a mirror bar standing in for the meta row (isSkeleton).", storyId: "atoms-text-typography-typography-base--plain" },
                             {
                                 name: "List.Meta",
                                 tier: "composite",
@@ -100,7 +99,7 @@ const CONTENT_PARTS: Array<AnatomyNode> = [
                 ],
             },
             { name: "ProgressMeter", tier: "composite", role: "The progress bar, the defining trait of the has-progress shape.", storyId: "composites-stats-progressmeter--half" },
-            { name: "Button", tier: "atom", role: "The resume CTA (onPress plus a sliding ArrowRight icon).", storyId: "atoms-buttons-button-button-base--default" },
+            { name: "Button.Base", tier: "atom", role: "The resume CTA (onPress plus a sliding ArrowRight icon).", storyId: "atoms-buttons-button-button-base--default" },
         ],
     },
 ]
@@ -108,7 +107,7 @@ const CONTENT_PARTS: Array<AnatomyNode> = [
 // error leaf: connection dropped → `Feedback.Empty` SITS INSIDE the frame, the Retry button lives in the `action` prop.
 const ERROR_PARTS: Array<AnatomyNode> = [
     {
-        name: "SurfaceCard",
+        name: "SurfaceCard.Base",
         tier: "composite",
         role: "The very same frame as the loaded leaf; an error must never make the frame itself disappear.",
         storyId: "composites-cards-surfacecard-surfacecard-base--default",
@@ -120,7 +119,7 @@ const ERROR_PARTS: Array<AnatomyNode> = [
                 state: "danger",
                 storyId: "composites-feedback-feedback-feedback-empty--action",
                 children: [
-                    { name: "Button", tier: "atom", role: "The retry button (secondary), built by the story inside the action prop, so it is still declared per §11a.1.", storyId: "atoms-buttons-button-button-base--default" },
+                    { name: "Button.Base", tier: "atom", role: "The retry button (secondary), built by the story inside the action prop, so it is still declared per §11a.1.", storyId: "atoms-buttons-button-button-base--default" },
                 ],
             },
         ],
@@ -244,7 +243,7 @@ export const LoadError: Story = {
     />
 </SurfaceCard.Base>`,
                         render: (
-                            <SurfaceCard.Base anatPart="SurfaceCard">
+                            <SurfaceCard.Base anatPart="SurfaceCard.Base">
                                 <Feedback.Empty
                                     anatPart="Feedback.Empty"
                                     tone="danger"
@@ -252,7 +251,7 @@ export const LoadError: Story = {
                                     title="Connection lost"
                                     description="The network seems to have dropped. Check your connection and try again."
                                     action={
-                                        <Button.Base variant="secondary" size="sm" label="Retry" onPress={() => {}} anatPart="Button" />
+                                        <Button.Base variant="secondary" size="sm" label="Retry" onPress={() => {}} anatPart="Button.Base" />
                                     }
                                 />
                             </SurfaceCard.Base>

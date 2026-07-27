@@ -106,7 +106,7 @@ export interface CourseContentsLayoutProps {
  * from this state even though the content state declares it.
  */
 const CourseContentsEmpty = () => (
-    <Container.Base anatPart="Container" size="md" padding="roomy">
+    <Container.Base anatPart="Container.Base" size="md" padding="roomy">
         <AsyncContent.Empty
             anatPart="AsyncContent.Empty"
             icon={StackIcon}
@@ -146,7 +146,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
         // the block below it was EXACTLY 0 — the page read as if the title were stuck to the
         // card. Writing `gap="page"` with nothing to receive it is worse than not writing it at
         // all: reading the code makes it look like the rhythm was already set.
-        <Container.Base size="md" padding="roomy" anatPart="Container">
+        <Container.Base size="md" padding="roomy" anatPart="Container.Base">
             {/* VERTICAL rhythm owned by ONE party (§10a). Two deliberately different steps:
             `8` separates the course IDENTITY cluster from the content below (seam between two
             REGIONS), `6` is the rhythm between blocks within the same region — §10

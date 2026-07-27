@@ -1,13 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — `Divider.Base`: wraps HeroUI `Separator` directly (HeroUI has no
  * "Divider", renamed for the app's vocabulary). A leaf atom — it doesn't build
- * any other atom so it has NO deps: the `annotate` prop is dropped entirely
- * (§12g, decided 2026-07-26, second pass). `Line`/`Label` are INTERNAL spans of
- * this very atom (a slot, nowhere else to jump to), not deps.
+ * any atom OF OURS with its own story, so it has no atom-tier dep. `Label` is an
+ * INTERNAL span holding the free-form label content (a slot, nowhere else to jump
+ * to), not a dep.
+ *
+ * ⚠️ 2026-07-28 (naming pass): every rule this atom draws IS a direct HeroUI
+ * `Separator` render — renamed from the role-word `Line` to the real import name,
+ * `tier: "heroui"` (no `storyId`). Previously the tree showed nothing at all for
+ * this atom (no `annotate`), hiding that HeroUI usage entirely.
  *
  * 📐 **1 PROP = 1 LEAF** (§12g): `orientation` · `variant` · `label`, each prop
  * one leaf, and the leaf renders EVERY value in full. The previous version split
@@ -23,6 +28,14 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * own. Now each value is its own `states[]` entry — its own `why` and its own
  * `code` — reachable through the leaf's state tabs.
  */
+/** The only node this atom ever draws is a direct HeroUI `Separator`. */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    Separator: {
+        tier: "heroui",
+        role: "the rule itself — one per side of the label when labelled, or the bare standalone line",
+    },
+}
+
 const meta: Meta<typeof Divider.Base> = {
     title: "Atoms/Display/Divider/Divider.Base",
     component: Divider.Base,
@@ -42,6 +55,7 @@ export const Default: Story = {
                 name="Divider.Base"
                 tier="atom"
                 leaf="Bare divider"
+                annotate={ANNOTATE}
                 reason="The one rule in the system. Every leaf below it differs by exactly one prop, so this is the baseline you compare against."
                 states={[
                     {
@@ -68,6 +82,7 @@ export const Orientation: Story = {
                 name="Divider.Base"
                 tier="atom"
                 leaf="Prop `orientation`"
+                annotate={ANNOTATE}
                 states={[
                     {
                         name: "orientation = \"horizontal\" (default)",
@@ -107,6 +122,7 @@ export const Variants: Story = {
                 name="Divider.Base"
                 tier="atom"
                 leaf="Prop `variant`"
+                annotate={ANNOTATE}
                 states={[
                     {
                         name: "variant = \"default\"",
@@ -152,6 +168,7 @@ export const WithLabel: Story = {
                 name="Divider.Base"
                 tier="atom"
                 leaf="Prop `label`"
+                annotate={ANNOTATE}
                 states={[
                     {
                         name: "label set (horizontal only)",

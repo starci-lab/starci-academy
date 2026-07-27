@@ -110,13 +110,15 @@ const InputText = ({ value, onValueChange, placeholder, isDisabled, isInvalid, a
             skeletonControl={<FieldSkeleton className={className} showAnatomy={showAnatomy} />}
         >
             <HeroTextField aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full", className)}>
+                {/* Node name = the REAL heroui component rendered here (`Input`) — NOT the
+                    slot word "Field" it used to carry. */}
                 <HeroInput
                     id={controlId}
                     placeholder={placeholder}
                     value={value}
                     onChange={(event) => onValueChange?.(event.target.value)}
                     className="w-full"
-                    data-anat-part={showAnatomy ? "Field" : undefined}
+                    data-anat-part={showAnatomy ? "Input" : undefined}
                 />
             </HeroTextField>
         </FieldFrame.Base>
@@ -155,6 +157,8 @@ const InputTextarea = ({
             skeletonControl={<FieldSkeleton heightCls="h-24" className={className} showAnatomy={showAnatomy} />}
         >
             <HeroTextField aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full", className)}>
+                {/* Node name = the REAL heroui component rendered here (`TextArea`) — NOT the
+                    slot word "Field" it used to carry. */}
                 <HeroTextArea
                     id={controlId}
                     rows={rows}
@@ -162,7 +166,7 @@ const InputTextarea = ({
                     value={value}
                     onChange={(event) => onValueChange?.(event.target.value)}
                     className="w-full"
-                    data-anat-part={showAnatomy ? "Field" : undefined}
+                    data-anat-part={showAnatomy ? "TextArea" : undefined}
                 />
             </HeroTextField>
         </FieldFrame.Base>
@@ -223,13 +227,14 @@ const InputNumber = ({
                 fullWidth
                 className={className}
             >
-                <div data-anat-part={showAnatomy ? "Field" : undefined}>
-                    <HeroNumberField.Group>
-                        <HeroNumberField.DecrementButton />
-                        <HeroNumberField.Input />
-                        <HeroNumberField.IncrementButton />
-                    </HeroNumberField.Group>
-                </div>
+                {/* Node name = the REAL heroui component rendered here (`NumberField.Group`) —
+                    NOT the slot word "Field" a wrapping div used to carry (the wrapper had no
+                    styling of its own, so it's dropped rather than tagged). */}
+                <HeroNumberField.Group data-anat-part={showAnatomy ? "NumberField.Group" : undefined}>
+                    <HeroNumberField.DecrementButton />
+                    <HeroNumberField.Input />
+                    <HeroNumberField.IncrementButton />
+                </HeroNumberField.Group>
             </HeroNumberField>
         </FieldFrame.Base>
     )
@@ -285,7 +290,9 @@ const InputDate = ({
                 maxValue={maxValue}
                 className={cn("w-full", className)}
             >
-                <DateField.Group fullWidth variant="secondary" data-anat-part={showAnatomy ? "Field" : undefined}>
+                {/* Node name = the REAL heroui component rendered here (`DateField.Group`) — NOT
+                    the slot word "Field" it used to carry. */}
+                <DateField.Group fullWidth variant="secondary" data-anat-part={showAnatomy ? "DateField.Group" : undefined}>
                     <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
                     <DateField.Suffix>
                         <HeroDatePicker.Trigger>
@@ -339,7 +346,9 @@ const InputSearch = ({
                 isDisabled={isDisabled}
                 className={cn("w-full", className)}
             >
-                <HeroSearchField.Group data-anat-part={showAnatomy ? "Field" : undefined}>
+                {/* Node name = the REAL heroui component rendered here (`SearchField.Group`) —
+                    NOT the slot word "Field" it used to carry. */}
+                <HeroSearchField.Group data-anat-part={showAnatomy ? "SearchField.Group" : undefined}>
                     <HeroSearchField.SearchIcon />
                     <HeroSearchField.Input id={controlId} placeholder={placeholder} />
                 </HeroSearchField.Group>
@@ -380,7 +389,10 @@ const InputPassword = ({
             skeletonControl={<FieldSkeleton className={className} showAnatomy={showAnatomy} />}
         >
             <HeroTextField aria-label={fieldName(label, ariaLabel)} isInvalid={invalid} isDisabled={isDisabled} className={cn("w-full", className)}>
-                <div className="relative" data-anat-part={showAnatomy ? "Field" : undefined}>
+                <div className="relative">
+                    {/* Node name = the REAL heroui component rendered here (`Input`) — NOT the
+                        slot word "Field" the wrapping div used to carry (the div stays for its
+                        `relative` positioning, but a plain wrapper isn't a real component). */}
                     <HeroInput
                         id={controlId}
                         type={reveal ? "text" : "password"}
@@ -388,6 +400,7 @@ const InputPassword = ({
                         value={value}
                         onChange={(event) => onValueChange?.(event.target.value)}
                         className="w-full pr-9"
+                        data-anat-part={showAnatomy ? "Input" : undefined}
                     />
                     <button
                         type="button"
@@ -465,13 +478,14 @@ const InputCurrency = ({
                 fullWidth
                 className={className}
             >
-                <div data-anat-part={showAnatomy ? "Field" : undefined}>
-                    <HeroNumberField.Group>
-                        <HeroNumberField.DecrementButton />
-                        <HeroNumberField.Input />
-                        <HeroNumberField.IncrementButton />
-                    </HeroNumberField.Group>
-                </div>
+                {/* Node name = the REAL heroui component rendered here (`NumberField.Group`) —
+                    NOT the slot word "Field" a wrapping div used to carry (the wrapper had no
+                    styling of its own, so it's dropped rather than tagged). */}
+                <HeroNumberField.Group data-anat-part={showAnatomy ? "NumberField.Group" : undefined}>
+                    <HeroNumberField.DecrementButton />
+                    <HeroNumberField.Input />
+                    <HeroNumberField.IncrementButton />
+                </HeroNumberField.Group>
             </HeroNumberField>
         </FieldFrame.Base>
     )
@@ -522,7 +536,9 @@ const InputTime = ({
                 fullWidth
                 className={cn("w-full", className)}
             >
-                <HeroTimeField.Group fullWidth variant="secondary" data-anat-part={showAnatomy ? "Field" : undefined}>
+                {/* Node name = the REAL heroui component rendered here (`TimeField.Group`) —
+                    NOT the slot word "Field" it used to carry. */}
+                <HeroTimeField.Group fullWidth variant="secondary" data-anat-part={showAnatomy ? "TimeField.Group" : undefined}>
                     <HeroTimeField.Input>{(segment) => <HeroTimeField.Segment segment={segment} />}</HeroTimeField.Input>
                 </HeroTimeField.Group>
             </HeroTimeField>
@@ -588,7 +604,9 @@ const InputOtp = ({
                 autoFocus={autoFocus}
                 className={className}
             >
-                <HeroInputOTP.Group data-anat-part={showAnatomy ? "Field" : undefined}>
+                {/* Node name = the REAL heroui component rendered here (`InputOTP.Group`) —
+                    NOT the slot word "Field" it used to carry. */}
+                <HeroInputOTP.Group data-anat-part={showAnatomy ? "InputOTP.Group" : undefined}>
                     {Array.from({ length }, (_, index) => (
                         <HeroInputOTP.Slot key={index} index={index} />
                     ))}
@@ -660,8 +678,16 @@ const InputTags = ({
                 )}
             >
                 {value.map((tag, index) => (
-                    <span key={`${tag}-${index}`} data-anat-part={showAnatomy ? "Chip" : undefined} className="inline-flex">
-                        <Chip.Base text={tag} onRemove={isDisabled ? undefined : () => removeAt(index)} removeLabel={removeLabel} />
+                    <span key={`${tag}-${index}`} className="inline-flex">
+                        {/* Node name = the REAL component rendered here (`Chip.Base`, our own
+                            atom with its own story) — NOT the slot word "Chip" the wrapping
+                            span used to carry. */}
+                        <Chip.Base
+                            text={tag}
+                            onRemove={isDisabled ? undefined : () => removeAt(index)}
+                            removeLabel={removeLabel}
+                            anatPart={showAnatomy ? "Chip.Base" : undefined}
+                        />
                     </span>
                 ))}
                 <input

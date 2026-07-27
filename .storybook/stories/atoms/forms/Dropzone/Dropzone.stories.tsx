@@ -1,7 +1,17 @@
 import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Dropzone } from "@sb-components/atoms/forms/Dropzone/Dropzone"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+
+/**
+ * `Skeleton` — heroui's OWN component (imported `Skeleton as HeroSkeleton` and
+ * rendered directly in the `isSkeleton` branch), so it enters the tree as tier
+ * `heroui` with no `storyId` (§ two-law pass, 2026-07-28). `DropBox`/`ErrorMessage`
+ * stay unannotated — they're plain hand-rolled `<div>`s, not a real component.
+ */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    Skeleton: { tier: "heroui", role: "loading placeholder box" },
+}
 
 const meta: Meta<typeof Dropzone> = {
     title: "Atoms/Forms/Dropzone",
@@ -144,6 +154,7 @@ export const Skeleton: Story = {
             <BlockAnatomy
                 name="Dropzone"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isSkeleton`"
                 states={[
                     {

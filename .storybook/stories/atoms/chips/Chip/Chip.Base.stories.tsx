@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CheckCircleIcon, ClockIcon, LockIcon, XCircleIcon } from "@phosphor-icons/react"
 import { Chip, type ChipTone } from "@sb-components/atoms/chips/Chip/Chip"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — `Chip.Base`: the ONLY chip in the system.
@@ -65,6 +65,21 @@ export default meta
 
 type Story = StoryObj<typeof Chip.Base>
 
+/**
+ * HeroUI nodes this atom renders — LUAT 2: an import from `@heroui/react` that gets
+ * rendered must show up in the tree as `tier: "heroui"` (no `storyId`, there's no story
+ * of ours to jump to). Shared across every leaf below that renders a REAL (non-skeleton)
+ * chip, since all of them build `HeroChip.Label`.
+ */
+const CHIP_LABEL_DEP: Record<string, AnatomyAnnotation> = {
+    "Chip.Label": { tier: "heroui", role: "the chip's own text label, HeroUI's `Chip.Label`" },
+}
+
+/** Same idea, for the `isSkeleton` leaf: the outer shell rendered there IS HeroUI's `Chip`, just in its loading look. */
+const CHIP_SKELETON_DEP: Record<string, AnatomyAnnotation> = {
+    Chip: { tier: "heroui", role: "the chip shell itself, HeroUI's `Chip`, in its loading look" },
+}
+
 /** BARE leaf — no prop turned on, to see the default look (`tone="neutral"`, no glyph, no ×). */
 export const Default: Story = {
     render: () => (
@@ -73,6 +88,7 @@ export const Default: Story = {
                 name="Chip.Base"
                 tier="atom"
                 leaf="Bare chip"
+                annotate={CHIP_LABEL_DEP}
                 reason="The one chip in the system. Every leaf below it differs by exactly one prop, so this is the baseline you compare against."
                 states={[
                     {
@@ -95,6 +111,7 @@ export const Tones: Story = {
                 name="Chip.Base"
                 tier="atom"
                 leaf="Prop `tone`"
+                annotate={CHIP_LABEL_DEP}
                 reason="Tone is meaning, not colour. Pick it from what the chip says; a red chip that means nothing bad is noise the reader has to learn to ignore."
                 states={[
                     {
@@ -141,6 +158,7 @@ export const Icon: Story = {
                 name="Chip.Base"
                 tier="atom"
                 leaf="Prop `icon`"
+                annotate={CHIP_LABEL_DEP}
                 reason="An icon earns its slot when the symbol reads faster than the word, such as verified, failed, waiting, locked. Anything a reader has to decode belongs in the label instead."
                 states={[
                     {
@@ -188,6 +206,7 @@ export const Dot: Story = {
                 name="Chip.Base"
                 tier="atom"
                 leaf="Props `dotColor` / `dotClassName`"
+                annotate={CHIP_LABEL_DEP}
                 reason="The dot carries the status so the chip does not have to. That is why these chips stay neutral: a row of live services reads as one list with coloured markers, instead of five competing pills."
                 states={[
                     {
@@ -230,6 +249,7 @@ export const Removable: Story = {
                 name="Chip.Base"
                 tier="atom"
                 leaf="Prop `onRemove`"
+                annotate={CHIP_LABEL_DEP}
                 reason="Pass a handler and the chip grows a ×, that is the whole switch. A chip the reader can dismiss is a filter or a picked value; a chip they cannot is a label."
                 states={[
                     {
@@ -276,6 +296,7 @@ export const Skeleton: Story = {
                 name="Chip.Base"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
+                annotate={CHIP_SKELETON_DEP}
                 reason="Whoever owns the shape owns its resting state, so the chip draws its own shimmer. There is no shared skeleton component to keep in sync."
                 states={[
                     {

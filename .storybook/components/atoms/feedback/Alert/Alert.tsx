@@ -167,10 +167,10 @@ const AlertBase = ({
             data-anat-part={anatPart}
         >
             {/* §4: the scaffold owns the glyph scale — the caller hands a BARE icon (component ref). */}
-            <HeroAlert.Indicator className={GLYPH_SCALE} data-anat-part={showAnatomy ? "Icon" : undefined}>
+            <HeroAlert.Indicator className={GLYPH_SCALE} data-anat-part={showAnatomy ? "Alert.Indicator" : undefined}>
                 <Icon aria-hidden />
             </HeroAlert.Indicator>
-            <HeroAlert.Content data-anat-part={showAnatomy ? "Content" : undefined}>
+            <HeroAlert.Content data-anat-part={showAnatomy ? "Alert.Content" : undefined}>
                 {/* §12c: the skeleton branch is checked BEFORE any other text-rendering branch. */}
                 {isSkeleton ? (
                     // The FRAME (tint · radius · shadow · gap) and the ICON render FOR REAL — only
@@ -180,18 +180,18 @@ const AlertBase = ({
                     <>
                         <HeroSkeleton
                             className="my-1 h-4 w-40 rounded"
-                            data-anat-part={showAnatomy ? "Title" : undefined}
+                            data-anat-part={showAnatomy ? "Skeleton" : undefined}
                         />
                         <HeroSkeleton
                             className="my-1 h-3 w-full max-w-64 rounded"
-                            data-anat-part={showAnatomy ? "Description" : undefined}
+                            data-anat-part={showAnatomy ? "Skeleton" : undefined}
                         />
                     </>
                 ) : (
                     <>
-                        <HeroAlert.Title data-anat-part={showAnatomy ? "Title" : undefined}>{title}</HeroAlert.Title>
+                        <HeroAlert.Title data-anat-part={showAnatomy ? "Alert.Title" : undefined}>{title}</HeroAlert.Title>
                         {description ? (
-                            <HeroAlert.Description data-anat-part={showAnatomy ? "Description" : undefined}>
+                            <HeroAlert.Description data-anat-part={showAnatomy ? "Alert.Description" : undefined}>
                                 {description}
                             </HeroAlert.Description>
                         ) : null}
@@ -206,7 +206,7 @@ const AlertBase = ({
             ) : null}
             {onClose ? (
                 // §11a: the badge stops at the "Close" node (atom `Button.Base`) — don't drill into the atom's guts.
-                <span className="shrink-0" data-anat-part={showAnatomy ? "Close" : undefined}>
+                <span className="shrink-0" data-anat-part={showAnatomy ? "Button.Base" : undefined}>
                     <Button.Base isIconOnly
                         prefixIcon={CloseGlyph}
                         ariaLabel={closeAriaLabel ?? "Close"}

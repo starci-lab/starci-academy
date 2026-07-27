@@ -132,13 +132,13 @@ const CardBody = ({
             (§14d.1 allows `className` for placement), not the scaffold's own shape. */}
         <Stack.H gap="grouped" align="center" className="relative" anatPart={showAnatomy ? "Stack.H" : undefined}>
             <Stack.V gap="related" className="min-w-0 flex-1" anatPart={showAnatomy ? "Stack.V" : undefined}>
-                <Typography.Base weight="medium" truncate anatPart={showAnatomy ? "Title" : undefined} isSkeleton={isSkeleton} text={title} />
+                <Typography.Base weight="medium" truncate anatPart={showAnatomy ? "Typography.Base" : undefined} isSkeleton={isSkeleton} text={title} />
                 {isSkeleton ? (
                     // `List.Meta` (the scaffold the live branch uses here) has no `isSkeleton`
                     // yet and sits outside this round's boundary — CardBody calls that scaffold
                     // DIRECTLY so it builds ONE shimmer bar in place of the meta/subtitle row
                     // (the real shape always has EXACTLY ONE of the two) using atom `Typography.Base`.
-                    <Typography.Base size="xs" color="muted" isSkeleton className="w-1/2" anatPart={showAnatomy ? "Skeleton.Meta" : undefined} />
+                    <Typography.Base size="xs" color="muted" isSkeleton className="w-1/2" anatPart={showAnatomy ? "Typography.Base" : undefined} />
                 ) : meta?.length || timeLeft ? (
                     <List.Meta
                         items={meta ?? []}
@@ -157,7 +157,7 @@ const CardBody = ({
                         }
                     />
                 ) : subtitle ? (
-                    <Typography.Base size="xs" color="muted" truncate anatPart={showAnatomy ? "Subtitle" : undefined} text={subtitle} />
+                    <Typography.Base size="xs" color="muted" truncate anatPart={showAnatomy ? "Typography.Base" : undefined} text={subtitle} />
                 ) : null}
             </Stack.V>
         </Stack.H>
@@ -169,7 +169,7 @@ const CardBody = ({
             // `ProgressMeter` (scaffold) has no `isSkeleton` yet and sits outside this
             // round's boundary — CardBody calls that scaffold directly so it builds a
             // track shimmer bar matching the real track height (`h-1`, see `ProgressMeter.tsx`).
-            <HeroSkeleton className="h-1 w-full rounded-full" data-anat-part={showAnatomy ? "ProgressMeter" : undefined} />
+            <HeroSkeleton className="h-1 w-full rounded-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
         ) : (
             <ProgressMeter value={value} max={max} anatPart={showAnatomy ? "ProgressMeter" : undefined} />
         )}
@@ -190,7 +190,7 @@ const ContinueCardHero = (props: ContinueCardHeroProps) => {
         <SurfaceCard.Base
             isHighlight
             isSkeleton={isSkeleton}
-            anatPart={anatPart ?? (showAnatomy ? "SurfaceCard" : undefined)}
+            anatPart={anatPart ?? (showAnatomy ? "SurfaceCard.Base" : undefined)}
             contentClassName={cn("relative flex flex-col gap-3 overflow-hidden", className)}
         >
             <CardBody
@@ -208,7 +208,7 @@ const ContinueCardHero = (props: ContinueCardHeroProps) => {
                         suffixIcon={ArrowRightIcon}
                         iconSlide
                         onPress={onPress}
-                        anatPart={showAnatomy ? "Button" : undefined}
+                        anatPart={showAnatomy ? "Button.Base" : undefined}
                         className="w-fit shrink-0"
                     />
                 }
@@ -229,7 +229,7 @@ const ContinueCardItem = (props: ContinueCardItemProps) => {
     return (
         <SurfaceCard.Base
             isSkeleton={isSkeleton}
-            anatPart={anatPart ?? (showAnatomy ? "SurfaceCard" : undefined)}
+            anatPart={anatPart ?? (showAnatomy ? "SurfaceCard.Base" : undefined)}
             contentClassName={cn("relative flex flex-col gap-3 overflow-hidden", className)}
         >
             <CardBody
@@ -240,14 +240,16 @@ const ContinueCardItem = (props: ContinueCardItemProps) => {
                         // round's boundary — `.Item` calls that atom DIRECTLY so it builds a
                         // text shimmer bar matching the "Tiếp tục" label's size (`text-sm`, see
                         // `LinkSeeMore.tsx`) instead of branching off to build a whole fake link.
-                        <span data-anat-part={showAnatomy ? "SeeMoreLink" : undefined}>
-                            <HeroSkeleton className="h-[14px] w-20 rounded" />
+                        // The tag sits on the REAL heroui `Skeleton` element itself (not the
+                        // wrapping span) — same convention as the progress-bar mirror above.
+                        <span>
+                            <HeroSkeleton className="h-[14px] w-20 rounded" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
                         </span>
                     ) : (
                         <AtomLink.SeeMore
                             href={href}
                             onPress={onPress}
-                            anatPart={showAnatomy ? "SeeMoreLink" : undefined}
+                            anatPart={showAnatomy ? "Link.SeeMore" : undefined}
                             label={CTA_LABEL}
                         />
                     )

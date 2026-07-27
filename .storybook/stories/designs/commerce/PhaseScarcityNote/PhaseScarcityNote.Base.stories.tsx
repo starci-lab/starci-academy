@@ -32,21 +32,19 @@ type Story = StoryObj<typeof PhaseScarcityNote.Base>
 const TYPOGRAPHY_STORY = "atoms-text-typography-typography-base--plain"
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    // ⭐ 2026-07-27: this line is now built with the layouts tier's `Cluster` FRAME
+    // ⭐ 2026-07-27: this line is now built with the layouts tier's `Cluster.Base` FRAME
     // (no more hand-typed `<div className="flex flex-wrap gap-2">`), so the frame must
     // SHOW UP in the tree — using a frame the panel can't see leaves the reader thinking
     // this is still a hand-rolled div.
-    Cluster: { tier: "frame", role: "a ONE-TRACK frame that wraps on its own — `gap` is pinned to the §10 scale instead of a hand-typed class", storyId: "frames-cluster-cluster-base--default" },
-    // ⚠️ The panel only accepts a part with a REAL `storyId` (§11a whitelist) — the three
+    "Cluster.Base": { tier: "frame", role: "a ONE-TRACK frame that wraps on its own and draws its own `·` separator — `gap` is pinned to the §10 scale instead of a hand-typed class", storyId: "frames-cluster-cluster-base--default" },
+    // ⚠️ The panel only accepts a part with a REAL `storyId` (§11a whitelist) — the two
     // text lines below used to declare a role but were MISSING `storyId`, so they never
     // made it into the tree. They're built by THIS component itself (not a child's guts)
     // ⇒ per §11a.1 they must be declared.
     // `WarningCircleIcon` has NO `storyId`: it's a Phosphor glyph, not a component of the
     // system — there's no story to jump to, so standing outside the tree is correct.
     WarningCircleIcon: { tier: "atom", role: "warning mark — opens the line" },
-    SeatCountLine: { tier: "atom", role: "the REQUIRED clause: N seats left at the {phase} price", storyId: TYPOGRAPHY_STORY },
-    Separator: { tier: "atom", role: "the · separating the two clauses", storyId: TYPOGRAPHY_STORY },
-    PriceRiseClause: { tier: "atom", role: "the OPTIONAL clause: what the price rises to afterwards", storyId: TYPOGRAPHY_STORY },
+    "Typography.Base": { tier: "atom", role: "one of this line's own clauses — the REQUIRED \"N seats left at the {phase} price\", or the OPTIONAL \"price rises to\" clause that follows it", storyId: TYPOGRAPHY_STORY },
 }
 
 /**

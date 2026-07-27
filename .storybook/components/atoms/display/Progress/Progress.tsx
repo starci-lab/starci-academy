@@ -78,8 +78,8 @@ const ProgressBar = ({
             size={size}
             className={cn("w-full", className)}
         >
-            <HeroProgressBar.Track data-anat-part={showAnatomy ? "Track" : undefined}>
-                <HeroProgressBar.Fill data-anat-part={showAnatomy ? "Fill" : undefined} />
+            <HeroProgressBar.Track data-anat-part={showAnatomy ? "ProgressBar.Track" : undefined}>
+                <HeroProgressBar.Fill data-anat-part={showAnatomy ? "ProgressBar.Fill" : undefined} />
             </HeroProgressBar.Track>
         </HeroProgressBar>
     )
@@ -110,9 +110,9 @@ const ProgressCircle = ({
             size={size}
             className={cn(className)}
         >
-            <HeroProgressCircle.Track data-anat-part={showAnatomy ? "Track" : undefined}>
+            <HeroProgressCircle.Track data-anat-part={showAnatomy ? "ProgressCircle.Track" : undefined}>
                 <HeroProgressCircle.TrackCircle />
-                <HeroProgressCircle.FillCircle data-anat-part={showAnatomy ? "Fill" : undefined} />
+                <HeroProgressCircle.FillCircle data-anat-part={showAnatomy ? "ProgressCircle.FillCircle" : undefined} />
             </HeroProgressCircle.Track>
         </HeroProgressCircle>
     )
@@ -159,8 +159,8 @@ const Meter = ({
     }
     return (
         <HeroMeter aria-label={ariaLabel} value={value} maxValue={max} color={color} size={size} className={cn("w-full", className)}>
-            <HeroMeter.Track data-anat-part={showAnatomy ? "Track" : undefined}>
-                <HeroMeter.Fill data-anat-part={showAnatomy ? "Fill" : undefined} />
+            <HeroMeter.Track data-anat-part={showAnatomy ? "Meter.Track" : undefined}>
+                <HeroMeter.Fill data-anat-part={showAnatomy ? "Meter.Fill" : undefined} />
             </HeroMeter.Track>
         </HeroMeter>
     )

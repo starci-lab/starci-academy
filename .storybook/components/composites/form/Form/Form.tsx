@@ -175,11 +175,11 @@ const Section = ({
         <section className={cn("flex min-w-0 flex-col", GAP_CLASS[gap], className)}>
             {/* tight gap-1: title ↔ description là một CẶP, không phải hai vùng (§10b). */}
             <div className="flex min-w-0 flex-col gap-1" data-anat-part={showAnatomy ? "Header" : undefined}>
-                <span data-anat-part={showAnatomy ? "Title" : undefined}>
+                <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
                     <Typography.Base size="sm" text={title} weight="medium" />
                 </span>
                 {description != null ? (
-                    <span data-anat-part={showAnatomy ? "Description" : undefined}>
+                    <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
                         <Typography.Base size="xs" text={description} color="muted" />
                     </span>
                 ) : null}

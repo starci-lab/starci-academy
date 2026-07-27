@@ -29,7 +29,7 @@ export const PARTS: Array<AnatomyNode> = [
     // page out — `Container` (reading width + page padding) and `Stack.V` (rhythm
     // between blocks) were invisible even though they decide the entire page frame.
     {
-        name: "Container",
+        name: "Container.Base",
         tier: "frame",
         role: "reading width + page padding — `size=\"md\"` for a text column; `padding` is pinned to the §10 scale",
         storyId: "frames-container-container-base--default",

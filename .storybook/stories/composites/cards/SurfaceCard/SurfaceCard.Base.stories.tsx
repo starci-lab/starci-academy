@@ -64,7 +64,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  * `storyId` to jump to.
  */
 const DESCRIPTION_ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Description: {
+    "Typography.Base": {
         tier: "atom",
         role: "the caption below Content, built by the frame from Typography.Base (size xs, muted).",
         storyId: "atoms-text-typography-typography-base--plain",

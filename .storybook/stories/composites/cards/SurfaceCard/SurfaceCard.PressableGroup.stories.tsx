@@ -77,22 +77,26 @@ const profileItems: Array<SurfaceCardPressableGroupItem> = MENTORS.map((m) => ({
 const shell = (node: ReactNode) => <div className="p-8">{node}</div>
 
 /**
- * Live grid leaf: each cell is a REPEATED `Item` — a `SurfaceCard.Pressable` whose
- * `content` the caller composes freely (a ProfileCard here). `Item` HAS its own story
+ * Live grid leaf: each cell is a REPEATED `SurfaceCard.Pressable` whose `content`
+ * the caller composes freely (a ProfileCard here). It HAS its own story
  * (`SurfaceCard.Pressable/Default`), so it declares `storyId` to jump to it.
+ *
+ * 2026-07-27: the node's name changed from the role label `"Item"` to the real
+ * component being rendered, `"SurfaceCard.Pressable"` — same reasoning applies to
+ * `"Grid"` → `"Grid.Base"` below, the actual frame this wrapper builds.
  *
  * 2026-07-26 (teacher): switched from a hand-written `parts: Array<AnatomyNode>` array
  * to the `annotate: Record<string, AnatomyAnnotation>` table — the tree structure is
- * now inferred from the DOM (`data-anat-part="Item"` attached by the story itself
- * below), and the hand-declared part is now only the WHY.
+ * now inferred from the DOM (`data-anat-part` attached by the story itself below),
+ * and the hand-declared part is now only the WHY.
  */
 const ITEM_ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Item: {
+    "SurfaceCard.Pressable": {
         tier: "composite",
         role: "SurfaceCard.Pressable repeated once per entry, with its own story at SurfaceCard.Pressable Default.",
         storyId: "composites-cards-surfacecard-surfacecard-pressable--default",
     },
-    Grid: {
+    "Grid.Base": {
         tier: "frame",
         role: "the responsive grid the group lays its cells on, built from Grid.Base.",
         storyId: "frames-grid-grid-base--default",
@@ -102,11 +106,11 @@ const ITEM_ANNOTATE: Record<string, AnatomyAnnotation> = {
 /**
  * Loading-only dep: the skeleton mirror tile has no story of its own (an internal
  * helper), so it stays undeclared as before — but the `Avatar.Base` it renders DOES
- * have a real story, and Avatar has no `anatPart` of its own to self-name, so the
- * frame wraps it in a named "Avatar" node.
+ * have a real story, and it has no `anatPart` of its own to self-name, so the frame
+ * wraps it in a node named after the real component, `"Avatar.Base"`.
  */
 const SKELETON_ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Avatar: {
+    "Avatar.Base": {
         tier: "atom",
         role: "the leading avatar mirror inside each generic skeleton tile.",
         storyId: "atoms-display-avatar-avatar-base--default",

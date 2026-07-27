@@ -7,7 +7,7 @@ import type { ReactNode } from "react"
 // LabeledCard is superseded by SurfaceCard (label OUTSIDE the card + bordered +
 // contentClassName) — the local SurfaceCard port stands in for the question /
 // answer frames faithfully.
-import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**

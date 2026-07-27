@@ -14,7 +14,7 @@ import {
     cn,
     Skeleton as HeroSkeleton,
 } from "@heroui/react"
-import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
 import { PriceTag } from "@sb-components/designs/commerce/PriceTag/PriceTag"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"

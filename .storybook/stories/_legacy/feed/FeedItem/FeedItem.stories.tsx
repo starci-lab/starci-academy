@@ -44,18 +44,18 @@ const BASE_PARTS: Array<AnatomyNode> = [
         tier: "design",
         role: "slot leading — avatar + badge loại hoạt động",
         children: [
-            { name: "UserAvatar", tier: "primitive", role: "avatar nền (ảnh/initials)" },
+            { name: "UserAvatar", tier: "composite", role: "avatar nền (ảnh/initials)" },
         ],
     },
     {
         name: "Typography",
-        tier: "primitive",
+        tier: "composite",
         role: "câu action — bọc children",
         children: [
             { name: "EntityLink", tier: "design", role: "mốc thực thể bấm được, dựng trong câu action" },
         ],
     },
-    { name: "Typography", tier: "primitive", role: "timestamp muted" },
+    { name: "Typography", tier: "composite", role: "timestamp muted" },
 ]
 
 // REACTION leaf: same chrome + a ReactionBar in the footer slot (a sibling of the text column).
@@ -65,18 +65,18 @@ const REACTION_PARTS: Array<AnatomyNode> = [
         tier: "design",
         role: "slot leading — avatar + badge loại hoạt động",
         children: [
-            { name: "UserAvatar", tier: "primitive", role: "avatar nền (ảnh/initials)" },
+            { name: "UserAvatar", tier: "composite", role: "avatar nền (ảnh/initials)" },
         ],
     },
     {
         name: "Typography",
-        tier: "primitive",
+        tier: "composite",
         role: "câu action — bọc children",
         children: [
             { name: "EntityLink", tier: "design", role: "mốc thực thể bấm được, dựng trong câu action" },
         ],
     },
-    { name: "Typography", tier: "primitive", role: "timestamp muted" },
+    { name: "Typography", tier: "composite", role: "timestamp muted" },
     { name: "ReactionBar", tier: "design", role: "slot footer — thả cảm xúc" },
 ]
 
@@ -84,8 +84,8 @@ const REACTION_PARTS: Array<AnatomyNode> = [
 // FeedItem STILL directly renders its own two Typography (action + timestamp); only
 // the leading slot and the nested EntityLink are absent for this leaf.
 const TEXT_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "câu action — text thuần, không mốc thực thể" },
-    { name: "Typography", tier: "primitive", role: "timestamp muted" },
+    { name: "Typography", tier: "composite", role: "câu action — text thuần, không mốc thực thể" },
+    { name: "Typography", tier: "composite", role: "timestamp muted" },
 ]
 
 export const Default: Story = {

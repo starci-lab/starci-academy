@@ -1,6 +1,6 @@
 import React from "react"
 import { ArrowRightIcon, CardsIcon, MicrophoneStageIcon, TrophyIcon } from "@phosphor-icons/react"
-import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────

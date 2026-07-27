@@ -30,14 +30,14 @@ const shell = (node: ReactNode) => <div className="p-8"><div className="max-w-md
 
 // Selected case IS a sample → the pill row + the IOExampleCard detail pane.
 const SAMPLE_PARTS: Array<AnatomyNode> = [
-    { name: "Div.Pills", tier: "primitive", role: "wrap pill chọn case, mỗi pill mang glyph ✓/✕ + nhãn" },
+    { name: "Div.Pills", tier: "composite", role: "wrap pill chọn case, mỗi pill mang glyph ✓/✕ + nhãn" },
     { name: "IOExampleCard", tier: "design", role: "chi tiết input · expected · got của case đang chọn" },
 ]
 
 // Selected case is HIDDEN (non-sample) → the pill row + a muted note instead of IO.
 const HIDDEN_PARTS: Array<AnatomyNode> = [
-    { name: "Div.Pills", tier: "primitive", role: "wrap pill chọn case, mỗi pill mang glyph ✓/✕ + nhãn" },
-    { name: "Typography.HiddenNote", tier: "primitive", role: "ghi chú mờ — case ẩn không lộ IO" },
+    { name: "Div.Pills", tier: "composite", role: "wrap pill chọn case, mỗi pill mang glyph ✓/✕ + nhãn" },
+    { name: "Typography.HiddenNote", tier: "composite", role: "ghi chú mờ — case ẩn không lộ IO" },
 ]
 
 /** All cases pass — pills tint success, the first is selected showing its sample IO. */
@@ -123,8 +123,8 @@ export const HiddenCase: Story = {
 // this leaf mirrors the layout tree directly in the story (parts tagged here,
 // not inside TestCaseResultGrid.tsx).
 const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Div.PillsSkeleton", tier: "primitive", role: "3 vạch skeleton mirror pill selector" },
-    { name: "Div.IOFrameSkeleton", tier: "primitive", role: "khung IOExampleCard mirror 2 hàng nhãn/giá trị" },
+    { name: "Div.PillsSkeleton", tier: "composite", role: "3 vạch skeleton mirror pill selector" },
+    { name: "Div.IOFrameSkeleton", tier: "composite", role: "khung IOExampleCard mirror 2 hàng nhãn/giá trị" },
 ]
 
 export const SkeletonLoading: Story = {

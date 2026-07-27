@@ -56,7 +56,7 @@ const FILE_HEADER: AnatomyNode = {
     tier: "design",
     role: "header bar border-b bg-default px-4 py-2 — chỉ render khi có prop filename",
     children: [
-        { name: "Typography.FileName", tier: "primitive", role: "tên file (font-mono body-sm medium)" },
+        { name: "Typography.FileName", tier: "composite", role: "tên file (font-mono body-sm medium)" },
     ],
 }
 

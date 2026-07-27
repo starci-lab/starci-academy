@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import React, { useState } from "react"
 import { ActivityFeed, ActivityType, type QueryMyFeedItemData } from "@sb-components/_legacy/blocks/feed/ActivityFeed/ActivityFeed"
 import { ReactionType } from "@sb-components/_legacy/designs/feed/ReactionBar/ReactionBar"
-import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
-import { Feedback } from "@sb-components/layouts/feedback/Feedback/Feedback"
+import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { Feedback } from "@sb-components/composites/feedback/Feedback/Feedback"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
@@ -90,12 +90,12 @@ const FEED_PARTS: Array<AnatomyNode> = [
         children: [
             {
                 name: "SurfaceListCard",
-                tier: "primitive",
+                tier: "composite",
                 role: "surface gom các hàng của một ngày (shadow, hoặc viền khi bordered)",
                 children: [
                     {
                         name: "SurfaceListCardItem",
-                        tier: "primitive",
+                        tier: "composite",
                         role: "ô chứa một hàng hoạt động, kẻ ngăn giữa các hàng",
                         children: [
                             {
@@ -108,7 +108,7 @@ const FEED_PARTS: Array<AnatomyNode> = [
                                         tier: "design",
                                         role: "leading — avatar + badge loại hoạt động",
                                         children: [
-                                            { name: "UserAvatar", tier: "primitive", role: "avatar nền (ảnh/initials)" },
+                                            { name: "UserAvatar", tier: "composite", role: "avatar nền (ảnh/initials)" },
                                         ],
                                     },
                                     { name: "EntityLink", tier: "design", role: "actor + target bấm được, dựng trong câu (2 thực thể)" },
@@ -131,7 +131,7 @@ const FEED_PARTS: Array<AnatomyNode> = [
 const EMPTY_PARTS: Array<AnatomyNode> = [
     {
         name: "Feedback.Empty",
-        tier: "primitive",
+        tier: "composite",
         role: "trạng thái rỗng do FEATURE dựng (\"Chưa có hoạt động nào\")",
         state: "empty",
     },
@@ -141,23 +141,23 @@ const EMPTY_PARTS: Array<AnatomyNode> = [
 // SurfaceListCard whose SurfaceListCardItem rows mirror each FeedItem (avatar circle
 // + sentence bar + timestamp bar + footer pill). All parts are Skeleton primitives.
 const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton", tier: "primitive", role: "eyebrow ngày (mirror DayHeaderSection)", state: "skeleton" },
+    { name: "Skeleton", tier: "composite", role: "eyebrow ngày (mirror DayHeaderSection)", state: "skeleton" },
     {
         name: "SurfaceListCard",
-        tier: "primitive",
+        tier: "composite",
         role: "surface gom hàng (mirror)",
         state: "skeleton",
         children: [
             {
                 name: "SurfaceListCardItem",
-                tier: "primitive",
+                tier: "composite",
                 role: "ô một hàng (mirror), lặp 3 lần",
                 state: "skeleton",
                 children: [
-                    { name: "Skeleton", tier: "primitive", role: "mirror ActivityAvatar/UserAvatar" },
-                    { name: "Skeleton", tier: "primitive", role: "mirror câu (body-sm)" },
-                    { name: "Skeleton", tier: "primitive", role: "mirror thời gian (body-xs)" },
-                    { name: "Skeleton", tier: "primitive", role: "mirror footer ReactionBar (pill)" },
+                    { name: "Skeleton", tier: "composite", role: "mirror ActivityAvatar/UserAvatar" },
+                    { name: "Skeleton", tier: "composite", role: "mirror câu (body-sm)" },
+                    { name: "Skeleton", tier: "composite", role: "mirror thời gian (body-xs)" },
+                    { name: "Skeleton", tier: "composite", role: "mirror footer ReactionBar (pill)" },
                 ],
             },
         ],

@@ -37,30 +37,30 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 // plain text echo) and ReactionBar (a composed sub-block) stay. Shared by every
 // leaf that renders this exact shape.
 const BASE_PARTS: Array<AnatomyNode> = [
-    { name: "UserAvatar", tier: "primitive", role: "avatar tác giả bình luận" },
-    { name: "Typography.Name", tier: "primitive", role: "tên hiển thị tác giả (truncate)" },
-    { name: "Typography.Time", tier: "primitive", role: "thời gian tương đối, muted" },
-    { name: "MarkdownContent", tier: "primitive", role: "thân bình luận (compact, [&_p]:m-0)" },
+    { name: "UserAvatar", tier: "composite", role: "avatar tác giả bình luận" },
+    { name: "Typography.Name", tier: "composite", role: "tên hiển thị tác giả (truncate)" },
+    { name: "Typography.Time", tier: "composite", role: "thời gian tương đối, muted" },
+    { name: "MarkdownContent", tier: "composite", role: "thân bình luận (compact, [&_p]:m-0)" },
     { name: "ReactionBar", tier: "design", role: "thả cảm xúc cho bình luận" },
 ]
 
 // Actions leaf: base + the caller-supplied actions slot beside the reaction bar
 // in the footer row.
 const ACTIONS_PARTS: Array<AnatomyNode> = [
-    { name: "UserAvatar", tier: "primitive", role: "avatar tác giả bình luận" },
-    { name: "Typography.Name", tier: "primitive", role: "tên hiển thị tác giả (truncate)" },
-    { name: "Typography.Time", tier: "primitive", role: "thời gian tương đối, muted" },
-    { name: "MarkdownContent", tier: "primitive", role: "thân bình luận (compact, [&_p]:m-0)" },
+    { name: "UserAvatar", tier: "composite", role: "avatar tác giả bình luận" },
+    { name: "Typography.Name", tier: "composite", role: "tên hiển thị tác giả (truncate)" },
+    { name: "Typography.Time", tier: "composite", role: "thời gian tương đối, muted" },
+    { name: "MarkdownContent", tier: "composite", role: "thân bình luận (compact, [&_p]:m-0)" },
     { name: "ReactionBar", tier: "design", role: "thả cảm xúc cho bình luận" },
-    { name: "actions", tier: "primitive", role: "slot hành động do caller cấp (nút Trả lời)" },
+    { name: "actions", tier: "composite", role: "slot hành động do caller cấp (nút Trả lời)" },
 ]
 
 // Read-only + zero reactions: ReactionBar returns null, so it drops out entirely.
 const NO_REACTION_PARTS: Array<AnatomyNode> = [
-    { name: "UserAvatar", tier: "primitive", role: "avatar tác giả bình luận" },
-    { name: "Typography.Name", tier: "primitive", role: "tên hiển thị tác giả (truncate)" },
-    { name: "Typography.Time", tier: "primitive", role: "thời gian tương đối, muted" },
-    { name: "MarkdownContent", tier: "primitive", role: "thân bình luận (compact, [&_p]:m-0)" },
+    { name: "UserAvatar", tier: "composite", role: "avatar tác giả bình luận" },
+    { name: "Typography.Name", tier: "composite", role: "tên hiển thị tác giả (truncate)" },
+    { name: "Typography.Time", tier: "composite", role: "thời gian tương đối, muted" },
+    { name: "MarkdownContent", tier: "composite", role: "thân bình luận (compact, [&_p]:m-0)" },
 ]
 
 /** Wrapper owning local state, simulating the real react flow. */

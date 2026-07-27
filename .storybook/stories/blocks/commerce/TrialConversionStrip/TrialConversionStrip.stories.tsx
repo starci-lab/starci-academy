@@ -51,9 +51,9 @@ const SAMPLE_PRICE: TrialConversionStripPrice = {
 // and the tree must SAY so, otherwise the reader still thinks this is a hand-rolled div.
 const SURFACE: AnatomyNode = {
     name: "SurfaceCard",
-    tier: "primitive",
+    tier: "composite",
     role: "card face — radius/shadow/`padding` (default 3, matching the card `p-3` rule) comes from the scaffold, not hand-rolled",
-    storyId: "layouts-cards-surfacecard-surfacecard-base--default",
+    storyId: "composites-cards-surfacecard-surfacecard-base--default",
 }
 // ⚠️ TRIED `Split` and it was WRONG: its contract is "the `start` side is allowed to
 // SHRINK" ⇒ when tight it SQUEEZES the price column and the −33% chip drops to a new
@@ -63,18 +63,18 @@ const SURFACE: AnatomyNode = {
 // matching names would merge into one.
 const PRICE_ROW: AnatomyNode = {
     name: "Stack.H.PriceRow",
-    tier: "primitive",
+    tier: "frame",
     role: "price ↔ CTA row — `wrap` so the BUTTON drops to a new line when tight, the price column never gets squeezed",
-    storyId: "layouts-layout-stack-stack-h--default",
+    storyId: "frames-stack-stack-h--default",
 }
 
 const HEADER_PARTS: Array<AnatomyNode> = [
     { name: "IconTile", tier: "atom", role: "the lock glyph in its tinted tile — accent tone, sm (40px)", storyId: "atoms-display-icontile-icontile-base--default" },
     {
         name: "TitledText",
-        tier: "primitive",
+        tier: "composite",
         role: "the title↔description pair as ONE unit — it owns the type scale (title sm medium, subtitle xs muted)",
-        storyId: "layouts-texts-titledtext--row",
+        storyId: "composites-texts-titledtext--row",
     },
 ]
 
@@ -89,15 +89,15 @@ const framed = (priceSide: Array<AnatomyNode>): Array<AnatomyNode> => [
         children: [
             {
                 name: "Stack.V",
-                tier: "primitive",
+                tier: "frame",
                 role: "column inside the card — `gap-6` seam between the lead cluster and the price block (replaces the removed `border-t`)",
-                storyId: "layouts-layout-stack-stack-v--default",
+                storyId: "frames-stack-stack-v--default",
                 children: [
                     {
                         name: "Stack.H",
-                        tier: "primitive",
+                        tier: "frame",
                         role: "lead row — icon ↔ text cluster, center-aligned",
-                        storyId: "layouts-layout-stack-stack-h--default",
+                        storyId: "frames-stack-stack-h--default",
                         children: HEADER_PARTS,
                     },
                     {
@@ -108,9 +108,9 @@ const framed = (priceSide: Array<AnatomyNode>): Array<AnatomyNode> => [
                                 // groups nodes BY NAME, two `Stack.V`s with the same name
                                 // would MERGE into one and misread the tree.
                                 name: "Stack.V.Price",
-                                tier: "primitive",
+                                tier: "frame",
                                 role: "LEFT side of the Split — price column + scarcity line",
-                                storyId: "layouts-layout-stack-stack-v--default",
+                                storyId: "frames-stack-stack-v--default",
                                 children: priceSide,
                             },
                             BUTTON,
@@ -138,7 +138,7 @@ const LOADED_PARTS: Array<AnatomyNode> = framed([
     // text line vanished from the tree even though it still rendered, while its four
     // internal spans leaked out as separate siblings.
     { name: "PhaseScarcityNote", tier: "design", role: "seats left in the current phase + the price it rises to", storyId: "designs-commerce-phasescarcitynote-phasescarcitynote-base--default" },
-    { name: "Button", tier: "primitive", role: "CTA to unlock the whole course", storyId: "atoms-buttons-button-button-base--default" },
+    { name: "Button", tier: "composite", role: "CTA to unlock the whole course", storyId: "atoms-buttons-button-button-base--default" },
 ])
 
 /**

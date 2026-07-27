@@ -37,9 +37,9 @@ const SITE_PREVIEW_PARTS: Array<AnatomyNode> = [
         tier: "design",
         role: "header trên cùng (border dưới): cụm brand+menu bên trái + nút Đăng ký bên phải",
         children: [
-            { name: "Brand", tier: "primitive", role: "chấm accent + chữ StarCi" },
-            { name: "Menu", tier: "primitive", role: "Khóa học · Lộ trình · Bảng giá (ẩn dưới @app-sm)" },
-            { name: "SignUpButton", tier: "primitive", role: "pill accent (span rounded-full, không phải Button thật)" },
+            { name: "Brand", tier: "composite", role: "chấm accent + chữ StarCi" },
+            { name: "Menu", tier: "composite", role: "Khóa học · Lộ trình · Bảng giá (ẩn dưới @app-sm)" },
+            { name: "SignUpButton", tier: "composite", role: "pill accent (span rounded-full, không phải Button thật)" },
         ],
     },
     {
@@ -54,18 +54,18 @@ const SITE_PREVIEW_PARTS: Array<AnatomyNode> = [
                 children: [
                     {
                         name: "TopicGroup",
-                        tier: "primitive",
+                        tier: "composite",
                         role: "label Chủ đề + 3 FilterRow (Fullstack on)",
                         children: [
-                            { name: "FilterRow", tier: "primitive", role: "1 dòng lọc: ô tick + nhãn (checked = viền/nền accent + CheckCircleIcon)" },
+                            { name: "FilterRow", tier: "composite", role: "1 dòng lọc: ô tick + nhãn (checked = viền/nền accent + CheckCircleIcon)" },
                         ],
                     },
                     {
                         name: "FormatGroup",
-                        tier: "primitive",
+                        tier: "composite",
                         role: "label Hình thức + 2 FilterRow (Tự học on)",
                         children: [
-                            { name: "FilterRow", tier: "primitive", role: "1 dòng lọc: ô tick + nhãn (checked = viền/nền accent + CheckCircleIcon)" },
+                            { name: "FilterRow", tier: "composite", role: "1 dòng lọc: ô tick + nhãn (checked = viền/nền accent + CheckCircleIcon)" },
                         ],
                     },
                 ],
@@ -80,17 +80,17 @@ const SITE_PREVIEW_PARTS: Array<AnatomyNode> = [
                         tier: "design",
                         role: "1 tile khoá (border rounded): tile initial + cụm thông tin + giá",
                         children: [
-                            { name: "InitialTile", tier: "primitive", role: "ô vuông chữ viết tắt (tone accent/success/warning)" },
+                            { name: "InitialTile", tier: "composite", role: "ô vuông chữ viết tắt (tone accent/success/warning)" },
                             {
                                 name: "InfoCluster",
-                                tier: "primitive",
+                                tier: "composite",
                                 role: "cột giữa: tên khoá + dòng rating/level",
                                 children: [
-                                    { name: "CourseName", tier: "primitive", role: "tên + CheckCircleIcon (verified, success)" },
-                                    { name: "RatingMeta", tier: "primitive", role: "StarIcon (fill, warning) + rating · level" },
+                                    { name: "CourseName", tier: "composite", role: "tên + CheckCircleIcon (verified, success)" },
+                                    { name: "RatingMeta", tier: "composite", role: "StarIcon (fill, warning) + rating · level" },
                                 ],
                             },
-                            { name: "Price", tier: "primitive", role: "giá + dòng phụ / khóa" },
+                            { name: "Price", tier: "composite", role: "giá + dòng phụ / khóa" },
                         ],
                     },
                 ],

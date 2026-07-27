@@ -1,7 +1,7 @@
 import React from "react"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Card, CardContent, cn, Skeleton as HeroSkeleton } from "@heroui/react"
-import { type VerdictBand, verdictBandClassName } from "@sb-components/layouts/cards/verdict-band"
+import { type VerdictBand, verdictBandClassName } from "@sb-components/composites/cards/verdict-band"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**

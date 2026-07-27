@@ -4,7 +4,7 @@ import { Typography } from "@heroui/react"
 import { TrayIcon } from "@phosphor-icons/react"
 import { TruthList } from "@sb-components/_legacy/blocks/marketing/TruthList/TruthList"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
-import { Feedback } from "@sb-components/layouts/feedback/Feedback/Feedback"
+import { Feedback } from "@sb-components/composites/feedback/Feedback/Feedback"
 
 // `Feedback.Empty` nhận icon là COMPONENT ref và tự ép `size-8` (§4/§5) — phosphor
 // `weight="duotone"` không đi kèm được nữa, nên bọc thành component để GIỮ NGUYÊN nét vẽ.
@@ -62,34 +62,34 @@ const typicalTruths = [
 // Reused by every content leaf (single/multi/wrap share this composition).
 const ACCORDION_NODE: AnatomyNode = {
     name: "Accordion",
-    tier: "primitive",
+    tier: "composite",
     role: "variant surface, flush (!rounded-none) — KHÔNG Accordion.Indicator (không caret, thầy chốt)",
     children: [
         {
             name: "Accordion.Item",
-            tier: "primitive",
+            tier: "composite",
             role: "một sự thật = một item bấm mở (lặp theo số truths)",
             children: [
                 {
                     name: "Accordion.Heading",
-                    tier: "primitive",
+                    tier: "composite",
                     role: "hàng tiêu đề bọc trigger",
                     children: [
                         {
                             name: "Accordion.Trigger",
-                            tier: "primitive",
+                            tier: "composite",
                             role: "bấm mở/đóng — hiện câu sự thật (item.truth, type body, weight medium) — hover là affordance (không có mũi tên)",
                         },
                     ],
                 },
                 {
                     name: "Accordion.Panel",
-                    tier: "primitive",
+                    tier: "composite",
                     role: "vùng mở ra khi item active",
                     children: [
                         {
                             name: "Accordion.Body",
-                            tier: "primitive",
+                            tier: "composite",
                             role: "thân câu trả lời — hiện câu trả lời (item.fix, '→ ...', type body-sm, color muted)",
                         },
                     ],
@@ -104,7 +104,7 @@ const ACCORDION_NODE: AnatomyNode = {
 const TRUTHLIST_PARTS: Array<AnatomyNode> = [
     {
         name: "Surface frame",
-        tier: "primitive",
+        tier: "composite",
         role: "div khung ngoài (overflow-hidden rounded-3xl bg-surface shadow-surface) — nền + bo góc + đổ bóng cho cả block",
         children: [ACCORDION_NODE],
     },
@@ -115,13 +115,13 @@ const TRUTHLIST_PARTS: Array<AnatomyNode> = [
 const TRUTHLIST_BYLINE_PARTS: Array<AnatomyNode> = [
     {
         name: "Surface frame",
-        tier: "primitive",
+        tier: "composite",
         role: "div khung ngoài (overflow-hidden rounded-3xl bg-surface shadow-surface) — nền + bo góc + đổ bóng cho cả block",
         children: [
             ACCORDION_NODE,
             {
                 name: "Byline row",
-                tier: "primitive",
+                tier: "composite",
                 role: "div chữ ký cuối surface (border-t border-default, px-5 py-4) — hiện chữ ký tác giả do caller truyền qua prop byline (body-sm, color muted) — chỉ render khi có prop byline",
                 state: "byline",
             },
@@ -135,7 +135,7 @@ const TRUTHLIST_BYLINE_PARTS: Array<AnatomyNode> = [
 const EMPTY_PARTS: Array<AnatomyNode> = [
     {
         name: "Surface frame",
-        tier: "primitive",
+        tier: "composite",
         role: "div khung ngoài (overflow-hidden rounded-3xl bg-surface shadow-surface) — lấp bằng Feedback.Empty thay accordion",
         children: [
             {

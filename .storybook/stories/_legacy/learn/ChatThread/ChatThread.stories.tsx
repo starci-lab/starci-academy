@@ -60,38 +60,38 @@ const ANSWER_MD =
     "**Closure** là hàm “nhớ” được scope nơi nó sinh ra — nó giữ tham chiếu tới biến ngoài ngay cả sau khi hàm cha đã `return`.\n\nMemory leak xảy ra khi closure giữ tham chiếu **sống lâu hơn cần thiết** (ví dụ một listener quên gỡ)."
 
 // ── Anatomy trees per state ──────────────────────────────────────────────────
-const USER_BUBBLE: AnatomyNode = { name: "ChatBubble.User", tier: "primitive", role: "tin nhắn người dùng — canh phải, nền accent-soft" }
+const USER_BUBBLE: AnatomyNode = { name: "ChatBubble.User", tier: "composite", role: "tin nhắn người dùng — canh phải, nền accent-soft" }
 
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "Typography.Suggestion", tier: "primitive", role: "dòng gợi ý khi thread rỗng (muted)" },
-    { name: "Button.Suggestion", tier: "primitive", role: "nút gợi ý / kỹ năng truy hồi (lặp ×N)" },
+    { name: "Typography.Suggestion", tier: "composite", role: "dòng gợi ý khi thread rỗng (muted)" },
+    { name: "Button.Suggestion", tier: "composite", role: "nút gợi ý / kỹ năng truy hồi (lặp ×N)" },
 ]
 
 /** Rỗng — scope="content" (bài học đang mở): hint + cụm 3 nút gợi ý + cụm 2 nút kỹ năng. */
 const EMPTY_CONTENT_SCOPE_PARTS: Array<AnatomyNode> = [
-    { name: "Typography.Suggestion", tier: "primitive", role: "dòng hint scope bài học (muted) — 'Hỏi bất cứ điều gì về nội dung này.'" },
+    { name: "Typography.Suggestion", tier: "composite", role: "dòng hint scope bài học (muted) — 'Hỏi bất cứ điều gì về nội dung này.'" },
     {
         name: "ChipButtonList.Suggestion",
-        tier: "primitive",
+        tier: "composite",
         role: "cụm 3 nút câu hỏi mẫu (tóm tắt / khó nhất / ví dụ) — chỉ hiện khi scope=\"content\", vì chỉ lesson mới có 'bài này' để tóm tắt",
-        children: [{ name: "Button", tier: "primitive", role: "nút gợi ý (lặp ×3)" }],
+        children: [{ name: "Button", tier: "composite", role: "nút gợi ý (lặp ×3)" }],
     },
     {
         name: "ChipButtonList.Skill",
-        tier: "primitive",
+        tier: "composite",
         role: "cụm 2 nút kỹ năng truy hồi (tìm challenges của bài · tìm thẻ ôn của bài)",
-        children: [{ name: "Button", tier: "primitive", role: "nút kỹ năng (lặp ×2)" }],
+        children: [{ name: "Button", tier: "composite", role: "nút kỹ năng (lặp ×2)" }],
     },
 ]
 
 /** Rỗng — scope="course" (chưa mở bài nào): hint khác + KHÔNG có cụm gợi ý + cụm 3 nút kỹ năng. */
 const EMPTY_COURSE_SCOPE_PARTS: Array<AnatomyNode> = [
-    { name: "Typography.Suggestion", tier: "primitive", role: "dòng hint scope khoá (muted) — 'Bạn chưa mở bài nào. Cứ hỏi bất cứ điều gì về cả khoá này.'" },
+    { name: "Typography.Suggestion", tier: "composite", role: "dòng hint scope khoá (muted) — 'Bạn chưa mở bài nào. Cứ hỏi bất cứ điều gì về cả khoá này.'" },
     {
         name: "ChipButtonList.Skill",
-        tier: "primitive",
+        tier: "composite",
         role: "cụm 3 nút kỹ năng (tìm bài học · tìm challenges · tìm thẻ ôn trong khoá) — KHÔNG có cụm gợi ý vì course không có 'bài này' để tóm tắt",
-        children: [{ name: "Button", tier: "primitive", role: "nút kỹ năng (lặp ×3)" }],
+        children: [{ name: "Button", tier: "composite", role: "nút kỹ năng (lặp ×3)" }],
     },
 ]
 
@@ -102,7 +102,7 @@ const SESSION_ERROR_PARTS: Array<AnatomyNode> = [
     USER_BUBBLE,
     {
         name: "ChatBubble.Assistant",
-        tier: "primitive",
+        tier: "composite",
         role: "tin nhắn trợ lý báo tạo phiên thất bại — text THƯỜNG, không phải quota/error state",
         children: [{ name: "MarkdownContent", tier: "block", role: "'⚠️ Không gửi được — không tạo được hội thoại…' render như markdown thường, KHÔNG có CTA nâng cấp hay nút thử lại" }],
     },
@@ -112,7 +112,7 @@ const CONVERSATION_PARTS: Array<AnatomyNode> = [
     USER_BUBBLE,
     {
         name: "ChatBubble.Assistant",
-        tier: "primitive",
+        tier: "composite",
         role: "tin nhắn trợ lý — canh trái",
         children: [{ name: "MarkdownContent", tier: "block", role: "câu trả lời render markdown (đậm/xuống dòng/code)" }],
     },
@@ -122,7 +122,7 @@ const TOOLRESULT_PARTS: Array<AnatomyNode> = [
     USER_BUBBLE,
     {
         name: "ChatBubble.Assistant",
-        tier: "primitive",
+        tier: "composite",
         role: "tin nhắn trợ lý ôm kết quả RAG",
         children: [{ name: "ChatToolResult", tier: "block", role: "kết quả RAG — 1 block (NestedCard + EntityResultRow + SeeMoreLink)" }],
     },
@@ -132,9 +132,9 @@ const THINKING_PARTS: Array<AnatomyNode> = [
     USER_BUBBLE,
     {
         name: "ChatBubble.Assistant",
-        tier: "primitive",
+        tier: "composite",
         role: "tin nhắn trợ lý đang stream",
-        children: [{ name: "Typography.Thinking", tier: "primitive", role: "dòng 'Đang soạn…' (muted) khi content rỗng" }],
+        children: [{ name: "Typography.Thinking", tier: "composite", role: "dòng 'Đang soạn…' (muted) khi content rỗng" }],
     },
 ]
 
@@ -142,11 +142,11 @@ const QUOTA_PARTS: Array<AnatomyNode> = [
     USER_BUBBLE,
     {
         name: "ChatBubble.Assistant",
-        tier: "primitive",
+        tier: "composite",
         role: "tin nhắn trợ lý báo hết quota",
         children: [
             { name: "MarkdownContent", tier: "block", role: "thông báo hết credit (markdown)" },
-            { name: "Button.Upgrade", tier: "primitive", role: "CTA nâng cấp gói AI (primary sm + mũi tên)" },
+            { name: "Button.Upgrade", tier: "composite", role: "CTA nâng cấp gói AI (primary sm + mũi tên)" },
         ],
     },
 ]
@@ -154,7 +154,7 @@ const QUOTA_PARTS: Array<AnatomyNode> = [
 const SKELETON_PARTS: Array<AnatomyNode> = [
     {
         name: "ChatBubble.Skeleton",
-        tier: "primitive",
+        tier: "composite",
         role: "bubble giả mirror hình dạng tin nhắn (user ngắn + assistant nhiều dòng) — lặp khi tải",
         state: "skeleton",
     },
@@ -164,12 +164,12 @@ const ERROR_PARTS: Array<AnatomyNode> = [
     USER_BUBBLE,
     {
         name: "ChatBubble.Assistant",
-        tier: "primitive",
+        tier: "composite",
         role: "tin nhắn trợ lý gặp lỗi — không trả lời được",
         state: "error",
         children: [
-            { name: "InlineIconLabel.Error", tier: "primitive", role: "dòng lỗi (icon cảnh báo + text tone danger)" },
-            { name: "Button.Retry", tier: "primitive", role: "CTA thử lại (secondary sm + icon xoay)" },
+            { name: "InlineIconLabel.Error", tier: "composite", role: "dòng lỗi (icon cảnh báo + text tone danger)" },
+            { name: "Button.Retry", tier: "composite", role: "CTA thử lại (secondary sm + icon xoay)" },
         ],
     },
 ]

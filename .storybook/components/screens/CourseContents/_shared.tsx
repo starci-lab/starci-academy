@@ -30,22 +30,22 @@ export const PARTS: Array<AnatomyNode> = [
     // between blocks) were invisible even though they decide the entire page frame.
     {
         name: "Container",
-        tier: "primitive",
+        tier: "frame",
         role: "reading width + page padding — `size=\"md\"` for a text column; `padding` is pinned to the §10 scale",
-        storyId: "layouts-layout-container-container-base--default",
+        storyId: "frames-container-container-base--default",
     },
     {
         // Different name from the `Stack.V` inside it: the panel groups nodes BY NAME, so a matching name would merge them into one.
         name: "Stack.V.Page",
-        tier: "primitive",
+        tier: "frame",
         role: "rhythm between two REGIONS — `gap=8` separates the course-identity cluster from the content (§10: sections-wide)",
-        storyId: "layouts-layout-stack-stack-v--default",
+        storyId: "frames-stack-stack-v--default",
     },
     {
         name: "Stack.V",
-        tier: "primitive",
+        tier: "frame",
         role: "VERTICAL rhythm between blocks — one seam, one owner (§10a)",
-        storyId: "layouts-layout-stack-stack-v--default",
+        storyId: "frames-stack-stack-v--default",
     },
     {
         // §11a — at the SCREEN tier, only the HIGHEST node: CourseBrief is ONE node (the
@@ -81,7 +81,7 @@ export const PARTS: Array<AnatomyNode> = [
     { name: "KeepGoingPath", tier: "block", role: "lessons of the current module — bordered SurfaceCard.List; each row: state icon · title · reading time · difficulty chip · lock icon", storyId: "blocks-learn-keepgoingpath-keepgoingpath-base--path" },
     // The empty state replaces the whole spine with this frame. It lives in the SAME list:
     // on a content render it simply is not in the DOM, so it cannot reach the tree.
-    { name: "AsyncContent.Empty", tier: "primitive", role: "the course has no contents yet — icon + title + description", storyId: "layouts-async-asynccontent-asynccontent-empty--basic" },
+    { name: "AsyncContent.Empty", tier: "composite", role: "the course has no contents yet — icon + title + description", storyId: "composites-async-asynccontent-asynccontent-empty--basic" },
 ]
 
 /** Args for {@link deviceLeaf}. */

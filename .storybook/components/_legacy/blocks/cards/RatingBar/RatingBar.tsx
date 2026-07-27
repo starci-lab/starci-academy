@@ -3,7 +3,7 @@
 import React from "react"
 import { cn } from "@heroui/react"
 import type { ReactNode } from "react"
-import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 

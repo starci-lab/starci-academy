@@ -33,24 +33,24 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 const MARK_PARTS: Array<AnatomyNode> = [
     {
         name: "Tooltip",
-        tier: "primitive",
+        tier: "composite",
         role: "gốc mark — bọc trigger + nội dung, mở giải thích self-host khi hover/focus (HeroUI base)",
         children: [
             {
                 name: "Tooltip.Trigger",
-                tier: "primitive",
+                tier: "composite",
                 role: "vùng hover/focus inline (aria-label), bọc icon",
                 children: [
                     {
                         name: "CpuIcon",
-                        tier: "primitive",
+                        tier: "composite",
                         role: "icon GPU accent, đánh dấu model chạy trên hạ tầng nội bộ",
                     },
                 ],
             },
             {
                 name: "Tooltip.Content",
-                tier: "primitive",
+                tier: "composite",
                 role: "bong bóng giải thích: model chạy GPU nội bộ StarCi, không gọi API bên ngoài",
             },
         ],

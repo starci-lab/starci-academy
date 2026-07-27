@@ -27,15 +27,15 @@ type Story = StoryObj<typeof SearchBar>
 
 /** Live field: sr-only label + Autocomplete (trigger + suggestions popover) + trailing filter Button. */
 const PARTS_MAIN: Array<AnatomyNode> = [
-    { name: "Label", tier: "primitive", role: "nhãn 'Tìm kiếm' sr-only (a11y)" },
-    { name: "Autocomplete.Trigger", tier: "primitive", role: "ô nhập + giá trị + nút xoá + mũi tên (combobox trigger)" },
-    { name: "Autocomplete.Popover", tier: "primitive", role: "dropdown gợi ý (filter field + ListBox) — không đào sâu ở đây" },
-    { name: "Button", tier: "primitive", role: "nút icon 'Bộ lọc' (trailing suffix)" },
+    { name: "Label", tier: "composite", role: "nhãn 'Tìm kiếm' sr-only (a11y)" },
+    { name: "Autocomplete.Trigger", tier: "composite", role: "ô nhập + giá trị + nút xoá + mũi tên (combobox trigger)" },
+    { name: "Autocomplete.Popover", tier: "composite", role: "dropdown gợi ý (filter field + ListBox) — không đào sâu ở đây" },
+    { name: "Button", tier: "composite", role: "nút icon 'Bộ lọc' (trailing suffix)" },
 ]
 
 /** Loading mirror: one field-box skeleton, no popover/filter button ever renders. */
 const PARTS_SKELETON: Array<AnatomyNode> = [
-    { name: "Skeleton", tier: "primitive", role: "khung ô tìm kiếm (h-10)", state: "skeleton" },
+    { name: "Skeleton", tier: "composite", role: "khung ô tìm kiếm (h-10)", state: "skeleton" },
 ]
 
 /**

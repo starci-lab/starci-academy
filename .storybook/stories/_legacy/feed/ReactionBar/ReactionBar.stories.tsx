@@ -64,7 +64,7 @@ const Controlled = ({
 const INTERACTIVE_PARTS: Array<AnatomyNode> = [
     {
         name: "Button.ReactTrigger",
-        tier: "primitive",
+        tier: "composite",
         role: "nút bấm mở/đóng picker; hiển thị glyph hiện tại (neutral/emoji cảm xúc) + số đếm",
     },
     {
@@ -72,7 +72,7 @@ const INTERACTIVE_PARTS: Array<AnatomyNode> = [
         tier: "design",
         role: "popover 6 emoji (framer-motion), chỉ hiện khi mở — chọn / gỡ cảm xúc",
         children: [
-            { name: "Button.EmojiOption", tier: "primitive", role: "6 nút emoji map từ REACTIONS — bấm để chọn / gỡ", state: "×6" },
+            { name: "Button.EmojiOption", tier: "composite", role: "6 nút emoji map từ REACTIONS — bấm để chọn / gỡ", state: "×6" },
         ],
     },
 ]
@@ -82,8 +82,8 @@ const INTERACTIVE_PARTS: Array<AnatomyNode> = [
 // control here, unlike the interactive trigger) — each gets its own node
 // (§ granularity, same as DeckCard's title/description/count Typography).
 const READONLY_PARTS: Array<AnatomyNode> = [
-    { name: "Span.ViewerEmoji", tier: "primitive", role: "emoji người xem đã chọn trước đó — chỉ khi có myReaction", state: "tuỳ chọn" },
-    { name: "Typography", tier: "primitive", role: "số đếm cảm xúc" },
+    { name: "Span.ViewerEmoji", tier: "composite", role: "emoji người xem đã chọn trước đó — chỉ khi có myReaction", state: "tuỳ chọn" },
+    { name: "Typography", tier: "composite", role: "số đếm cảm xúc" },
 ]
 
 // Read-only + count 0 leaf: the bar returns null, leaving no gap.

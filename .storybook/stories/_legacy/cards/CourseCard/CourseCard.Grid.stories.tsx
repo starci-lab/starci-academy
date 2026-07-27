@@ -43,24 +43,24 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 // secondary "Xem khóa học" in the same secondary-Button slot).
 const DATA_PARTS: Array<AnatomyNode> = [
     {
-        name: "Card", tier: "primitive", role: "khung thẻ rounded-3xl, flex-col overflow-hidden",
+        name: "Card", tier: "composite", role: "khung thẻ rounded-3xl, flex-col overflow-hidden",
         children: [
             {
-                name: "Card.Content", tier: "primitive", role: "vùng trên: cover + tiêu đề/mô tả + value-props (gap-3)",
+                name: "Card.Content", tier: "composite", role: "vùng trên: cover + tiêu đề/mô tả + value-props (gap-3)",
                 children: [
-                    { name: "Typography.Title", tier: "primitive", role: "tiêu đề khóa học (h6, bold, truncate)" },
-                    { name: "Typography.Learners", tier: "primitive", role: "số học viên — meta-count muted (KHÔNG bọc chip)" },
-                    { name: "Typography.Description", tier: "primitive", role: "mô tả khóa học (body-sm, muted, line-clamp-2)" },
+                    { name: "Typography.Title", tier: "composite", role: "tiêu đề khóa học (h6, bold, truncate)" },
+                    { name: "Typography.Learners", tier: "composite", role: "số học viên — meta-count muted (KHÔNG bọc chip)" },
+                    { name: "Typography.Description", tier: "composite", role: "mô tả khóa học (body-sm, muted, line-clamp-2)" },
                     {
                         name: "CrossListCard", tier: "block", role: "value-props (bordered) — tick CHÌM để chữ dẫn (§2)",
                         children: [
-                            { name: "CrossListItem", tier: "primitive", role: "hàng value-prop ×3, mark=check/tone=muted" },
+                            { name: "CrossListItem", tier: "composite", role: "hàng value-prop ×3, mark=check/tone=muted" },
                         ],
                     },
                 ],
             },
             {
-                name: "Card.Footer", tier: "primitive", role: "vùng dưới: giá + USD hint + hàng CTA (items-start)",
+                name: "Card.Footer", tier: "composite", role: "vùng dưới: giá + USD hint + hàng CTA (items-start)",
                 children: [
                     {
                         name: "PriceTag", tier: "block", role: "giá: số giảm bold + gốc gạch ngang + dòng tiết kiệm",
@@ -68,9 +68,9 @@ const DATA_PARTS: Array<AnatomyNode> = [
                             { name: "StatusChip", tier: "design", role: "chip −% — Popover.Trigger mở breakdown giá" },
                         ],
                     },
-                    { name: "Typography.Usd", tier: "primitive", role: "gợi ý giá quy đổi USD (khi thanh toán quốc tế)" },
-                    { name: "Button.Primary", tier: "primitive", role: "CTA chính primary + mũi tên (Xem khóa học / Tiếp tục học)" },
-                    { name: "Button.Secondary", tier: "primitive", role: "CTA phụ secondary (Thêm vào giỏ / Xem khóa học) — KHÔNG mũi tên" },
+                    { name: "Typography.Usd", tier: "composite", role: "gợi ý giá quy đổi USD (khi thanh toán quốc tế)" },
+                    { name: "Button.Primary", tier: "composite", role: "CTA chính primary + mũi tên (Xem khóa học / Tiếp tục học)" },
+                    { name: "Button.Secondary", tier: "composite", role: "CTA phụ secondary (Thêm vào giỏ / Xem khóa học) — KHÔNG mũi tên" },
                 ],
             },
         ],
@@ -84,25 +84,25 @@ const DATA_PARTS: Array<AnatomyNode> = [
 // stay; the cover image itself is CUT (prop-value element, see DATA_PARTS).
 const NO_COVER_PARTS: Array<AnatomyNode> = [
     {
-        name: "Card", tier: "primitive", role: "khung thẻ rounded-3xl, flex-col",
+        name: "Card", tier: "composite", role: "khung thẻ rounded-3xl, flex-col",
         children: [
             {
-                name: "Card.Content", tier: "primitive", role: "vùng trên: cover + tiêu đề/mô tả + value-props",
+                name: "Card.Content", tier: "composite", role: "vùng trên: cover + tiêu đề/mô tả + value-props",
                 children: [
-                    { name: "Typography.FallbackTitle", tier: "primitive", role: "tiêu đề lặp lại TRONG khối gradient dự phòng (không ảnh bìa)" },
-                    { name: "Typography.Title", tier: "primitive", role: "tiêu đề khóa học (h6, bold, truncate)" },
-                    { name: "Typography.Learners", tier: "primitive", role: "số học viên — meta-count muted" },
-                    { name: "Typography.Description", tier: "primitive", role: "mô tả khóa học (body-sm, muted, line-clamp-2)" },
+                    { name: "Typography.FallbackTitle", tier: "composite", role: "tiêu đề lặp lại TRONG khối gradient dự phòng (không ảnh bìa)" },
+                    { name: "Typography.Title", tier: "composite", role: "tiêu đề khóa học (h6, bold, truncate)" },
+                    { name: "Typography.Learners", tier: "composite", role: "số học viên — meta-count muted" },
+                    { name: "Typography.Description", tier: "composite", role: "mô tả khóa học (body-sm, muted, line-clamp-2)" },
                     {
                         name: "CrossListCard", tier: "block", role: "value-props (bordered, tick chìm §2)",
                         children: [
-                            { name: "CrossListItem", tier: "primitive", role: "hàng value-prop ×3, mark=check/tone=muted" },
+                            { name: "CrossListItem", tier: "composite", role: "hàng value-prop ×3, mark=check/tone=muted" },
                         ],
                     },
                 ],
             },
             {
-                name: "Card.Footer", tier: "primitive", role: "vùng dưới: giá + USD hint + CTA",
+                name: "Card.Footer", tier: "composite", role: "vùng dưới: giá + USD hint + CTA",
                 children: [
                     {
                         name: "PriceTag", tier: "block", role: "giá phase hiện tại + gốc gạch ngang",
@@ -110,8 +110,8 @@ const NO_COVER_PARTS: Array<AnatomyNode> = [
                             { name: "StatusChip", tier: "design", role: "chip −% — Popover.Trigger mở breakdown giá" },
                         ],
                     },
-                    { name: "Typography.Usd", tier: "primitive", role: "gợi ý giá quy đổi USD" },
-                    { name: "Button.Primary", tier: "primitive", role: "CTA chính primary (chưa đăng ký, không action → 1 nút)" },
+                    { name: "Typography.Usd", tier: "composite", role: "gợi ý giá quy đổi USD" },
+                    { name: "Button.Primary", tier: "composite", role: "CTA chính primary (chưa đăng ký, không action → 1 nút)" },
                 ],
             },
         ],
@@ -125,28 +125,28 @@ const NO_COVER_PARTS: Array<AnatomyNode> = [
 // stays CUT (prop-value element, see DATA_PARTS).
 const LOADING_PARTS: Array<AnatomyNode> = [
     {
-        name: "Card", tier: "primitive", role: "khung thẻ rounded-3xl, flex-col",
+        name: "Card", tier: "composite", role: "khung thẻ rounded-3xl, flex-col",
         children: [
             {
-                name: "Card.Content", tier: "primitive", role: "vùng trên: cover + tiêu đề/mô tả + value-props",
+                name: "Card.Content", tier: "composite", role: "vùng trên: cover + tiêu đề/mô tả + value-props",
                 children: [
-                    { name: "Typography.Title", tier: "primitive", role: "tiêu đề khóa học (h6, bold, truncate)" },
-                    { name: "Typography.Learners", tier: "primitive", role: "số học viên — meta-count muted" },
-                    { name: "Typography.Description", tier: "primitive", role: "mô tả khóa học (body-sm, muted, line-clamp-2)" },
+                    { name: "Typography.Title", tier: "composite", role: "tiêu đề khóa học (h6, bold, truncate)" },
+                    { name: "Typography.Learners", tier: "composite", role: "số học viên — meta-count muted" },
+                    { name: "Typography.Description", tier: "composite", role: "mô tả khóa học (body-sm, muted, line-clamp-2)" },
                     {
                         name: "CrossListCard", tier: "block", role: "value-props (bordered, tick chìm §2)",
                         children: [
-                            { name: "CrossListItem", tier: "primitive", role: "hàng value-prop ×3, mark=check/tone=muted" },
+                            { name: "CrossListItem", tier: "composite", role: "hàng value-prop ×3, mark=check/tone=muted" },
                         ],
                     },
                 ],
             },
             {
-                name: "Card.Footer", tier: "primitive", role: "vùng dưới: giá(skeleton) + USD hint + CTA",
+                name: "Card.Footer", tier: "composite", role: "vùng dưới: giá(skeleton) + USD hint + CTA",
                 children: [
-                    { name: "Skeleton.Price", tier: "primitive", role: "dòng giá khi loyalty preview đang tải (loyaltyPending) — thay chỗ PriceTag", state: "loading" },
-                    { name: "Typography.Usd", tier: "primitive", role: "gợi ý giá quy đổi USD (không phụ thuộc loyaltyPending)" },
-                    { name: "Button.Primary", tier: "primitive", role: "CTA chính primary (không action → 1 nút)" },
+                    { name: "Skeleton.Price", tier: "composite", role: "dòng giá khi loyalty preview đang tải (loyaltyPending) — thay chỗ PriceTag", state: "loading" },
+                    { name: "Typography.Usd", tier: "composite", role: "gợi ý giá quy đổi USD (không phụ thuộc loyaltyPending)" },
+                    { name: "Button.Primary", tier: "composite", role: "CTA chính primary (không action → 1 nút)" },
                 ],
             },
         ],
@@ -160,19 +160,19 @@ const LOADING_PARTS: Array<AnatomyNode> = [
 // DATA_PARTS); title/description ARE composed Typography nodes (always render).
 const FREE_PARTS: Array<AnatomyNode> = [
     {
-        name: "Card", tier: "primitive", role: "khung thẻ rounded-3xl, flex-col",
+        name: "Card", tier: "composite", role: "khung thẻ rounded-3xl, flex-col",
         children: [
             {
-                name: "Card.Content", tier: "primitive", role: "vùng trên (thu gọn: chỉ cover + tiêu đề/mô tả)",
+                name: "Card.Content", tier: "composite", role: "vùng trên (thu gọn: chỉ cover + tiêu đề/mô tả)",
                 children: [
-                    { name: "Typography.Title", tier: "primitive", role: "tiêu đề khóa học (h6, bold, truncate)" },
-                    { name: "Typography.Description", tier: "primitive", role: "mô tả khóa học (body-sm, muted, line-clamp-2)" },
+                    { name: "Typography.Title", tier: "composite", role: "tiêu đề khóa học (h6, bold, truncate)" },
+                    { name: "Typography.Description", tier: "composite", role: "mô tả khóa học (body-sm, muted, line-clamp-2)" },
                 ],
             },
             {
-                name: "Card.Footer", tier: "primitive", role: "vùng dưới: chỉ CTA (giá rỗng — displayPrice null → <span/>)",
+                name: "Card.Footer", tier: "composite", role: "vùng dưới: chỉ CTA (giá rỗng — displayPrice null → <span/>)",
                 children: [
-                    { name: "Button.Primary", tier: "primitive", role: "CTA chính primary (không giá / value-props / số học viên → 1 nút)" },
+                    { name: "Button.Primary", tier: "composite", role: "CTA chính primary (không giá / value-props / số học viên → 1 nút)" },
                 ],
             },
         ],
@@ -184,23 +184,23 @@ const FREE_PARTS: Array<AnatomyNode> = [
 // box/radius/padding so the grid never jumps. CrossListCard self-skeletons its rows.
 const SKELETON_PARTS: Array<AnatomyNode> = [
     {
-        name: "Card", tier: "primitive", role: "khung mirror rounded-3xl, flex-col (giữ đúng box/radius/padding data)", state: "skeleton",
+        name: "Card", tier: "composite", role: "khung mirror rounded-3xl, flex-col (giữ đúng box/radius/padding data)", state: "skeleton",
         children: [
             {
-                name: "Card.Content", tier: "primitive", role: "vùng trên mirror (gap-3)",
+                name: "Card.Content", tier: "composite", role: "vùng trên mirror (gap-3)",
                 children: [
-                    { name: "Skeleton.Cover", tier: "primitive", role: "khối ảnh bìa 16:9 rounded-2xl", state: "skeleton" },
-                    { name: "Skeleton.Title", tier: "primitive", role: "tiêu đề h6", state: "skeleton" },
-                    { name: "Skeleton.Learners", tier: "primitive", role: "chấm icon tròn + số học viên", state: "skeleton" },
-                    { name: "Skeleton.Description", tier: "primitive", role: "2 dòng mô tả body-sm", state: "skeleton" },
+                    { name: "Skeleton.Cover", tier: "composite", role: "khối ảnh bìa 16:9 rounded-2xl", state: "skeleton" },
+                    { name: "Skeleton.Title", tier: "composite", role: "tiêu đề h6", state: "skeleton" },
+                    { name: "Skeleton.Learners", tier: "composite", role: "chấm icon tròn + số học viên", state: "skeleton" },
+                    { name: "Skeleton.Description", tier: "composite", role: "2 dòng mô tả body-sm", state: "skeleton" },
                     { name: "CrossListCard", tier: "block", role: "value-props tự skeleton (bordered isSkeleton)", state: "skeleton" },
                 ],
             },
             {
-                name: "Card.Footer", tier: "primitive", role: "vùng dưới mirror",
+                name: "Card.Footer", tier: "composite", role: "vùng dưới mirror",
                 children: [
-                    { name: "Skeleton.Price", tier: "primitive", role: "dòng giá", state: "skeleton" },
-                    { name: "Skeleton", tier: "primitive", role: "hàng 2 nút (×2, div flex — không phải ButtonGroup)", state: "skeleton" },
+                    { name: "Skeleton.Price", tier: "composite", role: "dòng giá", state: "skeleton" },
+                    { name: "Skeleton", tier: "composite", role: "hàng 2 nút (×2, div flex — không phải ButtonGroup)", state: "skeleton" },
                 ],
             },
         ],

@@ -1,9 +1,9 @@
 import type { SVGProps } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ContinueCard } from "@sb-components/designs/cards/ContinueCard/ContinueCard"
-import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { WarningIcon } from "@phosphor-icons/react"
-import { Feedback } from "@sb-components/layouts/feedback/Feedback/Feedback"
+import { Feedback } from "@sb-components/composites/feedback/Feedback/Feedback"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
@@ -53,23 +53,23 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 const ITEM_PARTS: Array<AnatomyNode> = [
     {
         name: "SurfaceCard",
-        tier: "primitive",
+        tier: "composite",
         role: "FLAT card surface — holds the info plus the CTA row",
-        storyId: "layouts-cards-surfacecard-surfacecard-base--default",
+        storyId: "composites-cards-surfacecard-surfacecard-base--default",
         children: [
             // ⭐ 2026-07-27: two `layouts`-tier frames are now PRESENT in the tree — before,
             // this cluster was a hand-typed `<div className="flex …">` so the panel had nothing to point at.
             {
                 name: "Stack.H",
-                tier: "primitive",
+                tier: "frame",
                 role: "outer row — one horizontal track (children are ARBITRARY ⇒ `Stack`, not `Cluster`, §13b)",
-                storyId: "layouts-layout-stack-stack-h--default",
+                storyId: "frames-stack-stack-h--default",
                 children: [
                     {
                         name: "Stack.V",
-                        tier: "primitive",
+                        tier: "frame",
                         role: "text column — title on top, meta/subtitle underneath",
-                        storyId: "layouts-layout-stack-stack-v--default",
+                        storyId: "frames-stack-stack-v--default",
                         children: [
                             { name: "Title", tier: "atom", role: "item name — `Typography.Base` medium + truncate", storyId: "atoms-text-typography-typography-base--plain" },
                             { name: "Skeleton.Meta", tier: "atom", role: "mirror bar standing in for the meta row while loading — `Typography.Base isSkeleton`", storyId: "atoms-text-typography-typography-base--plain" },
@@ -87,16 +87,16 @@ const ITEM_PARTS: Array<AnatomyNode> = [
 const ERROR_PARTS: Array<AnatomyNode> = [
     {
         name: "SurfaceCard",
-        tier: "primitive",
+        tier: "composite",
         role: "the very SAME frame — an error must never make the frame disappear",
-        storyId: "layouts-cards-surfacecard-surfacecard-base--default",
+        storyId: "composites-cards-surfacecard-surfacecard-base--default",
         children: [
             {
                 name: "Feedback.Empty",
-                tier: "primitive",
+                tier: "composite",
                 role: "danger tone + icon + description + a Retry button",
                 state: "danger",
-                storyId: "layouts-feedback-feedback-feedback-empty--action",
+                storyId: "composites-feedback-feedback-feedback-empty--action",
                 children: [
                     { name: "Button", tier: "atom", role: "retry button (secondary, inside the `action` prop — built by the STORY, so it is still declared, §11a.1)", storyId: "atoms-buttons-button-button-base--default" },
                 ],

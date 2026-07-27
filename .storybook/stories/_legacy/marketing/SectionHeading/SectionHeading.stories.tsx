@@ -39,34 +39,34 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 // a distinct element the block renders directly.
 const titleRow = (withAnchor: boolean): AnatomyNode => ({
     name: "TitleRow",
-    tier: "primitive",
+    tier: "composite",
     role: "hàng flex (items-center gap-2) bọc tiêu đề" + (withAnchor ? " + anchor \"#\"" : ""),
     children: withAnchor
         ? [
-            { name: "Typography.Heading", tier: "primitive", role: "tiêu đề section (bold)" },
-            { name: "Anchor '#'", tier: "primitive", role: "deep-link \"#\" cạnh tiêu đề (→ #anchorId)" },
+            { name: "Typography.Heading", tier: "composite", role: "tiêu đề section (bold)" },
+            { name: "Anchor '#'", tier: "composite", role: "deep-link \"#\" cạnh tiêu đề (→ #anchorId)" },
         ]
-        : [{ name: "Typography.Heading", tier: "primitive", role: "tiêu đề section (bold)" }],
+        : [{ name: "Typography.Heading", tier: "composite", role: "tiêu đề section (bold)" }],
 })
 
 // FULL — eyebrow + [title row] + intro (the default marketing rhythm). Shared by
 // the centered default leaf and the level-2 hero leaf (same shape, bigger scale).
 const FULL_PARTS: Array<AnatomyNode> = [
-    { name: "StatusChip", tier: "primitive", role: "eyebrow soft accent phía trên tiêu đề", state: "accent" },
+    { name: "StatusChip", tier: "composite", role: "eyebrow soft accent phía trên tiêu đề", state: "accent" },
     titleRow(false),
-    { name: "Typography", tier: "primitive", role: "dòng dẫn mờ dưới tiêu đề (body-sm, muted)" },
+    { name: "Typography", tier: "composite", role: "dòng dẫn mờ dưới tiêu đề (body-sm, muted)" },
 ]
 
 // HEADING + INTRO — no eyebrow: [title row] + dòng dẫn (căn trái).
 const HEADING_INTRO_PARTS: Array<AnatomyNode> = [
     titleRow(false),
-    { name: "Typography", tier: "primitive", role: "dòng dẫn mờ (body-sm, muted)" },
+    { name: "Typography", tier: "composite", role: "dòng dẫn mờ (body-sm, muted)" },
 ]
 
 // ANCHORED — title row kèm deep-link "#", cộng dòng dẫn (không eyebrow).
 const ANCHORED_PARTS: Array<AnatomyNode> = [
     titleRow(true),
-    { name: "Typography", tier: "primitive", role: "dòng dẫn mờ (body-sm, muted)" },
+    { name: "Typography", tier: "composite", role: "dòng dẫn mờ (body-sm, muted)" },
 ]
 
 // TITLE ONLY — chỉ còn [title row] bọc tiêu đề, không eyebrow / anchor / intro.

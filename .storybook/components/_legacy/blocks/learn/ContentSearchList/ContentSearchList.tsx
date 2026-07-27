@@ -1,8 +1,8 @@
 import React from "react"
 import { ScrollShadow, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { AsyncContent } from "@sb-components/layouts/async/AsyncContent/AsyncContent"
-import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
+import { AsyncContent } from "@sb-components/composites/async/AsyncContent/AsyncContent"
+import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { EntityResultRow, type SearchCourseContentItem } from "@sb-components/_legacy/blocks/learn/EntityResultRow/EntityResultRow"
 
 /**

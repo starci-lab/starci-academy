@@ -46,7 +46,7 @@ const AMOUNT: AnatomyNode = { name: "Typography", tier: "atom", role: "amount to
 const PRICE_POPOVER_PARTS: Array<AnatomyNode> = [
     {
         name: "Popover.Trigger",
-        tier: "primitive",
+        tier: "composite",
         role: "button that opens the popover (react-aria: role=button, aria-expanded/controls) — exactly ONE interactive element, wraps the −X% chip",
         children: [
             {
@@ -64,7 +64,7 @@ const PRICE_POPOVER_PARTS: Array<AnatomyNode> = [
     },
     {
         name: "Popover.Content",
-        tier: "primitive",
+        tier: "composite",
         role: "the price-breakdown table",
         children: [
             {
@@ -74,9 +74,9 @@ const PRICE_POPOVER_PARTS: Array<AnatomyNode> = [
                 // `KeyValue.List` FRAME — the "You pay" row uses `emphasis` so the EMPHASIS
                 // is decided by the frame, the same across every price table.
                 name: "KeyValue.List",
-                tier: "primitive",
+                tier: "composite",
                 role: "a column of label↔value pairs built from `items`; the TOTAL row turns on `emphasis`",
-                storyId: "layouts-data-keyvalue-keyvalue-list--with-total",
+                storyId: "composites-data-keyvalue-keyvalue-list--with-total",
             },
         ],
     },
@@ -95,12 +95,12 @@ const SAVING_LINE: AnatomyNode = { name: "SavingLine", tier: "atom", role: "the 
 // ⭐ 2026-07-27 — the tree now reflects the real FRAME (teacher: "layout is built from
 // layouts components"): `Stack.V` (outer column) ⊃ `Cluster` (price row, baseline aligned)
 // ⊃ three elements, then `SavingLine` is the column's second line.
-const STACK: AnatomyNode = { name: "Stack.V", tier: "primitive", role: "outer column — the price row on top, the \"Save\" line beneath", storyId: "layouts-layout-stack-stack-v--default" }
+const STACK: AnatomyNode = { name: "Stack.V", tier: "frame", role: "outer column — the price row on top, the \"Save\" line beneath", storyId: "frames-stack-stack-v--default" }
 const CLUSTER = (items: Array<AnatomyNode>): AnatomyNode => ({
     name: "Cluster",
-    tier: "primitive",
+    tier: "frame",
     role: "price row — BASELINE aligned (big number, struck number and chip share a baseline) and wraps when space runs out",
-    storyId: "layouts-layout-cluster-cluster-base--default",
+    storyId: "frames-cluster-cluster-base--default",
     children: items,
 })
 

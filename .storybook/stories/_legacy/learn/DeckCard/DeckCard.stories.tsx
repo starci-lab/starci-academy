@@ -43,16 +43,16 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 const DECK_PARTS: Array<AnatomyNode> = [
     {
         name: "Card",
-        tier: "primitive",
+        tier: "composite",
         role: "khung thẻ (rounded-3xl) bọc toàn bộ nội dung — card không bấm được, CTA là hành động duy nhất",
         children: [
-            { name: "Typography", tier: "primitive", role: "tiêu đề deck (title, line-clamp-2)" },
-            { name: "StatusChip", tier: "primitive", role: "\"N đến hạn\" (warning) — chỉ khi showProgress && dueCount", state: "warning" },
+            { name: "Typography", tier: "composite", role: "tiêu đề deck (title, line-clamp-2)" },
+            { name: "StatusChip", tier: "composite", role: "\"N đến hạn\" (warning) — chỉ khi showProgress && dueCount", state: "warning" },
             { name: "DifficultyChip", tier: "design", role: "chấm màu theo độ khó (beginner→insane)" },
-            { name: "Typography", tier: "primitive", role: "mô tả chủ đề (description, line-clamp-2)" },
-            { name: "ProgressMeter", tier: "primitive", role: "thanh mastery% (đã thuộc/tổng) — thay text+Separator cũ" },
-            { name: "Typography", tier: "primitive", role: "số thẻ (cardCount) ở footer" },
-            { name: "Button", tier: "primitive", role: "CTA \"Học\" — hành động duy nhất (card không click được)" },
+            { name: "Typography", tier: "composite", role: "mô tả chủ đề (description, line-clamp-2)" },
+            { name: "ProgressMeter", tier: "composite", role: "thanh mastery% (đã thuộc/tổng) — thay text+Separator cũ" },
+            { name: "Typography", tier: "composite", role: "số thẻ (cardCount) ở footer" },
+            { name: "Button", tier: "composite", role: "CTA \"Học\" — hành động duy nhất (card không click được)" },
         ],
     },
 ]
@@ -61,15 +61,15 @@ const DECK_PARTS: Array<AnatomyNode> = [
 const NO_DUE_PARTS: Array<AnatomyNode> = [
     {
         name: "Card",
-        tier: "primitive",
+        tier: "composite",
         role: "khung thẻ (rounded-3xl) bọc toàn bộ nội dung — card không bấm được, CTA là hành động duy nhất",
         children: [
-            { name: "Typography", tier: "primitive", role: "tiêu đề deck (title, line-clamp-2)" },
+            { name: "Typography", tier: "composite", role: "tiêu đề deck (title, line-clamp-2)" },
             { name: "DifficultyChip", tier: "design", role: "chấm màu theo độ khó (beginner→insane)" },
-            { name: "Typography", tier: "primitive", role: "mô tả chủ đề (description, line-clamp-2)" },
-            { name: "ProgressMeter", tier: "primitive", role: "thanh mastery% (đã thuộc/tổng)" },
-            { name: "Typography", tier: "primitive", role: "số thẻ (cardCount) ở footer" },
-            { name: "Button", tier: "primitive", role: "CTA \"Học\" — hành động duy nhất" },
+            { name: "Typography", tier: "composite", role: "mô tả chủ đề (description, line-clamp-2)" },
+            { name: "ProgressMeter", tier: "composite", role: "thanh mastery% (đã thuộc/tổng)" },
+            { name: "Typography", tier: "composite", role: "số thẻ (cardCount) ở footer" },
+            { name: "Button", tier: "composite", role: "CTA \"Học\" — hành động duy nhất" },
         ],
     },
 ]
@@ -79,15 +79,15 @@ const NO_DUE_PARTS: Array<AnatomyNode> = [
 const NO_DESC_PARTS: Array<AnatomyNode> = [
     {
         name: "Card",
-        tier: "primitive",
+        tier: "composite",
         role: "khung thẻ (rounded-3xl) bọc toàn bộ nội dung — card không bấm được, CTA là hành động duy nhất",
         children: [
-            { name: "Typography", tier: "primitive", role: "tiêu đề deck (title, line-clamp-2)" },
-            { name: "StatusChip", tier: "primitive", role: "\"N đến hạn\" (warning) — chỉ khi showProgress && dueCount", state: "warning" },
+            { name: "Typography", tier: "composite", role: "tiêu đề deck (title, line-clamp-2)" },
+            { name: "StatusChip", tier: "composite", role: "\"N đến hạn\" (warning) — chỉ khi showProgress && dueCount", state: "warning" },
             { name: "DifficultyChip", tier: "design", role: "chấm màu theo độ khó (beginner→insane)" },
-            { name: "ProgressMeter", tier: "primitive", role: "thanh mastery% (đã thuộc/tổng) — thay text+Separator cũ" },
-            { name: "Typography", tier: "primitive", role: "số thẻ (cardCount) ở footer" },
-            { name: "Button", tier: "primitive", role: "CTA \"Học\" — hành động duy nhất (card không click được)" },
+            { name: "ProgressMeter", tier: "composite", role: "thanh mastery% (đã thuộc/tổng) — thay text+Separator cũ" },
+            { name: "Typography", tier: "composite", role: "số thẻ (cardCount) ở footer" },
+            { name: "Button", tier: "composite", role: "CTA \"Học\" — hành động duy nhất (card không click được)" },
         ],
     },
 ]
@@ -96,14 +96,14 @@ const NO_DESC_PARTS: Array<AnatomyNode> = [
 const QUIZ_PARTS: Array<AnatomyNode> = [
     {
         name: "Card",
-        tier: "primitive",
+        tier: "composite",
         role: "khung thẻ (rounded-3xl) bọc toàn bộ nội dung — card không bấm được, CTA là hành động duy nhất",
         children: [
-            { name: "Typography", tier: "primitive", role: "tiêu đề deck (title, line-clamp-2)" },
+            { name: "Typography", tier: "composite", role: "tiêu đề deck (title, line-clamp-2)" },
             { name: "DifficultyChip", tier: "design", role: "chấm màu theo độ khó (beginner→insane)" },
-            { name: "Typography", tier: "primitive", role: "mô tả chủ đề (description, line-clamp-2)" },
-            { name: "Typography", tier: "primitive", role: "số thẻ (cardCount) ở footer" },
-            { name: "Button", tier: "primitive", role: "CTA nhãn tuỳ biến (vd 'Hỏi nhanh')" },
+            { name: "Typography", tier: "composite", role: "mô tả chủ đề (description, line-clamp-2)" },
+            { name: "Typography", tier: "composite", role: "số thẻ (cardCount) ở footer" },
+            { name: "Button", tier: "composite", role: "CTA nhãn tuỳ biến (vd 'Hỏi nhanh')" },
         ],
     },
 ]
@@ -112,17 +112,17 @@ const QUIZ_PARTS: Array<AnatomyNode> = [
 const SKELETON_PARTS: Array<AnatomyNode> = [
     {
         name: "Card",
-        tier: "primitive",
+        tier: "composite",
         role: "khung thẻ (rounded-3xl) — giữ nguyên footprint khi tải",
         children: [
-            { name: "Skeleton", tier: "primitive", role: "khung tiêu đề (body-sm · 1/2)", state: "skeleton" },
-            { name: "Skeleton", tier: "primitive", role: "khung chip độ khó", state: "skeleton" },
-            { name: "Skeleton", tier: "primitive", role: "khung mô tả (body-xs · 3/4)", state: "skeleton" },
-            { name: "Skeleton", tier: "primitive", role: "khung nhãn mastery (body-xs · 1/3)", state: "skeleton" },
-            { name: "Skeleton", tier: "primitive", role: "khung % mastery (body-xs · w-8)", state: "skeleton" },
-            { name: "Skeleton", tier: "primitive", role: "khung thanh mastery", state: "skeleton" },
-            { name: "Skeleton", tier: "primitive", role: "khung số thẻ (body-xs · 1/4)", state: "skeleton" },
-            { name: "Skeleton", tier: "primitive", role: "khung CTA", state: "skeleton" },
+            { name: "Skeleton", tier: "composite", role: "khung tiêu đề (body-sm · 1/2)", state: "skeleton" },
+            { name: "Skeleton", tier: "composite", role: "khung chip độ khó", state: "skeleton" },
+            { name: "Skeleton", tier: "composite", role: "khung mô tả (body-xs · 3/4)", state: "skeleton" },
+            { name: "Skeleton", tier: "composite", role: "khung nhãn mastery (body-xs · 1/3)", state: "skeleton" },
+            { name: "Skeleton", tier: "composite", role: "khung % mastery (body-xs · w-8)", state: "skeleton" },
+            { name: "Skeleton", tier: "composite", role: "khung thanh mastery", state: "skeleton" },
+            { name: "Skeleton", tier: "composite", role: "khung số thẻ (body-xs · 1/4)", state: "skeleton" },
+            { name: "Skeleton", tier: "composite", role: "khung CTA", state: "skeleton" },
         ],
     },
 ]

@@ -3,7 +3,7 @@ import { cn } from "@heroui/react"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
 import { SectionCard } from "@sb-components/_legacy/designs/cards/SectionCard/SectionCard"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
-import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { PricePoint } from "@sb-components/atoms/display/PricePoint/PricePoint"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 

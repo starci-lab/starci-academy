@@ -38,36 +38,36 @@ const PrimaryAction = ({ children }: { children: string }) => (
 const shell = (node: ReactNode) => <div className="p-8"><div className="max-w-md">{node}</div></div>
 
 const DEFAULT_PARTS: Array<AnatomyNode> = [
-    { name: "Value", tier: "primitive", role: "số headline tô màu theo band + unit mờ" },
-    { name: "Verdict", tier: "primitive", role: "câu phán xử một dòng" },
+    { name: "Value", tier: "composite", role: "số headline tô màu theo band + unit mờ" },
+    { name: "Verdict", tier: "composite", role: "câu phán xử một dòng" },
 ]
 
 const FULL_PARTS: Array<AnatomyNode> = [
-    { name: "Value", tier: "primitive", role: "số headline tô màu theo band + unit mờ" },
-    { name: "Verdict", tier: "primitive", role: "câu phán xử một dòng" },
-    { name: "Sub", tier: "primitive", role: "dòng bằng chứng mờ dưới verdict" },
+    { name: "Value", tier: "composite", role: "số headline tô màu theo band + unit mờ" },
+    { name: "Verdict", tier: "composite", role: "câu phán xử một dòng" },
+    { name: "Sub", tier: "composite", role: "dòng bằng chứng mờ dưới verdict" },
     { name: "ProgressMeter", tier: "design", role: "thanh tiến độ có mốc target" },
     { name: "Splits", tier: "design", role: "2-up mini-stat bổ dọc con số headline" },
-    { name: "Action", tier: "primitive", role: "slot hành động chính — caller cung cấp Button" },
+    { name: "Action", tier: "composite", role: "slot hành động chính — caller cung cấp Button" },
 ]
 
 const METER_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "Value", tier: "primitive", role: "số headline tô màu theo band + unit mờ" },
-    { name: "Verdict", tier: "primitive", role: "câu phán xử một dòng" },
-    { name: "Sub", tier: "primitive", role: "dòng bằng chứng mờ dưới verdict" },
+    { name: "Value", tier: "composite", role: "số headline tô màu theo band + unit mờ" },
+    { name: "Verdict", tier: "composite", role: "câu phán xử một dòng" },
+    { name: "Sub", tier: "composite", role: "dòng bằng chứng mờ dưới verdict" },
     { name: "ProgressMeter", tier: "design", role: "thanh tiến độ có mốc target" },
-    { name: "Action", tier: "primitive", role: "slot hành động chính — caller cung cấp Button" },
+    { name: "Action", tier: "composite", role: "slot hành động chính — caller cung cấp Button" },
 ]
 
 const SPLITS_NEUTRAL_PARTS: Array<AnatomyNode> = [
-    { name: "Value", tier: "primitive", role: "số headline tô màu theo band + unit mờ" },
-    { name: "Verdict", tier: "primitive", role: "câu phán xử một dòng" },
+    { name: "Value", tier: "composite", role: "số headline tô màu theo band + unit mờ" },
+    { name: "Verdict", tier: "composite", role: "câu phán xử một dòng" },
     { name: "Splits", tier: "design", role: "2-up mini-stat, band bỏ trống → giữ neutral foreground" },
 ]
 
 const BAND_PARTS: Array<AnatomyNode> = [
-    { name: "Value", tier: "primitive", role: "số headline tô màu theo band + unit mờ" },
-    { name: "Verdict", tier: "primitive", role: "câu phán xử một dòng" },
+    { name: "Value", tier: "composite", role: "số headline tô màu theo band + unit mờ" },
+    { name: "Verdict", tier: "composite", role: "câu phán xử một dòng" },
     { name: "ProgressMeter", tier: "design", role: "thanh tiến độ có mốc target, fill theo band" },
 ]
 

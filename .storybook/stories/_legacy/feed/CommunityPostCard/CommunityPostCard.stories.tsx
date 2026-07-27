@@ -39,12 +39,12 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 const framed = (inner: Array<AnatomyNode>): Array<AnatomyNode> => [
     {
         name: "Card",
-        tier: "primitive",
+        tier: "composite",
         role: "khung card bao toàn bộ bài đăng",
         children: [
             {
                 name: "CardContent",
-                tier: "primitive",
+                tier: "composite",
                 role: "vùng nội dung có padding của card",
                 children: inner,
             },
@@ -61,33 +61,33 @@ const framed = (inner: Array<AnatomyNode>): Array<AnatomyNode> => [
 // also their own nodes. Only the "Bình luận" hand-rolled trigger stays a single
 // leaf: its inner icon + count Typography are folded into ITS OWN affordance (same
 // pattern as ReactionBar's own trigger button), not drilled into separately.
-const HEADER_AVATAR: AnatomyNode = { name: "UserAvatar", tier: "primitive", role: "avatar tác giả trong header" }
-const BODY_MARKDOWN: AnatomyNode = { name: "MarkdownContent", tier: "primitive", role: "thân bài markdown (compact, [&_p]:m-0)" }
+const HEADER_AVATAR: AnatomyNode = { name: "UserAvatar", tier: "composite", role: "avatar tác giả trong header" }
+const BODY_MARKDOWN: AnatomyNode = { name: "MarkdownContent", tier: "composite", role: "thân bài markdown (compact, [&_p]:m-0)" }
 const FOOTER_REACTIONS: AnatomyNode = { name: "ReactionBar", tier: "design", role: "thả cảm xúc trong footer" }
-const FOOTER_COMMENT: AnatomyNode = { name: "CommentButton", tier: "primitive", role: "nút mở thread bình luận + đếm ở footer", state: "hand-rolled" }
+const FOOTER_COMMENT: AnatomyNode = { name: "CommentButton", tier: "composite", role: "nút mở thread bình luận + đếm ở footer", state: "hand-rolled" }
 
 // Header text row every leaf renders: display name, then @username · time · kênh.
 const HEADER_TEXT: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "tên hiển thị tác giả" },
-    { name: "Typography", tier: "primitive", role: "@username" },
-    { name: "Typography", tier: "primitive", role: "dấu · phân cách" },
-    { name: "Typography", tier: "primitive", role: "thời gian tương đối" },
-    { name: "Typography", tier: "primitive", role: "nhãn kênh" },
+    { name: "Typography", tier: "composite", role: "tên hiển thị tác giả" },
+    { name: "Typography", tier: "composite", role: "@username" },
+    { name: "Typography", tier: "composite", role: "dấu · phân cách" },
+    { name: "Typography", tier: "composite", role: "thời gian tương đối" },
+    { name: "Typography", tier: "composite", role: "nhãn kênh" },
 ]
 
 // Same header text row, with the founder badge icon inserted right after the name
 // (isFounderAuthor → SealCheckIcon renders beside the display name Typography).
 const HEADER_TEXT_FOUNDER: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "tên hiển thị tác giả" },
-    { name: "SealCheckIcon", tier: "primitive", role: "huy hiệu founder cạnh tên — chỉ khi isFounderAuthor" },
-    { name: "Typography", tier: "primitive", role: "@username" },
-    { name: "Typography", tier: "primitive", role: "dấu · phân cách" },
-    { name: "Typography", tier: "primitive", role: "thời gian tương đối" },
-    { name: "Typography", tier: "primitive", role: "nhãn kênh" },
+    { name: "Typography", tier: "composite", role: "tên hiển thị tác giả" },
+    { name: "SealCheckIcon", tier: "composite", role: "huy hiệu founder cạnh tên — chỉ khi isFounderAuthor" },
+    { name: "Typography", tier: "composite", role: "@username" },
+    { name: "Typography", tier: "composite", role: "dấu · phân cách" },
+    { name: "Typography", tier: "composite", role: "thời gian tương đối" },
+    { name: "Typography", tier: "composite", role: "nhãn kênh" },
 ]
 
 // Pin icon at the header's trailing edge — only when isPinned.
-const PINNED_ICON: AnatomyNode = { name: "PushPinIcon", tier: "primitive", role: "ghim ở góc header — chỉ khi isPinned" }
+const PINNED_ICON: AnatomyNode = { name: "PushPinIcon", tier: "composite", role: "ghim ở góc header — chỉ khi isPinned" }
 
 // Base leaf: avatar, header text, markdown body, reaction bar + comment button footer.
 const DEFAULT_PARTS: Array<AnatomyNode> = framed([
@@ -134,7 +134,7 @@ const READONLY_PARTS: Array<AnatomyNode> = framed([
     ...HEADER_TEXT,
     BODY_MARKDOWN,
     { name: "ReactionBar", tier: "design", role: "hiển thị cảm xúc (chỉ đọc)", state: "read-only" },
-    { name: "CommentButton", tier: "primitive", role: "đếm bình luận tĩnh (nút disabled)", state: "read-only" },
+    { name: "CommentButton", tier: "composite", role: "đếm bình luận tĩnh (nút disabled)", state: "read-only" },
 ])
 
 const defaultPost: QueryCommunityFeedItemData = {

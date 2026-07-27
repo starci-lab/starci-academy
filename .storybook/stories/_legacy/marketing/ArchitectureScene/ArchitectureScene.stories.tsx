@@ -54,8 +54,8 @@ const SMALL_DATA: ArchitectureSceneData = {
 // A directed floor wire (`Edge`): a dashed `Line` plus animated packet spheres —
 // 3 fast dots when `congested`, 1 slow dot when `flow`, none otherwise.
 const EDGE_PARTS: Array<AnatomyNode> = [
-    { name: "Line.Dashed", tier: "primitive", role: "đường nối gạch có hướng; độ dày/độ mờ theo congested·eventual" },
-    { name: "Mesh.Packet", tier: "primitive", role: "gói cầu chạy dọc dây", state: "×dots (congested 3 · flow 1 · 0)" },
+    { name: "Line.Dashed", tier: "composite", role: "đường nối gạch có hướng; độ dày/độ mờ theo congested·eventual" },
+    { name: "Mesh.Packet", tier: "composite", role: "gói cầu chạy dọc dây", state: "×dots (congested 3 · flow 1 · 0)" },
 ]
 
 // The captioned scene composition: a WebGL <Canvas> board (auto-fit camera + orbit
@@ -68,11 +68,11 @@ const SCENE_PARTS: Array<AnatomyNode> = [
         tier: "design",
         role: "board 3D flat-isometric (react-three-fiber), tự fit camera theo bounding-box node",
         children: [
-            { name: "CameraFit", tier: "primitive", role: "imperative: reframe camera orthographic theo bounding-box node (không mesh)" },
-            { name: "Line.Grid", tier: "primitive", role: "sàn iso, lưới trên biên ô cell" },
+            { name: "CameraFit", tier: "composite", role: "imperative: reframe camera orthographic theo bounding-box node (không mesh)" },
+            { name: "Line.Grid", tier: "composite", role: "sàn iso, lưới trên biên ô cell" },
             {
                 name: "Edge.Wire",
-                tier: "primitive",
+                tier: "composite",
                 role: "dây nối có hướng giữa 2 node (flow / congested / eventual)",
                 state: "×N",
                 children: EDGE_PARTS,
@@ -83,7 +83,7 @@ const SCENE_PARTS: Array<AnatomyNode> = [
                 role: "một node đặt trên ô cell",
                 state: "×N",
                 children: [
-                    { name: "KindMesh", tier: "primitive", role: "khối 3D theo `kind` (container · database · broker · loadBalancer · client · user · pod)" },
+                    { name: "KindMesh", tier: "composite", role: "khối 3D theo `kind` (container · database · broker · loadBalancer · client · user · pod)" },
                     {
                         name: "Html.FloatingLabel",
                         tier: "design",
@@ -91,10 +91,10 @@ const SCENE_PARTS: Array<AnatomyNode> = [
                     },
                 ],
             },
-            { name: "OrbitControls", tier: "primitive", role: "kéo để xoay board (no zoom/pan/auto-spin), polar bị kẹp; không mesh" },
+            { name: "OrbitControls", tier: "composite", role: "kéo để xoay board (no zoom/pan/auto-spin), polar bị kẹp; không mesh" },
         ],
     },
-    { name: "Typography", tier: "primitive", role: "caption dưới scene — ArchitectureScene tự render prop `caption`" },
+    { name: "Typography", tier: "composite", role: "caption dưới scene — ArchitectureScene tự render prop `caption`" },
 ]
 
 // SelectedNode leaf: same scene, but `onSelectNode` makes nodes clickable and
@@ -105,11 +105,11 @@ const SELECTED_PARTS: Array<AnatomyNode> = [
         tier: "design",
         role: "board 3D flat-isometric, nodes tương tác được",
         children: [
-            { name: "CameraFit", tier: "primitive", role: "imperative: reframe camera orthographic theo bounding-box node (không mesh)" },
-            { name: "Line.Grid", tier: "primitive", role: "sàn iso, lưới trên biên ô cell" },
+            { name: "CameraFit", tier: "composite", role: "imperative: reframe camera orthographic theo bounding-box node (không mesh)" },
+            { name: "Line.Grid", tier: "composite", role: "sàn iso, lưới trên biên ô cell" },
             {
                 name: "Edge.Wire",
-                tier: "primitive",
+                tier: "composite",
                 role: "dây nối có hướng giữa 2 node",
                 state: "×N",
                 children: EDGE_PARTS,
@@ -120,7 +120,7 @@ const SELECTED_PARTS: Array<AnatomyNode> = [
                 role: "node bấm được (onSelectNode); node đang chọn thêm ring accent",
                 state: "selected · clickable",
                 children: [
-                    { name: "KindMesh", tier: "primitive", role: "khối 3D theo `kind`" },
+                    { name: "KindMesh", tier: "composite", role: "khối 3D theo `kind`" },
                     {
                         name: "Html.FloatingLabel",
                         tier: "design",
@@ -129,10 +129,10 @@ const SELECTED_PARTS: Array<AnatomyNode> = [
                     },
                 ],
             },
-            { name: "OrbitControls", tier: "primitive", role: "kéo để xoay board (no zoom/pan/auto-spin), polar bị kẹp; không mesh" },
+            { name: "OrbitControls", tier: "composite", role: "kéo để xoay board (no zoom/pan/auto-spin), polar bị kẹp; không mesh" },
         ],
     },
-    { name: "Typography", tier: "primitive", role: "caption dưới scene — ArchitectureScene tự render prop `caption`" },
+    { name: "Typography", tier: "composite", role: "caption dưới scene — ArchitectureScene tự render prop `caption`" },
 ]
 
 // NoCaption leaf: same board, but `caption` omitted → the Typography line drops.
@@ -142,11 +142,11 @@ const NO_CAPTION_PARTS: Array<AnatomyNode> = [
         tier: "design",
         role: "board 3D flat-isometric (react-three-fiber), tự fit camera theo bounding-box node",
         children: [
-            { name: "CameraFit", tier: "primitive", role: "imperative: reframe camera orthographic theo bounding-box node (không mesh)" },
-            { name: "Line.Grid", tier: "primitive", role: "sàn iso, lưới trên biên ô cell" },
+            { name: "CameraFit", tier: "composite", role: "imperative: reframe camera orthographic theo bounding-box node (không mesh)" },
+            { name: "Line.Grid", tier: "composite", role: "sàn iso, lưới trên biên ô cell" },
             {
                 name: "Edge.Wire",
-                tier: "primitive",
+                tier: "composite",
                 role: "dây nối có hướng giữa 2 node",
                 state: "×N",
                 children: EDGE_PARTS,
@@ -157,7 +157,7 @@ const NO_CAPTION_PARTS: Array<AnatomyNode> = [
                 role: "một node đặt trên ô cell",
                 state: "×N",
                 children: [
-                    { name: "KindMesh", tier: "primitive", role: "khối 3D theo `kind`" },
+                    { name: "KindMesh", tier: "composite", role: "khối 3D theo `kind`" },
                     {
                         name: "Html.FloatingLabel",
                         tier: "design",
@@ -165,7 +165,7 @@ const NO_CAPTION_PARTS: Array<AnatomyNode> = [
                     },
                 ],
             },
-            { name: "OrbitControls", tier: "primitive", role: "kéo để xoay board (no zoom/pan/auto-spin), polar bị kẹp; không mesh" },
+            { name: "OrbitControls", tier: "composite", role: "kéo để xoay board (no zoom/pan/auto-spin), polar bị kẹp; không mesh" },
         ],
     },
 ]

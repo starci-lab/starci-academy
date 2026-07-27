@@ -39,12 +39,12 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 // UNDER AsyncContent.children (not as a sibling). Each DeckCard in turn composes
 // its own title/chips/meter/count/CTA in DOM order.
 const DATA_PARTS: Array<AnatomyNode> = [
-    { name: "TextField.Input", tier: "primitive", role: "ô tìm bộ thẻ" },
-    { name: "Typography", tier: "primitive", role: "đếm kết quả (\"Tìm thấy N bộ thẻ\")" },
-    { name: "Toolbar", tier: "primitive", role: "đổi kiểu hiển thị lưới / danh sách" },
+    { name: "TextField.Input", tier: "composite", role: "ô tìm bộ thẻ" },
+    { name: "Typography", tier: "composite", role: "đếm kết quả (\"Tìm thấy N bộ thẻ\")" },
+    { name: "Toolbar", tier: "composite", role: "đổi kiểu hiển thị lưới / danh sách" },
     {
         name: "AsyncContent.Base",
-        tier: "primitive",
+        tier: "composite",
         role: "switch error → loading → empty → content",
         state: "content",
         children: [
@@ -53,13 +53,13 @@ const DATA_PARTS: Array<AnatomyNode> = [
                 tier: "design",
                 role: "một bộ thẻ (block con, lặp ×N trong lưới)",
                 children: [
-                    { name: "Typography", tier: "primitive", role: "tên bộ thẻ (line-clamp 2)" },
-                    { name: "StatusChip", tier: "primitive", role: "số thẻ đến hạn ôn", state: "warning" },
+                    { name: "Typography", tier: "composite", role: "tên bộ thẻ (line-clamp 2)" },
+                    { name: "StatusChip", tier: "composite", role: "số thẻ đến hạn ôn", state: "warning" },
                     { name: "DifficultyChip", tier: "design", role: "tầng độ khó" },
-                    { name: "Typography", tier: "primitive", role: "mô tả chủ đề (muted, line-clamp 2)" },
-                    { name: "ProgressMeter", tier: "primitive", role: "tiến độ đã thuộc" },
-                    { name: "Typography", tier: "primitive", role: "tổng số thẻ (\"N thẻ\", muted)" },
-                    { name: "Button", tier: "primitive", role: "CTA \"Học\"" },
+                    { name: "Typography", tier: "composite", role: "mô tả chủ đề (muted, line-clamp 2)" },
+                    { name: "ProgressMeter", tier: "composite", role: "tiến độ đã thuộc" },
+                    { name: "Typography", tier: "composite", role: "tổng số thẻ (\"N thẻ\", muted)" },
+                    { name: "Button", tier: "composite", role: "CTA \"Học\"" },
                 ],
             },
         ],
@@ -70,16 +70,16 @@ const DATA_PARTS: Array<AnatomyNode> = [
 // but filteredDecks is empty → the body swaps to a muted "không khớp" Typography
 // (no DeckCard). It is NOT a distinct AsyncContent.Base state — it lives inside content.
 const SEARCH_EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "TextField.Input", tier: "primitive", role: "ô tìm (giữ query)" },
-    { name: "Typography", tier: "primitive", role: "đếm kết quả (\"Tìm thấy 0 bộ thẻ\")" },
-    { name: "Toolbar", tier: "primitive", role: "toggle lưới / danh sách" },
+    { name: "TextField.Input", tier: "composite", role: "ô tìm (giữ query)" },
+    { name: "Typography", tier: "composite", role: "đếm kết quả (\"Tìm thấy 0 bộ thẻ\")" },
+    { name: "Toolbar", tier: "composite", role: "toggle lưới / danh sách" },
     {
         name: "AsyncContent.Base",
-        tier: "primitive",
+        tier: "composite",
         role: "nhánh content — body đổi sang Typography muted \"Không tìm thấy bộ thẻ nào khớp…\" thay cho lưới DeckCard",
         state: "content",
         children: [
-            { name: "Typography", tier: "primitive", role: "thông báo không khớp query (thay cho lưới DeckCard)" },
+            { name: "Typography", tier: "composite", role: "thông báo không khớp query (thay cho lưới DeckCard)" },
         ],
     },
 ]
@@ -87,12 +87,12 @@ const SEARCH_EMPTY_PARTS: Array<AnatomyNode> = [
 // loading leaf: chrome stays (count slot → Skeleton.Typography), AsyncContent.Base takes
 // its loading branch → the skeleton grid of skeleton DeckCards nested under it.
 const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "TextField.Input", tier: "primitive", role: "ô tìm (vẫn hiện)" },
-    { name: "Typography", tier: "primitive", role: "đếm — Skeleton.Typography mirror" },
-    { name: "Toolbar", tier: "primitive", role: "toggle (vẫn hiện)" },
+    { name: "TextField.Input", tier: "composite", role: "ô tìm (vẫn hiện)" },
+    { name: "Typography", tier: "composite", role: "đếm — Skeleton.Typography mirror" },
+    { name: "Toolbar", tier: "composite", role: "toggle (vẫn hiện)" },
     {
         name: "AsyncContent.Base",
-        tier: "primitive",
+        tier: "composite",
         role: "nhánh loading → lưới skeleton",
         state: "loading",
         children: [
@@ -104,12 +104,12 @@ const LOADING_PARTS: Array<AnatomyNode> = [
 // empty leaf: chrome stays, AsyncContent.Base falls to AsyncContent.Empty, which itself
 // composes the Feedback.Empty primitive (TrayIcon + title, no action button).
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "TextField.Input", tier: "primitive", role: "ô tìm" },
-    { name: "Typography", tier: "primitive", role: "đếm kết quả (\"Tìm thấy 0 bộ thẻ\")" },
-    { name: "Toolbar", tier: "primitive", role: "toggle" },
+    { name: "TextField.Input", tier: "composite", role: "ô tìm" },
+    { name: "Typography", tier: "composite", role: "đếm kết quả (\"Tìm thấy 0 bộ thẻ\")" },
+    { name: "Toolbar", tier: "composite", role: "toggle" },
     {
         name: "AsyncContent.Base",
-        tier: "primitive",
+        tier: "composite",
         role: "nhánh empty",
         state: "empty",
         children: [
@@ -118,7 +118,7 @@ const EMPTY_PARTS: Array<AnatomyNode> = [
                 tier: "design",
                 role: "khung rỗng của region",
                 children: [
-                    { name: "Feedback.Empty", tier: "primitive", role: "TrayIcon + \"Chưa có bộ thẻ nào\" (không nút)" },
+                    { name: "Feedback.Empty", tier: "composite", role: "TrayIcon + \"Chưa có bộ thẻ nào\" (không nút)" },
                 ],
             },
         ],
@@ -129,12 +129,12 @@ const EMPTY_PARTS: Array<AnatomyNode> = [
 // (tone danger, WarningIcon + title). NOTE: onRetry is passed but retryLabel is
 // NOT, so Feedback.Empty renders NO retry Button — the anatomy reflects that reality.
 const ERROR_PARTS: Array<AnatomyNode> = [
-    { name: "TextField.Input", tier: "primitive", role: "ô tìm" },
-    { name: "Typography", tier: "primitive", role: "đếm kết quả (\"Tìm thấy 0 bộ thẻ\")" },
-    { name: "Toolbar", tier: "primitive", role: "toggle" },
+    { name: "TextField.Input", tier: "composite", role: "ô tìm" },
+    { name: "Typography", tier: "composite", role: "đếm kết quả (\"Tìm thấy 0 bộ thẻ\")" },
+    { name: "Toolbar", tier: "composite", role: "toggle" },
     {
         name: "AsyncContent.Base",
-        tier: "primitive",
+        tier: "composite",
         role: "nhánh error",
         state: "error",
         children: [
@@ -143,7 +143,7 @@ const ERROR_PARTS: Array<AnatomyNode> = [
                 tier: "design",
                 role: "khung lỗi của region",
                 children: [
-                    { name: "Feedback.Empty", tier: "primitive", role: "WarningIcon + \"Không tải được bộ thẻ\" — KHÔNG nút thử lại (thiếu retryLabel)", state: "danger" },
+                    { name: "Feedback.Empty", tier: "composite", role: "WarningIcon + \"Không tải được bộ thẻ\" — KHÔNG nút thử lại (thiếu retryLabel)", state: "danger" },
                 ],
             },
         ],

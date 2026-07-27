@@ -1,6 +1,6 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Page } from "@sb-components/layouts/layout/Page/Page"
+import { Page } from "@sb-components/composites/layout/Page/Page"
 import { Breadcrumbs } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcrumbs"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 

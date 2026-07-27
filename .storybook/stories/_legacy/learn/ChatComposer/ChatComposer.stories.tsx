@@ -77,9 +77,9 @@ const MODEL_PICKER_NODE: AnatomyNode = {
     tier: "block",
     role: "slot picker model — trong app thật là GradeModelDropdown (task=\"chatting\", placement=\"top start\")",
 }
-const TOGGLE_NODE: AnatomyNode = { name: "Button.ToggleSkill", tier: "primitive", role: "mở/đóng skill-menu (kính lúp, iconOnly tertiary)" }
-const SEND_NODE: AnatomyNode = { name: "Button.Send", tier: "primitive", role: "gửi câu hỏi (iconOnly primary, PaperPlaneTiltIcon)" }
-const INPUT_NODE: AnatomyNode = { name: "input", tier: "primitive", role: "ô gõ trần — Enter gửi, Escape đóng skill-menu" }
+const TOGGLE_NODE: AnatomyNode = { name: "Button.ToggleSkill", tier: "composite", role: "mở/đóng skill-menu (kính lúp, iconOnly tertiary)" }
+const SEND_NODE: AnatomyNode = { name: "Button.Send", tier: "composite", role: "gửi câu hỏi (iconOnly primary, PaperPlaneTiltIcon)" }
+const INPUT_NODE: AnatomyNode = { name: "input", tier: "composite", role: "ô gõ trần — Enter gửi, Escape đóng skill-menu" }
 
 const NORMAL_PARTS: Array<AnatomyNode> = [INPUT_NODE, MODEL_PICKER_NODE, TOGGLE_NODE, SEND_NODE]
 
@@ -91,8 +91,8 @@ const SENDING_PARTS: Array<AnatomyNode> = [
 ]
 
 const SKILL_MENU_PARTS: Array<AnatomyNode> = [
-    { name: "Typography.Hint", tier: "primitive", role: "dòng hint đầu skill-menu (muted, body-xs)" },
-    { name: "ChipButtonList.Skills", tier: "primitive", role: "4 hàng kỹ năng truy hồi — challenges/flashcards/lessons/related" },
+    { name: "Typography.Hint", tier: "composite", role: "dòng hint đầu skill-menu (muted, body-xs)" },
+    { name: "ChipButtonList.Skills", tier: "composite", role: "4 hàng kỹ năng truy hồi — challenges/flashcards/lessons/related" },
     INPUT_NODE,
     MODEL_PICKER_NODE,
     { ...TOGGLE_NODE, role: "đang MỞ menu", state: "mở" },
@@ -100,7 +100,7 @@ const SKILL_MENU_PARTS: Array<AnatomyNode> = [
 ]
 
 const SELECTION_NO_MSG_PARTS: Array<AnatomyNode> = [
-    { name: "ChipButtonList.QuickAsk", tier: "primitive", role: "3 nút hỏi nhanh (giải thích/ví dụ/diễn giải) — chỉ hiện khi CHƯA có tin nhắn nào" },
+    { name: "ChipButtonList.QuickAsk", tier: "composite", role: "3 nút hỏi nhanh (giải thích/ví dụ/diễn giải) — chỉ hiện khi CHƯA có tin nhắn nào" },
     { ...INPUT_NODE, role: "RỜI khỏi composer sang hộp trích đoạn (border riêng)" },
     MODEL_PICKER_NODE,
     TOGGLE_NODE,

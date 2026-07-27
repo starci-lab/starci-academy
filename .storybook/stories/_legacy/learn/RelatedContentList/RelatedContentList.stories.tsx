@@ -107,18 +107,18 @@ const ITEM_OAUTH_CONTENT: SearchCourseContentItem = {
 const DATA_PARTS: Array<AnatomyNode> = [
     {
         name: "LabeledCard",
-        tier: "primitive",
+        tier: "composite",
         role: "nhãn section ngoài khung (frameless — nội dung tự là card; nhãn Label là text nội tại, không tách node)",
         children: [
             {
                 name: "AsyncContent.Base",
-                tier: "primitive",
+                tier: "composite",
                 role: "switch error → loading → empty → content (empty/error tự-ẩn ở tầng trên)",
                 state: "content",
                 children: [
                     {
                         name: "SurfaceListCard",
-                        tier: "primitive",
+                        tier: "composite",
                         role: "khung surface bordered ôm các hàng edge-to-edge",
                         children: [
                             { name: "EntityResultRow", tier: "design", role: "mỗi hàng kết quả (breadcrumb + tiêu đề, mặc định không chip/snippet)" },
@@ -140,26 +140,26 @@ const DATA_PARTS: Array<AnatomyNode> = [
 const LOADING_PARTS: Array<AnatomyNode> = [
     {
         name: "LabeledCard",
-        tier: "primitive",
+        tier: "composite",
         role: "nhãn section (vẫn hiện — text nội tại, không tách node)",
         children: [
             {
                 name: "AsyncContent.Base",
-                tier: "primitive",
+                tier: "composite",
                 role: "nhánh loading → skeleton",
                 state: "loading",
                 children: [
                     {
                         name: "SurfaceListCard",
-                        tier: "primitive",
+                        tier: "composite",
                         role: "khung bordered giữ đúng footprint",
                         children: [
                             {
                                 name: "SurfaceListCardItem",
-                                tier: "primitive",
+                                tier: "composite",
                                 role: "mỗi hàng skeleton (bọc item edge-to-edge)",
                                 children: [
-                                    { name: "Skeleton", tier: "primitive", role: "3 dòng Skeleton.Typography mirror mỗi hàng", state: "skeleton" },
+                                    { name: "Skeleton", tier: "composite", role: "3 dòng Skeleton.Typography mirror mỗi hàng", state: "skeleton" },
                                 ],
                             },
                         ],

@@ -20,7 +20,16 @@ import React from "react"
  * only had four, so a screen had to masquerade as `block` — the panel then printed the
  * wrong badge on the very node that anchors the whole tree.
  */
-export type AnatomyTier = "atom" | "primitive" | "design" | "block" | "screen"
+/**
+ * The six tiers of the drawing, lowest first.
+ *
+ * `frame` + `composite` replaced the single `primitive` tier on 2026-07-27: what used to be
+ * one folder was measurably two natures — 7 slot-agnostic frames (`Container`, `Grid`,
+ * `Cluster`, `Split`, `Stack`, `DragScrollArea`, `ResizableRail`) versus 37 components that
+ * own content roles. `Section`/`Page`/`ModalShell` moved to `composite` because they own a
+ * TITLE; the discriminator is "slot-agnostic vs owns content", not the import count.
+ */
+export type AnatomyTier = "atom" | "frame" | "composite" | "design" | "block" | "screen"
 
 /** Value provided by {@link BlockAnatomy} to the overlays nested under it. */
 export interface AnatomyPanelValue {

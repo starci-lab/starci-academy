@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CircuitryIcon, CloudIcon, DatabaseIcon, RobotIcon } from "@phosphor-icons/react"
 import { ReadinessChecklist, type ReadinessChecklistItem } from "@sb-components/_legacy/blocks/feedback/ReadinessChecklist/ReadinessChecklist"
-import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof ReadinessChecklist> = {
@@ -55,9 +55,9 @@ const ITEMS: Array<ReadinessChecklistItem> = [
 // ROW — one repeated per item: List.Row (leading·title·subtitle·trailing, opaque —
 // badged via AnatomyOverlay) composing an IconTile (leading) + StatusChip (trailing).
 const ROW_PARTS: Array<AnatomyNode> = [
-    { name: "List.Row", tier: "design", role: "hàng leading·title·subtitle·trailing — lặp mỗi item", storyId: "layouts-lists-list-list-row--title-only" },
-    { name: "IconTile", tier: "primitive", role: "leading — check tròn (success) khi ready, icon caller (neutral) khi chờ" },
-    { name: "StatusChip", tier: "primitive", role: "trailing — nhãn Sẵn sàng/Chờ theo tone success/neutral" },
+    { name: "List.Row", tier: "design", role: "hàng leading·title·subtitle·trailing — lặp mỗi item", storyId: "composites-lists-list-list-row--title-only" },
+    { name: "IconTile", tier: "composite", role: "leading — check tròn (success) khi ready, icon caller (neutral) khi chờ" },
+    { name: "StatusChip", tier: "composite", role: "trailing — nhãn Sẵn sàng/Chờ theo tone success/neutral" },
 ]
 
 /** All waiting — no prerequisite ready yet (right after the local model cluster boots, no health check passed). */

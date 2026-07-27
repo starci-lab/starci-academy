@@ -95,43 +95,43 @@ const LOCKED_ITEM: SearchCourseContentItem = {
 // được badge (2026-07-23 granularity ruling: primitive block/design trực tiếp render luôn có
 // node, kể cả khi chỉ hiện prop) — cùng tên "Typography" với breadcrumb/snippet ở các leaf khác.
 const KIND_CHIP_PARTS: Array<AnatomyNode> = [
-    { name: "EnumChip", tier: "primitive", role: "nhãn loại kết quả (kind → StatusChip màu soft): Bài học/Thử thách/Flashcard/Dự án — chỉ khi showKindChip" },
-    { name: "Typography", tier: "primitive", role: "tiêu đề kết quả (item.title, hover-underline)" },
+    { name: "EnumChip", tier: "composite", role: "nhãn loại kết quả (kind → StatusChip màu soft): Bài học/Thử thách/Flashcard/Dự án — chỉ khi showKindChip" },
+    { name: "Typography", tier: "composite", role: "tiêu đề kết quả (item.title, hover-underline)" },
 ]
 
 // leaf breadcrumb (no chip): breadcrumb + tiêu đề đều là Typography EntityResultRow tự render
 // (item.breadcrumb / item.title) → mỗi occurrence là 1 node "Typography".
 const BREADCRUMB_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "breadcrumb (item.breadcrumb, muted) — khi không showKindChip" },
-    { name: "Typography", tier: "primitive", role: "tiêu đề kết quả (item.title, hover-underline)" },
+    { name: "Typography", tier: "composite", role: "breadcrumb (item.breadcrumb, muted) — khi không showKindChip" },
+    { name: "Typography", tier: "composite", role: "tiêu đề kết quả (item.title, hover-underline)" },
 ]
 
 // leaf chỉ tiêu đề: không chip, breadcrumb null, snippet rỗng → chỉ còn Typography tiêu đề.
 const TITLE_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "tiêu đề kết quả (item.title, hover-underline)" },
+    { name: "Typography", tier: "composite", role: "tiêu đề kết quả (item.title, hover-underline)" },
 ]
 
 // leaf có snippet: breadcrumb · tiêu đề · snippet đều là Typography (khác composition với leaf
 // có EnumChip/khoá — cả 3 dòng cùng lúc).
 const SNIPPET_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "breadcrumb (item.breadcrumb, muted)" },
-    { name: "Typography", tier: "primitive", role: "tiêu đề kết quả (item.title, hover-underline)" },
-    { name: "Typography", tier: "primitive", role: "snippet (item.snippet, muted) — showSnippet" },
+    { name: "Typography", tier: "composite", role: "breadcrumb (item.breadcrumb, muted)" },
+    { name: "Typography", tier: "composite", role: "tiêu đề kết quả (item.title, hover-underline)" },
+    { name: "Typography", tier: "composite", role: "snippet (item.snippet, muted) — showSnippet" },
 ]
 
 // leaf khoá: breadcrumb · tiêu đề vẫn là Typography (badge như các leaf khác); cụm lock <span> là
 // vai cấu trúc riêng biệt CỐ ĐỊNH (icon + nhãn "Ghi danh để mở" không đổi theo prop nào) → GIỮ nguyên span + con.
 const LOCKED_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "breadcrumb (item.breadcrumb, muted)" },
-    { name: "Typography", tier: "primitive", role: "tiêu đề kết quả (item.title, hover-underline)" },
+    { name: "Typography", tier: "composite", role: "breadcrumb (item.breadcrumb, muted)" },
+    { name: "Typography", tier: "composite", role: "tiêu đề kết quả (item.title, hover-underline)" },
     {
         name: "span",
-        tier: "primitive",
+        tier: "composite",
         role: "cụm lock (flex, warning-soft) — gợi ý khoá premium, dòng vẫn navigate",
         state: "isLocked",
         children: [
-            { name: "LockSimpleIcon", tier: "primitive", role: "icon khoá dẫn nhãn" },
-            { name: "Typography", tier: "primitive", role: "\"Ghi danh để mở\"" },
+            { name: "LockSimpleIcon", tier: "composite", role: "icon khoá dẫn nhãn" },
+            { name: "Typography", tier: "composite", role: "\"Ghi danh để mở\"" },
         ],
     },
 ]

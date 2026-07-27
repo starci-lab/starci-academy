@@ -13,9 +13,9 @@ import {
     Skeleton as HeroSkeleton,
 } from "@heroui/react"
 import { ArchiveIcon, DotsThreeVerticalIcon, PencilSimpleIcon, TrashIcon } from "@phosphor-icons/react"
-import { AsyncContent } from "@sb-components/layouts/async/AsyncContent/AsyncContent"
-import { SurfaceCard, type SurfaceCardListItem } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
-import { TitledText } from "@sb-components/layouts/text/TitledText/TitledText"
+import { AsyncContent } from "@sb-components/composites/async/AsyncContent/AsyncContent"
+import { SurfaceCard, type SurfaceCardListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { TitledText } from "@sb-components/composites/text/TitledText/TitledText"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"

@@ -61,12 +61,12 @@ const sectionFrame = (children: Array<AnatomyNode>): AnatomyNode => ({
 // stay collapsed: they're opaque ReactNode SLOTS the CALLER builds (a Button
 // element, a `<ul>`) — PricingCard never imports Button or a list component,
 // it just positions whatever came in via a plain wrapper div.
-const NAME: AnatomyNode = { name: "Typography.Name", tier: "primitive", role: "tên tier (Typography body semibold) — cùng dòng với chip" }
-const CHIP: AnatomyNode = { name: "StatusChip", tier: "primitive", role: "chip \"phổ biến nhất\" (StatusChip accent soft, w-fit) — cùng dòng với tên, chỉ khi highlighted && badge", state: "accent" }
+const NAME: AnatomyNode = { name: "Typography.Name", tier: "composite", role: "tên tier (Typography body semibold) — cùng dòng với chip" }
+const CHIP: AnatomyNode = { name: "StatusChip", tier: "composite", role: "chip \"phổ biến nhất\" (StatusChip accent soft, w-fit) — cùng dòng với tên, chỉ khi highlighted && badge", state: "accent" }
 // Price = ONE PricePoint primitive (amount + struck original + period). It is a
 // primitive → ONE node; its internal amount/original/period Typography are its OWN
 // anatomy (drill into PricePoint's story), NOT badged here.
-const PRICE_POINT: AnatomyNode = { name: "PricePoint", tier: "primitive", role: "giá gói: số lớn + giá gốc gạch ngang (khi có) + kỳ hạn — 1 đơn vị" }
+const PRICE_POINT: AnatomyNode = { name: "PricePoint", tier: "composite", role: "giá gói: số lớn + giá gốc gạch ngang (khi có) + kỳ hạn — 1 đơn vị" }
 
 // BASE shape (BaseTier · BadgeHiddenWithoutHighlight): tên + PricePoint, không chip.
 const BASE_PARTS: Array<AnatomyNode> = [sectionFrame([NAME, PRICE_POINT])]

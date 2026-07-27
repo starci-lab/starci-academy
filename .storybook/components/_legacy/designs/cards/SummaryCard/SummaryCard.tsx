@@ -1,8 +1,8 @@
 import React from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { CaretRightIcon } from "@phosphor-icons/react"
-import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
-import { TitledText } from "@sb-components/layouts/text/TitledText/TitledText"
+import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { TitledText } from "@sb-components/composites/text/TitledText/TitledText"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from

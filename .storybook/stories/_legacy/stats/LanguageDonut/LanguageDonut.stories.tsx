@@ -17,8 +17,8 @@ type Story = StoryObj<typeof LanguageDonut>
 
 // Both leaves share the same two direct parts — only size/item count differ.
 const DONUT_PARTS: Array<AnatomyNode> = [
-    { name: "Donut", tier: "primitive", role: "vành recharts theo màu brand ngôn ngữ + tổng số ở tâm" },
-    { name: "Legend", tier: "primitive", role: "danh sách dot màu + tên · count · % mỗi ngôn ngữ" },
+    { name: "Donut", tier: "composite", role: "vành recharts theo màu brand ngôn ngữ + tổng số ở tâm" },
+    { name: "Legend", tier: "composite", role: "danh sách dot màu + tên · count · % mỗi ngôn ngữ" },
 ]
 
 /** Default size for many languages — ring split by brand colour, total at the centre, legend with count + %. */

@@ -102,16 +102,16 @@ const QUERY = "N+1 query"
 const IDLE_PARTS: Array<AnatomyNode> = [
     {
         name: "ScrollShadow",
-        tier: "primitive",
+        tier: "composite",
         role: "vùng cuộn tự giới hạn (max-h-[55vh])",
         children: [
             {
                 name: "AsyncContent.Base",
-                tier: "primitive",
+                tier: "composite",
                 role: "switch error → loading → empty → content",
                 state: "content",
                 children: [
-                    { name: "Typography", tier: "primitive", role: "dòng gợi ý gõ từ khoá — chỉ khi query rỗng" },
+                    { name: "Typography", tier: "composite", role: "dòng gợi ý gõ từ khoá — chỉ khi query rỗng" },
                 ],
             },
         ],
@@ -123,28 +123,28 @@ const IDLE_PARTS: Array<AnatomyNode> = [
 const LOADING_PARTS: Array<AnatomyNode> = [
     {
         name: "ScrollShadow",
-        tier: "primitive",
+        tier: "composite",
         role: "vùng cuộn tự giới hạn (max-h-[55vh])",
         children: [
             {
                 name: "AsyncContent.Base",
-                tier: "primitive",
+                tier: "composite",
                 role: "nhánh loading → skeleton",
                 state: "loading",
                 children: [
                     {
                         name: "SurfaceListCard",
-                        tier: "primitive",
+                        tier: "composite",
                         role: "khung bordered (rounded-3xl bg-surface) — CÙNG khung với leaf có kết quả (port fix)",
                         children: [
                             {
                                 name: "SurfaceListCardItem",
-                                tier: "primitive",
+                                tier: "composite",
                                 role: "khung mỗi hàng skeleton ×3",
                                 children: [
-                                    { name: "Skeleton", tier: "primitive", role: "thanh tiêu đề giả (2/3)", state: "skeleton" },
-                                    { name: "Skeleton", tier: "primitive", role: "thanh phụ đề giả (1/2)", state: "skeleton" },
-                                    { name: "Skeleton", tier: "primitive", role: "ô icon-loại giả (size-4)", state: "skeleton" },
+                                    { name: "Skeleton", tier: "composite", role: "thanh tiêu đề giả (2/3)", state: "skeleton" },
+                                    { name: "Skeleton", tier: "composite", role: "thanh phụ đề giả (1/2)", state: "skeleton" },
+                                    { name: "Skeleton", tier: "composite", role: "ô icon-loại giả (size-4)", state: "skeleton" },
                                 ],
                             },
                         ],
@@ -159,16 +159,16 @@ const LOADING_PARTS: Array<AnatomyNode> = [
 const EMPTY_PARTS: Array<AnatomyNode> = [
     {
         name: "ScrollShadow",
-        tier: "primitive",
+        tier: "composite",
         role: "vùng cuộn tự giới hạn (max-h-[55vh])",
         children: [
             {
                 name: "AsyncContent.Base",
-                tier: "primitive",
+                tier: "composite",
                 role: "nhánh empty",
                 state: "empty",
                 children: [
-                    { name: "AsyncContent.Empty", tier: "primitive", role: "dòng 'không tìm thấy' — CÙNG câu với leaf lỗi" },
+                    { name: "AsyncContent.Empty", tier: "composite", role: "dòng 'không tìm thấy' — CÙNG câu với leaf lỗi" },
                 ],
             },
         ],
@@ -179,16 +179,16 @@ const EMPTY_PARTS: Array<AnatomyNode> = [
 const ERROR_PARTS: Array<AnatomyNode> = [
     {
         name: "ScrollShadow",
-        tier: "primitive",
+        tier: "composite",
         role: "vùng cuộn tự giới hạn (max-h-[55vh])",
         children: [
             {
                 name: "AsyncContent.Base",
-                tier: "primitive",
+                tier: "composite",
                 role: "nhánh error (ưu tiên trước loading/empty)",
                 state: "error",
                 children: [
-                    { name: "AsyncContent.Error", tier: "primitive", role: "dòng 'không tìm thấy' — nguồn dùng CHUNG một câu cho empty và error" },
+                    { name: "AsyncContent.Error", tier: "composite", role: "dòng 'không tìm thấy' — nguồn dùng CHUNG một câu cho empty và error" },
                 ],
             },
         ],
@@ -200,18 +200,18 @@ const ERROR_PARTS: Array<AnatomyNode> = [
 const DATA_PARTS: Array<AnatomyNode> = [
     {
         name: "ScrollShadow",
-        tier: "primitive",
+        tier: "composite",
         role: "vùng cuộn tự giới hạn (max-h-[55vh])",
         children: [
             {
                 name: "AsyncContent.Base",
-                tier: "primitive",
+                tier: "composite",
                 role: "nhánh content, query không rỗng",
                 state: "content",
                 children: [
                     {
                         name: "SurfaceListCard",
-                        tier: "primitive",
+                        tier: "composite",
                         role: "khung bordered (rounded-3xl bg-surface) ôm các hàng edge-to-edge — CÙNG khung skeleton (port fix, nguồn hand-roll rounded-2xl khác shape)",
                         children: [
                             { name: "EntityResultRow", tier: "design", role: "mỗi hàng kết quả (chip loại + tiêu đề + snippet), lặp ×N" },

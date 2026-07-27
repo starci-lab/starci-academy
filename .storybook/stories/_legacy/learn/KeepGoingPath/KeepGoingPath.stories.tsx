@@ -15,7 +15,7 @@ type Story = StoryObj<typeof KeepGoingPath>
 
 const PARTS: Array<AnatomyNode> = [
     { name: "SurfaceCardHeader", tier: "block", role: "dòng dẫn chương — đi `label` của SurfaceCard (render NGOÀI/trên surface), KHÔNG phải Typography rời" },
-    { name: "Surface", tier: "block", role: "vỏ surface + danh sách hàng — `SurfaceCard.List`, CÙNG layout với LearnNudges. `bordered` là PROP (chỉ bật khi nằm trong surface cha), mặc định shadow", storyId: "layouts-cards-surfacecard-surfacecard-list--leading-meta" },
+    { name: "Surface", tier: "block", role: "vỏ surface + danh sách hàng — `SurfaceCard.List`, CÙNG layout với LearnNudges. `bordered` là PROP (chỉ bật khi nằm trong surface cha), mặc định shadow", storyId: "composites-cards-surfacecard-surfacecard-list--leading-meta" },
 ]
 
 const LESSONS: Array<KeepGoingLesson> = [

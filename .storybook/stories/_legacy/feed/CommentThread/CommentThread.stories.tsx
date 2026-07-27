@@ -37,16 +37,16 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 // Button stays ONE opaque node, no icon child. attachSlot is not supplied here → not
 // rendered → omitted. Shared by the root composer AND every inline reply composer.
 const COMPOSER_PARTS: Array<AnatomyNode> = [
-    { name: "UserAvatar", tier: "primitive", role: "ảnh đại diện người xem ở đầu hàng (khi có avatarSrc)" },
+    { name: "UserAvatar", tier: "composite", role: "ảnh đại diện người xem ở đầu hàng (khi có avatarSrc)" },
     {
         name: "TextField",
-        tier: "primitive",
+        tier: "composite",
         role: "ô nhập (variant secondary) bọc vùng soạn",
         children: [
-            { name: "TextArea", tier: "primitive", role: "vùng gõ tự giãn theo nội dung" },
+            { name: "TextArea", tier: "composite", role: "vùng gõ tự giãn theo nội dung" },
         ],
     },
-    { name: "Button", tier: "primitive", role: "nút Gửi (size sm, primary); disabled khi trống hoặc đang gửi" },
+    { name: "Button", tier: "composite", role: "nút Gửi (size sm, primary); disabled khi trống hoặc đang gửi" },
 ]
 
 // One CommunityCommentRow node's real DOM: avatar + author-name/time Typography it
@@ -60,12 +60,12 @@ const COMMENT_ROW: AnatomyNode = {
     tier: "block",
     role: "một node bình luận: avatar + tác giả/thời gian + nội dung + reaction + slot actions",
     children: [
-        { name: "UserAvatar", tier: "primitive", role: "ảnh đại diện tác giả" },
-        { name: "Typography.Name", tier: "primitive", role: "tên hiển thị tác giả (truncate)" },
-        { name: "Typography.Time", tier: "primitive", role: "thời gian tương đối, muted" },
-        { name: "MarkdownContent", tier: "primitive", role: "nội dung bình luận (markdown)" },
+        { name: "UserAvatar", tier: "composite", role: "ảnh đại diện tác giả" },
+        { name: "Typography.Name", tier: "composite", role: "tên hiển thị tác giả (truncate)" },
+        { name: "Typography.Time", tier: "composite", role: "thời gian tương đối, muted" },
+        { name: "MarkdownContent", tier: "composite", role: "nội dung bình luận (markdown)" },
         { name: "ReactionBar", tier: "block", role: "cảm xúc + đếm; read-only khi không có onReact" },
-        { name: "Reply", tier: "primitive", role: "nút mở/đóng ô trả lời inline (truyền qua slot actions)", state: "hand-rolled" },
+        { name: "Reply", tier: "composite", role: "nút mở/đóng ô trả lời inline (truyền qua slot actions)", state: "hand-rolled" },
     ],
 }
 

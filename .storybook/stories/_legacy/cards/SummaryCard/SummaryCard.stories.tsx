@@ -19,16 +19,16 @@ type Story = StoryObj<typeof SummaryCard>
 // leaf live (WithHint/NoHint/LongContent/Group): icon + caret đứng trên, TitledText
 // (size=stat) gói value·label·hint làm MỘT node — không rải 3 Typography rời.
 const CARD_PARTS: Array<AnatomyNode> = [
-    { name: "Icon", tier: "primitive", role: "icon dẫn đầu (props.icon TRẦN, card tự ép size-6)" },
-    { name: "CaretRightIcon", tier: "primitive", role: "caret điều hướng size-3, không trượt" },
+    { name: "Icon", tier: "composite", role: "icon dẫn đầu (props.icon TRẦN, card tự ép size-6)" },
+    { name: "CaretRightIcon", tier: "composite", role: "caret điều hướng size-3, không trượt" },
     { name: "TitledText", tier: "design", role: "value·label·hint (size=stat) — 1 unit ngữ nghĩa" },
 ]
 
 // leaf Loading: isSkeleton branch đổi hẳn composition — 2 khối Skeleton (icon·caret)
 // + TitledText tự vẽ mirror (isSkeleton) — không phải Skeleton rời hand-roll.
 const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton", tier: "primitive", role: "khối icon (size-6)" },
-    { name: "Skeleton", tier: "primitive", role: "khối caret (size-5)" },
+    { name: "Skeleton", tier: "composite", role: "khối icon (size-6)" },
+    { name: "Skeleton", tier: "composite", role: "khối caret (size-5)" },
     { name: "TitledText", tier: "design", role: "value·label·hint skeleton mirror (isSkeleton)" },
 ]
 

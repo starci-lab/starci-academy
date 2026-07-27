@@ -97,11 +97,11 @@ const FEATURE_LIST: AnatomyNode = {
 // Content Typography that the inlined PricingCard DIRECTLY renders (its own `type`/
 // `weight`/`color`, echoing tier data) — each is a badged node, same standard as the
 // standalone `cards/PricingCard` block.
-const NAME: AnatomyNode = { name: "Typography.Name", tier: "primitive", role: "tên gói — tiêu đề cột" }
+const NAME: AnatomyNode = { name: "Typography.Name", tier: "composite", role: "tên gói — tiêu đề cột" }
 // Price = ONE PricePoint primitive (số lớn + period). Its internal Typography are
 // PricePoint's OWN anatomy (drill into PricePoint's story), NOT badged here.
-const PRICE_POINT: AnatomyNode = { name: "PricePoint", tier: "primitive", role: "giá gói: số lớn + kỳ hạn (khi có) — 1 đơn vị" }
-const DESC: AnatomyNode = { name: "Typography.Description", tier: "primitive", role: "mô tả gói — chìm (muted), chỉ tier có description" }
+const PRICE_POINT: AnatomyNode = { name: "PricePoint", tier: "composite", role: "giá gói: số lớn + kỳ hạn (khi có) — 1 đơn vị" }
+const DESC: AnatomyNode = { name: "Typography.Description", tier: "composite", role: "mô tả gói — chìm (muted), chỉ tier có description" }
 
 // Highlighted leaf: at least one tier is nổi bật → PricingCard's frame is accent and
 // carries the StatusChip ribbon inline beside the tier name.
@@ -117,11 +117,11 @@ const HIGHLIGHTED_PARTS: Array<AnatomyNode> = [
         role: "mỗi cột một tier — khung (accent khi tier nổi bật)",
         children: [
             NAME,
-            { name: "StatusChip", tier: "primitive", role: "ribbon \"phổ biến\" cạnh tên — chỉ tier nổi bật", state: "accent" },
+            { name: "StatusChip", tier: "composite", role: "ribbon \"phổ biến\" cạnh tên — chỉ tier nổi bật", state: "accent" },
             PRICE_POINT,
             DESC,
             FEATURE_LIST,
-            { name: "Button", tier: "primitive", role: "CTA chọn gói — một hành động duy nhất mỗi cột" },
+            { name: "Button", tier: "composite", role: "CTA chọn gói — một hành động duy nhất mỗi cột" },
         ],
     },
 ]
@@ -139,7 +139,7 @@ const PLAIN_PARTS: Array<AnatomyNode> = [
             PRICE_POINT,
             DESC,
             FEATURE_LIST,
-            { name: "Button", tier: "primitive", role: "CTA chọn gói — một hành động duy nhất mỗi cột" },
+            { name: "Button", tier: "composite", role: "CTA chọn gói — một hành động duy nhất mỗi cột" },
         ],
     },
 ]

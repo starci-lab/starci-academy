@@ -17,13 +17,13 @@ type Story = StoryObj<typeof BrandLockup>
 
 // Wide container: both direct parts render — the icon AND the wordmark stack.
 const FULL_PARTS: Array<AnatomyNode> = [
-    { name: "Logo", tier: "primitive", role: "biểu trưng SVG circuit-C" },
-    { name: "Wordmark", tier: "primitive", role: "stack 2 dòng StarCi/Academy — ẩn dưới @app-md" },
+    { name: "Logo", tier: "composite", role: "biểu trưng SVG circuit-C" },
+    { name: "Wordmark", tier: "composite", role: "stack 2 dòng StarCi/Academy — ẩn dưới @app-md" },
 ]
 
 // Narrow container: only the icon is meaningfully present (Wordmark is CSS-hidden).
 const ICON_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "Logo", tier: "primitive", role: "biểu trưng SVG circuit-C" },
+    { name: "Logo", tier: "composite", role: "biểu trưng SVG circuit-C" },
 ]
 
 export const IconAndWordmark: Story = {

@@ -33,13 +33,13 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 // LABEL is a Typography ArchitectureFlow renders directly → ONE node representing
 // the repeated per-node label (mirrors how a repeated design/primitive is one node).
 const FLOW_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "nhãn mỗi node (style \"code\"), lặp theo mảng nodes" },
+    { name: "Typography", tier: "composite", role: "nhãn mỗi node (style \"code\"), lặp theo mảng nodes" },
 ]
 
 // Single node: one bordered box wrapping its Typography, NO connector (caret only
 // appears between nodes) — same composition as FLOW_PARTS minus the connector.
 const SINGLE_PARTS: Array<AnatomyNode> = [
-    { name: "Typography", tier: "primitive", role: "nhãn node duy nhất (style \"code\")" },
+    { name: "Typography", tier: "composite", role: "nhãn node duy nhất (style \"code\")" },
 ]
 
 // Empty: no node labels → the block renders an empty flex row (no parts composed).

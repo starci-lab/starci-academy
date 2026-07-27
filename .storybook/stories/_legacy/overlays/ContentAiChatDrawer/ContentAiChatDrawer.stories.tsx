@@ -99,8 +99,8 @@ const CONVERSATIONS: Array<ConversationListItem> = [
 
 /** Shell header primitives shared by every leaf. */
 const HEADER_PARTS: Array<AnatomyNode> = [
-    { name: "Title", tier: "primitive", role: "tên bài học — tiêu đề drawer" },
-    { name: "ModeSwitch", tier: "primitive", role: "chuyển hiển thị rail ⇄ drawer (segmented 2 icon)" },
+    { name: "Title", tier: "composite", role: "tên bài học — tiêu đề drawer" },
+    { name: "ModeSwitch", tier: "composite", role: "chuyển hiển thị rail ⇄ drawer (segmented 2 icon)" },
 ]
 
 /** LEAF 1 — Chat thường: HistoryLink + ChatThread + ChatComposer(normal). */
@@ -114,7 +114,7 @@ export const ChatThuong: Story = {
                 leaf="Chat thường"
                 parts={[
                     ...HEADER_PARTS,
-                    { name: "HistoryLink", tier: "primitive", role: "mở lịch sử phiên trò chuyện" },
+                    { name: "HistoryLink", tier: "composite", role: "mở lịch sử phiên trò chuyện" },
                     { name: "ChatThread", tier: "block", role: "vùng hội thoại — luồng tin nhắn (states ở story ChatThread)", storyId: "block-learn-chatthread--conversation" },
                     { name: "ChatComposer", tier: "block", role: "ô soạn — input + model picker + gửi (states ở story ChatComposer)" },
                 ]}
@@ -148,7 +148,7 @@ export const ChatBoiDen: Story = {
                 leaf="Chat có bôi đen"
                 parts={[
                     ...HEADER_PARTS,
-                    { name: "HistoryLink", tier: "primitive", role: "mở lịch sử phiên" },
+                    { name: "HistoryLink", tier: "composite", role: "mở lịch sử phiên" },
                     { name: "SelectionBanner", tier: "block", role: "đoạn văn đã bôi đen — ghim trên đầu thread", storyId: "block-learn-selectionbanner--overview" },
                     { name: "ChatThread", tier: "block", role: "hội thoại side-thread về đoạn đã chọn", storyId: "block-learn-chatthread--conversation" },
                     { name: "ChatComposer", tier: "block", role: "chế độ selection — input rời sang hộp quick-ask riêng" },
@@ -194,7 +194,7 @@ export const LichSuPhien: Story = {
                 leaf="Lịch sử phiên"
                 parts={[
                     ...HEADER_PARTS,
-                    { name: "BackLink", tier: "primitive", role: "quay lại phiên chat" },
+                    { name: "BackLink", tier: "composite", role: "quay lại phiên chat" },
                     { name: "ConversationList", tier: "block", role: "danh sách/chọn phiên (states ở story ConversationList)", storyId: "block-learn-conversationlist--default" },
                 ]}
                 note="Cấu trúc KHÁC hẳn chat: HistoryLink → BackLink, body là ConversationList, KHÔNG composer."
@@ -236,7 +236,7 @@ export const TimNoiDung: Story = {
                 leaf="Tìm nội dung khoá"
                 parts={[
                     ...HEADER_PARTS,
-                    { name: "BackLink", tier: "primitive", role: "quay lại phiên chat" },
+                    { name: "BackLink", tier: "composite", role: "quay lại phiên chat" },
                     { name: "ContentSearchList", tier: "block", role: "tìm nội dung khoá (states ở story ContentSearchList)", storyId: "block-learn-contentsearchlist--with-results" },
                 ]}
                 note="Cấu trúc riêng: BackLink + ContentSearchList (ô tìm + danh sách kết quả), KHÔNG composer."

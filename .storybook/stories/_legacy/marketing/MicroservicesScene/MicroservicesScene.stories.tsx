@@ -44,18 +44,18 @@ const SCENE_PARTS: Array<AnatomyNode> = [
         children: [
             {
                 name: "G.Connectors",
-                tier: "primitive",
+                tier: "composite",
                 role: "dây nối svc → 3 pods; dây pods → DB đơn tô đỏ (hot path nghẽn)",
                 children: [
-                    { name: "Circle.Packet", tier: "primitive", role: "gói chạy dọc dây vào service (animateMotion, CSS)" },
+                    { name: "Circle.Packet", tier: "composite", role: "gói chạy dọc dây vào service (animateMotion, CSS)" },
                 ],
             },
-            { name: "IsoSvc", tier: "primitive", role: "node Service·LB (hex iso) phía trước deployment" },
-            { name: "IsoPod", tier: "primitive", role: "pod cube iso của deployment", state: "×3 · 1 accent focal" },
-            { name: "IsoDb", tier: "primitive", role: "datastore trụ iso, single-node = điểm nghẽn", state: "danger" },
-            { name: "Text.Label", tier: "primitive", role: "nhãn SVG: Service·LB / Deployment·3 pods / Postgres·1 node", state: "×3" },
-            { name: "G.ErrorFlag", tier: "primitive", role: "cảnh báo ⚠ single DB → bottleneck (tone danger)" },
-            { name: "Legend", tier: "primitive", role: "2 circle+text rời: focal pod (accent) · where it breaks (danger)" },
+            { name: "IsoSvc", tier: "composite", role: "node Service·LB (hex iso) phía trước deployment" },
+            { name: "IsoPod", tier: "composite", role: "pod cube iso của deployment", state: "×3 · 1 accent focal" },
+            { name: "IsoDb", tier: "composite", role: "datastore trụ iso, single-node = điểm nghẽn", state: "danger" },
+            { name: "Text.Label", tier: "composite", role: "nhãn SVG: Service·LB / Deployment·3 pods / Postgres·1 node", state: "×3" },
+            { name: "G.ErrorFlag", tier: "composite", role: "cảnh báo ⚠ single DB → bottleneck (tone danger)" },
+            { name: "Legend", tier: "composite", role: "2 circle+text rời: focal pod (accent) · where it breaks (danger)" },
         ],
     },
 ]
@@ -65,7 +65,7 @@ const SCENE_PARTS: Array<AnatomyNode> = [
 // its own badged node/anchor (not folded into the block).
 const CAPTION_PARTS: Array<AnatomyNode> = [
     ...SCENE_PARTS,
-    { name: "Typography", tier: "primitive", role: "caption dưới scene — MicroservicesScene tự render prop `caption`" },
+    { name: "Typography", tier: "composite", role: "caption dưới scene — MicroservicesScene tự render prop `caption`" },
 ]
 
 /** NO CAPTION — the bare scene: only the isometric SVG, no caption. */

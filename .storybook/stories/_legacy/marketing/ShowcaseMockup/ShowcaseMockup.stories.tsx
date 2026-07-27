@@ -65,7 +65,7 @@ const windowCard = (withUrl: boolean): AnatomyNode => ({
                 ? "thanh cửa sổ (border-b): 3 chấm đỏ/vàng/lục + address bar"
                 : "thanh cửa sổ (border-b): chỉ 3 chấm đỏ/vàng/lục, KHÔNG address bar",
             children: withUrl
-                ? [{ name: "Typography", tier: "primitive", role: "chuỗi URL address bar (type=code, render trực tiếp prop url)" }]
+                ? [{ name: "Typography", tier: "composite", role: "chuỗi URL address bar (type=code, render trực tiếp prop url)" }]
                 : undefined,
         },
         { name: "Content", tier: "design", role: "vùng bọc nội dung children (khoá 16:9 khi aspect='video')" },

@@ -40,7 +40,7 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 // renders directly is its own node.
 const PANEL_PART: AnatomyNode = {
     name: "PopoverContent",
-    tier: "primitive",
+    tier: "composite",
     role: "panel nổi 360px neo dưới-phải nút chuông",
     children: [
         {
@@ -48,26 +48,26 @@ const PANEL_PART: AnatomyNode = {
             tier: "block",
             role: "danh sách gom theo ngày + header đánh dấu đã đọc",
             children: [
-                { name: "Typography.Header", tier: "primitive", role: "tiêu đề panel (\"Thông báo\") — hiện prop title" },
+                { name: "Typography.Header", tier: "composite", role: "tiêu đề panel (\"Thông báo\") — hiện prop title" },
                 {
                     name: "Button",
-                    tier: "primitive",
+                    tier: "composite",
                     role: "nút đánh dấu tất cả đã đọc (tertiary, sm) — nhãn hiện qua children",
                     children: [
-                        { name: "ChecksIcon", tier: "primitive", role: "icon check dẫn đầu nút" },
+                        { name: "ChecksIcon", tier: "composite", role: "icon check dẫn đầu nút" },
                     ],
                 },
-                { name: "Typography.GroupLabel", tier: "primitive", role: "nhãn nhóm ngày (\"Today\"/\"Earlier\") — hiện prop group.label" },
+                { name: "Typography.GroupLabel", tier: "composite", role: "nhãn nhóm ngày (\"Today\"/\"Earlier\") — hiện prop group.label" },
                 {
                     name: "NotificationItem",
                     tier: "design",
                     role: "một dòng thông báo (lặp ×N theo group)",
                     children: [
-                        { name: "IconTile", tier: "primitive", role: "ô icon dẫn đầu, màu theo tone" },
-                        { name: "Dot", tier: "primitive", role: "chấm accent cạnh tiêu đề (dòng chưa đọc)", state: "unread" },
-                        { name: "Typography.Title", tier: "primitive", role: "tiêu đề dòng" },
-                        { name: "Typography.Body", tier: "primitive", role: "chi tiết phụ dòng" },
-                        { name: "Typography.Time", tier: "primitive", role: "nhãn thời gian dòng" },
+                        { name: "IconTile", tier: "composite", role: "ô icon dẫn đầu, màu theo tone" },
+                        { name: "Dot", tier: "composite", role: "chấm accent cạnh tiêu đề (dòng chưa đọc)", state: "unread" },
+                        { name: "Typography.Title", tier: "composite", role: "tiêu đề dòng" },
+                        { name: "Typography.Body", tier: "composite", role: "chi tiết phụ dòng" },
+                        { name: "Typography.Time", tier: "composite", role: "nhãn thời gian dòng" },
                     ],
                 },
             ],
@@ -84,16 +84,16 @@ const PANEL_PART: AnatomyNode = {
 const WITH_BADGE_PARTS: Array<AnatomyNode> = [
     {
         name: "Button.IconOnly",
-        tier: "primitive",
+        tier: "composite",
         role: "nút chuông mở popover (tertiary, bo tròn)",
         children: [
             {
                 name: "Badge.Anchor",
-                tier: "primitive",
+                tier: "composite",
                 role: "neo badge đếm vào góc chuông",
                 children: [
-                    { name: "BellIcon", tier: "primitive", role: "biểu tượng chuông" },
-                    { name: "Badge", tier: "primitive", role: "đếm chưa đọc, chốt \"9+\"", state: "danger" },
+                    { name: "BellIcon", tier: "composite", role: "biểu tượng chuông" },
+                    { name: "Badge", tier: "composite", role: "đếm chưa đọc, chốt \"9+\"", state: "danger" },
                 ],
             },
         ],
@@ -107,10 +107,10 @@ const WITH_BADGE_PARTS: Array<AnatomyNode> = [
 const NO_BADGE_PARTS: Array<AnatomyNode> = [
     {
         name: "Button.IconOnly",
-        tier: "primitive",
+        tier: "composite",
         role: "nút chuông mở popover (tertiary, bo tròn) — không badge ở 0",
         children: [
-            { name: "BellIcon", tier: "primitive", role: "biểu tượng chuông (không badge ở 0)" },
+            { name: "BellIcon", tier: "composite", role: "biểu tượng chuông (không badge ở 0)" },
         ],
     },
     PANEL_PART,

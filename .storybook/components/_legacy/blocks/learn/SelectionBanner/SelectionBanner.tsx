@@ -3,7 +3,7 @@ import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { QuotesIcon, XIcon } from "@phosphor-icons/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { InlineIconLabel } from "@sb-components/layouts/text/InlineIconLabel/InlineIconLabel"
+import { InlineIconLabel } from "@sb-components/composites/text/InlineIconLabel/InlineIconLabel"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
 
 /**

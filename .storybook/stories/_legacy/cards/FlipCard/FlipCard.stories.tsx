@@ -78,25 +78,25 @@ const LONG_ANSWER = (
 // DOM thật: câu hỏi = SurfaceCard riêng; chips (level+tag) nhóm NGAY dưới câu hỏi;
 // đáp án = SurfaceCard riêng, chỉ hiện khi revealed.
 const NOT_REVEALED_PARTS: Array<AnatomyNode> = [
-    { name: "SurfaceCard.Question", tier: "primitive", role: "thẻ câu hỏi (label ngoài, viền bordered)" },
-    { name: "BelowFront", tier: "primitive", role: "cụm chip cấp độ + tag, gom NGAY dưới câu hỏi" },
+    { name: "SurfaceCard.Question", tier: "composite", role: "thẻ câu hỏi (label ngoài, viền bordered)" },
+    { name: "BelowFront", tier: "composite", role: "cụm chip cấp độ + tag, gom NGAY dưới câu hỏi" },
 ]
 
 const REVEALED_PARTS: Array<AnatomyNode> = [
-    { name: "SurfaceCard.Question", tier: "primitive", role: "thẻ câu hỏi (label ngoài, viền bordered)" },
-    { name: "BelowFront", tier: "primitive", role: "cụm chip cấp độ + tag, gom NGAY dưới câu hỏi" },
-    { name: "SurfaceCard.Answer", tier: "primitive", role: "thẻ đáp án, reveal bên dưới (height-animate)" },
+    { name: "SurfaceCard.Question", tier: "composite", role: "thẻ câu hỏi (label ngoài, viền bordered)" },
+    { name: "BelowFront", tier: "composite", role: "cụm chip cấp độ + tag, gom NGAY dưới câu hỏi" },
+    { name: "SurfaceCard.Answer", tier: "composite", role: "thẻ đáp án, reveal bên dưới (height-animate)" },
 ]
 
 const NO_CHIPS_PARTS: Array<AnatomyNode> = [
-    { name: "SurfaceCard.Question", tier: "primitive", role: "thẻ câu hỏi (label ngoài, viền bordered)" },
-    { name: "SurfaceCard.Answer", tier: "primitive", role: "thẻ đáp án, reveal bên dưới (height-animate)" },
+    { name: "SurfaceCard.Question", tier: "composite", role: "thẻ câu hỏi (label ngoài, viền bordered)" },
+    { name: "SurfaceCard.Answer", tier: "composite", role: "thẻ đáp án, reveal bên dưới (height-animate)" },
 ]
 
 const LOCKED_PARTS: Array<AnatomyNode> = [
-    { name: "SurfaceCard.Question", tier: "primitive", role: "thẻ câu hỏi (label ngoài, viền bordered)" },
-    { name: "BelowFront", tier: "primitive", role: "cụm chip cấp độ + tag, gom NGAY dưới câu hỏi" },
-    { name: "SurfaceCard.Answer", tier: "primitive", role: "thẻ đáp án — nội dung thay bằng prompt mở khoá (icon khoá + title + subtitle)", state: "locked" },
+    { name: "SurfaceCard.Question", tier: "composite", role: "thẻ câu hỏi (label ngoài, viền bordered)" },
+    { name: "BelowFront", tier: "composite", role: "cụm chip cấp độ + tag, gom NGAY dưới câu hỏi" },
+    { name: "SurfaceCard.Answer", tier: "composite", role: "thẻ đáp án — nội dung thay bằng prompt mở khoá (icon khoá + title + subtitle)", state: "locked" },
 ]
 
 /** Not revealed — the default when the card first appears: only the question card + its chips. */

@@ -33,8 +33,8 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     // The FRAME is also a DEP (§11a.1) — this block already declared the frame it uses, kept as-is.
     "Alert.Base": { tier: "atom", role: "the RESTING branch reaches straight for the atom (the callout frame has no `isSkeleton` yet)", storyId: "atoms-feedback-alert-alert-base--action" },
     "Feedback.Callout": {
-        storyId: "layouts-feedback-feedback-feedback-callout--default",
-        tier: "primitive",
+        storyId: "composites-feedback-feedback-feedback-callout--default",
+        tier: "composite",
         role: "every bit of the SHAPE comes from this frame — the block only supplies content and the hide condition",
     },
 }

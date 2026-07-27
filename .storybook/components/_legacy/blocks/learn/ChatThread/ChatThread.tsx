@@ -7,8 +7,8 @@ import { ChatBubble } from "@sb-components/_legacy/designs/feed/ChatBubble/ChatB
 import { ChatToolResult } from "@sb-components/_legacy/blocks/learn/ChatToolResult/ChatToolResult"
 import { MarkdownContent } from "@sb-components/_legacy/designs/rendering/MarkdownContent/MarkdownContent"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
-import { ChipButtonList } from "@sb-components/layouts/buttons/ChipButtonList/ChipButtonList"
-import { InlineIconLabel } from "@sb-components/layouts/text/InlineIconLabel/InlineIconLabel"
+import { ChipButtonList } from "@sb-components/composites/buttons/ChipButtonList/ChipButtonList"
+import { InlineIconLabel } from "@sb-components/composites/text/InlineIconLabel/InlineIconLabel"
 import type { SearchCourseContentItem } from "@sb-components/_legacy/blocks/learn/EntityResultRow/EntityResultRow"
 
 /**

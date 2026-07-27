@@ -41,22 +41,22 @@ const frame = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
 const ICON_TILE: AnatomyNode = {
     name: "IconTile",
-    tier: "primitive",
+    tier: "composite",
     role: "ô icon vuông tô nền theo tone (accent · success · warning · danger · neutral), size md",
 }
 const TITLE_TYPOGRAPHY: AnatomyNode = {
     name: "Typography",
-    tier: "primitive",
+    tier: "composite",
     role: "tiêu đề claim (h5, semibold) — PitchCard tự render prop `title`",
 }
 const BODY_TYPOGRAPHY: AnatomyNode = {
     name: "Typography",
-    tier: "primitive",
+    tier: "composite",
     role: "đoạn giải thích (body-sm, muted) — PitchCard tự render prop `body`",
 }
 const FOOTER_BUTTON: AnatomyNode = {
     name: "Button",
-    tier: "primitive",
+    tier: "composite",
     role: "CTA vào surface liên quan (slot `footer`, chỉ khi truyền prop này)",
 }
 

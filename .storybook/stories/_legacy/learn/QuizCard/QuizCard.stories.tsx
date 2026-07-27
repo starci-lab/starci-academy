@@ -78,18 +78,18 @@ const MultipleDemo = () => {
 // tách node; icon ✓/✗ là mark nội tại mỗi row — gộp vào Radio/Checkbox.)
 
 /** StatusChip "Câu N" — con đầu của SectionCard (chỉ khi có questionIndex). */
-const CHIP_NODE: AnatomyNode = { name: "StatusChip", tier: "primitive", role: "nhãn \"Câu N\"", state: "accent" }
+const CHIP_NODE: AnatomyNode = { name: "StatusChip", tier: "composite", role: "nhãn \"Câu N\"", state: "accent" }
 /** Typography hiển thị prop `question` — QuizCard tự render trực tiếp. */
-const QUESTION_NODE: AnatomyNode = { name: "Typography", tier: "primitive", role: "nội dung câu hỏi" }
+const QUESTION_NODE: AnatomyNode = { name: "Typography", tier: "composite", role: "nội dung câu hỏi" }
 /** Nút nộp — chỉ dựng khi có onSubmit và chưa nộp. */
 const SUBMIT_NODE: AnatomyNode = {
     name: "Button",
-    tier: "primitive",
+    tier: "composite",
     role: "CTA \"Kiểm tra đáp án\" — chỉ khi có onSubmit và chưa nộp",
 }
 /** Khối giải thích — chỉ dựng khi đã nộp VÀ có `explanation`; 2 Typography riêng (nhãn tĩnh + nội dung). */
-const EXPLANATION_LABEL_NODE: AnatomyNode = { name: "Typography", tier: "primitive", role: "nhãn tĩnh \"Giải thích\"" }
-const EXPLANATION_BODY_NODE: AnatomyNode = { name: "Typography", tier: "primitive", role: "nội dung giải thích (muted)" }
+const EXPLANATION_LABEL_NODE: AnatomyNode = { name: "Typography", tier: "composite", role: "nhãn tĩnh \"Giải thích\"" }
+const EXPLANATION_BODY_NODE: AnatomyNode = { name: "Typography", tier: "composite", role: "nội dung giải thích (muted)" }
 
 // Câu hỏi + khối giải thích đều là Typography QuizCard TỰ RENDER trực tiếp (dù
 // nằm trong children của SectionCard) → MỖI Typography là 1 node riêng, có
@@ -99,19 +99,19 @@ const EXPLANATION_BODY_NODE: AnatomyNode = { name: "Typography", tier: "primitiv
 
 /** Bọc các con trong SectionCard theo đúng thứ tự DOM. */
 const inSection = (children: Array<AnatomyNode>): Array<AnatomyNode> => [
-    { name: "SectionCard", tier: "primitive", role: "khung surface tự đóng bao TOÀN BỘ câu hỏi (câu hỏi là text nội tại)", children },
+    { name: "SectionCard", tier: "composite", role: "khung surface tự đóng bao TOÀN BỘ câu hỏi (câu hỏi là text nội tại)", children },
 ]
 
 /** RadioGroup > Radio row (đúng/sai lộ ra sau khi nộp qua chính Radio, không tách node icon). */
 const radioGroup = (revealed: boolean): AnatomyNode => ({
     name: "RadioGroup",
-    tier: "primitive",
+    tier: "composite",
     role: revealed ? "nhóm phương án chọn-một; lộ đúng/sai sau khi nộp" : "nhóm phương án chọn-một; chỉ default/selected trước khi nộp",
     ...(revealed ? { state: "revealed" } : {}),
     children: [
         {
             name: "Radio",
-            tier: "primitive",
+            tier: "composite",
             role: revealed ? "mỗi phương án (một dòng); tô + icon ✓/✗ đúng/sai sau khi nộp" : "mỗi phương án (một dòng); default/selected",
             ...(revealed ? { state: "revealed" } : {}),
         },
@@ -121,13 +121,13 @@ const radioGroup = (revealed: boolean): AnatomyNode => ({
 /** CheckboxGroup > Checkbox row (đúng/sai/bỏ sót lộ ra qua chính Checkbox, không tách node icon). */
 const checkboxGroup = (revealed: boolean): AnatomyNode => ({
     name: "CheckboxGroup",
-    tier: "primitive",
+    tier: "composite",
     role: revealed ? "nhóm phương án chọn-nhiều; mỗi dòng lộ đúng/sai/bỏ sót sau khi nộp" : "nhóm phương án chọn-nhiều; chỉ default/selected trước khi nộp",
     ...(revealed ? { state: "revealed" } : {}),
     children: [
         {
             name: "Checkbox",
-            tier: "primitive",
+            tier: "composite",
             role: revealed ? "mỗi phương án (một dòng); tô + icon ✓/✗ đúng/sai/bỏ sót sau khi nộp" : "mỗi phương án (một dòng); default/selected",
             ...(revealed ? { state: "revealed" } : {}),
         },

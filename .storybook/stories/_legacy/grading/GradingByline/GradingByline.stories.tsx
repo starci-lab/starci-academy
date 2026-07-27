@@ -35,11 +35,11 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 const VERDICT_PARTS: Array<AnatomyNode> = [
     {
         name: "Span.VerdictRow",
-        tier: "primitive",
+        tier: "composite",
         role: "hàng inline gom glyph + nhãn kết quả",
         children: [
-            { name: "VerdictIcon", tier: "primitive", role: "glyph đạt (check xanh) / không đạt (x đỏ)" },
-            { name: "Typography.VerdictLabel", tier: "primitive", role: "nhãn kết quả (Đạt / Không đạt) đứng cạnh glyph" },
+            { name: "VerdictIcon", tier: "composite", role: "glyph đạt (check xanh) / không đạt (x đỏ)" },
+            { name: "Typography.VerdictLabel", tier: "composite", role: "nhãn kết quả (Đạt / Không đạt) đứng cạnh glyph" },
         ],
     },
 ]
@@ -48,11 +48,11 @@ const VERDICT_PARTS: Array<AnatomyNode> = [
 const VERDICT_CHIP_PARTS: Array<AnatomyNode> = [
     {
         name: "Chip",
-        tier: "primitive",
+        tier: "composite",
         role: "vỏ chip kết quả (success / danger · soft)",
         children: [
-            { name: "VerdictIcon", tier: "primitive", role: "glyph đạt / không đạt" },
-            { name: "Chip.Label", tier: "primitive", role: "nhãn kết quả trong chip" },
+            { name: "VerdictIcon", tier: "composite", role: "glyph đạt / không đạt" },
+            { name: "Chip.Label", tier: "composite", role: "nhãn kết quả trong chip" },
         ],
     },
 ]
@@ -67,7 +67,7 @@ const BYLINE_PARTS: Array<AnatomyNode> = [
         children: [
             {
                 name: "Span.AttributionRow",
-                tier: "primitive",
+                tier: "composite",
                 role: "gom sparkle + tên model plain-text (chip đứng NGOÀI span này); tự hiện SparkleIcon + tên model plain-text (không chip, không mono)",
             },
             { name: "AiCategoryChip", tier: "design", role: "chip hạng model — sibling của dòng text trong fragment" },
@@ -84,7 +84,7 @@ const BYLINE_NO_CHIP_PARTS: Array<AnatomyNode> = [
         children: [
             {
                 name: "Span.AttributionRow",
-                tier: "primitive",
+                tier: "composite",
                 role: "gom sparkle + tên model plain-text; tự hiện SparkleIcon + tên model plain-text (không hạng → không chip)",
             },
         ],
@@ -96,10 +96,10 @@ const BYLINE_NO_CHIP_PARTS: Array<AnatomyNode> = [
 const BYLINE_EMPTY_PARTS: Array<AnatomyNode> = [
     {
         name: "Div.DashedFrame",
-        tier: "primitive",
+        tier: "composite",
         role: "frame viền gạch (dashed) — ModelByline trả null nên không có part",
         children: [
-            { name: "Typography.Caption", tier: "primitive", role: "dòng chú thích placeholder (muted, body-xs)" },
+            { name: "Typography.Caption", tier: "composite", role: "dòng chú thích placeholder (muted, body-xs)" },
         ],
     },
 ]

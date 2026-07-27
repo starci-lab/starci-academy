@@ -2,7 +2,7 @@ import React from "react"
 import { cn } from "@heroui/react"
 import { LockSimpleIcon } from "@phosphor-icons/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { EnumChip, type EnumChipEntry } from "@sb-components/layouts/chips/EnumChip/EnumChip"
+import { EnumChip, type EnumChipEntry } from "@sb-components/composites/chips/EnumChip/EnumChip"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported from

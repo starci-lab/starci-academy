@@ -2,7 +2,7 @@ import React from "react"
 import type { ReactNode } from "react"
 import { Card, CardContent, Typography as HeroTypography, cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { ProgressMeter } from "@sb-components/layouts/stats/ProgressMeter/ProgressMeter"
+import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/ProgressMeter"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from

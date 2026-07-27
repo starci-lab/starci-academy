@@ -6,7 +6,7 @@ import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
 import type { IconTileTone, IconComponent } from "@sb-components/atoms/display/IconTile/IconTile"
-import { SegmentBar } from "@sb-components/layouts/stats/SegmentBar/SegmentBar"
+import { SegmentBar } from "@sb-components/composites/stats/SegmentBar/SegmentBar"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — NEW block, ported faithfully from the enrolled-course

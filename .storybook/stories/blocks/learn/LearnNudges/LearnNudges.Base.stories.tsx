@@ -37,8 +37,8 @@ const NUDGES: Array<LearnNudge> = [
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     // A KHUNG is also a DEP (§11a.1) — this block already declares the khung it uses, kept as-is.
     "SurfaceCard.List": {
-        storyId: "layouts-cards-surfacecard-surfacecard-list--default",
-        tier: "primitive",
+        storyId: "composites-cards-surfacecard-surfacecard-list--default",
+        tier: "composite",
         role: "frame + row rhythm — the SAME layout as KeepGoingPath",
     },
 }

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CodeIcon, StackIcon, TrayIcon } from "@phosphor-icons/react"
 import { TopicLane } from "@sb-components/_legacy/blocks/marketing/TopicLane/TopicLane"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
-import { Feedback } from "@sb-components/layouts/feedback/Feedback/Feedback"
+import { Feedback } from "@sb-components/composites/feedback/Feedback/Feedback"
 import { Skeleton as HeroSkeleton } from "@heroui/react"
 
 // `Feedback.Empty` nhận icon là COMPONENT ref và tự ép `size-8` (§4/§5) — phosphor
@@ -44,15 +44,15 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 // `Typography` children are ALSO direct-composed (not "inside a primitive's slot") →
 // they get their own nodes, nested under `button` (real DOM containment).
 const CONTENT_PARTS: Array<AnatomyNode> = [
-    { name: "Icon", tier: "primitive", role: "icon lane (code / hạ tầng) — ReactNode truyền vào, bọc <span> size-4" },
-    { name: "Typography", tier: "primitive", role: "tiêu đề lane (type=body-sm, weight=semibold)" },
+    { name: "Icon", tier: "composite", role: "icon lane (code / hạ tầng) — ReactNode truyền vào, bọc <span> size-4" },
+    { name: "Typography", tier: "composite", role: "tiêu đề lane (type=body-sm, weight=semibold)" },
     {
         name: "button",
-        tier: "primitive",
+        tier: "composite",
         role: "hàng chủ đề bấm được — hand-roll <button> (có port ListRow nhưng chưa dùng)",
         children: [
-            { name: "Typography.Label", tier: "primitive", role: "nhãn lesson (type=body-sm, truncate, hover underline)" },
-            { name: "Typography.Tag", tier: "primitive", role: "tag khóa phải (type=code, text-[10px] muted)" },
+            { name: "Typography.Label", tier: "composite", role: "nhãn lesson (type=body-sm, truncate, hover underline)" },
+            { name: "Typography.Tag", tier: "composite", role: "tag khóa phải (type=code, text-[10px] muted)" },
         ],
     },
 ]
@@ -62,24 +62,24 @@ const CONTENT_PARTS: Array<AnatomyNode> = [
 // anatomy của chính nó) → giữ NGUYÊN 1 node, KHÔNG đào vào con của nó (icon/tiêu đề/
 // mô tả rỗng nằm TRONG slot của Feedback.Empty, không badge riêng).
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "Icon", tier: "primitive", role: "icon lane — header vẫn giữ" },
-    { name: "Typography", tier: "primitive", role: "tiêu đề lane (type=body-sm, weight=semibold)" },
-    { name: "Feedback.Empty", tier: "primitive", role: "\"Chưa có chủ đề nào\" thay cho danh sách hàng", state: "empty" },
+    { name: "Icon", tier: "composite", role: "icon lane — header vẫn giữ" },
+    { name: "Typography", tier: "composite", role: "tiêu đề lane (type=body-sm, weight=semibold)" },
+    { name: "Feedback.Empty", tier: "composite", role: "\"Chưa có chủ đề nào\" thay cho danh sách hàng", state: "empty" },
 ]
 
 // loading leaf: chrome mirrored — header Skeleton (icon + tiêu đề) + 3 khung hàng,
 // mỗi khung BỌC 2 Skeleton (nhãn + tag) đúng footprint <button> để không nhảy layout.
 const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton.Icon", tier: "primitive", role: "mirror icon lane (size-4)", state: "skeleton" },
-    { name: "Skeleton.Title", tier: "primitive", role: "mirror tiêu đề lane (h-[14px] w-20)", state: "skeleton" },
+    { name: "Skeleton.Icon", tier: "composite", role: "mirror icon lane (size-4)", state: "skeleton" },
+    { name: "Skeleton.Title", tier: "composite", role: "mirror tiêu đề lane (h-[14px] w-20)", state: "skeleton" },
     {
         name: "Row frame",
-        tier: "primitive",
+        tier: "composite",
         role: "khung hàng ×3 (div border + surface) — giữ đúng footprint của <button>",
         state: "skeleton",
         children: [
-            { name: "Skeleton.Label", tier: "primitive", role: "mirror nhãn lesson (h-[14px] w-1/2)", state: "skeleton" },
-            { name: "Skeleton.Tag", tier: "primitive", role: "mirror tag (h-3 w-6)", state: "skeleton" },
+            { name: "Skeleton.Label", tier: "composite", role: "mirror nhãn lesson (h-[14px] w-1/2)", state: "skeleton" },
+            { name: "Skeleton.Tag", tier: "composite", role: "mirror tag (h-3 w-6)", state: "skeleton" },
         ],
     },
 ]

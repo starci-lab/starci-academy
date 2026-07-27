@@ -14,7 +14,7 @@ export default meta
 type Story = StoryObj<typeof CourseBrief>
 
 const PARTS: Array<AnatomyNode> = [
-    { name: "Page.Header", tier: "primitive", role: "KHUNG bố cục (layout) — breadcrumb → title → description → meta. Block ĐẶT nội dung vào đây, KHÔNG tự vẽ." },
+    { name: "Page.Header", tier: "composite", role: "KHUNG bố cục (layout) — breadcrumb → title → description → meta. Block ĐẶT nội dung vào đây, KHÔNG tự vẽ." },
     { name: "Breadcrumbs", tier: "atom", role: "đường dẫn — block tự dựng từ `breadcrumbItems` (DỮ LIỆU), screen không cầm atom" },
     { name: "Title", tier: "atom", role: "tên khoá — prop `title`" },
     { name: "Meta", tier: "atom", role: "scalar catalog (chương · giờ · học viên) — §1 muted text, KHÔNG chip" },

@@ -1,6 +1,6 @@
 import React from "react"
 import { CheckCircleIcon, CircleIcon, LockIcon, PlayIcon } from "@phosphor-icons/react"
-import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { DifficultyChip, type Difficulty } from "@sb-components/_legacy/designs/chips/DifficultyChip/DifficultyChip"
 
 /**

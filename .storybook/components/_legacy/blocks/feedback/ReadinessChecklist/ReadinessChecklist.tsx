@@ -1,6 +1,6 @@
 import React from "react"
 import { CheckCircleIcon } from "@phosphor-icons/react"
-import { List } from "@sb-components/layouts/lists/List/List"
+import { List } from "@sb-components/composites/lists/List/List"
 import { IconTile, type IconComponent } from "@sb-components/atoms/display/IconTile/IconTile"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"

@@ -19,15 +19,15 @@ type Story = StoryObj<typeof IOExampleCard>
 // N hàng cùng 1 tên part (repeated), tách nhau bởi viền dashed. Không đào sâu vào
 // label/value riêng bên trong (cháu-nội của Row).
 const TWO_ROW_PARTS: Array<AnatomyNode> = [
-    { name: "Row", tier: "primitive", role: "label muted (text-xs) + value mono pre-wrap, lặp lại mỗi phần tử `rows`" },
+    { name: "Row", tier: "composite", role: "label muted (text-xs) + value mono pre-wrap, lặp lại mỗi phần tử `rows`" },
 ]
 
 const THREE_ROW_PARTS: Array<AnatomyNode> = [
-    { name: "Row", tier: "primitive", role: "label muted/success/danger theo `tone` + value mono, lặp lại mỗi phần tử `rows`" },
+    { name: "Row", tier: "composite", role: "label muted/success/danger theo `tone` + value mono, lặp lại mỗi phần tử `rows`" },
 ]
 
 const ONE_ROW_PARTS: Array<AnatomyNode> = [
-    { name: "Row", tier: "primitive", role: "label muted + value mono — chỉ 1 hàng nên không có viền dashed giữa hàng" },
+    { name: "Row", tier: "composite", role: "label muted + value mono — chỉ 1 hàng nên không có viền dashed giữa hàng" },
 ]
 
 /** A sample testcase: labelled input → expected output, mono + pre-wrapped. */

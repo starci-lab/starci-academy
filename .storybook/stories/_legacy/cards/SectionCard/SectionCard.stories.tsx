@@ -26,16 +26,16 @@ const body = (
 // FULL — header row (Icon + Title left, Action right) separated by a rule, then Body.
 // Shared by Default and Loading (same composition; Loading swaps each node for its skeleton mirror).
 const FULL_PARTS: Array<AnatomyNode> = [
-    { name: "Icon", tier: "primitive", role: "icon đầu header (muted/accent theo `accent`) — hiện khi có prop `icon`" },
-    { name: "Title", tier: "primitive", role: "tiêu đề header (text-base semibold) — hiện prop `title`" },
-    { name: "Action", tier: "primitive", role: "action ghim phải header (vd nút 'View all') — hiện khi có prop `action`" },
+    { name: "Icon", tier: "composite", role: "icon đầu header (muted/accent theo `accent`) — hiện khi có prop `icon`" },
+    { name: "Title", tier: "composite", role: "tiêu đề header (text-base semibold) — hiện prop `title`" },
+    { name: "Action", tier: "composite", role: "action ghim phải header (vd nút 'View all') — hiện khi có prop `action`" },
     { name: "Body", tier: "design", role: "nội dung section dưới header — children" },
 ]
 
 // HEADER_NO_ACTION — Icon + Title, no Action (WhoToFollow/UpcomingLivestreamCard/StreakFreezeCard combo).
 const HEADER_NO_ACTION_PARTS: Array<AnatomyNode> = [
-    { name: "Icon", tier: "primitive", role: "icon đầu header" },
-    { name: "Title", tier: "primitive", role: "tiêu đề header" },
+    { name: "Icon", tier: "composite", role: "icon đầu header" },
+    { name: "Title", tier: "composite", role: "tiêu đề header" },
     { name: "Body", tier: "design", role: "nội dung section dưới header — children" },
 ]
 

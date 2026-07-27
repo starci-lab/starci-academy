@@ -30,14 +30,14 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 
 // Clickable / pending leaves resolve a route → EntityLink renders the HeroUI Link.
 const LINK_PARTS: Array<AnatomyNode> = [
-    { name: "Link", tier: "primitive", role: "chữ đậm bấm được (HeroUI Link), gạch chân khi hover" },
+    { name: "Link", tier: "composite", role: "chữ đậm bấm được (HeroUI Link), gạch chân khi hover" },
 ]
 
 // Not-clickable leaf shows BOTH branches: a resolvable actor (Link) + an
 // unresolvable target that falls back to a plain bold span (no dead link).
 const NOT_CLICKABLE_PARTS: Array<AnatomyNode> = [
-    { name: "Link", tier: "primitive", role: "mốc resolve được → chữ đậm bấm được" },
-    { name: "span", tier: "primitive", role: "mốc không resolve → chữ đậm thường, không phải link chết" },
+    { name: "Link", tier: "composite", role: "mốc resolve được → chữ đậm bấm được" },
+    { name: "span", tier: "composite", role: "mốc không resolve → chữ đậm thường, không phải link chết" },
 ]
 
 export const Clickable: Story = {

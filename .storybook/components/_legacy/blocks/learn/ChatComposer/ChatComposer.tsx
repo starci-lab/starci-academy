@@ -3,7 +3,7 @@ import type { ReactNode } from "react"
 import { cn, ScrollShadow } from "@heroui/react"
 import { MagnifyingGlassIcon, PaperPlaneTiltIcon } from "@phosphor-icons/react"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
-import { ChipButtonList, type ChipButtonItem } from "@sb-components/layouts/buttons/ChipButtonList/ChipButtonList"
+import { ChipButtonList, type ChipButtonItem } from "@sb-components/composites/buttons/ChipButtonList/ChipButtonList"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**

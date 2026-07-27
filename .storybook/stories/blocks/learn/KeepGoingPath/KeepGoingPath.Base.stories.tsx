@@ -43,8 +43,8 @@ const MIXED: Array<KeepGoingContent> = [
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     // A FRAME is also a DEP (§11a.1) — this block already declares the frame it uses, kept as-is.
     "SurfaceCard.List": {
-        storyId: "layouts-cards-surfacecard-surfacecard-list--default",
-        tier: "primitive",
+        storyId: "composites-cards-surfacecard-surfacecard-list--default",
+        tier: "composite",
         role: "frame + row rhythm — SHARED with LearnNudges so no second render path is born",
     },
     "VariantChip.Difficulty": {

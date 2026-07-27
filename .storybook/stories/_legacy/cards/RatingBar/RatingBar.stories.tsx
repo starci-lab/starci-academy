@@ -40,9 +40,9 @@ const gradesWithoutInterval = [
 ]
 
 // Every tile: label + shortcut-number chip + (optional) next-interval hint.
-const LABEL: AnatomyNode = { name: "Label", tier: "primitive", role: "nhãn mức nhớ (Quên/Khó/Tốt/Dễ)" }
-const STATUS_CHIP: AnatomyNode = { name: "StatusChip", tier: "primitive", role: "số phím tắt 1–4 (tone neutral)" }
-const HINT: AnatomyNode = { name: "Typography", tier: "primitive", role: "khoảng lặp kế tiếp (vd '3 ngày')" }
+const LABEL: AnatomyNode = { name: "Label", tier: "composite", role: "nhãn mức nhớ (Quên/Khó/Tốt/Dễ)" }
+const STATUS_CHIP: AnatomyNode = { name: "StatusChip", tier: "composite", role: "số phím tắt 1–4 (tone neutral)" }
+const HINT: AnatomyNode = { name: "Typography", tier: "composite", role: "khoảng lặp kế tiếp (vd '3 ngày')" }
 
 /** With hint — every tile shows its next-interval preview. */
 const PARTS_WITH_HINT: Array<AnatomyNode> = [LABEL, STATUS_CHIP, HINT]
@@ -50,8 +50,8 @@ const PARTS_WITH_HINT: Array<AnatomyNode> = [LABEL, STATUS_CHIP, HINT]
 const PARTS_NO_HINT: Array<AnatomyNode> = [LABEL, STATUS_CHIP]
 /** Loading — each tile's Label/StatusChip/hint mirrored as Skeleton stand-ins. */
 const PARTS_SKELETON: Array<AnatomyNode> = [
-    { name: "Skeleton", tier: "primitive", role: "khung nhãn mức nhớ", state: "skeleton" },
-    { name: "Skeleton", tier: "primitive", role: "khung số phím tắt", state: "skeleton" },
+    { name: "Skeleton", tier: "composite", role: "khung nhãn mức nhớ", state: "skeleton" },
+    { name: "Skeleton", tier: "composite", role: "khung số phím tắt", state: "skeleton" },
 ]
 
 /**

@@ -17,7 +17,7 @@ import { ActivityAvatar } from "@sb-components/_legacy/designs/feed/ActivityAvat
 import { EntityLink } from "@sb-components/_legacy/designs/feed/EntityLink/EntityLink"
 import { FeedItem } from "@sb-components/_legacy/designs/feed/FeedItem/FeedItem"
 import { ReactionBar, ReactionType } from "@sb-components/_legacy/designs/feed/ReactionBar/ReactionBar"
-import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK ported faithfully from

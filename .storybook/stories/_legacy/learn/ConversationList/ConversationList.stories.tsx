@@ -36,10 +36,10 @@ const SESSIONS: Array<ConversationListItem> = [
 
 // ── content leaf — chrome: ScrollShadow → AsyncContent.Base(content) → SurfaceListCard → rows. ──
 const DATA_PARTS: Array<AnatomyNode> = [
-    { name: "ScrollShadow", tier: "primitive", role: "khung cuộn tự giới hạn 55vh" },
+    { name: "ScrollShadow", tier: "composite", role: "khung cuộn tự giới hạn 55vh" },
     {
         name: "AsyncContent.Base",
-        tier: "primitive",
+        tier: "composite",
         role: "switch error → loading → empty → content",
         state: "content",
         children: [
@@ -56,13 +56,13 @@ const DATA_PARTS: Array<AnatomyNode> = [
                             { name: "TitledText", tier: "design", role: "tiêu đề (body-sm, rỗng → \"Chưa đặt tên\") + phụ đề (body-xs muted)" },
                             {
                                 name: "Dropdown",
-                                tier: "primitive",
+                                tier: "composite",
                                 role: "menu ⋯ ẩn khi đang đổi tên",
                                 children: [
-                                    { name: "Button.Menu", tier: "primitive", role: "nút kích hoạt menu (size-sm, icon tự ép cỡ)" },
-                                    { name: "DropdownItem.Rename", tier: "primitive", role: "vào chế độ sửa tên" },
-                                    { name: "DropdownItem.Archive", tier: "primitive", role: "lưu trữ phiên" },
-                                    { name: "DropdownItem.Delete", tier: "primitive", role: "xoá phiên (tô danger)", state: "danger" },
+                                    { name: "Button.Menu", tier: "composite", role: "nút kích hoạt menu (size-sm, icon tự ép cỡ)" },
+                                    { name: "DropdownItem.Rename", tier: "composite", role: "vào chế độ sửa tên" },
+                                    { name: "DropdownItem.Archive", tier: "composite", role: "lưu trữ phiên" },
+                                    { name: "DropdownItem.Delete", tier: "composite", role: "xoá phiên (tô danger)", state: "danger" },
                                 ],
                             },
                         ],
@@ -76,10 +76,10 @@ const DATA_PARTS: Array<AnatomyNode> = [
 // loading leaf — AsyncContent.Base falls to its loading branch → a bordered
 // SurfaceListCard of skeleton rows (same footprint as a real row).
 const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "ScrollShadow", tier: "primitive", role: "khung cuộn (vẫn hiện)" },
+    { name: "ScrollShadow", tier: "composite", role: "khung cuộn (vẫn hiện)" },
     {
         name: "AsyncContent.Base",
-        tier: "primitive",
+        tier: "composite",
         role: "nhánh loading",
         state: "loading",
         children: [
@@ -93,9 +93,9 @@ const LOADING_PARTS: Array<AnatomyNode> = [
                         tier: "design",
                         role: "hàng skeleton ×3 (source :1049 `[0, 1, 2]`)",
                         children: [
-                            { name: "Skeleton.Title", tier: "primitive", role: "mirror body-sm, rộng 2/3" },
-                            { name: "Skeleton.Subtitle", tier: "primitive", role: "mirror body-xs, rộng 1/2" },
-                            { name: "Skeleton", tier: "primitive", role: "mirror size-8 rounded-xl" },
+                            { name: "Skeleton.Title", tier: "composite", role: "mirror body-sm, rộng 2/3" },
+                            { name: "Skeleton.Subtitle", tier: "composite", role: "mirror body-xs, rộng 1/2" },
+                            { name: "Skeleton", tier: "composite", role: "mirror size-8 rounded-xl" },
                         ],
                     },
                 ],
@@ -107,10 +107,10 @@ const LOADING_PARTS: Array<AnatomyNode> = [
 // empty leaf — chrome stays, AsyncContent.Base falls to AsyncContent.Empty → Feedback.Empty.
 // SAME copy as the error leaf (source :1063-1070), no retry button.
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "ScrollShadow", tier: "primitive", role: "khung cuộn" },
+    { name: "ScrollShadow", tier: "composite", role: "khung cuộn" },
     {
         name: "AsyncContent.Base",
-        tier: "primitive",
+        tier: "composite",
         role: "nhánh empty",
         state: "empty",
         children: [
@@ -119,7 +119,7 @@ const EMPTY_PARTS: Array<AnatomyNode> = [
                 tier: "design",
                 role: "khung rỗng của region",
                 children: [
-                    { name: "Feedback.Empty", tier: "primitive", role: "\"Chưa có cuộc trò chuyện\" — KHÔNG nút thử lại" },
+                    { name: "Feedback.Empty", tier: "composite", role: "\"Chưa có cuộc trò chuyện\" — KHÔNG nút thử lại" },
                 ],
             },
         ],
@@ -130,10 +130,10 @@ const EMPTY_PARTS: Array<AnatomyNode> = [
 // (tone danger). Source dùng CÙNG câu với empty, không có onRetry/retryLabel
 // nên KHÔNG có nút thử lại — anatomy phản ánh đúng thực tế đó.
 const ERROR_PARTS: Array<AnatomyNode> = [
-    { name: "ScrollShadow", tier: "primitive", role: "khung cuộn" },
+    { name: "ScrollShadow", tier: "composite", role: "khung cuộn" },
     {
         name: "AsyncContent.Base",
-        tier: "primitive",
+        tier: "composite",
         role: "nhánh error",
         state: "error",
         children: [
@@ -142,7 +142,7 @@ const ERROR_PARTS: Array<AnatomyNode> = [
                 tier: "design",
                 role: "khung lỗi của region",
                 children: [
-                    { name: "Feedback.Empty", tier: "primitive", role: "\"Chưa có cuộc trò chuyện\" (cùng câu empty) — KHÔNG nút thử lại", state: "danger" },
+                    { name: "Feedback.Empty", tier: "composite", role: "\"Chưa có cuộc trò chuyện\" (cùng câu empty) — KHÔNG nút thử lại", state: "danger" },
                 ],
             },
         ],
@@ -152,10 +152,10 @@ const ERROR_PARTS: Array<AnatomyNode> = [
 // active-row leaf — SAME shape as DATA_PARTS, plus the accent-tint wrapper
 // (source :1075-1079) around the open session's title+menu.
 const ACTIVE_PARTS: Array<AnatomyNode> = [
-    { name: "ScrollShadow", tier: "primitive", role: "khung cuộn" },
+    { name: "ScrollShadow", tier: "composite", role: "khung cuộn" },
     {
         name: "AsyncContent.Base",
-        tier: "primitive",
+        tier: "composite",
         role: "nhánh content",
         state: "content",
         children: [
@@ -176,7 +176,7 @@ const ACTIVE_PARTS: Array<AnatomyNode> = [
                                 state: "accent",
                                 children: [
                                     { name: "TitledText", tier: "design", role: "tiêu đề + phụ đề của phiên đang mở" },
-                                    { name: "Dropdown", tier: "primitive", role: "menu ⋯ của phiên đang mở" },
+                                    { name: "Dropdown", tier: "composite", role: "menu ⋯ của phiên đang mở" },
                                 ],
                             },
                         ],
@@ -190,10 +190,10 @@ const ACTIVE_PARTS: Array<AnatomyNode> = [
 // renaming leaf — the ⋯ menu is HIDDEN (source :1135); the title/subtitle
 // column is replaced by a single bare `<input>` (source :1081-1102).
 const RENAMING_PARTS: Array<AnatomyNode> = [
-    { name: "ScrollShadow", tier: "primitive", role: "khung cuộn" },
+    { name: "ScrollShadow", tier: "composite", role: "khung cuộn" },
     {
         name: "AsyncContent.Base",
-        tier: "primitive",
+        tier: "composite",
         role: "nhánh content",
         state: "content",
         children: [
@@ -207,7 +207,7 @@ const RENAMING_PARTS: Array<AnatomyNode> = [
                         tier: "design",
                         role: "phiên ĐANG ĐỔI TÊN — cột title/subtitle rút còn 1 input, KHÔNG có menu ⋯",
                         children: [
-                            { name: "Input.Rename", tier: "primitive", role: "input trần, autoFocus; Enter/blur lưu, Escape huỷ" },
+                            { name: "Input.Rename", tier: "composite", role: "input trần, autoFocus; Enter/blur lưu, Escape huỷ" },
                         ],
                     },
                 ],
@@ -220,10 +220,10 @@ const RENAMING_PARTS: Array<AnatomyNode> = [
 // IMPROVEMENT over source (:1189-1197 rendered a bare "đang tải" Typography
 // line): the trailing row mirrors the real row footprint instead — no jump.
 const PAGINATING_PARTS: Array<AnatomyNode> = [
-    { name: "ScrollShadow", tier: "primitive", role: "khung cuộn" },
+    { name: "ScrollShadow", tier: "composite", role: "khung cuộn" },
     {
         name: "AsyncContent.Base",
-        tier: "primitive",
+        tier: "composite",
         role: "nhánh content",
         state: "content",
         children: [
@@ -239,9 +239,9 @@ const PAGINATING_PARTS: Array<AnatomyNode> = [
                         role: "hàng skeleton mirror NỐI THÊM cuối danh sách — cải thiện so với source (dòng chữ trần)",
                         state: "loading",
                         children: [
-                            { name: "Skeleton.Title", tier: "primitive", role: "mirror body-sm" },
-                            { name: "Skeleton.Subtitle", tier: "primitive", role: "mirror body-xs" },
-                            { name: "Skeleton", tier: "primitive", role: "mirror size-8" },
+                            { name: "Skeleton.Title", tier: "composite", role: "mirror body-sm" },
+                            { name: "Skeleton.Subtitle", tier: "composite", role: "mirror body-xs" },
+                            { name: "Skeleton", tier: "composite", role: "mirror size-8" },
                         ],
                     },
                 ],

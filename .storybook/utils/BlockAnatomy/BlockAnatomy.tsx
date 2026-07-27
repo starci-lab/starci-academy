@@ -124,7 +124,8 @@ export interface BlockAnatomyProps {
 const TIER_PILL: Record<AnatomyTier, string> = {
     screen: "bg-rose-100 text-rose-800 dark:bg-rose-900 dark:text-rose-100",
     block: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100",
-    primitive: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100",
+    frame: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100",
+    composite: "bg-sky-100 text-sky-800 dark:bg-sky-900 dark:text-sky-100",
     design: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-100",
     atom: "bg-default text-muted",
 }
@@ -133,16 +134,21 @@ const TIER_PILL: Record<AnatomyTier, string> = {
 const TIER_RAIL: Record<AnatomyTier, string> = {
     screen: "border-rose-400",
     block: "border-purple-400",
-    primitive: "border-blue-400",
+    frame: "border-blue-400",
+    composite: "border-sky-400",
     design: "border-emerald-400",
     atom: "border-default",
 }
 
-/** Nhãn tầng hiện ra — `primitive` là tên CŨ của tầng layout (§13). */
+/**
+ * Nhãn tầng hiện ra. `frame` và `composite` thay cho `primitive` (2026-07-27): tầng cũ đo ra
+ * hai bản chất — 7 khung slot-trơ và 37 component sở hữu vai nội dung.
+ */
 const TIER_NAME: Record<AnatomyTier, string> = {
     screen: "screen",
     block: "block",
-    primitive: "layout",
+    frame: "frame",
+    composite: "composite",
     design: "design",
     atom: "atom",
 }
@@ -371,7 +377,7 @@ const BlockAnatomyDerived = ({
                 const kids = order.filter((child) => parentOf.get(child) === nm)
                 return {
                     name: nm,
-                    tier: meta?.tier ?? "primitive",
+                    tier: meta?.tier ?? "composite",
                     role: meta?.role,
                     state: meta?.state,
                     storyId: meta?.storyId,

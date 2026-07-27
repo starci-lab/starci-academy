@@ -1,9 +1,9 @@
 import React from "react"
 import { Popover, cn } from "@heroui/react"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
-import { Cluster } from "@sb-components/layouts/layout/Cluster/Cluster"
-import { Stack } from "@sb-components/layouts/layout/Stack/Stack"
-import { KeyValue } from "@sb-components/layouts/data/KeyValue/KeyValue"
+import { Cluster } from "@sb-components/frames/Cluster/Cluster"
+import { Stack } from "@sb-components/frames/Stack/Stack"
+import { KeyValue } from "@sb-components/composites/data/KeyValue/KeyValue"
 import { Typography as TypographyAtom } from "@sb-components/atoms/text/Typography/Typography"
 
 /**

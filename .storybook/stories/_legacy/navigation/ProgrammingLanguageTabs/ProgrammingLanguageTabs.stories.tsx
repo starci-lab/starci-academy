@@ -29,11 +29,11 @@ type Story = StoryObj<typeof ProgrammingLanguageTabs>
 
 const tabsFrame = (children: Array<AnatomyNode>): AnatomyNode => ({
     name: "ExtendedTabs",
-    tier: "primitive",
+    tier: "composite",
     role: "khung tab (pill hoặc underline chrome, sở hữu bởi ExtendedTabs)",
     children,
 })
-const TAB: AnatomyNode = { name: "Tabs.Tab", tier: "primitive", role: "mỗi tab ngôn ngữ (icon brand + nhãn), lặp theo 4 ngôn ngữ mặc định; disabled khi không có sample" }
+const TAB: AnatomyNode = { name: "Tabs.Tab", tier: "composite", role: "mỗi tab ngôn ngữ (icon brand + nhãn), lặp theo 4 ngôn ngữ mặc định; disabled khi không có sample" }
 const PARTS: Array<AnatomyNode> = [tabsFrame([TAB])]
 
 /** Owns `selectedLang` so the active tab / indicator updates on press. */

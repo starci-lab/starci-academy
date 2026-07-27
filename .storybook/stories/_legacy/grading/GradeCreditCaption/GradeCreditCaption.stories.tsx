@@ -56,7 +56,7 @@ const emptyUsage: GradeCreditUsage = {
 const MUTED_PARTS: Array<AnatomyNode> = [
     {
         name: "Button.Pressable",
-        tier: "primitive",
+        tier: "composite",
         role: "native <button> bọc caption, bấm mở modal chi tiết quota; tự hiện dòng \"Còn N/M credit tuần này\" (muted)",
     },
 ]
@@ -67,7 +67,7 @@ const MUTED_PARTS: Array<AnatomyNode> = [
 const WARNING_PARTS: Array<AnatomyNode> = [
     {
         name: "Button.Pressable",
-        tier: "primitive",
+        tier: "composite",
         role: "native <button> bọc caption, bấm mở modal chi tiết quota; tự hiện dòng cảnh báo đỏ + icon cảnh báo trước text, nói ĐÚNG lý do (hết tuần / dồn hết khung 5h)",
         state: "danger",
     },
@@ -78,7 +78,7 @@ const WARNING_PARTS: Array<AnatomyNode> = [
 const STATIC_PARTS: Array<AnatomyNode> = [
     {
         name: "Span.Wrapper",
-        tier: "primitive",
+        tier: "composite",
         role: "span bọc ngoài (nhận className), thay cho lớp <button> khi tĩnh; tự hiện dòng \"Còn N/M credit tuần này\" (muted)",
     },
 ]

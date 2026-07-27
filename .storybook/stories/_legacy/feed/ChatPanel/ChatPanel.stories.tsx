@@ -4,7 +4,7 @@ import type { ReactNode } from "react"
 import { Typography } from "@heroui/react"
 import { ChatCircleDotsIcon } from "@phosphor-icons/react"
 import { ChatPanel, type ChatPanelMessage } from "@sb-components/_legacy/blocks/feed/ChatPanel/ChatPanel"
-import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -39,9 +39,9 @@ const COMPOSER_PART: AnatomyNode = {
     tier: "block",
     role: "ô soạn tin ghim đáy panel",
     children: [
-        { name: "UserAvatar", tier: "primitive", role: "avatar người soạn ở đầu hàng (tuỳ chọn)" },
-        { name: "TextField.TextArea", tier: "primitive", role: "ô nhập tự giãn cao (HeroUI field)" },
-        { name: "Button", tier: "primitive", role: "nút Send + spinner khi đang gửi" },
+        { name: "UserAvatar", tier: "composite", role: "avatar người soạn ở đầu hàng (tuỳ chọn)" },
+        { name: "TextField.TextArea", tier: "composite", role: "ô nhập tự giãn cao (HeroUI field)" },
+        { name: "Button", tier: "composite", role: "nút Send + spinner khi đang gửi" },
     ],
 }
 
@@ -70,7 +70,7 @@ const CONVERSATION_PARTS: Array<AnatomyNode> = [
 const TYPING_PARTS: Array<AnatomyNode> = [
     { name: "ChatBubble", tier: "design", role: "mỗi lượt tin theo role (user/assistant)" },
     TOOL_RESULT_PART,
-    { name: "TypingIndicator", tier: "primitive", role: "ba chấm nảy phía trợ lý đang gõ", state: "typing" },
+    { name: "TypingIndicator", tier: "composite", role: "ba chấm nảy phía trợ lý đang gõ", state: "typing" },
     COMPOSER_PART,
 ]
 
@@ -79,7 +79,7 @@ const TYPING_PARTS: Array<AnatomyNode> = [
 // hands `emptyState`) — cut per canon granularity; the slot absorbs them as ONE
 // node. Composer still pinned at the bottom.
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "EmptyState", tier: "primitive", role: "slot canh giữa khi danh sách rỗng (icon + dòng nhắc do feature cấp)" },
+    { name: "EmptyState", tier: "composite", role: "slot canh giữa khi danh sách rỗng (icon + dòng nhắc do feature cấp)" },
     COMPOSER_PART,
 ]
 

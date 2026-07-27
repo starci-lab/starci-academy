@@ -1,8 +1,8 @@
 import React from "react"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { cn } from "@heroui/react"
-import { EnumChip } from "@sb-components/layouts/chips/EnumChip/EnumChip"
-import type { EnumChipEntry } from "@sb-components/layouts/chips/EnumChip/EnumChip"
+import { EnumChip } from "@sb-components/composites/chips/EnumChip/EnumChip"
+import type { EnumChipEntry } from "@sb-components/composites/chips/EnumChip/EnumChip"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — the target `HostPlatformChip`. Authored in

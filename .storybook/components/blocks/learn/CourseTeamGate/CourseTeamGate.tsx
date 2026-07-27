@@ -1,6 +1,6 @@
 import React from "react"
 import { GithubLogoIcon } from "@phosphor-icons/react"
-import { Feedback } from "@sb-components/layouts/feedback/Feedback/Feedback"
+import { Feedback } from "@sb-components/composites/feedback/Feedback/Feedback"
 import { Alert } from "@sb-components/atoms/feedback/Alert/Alert"
 
 /**

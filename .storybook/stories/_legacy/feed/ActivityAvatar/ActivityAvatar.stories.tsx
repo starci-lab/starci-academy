@@ -42,10 +42,10 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 // icon inside it is just the badge presenting its `icon` prop (like CrossListItem's
 // mark), no identity of its own → CUT, folded into "Activity badge".
 const AVATAR_PARTS: Array<AnatomyNode> = [
-    { name: "UserAvatar", tier: "primitive", role: "avatar nền (ảnh thật / initials sinh theo username)" },
+    { name: "UserAvatar", tier: "composite", role: "avatar nền (ảnh thật / initials sinh theo username)" },
     {
         name: "ActivityBadge",
-        tier: "primitive",
+        tier: "composite",
         role: "đĩa soft-accent ở góc dưới-phải (span bg-surface + ring surface, bọc span bg-accent-soft) — tự hiện icon loại hoạt động bên trong",
     },
 ]

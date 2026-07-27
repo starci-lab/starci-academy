@@ -17,11 +17,11 @@ type Story = StoryObj<typeof FeedbackListItem>
 
 // Direct parts inside CardContent: a leading SourceChip + Title + right-aligned
 // Date row, an optional CourseTitle line, then the Summary line.
-const SOURCE_CHIP: AnatomyNode = { name: "SourceChip", tier: "primitive", role: "tone theo nguồn (challenge/task/cv)" }
-const TITLE: AnatomyNode = { name: "Title", tier: "primitive", role: "tiêu đề feedback (body-sm medium)" }
-const DATE: AnatomyNode = { name: "Date", tier: "primitive", role: "ngày, đẩy phải (ml-auto)" }
-const COURSE_TITLE: AnatomyNode = { name: "CourseTitle", tier: "primitive", role: "khoá học liên quan — ẩn khi không có" }
-const SUMMARY: AnatomyNode = { name: "Summary", tier: "primitive", role: "nội dung tóm tắt feedback" }
+const SOURCE_CHIP: AnatomyNode = { name: "SourceChip", tier: "composite", role: "tone theo nguồn (challenge/task/cv)" }
+const TITLE: AnatomyNode = { name: "Title", tier: "composite", role: "tiêu đề feedback (body-sm medium)" }
+const DATE: AnatomyNode = { name: "Date", tier: "composite", role: "ngày, đẩy phải (ml-auto)" }
+const COURSE_TITLE: AnatomyNode = { name: "CourseTitle", tier: "composite", role: "khoá học liên quan — ẩn khi không có" }
+const SUMMARY: AnatomyNode = { name: "Summary", tier: "composite", role: "nội dung tóm tắt feedback" }
 const WITH_COURSE_PARTS: Array<AnatomyNode> = [SOURCE_CHIP, TITLE, DATE, COURSE_TITLE, SUMMARY]
 const NO_COURSE_PARTS: Array<AnatomyNode> = [SOURCE_CHIP, TITLE, DATE, SUMMARY]
 const SKELETON_PARTS: Array<AnatomyNode> = [SOURCE_CHIP, TITLE, SUMMARY]

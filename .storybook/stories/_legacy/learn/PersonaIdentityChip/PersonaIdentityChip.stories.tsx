@@ -18,16 +18,16 @@ type Story = StoryObj<typeof PersonaIdentityChip>
 // leaf live (Default/WithAvatarUrl/LongNameTruncates/Sizes): avatar + tên + vai trò —
 // cùng composition dù avatar generated/uploaded hay size khác nhau.
 const PARTS: Array<AnatomyNode> = [
-    { name: "UserAvatar", tier: "primitive", role: "avatar (uploaded→generated fallback theo avatarUrl/avatarSeed)" },
-    { name: "Typography", tier: "primitive", role: "tên (name, medium)" },
-    { name: "Typography", tier: "primitive", role: "vai trò (role, muted)" },
+    { name: "UserAvatar", tier: "composite", role: "avatar (uploaded→generated fallback theo avatarUrl/avatarSeed)" },
+    { name: "Typography", tier: "composite", role: "tên (name, medium)" },
+    { name: "Typography", tier: "composite", role: "vai trò (role, muted)" },
 ]
 
 // leaf Loading: isSkeleton đổi hẳn composition — avatar dot + 2 dòng nhãn skeleton.
 const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton", tier: "primitive", role: "avatar dot placeholder" },
-    { name: "Skeleton", tier: "primitive", role: "dòng tên (width 1/2)" },
-    { name: "Skeleton", tier: "primitive", role: "dòng vai trò (width 1/3)" },
+    { name: "Skeleton", tier: "composite", role: "avatar dot placeholder" },
+    { name: "Skeleton", tier: "composite", role: "dòng tên (width 1/2)" },
+    { name: "Skeleton", tier: "composite", role: "dòng vai trò (width 1/3)" },
 ]
 
 /** Default: generated fallback avatar (no `avatarUrl`), seeded by name. */

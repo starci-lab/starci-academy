@@ -23,8 +23,8 @@ export default meta
 
 type Story = StoryObj<typeof TaskChecklistRow>
 
-const ICON: AnatomyNode = { name: "Icon", tier: "primitive", role: "CheckCircleIcon (done) hoặc CircleIcon (chưa xong)" }
-const TITLE: AnatomyNode = { name: "Typography", tier: "primitive", role: "tiêu đề task, truncate 1 dòng, tint success khi done" }
+const ICON: AnatomyNode = { name: "Icon", tier: "composite", role: "CheckCircleIcon (done) hoặc CircleIcon (chưa xong)" }
+const TITLE: AnatomyNode = { name: "Typography", tier: "composite", role: "tiêu đề task, truncate 1 dòng, tint success khi done" }
 const PARTS: Array<AnatomyNode> = [ICON, TITLE]
 
 /** Not done: a `CircleIcon` beside a muted-tone title. */

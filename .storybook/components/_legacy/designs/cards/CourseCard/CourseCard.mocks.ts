@@ -11,11 +11,11 @@ export const ANATOMY = {
     primitives: [
         { name: "CrossListCard", tier: "block" as const, role: "value-props (bordered, mark=check, tone=muted) — tick CHÌM để chữ dẫn (§2)" },
         { name: "PriceTag", tier: "block" as const, role: "giá: số giảm + gốc gạch ngang + chip −% (popover breakdown) + dòng tiết kiệm. ⚠ đang inline" },
-        { name: "Cover (img / gradient)", tier: "primitive" as const, role: "ảnh bìa 16:9 rounded-2xl; thiếu → gradient + BookOpenIcon" },
-        { name: "Button ×2", tier: "primitive" as const, role: "CTA: Xem khóa học (primary) + Thêm vào giỏ (secondary action)" },
-        { name: "Typography", tier: "primitive" as const, role: "tiêu đề (bold) + mô tả (muted line-clamp)" },
-        { name: "Typography muted + UsersIcon", tier: "primitive" as const, role: "số học viên — meta-count text muted (KHÔNG bọc Chip)" },
-        { name: "Skeleton", tier: "primitive" as const, state: "Đang tải", role: "dòng giá khi loyalty preview đang tải (loyaltyPending)" },
+        { name: "Cover (img / gradient)", tier: "composite" as const, role: "ảnh bìa 16:9 rounded-2xl; thiếu → gradient + BookOpenIcon" },
+        { name: "Button ×2", tier: "composite" as const, role: "CTA: Xem khóa học (primary) + Thêm vào giỏ (secondary action)" },
+        { name: "Typography", tier: "composite" as const, role: "tiêu đề (bold) + mô tả (muted line-clamp)" },
+        { name: "Typography muted + UsersIcon", tier: "composite" as const, role: "số học viên — meta-count text muted (KHÔNG bọc Chip)" },
+        { name: "Skeleton", tier: "composite" as const, state: "Đang tải", role: "dòng giá khi loyalty preview đang tải (loyaltyPending)" },
     ],
     reason:
         "Một ô khóa học trong catalog gom BLOCK con (CrossListCard value-props · PriceTag giá) + PRIMITIVE (cover · 2 Button CTA · Typography tiêu đề/mô tả · Typography+UsersIcon số học viên; Skeleton chỉ khi đang tải giá). Đóng gói 2 layout grid/line, 2 nút khi đã đăng ký, để feature chỉ truyền `course`.",

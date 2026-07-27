@@ -66,14 +66,14 @@ const Controlled = ({
 // empty draft and the in-flight submit — same parts, only the Send inner state
 // (icon → Spinner) differs, which stays folded into the Send button's role.
 const BASE_PARTS: Array<AnatomyNode> = [
-    { name: "UserAvatar", tier: "primitive", role: "avatar người soạn ở đầu hàng (tuỳ chọn)" },
-    { name: "TextField.TextArea", tier: "primitive", role: "ô nhập tự giãn cao (HeroUI field)" },
+    { name: "UserAvatar", tier: "composite", role: "avatar người soạn ở đầu hàng (tuỳ chọn)" },
+    { name: "TextField.TextArea", tier: "composite", role: "ô nhập tự giãn cao (HeroUI field)" },
     {
         name: "Div.Actions",
-        tier: "primitive",
+        tier: "composite",
         role: "cụm hành động cuối hàng (attach tuỳ chọn + Send)",
         children: [
-            { name: "Button", tier: "primitive", role: "nút Send + spinner khi đang gửi" },
+            { name: "Button", tier: "composite", role: "nút Send + spinner khi đang gửi" },
         ],
     },
 ]
@@ -81,15 +81,15 @@ const BASE_PARTS: Array<AnatomyNode> = [
 // Typing row: the feature drops an attach slot INTO the actions cluster, BEFORE
 // Send → the cluster now nests two buttons (attach, then Send).
 const TYPING_PARTS: Array<AnatomyNode> = [
-    { name: "UserAvatar", tier: "primitive", role: "avatar người soạn ở đầu hàng (tuỳ chọn)" },
-    { name: "TextField.TextArea", tier: "primitive", role: "ô nhập tự giãn cao (HeroUI field)" },
+    { name: "UserAvatar", tier: "composite", role: "avatar người soạn ở đầu hàng (tuỳ chọn)" },
+    { name: "TextField.TextArea", tier: "composite", role: "ô nhập tự giãn cao (HeroUI field)" },
     {
         name: "Div.Actions",
-        tier: "primitive",
+        tier: "composite",
         role: "cụm hành động cuối hàng (attach tuỳ chọn + Send)",
         children: [
-            { name: "Button.Attach", tier: "primitive", role: "nút đính kèm feature cấp (attach slot)" },
-            { name: "Button", tier: "primitive", role: "nút Send + spinner khi đang gửi" },
+            { name: "Button.Attach", tier: "composite", role: "nút đính kèm feature cấp (attach slot)" },
+            { name: "Button", tier: "composite", role: "nút Send + spinner khi đang gửi" },
         ],
     },
 ]

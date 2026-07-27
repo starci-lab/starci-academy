@@ -35,10 +35,10 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 // cut: PlaygroundCard writes `<Typography>{title}</Typography>` itself (not a value
 // folded into another primitive's slot), so it badges like any other directly-composed part.
 const CARD_PARTS: Array<AnatomyNode> = [
-    { name: "IconTile", tier: "primitive", role: "avatar terminal tô nền accent (size lg)" },
-    { name: "Typography", tier: "primitive", role: "tiêu đề bài thực hành (h6, bold, truncate)" },
-    { name: "StatusChip", tier: "primitive", role: "chip số bước \"N bước\" (neutral) — meta chìm" },
-    { name: "Button", tier: "primitive", role: "CTA \"Vào playground\" — hành động duy nhất (primary, w-full)" },
+    { name: "IconTile", tier: "composite", role: "avatar terminal tô nền accent (size lg)" },
+    { name: "Typography", tier: "composite", role: "tiêu đề bài thực hành (h6, bold, truncate)" },
+    { name: "StatusChip", tier: "composite", role: "chip số bước \"N bước\" (neutral) — meta chìm" },
+    { name: "Button", tier: "composite", role: "CTA \"Vào playground\" — hành động duy nhất (primary, w-full)" },
 ]
 
 export const Default: Story = {

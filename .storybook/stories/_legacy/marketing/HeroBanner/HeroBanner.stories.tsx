@@ -55,29 +55,29 @@ const VisualPlaceholder = ({ caption }: { caption: string }) => (
 // directly composing a primitive, even to show its own prop, still gets a node + anchor).
 const CENTERED_PARTS: Array<AnatomyNode> = [
     { name: "StatusChip", tier: "design", role: "eyebrow gate (tone accent)" },
-    { name: "Typography.Heading", tier: "primitive", role: "headline (level 1, bold) — HeroBanner tự render prop `headline`" },
-    { name: "Typography", tier: "primitive", role: "subline (muted) — HeroBanner tự render prop `subline`" },
-    { name: "Button", tier: "primitive", role: "CTA chính (truyền qua slot)" },
+    { name: "Typography.Heading", tier: "composite", role: "headline (level 1, bold) — HeroBanner tự render prop `headline`" },
+    { name: "Typography", tier: "composite", role: "subline (muted) — HeroBanner tự render prop `subline`" },
+    { name: "Button", tier: "composite", role: "CTA chính (truyền qua slot)" },
 ]
 
 // Split leaf: adds a secondary CTA + a `visual` slot → two-column layout.
 // The two CTAs are sibling Buttons inside a bare flex `<div>` (no ButtonGroup primitive).
 const SPLIT_PARTS: Array<AnatomyNode> = [
     { name: "StatusChip", tier: "design", role: "eyebrow gate (tone accent)" },
-    { name: "Typography.Heading", tier: "primitive", role: "headline (level 1, bold) — HeroBanner tự render prop `headline`" },
-    { name: "Typography", tier: "primitive", role: "subline (muted) — HeroBanner tự render prop `subline`" },
-    { name: "Button", tier: "primitive", role: "CTA chính (slot `primary`)" },
-    { name: "Button", tier: "primitive", role: "CTA phụ (slot `secondary`)" },
-    { name: "VisualPlaceholder", tier: "primitive", role: "cột visual (slot) → bật layout chia đôi", state: "split" },
+    { name: "Typography.Heading", tier: "composite", role: "headline (level 1, bold) — HeroBanner tự render prop `headline`" },
+    { name: "Typography", tier: "composite", role: "subline (muted) — HeroBanner tự render prop `subline`" },
+    { name: "Button", tier: "composite", role: "CTA chính (slot `primary`)" },
+    { name: "Button", tier: "composite", role: "CTA phụ (slot `secondary`)" },
+    { name: "VisualPlaceholder", tier: "composite", role: "cột visual (slot) → bật layout chia đôi", state: "split" },
 ]
 
 // Keywords leaf: centered + a brand-tinted keyword strip under the CTA (no label, no secondary).
 const KEYWORDS_PARTS: Array<AnatomyNode> = [
     { name: "StatusChip", tier: "design", role: "eyebrow gate (tone accent)" },
-    { name: "Typography.Heading", tier: "primitive", role: "headline (level 1, bold) — HeroBanner tự render prop `headline`" },
-    { name: "Typography", tier: "primitive", role: "subline (muted) — HeroBanner tự render prop `subline`" },
-    { name: "Button", tier: "primitive", role: "CTA chính (truyền qua slot)" },
-    { name: "Chip", tier: "primitive", role: "dải keyword màu thương hiệu (bg/10 + text)" },
+    { name: "Typography.Heading", tier: "composite", role: "headline (level 1, bold) — HeroBanner tự render prop `headline`" },
+    { name: "Typography", tier: "composite", role: "subline (muted) — HeroBanner tự render prop `subline`" },
+    { name: "Button", tier: "composite", role: "CTA chính (truyền qua slot)" },
+    { name: "Chip", tier: "composite", role: "dải keyword màu thương hiệu (bg/10 + text)" },
 ]
 
 // Full leaf: secondary CTA + keyword strip WITH a muted label (every slot occupied).
@@ -85,12 +85,12 @@ const KEYWORDS_PARTS: Array<AnatomyNode> = [
 // label is HeroBanner's OWN direct render (`keywordsLabel` prop) — its own badged node too.
 const FULL_PARTS: Array<AnatomyNode> = [
     { name: "StatusChip", tier: "design", role: "eyebrow gate (tone accent)" },
-    { name: "Typography.Heading", tier: "primitive", role: "headline (level 1, bold) — HeroBanner tự render prop `headline`" },
-    { name: "Typography", tier: "primitive", role: "subline (muted) — HeroBanner tự render prop `subline`" },
-    { name: "Button", tier: "primitive", role: "CTA chính (slot `primary`)" },
-    { name: "Button", tier: "primitive", role: "CTA phụ (slot `secondary`)" },
-    { name: "Typography", tier: "primitive", role: "nhãn keyword (muted) — HeroBanner tự render prop `keywordsLabel`" },
-    { name: "Chip", tier: "primitive", role: "dải keyword màu thương hiệu (bg/10 + text)" },
+    { name: "Typography.Heading", tier: "composite", role: "headline (level 1, bold) — HeroBanner tự render prop `headline`" },
+    { name: "Typography", tier: "composite", role: "subline (muted) — HeroBanner tự render prop `subline`" },
+    { name: "Button", tier: "composite", role: "CTA chính (slot `primary`)" },
+    { name: "Button", tier: "composite", role: "CTA phụ (slot `secondary`)" },
+    { name: "Typography", tier: "composite", role: "nhãn keyword (muted) — HeroBanner tự render prop `keywordsLabel`" },
+    { name: "Chip", tier: "composite", role: "dải keyword màu thương hiệu (bg/10 + text)" },
 ]
 
 export const CenteredNoVisual: Story = {

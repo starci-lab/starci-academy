@@ -39,45 +39,45 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 // FULL — icon + title + body + time, already read (no unread dot, no action).
 // Shared by the default, read and long-text leaves (same composition).
 const FULL_PARTS: Array<AnatomyNode> = [
-    { name: "IconTile", tier: "primitive", role: "ô icon vuông tô màu theo tone (default/success/warning/accent) — đầu hàng" },
-    { name: "Typography.Title", tier: "primitive", role: "tiêu đề dòng (body-sm, weight medium, clamp-2) — hiện prop title" },
-    { name: "Typography.Body", tier: "primitive", role: "chi tiết phụ (body-xs, muted, clamp-2) — hiện prop body" },
-    { name: "Typography.Time", tier: "primitive", role: "nhãn thời gian đã format (body-xs, muted) — hiện prop timeLabel" },
+    { name: "IconTile", tier: "composite", role: "ô icon vuông tô màu theo tone (default/success/warning/accent) — đầu hàng" },
+    { name: "Typography.Title", tier: "composite", role: "tiêu đề dòng (body-sm, weight medium, clamp-2) — hiện prop title" },
+    { name: "Typography.Body", tier: "composite", role: "chi tiết phụ (body-xs, muted, clamp-2) — hiện prop body" },
+    { name: "Typography.Time", tier: "composite", role: "nhãn thời gian đã format (body-xs, muted) — hiện prop timeLabel" },
 ]
 
 // UNREAD — FULL + accent dot cạnh tiêu đề và nền accent-soft cả dòng.
 const UNREAD_PARTS: Array<AnatomyNode> = [
-    { name: "IconTile", tier: "primitive", role: "ô icon vuông tô màu theo tone" },
-    { name: "Dot", tier: "primitive", role: "chấm accent (span) cạnh tiêu đề báo chưa đọc", state: "unread" },
-    { name: "Typography.Title", tier: "primitive", role: "tiêu đề dòng (body-sm, weight medium, clamp-2)" },
-    { name: "Typography.Body", tier: "primitive", role: "chi tiết phụ (body-xs, muted, clamp-2)" },
-    { name: "Typography.Time", tier: "primitive", role: "nhãn thời gian đã format (body-xs, muted)" },
+    { name: "IconTile", tier: "composite", role: "ô icon vuông tô màu theo tone" },
+    { name: "Dot", tier: "composite", role: "chấm accent (span) cạnh tiêu đề báo chưa đọc", state: "unread" },
+    { name: "Typography.Title", tier: "composite", role: "tiêu đề dòng (body-sm, weight medium, clamp-2)" },
+    { name: "Typography.Body", tier: "composite", role: "chi tiết phụ (body-xs, muted, clamp-2)" },
+    { name: "Typography.Time", tier: "composite", role: "nhãn thời gian đã format (body-xs, muted)" },
 ]
 
 // ACTION — UNREAD + actionSlot cuối dòng (slot giữ kích thước riêng, không bóp cột chữ —
 // nội dung actionSlot do caller truyền, không phải node riêng của NotificationItem).
 const ACTION_PARTS: Array<AnatomyNode> = [
-    { name: "IconTile", tier: "primitive", role: "ô icon vuông tô màu theo tone" },
-    { name: "Dot", tier: "primitive", role: "chấm accent (span) cạnh tiêu đề báo chưa đọc", state: "unread" },
-    { name: "Typography.Title", tier: "primitive", role: "tiêu đề dòng (body-sm, weight medium, clamp-2)" },
-    { name: "Typography.Body", tier: "primitive", role: "chi tiết phụ (body-xs, muted, clamp-2)" },
-    { name: "Typography.Time", tier: "primitive", role: "nhãn thời gian đã format (body-xs, muted)" },
+    { name: "IconTile", tier: "composite", role: "ô icon vuông tô màu theo tone" },
+    { name: "Dot", tier: "composite", role: "chấm accent (span) cạnh tiêu đề báo chưa đọc", state: "unread" },
+    { name: "Typography.Title", tier: "composite", role: "tiêu đề dòng (body-sm, weight medium, clamp-2)" },
+    { name: "Typography.Body", tier: "composite", role: "chi tiết phụ (body-xs, muted, clamp-2)" },
+    { name: "Typography.Time", tier: "composite", role: "nhãn thời gian đã format (body-xs, muted)" },
 ]
 
 // NO_ICON — text-only row: the leading IconTile is omitted (`icon` not passed) — only the
 // row's own title/body/time text remains.
 const NO_ICON_PARTS: Array<AnatomyNode> = [
-    { name: "Typography.Title", tier: "primitive", role: "tiêu đề dòng (body-sm, weight medium, clamp-2)" },
-    { name: "Typography.Body", tier: "primitive", role: "chi tiết phụ (body-xs, muted, clamp-2)" },
-    { name: "Typography.Time", tier: "primitive", role: "nhãn thời gian đã format (body-xs, muted)" },
+    { name: "Typography.Title", tier: "composite", role: "tiêu đề dòng (body-sm, weight medium, clamp-2)" },
+    { name: "Typography.Body", tier: "composite", role: "chi tiết phụ (body-xs, muted, clamp-2)" },
+    { name: "Typography.Time", tier: "composite", role: "nhãn thời gian đã format (body-xs, muted)" },
 ]
 
 // TITLE_ONLY — icon + unread dot, body omitted (`body` not passed).
 const TITLE_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "IconTile", tier: "primitive", role: "ô icon vuông tô màu theo tone" },
-    { name: "Dot", tier: "primitive", role: "chấm accent (span) cạnh tiêu đề báo chưa đọc", state: "unread" },
-    { name: "Typography.Title", tier: "primitive", role: "tiêu đề dòng (body-sm, weight medium, clamp-2)" },
-    { name: "Typography.Time", tier: "primitive", role: "nhãn thời gian đã format (body-xs, muted)" },
+    { name: "IconTile", tier: "composite", role: "ô icon vuông tô màu theo tone" },
+    { name: "Dot", tier: "composite", role: "chấm accent (span) cạnh tiêu đề báo chưa đọc", state: "unread" },
+    { name: "Typography.Title", tier: "composite", role: "tiêu đề dòng (body-sm, weight medium, clamp-2)" },
+    { name: "Typography.Time", tier: "composite", role: "nhãn thời gian đã format (body-xs, muted)" },
 ]
 
 /** Default — neutral `tone="default"`, already read, no `onPress` (static row, not interactive). */

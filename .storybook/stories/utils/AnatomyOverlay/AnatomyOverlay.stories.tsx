@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Typography } from "@heroui/react"
+import { type AnatomyTier } from "@sb-utils/AnatomyOverlay/anatomy-context"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 
 /**
@@ -23,8 +24,12 @@ type Story = StoryObj<typeof AnatomyOverlay>
 interface BoxProps {
     /** Corner tag text drawn by the overlay. */
     label: string
-    /** Tier colour of the overlay tag. */
-    tier: "primitive" | "design" | "block"
+    /**
+     * Tier colour of the overlay tag. Typed from {@link AnatomyTier} rather than a hand-listed
+     * union: the hand-listed one still said `primitive` after the tier split (2026-07-27) and
+     * only tsc caught it — a demo that hard-codes the tier names goes stale silently.
+     */
+    tier: AnatomyTier
     /** Content rendered inside the annotated box. */
     children: React.ReactNode
 }
@@ -36,11 +41,12 @@ const Box = ({ label, tier, children }: BoxProps) => (
     </div>
 )
 
-/** TIERS — the three tag colours drawn as absolute overlays (layout untouched). */
+/** TIERS — one tag colour per tier, drawn as absolute overlays (layout untouched). */
 export const Tiers: Story = {
     render: () => (
         <div className="flex flex-wrap gap-8 p-12">
-            <Box label="EnumChip" tier="primitive"><Typography type="body-sm">primitive</Typography></Box>
+            <Box label="Grid" tier="frame"><Typography type="body-sm">frame</Typography></Box>
+            <Box label="EnumChip" tier="composite"><Typography type="body-sm">composite</Typography></Box>
             <Box label="DeckCard" tier="design"><Typography type="body-sm">design</Typography></Box>
             <Box label="FlashcardDeckList" tier="block"><Typography type="body-sm">block</Typography></Box>
         </div>

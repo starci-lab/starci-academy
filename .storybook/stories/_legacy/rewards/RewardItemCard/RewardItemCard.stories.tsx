@@ -43,19 +43,19 @@ const ICONS = {
 // Shared by every content leaf (data · không đủ Coin · đang đổi · lưới · tiêu đề
 // dài): same Card frame, only prop-driven state differs.
 const CONTENT_PARTS: Array<AnatomyNode> = [
-    { name: "IconTile", tier: "primitive", role: "khung icon vuông tinted (size sm, tone accent) — đầu header row" },
-    { name: "TitledText", tier: "primitive", role: "cụm tên (body-sm semibold, truncate) + mô tả (body-xs muted) — hiện prop title/description trong 1 primitive" },
-    { name: "StatusChip", tier: "primitive", role: "chip giá Coin (tone accent, soft) — đầu footer row" },
-    { name: "Button", tier: "primitive", role: "CTA đổi thưởng (variant primary, size sm) — isDisabled khi không đủ Coin/đang đổi, isPending khi đang đổi — cuối footer row" },
+    { name: "IconTile", tier: "composite", role: "khung icon vuông tinted (size sm, tone accent) — đầu header row" },
+    { name: "TitledText", tier: "composite", role: "cụm tên (body-sm semibold, truncate) + mô tả (body-xs muted) — hiện prop title/description trong 1 primitive" },
+    { name: "StatusChip", tier: "composite", role: "chip giá Coin (tone accent, soft) — đầu footer row" },
+    { name: "Button", tier: "composite", role: "CTA đổi thưởng (variant primary, size sm) — isDisabled khi không đủ Coin/đang đổi, isPending khi đang đổi — cuối footer row" },
 ]
 
 // Khung chờ leaf: Skeleton mirror đúng khung Card này (§6/§8: skeleton là PROP).
 // Cùng 2 hàng layout: header (ô icon + TitledText isSkeleton) · footer (vệt chip + vệt nút).
 const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton.Icon", tier: "primitive", role: "ô vuông 48px (size-12 rounded-xl) mirror IconTile — đầu header row", state: "skeleton" },
-    { name: "TitledText", tier: "primitive", role: "TitledText isSkeleton mirror cụm tiêu đề + mô tả (2 vệt chữ) — cùng primitive khi tải", state: "skeleton" },
-    { name: "Skeleton", tier: "primitive", role: "vệt chip giá mirror StatusChip — đầu footer row", state: "skeleton" },
-    { name: "Skeleton", tier: "primitive", role: "vệt CTA (width w-20) mirror Button — cuối footer row", state: "skeleton" },
+    { name: "Skeleton.Icon", tier: "composite", role: "ô vuông 48px (size-12 rounded-xl) mirror IconTile — đầu header row", state: "skeleton" },
+    { name: "TitledText", tier: "composite", role: "TitledText isSkeleton mirror cụm tiêu đề + mô tả (2 vệt chữ) — cùng primitive khi tải", state: "skeleton" },
+    { name: "Skeleton", tier: "composite", role: "vệt chip giá mirror StatusChip — đầu footer row", state: "skeleton" },
+    { name: "Skeleton", tier: "composite", role: "vệt CTA (width w-20) mirror Button — cuối footer row", state: "skeleton" },
 ]
 
 /** Default — affordable reward, ready to redeem. */

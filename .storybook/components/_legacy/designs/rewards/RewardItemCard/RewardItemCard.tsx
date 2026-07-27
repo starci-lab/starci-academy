@@ -5,7 +5,7 @@ import { Card, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
 import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
 import type { IconComponent } from "@sb-components/atoms/display/IconTile/IconTile"
-import { TitledText } from "@sb-components/layouts/text/TitledText/TitledText"
+import { TitledText } from "@sb-components/composites/text/TitledText/TitledText"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from the per-reward `Card`

@@ -106,7 +106,7 @@ const SINGLE_ITEM: Array<SearchCourseContentItem> = [FLASHCARD_ITEMS[0]]
 // ChatToolResult composes INTO NestedCard's slots (rows + footer link) are the nodes.
 const nestedCard = (children: Array<AnatomyNode>): AnatomyNode => ({
     name: "NestedCard",
-    tier: "primitive",
+    tier: "composite",
     role: "khung compact bordered (surface-in-surface) + header eyebrow (icon loại + nhãn + số lượng) + slot footer",
     children,
 })
@@ -115,7 +115,7 @@ const nestedCard = (children: Array<AnatomyNode>): AnatomyNode => ({
 // hand-rolled button+ArrowRightIcon.
 const SEE_MORE: AnatomyNode = {
     name: "SeeMoreLink",
-    tier: "primitive",
+    tier: "composite",
     role: "footer 'xem tất cả' — text accent + mũi tên trượt khi hover (§5b), sở hữu bởi primitive",
 }
 
@@ -137,15 +137,15 @@ const CHIP_LOCKED_ROW: AnatomyNode = {
     tier: "design",
     role: "hàng kết quả pickable (lặp ×N)",
     children: [
-        { name: "EnumChip", tier: "primitive", role: "chip loại (kind → màu soft) khi showKindChip" },
+        { name: "EnumChip", tier: "composite", role: "chip loại (kind → màu soft) khi showKindChip" },
         {
             name: "span",
-            tier: "primitive",
+            tier: "composite",
             role: "khung bọc cờ khoá 'Ghi danh để mở' — icon + nhãn",
             state: "locked",
             children: [
-                { name: "LockSimpleIcon", tier: "primitive", role: "cờ 'Ghi danh để mở' — hàng vẫn navigate" },
-                { name: "Typography", tier: "primitive", role: "nhãn 'Ghi danh để mở'" },
+                { name: "LockSimpleIcon", tier: "composite", role: "cờ 'Ghi danh để mở' — hàng vẫn navigate" },
+                { name: "Typography", tier: "composite", role: "nhãn 'Ghi danh để mở'" },
             ],
         },
     ],
@@ -166,13 +166,13 @@ const LOADING_PARTS: Array<AnatomyNode> = [
     nestedCard([
         {
             name: "SurfaceListCardItem",
-            tier: "primitive",
+            tier: "composite",
             role: "khung hàng skeleton ×2 (giữ đúng footprint hàng thật)",
             state: "skeleton",
             children: [
-                { name: "Skeleton", tier: "primitive", role: "chip loại giả (khi showKindChip)", state: "skeleton" },
-                { name: "Skeleton", tier: "primitive", role: "thanh tiêu đề giả (3/4)", state: "skeleton" },
-                { name: "Skeleton", tier: "primitive", role: "thanh snippet giả (full)", state: "skeleton" },
+                { name: "Skeleton", tier: "composite", role: "chip loại giả (khi showKindChip)", state: "skeleton" },
+                { name: "Skeleton", tier: "composite", role: "thanh tiêu đề giả (3/4)", state: "skeleton" },
+                { name: "Skeleton", tier: "composite", role: "thanh snippet giả (full)", state: "skeleton" },
             ],
         },
     ]),

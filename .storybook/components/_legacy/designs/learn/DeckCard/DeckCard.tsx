@@ -6,7 +6,7 @@ import { Card, cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
 import { DifficultyChip, type Difficulty } from "@sb-components/_legacy/designs/chips/DifficultyChip/DifficultyChip"
-import { ProgressMeter } from "@sb-components/layouts/stats/ProgressMeter/ProgressMeter"
+import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/ProgressMeter"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 
 /**

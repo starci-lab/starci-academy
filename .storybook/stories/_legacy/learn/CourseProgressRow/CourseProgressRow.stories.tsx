@@ -34,28 +34,28 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 // tiếp render Typography luôn có node). IconTile + SegmentBar are composed sub-components with
 // their own identity, kept as single leaf nodes (not drilled further here).
 const ROW_PARTS: Array<AnatomyNode> = [
-    { name: "IconTile", tier: "primitive", role: "tile 48px (size sm) — icon fallback, hoặc ảnh bìa khi có src" },
-    { name: "Typography", tier: "primitive", role: "tiêu đề khoá học (title)" },
-    { name: "Typography", tier: "primitive", role: "% hoàn thành (clamped percent)" },
-    { name: "SegmentBar", tier: "primitive", role: "track 2 sắc (đã xong / còn lại), hideLegend" },
+    { name: "IconTile", tier: "composite", role: "tile 48px (size sm) — icon fallback, hoặc ảnh bìa khi có src" },
+    { name: "Typography", tier: "composite", role: "tiêu đề khoá học (title)" },
+    { name: "Typography", tier: "composite", role: "% hoàn thành (clamped percent)" },
+    { name: "SegmentBar", tier: "composite", role: "track 2 sắc (đã xong / còn lại), hideLegend" },
 ]
 
 // Trial shape — trialLabel adds a warning StatusChip beside the title (Trial · Empty).
 const TRIAL_PARTS: Array<AnatomyNode> = [
-    { name: "IconTile", tier: "primitive", role: "tile 48px (size sm) — icon fallback" },
-    { name: "Typography", tier: "primitive", role: "tiêu đề khoá học (title)" },
-    { name: "StatusChip", tier: "primitive", role: "chip 'Học thử' — CHỈ khi trialLabel được truyền", state: "warning" },
-    { name: "Typography", tier: "primitive", role: "% hoàn thành (clamped percent)" },
-    { name: "SegmentBar", tier: "primitive", role: "track 2 sắc (đã xong / còn lại), hideLegend" },
+    { name: "IconTile", tier: "composite", role: "tile 48px (size sm) — icon fallback" },
+    { name: "Typography", tier: "composite", role: "tiêu đề khoá học (title)" },
+    { name: "StatusChip", tier: "composite", role: "chip 'Học thử' — CHỈ khi trialLabel được truyền", state: "warning" },
+    { name: "Typography", tier: "composite", role: "% hoàn thành (clamped percent)" },
+    { name: "SegmentBar", tier: "composite", role: "track 2 sắc (đã xong / còn lại), hideLegend" },
 ]
 
 // Meta shape — an extra muted line under the bar (WithMeta).
 const META_PARTS: Array<AnatomyNode> = [
-    { name: "IconTile", tier: "primitive", role: "tile 48px (size sm) — icon fallback" },
-    { name: "Typography", tier: "primitive", role: "tiêu đề khoá học (title)" },
-    { name: "Typography", tier: "primitive", role: "% hoàn thành (clamped percent)" },
-    { name: "SegmentBar", tier: "primitive", role: "track 2 sắc (đã xong / còn lại), hideLegend" },
-    { name: "Typography", tier: "primitive", role: "dòng meta muted dưới bar (meta)" },
+    { name: "IconTile", tier: "composite", role: "tile 48px (size sm) — icon fallback" },
+    { name: "Typography", tier: "composite", role: "tiêu đề khoá học (title)" },
+    { name: "Typography", tier: "composite", role: "% hoàn thành (clamped percent)" },
+    { name: "SegmentBar", tier: "composite", role: "track 2 sắc (đã xong / còn lại), hideLegend" },
+    { name: "Typography", tier: "composite", role: "dòng meta muted dưới bar (meta)" },
 ]
 
 // List shape — several rows stacked in a consumer-owned surface frame.
@@ -72,20 +72,20 @@ const LIST_PARTS: Array<AnatomyNode> = [
 
 // Loading (basic) — skeleton mirror of the base row (Skeleton).
 const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton.Tile", tier: "primitive", role: "ô 48px thay IconTile" },
-    { name: "Skeleton.Title", tier: "primitive", role: "vệt tiêu đề (1/2)" },
-    { name: "Skeleton.Percent", tier: "primitive", role: "vệt % (w-8)" },
-    { name: "Skeleton", tier: "primitive", role: "vệt track (h-1)" },
+    { name: "Skeleton.Tile", tier: "composite", role: "ô 48px thay IconTile" },
+    { name: "Skeleton.Title", tier: "composite", role: "vệt tiêu đề (1/2)" },
+    { name: "Skeleton.Percent", tier: "composite", role: "vệt % (w-8)" },
+    { name: "Skeleton", tier: "composite", role: "vệt track (h-1)" },
 ]
 
 // Loading (full) — reserves the trial-chip + meta placeholders too (SkeletonWithTrialAndMeta).
 const SKELETON_FULL_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton.Tile", tier: "primitive", role: "ô 48px thay IconTile" },
-    { name: "Skeleton.Title", tier: "primitive", role: "vệt tiêu đề (1/2)" },
-    { name: "Skeleton", tier: "primitive", role: "vệt chip học thử (withTrialChip)" },
-    { name: "Skeleton.Percent", tier: "primitive", role: "vệt % (w-8)" },
-    { name: "Skeleton", tier: "primitive", role: "vệt track (h-1)" },
-    { name: "Skeleton.Meta", tier: "primitive", role: "vệt dòng meta (withMeta)" },
+    { name: "Skeleton.Tile", tier: "composite", role: "ô 48px thay IconTile" },
+    { name: "Skeleton.Title", tier: "composite", role: "vệt tiêu đề (1/2)" },
+    { name: "Skeleton", tier: "composite", role: "vệt chip học thử (withTrialChip)" },
+    { name: "Skeleton.Percent", tier: "composite", role: "vệt % (w-8)" },
+    { name: "Skeleton", tier: "composite", role: "vệt track (h-1)" },
+    { name: "Skeleton.Meta", tier: "composite", role: "vệt dòng meta (withMeta)" },
 ]
 
 /** Default — enrolled course, no trial chip (the norm; mirrors `CourseTrialChip` self-hiding). */

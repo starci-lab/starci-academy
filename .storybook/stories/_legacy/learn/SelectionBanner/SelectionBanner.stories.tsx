@@ -45,17 +45,17 @@ const ARCHIVED_NOTE =
 // canon (no phantom/optional node when the prop isn't set).
 const inlineIconLabelNode: AnatomyNode = {
     name: "InlineIconLabel",
-    tier: "primitive",
+    tier: "composite",
     role: "icon trích dẫn + đoạn văn đã chọn (line-clamp-2), tone warning — sở hữu icon+màu",
 }
 const buttonNode: AnatomyNode = {
     name: "Button",
-    tier: "primitive",
+    tier: "composite",
     role: "nút bỏ chọn (icon-only, ghost, size sm) — xoá selection hiện tại",
 }
 const noteNode: AnatomyNode = {
     name: "Typography",
-    tier: "primitive",
+    tier: "composite",
     role: "ghi chú phiên hỏi-theo-đoạn được lưu trữ riêng (born-archived), body-xs muted",
 }
 

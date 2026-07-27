@@ -43,15 +43,15 @@ const frame = (node: React.ReactNode) => <div className="p-8">{node}</div>
 // link affordance, the same role as `SeeMoreLink`).
 const TRACK_PARTS: Array<AnatomyNode> = [
     {
-        name: "Card", tier: "primitive", role: "khung surface bounded (h-full để đều hàng khi xếp 3)",
+        name: "Card", tier: "composite", role: "khung surface bounded (h-full để đều hàng khi xếp 3)",
         children: [
             {
-                name: "CardContent", tier: "primitive", role: "thân thẻ flex-col gap-6: header · path tầng · CTA",
+                name: "CardContent", tier: "composite", role: "thân thẻ flex-col gap-6: header · path tầng · CTA",
                 children: [
-                    { name: "IconTile", tier: "primitive", role: "header: ô icon tô nền theo màu track (tone=color, size sm)" },
-                    { name: "Typography.HeaderMeta", tier: "primitive", role: "header: tiêu đề (body semibold, truncate) + meta (body-xs muted)" },
-                    { name: "Typography.TierPath", tier: "primitive", role: "path: mỗi rung = nhãn tầng (body-xs muted) + chủ đề (body-sm), kèm dot•line màu track chỉ dẫn ×N" },
-                    { name: "Button.Cta", tier: "primitive", role: "CTA 'Vào khóa' hand-roll <button> + ArrowRightIcon (mt-auto, tone soft theo màu — chưa dùng Button port)" },
+                    { name: "IconTile", tier: "composite", role: "header: ô icon tô nền theo màu track (tone=color, size sm)" },
+                    { name: "Typography.HeaderMeta", tier: "composite", role: "header: tiêu đề (body semibold, truncate) + meta (body-xs muted)" },
+                    { name: "Typography.TierPath", tier: "composite", role: "path: mỗi rung = nhãn tầng (body-xs muted) + chủ đề (body-sm), kèm dot•line màu track chỉ dẫn ×N" },
+                    { name: "Button.Cta", tier: "composite", role: "CTA 'Vào khóa' hand-roll <button> + ArrowRightIcon (mt-auto, tone soft theo màu — chưa dùng Button port)" },
                 ],
             },
         ],

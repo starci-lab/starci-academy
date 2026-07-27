@@ -44,17 +44,17 @@ const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">
 
 const PRIMARY_CTA: AnatomyNode = {
     name: "Button.Primary",
-    tier: "primitive",
+    tier: "composite",
     role: "CTA chính (primary, size lg, mũi tên)",
 }
 const SECONDARY_CTA: AnatomyNode = {
     name: "Button.Secondary",
-    tier: "primitive",
+    tier: "composite",
     role: "hành động phụ nhẹ (tertiary)",
 }
-const EYEBROW_TYPOGRAPHY: AnatomyNode = { name: "Typography", tier: "primitive", role: "eyebrow muted (\"Đã xong · Tiếp theo\")" }
-const TITLE_TYPOGRAPHY: AnatomyNode = { name: "Typography", tier: "primitive", role: "tiêu đề bước kế tiếp" }
-const DESCRIPTION_TYPOGRAPHY: AnatomyNode = { name: "Typography", tier: "primitive", role: "mô tả outcome (muted)" }
+const EYEBROW_TYPOGRAPHY: AnatomyNode = { name: "Typography", tier: "composite", role: "eyebrow muted (\"Đã xong · Tiếp theo\")" }
+const TITLE_TYPOGRAPHY: AnatomyNode = { name: "Typography", tier: "composite", role: "tiêu đề bước kế tiếp" }
+const DESCRIPTION_TYPOGRAPHY: AnatomyNode = { name: "Typography", tier: "composite", role: "mô tả outcome (muted)" }
 
 /** Build a leaf's real tree: SectionCard BAO các cụm div theo đúng thứ tự DOM. */
 const buildLeaf = (opts: {
@@ -73,7 +73,7 @@ const buildLeaf = (opts: {
     }
     children.push({
         name: "Div.CtaRow",
-        tier: "primitive",
+        tier: "composite",
         role: "hàng hành động (flex-wrap) — CTA chính + hành động phụ tùy chọn",
         children: [PRIMARY_CTA, ...(opts.secondary ? [SECONDARY_CTA] : [])],
     })

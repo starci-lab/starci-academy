@@ -2,7 +2,7 @@ import React from "react"
 import { cn } from "@heroui/react"
 import { WarningCircleIcon } from "@phosphor-icons/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { Cluster } from "@sb-components/layouts/layout/Cluster/Cluster"
+import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────

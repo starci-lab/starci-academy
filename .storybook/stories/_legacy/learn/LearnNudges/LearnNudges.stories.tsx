@@ -15,7 +15,7 @@ type Story = StoryObj<typeof LearnNudges>
 
 const PARTS: Array<AnatomyNode> = [
     { name: "SurfaceCardHeader", tier: "block", role: "dòng dẫn — đi `label` của SurfaceCard (render NGOÀI/trên surface)" },
-    { name: "Surface", tier: "block", role: "vỏ surface + danh sách hàng — `SurfaceCard.List`, CÙNG layout với KeepGoingPath", storyId: "layouts-cards-surfacecard-surfacecard-list--leading-meta" },
+    { name: "Surface", tier: "block", role: "vỏ surface + danh sách hàng — `SurfaceCard.List`, CÙNG layout với KeepGoingPath", storyId: "composites-cards-surfacecard-surfacecard-list--leading-meta" },
 ]
 
 const ITEMS: Array<LearnNudge> = [

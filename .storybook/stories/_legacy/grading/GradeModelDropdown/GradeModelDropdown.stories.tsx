@@ -146,7 +146,7 @@ const SELF_HOST_MARK: AnatomyNode = { name: "SelfHostGpuMark", tier: "design", r
 // Normal selectable row — DropdownItem wrapping the ModelRowLayout.
 const NORMAL_ROW: AnatomyNode = {
     name: "DropdownItem",
-    tier: "primitive",
+    tier: "composite",
     role: "hàng model bấm-chọn (lặp ×N)",
     children: [
         {
@@ -165,13 +165,13 @@ const NORMAL_ROW: AnatomyNode = {
 // the real emitters (each forwards props onto an actual DOM element) and are direct children here.
 const LOCKED_ROW: AnatomyNode = {
     name: "DropdownItem.Locked",
-    tier: "primitive",
+    tier: "composite",
     role: "hàng tier cao — không chọn được, bấm → nâng gói",
     state: "locked",
     children: [
         {
             name: "Tooltip.Trigger",
-            tier: "primitive",
+            tier: "composite",
             role: "vùng hover bọc hàng — giải thích vì sao khoá",
             children: [
                 {
@@ -182,20 +182,20 @@ const LOCKED_ROW: AnatomyNode = {
                 },
             ],
         },
-        { name: "Tooltip.Content", tier: "primitive", role: "'Nâng gói hoặc enroll khoá để mở model này'" },
+        { name: "Tooltip.Content", tier: "composite", role: "'Nâng gói hoặc enroll khoá để mở model này'" },
     ],
 }
 
 // Below-floor row — vẫn chọn được nhưng cảnh báo: cùng shape, icon amber. (Tooltip root cut — see LOCKED_ROW note.)
 const WARN_ROW: AnatomyNode = {
     name: "DropdownItem.Warning",
-    tier: "primitive",
+    tier: "composite",
     role: "hàng dưới floor — vẫn chọn được nhưng có thể kém chính xác",
     state: "warning",
     children: [
         {
             name: "Tooltip.Trigger",
-            tier: "primitive",
+            tier: "composite",
             role: "vùng hover bọc hàng — giải thích cảnh báo",
             children: [
                 {
@@ -206,7 +206,7 @@ const WARN_ROW: AnatomyNode = {
                 },
             ],
         },
-        { name: "Tooltip.Content", tier: "primitive", role: "'Model dưới mức khuyến nghị — kết quả có thể kém chính xác'" },
+        { name: "Tooltip.Content", tier: "composite", role: "'Model dưới mức khuyến nghị — kết quả có thể kém chính xác'" },
     ],
 }
 
@@ -216,13 +216,13 @@ const WARN_ROW: AnatomyNode = {
 // real instance (not self-host) so no SELF_HOST_MARK child here.
 const DISABLED_ROW: AnatomyNode = {
     name: "DropdownItem.Disabled",
-    tier: "primitive",
+    tier: "composite",
     role: "model tạm mất kết nối (key lỗi / provider down) — không chọn được — ẨN mặc định, hiện qua REVEAL_HIDDEN",
     state: "disabled",
     children: [
         {
             name: "Tooltip.Trigger",
-            tier: "primitive",
+            tier: "composite",
             role: "vùng hover bọc hàng — giải thích vì sao không khả dụng",
             children: [
                 {
@@ -233,14 +233,14 @@ const DISABLED_ROW: AnatomyNode = {
                 },
             ],
         },
-        { name: "Tooltip.Content", tier: "primitive", role: "'Model tạm không khả dụng'" },
+        { name: "Tooltip.Content", tier: "composite", role: "'Model tạm không khả dụng'" },
     ],
 }
 
 // Empty catalog row — DropdownItem wrapping a muted text span.
 const EMPTY_ROW: AnatomyNode = {
     name: "DropdownItem.Empty",
-    tier: "primitive",
+    tier: "composite",
     role: "dòng rỗng khi danh sách trống — tự hiện 'Không có model khớp' (muted)",
     state: "empty",
 }
@@ -248,43 +248,43 @@ const EMPTY_ROW: AnatomyNode = {
 // Auto lane pinned atop the popover — its own DropdownMenu/Section/Item + Separator.
 const AUTO_LANE: AnatomyNode = {
     name: "DropdownMenu.Auto",
-    tier: "primitive",
+    tier: "composite",
     role: "menu ghim lane 'Tự động' đầu popover",
     children: [
         {
             name: "DropdownSection",
-            tier: "primitive",
+            tier: "composite",
             role: "nhóm mục trong menu",
             children: [
                 {
                     name: "DropdownItem.Auto",
-                    tier: "primitive",
+                    tier: "composite",
                     role: "lane 'Tự động' — balancer tự chọn model; tự hiện SparkleIcon + nhãn 'Tự động'",
                 },
             ],
         },
-        { name: "Separator", tier: "primitive", role: "ngăn lane auto với phần tìm/lọc" },
+        { name: "Separator", tier: "composite", role: "ngăn lane auto với phần tìm/lọc" },
     ],
 }
 
-const SEARCH_NODE: AnatomyNode = { name: "SearchField", tier: "primitive", role: "ô tìm model trong popover" }
-const TIER_FILTER_NODE: AnatomyNode = { name: "FlexWrapButtonRadio", tier: "primitive", role: "cụm pill lọc theo hạng (tier) — ẩn khi < 2 bucket" }
-const REVEAL_HIDDEN: AnatomyNode = { name: "Button.RevealHidden", tier: "primitive", role: "nút lộ model đang ẩn (down / off-task) — CHỈ khi hiddenCount > 0" }
+const SEARCH_NODE: AnatomyNode = { name: "SearchField", tier: "composite", role: "ô tìm model trong popover" }
+const TIER_FILTER_NODE: AnatomyNode = { name: "FlexWrapButtonRadio", tier: "composite", role: "cụm pill lọc theo hạng (tier) — ẩn khi < 2 bucket" }
+const REVEAL_HIDDEN: AnatomyNode = { name: "Button.RevealHidden", tier: "composite", role: "nút lộ model đang ẩn (down / off-task) — CHỈ khi hiddenCount > 0" }
 
 // list = ScrollShadow > DropdownMenu > DropdownSection > rows.
 const listMenu = (rows: Array<AnatomyNode>): AnatomyNode => ({
     name: "ScrollShadow",
-    tier: "primitive",
+    tier: "composite",
     role: "vùng cuộn danh sách model (max-h-72)",
     children: [
         {
             name: "DropdownMenu.ModelList",
-            tier: "primitive",
+            tier: "composite",
             role: "menu danh sách model",
             children: [
                 {
                     name: "DropdownSection",
-                    tier: "primitive",
+                    tier: "composite",
                     role: "nhóm mục trong menu",
                     children: rows,
                 },
@@ -295,21 +295,21 @@ const listMenu = (rows: Array<AnatomyNode>): AnatomyNode => ({
 
 const popover = (children: Array<AnatomyNode>): AnatomyNode => ({
     name: "DropdownPopover",
-    tier: "primitive",
+    tier: "composite",
     role: "bảng popover (flex-col): auto lane + tìm + lọc hạng + danh sách + nút lộ ẩn",
     children,
 })
 
-const TRIGGER_INLINE: AnatomyNode = { name: "DropdownTrigger", tier: "primitive", role: "trigger inline — Sparkle + nhãn + CaretDown", state: "inline" }
-const TRIGGER_FIELD: AnatomyNode = { name: "DropdownTrigger", tier: "primitive", role: "trigger field-style (viền + nền field) khớp Select cạnh nó — Sparkle + nhãn + FieldChevronDown", state: "field" }
+const TRIGGER_INLINE: AnatomyNode = { name: "DropdownTrigger", tier: "composite", role: "trigger inline — Sparkle + nhãn + CaretDown", state: "inline" }
+const TRIGGER_FIELD: AnatomyNode = { name: "DropdownTrigger", tier: "composite", role: "trigger field-style (viền + nền field) khớp Select cạnh nó — Sparkle + nhãn + FieldChevronDown", state: "field" }
 // Button trigger — DropdownTrigger WRAPS a real Button (tertiary), not a bare Button.
 const TRIGGER_BUTTON: AnatomyNode = {
     name: "DropdownTrigger",
-    tier: "primitive",
+    tier: "composite",
     role: "trigger bọc Button",
     state: "button",
     children: [
-        { name: "Button", tier: "primitive", role: "Button tertiary — Sparkle + nhãn, hoà vào cụm nút cạnh nó" },
+        { name: "Button", tier: "composite", role: "Button tertiary — Sparkle + nhãn, hoà vào cụm nút cạnh nó" },
     ],
 }
 

@@ -26,8 +26,8 @@ const INITIAL_DATE = new CalendarDate(2026, 7, 20)
 // The Booking/NoSelection leaves both compose the same two direct parts — the
 // DatePicker half and the time-slot grid half; the Skeleton leaf mirrors the
 // same two halves with placeholder rows (same part names, per §11a).
-const DATE_PICKER: AnatomyNode = { name: "DatePicker", tier: "primitive", role: "FieldShell label + DateField/Calendar — chọn ngày" }
-const SLOT_GRID: AnatomyNode = { name: "SlotGrid", tier: "primitive", role: "Label + lưới nút chọn khung giờ (single-select)" }
+const DATE_PICKER: AnatomyNode = { name: "DatePicker", tier: "composite", role: "FieldShell label + DateField/Calendar — chọn ngày" }
+const SLOT_GRID: AnatomyNode = { name: "SlotGrid", tier: "composite", role: "Label + lưới nút chọn khung giờ (single-select)" }
 const PARTS: Array<AnatomyNode> = [DATE_PICKER, SLOT_GRID]
 
 const SLOTS: Array<SchedulePickerSlot> = [
@@ -74,7 +74,7 @@ export const Booking: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <BlockAnatomy name="SchedulePicker" tier="primitive" leaf="Booking" parts={PARTS} note="2 nửa trực tiếp: DatePicker (chọn ngày) + SlotGrid (chọn khung giờ, single-select).">
+                <BlockAnatomy name="SchedulePicker" tier="composite" leaf="Booking" parts={PARTS} note="2 nửa trực tiếp: DatePicker (chọn ngày) + SlotGrid (chọn khung giờ, single-select).">
                     <Controlled initialSlotId="1030" />
                 </BlockAnatomy>
             </div>
@@ -87,7 +87,7 @@ export const NoSelection: Story = {
     render: () => (
         <div className="p-8">
             <div className="max-w-md">
-                <BlockAnatomy name="SchedulePicker" tier="primitive" leaf="NoSelection" parts={PARTS} note="Composition không đổi khi rỗng — DatePicker chưa có value, SlotGrid chưa có slot chọn.">
+                <BlockAnatomy name="SchedulePicker" tier="composite" leaf="NoSelection" parts={PARTS} note="Composition không đổi khi rỗng — DatePicker chưa có value, SlotGrid chưa có slot chọn.">
                     <Controlled initialDate={null} />
                 </BlockAnatomy>
             </div>
@@ -99,7 +99,7 @@ export const NoSelection: Story = {
 export const Skeleton: Story = {
     render: () => (
         <div className="p-8 max-w-sm">
-            <BlockAnatomy name="SchedulePicker" tier="primitive" leaf="Skeleton" parts={PARTS} note="Mirror cùng 2 phần DatePicker/SlotGrid bằng Skeleton.Input, không mount control thật.">
+            <BlockAnatomy name="SchedulePicker" tier="composite" leaf="Skeleton" parts={PARTS} note="Mirror cùng 2 phần DatePicker/SlotGrid bằng Skeleton.Input, không mount control thật.">
                 <SchedulePicker
                     isSkeleton
                     dateValue={null}

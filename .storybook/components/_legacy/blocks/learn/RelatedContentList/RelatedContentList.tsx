@@ -1,8 +1,8 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { Label, cn } from "@heroui/react"
-import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
-import { AsyncContent } from "@sb-components/layouts/async/AsyncContent/AsyncContent"
+import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { AsyncContent } from "@sb-components/composites/async/AsyncContent/AsyncContent"
 import { EntityResultRow, type SearchCourseContentItem } from "@sb-components/_legacy/blocks/learn/EntityResultRow/EntityResultRow"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 

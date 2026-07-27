@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button, Chip } from "@heroui/react"
 import { MediaCard } from "@sb-components/_legacy/designs/cards/MediaCard/MediaCard"
-import { List } from "@sb-components/layouts/lists/List/List"
+import { List } from "@sb-components/composites/lists/List/List"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof MediaCard> = {
@@ -35,20 +35,20 @@ const DESCRIPTION = "Build a solid foundation from frontend to backend through h
 // all inside the HeroUI Card/CardContent frame (frame itself isn't a named part — it's the primitive's own root).
 const FULL_PARTS: Array<AnatomyNode> = [
     { name: "Cover", tier: "design", role: "media full-bleed 16:9 (ảnh thật hoặc placeholder khi omit `cover`)" },
-    { name: "Typography.Title", tier: "primitive", role: "tiêu đề (weight medium)" },
+    { name: "Typography.Title", tier: "composite", role: "tiêu đề (weight medium)" },
     { name: "Meta", tier: "design", role: "slot meta — nhận node List.Meta do caller truyền vào" },
-    { name: "Typography.Description", tier: "primitive", role: "mô tả ngắn, line-clamp-2" },
+    { name: "Typography.Description", tier: "composite", role: "mô tả ngắn, line-clamp-2" },
     { name: "Footer", tier: "design", role: "slot footer — CTA/giá/tiến độ do caller truyền vào" },
 ]
 const MINIMAL_PARTS: Array<AnatomyNode> = [
     { name: "Cover", tier: "design", role: "placeholder 16:9 (không truyền `cover`) — lấp slot để lưới đều" },
-    { name: "Typography.Title", tier: "primitive", role: "tiêu đề (weight medium)" },
+    { name: "Typography.Title", tier: "composite", role: "tiêu đề (weight medium)" },
 ]
 const LOADING_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton.Cover", tier: "primitive", role: "mirror cover 16:9", state: "skeleton" },
-    { name: "Skeleton", tier: "primitive", role: "mirror tiêu đề + 2 dòng mô tả (×3)", state: "skeleton" },
-    { name: "Skeleton", tier: "primitive", role: "mirror chip tín hiệu trong meta", state: "skeleton" },
-    { name: "Skeleton", tier: "primitive", role: "mirror CTA footer", state: "skeleton" },
+    { name: "Skeleton.Cover", tier: "composite", role: "mirror cover 16:9", state: "skeleton" },
+    { name: "Skeleton", tier: "composite", role: "mirror tiêu đề + 2 dòng mô tả (×3)", state: "skeleton" },
+    { name: "Skeleton", tier: "composite", role: "mirror chip tín hiệu trong meta", state: "skeleton" },
+    { name: "Skeleton", tier: "composite", role: "mirror CTA footer", state: "skeleton" },
 ]
 
 /** Có cover — ảnh 16:9 full-bleed trên đầu, rồi title / meta / description / CTA trong body `p-3`. */

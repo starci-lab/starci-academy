@@ -38,7 +38,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     // (no more hand-typed `<div className="flex flex-wrap gap-2">`), so the frame must
     // SHOW UP in the tree — using a frame the panel can't see leaves the reader thinking
     // this is still a hand-rolled div.
-    Cluster: { tier: "primitive", role: "a ONE-TRACK frame that wraps on its own — `gap` is pinned to the §10 scale instead of a hand-typed class", storyId: "layouts-layout-cluster-cluster-base--default" },
+    Cluster: { tier: "frame", role: "a ONE-TRACK frame that wraps on its own — `gap` is pinned to the §10 scale instead of a hand-typed class", storyId: "frames-cluster-cluster-base--default" },
     // ⚠️ The panel only accepts a part with a REAL `storyId` (§11a whitelist) — the three
     // text lines below used to declare a role but were MISSING `storyId`, so they never
     // made it into the tree. They're built by THIS component itself (not a child's guts)

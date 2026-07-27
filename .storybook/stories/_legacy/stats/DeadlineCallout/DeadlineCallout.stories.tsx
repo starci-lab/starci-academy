@@ -18,13 +18,13 @@ type Story = StoryObj<typeof DeadlineCallout>
 // DOM thật: Panel (count+title+hint, tinted warning-soft) LUÔN có mặt · Forecast
 // (hàng bar 7-ngày) + Caption đều optional, ẨN hẳn (không render rỗng) khi thiếu data.
 const FULL_PARTS: Array<AnatomyNode> = [
-    { name: "Panel", tier: "primitive", role: "count lớn + title + hint, nền warning-soft" },
-    { name: "Forecast", tier: "primitive", role: "hàng bar dự báo theo ngày (1 bar spike → danger)" },
-    { name: "Caption", tier: "primitive", role: "dòng kết luận dưới forecast" },
+    { name: "Panel", tier: "composite", role: "count lớn + title + hint, nền warning-soft" },
+    { name: "Forecast", tier: "composite", role: "hàng bar dự báo theo ngày (1 bar spike → danger)" },
+    { name: "Caption", tier: "composite", role: "dòng kết luận dưới forecast" },
 ]
 
 const PANEL_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "Panel", tier: "primitive", role: "count lớn + title + hint, nền warning-soft" },
+    { name: "Panel", tier: "composite", role: "count lớn + title + hint, nền warning-soft" },
 ]
 
 /** Full shape: panel + 7-day forecast (Friday spikes danger) + closing caption. */

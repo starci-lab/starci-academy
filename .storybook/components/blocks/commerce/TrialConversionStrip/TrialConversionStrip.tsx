@@ -8,9 +8,9 @@ import { PriceTag, type PriceBreakdown } from "@sb-components/designs/commerce/P
 import { PhaseScarcityNote, PricingPhase } from "@sb-components/designs/commerce/PhaseScarcityNote/PhaseScarcityNote"
 import { Button as AtomButton } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { TitledText } from "@sb-components/layouts/text/TitledText/TitledText"
-import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"
-import { Stack } from "@sb-components/layouts/layout/Stack/Stack"
+import { TitledText } from "@sb-components/composites/text/TitledText/TitledText"
+import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { Stack } from "@sb-components/frames/Stack/Stack"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK ported faithfully from

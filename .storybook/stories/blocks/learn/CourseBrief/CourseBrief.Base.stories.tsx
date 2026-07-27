@@ -45,7 +45,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Skeleton.Title": { tier: "atom", role: "title mirror while loading (h3 bold)", storyId: "atoms-text-typography-typography-base--plain" },
     "Skeleton.Description": { tier: "atom", role: "description mirror while loading (sm muted)", storyId: "atoms-text-typography-typography-base--plain" },
     Meta: { tier: "atom", role: "meta line — modules · study hours · learners, joined by ·", storyId: "atoms-text-typography-typography-base--plain" },
-    "Page.Header": { tier: "primitive", role: "page-header FRAME — breadcrumb ↔ title ↔ description ↔ meta; the frame owns the type scale", storyId: "layouts-layout-page-page-header--full" },
+    "Page.Header": { tier: "composite", role: "page-header FRAME — breadcrumb ↔ title ↔ description ↔ meta; the frame owns the type scale", storyId: "composites-layout-page-page-header--full" },
     Breadcrumbs: { tier: "atom", role: "trail — the block builds it from crumb DATA", storyId: "atoms-navigation-breadcrumbs-breadcrumbs-base--default" },
 }
 

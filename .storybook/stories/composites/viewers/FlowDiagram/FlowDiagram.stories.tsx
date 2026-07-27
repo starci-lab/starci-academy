@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import type { Edge, Node } from "@xyflow/react"
-import { FlowDiagram, FLOW_DIAGRAM_CARD_NODE_TYPE } from "@sb-components/composites/rendering/FlowDiagram/FlowDiagram"
+import { FlowDiagram, FLOW_DIAGRAM_CARD_NODE_TYPE } from "@sb-components/composites/viewers/FlowDiagram/FlowDiagram"
 
 const meta: Meta<typeof FlowDiagram> = {
-    title: "Composites/Rendering/FlowDiagram",
+    title: "Composites/Viewers/FlowDiagram",
     component: FlowDiagram,
     tags: ["autodocs"],
     parameters: {

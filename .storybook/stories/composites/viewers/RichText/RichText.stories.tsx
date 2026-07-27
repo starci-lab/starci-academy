@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { RichText } from "@sb-components/composites/rendering/RichText/RichText"
+import { RichText } from "@sb-components/composites/viewers/RichText/RichText"
 
 const meta: Meta<typeof RichText> = {
-    title: "Composites/Rendering/RichText",
+    title: "Composites/Viewers/RichText",
     component: RichText,
     tags: ["autodocs"],
     parameters: {

@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { PDFView } from "@sb-components/composites/rendering/PDFView/PDFView"
+import { PDFView } from "@sb-components/composites/viewers/PDFView/PDFView"
 
 const meta: Meta<typeof PDFView> = {
-    title: "Composites/Rendering/PDFView",
+    title: "Composites/Viewers/PDFView",
     component: PDFView,
     tags: ["autodocs"],
     parameters: {

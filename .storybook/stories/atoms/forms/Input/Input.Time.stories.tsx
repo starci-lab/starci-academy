@@ -21,8 +21,8 @@ type Story = StoryObj
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "TimeField.Group": { tier: "heroui", role: "time segment input group" },
-    Label: { tier: "heroui", role: "field label line" },
-    Skeleton: { tier: "heroui", role: "loading placeholder" },
+    "Label": { tier: "heroui", role: "field label line" },
+    "Skeleton": { tier: "heroui", role: "loading placeholder" },
 }
 
 /** Leaf TRẦN — chưa có label/hint/error, chỉ segments giờ:phút, chưa chọn. */

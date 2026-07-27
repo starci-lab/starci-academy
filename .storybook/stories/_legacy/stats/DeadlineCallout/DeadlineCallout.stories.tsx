@@ -34,7 +34,7 @@ export const Full: Story = {
             <div className="max-w-md">
                 <BlockAnatomy
                     name="DeadlineCallout"
-                    tier="design"
+                    tier="block"
                     leaf="Full"
                     parts={FULL_PARTS}
                     reason="Verdict (count+sentence trong Panel) → evidence (Forecast) → Caption kết luận. Khác Callout chung: LUÔN mang countdown."
@@ -68,7 +68,7 @@ export const PanelOnly: Story = {
             <div className="max-w-md">
                 <BlockAnatomy
                     name="DeadlineCallout"
-                    tier="design"
+                    tier="block"
                     leaf="PanelOnly"
                     parts={PANEL_ONLY_PARTS}
                     note="Không đủ lịch sử để dự báo → Forecast/Caption KHÔNG render (không phải hàng rỗng)."

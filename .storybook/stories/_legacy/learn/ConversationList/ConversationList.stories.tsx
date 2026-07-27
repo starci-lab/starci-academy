@@ -45,15 +45,15 @@ const DATA_PARTS: Array<AnatomyNode> = [
         children: [
             {
                 name: "SurfaceListCard",
-                tier: "design",
+                tier: "block",
                 role: "khung surface bordered chứa các phiên",
                 children: [
                     {
                         name: "SurfaceListCardItem",
-                        tier: "design",
+                        tier: "block",
                         role: "một phiên trò chuyện (lặp ×N)",
                         children: [
-                            { name: "TitledText", tier: "design", role: "tiêu đề (body-sm, rỗng → \"Chưa đặt tên\") + phụ đề (body-xs muted)" },
+                            { name: "TitledText", tier: "block", role: "tiêu đề (body-sm, rỗng → \"Chưa đặt tên\") + phụ đề (body-xs muted)" },
                             {
                                 name: "Dropdown",
                                 tier: "composite",
@@ -85,12 +85,12 @@ const LOADING_PARTS: Array<AnatomyNode> = [
         children: [
             {
                 name: "SurfaceListCard",
-                tier: "design",
+                tier: "block",
                 role: "khung surface bordered — skeleton mirror",
                 children: [
                     {
                         name: "SurfaceListCardItem",
-                        tier: "design",
+                        tier: "block",
                         role: "hàng skeleton ×3 (source :1049 `[0, 1, 2]`)",
                         children: [
                             { name: "Skeleton.Title", tier: "composite", role: "mirror body-sm, rộng 2/3" },
@@ -116,7 +116,7 @@ const EMPTY_PARTS: Array<AnatomyNode> = [
         children: [
             {
                 name: "AsyncContent.Empty",
-                tier: "design",
+                tier: "block",
                 role: "khung rỗng của region",
                 children: [
                     { name: "Feedback.Empty", tier: "composite", role: "\"Chưa có cuộc trò chuyện\" — KHÔNG nút thử lại" },
@@ -139,7 +139,7 @@ const ERROR_PARTS: Array<AnatomyNode> = [
         children: [
             {
                 name: "AsyncContent.Error",
-                tier: "design",
+                tier: "block",
                 role: "khung lỗi của region",
                 children: [
                     { name: "Feedback.Empty", tier: "composite", role: "\"Chưa có cuộc trò chuyện\" (cùng câu empty) — KHÔNG nút thử lại", state: "danger" },
@@ -161,21 +161,21 @@ const ACTIVE_PARTS: Array<AnatomyNode> = [
         children: [
             {
                 name: "SurfaceListCard",
-                tier: "design",
+                tier: "block",
                 role: "khung surface bordered",
                 children: [
                     {
                         name: "SurfaceListCardItem",
-                        tier: "design",
+                        tier: "block",
                         role: "phiên ĐANG MỞ",
                         children: [
                             {
                                 name: "Row.Active",
-                                tier: "design",
+                                tier: "block",
                                 role: "bọc `text-accent-soft-foreground` (source :1078) — Typography vẫn giữ màu prop riêng, xem note file header",
                                 state: "accent",
                                 children: [
-                                    { name: "TitledText", tier: "design", role: "tiêu đề + phụ đề của phiên đang mở" },
+                                    { name: "TitledText", tier: "block", role: "tiêu đề + phụ đề của phiên đang mở" },
                                     { name: "Dropdown", tier: "composite", role: "menu ⋯ của phiên đang mở" },
                                 ],
                             },
@@ -199,12 +199,12 @@ const RENAMING_PARTS: Array<AnatomyNode> = [
         children: [
             {
                 name: "SurfaceListCard",
-                tier: "design",
+                tier: "block",
                 role: "khung surface bordered",
                 children: [
                     {
                         name: "SurfaceListCardItem",
-                        tier: "design",
+                        tier: "block",
                         role: "phiên ĐANG ĐỔI TÊN — cột title/subtitle rút còn 1 input, KHÔNG có menu ⋯",
                         children: [
                             { name: "Input.Rename", tier: "composite", role: "input trần, autoFocus; Enter/blur lưu, Escape huỷ" },
@@ -229,13 +229,13 @@ const PAGINATING_PARTS: Array<AnatomyNode> = [
         children: [
             {
                 name: "SurfaceListCard",
-                tier: "design",
+                tier: "block",
                 role: "khung surface bordered",
                 children: [
-                    { name: "SurfaceListCardItem", tier: "design", role: "các phiên đã tải" },
+                    { name: "SurfaceListCardItem", tier: "block", role: "các phiên đã tải" },
                     {
                         name: "SurfaceListCardItem.Loading",
-                        tier: "design",
+                        tier: "block",
                         role: "hàng skeleton mirror NỐI THÊM cuối danh sách — cải thiện so với source (dòng chữ trần)",
                         state: "loading",
                         children: [

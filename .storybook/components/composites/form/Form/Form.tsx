@@ -114,14 +114,16 @@ const Base = ({
                 vì fieldset mặc định `min-width: min-content` (sẽ phá truncate bên trong).
             */}
             <fieldset disabled={isDisabled} className={cn("flex min-w-0 flex-col", GAP_CLASS[gap])}>
+                {/* No `data-anat-part` on `Body`/`Actions`: both wrap arbitrary caller-supplied
+                    nodes (fields, or usually a `Form.Actions` but never enforced), with no ONE
+                    fixed component a panel link could point to (§11a.1 LOẠI 3 — caller slot,
+                    stop badging). */}
                 {main != null ? (
-                    <div className={cn("flex min-w-0 flex-col", GAP_CLASS[gap])} data-anat-part={showAnatomy ? "Body" : undefined}>
+                    <div className={cn("flex min-w-0 flex-col", GAP_CLASS[gap])}>
                         {main}
                     </div>
                 ) : null}
-                {actions != null ? (
-                    <div data-anat-part={showAnatomy ? "Actions" : undefined}>{actions}</div>
-                ) : null}
+                {actions != null ? <div>{actions}</div> : null}
             </fieldset>
         </form>
     )
@@ -173,8 +175,12 @@ const Section = ({
     const main = body ?? children
     return (
         <section className={cn("flex min-w-0 flex-col", GAP_CLASS[gap], className)}>
-            {/* tight gap-1: title ↔ description là một CẶP, không phải hai vùng (§10b). */}
-            <div className="flex min-w-0 flex-col gap-1" data-anat-part={showAnatomy ? "Header" : undefined}>
+            {/* tight gap-1: title ↔ description là một CẶP, không phải hai vùng (§10b).
+                No `data-anat-part="Header"` wrapper: it never helps the reader past what the
+                `Typography.Base` nodes inside already say on their own (§11a.1 LOẠI 2/3 — a
+                badge with nowhere to link is worse than no badge; those two atoms keep their
+                own badge below and surface as top-level nodes instead). */}
+            <div className="flex min-w-0 flex-col gap-1">
                 <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
                     <Typography.Base size="sm" text={title} weight="medium" />
                 </span>
@@ -184,8 +190,10 @@ const Section = ({
                     </span>
                 ) : null}
             </div>
+            {/* No `data-anat-part="Body"` here either: `body`/`children` is arbitrary
+                caller-supplied field content (§11a.1 LOẠI 3 — caller slot). */}
             {main != null ? (
-                <div className={cn("flex min-w-0 flex-col", GAP_CLASS[gap])} data-anat-part={showAnatomy ? "Body" : undefined}>
+                <div className={cn("flex min-w-0 flex-col", GAP_CLASS[gap])}>
                     {main}
                 </div>
             ) : null}

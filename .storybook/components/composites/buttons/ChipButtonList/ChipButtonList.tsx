@@ -139,10 +139,7 @@ export const ChipButtonList = ({
                     anatPart={showAnatomy ? "Button" : undefined}
                 >
                     {item.icon ? (
-                        <span
-                            className="[&_svg]:size-4 shrink-0 text-muted"
-                            data-anat-part={showAnatomy ? "icon" : undefined}
-                        >
+                        <span className="[&_svg]:size-4 shrink-0 text-muted">
                             {item.icon}
                         </span>
                     ) : null}

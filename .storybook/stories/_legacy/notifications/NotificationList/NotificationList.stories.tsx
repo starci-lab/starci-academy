@@ -124,7 +124,7 @@ const POPULATED_PARTS: Array<AnatomyNode> = [
     { name: "Typography.GroupLabel", tier: "composite", role: "nhãn nhóm ngày (\"Today\"/\"Earlier\") — hiện prop group.label" },
     {
         name: "NotificationItem",
-        tier: "design",
+        tier: "block",
         role: "mỗi dòng thông báo (design con, lặp ×N)",
         children: [
             { name: "IconTile", tier: "composite", role: "ô icon dẫn đầu, tô màu theo tone" },
@@ -152,7 +152,7 @@ const LOADING_PARTS: Array<AnatomyNode> = [
     { name: "Skeleton.GroupLabel", tier: "composite", role: "nhãn nhóm ngày — skeleton mirror", state: "skeleton" },
     {
         name: "SkeletonNotificationRow",
-        tier: "design",
+        tier: "block",
         role: "mirror NotificationItem ×3 (giữ đúng footprint)",
         state: "skeleton",
         children: [

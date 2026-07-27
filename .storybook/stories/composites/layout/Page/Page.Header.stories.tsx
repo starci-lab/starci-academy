@@ -28,14 +28,12 @@ const TITLE_DESCRIPTION_PARTS: Array<AnatomyNode> = [
 
 // Full set leaf: breadcrumb row + actions slot + a meta chip/stat strip below. Breadcrumb/Actions/Meta
 // are arbitrary caller-supplied slots (ReactNode) — this leaf's own demo happens to fill them with a
-// HeroUI Breadcrumbs/Button/Chip, but the frame itself never fixes what renders there, so they stay
-// generic (no single real component to name).
+// HeroUI Breadcrumbs/Button/Chip, but the frame itself never fixes what renders there. Page.Header
+// never claims them as its own anatomy (§11a caller-slot rule), so only the two Typography.Base
+// nodes it actually BUILDS itself carry a badge.
 const FULL_PARTS: Array<AnatomyNode> = [
-    { name: "Breadcrumb", tier: "composite", role: "breadcrumb row above the main title row (arbitrary caller node)" },
     { name: "Typography.Base", tier: "atom", role: "primary title, an H3 heading", storyId: "atoms-text-typography-typography-base--plain" },
     { name: "Typography.Base", tier: "atom", role: "supporting line under the title, muted", storyId: "atoms-text-typography-typography-base--plain" },
-    { name: "Actions", tier: "composite", role: "right-aligned control slot, shrink-0 (arbitrary caller node)" },
-    { name: "Meta", tier: "composite", role: "stat/meta chip row below the title block (arbitrary caller node)" },
 ]
 
 /** Minimal set: a title + one description line — a page entered straight from a menu, no breadcrumb. */

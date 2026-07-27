@@ -8,7 +8,7 @@ import {
     TrialConversionStrip,
     type TrialConversionStripPrice,
 } from "@sb-components/blocks/commerce/TrialConversionStrip/TrialConversionStrip"
-import { PricingPhase } from "@sb-components/designs/commerce/PhaseScarcityNote/PhaseScarcityNote"
+import { PricingPhase } from "@sb-components/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote"
 import { ContinueLearning } from "@sb-components/blocks/learn/ContinueLearning/ContinueLearning"
 import { AsyncContent } from "@sb-components/composites/async/AsyncContent/AsyncContent"
 import { Container } from "@sb-components/frames/Container/Container"

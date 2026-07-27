@@ -12,7 +12,7 @@ import {
 } from "@heroui/react"
 import { ResizableRail } from "@sb-components/behaviors/ResizableRail/ResizableRail"
 import { Page } from "@sb-components/composites/layout/Page/Page"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * `ResizableRail.Base` — a side rail whose width the reader drags, persisted to
@@ -129,13 +129,11 @@ const PracticeShellDemo = ({
     heightClassName,
     defaultWidth = 300,
     maxWidth = 420,
-    showAnatomy = false,
 }: {
     storageKey: string
     heightClassName: string
     defaultWidth?: number
     maxWidth?: number
-    showAnatomy?: boolean
 }) => (
     <div className={`flex w-full items-start ${heightClassName}`}>
         <ResizableRail.Base
@@ -145,7 +143,6 @@ const PracticeShellDemo = ({
             minWidth={256}
             maxWidth={maxWidth}
             ariaLabel="Kéo để đổi độ rộng danh sách chủ đề"
-            showAnatomy={showAnatomy}
         >
             <PracticeTopicsBody className="min-h-0 flex-1" />
         </ResizableRail.Base>
@@ -161,12 +158,10 @@ const PracticeShellDemo = ({
     </div>
 )
 
-// Content (rail body — an anatomy-only marker, real children keep their own layout)
-// · Handle (drag splitter, edge per `handleSide`).
-const RAIL_PARTS: Array<AnatomyNode> = [
-    { name: "Content", tier: "composite", role: "The rail's body (children); a marker only, it does not change the real layout." },
-    { name: "Handle", tier: "composite", role: "The drag-to-resize splitter (role=separator), positioned on the edge set by handleSide." },
-]
+// No anatomy `parts` here (2026-07-28): the rail's body is a CALLER slot (`children`), not this
+// frame's own part, and the drag handle is internal geometry with no component/story of its own
+// to link a reader to — neither name is declared anywhere, so the badges only ever rendered into
+// the DOM invisibly. Both were dropped at the source in `ResizableRail.tsx`.
 
 /** Default: search + topic ListBox rail beside a content pane. Drag the right-edge handle to resize. */
 export const Default: Story = {
@@ -176,7 +171,6 @@ export const Default: Story = {
                 name="ResizableRail.Base"
                 tier="frame"
                 leaf="Default"
-                parts={RAIL_PARTS}
                 states={[
                     {
                         name: "defaultWidth = 300, minWidth = 256, maxWidth = 420",
@@ -186,7 +180,6 @@ export const Default: Story = {
                             <PracticeShellDemo
                                 storageKey="storybook.practice.rail.width"
                                 heightClassName="h-[32rem]"
-                                showAnatomy
                             />
                         ),
                     },
@@ -204,18 +197,16 @@ export const OverflowScrollsInRail: Story = {
                 name="ResizableRail.Base"
                 tier="frame"
                 leaf="OverflowScrollsInRail"
-                parts={RAIL_PARTS}
                 states={[
                     {
                         name: "rail height = h-80, topic list taller than the rail",
-                        why: "The topic list scrolls inside the rail through its own ScrollShadow rather than pushing the surrounding shell taller. The rail composes the exact same Content and Handle parts as Default, only the height and the overflow behaviour inside Content differ.",
+                        why: "The topic list scrolls inside the rail through its own ScrollShadow rather than pushing the surrounding shell taller. The rail is the exact same drag-to-resize box as Default, only the height and the overflow behaviour inside the rail body differ.",
                         code: "<ResizableRail.Base storageKey=\"practice.rail.scroll.width\" defaultWidth={360} minWidth={256} maxWidth={420} ariaLabel=\"Resize the topic list\"><ScrollShadow><TopicList /></ScrollShadow></ResizableRail.Base>",
                         render: (
                             <PracticeShellDemo
                                 storageKey="storybook.practice.rail.scroll.v2.width"
                                 heightClassName="h-80"
                                 defaultWidth={360}
-                                showAnatomy
                             />
                         ),
                     },
@@ -240,8 +231,7 @@ export const ShrinkingMaxWidth: Story = {
                     name="ResizableRail.Base"
                     tier="frame"
                     leaf="ShrinkingMaxWidth"
-                    parts={RAIL_PARTS}
-                    reason="The persisted width is the reader's own preference, so a temporarily small maxWidth clamps the rail on screen without overwriting what gets saved to localStorage — the next time the bound widens, the rail returns to the width the reader actually chose."
+                        reason="The persisted width is the reader's own preference, so a temporarily small maxWidth clamps the rail on screen without overwriting what gets saved to localStorage — the next time the bound widens, the rail returns to the width the reader actually chose."
                     states={[
                         {
                             name: "maxWidth toggled at runtime between 560 and 360",

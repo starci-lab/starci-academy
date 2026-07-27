@@ -74,7 +74,7 @@ const COMMENT_ROW: AnatomyNode = {
 // rendered reply subtree. depth 1..4 draws an indent guide rail; deeper renders flush.
 const COMMENT_ITEM: AnatomyNode = {
     name: "CommentThreadItem",
-    tier: "design",
+    tier: "block",
     role: "đơn vị đệ quy: một node + ô trả lời inline + cây reply con; thụt lề theo depth qua rail (≤4 cấp)",
     children: [
         COMMENT_ROW,
@@ -87,7 +87,7 @@ const COMMENT_ITEM: AnatomyNode = {
         },
         {
             name: "CommentThreadItem",
-            tier: "design",
+            tier: "block",
             role: "cây reply con — đệ quy CommentThreadItem, thụt lề sâu hơn một cấp",
             state: "đệ quy",
         },

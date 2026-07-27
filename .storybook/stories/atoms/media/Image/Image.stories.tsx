@@ -1,13 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Image } from "@sb-components/atoms/media/Image/Image"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — `Image`: framed image bọc `<img>`, tự lo skeleton lúc fetch + fallback
  * khi lỗi/rỗng. Icon lib = `@phosphor-icons/react` (§5.0). Không compose atom
- * nào có story riêng ⇒ ATOM LÁ, không có `annotate` (§12 — bỏ hẳn prop, đừng
- * để `{}`). `Frame`/`Img`/`Skeleton`/`Fallback` chỉ là KHE nội bộ, không phải
- * deps — không trỏ đi đâu được nên không khai vào cây.
+ * nào có story riêng ⇒ ATOM LÁ. `Frame`/`Img`/`Fallback` chỉ là KHE nội bộ,
+ * không phải component có nhà để nhảy tới — không badge (LOẠI 2b, `check-orphan-parts.mjs`).
+ * RIÊNG `Skeleton` LÀ HeroUI's own `Skeleton` render thẳng nên badge + khai
+ * `annotate: { "Skeleton": { tier: "heroui" } }` (LOẠI 2a) — panel chỉ nhận
+ * node có `storyId` hoặc `tier: "heroui"`.
  *
  * 📐 **HAI LEAF** (§14d.2 — leaf tách theo CẤU TRÚC):
  *   • `WithImage` — cây có node `Img`. Loaded · loading (skeleton phủ) · dùng
@@ -30,6 +32,11 @@ type Story = StoryObj<typeof Image>
 // image that actually loads.
 const OK_SRC =
     "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
+/** `Skeleton` is HeroUI's own `Skeleton` render, straight through — no story of its own to jump to. */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "Skeleton": { tier: "heroui", role: "the shimmer bar covering the frame while the image is still loading, HeroUI's own `Skeleton`" },
+}
+
 const FALLBACK_SRC =
     "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
 // Demo fallback uses a NULL src — a clear, realistic case ("no image yet").
@@ -48,6 +55,7 @@ export const WithImage: Story = {
                 tier="atom"
                 leaf="With image"
                 reason="A media atom that wraps <img>, owning its own loading skeleton and error fallback: media atoms (like CoverImage) only ever pass src/alt down to it. Loading, fallbackSrc and ratio never change the tree, still Frame containing Img, so they live as states inside this one leaf per §14d.2."
+                annotate={ANNOTATE}
                 states={[
                     {
                         name: "src set, image loaded",

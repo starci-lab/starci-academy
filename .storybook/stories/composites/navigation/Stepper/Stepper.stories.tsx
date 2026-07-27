@@ -21,14 +21,13 @@ const CHECKOUT_STEPS: Array<StepperStep> = [
     { id: "done", label: "Complete", description: "Get your receipt" },
 ]
 
-// Same 4 parts across every leaf below: each step repeats Indicator/Label/Description,
-// and a Connector sits between every pair of steps (all 3 checkout steps have a
-// description, so Description is present in every leaf here too).
+// Stepper's own circular indicator and connector line are internal geometry it draws itself
+// (§13z) with no dedicated sub-story to link to, so — unlike Typography.Base below — they carry
+// no badge (a link-less node is worse than no node at all). Only the two repeated
+// Typography.Base nodes (label/description) get badged, once per step.
 const STEPPER_PARTS: Array<AnatomyNode> = [
-    { name: "Indicator", tier: "composite", role: "the step's circular badge, showing a check icon once the step is done and a 1-based number otherwise (repeats per step)" },
     { name: "Typography.Base", tier: "atom", role: "the step's short label text (repeats per step)", storyId: "atoms-text-typography-typography-base--plain" },
     { name: "Typography.Base", tier: "atom", role: "the step's optional one-line description under the label (repeats per step)", storyId: "atoms-text-typography-typography-base--plain" },
-    { name: "Connector", tier: "composite", role: "the line between two adjacent steps, turning success-toned once the flow has passed it" },
 ]
 
 /** Horizontal, mid-flow: done = check, current = accent ring, upcoming = muted. */

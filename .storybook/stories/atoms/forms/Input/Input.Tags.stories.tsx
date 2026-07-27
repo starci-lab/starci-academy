@@ -23,8 +23,8 @@ type Story = StoryObj
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Chip.Base": { tier: "atom", role: "each tag renders as a removable Chip.Base", storyId: "atoms-chips-chip-chip-base--removable" },
-    Label: { tier: "heroui", role: "field label line" },
-    Skeleton: { tier: "heroui", role: "loading placeholder" },
+    "Label": { tier: "heroui", role: "field label line" },
+    "Skeleton": { tier: "heroui", role: "loading placeholder" },
 }
 
 /** Leaf TRẦN — trống, gõ + Enter để thêm thẻ. Chưa có token nên chưa có Chip deps. Migrated to `states` 2026-07-27. */

@@ -34,7 +34,7 @@ const SKELETON_PARTS: Array<AnatomyNode> = [
 export const Default: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="PersonaIdentityChip" tier="design" leaf="Default" parts={PARTS}>
+            <BlockAnatomy name="PersonaIdentityChip" tier="block" leaf="Default" parts={PARTS}>
                 <PersonaIdentityChip name="StarCi" role="Solution Architect" avatarSeed="starci@example.com" showAnatomy />
             </BlockAnatomy>
         </div>
@@ -45,7 +45,7 @@ export const Default: Story = {
 export const WithAvatarUrl: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="PersonaIdentityChip" tier="design" leaf="WithAvatarUrl" parts={PARTS} note="avatarUrl có giá trị — UserAvatar ưu tiên ảnh upload, cùng 3 part với Default.">
+            <BlockAnatomy name="PersonaIdentityChip" tier="block" leaf="WithAvatarUrl" parts={PARTS} note="avatarUrl có giá trị — UserAvatar ưu tiên ảnh upload, cùng 3 part với Default.">
                 <PersonaIdentityChip
                     name="StarCi"
                     role="Solution Architect"
@@ -61,7 +61,7 @@ export const WithAvatarUrl: Story = {
 export const LongNameTruncates: Story = {
     render: () => (
         <div className="max-w-52 p-8">
-            <BlockAnatomy name="PersonaIdentityChip" tier="design" leaf="LongNameTruncates" parts={PARTS} note="tên/vai trò dài trong khung hẹp — cả hai dòng truncate, cùng composition với Default.">
+            <BlockAnatomy name="PersonaIdentityChip" tier="block" leaf="LongNameTruncates" parts={PARTS} note="tên/vai trò dài trong khung hẹp — cả hai dòng truncate, cùng composition với Default.">
                 <PersonaIdentityChip
                     name="Nguyễn Văn Rất Là Dài Tên"
                     role="Senior Staff Solution Architect & Interview Lead"
@@ -77,7 +77,7 @@ export const LongNameTruncates: Story = {
 export const Sizes: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="PersonaIdentityChip" tier="design" leaf="Sizes" parts={PARTS} note="3 size (sm/md/lg) cùng composition — chỉ đổi avatar box + type scale tên.">
+            <BlockAnatomy name="PersonaIdentityChip" tier="block" leaf="Sizes" parts={PARTS} note="3 size (sm/md/lg) cùng composition — chỉ đổi avatar box + type scale tên.">
                 <div className="flex flex-col gap-6">
                     <PersonaIdentityChip name="StarCi" role="Solution Architect" avatarSeed="sm@example.com" size="sm" showAnatomy />
                     <PersonaIdentityChip name="StarCi" role="Solution Architect" avatarSeed="md@example.com" size="md" showAnatomy />
@@ -92,7 +92,7 @@ export const Sizes: Story = {
 export const Loading: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="PersonaIdentityChip" tier="design" leaf="Loading" parts={SKELETON_PARTS} note="isSkeleton đổi hẳn composition: avatar dot + 2 dòng nhãn skeleton, không UserAvatar/Typography thật.">
+            <BlockAnatomy name="PersonaIdentityChip" tier="block" leaf="Loading" parts={SKELETON_PARTS} note="isSkeleton đổi hẳn composition: avatar dot + 2 dòng nhãn skeleton, không UserAvatar/Typography thật.">
                 <div className="flex flex-col gap-6">
                     <PersonaIdentityChip name="StarCi" role="Solution Architect" isSkeleton size="sm" showAnatomy />
                     <PersonaIdentityChip name="StarCi" role="Solution Architect" isSkeleton size="md" showAnatomy />

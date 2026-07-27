@@ -78,7 +78,7 @@ export const CenteredDefault: Story = {
         frame(
             <BlockAnatomy
                 name="SectionHeading"
-                tier="design"
+                tier="block"
                 leaf="CenteredDefault"
                 parts={FULL_PARTS}
                 reason="Mọi section marketing lặp lại đúng nhịp: eyebrow màu → tiêu đề đậm → một dòng dẫn mờ. Gói vào một block để mọi section dùng cùng type-scale + spacing, feature chỉ truyền chữ; anchorId thêm '#' deep-link để mục lục/menu tham chiếu trực tiếp."
@@ -98,7 +98,7 @@ export const AlignStart: Story = {
         frame(
             <BlockAnatomy
                 name="SectionHeading"
-                tier="design"
+                tier="block"
                 leaf="AlignStart"
                 parts={HEADING_INTRO_PARTS}
                 note="Bỏ eyebrow, căn trái (FAQ) → chỉ còn tiêu đề + dòng dẫn, không StatusChip."
@@ -118,7 +118,7 @@ export const WithAnchor: Story = {
         frame(
             <BlockAnatomy
                 name="SectionHeading"
-                tier="design"
+                tier="block"
                 leaf="WithAnchor"
                 parts={ANCHORED_PARTS}
                 note='anchorId → thêm link "#" cạnh tiêu đề để deep-link section (composition khác leaf mặc định).'
@@ -138,7 +138,7 @@ export const TitleOnly: Story = {
         frame(
             <BlockAnatomy
                 name="SectionHeading"
-                tier="design"
+                tier="block"
                 leaf="TitleOnly"
                 parts={TITLE_ONLY_PARTS}
                 note="Không eyebrow / anchor / intro → chỉ còn title row (tiêu đề)."
@@ -154,7 +154,7 @@ export const Level2Hero: Story = {
         frame(
             <BlockAnatomy
                 name="SectionHeading"
-                tier="design"
+                tier="block"
                 leaf="Level2Hero"
                 parts={FULL_PARTS}
                 note="CÙNG composition với leaf mặc định (eyebrow + tiêu đề + dẫn), chỉ nâng level 3 → 2 cho hero-scale."

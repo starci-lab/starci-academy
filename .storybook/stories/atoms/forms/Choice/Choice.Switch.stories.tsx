@@ -6,11 +6,14 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 /**
  * `Switch`/`Label` — heroui's OWN components (imported `Switch as HeroSwitch` and
  * `Label as HeroLabel`, rendered directly), so they enter the tree as tier
- * `heroui` with no `storyId` (§ two-law pass, 2026-07-28).
+ * `heroui` with no `storyId` (§ two-law pass, 2026-07-28). `Skeleton` is the same
+ * heroui `Skeleton` this atom's `isSkeleton` branch renders directly, so it gets
+ * the same treatment (2026-07-28 orphan-part pass).
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Switch: { tier: "heroui", role: "toggle track + thumb" },
-    Label: { tier: "heroui", role: "label beside the track" },
+    "Switch": { tier: "heroui", role: "toggle track + thumb" },
+    "Label": { tier: "heroui", role: "label beside the track" },
+    "Skeleton": { tier: "heroui", role: "loading placeholder mirroring the track + label" },
 }
 
 /**
@@ -299,6 +302,7 @@ export const Loading: Story = {
             <BlockAnatomy
                 name="Choice.Switch"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isSkeleton`"
                 reason="Whoever owns the shape owns its resting state, so the switch draws its own shimmer; there is no shared skeleton component to keep in sync."
                 states={[

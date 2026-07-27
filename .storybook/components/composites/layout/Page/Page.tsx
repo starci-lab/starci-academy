@@ -120,7 +120,7 @@ const Header = ({
         <div data-anat-part={anatPart} className={cn("flex flex-col gap-3", className)}>
             {/* Breadcrumb row — rendered only when provided, sits above the main title row */}
             {breadcrumb ? (
-                <div data-anat-part={showAnatomy ? "Breadcrumb" : undefined}>{breadcrumb}</div>
+                <div>{breadcrumb}</div>
             ) : null}
 
             {/* Main row: title+description stack on the left, actions pinned to the right */}
@@ -145,13 +145,13 @@ const Header = ({
 
                 {/* Right slot: shrink-0 prevents action buttons from being squeezed */}
                 {actions ? (
-                    <div className="shrink-0" data-anat-part={showAnatomy ? "Actions" : undefined}>{actions}</div>
+                    <div className="shrink-0">{actions}</div>
                 ) : null}
             </div>
 
             {/* Meta row: stat/meta chips below the title block (gap-3 from outer) */}
             {meta ? (
-                <div data-anat-part={showAnatomy ? "Meta" : undefined}>{meta}</div>
+                <div>{meta}</div>
             ) : null}
         </div>
     )
@@ -212,10 +212,9 @@ const BottomBar = ({
     // (`w-full` CTA, two `flex-1` buttons) must not be boxed by a shrink-0 wrapper.
     if (main == null || actions == null) {
         const only = main ?? actions
-        const part = main != null ? "Body" : "Actions"
         return (
             <div className={cn(chrome, className)}>
-                <div data-anat-part={showAnatomy ? part : undefined}>{only}</div>
+                <div>{only}</div>
             </div>
         )
     }
@@ -223,8 +222,8 @@ const BottomBar = ({
     return (
         <div className={cn(chrome, className)}>
             <div className="flex items-center justify-between gap-3">
-                <div className="min-w-0" data-anat-part={showAnatomy ? "Body" : undefined}>{main}</div>
-                <div className="shrink-0" data-anat-part={showAnatomy ? "Actions" : undefined}>{actions}</div>
+                <div className="min-w-0">{main}</div>
+                <div className="shrink-0">{actions}</div>
             </div>
         </div>
     )

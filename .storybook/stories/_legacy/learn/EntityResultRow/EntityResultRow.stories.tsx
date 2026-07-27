@@ -142,7 +142,7 @@ export const KindChips: Story = {
         shell(
             <BlockAnatomy
                 name="EntityResultRow"
-                tier="design"
+                tier="block"
                 leaf="KindChips"
                 parts={KIND_CHIP_PARTS}
                 reason="Một kết quả tìm kiếm RAG cần một nhãn LOẠI theo enum (EnumChip: kind → màu) đứng trên tiêu đề-link. Gói nhãn-loại + breadcrumb + tiêu đề (hover-underline, foreground) + snippet + trạng thái khoá vào MỘT dòng pickable dùng chung cho 3 nơi (widget kết quả tool trong chat, danh sách liên quan, view tìm kiếm AI) — mỗi nơi chỉ bật/tắt showKindChip·showSnippet, không dựng lại dòng."
@@ -163,7 +163,7 @@ export const Breadcrumb: Story = {
         shell(
             <BlockAnatomy
                 name="EntityResultRow"
-                tier="design"
+                tier="block"
                 leaf="Breadcrumb"
                 parts={BREADCRUMB_PARTS}
                 note="Tắt showKindChip → breadcrumb muted thay chip đứng trên tiêu đề."
@@ -181,7 +181,7 @@ export const NoChipNoBreadcrumb: Story = {
         shell(
             <BlockAnatomy
                 name="EntityResultRow"
-                tier="design"
+                tier="block"
                 leaf="NoChipNoBreadcrumb"
                 parts={TITLE_ONLY_PARTS}
                 note="Không chip, breadcrumb null, snippet rỗng → dòng thu về đúng một Typography tiêu đề."
@@ -199,7 +199,7 @@ export const WithSnippet: Story = {
         shell(
             <BlockAnatomy
                 name="EntityResultRow"
-                tier="design"
+                tier="block"
                 leaf="WithSnippet"
                 parts={SNIPPET_PARTS}
                 note="Bật showSnippet → thêm dòng snippet muted làm ngữ cảnh dưới tiêu đề."
@@ -217,7 +217,7 @@ export const MultipleRows: Story = {
         shell(
             <BlockAnatomy
                 name="EntityResultRow"
-                tier="design"
+                tier="block"
                 leaf="MultipleRows"
                 parts={SNIPPET_PARTS}
                 note="Lặp dòng snippet ×N trong một khung — CÙNG composition với leaf 'Có snippet', separator inset giữa các dòng."
@@ -237,7 +237,7 @@ export const Locked: Story = {
         shell(
             <BlockAnatomy
                 name="EntityResultRow"
-                tier="design"
+                tier="block"
                 leaf="Locked"
                 parts={LOCKED_PARTS}
                 note="isLocked → thêm LockSimpleIcon + 'Ghi danh để mở', dòng vẫn navigate về gate ghi danh."

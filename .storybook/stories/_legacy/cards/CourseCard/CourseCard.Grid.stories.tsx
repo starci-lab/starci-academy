@@ -65,7 +65,7 @@ const DATA_PARTS: Array<AnatomyNode> = [
                     {
                         name: "PriceTag", tier: "block", role: "giá: số giảm bold + gốc gạch ngang + dòng tiết kiệm",
                         children: [
-                            { name: "StatusChip", tier: "design", role: "chip −% — Popover.Trigger mở breakdown giá" },
+                            { name: "StatusChip", tier: "block", role: "chip −% — Popover.Trigger mở breakdown giá" },
                         ],
                     },
                     { name: "Typography.Usd", tier: "composite", role: "gợi ý giá quy đổi USD (khi thanh toán quốc tế)" },
@@ -107,7 +107,7 @@ const NO_COVER_PARTS: Array<AnatomyNode> = [
                     {
                         name: "PriceTag", tier: "block", role: "giá phase hiện tại + gốc gạch ngang",
                         children: [
-                            { name: "StatusChip", tier: "design", role: "chip −% — Popover.Trigger mở breakdown giá" },
+                            { name: "StatusChip", tier: "block", role: "chip −% — Popover.Trigger mở breakdown giá" },
                         ],
                     },
                     { name: "Typography.Usd", tier: "composite", role: "gợi ý giá quy đổi USD" },
@@ -213,7 +213,7 @@ export const Discounted: Story = {
         frame(
             <BlockAnatomy
                 name="CourseCard"
-                tier="design"
+                tier="block"
                 leaf="Discounted"
                 parts={DATA_PARTS}
                 reason="Một ô khóa học trong catalog gom BLOCK con (CrossListCard value-props · PriceTag giá) + PRIMITIVE (cover · 2 Button CTA · Typography tiêu đề/mô tả · Typography+UsersIcon số học viên; Skeleton chỉ khi đang tải giá). Đóng gói 2 layout grid/line, 2 nút khi đã đăng ký, để feature chỉ truyền `course`."
@@ -237,7 +237,7 @@ export const Enrolled: Story = {
         frame(
             <BlockAnatomy
                 name="CourseCard"
-                tier="design"
+                tier="block"
                 leaf="Enrolled"
                 parts={DATA_PARTS}
                 note="Đã đăng ký → CÙNG composition data, chỉ đổi nhãn: primary 'Tiếp tục học' + phụ 'Xem khóa học' (không nhận cart action)."
@@ -255,7 +255,7 @@ export const NoCover: Story = {
         frame(
             <BlockAnatomy
                 name="CourseCard"
-                tier="design"
+                tier="block"
                 leaf="NoCover"
                 parts={NO_COVER_PARTS}
                 note="Thiếu ảnh → cover đổi sang gradient + BookOpenIcon; không truyền action nên chỉ còn 1 nút CTA chính."
@@ -273,7 +273,7 @@ export const Loading: Story = {
         frame(
             <BlockAnatomy
                 name="CourseCard"
-                tier="design"
+                tier="block"
                 leaf="Loading"
                 parts={LOADING_PARTS}
                 note="loyaltyPending → dòng giá là Skeleton thay cho PriceTag; phần còn lại giữ nguyên footprint data."
@@ -291,7 +291,7 @@ export const Free: Story = {
         frame(
             <BlockAnatomy
                 name="CourseCard"
-                tier="design"
+                tier="block"
                 leaf="Free"
                 parts={FREE_PARTS}
                 note="Không giá / không value-props / không số học viên → thân card thu về cover + tiêu đề/mô tả + 1 nút."
@@ -309,7 +309,7 @@ export const Skeleton: Story = {
         frame(
             <BlockAnatomy
                 name="CourseCard"
-                tier="design"
+                tier="block"
                 leaf="Skeleton"
                 parts={SKELETON_PARTS}
                 note="isSkeleton → tự dựng skeleton MIRROR đúng box/radius/padding data; `course` bị bỏ qua."
@@ -327,7 +327,7 @@ export const SkeletonGrid: Story = {
         frame(
             <BlockAnatomy
                 name="CourseCard"
-                tier="design"
+                tier="block"
                 leaf="SkeletonGrid"
                 parts={SKELETON_PARTS}
                 note="Cả lưới catalog đang tải → lặp skeleton mirror ×3, CÙNG composition với leaf 'Khung chờ'."

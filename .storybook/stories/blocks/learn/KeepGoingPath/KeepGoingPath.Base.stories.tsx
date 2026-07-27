@@ -48,8 +48,8 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
         role: "the frame and row rhythm, shared with LearnNudges so no second render path gets born",
     },
     "VariantChip.Difficulty": {
-        storyId: "designs-chips-variantchip-variantchip-difficulty--levels",
-        tier: "design",
+        storyId: "blocks-learn-variantchip-variantchip-difficulty--levels",
+        tier: "block",
         role: "a 4-step difficulty ramp, not a status token",
     },
 }

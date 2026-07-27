@@ -31,7 +31,7 @@ export const Default: Story = {
     render: () => (
         <div className="p-8">
             <div className="w-full max-w-2xl">
-                <BlockAnatomy name="FeedbackListItem" tier="design" leaf="Default" parts={WITH_COURSE_PARTS} note="Có courseTitle → 3 dòng: chip+title+date, courseTitle, summary.">
+                <BlockAnatomy name="FeedbackListItem" tier="block" leaf="Default" parts={WITH_COURSE_PARTS} note="Có courseTitle → 3 dòng: chip+title+date, courseTitle, summary.">
                     <FeedbackListItem
                         source="challenge"
                         sourceLabel="Thử thách"
@@ -52,7 +52,7 @@ export const NoCourse: Story = {
     render: () => (
         <div className="p-8">
             <div className="w-full max-w-2xl">
-                <BlockAnatomy name="FeedbackListItem" tier="design" leaf="NoCourse" parts={NO_COURSE_PARTS} note="courseTitle omitted → dòng CourseTitle KHÔNG render (không phải rỗng-vẫn-badge).">
+                <BlockAnatomy name="FeedbackListItem" tier="block" leaf="NoCourse" parts={NO_COURSE_PARTS} note="courseTitle omitted → dòng CourseTitle KHÔNG render (không phải rỗng-vẫn-badge).">
                     <FeedbackListItem
                         source="cv"
                         sourceLabel="CV"
@@ -72,7 +72,7 @@ export const TaskSource: Story = {
     render: () => (
         <div className="p-8">
             <div className="w-full max-w-2xl">
-                <BlockAnatomy name="FeedbackListItem" tier="design" leaf="TaskSource" parts={WITH_COURSE_PARTS} note="tone warning (task) — composition giống leaf Default (có courseTitle).">
+                <BlockAnatomy name="FeedbackListItem" tier="block" leaf="TaskSource" parts={WITH_COURSE_PARTS} note="tone warning (task) — composition giống leaf Default (có courseTitle).">
                     <FeedbackListItem
                         source="task"
                         sourceLabel="Bài tập"
@@ -93,7 +93,7 @@ export const List: Story = {
     render: () => (
         <div className="p-8">
             <div className="w-full max-w-2xl">
-                <BlockAnatomy name="FeedbackListItem" tier="design" leaf="List" parts={WITH_COURSE_PARTS} note="×3 xếp chồng gap-3 (consumer sở hữu, KHÔNG thuộc block) — mixed nguồn, hàng cuối không có CourseTitle.">
+                <BlockAnatomy name="FeedbackListItem" tier="block" leaf="List" parts={WITH_COURSE_PARTS} note="×3 xếp chồng gap-3 (consumer sở hữu, KHÔNG thuộc block) — mixed nguồn, hàng cuối không có CourseTitle.">
                     <div className="flex flex-col gap-3">
                         <FeedbackListItem
                             source="challenge"
@@ -134,7 +134,7 @@ export const SkeletonState: Story = {
     render: () => (
         <div className="p-8">
             <div className="w-full max-w-2xl">
-                <BlockAnatomy name="FeedbackListItem" tier="design" leaf="Skeleton" parts={SKELETON_PARTS} note="isSkeleton → chỉ 2 hàng bar (chip+title, summary); KHÔNG giữ chỗ riêng cho Date/CourseTitle.">
+                <BlockAnatomy name="FeedbackListItem" tier="block" leaf="Skeleton" parts={SKELETON_PARTS} note="isSkeleton → chỉ 2 hàng bar (chip+title, summary); KHÔNG giữ chỗ riêng cho Date/CourseTitle.">
                     <div className="flex flex-col gap-3">
                         <FeedbackListItem
                             isSkeleton

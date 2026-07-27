@@ -13,10 +13,10 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * `heroui` để panel hai-luật không lặng lẽ bỏ sót chúng (2026-07-28).
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Input: { tier: "heroui", role: "typed filter text field" },
+    "Input": { tier: "heroui", role: "typed filter text field" },
     "ComboBox.Trigger": { tier: "heroui", role: "caret button opening the list" },
-    Label: { tier: "heroui", role: "field label line" },
-    Skeleton: { tier: "heroui", role: "loading placeholder" },
+    "Label": { tier: "heroui", role: "field label line" },
+    "Skeleton": { tier: "heroui", role: "loading placeholder" },
 }
 
 const meta: Meta = { title: "Atoms/Forms/Select/Select.Combobox", tags: ["autodocs"], parameters: { layout: "fullscreen" } }

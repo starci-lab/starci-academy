@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Typography } from "@heroui/react"
 import { SnippetIcon } from "@sb-components/atoms/display/SnippetIcon/SnippetIcon"
-import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ATOM — `SnippetIcon.Base`: nút copy-một-chạm DUY NHẤT của hệ.
@@ -45,6 +45,21 @@ page can't demonstrate on its own. Pass \`isCopied\` to pin either state from
 the outside — leave it unset and the atom keeps managing it internally.
 `
 
+/**
+ * `Icon` is the swapping glyph span — a plain element, not a fixed importable
+ * component, so it links back to THIS atom's own `Copied` leaf/story (§13z internal
+ * geometry, self-link) instead of going undeclared: that leaf is where the reader
+ * actually sees both the copy and check frames explained side by side. The root
+ * trigger gets no self-badge — it's the whole leaf being viewed, nothing to jump to.
+ */
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "Icon": {
+        tier: "atom",
+        role: "the swapping glyph — a copy icon, or a checkmark for 350ms after a click — see the Copied leaf for both frames",
+        storyId: "atoms-display-snippeticon-snippeticon-base--copied",
+    },
+}
+
 const meta: Meta<typeof SnippetIcon.Base> = {
     title: "Atoms/Display/SnippetIcon/SnippetIcon.Base",
     component: SnippetIcon.Base,
@@ -67,6 +82,7 @@ export const Default: Story = {
                 name="SnippetIcon.Base"
                 tier="atom"
                 leaf="Bare icon"
+                annotate={ANNOTATE}
                 reason="The one copy affordance in the system. It sits next to the value it copies and needs nothing else to work, no size, no tone, no icon choice."
                 states={[
                     {
@@ -99,6 +115,7 @@ export const Copied: Story = {
                 name="SnippetIcon.Base"
                 tier="atom"
                 leaf="Prop `isCopied`"
+                annotate={ANNOTATE}
                 reason="A real click swaps the glyph to a checkmark for 350ms on its own, but a static page can never land on that exact millisecond, so isCopied pins either frame for anyone building or reviewing this state."
                 states={[
                     {

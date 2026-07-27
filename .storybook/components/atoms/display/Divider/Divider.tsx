@@ -55,7 +55,9 @@ const DividerBase = ({ orientation = "horizontal", variant = "default", label, s
         return (
             <div data-anat-part={anatPart} className={cn("flex w-full items-center gap-3", className)}>
                 <HeroSeparator orientation="horizontal" variant={variant} className="flex-1" data-anat-part={showAnatomy ? "Separator" : undefined} />
-                <span className="text-muted shrink-0 text-xs" data-anat-part={showAnatomy ? "Label" : undefined}>
+                {/* Caller slot (§ LOAI 3) — `label` is free-form content the caller passed in,
+                    not a part of Divider.Base's own anatomy, so this span stays unbadged. */}
+                <span className="text-muted shrink-0 text-xs">
                     {label}
                 </span>
                 <HeroSeparator orientation="horizontal" variant={variant} className="flex-1" data-anat-part={showAnatomy ? "Separator" : undefined} />

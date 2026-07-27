@@ -53,9 +53,9 @@ type Story = StoryObj<typeof Button.Base>
  * a library component.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Button: { tier: "heroui", role: "the HeroUI button element this atom renders" },
-    Skeleton: { tier: "heroui", role: "loading shimmer standing in for the button" },
-    Spinner: { tier: "heroui", role: "busy indicator that replaces the leading glyph while isPending" },
+    "Button": { tier: "heroui", role: "the HeroUI button element this atom renders" },
+    "Skeleton": { tier: "heroui", role: "loading shimmer standing in for the button" },
+    "Spinner": { tier: "heroui", role: "busy indicator that replaces the leading glyph while isPending" },
 }
 
 /** Bare leaf — no prop turned on, showing the default look (`variant="primary"`, `size="md"`). */

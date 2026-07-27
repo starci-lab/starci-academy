@@ -45,7 +45,7 @@ export const Clickable: Story = {
         frame(
             <BlockAnatomy
                 name="EntityLink"
-                tier="design"
+                tier="block"
                 leaf="Clickable"
                 parts={LINK_PARTS}
                 reason="Mỗi mốc thực thể (người, bài học, thử thách, khóa học) trong câu activity của feed cần một cách hiển thị nhất quán: chữ đậm + gạch chân khi hover nếu resolve được route, chữ đậm thường nếu không — không bao giờ là link chết. Đây gần như một PRIMITIVE một-phần-tử (xem FLAGS)."
@@ -64,7 +64,7 @@ export const NotClickable: Story = {
         frame(
             <BlockAnatomy
                 name="EntityLink"
-                tier="design"
+                tier="block"
                 leaf="NotClickable"
                 parts={NOT_CLICKABLE_PARTS}
                 note="Thiếu onPress → mốc rơi về span chữ đậm thường (mục tiêu đã xoá / không resolve), khác composition với leaf bấm được."
@@ -83,7 +83,7 @@ export const Pending: Story = {
         frame(
             <BlockAnatomy
                 name="EntityLink"
-                tier="design"
+                tier="block"
                 leaf="Pending"
                 parts={LINK_PARTS}
                 note="Đang resolve/navigate → Link bị disable nhưng CÙNG composition với leaf bấm được."

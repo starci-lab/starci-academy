@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { VariantChip, type Difficulty } from "@sb-components/designs/chips/VariantChip/VariantChip"
+import { VariantChip, type Difficulty } from "@sb-components/blocks/learn/VariantChip/VariantChip"
 import { BlockAnatomy, type AnatomyAnnotation, type AnatomyState } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -26,7 +26,7 @@ import { BlockAnatomy, type AnatomyAnnotation, type AnatomyState } from "@sb-uti
  * bars. (The `isSkeleton` prop still exists, §12c — two different things.)
  */
 const meta: Meta<typeof VariantChip.Difficulty> = {
-    title: "Designs/Chips/VariantChip/VariantChip.Difficulty",
+    title: "Blocks/Learn/VariantChip/VariantChip.Difficulty",
     component: VariantChip.Difficulty,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },
@@ -40,6 +40,18 @@ type Story = StoryObj<typeof VariantChip.Difficulty>
 const LEVELS: Array<Difficulty> = ["beginner", "intermediate", "advanced", "insane"]
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    // ⚠️ The wrapping `<span>` this design draws around `Chip.Base` ALSO emits its own
+    // badge (default `anatPart ?? "VariantChip.Difficulty"`, teacher caught 2026-07-26):
+    // without a real DOM node named after the design itself, `Chip.Base`'s own insides
+    // (`Dot`/`Label`) would climb the ancestor chain past this design entirely, so it
+    // needs a self-entry the same way any other real component of ours does — same
+    // `storyId` a CALLER declares when it embeds this chip (see `KeepGoingPath`'s dep on
+    // `"blocks-learn-variantchip-variantchip-difficulty--levels"`).
+    "VariantChip.Difficulty": {
+        storyId: "blocks-learn-variantchip-variantchip-difficulty--levels",
+        tier: "block",
+        role: "The design's own root span — it exists so `Chip.Base` (and its dot/label inside) nests correctly beneath it in the tree instead of floating loose.",
+    },
     "Chip.Base": {
         storyId: "atoms-chips-chip-chip-base--default",
         tier: "atom",
@@ -75,7 +87,7 @@ export const Levels: Story = {
         <div className="p-8">
             <BlockAnatomy
                 name="VariantChip.Difficulty"
-                tier="design"
+                tier="block"
                 leaf="Difficulty chip"
                 annotate={ANNOTATE}
                 reason="difficulty decides both the label and the color together, and every level renders through the exact same Chip.Base shape, so the four levels plus their skeleton mirrors are states of one leaf rather than eight separate leaves."

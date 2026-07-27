@@ -64,7 +64,7 @@ const FOOTER_BUTTON: AnatomyNode = {
 const sectionFrame = (children: Array<AnatomyNode>): Array<AnatomyNode> => [
     {
         name: "SectionCard",
-        tier: "design",
+        tier: "block",
         role: "khung viền tự đóng (h-full để đều hàng) — BAO toàn bộ nội dung",
         children,
     },
@@ -81,7 +81,7 @@ export const Default: Story = {
         frame(
             <BlockAnatomy
                 name="PitchCard"
-                tier="design"
+                tier="block"
                 leaf="Default"
                 parts={PITCH_PARTS}
                 reason="Một 'beat' landing lặp lại: một icon có nhãn màu, một claim đậm, một đoạn giải thích, đôi khi một CTA. Gói SectionCard + IconTile + typography vào một block để mọi beat (wedge/outcome/methodology) dùng chung một khung nhất quán, đều chiều cao khi xếp lưới — feature chỉ đổi icon/tone/chữ."
@@ -103,7 +103,7 @@ export const WithFooter: Story = {
         frame(
             <BlockAnatomy
                 name="PitchCard"
-                tier="design"
+                tier="block"
                 leaf="WithFooter"
                 parts={PITCH_FOOTER_PARTS}
                 note="Truyền `footer` → thêm slot CTA dưới đáy, composition khác leaf mặc định (có Button)."
@@ -127,7 +127,7 @@ export const ToneVariants: Story = {
         frame(
             <BlockAnatomy
                 name="PitchCard"
-                tier="design"
+                tier="block"
                 leaf="ToneVariants"
                 parts={PITCH_PARTS}
                 note="Ba thẻ CÙNG composition base, chỉ đổi tone của IconTile (accent · success · warning)."
@@ -147,7 +147,7 @@ export const RemainingTones: Story = {
         frame(
             <BlockAnatomy
                 name="PitchCard"
-                tier="design"
+                tier="block"
                 leaf="RemainingTones"
                 parts={PITCH_PARTS}
                 note="Hai thẻ CÙNG composition base, phủ nốt tone danger + neutral của IconTile."

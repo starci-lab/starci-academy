@@ -51,7 +51,6 @@ export const StatGridCard = ({ items, className, showAnatomy = false }: StatGrid
                 return (
                     <div
                         key={item.key}
-                        data-anat-part={showAnatomy ? "Cell" : undefined}
                         className={cn(
                             "flex flex-col gap-3 p-3",
                             isLastOddSpan && "col-span-2",

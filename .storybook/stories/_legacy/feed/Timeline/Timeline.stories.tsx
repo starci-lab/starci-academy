@@ -28,7 +28,7 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 const TIMELINE_PARTS: Array<AnatomyNode> = [
     {
         name: "FeedItem",
-        tier: "design",
+        tier: "block",
         role: "mỗi dòng hoạt động bên cạnh đường nối",
         children: [
             { name: "ActivityAvatar", tier: "block", role: "leading của từng FeedItem" },

@@ -70,7 +70,6 @@ const StepIndicator = ({
 }) => (
     <span
         aria-hidden
-        data-anat-part={showAnatomy ? "Indicator" : undefined}
         className={cn(
             "flex size-8 shrink-0 items-center justify-center rounded-full text-sm font-semibold",
             state === "done" && "bg-success text-success-foreground",
@@ -156,7 +155,6 @@ const StepperBase = ({
                             {!isFirst ? (
                                 <span
                                     aria-hidden
-                                    data-anat-part={showAnatomy ? "Connector" : undefined}
                                     className={cn(
                                         "mt-3 h-0.5 min-w-6 flex-1",
                                         connectorPassed ? "bg-success" : "bg-default",
@@ -193,7 +191,6 @@ const StepperBase = ({
                             {index < steps.length - 1 ? (
                                 <span
                                     aria-hidden
-                                    data-anat-part={showAnatomy ? "Connector" : undefined}
                                     className={cn(
                                         "w-0.5 flex-1",
                                         index < safeIndex ? "bg-success" : "bg-default",

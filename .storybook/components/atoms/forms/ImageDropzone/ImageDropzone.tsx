@@ -112,7 +112,6 @@ const ImageDropzoneBase = ({
             <input {...getInputProps()} />
             <span
                 aria-hidden
-                data-anat-part={showAnatomy ? "Icon" : undefined}
                 className={cn("text-muted [&_svg]:size-8", isDragActive && "text-accent-soft-foreground")}
             >
                 {/* `size-8` >= `size-5` ⇒ KHÔNG truyền `weight` (§5.0a), glyph giữ nét `regular`. */}

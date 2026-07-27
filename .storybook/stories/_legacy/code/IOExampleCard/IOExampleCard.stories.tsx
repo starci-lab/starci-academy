@@ -37,7 +37,7 @@ export const Sample: Story = {
             <div className="max-w-md">
                 <BlockAnatomy
                     name="IOExampleCard"
-                    tier="design"
+                    tier="block"
                     leaf="Sample"
                     parts={TWO_ROW_PARTS}
                     reason="Bounded card render N khối label+value đồng dạng (test case input→output); mỗi khối là 1 Row lặp lại, tách bởi viền dashed."
@@ -62,7 +62,7 @@ export const Diff: Story = {
             <div className="max-w-md">
                 <BlockAnatomy
                     name="IOExampleCard"
-                    tier="design"
+                    tier="block"
                     leaf="Diff"
                     parts={THREE_ROW_PARTS}
                     note="3 Row cùng tên — chỉ khác `tone` trên label (default/success/danger), value luôn cùng cấu trúc mono."
@@ -88,7 +88,7 @@ export const SingleRow: Story = {
             <div className="max-w-md">
                 <BlockAnatomy
                     name="IOExampleCard"
-                    tier="design"
+                    tier="block"
                     leaf="SingleRow"
                     parts={ONE_ROW_PARTS}
                     note="1 phần tử `rows` → 1 Row, không viền dashed (viền chỉ xuất hiện TỪ hàng thứ 2)."
@@ -110,7 +110,7 @@ export const MultiLineValue: Story = {
             <div className="max-w-md">
                 <BlockAnatomy
                     name="IOExampleCard"
-                    tier="design"
+                    tier="block"
                     leaf="MultiLineValue"
                     parts={TWO_ROW_PARTS}
                     note="Cùng bộ part như Sample — value nhiều dòng chỉ đổi nội dung, không đổi composition."

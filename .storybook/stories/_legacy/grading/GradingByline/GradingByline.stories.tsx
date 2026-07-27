@@ -62,7 +62,7 @@ const VERDICT_CHIP_PARTS: Array<AnatomyNode> = [
 const BYLINE_PARTS: Array<AnatomyNode> = [
     {
         name: "ModelByline",
-        tier: "design",
+        tier: "block",
         role: "nửa attribution của cặp: sparkle + tên model + chip hạng",
         children: [
             {
@@ -70,7 +70,7 @@ const BYLINE_PARTS: Array<AnatomyNode> = [
                 tier: "composite",
                 role: "gom sparkle + tên model plain-text (chip đứng NGOÀI span này); tự hiện SparkleIcon + tên model plain-text (không chip, không mono)",
             },
-            { name: "AiCategoryChip", tier: "design", role: "chip hạng model — sibling của dòng text trong fragment" },
+            { name: "AiCategoryChip", tier: "block", role: "chip hạng model — sibling của dòng text trong fragment" },
         ],
     },
 ]
@@ -79,7 +79,7 @@ const BYLINE_PARTS: Array<AnatomyNode> = [
 const BYLINE_NO_CHIP_PARTS: Array<AnatomyNode> = [
     {
         name: "ModelByline",
-        tier: "design",
+        tier: "block",
         role: "nửa attribution: sparkle + tên model (không hạng)",
         children: [
             {
@@ -109,7 +109,7 @@ export const VerdictPass: Story = {
         shell(
             <BlockAnatomy
                 name="GradingByline"
-                tier="design"
+                tier="block"
                 leaf="Pass"
                 parts={VERDICT_PARTS}
                 note="Glyph check xanh + nhãn 'Đạt' — leaf verdict tối giản dùng lại ở dòng lịch sử."
@@ -127,7 +127,7 @@ export const VerdictFail: Story = {
         shell(
             <BlockAnatomy
                 name="GradingByline"
-                tier="design"
+                tier="block"
                 leaf="Fail"
                 parts={VERDICT_PARTS}
                 note="Cùng composition với leaf 'Đạt', chỉ đổi tone glyph (x đỏ) + nhãn 'Không đạt'."
@@ -145,7 +145,7 @@ export const VerdictInChipPass: Story = {
         shell(
             <BlockAnatomy
                 name="GradingByline"
-                tier="design"
+                tier="block"
                 leaf="ChipPass"
                 parts={VERDICT_CHIP_PARTS}
                 note="Glyph + nhãn bọc trong Chip soft — leaf khác 'Đạt' vì thêm vỏ Chip + Chip.Label."
@@ -163,7 +163,7 @@ export const VerdictInChipFail: Story = {
         shell(
             <BlockAnatomy
                 name="GradingByline"
-                tier="design"
+                tier="block"
                 leaf="ChipFail"
                 parts={VERDICT_CHIP_PARTS}
                 note="Cùng composition với 'Chip đạt', đổi màu Chip sang danger + nhãn 'Không đạt'."
@@ -181,7 +181,7 @@ export const BylineWithLabel: Story = {
         shell(
             <BlockAnatomy
                 name="GradingByline"
-                tier="design"
+                tier="block"
                 leaf="WithLabel"
                 parts={BYLINE_PARTS}
                 reason="Gom hai mảnh attribution chấm bài dùng lại khắp result card / drawer / dòng lịch sử: ModelByline (sparkle + tên model plain-text + AiCategoryChip theo hạng) và VerdictIcon (đạt/không đạt). Quy tắc 'text rồi chip bên cạnh' được gói sẵn để mọi surface hiển thị model đã chấm nhất quán, không tự ghép lại chip-cạnh-chip."
@@ -198,7 +198,7 @@ export const BylineNoLabel: Story = {
         shell(
             <BlockAnatomy
                 name="GradingByline"
-                tier="design"
+                tier="block"
                 leaf="NoLabel"
                 parts={BYLINE_PARTS}
                 note="Bỏ tiền tố 'Đã chấm bởi' — chỉ khác nội dung text, CÙNG composition với leaf 'Có nhãn + hạng'."
@@ -215,7 +215,7 @@ export const BylineNoTierChip: Story = {
         shell(
             <BlockAnatomy
                 name="GradingByline"
-                tier="design"
+                tier="block"
                 leaf="NoTierChip"
                 parts={BYLINE_NO_CHIP_PARTS}
                 note="Không truyền `category` → AiCategoryChip vắng mặt, composition thiếu chip hạng."
@@ -232,7 +232,7 @@ export const BylineEmpty: Story = {
         shell(
             <BlockAnatomy
                 name="GradingByline"
-                tier="design"
+                tier="block"
                 leaf="Empty"
                 parts={BYLINE_EMPTY_PARTS}
                 note="model=null → ModelByline không render gì; khung chấm gạch chỉ chứa dòng chú thích placeholder."

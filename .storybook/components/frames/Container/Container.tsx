@@ -106,9 +106,14 @@ export interface ContainerBaseProps {
     /** Extra class for the measure. */
     className?: string
     /**
-     * Name THIS measure itself in the BlockAnatomy panel — overrides the default name
-     * `"Container.Base"`. Exists so the caller (screen) doesn't have to wrap an extra empty
-     * `div` just to attach `data-anat-part`; same mold as `SurfaceCard.*`.
+     * Name THIS measure itself in the BlockAnatomy panel, so a PARENT composition can badge
+     * it as one node (§11a.1) — exactly `SurfaceCard.*`'s own contract: no default guess, the
+     * caller states the name explicitly and declares it (with a real `storyId`) wherever it
+     * nests this measure. ⚠️ 2026-07-28: this used to fall back to a hardcoded default name
+     * `"Container.Base"` whenever `showAnatomy` was on, even with no caller in sight — nobody
+     * ever nested this measure as a badged part, so every one of THIS file's own stories kept
+     * emitting an undeclared "Container.Base" node the panel could never show, exactly the
+     * "badge that leads nowhere" the anatomy gate exists to catch.
      */
     anatPart?: string
     /**
@@ -146,7 +151,7 @@ const ContainerBase = ({
         // query measures the box of the element that opens the container, so
         // placing it here is what lets children measure the actual measure.
         <div
-            data-anat-part={anatPart ?? (showAnatomy ? "Container.Base" : undefined)}
+            data-anat-part={anatPart}
             className={cn(
                 "@container mx-auto w-full",
                 SIZE_CLASS[size],

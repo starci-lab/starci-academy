@@ -15,9 +15,9 @@ type Story = StoryObj
  * `Description`/`Error` để nguyên, không khai — chỉ là `<p>` trần.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    TextArea: { tier: "heroui", role: "multi-line text field" },
-    Label: { tier: "heroui", role: "field label line" },
-    Skeleton: { tier: "heroui", role: "loading placeholder" },
+    "TextArea": { tier: "heroui", role: "multi-line text field" },
+    "Label": { tier: "heroui", role: "field label line" },
+    "Skeleton": { tier: "heroui", role: "loading placeholder" },
 }
 
 /** Default — bare multi-line field (rows=3): empty box, no label/hint/error/placeholder. */

@@ -17,8 +17,8 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Select.Trigger": { tier: "heroui", role: "dropdown trigger button" },
     "Select.Value": { tier: "heroui", role: "trigger's selected-value text" },
-    Label: { tier: "heroui", role: "field label line" },
-    Skeleton: { tier: "heroui", role: "loading placeholder" },
+    "Label": { tier: "heroui", role: "field label line" },
+    "Skeleton": { tier: "heroui", role: "loading placeholder" },
 }
 
 const meta: Meta = { title: "Atoms/Forms/Select/Select.Single", tags: ["autodocs"], parameters: { layout: "fullscreen" } }

@@ -1,11 +1,11 @@
 import React from "react"
 import { ArrowRightIcon, LockIcon } from "@phosphor-icons/react"
 import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
-import { PriceTag, type PriceBreakdown } from "@sb-components/designs/commerce/PriceTag/PriceTag"
+import { PriceTag, type PriceBreakdown } from "@sb-components/blocks/commerce/PriceTag/PriceTag"
 // The NON-legacy version (`designs/commerce/…`) — the `_legacy` version of the same
 // name still exists but is a dead end; screens are forbidden from touching `_legacy`
 // so every link in the chain has to move off it (instructor, 2026-07-26).
-import { PhaseScarcityNote, PricingPhase } from "@sb-components/designs/commerce/PhaseScarcityNote/PhaseScarcityNote"
+import { PhaseScarcityNote, PricingPhase } from "@sb-components/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote"
 import { Button as AtomButton } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { TitledText } from "@sb-components/composites/text/TitledText/TitledText"

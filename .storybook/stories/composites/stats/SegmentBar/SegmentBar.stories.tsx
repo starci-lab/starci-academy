@@ -16,22 +16,19 @@ export default meta
 type Story = StoryObj<typeof SegmentBar>
 
 // leaf có legend (Proportional/WithMax/ManyGroups/Empty): track + legend, không caption.
-// `Bar` stays a generic label — the track is bespoke markup (a `role="img"` div), no real
-// component sits behind it. `Legend` IS the real `Legend` composite this file renders directly.
+// The track is bespoke internal geometry (a `role="img"` div, §13z) with no dedicated
+// sub-story to link to, so it carries no badge — a link-less node is worse than none.
+// `Legend` IS the real `Legend` composite this file renders directly.
 const BAR_LEGEND_PARTS: Array<AnatomyNode> = [
-    { name: "Bar", tier: "composite", role: "the track that divides into slices by proportion (role=img)" },
     { name: "Legend", tier: "composite", role: "the colour dot + label + count row under the track", storyId: "composites-stats-legend--basic" },
 ]
 
-// leaf HideLegend: chỉ còn track, legend bị ẩn hẳn.
-const BAR_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "Bar", tier: "composite", role: "the track that divides into slices by proportion (role=img)" },
-]
+// leaf HideLegend: chỉ còn track, legend bị ẩn hẳn. Track stays unbadged (see above).
+const BAR_ONLY_PARTS: Array<AnatomyNode> = []
 
 // leaf InlineLabels: có cả legend + caption (câu takeaway muted dưới cùng). Caption renders
 // straight HeroUI `Typography`, so it is named for that real import, not its role.
 const BAR_LEGEND_CAPTION_PARTS: Array<AnatomyNode> = [
-    { name: "Bar", tier: "composite", role: "a thick ladder track that prints its own %+label directly on each band" },
     { name: "Legend", tier: "composite", role: "the colour dot + label row under the track (no count suffix, already printed on the band)", storyId: "composites-stats-legend--basic" },
     { name: "Typography", tier: "heroui", role: "an optional muted takeaway sentence below everything" },
 ]

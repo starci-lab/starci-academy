@@ -8,11 +8,14 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * `Checkbox as HeroCheckbox` and rendered directly), so they enter the tree as
  * tier `heroui` with no `storyId` (§ two-law pass, 2026-07-28): there is no story
  * of ours to jump to, only a library component whose presence would otherwise be
- * silently dropped.
+ * silently dropped. `Skeleton` is the same heroui `Skeleton` the `isSkeleton`
+ * branch renders directly, so it gets the same treatment (2026-07-28 orphan-part
+ * pass).
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Checkbox.Control": { tier: "heroui", role: "tick box + check glyph" },
     "Checkbox.Content": { tier: "heroui", role: "label wrapper beside the box" },
+    "Skeleton": { tier: "heroui", role: "loading placeholder mirroring the box + label" },
 }
 
 /**

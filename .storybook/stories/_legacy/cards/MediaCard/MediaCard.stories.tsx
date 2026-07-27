@@ -34,14 +34,14 @@ const DESCRIPTION = "Build a solid foundation from frontend to backend through h
 // LOADED leaf shape — cover slot · title · optional meta · optional description · optional footer,
 // all inside the HeroUI Card/CardContent frame (frame itself isn't a named part — it's the primitive's own root).
 const FULL_PARTS: Array<AnatomyNode> = [
-    { name: "Cover", tier: "design", role: "media full-bleed 16:9 (ảnh thật hoặc placeholder khi omit `cover`)" },
+    { name: "Cover", tier: "block", role: "media full-bleed 16:9 (ảnh thật hoặc placeholder khi omit `cover`)" },
     { name: "Typography.Title", tier: "composite", role: "tiêu đề (weight medium)" },
-    { name: "Meta", tier: "design", role: "slot meta — nhận node List.Meta do caller truyền vào" },
+    { name: "Meta", tier: "block", role: "slot meta — nhận node List.Meta do caller truyền vào" },
     { name: "Typography.Description", tier: "composite", role: "mô tả ngắn, line-clamp-2" },
-    { name: "Footer", tier: "design", role: "slot footer — CTA/giá/tiến độ do caller truyền vào" },
+    { name: "Footer", tier: "block", role: "slot footer — CTA/giá/tiến độ do caller truyền vào" },
 ]
 const MINIMAL_PARTS: Array<AnatomyNode> = [
-    { name: "Cover", tier: "design", role: "placeholder 16:9 (không truyền `cover`) — lấp slot để lưới đều" },
+    { name: "Cover", tier: "block", role: "placeholder 16:9 (không truyền `cover`) — lấp slot để lưới đều" },
     { name: "Typography.Title", tier: "composite", role: "tiêu đề (weight medium)" },
 ]
 const LOADING_PARTS: Array<AnatomyNode> = [
@@ -55,7 +55,7 @@ const LOADING_PARTS: Array<AnatomyNode> = [
 export const WithCover: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="MediaCard" tier="design" leaf="WithCover" parts={FULL_PARTS}>
+            <BlockAnatomy name="MediaCard" tier="block" leaf="WithCover" parts={FULL_PARTS}>
                 <div style={{ width: 320 }}>
                     <MediaCard
                         showAnatomy
@@ -77,7 +77,7 @@ export const WithoutCover: Story = {
         <div className="p-8">
             <BlockAnatomy
                 name="MediaCard"
-                tier="design"
+                tier="block"
                 leaf="WithoutCover"
                 parts={FULL_PARTS}
                 note="Không truyền `cover` — placeholder 16:9 lấp ĐÚNG slot Cover, phần còn lại giống hệt WithCover."
@@ -100,7 +100,7 @@ export const WithoutCover: Story = {
 export const Pressable: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="MediaCard" tier="design" leaf="Pressable" parts={FULL_PARTS.filter((p) => p.name !== "Footer")}>
+            <BlockAnatomy name="MediaCard" tier="block" leaf="Pressable" parts={FULL_PARTS.filter((p) => p.name !== "Footer")}>
                 <div style={{ width: 320 }}>
                     <MediaCard
                         showAnatomy
@@ -120,7 +120,7 @@ export const Pressable: Story = {
 export const AsLink: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="MediaCard" tier="design" leaf="AsLink" parts={FULL_PARTS.filter((p) => p.name !== "Footer")}>
+            <BlockAnatomy name="MediaCard" tier="block" leaf="AsLink" parts={FULL_PARTS.filter((p) => p.name !== "Footer")}>
                 <div style={{ width: 320 }}>
                     <MediaCard
                         showAnatomy
@@ -142,7 +142,7 @@ export const Minimal: Story = {
         <div className="p-8">
             <BlockAnatomy
                 name="MediaCard"
-                tier="design"
+                tier="block"
                 leaf="Minimal"
                 parts={MINIMAL_PARTS}
                 note="Mọi slot phụ (meta/description/footer) đều rỗng — chỉ còn Cover placeholder + Title."
@@ -161,7 +161,7 @@ export const Loading: Story = {
         <div className="p-8">
             <BlockAnatomy
                 name="MediaCard"
-                tier="design"
+                tier="block"
                 leaf="Loading"
                 parts={LOADING_PARTS}
                 note="Skeleton mirror TỰ vẽ bởi primitive (isSkeleton) — composition khác hẳn leaf loaded (không part thật)."

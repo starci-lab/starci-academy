@@ -28,39 +28,31 @@ export default meta
 
 type Story = StoryObj<typeof Form.Section>
 
-/** Header (Title[+Description]) · Body — các part TRỰC TIẾP của khung (§11a). */
+/**
+ * Chỉ khai `Typography.Base` — component THẬT duy nhất của khung này có story
+ * riêng để trỏ sang. Khung KHÔNG badge `Header`/`Body` nữa (2026-07-28, §11a.1
+ * LOẠI 2/3): `Header` chỉ là div gom title+description mà chính hai
+ * `Typography.Base` bên dưới đã nói hết, còn `Body` bọc field TUỲ Ý caller đưa
+ * vào — cả hai không có MỘT component cố định để trỏ sang, nên component đã bỏ
+ * hẳn hai badge này; `Typography.Base` nổi lên thành node gốc thay vì con của
+ * `Header`.
+ */
 const TITLE_ONLY_PARTS: Array<AnatomyNode> = [
     {
-        name: "Header",
-        tier: "composite",
-        role: "the group's opening block, carrying the title alone",
-        children: [
-            {
-                name: "Typography.Base",
-                tier: "atom",
-                role: "the group title (Sm medium, §9b)",
-                storyId: "atoms-text-typography-typography-base--bold",
-            },
-        ],
+        name: "Typography.Base",
+        tier: "atom",
+        role: "the group title (Sm medium, §9b)",
+        storyId: "atoms-text-typography-typography-base--bold",
     },
-    { name: "Body", tier: "composite", role: "the field column (`body`/`children`) on the `gap` rhythm" },
 ]
 
 const WITH_DESCRIPTION_PARTS: Array<AnatomyNode> = [
     {
-        name: "Header",
-        tier: "composite",
-        role: "the group's opening block, carrying the title and its description together on a tight `gap-1` (§10b)",
-        children: [
-            {
-                name: "Typography.Base",
-                tier: "atom",
-                role: "the title (Sm medium) and the description (Xs muted, §9a) — same real component, two props",
-                storyId: "atoms-text-typography-typography-base--colors",
-            },
-        ],
+        name: "Typography.Base",
+        tier: "atom",
+        role: "the title (Sm medium) and the description (Xs muted, §9a) — same real component, two props",
+        storyId: "atoms-text-typography-typography-base--colors",
     },
-    { name: "Body", tier: "composite", role: "the field column (`body`/`children`) on the `gap` rhythm" },
 ]
 
 /** Fixture field thật — atom tự mang label/hint/errorMessage/isRequired (§12e). */

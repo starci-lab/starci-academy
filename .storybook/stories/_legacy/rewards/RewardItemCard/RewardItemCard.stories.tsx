@@ -64,7 +64,7 @@ export const Default: Story = {
         shell(
             <BlockAnatomy
                 name="RewardItemCard"
-                tier="design"
+                tier="block"
                 leaf="Default"
                 parts={CONTENT_PARTS}
                 reason="Một ô trong catalog Coin shop gom IconTile (nhận diện thưởng) + tiêu đề/mô tả + StatusChip (giá) + Button (đổi) trong một khung Card tự-đủ, để RewardCatalog chỉ truyền data + onRedeem — không tự dựng lại icon/chip/nút. Khi tải: Skeleton mirror đúng khung Card này."
@@ -89,7 +89,7 @@ export const CannotAfford: Story = {
         shell(
             <BlockAnatomy
                 name="RewardItemCard"
-                tier="design"
+                tier="block"
                 leaf="CannotAfford"
                 parts={CONTENT_PARTS}
                 note="Cùng composition với leaf 'Có dữ liệu'; Button khoá (isDisabled) + đổi nhãn sang 'Không đủ Coin'."
@@ -115,7 +115,7 @@ export const Redeeming: Story = {
         shell(
             <BlockAnatomy
                 name="RewardItemCard"
-                tier="design"
+                tier="block"
                 leaf="Redeeming"
                 parts={CONTENT_PARTS}
                 note="Cùng composition; Button hiện spinner (isPending) và khoá bấm khi redeem đang bay."
@@ -141,7 +141,7 @@ export const Grid: Story = {
         shell(
             <BlockAnatomy
                 name="RewardItemCard"
-                tier="design"
+                tier="block"
                 leaf="Grid"
                 parts={CONTENT_PARTS}
                 note="Cùng composition, lặp ×N theo lưới @app-sm:grid-cols-2 của RewardCatalog."
@@ -175,7 +175,7 @@ export const LongTitle: Story = {
         shell(
             <BlockAnatomy
                 name="RewardItemCard"
-                tier="design"
+                tier="block"
                 leaf="LongTitle"
                 parts={CONTENT_PARTS}
                 note="Cùng composition; tiêu đề dài bị cắt truncate 1 dòng (ellipsis) thay vì xuống dòng."
@@ -201,7 +201,7 @@ export const Skeleton: Story = {
         shell(
             <BlockAnatomy
                 name="RewardItemCard"
-                tier="design"
+                tier="block"
                 leaf="Loading"
                 parts={SKELETON_PARTS}
                 note="isSkeleton → Skeleton mirror đúng khung Card (icon · 2 dòng chữ · chip · nút), không phần thật nào — giữ lưới catalog khỏi nhảy khi tải."

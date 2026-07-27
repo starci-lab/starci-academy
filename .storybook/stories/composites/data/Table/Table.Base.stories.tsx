@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Table } from "@sb-components/composites/data/Table/Table"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE (§12f/§13) — `Table.Base` là KHUNG bảng: nó SỞ HỮU cấu hình cột
@@ -43,104 +43,37 @@ const ITEMS = [
 ]
 
 /**
- * ANATOMY IS PER-LEAF. Cây DOM thật là HeroUI `Table` NGUYÊN CON: `Table` (root) →
- * `Table.ScrollContainer` → `Table.Content` → `Table.Header` (chứa N `Table.Column`) +
- * `Table.Body` (chứa N `Table.Row`). Tất cả các node này là component CỦA HEROUI, không
- * phải của ta ⇒ tier `heroui`, KHÔNG có `storyId` (không có story riêng để trỏ sang).
+ * ANATOMY IS PER-LEAF, one shared whitelist (2026-07-28 — migrated off the deprecated
+ * `parts` tree, {@link BlockAnatomyProps.parts}, to `annotate`; structure is always
+ * derived from DOM, this table is only WHY + tier + storyId per name, §11a.1).
+ *
+ * Cây DOM thật là HeroUI `Table` NGUYÊN CON: `Table` (root) → `Table.ScrollContainer` →
+ * `Table.Content` → `Table.Header` (chứa N `Table.Column`) + `Table.Body` (chứa N
+ * `Table.Row`). Tất cả các node này là component CỦA HEROUI, không phải của ta ⇒ tier
+ * `heroui`, KHÔNG có `storyId` (không có story riêng để trỏ sang) — panel vẫn nhận vì
+ * `tier: "heroui"` một mình đã đủ điều kiện vào cây (khác `parts` cũ: định dạng mảng
+ * không có đường nhận diện `tier` mà không kèm `storyId`, nên bị coi là orphan cho tới
+ * khi chuyển sang `annotate`).
+ *
  * Ô (`Table.Cell`) không badge riêng vì nó chỉ là chỗ đổ node của consumer (§11a: badge
- * con TRỰC TIẾP) — giống `Empty` bên dưới.
+ * con TRỰC TIẾP) — cùng lý do `emptyContent` bên dưới (renderEmptyState) cũng không
+ * badge nữa: cả hai là khe của caller (§11a.1 LOẠI 3), component đã bỏ hẳn
+ * `data-anat-part="Empty"` (2026-07-28).
  */
-const TABLE_PARTS: Array<AnatomyNode> = [
-    { name: "Table", tier: "heroui", role: "HeroUI's own table root — canvas, variant skin." },
-    { name: "Table.ScrollContainer", tier: "heroui", role: "Horizontal scroll wrapper around the table." },
-    {
-        name: "Table.Content",
-        tier: "heroui",
-        role: "The real `<table>` (`ariaLabel` lives here).",
-        children: [
-            {
-                name: "Table.Header",
-                tier: "heroui",
-                role: "The header row, built entirely from columns.",
-                children: [
-                    { name: "Table.Column", tier: "heroui", role: "One column: its header text, alignment, and width." },
-                ],
-            },
-            {
-                name: "Table.Body",
-                tier: "heroui",
-                role: "The table body, built entirely from items.",
-                children: [
-                    { name: "Table.Row", tier: "heroui", role: "One row; each cell reads item[column.key]." },
-                ],
-            },
-        ],
+const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "Table": { tier: "heroui", role: "HeroUI's own table root — canvas, variant skin." },
+    "Table.ScrollContainer": { tier: "heroui", role: "Horizontal scroll wrapper around the table." },
+    "Table.Content": { tier: "heroui", role: "The real `<table>` (`ariaLabel` lives here)." },
+    "Table.Header": { tier: "heroui", role: "The header row, built entirely from `columns` — stays exactly as is regardless of `items`, since columns are configuration." },
+    "Table.Column": { tier: "heroui", role: "One column: its header text, alignment, and width." },
+    "Table.Body": { tier: "heroui", role: "The table body — real rows, the skeleton mirror, or `emptyContent`, depending on state." },
+    "Table.Row": { tier: "heroui", role: "One row; each cell reads `item[column.key]`, or is a skeleton bar while loading." },
+    "Typography.Base": {
+        tier: "atom",
+        role: "isSkeleton bar filling each cell so the row's shape doesn't jump when data lands.",
+        storyId: "atoms-text-typography-typography-base--loading",
     },
-]
-
-/** Leaf RỖNG: `Table.Body` không có `Table.Row` nào, thay bằng node `Empty`. */
-const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "Table", tier: "heroui", role: "HeroUI's own table root." },
-    { name: "Table.ScrollContainer", tier: "heroui", role: "Horizontal scroll wrapper around the table." },
-    {
-        name: "Table.Content",
-        tier: "heroui",
-        role: "The real `<table>`.",
-        children: [
-            {
-                name: "Table.Header",
-                tier: "heroui",
-                role: "The header row stays exactly as is, since columns are configuration and never depend on the data.",
-                children: [{ name: "Table.Column", tier: "heroui", role: "One column." }],
-            },
-            {
-                name: "Table.Body",
-                tier: "heroui",
-                role: "An empty table body.",
-                children: [{ name: "Empty", tier: "composite", role: "emptyContent spans the full width of the body." }],
-            },
-        ],
-    },
-]
-
-/** Leaf ĐANG TẢI: khung + header THẬT giữ nguyên, mỗi ô thành một thanh skeleton. */
-const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Table", tier: "heroui", role: "HeroUI's own table root." },
-    { name: "Table.ScrollContainer", tier: "heroui", role: "Horizontal scroll wrapper around the table." },
-    {
-        name: "Table.Content",
-        tier: "heroui",
-        role: "The real `<table>`.",
-        children: [
-            {
-                name: "Table.Header",
-                tier: "heroui",
-                role: "The real header, not skeletoned, since the columns are already known before the data arrives.",
-                children: [{ name: "Table.Column", tier: "heroui", role: "One column." }],
-            },
-            {
-                name: "Table.Body",
-                tier: "heroui",
-                role: "A mirror table body.",
-                children: [
-                    {
-                        name: "Table.Row",
-                        tier: "heroui",
-                        role: "A mirror row; each cell is a Typography.Base bar.",
-                        children: [
-                            {
-                                name: "Typography.Base",
-                                tier: "atom",
-                                role: "isSkeleton bar filling each cell so the row's shape doesn't jump when data lands.",
-                                storyId: "atoms-text-typography-typography-base--loading",
-                            },
-                        ],
-                    },
-                ],
-            },
-        ],
-    },
-]
+}
 
 /** Default — `columns` + `items` là DỮ LIỆU; khung tự dựng header/hàng/ô. */
 export const Default: Story = {
@@ -150,7 +83,7 @@ export const Default: Story = {
                 name="Table.Base"
                 tier="composite"
                 leaf="Default"
-                parts={TABLE_PARTS}
+                annotate={ANNOTATE}
                 reason="A table is a repeating list, so §13b requires items as data and forbids children: a caller who cannot hand-place a Column or a Row can never let the cell count drift from the column count. The frame only lays cells out; content such as the Chip.Base below is a node the caller already formatted, so the frame itself knows nothing about the domain."
                 states={[
                     {
@@ -184,7 +117,7 @@ export const Alignment: Story = {
                 name="Table.Base"
                 tier="composite"
                 leaf="Alignment"
-                parts={TABLE_PARTS}
+                annotate={ANNOTATE}
                 reason="align and width are declared once on the column, in columns, and the frame applies them to the header and to every cell beneath it, so no call site ever aligns one cell by hand while its neighbours drift."
                 states={[
                     {
@@ -222,7 +155,7 @@ export const Empty: Story = {
                 name="Table.Base"
                 tier="composite"
                 leaf="Empty"
-                parts={EMPTY_PARTS}
+                annotate={ANNOTATE}
                 states={[
                     {
                         name: "items = []",
@@ -257,7 +190,7 @@ export const Loading: Story = {
                 name="Table.Base"
                 tier="composite"
                 leaf="Loading"
-                parts={SKELETON_PARTS}
+                annotate={ANNOTATE}
                 states={[
                     {
                         name: "isSkeleton = true",
@@ -292,7 +225,7 @@ export const Pressable: Story = {
                 name="Table.Base"
                 tier="composite"
                 leaf="Pressable"
-                parts={TABLE_PARTS}
+                annotate={ANNOTATE}
                 reason="A row is not a card (§7b): it never lifts or scales on press, its feedback is a hover background plus a focus ring, and the keyboard behaviour comes from react-aria's row action rather than a hand-rolled handler."
                 states={[
                     {

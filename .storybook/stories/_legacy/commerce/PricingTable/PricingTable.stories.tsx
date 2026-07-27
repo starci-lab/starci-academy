@@ -83,12 +83,12 @@ const threeTiers: PricingTableTier[] = [
 // (no child nodes; drill into CrossListItem's own story for that anatomy).
 const FEATURE_LIST: AnatomyNode = {
     name: "CrossListCard",
-    tier: "design",
+    tier: "block",
     role: "danh sách tính năng — 1 list trộn dòng có (✓) và không có (✗); khung bordered lồng trong thẻ",
     children: [
         {
             name: "CrossListItem",
-            tier: "design",
+            tier: "block",
             role: "mỗi tính năng một dòng (lặp theo features) — mark (✓/✗) + nhãn tự hiện nội bộ",
         },
     ],
@@ -113,7 +113,7 @@ const DESC: AnatomyNode = { name: "Typography.Description", tier: "composite", r
 const HIGHLIGHTED_PARTS: Array<AnatomyNode> = [
     {
         name: "PricingCard",
-        tier: "design",
+        tier: "block",
         role: "mỗi cột một tier — khung (accent khi tier nổi bật)",
         children: [
             NAME,
@@ -132,7 +132,7 @@ const HIGHLIGHTED_PARTS: Array<AnatomyNode> = [
 const PLAIN_PARTS: Array<AnatomyNode> = [
     {
         name: "PricingCard",
-        tier: "design",
+        tier: "block",
         role: "mỗi cột một tier — khung (không accent — mọi cột đồng cấp)",
         children: [
             NAME,

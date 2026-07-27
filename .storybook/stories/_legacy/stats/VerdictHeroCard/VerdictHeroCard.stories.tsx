@@ -46,8 +46,8 @@ const FULL_PARTS: Array<AnatomyNode> = [
     { name: "Value", tier: "composite", role: "số headline tô màu theo band + unit mờ" },
     { name: "Verdict", tier: "composite", role: "câu phán xử một dòng" },
     { name: "Sub", tier: "composite", role: "dòng bằng chứng mờ dưới verdict" },
-    { name: "ProgressMeter", tier: "design", role: "thanh tiến độ có mốc target" },
-    { name: "Splits", tier: "design", role: "2-up mini-stat bổ dọc con số headline" },
+    { name: "ProgressMeter", tier: "block", role: "thanh tiến độ có mốc target" },
+    { name: "Splits", tier: "block", role: "2-up mini-stat bổ dọc con số headline" },
     { name: "Action", tier: "composite", role: "slot hành động chính — caller cung cấp Button" },
 ]
 
@@ -55,20 +55,20 @@ const METER_ONLY_PARTS: Array<AnatomyNode> = [
     { name: "Value", tier: "composite", role: "số headline tô màu theo band + unit mờ" },
     { name: "Verdict", tier: "composite", role: "câu phán xử một dòng" },
     { name: "Sub", tier: "composite", role: "dòng bằng chứng mờ dưới verdict" },
-    { name: "ProgressMeter", tier: "design", role: "thanh tiến độ có mốc target" },
+    { name: "ProgressMeter", tier: "block", role: "thanh tiến độ có mốc target" },
     { name: "Action", tier: "composite", role: "slot hành động chính — caller cung cấp Button" },
 ]
 
 const SPLITS_NEUTRAL_PARTS: Array<AnatomyNode> = [
     { name: "Value", tier: "composite", role: "số headline tô màu theo band + unit mờ" },
     { name: "Verdict", tier: "composite", role: "câu phán xử một dòng" },
-    { name: "Splits", tier: "design", role: "2-up mini-stat, band bỏ trống → giữ neutral foreground" },
+    { name: "Splits", tier: "block", role: "2-up mini-stat, band bỏ trống → giữ neutral foreground" },
 ]
 
 const BAND_PARTS: Array<AnatomyNode> = [
     { name: "Value", tier: "composite", role: "số headline tô màu theo band + unit mờ" },
     { name: "Verdict", tier: "composite", role: "câu phán xử một dòng" },
-    { name: "ProgressMeter", tier: "design", role: "thanh tiến độ có mốc target, fill theo band" },
+    { name: "ProgressMeter", tier: "block", role: "thanh tiến độ có mốc target, fill theo band" },
 ]
 
 /** Only the required props (`value` + `band` + `verdict`) — no `unit`, `sub`, `meter`, `splits`, or `action`. The doc comment calls this out explicitly: omit `meter` "when there is no meaningful bar to show (e.g. a pure count)". */
@@ -77,7 +77,7 @@ export const Default: Story = {
         shell(
             <BlockAnatomy
                 name="VerdictHeroCard"
-                tier="design"
+                tier="block"
                 leaf="Default"
                 parts={DEFAULT_PARTS}
                 reason="Hero 'phán xử' chia sẻ giữa các surface Thống kê: số headline tô band + câu phán xử LUÔN đi cùng nhau; mọi zone khác (sub/meter/splits/action) là tuỳ chọn, bỏ khi không có bằng chứng/hành động phù hợp."
@@ -98,7 +98,7 @@ export const Full: Story = {
         shell(
             <BlockAnatomy
                 name="VerdictHeroCard"
-                tier="design"
+                tier="block"
                 leaf="Full"
                 parts={FULL_PARTS}
                 note="Đủ 6 part: Value, Verdict, Sub (bằng chứng), ProgressMeter (mốc target), Splits (2-up), Action (CTA)."
@@ -124,7 +124,7 @@ export const MeterOnly: Story = {
         shell(
             <BlockAnatomy
                 name="VerdictHeroCard"
-                tier="design"
+                tier="block"
                 leaf="MeterOnly"
                 parts={METER_ONLY_PARTS}
                 note="Bỏ `splits` (không có breakdown 2-up tự nhiên) — Sub + ProgressMeter + Action vẫn đủ làm bằng chứng + hành động."
@@ -149,7 +149,7 @@ export const SplitsNeutral: Story = {
         shell(
             <BlockAnatomy
                 name="VerdictHeroCard"
-                tier="design"
+                tier="block"
                 leaf="SplitsNeutral"
                 parts={SPLITS_NEUTRAL_PARTS}
                 note="Chỉ Value + Verdict + Splits — không sub/meter/action; mỗi split không truyền `band` nên giữ neutral foreground."
@@ -172,7 +172,7 @@ export const BandDanger: Story = {
         shell(
             <BlockAnatomy
                 name="VerdictHeroCard"
-                tier="design"
+                tier="block"
                 leaf="BandDanger"
                 parts={BAND_PARTS}
                 note="Value + Verdict + ProgressMeter — band=danger tô đỏ cả số lẫn fill thanh tiến độ."
@@ -195,7 +195,7 @@ export const BandWarning: Story = {
         shell(
             <BlockAnatomy
                 name="VerdictHeroCard"
-                tier="design"
+                tier="block"
                 leaf="BandWarning"
                 parts={BAND_PARTS}
                 note="Cùng composition với leaf BandDanger — chỉ đổi tone sang warning (đang tiến bộ, chưa chạm mốc)."
@@ -218,7 +218,7 @@ export const BandSuccess: Story = {
         shell(
             <BlockAnatomy
                 name="VerdictHeroCard"
-                tier="design"
+                tier="block"
                 leaf="BandSuccess"
                 parts={BAND_PARTS}
                 note="Cùng composition với leaf BandDanger/BandWarning — tone success khi đã vượt mốc target."

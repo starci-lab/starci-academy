@@ -7,11 +7,14 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 /**
  * `Radio.Content`/`Radio.Control` — heroui's OWN compound parts (imported `Radio as
  * HeroRadio` and rendered directly), so they enter the tree as tier `heroui` with
- * no `storyId` (§ two-law pass, 2026-07-28).
+ * no `storyId` (§ two-law pass, 2026-07-28). `Skeleton` is the same heroui
+ * `Skeleton` the `isSkeleton` branch renders directly, so it gets the same
+ * treatment (2026-07-28 orphan-part pass).
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Radio.Content": { tier: "heroui", role: "row wrapping the dot + label" },
     "Radio.Control": { tier: "heroui", role: "dot + fill glyph" },
+    "Skeleton": { tier: "heroui", role: "loading placeholder mirroring the dot + label" },
 }
 
 /**
@@ -158,6 +161,7 @@ export const Loading: Story = {
             <BlockAnatomy
                 name="Choice.Radio"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isSkeleton`"
                 reason="Whoever owns the shape owns its resting state, so the row draws its own shimmer with no shared skeleton component to keep in sync."
                 states={[

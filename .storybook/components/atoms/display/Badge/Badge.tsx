@@ -99,7 +99,9 @@ const BadgeBase = ({
     }
     return (
         <HeroBadge.Anchor data-anat-part={showAnatomy ? "Badge.Anchor" : undefined}>
-            <span data-anat-part={showAnatomy ? "Content" : undefined} className="inline-flex">
+            {/* Caller slot (§ LOAI 3) — `children` belongs to whoever anchors on this badge,
+                not to Badge.Base's own anatomy, so this wrapper stays unbadged. */}
+            <span className="inline-flex">
                 {children}
             </span>
             {badge}

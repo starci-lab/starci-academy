@@ -150,11 +150,10 @@ const COLLAPSE_PARTS: Array<AnatomyNode> = [
     { name: "Tabs.Extended", tier: "atom", role: "the language group (neutral), inline from `@app-sm` up", storyId: "atoms-navigation-tabs-tabs-extended--default" },
 ]
 // `leftEnd` is an arbitrary caller-supplied slot (any node beside the left group) — the toolbar
-// never fixes what renders there, so it stays a generic label even though this demo fills it
-// with a `Button.Base`.
+// never fixes what renders there and never claims it as its own anatomy (§11a caller-slot rule),
+// so it carries no badge even though this demo fills it with a `Button.Base`.
 const LEFT_END_PARTS: Array<AnatomyNode> = [
     { name: "Tabs.Extended", tier: "atom", role: "the main tab group", storyId: "atoms-navigation-tabs-tabs-extended--default" },
-    { name: "LeftEnd", tier: "composite", role: "the action cluster beside the left group, such as a plus button, a sibling of the tab list rather than nested inside a Tab" },
 ]
 
 /** Một nhóm tab đổi TOÀN BỘ panel bên dưới (secondary, underline) — hình thái tối thiểu. */

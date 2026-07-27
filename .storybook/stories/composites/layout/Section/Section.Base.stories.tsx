@@ -57,21 +57,16 @@ const CardBody = () => (
 )
 
 // `header` in object-props form is a FIXED internal choice — the frame always builds its own
-// real `Section.Header` from it, so that node gets the real component name + storyId.
+// real `Section.Header` from it, so that node gets the real component name + storyId. `body`/
+// `footer` (and the free-form NODE form of `header`) are arbitrary caller-supplied slots (§11a
+// caller-slot rule) — the frame never claims them as its own anatomy, so they carry no badge.
 const HEADER_BODY_PARTS: Array<AnatomyNode> = [
     { name: "Section.Header", tier: "composite", role: "the top region, the frame builds a Section.Header from props itself", storyId: "composites-layout-section-section-header--default" },
-    { name: "Body", tier: "composite", role: "the main region (`body`, or the `children` shorthand)" },
 ]
-const BODY_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "Body", tier: "composite", role: "the main region, `children` is the shorthand for `body`" },
-]
+const BODY_ONLY_PARTS: Array<AnatomyNode> = []
 // Here `header` is the free-form NODE escape hatch (arbitrary caller content, not the props
-// shorthand), so — unlike HEADER_BODY_PARTS above — it stays a generic label.
-const FULL_PARTS: Array<AnatomyNode> = [
-    { name: "Header", tier: "composite", role: "the top region; in this leaf it is a free-form NODE, not `Section.Header` props" },
-    { name: "Body", tier: "composite", role: "the main region" },
-    { name: "Footer", tier: "composite", role: "the bottom region (a closing CTA, a caption, a see-more link)" },
-]
+// shorthand) — like `body`/`footer`, it stays unbadged.
+const FULL_PARTS: Array<AnatomyNode> = []
 
 /** `children` = shorthand for `body`: a wrapping frame that accepts any content, no header. */
 export const Default: Story = {

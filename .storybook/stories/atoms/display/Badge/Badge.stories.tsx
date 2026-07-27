@@ -26,7 +26,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  */
 /** Every node this atom renders is a direct HeroUI import — all `tier: "heroui"`, no `storyId`. */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Badge: {
+    "Badge": {
         tier: "heroui",
         role: "the coloured pill itself — the count, the dot, or the capped label",
     },
@@ -34,7 +34,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
         tier: "heroui",
         role: "wraps the anchor content so the pill can hang off one of its corners",
     },
-    Skeleton: {
+    "Skeleton": {
         tier: "heroui",
         role: "the resting shimmer, drawn in place of the pill while isSkeleton is on",
     },

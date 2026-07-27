@@ -10,9 +10,12 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * only the grid/border/span structure — cell content is free-form (`ReactNode`).
  *
  * ANATOMY IS PER-LEAF: each story below is its OWN leaf and carries its OWN
- * BlockAnatomy axis. `items[].content` is an opaque caller-built slot (icon +
- * label + count + mini progress bar assembled by the STORY, not this
- * component) so it stays collapsed as ONE `Cell` node, never drilled into.
+ * BlockAnatomy axis. Each grid cell is this frame's own internal geometry
+ * (border/col-span placement, §13z) wrapping `items[].content`, an opaque
+ * caller-built slot (icon + label + count + mini progress bar assembled by the
+ * STORY, not this component). Neither has a dedicated sub-story to link to, so
+ * the cell carries no badge (a link-less node is worse than none) — the
+ * structure tab stays empty for every leaf below.
  */
 const meta: Meta<typeof StatGridCard> = {
     title: "Composites/Stats/StatGridCard",
@@ -27,8 +30,7 @@ export default meta
 
 type Story = StoryObj<typeof StatGridCard>
 
-const CELL: AnatomyNode = { name: "Cell", tier: "composite", role: "one grid cell, repeated per item, with free-form content; the last cell spans both columns when the total count is odd" }
-const PARTS: Array<AnatomyNode> = [CELL]
+const PARTS: Array<AnatomyNode> = []
 
 /** One cell: an icon + label row, a count, and a mini progress bar — the exact shape `WeeklyGoals` feeds in. */
 const statCell = (icon: React.ReactNode, label: string, current: number, target: number) => (

@@ -44,16 +44,15 @@ const DESCRIPTION_PARTS: Array<AnatomyNode> = [
     { name: "Typography.Base", tier: "atom", role: "a supporting line under the title, muted and one size smaller", storyId: "atoms-text-typography-typography-base--plain" },
 ]
 // `Action` is an arbitrary caller-supplied slot (docs: "pass a Button.* atom node") — the frame
-// never fixes which one, so it stays a generic label rather than a hardcoded component name.
+// never fixes which one and never claims it as its own anatomy (§11a caller-slot rule), so it
+// carries no badge even though this demo happens to fill it with a Button.Base.
 const ACTION_PARTS: Array<AnatomyNode> = [
     { name: "Typography.Base", tier: "atom", role: "the region's title", storyId: "atoms-text-typography-typography-base--plain" },
-    { name: "Action", tier: "composite", role: "the right-pinned control slot, shrink-0, holding whatever Button.* node the caller passes" },
 ]
 const FULL_PARTS: Array<AnatomyNode> = [
     { name: "Typography.Base", tier: "atom", role: "a muted kicker above the title", storyId: "atoms-text-typography-typography-base--plain" },
     { name: "Typography.Base", tier: "atom", role: "the region's title", storyId: "atoms-text-typography-typography-base--plain" },
     { name: "Typography.Base", tier: "atom", role: "a muted supporting line", storyId: "atoms-text-typography-typography-base--plain" },
-    { name: "Action", tier: "composite", role: "the right-pinned control slot" },
 ]
 
 /** Tối thiểu — chỉ `title`. Khung vẫn là hàng flex, chỉ có một cột chữ. */

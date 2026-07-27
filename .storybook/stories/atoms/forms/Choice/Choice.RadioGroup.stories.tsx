@@ -8,10 +8,13 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * rendered directly), only present when `groupLabel` is passed. Tier `heroui`,
  * no `storyId` (§ two-law pass, 2026-07-28) — `FieldFrame` itself has no story of
  * its own to jump to, but the library component underneath still deserves to
- * show up rather than being silently dropped.
+ * show up rather than being silently dropped. `Skeleton` is the same heroui
+ * `Skeleton` the `isSkeleton` branch renders directly, so it gets the same
+ * treatment (2026-07-28 orphan-part pass).
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Label: { tier: "heroui", role: "group heading above the rows" },
+    "Label": { tier: "heroui", role: "group heading above the rows" },
+    "Skeleton": { tier: "heroui", role: "loading placeholder mirroring the stacked option rows" },
 }
 
 /**
@@ -315,6 +318,7 @@ export const Loading: Story = {
             <BlockAnatomy
                 name="Choice.RadioGroup"
                 tier="atom"
+                annotate={ANNOTATE}
                 leaf="Prop `isSkeleton`"
                 reason="Whoever owns the shape owns its resting state, so the group draws its own shimmer, no shared skeleton component to keep in sync by hand."
                 states={[

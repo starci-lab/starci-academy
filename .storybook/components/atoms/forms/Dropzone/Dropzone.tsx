@@ -35,9 +35,10 @@ export interface DropzoneProps {
     /** Extra classes on the outer wrapper. */
     className?: string
     /**
-     * Storybook-only: when true, each composed part (`DropBox` / `ErrorMessage` /
-     * the loading `Skeleton`) emits a `data-anat-part` so the anatomy panel can
-     * anchor badges. No visual effect.
+     * Storybook-only: when true, the loading `Skeleton` emits a `data-anat-part` so
+     * the anatomy panel can anchor its badge. The drag box and the error line stay
+     * unbadged (2026-07-28) — plain hand-rolled `<div>`s, not a real component. No
+     * visual effect.
      */
     showAnatomy?: boolean
 }
@@ -95,7 +96,6 @@ const DropzoneBase = ({
         <div className={cn("flex flex-col gap-2", className)}>
             <div
                 {...getRootProps()}
-                data-anat-part={showAnatomy ? "DropBox" : undefined}
                 className={cn(
                     "cursor-pointer border-2 border-dashed rounded-3xl bg-surface p-2 transition-colors",
                     isDragActive ? "border-accent" : "",
@@ -115,7 +115,7 @@ const DropzoneBase = ({
                 </div>
             </div>
             {errorMessage ? (
-                <div className="text-sm text-danger-soft-foreground" data-anat-part={showAnatomy ? "ErrorMessage" : undefined}>{errorMessage}</div>
+                <div className="text-sm text-danger-soft-foreground">{errorMessage}</div>
             ) : null}
         </div>
     )

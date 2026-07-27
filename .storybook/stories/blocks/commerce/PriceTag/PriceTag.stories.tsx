@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { expect, screen, userEvent, waitFor, within } from "storybook/test"
-import { PriceTag } from "@sb-components/designs/commerce/PriceTag/PriceTag"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { PriceTag } from "@sb-components/blocks/commerce/PriceTag/PriceTag"
+import { BlockAnatomy, type AnatomyAnnotation, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * DESIGN — a single course/product price: the amount to pay (bold), the struck
@@ -14,7 +14,7 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * chip, popover, and saving line; `showSavingLine={false}` drops that last line.
  */
 const meta: Meta<typeof PriceTag> = {
-    title: "Designs/Commerce/PriceTag",
+    title: "Blocks/Commerce/PriceTag",
     component: PriceTag,
     tags: ["autodocs"],
     parameters: {
@@ -35,64 +35,6 @@ const TYPOGRAPHY_STORY = "atoms-text-typography-typography-base--plain"
 
 const AMOUNT: AnatomyNode = { name: "Typography.Base", tier: "atom", role: "the amount to pay (bold), rendered alone when there is no discount to compare it against", storyId: TYPOGRAPHY_STORY }
 
-// The −X% chip → popover subtree, shared by every on-sale leaf. NOTE: the "Popover"
-// wrapper itself is CUT from the tree — HeroUI's `PopoverRoot` is just a context
-// provider around react-aria's `DialogTrigger`, which renders NO DOM element of its
-// own (state-only, clones its children), so there is nothing to tag with
-// `data-anat-part="Popover"`. Only its two DOM-bearing children remain, as SIBLINGS,
-// both tagged `tier: "heroui"` (no `storyId` — they're the library's own components,
-// not one of ours): `Popover.Trigger` (the actual clickable div — role=button,
-// aria-expanded/controls — wrapping the `Chip.Base`; the chip is NOT the button, just
-// its soft-success label) and `Popover.Content` (the breakdown rows).
-const PRICE_POPOVER_PARTS: Array<AnatomyNode> = [
-    {
-        name: "Popover.Trigger",
-        tier: "heroui",
-        role: "the button that opens the popover (react-aria: role=button, aria-expanded/controls), the one interactive element in this cluster, wrapping the −X% chip",
-        children: [
-            {
-                // Node name = the REAL name of the component (`Chip.Base`), not a dead name:
-                // `StatusChip` was REMOVED on 2026-07-26 because it was just this chip with
-                // `tone` hardcoded. Tier is `atom` — the old badge showed "layout" because
-                // `primitive` was mis-declared.
-                name: "Chip.Base",
-                tier: "atom",
-                role: "the \"−X%\" saving label (soft-success), just a label rather than a button itself",
-                state: "success",
-                storyId: "atoms-chips-chip-chip-base--default",
-            },
-        ],
-    },
-    {
-        name: "Popover.Content",
-        tier: "heroui",
-        role: "the price-breakdown table",
-        children: [
-            {
-                // ⭐ 2026-07-27: the four "label ↔ value" rows used to be four hand-rolled
-                // `<div className="flex items-center justify-between gap-3">` plus a
-                // hand-drawn `border-t` for the total row. Now they go through the
-                // `KeyValue.List` COMPOSITE — the "You pay" row uses `emphasis` so the EMPHASIS
-                // is decided by the composite, the same across every price table.
-                name: "KeyValue.List",
-                tier: "composite",
-                role: "a column of label and value pairs built from `items`, with the TOTAL row turning on `emphasis`",
-                storyId: "composites-data-keyvalue-keyvalue-list--with-total",
-            },
-        ],
-    },
-]
-
-// On sale: amount (distinguished from the struck original only by its ROLE, not its
-// name — both are the same `Typography.Base` atom) + struck list price + −X% chip →
-// popover + a saving line — PriceTag directly renders every one of these itself.
-const AMOUNT_WITH_SAVING: AnatomyNode = { name: "Typography.Base", tier: "atom", role: "the amount to pay (bold)", storyId: TYPOGRAPHY_STORY }
-// ⚠️ Node name must match EXACTLY the `data-anat-part` the component emits — this is the
-// SAME `Typography.Base` atom as every other text line here, distinguished only by ROLE
-// (§14d.1: role goes in the `role` field, never baked into the name).
-const ORIGINAL: AnatomyNode = { name: "Typography.Base", tier: "atom", role: "the struck original price (muted, line-through)", storyId: TYPOGRAPHY_STORY }
-const SAVING_LINE: AnatomyNode = { name: "Typography.Base", tier: "atom", role: "the \"Save N₫\" line (muted)", storyId: TYPOGRAPHY_STORY }
-
 // ⭐ 2026-07-27 — the tree now reflects the real FRAME (teacher: "layout is built from
 // layouts components"): `Stack.V` (outer column) ⊃ `Cluster.Base` (price row, baseline
 // aligned) ⊃ three elements, then the saving line is the column's second line.
@@ -110,14 +52,56 @@ const NO_DISCOUNT_PARTS: Array<AnatomyNode> = [
     { ...STACK, children: [CLUSTER([AMOUNT])] },
 ]
 
-const DISCOUNT_PARTS: Array<AnatomyNode> = [
-    { ...STACK, children: [CLUSTER([AMOUNT_WITH_SAVING, ORIGINAL, ...PRICE_POPOVER_PARTS]), SAVING_LINE] },
-]
-
-// On sale with showSavingLine={false}: same composed chrome minus the saving line node.
-const NO_SAVING_LINE_PARTS: Array<AnatomyNode> = [
-    { ...STACK, children: [CLUSTER([AMOUNT_WITH_SAVING, ORIGINAL, ...PRICE_POPOVER_PARTS])] },
-]
+/**
+ * On-sale composition — amount + struck original + `−X%` chip → popover + saving line,
+ * flattened by hand into the whitelist shape (§11a) INSTEAD OF a nested `parts` tree.
+ *
+ * ⚠️ 2026-07-28 (orphan-part gate): the old nested `AnatomyNode` tree already carried
+ * `Popover.Trigger`/`Popover.Content` at `tier: "heroui"`, but that SHAPE (a node inside
+ * an array) is invisible to `scripts/check-orphan-parts.mjs` — the gate only recognises a
+ * flat `"Name": { … }` record literal (the shape `annotate` already uses everywhere else
+ * in this codebase, e.g. `Button.Base`/`Avatar`/`Badge`). Flattened BY HAND here (not by
+ * calling the tree's own flatten helper, which isn't exported) so the checker's regex can
+ * actually see it — same first-occurrence-wins collapse the old `parts` tree already had
+ * for the duplicate `Typography.Base` name (original/saving-line drop to the amount's
+ * role), so this is a rewrite of the SAME behaviour, not a new one.
+ *
+ * The "Popover" context wrapper itself is CUT from the tree — HeroUI's `PopoverRoot` is
+ * just a context provider around react-aria's `DialogTrigger`, which renders NO DOM
+ * element of its own (state-only, clones its children), so there is nothing to tag with
+ * `data-anat-part="Popover"`. Only its two DOM-bearing children remain, both `tier:
+ * "heroui"` (no `storyId` — they're the library's own components, not one of ours):
+ * `Popover.Trigger` (the actual clickable div — role=button, aria-expanded/controls —
+ * wrapping the `Chip.Base`; the chip is NOT the button, just its soft-success label) and
+ * `Popover.Content` (the breakdown rows).
+ */
+const DISCOUNT_ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "Stack.V": { tier: "frame", role: "the outer column that stacks the price row on top and the \"Save\" line beneath it", storyId: "frames-stack-stack-v--default" },
+    "Cluster.Base": { tier: "frame", role: "the price row, baseline aligned so the big number, the struck number, and the chip share one baseline, wrapping onto a new line when space runs out", storyId: "frames-cluster-cluster-base--default" },
+    "Typography.Base": { tier: "atom", role: "the amount to pay (bold)", storyId: TYPOGRAPHY_STORY },
+    "Popover.Trigger": { tier: "heroui", role: "the button that opens the popover (react-aria: role=button, aria-expanded/controls), the one interactive element in this cluster, wrapping the −X% chip" },
+    "Chip.Base": {
+        // Node name = the REAL name of the component (`Chip.Base`), not a dead name:
+        // `StatusChip` was REMOVED on 2026-07-26 because it was just this chip with
+        // `tone` hardcoded. Tier is `atom` — the old badge showed "layout" because
+        // `primitive` was mis-declared.
+        tier: "atom",
+        role: "the \"−X%\" saving label (soft-success), just a label rather than a button itself",
+        state: "success",
+        storyId: "atoms-chips-chip-chip-base--default",
+    },
+    "Popover.Content": { tier: "heroui", role: "the price-breakdown table" },
+    "KeyValue.List": {
+        // ⭐ 2026-07-27: the four "label ↔ value" rows used to be four hand-rolled
+        // `<div className="flex items-center justify-between gap-3">` plus a hand-drawn
+        // `border-t` for the total row. Now they go through the `KeyValue.List`
+        // COMPOSITE — the "You pay" row uses `emphasis` so the EMPHASIS is decided by
+        // the composite, the same across every price table.
+        tier: "composite",
+        role: "a column of label and value pairs built from `items`, with the TOTAL row turning on `emphasis`",
+        storyId: "composites-data-keyvalue-keyvalue-list--with-total",
+    },
+}
 
 /** No discount — shows the sale price only, no strikethrough or chip. */
 export const Default: Story = {
@@ -125,7 +109,7 @@ export const Default: Story = {
         shell(
             <BlockAnatomy
                 name="PriceTag"
-                tier="design"
+                tier="block"
                 leaf="Default"
                 parts={NO_DISCOUNT_PARTS}
                 reason="A displayed price needs to pack multiple signals into one spot: the amount to pay in bold, the struck original price, and the saving amount. The saving amount uses a `Chip.Base` (tone success) as both the label and the button that opens the price-breakdown popover, which walks from the original price, through the phase price and membership discount, down to what the buyer actually pays. Bundling all of this into one block keeps the discount logic from drifting across every place a price gets shown."
@@ -147,9 +131,9 @@ export const WithDiscount: Story = {
         shell(
             <BlockAnatomy
                 name="PriceTag"
-                tier="design"
+                tier="block"
                 leaf="WithDiscount"
-                parts={DISCOUNT_PARTS}
+                annotate={DISCOUNT_ANNOTATE}
                 states={[
                     {
                         name: "original set, breakdown set",
@@ -176,7 +160,7 @@ export const WithDiscount: Story = {
 /**
  * Leaf prop `isSkeleton` — the RESTING state.
  *
- * Uses the EXACT SAME parts tree as the discounted version (`DISCOUNT_PARTS`): the flag
+ * Uses the EXACT SAME annotate table as the discounted version (`DISCOUNT_ANNOTATE`): the flag
  * changes STATE, not STRUCTURE (§11f). The flag flows down into each rendering atom
  * (`Typography.Base`, `Chip.Base`) — there is no second shimmer tree (§12c).
  */
@@ -185,9 +169,9 @@ export const Skeleton: Story = {
         shell(
             <BlockAnatomy
                 name="PriceTag"
-                tier="design"
+                tier="block"
                 leaf={"Prop `isSkeleton`"}
-                parts={DISCOUNT_PARTS}
+                annotate={DISCOUNT_ANNOTATE}
                 states={[
                     {
                         name: "isSkeleton",
@@ -217,9 +201,9 @@ export const Inline: Story = {
         shell(
             <BlockAnatomy
                 name="PriceTag.Inline"
-                tier="design"
+                tier="block"
                 leaf="Inline"
-                parts={DISCOUNT_PARTS}
+                annotate={DISCOUNT_ANNOTATE}
                 states={[
                     {
                         name: "discounted = 1490000, original = 1990000",
@@ -244,9 +228,9 @@ export const Prominent: Story = {
         shell(
             <BlockAnatomy
                 name="PriceTag.Prominent"
-                tier="design"
+                tier="block"
                 leaf="Prominent"
-                parts={DISCOUNT_PARTS}
+                annotate={DISCOUNT_ANNOTATE}
                 states={[
                     {
                         name: "discounted = 1490000, original = 1990000",
@@ -272,9 +256,9 @@ export const CurrencyUsd: Story = {
         shell(
             <BlockAnatomy
                 name="PriceTag"
-                tier="design"
+                tier="block"
                 leaf="CurrencyUsd"
-                parts={DISCOUNT_PARTS}
+                annotate={DISCOUNT_ANNOTATE}
                 states={[
                     {
                         name: "currency = \"USD\"",
@@ -306,9 +290,9 @@ export const NoSavingLine: Story = {
         shell(
             <BlockAnatomy
                 name="PriceTag"
-                tier="design"
+                tier="block"
                 leaf="NoSavingLine"
-                parts={NO_SAVING_LINE_PARTS}
+                annotate={DISCOUNT_ANNOTATE}
                 states={[
                     {
                         name: "showSavingLine = false",
@@ -339,9 +323,9 @@ export const DiscountWithoutBreakdown: Story = {
         shell(
             <BlockAnatomy
                 name="PriceTag"
-                tier="design"
+                tier="block"
                 leaf="DiscountWithoutBreakdown"
-                parts={DISCOUNT_PARTS}
+                annotate={DISCOUNT_ANNOTATE}
                 states={[
                     {
                         name: "breakdown = undefined",
@@ -360,9 +344,9 @@ export const BreakdownOpen: Story = {
         shell(
             <BlockAnatomy
                 name="PriceTag"
-                tier="design"
+                tier="block"
                 leaf="BreakdownOpen"
-                parts={DISCOUNT_PARTS}
+                annotate={DISCOUNT_ANNOTATE}
                 states={[
                     {
                         name: "breakdown set, popover opened by the play test",

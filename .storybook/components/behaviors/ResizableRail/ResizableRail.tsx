@@ -181,15 +181,17 @@ const Base = ({
     return (
         <div className={cn(className)} style={{ width }}>
             {children}
-            {/* Anatomy-only marker for the "Content" (rail body) region — an inset-0
-                span, NOT a wrapper, so the real children keep their own flex sizing
-                (e.g. `flex-1`) against the ACTUAL ancestor instead of an inserted box.
-                Relies on the caller's `className` carrying `relative` (same contract
-                the Handle below already depends on). Rendered ONLY in showAnatomy mode. */}
-            {showAnatomy ? (
-                <span aria-hidden data-anat-part="Content" data-anat-marker="" className="pointer-events-none absolute inset-0" />
-            ) : null}
-            {/* splitter: a thin line at the chosen edge that thickens to accent on hover/drag */}
+            {/* ⚠️ 2026-07-28: this used to also emit an anatomy-only "Content" marker span
+                here (an inset-0 marker for the rail body region). Dropped: `children` is a
+                CALLER slot — whatever the caller renders as the rail body belongs to THEIR
+                own anatomy, not this frame's, and no story ever declared "Content" (there is
+                no component behind it to link to), so the marker only ever rendered into the
+                DOM invisibly. */}
+            {/* splitter: a thin line at the chosen edge that thickens to accent on hover/drag.
+                ⚠️ 2026-07-28: `data-anat-part="Handle"` was dropped too — the splitter is this
+                frame's own internal geometry (no component/story of its own to link a reader
+                to, same as `Grid.Base`'s per-cell wrapper), so the badge only ever rendered
+                invisibly as well. */}
             <div
                 role="separator"
                 aria-orientation="vertical"
@@ -199,7 +201,6 @@ const Base = ({
                 onPointerMove={onPointerMove}
                 onPointerUp={onPointerUp}
                 onKeyDown={onKeyDown}
-                data-anat-part={showAnatomy ? "Handle" : undefined}
                 className={cn(
                     "group absolute inset-y-0 z-20 flex w-3 cursor-col-resize items-stretch justify-center outline-none",
                     handleSide === "left" ? "left-0 -translate-x-1/2" : "right-0 translate-x-1/2",

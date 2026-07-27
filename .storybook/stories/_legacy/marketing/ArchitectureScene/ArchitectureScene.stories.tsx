@@ -65,7 +65,7 @@ const EDGE_PARTS: Array<AnatomyNode> = [
 const SCENE_PARTS: Array<AnatomyNode> = [
     {
         name: "Canvas.WebGL",
-        tier: "design",
+        tier: "block",
         role: "board 3D flat-isometric (react-three-fiber), tự fit camera theo bounding-box node",
         children: [
             { name: "CameraFit", tier: "composite", role: "imperative: reframe camera orthographic theo bounding-box node (không mesh)" },
@@ -79,14 +79,14 @@ const SCENE_PARTS: Array<AnatomyNode> = [
             },
             {
                 name: "Bar.Node",
-                tier: "design",
+                tier: "block",
                 role: "một node đặt trên ô cell",
                 state: "×N",
                 children: [
                     { name: "KindMesh", tier: "composite", role: "khối 3D theo `kind` (container · database · broker · loadBalancer · client · user · pod)" },
                     {
                         name: "Html.FloatingLabel",
-                        tier: "design",
+                        tier: "block",
                         role: "chip surface nổi trên node (drei Html portal), viền theo tone node — hiện tên · sub · kind-icon · status",
                     },
                 ],
@@ -102,7 +102,7 @@ const SCENE_PARTS: Array<AnatomyNode> = [
 const SELECTED_PARTS: Array<AnatomyNode> = [
     {
         name: "Canvas.WebGL",
-        tier: "design",
+        tier: "block",
         role: "board 3D flat-isometric, nodes tương tác được",
         children: [
             { name: "CameraFit", tier: "composite", role: "imperative: reframe camera orthographic theo bounding-box node (không mesh)" },
@@ -116,14 +116,14 @@ const SELECTED_PARTS: Array<AnatomyNode> = [
             },
             {
                 name: "Bar.Node",
-                tier: "design",
+                tier: "block",
                 role: "node bấm được (onSelectNode); node đang chọn thêm ring accent",
                 state: "selected · clickable",
                 children: [
                     { name: "KindMesh", tier: "composite", role: "khối 3D theo `kind`" },
                     {
                         name: "Html.FloatingLabel",
-                        tier: "design",
+                        tier: "block",
                         role: "chip surface (drei Html portal) + ring accent khi selectedId khớp — hiện tên · sub · kind-icon · status",
                         state: "ring khi selected",
                     },
@@ -139,7 +139,7 @@ const SELECTED_PARTS: Array<AnatomyNode> = [
 const NO_CAPTION_PARTS: Array<AnatomyNode> = [
     {
         name: "Canvas.WebGL",
-        tier: "design",
+        tier: "block",
         role: "board 3D flat-isometric (react-three-fiber), tự fit camera theo bounding-box node",
         children: [
             { name: "CameraFit", tier: "composite", role: "imperative: reframe camera orthographic theo bounding-box node (không mesh)" },
@@ -153,14 +153,14 @@ const NO_CAPTION_PARTS: Array<AnatomyNode> = [
             },
             {
                 name: "Bar.Node",
-                tier: "design",
+                tier: "block",
                 role: "một node đặt trên ô cell",
                 state: "×N",
                 children: [
                     { name: "KindMesh", tier: "composite", role: "khối 3D theo `kind`" },
                     {
                         name: "Html.FloatingLabel",
-                        tier: "design",
+                        tier: "block",
                         role: "chip surface nổi trên node (drei Html portal), viền theo tone node — hiện tên · sub · kind-icon · status",
                     },
                 ],
@@ -175,7 +175,7 @@ export const DefaultScene: Story = {
         shell(
             <BlockAnatomy
                 name="ArchitectureScene"
-                tier="design"
+                tier="block"
                 leaf="DefaultScene"
                 parts={SCENE_PARTS}
                 reason="Hero kiến trúc dạng 3D thật (WebGL, flat-isometric tiles-on-a-grid), driven hoàn toàn bằng JSON `data` + 3 tone token (normal/success/danger). Đổi `data` là render bất kỳ sơ đồ/sự cố nào — mặc định là backend StarCi (CQRS/CDC)."
@@ -192,7 +192,7 @@ export const CustomData: Story = {
         shell(
             <BlockAnatomy
                 name="ArchitectureScene"
-                tier="design"
+                tier="block"
                 leaf="CustomData"
                 parts={SCENE_PARTS}
                 note="Cùng composition với leaf mặc định; `data` nhỏ hơn (client → LB → API → PostgreSQL), node `api` tone danger + status 'overloaded'."
@@ -212,7 +212,7 @@ export const SelectedNode: Story = {
         shell(
             <BlockAnatomy
                 name="ArchitectureScene"
-                tier="design"
+                tier="block"
                 leaf="SelectedNode"
                 parts={SELECTED_PARTS}
                 note="onSelectNode bật → node bấm được; selectedId='api' thêm ring accent quanh nhãn (khác leaf data ở tính tương tác)."
@@ -236,7 +236,7 @@ export const NoCaption: Story = {
         shell(
             <BlockAnatomy
                 name="ArchitectureScene"
-                tier="design"
+                tier="block"
                 leaf="NoCaption"
                 parts={NO_CAPTION_PARTS}
                 note="Bỏ `caption` → KHÔNG render Typography, chỉ còn Canvas (khác các leaf khác đúng một part)."
@@ -283,7 +283,7 @@ export const PodAndUserKinds: Story = {
         shell(
             <BlockAnatomy
                 name="ArchitectureScene"
-                tier="design"
+                tier="block"
                 leaf="PodAndUserKinds"
                 parts={SCENE_PARTS}
                 note="Cùng composition; KindMesh lần này là `pod` + `user` + `loadBalancer`, cạnh `eventual` mờ hơn, status warning/info."

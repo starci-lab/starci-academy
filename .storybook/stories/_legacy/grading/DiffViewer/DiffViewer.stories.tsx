@@ -53,7 +53,7 @@ const sampleHunks: DiffHunk[] = [
 /** Filename header bar — a bordered div showing the mono filename text directly. */
 const FILE_HEADER: AnatomyNode = {
     name: "FileHeader",
-    tier: "design",
+    tier: "block",
     role: "header bar border-b bg-default px-4 py-2 — chỉ render khi có prop filename",
     children: [
         { name: "Typography.FileName", tier: "composite", role: "tên file (font-mono body-sm medium)" },
@@ -63,31 +63,31 @@ const FILE_HEADER: AnatomyNode = {
 /** Muted @@ separator row — only drawn when the hunk carries a `header`. */
 const HUNK_HEADER: AnatomyNode = {
     name: "HunkHeader",
-    tier: "design",
+    tier: "block",
     role: "hàng phân cách muted @@ … @@ (tự vẽ, chỉ khi hunk có header)",
 }
 
 /** One UNIFIED row: a flex div that self-draws the two gutter cells, marker và nội dung. */
 const UNIFIED_ROW: AnatomyNode = {
     name: "UnifiedRow",
-    tier: "design",
+    tier: "block",
     role: "một hàng diff xếp dọc, nền token thêm=success / xoá=danger / context=neutral; tự hiện số dòng cũ+mới, glyph +/-/khoảng-trắng và nội dung dòng (tự vẽ)",
 }
 
 /** One SPLIT row: a 2-col grid that CONTAINS an old-side and a new-side SplitCell. */
 const SPLIT_ROW: AnatomyNode = {
     name: "SplitRow",
-    tier: "design",
+    tier: "block",
     role: "grid grid-cols-2 divide-x — mỗi dòng chia file cũ trái / file mới phải (tự vẽ)",
     children: [
         {
             name: "SplitCell",
-            tier: "design",
+            tier: "block",
             role: "bên cũ: tự hiện số dòng + nội dung; dòng thêm thành ô trống filler (tự vẽ)",
         },
         {
             name: "SplitCell",
-            tier: "design",
+            tier: "block",
             role: "bên mới: tự hiện số dòng + nội dung; dòng xoá thành ô trống filler (tự vẽ)",
         },
     ],
@@ -96,7 +96,7 @@ const SPLIT_ROW: AnatomyNode = {
 /** overflow-x-auto scroll region wrapping the mono code body — CONTAINS hunk rows. */
 const scrollRegion = (children: Array<AnatomyNode>): AnatomyNode => ({
     name: "ScrollRegion",
-    tier: "design",
+    tier: "block",
     role: "overflow-x-auto bọc thân min-w-fit font-mono text-xs — dòng dài cuộn ngang, không vỡ trang",
     children,
 })
@@ -130,7 +130,7 @@ export const Unified: Story = {
         frame(
             <BlockAnatomy
                 name="DiffViewer"
-                tier="design"
+                tier="block"
                 leaf="Unified"
                 parts={UNIFIED_PARTS}
                 reason="Leaf renderer cho diff chấm bài: nhận hunks đã parse sẵn (không tự chạy thuật toán diff) rồi vẽ header tên file + gutter số dòng + nền màu theo token (thêm=success, xoá=danger, context=neutral). Không cấu thành từ Primitives/* — tự vẽ mọi hàng, nên đúng ra là một Primitive hơn là Block (xem FLAGS)."
@@ -146,7 +146,7 @@ export const Split: Story = {
         frame(
             <BlockAnatomy
                 name="DiffViewer"
-                tier="design"
+                tier="block"
                 leaf="Split"
                 parts={SPLIT_PARTS}
                 note="Cùng thành phần nhưng bố cục chia đôi: file cũ bên trái, file mới bên phải; context hiện cả hai bên."
@@ -162,7 +162,7 @@ export const NoFilename: Story = {
         frame(
             <BlockAnatomy
                 name="DiffViewer"
-                tier="design"
+                tier="block"
                 leaf="NoFilename"
                 parts={NO_FILENAME_PARTS}
                 note="filename bỏ trống → header bar bị bỏ HẲN (không Typography), phần code giữ nguyên."
@@ -189,7 +189,7 @@ export const WithoutHunkHeader: Story = {
         frame(
             <BlockAnatomy
                 name="DiffViewer"
-                tier="design"
+                tier="block"
                 leaf="WithoutHunkHeader"
                 parts={NO_HUNK_HEADER_PARTS}
                 note="hunk không có header → không vẽ hàng phân cách muted; các hàng diff nối liền nhau."

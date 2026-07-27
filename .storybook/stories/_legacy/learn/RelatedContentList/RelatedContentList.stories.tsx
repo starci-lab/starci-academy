@@ -121,7 +121,7 @@ const DATA_PARTS: Array<AnatomyNode> = [
                         tier: "composite",
                         role: "khung surface bordered ôm các hàng edge-to-edge",
                         children: [
-                            { name: "EntityResultRow", tier: "design", role: "mỗi hàng kết quả (breadcrumb + tiêu đề, mặc định không chip/snippet)" },
+                            { name: "EntityResultRow", tier: "block", role: "mỗi hàng kết quả (breadcrumb + tiêu đề, mặc định không chip/snippet)" },
                         ],
                     },
                 ],

@@ -55,7 +55,7 @@ export const Default: Story = {
         shell(
             <BlockAnatomy
                 name="PhaseScarcityNote"
-                tier="design"
+                tier="block"
                 leaf="Default"
                 parts={FULL_PARTS}
                 reason="Dòng cảnh báo khan-hiếm-suất chỉ gồm một icon cảnh báo + một câu chữ — KHÔNG cấu thành từ primitive nào. Thực chất là một atom trình bày, nên bị đánh dấu &quot;đáng lẽ là Primitive&quot;. Vẫn port ở tier Block để giữ đủ bộ commerce; số suất + giá đều đến từ backend, block không tự bịa scarcity."
@@ -76,7 +76,7 @@ export const ManySeats: Story = {
         shell(
             <BlockAnatomy
                 name="PhaseScarcityNote"
-                tier="design"
+                tier="block"
                 leaf="ManySeats"
                 parts={FULL_PARTS}
                 note="Còn nhiều suất (42) — CÙNG composition với leaf 'Có tăng giá', chỉ khác con số."
@@ -97,7 +97,7 @@ export const FewSeats: Story = {
         shell(
             <BlockAnatomy
                 name="PhaseScarcityNote"
-                tier="design"
+                tier="block"
                 leaf="FewSeats"
                 parts={FULL_PARTS}
                 note="Ít suất (3) — sức ép khan hiếm cao hơn nhưng CÙNG composition (icon + suất + tăng giá)."
@@ -118,7 +118,7 @@ export const OneSeatLeft: Story = {
         shell(
             <BlockAnatomy
                 name="PhaseScarcityNote"
-                tier="design"
+                tier="block"
                 leaf="OneSeatLeft"
                 parts={FULL_PARTS}
                 note="Suất cuối (1) — vẫn CÙNG composition, con số ở ngưỡng gấp nhất."
@@ -139,7 +139,7 @@ export const NoNextPhase: Story = {
         shell(
             <BlockAnatomy
                 name="PhaseScarcityNote"
-                tier="design"
+                tier="block"
                 leaf="NoNextPhase"
                 parts={SEATS_ONLY_PARTS}
                 note="nextPhasePriceVnd = null → mệnh đề 'giá tăng lên…' VẮNG, chỉ còn icon + dòng số suất."
@@ -160,7 +160,7 @@ export const Unlimited: Story = {
         shell(
             <BlockAnatomy
                 name="PhaseScarcityNote"
-                tier="design"
+                tier="block"
                 leaf="Unlimited"
                 parts={UNLIMITED_PARTS}
                 note="seatsRemaining = null → không có trigger khan hiếm trung thực → block render RỖNG (null)."

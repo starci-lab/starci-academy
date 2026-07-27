@@ -275,7 +275,7 @@ const ToolbarBase = ({
             {leftEnd ? (
                 <div className="flex min-w-0 items-center gap-1">
                     <div data-anat-part={showAnatomy ? "Tabs.Extended" : undefined}>{renderGroup(leftTabs)}</div>
-                    <div data-anat-part={showAnatomy ? "LeftEnd" : undefined}>{leftEnd}</div>
+                    <div>{leftEnd}</div>
                 </div>
             ) : (
                 <div data-anat-part={showAnatomy ? "Tabs.Extended" : undefined}>{renderGroup(leftTabs)}</div>

@@ -4,7 +4,7 @@ import Link from "next/link"
 import { Accordion, Card, cn, Radio, RadioGroup, Skeleton as HeroSkeleton } from "@heroui/react"
 import { AnimatePresence, motion } from "framer-motion"
 import { CheckCircleIcon, PlusIcon, XCircleIcon } from "@phosphor-icons/react"
-import { SurfaceCardHeader, surfaceSectionGap, surfaceFrame, type SurfaceLabelProps, type SurfaceCardVariant } from "@sb-components/composites/cards/surface-card-header"
+import { SurfaceCardHeader, surfaceSectionGap, surfaceFrame, type SurfaceLabelProps, type SurfaceCardVariant } from "@sb-components/composites/cards/SurfaceCard/surface-card-header"
 import { type VerdictBand, type VerdictBandVariant, verdictBandClassName } from "@sb-components/composites/cards/verdict-band"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
@@ -91,16 +91,16 @@ interface SlotProps {
  * `header` nor `footer` the body is returned RAW, so a `children`-only call
  * renders the exact same DOM as before this refactor (no extra wrapper div).
  */
-const composeSlots = ({ header, body, footer, children, showAnatomy }: SlotProps & { showAnatomy?: boolean }): ReactNode => {
+const composeSlots = ({ header, body, footer, children }: SlotProps): ReactNode => {
     const main = body ?? children
     if (header == null && footer == null) {
         return main
     }
     return (
         <div className="flex flex-col gap-3">
-            {header != null ? <div data-anat-part={showAnatomy ? "Header" : undefined}>{header}</div> : null}
-            {main != null ? <div data-anat-part={showAnatomy ? "Body" : undefined}>{main}</div> : null}
-            {footer != null ? <div data-anat-part={showAnatomy ? "Footer" : undefined}>{footer}</div> : null}
+            {header != null ? <div>{header}</div> : null}
+            {main != null ? <div>{main}</div> : null}
+            {footer != null ? <div>{footer}</div> : null}
         </div>
     )
 }
@@ -254,7 +254,7 @@ const Base = ({
     anatPart,
     showAnatomy = false,
 }: SurfaceCardBaseProps) => {
-    const content = composeSlots({ header, body, footer, children, showAnatomy })
+    const content = composeSlots({ header, body, footer, children })
     const card = (
         <div
             className={cn(
@@ -262,7 +262,6 @@ const Base = ({
                 padding === "flush" ? "overflow-hidden" : PADDING_CLASS[padding],
                 contentClassName,
             )}
-            data-anat-part={showAnatomy ? "Content" : undefined}
         >
             {content}
         </div>
@@ -272,7 +271,7 @@ const Base = ({
     // `isSkeleton`: at rest there's nothing worth emphasizing yet — running the
     // sweep around a shimmer block would just be noise.
     const highlighted = isHighlight ? (
-        <div className="relative" data-anat-part={showAnatomy ? "Highlight" : undefined}>
+        <div className="relative">
             {isSkeleton ? null : <div aria-hidden className="highlight-card-sweep" />}
             {card}
         </div>
@@ -498,7 +497,6 @@ const Nested = ({
                         // leading eyebrow: card owns icon size-4 (§4/§5); icon inherits muted via the span
                         <span
                             className="flex min-w-0 items-center gap-2 text-muted [&_svg]:size-4"
-                            data-anat-part={showAnatomy ? "Header" : undefined}
                         >
                             {icon}
                             {isSkeleton
@@ -506,12 +504,12 @@ const Nested = ({
                                 : <Typography.Base size="xs" color="muted" truncate text={title} />}
                         </span>
                     )}
-                    {meta ? <span className="shrink-0" data-anat-part={showAnatomy ? "Meta" : undefined}>{meta}</span> : null}
+                    {meta ? <span className="shrink-0">{meta}</span> : null}
                 </div>
             ) : null}
-            <div className="flex flex-col divide-y divide-default" data-anat-part={showAnatomy ? "Body" : undefined}>{innerBody}</div>
+            <div className="flex flex-col divide-y divide-default">{innerBody}</div>
             {footer ? (
-                <div className="border-t border-default px-3 py-2" data-anat-part={showAnatomy ? "Footer" : undefined}>
+                <div className="border-t border-default px-3 py-2">
                     {footer}
                 </div>
             ) : null}
@@ -697,14 +695,13 @@ const Pressable = ({
     showAnatomy,
 }: SurfaceCardPressableProps) => {
     const { ripples, add: addRipple, clear: clearRipple } = useRipple()
-    const content = composeSlots({ header, body, footer, children, showAnatomy })
+    const content = composeSlots({ header, body, footer, children })
 
     // Skeleton mirror — generic tile shape (leading tile + 2 text bars), same
     // outer frame/padding as the real card, regardless of actions/content.
     if (isSkeleton) {
         return (
             <div
-                data-anat-part={showAnatomy ? "Skeleton" : undefined}
                 className={cn("flex items-center gap-3 rounded-3xl bg-surface p-3 shadow-surface", className)}
             >
                 <HeroSkeleton className="size-10 shrink-0 rounded-xl" />
@@ -748,7 +745,7 @@ const Pressable = ({
         // Content sits ABOVE the ripple layer (ripple is absolute `z-0`).
         const inner = (
             <>
-                <span className="relative z-10 block" data-anat-part={showAnatomy ? "Content" : undefined}>{content}</span>
+                <span className="relative z-10 block">{content}</span>
                 {!isDisabled ? <Ripple ripples={ripples} onClear={clearRipple} /> : null}
             </>
         )
@@ -794,12 +791,12 @@ const Pressable = ({
             )}
         >
             <div className="flex items-center gap-3">
-                <div className="min-w-0 flex-1" data-anat-part={showAnatomy ? "Content" : undefined}>
+                <div className="min-w-0 flex-1">
                     {content}
                 </div>
                 {/* Secondary actions — later in source order than the overlay AND
                     `relative z-10`, so they hit-test ABOVE the stretched overlay. */}
-                <div className="relative z-10 flex shrink-0 items-center gap-2" data-anat-part={showAnatomy ? "Actions" : undefined}>
+                <div className="relative z-10 flex shrink-0 items-center gap-2">
                     {actions}
                 </div>
             </div>
@@ -1201,18 +1198,18 @@ const SelectableGroup = <T extends string>({
                             >
                                 <div className="flex w-full items-center gap-2">
                                     {item.icon ? (
-                                        <span className="shrink-0" aria-hidden data-anat-part={showAnatomy ? "Icon" : undefined}>
+                                        <span className="shrink-0" aria-hidden>
                                             {item.icon}
                                         </span>
                                     ) : null}
-                                    <span className="flex min-w-0 flex-col" data-anat-part={showAnatomy ? "Label" : undefined}>
+                                    <span className="flex min-w-0 flex-col">
                                         <span className="truncate">{item.label}</span>
                                         {item.description ? (
                                             <span className="truncate text-xs text-muted">{item.description}</span>
                                         ) : null}
                                     </span>
                                     {item.badge ? (
-                                        <span className="ml-auto shrink-0" data-anat-part={showAnatomy ? "Badge" : undefined}>
+                                        <span className="ml-auto shrink-0">
                                             {item.badge}
                                         </span>
                                     ) : null}
@@ -1517,7 +1514,7 @@ const List = ({
     const bare = label == null && description == null
     const surface = (
         <div
-            data-anat-part={showAnatomy ? "Surface" : bare ? anatPart : undefined}
+            data-anat-part={bare ? anatPart : undefined}
             className={cn(
                 "overflow-hidden",
                 surfaceFrame(variant),
@@ -1537,7 +1534,7 @@ const List = ({
     ) : surface
     return (
         <section data-anat-part={anatPart} className={cn("flex flex-col", surfaceSectionGap(subtleLabel), className)}>
-            <div data-anat-part={showAnatomy && label != null ? "Header" : undefined}>
+            <div>
                 <SurfaceCardHeader
                     label={label}
                     labelEnd={labelEnd}
@@ -1704,7 +1701,7 @@ const AccordionFrameSkeleton = ({
             data-anat-part={anatPart}
         >
             {rows.map((item, index) => (
-                <div key={item?.id ?? index} className="relative" data-anat-part={showAnatomy ? "Row" : undefined}>
+                <div key={item?.id ?? index} className="relative">
                     <div className="flex items-center p-3">
                         <div className="flex min-w-0 flex-1 flex-col gap-0 text-left">
                             {/* Row box height EXACTLY matches the real text's line-height (sm=20px · xs=16px) —
@@ -1766,12 +1763,12 @@ const AccordionCard = ({
             items={items}
             variant={variant}
             showAnatomy={showAnatomy}
-            anatPart={showAnatomy ? "Surface" : bare ? anatPart : undefined}
+            anatPart={bare ? anatPart : undefined}
         />
     ) : items.length === 0 && emptyState != null ? (
         <div
             className={cn("overflow-hidden p-8", surfaceFrame(variant))}
-            data-anat-part={showAnatomy ? "Surface" : bare ? anatPart : undefined}
+            data-anat-part={bare ? anatPart : undefined}
         >
             {emptyState}
         </div>
@@ -1782,7 +1779,7 @@ const AccordionCard = ({
             defaultExpandedKeys={defaultExpandedKeys}
             variant={variant}
             showAnatomy={showAnatomy}
-            anatPart={showAnatomy ? "Surface" : bare ? anatPart : undefined}
+            anatPart={bare ? anatPart : undefined}
         />
     )
     // bare = no header AND no caption → render the frame directly
@@ -1791,12 +1788,12 @@ const AccordionCard = ({
     const withCaption = description != null ? (
         <div className="flex flex-col gap-2">
             {frame}
-            <div data-anat-part={showAnatomy ? "Description" : undefined}>{description}</div>
+            <div>{description}</div>
         </div>
     ) : frame
     return (
         <section data-anat-part={anatPart} className={cn("flex flex-col", surfaceSectionGap(subtleLabel), className)}>
-            <div data-anat-part={showAnatomy && label != null ? "Header" : undefined}>
+            <div>
                 <SurfaceCardHeader
                     label={label}
                     labelEnd={labelEnd}
@@ -1965,7 +1962,7 @@ const CrossList = ({
     <ul className={cn("overflow-hidden", surfaceFrame(variant), className)} data-anat-part={anatPart}>
         {isSkeleton
             ? Array.from({ length: skeletonRows }).map((_, index) => (
-                <CrossListRow key={index} isSkeleton anatPart={showAnatomy ? "CrossListItem" : undefined} />
+                <CrossListRow key={index} isSkeleton />
             ))
             : items.map((item) => (
                 <CrossListRow
@@ -1973,7 +1970,7 @@ const CrossList = ({
                     mark={item.mark}
                     tone={item.tone}
                     text={item.text}
-                    anatPart={item.anatPart ?? (showAnatomy ? "CrossListItem" : undefined)}
+                    anatPart={item.anatPart}
                     markAnatPart={item.markAnatPart}
                 />
             ))}

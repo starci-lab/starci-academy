@@ -220,8 +220,14 @@ export interface FeedbackEmptyProps {
     /** Anatomy tag: names this frame so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
     /**
-     * When on, each composed part emits `data-anat-part` (`Code`/`Icon`/`Title`/
-     * `Description`/`Body`/`Action`) for a BlockAnatomy panel.
+     * When on, each composed part with a FIXED identity emits `data-anat-part`
+     * (`Code`/`Title`/`Description`, all as `Typography`/`Typography.Base`) for a
+     * BlockAnatomy panel.
+     *
+     * ⚠️ `Icon`/`Body`/`Action` do NOT badge (2026-07-28, §11a.1 LOẠI 3): each is an
+     * arbitrary node the CALLER supplies (a different icon component every call, a
+     * hint list, one or two buttons), so there is no single fixed component for a
+     * panel link to point to — a badge with nowhere to link is worse than no badge.
      *
      * ⚠️ Replaces the old `EmptyState`'s set of 5 props `codeAnatPart`/`iconAnatPart`/… —
      * one flag, FIXED part names (matching every other frame in the system).
@@ -285,10 +291,10 @@ const Empty = ({
                 </div>
             ) : null}
             {Icon ? (
-                <span
-                    data-anat-part={showAnatomy ? "Icon" : undefined}
-                    className={cn("inline-flex", tone === "danger" ? "text-danger" : "text-foreground")}
-                >
+                // No `data-anat-part` here: `icon` is an arbitrary caller-supplied component (a
+                // different Phosphor glyph every call), so there is no ONE fixed component for a
+                // panel link to point to (§11a.1 LOẠI 3 — caller slot, stop badging).
+                <span className={cn("inline-flex", tone === "danger" ? "text-danger" : "text-foreground")}>
                     <Icon className="size-8" />
                 </span>
             ) : null}
@@ -315,14 +321,12 @@ const Empty = ({
                     ) : null}
                 </>
             )}
-            {main != null ? (
-                <div data-anat-part={showAnatomy ? "Body" : undefined}>{main}</div>
-            ) : null}
+            {/* No `data-anat-part` on `Body`/`Action` below: both are arbitrary caller-supplied
+                nodes (a hint list here, one or two buttons there) with no ONE fixed component a
+                panel link could point to (§11a.1 LOẠI 3 — caller slot, stop badging). */}
+            {main != null ? <div>{main}</div> : null}
             {action ? (
-                <div
-                    data-anat-part={showAnatomy ? "Action" : undefined}
-                    className={isPage ? "flex flex-wrap items-center justify-center gap-3" : undefined}
-                >
+                <div className={isPage ? "flex flex-wrap items-center justify-center gap-3" : undefined}>
                     {action}
                 </div>
             ) : null}

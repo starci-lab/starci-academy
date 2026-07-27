@@ -406,7 +406,6 @@ const InputPassword = ({
                         type="button"
                         aria-label={reveal ? "Hide password" : "Show password"}
                         onClick={() => setReveal((r) => !r)}
-                        data-anat-part={showAnatomy ? "Toggle" : undefined}
                         className="text-muted absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer [&_svg]:size-4"
                     >
                         {/* icon `size-4` (nhỏ hơn `size-5`) → `weight="bold"` bù nét mảnh, §5.0a. */}
@@ -669,7 +668,6 @@ const InputTags = ({
             skeletonControl={<FieldSkeleton className={className} showAnatomy={showAnatomy} />}
         >
             <div
-                data-anat-part={showAnatomy ? "Field" : undefined}
                 className={cn(
                     "bg-default-100 flex w-full flex-wrap items-center gap-2 rounded-xl border px-2 py-1.5",
                     invalid ? "border-danger" : "border-default-200",

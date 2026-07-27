@@ -34,7 +34,7 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 const SITE_PREVIEW_PARTS: Array<AnatomyNode> = [
     {
         name: "Navbar",
-        tier: "design",
+        tier: "block",
         role: "header trên cùng (border dưới): cụm brand+menu bên trái + nút Đăng ký bên phải",
         children: [
             { name: "Brand", tier: "composite", role: "chấm accent + chữ StarCi" },
@@ -44,12 +44,12 @@ const SITE_PREVIEW_PARTS: Array<AnatomyNode> = [
     },
     {
         name: "Body",
-        tier: "design",
+        tier: "block",
         role: "vùng thân (flex-1): bọc chung sidebar lọc + list khoá",
         children: [
             {
                 name: "FilterSidebar",
-                tier: "design",
+                tier: "block",
                 role: "cột lọc bên trái (ẩn dưới @app-sm)",
                 children: [
                     {
@@ -72,12 +72,12 @@ const SITE_PREVIEW_PARTS: Array<AnatomyNode> = [
             },
             {
                 name: "CourseList",
-                tier: "design",
+                tier: "block",
                 role: "list khoá học minh hoạ (3 dòng)",
                 children: [
                     {
                         name: "CourseRow",
-                        tier: "design",
+                        tier: "block",
                         role: "1 tile khoá (border rounded): tile initial + cụm thông tin + giá",
                         children: [
                             { name: "InitialTile", tier: "composite", role: "ô vuông chữ viết tắt (tone accent/success/warning)" },
@@ -103,7 +103,7 @@ const SITE_PREVIEW_PARTS: Array<AnatomyNode> = [
 const MOCKUP_PARTS: Array<AnatomyNode> = [
     {
         name: "ShowcaseMockup",
-        tier: "design",
+        tier: "block",
         role: "khung cửa sổ trình duyệt (3 chấm + address bar, tilt + glow) bọc preview",
         children: SITE_PREVIEW_PARTS,
     },
@@ -114,7 +114,7 @@ export const Standalone: Story = {
         shell(
             <BlockAnatomy
                 name="SitePreview"
-                tier="design"
+                tier="block"
                 leaf="Standalone"
                 parts={SITE_PREVIEW_PARTS}
                 reason="Nội dung minh hoạ cố định (nav + sidebar lọc + list khoá) để nhét vào ShowcaseMockup — cho thấy sản phẩm trông thế nào mà không cần ảnh chụp thật. Tự lấp đầy chiều cao cha nên phải bọc trong khung có chiều cao xác định."
@@ -131,7 +131,7 @@ export const InShowcaseMockup: Story = {
         shell(
             <BlockAnatomy
                 name="SitePreview"
-                tier="design"
+                tier="block"
                 leaf="InShowcaseMockup"
                 parts={MOCKUP_PARTS}
                 note="Bối cảnh thật: cùng SitePreview nhưng bọc trong khung cửa sổ trình duyệt ShowcaseMockup (thêm 1 lớp frame ngoài)."

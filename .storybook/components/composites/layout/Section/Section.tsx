@@ -136,7 +136,7 @@ const Header = ({
                 ) : null}
             </div>
             {action != null ? (
-                <div className="shrink-0" data-anat-part={showAnatomy ? "Action" : undefined}>{action}</div>
+                <div className="shrink-0">{action}</div>
             ) : null}
         </div>
     )
@@ -217,13 +217,13 @@ const Base = ({
     return (
         <section className={cn("flex flex-col", GAP_CLASS[gap], className)} data-anat-part={anatPart}>
             {headerNode != null ? (
-                <div data-anat-part={showAnatomy ? "Header" : undefined}>{headerNode}</div>
+                <div>{headerNode}</div>
             ) : null}
             {main != null ? (
-                <div data-anat-part={showAnatomy ? "Body" : undefined}>{main}</div>
+                <div>{main}</div>
             ) : null}
             {footer != null ? (
-                <div data-anat-part={showAnatomy ? "Footer" : undefined}>{footer}</div>
+                <div>{footer}</div>
             ) : null}
         </section>
     )

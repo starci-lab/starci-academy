@@ -29,7 +29,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
         tier: "heroui",
         role: "the coloured arc — a fixed sweep at a value, or a continuous spin when indeterminate",
     },
-    Skeleton: {
+    "Skeleton": {
         tier: "heroui",
         role: "the resting circle shimmer, drawn in place of the whole ring while isSkeleton is on",
     },

@@ -13,7 +13,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * không storyId thì thôi" (đúng, cho atom CỦA TA) áp nhầm sang cả node heroui.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Spinner: {
+    "Spinner": {
         tier: "heroui",
         role: "the spinning glyph itself — the only thing this atom renders",
     },

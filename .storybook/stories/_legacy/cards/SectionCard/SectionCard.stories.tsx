@@ -29,19 +29,19 @@ const FULL_PARTS: Array<AnatomyNode> = [
     { name: "Icon", tier: "composite", role: "icon đầu header (muted/accent theo `accent`) — hiện khi có prop `icon`" },
     { name: "Title", tier: "composite", role: "tiêu đề header (text-base semibold) — hiện prop `title`" },
     { name: "Action", tier: "composite", role: "action ghim phải header (vd nút 'View all') — hiện khi có prop `action`" },
-    { name: "Body", tier: "design", role: "nội dung section dưới header — children" },
+    { name: "Body", tier: "block", role: "nội dung section dưới header — children" },
 ]
 
 // HEADER_NO_ACTION — Icon + Title, no Action (WhoToFollow/UpcomingLivestreamCard/StreakFreezeCard combo).
 const HEADER_NO_ACTION_PARTS: Array<AnatomyNode> = [
     { name: "Icon", tier: "composite", role: "icon đầu header" },
     { name: "Title", tier: "composite", role: "tiêu đề header" },
-    { name: "Body", tier: "design", role: "nội dung section dưới header — children" },
+    { name: "Body", tier: "block", role: "nội dung section dưới header — children" },
 ]
 
 // PLAIN — no header at all (title/icon/action all omitted) → only Body.
 const BODY_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "Body", tier: "design", role: "nội dung section — children (không header)" },
+    { name: "Body", tier: "block", role: "nội dung section — children (không header)" },
 ]
 
 /** The standard "bordered" frame: header (icon + title left, action right) separated by a rule, then the body. */
@@ -51,7 +51,7 @@ export const Default: Story = {
             <div className="max-w-md">
                 <BlockAnatomy
                     name="SectionCard"
-                    tier="design"
+                    tier="block"
                     leaf="Default"
                     parts={FULL_PARTS}
                     reason="Card viền chuẩn: header (icon + title trái, action phải) ngăn cách bằng rule, rồi tới body — dùng lặp lại khắp profile/dashboard."
@@ -77,7 +77,7 @@ export const Accent: Story = {
             <div className="max-w-md">
                 <BlockAnatomy
                     name="SectionCard"
-                    tier="design"
+                    tier="block"
                     leaf="Accent"
                     parts={HEADER_NO_ACTION_PARTS}
                     note="`accent` — viền tô nhạt accent + icon đổi màu accent; không có Action."
@@ -103,7 +103,7 @@ export const IconTitleNoAction: Story = {
             <div className="max-w-md">
                 <BlockAnatomy
                     name="SectionCard"
-                    tier="design"
+                    tier="block"
                     leaf="IconTitleNoAction"
                     parts={HEADER_NO_ACTION_PARTS}
                     note="Tổ hợp header phổ biến nhất: Icon + Title, không Action."
@@ -128,7 +128,7 @@ export const Plain: Story = {
             <div className="max-w-md">
                 <BlockAnatomy
                     name="SectionCard"
-                    tier="design"
+                    tier="block"
                     leaf="Plain"
                     parts={BODY_ONLY_PARTS}
                     note="Bỏ hết title/icon/action → không header, chỉ khung + Body."
@@ -147,7 +147,7 @@ export const Loading: Story = {
             <div className="max-w-md">
                 <BlockAnatomy
                     name="SectionCard"
-                    tier="design"
+                    tier="block"
                     leaf="Loading"
                     parts={FULL_PARTS}
                     note="`isSkeleton` — CÙNG composition leaf Default; mỗi node đổi sang skeleton mirror (Icon/Title/Action bar + Body paragraph)."
@@ -178,7 +178,7 @@ export const WithVerdict: Story = {
             <div className="max-w-md">
                 <BlockAnatomy
                     name="SectionCard"
-                    tier="design"
+                    tier="block"
                     leaf="WithVerdict"
                     parts={BODY_ONLY_PARTS}
                     note="5 card không header (chỉ Body) — `withVerdict` chỉ đổi className viền trái (không phải node render riêng), nên anatomy chỉ badge Body ở mỗi card."

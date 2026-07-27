@@ -47,7 +47,7 @@ export const Tiers: Story = {
         <div className="flex flex-wrap gap-8 p-12">
             <Box label="Grid" tier="frame"><Typography type="body-sm">frame</Typography></Box>
             <Box label="EnumChip" tier="composite"><Typography type="body-sm">composite</Typography></Box>
-            <Box label="DeckCard" tier="design"><Typography type="body-sm">design</Typography></Box>
+            <Box label="DeckCard" tier="block"><Typography type="body-sm">design</Typography></Box>
             <Box label="FlashcardDeckList" tier="block"><Typography type="body-sm">block</Typography></Box>
         </div>
     ),
@@ -64,7 +64,7 @@ export const Nested: Story = {
             <div className="relative rounded-large bg-surface p-10 shadow-surface" data-anat>
                 <div className="relative rounded-large bg-default/40 p-8" data-anat>
                     <Typography type="body-sm">inner content</Typography>
-                    <AnatomyOverlay label="DeckCard" tier="design" />
+                    <AnatomyOverlay label="DeckCard" tier="block" />
                 </div>
                 <AnatomyOverlay label="FlashcardDeckList" tier="block" />
             </div>

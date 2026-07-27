@@ -30,7 +30,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  */
 /** The only node this atom ever draws is a direct HeroUI `Separator`. */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Separator: {
+    "Separator": {
         tier: "heroui",
         role: "the rule itself — one per side of the label when labelled, or the bare standalone line",
     },

@@ -161,9 +161,13 @@ const IconTileBase = ({
     }
 
     return (
+        // Tile/Cover/Icon are plain elements/arbitrary content, not fixed importable
+        // components (§ naming pass, 2026-07-28 — see the story's own note), so none
+        // of them gets a self-badge fallback here; only `anatPart` from a PARENT names
+        // this root as one opaque node.
         <div
             aria-hidden
-            data-anat-part={anatPart ?? (showAnatomy ? "Tile" : undefined)}
+            data-anat-part={anatPart}
             className={cn(
                 "flex shrink-0 items-center justify-center overflow-hidden",
                 SIZE_BOX[size],
@@ -177,12 +181,11 @@ const IconTileBase = ({
                 <img
                     src={src ?? undefined}
                     alt={alt}
-                    data-anat-part={showAnatomy ? "Cover" : undefined}
                     className="size-full object-cover"
                     onError={() => setFailed(true)}
                 />
             ) : Icon ? (
-                <span aria-hidden data-anat-part={showAnatomy ? "Icon" : undefined} className="inline-flex shrink-0">
+                <span aria-hidden className="inline-flex shrink-0">
                     {/* The atom owns the glyph scale (§4): SIZE_ICON is already ≥ size-5
                         at all three steps, so no `weight` is passed (§5.0a — only a
                         glyph < size-5 forces "bold"). */}

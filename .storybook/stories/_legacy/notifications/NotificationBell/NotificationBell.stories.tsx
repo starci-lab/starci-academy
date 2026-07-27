@@ -60,7 +60,7 @@ const PANEL_PART: AnatomyNode = {
                 { name: "Typography.GroupLabel", tier: "composite", role: "nhãn nhóm ngày (\"Today\"/\"Earlier\") — hiện prop group.label" },
                 {
                     name: "NotificationItem",
-                    tier: "design",
+                    tier: "block",
                     role: "một dòng thông báo (lặp ×N theo group)",
                     children: [
                         { name: "IconTile", tier: "composite", role: "ô icon dẫn đầu, màu theo tone" },

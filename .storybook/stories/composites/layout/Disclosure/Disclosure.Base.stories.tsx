@@ -36,20 +36,16 @@ const SampleContent = () => (
 
 /**
  * ANATOMY IS PER-LEAF: every story below wraps its render in its OWN BlockAnatomy
- * axis. `Disclosure.Base` composes a `Trigger` row (caret + title) and a `Content`
- * region — `Content` only MOUNTS while expanded (no exit animation), so closed
- * leaves show just `Trigger`.
+ * axis. `Disclosure.Base` composes a caret-plus-title trigger row (own internal
+ * geometry, §13z — no dedicated sub-story to link to, so it stays unbadged rather
+ * than dangle a node with nowhere to jump) and a content region carrying whatever
+ * the caller passed via `body`/`children` (a caller slot, not this frame's own
+ * part). Neither carries a badge, so every leaf below has an empty structure tab
+ * — an honest reflection of a khung with no named parts to show, not a bug.
  */
-const CLOSED_PARTS: Array<AnatomyNode> = [
-    { name: "Trigger", tier: "composite", role: "the caret-plus-title row the reader presses to toggle the disclosure" },
-]
-const OPEN_PARTS: Array<AnatomyNode> = [
-    { name: "Trigger", tier: "composite", role: "the caret-plus-title row, its caret rotated 180° now that the content is showing" },
-    { name: "Content", tier: "composite", role: "the content region carried in the `body` slot, mounted only while expanded" },
-]
-const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton", tier: "heroui", role: "a mirror of the trigger row while the section is not ready yet (HeroUI `Skeleton`, aliased `HeroSkeleton` in this file)", state: "skeleton" },
-]
+const CLOSED_PARTS: Array<AnatomyNode> = []
+const OPEN_PARTS: Array<AnatomyNode> = []
+const SKELETON_PARTS: Array<AnatomyNode> = []
 
 /** Default: uncontrolled, closed on mount — click the trigger to expand it. `children` shorthand for `body`. */
 export const Default: Story = {

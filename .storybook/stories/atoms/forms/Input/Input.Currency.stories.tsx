@@ -20,8 +20,8 @@ type Story = StoryObj
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "NumberField.Group": { tier: "heroui", role: "currency stepper group" },
-    Label: { tier: "heroui", role: "field label line" },
-    Skeleton: { tier: "heroui", role: "loading placeholder" },
+    "Label": { tier: "heroui", role: "field label line" },
+    "Skeleton": { tier: "heroui", role: "loading placeholder" },
 }
 
 /** Default — bare field; the atom renders the currency symbol and grouping itself. */

@@ -140,8 +140,8 @@ const Controlled = ({
 // StatusChip is NEVER mounted here — it is intentionally absent from these parts.
 
 // Chips/marks pinned inside a model row (right = category chip; name-suffix = self-host).
-const CATEGORY_CHIP: AnatomyNode = { name: "AiCategoryChip", tier: "design", role: "chip hạng (tier) tô màu ghim cuối hàng (trailing)" }
-const SELF_HOST_MARK: AnatomyNode = { name: "SelfHostGpuMark", tier: "design", role: "dấu GPU self-host — CHỈ hàng model chạy hạ tầng nội bộ (nameSuffix)", state: "self-host" }
+const CATEGORY_CHIP: AnatomyNode = { name: "AiCategoryChip", tier: "block", role: "chip hạng (tier) tô màu ghim cuối hàng (trailing)" }
+const SELF_HOST_MARK: AnatomyNode = { name: "SelfHostGpuMark", tier: "block", role: "dấu GPU self-host — CHỈ hàng model chạy hạ tầng nội bộ (nameSuffix)", state: "self-host" }
 
 // Normal selectable row — DropdownItem wrapping the ModelRowLayout.
 const NORMAL_ROW: AnatomyNode = {
@@ -151,7 +151,7 @@ const NORMAL_ROW: AnatomyNode = {
     children: [
         {
             name: "ModelRowLayout",
-            tier: "design",
+            tier: "block",
             role: "layout hàng — tên truncate trái, chip ghim phải",
             children: [SELF_HOST_MARK, CATEGORY_CHIP],
         },
@@ -176,7 +176,7 @@ const LOCKED_ROW: AnatomyNode = {
             children: [
                 {
                     name: "ModelRowLayout",
-                    tier: "design",
+                    tier: "block",
                     role: "layout hàng — muted, không chọn được; tự hiện dấu khoá đầu hàng (leading)",
                     children: [CATEGORY_CHIP],
                 },
@@ -200,7 +200,7 @@ const WARN_ROW: AnatomyNode = {
             children: [
                 {
                     name: "ModelRowLayout",
-                    tier: "design",
+                    tier: "block",
                     role: "layout hàng — vẫn chọn được; tự hiện dấu cảnh báo model dưới mức khuyến nghị (leading)",
                     children: [SELF_HOST_MARK, CATEGORY_CHIP],
                 },
@@ -227,7 +227,7 @@ const DISABLED_ROW: AnatomyNode = {
             children: [
                 {
                     name: "ModelRowLayout",
-                    tier: "design",
+                    tier: "block",
                     role: "layout hàng — muted, không chọn được; tự hiện dấu cảnh báo model tạm mất kết nối (leading)",
                     children: [CATEGORY_CHIP],
                 },

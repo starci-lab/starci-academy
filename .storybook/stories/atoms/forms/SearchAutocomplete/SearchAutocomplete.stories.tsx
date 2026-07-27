@@ -28,7 +28,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "ComboBox.InputGroup": { tier: "heroui", role: "search field + leading icon group" },
     "ComboBox.Popover": { tier: "heroui", role: "suggestion dropdown container" },
-    Skeleton: { tier: "heroui", role: "loading placeholder" },
+    "Skeleton": { tier: "heroui", role: "loading placeholder" },
 }
 const meta: Meta<typeof SearchAutocomplete.Base> = {
     title: "Atoms/Forms/SearchAutocomplete",

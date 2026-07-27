@@ -77,7 +77,7 @@ const CHIP_LABEL_DEP: Record<string, AnatomyAnnotation> = {
 
 /** Same idea, for the `isSkeleton` leaf: the outer shell rendered there IS HeroUI's `Chip`, just in its loading look. */
 const CHIP_SKELETON_DEP: Record<string, AnatomyAnnotation> = {
-    Chip: { tier: "heroui", role: "the chip shell itself, HeroUI's `Chip`, in its loading look" },
+    "Chip": { tier: "heroui", role: "the chip shell itself, HeroUI's `Chip`, in its loading look" },
 }
 
 /** BARE leaf — no prop turned on, to see the default look (`tone="neutral"`, no glyph, no ×). */

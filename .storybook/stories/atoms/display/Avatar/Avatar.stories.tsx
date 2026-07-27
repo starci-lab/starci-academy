@@ -46,23 +46,33 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * own story to jump to) — all four get `tier: "heroui"`, no `storyId` (§ heroui rule,
  * 2026-07-28 naming pass). Renamed from role-words (`Image`/`Fallback`) to the REAL
  * exported names (`AvatarImage`/`AvatarFallback`); `Avatar`/`Skeleton` already matched.
+ *
+ * `Status` is the ONE part with no HeroUI counterpart — a hand-drawn presence dot the
+ * atom owns itself (§13z). It gets its own leaf/story right in this file (`Status`,
+ * every tone × size), so it links there instead of going undeclared or getting a
+ * dishonest `tier: "heroui"` for something that isn't a library import.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Avatar: {
+    "Avatar": {
         tier: "heroui",
         role: "the HeroUI avatar frame holding whichever fallback candidate is currently showing",
     },
-    AvatarImage: {
+    "AvatarImage": {
         tier: "heroui",
         role: "the real photo or the generated (DiceBear) face — whichever image candidate is currently loaded",
     },
-    AvatarFallback: {
+    "AvatarFallback": {
         tier: "heroui",
         role: "initials or a plain icon glyph, shown once every image candidate is exhausted",
     },
-    Skeleton: {
+    "Skeleton": {
         tier: "heroui",
         role: "the resting circle shimmer, drawn in place of the whole avatar while isSkeleton is on",
+    },
+    "Status": {
+        tier: "atom",
+        role: "the presence dot at the avatar's corner, drawn by this atom itself — see the dedicated Status leaf for every tone × size",
+        storyId: "atoms-display-avatar-avatar-base--status",
     },
 }
 

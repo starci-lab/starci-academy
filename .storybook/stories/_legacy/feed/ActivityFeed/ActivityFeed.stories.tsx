@@ -85,7 +85,7 @@ const Controlled = () => {
 const FEED_PARTS: Array<AnatomyNode> = [
     {
         name: "DayHeaderSection",
-        tier: "design",
+        tier: "block",
         role: "khung mỗi ngày — eyebrow ngày (Hôm nay/Hôm qua/ngày cũ) trên nội dung frameless (mirror LabeledCard, chưa port)",
         children: [
             {
@@ -100,19 +100,19 @@ const FEED_PARTS: Array<AnatomyNode> = [
                         children: [
                             {
                                 name: "FeedItem",
-                                tier: "design",
+                                tier: "block",
                                 role: "bố cục từng hàng (leading · câu/thời gian nội bộ · footer)",
                                 children: [
                                     {
                                         name: "ActivityAvatar",
-                                        tier: "design",
+                                        tier: "block",
                                         role: "leading — avatar + badge loại hoạt động",
                                         children: [
                                             { name: "UserAvatar", tier: "composite", role: "avatar nền (ảnh/initials)" },
                                         ],
                                     },
-                                    { name: "EntityLink", tier: "design", role: "actor + target bấm được, dựng trong câu (2 thực thể)" },
-                                    { name: "ReactionBar", tier: "design", role: "footer — thả cảm xúc mỗi hàng" },
+                                    { name: "EntityLink", tier: "block", role: "actor + target bấm được, dựng trong câu (2 thực thể)" },
+                                    { name: "ReactionBar", tier: "block", role: "footer — thả cảm xúc mỗi hàng" },
                                 ],
                             },
                         ],

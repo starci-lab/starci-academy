@@ -52,11 +52,11 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
         tier: "atom",
         role: "one Avatar.Base per person, overlapped, the ring separating it from the one beneath",
     },
-    Avatar: {
+    "Avatar": {
         tier: "heroui",
         role: "the plus-N overflow chip — HeroUI's own Avatar reused to hold a count instead of a person, so it is not an Avatar.Base",
     },
-    Skeleton: {
+    "Skeleton": {
         tier: "heroui",
         role: "the overflow chip's shimmer while loading, HeroUI Skeleton mirroring the same ring and size as every avatar slot",
     },

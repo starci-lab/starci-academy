@@ -197,12 +197,16 @@ const AlertBase = ({
                         ) : null}
                     </>
                 )}
+                {/* §11a: `body` is a CALLER SLOT — the node inside belongs to whoever passed it,
+                    not to this atom's own anatomy, so the wrapper does not badge it. */}
                 {body != null ? (
-                    <div className="mt-2 w-full" data-anat-part={showAnatomy ? "Body" : undefined}>{body}</div>
+                    <div className="mt-2 w-full">{body}</div>
                 ) : null}
             </HeroAlert.Content>
+            {/* §11a: `action` is a CALLER SLOT too (usually `Button.Base`, but the atom never
+                forces that) — not badged for the same reason as `body` above. */}
             {action ? (
-                <div className="shrink-0" data-anat-part={showAnatomy ? "Action" : undefined}>{action}</div>
+                <div className="shrink-0">{action}</div>
             ) : null}
             {onClose ? (
                 // §11a: the badge stops at the "Close" node (atom `Button.Base`) — don't drill into the atom's guts.

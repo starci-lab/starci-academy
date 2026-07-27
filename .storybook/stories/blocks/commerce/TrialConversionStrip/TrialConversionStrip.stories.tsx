@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { TrialConversionStrip, type TrialConversionStripPrice } from "@sb-components/blocks/commerce/TrialConversionStrip/TrialConversionStrip"
-import { PricingPhase } from "@sb-components/_legacy/designs/commerce/PhaseScarcityNote/PhaseScarcityNote"
+import { PricingPhase } from "@sb-components/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -135,12 +135,12 @@ const LOADING_PARTS: Array<AnatomyNode> = framed([
 // LOADED shape — price landed: PriceTag owns the discount, PhaseScarcityNote sits as a
 // sibling below owning scarcity (orthogonal urgency, per PhaseScarcityNote's own doc).
 const LOADED_PARTS: Array<AnatomyNode> = framed([
-    { name: "PriceTag.Prominent", tier: "design", role: "amount due + struck-through original price + savings chip", storyId: "designs-commerce-pricetag--with-discount" },
+    { name: "PriceTag.Prominent", tier: "block", role: "amount due + struck-through original price + savings chip", storyId: "blocks-commerce-pricetag--with-discount" },
     // 2026-07-27: `PhaseScarcityNote` now HAS `anatPart` so it can merge into ONE node.
     // Before, it lacked that prop ⇒ the root emitted no `data-anat-part` ⇒ the amber
     // text line vanished from the tree even though it still rendered, while its four
     // internal spans leaked out as separate siblings.
-    { name: "PhaseScarcityNote", tier: "design", role: "seats left in the current phase + the price it rises to", storyId: "designs-commerce-phasescarcitynote-phasescarcitynote-base--default" },
+    { name: "PhaseScarcityNote", tier: "block", role: "seats left in the current phase + the price it rises to", storyId: "blocks-commerce-phasescarcitynote-phasescarcitynote-base--default" },
     { name: "Button.Base", tier: "atom", role: "CTA to unlock the whole course", storyId: "atoms-buttons-button-button-base--default" },
 ])
 

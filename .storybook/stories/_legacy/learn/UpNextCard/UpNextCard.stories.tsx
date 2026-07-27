@@ -80,7 +80,7 @@ const buildLeaf = (opts: {
     return [
         {
             name: "SectionCard",
-            tier: "design",
+            tier: "block",
             // check là glyph nội tại (không node); eyebrow/title/description giờ là
             // node Typography riêng trong `children` — role ở đây chỉ mô tả khung.
             role: [
@@ -117,7 +117,7 @@ export const Minimal: Story = {
         frame(
             <BlockAnatomy
                 name="UpNextCard"
-                tier="design"
+                tier="block"
                 leaf="Minimal"
                 parts={MINIMAL_PARTS}
                 note="Chỉ khung + tiêu đề + ĐÚNG MỘT CTA — không check/eyebrow/mô tả/hành động phụ."
@@ -137,7 +137,7 @@ export const CheckAndEyebrow: Story = {
         frame(
             <BlockAnatomy
                 name="UpNextCard"
-                tier="design"
+                tier="block"
                 leaf="CheckAndEyebrow"
                 parts={CHECK_PARTS}
                 note="Thêm check hoàn thành + eyebrow muted trên tiêu đề — CTA đọc như đang cưỡi đà 'vừa xong'."
@@ -159,7 +159,7 @@ export const WithDescription: Story = {
         frame(
             <BlockAnatomy
                 name="UpNextCard"
-                tier="design"
+                tier="block"
                 leaf="WithDescription"
                 parts={DESCRIPTION_PARTS}
                 note="Thêm một dòng mô tả hướng outcome dưới tiêu đề — nói rõ 'làm xong để tiến tới đâu'."
@@ -182,7 +182,7 @@ export const WithSecondaryAction: Story = {
         frame(
             <BlockAnatomy
                 name="UpNextCard"
-                tier="design"
+                tier="block"
                 leaf="WithSecondaryAction"
                 parts={SECONDARY_PARTS}
                 note="Hàng CTA có thêm một hành động phụ nhẹ (tertiary) cạnh CTA chính — vẫn giữ MỘT hành động nổi."
@@ -204,7 +204,7 @@ export const Full: Story = {
         frame(
             <BlockAnatomy
                 name="UpNextCard"
-                tier="design"
+                tier="block"
                 leaf="Full"
                 parts={FULL_PARTS}
                 reason="Điểm hoàn thành một bề mặt học cần MỘT surface tự đóng khung (SectionCard) gom lại: micro-feedback 'vừa xong ✓' + eyebrow, bước tiếp theo (title + outcome), và ĐÚNG MỘT CTA chính (accent, size lg, mũi tên) + một hành động phụ nhẹ. Gói vào một block để mỗi màn hoàn thành chỉ truyền bước kế + handler điều hướng — không dựng lại khung, thứ tự nhấn, và cặp CTA chính/phụ."
@@ -229,7 +229,7 @@ export const LongContent: Story = {
         frame(
             <BlockAnatomy
                 name="UpNextCard"
-                tier="design"
+                tier="block"
                 leaf="LongContent"
                 parts={FULL_PARTS}
                 note="Cùng composition với leaf 'Đầy đủ' — chỉ tiêu đề/mô tả/nhãn dài hơn để soi cách chữ xuống dòng."

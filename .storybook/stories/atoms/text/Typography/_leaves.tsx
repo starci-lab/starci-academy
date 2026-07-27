@@ -8,11 +8,14 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * Shared story-leaf builder for the per-SIZE Typography components. NOT a `.stories`
  * file (leading `_`, no `.stories` suffix → not loaded by the glob).
  *
- * ⚠️ 2026-07-26: bỏ hẳn `parts`/`annotate`. `Typography.*` là ATOM LÁ cuối cùng của
- * hệ chữ — bọc thẳng HeroUI (`Typography.Heading`/`Link`/`Skeleton`), KHÔNG compose
- * atom nào khác có story riêng, nên KHÔNG có deps (canon §12, `BlockAnatomyProps`).
- * `data-anat-part` mà atom tự phát (`Text`/`PrefixIcon`/`SuffixIcon`/`Skeleton`) là
- * KHE nội bộ, không phải component có nhà để nhảy tới — không khai `annotate`.
+ * ⚠️ 2026-07-26: bỏ hẳn `parts`. `Typography.*` là ATOM LÁ cuối cùng của hệ chữ —
+ * bọc thẳng HeroUI (`Typography.Heading`/`Link`/`Skeleton`), KHÔNG compose atom
+ * nào khác có story riêng, nên KHÔNG có deps thật (canon §12, `BlockAnatomyProps`).
+ * `data-anat-part` mà atom tự phát (`Text`/`PrefixIcon`/`SuffixIcon`) là KHE nội bộ,
+ * không phải component có nhà để nhảy tới — không khai `annotate`. RIÊNG `Skeleton`
+ * (leaf `Loading`) LÀ HeroUI's own `Skeleton` render thẳng nên khai `annotate:
+ * { "Skeleton": { tier: "heroui" } }` — panel chỉ nhận node có `storyId` hoặc
+ * `tier: "heroui"`, badge mà không khai là badge vô hình (`check-orphan-parts.mjs`).
  */
 
 /** Rules (mirrors README) — shown at the top of each size's Overview. Chữ TIẾNG ANH vì hiện ra docs page. */
@@ -136,7 +139,7 @@ export const makeTypographyLeaves = (Comp: SizeComponent, label: string) => {
         Loading: leaf("Loading", `<${label} text="…" isSkeleton />`, (
             <Comp text="Grade assignments with the premium model" isSkeleton showAnatomy />
         ), "isSkeleton draws its own shimmer bar — the atom owns its resting state.", {
-            Skeleton: { tier: "heroui", role: "the shimmer bar itself, HeroUI's own `Skeleton`" },
+            "Skeleton": { tier: "heroui", role: "the shimmer bar itself, HeroUI's own `Skeleton`" },
         }),
     }
 }

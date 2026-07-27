@@ -21,7 +21,7 @@ type Story = StoryObj<typeof SummaryCard>
 const CARD_PARTS: Array<AnatomyNode> = [
     { name: "Icon", tier: "composite", role: "icon dẫn đầu (props.icon TRẦN, card tự ép size-6)" },
     { name: "CaretRightIcon", tier: "composite", role: "caret điều hướng size-3, không trượt" },
-    { name: "TitledText", tier: "design", role: "value·label·hint (size=stat) — 1 unit ngữ nghĩa" },
+    { name: "TitledText", tier: "block", role: "value·label·hint (size=stat) — 1 unit ngữ nghĩa" },
 ]
 
 // leaf Loading: isSkeleton branch đổi hẳn composition — 2 khối Skeleton (icon·caret)
@@ -29,7 +29,7 @@ const CARD_PARTS: Array<AnatomyNode> = [
 const SKELETON_PARTS: Array<AnatomyNode> = [
     { name: "Skeleton", tier: "composite", role: "khối icon (size-6)" },
     { name: "Skeleton", tier: "composite", role: "khối caret (size-5)" },
-    { name: "TitledText", tier: "design", role: "value·label·hint skeleton mirror (isSkeleton)" },
+    { name: "TitledText", tier: "block", role: "value·label·hint skeleton mirror (isSkeleton)" },
 ]
 
 /** With hint — a short gloss line under the label (e.g. the most recent milestone). */
@@ -41,7 +41,7 @@ export const WithHint: Story = {
     },
     render: () => (
         <div className="max-w-xs p-8">
-            <BlockAnatomy name="SummaryCard" tier="design" leaf="WithHint" parts={CARD_PARTS}>
+            <BlockAnatomy name="SummaryCard" tier="block" leaf="WithHint" parts={CARD_PARTS}>
                 <SummaryCard
                     icon={<BookOpenIcon aria-hidden focusable="false" />}
                     value="12"
@@ -62,7 +62,7 @@ export const NoHint: Story = {
     },
     render: () => (
         <div className="max-w-xs p-8">
-            <BlockAnatomy name="SummaryCard" tier="design" leaf="NoHint" parts={CARD_PARTS} note="Không truyền `hint` — TitledText chỉ render title·subtitle, vẫn cùng 1 node.">
+            <BlockAnatomy name="SummaryCard" tier="block" leaf="NoHint" parts={CARD_PARTS} note="Không truyền `hint` — TitledText chỉ render title·subtitle, vẫn cùng 1 node.">
                 <SummaryCard
                     icon={<FireIcon aria-hidden focusable="false" />}
                     value="7"
@@ -82,7 +82,7 @@ export const LongContent: Story = {
     },
     render: () => (
         <div className="max-w-xs p-8">
-            <BlockAnatomy name="SummaryCard" tier="design" leaf="LongContent" parts={CARD_PARTS} note="label/hint dài WRAP tại chỗ, cùng composition với WithHint.">
+            <BlockAnatomy name="SummaryCard" tier="block" leaf="LongContent" parts={CARD_PARTS} note="label/hint dài WRAP tại chỗ, cùng composition với WithHint.">
                 <SummaryCard
                     icon={<TrophyIcon aria-hidden focusable="false" />}
                     value="4.8/5"
@@ -105,7 +105,7 @@ export const Group: Story = {
     },
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="SummaryCard" tier="design" leaf="Group" parts={CARD_PARTS} note="SummaryCard.Group lặp lại CÙNG composition (icon·caret·TitledText) ×N — group chỉ thêm layout, không đổi vai từng card.">
+            <BlockAnatomy name="SummaryCard" tier="block" leaf="Group" parts={CARD_PARTS} note="SummaryCard.Group lặp lại CÙNG composition (icon·caret·TitledText) ×N — group chỉ thêm layout, không đổi vai từng card.">
                 <SummaryCard.Group
                     showAnatomy
                     items={[
@@ -142,7 +142,7 @@ export const Loading: Story = {
     },
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="SummaryCard" tier="design" leaf="Loading" parts={SKELETON_PARTS} note="isSkeleton đổi hẳn composition: 2 khối Skeleton thay icon/caret + TitledText tự vẽ mirror.">
+            <BlockAnatomy name="SummaryCard" tier="block" leaf="Loading" parts={SKELETON_PARTS} note="isSkeleton đổi hẳn composition: 2 khối Skeleton thay icon/caret + TitledText tự vẽ mirror.">
                 <SummaryCard.Group
                     isSkeleton
                     showAnatomy

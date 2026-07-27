@@ -32,13 +32,13 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * mọi leaf trong file — cây thật vẫn phụ thuộc leaf đang mở render gì.
  */
 const MENU_ANNOTATE: Record<string, AnatomyAnnotation> = {
-    DropdownTrigger: { tier: "heroui", role: "Pressable trigger wrapper (react-aria DialogTrigger) around the HeroButton." },
-    DropdownPopover: { tier: "heroui", role: "Portal surface the menu opens into (renders into document.body — never reachable here)." },
-    DropdownMenu: { tier: "heroui", role: "The react-aria Menu collection (renders into document.body — never reachable here)." },
-    DropdownSection: { tier: "heroui", role: "A titled group of rows (renders into document.body — never reachable here)." },
-    Header: { tier: "heroui", role: "react-aria-components section label (renders into document.body — never reachable here)." },
-    DropdownItem: { tier: "heroui", role: "One selectable row, flat or grouped (renders into document.body — never reachable here)." },
-    Skeleton: { tier: "heroui", role: "Shimmer placeholder bar/circle standing in for one resting row." },
+    "DropdownTrigger": { tier: "heroui", role: "Pressable trigger wrapper (react-aria DialogTrigger) around the HeroButton." },
+    "DropdownPopover": { tier: "heroui", role: "Portal surface the menu opens into (renders into document.body — never reachable here)." },
+    "DropdownMenu": { tier: "heroui", role: "The react-aria Menu collection (renders into document.body — never reachable here)." },
+    "DropdownSection": { tier: "heroui", role: "A titled group of rows (renders into document.body — never reachable here)." },
+    "Header": { tier: "heroui", role: "react-aria-components section label (renders into document.body — never reachable here)." },
+    "DropdownItem": { tier: "heroui", role: "One selectable row, flat or grouped (renders into document.body — never reachable here)." },
+    "Skeleton": { tier: "heroui", role: "Shimmer placeholder bar/circle standing in for one resting row." },
 }
 
 const meta: Meta<typeof Menu.Base> = {

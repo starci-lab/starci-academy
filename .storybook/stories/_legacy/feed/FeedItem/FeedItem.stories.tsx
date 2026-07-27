@@ -41,7 +41,7 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 const BASE_PARTS: Array<AnatomyNode> = [
     {
         name: "ActivityAvatar",
-        tier: "design",
+        tier: "block",
         role: "slot leading — avatar + badge loại hoạt động",
         children: [
             { name: "UserAvatar", tier: "composite", role: "avatar nền (ảnh/initials)" },
@@ -52,7 +52,7 @@ const BASE_PARTS: Array<AnatomyNode> = [
         tier: "composite",
         role: "câu action — bọc children",
         children: [
-            { name: "EntityLink", tier: "design", role: "mốc thực thể bấm được, dựng trong câu action" },
+            { name: "EntityLink", tier: "block", role: "mốc thực thể bấm được, dựng trong câu action" },
         ],
     },
     { name: "Typography", tier: "composite", role: "timestamp muted" },
@@ -62,7 +62,7 @@ const BASE_PARTS: Array<AnatomyNode> = [
 const REACTION_PARTS: Array<AnatomyNode> = [
     {
         name: "ActivityAvatar",
-        tier: "design",
+        tier: "block",
         role: "slot leading — avatar + badge loại hoạt động",
         children: [
             { name: "UserAvatar", tier: "composite", role: "avatar nền (ảnh/initials)" },
@@ -73,11 +73,11 @@ const REACTION_PARTS: Array<AnatomyNode> = [
         tier: "composite",
         role: "câu action — bọc children",
         children: [
-            { name: "EntityLink", tier: "design", role: "mốc thực thể bấm được, dựng trong câu action" },
+            { name: "EntityLink", tier: "block", role: "mốc thực thể bấm được, dựng trong câu action" },
         ],
     },
     { name: "Typography", tier: "composite", role: "timestamp muted" },
-    { name: "ReactionBar", tier: "design", role: "slot footer — thả cảm xúc" },
+    { name: "ReactionBar", tier: "block", role: "slot footer — thả cảm xúc" },
 ]
 
 // TEXT-ONLY leaf: no leading, no entity link — the action sentence is plain text.
@@ -93,7 +93,7 @@ export const Default: Story = {
         shell(
             <BlockAnatomy
                 name="FeedItem"
-                tier="design"
+                tier="block"
                 leaf="Default"
                 parts={BASE_PARTS}
                 reason="Một hàng thuật lại một SỰ KIỆN đã xảy ra (ai làm gì, khi nào) — chỉ đọc, khác ListRow bấm được. Bố cục leading + cột text + footer để feature ghép avatar/câu/reaction vào đúng chỗ mà không tự dựng lại layout hàng."
@@ -128,7 +128,7 @@ export const WithReaction: Story = {
         shell(
             <BlockAnatomy
                 name="FeedItem"
-                tier="design"
+                tier="block"
                 leaf="WithReaction"
                 parts={REACTION_PARTS}
                 note="Thêm ReactionBar vào slot footer (thả cảm xúc được) — composition khác leaf 'Có avatar'."
@@ -164,7 +164,7 @@ export const ReadOnlyFooter: Story = {
         shell(
             <BlockAnatomy
                 name="FeedItem"
-                tier="design"
+                tier="block"
                 leaf="ReadOnlyFooter"
                 parts={REACTION_PARTS}
                 note="CÙNG composition với leaf 'Có reaction' — nhưng ReactionBar không có onReact nên chỉ đọc số cảm xúc."
@@ -200,7 +200,7 @@ export const NoLeading: Story = {
         shell(
             <BlockAnatomy
                 name="FeedItem"
-                tier="design"
+                tier="block"
                 leaf="NoLeading"
                 parts={TEXT_ONLY_PARTS}
                 note="Bỏ slot leading + không mốc thực thể → chỉ còn cột text thuần + timestamp (composition tối giản nhất)."
@@ -219,7 +219,7 @@ export const LongText: Story = {
         shell(
             <BlockAnatomy
                 name="FeedItem"
-                tier="design"
+                tier="block"
                 leaf="LongText"
                 parts={BASE_PARTS}
                 note="CÙNG composition với leaf 'Có avatar' — chỉ khác câu action dài + khung hẹp để soi wrap."

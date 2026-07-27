@@ -33,7 +33,7 @@ export const IconAndWordmark: Story = {
             <div className="@container w-full">
                 <BlockAnatomy
                     name="BrandLockup"
-                    tier="design"
+                    tier="block"
                     leaf="IconAndWordmark"
                     parts={FULL_PARTS}
                     reason="Brand mark (Logo) sát cạnh wordmark 'StarCi / ACADEMY' — dùng chung cho navbar/footer đọc cùng một mark. Wordmark ẩn dưới @app-md nên phần rộng luôn có cả 2 part."
@@ -54,7 +54,7 @@ export const IconOnly: Story = {
             <div className="@container w-20">
                 <BlockAnatomy
                     name="BrandLockup"
-                    tier="design"
+                    tier="block"
                     leaf="IconOnly"
                     parts={ICON_ONLY_PARTS}
                     note="Container hẹp hơn @app-md → Wordmark bị CSS ẩn (`hidden`), composition chỉ còn Logo."
@@ -74,7 +74,7 @@ export const SelfStartInFlexCol: Story = {
             <div className="@container flex w-64 flex-col rounded-lg border border-default bg-default/40 p-4">
                 <BlockAnatomy
                     name="BrandLockup"
-                    tier="design"
+                    tier="block"
                     leaf="SelfStart"
                     parts={ICON_ONLY_PARTS}
                     note="w-64 vẫn hẹp hơn @app-md → Wordmark ẩn; leaf này minh hoạ `self-start` giữ lockup không bị stretch bởi flex-col cha, không đổi cây parts."

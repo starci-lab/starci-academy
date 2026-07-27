@@ -69,7 +69,7 @@ const INTERACTIVE_PARTS: Array<AnatomyNode> = [
     },
     {
         name: "EmojiPicker",
-        tier: "design",
+        tier: "block",
         role: "popover 6 emoji (framer-motion), chỉ hiện khi mở — chọn / gỡ cảm xúc",
         children: [
             { name: "Button.EmojiOption", tier: "composite", role: "6 nút emoji map từ REACTIONS — bấm để chọn / gỡ", state: "×6" },
@@ -88,7 +88,7 @@ const READONLY_PARTS: Array<AnatomyNode> = [
 
 // Read-only + count 0 leaf: the bar returns null, leaving no gap.
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "ReactionBar", tier: "design", role: "chế độ chỉ-đọc + count 0 → trả về null, không để lại khoảng trống", state: "null" },
+    { name: "ReactionBar", tier: "block", role: "chế độ chỉ-đọc + count 0 → trả về null, không để lại khoảng trống", state: "null" },
 ]
 
 /** CHƯA REACT — interactive, no reaction yet → neutral smiley trigger + picker. */
@@ -97,7 +97,7 @@ export const NoInteraction: Story = {
         shell(
             <BlockAnatomy
                 name="ReactionBar"
-                tier="design"
+                tier="block"
                 leaf="NoInteraction"
                 parts={INTERACTIVE_PARTS}
                 note="Người xem chưa react → nút trigger hiện glyph neutral, ẩn số đếm vì count = 0 (cả hai đều là giá trị inline trong nút trigger, không phải part riêng)."
@@ -114,7 +114,7 @@ export const Reacted: Story = {
         shell(
             <BlockAnatomy
                 name="ReactionBar"
-                tier="design"
+                tier="block"
                 leaf="Reacted"
                 parts={INTERACTIVE_PARTS}
                 note="Đã react → nút trigger đổi glyph sang emoji cảm xúc, số đếm hiện (accent) — CÙNG composition với leaf 'Chưa react'."
@@ -130,7 +130,7 @@ export const ReadOnly: Story = {
         shell(
             <BlockAnatomy
                 name="ReactionBar"
-                tier="design"
+                tier="block"
                 leaf="ReadOnly"
                 parts={READONLY_PARTS}
                 note="Không truyền onReact → bỏ nút trigger + picker; emoji người xem + số đếm render trực tiếp trên root, mỗi cái một node riêng (không còn gói trong nút trigger)."
@@ -146,7 +146,7 @@ export const ReadOnlyEmpty: Story = {
         shell(
             <BlockAnatomy
                 name="ReactionBar"
-                tier="design"
+                tier="block"
                 leaf="ReadOnlyEmpty"
                 parts={EMPTY_PARTS}
                 note="Chỉ-đọc + count 0 → ReactionBar trả về null (khác leaf 'Chỉ đọc'), không chiếm chỗ trong hàng meta."

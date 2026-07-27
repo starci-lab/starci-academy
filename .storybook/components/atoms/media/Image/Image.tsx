@@ -86,13 +86,18 @@ const ImageBase = ({ src, alt, ratio, fit = "cover", radius = "lg", fallbackSrc,
     const imgFit = fit === "cover" ? "object-cover" : "object-contain"
 
     return (
-        <div className={frameCls} data-anat-part={showAnatomy ? "Frame" : undefined}>
+        // §11a: `Frame` (this wrapper) and `Img` below are internal geometry of this atom,
+        // not a component with a story of its own to jump to — not badged (LOẠI 2b).
+        <div className={frameCls}>
             {showSkeleton ? (
+                // `Skeleton` IS a real HeroUI `Skeleton` render — badged + declared `tier: "heroui"`
+                // in the story's `annotate` (LOẠI 2a).
                 <HeroSkeleton className="absolute inset-0 size-full" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
             ) : null}
 
             {showFallbackGlyph ? (
-                <div className="text-muted absolute inset-0 flex items-center justify-center" data-anat-part={showAnatomy ? "Fallback" : undefined}>
+                // `Fallback` is a plain div holding the glyph — internal geometry, not badged (LOẠI 2b).
+                <div className="text-muted absolute inset-0 flex items-center justify-center">
                     {/* Glyph co theo khung (1/4), CHẶN SÀN `min-*-5` = size-5 để luôn ở nấc
                         weight `regular` (§5.0a: dưới size-5 mới phải bold) và không teo mất hình. */}
                     <ImageIcon className="size-1/4 max-h-10 max-w-10 min-h-5 min-w-5" aria-hidden />
@@ -108,7 +113,6 @@ const ImageBase = ({ src, alt, ratio, fit = "cover", radius = "lg", fallbackSrc,
                     onLoad={() => setStatus("loaded")}
                     onError={() => setStatus("error")}
                     className={cn("size-full", imgFit, status === "loading" && "opacity-0")}
-                    data-anat-part={showAnatomy ? "Img" : undefined}
                 />
             )}
         </div>

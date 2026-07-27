@@ -56,7 +56,7 @@ export const Default: Story = {
         shell(
             <BlockAnatomy
                 name="ActivityAvatar"
-                tier="design"
+                tier="block"
                 leaf="Default"
                 parts={AVATAR_PARTS}
                 reason="Một hàng feed cần avatar CÓ dấu hiệu loại hoạt động ngay trên avatar. Gói UserAvatar + badge icon vào một block để mọi loại event (follow, milestone, comment) dùng chung một khung avatar-kèm-badge, feature chỉ đổi icon."
@@ -76,7 +76,7 @@ export const WithPhoto: Story = {
         shell(
             <BlockAnatomy
                 name="ActivityAvatar"
-                tier="design"
+                tier="block"
                 leaf="WithPhoto"
                 parts={AVATAR_PARTS}
                 note="Ảnh upload + badge follow — CÙNG composition với leaf 'Có ảnh', chỉ khác icon."
@@ -96,7 +96,7 @@ export const GeneratedFallback: Story = {
         shell(
             <BlockAnatomy
                 name="ActivityAvatar"
-                tier="design"
+                tier="block"
                 leaf="GeneratedFallback"
                 parts={AVATAR_PARTS}
                 note="avatar=null → UserAvatar rơi về initials sinh theo username; badge vẫn nguyên, composition không đổi."
@@ -116,7 +116,7 @@ export const ActivityIconTypes: Story = {
         shell(
             <BlockAnatomy
                 name="ActivityAvatar"
-                tier="design"
+                tier="block"
                 leaf="ActivityIconTypes"
                 parts={AVATAR_PARTS}
                 note="Cùng khung avatar-kèm-badge, chỉ đổi icon theo loại event (đọc · mốc · sinh · bình luận)."

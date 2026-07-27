@@ -17,9 +17,9 @@ type Story = StoryObj
  * `Description`/`Error` stay unannotated — plain `<p>` tags, not a real component.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Input: { tier: "heroui", role: "single-line text field" },
-    Label: { tier: "heroui", role: "field label line" },
-    Skeleton: { tier: "heroui", role: "loading placeholder" },
+    "Input": { tier: "heroui", role: "single-line text field" },
+    "Label": { tier: "heroui", role: "field label line" },
+    "Skeleton": { tier: "heroui", role: "loading placeholder" },
 }
 
 /** Default — bare field: empty box, no label/hint/error/placeholder. */

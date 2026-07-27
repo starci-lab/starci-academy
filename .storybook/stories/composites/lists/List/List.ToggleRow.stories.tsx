@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { List } from "@sb-components/composites/lists/List/List"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ STATE SCOPE (teacher finalized 2026-07-25): `List.ToggleRow` is a ONE SETTINGS
@@ -33,10 +33,24 @@ type Story = StoryObj<typeof List.ToggleRow>
  * wraps it), so it needs the `heroui` tier to show up in the tree at all: a `heroui`
  * node needs no `storyId`, the tier alone is what keeps the panel from hiding it.
  */
-const ROW_PARTS: Array<AnatomyNode> = [
-    { name: "TitledText", tier: "composite", role: "the label with an optional muted description, stacked as one node" },
-    { name: "Switch", tier: "heroui", role: "the on/off switch, pinned to the right edge of the row" },
-]
+const ROW_ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "TitledText": { tier: "composite", role: "the label with an optional muted description, stacked as one node" },
+    "Switch": { tier: "heroui", role: "the on/off switch, pinned to the right edge of the row" },
+}
+
+/**
+ * `isSkeleton` renders a DIFFERENT trailing node than the real row: `Choice.Switch`
+ * (our own atom, with its own `isSkeleton` mirror) instead of the raw HeroUI `Switch` —
+ * so the Loading leaf gets its own annotate table naming what's actually in that DOM.
+ */
+const LOADING_ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "TitledText": { tier: "composite", role: "the label with an optional muted description, mirrored as shimmer bars" },
+    "Choice.Switch": {
+        tier: "atom",
+        role: "the switch's own shimmer mirror while isSkeleton",
+        storyId: "atoms-forms-choice-choice-switch--default",
+    },
+}
 
 /** Default: label + description, unchecked. */
 export const Default: Story = {
@@ -48,7 +62,7 @@ export const Default: Story = {
                     name="List.ToggleRow"
                     tier="composite"
                     leaf="Default"
-                    parts={ROW_PARTS}
+                    annotate={ROW_ANNOTATE}
                     reason="Generalizes the repeating settings toggle row seen in PrivacySettings: a TitledText paired with a Switch at gap-3, so every settings surface shares one row scaffold instead of hand-rolling its own."
                     states={[
                         {
@@ -87,7 +101,7 @@ export const Selected: Story = {
                     name="List.ToggleRow"
                     tier="composite"
                     leaf="Selected"
-                    parts={ROW_PARTS}
+                    annotate={ROW_ANNOTATE}
                     states={[
                         {
                             name: "checked = true",
@@ -125,7 +139,7 @@ export const NoDescription: Story = {
                     name="List.ToggleRow"
                     tier="composite"
                     leaf="NoDescription"
-                    parts={ROW_PARTS}
+                    annotate={ROW_ANNOTATE}
                     states={[
                         {
                             name: "description = undefined",
@@ -154,7 +168,7 @@ export const Disabled: Story = {
                 name="List.ToggleRow"
                 tier="composite"
                 leaf="Disabled"
-                parts={ROW_PARTS}
+                annotate={ROW_ANNOTATE}
                 states={[
                     {
                         name: "isDisabled = true, checked = false",
@@ -190,7 +204,7 @@ export const Loading: Story = {
                 name="List.ToggleRow"
                 tier="composite"
                 leaf="Loading"
-                parts={ROW_PARTS}
+                annotate={LOADING_ANNOTATE}
                 states={[
                     {
                         name: "isSkeleton = true",

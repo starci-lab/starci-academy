@@ -94,7 +94,6 @@ export const SegmentBar = ({
             <div
                 role="img"
                 aria-label={ariaLabel}
-                data-anat-part={showAnatomy ? "Bar" : undefined}
                 className={cn(
                     "flex w-full overflow-hidden bg-default",
                     inlineLabels ? "h-7 rounded-lg" : "h-1 rounded-full",

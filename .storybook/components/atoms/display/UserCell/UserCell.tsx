@@ -124,7 +124,9 @@ const UserCellBase = ({
                 ) : null}
             </div>
             {trailing ? (
-                <div data-anat-part={showAnatomy ? "Trailing" : undefined} className="ml-auto shrink-0">
+                // Caller slot (§ LOAI 3) — `trailing` is free content the caller passed in,
+                // not a fixed part of UserCell.Base's own anatomy, so it stays unbadged.
+                <div className="ml-auto shrink-0">
                     {trailing}
                 </div>
             ) : null}

@@ -87,7 +87,7 @@ export const WithCaption: Story = {
         shell(
             <BlockAnatomy
                 name="MicroservicesDiagram"
-                tier="design"
+                tier="block"
                 leaf="WithCaption"
                 parts={CAPTION_PARTS}
                 reason="Minh hoạ hero bằng code: topology microservices trên nền dot-grid blueprint, node focal accent + các điểm hỏng trôi cạnh vùng chúng đe doạ. Topology + failures là dữ liệu cố định trong block (chỉ `caption` là prop) — kể một câu chuyện 'v2 ngây thơ này sập ở đâu'."
@@ -104,7 +104,7 @@ export const NoCaption: Story = {
         shell(
             <BlockAnatomy
                 name="MicroservicesDiagram"
-                tier="design"
+                tier="block"
                 leaf="NoCaption"
                 parts={PARTS}
                 note="Không truyền `caption` → Typography dưới sơ đồ biến mất khỏi cây, chỉ còn topology + chip điểm hỏng."
@@ -121,7 +121,7 @@ export const NarrowWrap: Story = {
         shell(
             <BlockAnatomy
                 name="MicroservicesDiagram"
-                tier="design"
+                tier="block"
                 leaf="NarrowWrap"
                 parts={CAPTION_PARTS}
                 note="Trên màn hẹp các node xuống dòng nhưng CÙNG composition với leaf 'Có caption'."

@@ -20,8 +20,8 @@ type Story = StoryObj
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "SearchField.Group": { tier: "heroui", role: "search field group with icon" },
-    Label: { tier: "heroui", role: "field label line" },
-    Skeleton: { tier: "heroui", role: "loading placeholder" },
+    "Label": { tier: "heroui", role: "field label line" },
+    "Skeleton": { tier: "heroui", role: "loading placeholder" },
 }
 
 /** Default — bare field, magnifier icon + clear button once there is text. */

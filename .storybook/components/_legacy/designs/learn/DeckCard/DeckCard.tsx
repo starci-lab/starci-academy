@@ -118,7 +118,7 @@ export const DeckCard = ({
             data-anat={showAnatomy ? "" : undefined}
             data-anat-part={showAnatomy ? "Card" : undefined}
         >
-            {showAnatomy ? <AnatomyOverlay label="DeckCard" tier="design" href="/?path=/docs/design-learn-deckcard--docs" /> : null}
+            {showAnatomy ? <AnatomyOverlay label="DeckCard" tier="block" href="/?path=/docs/design-learn-deckcard--docs" /> : null}
             <Card.Content className="flex h-full flex-col gap-2">
                 <div className="flex items-start justify-between gap-2">
                     <Typography.Base size="sm"

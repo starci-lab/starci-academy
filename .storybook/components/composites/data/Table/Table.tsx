@@ -157,7 +157,10 @@ const TableBase = ({
             renderEmptyState={
                 emptyContent != null
                     ? () => (
-                        <div className="p-8 text-center" data-anat-part={showAnatomy ? "Empty" : undefined}>
+                        // No `data-anat-part` here: `emptyContent` is an arbitrary node the CALLER
+                        // supplies, so there is no ONE fixed component for a panel link to point to
+                        // (§11a.1 LOẠI 3 — caller slot, stop badging).
+                        <div className="p-8 text-center">
                             {emptyContent}
                         </div>
                     )

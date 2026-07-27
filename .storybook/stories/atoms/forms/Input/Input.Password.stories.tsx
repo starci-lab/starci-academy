@@ -26,9 +26,9 @@ type Story = StoryObj
  * component (forbidden in this pass), noted as an issue instead of a leaf.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Input: { tier: "heroui", role: "masked text field" },
-    Label: { tier: "heroui", role: "field label line" },
-    Skeleton: { tier: "heroui", role: "loading placeholder" },
+    "Input": { tier: "heroui", role: "masked text field" },
+    "Label": { tier: "heroui", role: "field label line" },
+    "Skeleton": { tier: "heroui", role: "loading placeholder" },
 }
 
 /** Default — bare masked field + the show/hide eye button. No prop turned on (§12g). */

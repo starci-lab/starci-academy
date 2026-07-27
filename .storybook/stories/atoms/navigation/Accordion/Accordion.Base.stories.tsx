@@ -37,12 +37,12 @@ export default meta
 type Story = StoryObj<typeof Accordion.Base>
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    DisclosureGroup: { tier: "heroui", role: "owns single-open vs multi-open expansion across every panel" },
-    Disclosure: { tier: "heroui", role: "one FAQ panel — trigger row plus its collapsible content" },
+    "DisclosureGroup": { tier: "heroui", role: "owns single-open vs multi-open expansion across every panel" },
+    "Disclosure": { tier: "heroui", role: "one FAQ panel — trigger row plus its collapsible content" },
     "Disclosure.Trigger": { tier: "heroui", role: "the pressable row that opens/closes this panel" },
     "Disclosure.Indicator": { tier: "heroui", role: "the chevron that rotates when the panel opens" },
     "Disclosure.Content": { tier: "heroui", role: "the collapsible region holding this panel's body" },
-    Skeleton: { tier: "heroui", role: "shimmer bar standing in for a trigger row's title or chevron" },
+    "Skeleton": { tier: "heroui", role: "shimmer bar standing in for a trigger row's title or chevron" },
 }
 
 const FAQ_ITEMS = [

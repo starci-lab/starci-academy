@@ -65,7 +65,7 @@ export const DifficultyChip = ({ difficulty, label, className, isSkeleton, showA
     return showAnatomy ? (
         <span className="relative inline-flex" data-anat data-anat-part={anatPart}>
             {chip}
-            <AnatomyOverlay label="DifficultyChip" tier="design" href="/?path=/docs/design-chip-difficultychip--docs" />
+            <AnatomyOverlay label="DifficultyChip" tier="block" href="/?path=/docs/design-chip-difficultychip--docs" />
         </span>
     ) : chip
 }

@@ -86,7 +86,7 @@ export const Default: Story = {
         frame(
             <BlockAnatomy
                 name="NotificationItem"
-                tier="design"
+                tier="block"
                 leaf="Default"
                 parts={FULL_PARTS}
                 reason="Một dòng thông báo gộp ô icon theo tone + cột title/body + nhãn thời gian đã format + tín hiệu unread (dot accent + nền accent nhạt) + action slot cuối dòng, để feature chỉ ánh xạ kind → icon/tone và truyền copy đã dịch. Cả dòng bấm được khi có onPress."
@@ -107,7 +107,7 @@ export const Unread: Story = {
         frame(
             <BlockAnatomy
                 name="NotificationItem"
-                tier="design"
+                tier="block"
                 leaf="Unread"
                 parts={UNREAD_PARTS}
                 note="Thêm chấm accent cạnh tiêu đề + nền accent-soft báo chưa đọc; cả dòng bấm được (onPress)."
@@ -131,7 +131,7 @@ export const Read: Story = {
         frame(
             <BlockAnatomy
                 name="NotificationItem"
-                tier="design"
+                tier="block"
                 leaf="Read"
                 parts={FULL_PARTS}
                 note="Đã đọc — không chấm/không nền accent; CÙNG composition với leaf mặc định, cả dòng bấm được."
@@ -154,7 +154,7 @@ export const WithAction: Story = {
         frame(
             <BlockAnatomy
                 name="NotificationItem"
-                tier="design"
+                tier="block"
                 leaf="WithAction"
                 parts={ACTION_PARTS}
                 note="Thêm actionSlot cuối dòng ('View') cạnh trạng thái chưa đọc; slot giữ kích thước riêng, không bóp cột chữ."
@@ -185,7 +185,7 @@ export const TextOnly: Story = {
         frame(
             <BlockAnatomy
                 name="NotificationItem"
-                tier="design"
+                tier="block"
                 leaf="NoIcon"
                 parts={NO_ICON_PARTS}
                 note="Bỏ IconTile → hàng chỉ chữ (không truyền `icon`), cột title/body/time tràn hết bề ngang."
@@ -207,7 +207,7 @@ export const TitleOnly: Story = {
         frame(
             <BlockAnatomy
                 name="NotificationItem"
-                tier="design"
+                tier="block"
                 leaf="TitleOnly"
                 parts={TITLE_ONLY_PARTS}
                 note="Bỏ body → hàng chỉ tiêu đề + thời gian (không truyền `body`)."
@@ -232,7 +232,7 @@ export const LongText: Story = {
         frame(
             <BlockAnatomy
                 name="NotificationItem"
-                tier="design"
+                tier="block"
                 leaf="LongTextClamped"
                 parts={FULL_PARTS}
                 note="CÙNG composition leaf mặc định; title/body clamp 2 dòng nên tràn thì cắt, không đẩy hàng cao."

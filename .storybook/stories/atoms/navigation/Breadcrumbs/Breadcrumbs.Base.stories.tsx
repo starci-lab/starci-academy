@@ -43,10 +43,10 @@ export default meta
 type Story = StoryObj<typeof Breadcrumbs.Base>
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Breadcrumbs: { tier: "heroui", role: "the trail root — lays out every crumb in order" },
+    "Breadcrumbs": { tier: "heroui", role: "the trail root — lays out every crumb in order" },
     "Breadcrumbs.Item": { tier: "heroui", role: "one crumb — a real destination, or the '…' placeholder when the trail is truncated" },
-    Link: { tier: "heroui", role: "the collapsed back affordance, shown once the trail gives way to a single back link" },
-    Skeleton: { tier: "heroui", role: "shimmer bar standing in for a crumb or the back link's glyph/label" },
+    "Link": { tier: "heroui", role: "the collapsed back affordance, shown once the trail gives way to a single back link" },
+    "Skeleton": { tier: "heroui", role: "shimmer bar standing in for a crumb or the back link's glyph/label" },
 }
 
 /** Default — full trail; the last crumb is the current page (no `onPress`). */

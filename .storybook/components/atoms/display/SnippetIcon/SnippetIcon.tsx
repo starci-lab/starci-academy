@@ -65,11 +65,16 @@ const SnippetIconBase = ({
     }
 
     return (
+        // The root (trigger) is a plain element with no reusable name/story of its own
+        // (§13z internal geometry) — only `anatPart` from a PARENT names it as one
+        // opaque node, no self-badge fallback. `Icon` DOES get a self-badge: it has its
+        // own dedicated leaf/story in this same file (`Copied`) showing the exact
+        // copy↔check swap, so linking there is a real jump, not a circular one.
         <motion.div
             onClick={handleCopy}
             className={cn("cursor-pointer", className)}
             whileTap={{ scale: 0.9 }}
-            data-anat-part={anatPart ?? (showAnatomy ? "Trigger" : undefined)}
+            data-anat-part={anatPart}
         >
             <AnimatePresence mode="wait">
                 {copied ? (

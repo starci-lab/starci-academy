@@ -21,8 +21,8 @@ type Story = StoryObj
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "NumberField.Group": { tier: "heroui", role: "number stepper group" },
-    Label: { tier: "heroui", role: "field label line" },
-    Skeleton: { tier: "heroui", role: "loading placeholder" },
+    "Label": { tier: "heroui", role: "field label line" },
+    "Skeleton": { tier: "heroui", role: "loading placeholder" },
 }
 
 /** Default — bare number field with a stepper (min/max/step), no label yet. */

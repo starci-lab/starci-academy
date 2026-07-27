@@ -32,19 +32,12 @@ type Story = StoryObj<typeof Page.BottomBar>
  */
 const IN_BOX = "absolute inset-x-0 bottom-0"
 
-// Both slots → the khung builds a justify-between row (Body min-w-0 · Actions shrink-0).
-const BOTH_PARTS: Array<AnatomyNode> = [
-    { name: "Body", tier: "composite", role: "leading content (usually price), min-w-0" },
-    { name: "Actions", tier: "composite", role: "primary button on the right, shrink-0" },
-]
-
-// One side only → content renders RAW to keep the caller's own width strategy.
-const BODY_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "Body", tier: "composite", role: "the whole bar row laid out by the caller (no Actions to split against)" },
-]
-const ACTIONS_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "Actions", tier: "composite", role: "button cluster fills the whole bar, keeps the caller's own w-full/flex-1" },
-]
+// `body`/`actions` are arbitrary caller-supplied slots (§11a caller-slot rule) — the khung only
+// lays out the row (justify-between, min-w-0/shrink-0 or raw when only one side is passed), it
+// never claims their content as its own anatomy, so neither carries a badge.
+const BOTH_PARTS: Array<AnatomyNode> = []
+const BODY_ONLY_PARTS: Array<AnatomyNode> = []
+const ACTIONS_ONLY_PARTS: Array<AnatomyNode> = []
 
 /** Props for the local `PriceTag` helper — a faithful mini price display. */
 interface PriceTagProps {

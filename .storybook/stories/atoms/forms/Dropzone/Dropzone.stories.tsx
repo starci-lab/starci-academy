@@ -6,11 +6,13 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 /**
  * `Skeleton` — heroui's OWN component (imported `Skeleton as HeroSkeleton` and
  * rendered directly in the `isSkeleton` branch), so it enters the tree as tier
- * `heroui` with no `storyId` (§ two-law pass, 2026-07-28). `DropBox`/`ErrorMessage`
- * stay unannotated — they're plain hand-rolled `<div>`s, not a real component.
+ * `heroui` with no `storyId` (§ two-law pass, 2026-07-28). The drag box and the
+ * error line are no longer badged at all (2026-07-28 orphan-part pass) — they're
+ * plain hand-rolled `<div>`s, not a real component, and a badge that can never be
+ * declared is worse than no badge.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Skeleton: { tier: "heroui", role: "loading placeholder box" },
+    "Skeleton": { tier: "heroui", role: "loading placeholder box" },
 }
 
 const meta: Meta<typeof Dropzone> = {

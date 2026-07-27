@@ -1,11 +1,11 @@
 import type { SVGProps } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ContinueCard } from "@sb-components/designs/cards/ContinueCard/ContinueCard"
+import { ContinueCard } from "@sb-components/blocks/learn/ContinueCard/ContinueCard"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { WarningIcon } from "@phosphor-icons/react"
 import { Feedback } from "@sb-components/composites/feedback/Feedback/Feedback"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 // `Feedback.Empty` takes the icon as a COMPONENT ref and forces `size-8` itself
 // (§4/§5) — phosphor's `weight="duotone"` can no longer ride along, so wrap it
@@ -21,7 +21,7 @@ const WarningDuotone = (props: SVGProps<SVGSVGElement>) => <WarningIcon {...prop
  * TIẾNG ANH theo luật B (bỏ dấu — ↔ → làm dấu nối).
  */
 const meta: Meta<typeof ContinueCard> = {
-    title: "Designs/Cards/ContinueCard/Hero/Progress",
+    title: "Blocks/Learn/ContinueCard/Hero/Progress",
     component: ContinueCard,
     tags: ["autodocs"],
     parameters: {
@@ -126,13 +126,38 @@ const ERROR_PARTS: Array<AnatomyNode> = [
     },
 ]
 
+/**
+ * The `isSkeleton` leaf's own whitelist — hand-flattened from `CONTENT_PARTS` (§11f: same
+ * composition, only DIFFERENT because `ProgressMeter` has no `isSkeleton` shape of its own
+ * yet, so `CardBody` builds the track's shimmer bar directly with raw HeroUI `Skeleton`).
+ *
+ * ⚠️ 2026-07-28 (orphan-part gate): a `tier: "heroui"` entry only registers with
+ * `scripts/check-orphan-parts.mjs` (and only ADMITS into the panel's tree, per
+ * `BlockAnatomy`'s own `storyId || tier === "heroui"` rule) as a flat `"Name": { … }`
+ * record — the exact shape `annotate` uses everywhere else in this codebase for a raw
+ * HeroUI import. Nesting `{ name: "Skeleton", tier: "heroui" }` INSIDE the `parts` array
+ * (as `CONTENT_PARTS` is written) renders fine at runtime, but the gate's regex can't see
+ * it, so it stayed invisible in the tree with no error anywhere until the gate script
+ * caught it. `parts={CONTENT_PARTS}` is switched to `annotate={SKELETON_ANNOTATE}` for
+ * JUST this one leaf — the two other leaves in this file (`NotUrgent`/`Urgent`) keep the
+ * nested `parts` tree unchanged, since they never render the raw `Skeleton` bar.
+ */
+const SKELETON_ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "SurfaceCard.Base": { tier: "composite", role: "The card surface; isHighlight turns on the hero accent glow, and the frame stays put across every state so switching state never shifts the layout.", storyId: "composites-cards-surfacecard-surfacecard-base--default" },
+    "Stack.H": { tier: "frame", role: "The outer row, one horizontal track; children are arbitrary, which is why this uses Stack rather than Cluster (§13b).", storyId: "frames-stack-stack-h--default" },
+    "Stack.V": { tier: "frame", role: "The text column, title on top with the meta and subtitle underneath.", storyId: "frames-stack-stack-v--default" },
+    "Typography.Base": { tier: "atom", role: "The name of the session in progress, medium weight with truncate — or, while loading, a mirror bar standing in for the meta row (isSkeleton).", storyId: "atoms-text-typography-typography-base--plain" },
+    "Skeleton": { tier: "heroui", role: "The loading mirror standing in for the progress bar — ProgressMeter has no `isSkeleton` shape of its own yet, so CardBody builds this shimmer bar directly, matching the real track's height." },
+    "Button.Base": { tier: "atom", role: "The resume CTA (onPress plus a sliding ArrowRight icon).", storyId: "atoms-buttons-button-button-base--default" },
+}
+
 /** STATE not urgent — plenty of time left: NEUTRAL time chip + progress bar. */
 export const NotUrgent: Story = {
     render: () =>
         shell(
             <BlockAnatomy
                 name="ContinueCard"
-                tier="design"
+                tier="block"
                 leaf="NotUrgent"
                 parts={CONTENT_PARTS}
                 renderClassName="w-96"
@@ -162,7 +187,7 @@ export const Urgent: Story = {
         shell(
             <BlockAnatomy
                 name="ContinueCard"
-                tier="design"
+                tier="block"
                 leaf="Urgent"
                 parts={CONTENT_PARTS}
                 renderClassName="w-96"
@@ -196,14 +221,14 @@ export const Skeleton: Story = {
         shell(
             <BlockAnatomy
                 name="ContinueCard"
-                tier="design"
+                tier="block"
                 leaf="Prop `isSkeleton`"
-                parts={CONTENT_PARTS}
+                annotate={SKELETON_ANNOTATE}
                 renderClassName="w-96"
                 states={[
                     {
                         name: "isSkeleton = true, value = 2, max = 8",
-                        why: "Every part, including the progress bar itself, renders its own shimmer instead of real content, while the composition stays exactly the parts tree the loaded leaf already declares. isSkeleton flips a state rather than the structure (§11f), which is why this leaf reuses CONTENT_PARTS instead of hand-rolling a separate skeleton tree.",
+                        why: "Every part, including the progress bar itself, renders its own shimmer instead of real content, while the composition stays exactly the same shape the loaded leaf already declares — only the progress bar swaps `ProgressMeter` for a raw HeroUI `Skeleton` mirror, since `ProgressMeter` has no `isSkeleton` shape of its own yet. isSkeleton flips a state rather than the structure (§11f), which is why this leaf reuses that same composition instead of hand-rolling a separate skeleton tree.",
                         code: `<ContinueCard.Hero
     title="Mock interview: Design a rate limiter"
     meta={["Question 2 / 8", "Middle"]}
@@ -226,7 +251,7 @@ export const LoadError: Story = {
         shell(
             <BlockAnatomy
                 name="ContinueCard"
-                tier="design"
+                tier="block"
                 leaf="LoadError"
                 parts={ERROR_PARTS}
                 renderClassName="w-96"

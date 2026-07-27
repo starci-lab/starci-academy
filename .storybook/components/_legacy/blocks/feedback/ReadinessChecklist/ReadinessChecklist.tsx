@@ -98,7 +98,7 @@ export const ReadinessChecklist = ({ items, readyLabel, pendingLabel, className,
                 return showAnatomy ? (
                     <div key={item.id} className="relative" data-anat>
                         {row}
-                        <AnatomyOverlay label="List.Row" tier="design" />
+                        <AnatomyOverlay label="List.Row" tier="block" />
                     </div>
                 ) : (
                     <React.Fragment key={item.id}>{row}</React.Fragment>

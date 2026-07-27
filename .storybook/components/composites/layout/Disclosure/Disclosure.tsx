@@ -108,10 +108,7 @@ const Base = ({
         // toggling isSkeleton does not shift layout (§8).
         return (
             <div className={cn("flex flex-col gap-3", className)}>
-                <div
-                    className="flex w-fit items-center gap-2 text-muted"
-                    data-anat-part={showAnatomy ? "Skeleton" : undefined}
-                >
+                <div className="flex w-fit items-center gap-2 text-muted">
                     <CaretDownIcon className="size-4 shrink-0" weight="bold" aria-hidden focusable="false" />
                     <HeroSkeleton className={cn(SKELETON_TEXT_BAR_SM, "w-24")} />
                 </div>
@@ -133,7 +130,6 @@ const Base = ({
                 onClick={toggle}
                 aria-expanded={open}
                 disabled={isDisabled}
-                data-anat-part={showAnatomy ? "Trigger" : undefined}
                 className={cn(
                     "group flex w-fit items-center gap-2 text-muted outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent",
                     isDisabled ? "cursor-not-allowed opacity-60" : "cursor-pointer",
@@ -148,7 +144,7 @@ const Base = ({
                 <span className="text-sm">{title}</span>
             </button>
             {open ? (
-                <div className="flex flex-col gap-3" data-anat-part={showAnatomy ? "Content" : undefined}>
+                <div className="flex flex-col gap-3">
                     {content}
                 </div>
             ) : null}

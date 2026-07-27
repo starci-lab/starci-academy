@@ -39,9 +39,9 @@ const SAMPLE = {
 const PARTS: Array<AnatomyNode> = [
     {
         name: "ContinueCard.Hero",
-        tier: "design",
+        tier: "block",
         role: "the design this block composes directly, given `title`/`meta` already turned into copy by the block so the design tier only has to draw them",
-        storyId: "designs-cards-continuecard-hero-progress--not-urgent",
+        storyId: "blocks-learn-continuecard-hero-progress--not-urgent",
     },
 ]
 

@@ -2,7 +2,7 @@ import { useState } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Input } from "@sb-components/atoms/forms/Input/Input"
 import { Form } from "@sb-components/composites/form/Form/Form"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * KHUNG (composite tier §13) — `Form.Base`: vỏ `<form>` THẬT (submit bằng ENTER) +
@@ -28,11 +28,14 @@ export default meta
 
 type Story = StoryObj<typeof Form.Base>
 
-/** Hai part TRỰC TIẾP của khung: cột nội dung và slot hàng nút (§11a). */
-const PARTS: Array<AnatomyNode> = [
-    { name: "Body", tier: "composite", role: "the content column (`body`/`children`), holding Form.Sections and fields, spaced by `gap`" },
-    { name: "Actions", tier: "composite", role: "the button-row slot at the BOTTOM of the form (usually Form.Actions)" },
-]
+/**
+ * Khung KHÔNG badge `Body`/`Actions` (2026-07-28, §11a.1 LOẠI 3): cả hai bọc node
+ * TUỲ Ý caller đưa vào (field bất kỳ, hoặc `actions` — thường là `Form.Actions`
+ * nhưng không hề bị ép kiểu), nên không có MỘT component cố định để trỏ sang —
+ * component đã bỏ hẳn hai badge này. Không còn part nào của RIÊNG `Form.Base` để
+ * khai ở đây; những node THẬT xuất hiện trong canvas dưới đây (vd `Typography.Base`
+ * của `Form.Section`) đã có `storyId` khai sẵn ở `Form.Section.stories.tsx`.
+ */
 
 /** Fixture field thật — atom `Input.*` TỰ mang label/hint/required (§12e). */
 const AccountFields = () => {
@@ -54,7 +57,6 @@ export const Default: Story = {
                 name="Form.Base"
                 tier="composite"
                 leaf="Default"
-                parts={PARTS}
                 reason="The form frame of the composite tier: it builds a real `<form>` (ENTER inside a field submits, a11y), stacks content into a column on the `gap` rhythm (§10c), and keeps one `actions` slot at the bottom. The frame knows nothing about the fields inside, no validation, no values, no errors (that is the block tier); labels and errors come from the form atoms themselves (§12e)."
                 states={[
                     {
@@ -110,7 +112,6 @@ export const Submitting: Story = {
                 name="Form.Base"
                 tier="composite"
                 leaf="Submitting"
-                parts={PARTS}
                 states={[
                     {
                         name: "isDisabled = true, one action isPending",
@@ -161,7 +162,6 @@ export const Disabled: Story = {
                 name="Form.Base"
                 tier="composite"
                 leaf="Disabled"
-                parts={PARTS}
                 states={[
                     {
                         name: "isDisabled = true, no action isPending",

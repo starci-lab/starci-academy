@@ -43,7 +43,7 @@ export default meta
 type Story = StoryObj<typeof Link.Back>
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Link: { tier: "heroui", role: "the back affordance itself — label + arrow, sliding left on hover" },
+    "Link": { tier: "heroui", role: "the back affordance itself — label + arrow, sliding left on hover" },
 }
 
 /**

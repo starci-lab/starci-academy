@@ -39,7 +39,7 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 const SCENE_PARTS: Array<AnatomyNode> = [
     {
         name: "Svg.Scene",
-        tier: "design",
+        tier: "block",
         role: "canvas isometric 'mini infra' — topology cố định, thuần SVG (no image/WebGL)",
         children: [
             {
@@ -74,7 +74,7 @@ export const NoCaption: Story = {
         shell(
             <BlockAnatomy
                 name="MicroservicesScene"
-                tier="design"
+                tier="block"
                 leaf="NoCaption"
                 parts={SCENE_PARTS}
                 note="Chỉ minh hoạ SVG isometric, KHÔNG có caption — composition trần của scene."
@@ -93,7 +93,7 @@ export const ShortCaption: Story = {
         shell(
             <BlockAnatomy
                 name="MicroservicesScene"
-                tier="design"
+                tier="block"
                 leaf="ShortCaption"
                 parts={CAPTION_PARTS}
                 note="Thêm caption dưới minh hoạ (Typography riêng, có anchor) — thêm 1 node so với leaf trần."
@@ -111,7 +111,7 @@ export const LongCaptionWrap: Story = {
         shell(
             <BlockAnatomy
                 name="MicroservicesScene"
-                tier="design"
+                tier="block"
                 leaf="LongCaptionWrap"
                 parts={CAPTION_PARTS}
                 note="CÙNG composition với 'Caption ngắn' — chỉ khác độ dài caption + bề rộng khung nên chữ xuống dòng."

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import {
     PhaseScarcityNote,
     PricingPhase,
-} from "@sb-components/designs/commerce/PhaseScarcityNote/PhaseScarcityNote"
+} from "@sb-components/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -18,7 +18,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * toggles, and the caller here always passes the same three props.
  */
 const meta: Meta<typeof PhaseScarcityNote.Base> = {
-    title: "Designs/Commerce/PhaseScarcityNote/PhaseScarcityNote.Base",
+    title: "Blocks/Commerce/PhaseScarcityNote/PhaseScarcityNote.Base",
     component: PhaseScarcityNote.Base,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },
@@ -44,7 +44,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     // `WarningCircleIcon` has NO `storyId`: it's a Phosphor glyph, not a component of the
     // system — there's no story to jump to, so standing outside the tree is correct.
     WarningCircleIcon: { tier: "atom", role: "warning mark — opens the line" },
-    "Typography.Base": { tier: "atom", role: "one of this line's own clauses — the REQUIRED \"N seats left at the {phase} price\", or the OPTIONAL \"price rises to\" clause that follows it", storyId: TYPOGRAPHY_STORY },
+    "Typography.Base": { tier: "atom", role: "one of this line's own clauses — the REQUIRED \"N seats left at the current phase price\", or the OPTIONAL \"price rises to\" clause that follows it", storyId: TYPOGRAPHY_STORY },
 }
 
 /**
@@ -64,7 +64,7 @@ export const Default: Story = {
         <div className="p-8">
             <BlockAnatomy
                 name="PhaseScarcityNote.Base"
-                tier="design"
+                tier="block"
                 leaf="Default"
                 annotate={ANNOTATE}
                 reason="Every number on this line comes from the backend price preview, so nothing here may be invented. A countdown or a seat count made up in the frontend is fake scarcity, which is why a phase that caps nothing stays silent instead of filling the space."

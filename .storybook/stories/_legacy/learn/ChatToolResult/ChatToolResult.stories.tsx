@@ -125,7 +125,7 @@ const SEE_MORE: AnatomyNode = {
 // (Flashcard hits carry breadcrumb=null and these leaves pass showKindChip off → neither shows.)
 const SIMPLE_ROW: AnatomyNode = {
     name: "EntityResultRow",
-    tier: "design",
+    tier: "block",
     role: "hàng kết quả pickable (lặp ×N) — cả hàng là nav link",
 }
 
@@ -134,7 +134,7 @@ const SIMPLE_ROW: AnatomyNode = {
 // (real component) and the lock <span> cluster (fixed icon+label, not prop-driven) stay.
 const CHIP_LOCKED_ROW: AnatomyNode = {
     name: "EntityResultRow",
-    tier: "design",
+    tier: "block",
     role: "hàng kết quả pickable (lặp ×N)",
     children: [
         { name: "EnumChip", tier: "composite", role: "chip loại (kind → màu soft) khi showKindChip" },

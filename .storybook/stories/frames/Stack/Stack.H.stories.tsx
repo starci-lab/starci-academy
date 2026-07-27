@@ -24,12 +24,15 @@ export default meta
 
 type Story = StoryObj<typeof Stack.H>
 
-const TRACK_PARTS: Array<AnatomyNode> = [
-    { name: "Flex.Base", tier: "composite", role: "the horizontal flex axis, owning gap (§10), align, justify, and wrap" },
-]
+// No `Flex.Base` node here (2026-07-28): same reasoning as `Stack.V` — the track's own root no
+// longer self-badges with the internal box's name, since `Flex.Base` has no story of its own.
 const DIVIDER_PARTS: Array<AnatomyNode> = [
-    { name: "Flex.Base", tier: "composite", role: "the horizontal flex axis, owning gap (§10)" },
-    { name: "Divider.Base", tier: "atom", role: "a vertical Divider.Base (`self-stretch`) inserted between two children" },
+    {
+        name: "Divider.Base",
+        tier: "atom",
+        role: "a vertical Divider.Base (`self-stretch`) inserted between two children",
+        storyId: "atoms-display-divider-divider-base--default",
+    },
 ]
 
 /** Default — a horizontal row, seam `related(2)`: elements belonging to the SAME cluster. */
@@ -40,7 +43,6 @@ export const Default: Story = {
                 name="Stack.H"
                 tier="frame"
                 leaf="Default"
-                parts={TRACK_PARTS}
                 reason="The same single-axis frame as `Stack.V`, turned into a row, and only a row gets `wrap`. It accepts ARBITRARY `children`; when the content is N repeating elements of the same kind, that calls for `Cluster`/`Grid` (§13b) instead of this frame."
                 states={[
                     {
@@ -72,7 +74,6 @@ export const Wrap: Story = {
                 name="Stack.H"
                 tier="frame"
                 leaf="Wrap"
-                parts={TRACK_PARTS}
                 reason="The frame is deliberately narrow (`w-80`) in both states below so the row is forced past its available width, which is what makes `wrap` observable at all."
                 states={[
                     {
@@ -123,7 +124,6 @@ export const Justify: Story = {
                 name="Stack.H"
                 tier="frame"
                 leaf="Justify"
-                parts={TRACK_PARTS}
                 reason="`justify` only reads legibly when the main axis has leftover space to distribute, which is why this state belongs to a row and has no equivalent on `Stack.V`. Every render below shares the same `w-96` frame and the same two buttons, so only the distribution changes."
                 states={[
                     {

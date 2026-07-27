@@ -51,24 +51,24 @@ const COMPOSER_PART: AnatomyNode = {
 // `content` — cut per canon granularity; the section absorbs them as ONE node.
 const TOOL_RESULT_PART: AnatomyNode = {
     name: "NestedCard",
-    tier: "design",
+    tier: "block",
     role: "tool-result gắn dưới lượt trợ lý (nguồn tham khảo)",
     children: [
-        { name: "NestedCardSection", tier: "design", role: "mỗi nguồn một hàng (eyebrow + tiêu đề + mô tả)" },
+        { name: "NestedCardSection", tier: "block", role: "mỗi nguồn một hàng (eyebrow + tiêu đề + mô tả)" },
     ],
 }
 
 // Conversation leaf: the real turns — bubbles, a tool-result card nested under the
 // assistant turn, and the composer with its own field/avatar/Send inside.
 const CONVERSATION_PARTS: Array<AnatomyNode> = [
-    { name: "ChatBubble", tier: "design", role: "mỗi lượt tin theo role (user/assistant)" },
+    { name: "ChatBubble", tier: "block", role: "mỗi lượt tin theo role (user/assistant)" },
     TOOL_RESULT_PART,
     COMPOSER_PART,
 ]
 
 // Typing leaf: same turns + the three-dot indicator standing in for the pending reply.
 const TYPING_PARTS: Array<AnatomyNode> = [
-    { name: "ChatBubble", tier: "design", role: "mỗi lượt tin theo role (user/assistant)" },
+    { name: "ChatBubble", tier: "block", role: "mỗi lượt tin theo role (user/assistant)" },
     TOOL_RESULT_PART,
     { name: "TypingIndicator", tier: "composite", role: "ba chấm nảy phía trợ lý đang gõ", state: "typing" },
     COMPOSER_PART,

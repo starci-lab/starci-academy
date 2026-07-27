@@ -62,7 +62,7 @@ export const Standalone: Story = {
         frame(
             <BlockAnatomy
                 name="SelfHostGpuMark"
-                tier="design"
+                tier="block"
                 leaf="Standalone"
                 parts={MARK_PARTS}
                 reason="Một dấu hiệu leaf: icon GPU + tooltip đứng cạnh tên model trong dropdown chấm bài để phân biệt model self-host (RTX 5060) với model gọi API bên ngoài. Chi tiết nằm trong tooltip nên dòng không phải gánh thêm chip — chỉ một icon nhỏ."
@@ -77,7 +77,7 @@ export const BesideModelName: Story = {
         frame(
             <BlockAnatomy
                 name="SelfHostGpuMark"
-                tier="design"
+                tier="block"
                 leaf="BesideModelName"
                 parts={MARK_PARTS}
                 note="Đặt cạnh tên model trong một dòng — CÙNG composition với leaf 'Đứng riêng', chỉ thêm Typography ngoài mark."

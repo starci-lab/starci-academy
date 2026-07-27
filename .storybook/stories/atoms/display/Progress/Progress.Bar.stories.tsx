@@ -30,7 +30,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
         tier: "heroui",
         role: "the filled portion — a fixed width at a value, or a running CSS animation when indeterminate",
     },
-    Skeleton: {
+    "Skeleton": {
         tier: "heroui",
         role: "the resting shimmer bar, drawn in place of the whole track/fill pair while isSkeleton is on",
     },

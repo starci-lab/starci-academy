@@ -1,6 +1,6 @@
 import type { SVGProps } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ContinueCard } from "@sb-components/designs/cards/ContinueCard/ContinueCard"
+import { ContinueCard } from "@sb-components/blocks/learn/ContinueCard/ContinueCard"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { WarningIcon } from "@phosphor-icons/react"
 import { Feedback } from "@sb-components/composites/feedback/Feedback/Feedback"
@@ -18,7 +18,7 @@ const WarningDuotone = (props: SVGProps<SVGSVGElement>) => <WarningIcon {...prop
  * there is no separate consolidated "Anatomy" story.
  */
 const meta: Meta<typeof ContinueCard> = {
-    title: "Designs/Cards/ContinueCard/Hero/No progress",
+    title: "Blocks/Learn/ContinueCard/Hero/No progress",
     component: ContinueCard,
     tags: ["autodocs"],
     parameters: {
@@ -125,7 +125,7 @@ export const NotStarted: Story = {
         shell(
             <BlockAnatomy
                 name="ContinueCard"
-                tier="design"
+                tier="block"
                 leaf="NotStarted"
                 parts={NO_PROGRESS_PARTS}
                 reason="Anatomy of the loaded LEAF 'No progress': ONLY the parts this leaf composes (NO ProgressMeter, that's the SHAPE difference from 'Progress'). Loading/error are SEPARATE leaves with their own composition, not included here."
@@ -160,7 +160,7 @@ export const Skeleton: Story = {
         shell(
             <BlockAnatomy
                 name="ContinueCard"
-                tier="design"
+                tier="block"
                 leaf="Prop `isSkeleton`"
                 parts={NO_PROGRESS_PARTS}
                 states={[
@@ -191,7 +191,7 @@ export const LoadError: Story = {
         shell(
             <BlockAnatomy
                 name="ContinueCard"
-                tier="design"
+                tier="block"
                 leaf="LoadError"
                 parts={ERROR_PARTS}
                 states={[

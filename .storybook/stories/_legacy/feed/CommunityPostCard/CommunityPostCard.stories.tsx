@@ -63,7 +63,7 @@ const framed = (inner: Array<AnatomyNode>): Array<AnatomyNode> => [
 // pattern as ReactionBar's own trigger button), not drilled into separately.
 const HEADER_AVATAR: AnatomyNode = { name: "UserAvatar", tier: "composite", role: "avatar tác giả trong header" }
 const BODY_MARKDOWN: AnatomyNode = { name: "MarkdownContent", tier: "composite", role: "thân bài markdown (compact, [&_p]:m-0)" }
-const FOOTER_REACTIONS: AnatomyNode = { name: "ReactionBar", tier: "design", role: "thả cảm xúc trong footer" }
+const FOOTER_REACTIONS: AnatomyNode = { name: "ReactionBar", tier: "block", role: "thả cảm xúc trong footer" }
 const FOOTER_COMMENT: AnatomyNode = { name: "CommentButton", tier: "composite", role: "nút mở thread bình luận + đếm ở footer", state: "hand-rolled" }
 
 // Header text row every leaf renders: display name, then @username · time · kênh.
@@ -133,7 +133,7 @@ const READONLY_PARTS: Array<AnatomyNode> = framed([
     HEADER_AVATAR,
     ...HEADER_TEXT,
     BODY_MARKDOWN,
-    { name: "ReactionBar", tier: "design", role: "hiển thị cảm xúc (chỉ đọc)", state: "read-only" },
+    { name: "ReactionBar", tier: "block", role: "hiển thị cảm xúc (chỉ đọc)", state: "read-only" },
     { name: "CommentButton", tier: "composite", role: "đếm bình luận tĩnh (nút disabled)", state: "read-only" },
 ])
 
@@ -241,7 +241,7 @@ export const Default: Story = {
         shell(
             <BlockAnatomy
                 name="CommunityPostCard"
-                tier="design"
+                tier="block"
                 leaf="Default"
                 parts={DEFAULT_PARTS}
                 reason="Một bài đăng cộng đồng gói header tác giả (avatar + tên + thời gian + kênh + huy hiệu) + thân markdown + footer reaction/bình luận vào một card. Feature chỉ truyền post + handler; block tự dựng khung Card và bố cục. Tên/@username/thời gian/kênh render qua Typography riêng CommunityPostCard tự viết — mỗi cái một node (§ granularity), như DeckCard."
@@ -256,7 +256,7 @@ export const FounderPinned: Story = {
         shell(
             <BlockAnatomy
                 name="CommunityPostCard"
-                tier="design"
+                tier="block"
                 leaf="FounderPinned"
                 parts={FOUNDER_PINNED_PARTS}
                 note="Founder + đã ghim → thêm SealCheckIcon cạnh tên + PushPinIcon ở góc header so với leaf 'Có dữ liệu', mỗi icon một node riêng (block tự render trực tiếp)."
@@ -271,7 +271,7 @@ export const Pinned: Story = {
         shell(
             <BlockAnatomy
                 name="CommunityPostCard"
-                tier="design"
+                tier="block"
                 leaf="Pinned"
                 parts={PINNED_PARTS}
                 note="isPinned → thêm PushPinIcon ở góc header so với leaf 'Có dữ liệu' — node riêng, block tự render trực tiếp."
@@ -286,7 +286,7 @@ export const FounderAuthor: Story = {
         shell(
             <BlockAnatomy
                 name="CommunityPostCard"
-                tier="design"
+                tier="block"
                 leaf="FounderAuthor"
                 parts={FOUNDER_PARTS}
                 note="isFounderAuthor → thêm SealCheckIcon cạnh tên so với leaf 'Có dữ liệu' — node riêng, block tự render trực tiếp."
@@ -301,7 +301,7 @@ export const Fresh: Story = {
         shell(
             <BlockAnatomy
                 name="CommunityPostCard"
-                tier="design"
+                tier="block"
                 leaf="Fresh"
                 parts={DEFAULT_PARTS}
                 note="Bài mới đăng (0 reaction, 0 bình luận) — CÙNG composition với leaf 'Có dữ liệu', chỉ đổi dữ liệu đếm."
@@ -316,7 +316,7 @@ export const LongBody: Story = {
         shell(
             <BlockAnatomy
                 name="CommunityPostCard"
-                tier="design"
+                tier="block"
                 leaf="LongBody"
                 parts={DEFAULT_PARTS}
                 note="Thân markdown dài + đã sửa — CÙNG composition, MarkdownContent tự giãn chiều cao."
@@ -331,7 +331,7 @@ export const ReadOnly: Story = {
         shell(
             <BlockAnatomy
                 name="CommunityPostCard"
-                tier="design"
+                tier="block"
                 leaf="ReadOnly"
                 parts={READONLY_PARTS}
                 note="Không truyền onReact/onToggleComments → ReactionBar chỉ đọc, đếm bình luận tĩnh."
@@ -346,7 +346,7 @@ export const Interactive: Story = {
         shell(
             <BlockAnatomy
                 name="CommunityPostCard"
-                tier="design"
+                tier="block"
                 leaf="Interactive"
                 parts={DEFAULT_PARTS}
                 note="Có onReact + onToggleComments → bấm cảm xúc cập nhật state, mở thread bình luận qua children; base composition không đổi."

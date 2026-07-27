@@ -89,8 +89,12 @@ const FlexBase = ({
     anatPart,
     showAnatomy = false,
 }: FlexBaseProps) => (
+    // No self-name fallback: `Flex.Base` is internal-only (see the export note below) and has
+    // no story of its own, so a default badge here would only ever point nowhere (§11a.1 rule
+    // on undeclared parts). A caller that needs THIS box badged as a node passes `anatPart`
+    // explicitly, same contract as `Split.Base`/`Cluster.Base`/`SurfaceCard.*`.
     <div
-        data-anat-part={anatPart ?? (showAnatomy ? "Flex.Base" : undefined)}
+        data-anat-part={anatPart}
         className={cn(
             "flex",
             DIRECTION_CLASS[direction],

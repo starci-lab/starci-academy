@@ -49,7 +49,7 @@ const FEATURES = (
 /** Wrap a leaf's content parts in the SectionCard frame that actually contains them. */
 const sectionFrame = (children: Array<AnatomyNode>): AnatomyNode => ({
     name: "SectionCard",
-    tier: "design",
+    tier: "block",
     role: "khung surface bao TOÀN BỘ nội dung (accent khi highlighted; CardContent xếp dọc gap-6, h-full)",
     children,
 })
@@ -83,9 +83,9 @@ const NO_PERIOD_PARTS: Array<AnatomyNode> = [sectionFrame([NAME, PRICE_POINT])]
 // ROW leaf (PricingRow): ba PricingCard xếp lưới items-stretch (grid div = layout, không phải node)
 // → mỗi tier là MỘT sub-block design, nest nguyên cây SectionCard + shape của nó.
 const ROW_PARTS: Array<AnatomyNode> = [
-    { name: "PricingCard.Free", tier: "design", role: "tier cơ bản (không chip, không giá gốc)", children: BASE_PARTS },
-    { name: "PricingCard.Pro", tier: "design", role: "tier nổi bật (highlighted → chip accent + giá gốc gạch ngang)", state: "highlighted", children: FULL_PARTS },
-    { name: "PricingCard.Enterprise", tier: "design", role: "tier liên hệ (không kỳ hạn)", children: NO_PERIOD_PARTS },
+    { name: "PricingCard.Free", tier: "block", role: "tier cơ bản (không chip, không giá gốc)", children: BASE_PARTS },
+    { name: "PricingCard.Pro", tier: "block", role: "tier nổi bật (highlighted → chip accent + giá gốc gạch ngang)", state: "highlighted", children: FULL_PARTS },
+    { name: "PricingCard.Enterprise", tier: "block", role: "tier liên hệ (không kỳ hạn)", children: NO_PERIOD_PARTS },
 ]
 
 export const BaseTier: Story = {
@@ -93,7 +93,7 @@ export const BaseTier: Story = {
         frame(
             <BlockAnatomy
                 name="PricingCard"
-                tier="design"
+                tier="block"
                 leaf="BaseTier"
                 parts={BASE_PARTS}
                 reason="Một tier bảng giá là MỘT surface tự đóng khung (SectionCard) với công thức cố định: tên + chip nổi bật, dòng giá lớn kèm giá gốc gạch ngang, danh sách feature giãn đầy chiều cao, và CTA dính đáy. Gói vào một block để mọi tier trong bảng giá đều một khuôn, bằng chiều cao khi xếp lưới — feature chỉ đổi nội dung ReactNode."
@@ -123,7 +123,7 @@ export const HighlightedWithBadge: Story = {
         frame(
             <BlockAnatomy
                 name="PricingCard"
-                tier="design"
+                tier="block"
                 leaf="HighlightedWithBadge"
                 parts={FULL_PARTS}
                 note="highlighted && badge → chip accent hiện + giá gốc gạch ngang; composition ĐẦY ĐỦ."
@@ -150,7 +150,7 @@ export const BadgeHiddenWithoutHighlight: Story = {
         frame(
             <BlockAnatomy
                 name="PricingCard"
-                tier="design"
+                tier="block"
                 leaf="BadgeHiddenWithoutHighlight"
                 parts={BASE_PARTS}
                 note="badge truyền vào NHƯNG không highlighted → StatusChip ẩn; cùng composition với tier cơ bản."
@@ -181,7 +181,7 @@ export const DiscountWithoutHighlight: Story = {
         frame(
             <BlockAnatomy
                 name="PricingCard"
-                tier="design"
+                tier="block"
                 leaf="DiscountWithoutHighlight"
                 parts={DISCOUNT_PARTS}
                 note="originalPrice hiện độc lập với highlighted (khác chip) → giá gốc gạch ngang có mặt nhưng KHÔNG có StatusChip."
@@ -211,7 +211,7 @@ export const NoPeriod: Story = {
         frame(
             <BlockAnatomy
                 name="PricingCard"
-                tier="design"
+                tier="block"
                 leaf="NoPeriod"
                 parts={NO_PERIOD_PARTS}
                 note="bỏ period → dòng giá chỉ còn giá lớn; không chip, không giá gốc."
@@ -240,7 +240,7 @@ export const LongFeatureList: Story = {
         frame(
             <BlockAnatomy
                 name="PricingCard"
-                tier="design"
+                tier="block"
                 leaf="LongFeatureList"
                 parts={DISCOUNT_PARTS}
                 note="features dài giãn flex-1 đẩy CTA xuống đáy; có giá gốc, cùng composition với leaf giảm giá."
@@ -275,7 +275,7 @@ export const PricingRow: Story = {
         frame(
             <BlockAnatomy
                 name="PricingCard"
-                tier="design"
+                tier="block"
                 leaf="PricingRow"
                 parts={ROW_PARTS}
                 note="ba tier xếp lưới items-stretch → cùng chiều cao; gồm cả ba shape (cơ bản · nổi bật · không kỳ hạn)."

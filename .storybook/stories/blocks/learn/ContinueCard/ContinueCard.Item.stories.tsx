@@ -1,11 +1,11 @@
 import type { SVGProps } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ContinueCard } from "@sb-components/designs/cards/ContinueCard/ContinueCard"
+import { ContinueCard } from "@sb-components/blocks/learn/ContinueCard/ContinueCard"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { WarningIcon } from "@phosphor-icons/react"
 import { Feedback } from "@sb-components/composites/feedback/Feedback/Feedback"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 // `Feedback.Empty` takes icon as a COMPONENT ref and forces `size-8` itself (§4/§5) — Phosphor's
 // `weight="duotone"` can no longer ride along, so it's wrapped as a component to KEEP the stroke style.
@@ -27,7 +27,7 @@ const WarningDuotone = (props: SVGProps<SVGSVGElement>) => <WarningIcon {...prop
  * full width instead of inheriting the card's cap.
  */
 const meta: Meta<typeof ContinueCard> = {
-    title: "Designs/Cards/ContinueCard/ContinueCard.Item",
+    title: "Blocks/Learn/ContinueCard/ContinueCard.Item",
     component: ContinueCard,
     tags: ["autodocs"],
     parameters: {
@@ -109,13 +109,35 @@ const ERROR_PARTS: Array<AnatomyNode> = [
     },
 ]
 
+/**
+ * The `isSkeleton` leaf's own whitelist — hand-flattened from `ITEM_PARTS` (§11f: same
+ * composition, only DIFFERENT because `Link.SeeMore` has no `isSkeleton` shape of its own
+ * yet, so `.Item` builds the CTA's shimmer bar directly with raw HeroUI `Skeleton`).
+ *
+ * ⚠️ 2026-07-28 (orphan-part gate, same fix as `ContinueCard.Hero.Progress`'s own
+ * `SKELETON_ANNOTATE`): a `tier: "heroui"` entry only registers with
+ * `scripts/check-orphan-parts.mjs` — and only ADMITS into the panel's tree, per
+ * `BlockAnatomy`'s own `storyId || tier === "heroui"` rule — as a flat `"Name": { … }`
+ * record, not as a `{ name: "Skeleton", tier: "heroui" }` node nested inside the `parts`
+ * array. `parts={ITEM_PARTS}` is switched to `annotate={ITEM_SKELETON_ANNOTATE}` for JUST
+ * this leaf — `Content`/`LoadError` below keep the nested `parts` tree unchanged, since
+ * neither of them renders the raw `Skeleton` bar.
+ */
+const ITEM_SKELETON_ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "SurfaceCard.Base": { tier: "composite", role: "FLAT card surface — holds the info plus the CTA row", storyId: "composites-cards-surfacecard-surfacecard-base--default" },
+    "Stack.H": { tier: "frame", role: "outer row — one horizontal track (children are ARBITRARY ⇒ `Stack`, not `Cluster`, §13b)", storyId: "frames-stack-stack-h--default" },
+    "Stack.V": { tier: "frame", role: "text column — title on top, meta/subtitle underneath", storyId: "frames-stack-stack-v--default" },
+    "Typography.Base": { tier: "atom", role: "the item name — medium weight, truncate", storyId: "atoms-text-typography-typography-base--plain" },
+    "Skeleton": { tier: "heroui", role: "the loading mirror standing in for the \"Tiếp tục →\" CTA — `Link.SeeMore` has no `isSkeleton` shape of its own yet, so `.Item` builds this shimmer bar directly, matching the label's text size" },
+}
+
 /** The loaded item card — one representative (grid is the consumer's concern). Migrated to `states` 2026-07-27. */
 export const Content: Story = {
     render: () =>
         frame(
             <BlockAnatomy
                 name="ContinueCard"
-                tier="design"
+                tier="block"
                 leaf="Content"
                 parts={ITEM_PARTS}
                 renderClassName="mx-auto max-w-4xl"
@@ -145,21 +167,22 @@ export const Content: Story = {
 /**
  * STATE isSkeleton — mirror shimmer via the component's OWN `isSkeleton` prop.
  * Same COMPOSITION as the loaded item leaf (§11f: state, not structure) — reuses
- * `ITEM_PARTS`, no hand-rolled skeleton tree. Migrated to `states` 2026-07-27.
+ * the same tree as `ITEM_PARTS`, no hand-rolled skeleton tree. Migrated to `states`
+ * 2026-07-27.
  */
 export const Skeleton: Story = {
     render: () =>
         frame(
             <BlockAnatomy
                 name="ContinueCard"
-                tier="design"
+                tier="block"
                 leaf="Prop `isSkeleton`"
-                parts={ITEM_PARTS}
+                annotate={ITEM_SKELETON_ANNOTATE}
                 renderClassName="mx-auto max-w-4xl"
                 states={[
                     {
                         name: "isSkeleton = true",
-                        why: "The same `SurfaceCard` ⊃ `Stack.H` ⊃ `Stack.V` tree mounts as the loaded state, but each text part renders its shimmer bar instead of real content — the composition never changes, only its state does (§11f). The layout has to hold still while data loads, which is only possible if the skeleton reuses the exact same structure as the real card.",
+                        why: "The same `SurfaceCard` ⊃ `Stack.H` ⊃ `Stack.V` tree mounts as the loaded state, but each text part renders its shimmer bar instead of real content, and the CTA swaps `Link.SeeMore` for a raw HeroUI `Skeleton` mirror since `Link.SeeMore` has no `isSkeleton` shape of its own yet — the composition never changes, only its state does (§11f). The layout has to hold still while data loads, which is only possible if the skeleton reuses the exact same structure as the real card.",
                         code: `<ContinueCard.Item
     title="Building a RESTful API with NestJS"
     subtitle="Reading"
@@ -189,7 +212,7 @@ export const LoadError: Story = {
         frame(
             <BlockAnatomy
                 name="ContinueCard"
-                tier="design"
+                tier="block"
                 leaf="LoadError"
                 parts={ERROR_PARTS}
                 renderClassName="mx-auto max-w-4xl"

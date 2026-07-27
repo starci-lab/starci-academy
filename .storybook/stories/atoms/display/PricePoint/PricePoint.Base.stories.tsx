@@ -80,17 +80,25 @@ const TYPOGRAPHY_STORY = "atoms-text-typography-typography-base--plain"
  * MỘT real component, `Typography.Base`, nên chia sẻ một entry theo tên thật thay
  * vì ba tên bịa `Amount`/`Original`/`Period` (§ naming pass, 2026-07-28) — panel
  * gom node theo phần tử DOM nên ba lần xuất hiện vẫn ra ba nhánh riêng.
+ *
+ * Written as a `Record` (not a bare `AnatomyAnnotation`) so the checker's declared-part
+ * scan — which only recognises an inline `"Name": { ... }` object literal — actually
+ * sees this entry instead of a reference to a separately-defined constant.
  */
-const PART_TYPOGRAPHY: AnatomyAnnotation = {
-    role: "One of the three price parts (the prominent amount, the struck original, or the billing period) — each a Typography.Base instance riding this atom's own per-size type scale.",
-    tier: "atom",
-    storyId: TYPOGRAPHY_STORY,
+const ANNOTATE_TYPOGRAPHY: Record<string, AnatomyAnnotation> = {
+    "Typography.Base": {
+        role: "One of the three price parts (the prominent amount, the struck original, or the billing period) — each a Typography.Base instance riding this atom's own per-size type scale.",
+        tier: "atom",
+        storyId: TYPOGRAPHY_STORY,
+    },
 }
 
 /** Chú giải cho bar shimmer — cùng một HeroUI `Skeleton` cho cả amount-bar lẫn period-bar. */
-const PART_SKELETON: AnatomyAnnotation = {
-    role: "A shimmer bar mirroring either the amount or the period box at this size.",
-    tier: "heroui",
+const ANNOTATE_SKELETON: Record<string, AnatomyAnnotation> = {
+    "Skeleton": {
+        role: "A shimmer bar mirroring either the amount or the period box at this size.",
+        tier: "heroui",
+    },
 }
 
 /** Leaf TRẦN — chỉ `amount`, không `original`/`period`, `size` mặc định `"md"`. */
@@ -102,7 +110,7 @@ export const Default: Story = {
                 tier="atom"
                 leaf="Bare price"
                 reason="The baseline unit: just the amount, at the default md scale. Every leaf below differs by exactly one prop, so this is what you compare the others against."
-                annotate={{ "Typography.Base": PART_TYPOGRAPHY }}
+                annotate={ANNOTATE_TYPOGRAPHY}
                 states={[
                     {
                         name: "original and period both unset, size unset",
@@ -125,7 +133,7 @@ export const Original: Story = {
                 tier="atom"
                 leaf="Prop `original`"
                 reason="The struck price only earns its spot when there is a real discount — it lets the reader see the drop for themselves instead of trusting a badge that claims one."
-                annotate={{ "Typography.Base": PART_TYPOGRAPHY }}
+                annotate={ANNOTATE_TYPOGRAPHY}
                 states={[
                     {
                         name: "original unset",
@@ -154,7 +162,7 @@ export const Period: Story = {
                 tier="atom"
                 leaf="Prop `period`"
                 reason="A recurring price needs the cadence right next to the number, or the reader has to hunt the page for a `/month` disclaimer somewhere else."
-                annotate={{ "Typography.Base": PART_TYPOGRAPHY }}
+                annotate={ANNOTATE_TYPOGRAPHY}
                 states={[
                     {
                         name: "period unset",
@@ -186,7 +194,7 @@ export const Sizes: Story = {
                 tier="atom"
                 leaf="Prop `size`"
                 reason="Pick size from where the price sits, not from the number's own weight — a pricing page hero and a compact plan row both show plain dollar amounts. `size` drives all three parts off one shared token table, so the unit grows as one coherent piece instead of a big number next to leftover tiny text."
-                annotate={{ "Typography.Base": PART_TYPOGRAPHY }}
+                annotate={ANNOTATE_TYPOGRAPHY}
                 states={[
                     {
                         name: "size = \"sm\"",
@@ -230,7 +238,7 @@ export const Skeleton: Story = {
                 tier="atom"
                 leaf="Prop `isSkeleton`"
                 reason="Whoever owns the shape owns its resting state, so the price draws its own shimmer instead of a shared generic placeholder. `original` has no placeholder of its own — passing it during `isSkeleton` changes nothing, since the bar only ever reads `period`."
-                annotate={{ Skeleton: PART_SKELETON }}
+                annotate={ANNOTATE_SKELETON}
                 states={[
                     {
                         name: "isSkeleton = true, size = \"sm\", period unset",

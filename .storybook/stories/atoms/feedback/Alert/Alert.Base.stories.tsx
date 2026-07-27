@@ -64,7 +64,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
         tier: "heroui",
         role: "the optional supporting line under the title",
     },
-    Skeleton: {
+    "Skeleton": {
         tier: "heroui",
         role: "shimmer bar mirroring either the title or the description line box — the frame and icon stay real",
     },

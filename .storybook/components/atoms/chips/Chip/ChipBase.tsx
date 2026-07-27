@@ -195,7 +195,6 @@ export const ChipBase = ({
     const leading = hasDot ? (
         <span
             aria-hidden
-            data-anat-part={showAnatomy ? "Dot" : undefined}
             className={cn("inline-flex shrink-0", dotClassName)}
             style={dotColor ? { color: dotColor } : undefined}
         >
@@ -204,7 +203,7 @@ export const ChipBase = ({
             <CircleIcon weight="fill" width={DOT_PX} height={DOT_PX} />
         </span>
     ) : Icon ? (
-        <span aria-hidden data-anat-part={showAnatomy ? "Icon" : undefined} className="inline-flex shrink-0">
+        <span aria-hidden className="inline-flex shrink-0">
             {/* Atom sở hữu scale glyph (§4): bằng cỡ chữ chip, và dưới `size-5` ⇒ `bold` (§5.0a). */}
             <Icon className={ICON_CLS} weight="bold" />
         </span>
@@ -240,7 +239,6 @@ export const ChipBase = ({
                     type="button"
                     aria-label={removeLabel ?? "Remove"}
                     onClick={onRemove}
-                    data-anat-part={showAnatomy ? "Remove" : undefined}
                     className="inline-flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-full opacity-70 outline-none transition hover:bg-current/15 hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-accent [&_svg]:size-3"
                 >
                     {/* × bị ép size-3 (< size-5) ⇒ weight="bold" (§5.0a). */}

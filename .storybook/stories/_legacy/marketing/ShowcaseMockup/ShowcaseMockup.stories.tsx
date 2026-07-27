@@ -55,12 +55,12 @@ const DemoContent = () => (
  *  bar and the content area. `withUrl` toggles whether the chrome shows the address bar. */
 const windowCard = (withUrl: boolean): AnatomyNode => ({
     name: "WindowCard",
-    tier: "design",
+    tier: "block",
     role: "thẻ cửa sổ nền surface, viền default, bo góc 3xl (overflow-hidden) — CHỨA chrome + nội dung",
     children: [
         {
             name: "WindowChrome",
-            tier: "design",
+            tier: "block",
             role: withUrl
                 ? "thanh cửa sổ (border-b): 3 chấm đỏ/vàng/lục + address bar"
                 : "thanh cửa sổ (border-b): chỉ 3 chấm đỏ/vàng/lục, KHÔNG address bar",
@@ -68,7 +68,7 @@ const windowCard = (withUrl: boolean): AnatomyNode => ({
                 ? [{ name: "Typography", tier: "composite", role: "chuỗi URL address bar (type=code, render trực tiếp prop url)" }]
                 : undefined,
         },
-        { name: "Content", tier: "design", role: "vùng bọc nội dung children (khoá 16:9 khi aspect='video')" },
+        { name: "Content", tier: "block", role: "vùng bọc nội dung children (khoá 16:9 khi aspect='video')" },
     ],
 })
 
@@ -76,10 +76,10 @@ const windowCard = (withUrl: boolean): AnatomyNode => ({
  *  in opposite tilts; hover flattens both. */
 const cardStack = (withUrl: boolean): AnatomyNode => ({
     name: "FanStack",
-    tier: "design",
+    tier: "block",
     role: "wrapper .group xếp 2 thẻ nghiêng ngược nhau → chiều sâu 'xoè'; hover ép cả 2 phẳng lại",
     children: [
-        { name: "CardBehind", tier: "design", role: "thẻ nền nghiêng NGƯỢC, tô màu theme (KHÔNG viền), aria-hidden → chiều sâu 'xoè'" },
+        { name: "CardBehind", tier: "block", role: "thẻ nền nghiêng NGƯỢC, tô màu theme (KHÔNG viền), aria-hidden → chiều sâu 'xoè'" },
         windowCard(withUrl),
     ],
 })
@@ -88,7 +88,7 @@ const cardStack = (withUrl: boolean): AnatomyNode => ({
 // every leaf that keeps both the backdrop and the URL (theme / tilt / backdrop-style /
 // aspect variants only change look, not parts).
 const BASE_PARTS: Array<AnatomyNode> = [
-    { name: "Backdrop", tier: "design", role: "lớp trang trí sau thẻ (glow / grid / stars), aria-hidden", state: "glow" },
+    { name: "Backdrop", tier: "block", role: "lớp trang trí sau thẻ (glow / grid / stars), aria-hidden", state: "glow" },
     cardStack(true),
 ]
 
@@ -99,7 +99,7 @@ const NO_BACKDROP_PARTS: Array<AnatomyNode> = [cardStack(true)]
 // NO-URL leaf: no `url` → the address-bar Typography is dropped, chrome shows only the
 // 3 dots. Backdrop and the rest of the stack stay.
 const NO_URL_PARTS: Array<AnatomyNode> = [
-    { name: "Backdrop", tier: "design", role: "lớp trang trí sau thẻ (glow), aria-hidden", state: "glow" },
+    { name: "Backdrop", tier: "block", role: "lớp trang trí sau thẻ (glow), aria-hidden", state: "glow" },
     cardStack(false),
 ]
 
@@ -109,7 +109,7 @@ export const Default: Story = {
         shell(
             <BlockAnatomy
                 name="ShowcaseMockup"
-                tier="design"
+                tier="block"
                 leaf="Default"
                 parts={BASE_PARTS}
                 reason="Khung cửa sổ trình duyệt tái dùng (3 chấm + address bar) bọc bất kỳ nội dung nào, nghiêng 3D + quầng sáng màu — cái look hero StarCi/Uni-Education gói thành một block. Feature chỉ đổi theme/tilt/backdrop/url + children; surface card luôn theo token light/dark."
@@ -129,7 +129,7 @@ export const ThemeStarci: Story = {
         shell(
             <BlockAnatomy
                 name="ShowcaseMockup"
-                tier="design"
+                tier="block"
                 leaf="ThemeStarci"
                 parts={BASE_PARTS}
                 note="Chỉ đổi màu quầng sáng (theme) → CÙNG composition với leaf 'Mặc định'."
@@ -149,7 +149,7 @@ export const ThemeAqua: Story = {
         shell(
             <BlockAnatomy
                 name="ShowcaseMockup"
-                tier="design"
+                tier="block"
                 leaf="ThemeAqua"
                 parts={BASE_PARTS}
                 note="Chỉ đổi màu quầng sáng (theme) → CÙNG composition với leaf 'Mặc định'."
@@ -169,7 +169,7 @@ export const TiltRight: Story = {
         shell(
             <BlockAnatomy
                 name="ShowcaseMockup"
-                tier="design"
+                tier="block"
                 leaf="TiltRight"
                 parts={BASE_PARTS}
                 note="Chỉ đổi hướng nghiêng 3D → CÙNG composition với leaf 'Mặc định'."
@@ -189,7 +189,7 @@ export const TiltNone: Story = {
         shell(
             <BlockAnatomy
                 name="ShowcaseMockup"
-                tier="design"
+                tier="block"
                 leaf="TiltNone"
                 parts={BASE_PARTS}
                 note="Tắt nghiêng 3D nhưng thẻ-sau VẪN dựng → CÙNG composition với leaf 'Mặc định'."
@@ -209,7 +209,7 @@ export const BackdropGrid: Story = {
         shell(
             <BlockAnatomy
                 name="ShowcaseMockup"
-                tier="design"
+                tier="block"
                 leaf="BackdropGrid"
                 parts={BASE_PARTS}
                 note="Lớp Backdrop đổi sang lưới chấm → vẫn CÙNG composition với leaf 'Mặc định'."
@@ -229,7 +229,7 @@ export const BackdropStars: Story = {
         shell(
             <BlockAnatomy
                 name="ShowcaseMockup"
-                tier="design"
+                tier="block"
                 leaf="BackdropStars"
                 parts={BASE_PARTS}
                 note="Lớp Backdrop đổi sang các chấm sao → vẫn CÙNG composition với leaf 'Mặc định'."
@@ -249,7 +249,7 @@ export const BackdropNone: Story = {
         shell(
             <BlockAnatomy
                 name="ShowcaseMockup"
-                tier="design"
+                tier="block"
                 leaf="BackdropNone"
                 parts={NO_BACKDROP_PARTS}
                 note="backdrop='none' → BỎ hẳn lớp Backdrop, khác leaf 'Mặc định' (thiếu một part)."
@@ -269,7 +269,7 @@ export const AspectVideo: Story = {
         shell(
             <BlockAnatomy
                 name="ShowcaseMockup"
-                tier="design"
+                tier="block"
                 leaf="AspectVideo"
                 parts={BASE_PARTS}
                 note="Vùng Content khoá tỉ lệ 16:9 (ảnh chụp toàn trang) → parts giữ nguyên như leaf 'Mặc định'."
@@ -291,7 +291,7 @@ export const NoAddressBar: Story = {
         shell(
             <BlockAnatomy
                 name="ShowcaseMockup"
-                tier="design"
+                tier="block"
                 leaf="NoAddressBar"
                 parts={NO_URL_PARTS}
                 note="Bỏ prop url → BỎ address bar, chrome chỉ còn 3 chấm (khác leaf 'Mặc định')."

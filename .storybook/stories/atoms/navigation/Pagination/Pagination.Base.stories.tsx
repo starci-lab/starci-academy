@@ -40,7 +40,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Pagination.Link": { tier: "heroui", role: "one concrete page number, filled when it's the active page" },
     "Pagination.Ellipsis": { tier: "heroui", role: "collapses a run of distant pages between the visible ones" },
     "Pagination.Next": { tier: "heroui", role: "steps forward one page, disabled on the last page" },
-    Skeleton: { tier: "heroui", role: "shimmer square standing in for a page link before totalPages is known" },
+    "Skeleton": { tier: "heroui", role: "shimmer square standing in for a page link before totalPages is known" },
 }
 
 /** Default — ít trang → hiện đủ mọi trang, không '…'. Migrated to `states` 2026-07-27. */

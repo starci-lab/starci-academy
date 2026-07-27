@@ -140,7 +140,7 @@ const EMPTY_PARTS: Array<AnatomyNode> = [
         children: [
             {
                 name: "Feedback.Empty",
-                tier: "design",
+                tier: "block",
                 role: "\"Chưa có sự thật nào\" — stack canh giữa lấp surface (size default, không action) — tự hiện icon khay + tiêu đề + mô tả phụ qua prop icon/title/description",
             },
         ],

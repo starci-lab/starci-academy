@@ -17,9 +17,15 @@ import { Label, Skeleton as HeroSkeleton, cn } from "@heroui/react"
  * skeleton), FieldFrame renders children DIRECTLY — zero wrapper, so the atom can
  * still be used as a bare cell nested inside something else.
  *
- * Anatomy parts (§11a — an atom badges its own direct parts): Label · Description ·
- * Error. The control cell badges its own part (`Field`/`Skeleton`) — FieldFrame does
- * NOT badge the Control wrapper, to avoid nesting two badge tiers.
+ * Anatomy (§11a — an atom badges its own direct parts): only `Label` and the
+ * label-bar `Skeleton` carry `data-anat-part` — both are heroui's OWN components
+ * (`Label`/`Skeleton` imported straight from `@heroui/react`), declared `tier:
+ * "heroui"` by whichever atom composes this frame with a visible `label`
+ * (`Choice.RadioGroup`, `Input.*`, `Select.*`). `Description`/`Error` stay
+ * unbadged (2026-07-28 orphan-part pass) — they're plain hand-rolled `<p>`s, not
+ * a real component, and `FieldFrame` itself has no story of its own to declare
+ * them against. The control cell badges its own part (`Field`/`Skeleton`) —
+ * FieldFrame does NOT badge the Control wrapper, to avoid nesting two badge tiers.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 export interface FieldFrameProps {
@@ -126,7 +132,7 @@ const FieldFrameBase = ({
             ) : null}
 
             {hint != null ? (
-                <p className="text-muted text-xs" data-anat-part={showAnatomy ? "Description" : undefined}>
+                <p className="text-muted text-xs">
                     {hint}
                 </p>
             ) : null}
@@ -134,7 +140,7 @@ const FieldFrameBase = ({
             {children}
 
             {errorMessage != null ? (
-                <p className="text-danger text-sm" data-anat-part={showAnatomy ? "Error" : undefined}>
+                <p className="text-danger text-sm">
                     {errorMessage}
                 </p>
             ) : null}

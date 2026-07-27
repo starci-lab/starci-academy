@@ -60,7 +60,7 @@ bigger callout. Size never changes tone or shape, only scale.
 `
 
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Skeleton: {
+    "Skeleton": {
         tier: "heroui",
         role: "the resting round shimmer, drawn in place of the badge while isSkeleton is on",
     },

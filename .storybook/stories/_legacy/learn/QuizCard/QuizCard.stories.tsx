@@ -160,7 +160,7 @@ export const SingleChoice: Story = {
         frame(
             <BlockAnatomy
                 name="QuizCard"
-                tier="design"
+                tier="block"
                 leaf="SingleChoice"
                 parts={SINGLE_ASK_PARTS}
                 reason='Một câu trắc nghiệm cần MỘT surface tự đóng khung để tách khỏi câu khác (SectionCard) và một nhãn thứ tự câu (StatusChip). Gói prompt + option rows + submit + giải thích + trạng thái đúng/sai vào một block, để feature chỉ truyền dữ liệu — không phải tự dựng lại khung, nhãn, và logic reveal đáp án ở mỗi màn.'
@@ -175,7 +175,7 @@ export const MultipleChoice: Story = {
         frame(
             <BlockAnatomy
                 name="QuizCard"
-                tier="design"
+                tier="block"
                 leaf="MultipleChoice"
                 parts={MULTIPLE_ASK_PARTS}
                 note="Chế độ chọn-nhiều → CheckboxGroup thay RadioGroup; vẫn có nút nộp (chưa nộp)."
@@ -190,7 +190,7 @@ export const SubmittedCorrect: Story = {
         frame(
             <BlockAnatomy
                 name="QuizCard"
-                tier="design"
+                tier="block"
                 leaf="SubmittedCorrect"
                 parts={SINGLE_SUBMITTED_PARTS}
                 note="Đã nộp (chọn đúng) → RadioGroup lộ đúng/sai, thêm khối giải thích, nút nộp biến mất."
@@ -215,7 +215,7 @@ export const SubmittedIncorrect: Story = {
         frame(
             <BlockAnatomy
                 name="QuizCard"
-                tier="design"
+                tier="block"
                 leaf="SubmittedIncorrect"
                 parts={SINGLE_SUBMITTED_PARTS}
                 note="Đã nộp (chọn sai) → cùng composition với leaf 'Đúng': lộ đáp án + giải thích, không nút nộp."
@@ -242,7 +242,7 @@ export const MultipleSubmitted: Story = {
         frame(
             <BlockAnatomy
                 name="QuizCard"
-                tier="design"
+                tier="block"
                 leaf="MultipleSubmitted"
                 parts={MULTIPLE_SUBMITTED_PARTS}
                 note="Chọn-nhiều đã nộp → mỗi dòng CheckboxGroup tự lộ đúng/sai/bỏ sót + khối giải thích."
@@ -288,7 +288,7 @@ export const NoQuestionIndex: Story = {
         return frame(
             <BlockAnatomy
                 name="QuizCard"
-                tier="design"
+                tier="block"
                 leaf="NoQuestionIndex"
                 parts={NO_INDEX_PARTS}
                 note="Không có questionIndex → StatusChip 'Câu N' biến mất hoàn toàn (khác các leaf khác)."
@@ -306,7 +306,7 @@ export const SubmittedNoExplanation: Story = {
         frame(
             <BlockAnatomy
                 name="QuizCard"
-                tier="design"
+                tier="block"
                 leaf="SubmittedNoExplanation"
                 parts={SUBMITTED_NO_EXPLANATION_PARTS}
                 note="Đã nộp nhưng không có explanation → khối giải thích bị lược; rows VẪN lộ đúng/sai (OptionResultIcon), chỉ mất khối giải thích + nút nộp."
@@ -332,7 +332,7 @@ export const ReadOnlyNoAction: Story = {
         frame(
             <BlockAnatomy
                 name="QuizCard"
-                tier="design"
+                tier="block"
                 leaf="ReadOnlyNoAction"
                 parts={READONLY_PARTS}
                 note="Không có onSubmit + chưa nộp → nút nộp không dựng, rows chỉ default/selected (KHÔNG OptionResultIcon); xem trước tĩnh chip + câu hỏi + phương án."

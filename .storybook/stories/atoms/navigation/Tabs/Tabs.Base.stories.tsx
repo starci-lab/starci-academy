@@ -37,8 +37,8 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Tabs.Tab": { tier: "heroui", role: "one tab — selectable, or disabled per item.isDisabled" },
     "Tabs.Indicator": { tier: "heroui", role: "the moving highlight/underline marking the selected tab" },
     "Badge.Anchor": { tier: "heroui", role: "anchors the count badge to the corner of a tab's label" },
-    Badge: { tier: "heroui", role: "the floated unread/pending count" },
-    Skeleton: { tier: "heroui", role: "shimmer bar standing in for a tab's label or underline" },
+    "Badge": { tier: "heroui", role: "the floated unread/pending count" },
+    "Skeleton": { tier: "heroui", role: "shimmer bar standing in for a tab's label or underline" },
 }
 
 const BASE_ITEMS = [

@@ -71,7 +71,7 @@ const Controlled = ({
 export const PillAll: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="ProgrammingLanguageTabs" tier="design" leaf="PillAll" parts={PARTS} reason="PLT là thin wrapper: 1 khung ExtendedTabs (pill chrome) chứa 4 Tabs.Tab lặp theo ngôn ngữ mặc định.">
+            <BlockAnatomy name="ProgrammingLanguageTabs" tier="block" leaf="PillAll" parts={PARTS} reason="PLT là thin wrapper: 1 khung ExtendedTabs (pill chrome) chứa 4 Tabs.Tab lặp theo ngôn ngữ mặc định.">
                 <Controlled availableLangs={["typescript", "java", "csharp", "go"]} initialLang="typescript" ariaLabel="Ngôn ngữ lập trình" />
             </BlockAnatomy>
         </div>
@@ -82,7 +82,7 @@ export const PillAll: Story = {
 export const PillPartialDisabled: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="ProgrammingLanguageTabs" tier="design" leaf="PillPartialDisabled" parts={PARTS} note="Ngôn ngữ không có trong `availableLangs` → Tabs.Tab tương ứng `isDisabled` (vẫn cùng 4 Tab, không ẩn).">
+            <BlockAnatomy name="ProgrammingLanguageTabs" tier="block" leaf="PillPartialDisabled" parts={PARTS} note="Ngôn ngữ không có trong `availableLangs` → Tabs.Tab tương ứng `isDisabled` (vẫn cùng 4 Tab, không ẩn).">
                 <Controlled availableLangs={["typescript", "go"]} initialLang="typescript" ariaLabel="Ngôn ngữ lập trình" />
             </BlockAnatomy>
         </div>
@@ -93,7 +93,7 @@ export const PillPartialDisabled: Story = {
 export const SecondaryUnderline: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="ProgrammingLanguageTabs" tier="design" leaf="SecondaryUnderline" parts={PARTS} note="`variant=Secondary` đổi chrome ExtendedTabs sang underline full-width — vẫn cùng ExtendedTabs+Tabs.Tab.">
+            <BlockAnatomy name="ProgrammingLanguageTabs" tier="block" leaf="SecondaryUnderline" parts={PARTS} note="`variant=Secondary` đổi chrome ExtendedTabs sang underline full-width — vẫn cùng ExtendedTabs+Tabs.Tab.">
                 <Controlled
                     availableLangs={["typescript", "java", "csharp", "go"]}
                     initialLang="java"
@@ -109,7 +109,7 @@ export const SecondaryUnderline: Story = {
 export const SecondaryNoBorder: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="ProgrammingLanguageTabs" tier="design" leaf="SecondaryNoBorder" parts={PARTS} note="`surfaceBorder=false` bỏ `border-b` wrapper NGOÀI ExtendedTabs — không phải node riêng, chỉ 1 class toggle.">
+            <BlockAnatomy name="ProgrammingLanguageTabs" tier="block" leaf="SecondaryNoBorder" parts={PARTS} note="`surfaceBorder=false` bỏ `border-b` wrapper NGOÀI ExtendedTabs — không phải node riêng, chỉ 1 class toggle.">
                 <Controlled
                     availableLangs={["typescript", "java", "csharp", "go"]}
                     initialLang="csharp"
@@ -127,7 +127,7 @@ export const EmptyHidden: Story = {
     render: () => (
         <div className="p-8">
             <div className="flex flex-col gap-2">
-                <BlockAnatomy name="ProgrammingLanguageTabs" tier="design" leaf="EmptyHidden" parts={[]} note="`availableLangs=[]` không `alwaysShow` → component trả `null`, không ExtendedTabs/Tab nào render.">
+                <BlockAnatomy name="ProgrammingLanguageTabs" tier="block" leaf="EmptyHidden" parts={[]} note="`availableLangs=[]` không `alwaysShow` → component trả `null`, không ExtendedTabs/Tab nào render.">
                     <ProgrammingLanguageTabs
                         showAnatomy
                         availableLangs={[]}
@@ -148,7 +148,7 @@ export const EmptyHidden: Story = {
 export const AlwaysShowAllDisabled: Story = {
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="ProgrammingLanguageTabs" tier="design" leaf="AlwaysShowAllDisabled" parts={PARTS} note="`alwaysShow` giữ đủ 4 Tabs.Tab dù `availableLangs` rỗng — mọi Tab `isDisabled`.">
+            <BlockAnatomy name="ProgrammingLanguageTabs" tier="block" leaf="AlwaysShowAllDisabled" parts={PARTS} note="`alwaysShow` giữ đủ 4 Tabs.Tab dù `availableLangs` rỗng — mọi Tab `isDisabled`.">
                 <Controlled availableLangs={[]} initialLang="typescript" ariaLabel="Ngôn ngữ lập trình" alwaysShow />
             </BlockAnatomy>
         </div>

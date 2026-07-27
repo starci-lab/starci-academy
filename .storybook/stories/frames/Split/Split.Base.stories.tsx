@@ -4,7 +4,7 @@ import { Split } from "@sb-components/frames/Split/Split"
 import { Stack } from "@sb-components/frames/Stack/Stack"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ PHẠM VI STATE: `Split.Base` là KHUNG hàng TRÁI ↔ PHẢI. State nó sinh ra = quan hệ
@@ -25,10 +25,10 @@ export default meta
 
 type Story = StoryObj<typeof Split.Base>
 
-const SIDE_PARTS: Array<AnatomyNode> = [
-    { name: "Start", tier: "composite", role: "the leading side, min-w-0 so long text truncates inside it instead of pushing End" },
-    { name: "End", tier: "composite", role: "the trailing side, shrink-0 so a button or value is never squeezed" },
-]
+// No `Start`/`End` anatomy nodes (2026-07-28): the two sides are CALLER slots — whatever they
+// wrap belongs to whoever passed it in (`Typography.Base`, `Button.Base`, a `Stack.V`…), not to
+// this khung's own anatomy, and no component sits behind either name for a reader to click
+// through to. The `reason` prose below already explains the min-w-0/shrink-0 split in words.
 
 /**
  * `@app-sm` đo CONTAINER gần nhất, không đo cửa sổ — nên muốn demo mốc thì phải tự mở
@@ -63,7 +63,6 @@ export const Default: Story = {
                 name="Split.Base"
                 tier="frame"
                 leaf="Default"
-                parts={SIDE_PARTS}
                 reason="Not a `Stack.H justify=between`: this is TWO NAMED sides with different width strategies, `start` can shrink and truncate, `end` cannot. Naming both sides enforces that rule in ONE place instead of at 43 call sites, and because the two slots already have names, the frame takes no `children` (§13b)."
                 states={[
                     {
@@ -103,7 +102,6 @@ export const StackOnMobile: Story = {
                 name="Split.Base"
                 tier="frame"
                 leaf="StackOnMobile"
-                parts={SIDE_PARTS}
                 reason="`@app-sm` measures the NEAREST container, not the viewport — the AI rail can squeeze the app column at any width, so the row must react to its own box rather than to the window."
                 states={[
                     {
@@ -165,7 +163,6 @@ export const Align: Story = {
                 name="Split.Base"
                 tier="frame"
                 leaf="Align"
-                parts={SIDE_PARTS}
                 reason="The fixture deliberately mismatches height, the left side carries two lines while the right side is one button, so the cross-axis alignment actually reads on screen."
                 states={[
                     {

@@ -63,7 +63,7 @@ export const AccentFourTiers: Story = {
         frame(
             <BlockAnatomy
                 name="TrackCard"
-                tier="design"
+                tier="block"
                 leaf="AccentFourTiers"
                 parts={TRACK_PARTS}
                 reason="Một 'lộ trình' cần một khối tự chứa: header định danh (icon + tên + meta) trên một đường 4 rung foundation → application, chốt bằng CTA vào khóa. Gói vào một block để xếp 3 track cạnh nhau so sánh ngay, màu chỉ đổi qua một token TrackColor."
@@ -94,7 +94,7 @@ export const SuccessFourTiers: Story = {
         frame(
             <BlockAnatomy
                 name="TrackCard"
-                tier="design"
+                tier="block"
                 leaf="SuccessFourTiers"
                 parts={TRACK_PARTS}
                 note="Đổi màu track qua token TrackColor 'success' — CÙNG composition với leaf accent."
@@ -125,7 +125,7 @@ export const WarningSingleTier: Story = {
         frame(
             <BlockAnatomy
                 name="TrackCard"
-                tier="design"
+                tier="block"
                 leaf="WarningSingleTier"
                 parts={TRACK_PARTS}
                 note="Chỉ một rung → đường path co lại nhưng CÙNG composition (không có node đường nối giữa các rung)."
@@ -151,7 +151,7 @@ export const LongTitleTruncate: Story = {
         frame(
             <BlockAnatomy
                 name="TrackCard"
-                tier="design"
+                tier="block"
                 leaf="LongTitleTruncate"
                 parts={TRACK_PARTS}
                 note="Khung hẹp + tiêu đề/meta dài → Typography truncate, composition không đổi."
@@ -180,7 +180,7 @@ export const ThreeTracksLayout: Story = {
         frame(
             <BlockAnatomy
                 name="TrackCard"
-                tier="design"
+                tier="block"
                 leaf="ThreeTracksLayout"
                 parts={TRACK_PARTS}
                 note="Xếp 3 TrackCard trong lưới @app-md:grid-cols-3 để so sánh — mỗi ô vẫn là CÙNG composition."

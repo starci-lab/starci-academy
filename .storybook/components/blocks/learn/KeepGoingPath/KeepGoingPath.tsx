@@ -2,7 +2,7 @@ import React from "react"
 import { Skeleton as HeroSkeleton } from "@heroui/react"
 import { CheckCircleIcon, CircleIcon, LockIcon, PlayCircleIcon } from "@phosphor-icons/react"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { VariantChip, type Difficulty } from "@sb-components/designs/chips/VariantChip/VariantChip"
+import { VariantChip, type Difficulty } from "@sb-components/blocks/learn/VariantChip/VariantChip"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────

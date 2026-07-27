@@ -31,7 +31,7 @@ const shell = (node: ReactNode) => <div className="p-8"><div className="max-w-md
 // Selected case IS a sample → the pill row + the IOExampleCard detail pane.
 const SAMPLE_PARTS: Array<AnatomyNode> = [
     { name: "Div.Pills", tier: "composite", role: "wrap pill chọn case, mỗi pill mang glyph ✓/✕ + nhãn" },
-    { name: "IOExampleCard", tier: "design", role: "chi tiết input · expected · got của case đang chọn" },
+    { name: "IOExampleCard", tier: "block", role: "chi tiết input · expected · got của case đang chọn" },
 ]
 
 // Selected case is HIDDEN (non-sample) → the pill row + a muted note instead of IO.

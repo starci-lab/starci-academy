@@ -214,7 +214,7 @@ const DATA_PARTS: Array<AnatomyNode> = [
                         tier: "composite",
                         role: "khung bordered (rounded-3xl bg-surface) ôm các hàng edge-to-edge — CÙNG khung skeleton (port fix, nguồn hand-roll rounded-2xl khác shape)",
                         children: [
-                            { name: "EntityResultRow", tier: "design", role: "mỗi hàng kết quả (chip loại + tiêu đề + snippet), lặp ×N" },
+                            { name: "EntityResultRow", tier: "block", role: "mỗi hàng kết quả (chip loại + tiêu đề + snippet), lặp ×N" },
                         ],
                     },
                 ],

@@ -48,9 +48,9 @@ const actions = (
 
 /** Cùng parts cho mọi leaf: Tabs (strip) · Panel (nội dung tab đang chọn) · Footer (hint + actions). */
 const CONSOLE_PARTS: Array<AnatomyNode> = [
-    { name: "Tabs", tier: "design", role: "dải tab (ExtendedTabs) — 'Test case' · 'Kết quả'" },
+    { name: "Tabs", tier: "block", role: "dải tab (ExtendedTabs) — 'Test case' · 'Kết quả'" },
     { name: "Panel", tier: "composite", role: "nội dung tab đang chọn, cuộn dọc" },
-    { name: "Footer", tier: "design", role: "thanh dưới cùng: hint muted bên trái + actions (Run/Submit) bên phải" },
+    { name: "Footer", tier: "block", role: "thanh dưới cùng: hint muted bên trái + actions (Run/Submit) bên phải" },
 ]
 
 /** The bottom console under an editor: tab strip over a scrollable panel, capped by a Run/Submit action bar. */

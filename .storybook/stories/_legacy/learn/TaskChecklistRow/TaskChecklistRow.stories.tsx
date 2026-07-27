@@ -31,7 +31,7 @@ const PARTS: Array<AnatomyNode> = [ICON, TITLE]
 export const Default: Story = {
     render: () => (
         <div className="max-w-sm p-8">
-            <BlockAnatomy name="TaskChecklistRow" tier="design" leaf="Default" parts={PARTS} reason="Hàng checklist tối giản: icon trạng thái (CheckCircle/Circle) + tiêu đề — hai phần trực tiếp cố định.">
+            <BlockAnatomy name="TaskChecklistRow" tier="block" leaf="Default" parts={PARTS} reason="Hàng checklist tối giản: icon trạng thái (CheckCircle/Circle) + tiêu đề — hai phần trực tiếp cố định.">
                 <TaskChecklistRow showAnatomy label="Thiết lập Docker Compose cho staging" done={false} />
             </BlockAnatomy>
         </div>
@@ -42,7 +42,7 @@ export const Default: Story = {
 export const Done: Story = {
     render: () => (
         <div className="max-w-sm p-8">
-            <BlockAnatomy name="TaskChecklistRow" tier="design" leaf="Done" parts={PARTS} note="`done` đổi Icon sang CheckCircleIcon + tint success trên Typography — cùng 2 node.">
+            <BlockAnatomy name="TaskChecklistRow" tier="block" leaf="Done" parts={PARTS} note="`done` đổi Icon sang CheckCircleIcon + tint success trên Typography — cùng 2 node.">
                 <TaskChecklistRow showAnatomy label="Viết Dockerfile multi-stage" done />
             </BlockAnatomy>
         </div>
@@ -53,7 +53,7 @@ export const Done: Story = {
 export const LongTitleTruncates: Story = {
     render: () => (
         <div className="max-w-sm p-8">
-            <BlockAnatomy name="TaskChecklistRow" tier="design" leaf="LongTitleTruncates" parts={PARTS} note="Title dài → truncate 1 dòng (Typography), không đổi composition.">
+            <BlockAnatomy name="TaskChecklistRow" tier="block" leaf="LongTitleTruncates" parts={PARTS} note="Title dài → truncate 1 dòng (Typography), không đổi composition.">
                 <TaskChecklistRow
                     showAnatomy
                     label="Cấu hình CI/CD pipeline chạy lint, test, build và deploy tự động lên staging mỗi khi merge vào nhánh main"
@@ -68,7 +68,7 @@ export const LongTitleTruncates: Story = {
 export const Interactive: Story = {
     render: () => (
         <div className="max-w-sm p-8">
-            <BlockAnatomy name="TaskChecklistRow" tier="design" leaf="Interactive" parts={PARTS} note="`onClick` đổi root sang `<button>` (hover/focus ring) — Icon+Typography bên trong không đổi.">
+            <BlockAnatomy name="TaskChecklistRow" tier="block" leaf="Interactive" parts={PARTS} note="`onClick` đổi root sang `<button>` (hover/focus ring) — Icon+Typography bên trong không đổi.">
                 <TaskChecklistRow showAnatomy label="Deploy container lên VPS" done={false} onClick={() => {}} />
             </BlockAnatomy>
         </div>
@@ -81,11 +81,11 @@ export const Loading: Story = {
         <div className="max-w-sm p-8">
             <BlockAnatomy
                 name="TaskChecklistRow"
-                tier="design"
+                tier="block"
                 leaf="Loading"
                 parts={[
-                    { name: "Skeleton.Icon", tier: "design", role: "chấm tròn skeleton thay Icon" },
-                    { name: "Skeleton", tier: "design", role: "thanh bar skeleton thay title (1/2 chiều rộng)" },
+                    { name: "Skeleton.Icon", tier: "block", role: "chấm tròn skeleton thay Icon" },
+                    { name: "Skeleton", tier: "block", role: "thanh bar skeleton thay title (1/2 chiều rộng)" },
                 ]}
                 note="`isSkeleton` thay cả Icon lẫn Typography bằng skeleton mirror, giữ nguyên gap-3/py-2."
             >

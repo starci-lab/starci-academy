@@ -54,7 +54,7 @@ const VisualPlaceholder = ({ caption }: { caption: string }) => (
 // its `headline`/`subline` props) — each is its own badged node (§ granularity: a block
 // directly composing a primitive, even to show its own prop, still gets a node + anchor).
 const CENTERED_PARTS: Array<AnatomyNode> = [
-    { name: "StatusChip", tier: "design", role: "eyebrow gate (tone accent)" },
+    { name: "StatusChip", tier: "block", role: "eyebrow gate (tone accent)" },
     { name: "Typography.Heading", tier: "composite", role: "headline (level 1, bold) — HeroBanner tự render prop `headline`" },
     { name: "Typography", tier: "composite", role: "subline (muted) — HeroBanner tự render prop `subline`" },
     { name: "Button", tier: "composite", role: "CTA chính (truyền qua slot)" },
@@ -63,7 +63,7 @@ const CENTERED_PARTS: Array<AnatomyNode> = [
 // Split leaf: adds a secondary CTA + a `visual` slot → two-column layout.
 // The two CTAs are sibling Buttons inside a bare flex `<div>` (no ButtonGroup primitive).
 const SPLIT_PARTS: Array<AnatomyNode> = [
-    { name: "StatusChip", tier: "design", role: "eyebrow gate (tone accent)" },
+    { name: "StatusChip", tier: "block", role: "eyebrow gate (tone accent)" },
     { name: "Typography.Heading", tier: "composite", role: "headline (level 1, bold) — HeroBanner tự render prop `headline`" },
     { name: "Typography", tier: "composite", role: "subline (muted) — HeroBanner tự render prop `subline`" },
     { name: "Button", tier: "composite", role: "CTA chính (slot `primary`)" },
@@ -73,7 +73,7 @@ const SPLIT_PARTS: Array<AnatomyNode> = [
 
 // Keywords leaf: centered + a brand-tinted keyword strip under the CTA (no label, no secondary).
 const KEYWORDS_PARTS: Array<AnatomyNode> = [
-    { name: "StatusChip", tier: "design", role: "eyebrow gate (tone accent)" },
+    { name: "StatusChip", tier: "block", role: "eyebrow gate (tone accent)" },
     { name: "Typography.Heading", tier: "composite", role: "headline (level 1, bold) — HeroBanner tự render prop `headline`" },
     { name: "Typography", tier: "composite", role: "subline (muted) — HeroBanner tự render prop `subline`" },
     { name: "Button", tier: "composite", role: "CTA chính (truyền qua slot)" },
@@ -84,7 +84,7 @@ const KEYWORDS_PARTS: Array<AnatomyNode> = [
 // Two sibling CTA Buttons (bare flex `<div>`, no ButtonGroup); the keyword strip's muted
 // label is HeroBanner's OWN direct render (`keywordsLabel` prop) — its own badged node too.
 const FULL_PARTS: Array<AnatomyNode> = [
-    { name: "StatusChip", tier: "design", role: "eyebrow gate (tone accent)" },
+    { name: "StatusChip", tier: "block", role: "eyebrow gate (tone accent)" },
     { name: "Typography.Heading", tier: "composite", role: "headline (level 1, bold) — HeroBanner tự render prop `headline`" },
     { name: "Typography", tier: "composite", role: "subline (muted) — HeroBanner tự render prop `subline`" },
     { name: "Button", tier: "composite", role: "CTA chính (slot `primary`)" },
@@ -98,7 +98,7 @@ export const CenteredNoVisual: Story = {
         frame(
             <BlockAnatomy
                 name="HeroBanner"
-                tier="design"
+                tier="block"
                 leaf="CenteredNoVisual"
                 parts={CENTERED_PARTS}
                 reason="Màn mở đầu landing gói eyebrow + headline + subline + CTA + dải ngôn ngữ vào một block. `visual` bật layout chia đôi; không có visual thì giữ một cột căn giữa (không bịa ảnh). Feature chỉ truyền chữ và Button đã cấu hình."
@@ -125,7 +125,7 @@ export const SplitWithVisual: Story = {
         frame(
             <BlockAnatomy
                 name="HeroBanner"
-                tier="design"
+                tier="block"
                 leaf="SplitWithVisual"
                 parts={SPLIT_PARTS}
                 note="`visual` có mặt → layout chia đôi (chữ trái, ảnh phải) + thêm CTA phụ; composition khác leaf căn-giữa."
@@ -158,7 +158,7 @@ export const PrimaryCtaOnly: Story = {
         frame(
             <BlockAnatomy
                 name="HeroBanner"
-                tier="design"
+                tier="block"
                 leaf="PrimaryCtaOnly"
                 parts={CENTERED_PARTS}
                 note="Không icon eyebrow, không CTA phụ — CÙNG composition với leaf căn-giữa (chỉ khác nội dung)."
@@ -183,7 +183,7 @@ export const KeywordsNoLabel: Story = {
         frame(
             <BlockAnatomy
                 name="HeroBanner"
-                tier="design"
+                tier="block"
                 leaf="KeywordsNoLabel"
                 parts={KEYWORDS_PARTS}
                 note="Thêm dải Chip màu thương hiệu dưới CTA (không label) → composition có thêm phần keyword."
@@ -209,7 +209,7 @@ export const LongHeadline: Story = {
         frame(
             <BlockAnatomy
                 name="HeroBanner"
-                tier="design"
+                tier="block"
                 leaf="LongHeadline"
                 parts={FULL_PARTS}
                 note="Headline dài xuống dòng + CTA phụ + dải keyword CÓ label — mọi slot lấp đầy trong một cột căn giữa."

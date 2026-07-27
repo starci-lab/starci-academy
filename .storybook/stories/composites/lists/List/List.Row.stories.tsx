@@ -16,7 +16,7 @@ import {
 } from "@phosphor-icons/react"
 import { List } from "@sb-components/composites/lists/List/List"
 import { DifficultyChip } from "@sb-components/_legacy/designs/chips/DifficultyChip/DifficultyChip"
-import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
+import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
  * ⚠️ STATE SCOPE (teacher confirmed 2026-07-25): `List.Row` is a SINGLE-ROW frame. What
@@ -44,32 +44,31 @@ const chevron = <CaretRightIcon className="size-3 text-muted" weight="bold" aria
 // Real DOM: List.Row ⊃ Leading?(icon/avatar, doesn't shrink) · TitledText(title+subtitle
 // merged — 1 semantic unit, does NOT split Title/Subtitle separately, see TitledText.tsx) ·
 // MetaTrailing?(meta+trailing cluster, sharing 1 gap-2 row on the right).
-const TITLE_ONLY_PARTS: Array<AnatomyNode> = [
-    { name: "TitledText", tier: "composite", role: "title (body-sm medium), no subtitle/leading/meta", storyId: "composites-texts-titledtext--row" },
-]
+//
+// ⚠️ 2026-07-28: `Leading` and `MetaTrailing` are CALLER SLOTS — the div only positions
+// whatever `leading`/`meta`/`trailing` the caller passed, it doesn't build that content
+// itself, and neither has a story of its own to jump to. Per the panel's whitelist rule
+// (only a part with a REAL `storyId` or `tier: "heroui"` counts), they are NOT annotated
+// here anymore — the component also stopped badging them (nothing to declare).
+const TITLE_ONLY_ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "TitledText": { tier: "composite", role: "title (body-sm medium), no subtitle/leading/meta", storyId: "composites-texts-titledtext--row" },
+}
 
-const LEADING_SUBTITLE_PARTS: Array<AnatomyNode> = [
-    { name: "Leading", tier: "composite", role: "lesson-type icon (does not shrink)" },
-    { name: "TitledText", tier: "composite", role: "title + subtitle (module breadcrumb)", storyId: "composites-texts-titledtext--row" },
+const LEADING_SUBTITLE_ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "TitledText": { tier: "composite", role: "title + subtitle (module breadcrumb)", storyId: "composites-texts-titledtext--row" },
     // ⭐ 2026-07-27 — while `isSkeleton`, the leading slot's placeholder box renders
-    // straight from HeroUI's `Skeleton` (aliased `HeroSkeleton` in the component),
-    // a DIFFERENT render than `Leading` above (which only ever wraps the caller's own
-    // icon). Kept as its own name — sharing "Leading" would have hidden that a real
-    // HeroUI component sits in that spot in the loading state. `heroui` needs no
-    // `storyId` to show up, only the tier.
-    { name: "Skeleton", tier: "heroui", role: "the shimmer placeholder standing in for the leading icon while isSkeleton" },
-]
+    // straight from HeroUI's `Skeleton` (aliased `HeroSkeleton` in the component). `heroui`
+    // needs no `storyId` to show up, only the tier.
+    "Skeleton": { tier: "heroui", role: "the shimmer placeholder standing in for the leading icon while isSkeleton" },
+}
 
-const META_TRAILING_PARTS: Array<AnatomyNode> = [
-    { name: "TitledText", tier: "composite", role: "title + subtitle (submission date)", storyId: "composites-texts-titledtext--row" },
-    { name: "MetaTrailing", tier: "composite", role: "status chip + navigation chevron, sharing 1 right-side row" },
-]
+const META_TRAILING_ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "TitledText": { tier: "composite", role: "title + subtitle (submission date)", storyId: "composites-texts-titledtext--row" },
+}
 
-const LEADING_META_TRAILING_PARTS: Array<AnatomyNode> = [
-    { name: "Leading", tier: "composite", role: "status/type icon (does not shrink)" },
-    { name: "TitledText", tier: "composite", role: "title + subtitle", storyId: "composites-texts-titledtext--row" },
-    { name: "MetaTrailing", tier: "composite", role: "meta cluster (chip/count) + trailing, sharing 1 right-side row" },
-]
+const LEADING_META_TRAILING_ANNOTATE: Record<string, AnatomyAnnotation> = {
+    "TitledText": { tier: "composite", role: "title + subtitle", storyId: "composites-texts-titledtext--row" },
+}
 
 /** The simplest row — just a title. Used when the list has no subtitle, icon, or trailing action. */
 export const TitleOnly: Story = {
@@ -79,7 +78,7 @@ export const TitleOnly: Story = {
                 name="List.Row"
                 tier="composite"
                 leaf="TitleOnly"
-                parts={TITLE_ONLY_PARTS}
+                annotate={TITLE_ONLY_ANNOTATE}
                 reason="A highly reusable list-row frame: leading/TitledText/meta-trailing are all optional via props; this leaf only turns on title."
                 states={[
                     {
@@ -115,7 +114,7 @@ export const LeadingSubtitle: Story = {
                 name="List.Row"
                 tier="composite"
                 leaf="LeadingSubtitle"
-                parts={LEADING_SUBTITLE_PARTS}
+                annotate={LEADING_SUBTITLE_ANNOTATE}
                 reason="`isSkeleton` is a STATE of this row, not a leaf of its own (§14d.2): the mirror keeps the exact node set of whichever slots are actually present, so it sits beside its real-data counterpart in this same leaf."
                 states={[
                     {
@@ -172,7 +171,7 @@ export const MetaTrailing: Story = {
                 name="List.Row"
                 tier="composite"
                 leaf="MetaTrailing"
-                parts={META_TRAILING_PARTS}
+                annotate={META_TRAILING_ANNOTATE}
                 states={[
                     {
                         name: "meta + trailing set",
@@ -213,7 +212,7 @@ export const DividerList: Story = {
                 name="List.Row"
                 tier="composite"
                 leaf="DividerList"
-                parts={TITLE_ONLY_PARTS}
+                annotate={TITLE_ONLY_ANNOTATE}
                 states={[
                     {
                         name: "3 rows, divider on all but the last",
@@ -243,7 +242,7 @@ export const LinkRow: Story = {
                 name="List.Row"
                 tier="composite"
                 leaf="LinkRow"
-                parts={META_TRAILING_PARTS}
+                annotate={META_TRAILING_ANNOTATE}
                 states={[
                     {
                         name: "href set, trailing only (no meta)",
@@ -288,7 +287,7 @@ export const Clickable: Story = {
                         name="List.Row"
                         tier="composite"
                         leaf="Clickable"
-                        parts={TITLE_ONLY_PARTS}
+                        annotate={TITLE_ONLY_ANNOTATE}
                         states={[
                             {
                                 name: "onPress set",
@@ -370,7 +369,7 @@ export const AsLessonRow: Story = {
                         name="List.Row"
                         tier="composite"
                         leaf="AsLessonRow"
-                        parts={LEADING_META_TRAILING_PARTS}
+                        annotate={LEADING_META_TRAILING_ANNOTATE}
                         reason="PROOF: List.Row alone covers a 'lesson row' (leading state icon, title, subtitle read-time, meta = DifficultyChip + lock, onPress); no dedicated LessonRow component is needed, since the variant of chrome comes entirely from props."
                         states={[
                             {
@@ -437,7 +436,7 @@ export const AsNudgeRow: Story = {
                 name="List.Row"
                 tier="composite"
                 leaf="AsNudgeRow"
-                parts={LEADING_META_TRAILING_PARTS}
+                annotate={LEADING_META_TRAILING_ANNOTATE}
                 reason="PROOF: List.Row also covers a 'nudge row' (leading icon, TitledText label, meta count, trailing arrow, href); no separate NudgeRow component is needed."
                 states={[
                     {

@@ -55,7 +55,7 @@ const ITEMS: Array<ReadinessChecklistItem> = [
 // ROW — one repeated per item: List.Row (leading·title·subtitle·trailing, opaque —
 // badged via AnatomyOverlay) composing an IconTile (leading) + StatusChip (trailing).
 const ROW_PARTS: Array<AnatomyNode> = [
-    { name: "List.Row", tier: "design", role: "hàng leading·title·subtitle·trailing — lặp mỗi item", storyId: "composites-lists-list-list-row--title-only" },
+    { name: "List.Row", tier: "block", role: "hàng leading·title·subtitle·trailing — lặp mỗi item", storyId: "composites-lists-list-list-row--title-only" },
     { name: "IconTile", tier: "composite", role: "leading — check tròn (success) khi ready, icon caller (neutral) khi chờ" },
     { name: "StatusChip", tier: "composite", role: "trailing — nhãn Sẵn sàng/Chờ theo tone success/neutral" },
 ]

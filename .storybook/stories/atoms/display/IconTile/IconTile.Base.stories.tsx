@@ -38,7 +38,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * (a direct HeroUI import) is a real, nameable node, `tier: "heroui"`.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Skeleton: {
+    "Skeleton": {
         tier: "heroui",
         role: "the resting shimmer box, drawn in place of the tile while isSkeleton is on",
     },

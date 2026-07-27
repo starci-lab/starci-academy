@@ -48,7 +48,7 @@ export const Default: Story = {
         <div className="p-8">
             <BlockAnatomy
                 name="SearchBar"
-                tier="design"
+                tier="block"
                 leaf="Default"
                 parts={PARTS_MAIN}
                 reason="Ô tìm kiếm gói 3 phần: nhãn a11y ẩn, combobox Autocomplete (trigger + popover gợi ý), và nút bộ lọc trailing — TextField/InputGroup chỉ là khung bố cục, không phải part riêng."
@@ -69,7 +69,7 @@ export const NarrowFrame: Story = {
             <div className="w-64">
                 <BlockAnatomy
                     name="SearchBar"
-                    tier="design"
+                    tier="block"
                     leaf="NarrowFrame"
                     parts={PARTS_MAIN}
                     note="Container hẹp hơn — CÙNG composition với leaf 'Default', chỉ đổi độ rộng khung ngoài."
@@ -90,7 +90,7 @@ export const Skeleton: Story = {
         <div className="p-8 max-w-sm">
             <BlockAnatomy
                 name="SearchBar"
-                tier="design"
+                tier="block"
                 leaf="Skeleton"
                 parts={PARTS_SKELETON}
                 note="isSkeleton → chỉ một khung bar mirror (h-10); popover/nút lọc không có hình dạng chờ để mirror."

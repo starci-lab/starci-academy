@@ -105,15 +105,15 @@ type Story = StoryObj<typeof UserCell.Base>
  * fixed component with a real name.
  */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Avatar: {
+    "Avatar": {
         role: "the HeroUI avatar frame inside the composed Avatar.Base, surfacing here because showAnatomy forwards straight through",
         tier: "heroui",
     },
-    AvatarImage: {
+    "AvatarImage": {
         role: "the real or generated photo inside Avatar.Base's fallback chain, when one is showing",
         tier: "heroui",
     },
-    AvatarFallback: {
+    "AvatarFallback": {
         role: "the initials/icon fallback inside Avatar.Base, when there is no photo to show",
         tier: "heroui",
     },
@@ -122,7 +122,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
         tier: "atom",
         storyId: "atoms-text-typography-typography-base--plain",
     },
-    Skeleton: {
+    "Skeleton": {
         role: "shimmer bar — the avatar circle (delegated to Avatar.Base), the name bar, and the handle bar all resolve to this same HeroUI Skeleton",
         tier: "heroui",
     },

@@ -106,7 +106,7 @@ export const NotRevealed: Story = {
             <div className="max-w-md">
                 <BlockAnatomy
                     name="FlipCard"
-                    tier="design"
+                    tier="block"
                     leaf="NotRevealed"
                     parts={NOT_REVEALED_PARTS}
                     reason="Anki-style: câu hỏi và đáp án là HAI thẻ tách biệt, không lật ảo. Leaf này chưa reveal nên chỉ thẻ câu hỏi + chips render."
@@ -125,7 +125,7 @@ export const Revealed: Story = {
             <div className="max-w-md">
                 <BlockAnatomy
                     name="FlipCard"
-                    tier="design"
+                    tier="block"
                     leaf="Revealed"
                     parts={REVEALED_PARTS}
                     note="revealed=true thêm SurfaceCard.Answer bên dưới; SurfaceCard.Question + BelowFront giữ nguyên vị trí."
@@ -144,7 +144,7 @@ export const WithoutChips: Story = {
             <div className="max-w-md">
                 <BlockAnatomy
                     name="FlipCard"
-                    tier="design"
+                    tier="block"
                     leaf="WithoutChips"
                     parts={NO_CHIPS_PARTS}
                     note="belowFront bỏ trống → không render (không phải div rỗng) — chỉ 2 part: Question + Answer."
@@ -163,7 +163,7 @@ export const LongAnswer: Story = {
             <div className="max-w-md">
                 <BlockAnatomy
                     name="FlipCard"
-                    tier="design"
+                    tier="block"
                     leaf="LongAnswer"
                     parts={REVEALED_PARTS}
                     note="Cùng bộ part như Revealed — chỉ nội dung answer dài hơn, cuộn trong ScrollShadow riêng của SurfaceCard.Answer."
@@ -182,7 +182,7 @@ export const Locked: Story = {
             <div className="max-w-md">
                 <BlockAnatomy
                     name="FlipCard"
-                    tier="design"
+                    tier="block"
                     leaf="Locked"
                     parts={LOCKED_PARTS}
                     note="locked=true: SurfaceCard.Answer vẫn là 1 part, nhưng nội dung bên trong đổi thành prompt mở khoá do primitive tự vẽ (icon+title+subtitle), không phải `back` truyền vào."
@@ -209,7 +209,7 @@ const Controlled = () => {
         <div className="flex max-w-md flex-col gap-3">
             <BlockAnatomy
                 name="FlipCard"
-                tier="design"
+                tier="block"
                 leaf="Interactive"
                 parts={REVEALED_PARTS}
                 note="revealed do CALLER giữ state — bấm nút để toggle; SurfaceCard.Answer chỉ có mặt trong DOM khi revealed=true."
@@ -241,7 +241,7 @@ export const Loading: Story = {
             <div className="max-w-md">
                 <BlockAnatomy
                     name="FlipCard"
-                    tier="design"
+                    tier="block"
                     leaf="Loading"
                     parts={REVEALED_PARTS}
                     note="isSkeleton mirror LUÔN vẽ đủ 3 part (Question/BelowFront/Answer) bằng Skeleton.* — composition giống leaf loaded, chỉ nội dung thay bằng bar."

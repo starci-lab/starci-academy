@@ -39,12 +39,17 @@ const Panel = ({ text }: PanelProps) => (
     </SurfaceCard.Base>
 )
 
-const TRACK_PARTS: Array<AnatomyNode> = [
-    { name: "Flex.Base", tier: "composite", role: "the vertical flex axis, owning gap (§10), align, and justify" },
-]
+// No `Flex.Base` node here (2026-07-28): the track's own root no longer self-badges with the
+// internal box's name — `Flex.Base` has no story of its own (it's not a public frame, see its
+// own file), so a node pointing there would never be clickable. `Stack.V`'s identity is already
+// the panel header; the only REAL nested part this frame ever composes is the divider below.
 const DIVIDER_PARTS: Array<AnatomyNode> = [
-    { name: "Flex.Base", tier: "composite", role: "the vertical flex axis, owning gap (§10)" },
-    { name: "Divider.Base", tier: "atom", role: "a Divider.Base inserted between two children, so N children produce N minus 1 lines" },
+    {
+        name: "Divider.Base",
+        tier: "atom",
+        role: "a Divider.Base inserted between two children, so N children produce N minus 1 lines",
+        storyId: "atoms-display-divider-divider-base--default",
+    },
 ]
 
 /** Default — a column with a `grouped(3)` seam: the default rhythm between blocks inside a card. */
@@ -55,7 +60,6 @@ export const Default: Story = {
                 name="Stack.V"
                 tier="frame"
                 leaf="Default"
-                parts={TRACK_PARTS}
                 reason="A single-axis VERTICAL frame: it only decides direction, seam, and alignment, carrying no content or function of its own (§13). It's a WRAPPING frame so it takes `children` (a single axis has EXACTLY ONE slot, so there's no header/body/footer set to name)."
                 states={[
                     {
@@ -95,7 +99,6 @@ export const Gaps: Story = {
                 name="Stack.V"
                 tier="frame"
                 leaf="Gaps"
-                parts={TRACK_PARTS}
                 reason="`gap` is a required `SeamScale` word, with no default, so a seam can't be picked wrong by accident (§10a: every seam has exactly one owner, chosen on purpose). Naming the relationship instead of the number is what makes a wrong seam READABLE in review: a page seam between a label and its value is visibly the wrong claim, while `gap={8}` is just a number someone typed."
                 states={[
                     {
@@ -221,7 +224,6 @@ export const Align: Story = {
                 name="Stack.V"
                 tier="frame"
                 leaf="Align"
-                parts={TRACK_PARTS}
                 reason="The fixture is a button with its own natural width, so the difference reads clearly: `stretch` overrides that natural width, the other three values keep it."
                 states={[
                     {

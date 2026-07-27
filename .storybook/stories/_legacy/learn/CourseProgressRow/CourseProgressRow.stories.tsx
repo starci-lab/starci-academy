@@ -65,7 +65,7 @@ const LIST_PARTS: Array<AnatomyNode> = [
         tier: "block",
         role: "khung bo góc + shadow-surface — CONSUMER bọc, KHÔNG thuộc block",
         children: [
-            { name: "CourseProgressRow", tier: "design", role: "một hàng tiến độ, lặp ×3 (base · học thử · hoàn tất)", children: TRIAL_PARTS },
+            { name: "CourseProgressRow", tier: "block", role: "một hàng tiến độ, lặp ×3 (base · học thử · hoàn tất)", children: TRIAL_PARTS },
         ],
     },
 ]
@@ -94,7 +94,7 @@ export const Default: Story = {
         frame(
             <BlockAnatomy
                 name="CourseProgressRow"
-                tier="design"
+                tier="block"
                 leaf="WithProgress"
                 parts={ROW_PARTS}
                 reason="Một hàng tiến độ khóa học trong danh sách 'hub' (dashboard/settings/profile) cần gộp NHIỀU tín hiệu (tile · tiêu đề · trạng thái học thử · % · bar) thành MỘT khối để feature chỉ truyền dữ liệu — khung hàng bấm được (SurfaceListCard/SurfaceListCardItem) vẫn là mối quan tâm RIÊNG, consumer bọc block này vào. Khi tải: Skeleton mirror đúng khung này (isSkeleton là prop, §6)."
@@ -117,7 +117,7 @@ export const Trial: Story = {
         frame(
             <BlockAnatomy
                 name="CourseProgressRow"
-                tier="design"
+                tier="block"
                 leaf="Trial"
                 parts={TRIAL_PARTS}
                 note="trialLabel được truyền → thêm StatusChip warning cạnh tiêu đề (khác leaf base)."
@@ -141,7 +141,7 @@ export const WithMeta: Story = {
         frame(
             <BlockAnatomy
                 name="CourseProgressRow"
-                tier="design"
+                tier="block"
                 leaf="WithMeta"
                 parts={META_PARTS}
                 note="meta được truyền → thêm 1 dòng Typography muted dưới bar (khác leaf base)."
@@ -165,7 +165,7 @@ export const Interactive: Story = {
         frame(
             <BlockAnatomy
                 name="CourseProgressRow"
-                tier="design"
+                tier="block"
                 leaf="Interactive"
                 parts={ROW_PARTS}
                 note="onPress → row là <button>, hover gạch chân tiêu đề (không tô nền); parts giống leaf base."
@@ -189,7 +189,7 @@ export const WithCoverImage: Story = {
         frame(
             <BlockAnatomy
                 name="CourseProgressRow"
-                tier="design"
+                tier="block"
                 leaf="WithCoverImage"
                 parts={ROW_PARTS}
                 note="src được truyền → IconTile hiện ảnh bìa thay icon fallback; parts giống leaf base."
@@ -214,7 +214,7 @@ export const Empty: Story = {
         frame(
             <BlockAnatomy
                 name="CourseProgressRow"
-                tier="design"
+                tier="block"
                 leaf="Empty"
                 parts={TRIAL_PARTS}
                 note="0% + học thử — bar rỗng hoàn toàn; composition như leaf 'Học thử' (có chip)."
@@ -238,7 +238,7 @@ export const Complete: Story = {
         frame(
             <BlockAnatomy
                 name="CourseProgressRow"
-                tier="design"
+                tier="block"
                 leaf="Complete"
                 parts={ROW_PARTS}
                 note="100% — bar đầy, không còn sliver còn-lại; parts giống leaf base."
@@ -261,7 +261,7 @@ export const List: Story = {
         frame(
             <BlockAnatomy
                 name="CourseProgressRow"
-                tier="design"
+                tier="block"
                 leaf="List"
                 parts={LIST_PARTS}
                 note="×3 xếp chồng trong khung surface (consumer sở hữu, KHÔNG thuộc block); mỗi hàng là 1 CourseProgressRow — base · học thử · hoàn tất."
@@ -300,7 +300,7 @@ export const Skeleton: Story = {
         frame(
             <BlockAnatomy
                 name="CourseProgressRow"
-                tier="design"
+                tier="block"
                 leaf="Skeleton"
                 parts={SKELETON_PARTS}
                 note="isSkeleton → mirror cơ bản (tile + tiêu đề + % + bar); chip/meta KHÔNG giữ chỗ."
@@ -324,7 +324,7 @@ export const SkeletonWithTrialAndMeta: Story = {
         frame(
             <BlockAnatomy
                 name="CourseProgressRow"
-                tier="design"
+                tier="block"
                 leaf="SkeletonWithTrialAndMeta"
                 parts={SKELETON_FULL_PARTS}
                 note="isSkeleton + withTrialChip + withMeta → giữ chỗ thêm vệt chip và dòng meta."

@@ -177,7 +177,7 @@ const Row = ({
     const content = (
         <>
             {leading ? (
-                <div className="shrink-0" data-anat-part={showAnatomy ? "Leading" : undefined}>
+                <div className="shrink-0">
                     {leading}
                 </div>
             ) : null}
@@ -186,7 +186,6 @@ const Row = ({
             {meta || trailing ? (
                 <div
                     className="ml-auto flex shrink-0 items-center gap-2"
-                    data-anat-part={showAnatomy ? "MetaTrailing" : undefined}
                 >
                     {meta}
                     {trailing}
@@ -304,12 +303,12 @@ const Labeled = ({
 
     return (
         <section className={cn("flex flex-col gap-3", className)}>
-            <div className="flex items-center gap-2" data-anat-part={showAnatomy ? "Header" : undefined}>
+            <div className="flex items-center gap-2">
                 {icon}
                 <Label>{label}</Label>
             </div>
-            <div className="flex flex-col gap-2" data-anat-part={showAnatomy ? "List" : undefined}>{rows}</div>
-            {action ? <div data-anat-part={showAnatomy ? "Action" : undefined}>{action}</div> : null}
+            <div className="flex flex-col gap-2">{rows}</div>
+            {action ? <div>{action}</div> : null}
         </section>
     )
 }
@@ -353,7 +352,7 @@ export interface ListMetaProps {
  */
 const Meta = ({ chip, items, className, anatPart, showAnatomy = false }: ListMetaProps) => (
     <div className={cn("flex min-w-0 items-center gap-2", className)} data-anat-part={anatPart}>
-        {chip ? <span className="shrink-0" data-anat-part={showAnatomy ? "Chip" : undefined}>{chip}</span> : null}
+        {chip ? <span className="shrink-0">{chip}</span> : null}
         {items.length > 0 ? (
             <Typography.Base size="xs"
                 text={(

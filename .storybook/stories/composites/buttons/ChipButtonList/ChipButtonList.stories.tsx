@@ -66,9 +66,8 @@ const WRAP_ICON_PARTS: Array<AnatomyNode> = [
     {
         name: "Button",
         tier: "composite",
-        role: "A suggestion chip (variant secondary, size sm), repeated once per item.",
+        role: "A suggestion chip (variant secondary, size sm), repeated once per item. Its leading icon is the caller's own node (item.icon) — ChipButtonList only forces its size (size-4 shrink-0, muted), so the icon itself carries no badge of its own.",
         storyId: "legacy-primitives-buttons-button--variants",
-        children: [{ name: "icon", tier: "composite", role: "The leading icon (size-4 shrink-0, muted); ChipButtonList forces this size itself." }],
     },
 ]
 
@@ -82,10 +81,9 @@ const COLUMN_PARTS: Array<AnatomyNode> = [
     {
         name: "Button",
         tier: "composite",
-        role: "A full-width skill-menu row (variant ghost), repeated once per item.",
+        role: "A full-width skill-menu row (variant ghost), repeated once per item. Its leading icon is the caller's own node, sized by ChipButtonList but not badged separately.",
         storyId: "legacy-primitives-buttons-button--variants",
         children: [
-            { name: "icon", tier: "composite", role: "The leading icon (size-4 shrink-0, muted)." },
             { name: "Typography", tier: "atom", role: "The skill label (weight medium, truncate).", storyId: "atoms-text-typography-typography-base--plain" },
         ],
     },
@@ -96,10 +94,9 @@ const DISABLED_PARTS: Array<AnatomyNode> = [
     {
         name: "Button",
         tier: "composite",
-        role: "A suggestion chip, repeated once per item; one item's isDisabled still renders it, only interaction is blocked.",
+        role: "A suggestion chip, repeated once per item; one item's isDisabled still renders it, only interaction is blocked. Its leading icon is the caller's own node.",
         state: "1 item isDisabled",
         storyId: "legacy-primitives-buttons-button--variants",
-        children: [{ name: "icon", tier: "composite", role: "The leading icon." }],
     },
 ]
 
@@ -112,8 +109,7 @@ const SKELETON_PARTS: Array<AnatomyNode> = [
 
 // single: cùng composition với wrap+icon, chỉ 1 item — container không ép tối thiểu N chip.
 const SINGLE_PARTS: Array<AnatomyNode> = [
-    { name: "Button", tier: "composite", role: "A suggestion chip; only one item is passed.", storyId: "legacy-primitives-buttons-button--variants" },
-    { name: "icon", tier: "composite", role: "The leading icon." },
+    { name: "Button", tier: "composite", role: "A suggestion chip; only one item is passed. Its leading icon is the caller's own node.", storyId: "legacy-primitives-buttons-button--variants" },
 ]
 
 /** WRAP + ICON — cụm chip gợi ý có icon dẫn nhãn (retrieval-skill chips). */

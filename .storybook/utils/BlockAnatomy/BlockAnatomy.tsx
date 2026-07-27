@@ -172,7 +172,6 @@ const TIER_PILL: Record<AnatomyTier, string> = {
     composite: "bg-sky-100 text-sky-800 dark:bg-sky-900 dark:text-sky-100",
     screen: "bg-rose-100 text-rose-800 dark:bg-rose-900 dark:text-rose-100",
     block: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100",
-    design: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-100",
     atom: "bg-default text-muted",
 }
 
@@ -183,7 +182,6 @@ const TIER_RAIL: Record<AnatomyTier, string> = {
     composite: "border-sky-400",
     screen: "border-rose-400",
     block: "border-purple-400",
-    design: "border-emerald-400",
     atom: "border-default",
 }
 
@@ -197,7 +195,6 @@ const TIER_NAME: Record<AnatomyTier, string> = {
     composite: "composite",
     screen: "screen",
     block: "block",
-    design: "design",
     atom: "atom",
 }
 

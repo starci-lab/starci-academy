@@ -38,7 +38,23 @@ import React from "react"
  * tầng design ngồi trên `heroui` nghĩa là atom layer đã bị bỏ qua — đúng thứ §12 sinh ra để
  * chặn, và giờ NHÌN THẤY được thay vì phải grep import.
  */
-export type AnatomyTier = "heroui" | "atom" | "frame" | "composite" | "design" | "block" | "screen"
+/**
+ * ⭐ `design` XOÁ 2026-07-28 (thầy chốt "coi như block import block").
+ *
+ * Ranh giới cũ là "chức năng hoàn chỉnh vs chỉ UI/UX", và nó MỜ: `PhaseScarcityNote` tự ẩn
+ * theo điều kiện nghiệp vụ (nghe như block) trong khi `PriceTag` chỉ format tiền (nghe như
+ * design), nên mỗi ca lại phải phân xử lại.
+ *
+ * Bỏ nó đi thì phép thử từng tầng thành CÙNG MỘT DẠNG câu hỏi, lồng nhau:
+ *   frame     không biết NỘI DUNG
+ *   composite biết nội dung, không biết NGHIỆP VỤ
+ *   block     biết NGHIỆP VỤ
+ *   screen    ghép các block
+ *
+ * Hệ quả đắt giá: `ContinueLearning` mất lý do tồn tại. Nó sinh ra CHỈ vì luật cũ cấm design
+ * biết nghiệp vụ, nên phải đẻ một block bọc ngoài để ghép câu.
+ */
+export type AnatomyTier = "heroui" | "atom" | "frame" | "composite" | "block" | "screen"
 
 /** Value provided by {@link BlockAnatomy} to the overlays nested under it. */
 export interface AnatomyPanelValue {

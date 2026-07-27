@@ -50,12 +50,12 @@ const DATA_PARTS: Array<AnatomyNode> = [
         children: [
             {
                 name: "DeckCard",
-                tier: "design",
+                tier: "block",
                 role: "một bộ thẻ (block con, lặp ×N trong lưới)",
                 children: [
                     { name: "Typography", tier: "composite", role: "tên bộ thẻ (line-clamp 2)" },
                     { name: "StatusChip", tier: "composite", role: "số thẻ đến hạn ôn", state: "warning" },
-                    { name: "DifficultyChip", tier: "design", role: "tầng độ khó" },
+                    { name: "DifficultyChip", tier: "block", role: "tầng độ khó" },
                     { name: "Typography", tier: "composite", role: "mô tả chủ đề (muted, line-clamp 2)" },
                     { name: "ProgressMeter", tier: "composite", role: "tiến độ đã thuộc" },
                     { name: "Typography", tier: "composite", role: "tổng số thẻ (\"N thẻ\", muted)" },
@@ -96,7 +96,7 @@ const LOADING_PARTS: Array<AnatomyNode> = [
         role: "nhánh loading → lưới skeleton",
         state: "loading",
         children: [
-            { name: "DeckCard", tier: "design", role: "skeleton mirror ×4 (giữ đúng footprint)", state: "skeleton" },
+            { name: "DeckCard", tier: "block", role: "skeleton mirror ×4 (giữ đúng footprint)", state: "skeleton" },
         ],
     },
 ]
@@ -115,7 +115,7 @@ const EMPTY_PARTS: Array<AnatomyNode> = [
         children: [
             {
                 name: "AsyncContent.Empty",
-                tier: "design",
+                tier: "block",
                 role: "khung rỗng của region",
                 children: [
                     { name: "Feedback.Empty", tier: "composite", role: "TrayIcon + \"Chưa có bộ thẻ nào\" (không nút)" },
@@ -140,7 +140,7 @@ const ERROR_PARTS: Array<AnatomyNode> = [
         children: [
             {
                 name: "AsyncContent.Error",
-                tier: "design",
+                tier: "block",
                 role: "khung lỗi của region",
                 children: [
                     { name: "Feedback.Empty", tier: "composite", role: "WarningIcon + \"Không tải được bộ thẻ\" — KHÔNG nút thử lại (thiếu retryLabel)", state: "danger" },

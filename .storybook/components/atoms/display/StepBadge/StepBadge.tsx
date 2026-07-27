@@ -117,10 +117,14 @@ const StepBadgeBase = ({
             />
         )
     }
+    // `Badge` (root span) and `Icon` (wraps the check glyph) are plain elements, not
+    // fixed importable components (§ naming pass, 2026-07-28) — kept in the DOM for
+    // future use but given no self-badge fallback; only `anatPart` from a PARENT
+    // names this root as one opaque node.
     return (
         <span
             aria-hidden
-            data-anat-part={anatPart ?? (showAnatomy ? "Badge" : undefined)}
+            data-anat-part={anatPart}
             className={cn(
                 "flex shrink-0 items-center justify-center rounded-full font-medium",
                 SIZE[size],
@@ -129,7 +133,7 @@ const StepBadgeBase = ({
             )}
         >
             {state === "done" ? (
-                <span aria-hidden data-anat-part={showAnatomy ? "Icon" : undefined} className="inline-flex shrink-0">
+                <span aria-hidden className="inline-flex shrink-0">
                     <CheckIcon weight={ICON_WEIGHT[size]} />
                 </span>
             ) : (

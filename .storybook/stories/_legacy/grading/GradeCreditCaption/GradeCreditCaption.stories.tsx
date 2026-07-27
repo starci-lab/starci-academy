@@ -91,7 +91,7 @@ export const Loading: Story = {
         shell(
             <BlockAnatomy
                 name="GradeCreditCaption"
-                tier="design"
+                tier="block"
                 leaf="Loading"
                 parts={LOADING_PARTS}
                 note="creditUsage null (chưa có snapshot) → caption return null, KHÔNG render gì — không phần tử nào."
@@ -117,7 +117,7 @@ export const PlentyCredit: Story = {
         shell(
             <BlockAnatomy
                 name="GradeCreditCaption"
-                tier="design"
+                tier="block"
                 leaf="PlentyCredit"
                 parts={MUTED_PARTS}
                 reason="Dòng caption leaf dùng chung dưới mọi model picker: hiện pool credit tuần cho cả lane Auto lẫn model pin (đều trừ chung một pool), đổi sang dòng cảnh báo đỏ khi lane Auto không còn đủ — và nói ĐÚNG lý do (hết tuần vs dồn hết khung 5h). Không cấu thành từ Primitives/* (chỉ text + icon), nên đúng ra là Primitive hơn Block (xem FLAGS)."
@@ -138,7 +138,7 @@ export const BlockedByWeek: Story = {
         shell(
             <BlockAnatomy
                 name="GradeCreditCaption"
-                tier="design"
+                tier="block"
                 leaf="BlockedByWeek"
                 parts={WARNING_PARTS}
                 note="Pool tuần dưới chi phí Auto → thêm WarningCircleIcon + text đỏ, khác composition leaf 'còn credit'."
@@ -159,7 +159,7 @@ export const BlockedByBurst: Story = {
         shell(
             <BlockAnatomy
                 name="GradeCreditCaption"
-                tier="design"
+                tier="block"
                 leaf="BlockedByBurst"
                 parts={WARNING_PARTS}
                 note="Khung 5h cạn nhưng tuần còn dư → CÙNG shape cảnh báo, chỉ đổi câu lý do."
@@ -180,7 +180,7 @@ export const PinnedModelNoWarning: Story = {
         shell(
             <BlockAnatomy
                 name="GradeCreditCaption"
-                tier="design"
+                tier="block"
                 leaf="PinnedModelNoWarning"
                 parts={MUTED_PARTS}
                 note="hasPinnedModel → bỏ qua check afford, luôn là dòng muted dù pool = 0; CÙNG composition leaf 'còn credit'."
@@ -201,7 +201,7 @@ export const UnknownAutoCost: Story = {
         shell(
             <BlockAnatomy
                 name="GradeCreditCaption"
-                tier="design"
+                tier="block"
                 leaf="UnknownAutoCost"
                 parts={MUTED_PARTS}
                 note="autoCreditCost undefined → không đủ dữ kiện để cảnh báo, giữ dòng muted; CÙNG composition leaf 'còn credit'."
@@ -222,7 +222,7 @@ export const Interactive: Story = {
         shell(
             <BlockAnatomy
                 name="GradeCreditCaption"
-                tier="design"
+                tier="block"
                 leaf="Interactive"
                 parts={MUTED_PARTS}
                 note="Có onOpenDetails → caption là pressable mở modal; CÙNG composition leaf 'còn credit'."
@@ -243,7 +243,7 @@ export const StaticNoDetails: Story = {
         shell(
             <BlockAnatomy
                 name="GradeCreditCaption"
-                tier="design"
+                tier="block"
                 leaf="StaticNoDetails"
                 parts={STATIC_PARTS}
                 note="Không truyền onOpenDetails → bỏ lớp <button>, còn span-bọc-ngoài + span caption tĩnh; composition khác leaf 'bấm mở chi tiết'."

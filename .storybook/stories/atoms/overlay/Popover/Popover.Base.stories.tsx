@@ -36,7 +36,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * trong file — cây thật vẫn phụ thuộc leaf đang mở render gì.
  */
 const POPOVER_ANNOTATE: Record<string, AnatomyAnnotation> = {
-    Button: { tier: "heroui", role: "Pressable trigger (react-aria DialogTrigger requires a pressable trigger)." },
+    "Button": { tier: "heroui", role: "Pressable trigger (react-aria DialogTrigger requires a pressable trigger)." },
     "Popover.Content": { tier: "heroui", role: "Panel surface (renders into document.body — never reachable here)." },
     "Popover.Arrow": { tier: "heroui", role: "Little arrow pointing at the trigger (renders into document.body — never reachable here)." },
     "Popover.Heading": { tier: "heroui", role: "Optional bold heading line (renders into document.body — never reachable here)." },

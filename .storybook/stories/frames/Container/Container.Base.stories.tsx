@@ -70,7 +70,7 @@ export const Default: Story = {
                         code: "<Container.Base body={<Tile label=\"Body\" />} />",
                         render: (
                             <Bleed>
-                                <Container.Base showAnatomy body={<Tile label="Body — max-w-app-md, centred" />} />
+                                <Container.Base body={<Tile label="Body — max-w-app-md, centred" />} />
                             </Bleed>
                         ),
                     },
@@ -96,7 +96,7 @@ export const Sizes: Story = {
                         code: "<Container.Base size=\"sm\" body={<Tile label='size=\"sm\" · 40rem' />} />",
                         render: (
                             <Bleed>
-                                <Container.Base size="sm" padding="cozy" showAnatomy body={<Tile label='size="sm" · 40rem' />} />
+                                <Container.Base size="sm" padding="cozy" body={<Tile label='size="sm" · 40rem' />} />
                             </Bleed>
                         ),
                     },
@@ -161,7 +161,7 @@ export const Padding: Story = {
                         code: '<Container.Base padding="flush" body={<Tile label="padding flush" />} />',
                         render: (
                             <Bleed>
-                                <Container.Base padding="flush" showAnatomy body={<Tile label="padding flush" />} />
+                                <Container.Base padding="flush" body={<Tile label="padding flush" />} />
                             </Bleed>
                         ),
                     },
@@ -228,7 +228,6 @@ export const PageRegions: Story = {
                         render: (
                             <Bleed>
                                 <Container.Base
-                                    showAnatomy
                                     body={
                                         <Stack.V gap="page">
                                             <Tile label="Header" />
@@ -291,7 +290,7 @@ export const ContainerQuery: Story = {
 <Container.Base size="md" body={<Grid.Base columns={columns} gap="grouped" items={cells} />} />`,
                             render: (
                                 <Bleed>
-                                    <Container.Base size="md" padding="cozy" showAnatomy>
+                                    <Container.Base size="md" padding="cozy">
                                         <span className="block" data-anat-part="Grid.Base">
                                             <Grid.Base columns={columns} gap="grouped" items={cells} />
                                         </span>

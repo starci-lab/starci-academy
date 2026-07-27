@@ -48,7 +48,7 @@ const DECK_PARTS: Array<AnatomyNode> = [
         children: [
             { name: "Typography", tier: "composite", role: "tiêu đề deck (title, line-clamp-2)" },
             { name: "StatusChip", tier: "composite", role: "\"N đến hạn\" (warning) — chỉ khi showProgress && dueCount", state: "warning" },
-            { name: "DifficultyChip", tier: "design", role: "chấm màu theo độ khó (beginner→insane)" },
+            { name: "DifficultyChip", tier: "block", role: "chấm màu theo độ khó (beginner→insane)" },
             { name: "Typography", tier: "composite", role: "mô tả chủ đề (description, line-clamp-2)" },
             { name: "ProgressMeter", tier: "composite", role: "thanh mastery% (đã thuộc/tổng) — thay text+Separator cũ" },
             { name: "Typography", tier: "composite", role: "số thẻ (cardCount) ở footer" },
@@ -65,7 +65,7 @@ const NO_DUE_PARTS: Array<AnatomyNode> = [
         role: "khung thẻ (rounded-3xl) bọc toàn bộ nội dung — card không bấm được, CTA là hành động duy nhất",
         children: [
             { name: "Typography", tier: "composite", role: "tiêu đề deck (title, line-clamp-2)" },
-            { name: "DifficultyChip", tier: "design", role: "chấm màu theo độ khó (beginner→insane)" },
+            { name: "DifficultyChip", tier: "block", role: "chấm màu theo độ khó (beginner→insane)" },
             { name: "Typography", tier: "composite", role: "mô tả chủ đề (description, line-clamp-2)" },
             { name: "ProgressMeter", tier: "composite", role: "thanh mastery% (đã thuộc/tổng)" },
             { name: "Typography", tier: "composite", role: "số thẻ (cardCount) ở footer" },
@@ -84,7 +84,7 @@ const NO_DESC_PARTS: Array<AnatomyNode> = [
         children: [
             { name: "Typography", tier: "composite", role: "tiêu đề deck (title, line-clamp-2)" },
             { name: "StatusChip", tier: "composite", role: "\"N đến hạn\" (warning) — chỉ khi showProgress && dueCount", state: "warning" },
-            { name: "DifficultyChip", tier: "design", role: "chấm màu theo độ khó (beginner→insane)" },
+            { name: "DifficultyChip", tier: "block", role: "chấm màu theo độ khó (beginner→insane)" },
             { name: "ProgressMeter", tier: "composite", role: "thanh mastery% (đã thuộc/tổng) — thay text+Separator cũ" },
             { name: "Typography", tier: "composite", role: "số thẻ (cardCount) ở footer" },
             { name: "Button", tier: "composite", role: "CTA \"Học\" — hành động duy nhất (card không click được)" },
@@ -100,7 +100,7 @@ const QUIZ_PARTS: Array<AnatomyNode> = [
         role: "khung thẻ (rounded-3xl) bọc toàn bộ nội dung — card không bấm được, CTA là hành động duy nhất",
         children: [
             { name: "Typography", tier: "composite", role: "tiêu đề deck (title, line-clamp-2)" },
-            { name: "DifficultyChip", tier: "design", role: "chấm màu theo độ khó (beginner→insane)" },
+            { name: "DifficultyChip", tier: "block", role: "chấm màu theo độ khó (beginner→insane)" },
             { name: "Typography", tier: "composite", role: "mô tả chủ đề (description, line-clamp-2)" },
             { name: "Typography", tier: "composite", role: "số thẻ (cardCount) ở footer" },
             { name: "Button", tier: "composite", role: "CTA nhãn tuỳ biến (vd 'Hỏi nhanh')" },
@@ -133,7 +133,7 @@ export const Default: Story = {
         frame(
             <BlockAnatomy
                 name="DeckCard"
-                tier="design"
+                tier="block"
                 leaf="Default"
                 parts={DECK_PARTS}
                 reason="Gom chip trạng thái (đến hạn + độ khó), thanh mastery trực quan thay dòng chữ, và MỘT CTA duy nhất vào một ô — để feature (FlashcardDeckList) chỉ lặp map truyền dữ liệu, không dựng lại khung/chip/thanh mỗi nơi. Khi tải: Skeleton mirror đúng khung này."
@@ -160,7 +160,7 @@ export const NoDue: Story = {
         frame(
             <BlockAnatomy
                 name="DeckCard"
-                tier="design"
+                tier="block"
                 leaf="NoDue"
                 parts={NO_DUE_PARTS}
                 note="dueCount rỗng → StatusChip 'đến hạn' biến mất, chỉ còn DifficultyChip; meter vẫn hiện."
@@ -186,7 +186,7 @@ export const FullyMastered: Story = {
         frame(
             <BlockAnatomy
                 name="DeckCard"
-                tier="design"
+                tier="block"
                 leaf="FullyMastered"
                 parts={NO_DUE_PARTS}
                 note="Không đến hạn → không StatusChip; ProgressMeter đầy 100% (đã thuộc = tổng)."
@@ -212,7 +212,7 @@ export const NoDescription: Story = {
         frame(
             <BlockAnatomy
                 name="DeckCard"
-                tier="design"
+                tier="block"
                 leaf="NoDescription"
                 parts={NO_DESC_PARTS}
                 note="Bỏ description → Typography mô tả biến mất khỏi cây; các part còn lại (chip · meter · CTA) giữ nguyên."
@@ -238,7 +238,7 @@ export const LongTitleAndDescription: Story = {
         frame(
             <BlockAnatomy
                 name="DeckCard"
-                tier="design"
+                tier="block"
                 leaf="LongTitleAndDescription"
                 parts={DECK_PARTS}
                 note="Tiêu đề + mô tả dài đều clamp-2 → tràn thì cắt, không kéo dài card; composition y hệt leaf 'Đầy đủ'."
@@ -265,7 +265,7 @@ export const QuizModeNoProgress: Story = {
         frame(
             <BlockAnatomy
                 name="DeckCard"
-                tier="design"
+                tier="block"
                 leaf="QuizModeNoProgress"
                 parts={QUIZ_PARTS}
                 note="showProgress=false → bỏ cả StatusChip lẫn ProgressMeter (SR không liên quan khi chỉ chọn chủ đề để hỏi); chỉ còn tiêu đề · chip độ khó · CTA đổi nhãn."
@@ -292,7 +292,7 @@ export const Grid: Story = {
         frame(
             <BlockAnatomy
                 name="DeckCard"
-                tier="design"
+                tier="block"
                 leaf="Grid"
                 parts={DECK_PARTS}
                 note="Lưới deck picker chỉ lặp CÙNG card ×N (mỗi ô tự phân giải chip/meter theo dữ liệu) — không dựng lại khung mỗi nơi."
@@ -343,7 +343,7 @@ export const Skeleton: Story = {
         frame(
             <BlockAnatomy
                 name="DeckCard"
-                tier="design"
+                tier="block"
                 leaf="Loading"
                 parts={SKELETON_PARTS}
                 note="isSkeleton → mỗi part thật đổi sang Skeleton tương ứng, giữ đúng footprint card (mọi prop dữ liệu bị bỏ qua)."
@@ -362,7 +362,7 @@ export const SkeletonGrid: Story = {
         frame(
             <BlockAnatomy
                 name="DeckCard"
-                tier="design"
+                tier="block"
                 leaf="Loading.Grid"
                 parts={SKELETON_PARTS}
                 note="Cả lưới deck picker đang tải cùng lúc — Skeleton mirror ×4, giữ nguyên footprint lưới thật."

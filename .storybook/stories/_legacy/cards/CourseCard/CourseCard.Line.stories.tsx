@@ -52,7 +52,7 @@ const CONTENT_PARTS: Array<AnatomyNode> = [
     { name: "Typography.Title", tier: "composite", role: "tiêu đề khóa học (body, bold, truncate)" },
     { name: "Typography.Learners", tier: "composite", role: "số học viên — meta-count muted" },
     { name: "Typography.Description", tier: "composite", role: "mô tả một dòng (body-sm, muted, line-clamp-1)" },
-    { name: "PriceTag", tier: "design", role: "giá VND (size sm): số phải trả + gốc gạch ngang + chip −% (popover) + dòng tiết kiệm", children: PRICE_TAG_CHILDREN },
+    { name: "PriceTag", tier: "block", role: "giá VND (size sm): số phải trả + gốc gạch ngang + chip −% (popover) + dòng tiết kiệm", children: PRICE_TAG_CHILDREN },
     { name: "Button.Primary", tier: "composite", role: "CTA chính (mũi tên): Xem khóa học / Tiếp tục học (đã đăng ký)" },
     { name: "Button.Secondary", tier: "composite", role: "nút phụ (flex-1, cùng hàng): Thêm vào giỏ (action) / Xem khóa học (đã đăng ký)" },
 ]
@@ -65,7 +65,7 @@ const NO_COVER_PARTS: Array<AnatomyNode> = [
     { name: "Typography.Title", tier: "composite", role: "tiêu đề khóa học (body, bold, truncate)" },
     { name: "Typography.Learners", tier: "composite", role: "số học viên — meta-count muted" },
     { name: "Typography.Description", tier: "composite", role: "mô tả một dòng (body-sm, muted, line-clamp-1)" },
-    { name: "PriceTag", tier: "design", role: "giá phase hiện tại (size sm): số phải trả + gốc gạch ngang + chip −% (popover) + dòng tiết kiệm", children: PRICE_TAG_CHILDREN },
+    { name: "PriceTag", tier: "block", role: "giá phase hiện tại (size sm): số phải trả + gốc gạch ngang + chip −% (popover) + dòng tiết kiệm", children: PRICE_TAG_CHILDREN },
     { name: "Button.Primary", tier: "composite", role: "CHỈ CTA chính (Xem khóa học) — không action → không nút phụ" },
 ]
 
@@ -107,7 +107,7 @@ export const Default: Story = {
         shell(
             <BlockAnatomy
                 name="CourseCard"
-                tier="design"
+                tier="block"
                 leaf="Default"
                 parts={CONTENT_PARTS}
                 reason="Một ô khóa học trong catalog gom BLOCK con (CrossListCard value-props · PriceTag giá) + PRIMITIVE (cover · 2 Button CTA · Typography tiêu đề/mô tả · Typography+UsersIcon số học viên; Skeleton chỉ khi đang tải giá). Đóng gói 2 layout grid/line, 2 nút khi đã đăng ký, để feature chỉ truyền `course`."
@@ -132,7 +132,7 @@ export const Enrolled: Story = {
         shell(
             <BlockAnatomy
                 name="CourseCard"
-                tier="design"
+                tier="block"
                 leaf="Enrolled"
                 parts={CONTENT_PARTS}
                 note="CÙNG composition với leaf 'Có dữ liệu' — chỉ đổi nhãn: primary 'Tiếp tục học' + secondary 'Xem khóa học' thay cho action."
@@ -150,7 +150,7 @@ export const NoCover: Story = {
         shell(
             <BlockAnatomy
                 name="CourseCard"
-                tier="design"
+                tier="block"
                 leaf="NoCover"
                 parts={NO_COVER_PARTS}
                 note="Thiếu coverImageUrl → phần cover đổi sang gradient + BookOpenIcon; không action → chỉ 1 nút primary."
@@ -168,7 +168,7 @@ export const Loading: Story = {
         shell(
             <BlockAnatomy
                 name="CourseCard"
-                tier="design"
+                tier="block"
                 leaf="Loading"
                 parts={LOADING_PARTS}
                 note="loyaltyPending → CHỈ dòng giá là Skeleton, phần còn lại render thật (khác leaf 'Khung chờ' mirror cả hàng)."
@@ -186,7 +186,7 @@ export const Free: Story = {
         shell(
             <BlockAnatomy
                 name="CourseCard"
-                tier="design"
+                tier="block"
                 leaf="Free"
                 parts={FREE_PARTS}
                 note="Không giá (PriceTag vắng) và enrollmentCount=0 (meta số học viên vắng) → composition gọn còn cover + title + 1 nút."
@@ -204,7 +204,7 @@ export const Skeleton: Story = {
         shell(
             <BlockAnatomy
                 name="CourseCard"
-                tier="design"
+                tier="block"
                 leaf="Skeleton"
                 parts={SKELETON_PARTS}
                 note="isSkeleton → tự dựng mirror cả hàng (mọi part skeleton), giữ nguyên box/radius/padding để lưới không nhảy."

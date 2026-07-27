@@ -41,8 +41,26 @@ import { join, relative } from "node:path"
 const ROOT = process.cwd()
 const SB = join(ROOT, ".storybook")
 const SCALE = new Set(["0", "1", "2", "3", "6", "8"])
-/** Tiers that must route spacing through a frame. `atom` and `util` own their own insides. */
-const GUARDED = new Set(["frame", "composite", "design", "block", "screen"])
+/**
+ * Tiers that must route spacing through a frame. `atom` and `util` own their own insides.
+ *
+ * ⚠️ `viewer` IS guarded — do not "simplify" it out of this set. It earns an exemption from
+ * the CHILD-MARGIN rule only, listed separately below, and the difference is load-bearing:
+ * drop it from `GUARDED` and the file is skipped entirely, taking the off-scale check with
+ * it. That exact mistake shipped green on 2026-07-28 and was caught only by planting a bad
+ * class on purpose and watching the gate stay silent.
+ */
+const GUARDED = new Set(["frame", "composite", "design", "block", "screen", "viewer"])
+
+/**
+ * Tiers exempt from the CHILD-MARGIN rule for a STRUCTURAL reason, not a convenient one.
+ *
+ * A viewer never sees its children as nodes: it hands a renderer map to a parser and gets
+ * elements back one token at a time, so nothing in it ever knows the sequence — there is no
+ * seam for a frame to own. Same argument §13z makes for the atom tier. The SCALE still
+ * applies: an off-scale `pl-4` inside a viewer is still a finding.
+ */
+const MARGIN_EXEMPT = new Set(["viewer"])
 
 const walk = (dir, out = []) => {
     for (const entry of readdirSync(dir)) {
@@ -61,6 +79,7 @@ const tierOf = (rel) =>
     rel.includes("/screens/") ? "screen"
     : rel.includes("/blocks/") ? "block"
     : rel.includes("/designs/") ? "design"
+    : rel.includes("/composites/viewers/") ? "viewer"
     : rel.includes("/composites/") ? "composite"
     : rel.includes("/frames/") ? "frame"
     : rel.includes("/atoms/") ? "atom"
@@ -111,8 +130,10 @@ for (const file of files) {
         // neutralise a margin a third-party stylesheet ships, and a rule with no legal path is a
         // rule people route around. Landed 2026-07-27 with `ModalShell`, where the seam moved up
         // to the Dialog's own `gap-4` and the children were left only to switch HeroUI's margin off.
-        for (const match of line.matchAll(/(?:^|[\s:"'`])m[trblxyse]?-(?!auto|0\b)(\d+(?:\.\d+)?)\b/g)) {
-            findings.push({ ...at, rule: "child-margin", detail: match[0] })
+        if (!MARGIN_EXEMPT.has(tier)) {
+            for (const match of line.matchAll(/(?:^|[\s:"'`])m[trblxyse]?-(?!auto|0\b)(\d+(?:\.\d+)?)\b/g)) {
+                findings.push({ ...at, rule: "child-margin", detail: match[0] })
+            }
         }
     })
 }

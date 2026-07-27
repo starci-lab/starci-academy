@@ -171,7 +171,7 @@ const MarkdownContent = ({
             <a href={href} className="text-accent underline underline-offset-2 hover:no-underline">{children}</a>
         ),
         blockquote: ({ children }: MarkdownNodeProps) => (
-            <blockquote className={cn("border-l-2 border-default pl-4 text-muted", reading ? "my-4" : "my-3")}>{children}</blockquote>
+            <blockquote className={cn("border-l-2 border-default pl-3 text-muted", reading ? "my-4" : "my-3")}>{children}</blockquote>
         ),
         hr: () => <hr className={cn("border-default", reading ? "my-8" : "my-6")} />,
         img: ({ src, alt }: MarkdownImageProps) => (

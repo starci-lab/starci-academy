@@ -80,10 +80,20 @@ const LOADING_PARTS: Array<AnatomyNode> = [
     { name: "Skeleton", tier: "composite", role: "The loading branch, the skeleton mirror tree the caller passed through slot skeleton." },
 ]
 const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "AsyncContent.Empty", tier: "composite", role: "The empty branch, built by the scaffold from props emptyContent rather than a node." },
+    {
+        name: "AsyncContent.Empty",
+        tier: "composite",
+        role: "The empty branch, built by the scaffold from props emptyContent rather than a node.",
+        storyId: "composites-async-asynccontent-asynccontent-empty--basic",
+    },
 ]
 const ERROR_PARTS: Array<AnatomyNode> = [
-    { name: "AsyncContent.Error", tier: "composite", role: "The error branch, built by the scaffold from props errorContent; it has the highest priority of the four." },
+    {
+        name: "AsyncContent.Error",
+        tier: "composite",
+        role: "The error branch, built by the scaffold from props errorContent; it has the highest priority of the four.",
+        storyId: "composites-async-asynccontent-asynccontent-error--basic",
+    },
 ]
 const SILENT_PARTS: Array<AnatomyNode> = []
 

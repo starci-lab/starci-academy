@@ -146,16 +146,6 @@ const PhaseScarcityNoteBase = ({
                 ...(nextPhasePriceVnd != null
                     ? [
                         {
-                            key: "sep",
-                            content: (
-                                <Typography.Base
-                                    size="sm"
-                                    text="·"
-                                    anatPart={showAnatomy ? "Separator" : undefined}
-                                />
-                            ),
-                        },
-                        {
                             key: "rise",
                             content: (
                                 <Typography.Base

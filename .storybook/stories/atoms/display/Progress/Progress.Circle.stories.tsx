@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Progress, type ProgressColor, type ProgressSize } from "@sb-components/atoms/display/Progress/Progress"
+import { Progress } from "@sb-components/atoms/display/Progress/Progress"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof Progress.Circle> = {
@@ -83,26 +83,7 @@ export const Loading: Story = {
     ),
 }
 
-/** One row of the color demo table below. */
-interface CircleColorRow {
-    /** color token applied to the ring's fill arc */
-    color: ProgressColor
-    /** aria-label describing what the ring measures */
-    label: string
-    /** progress value (0-100) shown by this row */
-    value: number
-}
-
-/** The FULL `ProgressColor` union — missing a value means that value sprouts as a stray leaf elsewhere. */
-const CIRCLE_COLORS: Array<CircleColorRow> = [
-    { color: "accent", label: "Course progress", value: 55 },
-    { color: "success", label: "Upload complete", value: 100 },
-    { color: "warning", label: "Sync needs attention", value: 40 },
-    { color: "danger", label: "Deploy failed", value: 20 },
-    { color: "default", label: "Idle queue", value: 65 },
-]
-
-/** Leaf prop `color` — 5 tones, render the FULL union. */
+/** Leaf prop `color` — each tone gets its own state, one ring per state. */
 export const Colors: Story = {
     render: () => (
         <div className="p-8">
@@ -113,22 +94,34 @@ export const Colors: Story = {
                 reason="Same tone semantics as Bar: the arc's colour carries the meaning of the number inside its ring, from a plain accent run to an explicit success, warning, or danger outcome."
                 states={[
                     {
-                        name: "color = accent | success | warning | danger | default",
-                        why: "All five tones render side by side, and only the FillCircle arc takes each tone while the TrackCircle stays neutral in every one of them. Keeping the track neutral across every colour is what makes the five rings still read as one family instead of five unrelated widgets.",
-                        code: "<Progress.Circle color=\"accent\" value={55} />\n<Progress.Circle color=\"success\" value={100} />\n<Progress.Circle color=\"warning\" value={40} />\n<Progress.Circle color=\"danger\" value={20} />\n<Progress.Circle color=\"default\" value={65} />",
-                        render: (
-                            <div className="flex flex-wrap items-center gap-6">
-                                {CIRCLE_COLORS.map(({ color, label, value }, index) => (
-                                    <Progress.Circle
-                                        key={color}
-                                        color={color}
-                                        value={value}
-                                        ariaLabel={label}
-                                        showAnatomy={index === 0}
-                                    />
-                                ))}
-                            </div>
-                        ),
+                        name: "color = accent",
+                        why: "The FillCircle arc renders in the accent tone while the TrackCircle stays neutral underneath. This is the default reading for an ordinary run, like course progress, with no outcome to call out yet.",
+                        code: "<Progress.Circle color=\"accent\" value={55} />",
+                        render: <Progress.Circle color="accent" value={55} ariaLabel="Course progress" showAnatomy />,
+                    },
+                    {
+                        name: "color = success",
+                        why: "The arc renders in the success tone to mark a positive outcome, such as an upload that finished cleanly. The track stays neutral so only the arc itself carries the good-news meaning.",
+                        code: "<Progress.Circle color=\"success\" value={100} />",
+                        render: <Progress.Circle color="success" value={100} ariaLabel="Upload complete" showAnatomy />,
+                    },
+                    {
+                        name: "color = warning",
+                        why: "The arc renders in the warning tone to flag a state that needs attention before it becomes a failure, such as a sync falling behind. The neutral track keeps the warning legible without overwhelming the ring.",
+                        code: "<Progress.Circle color=\"warning\" value={40} />",
+                        render: <Progress.Circle color="warning" value={40} ariaLabel="Sync needs attention" showAnatomy />,
+                    },
+                    {
+                        name: "color = danger",
+                        why: "The arc renders in the danger tone to mark an explicit failure, such as a deploy that did not go through. This tone is reserved for outcomes the user must act on, not just numbers that happen to be low.",
+                        code: "<Progress.Circle color=\"danger\" value={20} />",
+                        render: <Progress.Circle color="danger" value={20} ariaLabel="Deploy failed" showAnatomy />,
+                    },
+                    {
+                        name: "color = default",
+                        why: "The arc renders in the default tone for a run that carries no outcome semantics at all, such as an idle queue simply ticking along. Keeping this tone separate from accent avoids implying an active in-progress state when there is none.",
+                        code: "<Progress.Circle color=\"default\" value={65} />",
+                        render: <Progress.Circle color="default" value={65} ariaLabel="Idle queue" showAnatomy />,
                     },
                 ]}
             />
@@ -136,22 +129,7 @@ export const Colors: Story = {
     ),
 }
 
-/** One row of the size demo table below. */
-interface CircleSizeRow {
-    /** diameter step applied to the ring */
-    size: ProgressSize
-    /** aria-label describing what the ring measures */
-    label: string
-}
-
-/** The FULL `ProgressSize` union. */
-const CIRCLE_SIZES: Array<CircleSizeRow> = [
-    { size: "sm", label: "Compact ring" },
-    { size: "md", label: "Default ring" },
-    { size: "lg", label: "Prominent ring" },
-]
-
-/** Leaf prop `size` — 3 diameters, render the FULL union. */
+/** Leaf prop `size` — each diameter gets its own state, one ring per state. */
 export const Sizes: Story = {
     render: () => (
         <div className="p-8">
@@ -162,22 +140,22 @@ export const Sizes: Story = {
                 reason="Diameter signals weight: a compact ring fits inside a stat row, while a prominent ring can anchor a dashboard tile on its own."
                 states={[
                     {
-                        name: "size = sm | md | lg",
-                        why: "Three diameters render side by side at the same 68% value, so only the ring's size changes across the row. Each skeleton box matches its diameter 1:1, so a loading ring never resizes once the real value lands.",
-                        code: "<Progress.Circle size=\"sm\" value={68} />\n<Progress.Circle size=\"md\" value={68} />\n<Progress.Circle size=\"lg\" value={68} />",
-                        render: (
-                            <div className="flex flex-wrap items-end gap-6">
-                                {CIRCLE_SIZES.map(({ size, label }, index) => (
-                                    <Progress.Circle
-                                        key={size}
-                                        size={size}
-                                        value={68}
-                                        ariaLabel={label}
-                                        showAnatomy={index === 0}
-                                    />
-                                ))}
-                            </div>
-                        ),
+                        name: "size = sm",
+                        why: "The ring renders at its smallest diameter, sized to sit inline inside a compact stat row without dominating it. Its skeleton box matches this diameter exactly, so a loading ring never resizes once the real value lands.",
+                        code: "<Progress.Circle size=\"sm\" value={68} />",
+                        render: <Progress.Circle size="sm" value={68} ariaLabel="Compact ring" showAnatomy />,
+                    },
+                    {
+                        name: "size = md",
+                        why: "The ring renders at its default diameter, the size most product surfaces reach for first. It is large enough to read the value inside it without demanding its own dedicated tile.",
+                        code: "<Progress.Circle size=\"md\" value={68} />",
+                        render: <Progress.Circle size="md" value={68} ariaLabel="Default ring" showAnatomy />,
+                    },
+                    {
+                        name: "size = lg",
+                        why: "The ring renders at its largest diameter, big enough to anchor a dashboard tile on its own. Reach for this size when the ring is the primary focus of the card rather than one metric among several.",
+                        code: "<Progress.Circle size=\"lg\" value={68} />",
+                        render: <Progress.Circle size="lg" value={68} ariaLabel="Prominent ring" showAnatomy />,
                     },
                 ]}
             />

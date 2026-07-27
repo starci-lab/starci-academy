@@ -42,10 +42,10 @@ export default meta
 type Story = StoryObj<typeof Link.Back>
 
 /**
- * BARE leaf — the ONLY one this atom has. The three lines below are three CALL SHAPES
- * of the same text prop (`label`/`target` default/set), not three different leaves —
- * none of these values change the DOM structure, only the displayed string inside the
- * same `<span>`.
+ * BARE leaf — the ONLY one this atom has. `Default`/`TargetSet`/`LabelSet` are three
+ * CALL SHAPES of the same text prop (`label`/`target` default/set), not three different
+ * leaves — none of these values change the DOM structure, only the displayed string
+ * inside the same `<span>`.
  */
 export const Default: Story = {
     render: () => (
@@ -57,18 +57,60 @@ export const Default: Story = {
                 reason="The one back affordance in the system, wrapping HeroUI Link. `label` and `target` only swap the string inside the same span, the DOM never changes shape, so neither prop earns its own leaf."
                 states={[
                     {
-                        name: "label unset, target unset | target set | label set (three call shapes)",
-                        why: "Only the string inside the same span changes across the three lines: generic \"Back\" with neither prop set, \"Back to {target}\" once target is set, and the label overriding the whole string once it is set. Hover slides the arrow left and underlines the label on every line the same way, because that motion is fixed rather than prop-driven.",
-                        code: `<Link.Back onPress={goBack} />
-<Link.Back target="challenge" onPress={goBack} />
-<Link.Back label="Back to all courses" onPress={goBack} />`,
-                        render: (
-                            <div className="flex flex-col gap-4">
-                                <Link.Back onPress={() => {}} />
-                                <Link.Back target="challenge" onPress={() => {}} />
-                                <Link.Back label="Back to all courses" onPress={() => {}} />
-                            </div>
-                        ),
+                        name: "label unset, target unset",
+                        why: "The link renders the generic string \"Back\" inside its span because neither the label nor the target prop is set. Hover still slides the arrow left and underlines the label the same as every other call shape, since that motion is fixed rather than prop-driven.",
+                        code: `<Link.Back onPress={goBack} />`,
+                        render: <Link.Back onPress={() => {}} />,
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/**
+ * See the shared doc block above `Default` for why this is a call-shape split, not a
+ * new leaf.
+ */
+export const TargetSet: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="Link.Back"
+                tier="atom"
+                leaf="Bare link"
+                reason="The one back affordance in the system, wrapping HeroUI Link. `label` and `target` only swap the string inside the same span, the DOM never changes shape, so neither prop earns its own leaf."
+                states={[
+                    {
+                        name: "target = \"challenge\"",
+                        why: "The span now reads \"Back to challenge\" because the target prop is set and gets interpolated into the same generic string. The product wants the destination named so the user knows where the back action lands, without adding any new element to the DOM.",
+                        code: `<Link.Back target="challenge" onPress={goBack} />`,
+                        render: <Link.Back target="challenge" onPress={() => {}} />,
+                    },
+                ]}
+            />
+        </div>
+    ),
+}
+
+/**
+ * See the shared doc block above `Default` for why this is a call-shape split, not a
+ * new leaf.
+ */
+export const LabelSet: Story = {
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="Link.Back"
+                tier="atom"
+                leaf="Bare link"
+                reason="The one back affordance in the system, wrapping HeroUI Link. `label` and `target` only swap the string inside the same span, the DOM never changes shape, so neither prop earns its own leaf."
+                states={[
+                    {
+                        name: "label = \"Back to all courses\"",
+                        why: "The span shows the full custom string \"Back to all courses\" because the label prop overrides the generic text outright. The product wants full control of the wording in places where the default \"Back to {target}\" phrasing does not fit the copy.",
+                        code: `<Link.Back label="Back to all courses" onPress={goBack} />`,
+                        render: <Link.Back label="Back to all courses" onPress={() => {}} />,
                     },
                 ]}
             />

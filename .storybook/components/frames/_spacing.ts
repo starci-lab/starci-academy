@@ -59,11 +59,27 @@ export const GAP_CLASS: Record<SeamScale, string> = {
 }
 
 /**
- * The INSET of a surface, still numeric on purpose. Padding is not a seam between two
- * things, so the seam vocabulary does not describe it and `padding="related"` would say
- * nothing. Naming the inset steps is a separate decision, left open.
+ * The INSET of a surface, named by HOW MUCH AIR the surface gives its content
+ * (teacher, 2026-07-27: "name it now, margin and padding belong to the frame tier too").
+ *
+ * A separate vocabulary from {@link SeamScale} on purpose. A seam word answers "what are
+ * these two things to each other", which says nothing about the inside of one surface, so
+ * `padding="related"` would be a sentence with no meaning. An inset word answers a different
+ * question: how tightly does this surface hold what it contains.
+ *
+ * FOUR steps, not six. Measured across the tree before naming: 46 call sites use exactly
+ * `0`, `3`, `6`, `8` and NOT ONE uses `1` or `2`. Two steps nobody reached for were two more
+ * ways to be arbitrary, so they are gone. A scale earns a step by being chosen, not by
+ * existing in Tailwind.
+ *
+ * | word | class | what it is for |
+ * |---|---|---|
+ * | `flush` | `p-0` | content touches the edge: a cover image, a table that scrolls |
+ * | `cozy`  | `p-3` | the interior of a card, the house rule |
+ * | `roomy` | `p-6` | a page measure or a container |
+ * | `airy`  | `p-8` | a hero or an empty state that wants to breathe |
  */
-export type SpaceScale = 0 | 1 | 2 | 3 | 6 | 8
+export type InsetScale = "flush" | "cozy" | "roomy" | "airy"
 
 /**
  * Cross-axis alignment of a track.
@@ -108,11 +124,9 @@ export const JUSTIFY_CLASS: Record<LayoutJustify, string> = {
  * thay vì đẻ bản sao thứ hai. `Container.tsx` giờ import từ đây thay vì giữ bảng
  * cục bộ.
  */
-export const PADDING_CLASS: Record<SpaceScale, string> = {
-    0: "p-0",
-    1: "p-1",
-    2: "p-2",
-    3: "p-3",
-    6: "p-6",
-    8: "p-8",
+export const PADDING_CLASS: Record<InsetScale, string> = {
+    flush: "p-0",
+    cozy: "p-3",
+    roomy: "p-6",
+    airy: "p-8",
 }

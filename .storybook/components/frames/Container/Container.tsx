@@ -1,13 +1,13 @@
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
-import { GAP_CLASS, PADDING_CLASS, type SeamScale, type SpaceScale } from "@sb-components/frames/_spacing"
+import { PADDING_CLASS, type InsetScale } from "@sb-components/frames/_spacing"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * LAYOUT (khung) — `Container.*`: CONTENT MEASURE. One member, `Container.Base`
  * (one measure has one shape; width and padding are PROPS, §6b).
  *
- * KHUNG API LAW (§13b): a wrapping khung ⇒ named slots `header`/`body`/`footer`
+ * KHUNG API LAW (§13b): a wrapping khung ⇒ ONE named slot `body`
  * are the main road, `children` is a shorthand for `body`. No repeating list, so
  * no `items`.
  *
@@ -48,7 +48,7 @@ import { GAP_CLASS, PADDING_CLASS, type SeamScale, type SpaceScale } from "@sb-c
  * never fires** — the grid will sit still at the `md` tier. Not a bug, just a
  * measure too narrow for 4 columns.
  *
- * §10: `padding` and `gap` are {@link SpaceScale} union literals — off-scale is a
+ * §10: `padding` and `gap` are {@link InsetScale} union literals — off-scale is a
  * tsc error at the call site, not something caught in review.
  * §13: no domain content, no behavior — layout only.
  * ─────────────────────────────────────────────────────────────────────────────
@@ -89,20 +89,19 @@ export interface ContainerBaseProps {
      * measure = `p-6`). Set `0` when the child hugs the edge itself (edge-to-edge
      * cover image, a table that scrolls horizontally).
      */
-    padding?: SpaceScale
+    padding?: InsetScale
     /**
-     * Vertical seam between `header` ↔ `body` ↔ `footer`. Default `8` — PAGE rhythm,
-     * deliberately wider than the rhythm inside a card (§10b). Only takes effect when
-     * there's more than one region.
+     * The content this measure wraps. ONE region — a measure has no second one.
+     *
+     * ⭐ 2026-07-27: `header`/`footer`/`gap` were REMOVED. A container that owns page
+     * regions AND the rhythm between them is doing a second job, and it did that job
+     * badly: `gap` only applied when a slot was used, so `CourseContents` wrote
+     * `gap="page"` and MEASURED 0px. The fix in the field was `Container > Stack.V` —
+     * i.e. the slots were a weaker copy of `Stack.V`, and reality already voted.
+     * A measure now owns exactly one thing: how wide the reading column is.
      */
-    gap?: SeamScale
-    /** Top region — usually a `Page.Header`. */
-    header?: ReactNode
-    /** Main region. Equivalent to `children`; wins over `children` when both are passed. */
     body?: ReactNode
-    /** Bottom region IN FLOW (page footer, closing CTA row). Not a bottom-pinned bar. */
-    footer?: ReactNode
-    /** Shorthand for {@link ContainerBaseProps.body} — a wrapping khung can wrap anything. */
+    /** Shorthand for {@link ContainerBaseProps.body}. */
     children?: ReactNode
     /** Extra class for the measure. */
     className?: string
@@ -130,26 +129,17 @@ export interface ContainerBaseProps {
  */
 const ContainerBase = ({
     size = "md",
-    padding = 6,
-    gap = "page",
-    header,
+    padding = "roomy",
     body,
-    footer,
     children,
     className,
     anatPart,
     showAnatomy = false,
 }: ContainerBaseProps) => {
-    const main = body ?? children
-    const content = header == null && footer == null
-        ? main
-        : (
-            <div className={cn("flex flex-col", GAP_CLASS[gap])}>
-                {header != null ? <div data-anat-part={showAnatomy ? "Header" : undefined}>{header}</div> : null}
-                {main != null ? <div data-anat-part={showAnatomy ? "Body" : undefined}>{main}</div> : null}
-                {footer != null ? <div data-anat-part={showAnatomy ? "Footer" : undefined}>{footer}</div> : null}
-            </div>
-        )
+    // ONE region, rendered RAW. No wrapper div, so the measure adds no node of its own
+    // and whatever the caller nests (usually a `Stack.V`) owns the rhythm — §10a, one
+    // seam one owner.
+    const content = body ?? children
 
     return (
         // `@container` MUST sit on the same element capped by `max-w`: a container

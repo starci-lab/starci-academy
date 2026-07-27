@@ -160,7 +160,12 @@ const Callout = ({
         onClose={onClose}
         closeAriaLabel={closeAriaLabel}
         className={className}
-        anatPart={anatPart ?? (showAnatomy ? "Feedback.Callout" : undefined)}
+        // Self-names as the thing it COMPOSES, not as itself. The parent already gives it a
+        // name through `anatPart`; running inside its own story the useful answer is "this is
+        // an Alert.Base wearing a callout skin", which is what a Deps tab is for. Naming it
+        // `Feedback.Callout` here made the subject label itself and left the tree empty,
+        // because the only frame this composite is built on never appeared (caught 2026-07-27).
+        anatPart={anatPart ?? (showAnatomy ? "Alert.Base" : undefined)}
     />
 )
 
@@ -265,7 +270,7 @@ const Empty = ({
             data-anat-part={anatPart}
             className={cn(
                 isPage
-                    ? "mx-auto flex min-h-[70vh] max-w-xl flex-col items-center justify-center gap-6 px-6 py-16 text-center"
+                    ? "mx-auto flex min-h-[70vh] max-w-xl flex-col items-center justify-center gap-6 px-6 py-8 text-center"
                     : "flex flex-col items-center gap-3 py-6 text-center",
                 className,
             )}

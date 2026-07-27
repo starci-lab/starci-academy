@@ -35,17 +35,17 @@ type Story = StoryObj<typeof KeyValue.Row>
  * passes `hint`.
  */
 const ROW_PARTS: Array<AnatomyNode> = [
-    { name: "Label", tier: "atom", role: "Typography.Sm muted — the value's name (§9a SECONDARY text)" },
-    { name: "Value", tier: "atom", role: "Typography.Sm medium + tabular-nums — an ALREADY-formatted node" },
+    { name: "Label", tier: "atom", role: "Typography.Sm muted — the value's name (§9a SECONDARY text)", storyId: "atoms-text-typography-typography-base--colors" },
+    { name: "Value", tier: "atom", role: "Typography.Sm medium + tabular-nums — an ALREADY-formatted node", storyId: "atoms-text-typography-typography-base--numeric" },
 ]
 const HINT_PARTS: Array<AnatomyNode> = [
-    { name: "Label", tier: "atom", role: "Typography.Sm muted" },
-    { name: "Hint", tier: "atom", role: "Typography.Xs muted — a secondary line under the label, gap-1 (§10 tight)" },
-    { name: "Value", tier: "atom", role: "Typography.Sm medium + tabular-nums" },
+    { name: "Label", tier: "atom", role: "Typography.Sm muted", storyId: "atoms-text-typography-typography-base--colors" },
+    { name: "Hint", tier: "atom", role: "Typography.Xs muted — a secondary line under the label, gap-1 (§10 tight)", storyId: "atoms-text-typography-typography-base--colors" },
+    { name: "Value", tier: "atom", role: "Typography.Sm medium + tabular-nums", storyId: "atoms-text-typography-typography-base--numeric" },
 ]
 const EMPHASIS_PARTS: Array<AnatomyNode> = [
-    { name: "Label", tier: "atom", role: "Typography.Sm foreground + medium (total row's label)" },
-    { name: "Value", tier: "atom", role: "Typography.Base BOLD + tabular-nums (a large number, §9b)" },
+    { name: "Label", tier: "atom", role: "Typography.Sm foreground + medium (total row's label)", storyId: "atoms-text-typography-typography-base--bold" },
+    { name: "Value", tier: "atom", role: "Typography.Base BOLD + tabular-nums (a large number, §9b)", storyId: "atoms-text-typography-typography-base--numeric" },
 ]
 
 /** Default — muted label left, medium value right; `justify-between` holds both edges. Migrated to `states` 2026-07-27. */

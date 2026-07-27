@@ -95,7 +95,23 @@ for (const file of files) {
                 findings.push({ ...at, rule: "padding-off-scale", detail: match[0] })
             }
         }
-        for (const match of line.matchAll(/\bm[trblxyse]?-(?!auto)(\d+(?:\.\d+)?)\b/g)) {
+        // ⚠️ `\b` before `m` does NOT stop a match inside `-m-3`: the boundary sits between the
+        // hyphen and the `m`, so the whitelist for NEGATIVE margins never applied and a legitimate
+        // bleed was reported as a violation. Measured 2026-07-27 on `StatRibbon`, whose
+        // `@app-sm:-m-3` cancels `.card { p-3 }` so a per-cell `border-l` can reach the card's own
+        // top and bottom edge.
+        //
+        // Same failure family as the union-dump gate asking for `.map(` anywhere AND a
+        // SCREAMING_CASE token anywhere: a class scanner has to anchor on what comes BEFORE the
+        // token, not on the token alone. The only legal lead-ins are start of line, whitespace, a
+        // quote, or a variant colon.
+        //
+        // `0` joins `auto` and negatives on the whitelist. The rule is that a child must not
+        // DECIDE a seam; `mt-0` decides none, it CANCELS one. That is the only legal way to
+        // neutralise a margin a third-party stylesheet ships, and a rule with no legal path is a
+        // rule people route around. Landed 2026-07-27 with `ModalShell`, where the seam moved up
+        // to the Dialog's own `gap-4` and the children were left only to switch HeroUI's margin off.
+        for (const match of line.matchAll(/(?:^|[\s:"'`])m[trblxyse]?-(?!auto|0\b)(\d+(?:\.\d+)?)\b/g)) {
             findings.push({ ...at, rule: "child-margin", detail: match[0] })
         }
     })

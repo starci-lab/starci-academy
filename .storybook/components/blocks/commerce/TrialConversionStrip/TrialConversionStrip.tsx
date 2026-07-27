@@ -156,7 +156,7 @@ const TrialConversionStripBase = ({
                     align="end"
                     justify="between"
                     wrap
-                    anatPart={showAnatomy ? "Stack.H.PriceRow" : undefined}
+                    anatPart={showAnatomy ? "Stack.H" : undefined}
                 >
                     {/* `grouped` (§10b). Read the seam by RELATIONSHIP, not by tier: the
                     scarcity line is a CAPTION OF THE PRICE, so price + scarcity are one
@@ -169,7 +169,7 @@ const TrialConversionStripBase = ({
                     uniform rhythm precisely because it stops reading as groups. With 3 the
                     card reads 24/12/12/24 — two groups, which is what it is. It was `tight`
                     (1) before either fix, a step §10b reserves for pairs inside an atom. */}
-                    <Stack.V gap="grouped" anatPart={showAnatomy ? "Stack.V.Price" : undefined}>
+                    <Stack.V gap="grouped" anatPart={showAnatomy ? "Stack.V" : undefined}>
                         {isSkeleton && !price ? (
                         // 2026-07-12: the CTA card renders instantly once the outline
                         // resolves, but the price is a second fetch — mirror the price

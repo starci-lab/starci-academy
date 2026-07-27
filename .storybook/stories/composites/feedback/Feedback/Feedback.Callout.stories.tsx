@@ -42,6 +42,13 @@ type Story = StoryObj<typeof Feedback.Callout>
 
 /** Hai node THẬT có story khác để nhảy tới — cả hai đều là `Button.Base` do khung/atom tự dựng. */
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
+    // The frame this composite is built ON. Without it the Deps tab was empty on every state
+    // that passes neither `actionLabel` nor `onClose`, which is most of them.
+    "Alert.Base": {
+        tier: "atom",
+        role: "the whole SHAPE comes from this atom; the callout only sets content and tone",
+        storyId: "atoms-feedback-alert-alert-base--action",
+    },
     Action: {
         tier: "atom",
         role: "the CTA button, built from `actionLabel`/`onAction`, always a Button.Base",

@@ -66,7 +66,7 @@ const SURFACE: AnatomyNode = {
 // Name differs from the `Stack.H` node of the lead row: the panel groups nodes BY NAME,
 // matching names would merge into one.
 const PRICE_ROW: AnatomyNode = {
-    name: "Stack.H.PriceRow",
+    name: "Stack.H",
     tier: "frame",
     role: "price ↔ CTA row — `wrap` so the BUTTON drops to a new line when tight, the price column never gets squeezed",
     storyId: "frames-stack-stack-h--default",
@@ -111,7 +111,7 @@ const framed = (priceSide: Array<AnatomyNode>): Array<AnatomyNode> => [
                                 // Name MUST differ from the outer `Stack.V` node: the panel
                                 // groups nodes BY NAME, two `Stack.V`s with the same name
                                 // would MERGE into one and misread the tree.
-                                name: "Stack.V.Price",
+                                name: "Stack.V",
                                 tier: "frame",
                                 role: "LEFT side of the Split — price column + scarcity line",
                                 storyId: "frames-stack-stack-v--default",

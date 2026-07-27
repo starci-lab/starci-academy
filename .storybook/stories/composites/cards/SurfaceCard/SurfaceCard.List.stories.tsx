@@ -387,21 +387,45 @@ export const Verdict: Story = {
                 leaf="Verdict"
                 states={[
                     {
-                        name: "tone = success | warning | danger",
-                        why: "Each row grows a left inset-shadow band coloured by `tone`, since `tone` is shorthand for `withVerdict={{ enable: true, variant: tone }}` rather than a separate part. The band lets a row carry a data-driven verdict, like a pass/warn/fail tier, directly on its own edge.",
+                        name: "tone = \"success\"",
+                        why: "The row grows a left inset-shadow band in the success colour, since `tone` is shorthand for `withVerdict={{ enable: true, variant: tone }}` rather than a separate part. This marks a passing or on-track verdict directly on the row's own edge.",
                         code: `<SurfaceCard.List
-  items={[
-    { key: "shell", title: "Shell & file system", tone: "success", onPress: () => {} },
-    { key: "pipe", title: "Redirect & pipe", tone: "warning", onPress: () => {} },
-    { key: "perm", title: "Basic file permissions", tone: "danger", onPress: () => {} },
-  ]}
+  items={[{ key: "shell", title: "Shell & file system", tone: "success", onPress: () => {} }]}
 />`,
                         render: (
                             <SurfaceCard.List
                                 showAnatomy
                                 items={[
                                     { key: "shell", title: "Shell & file system", tone: "success", onPress: () => {}, anatPart: "Row" },
+                                ]}
+                            />
+                        ),
+                    },
+                    {
+                        name: "tone = \"warning\"",
+                        why: "The row grows a left inset-shadow band in the warning colour, the same shorthand for `withVerdict={{ enable: true, variant: tone }}` as the other tones. This marks a borderline verdict, one that needs attention but hasn't failed outright.",
+                        code: `<SurfaceCard.List
+  items={[{ key: "pipe", title: "Redirect & pipe", tone: "warning", onPress: () => {} }]}
+/>`,
+                        render: (
+                            <SurfaceCard.List
+                                showAnatomy
+                                items={[
                                     { key: "pipe", title: "Redirect & pipe", tone: "warning", onPress: () => {}, anatPart: "Row" },
+                                ]}
+                            />
+                        ),
+                    },
+                    {
+                        name: "tone = \"danger\"",
+                        why: "The row grows a left inset-shadow band in the danger colour, the same shorthand for `withVerdict={{ enable: true, variant: tone }}` as the other tones. This marks a failing verdict, so the learner can spot the weak spot at a glance.",
+                        code: `<SurfaceCard.List
+  items={[{ key: "perm", title: "Basic file permissions", tone: "danger", onPress: () => {} }]}
+/>`,
+                        render: (
+                            <SurfaceCard.List
+                                showAnatomy
+                                items={[
                                     { key: "perm", title: "Basic file permissions", tone: "danger", onPress: () => {}, anatPart: "Row" },
                                 ]}
                             />

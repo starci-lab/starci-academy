@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Typography } from "@heroui/react"
-import { DragScrollArea } from "@sb-components/frames/DragScrollArea/DragScrollArea"
+import { DragScrollArea } from "@sb-components/behaviors/DragScrollArea/DragScrollArea"
 
 /**
  * `DragScrollArea.Base` — a vertical scroll region with a hidden scrollbar plus
@@ -8,7 +8,7 @@ import { DragScrollArea } from "@sb-components/frames/DragScrollArea/DragScrollA
  * still scrollable on Windows. One region → plain `children`, no named slots.
  */
 const meta: Meta<typeof DragScrollArea.Base> = {
-    title: "Frames/DragScrollArea/DragScrollArea.Base",
+    title: "Behaviors/DragScrollArea/DragScrollArea.Base",
     component: DragScrollArea.Base,
     tags: ["autodocs"],
     parameters: {

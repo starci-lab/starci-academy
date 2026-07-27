@@ -9,7 +9,7 @@ import { type VerdictBand, type VerdictBandVariant, verdictBandClassName } from 
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { PADDING_CLASS, type SeamScale, type SpaceScale } from "@sb-components/frames/_spacing"
+import { PADDING_CLASS, type SeamScale, type InsetScale } from "@sb-components/frames/_spacing"
 import { Grid, type GridColumns } from "@sb-components/frames/Grid/Grid"
 
 /**
@@ -62,10 +62,10 @@ import { Grid, type GridColumns } from "@sb-components/frames/Grid/Grid"
  * | Old prop | New prop | Union | Default | Present on member |
  * |---|---|---|---|---|
  * | `bordered?: boolean` | `variant` | `"surface" \| "nested"` | `"surface"` | `.Base` `.Nested` `.List` `.Accordion` `.CrossList` |
- * | `flushContent?: boolean` | `padding` | `SpaceScale` (from `_spacing`) | `3` | `.Base` |
+ * | `flushContent?: boolean` | `padding` | `InsetScale` (from `_spacing`) | `3` | `.Base` |
  * | `compact?: boolean` | `radius` | `"xl" \| "3xl"` | `"3xl"` | `.Nested` |
  *
- * 1-1 mapping: `bordered` → `variant="nested"` · `flushContent` → `padding={0}` ·
+ * 1-1 mapping: `bordered` → `variant="nested"` · `flushContent` → `padding="flush"` ·
  * `compact` → `radius="xl"`.
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -163,11 +163,11 @@ export interface SurfaceCardBaseProps extends SurfaceLabelProps, SlotProps {
      * `overflow-hidden` so rounding clips a bleeding child correctly.
      *
      * 2026-07-26 (instructor): changed from `flushContent?: boolean` (`flushContent=true` →
-     * `padding={0}`). An INDEPENDENT axis from `variant` — a `nested` card AND
-     * `padding={0}` is a real combination (a bleed-edge image inside a nested
+     * `padding="flush"`). An INDEPENDENT axis from `variant` — a `nested` card AND
+     * `padding="flush"` is a real combination (a bleed-edge image inside a nested
      * card); merging them would kill that combo.
      */
-    padding?: SpaceScale
+    padding?: InsetScale
     /**
      * `true` → the parts the frame OWNS ITSELF (`label` · right slot ·
      * `description`) switch to shimmer. `children`/`body` are NOT drawn for you
@@ -246,7 +246,7 @@ const Base = ({
     children,
     description,
     variant = "surface",
-    padding = 3,
+    padding = "cozy",
     isSkeleton = false,
     isHighlight = false,
     className,
@@ -259,7 +259,7 @@ const Base = ({
         <div
             className={cn(
                 surfaceFrame(variant),
-                padding === 0 ? "overflow-hidden" : PADDING_CLASS[padding],
+                padding === "flush" ? "overflow-hidden" : PADDING_CLASS[padding],
                 contentClassName,
             )}
             data-anat-part={showAnatomy ? "Content" : undefined}
@@ -898,7 +898,7 @@ export interface SurfaceCardPressableGroupProps {
     /**
      * Gap between cards, §10c scale. Defaults to `3`.
      *
-     * 2026-07-26 (instructor): changed the type from a local `2 | 3` to the shared {@link SpaceScale}.
+     * 2026-07-26 (instructor): changed the type from a local `2 | 3` to the shared {@link InsetScale}.
      */
     gap?: SeamScale
     /**
@@ -956,11 +956,15 @@ const itemBody = (item: SurfaceCardPressableGroupItem) => {
 interface PressableGroupSkeletonTileProps {
     /** Placement class only. */
     className?: string
+    /** Storybook-only: names the Avatar mirror so a BlockAnatomy panel can badge/link it. Avatar has no anatPart of its own, so the frame wraps it instead. */
+    showAnatomy?: boolean
 }
 
-const PressableGroupSkeletonTile = ({ className }: PressableGroupSkeletonTileProps) => (
+const PressableGroupSkeletonTile = ({ className, showAnatomy }: PressableGroupSkeletonTileProps) => (
     <div className={cn(TILE_CHROME, "flex items-center gap-3 p-3", className)}>
-        <Avatar.Base isSkeleton size="md" className="shrink-0" />
+        <div className="shrink-0" data-anat-part={showAnatomy ? "Avatar" : undefined}>
+            <Avatar.Base isSkeleton size="md" />
+        </div>
         <div className="flex min-w-0 flex-1 flex-col">
             <Typography.Base size="sm" isSkeleton className="w-1/3" />
             <Typography.Base size="xs" isSkeleton className="w-2/3" />
@@ -1033,7 +1037,7 @@ const PressableGroup = ({
 
     if (isSkeleton) {
         return (
-            <div role="group" aria-label={ariaLabel} className={className}>
+            <div role="group" aria-label={ariaLabel} className={className} data-anat-part={showAnatomy ? "Grid" : undefined}>
                 <Grid.Base
                     columns={columns}
                     gap={gap}
@@ -1041,7 +1045,7 @@ const PressableGroup = ({
                         key: item.key,
                         content: showAnatomy ? (
                             <div className="relative" data-anat>
-                                <PressableGroupSkeletonTile className={item.className} />
+                                <PressableGroupSkeletonTile className={item.className} showAnatomy={showAnatomy} />
                                 <AnatomyOverlay label="SkeletonTile" tier="composite" />
                             </div>
                         ) : (
@@ -1058,7 +1062,7 @@ const PressableGroup = ({
     // (one frame, not every frame opening its own). Grid built with `Grid.Base`
     // (§13, the tier's ONE grid system) instead of hand-declaring `grid`/`grid-cols-*`.
     return (
-        <div role="group" aria-label={ariaLabel} className={className}>
+        <div role="group" aria-label={ariaLabel} className={className} data-anat-part={showAnatomy ? "Grid" : undefined}>
             <Grid.Base
                 columns={columns}
                 gap={gap}
@@ -1701,7 +1705,7 @@ const AccordionFrameSkeleton = ({
         >
             {rows.map((item, index) => (
                 <div key={item?.id ?? index} className="relative" data-anat-part={showAnatomy ? "Row" : undefined}>
-                    <div className="flex items-center px-4 py-4">
+                    <div className="flex items-center p-3">
                         <div className="flex min-w-0 flex-1 flex-col gap-0 text-left">
                             {/* Row box height EXACTLY matches the real text's line-height (sm=20px · xs=16px) —
                                 the shimmer bar is only glyph-height, so without this wrapper the

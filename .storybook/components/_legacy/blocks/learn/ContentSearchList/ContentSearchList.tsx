@@ -119,15 +119,15 @@ export const ContentSearchList = ({
                 {isIdle ? (
                     <Typography.Base size="sm" color="muted" showAnatomy={showAnatomy} text={STRINGS.hint} />
                 ) : (
-                    // WRAPPER frame (`.Base padding={0}` = same `overflow-hidden` + surface
+                    // WRAPPER frame (`.Base padding="flush"` = same `overflow-hidden` + surface
                     // skin as the skeleton branch's `.List`), NOT `.List items`: each
                     // EntityResultRow already OWNS its row frame (px-4 py-3 + full-bleed
                     // separator), so a `.List` row would double the padding + hairline.
-                    // Codemod 2026-07-26: `bordered` → `variant="nested"`, `flushContent` → `padding={0}`
+                    // Codemod 2026-07-26: `bordered` → `variant="nested"`, `flushContent` → `padding="flush"`
                     // (API 3-trục SurfaceCard.Base).
                     <SurfaceCard.Base
                         variant="nested"
-                        padding={0}
+                        padding="flush"
                         anatPart={showAnatomy ? "SurfaceListCard" : undefined}
                     >
                         {results.map((item, index) => (

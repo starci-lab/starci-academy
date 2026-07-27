@@ -42,6 +42,13 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
         tier: "composite",
         role: "the frame and row rhythm, the same layout KeepGoingPath uses",
     },
+    // Only renders in the `Skeleton` leaf (the `isSkeleton` row title) — harmless to
+    // declare here too, it simply never appears in the `Nudges` leaf's derived tree.
+    "Skeleton.Title": {
+        storyId: "atoms-text-typography-typography-base--plain",
+        tier: "atom",
+        role: "shimmer bar standing in for a row's title while waiting on data",
+    },
 }
 
 /** The one and only leaf — full 3 kinds of work plus the single-thing case. The **pending** state lives in the `Skeleton` leaf below. */

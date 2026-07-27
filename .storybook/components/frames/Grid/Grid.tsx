@@ -23,7 +23,7 @@ import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
  * Storybook preview) already provides — this frame deliberately does NOT open its
  * own container, or every grid would answer to its own width instead of the shell's.
  *
- * §10: `gap` is a {@link SpaceScale} union literal and REQUIRED.
+ * §10: `gap` is a {@link InsetScale} union literal and REQUIRED.
  * §13: no domain content, no behaviour — placement only.
  * ─────────────────────────────────────────────────────────────────────────────
  */

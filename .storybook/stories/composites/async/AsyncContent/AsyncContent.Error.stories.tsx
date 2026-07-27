@@ -38,6 +38,7 @@ const MESSAGE_PARTS: Array<AnatomyNode> = [
         tier: "composite",
         role: "centered frame for the error state",
         state: "danger",
+        storyId: "composites-feedback-feedback-feedback-empty--title-only",
     },
 ]
 const RETRY_PARTS: Array<AnatomyNode> = [
@@ -46,8 +47,9 @@ const RETRY_PARTS: Array<AnatomyNode> = [
         tier: "composite",
         role: "centered frame for the error state",
         state: "danger",
+        storyId: "composites-feedback-feedback-feedback-empty--title-only",
         children: [
-            { name: "Button", tier: "composite", role: "shorthand onRetry + retryLabel → retry button in the action slot", state: "secondary" },
+            { name: "Button", tier: "atom", role: "shorthand onRetry + retryLabel → retry button in the action slot", state: "secondary", storyId: "atoms-buttons-button-button-base--default" },
         ],
     },
 ]
@@ -57,6 +59,7 @@ const ACTION_PARTS: Array<AnatomyNode> = [
         tier: "composite",
         role: "centered frame for the error state",
         state: "danger",
+        storyId: "composites-feedback-feedback-feedback-empty--title-only",
         children: [
             { name: "Action", tier: "composite", role: "the general-purpose action slot, holding whatever node the caller passes" },
         ],

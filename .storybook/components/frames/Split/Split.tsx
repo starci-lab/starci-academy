@@ -18,7 +18,7 @@ import { ALIGN_CLASS, GAP_CLASS, type LayoutAlign, type SeamScale } from "@sb-co
  * contract → NO `children`. Children would reopen the "which child goes where"
  * question the named slots exist to close.
  *
- * §10: `gap` is a {@link SpaceScale} union literal and REQUIRED (off-scale is a
+ * §10: `gap` is a {@link InsetScale} union literal and REQUIRED (off-scale is a
  * type error). §13: no domain content, no behaviour — placement only.
  * ─────────────────────────────────────────────────────────────────────────────
  */

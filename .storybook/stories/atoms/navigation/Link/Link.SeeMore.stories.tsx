@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { Link, type LinkSeeMoreSize } from "@sb-components/atoms/navigation/Link/Link"
+import { Link } from "@sb-components/atoms/navigation/Link/Link"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -44,22 +44,6 @@ const meta: Meta<typeof Link.SeeMore> = {
 export default meta
 
 type Story = StoryObj<typeof Link.SeeMore>
-
-/** One row of the size demo table below. */
-interface SizeRow {
-    /** step from the `LinkSeeMoreSize` union applied to this row */
-    size: LinkSeeMoreSize
-    /** link text shown for this row */
-    label: string
-    /** short caption explaining when to reach for this size */
-    hint: string
-}
-
-/** The FULL `LinkSeeMoreSize` union. */
-const SIZES: Array<SizeRow> = [
-    { size: "sm", label: "See more (sm)", hint: "sits beside a full section label" },
-    { size: "xs", label: "See more (xs)", hint: "sits beside a small eyebrow / subtle label" },
-]
 
 /** The BARE leaf — `decorative` not on, `size` left at default. */
 export const Default: Story = {
@@ -112,7 +96,7 @@ export const Decorative: Story = {
     ),
 }
 
-/** Leaf prop `size` — 2 steps, renders the FULL union in ONE leaf. */
+/** Leaf prop `size` — 2 steps, each its own state tab. */
 export const Size: Story = {
     render: () => (
         <div className="p-8">
@@ -123,21 +107,29 @@ export const Size: Story = {
                 reason="The link matches the text row it sits beside: sm next to a full section label, xs next to a small eyebrow, so the caller never has to eyeball a pairing."
                 states={[
                     {
-                        name: "size = sm | xs",
-                        why: "Both sizes render side by side: only the text (and the arrow riding its line-height) scales between them, while the gap and font-weight stay put. Rendering the full union together lets a reader confirm at a glance that `sm` pairs with a full section label and `xs` pairs with a small eyebrow.",
-                        code: "<Link.SeeMore size=\"sm\" onPress={() => {}} label=\"See more (sm)\" />\n<Link.SeeMore size=\"xs\" onPress={() => {}} label=\"See more (xs)\" />",
+                        name: "size = sm",
+                        why: "Renders the see-more link at its default sm size, the arrow riding the text's line-height. This is the size to reach for when the link sits beside a full section label.",
+                        code: "<Link.SeeMore size=\"sm\" onPress={() => {}} label=\"See more (sm)\" />",
                         render: (
-                            <div className="flex flex-wrap items-center gap-6">
-                                {SIZES.map(({ size, label }, index) => (
-                                    <Link.SeeMore
-                                        key={size}
-                                        size={size}
-                                        onPress={() => {}}
-                                        label={label}
-                                        showAnatomy={index === 0}
-                                    />
-                                ))}
-                            </div>
+                            <Link.SeeMore
+                                size="sm"
+                                onPress={() => {}}
+                                label="See more (sm)"
+                                showAnatomy
+                            />
+                        ),
+                    },
+                    {
+                        name: "size = xs",
+                        why: "Renders the see-more link a step smaller, the text and arrow both shrinking together while the font-weight stays put. This is the size to reach for when the link sits beside a small eyebrow or subtle label.",
+                        code: "<Link.SeeMore size=\"xs\" onPress={() => {}} label=\"See more (xs)\" />",
+                        render: (
+                            <Link.SeeMore
+                                size="xs"
+                                onPress={() => {}}
+                                label="See more (xs)"
+                                showAnatomy
+                            />
                         ),
                     },
                 ]}

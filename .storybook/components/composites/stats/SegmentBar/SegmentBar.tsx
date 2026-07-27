@@ -105,7 +105,7 @@ export const SegmentBar = ({
                         key={segment.key}
                         className={cn(
                             "h-full min-w-0",
-                            inlineLabels && "flex items-center justify-center overflow-hidden px-1.5",
+                            inlineLabels && "flex items-center justify-center overflow-hidden px-1",
                         )}
                         style={{
                             // slices touch flush (no gap) so the bar reads as ONE line —

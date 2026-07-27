@@ -37,7 +37,7 @@ import { Stack } from "@sb-components/frames/Stack/Stack"
  * layout tier" but this very file already imports `Container`/`Stack`, so the rule
  * contradicted itself; the layout tier has since split into `frame` and `composite`, §0):
  *   ALLOWED: use the FRAME tier (`Container`, `Stack`, `Grid`) to arrange —
- *      that's exactly where §10c's scale gets enforced by TYPE (`gap: SpaceScale`).
+ *      that's exactly where §10c's scale gets enforced by TYPE (`gap: InsetScale`).
  *   FORBIDDEN: hand-rolling a `div` + layout class. No `mx-auto max-w-*`, no `flex gap-*`.
  *   FORBIDDEN: importing an ATOM. Text/buttons/chips are the block's job — a screen
  *      touching an atom means it's presenting itself, encroaching on the tier below.
@@ -106,7 +106,7 @@ export interface CourseContentsLayoutProps {
  * from this state even though the content state declares it.
  */
 const CourseContentsEmpty = () => (
-    <Container.Base anatPart="Container" size="md" padding={6}>
+    <Container.Base anatPart="Container" size="md" padding="roomy">
         <AsyncContent.Empty
             anatPart="AsyncContent.Empty"
             icon={StackIcon}
@@ -133,12 +133,12 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
     // there's only ONE tree left — it can no longer drift.
     return (
         // The FRAME goes through the frame tier, the screen does NOT hand-roll a `div` (§13):
-        //   • `mx-auto max-w-3xl p-6` → `Container.Base size="md" padding={6}` — `md` reads
+        //   • `mx-auto max-w-3xl p-6` → `Container.Base size="md" padding="roomy"` — `md` reads
         //     from the token `--container-app-md`, the same 768px but from the RIGHT SOURCE;
         //     `max-w-3xl` is a different scale, and if the token changes it drifts silently
         //     (see the `SIZE_CLASS` JSDoc).
         //   • `gap-10` → `gap="page"`. `10` is NOT on the §10c scale (0·1·2·3·6·8) — the frame's
-        //     `SpaceScale` type means an off-scale value is now a TYPE ERROR at the call site,
+        //     `InsetScale` type means an off-scale value is now a TYPE ERROR at the call site,
         //     it can no longer slip through. This is exactly where the §10 rule gets enforced.
         // WARNING, 2026-07-27 — `gap` has been REMOVED from this call: `Container.Base` only applies
         // `gap` when using the `header`/`footer` slots; passing `children` directly means that
@@ -146,12 +146,12 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
         // the block below it was EXACTLY 0 — the page read as if the title were stuck to the
         // card. Writing `gap="page"` with nothing to receive it is worse than not writing it at
         // all: reading the code makes it look like the rhythm was already set.
-        <Container.Base size="md" padding={6} anatPart="Container">
+        <Container.Base size="md" padding="roomy" anatPart="Container">
             {/* VERTICAL rhythm owned by ONE party (§10a). Two deliberately different steps:
             `8` separates the course IDENTITY cluster from the content below (seam between two
             REGIONS), `6` is the rhythm between blocks within the same region — §10
             "sections-wide vs related-tight", uniform spacing is forbidden. */}
-            <Stack.V gap="page" anatPart="Stack.V.Page">
+            <Stack.V gap="page" anatPart="Stack.V">
                 {/* 2026-07-26: dropped the old note "blocks have no `anatPart` yet so they need
             a div wrapper" — all six blocks now take `anatPart` directly, no wrapper left. */}
                 {/* §11a — the badge stops at the HIGHEST node `CourseBrief` (BLOCK). The

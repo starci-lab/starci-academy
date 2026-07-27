@@ -1,7 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
-import { type LayoutAlign, type LayoutJustify, type SeamScale } from "@sb-components/frames/_spacing"
+import { type LayoutAlign, type LayoutJustify, type SeamScale, type InsetScale } from "@sb-components/frames/_spacing"
 import { Flex } from "@sb-components/frames/Flex/Flex"
 
 /**
@@ -16,7 +16,7 @@ import { Flex } from "@sb-components/frames/Flex/Flex"
  * name: a track has exactly ONE slot, its content). `items` would be wrong here;
  * see `Cluster`/`Grid` for the repeat-list frames of this folder.
  *
- * ⭐ WHY THIS FRAME EXISTS (§10): `gap` is typed {@link SpaceScale} — a UNION
+ * ⭐ WHY THIS FRAME EXISTS (§10): `gap` is typed {@link InsetScale} — a UNION
  * LITERAL of `0·1·2·3·6·8`. Off-scale (`gap-4`, `gap-5`, `gap-1.5`) cannot even
  * be typed, so the §10 scale is enforced by the COMPILER instead of by review.
  * `gap` is REQUIRED for the same reason: an implicit default would let the seam
@@ -43,6 +43,16 @@ export interface StackBaseProps {
     justify?: LayoutJustify
     /** `true` → inserts `Divider.Base` BETWEEN children (never before the first / after the last). */
     divider?: boolean
+    /**
+     * Space INSIDE the track, same scale as `gap`.
+     *
+     * ⭐ 2026-07-27: forwarded down to `Flex` so a stack that also needs padding no longer
+     * has to DROP to `Flex` and lose `divider` plus the axis semantics. That drop was the
+     * one remaining reason to reach past this frame, and a way out that costs less than the
+     * proper road always wins — the same force that produced 227 hand-written
+     * `flex flex-col gap-4` in the first place.
+     */
+    padding?: InsetScale
     /**
      * Anatomy tag for THIS frame itself — so the PARENT can badge it as ONE node (§11a.1).
      * Missing this prop means the `layouts`-tier frame is used but the panel cannot see it.
@@ -107,6 +117,7 @@ const StackV = ({
     justify,
     divider = false,
     children,
+    padding,
     className,
     showAnatomy = false,
     anatPart,
@@ -114,6 +125,7 @@ const StackV = ({
     <Flex.Base
         direction="col"
         gap={gap}
+        padding={padding}
         align={align}
         justify={justify}
         className={className}
@@ -130,6 +142,7 @@ const StackH = ({
     wrap = false,
     divider = false,
     children,
+    padding,
     className,
     showAnatomy = false,
     anatPart,
@@ -137,6 +150,7 @@ const StackH = ({
     <Flex.Base
         direction="row"
         gap={gap}
+        padding={padding}
         align={align}
         justify={justify}
         wrap={wrap}

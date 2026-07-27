@@ -83,13 +83,26 @@ export const ProgressMeter = ({
             ) : null}
             {/* With a target marker, force the bar row to the pill's own height (`h-5`)
                 and center the bar in it, so the `h-5` pill sits EXACTLY on the track
-                midline. Reserve top room (`mt-5`) for a floating label so it never
-                overlaps the caption above. */}
+                midline.
+
+                Top room for the floating target label is `pt-6` (24px), NOT the old `mt-5`
+                (20px). Two rules were broken by that one class: a CHILD was pushing its own
+                margin, and 20px is not on the `0·1·2·3·6·8` scale at all.
+
+                20px looked justified because it equals the pill height (`h-5`), so it read as
+                a measurement rather than a choice. It is still a choice: the scale skips from
+                12 to 24 precisely so nobody picks a number off the ruler, and clearance takes
+                the FIRST step that clears the obstacle, which is 24. No exception (teacher,
+                2026-07-27: strict, no exceptions to the scale unless he grants one).
+
+                It is `pt` and not `mt` because the room belongs INSIDE this box: the label
+                floats over this box's own top edge, so the space is this surface's inset, not
+                a seam between two siblings. */}
             <div
                 className={cn(
                     "relative",
                     targetPercent !== null && "flex h-5 items-center",
-                    targetPercent !== null && targetLabel !== undefined && "mt-5",
+                    targetPercent !== null && targetLabel !== undefined && "pt-6",
                 )}
             >
                 <div className="w-full">

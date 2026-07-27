@@ -82,31 +82,50 @@ export const Placements: Story = {
                 leaf="Prop `placement`"
                 states={[
                     {
-                        name: "placement = top | bottom | left | right",
-                        why: "Four triggers are pinned open at once, one per `placement` value, so the panel visibly anchors itself to a different edge of each trigger: top, bottom, left, then right. Every panel is pinned open together instead of relying on hover, since a reader cannot hover four triggers at the same time.",
-                        code: "<Tooltip.Base label=\"…\" placement=\"top | bottom | left | right\">…</Tooltip.Base>",
+                        name: "placement = \"top\"",
+                        why: "The trigger is pinned open with the panel anchored above it, since `placement` is set to top. This is the default anchor shown here explicitly so all four sides can be compared leaf by leaf.",
+                        code: "<Tooltip.Base label=\"Placement top\" placement=\"top\">…</Tooltip.Base>",
                         render: (
-                            <div className="grid grid-cols-2 gap-x-24 gap-y-20 px-16 py-24">
-                                <div className="flex justify-center">
-                                    <Tooltip.Base label="Placement top" placement="top" defaultOpen showAnatomy>
-                                        <TriggerBox label="Top" />
-                                    </Tooltip.Base>
-                                </div>
-                                <div className="flex justify-center">
-                                    <Tooltip.Base label="Placement bottom" placement="bottom" defaultOpen showAnatomy>
-                                        <TriggerBox label="Bottom" />
-                                    </Tooltip.Base>
-                                </div>
-                                <div className="flex justify-center">
-                                    <Tooltip.Base label="Placement left" placement="left" defaultOpen showAnatomy>
-                                        <TriggerBox label="Left" />
-                                    </Tooltip.Base>
-                                </div>
-                                <div className="flex justify-center">
-                                    <Tooltip.Base label="Placement right" placement="right" defaultOpen showAnatomy>
-                                        <TriggerBox label="Right" />
-                                    </Tooltip.Base>
-                                </div>
+                            <div className="flex justify-center py-12">
+                                <Tooltip.Base label="Placement top" placement="top" defaultOpen showAnatomy>
+                                    <TriggerBox label="Top" />
+                                </Tooltip.Base>
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "placement = \"bottom\"",
+                        why: "The trigger is pinned open with the panel anchored below it, since `placement` is set to bottom. Bottom placement is the fallback the atom reaches for when a trigger sits too close to the top of the viewport for the panel to fit above it.",
+                        code: "<Tooltip.Base label=\"Placement bottom\" placement=\"bottom\">…</Tooltip.Base>",
+                        render: (
+                            <div className="flex justify-center py-12">
+                                <Tooltip.Base label="Placement bottom" placement="bottom" defaultOpen showAnatomy>
+                                    <TriggerBox label="Bottom" />
+                                </Tooltip.Base>
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "placement = \"left\"",
+                        why: "The trigger is pinned open with the panel anchored to its left edge, since `placement` is set to left. Left placement lets a caller keep the hint clear of content that sits directly above or below the trigger.",
+                        code: "<Tooltip.Base label=\"Placement left\" placement=\"left\">…</Tooltip.Base>",
+                        render: (
+                            <div className="flex justify-center py-12">
+                                <Tooltip.Base label="Placement left" placement="left" defaultOpen showAnatomy>
+                                    <TriggerBox label="Left" />
+                                </Tooltip.Base>
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "placement = \"right\"",
+                        why: "The trigger is pinned open with the panel anchored to its right edge, since `placement` is set to right. Right placement mirrors left for triggers sitting near the left edge of their container.",
+                        code: "<Tooltip.Base label=\"Placement right\" placement=\"right\">…</Tooltip.Base>",
+                        render: (
+                            <div className="flex justify-center py-12">
+                                <Tooltip.Base label="Placement right" placement="right" defaultOpen showAnatomy>
+                                    <TriggerBox label="Right" />
+                                </Tooltip.Base>
                             </div>
                         ),
                     },

@@ -52,7 +52,7 @@ const FlowDiagramCardNode = ({ data, selected }: NodeProps) => {
             <Handle type="target" position={Position.Top} className="!size-2 !border-none !bg-muted" />
             <div
                 className={cn(
-                    "flex min-w-[140px] max-w-[220px] flex-col items-center gap-1 rounded-large border bg-surface px-4 py-2.5 text-center shadow-sm transition-colors",
+                    "flex min-w-[140px] max-w-[220px] flex-col items-center gap-1 rounded-large border bg-surface px-3 py-2 text-center shadow-sm transition-colors",
                     selected ? "border-accent ring-2 ring-accent/40" : "border-default",
                 )}
             >

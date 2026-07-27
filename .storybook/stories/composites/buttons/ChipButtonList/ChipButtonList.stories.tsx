@@ -59,18 +59,22 @@ const DISABLED_ITEMS = [
 const ONE_ITEM = [{ label: "Tóm tắt bài học này", icon: <SparkleIcon aria-hidden focusable="false" /> }]
 
 // wrap + icon: mỗi Button lặp ×N, mỗi Button có 1 icon con dẫn nhãn.
+// Real item rows compose the base Button — the `_legacy` design (§0: ChipButtonList
+// itself was ported before the atom split, kept as-is here since this is a deps
+// declaration, not a rewrite of the component). Its own story lives under `Legacy`.
 const WRAP_ICON_PARTS: Array<AnatomyNode> = [
     {
         name: "Button",
         tier: "composite",
         role: "A suggestion chip (variant secondary, size sm), repeated once per item.",
+        storyId: "legacy-primitives-buttons-button--variants",
         children: [{ name: "icon", tier: "composite", role: "The leading icon (size-4 shrink-0, muted); ChipButtonList forces this size itself." }],
     },
 ]
 
 // wrap không icon: chip chỉ còn Button + nhãn trần (children trực tiếp, không Typography — giống base Button).
 const WRAP_PLAIN_PARTS: Array<AnatomyNode> = [
-    { name: "Button", tier: "composite", role: "A suggestion chip (variant secondary, size sm), repeated once per item, with no icon." },
+    { name: "Button", tier: "composite", role: "A suggestion chip (variant secondary, size sm), repeated once per item, with no icon.", storyId: "legacy-primitives-buttons-button--variants" },
 ]
 
 // column/ghost: mỗi Button là 1 hàng full-width, con gồm icon + Typography (label qua Typography, không className tay).
@@ -79,9 +83,10 @@ const COLUMN_PARTS: Array<AnatomyNode> = [
         name: "Button",
         tier: "composite",
         role: "A full-width skill-menu row (variant ghost), repeated once per item.",
+        storyId: "legacy-primitives-buttons-button--variants",
         children: [
             { name: "icon", tier: "composite", role: "The leading icon (size-4 shrink-0, muted)." },
-            { name: "Typography", tier: "composite", role: "The skill label (weight medium, truncate)." },
+            { name: "Typography", tier: "atom", role: "The skill label (weight medium, truncate).", storyId: "atoms-text-typography-typography-base--plain" },
         ],
     },
 ]
@@ -93,18 +98,21 @@ const DISABLED_PARTS: Array<AnatomyNode> = [
         tier: "composite",
         role: "A suggestion chip, repeated once per item; one item's isDisabled still renders it, only interaction is blocked.",
         state: "1 item isDisabled",
+        storyId: "legacy-primitives-buttons-button--variants",
         children: [{ name: "icon", tier: "composite", role: "The leading icon." }],
     },
 ]
 
-// skeleton: mirror shape wrap (Skeleton.Button pill ×N, container tự vẽ khi isSkeleton — không dựng Button thật).
+// skeleton: mirror shape wrap (Button.Base isSkeleton pill ×N, container tự vẽ khi isSkeleton — không dựng Button thật).
+// The skeleton mirror (wrap direction) reaches straight for the atom `Button.Base`
+// isSkeleton leaf instead — a different component from the real-row Button above.
 const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton", tier: "composite", role: "A shimmer pill repeated N times, mirroring the suggestion-chip shape.", state: "skeleton" },
+    { name: "Skeleton", tier: "atom", role: "A shimmer pill repeated N times (atom Button.Base isSkeleton), mirroring the suggestion-chip shape.", state: "skeleton", storyId: "atoms-buttons-button-button-base--skeleton" },
 ]
 
 // single: cùng composition với wrap+icon, chỉ 1 item — container không ép tối thiểu N chip.
 const SINGLE_PARTS: Array<AnatomyNode> = [
-    { name: "Button", tier: "composite", role: "A suggestion chip; only one item is passed." },
+    { name: "Button", tier: "composite", role: "A suggestion chip; only one item is passed.", storyId: "legacy-primitives-buttons-button--variants" },
     { name: "icon", tier: "composite", role: "The leading icon." },
 ]
 

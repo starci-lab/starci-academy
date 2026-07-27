@@ -82,14 +82,11 @@ export const TriggerVariants: Story = {
                 reason="The trigger is a real HeroButton, so it carries the same four visuals as every button in the system. Picking the variant decides how loud the menu's entry point reads next to its neighbours, a toolbar full of primary triggers would shout."
                 states={[
                     {
-                        name: "triggerVariant = primary | secondary | tertiary | ghost, menu closed",
-                        why: "All four buttons already differ from each other before anyone opens a menu, because the prop paints the trigger button itself rather than anything inside the popover. Each menu is shown closed on purpose, since that is the only moment the four variants can be compared side by side.",
-                        code: `<Menu.Base triggerVariant="primary" triggerLabel="Primary" items={[…]} />
-<Menu.Base triggerVariant="secondary" triggerLabel="Secondary" items={[…]} />
-<Menu.Base triggerVariant="tertiary" triggerLabel="Tertiary" items={[…]} />
-<Menu.Base triggerVariant="ghost" triggerLabel="Ghost" items={[…]} />`,
+                        name: "triggerVariant = \"primary\"",
+                        why: "The trigger renders as a primary HeroButton, the loudest visual weight in the button system, while the menu stays closed so the trigger's own look is what the reader compares. Reach for primary when this menu is the main action in its area and should draw the eye first.",
+                        code: "<Menu.Base triggerVariant=\"primary\" triggerLabel=\"Primary\" items={[…]} />",
                         render: (
-                            <div className="flex flex-wrap items-center justify-center gap-3">
+                            <div className="flex justify-center py-4">
                                 <Menu.Base
                                     triggerVariant="primary"
                                     triggerLabel="Primary"
@@ -101,30 +98,60 @@ export const TriggerVariants: Story = {
                                         { key: "settings", label: "Settings" },
                                     ]}
                                 />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "triggerVariant = \"secondary\"",
+                        why: "The trigger renders as a secondary HeroButton, one step down from primary, while the menu stays closed. Reach for secondary when the menu is useful but should not compete with a primary action sitting nearby.",
+                        code: "<Menu.Base triggerVariant=\"secondary\" triggerLabel=\"Secondary\" items={[…]} />",
+                        render: (
+                            <div className="flex justify-center py-4">
                                 <Menu.Base
                                     triggerVariant="secondary"
                                     triggerLabel="Secondary"
                                     ariaLabel="Secondary"
+                                    showAnatomy
                                     onAction={() => {}}
                                     items={[
                                         { key: "profile", label: "My profile" },
                                         { key: "settings", label: "Settings" },
                                     ]}
                                 />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "triggerVariant = \"tertiary\"",
+                        why: "The trigger renders as a tertiary HeroButton, quieter again, while the menu stays closed. Reach for tertiary when the menu is a minor option that should recede into the surrounding layout.",
+                        code: "<Menu.Base triggerVariant=\"tertiary\" triggerLabel=\"Tertiary\" items={[…]} />",
+                        render: (
+                            <div className="flex justify-center py-4">
                                 <Menu.Base
                                     triggerVariant="tertiary"
                                     triggerLabel="Tertiary"
                                     ariaLabel="Tertiary"
+                                    showAnatomy
                                     onAction={() => {}}
                                     items={[
                                         { key: "profile", label: "My profile" },
                                         { key: "settings", label: "Settings" },
                                     ]}
                                 />
+                            </div>
+                        ),
+                    },
+                    {
+                        name: "triggerVariant = \"ghost\"",
+                        why: "The trigger renders as a ghost HeroButton with no fill, while the menu stays closed. Reach for ghost when the menu should sit almost invisibly until the reader hovers or focuses it.",
+                        code: "<Menu.Base triggerVariant=\"ghost\" triggerLabel=\"Ghost\" items={[…]} />",
+                        render: (
+                            <div className="flex justify-center py-4">
                                 <Menu.Base
                                     triggerVariant="ghost"
                                     triggerLabel="Ghost"
                                     ariaLabel="Ghost"
+                                    showAnatomy
                                     onAction={() => {}}
                                     items={[
                                         { key: "profile", label: "My profile" },

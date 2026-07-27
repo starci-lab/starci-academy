@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
-import { ALIGN_CLASS, GAP_CLASS, JUSTIFY_CLASS, PADDING_CLASS, type LayoutAlign, type LayoutJustify, type SeamScale, type SpaceScale } from "@sb-components/frames/_spacing"
+import { ALIGN_CLASS, GAP_CLASS, JUSTIFY_CLASS, PADDING_CLASS, type LayoutAlign, type LayoutJustify, type SeamScale, type InsetScale } from "@sb-components/frames/_spacing"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -45,7 +45,7 @@ export interface FlexBaseProps {
      * Leaving it out renders no padding class at all, which keeps a plain layout box free of
      * inner space and matches how the frame behaved before.
      */
-    padding?: SpaceScale
+    padding?: InsetScale
     /** Cross axis alignment. `stretch` on a column, `center` on a row, matching the old Stack defaults. */
     align?: LayoutAlign
     /** Main axis distribution. Left out means the browser default, which is `start`. */
@@ -109,6 +109,16 @@ const FlexBase = ({
 )
 
 /** `Flex.*` namespace. One shape, so only `.Base`. */
+/**
+ * ⛔ INTERNAL to the frame tier (2026-07-27). `Stack.V`/`.H` are the public road; this box
+ * is what they are built on. It stays exported ONLY because `Stack.tsx` imports it — no
+ * story, and nothing outside `components/frames/` may call it.
+ *
+ * WHY it is not a public frame: it takes `direction` as a prop, so it can express any
+ * one-axis track, which makes it a strictly weaker `Stack` — same shapes, minus `divider`,
+ * minus the axis stated in the name. A public frame that can do everything the constrained
+ * one can is not a second option, it is the way the constraint gets bypassed.
+ */
 export const Flex = Object.assign(FlexBase, {
     Base: FlexBase,
 })

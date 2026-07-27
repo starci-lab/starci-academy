@@ -19,7 +19,7 @@ import { CodeSnippet } from "@sb-utils/BlockAnatomy/CodeSnippet"
  *
  * | Tab | Câu hỏi | Luật |
  * |---|---|---|
- * | **Deps** | leaf này dựng lại story nào? | chỉ component CÓ `storyId` — bấm nhảy được. KHÔNG có thì THÔI, tab không mọc ra (không còn dòng "no deps" placeholder). |
+ * | **Structure** | leaf này LỒNG những gì trong nó? | chỉ component CÓ `storyId` — bấm nhảy được. KHÔNG có thì THÔI, tab không mọc ra. ⚠️ Tên cũ là "Deps" và SAI: cây suy từ DOM nên nó tả CẤU TRÚC, còn phụ thuộc phải đọc từ IMPORT (thầy chốt 2026-07-27). |
  * | **Code** | gọi thế nào? | snippet + nút Copy. |
  *
  * CẤU TRÚC cây luôn suy từ DOM (leo ancestor của `data-anat-part`) — không ai gõ
@@ -424,31 +424,37 @@ const BlockAnatomyDerived = ({
                     order.push(nm)
                 }
             })
-            // CHA = tổ tiên GẦN NHẤT cũng mang `data-anat-part`. Cấu trúc đến từ DOM.
-            const firstEl = new Map<string, HTMLElement>()
-            els.forEach((el) => {
+            // ⭐ Gom node theo PHẦN TỬ, không theo TÊN (thầy chốt 2026-07-27).
+            //
+            // Bản cũ khoá theo chuỗi tên: `firstEl` chỉ giữ phần tử ĐẦU TIÊN của mỗi tên, nên hai
+            // `Stack.H` trong cùng một cây NHẬP làm một và cây đọc sai. Cách né đang dùng là bịa
+            // tên riêng (`Stack.H.PriceRow`, `Stack.V.Price`) — nhưng đó không phải tên component,
+            // và người đọc bấm vào sẽ tra một cái tên không tồn tại.
+            //
+            // Khoá theo phần tử thì cùng một component xuất hiện bao nhiêu lần cũng được, mỗi lần
+            // là một node riêng, và TÊN quay về đúng vai của nó: nhãn để tra chú giải, không phải
+            // định danh.
+            const nodeEls = els.filter((el) => {
                 const nm = el.getAttribute("data-anat-part") ?? ""
-                if (nm && !firstEl.has(nm)) {
-                    firstEl.set(nm, el)
-                }
+                return Boolean(nm && annotate[nm]?.storyId)
             })
-            const parentOf = new Map<string, string | null>()
-            order.forEach((nm) => {
-                let node = firstEl.get(nm)?.parentElement ?? null
-                let parent: string | null = null
+            const parentElOf = new Map<HTMLElement, HTMLElement | null>()
+            nodeEls.forEach((el) => {
+                let node = el.parentElement
+                let parent: HTMLElement | null = null
                 while (node && node !== host) {
-                    const up = node.getAttribute("data-anat-part")
-                    if (up && order.includes(up)) {
-                        parent = up
+                    if (nodeEls.includes(node)) {
+                        parent = node
                         break
                     }
                     node = node.parentElement
                 }
-                parentOf.set(nm, parent)
+                parentElOf.set(el, parent)
             })
-            const toNode = (nm: string): AnatomyNode => {
+            const toNode = (el: HTMLElement): AnatomyNode => {
+                const nm = el.getAttribute("data-anat-part") ?? ""
                 const meta = annotate[nm]
-                const kids = order.filter((child) => parentOf.get(child) === nm)
+                const kids = nodeEls.filter((child) => parentElOf.get(child) === el)
                 return {
                     name: nm,
                     tier: meta?.tier ?? "composite",
@@ -458,7 +464,7 @@ const BlockAnatomyDerived = ({
                     ...(kids.length > 0 ? { children: kids.map(toNode) } : {}),
                 }
             }
-            const next = order.filter((nm) => parentOf.get(nm) === null).map(toNode)
+            const next = nodeEls.filter((el) => parentElOf.get(el) === null).map(toNode)
             // So chuỗi TRƯỚC khi set — nếu không sẽ setState mỗi lượt render → lặp.
             setDerived((prev) => (JSON.stringify(prev) === JSON.stringify(next) ? prev : next))
         }
@@ -610,9 +616,12 @@ const BlockAnatomyDerived = ({
                     </div>
                 ) : null}
 
-                {/* Bố cục C (thầy chốt 2026-07-27): hồ sơ của CHÍNH state đang chọn nằm bên
-                    phải — vì sao · deps · code. Hẹp thì xuống một cột. */}
-                <div className="grid gap-3 p-4 @app-md:grid-cols-[1fr_20rem]">
+                {/* ⭐ MỘT CỘT (thầy chốt 2026-07-27, sửa bố cục C): why · deps · code xếp DỌC,
+                    mỗi thứ một hàng full-width.
+                    Bản hai cột nhét code vào rãnh `20rem` nên snippet phải cuộn ngang — mà code
+                    là thứ người ta COPY, không phải liếc. Đọc một dòng code bị cắt làm đôi tốn
+                    hơn nhiều so với việc phải cuộn dọc thêm một nấc. */}
+                <div className="flex flex-col gap-3 p-4">
                     <div className="flex flex-col gap-3">
                         {active.why ? (
                             <div>
@@ -622,14 +631,21 @@ const BlockAnatomyDerived = ({
                         ) : null}
                         {derived.length > 0 ? (
                             <div>
-                                <SideHeading>{isLegacyLeaf ? "deps" : "deps of this state"}</SideHeading>
+                                {/* ⭐ "STRUCTURE", khong phai "deps" (thay chot 2026-07-27). Cay nay suy tu DOM bang
+                                    cach leo to tien `data-anat-part`, nen no ta CAI GI LONG TRONG CAI GI —
+                                    tuc CAU TRUC. "Deps" la mot loi hua khac han: phu thuoc la thu doc tu
+                                    IMPORT, va hai thu do khong trung nhau. Bang chung: `Popover.Content`
+                                    render qua portal nen `KeyValue.List` khai dung van khong hien, con
+                                    `Popover.Trigger`/`Popover.Content` hien thanh ANH EM du logic long nhau.
+                                    Dat ten dung thi nguoi doc thoi cho doi thu no khong lam duoc. */}
+                                <SideHeading>{isLegacyLeaf ? "structure" : "structure of this state"}</SideHeading>
                                 {derived.map((node) => <Branch key={node.name} node={node} depth={1} />)}
                             </div>
                         ) : null}
                     </div>
 
                     {active.code ? (
-                        <div className="flex flex-col gap-2 @app-md:border-l @app-md:border-default @app-md:pl-4">
+                        <div className="flex flex-col gap-2 border-t border-default pt-3">
                             <div className="flex items-center justify-between">
                                 <SideHeading>code</SideHeading>
                                 <button

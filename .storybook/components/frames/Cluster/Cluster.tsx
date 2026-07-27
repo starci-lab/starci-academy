@@ -18,7 +18,7 @@ import { ALIGN_CLASS, GAP_CLASS, JUSTIFY_CLASS, type LayoutAlign, type LayoutJus
  * next to a badge next to a button); `Cluster` repeats ONE kind and always wraps.
  * The two are not interchangeable — pick by the §13b test, not by looks.
  *
- * §10: `gap` is a {@link SpaceScale} union literal and REQUIRED — a chip row is
+ * §10: `gap` is a {@link InsetScale} union literal and REQUIRED — a chip row is
  * the canonical `related`(2) seam, but the khung refuses to guess it for you.
  * §13: no domain content, no behaviour — the items' own components carry those.
  * ─────────────────────────────────────────────────────────────────────────────
@@ -45,6 +45,20 @@ export interface ClusterBaseProps {
      * to BOTH axes (row gap and column gap), so wrapped lines breathe the same.
      */
     gap: SeamScale
+    /**
+     * `true` puts a `·` BETWEEN items, N items get N-1 marks, mirroring `Stack`'s `divider`.
+     *
+     * ⭐ 2026-07-27. A `·` sitting between two meta fragments is not content, it is how the
+     * TRACK marks the boundary between its items, so it belongs to the frame the same way a
+     * rule does. Written as content it caused two separate bugs: a hand-typed `mx-1` for its
+     * breathing room, which the padding gate then reported as a child pushing its own margin,
+     * and a node in the structure tree named `Separator` whose link went to the generic
+     * Typography story, so three different roles all pointed at the same unrelated page.
+     *
+     * Both disappear here: the mark carries no margin because the track's own `gap` already
+     * spaces it, and it is not an item so it never becomes a node.
+     */
+    separator?: boolean
     /** Cross-axis alignment WITHIN a line (items of unequal height). Default `center`. */
     align?: LayoutAlign
     /** Main-axis distribution of each line. Default `start`. */
@@ -75,6 +89,7 @@ const ClusterBase = ({
     gap,
     align = "center",
     justify = "start",
+    separator = false,
     className,
     showAnatomy = false,
     anatPart,
@@ -89,15 +104,19 @@ const ClusterBase = ({
             className,
         )}
     >
-        {items.map((item) =>
-            showAnatomy ? (
-                <div key={item.key} data-anat-part="Item">
-                    {item.content}
-                </div>
-            ) : (
-                <React.Fragment key={item.key}>{item.content}</React.Fragment>
-            ),
-        )}
+        {items.map((item, index) => {
+            const body = showAnatomy
+                ? <div data-anat-part="Item">{item.content}</div>
+                : item.content
+            return (
+                <React.Fragment key={item.key}>
+                    {/* `aria-hidden`: the mark is a visual boundary, a screen reader already
+                        gets the items as separate nodes and would only hear noise. */}
+                    {separator && index > 0 ? <span aria-hidden>·</span> : null}
+                    {body}
+                </React.Fragment>
+            )
+        })}
     </div>
 )
 

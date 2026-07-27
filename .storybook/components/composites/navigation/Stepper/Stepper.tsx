@@ -129,7 +129,7 @@ const StepperBase = ({
                         <div
                             className={cn(
                                 "flex flex-col gap-0",
-                                isVertical ? "pt-1" : "mt-2 items-center text-center",
+                                isVertical ? "pt-1" : "items-center text-center",
                             )}
                         >
                             <span data-anat-part={showAnatomy ? "Label" : undefined}>
@@ -167,12 +167,12 @@ const StepperBase = ({
                                 <button
                                     type="button"
                                     onClick={() => onStepPress(index)}
-                                    className="flex flex-col items-center gap-0 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                                    className="flex flex-col items-center gap-2 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                                 >
                                     {indicatorAndCopy}
                                 </button>
                             ) : (
-                                <div className="flex flex-col items-center gap-0">
+                                <div className="flex flex-col items-center gap-2">
                                     {indicatorAndCopy}
                                 </div>
                             )}
@@ -183,14 +183,19 @@ const StepperBase = ({
                 // Vertical: indicator + a vertical connector down its left rail, copy on the right.
                 return (
                     <div key={step.id} className="flex gap-3">
-                        <div className="flex flex-col items-center">
+                        <div
+                            className={cn(
+                                "flex flex-col items-center gap-1",
+                                index < steps.length - 1 && "pb-1",
+                            )}
+                        >
                             <StepIndicator state={state} index={index} showAnatomy={showAnatomy} />
                             {index < steps.length - 1 ? (
                                 <span
                                     aria-hidden
                                     data-anat-part={showAnatomy ? "Connector" : undefined}
                                     className={cn(
-                                        "my-1 w-0.5 flex-1",
+                                        "w-0.5 flex-1",
                                         index < safeIndex ? "bg-success" : "bg-default",
                                     )}
                                 />

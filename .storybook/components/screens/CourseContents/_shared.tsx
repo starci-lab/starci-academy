@@ -36,7 +36,7 @@ export const PARTS: Array<AnatomyNode> = [
     },
     {
         // Different name from the `Stack.V` inside it: the panel groups nodes BY NAME, so a matching name would merge them into one.
-        name: "Stack.V.Page",
+        name: "Stack.V",
         tier: "frame",
         role: "rhythm between two REGIONS — `gap=\"page\"` separates the course-identity cluster from the content (§10: sections-wide)",
         storyId: "frames-stack-stack-v--default",

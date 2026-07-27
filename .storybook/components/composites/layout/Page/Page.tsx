@@ -206,7 +206,7 @@ const BottomBar = ({
     showAnatomy = false,
 }: PageBottomBarProps) => {
     const main = body ?? children
-    const chrome = "fixed bottom-0 left-0 right-[var(--app-rail-w,0px)] z-40 border-t border-separator bg-background px-4 py-3"
+    const chrome = "fixed bottom-0 left-0 right-[var(--app-rail-w,0px)] z-40 border-t border-separator bg-background px-6 py-3"
 
     // Only ONE side supplied → render it raw: the caller's own width strategy
     // (`w-full` CTA, two `flex-1` buttons) must not be boxed by a shrink-0 wrapper.

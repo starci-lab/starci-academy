@@ -37,9 +37,6 @@ export default meta
 
 type Story = StoryObj<typeof Choice.Switch>
 
-/** The FULL `size` union — missing a value means that value grows into a stray leaf elsewhere. */
-const SIZES = ["sm", "md", "lg"] as const
-
 /** BARE leaf — no prop turned on: off, no hint, no error. */
 export const Default: Story = {
     render: () => {
@@ -113,17 +110,27 @@ export const Sizes: Story = {
                     reason="size is scale only, it never changes what the switch means. Use it to match the switch to the row it sits in (a dense settings list vs. a spacious one)."
                     states={[
                         {
-                            name: "size = sm | md | lg (full union)",
-                            why: "Three tracks render at increasing scale while the label stays one text size across all three. Only the track and thumb grow, so size is purely a fit decision for the row the switch sits in, not a meaning change.",
-                            code: `<Choice.Switch size="sm" isSelected onValueChange={setValue} label="Dark mode" />
-<Choice.Switch size="md" isSelected onValueChange={setValue} label="Dark mode" />   // default
-<Choice.Switch size="lg" isSelected onValueChange={setValue} label="Dark mode" />`,
+                            name: "size = sm",
+                            why: "The track and thumb render at the smallest scale while the label keeps its normal text size. This scale fits a dense settings list where many rows of switches share one screen.",
+                            code: "<Choice.Switch size=\"sm\" isSelected onValueChange={setValue} label=\"Dark mode\" />",
                             render: (
-                                <div className="flex flex-col items-start gap-4">
-                                    {SIZES.map((size, index) => (
-                                        <Choice.Switch key={size} size={size} isSelected={value} onValueChange={setValue} label={`Dark mode (${size})`} showAnatomy={index === 0} />
-                                    ))}
-                                </div>
+                                <Choice.Switch size="sm" isSelected={value} onValueChange={setValue} label="Dark mode (sm)" showAnatomy />
+                            ),
+                        },
+                        {
+                            name: "size = md (default)",
+                            why: "The track and thumb render at the default scale, the size Choice.Switch takes whenever size is left unset. This is the resting scale for an ordinary settings row with no density pressure.",
+                            code: "<Choice.Switch isSelected onValueChange={setValue} label=\"Dark mode\" />   // size defaults to md",
+                            render: (
+                                <Choice.Switch size="md" isSelected={value} onValueChange={setValue} label="Dark mode (md)" showAnatomy />
+                            ),
+                        },
+                        {
+                            name: "size = lg",
+                            why: "The track and thumb render at the largest scale while the label keeps its normal text size. This scale suits a spacious page or a touch target that needs to stand out.",
+                            code: "<Choice.Switch size=\"lg\" isSelected onValueChange={setValue} label=\"Dark mode\" />",
+                            render: (
+                                <Choice.Switch size="lg" isSelected={value} onValueChange={setValue} label="Dark mode (lg)" showAnatomy />
                             ),
                         },
                     ]}
@@ -279,17 +286,27 @@ export const Loading: Story = {
                 reason="Whoever owns the shape owns its resting state, so the switch draws its own shimmer; there is no shared skeleton component to keep in sync."
                 states={[
                     {
-                        name: "isSkeleton = true, size = sm | md | lg (full union)",
-                        why: "A shimmer track and a shimmer label bar stand at each size instead of the real switch. The shimmer tracks size, so a row of switches does not jump once the real content lands and replaces it.",
-                        code: `<Choice.Switch size="sm" isSkeleton label="Dark mode" />
-<Choice.Switch isSkeleton label="Dark mode" />
-<Choice.Switch size="lg" isSkeleton label="Dark mode" />`,
+                        name: "isSkeleton = true, size = sm",
+                        why: "A shimmer track and a shimmer label bar stand at the smallest scale instead of the real switch. The shimmer tracks the sm scale, so a dense row of switches does not jump once the real content lands.",
+                        code: "<Choice.Switch size=\"sm\" isSkeleton label=\"Dark mode\" />",
                         render: (
-                            <div className="flex flex-col items-start gap-4">
-                                {SIZES.map((size, index) => (
-                                    <Choice.Switch key={size} size={size} isSelected={false} onValueChange={() => {}} label="Dark mode" isSkeleton showAnatomy={index === 0} />
-                                ))}
-                            </div>
+                            <Choice.Switch size="sm" isSelected={false} onValueChange={() => {}} label="Dark mode" isSkeleton showAnatomy />
+                        ),
+                    },
+                    {
+                        name: "isSkeleton = true, size = md (default)",
+                        why: "A shimmer track and a shimmer label bar stand at the default scale instead of the real switch. The shimmer tracks the md scale, so an ordinary switch row does not jump once the real content lands.",
+                        code: "<Choice.Switch isSkeleton label=\"Dark mode\" />   // size defaults to md",
+                        render: (
+                            <Choice.Switch size="md" isSelected={false} onValueChange={() => {}} label="Dark mode" isSkeleton showAnatomy />
+                        ),
+                    },
+                    {
+                        name: "isSkeleton = true, size = lg",
+                        why: "A shimmer track and a shimmer label bar stand at the largest scale instead of the real switch. The shimmer tracks the lg scale, so a spacious switch row does not jump once the real content lands.",
+                        code: "<Choice.Switch size=\"lg\" isSkeleton label=\"Dark mode\" />",
+                        render: (
+                            <Choice.Switch size="lg" isSelected={false} onValueChange={() => {}} label="Dark mode" isSkeleton showAnatomy />
                         ),
                     },
                 ]}

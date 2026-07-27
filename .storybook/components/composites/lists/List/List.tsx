@@ -360,7 +360,10 @@ const Meta = ({ chip, items, className, anatPart, showAnatomy = false }: ListMet
                     <>
                         {items.map((item, index) => (
                             <React.Fragment key={index}>
-                                {index > 0 ? <span aria-hidden className="mx-1">·</span> : null}
+                                {/* Khoảng thở của dấu `·` đến từ khoảng trắng của chính chuỗi,
+                                    KHÔNG từ `mx-1` gõ tay: margin của con là seam hai chủ (§10a),
+                                    và cổng `check-padding` bắt đúng chỗ này 2026-07-27. */}
+                                {index > 0 ? <span aria-hidden>{" · "}</span> : null}
                                 {item}
                             </React.Fragment>
                         ))}

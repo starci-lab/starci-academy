@@ -72,8 +72,8 @@ export const AllWaiting: Story = {
                     parts={ROW_PARTS}
                     reason="Danh sách prerequisite/setup: mỗi hàng = List.Row ghép IconTile (leading) + StatusChip (trailing) theo state ready/pending của item."
                 >
-                    {/* 2026-07-26: bordered+flushContent (boolean) → variant="nested"+padding={0} (ba trục độc lập, thầy chốt). */}
-                    <SurfaceCard.Base variant="nested" padding={0}>
+                    {/* 2026-07-26: bordered+flushContent (boolean) → variant="nested"+padding="flush" (ba trục độc lập, thầy chốt). */}
+                    <SurfaceCard.Base variant="nested" padding="flush">
                         <ReadinessChecklist
                             items={ITEMS}
                             readyLabel="Sẵn sàng"
@@ -99,8 +99,8 @@ export const PartiallyReady: Story = {
                     parts={ROW_PARTS}
                     note="CÙNG composition leaf AllWaiting; 2 hàng đầu đổi sang state ready (IconTile success + StatusChip success)."
                 >
-                    {/* 2026-07-26: bordered+flushContent (boolean) → variant="nested"+padding={0} (ba trục độc lập, thầy chốt). */}
-                    <SurfaceCard.Base variant="nested" padding={0}>
+                    {/* 2026-07-26: bordered+flushContent (boolean) → variant="nested"+padding="flush" (ba trục độc lập, thầy chốt). */}
+                    <SurfaceCard.Base variant="nested" padding="flush">
                         <ReadinessChecklist
                             items={ITEMS.map((item) => (
                                 item.id === "agent" || item.id === "ollama" ? { ...item, ready: true } : item

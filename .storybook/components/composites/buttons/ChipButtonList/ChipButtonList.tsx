@@ -108,6 +108,7 @@ export const ChipButtonList = ({
                             <Typography.Base
                                 size="sm"
                                 isSkeleton
+                                showAnatomy={showAnatomy}
                                 className={index % 2 === 0 ? "w-2/3" : "w-1/2"}
                             />
                         </div>
@@ -116,6 +117,7 @@ export const ChipButtonList = ({
                         <ButtonAtom.Base
                             key={index}
                             isSkeleton
+                            showAnatomy={showAnatomy}
                             label=""
                             className={index % 2 === 0 ? "w-40" : "w-28"}
                         />
@@ -149,6 +151,7 @@ export const ChipButtonList = ({
                             weight="medium"
                             truncate
                             className="min-w-0 flex-1"
+                            anatPart={showAnatomy ? "Typography" : undefined}
                             showAnatomy={showAnatomy}
                             text={item.label}
                         />

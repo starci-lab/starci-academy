@@ -317,7 +317,7 @@ export const ScrollableBody: Story = {
     ),
 }
 
-/** Leading tabs: `bodyStartsWithTabs` → header→tabs gap-3; the tab strip stands apart and does not scroll with the body. */
+/** Leading tabs: the strip stands apart and does not scroll with the body. */
 export const WithLeadingTabs: Story = {
     render: () => (
         <div className="p-8">
@@ -326,13 +326,12 @@ export const WithLeadingTabs: Story = {
                 trigger="Open modal with tabs"
                 hint="Fixed Tabs (no scroll). The panel at h-72: long content scrolls, short still fills the frame."
                 title="Notification settings"
-                bodyStartsWithTabs
                 bodyClassName="flex flex-col gap-3"
                 leaf="WithLeadingTabs"
                 parts={TITLE_ONLY_PARTS}
-                stateName="bodyStartsWithTabs = true"
+                stateName="body starts with a tab strip"
                 why="The tab strip sits fixed above the body content with a tighter gap-3 seam in place of the header's usual gap-4, and it stays put instead of scrolling away with the panel underneath it. A short panel still fills the fixed-height frame while a long one scrolls inside it."
-                code={`<ModalShell.Base title="Notification settings" bodyStartsWithTabs bodyClassName="flex flex-col gap-3">
+                code={`<ModalShell.Base title="Notification settings" bodyClassName="flex flex-col gap-3">
   <Tabs>{/* Email / Push panels */}</Tabs>
 </ModalShell.Base>`}
             >

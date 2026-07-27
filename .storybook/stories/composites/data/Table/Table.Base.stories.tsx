@@ -94,7 +94,21 @@ const SKELETON_PARTS: Array<AnatomyNode> = [
         name: "Body",
         tier: "composite",
         role: "A mirror table body.",
-        children: [{ name: "Row", tier: "composite", role: "A mirror row; each cell is a Skeleton.Typography bar." }],
+        children: [
+            {
+                name: "Row",
+                tier: "composite",
+                role: "A mirror row; each cell is a Skeleton.Typography bar.",
+                children: [
+                    {
+                        name: "Typography",
+                        tier: "atom",
+                        role: "Typography.Base isSkeleton bar filling each cell so the row's shape doesn't jump when data lands.",
+                        storyId: "atoms-text-typography-typography-base--loading",
+                    },
+                ],
+            },
+        ],
     },
 ]
 

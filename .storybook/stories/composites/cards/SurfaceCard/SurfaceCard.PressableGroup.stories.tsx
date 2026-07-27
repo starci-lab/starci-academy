@@ -3,7 +3,6 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Avatar, AvatarFallback, Typography } from "@heroui/react"
 import { CaretRightIcon, FolderOpenIcon } from "@phosphor-icons/react"
 import { SurfaceCard, type SurfaceCardPressableGroupItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import type { VerdictBandVariant } from "@sb-components/composites/cards/verdict-band"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -19,7 +18,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *
  * 2026-07-26 (teacher) — this member's own grid system (`SurfaceCardPressableGroupColumns`,
  * 7 tiers, HALF-SIZE container scale `@sm`/`@md`) was removed; `columns`/`gap` now use
- * the SHARED {@link GridColumns}/`SpaceScale` from `Grid.Base` (§13) — the FULL-SIZE
+ * the SHARED {@link GridColumns}/`InsetScale` from `Grid.Base` (§13) — the FULL-SIZE
  * scale `@app-sm`/`@app-md`/`@app-lg`. The anatomy panel also changed: the `parts`/
  * `AnatomyNode` prop (the old path, structure declared by hand) → `annotate` (only
  * annotates WHY, structure is inferred from the DOM), keeping only entries with a REAL
@@ -93,9 +92,26 @@ const ITEM_ANNOTATE: Record<string, AnatomyAnnotation> = {
         role: "SurfaceCard.Pressable repeated once per entry, with its own story at SurfaceCard.Pressable Default.",
         storyId: "composites-cards-surfacecard-surfacecard-pressable--default",
     },
+    Grid: {
+        tier: "frame",
+        role: "the responsive grid the group lays its cells on, built from Grid.Base.",
+        storyId: "frames-grid-grid-base--default",
+    },
 }
 
-const VERDICTS: Array<VerdictBandVariant> = ["success", "warning", "danger", "accent"]
+/**
+ * Loading-only dep: the skeleton mirror tile has no story of its own (an internal
+ * helper), so it stays undeclared as before — but the `Avatar.Base` it renders DOES
+ * have a real story, and Avatar has no `anatPart` of its own to self-name, so the
+ * frame wraps it in a named "Avatar" node.
+ */
+const SKELETON_ANNOTATE: Record<string, AnatomyAnnotation> = {
+    Avatar: {
+        tier: "atom",
+        role: "the leading avatar mirror inside each generic skeleton tile.",
+        storyId: "atoms-display-avatar-avatar-base--default",
+    },
+}
 
 /** Default — `items` is DATA (a REPEATING list forbids children); the whole grid is ONE labelled unit. */
 export const Default: Story = {
@@ -326,22 +342,63 @@ export const Verdict: Story = {
                 reason="withVerdict overlays the same canonical status band used by SectionCard and SurfaceCard.List, so a status signal reads identically wherever a card family shows one, instead of every composite inventing its own colour."
                 states={[
                     {
-                        name: "item.withVerdict.enable = true, one variant per item",
-                        why: "Each of the four tiles gains a coloured edge band, success, warning, danger, and accent in turn, layered on top of the same profile content as every other leaf. The band overlays the existing Item rather than replacing it, so it never changes what a tile's content can be.",
-                        code: `<SurfaceCard.PressableGroup
-    ariaLabel="Mentors by status"
-    columns={{ base: 1, sm: 2 }}
-    items={items.map((item, i) => ({ ...item, withVerdict: { enable: true, variant: VERDICTS[i] } }))}
-/>`,
+                        name: "item.withVerdict.variant = \"success\"",
+                        why: "Both tiles gain a green left-edge band layered on top of the same profile content as every other leaf. A caller reaches for success when the group itself, not a decoration on top, needs to say a mentor is confirmed and in good standing.",
+                        code: "<SurfaceCard.PressableGroup ariaLabel=\"Mentors by status\" columns={{ base: 1, sm: 2 }} items={[…].map((item) => ({ ...item, withVerdict: { enable: true, variant: \"success\" } }))} />",
                         render: (
                             <SurfaceCard.PressableGroup
-                                ariaLabel="Mentors by status"
+                                ariaLabel="Mentors (status success)"
                                 columns={{ base: 1, sm: 2 }}
-                                items={profileItems.map((item, index) => ({
+                                items={profileItems.slice(0, 2).map((item) => ({
                                     ...item,
-                                    withVerdict: { enable: true, variant: VERDICTS[index] },
+                                    withVerdict: { enable: true, variant: "success" },
                                 }))}
                                 showAnatomy
+                            />
+                        ),
+                    },
+                    {
+                        name: "item.withVerdict.variant = \"warning\"",
+                        why: "Both tiles gain an amber left-edge band instead, still overlaid on the identical profile content. Warning is the tone a caller reaches for when a mentor needs a second look, not the outright block that danger would signal.",
+                        code: "<SurfaceCard.PressableGroup ariaLabel=\"Mentors by status\" columns={{ base: 1, sm: 2 }} items={[…].map((item) => ({ ...item, withVerdict: { enable: true, variant: \"warning\" } }))} />",
+                        render: (
+                            <SurfaceCard.PressableGroup
+                                ariaLabel="Mentors (status warning)"
+                                columns={{ base: 1, sm: 2 }}
+                                items={profileItems.slice(0, 2).map((item) => ({
+                                    ...item,
+                                    withVerdict: { enable: true, variant: "warning" },
+                                }))}
+                            />
+                        ),
+                    },
+                    {
+                        name: "item.withVerdict.variant = \"danger\"",
+                        why: "Both tiles gain a red left-edge band, the strongest tone in the set. A caller reaches for danger when a mentor is unavailable or flagged, a state a reader must notice before pressing the tile.",
+                        code: "<SurfaceCard.PressableGroup ariaLabel=\"Mentors by status\" columns={{ base: 1, sm: 2 }} items={[…].map((item) => ({ ...item, withVerdict: { enable: true, variant: \"danger\" } }))} />",
+                        render: (
+                            <SurfaceCard.PressableGroup
+                                ariaLabel="Mentors (status danger)"
+                                columns={{ base: 1, sm: 2 }}
+                                items={profileItems.slice(0, 2).map((item) => ({
+                                    ...item,
+                                    withVerdict: { enable: true, variant: "danger" },
+                                }))}
+                            />
+                        ),
+                    },
+                    {
+                        name: "item.withVerdict.variant = \"accent\"",
+                        why: "Both tiles gain the brand accent band, the neutral highlight of the set rather than a pass or fail read. A caller reaches for accent to call attention to a mentor, for example a featured pick, without claiming any status judgement.",
+                        code: "<SurfaceCard.PressableGroup ariaLabel=\"Mentors by status\" columns={{ base: 1, sm: 2 }} items={[…].map((item) => ({ ...item, withVerdict: { enable: true, variant: \"accent\" } }))} />",
+                        render: (
+                            <SurfaceCard.PressableGroup
+                                ariaLabel="Mentors (status accent)"
+                                columns={{ base: 1, sm: 2 }}
+                                items={profileItems.slice(0, 2).map((item) => ({
+                                    ...item,
+                                    withVerdict: { enable: true, variant: "accent" },
+                                }))}
                             />
                         ),
                     },
@@ -411,9 +468,9 @@ export const PagerPinRight: Story = {
 
 /**
  * Loading — `isSkeleton` draws its own GENERIC mirror grid, keeping the same
- * columns/gap/tile-chrome. No separate Skeleton outside it. `SkeletonTile` has no
- * story of its own (an internal mirror), so there's NO `storyId` to point at — the
- * panel drops the deps prop entirely for this leaf.
+ * columns/gap/tile-chrome. No separate Skeleton outside it. `SkeletonTile` itself has no
+ * story of its own (an internal mirror), so it stays undeclared — but the `Avatar.Base`
+ * it renders inside DOES have a real story, so that ONE part is declared.
  */
 export const Loading: Story = {
     render: () =>
@@ -422,6 +479,7 @@ export const Loading: Story = {
                 name="SurfaceCard.PressableGroup"
                 tier="composite"
                 leaf="Loading"
+                annotate={SKELETON_ANNOTATE}
                 renderClassName="max-w-2xl"
                 reason="Whoever owns a shape owns its resting state, so the group draws its own generic shimmer instead of pulling in a shared skeleton component that would need to be kept in sync by hand."
                 states={[

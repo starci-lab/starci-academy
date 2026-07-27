@@ -59,7 +59,12 @@ const DIVIDER_PARTS: Array<AnatomyNode> = [
         role: "one `KeyValue.Row` built from `items[i]`",
         storyId: "composites-data-keyvalue-keyvalue-row--default",
     },
-    { name: "Divider", tier: "atom", role: "`Divider.Base` BETWEEN two rows — the last row doesn't get a line" },
+    {
+        name: "Divider",
+        tier: "atom",
+        role: "`Divider.Base` BETWEEN two rows — the last row doesn't get a line",
+        storyId: "atoms-display-divider-divider-base--default",
+    },
 ]
 
 /** Default — `items` is DATA (§13b forbids children); default gap `3` (vertical rows). */

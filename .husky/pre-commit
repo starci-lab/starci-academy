@@ -3,3 +3,9 @@ npx lint-staged
 # Deps link trong panel anatomy: `storyId` trỏ sai thì KHÔNG có gì đỏ — không tsc,
 # không eslint, không build. Chỉ lúc bấm mới biết. Nên chặn ở đây (continue.md #4).
 node scripts/check-story-ids.mjs
+
+# Mot state = MOT instance. Do ca union prop vao mot state thi `why` phai ta nam thu nen
+# ta khong ro thu nao, `code` het copy-chay-duoc, va story buoc phai go tay `flex gap-3`
+# de xep hang. Cong chi do khi mang duoc `.map` la mang CHUOI (gia tri prop); mang OBJECT
+# la du lieu that, duoc phep nhieu hang (rules/2 §8).
+node scripts/check-one-instance-per-state.mjs

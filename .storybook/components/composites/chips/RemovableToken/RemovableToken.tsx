@@ -79,7 +79,7 @@ export const RemovableToken = ({
         return (
             <div
                 className={cn(
-                    "flex items-center justify-between gap-3 rounded-2xl border border-default px-4 py-3",
+                    "flex items-center justify-between gap-3 rounded-2xl border border-default px-3 py-3",
                     className,
                 )}
             >
@@ -96,7 +96,7 @@ export const RemovableToken = ({
         <div
             aria-disabled={isDisabled}
             className={cn(
-                "flex items-center justify-between gap-3 rounded-2xl border border-default px-4 py-3",
+                "flex items-center justify-between gap-3 rounded-2xl border border-default px-3 py-3",
                 isDisabled && "opacity-50",
                 className,
             )}

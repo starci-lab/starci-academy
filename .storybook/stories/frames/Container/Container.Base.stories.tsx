@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Container } from "@sb-components/frames/Container/Container"
 import { Grid } from "@sb-components/frames/Grid/Grid"
+import { Stack } from "@sb-components/frames/Stack/Stack"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -95,7 +96,7 @@ export const Sizes: Story = {
                         code: "<Container.Base size=\"sm\" body={<Tile label='size=\"sm\" · 40rem' />} />",
                         render: (
                             <Bleed>
-                                <Container.Base size="sm" padding={3} showAnatomy body={<Tile label='size="sm" · 40rem' />} />
+                                <Container.Base size="sm" padding="cozy" showAnatomy body={<Tile label='size="sm" · 40rem' />} />
                             </Bleed>
                         ),
                     },
@@ -105,7 +106,7 @@ export const Sizes: Story = {
                         code: "<Container.Base size=\"md\" body={<Tile label='size=\"md\" · 48rem — default' />} />",
                         render: (
                             <Bleed>
-                                <Container.Base size="md" padding={3} body={<Tile label='size="md" · 48rem — default' />} />
+                                <Container.Base size="md" padding="cozy" body={<Tile label='size="md" · 48rem — default' />} />
                             </Bleed>
                         ),
                     },
@@ -115,7 +116,7 @@ export const Sizes: Story = {
                         code: "<Container.Base size=\"lg\" body={<Tile label='size=\"lg\" · 64rem' />} />",
                         render: (
                             <Bleed>
-                                <Container.Base size="lg" padding={3} body={<Tile label='size="lg" · 64rem' />} />
+                                <Container.Base size="lg" padding="cozy" body={<Tile label='size="lg" · 64rem' />} />
                             </Bleed>
                         ),
                     },
@@ -125,7 +126,7 @@ export const Sizes: Story = {
                         code: "<Container.Base size=\"xl\" body={<Tile label='size=\"xl\" · 80rem' />} />",
                         render: (
                             <Bleed>
-                                <Container.Base size="xl" padding={3} body={<Tile label='size="xl" · 80rem' />} />
+                                <Container.Base size="xl" padding="cozy" body={<Tile label='size="xl" · 80rem' />} />
                             </Bleed>
                         ),
                     },
@@ -135,7 +136,7 @@ export const Sizes: Story = {
                         code: "<Container.Base size=\"full\" body={<Tile label='size=\"full\" · no cap' />} />",
                         render: (
                             <Bleed>
-                                <Container.Base size="full" padding={3} body={<Tile label='size="full" · no cap' />} />
+                                <Container.Base size="full" padding="cozy" body={<Tile label='size="full" · no cap' />} />
                             </Bleed>
                         ),
                     },
@@ -157,40 +158,40 @@ export const Padding: Story = {
                     {
                         name: "padding = 0",
                         why: "The tile sits flush against the column's own edge, with no inset at all. Drop to 0 when a child already owns the edge itself, like a full-bleed cover image or a table that scrolls sideways.",
-                        code: "<Container.Base padding={0} body={<Tile label=\"padding={0}\" />} />",
+                        code: '<Container.Base padding="flush" body={<Tile label="padding flush" />} />',
                         render: (
                             <Bleed>
-                                <Container.Base padding={0} showAnatomy body={<Tile label="padding={0}" />} />
+                                <Container.Base padding="flush" showAnatomy body={<Tile label="padding flush" />} />
                             </Bleed>
                         ),
                     },
                     {
                         name: "padding = 3",
                         why: "A moderate inset separates the tile from the column edge. This step suits a card-like region that still wants some breathing room without the full page gutter.",
-                        code: "<Container.Base padding={3} body={<Tile label=\"padding={3}\" />} />",
+                        code: '<Container.Base padding="cozy" body={<Tile label="padding cozy" />} />',
                         render: (
                             <Bleed>
-                                <Container.Base padding={3} body={<Tile label="padding={3}" />} />
+                                <Container.Base padding="cozy" body={<Tile label="padding cozy" />} />
                             </Bleed>
                         ),
                     },
                     {
                         name: "padding = 6 (default)",
                         why: "The default page gutter applies, the widest inset most pages ever need. This is what every page gets automatically without passing the prop at all.",
-                        code: "<Container.Base body={<Tile label=\"padding={6} — default\" />} />",
+                        code: '<Container.Base body={<Tile label="padding roomy — default" />} />',
                         render: (
                             <Bleed>
-                                <Container.Base body={<Tile label="padding={6} — default" />} />
+                                <Container.Base body={<Tile label="padding roomy — default" />} />
                             </Bleed>
                         ),
                     },
                     {
                         name: "padding = 8",
                         why: "An even wider inset applies, shortening the readable line further inside the same column cap. Content that wants extra breathing room on top of the size cap reaches for this step.",
-                        code: "<Container.Base padding={8} body={<Tile label=\"padding={8}\" />} />",
+                        code: '<Container.Base padding="airy" body={<Tile label="padding airy" />} />',
                         render: (
                             <Bleed>
-                                <Container.Base padding={8} body={<Tile label="padding={8}" />} />
+                                <Container.Base padding="airy" body={<Tile label="padding airy" />} />
                             </Bleed>
                         ),
                     },
@@ -200,30 +201,41 @@ export const Padding: Story = {
     ),
 }
 
-/** Leaf slot — three regions `header`/`body`/`footer`, spaced by the PAGE rhythm. Migrated to `states` 2026-07-27. */
-export const Slots: Story = {
+/**
+ * Leaf composition — a measure holds ONE region; rhythm comes from a `Stack.V` nested
+ * inside it. Rewritten 2026-07-27 when `header`/`footer`/`gap` were removed.
+ */
+export const PageRegions: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
                 name="Container.Base"
                 tier="frame"
-                leaf="Slots `header` / `body` / `footer`"
+                leaf="Page regions via `Stack.V`"
                 states={[
                     {
-                        name: "header, body, footer all set",
-                        why: "Three tiles stack with the page rhythm (`gap-8`) between them instead of the tighter gap used inside a card. With neither `header` nor `footer` passed, the body renders raw with no extra wrapper at all, so a `children`-only call produces the exact same DOM as before this slot set existed.",
+                        name: "header, body and footer as one nested stack",
+                        why: "The measure renders its single region raw and adds no node of its own, so the nested stack is what decides the seam between the three tiles. Keeping the rhythm in one place is what stops a page from having two owners for the same gap, which is exactly how the old `gap` prop came to be written in code and measured as 0px on screen.",
                         code: `<Container.Base
-  header={<Page.Header title="Courses" />}
-  body={<CourseList />}
-  footer={<Pagination />}
+  body={
+    <Stack.V gap="page">
+      <Page.Header title="Courses" />
+      <CourseList />
+      <Pagination />
+    </Stack.V>
+  }
 />`,
                         render: (
                             <Bleed>
                                 <Container.Base
                                     showAnatomy
-                                    header={<Tile label="Header" />}
-                                    body={<Tile label="Body" />}
-                                    footer={<Tile label="Footer" />}
+                                    body={
+                                        <Stack.V gap="page">
+                                            <Tile label="Header" />
+                                            <Tile label="Body" />
+                                            <Tile label="Footer" />
+                                        </Stack.V>
+                                    }
                                 />
                             </Bleed>
                         ),
@@ -279,7 +291,7 @@ export const ContainerQuery: Story = {
 <Container.Base size="md" body={<Grid.Base columns={columns} gap="grouped" items={cells} />} />`,
                             render: (
                                 <Bleed>
-                                    <Container.Base size="md" padding={3} showAnatomy>
+                                    <Container.Base size="md" padding="cozy" showAnatomy>
                                         <span className="block" data-anat-part="Grid.Base">
                                             <Grid.Base columns={columns} gap="grouped" items={cells} />
                                         </span>
@@ -295,7 +307,7 @@ export const ContainerQuery: Story = {
 <Container.Base size="xl" body={<Grid.Base columns={columns} gap="grouped" items={cells} />} />`,
                             render: (
                                 <Bleed>
-                                    <Container.Base size="xl" padding={3}>
+                                    <Container.Base size="xl" padding="cozy">
                                         <span className="block" data-anat-part="Grid.Base">
                                             <Grid.Base columns={columns} gap="grouped" items={cells} />
                                         </span>

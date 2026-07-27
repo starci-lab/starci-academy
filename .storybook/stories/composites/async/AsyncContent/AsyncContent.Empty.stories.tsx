@@ -39,6 +39,7 @@ const MESSAGE_PARTS: Array<AnatomyNode> = [
         name: "Feedback.Empty",
         tier: "composite",
         role: "icon + title + description + action frame, centered",
+        storyId: "composites-feedback-feedback-feedback-empty--title-only",
     },
 ]
 const RETRY_PARTS: Array<AnatomyNode> = [
@@ -46,8 +47,9 @@ const RETRY_PARTS: Array<AnatomyNode> = [
         name: "Feedback.Empty",
         tier: "composite",
         role: "icon + title + description + action frame, centered",
+        storyId: "composites-feedback-feedback-feedback-empty--title-only",
         children: [
-            { name: "Button", tier: "composite", role: "shorthand onRetry + retryLabel → button placed in the action slot", state: "secondary" },
+            { name: "Button", tier: "atom", role: "shorthand onRetry + retryLabel → button placed in the action slot", state: "secondary", storyId: "atoms-buttons-button-button-base--default" },
         ],
     },
 ]
@@ -56,6 +58,7 @@ const ACTION_PARTS: Array<AnatomyNode> = [
         name: "Feedback.Empty",
         tier: "composite",
         role: "icon + title + description + action frame, centered",
+        storyId: "composites-feedback-feedback-feedback-empty--title-only",
         children: [
             { name: "Action", tier: "composite", role: "general-purpose action slot, taking any node the caller passes in" },
         ],

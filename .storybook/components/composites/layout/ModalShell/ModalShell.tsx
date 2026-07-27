@@ -80,12 +80,6 @@ export interface ModalShellBaseProps {
     bodyClassName?: string
     /** Extra classes merged onto `Modal.Footer`. */
     footerClassName?: string
-    /**
-     * Category **tabs**: whether the body's FIRST element is a tab strip
-     * rather than plain content. Governs header→body gap only: plain → `gap-4`;
-     * leading tabs → `gap-3`. No effect without {@link title}/{@link header}.
-     */
-    bodyStartsWithTabs?: boolean
     /** Extra classes merged onto `Modal.Dialog`. */
     className?: string
     /**
@@ -118,7 +112,6 @@ const Base = ({
     dialogClassName,
     bodyClassName,
     footerClassName,
-    bodyStartsWithTabs,
     className,
     children,
     showAnatomy = false,
@@ -133,7 +126,12 @@ const Base = ({
                     scroll={scroll}
                     size={size}
                 >
-                    <Modal.Dialog className={cn(dialogClassName, className)}>
+                    {/* ⭐ Cha giữ nhịp (thầy chốt (a), 2026-07-27). Dialog vốn ĐÃ là flex nhưng
+                        `rowGap: normal`, nên seam phải do con tự đẩy bằng `mt-*!` — mà `!` là để
+                        đè CSS của HeroUI (`.modal__header + .modal__body { mt-2 }`, `mt-5` trước
+                        footer), không phải để giành với cha.
+                        Nay `gap-4` ở đây + `mt-0!` ở con: MỘT seam, MỘT chủ (§10a). */}
+                    <Modal.Dialog className={cn("gap-3", dialogClassName, className)}>
                         <Modal.CloseTrigger data-anat-part={showAnatomy ? "CloseTrigger" : undefined} />
                         {header ? (
                             <Modal.Header data-anat-part={showAnatomy ? "Header" : undefined}>{header}</Modal.Header>
@@ -155,14 +153,18 @@ const Base = ({
                                 </div>
                             </Modal.Header>
                         ) : null}
-                        {/* HeroUI's own `.modal__header + .modal__body { mt-2 }` (8px) is
-                            tighter than the modal scale — override to gap-4
-                            (header→plain content) or gap-3 (header→tabs).
-                            Only fires when a header actually precedes body. */}
+                        {/* ⚠️ `bodyStartsWithTabs` ĐÃ XOÁ cùng lượt này. Nó bắt caller khai "body
+                            của tôi mở đầu bằng tabs" để khung trừ bớt 4px — tức KHUNG ĐANG HỎI
+                            NỘI DUNG BÊN TRONG NÓ LÀ LOẠI GÌ, thứ mà định nghĩa frame cấm.
+                            4px ấy sinh ra vì `Tabs` có đệm trên của riêng nó; đệm đó là hình học
+                            của `Tabs`, phải do chính nó lo (§13z), không phải để khung bù từ ngoài.
+                            Hệ quả có thật: ca tabs đổi 12px thành 16px. */}
                         <Modal.Body
                             data-anat-part={showAnatomy ? "Body" : undefined}
                             className={cn(
-                                hasHeader && (bodyStartsWithTabs ? "mt-3!" : "mt-4!"),
+                                // `mt-0!` chỉ để TẮT margin HeroUI ship sẵn; nhịp do `gap-4` của
+                                // Dialog quyết. Số 0 nằm trên thang nên không phải ngoại lệ.
+                                hasHeader && "mt-0!",
                                 bodyClassName,
                             )}
                         >
@@ -174,7 +176,7 @@ const Base = ({
                         {footer != null ? (
                             <Modal.Footer
                                 data-anat-part={showAnatomy ? "Footer" : undefined}
-                                className={cn("mt-4!", footerClassName)}
+                                className={cn("mt-0!", footerClassName)}
                             >
                                 {footer}
                             </Modal.Footer>

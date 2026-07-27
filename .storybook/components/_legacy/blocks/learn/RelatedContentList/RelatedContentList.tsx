@@ -132,12 +132,12 @@ export const RelatedContentList = ({
                     />
                 }
             >
-                {/* WRAPPER frame (`.Base padding={0}` = same `overflow-hidden` + surface skin
+                {/* WRAPPER frame (`.Base padding="flush"` = same `overflow-hidden` + surface skin
                     as the skeleton branch's `.List`), NOT `.List items`: EntityResultRow already
                     OWNS its row frame (px-4 py-3 + full-bleed separator), so a `.List` row would
                     double the padding + hairline. Codemod 2026-07-26: `bordered` → `variant="nested"`,
-                    `flushContent` → `padding={0}` (API 3-trục SurfaceCard.Base). */}
-                <SurfaceCard.Base variant="nested" padding={0} anatPart={showAnatomy ? "SurfaceListCard" : undefined}>
+                    `flushContent` → `padding="flush"` (API 3-trục SurfaceCard.Base). */}
+                <SurfaceCard.Base variant="nested" padding="flush" anatPart={showAnatomy ? "SurfaceListCard" : undefined}>
                     {filtered.map((item, index) => (
                         <EntityResultRow
                             key={`${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`}

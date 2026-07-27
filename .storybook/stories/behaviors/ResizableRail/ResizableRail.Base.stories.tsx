@@ -10,7 +10,7 @@ import {
     Typography,
     cn,
 } from "@heroui/react"
-import { ResizableRail } from "@sb-components/frames/ResizableRail/ResizableRail"
+import { ResizableRail } from "@sb-components/behaviors/ResizableRail/ResizableRail"
 import { Page } from "@sb-components/composites/layout/Page/Page"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
@@ -21,7 +21,7 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * 2026-07-27: migrated every leaf below to the `states[]` API.
  */
 const meta: Meta<typeof ResizableRail.Base> = {
-    title: "Frames/ResizableRail/ResizableRail.Base",
+    title: "Behaviors/ResizableRail/ResizableRail.Base",
     component: ResizableRail.Base,
     tags: ["autodocs"],
     parameters: {

@@ -17,7 +17,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * `WithLabel` leaf to prove the header can turn on, NOT the whole set repeated.
  *
  * 2026-07-26 (teacher, THREE INDEPENDENT AXES): `bordered?: boolean` → `variant?: SurfaceCardVariant`
- * (`"surface" | "nested"`), `flushContent?: boolean` → `padding?: SpaceScale`. The two
+ * (`"surface" | "nested"`), `flushContent?: boolean` → `padding?: InsetScale`. The two
  * old single-value leaves (`Bordered`, `FlushContent`) merged into two leaves named
  * AFTER THE PROP (`Variant`, `Padding`), each leaf rendering the full union side by
  * side instead of just the value that differs from the default.
@@ -55,6 +55,19 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
         tier: "atom",
         role: "the see-more affordance, which SurfaceCardHeader builds from Link.SeeMore, sized to match the label",
         storyId: "atoms-navigation-link-link-seemore--default",
+    },
+}
+
+/**
+ * `description` renders through `Typography.Base` itself (§4 — the frame owns
+ * scale/tone for this caption), so the "Description" node it wraps gets a real
+ * `storyId` to jump to.
+ */
+const DESCRIPTION_ANNOTATE: Record<string, AnatomyAnnotation> = {
+    Description: {
+        tier: "atom",
+        role: "the caption below Content, built by the frame from Typography.Base (size xs, muted).",
+        storyId: "atoms-text-typography-typography-base--plain",
     },
 }
 
@@ -280,6 +293,7 @@ export const Description: Story = {
                 name="SurfaceCard.Base"
                 tier="composite"
                 leaf="Description"
+                annotate={DESCRIPTION_ANNOTATE}
                 states={[
                     {
                         name: "description passed",
@@ -356,25 +370,25 @@ export const Variant: Story = {
 
 /**
  * `padding` — the second INDEPENDENT axis, the §10c scale. Default `3` is the
- * standard inset around the content; `padding={0}` drops the inset (still keeps
+ * standard inset around the content; `padding="flush"` drops the inset (still keeps
  * `overflow-hidden`) so a child can OWN its own edge (a cover image, a
  * full-bleed table) flush to the border. Merged from two old single-value
  * leaves (`Default` implying `3`, `FlushContent`) into ONE `Padding` leaf
  * rendering both side by side.
  *
  * 2026-07-26 (teacher): changed from `flushContent?: boolean`
- * (`flushContent=true` → `padding={0}`). An axis INDEPENDENT of `variant` — a
- * `nested` card AND `padding={0}` is a real combination (an edge-to-edge image
+ * (`flushContent=true` → `padding="flush"`). An axis INDEPENDENT of `variant` — a
+ * `nested` card AND `padding="flush"` is a real combination (an edge-to-edge image
  * inside a nested card); merging them would kill that combination.
  *
- * Same shape as `Variant`: only `padding={0}` sits inside `BlockAnatomy`, the
- * `padding={3}` card at the left is a plain reference sibling.
+ * Same shape as `Variant`: only `padding="flush"` sits inside `BlockAnatomy`, the
+ * `padding="cozy"` card at the left is a plain reference sibling.
  */
 export const Padding: Story = {
     render: () => (
         <div className="flex flex-wrap items-start gap-6 p-8">
             <div className="w-72">
-                <SurfaceCard.Base label="Featured course" padding={3}>
+                <SurfaceCard.Base label="Featured course" padding="cozy">
                     <ProfileRow />
                 </SurfaceCard.Base>
             </div>
@@ -385,14 +399,14 @@ export const Padding: Story = {
                     leaf="Padding"
                     states={[
                         {
-                            name: "padding = 0",
-                            why: "The card drops its `p-3` inset and turns on `overflow-hidden`, so a child now owns its own padding and its edges follow the frame's own corners. The card at the left shows the default `padding={3}` for comparison, the standard inset used on the §10c scale.",
-                            code: `<SurfaceCard.Base label="Featured course" padding={0}>
+                            name: "padding = flush",
+                            why: "The card drops its `p-3` inset and turns on `overflow-hidden`, so a child now owns its own padding and its edges follow the frame's own corners. The card at the left shows the default cozy inset for comparison, the standard card interior.",
+                            code: `<SurfaceCard.Base label="Featured course" padding="flush">
   <div className="h-28 bg-accent-soft" />
   <div className="p-3"><ProfileRow /></div>
 </SurfaceCard.Base>`,
                             render: (
-                                <SurfaceCard.Base label="Featured course" padding={0} showAnatomy>
+                                <SurfaceCard.Base label="Featured course" padding="flush" showAnatomy>
                                     <div className="h-28 w-full bg-accent-soft" aria-hidden />
                                     <div className="p-3"><ProfileRow /></div>
                                 </SurfaceCard.Base>

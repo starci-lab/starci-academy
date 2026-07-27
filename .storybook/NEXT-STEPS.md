@@ -1,6 +1,16 @@
 # NEXT STEPS — bản vẽ Storybook (chốt 2026-07-26)
 
 > Bàn giao để máy khác làm tiếp. Đọc mục **0** và **1** trước khi gõ dòng code nào.
+>
+> 🔴 **File này ĐÃ BỊ VƯỢT một phần.** Bàn giao hiện hành là
+> `starci-academy-backend/.claude/fe/continue.md` (2026-07-27). Chỗ nào hai bên đá nhau thì
+> **continue.md đúng**. Ba chỗ trong file này đã lạc hậu, đã đánh dấu tại chỗ:
+>
+> | Chỗ | File này ghi | Thật ra |
+> |---|---|---|
+> | mục 1, dòng `panel` | *"tab States đã BỎ, thêm lại là vỡ tsc"* | **`states[]` là API hiện hành**, 109 story đã di trú. ĐỪNG THÁO |
+> | mục 0 + 2 | tầng `layout` | đã tách **`frame` (7) + `composite` (37)** ⇒ 6 tầng |
+> | mục 2 + 3.1 | `layouts/_spacing.ts`, `stories/layouts/**` | nay là `frames/_spacing.ts`, `stories/frames/**` + `stories/composites/**` |
 
 ---
 
@@ -8,7 +18,7 @@
 
 | Cây | Vai | Ai sửa |
 |---|---|---|
-| `starci-academy/.storybook` | **BẢN VẼ** — atom · layout · design · block · screen + story | **agent kẻ ở đây** |
+| `starci-academy/.storybook` | **BẢN VẼ** — atom · frame · composite · design · block · screen + story | **agent kẻ ở đây** |
 | `starci-academy/src` | **CÔNG TRÌNH** — app thật | **THẦY** restructure, sau khi duyệt bản vẽ |
 
 - ⛔ **CẤM codemod `src/`** trong lane design/audit. Cấm cả "sync cho khớp".
@@ -16,7 +26,10 @@
 - ✅ Số liệu đếm trong `src` chỉ dùng để **chọn mặc định cho bản vẽ** (vd `max-w-3xl` 72 lần ⇒ default của `Container`), KHÔNG phải danh sách phải sửa.
 - ⭐ Gom họ · dời tầng · đặt lại category = **DESIGN, thầy chốt**. Agent chỉ kẻ bản vẽ + chỉ chỗ đá nhau.
 
-**Canon SSOT** nằm ở repo KHÁC: `starci-academy-backend/.claude/fe/principles.md` (§0 · §12 atom · §13 layout) và `.claude/skills/starci-fe-atom-audit/SKILL.md`.
+**Canon SSOT** nằm ở repo KHÁC — `starci-academy-backend/.claude/fe/`:
+- `continue.md` — **bàn giao hiện hành, đọc trước file này**
+- `principles.md` §0 (bản vẽ vs công trình) · §12 atom · §13 khung
+- `rules/1..4` (LUẬT) + `steps/0..5` (TRÌNH TỰ chạy workflow, mỗi bước có cổng đo)
 
 ---
 
@@ -27,7 +40,7 @@
 | **§0** | `.storybook` = bản vẽ, `src` = công trình | mục 0 ở trên |
 | **§12g.1** | **"Có hình" = ĐỔI PIXEL.** Prop chỉ chạy vào `aria-*` (`label`, `ariaLabel`, `removeLabel`) **KHÔNG có leaf** | mở leaf cho chúng ⇒ leaf render ra hai ô y hệt = chính dấu hiệu lỗi atom |
 | **§12g.2** | `items`/`options` **CÓ** leaf và leaf đó **chính là `Default`** (đừng đẻ thêm leaf `Items`); `text`/`amount` **KHÔNG** leaf riêng | `Button.Group` → `Default` ghi *"Prop `items`"* · `Chip.Base` → *"Bare chip"*. Hai kiểu này khác nhau là HỢP LỆ |
-| panel | **Tab States đã BỎ.** `BlockAnatomy` còn 2 tab: `Deps` · `Code`. Type `AnatomyStateCell` + prop `states` đã xoá — **thêm lại là vỡ tsc** | soi thật thấy nó chỉ lặp bằng chữ đúng thứ khung render đã hiện bằng hình |
+| panel | ⛔ **LẠC HẬU 2026-07-27.** Câu dưới đây đúng ở ngày 26, sai ở ngày 27: *"Tab States đã BỎ, `states` đã xoá, thêm lại là vỡ tsc"*. Thầy chốt bố cục **C**: panel nay là **tab STATE + khung bên** (why · deps · code), prop `states[]` là API hiện hành và 109 story đã di trú | soi thật thấy nó chỉ lặp bằng chữ đúng thứ khung render đã hiện bằng hình |
 | deps | Deps chỉ nhận node **có `storyId` thật** (bấm nhảy được). Rỗng ⇒ **tab không hiện** | `Spinner.Base` từng tự khai part trỏ vào chính nó, không `storyId` |
 | UI text | Chữ hiện ra màn hình = **TIẾNG ANH**; JSDoc/comment = **tiếng Việt** (neo § nằm ở đó) | |
 
@@ -48,7 +61,7 @@
 - `Page.Container` **XOÁ**, gộp vào `Container.Base` (§13c).
 - `SurfaceCard`: 3 boolean → **3 trục có tên** — `bordered` → `variant: "surface" | "nested"` · `flushContent` → `padding: SpaceScale` · `compact` → `radius: "xl" | "3xl"`.
 - `SurfaceCard.PressableGroup` bỏ hệ lưới riêng, dựng bằng `Grid.Base`.
-- `PADDING_CLASS` gom về SSOT `layouts/_spacing.ts` (cùng chỗ với `SpaceScale`/`GAP_CLASS`).
+- `PADDING_CLASS` gom về SSOT `frames/_spacing.ts` (ngày 26 đường dẫn là `layouts/_spacing.ts`) — cùng chỗ với `SpaceScale`/`GAP_CLASS`. ⚠️ Từ 27: `GAP_CLASS` khoá theo **CHỮ** (`SeamScale`), `PADDING_CLASS` vẫn khoá theo SỐ.
 
 ### Số đo đã verify (không phải suy đoán)
 | Kiểm | Kết quả |
@@ -63,16 +76,18 @@
 
 ## 3. NEXT STEPS — xếp theo thứ tự nên làm
 
-### 3.1 🔴 `stories/layouts/**` vẫn dùng API panel CŨ
-Mới chỉ dọn `stories/atoms/**`. Bên `layouts` còn nhiều file dùng `parts={...}` + `type AnatomyNode`.
+### 3.1 ✅ XONG 2026-07-27 — `stories/layouts/**` đã dọn (và thư mục đã tách)
+`layouts` nay là `stories/frames/**` + `stories/composites/**`; toàn bộ đã sang `annotate` + `states[]`.
+Còn đúng **2 helper** đi đường cũ, sửa 2 chỗ này là ~14 story đổi theo:
 
 ```bash
-grep -rl "parts={" .storybook/stories/layouts
+.storybook/stories/atoms/text/Typography/_leaves.tsx
+.storybook/components/screens/CourseContents/_shared.tsx
 ```
 
-Việc: chuyển sang `annotate`, **chỉ giữ entry có `storyId` thật**, không có deps thì bỏ hẳn prop (tab Deps tự ẩn). Dịch chữ UI sang tiếng Anh. Xem file mẫu `stories/atoms/chips/Chip/Chip.Base.stories.tsx`.
+Cách sửa 2 helper đó: chuyển sang `annotate` + `states[]`, **chỉ giữ entry có `storyId` thật**, không có deps thì bỏ hẳn prop (tab Deps tự ẩn). File mẫu: `stories/designs/commerce/PhaseScarcityNote/PhaseScarcityNote.Base.stories.tsx`.
 
-Còn sót ngoài vùng đã dọn: `stories/atoms/form/Form/Form.{Base,Section}.stories.tsx` — hai file này title là `Layouts/Form/…` (tầng khung) nhưng **nằm nhầm trong thư mục `atoms/`**. Dời hay để tuỳ thầy chốt.
+✅ Nốt "`Form` nằm nhầm trong `atoms/`" cũng xong — nay ở `stories/composites/form/Form/`.
 
 ### 3.2 🟠 `Cluster` vs `Stack.H` — có phải một khung không?
 Cả hai đều là "hàng ngang". `Stack.H` nhận `children` (arbitrary), `Cluster` nhận `items` (N phần tử cùng kiểu) + wrap. Header của chúng tự phân biệt, nhưng đáng soi lại xem ranh giới có thật hay chỉ là hai lần dựng cùng một thứ. **Gom hay giữ = thầy chốt.**

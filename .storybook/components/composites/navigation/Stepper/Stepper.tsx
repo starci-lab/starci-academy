@@ -158,7 +158,7 @@ const StepperBase = ({
                                     aria-hidden
                                     data-anat-part={showAnatomy ? "Connector" : undefined}
                                     className={cn(
-                                        "mt-4 h-0.5 min-w-6 flex-1",
+                                        "mt-3 h-0.5 min-w-6 flex-1",
                                         connectorPassed ? "bg-success" : "bg-default",
                                     )}
                                 />
@@ -205,7 +205,7 @@ const StepperBase = ({
                             <button
                                 type="button"
                                 onClick={() => onStepPress(index)}
-                                className="mb-4 flex flex-col gap-0 pt-1 text-left rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                                className="mb-3 flex flex-col gap-0 pt-1 text-left rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                             >
                                 <span data-anat-part={showAnatomy ? "Label" : undefined}>
                                     <Typography.Base size="sm" text={step.label} />
@@ -217,7 +217,7 @@ const StepperBase = ({
                                 ) : null}
                             </button>
                         ) : (
-                            <div className="mb-4 flex flex-col gap-0 pt-1">
+                            <div className="mb-3 flex flex-col gap-0 pt-1">
                                 <span data-anat-part={showAnatomy ? "Label" : undefined}>
                                     <Typography.Base size="sm"
                                         text={step.label}

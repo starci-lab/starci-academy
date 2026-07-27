@@ -171,7 +171,7 @@ const Base = ({
                             {main}
                         </Modal.Body>
                         {/* Same reason as above: HeroUI ships `mt-5` (20px) before the
-                            footer, off the modal's 4-scale — normalise to mt-4 so
+                            footer, off the scale — the Dialog's own `gap-3` decides it now so
                             header→body and body→footer read as the SAME gap. */}
                         {footer != null ? (
                             <Modal.Footer

@@ -1680,7 +1680,7 @@ const AccordionFrame = ({
  * the owner of the skeleton (§12c), it doesn't borrow a shared skeleton component.
  *
  * MATCHES THE REAL RENDER: same `surfaceFrame(variant)` + `overflow-hidden`, same
- * trigger row (`px-4 py-4`, row box height matching the real text's line-height),
+ * trigger row (`p-3`, row box height matching the real text's line-height),
  * same `h-px` divider between rows (the last row has none) — ONLY the text and
  * caret turn into shimmer bars.
  *

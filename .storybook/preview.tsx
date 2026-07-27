@@ -23,14 +23,13 @@ import "../src/app/globals.css"
  * invisible `data-anat-marker` span that the panel reads to derive the tree. (Its own JSDoc
  * still claims a "dashed outline + corner tag"; that is stale and tracked separately.)
  *
- * The panel is matched through the layout classes of its wrapper rather than a data attribute,
- * because the panel does not expose one yet. That is a KNOWN WEAK SELECTOR: it breaks the day
- * someone edits those Tailwind classes, silently and with no error. Replace it with a
- * `data-sb-anatomy-panel` hook on `BlockAnatomy`'s root as soon as that file is free to edit
- * (a prose pass was rewriting it when this was added).
+ * Matched by `data-sb-anatomy-panel`, the hook `BlockAnatomy` puts on the panel itself. The
+ * first version of this rule bound to the panel's Tailwind classes instead (the file was being
+ * rewritten by a prose pass at the time) — that would have broken silently the day someone
+ * edited those classes, with nothing to report it.
  */
 const ANATOMY_OFF_CSS = `
-.flex.flex-col.gap-6 > .overflow-hidden.rounded-xl.border.border-default.bg-surface { display: none; }
+[data-sb-anatomy-panel] { display: none; }
 `
 
 const preview: Preview = {

@@ -70,11 +70,44 @@ export interface AnatomyNode {
 /** Storybook manager route for a story id (breaks out of the preview iframe). */
 const storyHref = (storyId: string) => `/?path=/story/${storyId}`
 
+/**
+ * ONE STATE of a leaf: what it renders, why that state exists, and how to call it.
+ *
+ * A leaf usually has several states that all come from DATA (a seat count, a null price, an
+ * empty list). Before 2026-07-27 the panel had no idea they existed — the author stacked them
+ * by hand inside `children` with ad-hoc labels, so there was nowhere to explain a single state
+ * and nowhere to put its own snippet. Worse, the deps tree was derived from the DOM of ALL the
+ * stacked states at once, which made it correct for NONE of them: a state that renders nothing
+ * still showed the nodes of its neighbours.
+ *
+ * Only the SELECTED state is mounted, so the tree the panel derives belongs to that state and
+ * to nothing else.
+ */
+export interface AnatomyState {
+    /** Tab label — say what DATA produces the state (`"seats = 0"`, not `"empty"`). */
+    name: string
+    /** The component rendered in exactly that state. */
+    render: ReactNode
+    /** Why this state exists / what changes in it. Markdown allowed. */
+    why?: ReactNode
+    /** Snippet for THIS state — the props that produce it. */
+    code?: string
+}
+
 /** Props for the {@link BlockAnatomy} panel (ONE leaf). */
 export interface BlockAnatomyProps {
     /** Block/design display name (header + tree root). */
     name: string
     tier: AnatomyTier
+    /**
+     * The leaf's states — newest API (teacher picked layout C, 2026-07-27): a row of state tabs,
+     * the selected state rendered large, and its OWN why/deps/code beside it.
+     *
+     * OPTIONAL on purpose. 663 leaves already pass `children` + one `note` + one `code`; they keep
+     * working and are shown as a single implicit state, so both models live side by side while
+     * stories migrate one at a time.
+     */
+    states?: Array<AnatomyState>
     /**
      * DEPS — **story KHÁC** mà leaf này dựa vào (thầy chốt 2026-07-26).
      *
@@ -101,8 +134,11 @@ export interface BlockAnatomyProps {
      * KHÔNG hiện ra (thay vì báo "no deps" như trước 2026-07-26).
      */
     annotate?: Record<string, AnatomyAnnotation>
-    /** THIS leaf's live render (pass the component in this exact state). */
-    children: ReactNode
+    /**
+     * THIS leaf's live render. Legacy path — a leaf that declares {@link BlockAnatomyProps.states}
+     * passes each render inside its state instead, and leaves this out.
+     */
+    children?: ReactNode
     /** Leaf label shown in the header (e.g. `"Prop variant"`). */
     leaf?: string
     /** Short one-liner: what makes THIS leaf's composition/shape what it is. */
@@ -153,19 +189,20 @@ const TIER_NAME: Record<AnatomyTier, string> = {
     atom: "atom",
 }
 
-/**
- * Hai tab của panel. Thứ tự cố định: phụ thuộc → cách gọi.
- *
- * ⚠️ `"states"` đã gỡ khỏi union 2026-07-26 (thầy chốt bỏ tab States). Giữ lại thành
- * viên chết trong type là mở đường cho ai đó nhét lại tab — nên xoá hẳn.
- */
-type PanelTab = "deps" | "code"
-
-/** Nhãn tab hiện trên UI — tiếng Anh, một từ. */
-const TAB_LABEL: Record<PanelTab, string> = {
-    deps: "Deps",
-    code: "Code",
+/** Props for {@link SideHeading}. */
+interface SideHeadingProps {
+    /** Section label — one or two words, lower case. */
+    children: ReactNode
 }
+
+/**
+ * Nhãn nhỏ của một mục trong panel bên (`why this state` · `deps` · `code`).
+ *
+ * Tách ra vì ba chỗ dùng cùng một hình: viết tay ba lần thì lần thứ tư sẽ lệch.
+ */
+const SideHeading = ({ children }: SideHeadingProps) => (
+    <h4 className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-muted">{children}</h4>
+)
 
 /** Pill nhỏ dùng chung cho tier/state — gom lại để ba chỗ không lệch nhau. */
 const PILL = "rounded-full px-2 text-[11px] font-medium leading-5"
@@ -282,6 +319,7 @@ export const BlockAnatomy = ({
     name,
     tier,
     parts,
+    states,
     children,
     leaf,
     note,
@@ -295,7 +333,7 @@ export const BlockAnatomy = ({
     // `parts` cũ KHÔNG bị vứt: rút lấy phần WHY làm chú giải, cấu trúc lấy từ DOM.
     return (
         <BlockAnatomyDerived
-            {...{ name, tier, children, leaf, note, reason, code }}
+            {...{ name, tier, states, children, leaf, note, reason, code }}
             annotate={annotate ?? flattenParts(parts ?? [])}
         />
     )
@@ -310,6 +348,7 @@ export const BlockAnatomy = ({
 const BlockAnatomyDerived = ({
     name,
     tier,
+    states,
     children,
     leaf,
     note,
@@ -318,6 +357,22 @@ const BlockAnatomyDerived = ({
     annotate,
 }: Omit<BlockAnatomyProps, "parts"> & { annotate: Record<string, AnatomyAnnotation> }) => {
     const hostRef = useRef<HTMLDivElement>(null)
+
+    /**
+     * Bộ state của leaf. Story cũ (`children` + một `note` + một `code`) được coi là MỘT state
+     * ẩn danh, nên 663 leaf hiện có không phải sửa gì mà vẫn lên đúng bố cục mới.
+     */
+    const stateList: Array<AnatomyState> =
+        states && states.length > 0
+            ? states
+            : [{ name: leaf ?? "Default", render: children, why: note, code }]
+
+    const [pickedState, setPickedState] = useState(0)
+    // Kẹp chỉ số tại chỗ thay vì dùng effect: story đổi leaf làm mảng ngắn lại thì rơi về 0,
+    // không cần một lượt render dư để sửa state.
+    const activeIndex = pickedState < stateList.length ? pickedState : 0
+    const active = stateList[activeIndex]
+
     const [derived, setDerived] = useState<Array<AnatomyNode>>([])
     // Shiki cần biết nền sáng hay tối; đọc từ chính DOM đang bọc panel.
     const [isDark, setIsDark] = useState(false)
@@ -405,7 +460,11 @@ const BlockAnatomyDerived = ({
             cancelAnimationFrame(raf)
             ro.disconnect()
         }
-    }, [children, annotate])
+    // `activeIndex` PHẢI nằm trong deps: với API `states`, `children` không đổi khi bấm sang
+    // state khác, nên nếu chỉ khai `[children, annotate]` thì effect không chạy lại và cây deps
+    // đứng nguyên của state trước. Đo được: state `seatsRemaining = null` render 0 node mà panel
+    // vẫn hiện 4 link của state đầu.
+    }, [children, annotate, activeIndex])
 
     /**
      * Một nhánh — TÊN + pill tier + vai trò. Không số, không badge chồng lên hình.
@@ -459,22 +518,6 @@ const BlockAnatomyDerived = ({
         </div>
     )
 
-    /** Đếm mọi node trong cây (kể cả lồng) để ghi số lên tab Deps. */
-    const countNodes = (nodes: Array<AnatomyNode>): number =>
-        nodes.reduce((sum, node) => sum + 1 + countNodes(node.children ?? []), 0)
-
-    const depsCount = countNodes(derived)
-
-    // Tab nào KHÔNG có dữ liệu thì không mọc ra: Deps rỗng (sau khi lọc storyId)
-    // thì THÔI, không hiện tab; story chưa viết snippet thì không có `code`.
-    const tabs: Array<PanelTab> = [
-        ...(depsCount > 0 ? (["deps"] as const) : []),
-        ...(code ? (["code"] as const) : []),
-    ]
-    const [picked, setPicked] = useState<PanelTab | null>(null)
-    // Không dùng effect để chốt tab mặc định: cứ suy tại chỗ, tab bị gỡ thì rơi về đầu.
-    const activeTab: PanelTab = picked && tabs.includes(picked) ? picked : tabs[0]
-
     const [isCopied, setIsCopied] = useState(false)
     const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
     useEffect(() => {
@@ -486,7 +529,7 @@ const BlockAnatomyDerived = ({
         }
     }, [])
     const handleCopy = () => {
-        void navigator.clipboard?.writeText(code ?? "")
+        void navigator.clipboard?.writeText(active.code ?? "")
         setIsCopied(true)
         if (copyTimer.current) {
             clearTimeout(copyTimer.current)
@@ -496,10 +539,15 @@ const BlockAnatomyDerived = ({
 
     return (
         <div ref={hostRef} className="flex flex-col gap-6">
-            {/* Khung render THẬT của leaf. Bảng phủ bên dưới KHÔNG vẽ lại hình. */}
-            <div>{children}</div>
+            {/* HÌNH của state đang chọn — CHỈ state này được mount, nên cây deps panel suy ra
+                thuộc đúng nó. Trước 2026-07-27 mọi state xếp chung trong `children` nên cây
+                trộn lẫn và không đúng với state nào cả. */}
+            <div>{active.render}</div>
 
-            <div className="overflow-hidden rounded-xl border border-default bg-surface">
+            <div
+                data-sb-anatomy-panel=""
+                className="overflow-hidden rounded-xl border border-default bg-surface"
+            >
                 <div className="flex flex-wrap items-baseline gap-2 border-b border-default px-4 py-3">
                     <span className="font-mono text-sm text-foreground">{name}</span>
                     <span className={cn(PILL, TIER_PILL[tier])}>{TIER_NAME[tier]}</span>
@@ -509,48 +557,58 @@ const BlockAnatomyDerived = ({
                             · <Prose inline>{leaf}</Prose>
                         </span>
                     ) : null}
+                    {stateList.length > 1 ? (
+                        <span className="ml-auto text-[11px] text-muted">
+                            {stateList.length} states
+                        </span>
+                    ) : null}
                 </div>
 
-                {/* Một tab thì khỏi bày thanh tab — story cũ (chỉ có Deps) trông y như trước. */}
-                {tabs.length > 1 ? (
-                    <div role="tablist" aria-label="Anatomy views" className="flex gap-1 border-b border-default px-3">
-                        {tabs.map((tabId) => {
-                            const isActive = tabId === activeTab
-                            const count = tabId === "deps" ? depsCount : null
-                            return (
-                                <button
-                                    key={tabId}
-                                    type="button"
-                                    role="tab"
-                                    aria-selected={isActive}
-                                    onClick={() => setPicked(tabId)}
-                                    className={cn(
-                                        "-mb-px flex items-center gap-2 border-b-2 px-3 py-2 text-xs font-semibold",
-                                        isActive
-                                            ? "border-accent text-foreground"
-                                            : "border-transparent text-muted hover:text-foreground",
-                                    )}
-                                >
-                                    {TAB_LABEL[tabId]}
-                                    {count === null ? null : (
-                                        <span className="rounded-full bg-default px-2 text-[11px] font-bold leading-4 text-muted">
-                                            {count}
-                                        </span>
-                                    )}
-                                </button>
-                            )
-                        })}
+                {/* Hàng tab STATE. Một state thì khỏi bày — leaf cũ trông y như trước. */}
+                {stateList.length > 1 ? (
+                    <div role="tablist" aria-label="States" className="flex flex-wrap gap-1 border-b border-default px-3">
+                        {stateList.map((one, index) => (
+                            <button
+                                key={one.name}
+                                type="button"
+                                role="tab"
+                                aria-selected={index === activeIndex}
+                                onClick={() => setPickedState(index)}
+                                className={cn(
+                                    "-mb-px border-b-2 px-3 py-2 font-mono text-xs font-semibold",
+                                    index === activeIndex
+                                        ? "border-accent text-foreground"
+                                        : "border-transparent text-muted hover:text-foreground",
+                                )}
+                            >
+                                {one.name}
+                            </button>
+                        ))}
                     </div>
                 ) : null}
 
-                <div className="p-4">
-                    {activeTab === "deps" ? (
-                        derived.map((node) => <Branch key={node.name} node={node} depth={1} />)
-                    ) : null}
+                {/* Bố cục C (thầy chốt 2026-07-27): hồ sơ của CHÍNH state đang chọn nằm bên
+                    phải — vì sao · deps · code. Hẹp thì xuống một cột. */}
+                <div className="grid gap-3 p-4 @app-md:grid-cols-[1fr_20rem]">
+                    <div className="flex flex-col gap-3">
+                        {active.why ? (
+                            <div>
+                                <SideHeading>why this state</SideHeading>
+                                <Prose className="text-xs text-foreground">{active.why}</Prose>
+                            </div>
+                        ) : null}
+                        {derived.length > 0 ? (
+                            <div>
+                                <SideHeading>deps of this state</SideHeading>
+                                {derived.map((node) => <Branch key={node.name} node={node} depth={1} />)}
+                            </div>
+                        ) : null}
+                    </div>
 
-                    {activeTab === "code" && code ? (
-                        <div className="flex flex-col gap-2">
-                            <div className="flex justify-end">
+                    {active.code ? (
+                        <div className="flex flex-col gap-2 @app-md:border-l @app-md:border-default @app-md:pl-4">
+                            <div className="flex items-center justify-between">
+                                <SideHeading>code</SideHeading>
                                 <button
                                     type="button"
                                     onClick={handleCopy}
@@ -559,16 +617,15 @@ const BlockAnatomyDerived = ({
                                     {isCopied ? "Copied" : "Copy"}
                                 </button>
                             </div>
-                            <CodeSnippet code={code} isDark={isDark} />
+                            <CodeSnippet code={active.code} isDark={isDark} />
                         </div>
                     ) : null}
                 </div>
 
-                {/* WHY của cả leaf — nằm NGOÀI tab để đổi tab không mất mạch đọc. */}
-                {reason || note ? (
-                    <div className="flex flex-col gap-1 border-t border-default px-4 py-3">
-                        {reason ? <Prose className="text-xs text-foreground">{reason}</Prose> : null}
-                        {note ? <Prose className="text-xs text-muted">{note}</Prose> : null}
+                {/* WHY của CẢ LEAF — nằm dưới, ngoài vùng state: đổi state không mất mạch đọc. */}
+                {reason ? (
+                    <div className="border-t border-default px-4 py-3">
+                        <Prose className="text-xs text-foreground">{reason}</Prose>
                     </div>
                 ) : null}
             </div>

@@ -1,10 +1,8 @@
-import type { ReactNode } from "react"
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import {
     PhaseScarcityNote,
     PricingPhase,
 } from "@sb-components/designs/commerce/PhaseScarcityNote/PhaseScarcityNote"
-import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -51,103 +49,98 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     PriceRiseClause: { tier: "atom", role: "the OPTIONAL clause: what the price rises to afterwards", storyId: TYPOGRAPHY_STORY },
 }
 
-const leafShell = (leaf: string, node: ReactNode, note?: ReactNode, code?: string) => (
-    <div className="p-8">
-        <BlockAnatomy
-            name="PhaseScarcityNote.Base"
-            tier="design"
-            leaf={leaf}
-            parts={[]}
-            annotate={ANNOTATE}
-            note={note}
-            code={code}
-        >
-            {node}
-        </BlockAnatomy>
-    </div>
-)
-
-/** One labelled row of the scarcity ladder, so the reader can tell the states apart. */
-const Rung = ({ label, node }: RungProps) => (
-    <div className="flex flex-col gap-1">
-        <Typography.Base size="xs" color="muted" text={label} />
-        {node}
-    </div>
-)
-
-/** Props for {@link Rung}. */
-interface RungProps {
-    /** What data produced this row (not product copy — a label for the reader). */
-    label: string
-    /** The component rendered in that state. */
-    node: ReactNode
-}
-
 /**
- * The ONLY leaf. Every difference below comes from BACKEND DATA — seat count, whether a
- * next-phase price exists, whether the phase is capped at all — so they are STATES of one
- * line, not separate leaves (teacher, 2026-07-27: "coi như state đi, render nhiều state
- * trong 1 leaf").
+ * MỘT leaf, BỐN state — dùng API `states` (thầy chốt bố cục C, 2026-07-27).
  *
- * A leaf would be earned by a trục the CALLER toggles. Nothing here is caller-toggled: the
- * caller always passes the same three props and the backend decides which rung shows.
+ * Bốn state đều do BACKEND DATA sinh ra: số suất · có/không giá tăng · phase có bị chặn suất
+ * hay không. Vì vậy chúng là STATE của một leaf, không phải bốn leaf: leaf chỉ được đẻ ra bởi
+ * một trục mà CALLER bật, còn ở đây caller luôn truyền đúng ba prop như nhau.
  *
- * This replaces three leaves (`FullClause` · `NoPriceRise` · `Silent`). Split apart, the
- * reader had to open three stories and hold them in memory to see that the last two rungs
- * drop nodes; stacked, the drop is visible in one glance.
+ * Trước khi có `states`, bốn state này phải xếp tay trong `children` kèm nhãn tự chế — không
+ * chỗ nào giải thích riêng từng state, không snippet riêng, và tệ nhất là cây deps suy từ DOM
+ * của CẢ BỐN nên không đúng với state nào. Giờ mỗi state tự mang `why` + `code`, và chỉ state
+ * đang chọn được mount nên cây deps thuộc đúng nó.
  */
 export const Default: Story = {
-    render: () =>
-        leafShell(
-            "Default",
-            <div className="flex flex-col gap-4">
-                <Rung
-                    label="seats 14 · next price 2,490,000 — both clauses"
-                    node={
-                        <PhaseScarcityNote.Base
-                            showAnatomy
-                            currentPhase={PricingPhase.EarlyBird}
-                            seatsRemaining={14}
-                            nextPhasePriceVnd={2_490_000}
-                        />
-                    }
-                />
-                <Rung
-                    label="seats 3 · another phase — same nodes, only the number and the label change"
-                    node={
-                        <PhaseScarcityNote.Base
-                            currentPhase={PricingPhase.Pioneer}
-                            seatsRemaining={3}
-                            nextPhasePriceVnd={1_990_000}
-                        />
-                    }
-                />
-                <Rung
-                    label="next price null — Separator + PriceRiseClause DROP OUT"
-                    node={
-                        <PhaseScarcityNote.Base
-                            currentPhase={PricingPhase.Regular}
-                            seatsRemaining={5}
-                            nextPhasePriceVnd={null}
-                        />
-                    }
-                />
-                <Rung
-                    label="seats null (uncapped phase) — renders NOTHING, and the blank below is the contract"
-                    node={
-                        <PhaseScarcityNote.Base
-                            currentPhase={PricingPhase.Regular}
-                            seatsRemaining={null}
-                            nextPhasePriceVnd={2_990_000}
-                        />
-                    }
-                />
-            </div>,
-            "All four rungs are driven by data: the seat count, whether a next-phase price exists, and whether the phase is capped. The third rung is two nodes shorter than the first, and the fourth renders nothing at all — with no seat cap there is no honest 'when does the price rise' claim to make, so silence is the contract rather than a render bug.",
-            `<PhaseScarcityNote.Base
+    render: () => (
+        <div className="p-8">
+            <BlockAnatomy
+                name="PhaseScarcityNote.Base"
+                tier="design"
+                leaf="Default"
+                annotate={ANNOTATE}
+                reason="An honest scarcity line: every number comes from the backend's price preview, so a phase with no seat cap has nothing truthful to claim and stays silent instead of inventing a countdown."
+                states={[
+                    {
+                        name: "seats 14 · price rises",
+                        why: "Both clauses present — four items in the cluster. This is the baseline the other three are read against.",
+                        code: `<PhaseScarcityNote.Base
     currentPhase={PricingPhase.EarlyBird}
     seatsRemaining={14}
     nextPhasePriceVnd={2490000}
 />`,
-        ),
+                        render: (
+                            <PhaseScarcityNote.Base
+                                showAnatomy
+                                currentPhase={PricingPhase.EarlyBird}
+                                seatsRemaining={14}
+                                nextPhasePriceVnd={2_490_000}
+                            />
+                        ),
+                    },
+                    {
+                        name: "seats 3 · other phase",
+                        why: "Same node set, only the number and the phase label change — which is exactly why this is a STATE and not a leaf of its own.",
+                        code: `<PhaseScarcityNote.Base
+    currentPhase={PricingPhase.Pioneer}
+    seatsRemaining={3}
+    nextPhasePriceVnd={1990000}
+/>`,
+                        render: (
+                            <PhaseScarcityNote.Base
+                                showAnatomy
+                                currentPhase={PricingPhase.Pioneer}
+                                seatsRemaining={3}
+                                nextPhasePriceVnd={1_990_000}
+                            />
+                        ),
+                    },
+                    {
+                        name: "nextPhasePriceVnd = null",
+                        why: "`Separator` and `PriceRiseClause` DROP OUT — two nodes fewer than the first state. Nothing was toggled by the caller; the backend simply has no next-phase price to state.",
+                        code: `<PhaseScarcityNote.Base
+    currentPhase={PricingPhase.Regular}
+    seatsRemaining={5}
+    nextPhasePriceVnd={null}
+/>`,
+                        render: (
+                            <PhaseScarcityNote.Base
+                                showAnatomy
+                                currentPhase={PricingPhase.Regular}
+                                seatsRemaining={5}
+                                nextPhasePriceVnd={null}
+                            />
+                        ),
+                    },
+                    {
+                        name: "seatsRemaining = null",
+                        why: "Renders NOTHING, and the blank is the contract: an uncapped phase has no honest \"when does the price rise\" milestone, so inventing one would be fake scarcity. Note the deps list is empty here too — that is the tree of THIS state, not a leftover from the others.",
+                        code: `<PhaseScarcityNote.Base
+    currentPhase={PricingPhase.Regular}
+    seatsRemaining={null}
+    nextPhasePriceVnd={2990000}
+/>`,
+                        render: (
+                            <PhaseScarcityNote.Base
+                                showAnatomy
+                                currentPhase={PricingPhase.Regular}
+                                seatsRemaining={null}
+                                nextPhasePriceVnd={2_990_000}
+                            />
+                        ),
+                    },
+                ]}
+            />
+        </div>
+    ),
 }

@@ -94,9 +94,9 @@ export const QuizCard = ({
             <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-2">
                     {typeof questionIndex === "number" ? (
-                        <Chip.Base anatPart={showAnatomy ? "StatusChip" : undefined} tone="accent" text={`Câu ${questionIndex}`} />
+                        <Chip anatPart={showAnatomy ? "StatusChip" : undefined} tone="accent" text={`Câu ${questionIndex}`} />
                     ) : null}
-                    <Typography.Base weight="medium" showAnatomy={showAnatomy} text={question} />
+                    <Typography weight="medium" showAnatomy={showAnatomy} text={question} />
                 </div>
 
                 {selectionMode === "single" ? (
@@ -162,8 +162,8 @@ export const QuizCard = ({
 
                 {isSubmitted && explanation ? (
                     <div className="flex flex-col gap-1 rounded-2xl bg-surface-secondary px-4 py-3">
-                        <Typography.Base size="sm" weight="medium" showAnatomy={showAnatomy} text="Giải thích" />
-                        <Typography.Base size="sm" color="muted" showAnatomy={showAnatomy} text={explanation} />
+                        <Typography size="sm" weight="medium" showAnatomy={showAnatomy} text="Giải thích" />
+                        <Typography size="sm" color="muted" showAnatomy={showAnatomy} text={explanation} />
                     </div>
                 ) : null}
             </div>

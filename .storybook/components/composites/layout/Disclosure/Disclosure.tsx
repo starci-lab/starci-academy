@@ -14,7 +14,7 @@ import { SKELETON_TEXT_BAR_SM } from "@sb-components/atoms/_skeleton-bar"
  * slot and `body` names the revealed region, with `children` kept as shorthand
  * for `body`. It reveals ONE region, not a repeating list, so the `items` rule
  * does NOT apply here — a multi-panel accordion is a DIFFERENT frame and lives
- * as `SurfaceCard.Accordion` (items-driven), not as a member of this family.
+ * as `SurfaceCardAccordion` (items-driven), not as a member of this family.
  * Namespace only — no bare component export.
  *
  * Ground truth: MockInterviewSession's "Tùy chỉnh phiên" green-room row — a
@@ -32,7 +32,7 @@ import { SKELETON_TEXT_BAR_SM } from "@sb-components/atoms/_skeleton-bar"
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** Props for {@link Disclosure.Base}. */
+/** Props for {@link Disclosure}. */
 export interface DisclosureBaseProps {
     /**
      * Trigger label, rendered next to the caret. Bare `ReactNode` — the
@@ -159,6 +159,4 @@ const Base = ({
  * |---|---|
  * | `.Base` | `title` (trigger) + `body` slot (+ `children` = body) |
  */
-export const Disclosure = {
-    Base,
-}
+export { Base as Disclosure }

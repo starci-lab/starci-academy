@@ -15,21 +15,18 @@ import { LinkSeeMore } from "./LinkSeeMore"
  *
  * Each member gets its own FILE (following the `Button/`/`Choice/` mould) so
  * the relationship between them is a REAL, readable `import`:
- *   • `Link.Back`    → ./LinkBack     — "← Back" / "← Back to {target}".
- *   • `Link.SeeMore` → ./LinkSeeMore  — "Xem thêm →" / "Tiếp tục →".
+ *   • `LinkBack`    → ./LinkBack     — "← Back" / "← Back to {target}".
+ *   • `LinkSeeMore` → ./LinkSeeMore  — "Xem thêm →" / "Tiếp tục →".
  *
  * §12a: declared via `Object.assign` (NOT a bare object literal) — the root
- * must be a callable-namespace. Calling the root directly = `Link.Back`, the
+ * must be a callable-namespace. Calling the root directly = `LinkBack`, the
  * SIMPLEST shape of the family (no `size`/`decorative` union) — same
- * convention `Choice` follows with `Choice.Checkbox` as root. The two
+ * convention `Choice` follows with `ChoiceCheckbox` as root. The two
  * members do NOT rebuild each other (neither imports the other), so this
  * family has no internal deps.
  * ─────────────────────────────────────────────────────────────────────────────
  */
-export const Link = Object.assign(LinkBack, {
-    Back: LinkBack,
-    SeeMore: LinkSeeMore,
-})
+export { LinkBack, LinkSeeMore }
 
 export type { LinkBackProps } from "./LinkBack"
 export type { LinkSeeMoreProps, LinkSeeMoreSize } from "./LinkSeeMore"

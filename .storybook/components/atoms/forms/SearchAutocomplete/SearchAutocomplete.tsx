@@ -121,7 +121,7 @@ const SearchAutocompleteBase = ({
     }
 
     return (
-        <FieldFrame.Base
+        <FieldFrame
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -203,11 +203,9 @@ const SearchAutocompleteBase = ({
                     </ListBox>
                 </ComboBox.Popover>
             </ComboBox>
-        </FieldFrame.Base>
+        </FieldFrame>
     )
 }
 
 /** `SearchAutocomplete.*` — suggest-as-you-type search field on HeroUI `ComboBox`. */
-export const SearchAutocomplete = Object.assign(SearchAutocompleteBase, {
-    Base: SearchAutocompleteBase,
-})
+export { SearchAutocompleteBase as SearchAutocomplete }

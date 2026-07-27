@@ -47,7 +47,7 @@ const capitalize = (value: Difficulty): string => value.charAt(0).toUpperCase() 
 
 /**
  * GitHub-style difficulty indicator — a small tier-coloured dot followed by the
- * difficulty word. A thin map wrapper over the ATOM `Chip.Base` (variant `bare`);
+ * difficulty word. A thin map wrapper over the ATOM `Chip` (variant `bare`);
  * colour comes from the shared {@link DIFFICULTY_COLOR} scale. Thầy chốt 2026-07-25:
  * trước đây đi qua block `DotChip` tự vẽ — nay chỉ còn MỘT bảng chấm+nhãn ở atom.
  *
@@ -55,7 +55,7 @@ const capitalize = (value: Difficulty): string => value.charAt(0).toUpperCase() 
  */
 export const DifficultyChip = ({ difficulty, label, className, isSkeleton, showAnatomy = false, anatPart }: DifficultyChipProps) => {
     const chip = (
-        <Chip.Base
+        <Chip
             dotClassName={DIFFICULTY_COLOR[difficulty]}
             text={label ?? capitalize(difficulty)}
             className={className}

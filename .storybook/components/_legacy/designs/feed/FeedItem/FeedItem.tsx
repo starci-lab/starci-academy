@@ -61,8 +61,8 @@ export const FeedItem = ({ leading, children, timestamp, footer, className, anat
             {leading ? <div className="shrink-0">{leading}</div> : null}
             <div className="flex flex-col gap-1 min-w-0">
                 <div className="flex flex-col gap-0">
-                    <Typography.Base size="sm" showAnatomy={showAnatomy} text={children} />
-                    <Typography.Base size="xs" color="muted" showAnatomy={showAnatomy} text={timestamp} />
+                    <Typography size="sm" showAnatomy={showAnatomy} text={children} />
+                    <Typography size="xs" color="muted" showAnatomy={showAnatomy} text={timestamp} />
                 </div>
                 {footer ? <div>{footer}</div> : null}
             </div>

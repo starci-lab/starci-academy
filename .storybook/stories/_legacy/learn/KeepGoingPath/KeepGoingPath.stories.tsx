@@ -15,7 +15,7 @@ type Story = StoryObj<typeof KeepGoingPath>
 
 const PARTS: Array<AnatomyNode> = [
     { name: "SurfaceCardHeader", tier: "block", role: "dòng dẫn chương — đi `label` của SurfaceCard (render NGOÀI/trên surface), KHÔNG phải Typography rời" },
-    { name: "Surface", tier: "block", role: "vỏ surface + danh sách hàng — `SurfaceCard.List`, CÙNG layout với LearnNudges. `bordered` là PROP (chỉ bật khi nằm trong surface cha), mặc định shadow", storyId: "composites-cards-surfacecard-surfacecard-list--leading-meta" },
+    { name: "Surface", tier: "block", role: "vỏ surface + danh sách hàng — `SurfaceCardList`, CÙNG layout với LearnNudges. `bordered` là PROP (chỉ bật khi nằm trong surface cha), mặc định shadow", storyId: "composites-cards-surfacecard-surfacecardlist--leading-meta" },
 ]
 
 const LESSONS: Array<KeepGoingLesson> = [
@@ -36,7 +36,7 @@ export const Default: Story = {
                 tier="block"
                 leaf="Default"
                 parts={PARTS}
-                reason="ĐỒNG NHẤT RENDER (thầy soi mắt 2026-07-25): cụm này trông y hệt `LearnNudges` ngay trên nó nên phải đi CÙNG layout `SurfaceCard.List` — không chế thêm khái niệm render. Bản đầu tự vẽ `div.rounded-2xl.border` + `List.Row`: hai đường render cho một hình, đã dẹp."
+                reason="ĐỒNG NHẤT RENDER (thầy soi mắt 2026-07-25): cụm này trông y hệt `LearnNudges` ngay trên nó nên phải đi CÙNG layout `SurfaceCardList` — không chế thêm khái niệm render. Bản đầu tự vẽ `div.rounded-2xl.border` + `ListRow`: hai đường render cho một hình, đã dẹp."
                 note="Caller chỉ đưa DỮ LIỆU (`heading` + mảng `lessons`). Bảng trạng thái→icon nằm trong block. `bordered` KHÔNG hard-code: block không biết cha mình là gì — đứng trên nền trang trần thì shadow, nằm trong surface cha mới viền."
                 code={"<KeepGoingPath heading=\"Tiếp tục · Chương 2\" lessons={[…]} />"}
             >

@@ -197,6 +197,4 @@ const IconTileBase = ({
 }
 
 /** `IconTile.*` — framed icon-tile namespace. */
-export const IconTile = Object.assign(IconTileBase, {
-    Base: IconTileBase,
-})
+export { IconTileBase as IconTile }

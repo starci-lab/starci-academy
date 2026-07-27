@@ -766,7 +766,7 @@ export const ArchitectureScene = ({ data = DEFAULT_DATA, caption, className, sel
                 </Canvas>
             </div>
             {caption ? (
-                <Typography.Base size="sm" text={caption} color="muted" align="center" className="px-5" showAnatomy={showAnatomy} />
+                <Typography size="sm" text={caption} color="muted" align="center" className="px-5" showAnatomy={showAnatomy} />
             ) : null}
         </div>
     )

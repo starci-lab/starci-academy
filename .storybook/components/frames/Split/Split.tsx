@@ -5,9 +5,9 @@ import { ALIGN_CLASS, GAP_CLASS, type LayoutAlign, type SeamScale } from "@sb-co
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * LAYOUT (khung) — `Split.*`: the TRÁI ↔ PHẢI row (`items-center justify-between`).
- * One member, `Split.Base`: the shape has no second form — a split is a split.
+ * One member, `Split`: the shape has no second form — a split is a split.
  *
- * WHY IT IS ITS OWN KHUNG and not "a `Stack.H` with `justify=between`": the row
+ * WHY IT IS ITS OWN KHUNG and not "a `StackH` with `justify=between`": the row
  * appears 43× across the app (card title ↔ action, label ↔ value, price ↔ CTA)
  * and it is not one track of N children — it is TWO NAMED SIDES with different
  * width strategies: `start` may truncate (`min-w-0`), `end` must never be
@@ -39,7 +39,7 @@ const SM_ALIGN_CLASS: Record<LayoutAlign, string> = {
     baseline: "@app-sm:items-baseline",
 }
 
-/** Props for {@link Split.Base}. */
+/** Props for {@link Split}. */
 export interface SplitBaseProps {
     /**
      * LEADING side (the reading-flow anchor: title, label, primary text). Rendered
@@ -103,7 +103,7 @@ const SplitBase = ({
         )}
     >
         {/* No `data-anat-part` on these two wrappers (2026-07-28): `start`/`end` are CALLER
-            slots — whatever they render (a `Typography.Base`, a `Button.Base`, a `Stack.V`)
+            slots — whatever they render (a `Typography`, a `Button`, a `StackV`)
             belongs to the caller's own anatomy, not to this khung's. Badging the wrapper as
             "Start"/"End" would claim the caller's content as this frame's own part, and no
             story ever declared either name (no component sits behind them to link to), so
@@ -121,6 +121,4 @@ const SplitBase = ({
  * `Split.*` — the left↔right row khung namespace. Namespace only — no bare
  * component export (§13a).
  */
-export const Split = {
-    Base: SplitBase,
-}
+export { SplitBase as Split }

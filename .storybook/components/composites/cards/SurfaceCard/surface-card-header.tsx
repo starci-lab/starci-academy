@@ -1,7 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
-import { Link } from "@sb-components/atoms/navigation/Link/Link"
+import { LinkSeeMore } from "@sb-components/atoms/navigation/Link/Link"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
@@ -31,7 +31,7 @@ export interface SurfaceLabelProps {
     subtleLabel?: boolean
     /**
      * Storybook-only: attaches `data-anat-part` to header row parts rebuilt from an
-     * atom (currently: `Link.SeeMore`) so a BlockAnatomy panel can anchor the badge +
+     * atom (currently: `LinkSeeMore`) so a BlockAnatomy panel can anchor the badge +
      * link to that atom's own story. Doesn't affect the visual.
      */
     showAnatomy?: boolean
@@ -76,7 +76,7 @@ export const SurfaceCardHeader = ({
                     because it's an atom, `isSkeleton` FLOWS STRAIGHT into it instead
                     of forcing the header row to branch off and build its own shimmer
                     bar. */}
-                <Typography.Base
+                <Typography
                     size={textSize}
                     weight={subtleLabel ? undefined : "medium"}
                     color={subtleLabel ? "muted" : undefined}
@@ -90,12 +90,12 @@ export const SurfaceCardHeader = ({
                 // This is an ATOM with its own story ⇒ the node is named so it becomes a
                 // clickable DEP in the panel; the badge stops here, no drilling into the
                 // atom's insides (§11a).
-                <span className="shrink-0" data-anat-part={showAnatomy ? "Link.SeeMore" : undefined}>
-                    <Link.SeeMore onPress={onSeeMore} size={textSize} label={seeMoreLabel} />
+                <span className="shrink-0" data-anat-part={showAnatomy ? "LinkSeeMore" : undefined}>
+                    <LinkSeeMore onPress={onSeeMore} size={textSize} label={seeMoreLabel} />
                 </span>
             ) : labelEnd != null ? (
                 // Also goes through the atom, same reason — the flag keeps flowing, not branching.
-                <Typography.Base
+                <Typography
                     size={textSize}
                     color="muted"
                     isSkeleton={isSkeleton}

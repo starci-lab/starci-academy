@@ -70,7 +70,7 @@ export const FeedbackListItem = ({
             <Card className={cn(className)}>
                 <CardContent className="flex flex-col gap-2">
                     <div className="flex items-center gap-3">
-                        <Chip.Base isSkeleton showAnatomy={showAnatomy} />
+                        <Chip isSkeleton showAnatomy={showAnatomy} />
                         <Typography size="sm" isSkeleton className="w-1/3" anatPart={showAnatomy ? "Title" : undefined} />
                     </div>
                     <Typography size="sm" isSkeleton className="w-3/4" anatPart={showAnatomy ? "Summary" : undefined} />
@@ -83,18 +83,18 @@ export const FeedbackListItem = ({
         <Card className={cn(className)}>
             <CardContent className="flex flex-col gap-2">
                 <div className="flex flex-wrap items-center gap-3">
-                    <Chip.Base
+                    <Chip
                         tone={SOURCE_TONE_MAP[source] ?? "accent"}
                         anatPart={showAnatomy ? "SourceChip" : undefined}
                         text={sourceLabel}
                     />
-                    <Typography.Base size="sm" weight="medium" text={title} showAnatomy={showAnatomy} />
-                    <Typography.Base size="xs" color="muted" className="ml-auto" text={date} showAnatomy={showAnatomy} />
+                    <Typography size="sm" weight="medium" text={title} showAnatomy={showAnatomy} />
+                    <Typography size="xs" color="muted" className="ml-auto" text={date} showAnatomy={showAnatomy} />
                 </div>
                 {courseTitle ? (
-                    <Typography.Base size="xs" color="muted" text={courseTitle} showAnatomy={showAnatomy} />
+                    <Typography size="xs" color="muted" text={courseTitle} showAnatomy={showAnatomy} />
                 ) : null}
-                <Typography.Base size="sm" color="muted" text={summary} showAnatomy={showAnatomy} />
+                <Typography size="sm" color="muted" text={summary} showAnatomy={showAnatomy} />
             </CardContent>
         </Card>
     )

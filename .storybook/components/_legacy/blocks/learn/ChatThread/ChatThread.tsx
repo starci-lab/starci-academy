@@ -187,7 +187,7 @@ const AssistantBody = ({
         const tr = message.toolResult
         return (
             <div className="flex flex-col gap-2">
-                {tr.intro ? <Typography.Base size="sm" text={tr.intro} /> : null}
+                {tr.intro ? <Typography size="sm" text={tr.intro} /> : null}
                 <ChatToolResult
                     items={tr.items}
                     label={tr.label}
@@ -203,7 +203,7 @@ const AssistantBody = ({
         )
     }
     if (message.content === "") {
-        return <Typography.Base size="sm" color="muted" showAnatomy={showAnatomy} text={thinkingLabel} />
+        return <Typography size="sm" color="muted" showAnatomy={showAnatomy} text={thinkingLabel} />
     }
     if (message.isQuotaError) {
         return (
@@ -267,7 +267,7 @@ export const ChatThread = ({
                 hasSelection ? null : scope ? (
                     <>
                         {emptyHint ? (
-                            <Typography.Base size="sm" color="muted" showAnatomy={showAnatomy} text={emptyHint} />
+                            <Typography size="sm" color="muted" showAnatomy={showAnatomy} text={emptyHint} />
                         ) : null}
                         {/* suggestion cluster ("tóm tắt/khó nhất/ví dụ") only makes sense
                             against an OPEN lesson — course/task/challenge/foundation offer
@@ -292,7 +292,7 @@ export const ChatThread = ({
                 ) : (
                     <>
                         {emptyHint ? (
-                            <Typography.Base size="sm" color="muted" showAnatomy={showAnatomy} text={emptyHint} />
+                            <Typography size="sm" color="muted" showAnatomy={showAnatomy} text={emptyHint} />
                         ) : null}
                         {suggestions && suggestions.length > 0 ? (
                             <div className="flex flex-wrap gap-2">
@@ -316,7 +316,7 @@ export const ChatThread = ({
                 messages.map((message) =>
                     message.role === "user" ? (
                         <ChatBubble key={message.id} role="user" anatPart={showAnatomy ? "ChatBubble.User" : undefined}>
-                            <Typography.Base size="sm" text={message.content} />
+                            <Typography size="sm" text={message.content} />
                         </ChatBubble>
                     ) : (
                         <ChatBubble key={message.id} role="assistant" anatPart={showAnatomy ? "ChatBubble.Assistant" : undefined}>

@@ -11,10 +11,10 @@ import {
  * ATOM — `Progress.*`: the progress-indicator atom namespace (bọc HeroUI).
  *
  * Members theo HÌNH + NGỮ NGHĨA:
- *   • `Progress.Bar`    — thanh tuyến tính, TIẾN TRÌNH (task đang chạy). Có xác định
+ *   • `ProgressBar`    — thanh tuyến tính, TIẾN TRÌNH (task đang chạy). Có xác định
  *                          (value) hoặc `isIndeterminate` (không rõ thời lượng).
- *   • `Progress.Circle` — vòng tròn, cùng ngữ nghĩa tiến-trình như Bar.
- *   • `Progress.Meter`  — ĐO LƯỜNG tĩnh (dung lượng, mức pin, điểm). LUÔN có giá trị
+ *   • `ProgressCircle` — vòng tròn, cùng ngữ nghĩa tiến-trình như Bar.
+ *   • `ProgressMeter`  — ĐO LƯỜNG tĩnh (dung lượng, mức pin, điểm). LUÔN có giá trị
  *                          xác định → KHÔNG `isIndeterminate` (react-aria Meter không có).
  *
  * Bar/Circle bọc react-aria ProgressBar (hỗ trợ indeterminate); Meter bọc react-aria
@@ -53,7 +53,7 @@ interface ProgressTrackProps {
 /** Per-size circle diameter (skeleton match + `ProgressCircle` doesn't force a box). */
 const CIRCLE_BOX: Record<ProgressSize, string> = { sm: "size-10", md: "size-14", lg: "size-20" }
 
-/** `Progress.Bar` — linear progress (HeroUI ProgressBar). Determinate or indeterminate. */
+/** `ProgressBar` — linear progress (HeroUI ProgressBar). Determinate or indeterminate. */
 const ProgressBar = ({
     value = 0,
     max = 100,
@@ -85,7 +85,7 @@ const ProgressBar = ({
     )
 }
 
-/** `Progress.Circle` — circular progress (HeroUI ProgressCircle). Determinate or indeterminate. */
+/** `ProgressCircle` — circular progress (HeroUI ProgressCircle). Determinate or indeterminate. */
 const ProgressCircle = ({
     value = 0,
     max = 100,
@@ -143,7 +143,7 @@ type MeterProps = MeterOwnProps &
         | { isSkeleton?: false; value: number }
     )
 
-/** `Progress.Meter` — static gauge (HeroUI Meter). Always determinate; tone signals a band. */
+/** `ProgressMeter` — static gauge (HeroUI Meter). Always determinate; tone signals a band. */
 const Meter = ({
     value,
     max = 100,
@@ -170,8 +170,4 @@ const Meter = ({
  * `Progress.*` — progress-indicator atom namespace. `Bar`/`Circle` = tiến trình
  * (determinate/indeterminate), `Meter` = đo lường tĩnh (chỉ determinate).
  */
-export const Progress = Object.assign(ProgressBar, {
-    Bar: ProgressBar,
-    Circle: ProgressCircle,
-    Meter: Meter,
-})
+export { ProgressBar, ProgressCircle, Meter as ProgressMeter }

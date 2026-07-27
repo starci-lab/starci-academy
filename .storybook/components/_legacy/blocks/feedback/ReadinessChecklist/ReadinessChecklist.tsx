@@ -1,6 +1,6 @@
 import React from "react"
 import { CheckCircleIcon } from "@phosphor-icons/react"
-import { List } from "@sb-components/composites/lists/List/List"
+import { ListRow } from "@sb-components/composites/lists/List/List"
 import { IconTile, type IconComponent } from "@sb-components/atoms/display/IconTile/IconTile"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
@@ -8,7 +8,7 @@ import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/feedback/ReadinessChecklist`. Authored in Storybook (not
- * `src`); synced to `src` later. Its `List.Row`, `IconTile`, and `StatusChip`
+ * `src`); synced to `src` later. Its `ListRow`, `IconTile`, and `StatusChip`
  * dependencies are the real local ports (`../../lists/List/List`,
  * `../../identity/IconTile/IconTile`, `../../chips/StatusChip/StatusChip`).
  */
@@ -41,7 +41,7 @@ export interface ReadinessChecklistProps {
     className?: string
     /**
      * Storybook-only: when true, badges each row's directly-composed parts —
-     * `List.Row` (leading·title·subtitle·trailing, opaque here — no `data-anat-part`
+     * `ListRow` (leading·title·subtitle·trailing, opaque here — no `data-anat-part`
      * of its own, so it's badged via an {@link AnatomyOverlay} marker), plus the
      * `IconTile` and `StatusChip` this block wires directly into that row's
      * `leading`/`trailing` slots. No visual effect.
@@ -50,7 +50,7 @@ export interface ReadinessChecklistProps {
 }
 
 /**
- * A vertical list of prerequisite/setup checks, each rendered as a {@link List.Row}:
+ * A vertical list of prerequisite/setup checks, each rendered as a {@link ListRow}:
  * a leading `IconTile` (success-toned check when ready, the caller's own icon in
  * neutral tone while pending), the item's label as title, a ready/pending
  * description as subtitle, and a trailing {@link StatusChip} spelling out the state.
@@ -63,15 +63,15 @@ export const ReadinessChecklist = ({ items, readyLabel, pendingLabel, className,
         <div className={className}>
             {items.map((item, index) => {
                 const row = (
-                    <List.Row
-                        // p-3, not List.Row's bare py-2: this checklist always renders
+                    <ListRow
+                        // p-3, not ListRow's bare py-2: this checklist always renders
                         // INSIDE a bounded card, where a row with no horizontal padding
                         // sits flush against the card edge. Padding on the ROW keeps the
                         // divider full-width (border-b is on the row box, outside padding).
                         className="p-3"
                         divider={index < items.length - 1}
                         leading={(
-                            <IconTile.Base
+                            <IconTile
                                 // circle-check, not a bare tick — icon.md §2: every
                                 // "done / passed" mark is `CheckCircleIcon`.
                                 icon={item.ready ? CheckCircleIcon : item.icon}
@@ -83,7 +83,7 @@ export const ReadinessChecklist = ({ items, readyLabel, pendingLabel, className,
                         title={item.label}
                         subtitle={item.ready ? item.readyDescription : item.pendingDescription}
                         trailing={(
-                            <Chip.Base
+                            <Chip
                                 tone={item.ready ? "success" : "neutral"}
                                 anatPart={showAnatomy ? "StatusChip" : undefined}
                                 text={item.ready ? readyLabel : pendingLabel}
@@ -91,14 +91,14 @@ export const ReadinessChecklist = ({ items, readyLabel, pendingLabel, className,
                         )}
                     />
                 )
-                // List.Row doesn't accept `data-anat-part` itself — badge it via an
-                // AnatomyOverlay marker on a `relative` wrapper instead (§11a: List.Row
+                // ListRow doesn't accept `data-anat-part` itself — badge it via an
+                // AnatomyOverlay marker on a `relative` wrapper instead (§11a: ListRow
                 // is the DIRECT part; its own leading/title/subtitle/trailing are its
-                // internals, not drilled here — see List.Row's own story).
+                // internals, not drilled here — see ListRow's own story).
                 return showAnatomy ? (
                     <div key={item.id} className="relative" data-anat>
                         {row}
-                        <AnatomyOverlay label="List.Row" tier="block" />
+                        <AnatomyOverlay label="ListRow" tier="block" />
                     </div>
                 ) : (
                     <React.Fragment key={item.id}>{row}</React.Fragment>

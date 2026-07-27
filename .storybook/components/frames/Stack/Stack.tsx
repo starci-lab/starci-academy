@@ -8,8 +8,8 @@ import { Flex } from "@sb-components/frames/Flex/Flex"
  * ─────────────────────────────────────────────────────────────────────────────
  * LAYOUT (frame) — `Stack.*`: the base one-axis track. Two members = two AXES,
  * the only real shapes a stack has:
- *   • `Stack.V` — stacks VERTICALLY (column).
- *   • `Stack.H` — stacks HORIZONTALLY (row); only this axis can `wrap`.
+ *   • `StackV` — stacks VERTICALLY (column).
+ *   • `StackH` — stacks HORIZONTALLY (row); only this axis can `wrap`.
  *
  * FRAME API LAW (§13b): a stack WRAPS arbitrary content — it is not a repeating
  * list — so `children` is the road (there is no `header`/`body`/`footer` trio to
@@ -24,7 +24,7 @@ import { Flex } from "@sb-components/frames/Flex/Flex"
  *
  * §13 boundaries respected: no domain content, no feature behaviour — the track
  * only decides direction / gap / alignment / an optional rule between children.
- * `divider` COMPOSES the existing `Divider.Base` atom (§13c: a frame never
+ * `divider` COMPOSES the existing `Divider` atom (§13c: a frame never
  * hand-rolls what an atom already owns).
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -41,7 +41,7 @@ export interface StackBaseProps {
     align?: LayoutAlign
     /** Main-axis distribution (`V` → vertical, `H` → horizontal). */
     justify?: LayoutJustify
-    /** `true` → inserts `Divider.Base` BETWEEN children (never before the first / after the last). */
+    /** `true` → inserts `Divider` BETWEEN children (never before the first / after the last). */
     divider?: boolean
     /**
      * Space INSIDE the track, same scale as `gap`.
@@ -65,21 +65,21 @@ export interface StackBaseProps {
     showAnatomy?: boolean
 }
 
-/** Props for {@link Stack.V} — a vertical track (no row-only prop to add). */
+/** Props for {@link StackV} — a vertical track (no row-only prop to add). */
 export type StackVProps = StackBaseProps
 
-/** Props for {@link Stack.H} — a horizontal track. */
+/** Props for {@link StackH} — a horizontal track. */
 export interface StackHProps extends StackBaseProps {
     /**
      * `true` → children flow onto a new line when the row runs out of width.
      * ROW-ONLY: a column already grows without bound, so wrapping is meaningless
-     * on `Stack.V` and is not offered there.
+     * on `StackV` and is not offered there.
      */
     wrap?: boolean
 }
 
 /**
- * Interleaves `Divider.Base` between children — NOT around them: N children get
+ * Interleaves `Divider` between children — NOT around them: N children get
  * N−1 rules. The atom carries its own `showAnatomy` (part name `Line`), so the
  * frame adds no wrapper element and the DOM is identical with badges on or off.
  *
@@ -95,11 +95,11 @@ const interleaveDividers = (children: ReactNode, axis: "vertical" | "horizontal"
         index === 0
             ? [child]
             : [
-                <Divider.Base
+                <Divider
                     key={`stack-divider-${index}`}
                     orientation={ruleOrientation}
                     className={ruleOrientation === "vertical" ? "self-stretch" : undefined}
-                    anatPart={showAnatomy ? "Divider.Base" : undefined}
+                    anatPart={showAnatomy ? "Divider" : undefined}
                 />,
                 child,
             ],
@@ -122,7 +122,7 @@ const StackV = ({
     showAnatomy = false,
     anatPart,
 }: StackVProps) => (
-    <Flex.Base
+    <Flex
         direction="col"
         gap={gap}
         padding={padding}
@@ -132,7 +132,7 @@ const StackV = ({
         anatPart={anatPart}
     >
         {divider ? interleaveDividers(children, "vertical", showAnatomy) : children}
-    </Flex.Base>
+    </Flex>
 )
 
 const StackH = ({
@@ -147,7 +147,7 @@ const StackH = ({
     showAnatomy = false,
     anatPart,
 }: StackHProps) => (
-    <Flex.Base
+    <Flex
         direction="row"
         gap={gap}
         padding={padding}
@@ -158,10 +158,7 @@ const StackH = ({
         anatPart={anatPart}
     >
         {divider ? interleaveDividers(children, "horizontal", showAnatomy) : children}
-    </Flex.Base>
+    </Flex>
 )
 
-export const Stack = {
-    V: StackV,
-    H: StackH,
-}
+export { StackV, StackH }

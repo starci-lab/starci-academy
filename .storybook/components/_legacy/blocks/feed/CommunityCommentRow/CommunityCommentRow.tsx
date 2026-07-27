@@ -8,7 +8,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK ported faithfully from
  * `@/components/blocks/feed/CommunityCommentRow`. Composed from the atom
- * `Avatar.Base` + `MarkdownContent` + the local `ReactionBar` block. Synced to `src`
+ * `Avatar` + `MarkdownContent` + the local `ReactionBar` block. Synced to `src`
  * later. `@/modules` types + the localized time-ago label are inlined locally.
  */
 
@@ -98,14 +98,14 @@ export const CommunityCommentRow = ({
     return (
         <div className={className} data-anat-part={anatPart}>
             <div className="flex gap-3">
-                <Avatar.Base
+                <Avatar
                     name={comment.author.username}
                     src={comment.author.avatar ?? undefined}
                     showAnatomy={showAnatomy}
                 />
                 <div className="flex min-w-0 flex-1 flex-col gap-1">
                     <div className="flex items-center gap-1">
-                        <Typography.Base size="xs"
+                        <Typography size="xs"
                             weight="medium"
                             truncate
                             showAnatomy={showAnatomy}
@@ -117,7 +117,7 @@ export const CommunityCommentRow = ({
                                 className="size-3.5 shrink-0 text-accent-soft-foreground"
                             />
                         ) : null}
-                        <Typography.Base size="xs"
+                        <Typography size="xs"
                             color="muted"
                             showAnatomy={showAnatomy}
                             text={timeAgo(comment.createdAt)}

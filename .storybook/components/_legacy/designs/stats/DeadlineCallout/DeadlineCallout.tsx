@@ -66,11 +66,11 @@ export const DeadlineCallout = ({
                 data-anat-part={showAnatomy ? "Panel" : undefined}
                 className="flex items-center gap-3 rounded-2xl border border-warning-soft-foreground bg-warning-soft p-3"
             >
-                <Typography.Base size="h3" className="shrink-0 text-warning-soft-foreground" text={count} />
+                <Typography size="h3" className="shrink-0 text-warning-soft-foreground" text={count} />
                 <div className="flex min-w-0 flex-col gap-0">
-                    <Typography.Base size="sm" weight="medium" text={title} />
+                    <Typography size="sm" weight="medium" text={title} />
                     {hint ? (
-                        <Typography.Base size="xs" color="muted" text={hint} />
+                        <Typography size="xs" color="muted" text={hint} />
                     ) : null}
                 </div>
             </div>
@@ -88,14 +88,14 @@ export const DeadlineCallout = ({
                                     className={cn("w-full rounded-t", bar.spike ? "bg-danger/70" : "bg-accent/50")}
                                 />
                             </div>
-                            <Typography.Base size="xs" color="muted" text={bar.label} />
+                            <Typography size="xs" color="muted" text={bar.label} />
                         </div>
                     ))}
                 </div>
             ) : null}
 
             {caption ? (
-                <Typography.Base size="xs" color="muted" showAnatomy={showAnatomy} text={caption} />
+                <Typography size="xs" color="muted" showAnatomy={showAnatomy} text={caption} />
             ) : null}
         </div>
     )

@@ -3,7 +3,7 @@ import { Pagination as HeroPagination, Skeleton as HeroSkeleton, cn } from "@her
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Pagination.Base`: the ONE constrained page-nav atom over HeroUI
+ * ATOM — `Pagination`: the ONE constrained page-nav atom over HeroUI
  * `Pagination`.
  *
  * Controlled + presentational: the caller passes `currentPage` / `totalPages` and
@@ -183,9 +183,7 @@ const PaginationLink = ({ pageNumber, isActive, onPageChange, showAnatomy }: Pag
 }
 
 /**
- * `Pagination.*` — the page-nav ATOM namespace. `Pagination.Base` is the single
+ * `Pagination.*` — the page-nav ATOM namespace. `Pagination` is the single
  * constrained pager (windowing / ellipsis are LEAVES of it, prop-driven).
  */
-export const Pagination = Object.assign(PaginationBase, {
-    Base: PaginationBase,
-})
+export { PaginationBase as Pagination }

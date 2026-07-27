@@ -91,7 +91,7 @@ export const Empty: Story = {
                     {
                         name: "file = null",
                         why: "The dashed box shows only the hint line, with no file name and no error text present. This is the first thing a learner sees before touching the field, so the copy has to explain what to drop and which format is accepted.",
-                        code: "<Dropzone.Base hint=\"PDF or DOCX, up to 5MB\" acceptedMimeTypes={[…]} maxSizeInBytes={…} />",
+                        code: "<Dropzone hint=\"PDF or DOCX, up to 5MB\" acceptedMimeTypes={[…]} maxSizeInBytes={…} />",
                         render: <Controlled hint={HINT} acceptedMimeTypes={ACCEPT} maxSizeInBytes={MAX} />,
                     },
                 ]}
@@ -112,7 +112,7 @@ export const WithFile: Story = {
                     {
                         name: "file != null",
                         why: "The hint line is swapped for the picked file's name, in the exact same spot and with the same box around it. Showing the real file name confirms the pick succeeded without adding a second confirmation element next to the box.",
-                        code: "<Dropzone.Base file={cvFile} hint=\"PDF or DOCX, up to 5MB\" />",
+                        code: "<Dropzone file={cvFile} hint=\"PDF or DOCX, up to 5MB\" />",
                         render: <Controlled hint={HINT} initialFile={cvFile} acceptedMimeTypes={ACCEPT} maxSizeInBytes={MAX} />,
                     },
                 ]}
@@ -133,7 +133,7 @@ export const Error: Story = {
                     {
                         name: "errorMessage != null",
                         why: "The box border switches to the danger tone and an error line appears directly beneath it. Naming the exact problem right at the field, wrong type or over the size cap, lets the learner fix the file without guessing what went wrong.",
-                        code: "<Dropzone.Base errorMessage=\"File is larger than 5MB\" hint=\"PDF or DOCX, up to 5MB\" />",
+                        code: "<Dropzone errorMessage=\"File is larger than 5MB\" hint=\"PDF or DOCX, up to 5MB\" />",
                         render: (
                             <Controlled
                                 hint={HINT}
@@ -162,7 +162,7 @@ export const Skeleton: Story = {
                     {
                         name: "isSkeleton",
                         why: "The whole box collapses into a single shimmer block sized to the dashed box's shape, with no hint text and no error line drawn. Keeping the rest to one simple shape avoids mirroring a box and an error line that might never even appear.",
-                        code: "<Dropzone.Base isSkeleton />",
+                        code: "<Dropzone isSkeleton />",
                         render: (
                             <Dropzone
                                 isSkeleton

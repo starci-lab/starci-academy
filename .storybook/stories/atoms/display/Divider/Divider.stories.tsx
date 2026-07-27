@@ -3,7 +3,7 @@ import { Divider } from "@sb-components/atoms/display/Divider/Divider"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Divider.Base`: wraps HeroUI `Separator` directly (HeroUI has no
+ * ATOM — `Divider`: wraps HeroUI `Separator` directly (HeroUI has no
  * "Divider", renamed for the app's vocabulary). A leaf atom — it doesn't build
  * any atom OF OURS with its own story, so it has no atom-tier dep. `Label` is an
  * INTERNAL span holding the free-form label content (a slot, nowhere else to jump
@@ -36,23 +36,23 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     },
 }
 
-const meta: Meta<typeof Divider.Base> = {
-    title: "Atoms/Display/Divider/Divider.Base",
-    component: Divider.Base,
+const meta: Meta<typeof Divider> = {
+    title: "Atoms/Display/Divider/Divider",
+    component: Divider,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },
 }
 
 export default meta
 
-type Story = StoryObj<typeof Divider.Base>
+type Story = StoryObj<typeof Divider>
 
 /** Bare leaf — default orientation (horizontal), default variant, no label. Migrated to `states` 2026-07-27. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
-                name="Divider.Base"
+                name="Divider"
                 tier="atom"
                 leaf="Bare divider"
                 annotate={ANNOTATE}
@@ -61,10 +61,10 @@ export const Default: Story = {
                     {
                         name: "no props set (bare horizontal line)",
                         why: "A single horizontal rule renders at the default weight, with no label attached. This is the plain separator every other leaf on this page differs from by exactly one prop.",
-                        code: "<Divider.Base />",
+                        code: "<Divider />",
                         render: (
                             <div className="w-72">
-                                <Divider.Base showAnatomy />
+                                <Divider showAnatomy />
                             </div>
                         ),
                     },
@@ -79,7 +79,7 @@ export const Orientation: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
-                name="Divider.Base"
+                name="Divider"
                 tier="atom"
                 leaf="Prop `orientation`"
                 annotate={ANNOTATE}
@@ -87,23 +87,23 @@ export const Orientation: Story = {
                     {
                         name: "orientation = \"horizontal\" (default)",
                         why: "A single full-width rule renders on its own line. This is the default reading-flow separator, used to break up stacked sections in a column.",
-                        code: "<Divider.Base />",
+                        code: "<Divider />",
                         render: (
                             <div className="w-72">
-                                <Divider.Base showAnatomy />
+                                <Divider showAnatomy />
                             </div>
                         ),
                     },
                     {
                         name: "orientation = \"vertical\"",
                         why: "A standing rule renders between inline items instead of one horizontal line spanning the width. A vertical line needs a parent with a set height to show against, which is why it only makes sense between items sitting on the same row, like separating three lesson stages.",
-                        code: "<Divider.Base orientation=\"vertical\" />",
+                        code: "<Divider orientation=\"vertical\" />",
                         render: (
                             <div className="flex h-16 items-center gap-4">
                                 <span className="text-muted text-sm">Lesson</span>
-                                <Divider.Base orientation="vertical" showAnatomy />
+                                <Divider orientation="vertical" showAnatomy />
                                 <span className="text-muted text-sm">Exercise</span>
-                                <Divider.Base orientation="vertical" />
+                                <Divider orientation="vertical" />
                                 <span className="text-muted text-sm">Discussion</span>
                             </div>
                         ),
@@ -119,7 +119,7 @@ export const Variants: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
-                name="Divider.Base"
+                name="Divider"
                 tier="atom"
                 leaf="Prop `variant`"
                 annotate={ANNOTATE}
@@ -127,30 +127,30 @@ export const Variants: Story = {
                     {
                         name: "variant = \"default\"",
                         why: "One horizontal rule renders at the default weight and tone. This is the everyday separator used between ordinary sections.",
-                        code: "<Divider.Base variant=\"default\" />",
+                        code: "<Divider variant=\"default\" />",
                         render: (
                             <div className="w-72">
-                                <Divider.Base variant="default" showAnatomy />
+                                <Divider variant="default" showAnatomy />
                             </div>
                         ),
                     },
                     {
                         name: "variant = \"secondary\"",
                         why: "The same single rule renders, only its weight and tone step down one notch from default. A quieter seam is needed where a full-strength line would compete with more important content nearby.",
-                        code: "<Divider.Base variant=\"secondary\" />",
+                        code: "<Divider variant=\"secondary\" />",
                         render: (
                             <div className="w-72">
-                                <Divider.Base variant="secondary" showAnatomy />
+                                <Divider variant="secondary" showAnatomy />
                             </div>
                         ),
                     },
                     {
                         name: "variant = \"tertiary\"",
                         why: "The same single rule renders at the lightest weight and tone in the union. The faintest seam is for a boundary that should barely register, like inside a dense list.",
-                        code: "<Divider.Base variant=\"tertiary\" />",
+                        code: "<Divider variant=\"tertiary\" />",
                         render: (
                             <div className="w-72">
-                                <Divider.Base variant="tertiary" showAnatomy />
+                                <Divider variant="tertiary" showAnatomy />
                             </div>
                         ),
                     },
@@ -165,7 +165,7 @@ export const WithLabel: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
-                name="Divider.Base"
+                name="Divider"
                 tier="atom"
                 leaf="Prop `label`"
                 annotate={ANNOTATE}
@@ -173,10 +173,10 @@ export const WithLabel: Story = {
                     {
                         name: "label set (horizontal only)",
                         why: "Two `flex-1` rules render on either side of the centered label text instead of one continuous line. A labelled break — like an 'OR' divider on a sign-in form — needs the text itself to interrupt the line, not just sit beside it.",
-                        code: "<Divider.Base label=\"OR\" />",
+                        code: "<Divider label=\"OR\" />",
                         render: (
                             <div className="w-72">
-                                <Divider.Base label="OR" showAnatomy />
+                                <Divider label="OR" showAnatomy />
                             </div>
                         ),
                     },

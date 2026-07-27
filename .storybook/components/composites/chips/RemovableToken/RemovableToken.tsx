@@ -109,7 +109,7 @@ export const RemovableToken = ({
                         {icon}
                     </span>
                 ) : null}
-                <Typography.Base size="sm" weight="medium" truncate text={label} />
+                <Typography size="sm" weight="medium" truncate text={label} />
             </div>
 
             {(onEdit || onRemove) && (

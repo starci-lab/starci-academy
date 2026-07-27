@@ -1,5 +1,5 @@
 import React from "react"
-import { Progress } from "@sb-components/atoms/display/Progress/Progress"
+import { ProgressMeter as AtomProgressMeter } from "@sb-components/atoms/display/Progress/Progress"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import type { ReactNode } from "react"
 import { Card, cn } from "@heroui/react"
@@ -87,7 +87,7 @@ export const DeckCard = ({
                     {/* title + difficulty chip */}
                     <div className="flex items-start justify-between gap-2">
                         <Typography size="sm" isSkeleton className="w-1/2" anatPart={showAnatomy ? "Skeleton" : undefined} />
-                        <Chip.Base isSkeleton showAnatomy={showAnatomy} />
+                        <Chip isSkeleton showAnatomy={showAnatomy} />
                     </div>
                     {/* description preview */}
                     <Typography size="xs" isSkeleton className="w-3/4" anatPart={showAnatomy ? "Skeleton" : undefined} />
@@ -97,7 +97,7 @@ export const DeckCard = ({
                                 <Typography size="xs" isSkeleton className="w-1/3" anatPart={showAnatomy ? "Skeleton" : undefined} />
                                 <Typography size="xs" isSkeleton className="w-8" anatPart={showAnatomy ? "Skeleton" : undefined} />
                             </div>
-                            <Progress.Meter isSkeleton showAnatomy={showAnatomy} />
+                            <AtomProgressMeter isSkeleton showAnatomy={showAnatomy} />
                         </div>
                     ) : null}
                     {/* card count + CTA */}
@@ -121,7 +121,7 @@ export const DeckCard = ({
             {showAnatomy ? <AnatomyOverlay label="DeckCard" tier="block" href="/?path=/docs/design-learn-deckcard--docs" /> : null}
             <Card.Content className="flex h-full flex-col gap-2">
                 <div className="flex items-start justify-between gap-2">
-                    <Typography.Base size="sm"
+                    <Typography size="sm"
                         weight="medium"
                         className="line-clamp-2"
                         showAnatomy={showAnatomy}
@@ -129,13 +129,13 @@ export const DeckCard = ({
                     />
                     <div className="flex shrink-0 items-center gap-2">
                         {showProgress && dueCount ? (
-                            <Chip.Base tone="warning" showAnatomy={showAnatomy} text={`${dueCount} đến hạn`} />
+                            <Chip tone="warning" showAnatomy={showAnatomy} text={`${dueCount} đến hạn`} />
                         ) : null}
                         <DifficultyChip difficulty={difficulty} showAnatomy={showAnatomy} />
                     </div>
                 </div>
                 {description ? (
-                    <Typography.Base size="xs"
+                    <Typography size="xs"
                         color="muted"
                         className="line-clamp-2"
                         showAnatomy={showAnatomy}
@@ -156,7 +156,7 @@ export const DeckCard = ({
                     />
                 ) : null}
                 <div className="flex items-center justify-between gap-2 pt-1">
-                    <Typography.Base size="xs" color="muted" showAnatomy={showAnatomy} text={`${cardCount} thẻ`} />
+                    <Typography size="xs" color="muted" showAnatomy={showAnatomy} text={`${cardCount} thẻ`} />
                     <Button
                         variant="primary"
                         size="sm"

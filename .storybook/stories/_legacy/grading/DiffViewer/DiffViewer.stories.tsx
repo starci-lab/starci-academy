@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { DiffViewer } from "@sb-components/_legacy/designs/grading/DiffViewer/DiffViewer"
 import type { DiffHunk } from "@sb-components/_legacy/designs/grading/DiffViewer/DiffViewer"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
-
 /**
  * DESIGN — a leaf renderer for grading diffs (student code vs a suggested fix).
  * It takes PRE-PARSED hunks (no diff algorithm) and self-draws every row: a
@@ -22,14 +21,10 @@ const meta: Meta<typeof DiffViewer> = {
         layout: "fullscreen",
     },
 }
-
 export default meta
-
 type Story = StoryObj<typeof DiffViewer>
-
 /** Frame each leaf's anatomy panel with breathing room. */
 const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
-
 /** A small pre-parsed hunk: a few context lines, one removed line and two added lines. */
 const sampleHunks: DiffHunk[] = [
     {
@@ -44,12 +39,10 @@ const sampleHunks: DiffHunk[] = [
         ],
     },
 ]
-
 // ── Shared part nodes (the SAME real component reused across leaves) ──
 // The DiffViewer frame (rounded-xl border bg-surface) is the anatomy ROOT
 // (BlockAnatomy supplies it as the tree root), so `parts` below are its DIRECT
 // children, nested to mirror the real DOM the component hand-draws.
-
 /** Filename header bar — a bordered div showing the mono filename text directly. */
 const FILE_HEADER: AnatomyNode = {
     name: "FileHeader",
@@ -59,21 +52,18 @@ const FILE_HEADER: AnatomyNode = {
         { name: "Typography.FileName", tier: "composite", role: "tên file (font-mono body-sm medium)" },
     ],
 }
-
 /** Muted @@ separator row — only drawn when the hunk carries a `header`. */
 const HUNK_HEADER: AnatomyNode = {
     name: "HunkHeader",
     tier: "block",
     role: "hàng phân cách muted @@ … @@ (tự vẽ, chỉ khi hunk có header)",
 }
-
 /** One UNIFIED row: a flex div that self-draws the two gutter cells, marker và nội dung. */
 const UNIFIED_ROW: AnatomyNode = {
     name: "UnifiedRow",
     tier: "block",
     role: "một hàng diff xếp dọc, nền token thêm=success / xoá=danger / context=neutral; tự hiện số dòng cũ+mới, glyph +/-/khoảng-trắng và nội dung dòng (tự vẽ)",
 }
-
 /** One SPLIT row: a 2-col grid that CONTAINS an old-side and a new-side SplitCell. */
 const SPLIT_ROW: AnatomyNode = {
     name: "SplitRow",
@@ -92,7 +82,6 @@ const SPLIT_ROW: AnatomyNode = {
         },
     ],
 }
-
 /** overflow-x-auto scroll region wrapping the mono code body — CONTAINS hunk rows. */
 const scrollRegion = (children: Array<AnatomyNode>): AnatomyNode => ({
     name: "ScrollRegion",
@@ -100,30 +89,25 @@ const scrollRegion = (children: Array<AnatomyNode>): AnatomyNode => ({
     role: "overflow-x-auto bọc thân min-w-fit font-mono text-xs — dòng dài cuộn ngang, không vỡ trang",
     children,
 })
-
 // UNIFIED leaf: header bar (Typography) + scroll region [hunk header + one-column rows].
 const UNIFIED_PARTS: Array<AnatomyNode> = [
     FILE_HEADER,
     scrollRegion([HUNK_HEADER, UNIFIED_ROW]),
 ]
-
 // SPLIT leaf: same frame, but each row is a 2-column old/new grid with a gutter per side.
 const SPLIT_PARTS: Array<AnatomyNode> = [
     FILE_HEADER,
     scrollRegion([HUNK_HEADER, SPLIT_ROW]),
 ]
-
 // NO-FILENAME leaf: `filename` omitted → header bar (+ its Typography) skipped entirely.
 const NO_FILENAME_PARTS: Array<AnatomyNode> = [
     scrollRegion([HUNK_HEADER, UNIFIED_ROW]),
 ]
-
 // NO-HUNK-HEADER leaf: hunk has no `header` → the muted separator row is not drawn.
 const NO_HUNK_HEADER_PARTS: Array<AnatomyNode> = [
     FILE_HEADER,
     scrollRegion([UNIFIED_ROW]),
 ]
-
 /** UNIFIED (default) — every line stacked in one column with +/-/space markers. */
 export const Unified: Story = {
     render: () =>
@@ -139,7 +123,6 @@ export const Unified: Story = {
             </BlockAnatomy>,
         ),
 }
-
 /** SPLIT — SAME parts, but the body switches to a 2-column old/new layout. */
 export const Split: Story = {
     render: () =>
@@ -155,7 +138,6 @@ export const Split: Story = {
             </BlockAnatomy>,
         ),
 }
-
 /** `filename` is optional — the header bar is skipped entirely when omitted. */
 export const NoFilename: Story = {
     render: () =>
@@ -171,7 +153,6 @@ export const NoFilename: Story = {
             </BlockAnatomy>,
         ),
 }
-
 /** A hunk's `header` is optional — no muted separator row is drawn when it's omitted. */
 const hunkWithoutHeader: DiffHunk[] = [
     {
@@ -183,7 +164,6 @@ const hunkWithoutHeader: DiffHunk[] = [
         ],
     },
 ]
-
 export const WithoutHunkHeader: Story = {
     render: () =>
         frame(

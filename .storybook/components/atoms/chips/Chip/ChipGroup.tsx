@@ -2,7 +2,6 @@ import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { Tooltip } from "@sb-components/atoms/overlay/Tooltip/Tooltip"
 import { ChipBase, type ChipTone } from "./ChipBase"
-
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * ATOM — `ChipGroup`: HÀNG chip (cluster) mô tả bằng `items` DỮ LIỆU, cắt bớt khi tràn.
@@ -25,7 +24,6 @@ import { ChipBase, type ChipTone } from "./ChipBase"
  * qua `tone` của atom). Cả hai không phải hành vi, chỉ là lối vá từ ngoài.
  * ─────────────────────────────────────────────────────────────────────────────
  */
-
 /** Một chip trong {@link ChipGroup} — mô tả bằng DỮ LIỆU, không phải JSX (§12b). */
 export interface ChipGroupItem {
     /** Khoá React. Đặt tay để hai chip trùng chữ không đụng nhau. */
@@ -33,7 +31,6 @@ export interface ChipGroupItem {
     /** Nhãn chip. */
     text: ReactNode
 }
-
 /** Props for {@link ChipGroup} — a row of chips that collapses overflow into "+N". */
 export interface ChipGroupProps {
     /**
@@ -47,7 +44,7 @@ export interface ChipGroupProps {
     /**
      * Tone CHUNG cả hàng (default `neutral`) — hàng token phải ĐỒNG MÀU thì mới đọc ra là
      * một tập; mỗi chip một tone là hàng cầu vồng. Vì thế `tone` ở cụm, không ở từng item
-     * (cùng lý do `size` nằm ở cụm bên `Button.Group`, §12d).
+     * (cùng lý do `size` nằm ở cụm bên `ButtonGroup`, §12d).
      */
     tone?: ChipTone
     /** `true` → skeleton mirror đúng số ô lúc nghỉ (mỗi ô là một `ChipBase` tự vẽ). */
@@ -57,7 +54,6 @@ export interface ChipGroupProps {
     anatPart?: string
     className?: string
 }
-
 export const ChipGroup = ({
     items,
     maxVisible = 3,
@@ -68,8 +64,7 @@ export const ChipGroup = ({
     className,
 }: ChipGroupProps) => {
     // Nhãn deps: cây đọc từ DOM nên cụm phải GỌI TÊN cái nó dựng lại.
-    const chipPart = showAnatomy ? "Chip.Base" : undefined
-
+    const chipPart = showAnatomy ? "Chip" : undefined
     if (isSkeleton) {
         return (
             <div className={cn("flex flex-wrap items-center gap-2", className)} data-anat-part={anatPart}>
@@ -83,18 +78,16 @@ export const ChipGroup = ({
             </div>
         )
     }
-
     const visibleItems = items.slice(0, maxVisible)
     // Chỉ > 0 mới có tràn THẬT để hiện `+N` (tránh số âm khi hàng ngắn hơn maxVisible).
     const overflowCount = Math.max(0, items.length - maxVisible)
-
     return (
         <div className={cn("flex flex-wrap items-center gap-2", className)} data-anat-part={anatPart}>
             {visibleItems.map(({ key, text }) => (
                 <ChipBase key={key} text={text} tone={tone} anatPart={chipPart} />
             ))}
             {overflowCount > 0 ? (
-                <Tooltip.Base
+                <Tooltip
                     showAnatomy={showAnatomy}
                     label={
                         // Tooltip liệt kê ĐỦ hàng, kể cả phần đang hiện — người đọc mở ra để
@@ -107,7 +100,7 @@ export const ChipGroup = ({
                     }
                 >
                     <ChipBase text={`+${overflowCount}`} tone={tone} anatPart={chipPart} />
-                </Tooltip.Base>
+                </Tooltip>
             ) : null}
         </div>
     )

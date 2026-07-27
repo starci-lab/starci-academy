@@ -4,8 +4,7 @@ import type { IconType } from "react-icons"
 import { FaJava, FaGolang } from "react-icons/fa6"
 import { TbBrandTypescript } from "react-icons/tb"
 import { PiFileCSharp } from "react-icons/pi"
-import { Tabs as AtomTabs } from "@sb-components/atoms/navigation/Tabs/Tabs"
-
+import { TabsExtended } from "@sb-components/atoms/navigation/Tabs/Tabs"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — full port of `@/components/blocks/navigation/ProgrammingLanguageTabs`.
@@ -23,7 +22,6 @@ import { Tabs as AtomTabs } from "@sb-components/atoms/navigation/Tabs/Tabs"
  * `react-icons` (the same dep the real block uses).
  * ─────────────────────────────────────────────────────────────────────────────
  */
-
 /** Canonical programming-language keys (matches mount/CDN `lang` fields). */
 export enum ProgrammingLanguage {
     TypeScript = "typescript",
@@ -31,7 +29,6 @@ export enum ProgrammingLanguage {
     Csharp = "csharp",
     Go = "go",
 }
-
 /** Visual layout for {@link ProgrammingLanguageTabs} (pill switcher vs underline tabs). */
 export enum ProgrammingLanguageTabsVariant {
     /** Compact pill tabs with accent fill indicator. */
@@ -39,7 +36,6 @@ export enum ProgrammingLanguageTabsVariant {
     /** Full-width underline tabs matching a content tab bar. */
     Secondary = "secondary",
 }
-
 /** Fixed tab order for the four default programming languages. */
 const DEFAULT_PROGRAMMING_LANGUAGES: Array<ProgrammingLanguage> = [
     ProgrammingLanguage.TypeScript,
@@ -47,7 +43,6 @@ const DEFAULT_PROGRAMMING_LANGUAGES: Array<ProgrammingLanguage> = [
     ProgrammingLanguage.Csharp,
     ProgrammingLanguage.Go,
 ]
-
 /** Display label per language (stands in for next-intl `programmingLanguage.*`). */
 const PROGRAMMING_LANGUAGE_LABEL: Record<ProgrammingLanguage, string> = {
     [ProgrammingLanguage.TypeScript]: "TypeScript",
@@ -55,7 +50,6 @@ const PROGRAMMING_LANGUAGE_LABEL: Record<ProgrammingLanguage, string> = {
     [ProgrammingLanguage.Csharp]: "C#",
     [ProgrammingLanguage.Go]: "Go",
 }
-
 /** Brand icon per default programming-language tab (react-icons). */
 const programmingLanguageIconMap: Record<ProgrammingLanguage, IconType> = {
     [ProgrammingLanguage.TypeScript]: TbBrandTypescript,
@@ -63,16 +57,13 @@ const programmingLanguageIconMap: Record<ProgrammingLanguage, IconType> = {
     [ProgrammingLanguage.Csharp]: PiFileCSharp,
     [ProgrammingLanguage.Go]: FaGolang,
 }
-
 /** Normalize a language key for comparisons (`TypeScript` → `typescript`). */
 const normalizeProgrammingLang = (lang: string): string => lang.trim().toLowerCase()
-
 /** Whether a default tab language is present in the backend payload. */
 const isProgrammingLangAvailable = (lang: ProgrammingLanguage, availableLangs: Array<string>): boolean => {
     const normalizedAvailable = new Set(availableLangs.map(normalizeProgrammingLang))
     return normalizedAvailable.has(lang)
 }
-
 /**
  * Resolve the active language: keep a valid selection, else the first available tab
  * in {@link DEFAULT_PROGRAMMING_LANGUAGES} order, then the first backend language.
@@ -92,7 +83,6 @@ const resolveActiveProgrammingLang = (
     }
     return availableLangs[0] ? normalizeProgrammingLang(availableLangs[0]) : DEFAULT_PROGRAMMING_LANGUAGES[0]
 }
-
 /**
  * Pill brand chrome layered onto the `ExtendedTabs` primary (segmented) base:
  * center the compact strip; each tab hugs its label with `px-3`, smaller text,
@@ -101,14 +91,11 @@ const resolveActiveProgrammingLang = (
  * root to `w-fit`, so PLT only adds the centering + per-tab overrides here.
  */
 const PROGRAMMING_LANGUAGE_TABS_PILL_ROOT_CLASS_NAME = "text-center"
-
 /** `Tabs.List` slot overrides for the pill variant (compact tabs + accent selected text). */
 const PROGRAMMING_LANGUAGE_TABS_PILL_LIST_CLASS_NAME =
     "w-fit  *:w-fit *:px-3 *:text-sm *:font-normal *:data-[selected=true]:text-accent-foreground"
-
 /** Active tab pill fill. */
 const PROGRAMMING_LANGUAGE_TABS_PILL_INDICATOR_CLASS_NAME = "bg-accent"
-
 /**
  * Secondary brand chrome layered onto the `ExtendedTabs` secondary (underline)
  * base: stretch the strip full-width. The baseline removal + label-hugging tabs
@@ -116,14 +103,11 @@ const PROGRAMMING_LANGUAGE_TABS_PILL_INDICATOR_CLASS_NAME = "bg-accent"
  * the native `.tabs--secondary` `<Tabs.Indicator/>` (hardcoded `bg-accent`).
  */
 const PROGRAMMING_LANGUAGE_TABS_SECONDARY_ROOT_CLASS_NAME = "w-full"
-
 /** `Tabs.List` slot override for the secondary variant (full-width underline row). */
 const PROGRAMMING_LANGUAGE_TABS_SECONDARY_LIST_CLASS_NAME = "w-full"
-
 /** Per-tab classes for the secondary variant — accent text when selected. */
 const PROGRAMMING_LANGUAGE_TABS_SECONDARY_TAB_CLASS_NAME =
     "rounded-none data-[selected=true]:text-accent"
-
 /** Props for {@link ProgrammingLanguageTabs}. */
 export interface ProgrammingLanguageTabsProps {
     /** Language keys returned by the backend (subset of the default four). */
@@ -152,7 +136,6 @@ export interface ProgrammingLanguageTabsProps {
      */
     showAnatomy?: boolean
 }
-
 /**
  * Fixed four-tab programming-language switcher (TypeScript, Java, C#, Go).
  *
@@ -176,7 +159,6 @@ export const ProgrammingLanguageTabs = ({
     showAnatomy = false,
 }: ProgrammingLanguageTabsProps) => {
     const isSecondary = variant === ProgrammingLanguageTabsVariant.Secondary
-
     const tabItems = useMemo(
         () => DEFAULT_PROGRAMMING_LANGUAGES.map((lang) => ({
             lang,
@@ -184,27 +166,23 @@ export const ProgrammingLanguageTabs = ({
         })),
         [availableLangs],
     )
-
     const activeKey = useMemo(
         () => resolveActiveProgrammingLang(selectedLang, availableLangs),
         [selectedLang, availableLangs],
     )
-
     const onSelectionChange = useCallback(
         (key: string) => onSelectLang(key),
         [onSelectLang],
     )
-
     if (!alwaysShow && availableLangs.length === 0) {
         return null
     }
-
     const tabs = (
         // ExtendedTabs (../ExtendedTabs/ExtendedTabs.tsx) doesn't accept an
         // anatPart/data-* prop — wrap it in a plain marker div so the panel can
         // badge it as ONE node without touching that shared foundation file.
         <div className="contents" data-anat-part={showAnatomy ? "ExtendedTabs" : undefined}>
-            <AtomTabs.Extended
+            <TabsExtended
                 variant={isSecondary ? "secondary" : "primary"}
                 size={isSecondary ? "md" : "sm"}
                 selectedKey={activeKey}
@@ -247,10 +225,9 @@ export const ProgrammingLanguageTabs = ({
                         })}
                     </Tabs.List>
                 </Tabs.ListContainer>
-            </AtomTabs.Extended>
+            </TabsExtended>
         </div>
     )
-
     if (isSecondary && surfaceBorder) {
         return (
             <div className="w-full border-b">
@@ -258,6 +235,5 @@ export const ProgrammingLanguageTabs = ({
             </div>
         )
     }
-
     return tabs
 }

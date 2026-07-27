@@ -107,11 +107,11 @@ export const EntityResultRow = ({
             {showKindChip ? (
                 <EnumChip value={kind} map={KIND_META} className="w-fit" anatPart={showAnatomy ? "EnumChip" : undefined} />
             ) : item.breadcrumb ? (
-                <Typography.Base size="xs" color="muted" truncate showAnatomy={showAnatomy} text={item.breadcrumb} />
+                <Typography size="xs" color="muted" truncate showAnatomy={showAnatomy} text={item.breadcrumb} />
             ) : null}
             {/* affordance = the TITLE itself: FOREGROUND text + hover-underline ONLY — no
                 accent, no arrow. Nav link → hover underlines the title. */}
-            <Typography.Base size="sm"
+            <Typography size="sm"
                 weight="medium"
                 truncate
                 className="text-foreground underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline"
@@ -119,7 +119,7 @@ export const EntityResultRow = ({
                 text={item.title}
             />
             {showSnippet && item.snippet ? (
-                <Typography.Base size="xs" color="muted" truncate showAnatomy={showAnatomy} text={item.snippet} />
+                <Typography size="xs" color="muted" truncate showAnatomy={showAnatomy} text={item.snippet} />
             ) : null}
             {/* locked = this viewer must enrol to open it (premium lesson / capstone).
                 The row still NAVIGATES — landing on the surface's own enrol gate is the
@@ -135,7 +135,7 @@ export const EntityResultRow = ({
                         data-anat-part={showAnatomy ? "LockSimpleIcon" : undefined}
                         className="size-3.5 shrink-0"
                     />
-                    <Typography.Base size="xs"
+                    <Typography size="xs"
                         showAnatomy={showAnatomy}
                         className="text-warning-soft-foreground"
                         text={STRINGS.enrollToOpen}

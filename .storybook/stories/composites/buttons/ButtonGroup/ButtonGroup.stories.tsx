@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ArrowRightIcon, XIcon } from "@phosphor-icons/react"
 import { ButtonGroup } from "@sb-components/composites/buttons/ButtonGroup/ButtonGroup"
-
 const meta: Meta<typeof ButtonGroup> = {
     title: "Composites/Buttons/ButtonGroup",
     component: ButtonGroup,
@@ -10,11 +9,8 @@ const meta: Meta<typeof ButtonGroup> = {
         layout: "fullscreen",
     },
 }
-
 export default meta
-
 type Story = StoryObj<typeof ButtonGroup>
-
 /** 2 action, `align="stretch"` (mặc định) — dọc-full-width ở hẹp → ngang-auto từ `@app-sm`. */
 export const TwoActions: Story = {
     parameters: {
@@ -33,7 +29,6 @@ export const TwoActions: Story = {
         </div>
     ),
 }
-
 /** Footer dialog điển hình — `align="end"` canh phải, huỷ (tertiary) + xác nhận (danger). */
 export const DialogFooter: Story = {
     parameters: {
@@ -53,7 +48,6 @@ export const DialogFooter: Story = {
         </div>
     ),
 }
-
 /** 1 action duy nhất — container vẫn hợp lệ với mảng 1 phần tử. */
 export const SingleAction: Story = {
     parameters: {
@@ -65,7 +59,6 @@ export const SingleAction: Story = {
         </div>
     ),
 }
-
 /** STATE `isPending` trên 1 action — action kia vẫn bấm được bình thường. */
 export const Pending: Story = {
     parameters: {
@@ -83,7 +76,6 @@ export const Pending: Story = {
         </div>
     ),
 }
-
 /** STATE loading — `isSkeleton` tự render skeleton mirror cho MỌI action (đúng số nút + size). */
 export const Skeleton: Story = {
     parameters: {
@@ -98,7 +90,6 @@ export const Skeleton: Story = {
         </div>
     ),
 }
-
 /** SHAPE dọc + full-width — ép mọi breakpoint (khi cụm luôn hẹp), vd sidebar hẹp hoặc icon-only stack. */
 export const Vertical: Story = {
     parameters: {

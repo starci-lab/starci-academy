@@ -172,7 +172,7 @@ export const DiffViewer = ({
                     data-anat-part={showAnatomy ? "FileHeader" : undefined}
                     className="border-b border-default bg-default px-4 py-2"
                 >
-                    <Typography.Base size="sm"
+                    <Typography size="sm"
                         weight="medium"
                         className="font-mono"
                         showAnatomy={showAnatomy}

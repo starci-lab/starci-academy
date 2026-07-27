@@ -8,8 +8,8 @@ import { Link as HeroLink, Skeleton as HeroSkeleton, Typography as HeroTypograph
  * Members by SIZE — `Typography.Xs` · `.Sm` · `.Base` · `.Lg` (easy to extend: factory
  * `makeTypography("<size>")`). Same prop set, only size/icon/skeleton changes.
  *
- * Same thinking as `Chip.Base`:
- *   • Content via PROP `text={...}` (consistent with `<Chip.Base text=…/>`, NOT children).
+ * Same thinking as `Chip`:
+ *   • Content via PROP `text={...}` (consistent with `<Chip text=…/>`, NOT children).
  *   • Color: `color` = default(foreground) | muted (§9a) | accent/success/warning/danger (§2).
  *   • Weight §9b: `weight="medium" | "bold"`. `isItalic`.
  *   • `isLink` → HeroUI `Link` (accent + hover underline + a11y). No weight/icon alongside.
@@ -34,7 +34,7 @@ export type TypographyColor = "default" | "muted" | "accent" | "success" | "warn
 
 /**
  * ONE SIZE AXIS for the whole system (teacher confirmed 2026-07-25 — merged the namespace,
- * only `Typography.Base` remains). Three groups, three implementations INSIDE the atom,
+ * only `Typography` remains). Three groups, three implementations INSIDE the atom,
  * the caller only sees one prop:
  *   • `xs`/`sm`/`base`/`lg` — body scale, built with classes.
  *   • `h1`…`h5`             — wraps the compound `HeroTypography.Heading level={N}`.
@@ -316,6 +316,4 @@ const TypographyBase = ({
  * `Heading` — eight entry points for ONE concept "text", so every call site had to pick
  * a member before picking content. Now there's only one PROP axis `size` (§6b: variant = prop).
  */
-export const Typography = Object.assign(TypographyBase, {
-    Base: TypographyBase,
-})
+export { TypographyBase as Typography }

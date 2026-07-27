@@ -64,13 +64,13 @@ export const TrackCard = ({ icon, title, meta, color, tiers, viewLabel, onView, 
         <CardContent className="flex h-full flex-col gap-6" data-anat-part={showAnatomy ? "CardContent" : undefined}>
             <div className="flex items-center gap-3">
                 {/* IconTile has no 40px step — "sm" (48px) is the closest port size to the original size-10 tile. */}
-                <IconTile.Base icon={icon} tone={color} size="sm" anatPart={showAnatomy ? "IconTile" : undefined} />
+                <IconTile icon={icon} tone={color} size="sm" anatPart={showAnatomy ? "IconTile" : undefined} />
                 <div className="flex min-w-0 flex-col">
                     <span className="truncate" data-anat-part={showAnatomy ? "Typography.HeaderMeta" : undefined}>
-                        <Typography.Base text={title} weight="medium" />
+                        <Typography text={title} weight="medium" />
                     </span>
                     <span data-anat-part={showAnatomy ? "Typography.HeaderMeta" : undefined}>
-                        <Typography.Base size="xs" text={meta} color="muted" />
+                        <Typography size="xs" text={meta} color="muted" />
                     </span>
                 </div>
             </div>
@@ -84,10 +84,10 @@ export const TrackCard = ({ icon, title, meta, color, tiers, viewLabel, onView, 
                         </div>
                         <div className={cn("flex flex-col gap-0", index < tiers.length - 1 && "pb-4")}>
                             <span data-anat-part={showAnatomy ? "Typography.TierPath" : undefined}>
-                                <Typography.Base size="xs" text={tier.label} color="muted" />
+                                <Typography size="xs" text={tier.label} color="muted" />
                             </span>
                             <span data-anat-part={showAnatomy ? "Typography.TierPath" : undefined}>
-                                <Typography.Base size="sm" text={tier.topic} />
+                                <Typography size="sm" text={tier.topic} />
                             </span>
                         </div>
                     </div>

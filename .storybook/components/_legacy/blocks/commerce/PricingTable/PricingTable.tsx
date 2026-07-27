@@ -3,14 +3,13 @@ import { cn } from "@heroui/react"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
 import { SectionCard } from "@sb-components/_legacy/designs/cards/SectionCard/SectionCard"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
-import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCardCrossList } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { PricePoint } from "@sb-components/atoms/display/PricePoint/PricePoint"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK ported faithfully from
  * `@/components/blocks/commerce/PricingTable`. Composed from the local primitives
- * `PricingCard` (each tier column) + `SurfaceCard.CrossList` (feature rows —
+ * `PricingCard` (each tier column) + `SurfaceCardCrossList` (feature rows —
  * one list mixing `mark="check"` ✓ included and `mark="cross"` ✗ excluded) + a HeroUI
  * `Button` CTA. Synced to `src` later.
  *
@@ -18,10 +17,8 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * so a faithful local copy is inlined below (composing the local `SectionCard` +
  * `StatusChip` primitives). TODO: swap for the PricingCard local when it is ported.
  */
-
 // ── inlined faithful local copy of `@/components/blocks/cards/PricingCard` ────────────
 // TODO: swap for the PricingCard local when it is ported under .storybook/stories.
-
 /** Props for the inlined {@link PricingCard}. */
 interface PricingCardProps {
     name: React.ReactNode
@@ -36,7 +33,6 @@ interface PricingCardProps {
     /** When true, emit `data-anat-part` on each part so a BlockAnatomy panel can badge it on-render. */
     showAnatomy?: boolean
 }
-
 /**
  * Pricing tier card — one plan with a name, price row, feature list, and a CTA button.
  * Built on {@link SectionCard} (accent variant when `highlighted`); the "popular" badge
@@ -63,30 +59,25 @@ const PricingCard = ({
         <div className="flex flex-col gap-2">
             {/* Name (+ optional popular chip inline — chip is w-fit, never full-width) */}
             <div className="flex flex-wrap items-center gap-2">
-                <Typography.Base weight="medium" showAnatomy={showAnatomy} text={name} />
-                {highlighted && badge ? <Chip.Base tone="accent" anatPart={showAnatomy ? "StatusChip" : undefined} text={badge} /> : null}
+                <Typography weight="medium" showAnatomy={showAnatomy} text={name} />
+                {highlighted && badge ? <Chip tone="accent" anatPart={showAnatomy ? "StatusChip" : undefined} text={badge} /> : null}
             </div>
-
             {/* Price = ONE PricePoint primitive (amount + struck original + period) —
                 a price is a semantic unit, so one node, not 3 raw Typography. */}
-            <PricePoint.Base
+            <PricePoint
                 amount={price}
                 original={originalPrice}
                 period={period}
                 anatPart={showAnatomy ? "PricePoint" : undefined}
             />
         </div>
-
         {/* Feature list — grows to fill available vertical space; caller controls markup */}
         <div className="flex-1">{features}</div>
-
         {/* CTA pinned to the bottom of the card */}
         <div>{cta}</div>
     </SectionCard>
 )
-
 // ── PricingTable ─────────────────────────────────────────────────────────────────────
-
 /** One feature row inside a pricing tier. */
 export interface PricingTableFeature {
     /** The feature description shown on the row (e.g. "Chấm bài không giới hạn"). */
@@ -97,7 +88,6 @@ export interface PricingTableFeature {
      */
     included: boolean
 }
-
 /** One pricing tier column of the {@link PricingTable}. */
 export interface PricingTableTier {
     /** Stable identifier passed back through `onSelectTier` when the CTA is pressed. */
@@ -117,7 +107,6 @@ export interface PricingTableTier {
     /** When true this tier is emphasized with an accent frame + a "phổ biến" ribbon. */
     isHighlighted?: boolean
 }
-
 /** Props for the {@link PricingTable} block. */
 export interface PricingTableProps {
     /** The 2–3 tiers to compare side by side (columns on desktop, stacked on mobile). */
@@ -131,7 +120,6 @@ export interface PricingTableProps {
     /** When true, emit `data-anat-part` on each part so a BlockAnatomy panel can badge it on-render. */
     showAnatomy?: boolean
 }
-
 /**
  * PricingTable compares 2–3 pricing tiers side by side. Each column is a
  * {@link PricingCard} carrying a name, a pre-formatted price + period, an optional
@@ -168,14 +156,13 @@ export const PricingTable = ({
                     features={
                         <div className="flex flex-col gap-3">
                             {tier.description ? (
-                                <Typography.Base size="sm" color="muted" showAnatomy={showAnatomy} text={tier.description} />
+                                <Typography size="sm" color="muted" showAnatomy={showAnatomy} text={tier.description} />
                             ) : null}
-
-                            {/* Feature rows in ONE SurfaceCard.CrossList: included → mark="check" (✓),
+                            {/* Feature rows in ONE SurfaceCardCrossList: included → mark="check" (✓),
                                 excluded → mark="cross" (✗). variant="nested" = surface-in-surface.
                                 Repeat list = DATA (`items`), never children. */}
                             {/* Codemod 2026-07-26: `bordered` → `variant="nested"` (API 3-trục SurfaceCard). */}
-                            <SurfaceCard.CrossList
+                            <SurfaceCardCrossList
                                 variant="nested"
                                 anatPart={showAnatomy ? "CrossListCard" : undefined}
                                 items={tier.features.map((feature, index) => ({
@@ -183,9 +170,9 @@ export const PricingTable = ({
                                     mark: feature.included ? "check" : "cross",
                                     anatPart: showAnatomy ? "CrossListItem" : undefined,
                                     // mark icon + label are the ROW's OWN internals (its `mark` prop +
-                                    // `text`) — one node here; drill into SurfaceCard.CrossList's own
+                                    // `text`) — one node here; drill into SurfaceCardCrossList's own
                                     // story for its anatomy. No child data-anat-part.
-                                    text: <Typography.Base size="sm" color={feature.included ? undefined : "muted"} text={feature.label} />,
+                                    text: <Typography size="sm" color={feature.included ? undefined : "muted"} text={feature.label} />,
                                 }))}
                             />
                         </div>

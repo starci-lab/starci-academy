@@ -129,7 +129,7 @@ export const MicroservicesScene = ({ caption, className, showAnatomy }: Microser
                 <text x="344" y="424" fontFamily="sans-serif" fontSize="11" fill="#94a3b8">where it breaks</text>
             </svg>
             {caption ? (
-                <Typography.Base size="sm" color="muted" align="center" text={caption} className="px-5" showAnatomy={showAnatomy} />
+                <Typography size="sm" color="muted" align="center" text={caption} className="px-5" showAnatomy={showAnatomy} />
             ) : null}
         </div>
     )

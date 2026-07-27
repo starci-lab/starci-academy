@@ -5,7 +5,7 @@ import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK ported faithfully from
  * `@/components/blocks/feed/ActivityAvatar`. Composed from the atom
- * `Avatar.Base` + a small activity-type icon badge. Synced to `src` later.
+ * `Avatar` + a small activity-type icon badge. Synced to `src` later.
  */
 
 /** Props for the {@link ActivityAvatar} block. */
@@ -25,7 +25,7 @@ export interface ActivityAvatarProps {
 }
 
 /**
- * Facebook-style feed avatar: an `Avatar.Base` with a small activity-type icon
+ * Facebook-style feed avatar: an `Avatar` with a small activity-type icon
  * badge at the bottom-right. The badge is an OPAQUE soft-accent disc (a `bg-surface`
  * base under a `bg-accent-soft` tint so the avatar never bleeds through) with an
  * accent icon, and a surface ring cuts it cleanly from the avatar. Pure/props-only;
@@ -43,7 +43,7 @@ export const ActivityAvatar = ({
 }: ActivityAvatarProps) => {
     return (
         <div className={cn("relative shrink-0", className)} data-anat-part={anatPart}>
-            <Avatar.Base
+            <Avatar
                 className="size-9"
                 name={username}
                 src={avatar ?? undefined}

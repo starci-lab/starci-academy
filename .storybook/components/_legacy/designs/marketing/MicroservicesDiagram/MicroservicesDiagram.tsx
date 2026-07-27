@@ -201,7 +201,7 @@ export const MicroservicesDiagram = ({ caption, className, showAnatomy }: Micros
                     >
                         {/* NOTE: WarningIcon was size-4 in the raw Chip; StatusChip's `icon` slot
                             normalizes leading glyphs to size-3 (§4 icon ownership) — intentional. */}
-                        <Chip.Base
+                        <Chip
                             tone="danger"
                             anatPart={showAnatomy ? "StatusChip" : undefined}
                             icon={WarningIcon}
@@ -218,7 +218,7 @@ export const MicroservicesDiagram = ({ caption, className, showAnatomy }: Micros
             </motion.div>
 
             {caption ? (
-                <Typography.Base size="sm" color="muted" align="center" text={caption} className="px-5 pb-5" showAnatomy={showAnatomy} />
+                <Typography size="sm" color="muted" align="center" text={caption} className="px-5 pb-5" showAnatomy={showAnatomy} />
             ) : null}
         </div>
     )

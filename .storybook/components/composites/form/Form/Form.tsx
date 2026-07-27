@@ -1,9 +1,8 @@
 import type { FormEvent, ReactNode } from "react"
 import { cn } from "@heroui/react"
-import { Button, type ButtonGroupItem } from "@sb-components/atoms/buttons/Button/Button"
+import { ButtonGroup, type ButtonGroupItem } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
-
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — `Form.*`, the ONE form composite namespace
@@ -26,26 +25,24 @@ import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
  * - `.Base` / `.Section` là khung BỌC → slot CÓ TÊN (`body`) là đường chính,
  *   `children` giữ lại như shorthand của `body`.
  * - `.Actions` là DANH SÁCH LẶP (N nút cùng kiểu) → BẮT BUỘC `items` dữ liệu,
- *   CẤM children — y hệt `Button.Group items` (§12b).
+ *   CẤM children — y hệt `ButtonGroup items` (§12b).
  * - Namespace only — KHÔNG export component trần (§13a).
  *
  * KHUNG KHÔNG MANG CHỨC NĂNG (§13):
  * - ⛔ KHÔNG đẻ lại `label`/`hint`/`errorMessage`/`isRequired` — atom lo (§12e).
  * - ⛔ KHÔNG validation, KHÔNG state field, KHÔNG business rule — đó là tầng
  *   `block`. Khung chỉ biết "đang khoá hay không" (`isDisabled`) và "submit".
- * - ⛔ KHÔNG tự vẽ nút — `.Actions` COMPOSE atom `Button.Group` (§13c).
+ * - ⛔ KHÔNG tự vẽ nút — `.Actions` COMPOSE atom `ButtonGroup` (§13c).
  *
  * SPACING (§10c): mọi khoảng đi qua {@link SeamScale} — union literal `0·1·2·3·6·8`.
  * Khung ÉP thang bằng TYPE, không nhận số tuỳ ý; off-scale (`gap-4/5/…`) không
  * gọi được. Khoảng đến từ **gap của parent**, KHÔNG margin của con (§10a).
  * ─────────────────────────────────────────────────────────────────────────────
  */
-
 // ─────────────────────────────────────────────────────────────────────────────
 // .Base — the `<form>` shell
 // ─────────────────────────────────────────────────────────────────────────────
-
-/** Props for {@link Form.Base}. */
+/** Props for {@link Form}. */
 export interface FormBaseProps {
     /**
      * Submit handler. Khung tự `preventDefault()` rồi gọi hàm này, nên phím
@@ -54,12 +51,12 @@ export interface FormBaseProps {
      * Bỏ trống → form không submit (vẫn chặn reload trang).
      */
     onSubmit?: () => void
-    /** Vùng nội dung chính (các `Form.Section` / field). Thắng `children` khi truyền cả hai. */
+    /** Vùng nội dung chính (các `FormSection` / field). Thắng `children` khi truyền cả hai. */
     body?: ReactNode
     /** Shorthand của {@link FormBaseProps.body} — khung BỌC nhận nội dung bất kỳ (§13b). */
     children?: ReactNode
     /**
-     * Hàng nút cuối form — thường là một {@link Form.Actions}. Là slot CÓ TÊN
+     * Hàng nút cuối form — thường là một {@link FormActions}. Là slot CÓ TÊN
      * (không phải node cuối của `body`) để khung biết đâu là "đáy" và giữ
      * nhịp `gap` cho đúng seam.
      */
@@ -80,7 +77,6 @@ export interface FormBaseProps {
     /** `true` → gắn `data-anat-part` cho từng part để BlockAnatomy badge. */
     showAnatomy?: boolean
 }
-
 /**
  * Vỏ `<form>` của tầng composite: một thẻ `<form>` thật (submit bằng ENTER, a11y),
  * một cột nội dung theo nhịp `gap`, và một slot `actions` ở đáy.
@@ -115,7 +111,7 @@ const Base = ({
             */}
             <fieldset disabled={isDisabled} className={cn("flex min-w-0 flex-col", GAP_CLASS[gap])}>
                 {/* No `data-anat-part` on `Body`/`Actions`: both wrap arbitrary caller-supplied
-                    nodes (fields, or usually a `Form.Actions` but never enforced), with no ONE
+                    nodes (fields, or usually a `FormActions` but never enforced), with no ONE
                     fixed component a panel link could point to (§11a.1 LOẠI 3 — caller slot,
                     stop badging). */}
                 {main != null ? (
@@ -128,12 +124,10 @@ const Base = ({
         </form>
     )
 }
-
 // ─────────────────────────────────────────────────────────────────────────────
 // .Section — a titled group of fields
 // ─────────────────────────────────────────────────────────────────────────────
-
-/** Props for {@link Form.Section}. */
+/** Props for {@link FormSection}. */
 export interface FormSectionProps {
     /** Tiêu đề nhóm — `Typography.Sm` medium (§9b: nhấn làm-việc, không phải heading trang). */
     title: ReactNode
@@ -154,7 +148,6 @@ export interface FormSectionProps {
     /** `true` → gắn `data-anat-part` cho từng part để BlockAnatomy badge. */
     showAnatomy?: boolean
 }
-
 /**
  * Nhóm field có tiêu đề: một khối `header` (tiêu đề + mô tả tuỳ chọn, `gap-1`
  * tight vì là một CẶP dính nhau — §10b) rồi tới cột field.
@@ -177,16 +170,16 @@ const Section = ({
         <section className={cn("flex min-w-0 flex-col", GAP_CLASS[gap], className)}>
             {/* tight gap-1: title ↔ description là một CẶP, không phải hai vùng (§10b).
                 No `data-anat-part="Header"` wrapper: it never helps the reader past what the
-                `Typography.Base` nodes inside already say on their own (§11a.1 LOẠI 2/3 — a
+                `Typography` nodes inside already say on their own (§11a.1 LOẠI 2/3 — a
                 badge with nowhere to link is worse than no badge; those two atoms keep their
                 own badge below and surface as top-level nodes instead). */}
             <div className="flex min-w-0 flex-col gap-1">
-                <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
-                    <Typography.Base size="sm" text={title} weight="medium" />
+                <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                    <Typography size="sm" text={title} weight="medium" />
                 </span>
                 {description != null ? (
-                    <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
-                        <Typography.Base size="xs" text={description} color="muted" />
+                    <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                        <Typography size="xs" text={description} color="muted" />
                     </span>
                 ) : null}
             </div>
@@ -200,19 +193,16 @@ const Section = ({
         </section>
     )
 }
-
 // ─────────────────────────────────────────────────────────────────────────────
 // .Actions — the closing button row
 // ─────────────────────────────────────────────────────────────────────────────
-
 /** Căn hàng nút: `end` (mặc định — CTA nằm phải) · `start` · `between` (huỷ trái, CTA phải). */
 export type FormActionsAlign = "start" | "end" | "between"
-
-/** Props for {@link Form.Actions}. */
+/** Props for {@link FormActions}. */
 export interface FormActionsProps {
     /**
      * Hàng nút mô tả bằng DỮ LIỆU (§13b: danh sách lặp ⇒ `items`, CẤM children).
-     * Cùng shape với `Button.Group` items — khung chuyển thẳng xuống atom, KHÔNG
+     * Cùng shape với `ButtonGroup` items — khung chuyển thẳng xuống atom, KHÔNG
      * tự vẽ nút (§13c).
      */
     items: Array<ButtonGroupItem>
@@ -228,16 +218,14 @@ export interface FormActionsProps {
     /** `true` → gắn `data-anat-part` cho từng part để BlockAnatomy badge. */
     showAnatomy?: boolean
 }
-
 /** Căn ngang → class. `between` cần hàng nút CHIẾM HẾT bề ngang mới đẩy được hai mép. */
 const ALIGN_CLASS: Record<FormActionsAlign, string> = {
     start: "justify-start",
     end: "justify-end",
     between: "justify-between",
 }
-
 /**
- * Hàng nút cuối form. COMPOSE atom `Button.Group` (§13c — khung không hand-roll
+ * Hàng nút cuối form. COMPOSE atom `ButtonGroup` (§13c — khung không hand-roll
  * lại nút): khung chỉ thêm khái niệm khung thật là CĂN NGANG (`align`) và DÍNH
  * ĐÁY (`sticky`).
  *
@@ -262,7 +250,7 @@ const Actions = ({
             className,
         )}
     >
-        <Button.Group
+        <ButtonGroup
             items={items}
             // `between` = hai mép ⇒ cụm nút phải chiếm hết bề ngang mới đẩy ra được.
             className={align === "between" ? "w-full justify-between" : undefined}
@@ -270,16 +258,11 @@ const Actions = ({
         />
     </div>
 )
-
 /**
  * `Form.*` — form composite namespace (§13). `Base` (vỏ `<form>` +
  * cột nội dung + slot nút) · `Section` (nhóm field có tiêu đề) · `Actions`
- * (hàng nút, `items` dữ liệu → atom `Button.Group`).
+ * (hàng nút, `items` dữ liệu → atom `ButtonGroup`).
  *
  * Nhãn/mô tả/lỗi/bắt buộc của field KHÔNG ở đây — atom form tự mang (§12e).
  */
-export const Form = {
-    Base,
-    Section,
-    Actions,
-}
+export { Base as Form, Section as FormSection, Actions as FormActions }

@@ -1,16 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { UserIcon } from "@phosphor-icons/react"
-import {
-    Avatar,
-    type AvatarColor,
-    type AvatarSize,
-    type AvatarStatus,
-} from "@sb-components/atoms/display/Avatar/Avatar"
+import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
-
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Avatar.Base`: the system's ONE avatar, wrapping HeroUI Avatar directly.
+ * ATOM — `Avatar`: the system's ONE avatar, wrapping HeroUI Avatar directly.
  *
  * 📐 **1 PROP = 1 LEAF** (§12g). Rewritten 2026-07-26 after `AvatarBase` folded
  * DiceBear into its fallback chain (see the header of `AvatarBase.tsx`):
@@ -32,7 +26,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * 🎨 Icon = Phosphor (§5.0), pass the COMPONENT (`icon={UserIcon}`) not JSX,
  * the atom forces the scale + weight itself based on `size` (§5.0a).
  *
- * ⚙️ Every `states[]` entry below renders EXACTLY ONE `Avatar.Base` instance
+ * ⚙️ Every `states[]` entry below renders EXACTLY ONE `Avatar` instance
  * (2026-07-27 pass): a state that used to sweep several props/values side by
  * side inside one manually-wrapped `<div className="flex ...">` is split so
  * each individual value gets its own tab, its own `why`, and its own one-line
@@ -40,7 +34,6 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * blocks), it was always a comparison sweep across this atom's own prop values.
  * ─────────────────────────────────────────────────────────────────────────────
  */
-
 /**
  * Every part this atom renders is a DIRECT HeroUI import (no member of ours has its
  * own story to jump to) — all four get `tier: "heroui"`, no `storyId` (§ heroui rule,
@@ -72,21 +65,17 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "Status": {
         tier: "atom",
         role: "the presence dot at the avatar's corner, drawn by this atom itself — see the dedicated Status leaf for every tone × size",
-        storyId: "atoms-display-avatar-avatar-base--status",
+        storyId: "atoms-display-avatar-avatar--status",
     },
 }
-
-const meta: Meta<typeof Avatar.Base> = {
-    title: "Atoms/Display/Avatar/Avatar.Base",
-    component: Avatar.Base,
+const meta: Meta<typeof Avatar> = {
+    title: "Atoms/Display/Avatar/Avatar",
+    component: Avatar,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },
 }
-
 export default meta
-
-type Story = StoryObj<typeof Avatar.Base>
-
+type Story = StoryObj<typeof Avatar>
 // A real photo already in use elsewhere in the app — no new asset needed.
 const REAL_IMG = "https://i.pravatar.cc/150?img=12"
 // Guaranteed 404 — used to prove the fallback chain steps down after a load error.
@@ -94,13 +83,12 @@ const BROKEN_IMG = "https://example.com/nope.png"
 // Stable identity for the generated (DiceBear) face — same seed, same face everywhere.
 const SEED = "mai.chi@starci.vn"
 const NAME = "Mai Chi"
-
 /** BARE leaf — no prop turned on yet, to show the default shape. */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
-                name="Avatar.Base"
+                name="Avatar"
                 tier="atom"
                 leaf="Bare avatar"
                 annotate={ANNOTATE}
@@ -109,15 +97,14 @@ export const Default: Story = {
                     {
                         name: "no src, no name, no icon",
                         why: "With no `src`, `name`, or `icon` passed, the atom still has to draw something, so it falls through to `fallback=\"generated\"` and asks DiceBear for a face using its own built-in placeholder seed. Size defaults to `md` and no status dot is drawn, since neither was requested.",
-                        code: "<Avatar.Base />",
-                        render: <Avatar.Base showAnatomy />,
+                        code: "<Avatar />",
+                        render: <Avatar showAnatomy />,
                     },
                 ]}
             />
         </div>
     ),
 }
-
 /**
  * Leaf `Source` — the IMAGE-SOURCE axis (folded from 4 old leaves): a real photo,
  * a generated face (DiceBear, seed), initials, a plain icon, and the FAILED-LOAD
@@ -128,7 +115,7 @@ export const Source: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
-                name="Avatar.Base"
+                name="Avatar"
                 tier="atom"
                 leaf="Source chain"
                 annotate={ANNOTATE}
@@ -137,39 +124,38 @@ export const Source: Story = {
                     {
                         name: "src set",
                         why: "This cell passes a real `src`, so the atom renders the actual photo directly, the strongest link in the fallback chain. A real photo always wins over every other fallback, which is why it sits at the top of the chain.",
-                        code: `<Avatar.Base src="${REAL_IMG}" name="Mai Chi" />`,
-                        render: <Avatar.Base src={REAL_IMG} name={NAME} showAnatomy />,
+                        code: `<Avatar src="${REAL_IMG}" name="Mai Chi" />`,
+                        render: <Avatar src={REAL_IMG} name={NAME} showAnatomy />,
                     },
                     {
                         name: "seed set",
                         why: "This cell passes no `src` but does pass a `seed`, so the atom asks DiceBear for a generated face keyed to that seed. The generated face exists so the person still looks like someone even without a real photo on file.",
-                        code: `<Avatar.Base seed="${SEED}" name="Mai Chi" />`,
-                        render: <Avatar.Base seed={SEED} name={NAME} showAnatomy />,
+                        code: `<Avatar seed="${SEED}" name="Mai Chi" />`,
+                        render: <Avatar seed={SEED} name={NAME} showAnatomy />,
                     },
                     {
                         name: "name only",
                         why: "This cell passes only a `name` and forces `fallback=\"initials\"`, so the atom draws the person's initials instead of a face. Initials are the next best identity marker once no photo or generated face is wanted.",
-                        code: "<Avatar.Base name=\"Mai Chi\" fallback=\"initials\" />",
-                        render: <Avatar.Base name={NAME} fallback="initials" showAnatomy />,
+                        code: "<Avatar name=\"Mai Chi\" fallback=\"initials\" />",
+                        render: <Avatar name={NAME} fallback="initials" showAnatomy />,
                     },
                     {
                         name: "icon only",
                         why: "This cell passes only an `icon` and forces `fallback=\"icon\"`, so the atom draws a plain generic glyph with no personal identity at all. This is the last resort in the chain, used when there is nothing personal to show.",
-                        code: "<Avatar.Base icon={UserIcon} fallback=\"icon\" />",
-                        render: <Avatar.Base icon={UserIcon} fallback="icon" showAnatomy />,
+                        code: "<Avatar icon={UserIcon} fallback=\"icon\" />",
+                        render: <Avatar icon={UserIcon} fallback="icon" showAnatomy />,
                     },
                     {
                         name: "broken src + seed",
                         why: "This cell passes a `src` that fails to load together with a `seed`, so the atom listens for the image load error and steps down to the generated face instead of jumping straight to initials. HeroUI only mounts the `<img>` once it has loaded, so the atom has to catch that failure itself to land on this exact cell.",
-                        code: `<Avatar.Base src="${BROKEN_IMG}" seed="${SEED}" name="Mai Chi" />`,
-                        render: <Avatar.Base src={BROKEN_IMG} seed={SEED} name={NAME} showAnatomy />,
+                        code: `<Avatar src="${BROKEN_IMG}" seed="${SEED}" name="Mai Chi" />`,
+                        render: <Avatar src={BROKEN_IMG} seed={SEED} name={NAME} showAnatomy />,
                     },
                 ]}
             />
         </div>
     ),
 }
-
 /**
  * Leaf prop `fallback` — the face shown when there is NO `src`. `src` is
  * deliberately dropped in every state below: WITH a `src`, all three would
@@ -179,7 +165,7 @@ export const Fallback: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
-                name="Avatar.Base"
+                name="Avatar"
                 tier="atom"
                 leaf="Prop `fallback`"
                 annotate={ANNOTATE}
@@ -188,27 +174,26 @@ export const Fallback: Story = {
                     {
                         name: "fallback = \"generated\"",
                         why: "With no `src` and `fallback` set to `\"generated\"`, the atom asks DiceBear for a face using the `name` as its seed instead of drawing initials or an icon. This is the default fallback because a generated face still reads as a specific person, more than a placeholder ever could.",
-                        code: "<Avatar.Base fallback=\"generated\" name=\"Mai Chi\" />",
-                        render: <Avatar.Base fallback="generated" name={NAME} showAnatomy />,
+                        code: "<Avatar fallback=\"generated\" name=\"Mai Chi\" />",
+                        render: <Avatar fallback="generated" name={NAME} showAnatomy />,
                     },
                     {
                         name: "fallback = \"initials\"",
                         why: "With no `src` and `fallback` set to `\"initials\"`, the atom draws the person's initials pulled from the `name` prop instead of any face. This is the fallback to reach for when a generated face still feels wrong for the surface, for example a compact list row.",
-                        code: "<Avatar.Base fallback=\"initials\" name=\"Mai Chi\" />",
-                        render: <Avatar.Base fallback="initials" name={NAME} showAnatomy />,
+                        code: "<Avatar fallback=\"initials\" name=\"Mai Chi\" />",
+                        render: <Avatar fallback="initials" name={NAME} showAnatomy />,
                     },
                     {
                         name: "fallback = \"icon\"",
                         why: "With no `src` and `fallback` set to `\"icon\"`, the atom draws the passed `icon` with no name or face at all. This is the fallback for a genuinely anonymous or system slot, where there is no person's identity to represent.",
-                        code: "<Avatar.Base fallback=\"icon\" icon={UserIcon} />",
-                        render: <Avatar.Base fallback="icon" icon={UserIcon} showAnatomy />,
+                        code: "<Avatar fallback=\"icon\" icon={UserIcon} />",
+                        render: <Avatar fallback="icon" icon={UserIcon} showAnatomy />,
                     },
                 ]}
             />
         </div>
     ),
 }
-
 /**
  * Leaf prop `status` — the presence dot. Every state below fixes ONE tone at
  * ONE size, so the dot-diameter table (`SIZE_MAP.dot`: size-2 / 2.5 / 3) can be
@@ -219,7 +204,7 @@ export const Status: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
-                name="Avatar.Base"
+                name="Avatar"
                 tier="atom"
                 leaf="Prop `status`"
                 annotate={ANNOTATE}
@@ -228,81 +213,80 @@ export const Status: Story = {
                     {
                         name: "status = \"online\", size = \"sm\"",
                         why: "This cell sets `status=\"online\"` at `size=\"sm\"`, so the dot appears at its smallest diameter to signal the person is active right now inside a dense row. Comparing it against the `md` and `lg` cells of the same status is what proves the dot actually grows step by step instead of staying a fixed size.",
-                        code: `<Avatar.Base src="${REAL_IMG}" name="Mai Chi" status="online" size="sm" />`,
-                        render: <Avatar.Base src={REAL_IMG} name={NAME} status="online" size="sm" showAnatomy />,
+                        code: `<Avatar src="${REAL_IMG}" name="Mai Chi" status="online" size="sm" />`,
+                        render: <Avatar src={REAL_IMG} name={NAME} status="online" size="sm" showAnatomy />,
                     },
                     {
                         name: "status = \"online\", size = \"md\"",
                         why: "This cell sets `status=\"online\"` at `size=\"md\"`, so the dot appears at its default diameter to signal the person is active right now on a normal card or list. Sitting between the `sm` and `lg` cells is what shows the dot scaling smoothly instead of jumping.",
-                        code: `<Avatar.Base src="${REAL_IMG}" name="Mai Chi" status="online" size="md" />`,
-                        render: <Avatar.Base src={REAL_IMG} name={NAME} status="online" size="md" showAnatomy />,
+                        code: `<Avatar src="${REAL_IMG}" name="Mai Chi" status="online" size="md" />`,
+                        render: <Avatar src={REAL_IMG} name={NAME} status="online" size="md" showAnatomy />,
                     },
                     {
                         name: "status = \"online\", size = \"lg\"",
                         why: "This cell sets `status=\"online\"` at `size=\"lg\"`, so the dot appears at its largest diameter to signal the person is active right now on a profile header or hero. This is the top end of the scale, where the dot has to stay legible next to the biggest avatar box.",
-                        code: `<Avatar.Base src="${REAL_IMG}" name="Mai Chi" status="online" size="lg" />`,
-                        render: <Avatar.Base src={REAL_IMG} name={NAME} status="online" size="lg" showAnatomy />,
+                        code: `<Avatar src="${REAL_IMG}" name="Mai Chi" status="online" size="lg" />`,
+                        render: <Avatar src={REAL_IMG} name={NAME} status="online" size="lg" showAnatomy />,
                     },
                     {
                         name: "status = \"offline\", size = \"sm\"",
                         why: "This cell sets `status=\"offline\"` at `size=\"sm\"`, so the dot shows the muted tone for someone not signed in, drawn at its smallest diameter for a dense row. Checking it beside the `md` and `lg` offline cells confirms the same muted tone scales correctly across sizes.",
-                        code: `<Avatar.Base src="${REAL_IMG}" name="Mai Chi" status="offline" size="sm" />`,
-                        render: <Avatar.Base src={REAL_IMG} name={NAME} status="offline" size="sm" showAnatomy />,
+                        code: `<Avatar src="${REAL_IMG}" name="Mai Chi" status="offline" size="sm" />`,
+                        render: <Avatar src={REAL_IMG} name={NAME} status="offline" size="sm" showAnatomy />,
                     },
                     {
                         name: "status = \"offline\", size = \"md\"",
                         why: "This cell sets `status=\"offline\"` at `size=\"md\"`, so the dot shows the muted tone for someone not signed in, drawn at the default diameter used in cards and lists. It sits at the middle step of the size scale for this status.",
-                        code: `<Avatar.Base src="${REAL_IMG}" name="Mai Chi" status="offline" size="md" />`,
-                        render: <Avatar.Base src={REAL_IMG} name={NAME} status="offline" size="md" showAnatomy />,
+                        code: `<Avatar src="${REAL_IMG}" name="Mai Chi" status="offline" size="md" />`,
+                        render: <Avatar src={REAL_IMG} name={NAME} status="offline" size="md" showAnatomy />,
                     },
                     {
                         name: "status = \"offline\", size = \"lg\"",
                         why: "This cell sets `status=\"offline\"` at `size=\"lg\"`, so the dot shows the muted tone for someone not signed in, drawn at its largest diameter for a profile header. This is the top step, where the offline tone still has to read clearly at a bigger scale.",
-                        code: `<Avatar.Base src="${REAL_IMG}" name="Mai Chi" status="offline" size="lg" />`,
-                        render: <Avatar.Base src={REAL_IMG} name={NAME} status="offline" size="lg" showAnatomy />,
+                        code: `<Avatar src="${REAL_IMG}" name="Mai Chi" status="offline" size="lg" />`,
+                        render: <Avatar src={REAL_IMG} name={NAME} status="offline" size="lg" showAnatomy />,
                     },
                     {
                         name: "status = \"busy\", size = \"sm\"",
                         why: "This cell sets `status=\"busy\"` at `size=\"sm\"`, so the dot signals the person is in a call and should not be disturbed, drawn small for a dense row. Comparing it to the `md` and `lg` busy cells is what confirms this tone keeps its meaning as the avatar grows.",
-                        code: `<Avatar.Base src="${REAL_IMG}" name="Mai Chi" status="busy" size="sm" />`,
-                        render: <Avatar.Base src={REAL_IMG} name={NAME} status="busy" size="sm" showAnatomy />,
+                        code: `<Avatar src="${REAL_IMG}" name="Mai Chi" status="busy" size="sm" />`,
+                        render: <Avatar src={REAL_IMG} name={NAME} status="busy" size="sm" showAnatomy />,
                     },
                     {
                         name: "status = \"busy\", size = \"md\"",
                         why: "This cell sets `status=\"busy\"` at `size=\"md\"`, so the dot signals the person is in a call and should not be disturbed, drawn at the default card size. This is the middle step of the busy status across the size scale.",
-                        code: `<Avatar.Base src="${REAL_IMG}" name="Mai Chi" status="busy" size="md" />`,
-                        render: <Avatar.Base src={REAL_IMG} name={NAME} status="busy" size="md" showAnatomy />,
+                        code: `<Avatar src="${REAL_IMG}" name="Mai Chi" status="busy" size="md" />`,
+                        render: <Avatar src={REAL_IMG} name={NAME} status="busy" size="md" showAnatomy />,
                     },
                     {
                         name: "status = \"busy\", size = \"lg\"",
                         why: "This cell sets `status=\"busy\"` at `size=\"lg\"`, so the dot signals the person is in a call and should not be disturbed, drawn at its largest size for a profile header. This is the top step, where the busy tone still has to sit legibly at the corner of a bigger avatar.",
-                        code: `<Avatar.Base src="${REAL_IMG}" name="Mai Chi" status="busy" size="lg" />`,
-                        render: <Avatar.Base src={REAL_IMG} name={NAME} status="busy" size="lg" showAnatomy />,
+                        code: `<Avatar src="${REAL_IMG}" name="Mai Chi" status="busy" size="lg" />`,
+                        render: <Avatar src={REAL_IMG} name={NAME} status="busy" size="lg" showAnatomy />,
                     },
                     {
                         name: "status = \"away\", size = \"sm\"",
                         why: "This cell sets `status=\"away\"` at `size=\"sm\"`, so the dot signals the person stepped away, drawn small for a dense row. This is the first step of the away status across the size scale.",
-                        code: `<Avatar.Base src="${REAL_IMG}" name="Mai Chi" status="away" size="sm" />`,
-                        render: <Avatar.Base src={REAL_IMG} name={NAME} status="away" size="sm" showAnatomy />,
+                        code: `<Avatar src="${REAL_IMG}" name="Mai Chi" status="away" size="sm" />`,
+                        render: <Avatar src={REAL_IMG} name={NAME} status="away" size="sm" showAnatomy />,
                     },
                     {
                         name: "status = \"away\", size = \"md\"",
                         why: "This cell sets `status=\"away\"` at `size=\"md\"`, so the dot signals the person stepped away, drawn at the default size used in cards and lists. This is the middle step of the away status across the size scale.",
-                        code: `<Avatar.Base src="${REAL_IMG}" name="Mai Chi" status="away" size="md" />`,
-                        render: <Avatar.Base src={REAL_IMG} name={NAME} status="away" size="md" showAnatomy />,
+                        code: `<Avatar src="${REAL_IMG}" name="Mai Chi" status="away" size="md" />`,
+                        render: <Avatar src={REAL_IMG} name={NAME} status="away" size="md" showAnatomy />,
                     },
                     {
                         name: "status = \"away\", size = \"lg\"",
                         why: "This cell sets `status=\"away\"` at `size=\"lg\"`, so the dot signals the person stepped away, drawn at its largest size for a profile header. This is the last step of the away status, confirming the dot still scales up correctly at the top end.",
-                        code: `<Avatar.Base src="${REAL_IMG}" name="Mai Chi" status="away" size="lg" />`,
-                        render: <Avatar.Base src={REAL_IMG} name={NAME} status="away" size="lg" showAnatomy />,
+                        code: `<Avatar src="${REAL_IMG}" name="Mai Chi" status="away" size="lg" />`,
+                        render: <Avatar src={REAL_IMG} name={NAME} status="away" size="lg" showAnatomy />,
                     },
                 ]}
             />
         </div>
     ),
 }
-
 /**
  * Leaf prop `size` — 3 tiers, EACH state carries an icon so the glyph weight can
  * be seen changing with size (§5.0a: `sm` → size-4 → `bold`; `md`/`lg` →
@@ -312,7 +296,7 @@ export const Sizes: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
-                name="Avatar.Base"
+                name="Avatar"
                 tier="atom"
                 leaf="Prop `size`"
                 annotate={ANNOTATE}
@@ -321,27 +305,26 @@ export const Sizes: Story = {
                     {
                         name: "size = \"sm\"",
                         why: "This cell sets `size=\"sm\"` on an icon-only avatar, so the box shrinks to its smallest preset and the glyph switches to a bold stroke weight to survive being drawn that small. This is the size meant for dense rows like tables and comment threads.",
-                        code: "<Avatar.Base icon={UserIcon} size=\"sm\" />",
-                        render: <Avatar.Base icon={UserIcon} size="sm" showAnatomy />,
+                        code: "<Avatar icon={UserIcon} size=\"sm\" />",
+                        render: <Avatar icon={UserIcon} size="sm" showAnatomy />,
                     },
                     {
                         name: "size = \"md\"",
                         why: "This cell sets `size=\"md\"` on an icon-only avatar, so the box grows to the default preset and the glyph switches back to a regular stroke weight. This is the size used in ordinary cards and lists, the default when no size is specified.",
-                        code: "<Avatar.Base icon={UserIcon} size=\"md\" />",
-                        render: <Avatar.Base icon={UserIcon} size="md" showAnatomy />,
+                        code: "<Avatar icon={UserIcon} size=\"md\" />",
+                        render: <Avatar icon={UserIcon} size="md" showAnatomy />,
                     },
                     {
                         name: "size = \"lg\"",
                         why: "This cell sets `size=\"lg\"` on an icon-only avatar, so the box grows to its largest preset while the glyph keeps the regular stroke weight from `md`. This is the size meant for a profile header or hero section where the avatar is the focal point.",
-                        code: "<Avatar.Base icon={UserIcon} size=\"lg\" />",
-                        render: <Avatar.Base icon={UserIcon} size="lg" showAnatomy />,
+                        code: "<Avatar icon={UserIcon} size=\"lg\" />",
+                        render: <Avatar icon={UserIcon} size="lg" showAnatomy />,
                     },
                 ]}
             />
         </div>
     ),
 }
-
 /**
  * Leaf prop `color` — the tint of the FALLBACK BACKGROUND. Every state below
  * pairs one of the 5 tints with one of the two fallbacks that have a
@@ -352,7 +335,7 @@ export const Colors: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
-                name="Avatar.Base"
+                name="Avatar"
                 tier="atom"
                 leaf="Prop `color`"
                 annotate={ANNOTATE}
@@ -361,69 +344,68 @@ export const Colors: Story = {
                     {
                         name: "color = \"accent\", fallback = \"initials\"",
                         why: "This cell sets `color=\"accent\"` on an initials avatar with no `src`, so the fallback background paints the brand tint behind the person's initials. Accent carries no status meaning here, it is just the default brand color when nothing else applies.",
-                        code: "<Avatar.Base color=\"accent\" name=\"Mai Chi\" fallback=\"initials\" />",
-                        render: <Avatar.Base color="accent" name={NAME} fallback="initials" showAnatomy />,
+                        code: "<Avatar color=\"accent\" name=\"Mai Chi\" fallback=\"initials\" />",
+                        render: <Avatar color="accent" name={NAME} fallback="initials" showAnatomy />,
                     },
                     {
                         name: "color = \"danger\", fallback = \"initials\"",
                         why: "This cell sets `color=\"danger\"` on an initials avatar with no `src`, so the fallback background paints the danger tint behind the person's initials. This tint is meant to flag that something about this person or their state needs attention.",
-                        code: "<Avatar.Base color=\"danger\" name=\"Mai Chi\" fallback=\"initials\" />",
-                        render: <Avatar.Base color="danger" name={NAME} fallback="initials" showAnatomy />,
+                        code: "<Avatar color=\"danger\" name=\"Mai Chi\" fallback=\"initials\" />",
+                        render: <Avatar color="danger" name={NAME} fallback="initials" showAnatomy />,
                     },
                     {
                         name: "color = \"default\", fallback = \"initials\"",
                         why: "This cell sets `color=\"default\"` on an initials avatar with no `src`, so the fallback background paints the plain neutral tint behind the person's initials. This tint carries no meaning at all, it is the baseline color when nothing needs to stand out.",
-                        code: "<Avatar.Base color=\"default\" name=\"Mai Chi\" fallback=\"initials\" />",
-                        render: <Avatar.Base color="default" name={NAME} fallback="initials" showAnatomy />,
+                        code: "<Avatar color=\"default\" name=\"Mai Chi\" fallback=\"initials\" />",
+                        render: <Avatar color="default" name={NAME} fallback="initials" showAnatomy />,
                     },
                     {
                         name: "color = \"success\", fallback = \"initials\"",
                         why: "This cell sets `color=\"success\"` on an initials avatar with no `src`, so the fallback background paints the success tint behind the person's initials. This tint is meant to carry a positive signal, such as a completed or approved state.",
-                        code: "<Avatar.Base color=\"success\" name=\"Mai Chi\" fallback=\"initials\" />",
-                        render: <Avatar.Base color="success" name={NAME} fallback="initials" showAnatomy />,
+                        code: "<Avatar color=\"success\" name=\"Mai Chi\" fallback=\"initials\" />",
+                        render: <Avatar color="success" name={NAME} fallback="initials" showAnatomy />,
                     },
                     {
                         name: "color = \"warning\", fallback = \"initials\"",
                         why: "This cell sets `color=\"warning\"` on an initials avatar with no `src`, so the fallback background paints the warning tint behind the person's initials. This tint is meant to carry a caution signal, such as a state that needs a second look.",
-                        code: "<Avatar.Base color=\"warning\" name=\"Mai Chi\" fallback=\"initials\" />",
-                        render: <Avatar.Base color="warning" name={NAME} fallback="initials" showAnatomy />,
+                        code: "<Avatar color=\"warning\" name=\"Mai Chi\" fallback=\"initials\" />",
+                        render: <Avatar color="warning" name={NAME} fallback="initials" showAnatomy />,
                     },
                     {
                         name: "color = \"accent\", fallback = \"icon\"",
                         why: "This cell sets `color=\"accent\"` on an icon-only avatar with no `src`, so the fallback background paints the brand tint behind the plain glyph instead of the letters. This confirms the same tint that painted the initials state also paints the icon state, since color only touches the surface, not the glyph drawn on it.",
-                        code: "<Avatar.Base color=\"accent\" icon={UserIcon} fallback=\"icon\" />",
-                        render: <Avatar.Base color="accent" icon={UserIcon} fallback="icon" showAnatomy />,
+                        code: "<Avatar color=\"accent\" icon={UserIcon} fallback=\"icon\" />",
+                        render: <Avatar color="accent" icon={UserIcon} fallback="icon" showAnatomy />,
                     },
                     {
                         name: "color = \"danger\", fallback = \"icon\"",
                         why: "This cell sets `color=\"danger\"` on an icon-only avatar with no `src`, so the fallback background paints the danger tint behind the plain glyph. Repeating the danger tint on the icon fallback proves it is the surface being painted, not the initials text from the state above.",
-                        code: "<Avatar.Base color=\"danger\" icon={UserIcon} fallback=\"icon\" />",
-                        render: <Avatar.Base color="danger" icon={UserIcon} fallback="icon" showAnatomy />,
+                        code: "<Avatar color=\"danger\" icon={UserIcon} fallback=\"icon\" />",
+                        render: <Avatar color="danger" icon={UserIcon} fallback="icon" showAnatomy />,
                     },
                     {
                         name: "color = \"default\", fallback = \"icon\"",
                         why: "This cell sets `color=\"default\"` on an icon-only avatar with no `src`, so the fallback background paints the plain neutral tint behind the glyph. This is the baseline icon state against which every other tinted icon state is compared.",
-                        code: "<Avatar.Base color=\"default\" icon={UserIcon} fallback=\"icon\" />",
-                        render: <Avatar.Base color="default" icon={UserIcon} fallback="icon" showAnatomy />,
+                        code: "<Avatar color=\"default\" icon={UserIcon} fallback=\"icon\" />",
+                        render: <Avatar color="default" icon={UserIcon} fallback="icon" showAnatomy />,
                     },
                     {
                         name: "color = \"success\", fallback = \"icon\"",
                         why: "This cell sets `color=\"success\"` on an icon-only avatar with no `src`, so the fallback background paints the success tint behind the glyph. Seeing the same positive tint on both the initials and icon fallback confirms the color only paints the surface.",
-                        code: "<Avatar.Base color=\"success\" icon={UserIcon} fallback=\"icon\" />",
-                        render: <Avatar.Base color="success" icon={UserIcon} fallback="icon" showAnatomy />,
+                        code: "<Avatar color=\"success\" icon={UserIcon} fallback=\"icon\" />",
+                        render: <Avatar color="success" icon={UserIcon} fallback="icon" showAnatomy />,
                     },
                     {
                         name: "color = \"warning\", fallback = \"icon\"",
                         why: "This cell sets `color=\"warning\"` on an icon-only avatar with no `src`, so the fallback background paints the warning tint behind the glyph. Seeing the same caution tint on both the initials and icon fallback confirms the color only paints the surface.",
-                        code: "<Avatar.Base color=\"warning\" icon={UserIcon} fallback=\"icon\" />",
-                        render: <Avatar.Base color="warning" icon={UserIcon} fallback="icon" showAnatomy />,
+                        code: "<Avatar color=\"warning\" icon={UserIcon} fallback=\"icon\" />",
+                        render: <Avatar color="warning" icon={UserIcon} fallback="icon" showAnatomy />,
                     },
                 ]}
             />
         </div>
     ),
 }
-
 /**
  * Leaf prop `isSkeleton` — shimmer OWNED by the atom (hybrid C, §12c), one
  * state per (size × status-presence) pair.
@@ -440,7 +422,7 @@ export const Skeleton: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
-                name="Avatar.Base"
+                name="Avatar"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
                 annotate={ANNOTATE}
@@ -449,38 +431,38 @@ export const Skeleton: Story = {
                     {
                         name: "size = \"sm\", no status",
                         why: "This cell renders the `sm` skeleton shimmer with no `status` prop at all, so only the circular shimmer shows with no dot anywhere on it. This is the plain loading shape for a slot that will never show a presence dot.",
-                        code: "<Avatar.Base isSkeleton size=\"sm\" />",
-                        render: <Avatar.Base isSkeleton size="sm" showAnatomy />,
+                        code: "<Avatar isSkeleton size=\"sm\" />",
+                        render: <Avatar isSkeleton size="sm" showAnatomy />,
                     },
                     {
                         name: "size = \"sm\", status = \"online\"",
                         why: "This cell renders the `sm` skeleton shimmer with `status=\"online\"`, so a neutral grey dot is drawn at the corner even though the real online color is not known yet. Reserving that dot now is what stops the avatar's footprint from jumping once the real status color lands.",
-                        code: "<Avatar.Base isSkeleton size=\"sm\" status=\"online\" />",
-                        render: <Avatar.Base isSkeleton size="sm" status="online" showAnatomy />,
+                        code: "<Avatar isSkeleton size=\"sm\" status=\"online\" />",
+                        render: <Avatar isSkeleton size="sm" status="online" showAnatomy />,
                     },
                     {
                         name: "size = \"md\", no status",
                         why: "This cell renders the `md` skeleton shimmer with no `status` prop at all, so only the circular shimmer shows with no dot anywhere on it. This is the default-size loading shape used for a slot that will never carry a status.",
-                        code: "<Avatar.Base isSkeleton size=\"md\" />",
-                        render: <Avatar.Base isSkeleton size="md" showAnatomy />,
+                        code: "<Avatar isSkeleton size=\"md\" />",
+                        render: <Avatar isSkeleton size="md" showAnatomy />,
                     },
                     {
                         name: "size = \"md\", status = \"online\"",
                         why: "This cell renders the `md` skeleton shimmer with `status=\"online\"`, so a neutral grey dot sits at the corner at the default size before the real status color is known. Comparing this against the no-status `md` state is what proves the dot reserves its own space rather than appearing only once real data lands.",
-                        code: "<Avatar.Base isSkeleton size=\"md\" status=\"online\" />",
-                        render: <Avatar.Base isSkeleton size="md" status="online" showAnatomy />,
+                        code: "<Avatar isSkeleton size=\"md\" status=\"online\" />",
+                        render: <Avatar isSkeleton size="md" status="online" showAnatomy />,
                     },
                     {
                         name: "size = \"lg\", no status",
                         why: "This cell renders the `lg` skeleton shimmer with no `status` prop at all, so only the circular shimmer shows with no dot anywhere on it. This is the largest loading shape, used where the resolved avatar will sit in a profile header.",
-                        code: "<Avatar.Base isSkeleton size=\"lg\" />",
-                        render: <Avatar.Base isSkeleton size="lg" showAnatomy />,
+                        code: "<Avatar isSkeleton size=\"lg\" />",
+                        render: <Avatar isSkeleton size="lg" showAnatomy />,
                     },
                     {
                         name: "size = \"lg\", status = \"online\"",
                         why: "This cell renders the `lg` skeleton shimmer with `status=\"online\"`, so a neutral grey dot sits at the corner at the largest size before the real status color is known. This confirms the reserved-dot behavior holds at every size step, not only at the smaller ones.",
-                        code: "<Avatar.Base isSkeleton size=\"lg\" status=\"online\" />",
-                        render: <Avatar.Base isSkeleton size="lg" status="online" showAnatomy />,
+                        code: "<Avatar isSkeleton size=\"lg\" status=\"online\" />",
+                        render: <Avatar isSkeleton size="lg" status="online" showAnatomy />,
                     },
                 ]}
             />

@@ -28,7 +28,7 @@ export interface StatGridCardProps {
 
 /**
  * A bounded SURFACE card whose cells sit in a 2-col grid, divided by thin
- * `border-default` seams — the grid sibling of `SurfaceCard.List` (a vertical LIST
+ * `border-default` seams — the grid sibling of `SurfaceCardList` (a vertical LIST
  * of full-width rows): use this instead when the content reads better as compact
  * stat cells side-by-side. Seams (not `gap`) keep the card reading as ONE
  * continuous bordered block.

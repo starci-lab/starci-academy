@@ -96,7 +96,7 @@ export const UpNextCard = ({
                         />
                     ) : null}
                     {eyebrow ? (
-                        <Typography.Base size="xs" text={eyebrow} color="muted" showAnatomy={showAnatomy} />
+                        <Typography size="xs" text={eyebrow} color="muted" showAnatomy={showAnatomy} />
                     ) : null}
                 </div>
             ) : null}
@@ -104,9 +104,9 @@ export const UpNextCard = ({
             {/* the next rung — title/description are Typography UpNextCard renders
                 directly, so each gets its own anatomy tag. */}
             <div className="flex flex-col gap-2">
-                <Typography.Base text={title} weight="medium" showAnatomy={showAnatomy} />
+                <Typography text={title} weight="medium" showAnatomy={showAnatomy} />
                 {description ? (
-                    <Typography.Base size="sm" text={description} color="muted" showAnatomy={showAnatomy} />
+                    <Typography size="sm" text={description} color="muted" showAnatomy={showAnatomy} />
                 ) : null}
             </div>
 

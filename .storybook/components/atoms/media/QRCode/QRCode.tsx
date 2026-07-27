@@ -24,7 +24,7 @@ export interface QRCodeProps {
 }
 
 /**
- * `QRCode.Base` — the (currently only) shape of the QR block: image frame +
+ * `QRCode` — the (currently only) shape of the QR block: image frame +
  * optional centered icon.
  * @param props - {@link QRCodeProps}
  */
@@ -43,6 +43,4 @@ const QRCodeBase = ({ size, data, icon, className }: QRCodeProps) => {
 }
 
 /** `QRCode.*` — QR-code atom namespace (§13a: one shape today, grouped under `Base`). */
-export const QRCode = Object.assign(QRCodeBase, {
-    Base: QRCodeBase,
-})
+export { QRCodeBase as QRCode }

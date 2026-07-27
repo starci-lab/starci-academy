@@ -111,7 +111,7 @@ export const NotificationBell = ({
                 ariaLabel={ariaLabel}
                 anatPart={showAnatomy ? "Button.IconOnly" : undefined}
                 icon={
-                    <Badge.Base
+                    <Badge
                         count={unreadCount}
                         max={MAX_BADGE}
                         size="sm"
@@ -122,7 +122,7 @@ export const NotificationBell = ({
                             className="size-5"
                             data-anat-part={showAnatomy ? "BellIcon" : undefined}
                         />
-                    </Badge.Base>
+                    </Badge>
                 }
             />
             <PopoverContent

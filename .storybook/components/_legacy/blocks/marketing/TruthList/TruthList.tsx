@@ -71,7 +71,7 @@ export const TruthList = ({
                 {Array.from({ length: rows }).map((_, index) => (
                     <div key={index} data-anat-part={showAnatomy ? "Accordion.Item" : undefined}>
                         <div className="flex h-14 items-center px-5">
-                            <Typography.Base
+                            <Typography
                                 isSkeleton
                                 className="w-2/5"
                                 anatPart={showAnatomy ? "Accordion.Trigger" : undefined}
@@ -112,7 +112,7 @@ export const TruthList = ({
                     >
                         <Accordion.Heading data-anat-part={showAnatomy ? "Accordion.Heading" : undefined}>
                             <Accordion.Trigger data-anat-part={showAnatomy ? "Accordion.Trigger" : undefined}>
-                                <Typography.Base
+                                <Typography
                                     text={item.truth}
                                     weight="medium"
                                     className="text-left"
@@ -121,7 +121,7 @@ export const TruthList = ({
                         </Accordion.Heading>
                         <Accordion.Panel data-anat-part={showAnatomy ? "Accordion.Panel" : undefined}>
                             <Accordion.Body data-anat-part={showAnatomy ? "Accordion.Body" : undefined}>
-                                <Typography.Base size="sm"
+                                <Typography size="sm"
                                     text={item.fix}
                                     color="muted"
                                 />

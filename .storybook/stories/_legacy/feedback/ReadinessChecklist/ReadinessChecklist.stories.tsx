@@ -52,10 +52,10 @@ const ITEMS: Array<ReadinessChecklistItem> = [
     },
 ]
 
-// ROW — one repeated per item: List.Row (leading·title·subtitle·trailing, opaque —
+// ROW — one repeated per item: ListRow (leading·title·subtitle·trailing, opaque —
 // badged via AnatomyOverlay) composing an IconTile (leading) + StatusChip (trailing).
 const ROW_PARTS: Array<AnatomyNode> = [
-    { name: "List.Row", tier: "block", role: "hàng leading·title·subtitle·trailing — lặp mỗi item", storyId: "composites-lists-list-list-row--title-only" },
+    { name: "ListRow", tier: "block", role: "hàng leading·title·subtitle·trailing — lặp mỗi item", storyId: "composites-lists-list-listrow--title-only" },
     { name: "IconTile", tier: "composite", role: "leading — check tròn (success) khi ready, icon caller (neutral) khi chờ" },
     { name: "StatusChip", tier: "composite", role: "trailing — nhãn Sẵn sàng/Chờ theo tone success/neutral" },
 ]
@@ -70,17 +70,17 @@ export const AllWaiting: Story = {
                     tier="block"
                     leaf="AllWaiting"
                     parts={ROW_PARTS}
-                    reason="Danh sách prerequisite/setup: mỗi hàng = List.Row ghép IconTile (leading) + StatusChip (trailing) theo state ready/pending của item."
+                    reason="Danh sách prerequisite/setup: mỗi hàng = ListRow ghép IconTile (leading) + StatusChip (trailing) theo state ready/pending của item."
                 >
                     {/* 2026-07-26: bordered+flushContent (boolean) → variant="nested"+padding="flush" (ba trục độc lập, thầy chốt). */}
-                    <SurfaceCard.Base variant="nested" padding="flush">
+                    <SurfaceCard variant="nested" padding="flush">
                         <ReadinessChecklist
                             items={ITEMS}
                             readyLabel="Sẵn sàng"
                             pendingLabel="Chờ"
                             showAnatomy
                         />
-                    </SurfaceCard.Base>
+                    </SurfaceCard>
                 </BlockAnatomy>
             </div>
         </div>
@@ -100,7 +100,7 @@ export const PartiallyReady: Story = {
                     note="CÙNG composition leaf AllWaiting; 2 hàng đầu đổi sang state ready (IconTile success + StatusChip success)."
                 >
                     {/* 2026-07-26: bordered+flushContent (boolean) → variant="nested"+padding="flush" (ba trục độc lập, thầy chốt). */}
-                    <SurfaceCard.Base variant="nested" padding="flush">
+                    <SurfaceCard variant="nested" padding="flush">
                         <ReadinessChecklist
                             items={ITEMS.map((item) => (
                                 item.id === "agent" || item.id === "ollama" ? { ...item, ready: true } : item
@@ -109,7 +109,7 @@ export const PartiallyReady: Story = {
                             pendingLabel="Chờ"
                             showAnatomy
                         />
-                    </SurfaceCard.Base>
+                    </SurfaceCard>
                 </BlockAnatomy>
             </div>
         </div>

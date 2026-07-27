@@ -37,7 +37,7 @@ export const ProgressMeterTargetMark = ({ percent, label, className }: ProgressM
     >
         <div className="h-5 w-1 rounded bg-accent" />
         {label === undefined ? null : (
-            <Typography.Base size="xs"
+            <Typography size="xs"
                 color="muted"
                 className="absolute bottom-[calc(100%+3px)] left-1/2 -translate-x-1/2 whitespace-nowrap"
                 text={label}

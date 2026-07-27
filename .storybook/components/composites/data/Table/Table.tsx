@@ -50,7 +50,7 @@ export interface TableColumnSpec {
  */
 export type TableRowItem = Record<string, ReactNode> & { key: string }
 
-/** Props for {@link Table.Base}. */
+/** Props for {@link Table}. */
 export interface TableBaseProps {
     /** Cấu hình cột, theo thứ tự đọc. Cột đầu = row-header (a11y). */
     columns: ReadonlyArray<TableColumnSpec>
@@ -143,7 +143,7 @@ const TableBase = ({
                                 `h-5` để hàng mirror CAO ĐÚNG bằng hàng thật (§8, không nhảy
                                 layout). Căn bằng chiều cao + `items-center`, KHÔNG bằng margin (§10a).
                                 Tag NGOÀI atom (atom không nhận rest props) — cùng lý do như CellBox. */}
-                            <span className="flex h-5 items-center" data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
+                            <span className="flex h-5 items-center" data-anat-part={showAnatomy ? "Typography" : undefined}>
                                 <Typography size="sm" isSkeleton className="w-2/3" />
                             </span>
                         </HeroTable.Cell>
@@ -200,6 +200,4 @@ const TableBase = ({
  * `Table.*` — khung bảng dữ liệu (tầng COMPOSITE §13). `Base` là hình thái duy nhất;
  * biến thể (canh lề, bề rộng, rỗng, tải, hàng bấm được) là PROP của nó (§6b).
  */
-export const Table = {
-    Base: TableBase,
-}
+export { TableBase as Table }

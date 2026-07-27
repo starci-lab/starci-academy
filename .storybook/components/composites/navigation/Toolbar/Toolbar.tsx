@@ -1,8 +1,7 @@
 import React, { type Key, type ReactNode } from "react"
 import { ListBox, Select, Tabs, cn } from "@heroui/react"
-import { Tabs as AtomTabs } from "@sb-components/atoms/navigation/Tabs/Tabs"
+import { TabsExtended } from "@sb-components/atoms/navigation/Tabs/Tabs"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
-
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * COMPOSITE TIER (§13) — `Toolbar.*`, the KHUNG of a nav/control ROW above a panel.
@@ -15,7 +14,7 @@ import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
  * that right group into a compact dropdown below `@app-sm`. Behaviour and skin
  * are carried over VERBATIM; this is a rename, not a redesign.
  *
- * KHUNG API LAW (§13b): `Toolbar.Base` is NOT a generic wrapper — every channel
+ * KHUNG API LAW (§13b): `Toolbar` is NOT a generic wrapper — every channel
  * is a named slot. The two tab groups arrive as DATA (`items` + `selectedKey` +
  * `onSelectionChange`, {@link ToolbarTabGroup}), never as children; only
  * `leftEnd` is a free node slot. Namespace only — no bare component export.
@@ -38,7 +37,6 @@ import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
  * Authored in Storybook (not `src`); synced to `src` later.
  * ─────────────────────────────────────────────────────────────────────────────
  */
-
 /** One tab in a {@link ToolbarTabGroup}. */
 export interface ToolbarTabItem {
     /** Stable id used as the selection key. */
@@ -53,8 +51,7 @@ export interface ToolbarTabItem {
      * intercepts the selection, e.g. to open a paywall). */
     muted?: boolean
 }
-
-/** A controlled group of tabs — one side of a {@link Toolbar.Base} row. */
+/** A controlled group of tabs — one side of a {@link Toolbar} row. */
 export interface ToolbarTabGroup {
     /** Tabs in display order. */
     items: Array<ToolbarTabItem>
@@ -65,8 +62,7 @@ export interface ToolbarTabGroup {
     /** Fired with the newly selected tab key. */
     onSelectionChange: (key: Key) => void
 }
-
-/** Props for {@link Toolbar.Base}. */
+/** Props for {@link Toolbar}. */
 export interface ToolbarBaseProps {
     /** Primary tab group, pinned left. */
     leftTabs: ToolbarTabGroup
@@ -114,16 +110,13 @@ export interface ToolbarBaseProps {
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
 }
-
 /** size → extra Tab className override (md = HeroUI's own default, no override). */
 const TAB_SIZE_SM = "h-auto! w-auto! px-3! py-2! text-xs!"
-
 /**
  * Selected-state TEXT color only (accent tab group) — the underline itself now
  * comes from `<Tabs.Indicator/>` (native HeroUI `.tabs--secondary` accent bar).
  */
 const TAB_CLASS_ACCENT = "rounded-none data-[selected=true]:text-accent-soft-foreground"
-
 /**
  * Selected-state chrome — NEUTRAL foreground underline (secondary toggle
  * group, no accent). Kept on the MANUAL `border-b-2` technique because
@@ -133,7 +126,6 @@ const TAB_CLASS_ACCENT = "rounded-none data-[selected=true]:text-accent-soft-for
  */
 const TAB_CLASS_NEUTRAL =
     "rounded-none data-[selected=true]:border-b-2 data-[selected=true]:border-foreground data-[selected=true]:font-medium data-[selected=true]:text-foreground"
-
 /**
  * The toolbar row: `leftTabs` pinned left (+ an optional `leftEnd` action cluster
  * beside it), optional `rightTabs` pinned right, a `gap-3` gutter between them.
@@ -160,7 +152,7 @@ const ToolbarBase = ({
 }: ToolbarBaseProps) => {
     /** Render one controlled tab group (`accent` = accent selected chrome, secondary-only). */
     const renderGroup = (group: ToolbarTabGroup, accent = true): ReactNode => (
-        <AtomTabs.Extended
+        <TabsExtended
             variant={variant}
             size={size}
             selectedKey={group.selectedKey}
@@ -208,9 +200,8 @@ const ToolbarBase = ({
             {group.items.map((item) => (
                 <Tabs.Panel key={item.key} id={item.key} className="sr-only">{null}</Tabs.Panel>
             ))}
-        </AtomTabs.Extended>
+        </TabsExtended>
     )
-
     /**
      * Render `group` as a compact single-select dropdown — the mobile form of a
      * set-once right group (e.g. the language switcher) so it never crowds the row.
@@ -263,7 +254,6 @@ const ToolbarBase = ({
             </Select.Root>
         )
     }
-
     return (
         <div className={cn("flex items-center justify-between gap-3", showAnatomy && "relative", className)} data-anat={showAnatomy ? "" : undefined} data-anat-part={anatPart}>
             {/* Self-tag: lets a PARENT composite (e.g. FlashcardDeckList) cascade
@@ -274,11 +264,11 @@ const ToolbarBase = ({
             {showAnatomy ? <AnatomyOverlay label="Toolbar" tier="composite" href="/?path=/docs/composites-navigation-toolbar-toolbar-base--docs" /> : null}
             {leftEnd ? (
                 <div className="flex min-w-0 items-center gap-1">
-                    <div data-anat-part={showAnatomy ? "Tabs.Extended" : undefined}>{renderGroup(leftTabs)}</div>
+                    <div data-anat-part={showAnatomy ? "TabsExtended" : undefined}>{renderGroup(leftTabs)}</div>
                     <div>{leftEnd}</div>
                 </div>
             ) : (
-                <div data-anat-part={showAnatomy ? "Tabs.Extended" : undefined}>{renderGroup(leftTabs)}</div>
+                <div data-anat-part={showAnatomy ? "TabsExtended" : undefined}>{renderGroup(leftTabs)}</div>
             )}
             {rightTabs
                 ? collapseRightOnMobile
@@ -289,15 +279,14 @@ const ToolbarBase = ({
                                 via CSS), so each gets its OWN badge instead of one wrapper name that
                                 could only honestly describe one of them. */}
                             <div className="@app-sm:hidden" data-anat-part={showAnatomy ? "Select.Root" : undefined}>{renderSelect(rightTabs)}</div>
-                            <div className="hidden @app-sm:block" data-anat-part={showAnatomy ? "Tabs.Extended" : undefined}>{renderGroup(rightTabs, !rightTabsNeutral)}</div>
+                            <div className="hidden @app-sm:block" data-anat-part={showAnatomy ? "TabsExtended" : undefined}>{renderGroup(rightTabs, !rightTabsNeutral)}</div>
                         </div>
                     )
-                    : <div data-anat-part={showAnatomy ? "Tabs.Extended" : undefined}>{renderGroup(rightTabs, !rightTabsNeutral)}</div>
+                    : <div data-anat-part={showAnatomy ? "TabsExtended" : undefined}>{renderGroup(rightTabs, !rightTabsNeutral)}</div>
                 : null}
         </div>
     )
 }
-
 /**
  * The nav/control-row KHUNG namespace — one member for now:
  *
@@ -305,6 +294,4 @@ const ToolbarBase = ({
  * |---|---|
  * | `.Base` | `leftTabs`/`rightTabs` as DATA groups + `leftEnd` node slot (no children) |
  */
-export const Toolbar = {
-    Base: ToolbarBase,
-}
+export { ToolbarBase as Toolbar }

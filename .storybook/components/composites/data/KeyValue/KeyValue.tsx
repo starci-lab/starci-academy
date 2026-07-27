@@ -19,13 +19,13 @@ import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
  * COMPOSITE API LAW:
  *   • The composite carries NO domain content and **does NOT format** money/dates/units —
  *     the consumer passes an ALREADY-formatted node into `value` (`"1,200,000 ₫"`,
- *     `<Chip.Base/>`…).
+ *     `<Chip/>`…).
  *   • The composite does NOT grow functionality (no self-computed totals): `emphasis` is
  *     only a visual STRESS for a total row, the number is still supplied by the consumer.
  *   • `.List` is a repeated list ⇒ `items` is REQUIRED, children are forbidden.
  *
  * COMPOSE (§13c): text goes ENTIRELY through the `Typography.*` atom (§9 — no scattered
- * `text-*`/`font-*`), rules go through the `Divider.Base` atom. The composite only handles
+ * `text-*`/`font-*`), rules go through the `Divider` atom. The composite only handles
  * LAYOUT + the spacing scale.
  *
  * §10 — the gap scale is ENFORCED BY TYPE ({@link SeamScale}): only `0·1·2·3·6·8`, the
@@ -38,7 +38,7 @@ import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
 // .Row — ONE label–value pair
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** Props for {@link KeyValue.Row}. */
+/** Props for {@link KeyValueRow}. */
 export interface KeyValueRowProps {
     /** Label (left side) — §9a SECONDARY text ⇒ muted; `emphasis` pulls it up to foreground medium. */
     label: ReactNode
@@ -84,28 +84,28 @@ const KeyValueRow = ({
     const row = (
         <div
             className={cn("flex items-start justify-between gap-2", className)}
-            data-anat-part={anatPart ?? (showAnatomy ? "KeyValue.Row" : undefined)}
+            data-anat-part={anatPart ?? (showAnatomy ? "KeyValueRow" : undefined)}
         >
             {/* Label column: label + hint form a TIGHT cluster (§10b `tight` = gap-1). */}
             <div className="flex min-w-0 flex-col gap-1">
-                <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
-                    <Typography.Base size="sm"
+                <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                    <Typography size="sm"
                         text={label}
                         color={emphasis ? undefined : "muted"}
                         weight={emphasis ? "medium" : undefined}
                     />
                 </span>
                 {hint != null ? (
-                    <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
-                        <Typography.Base size="xs" text={hint} color="muted" />
+                    <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                        <Typography size="xs" text={hint} color="muted" />
                     </span>
                 ) : null}
             </div>
-            <span className="shrink-0" data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
+            <span className="shrink-0" data-anat-part={showAnatomy ? "Typography" : undefined}>
                 {emphasis ? (
-                    <Typography.Base text={value} weight="bold" tabularNums />
+                    <Typography text={value} weight="bold" tabularNums />
                 ) : (
-                    <Typography.Base size="sm" text={value} weight="medium" tabularNums />
+                    <Typography size="sm" text={value} weight="medium" tabularNums />
                 )}
             </span>
         </div>
@@ -116,8 +116,8 @@ const KeyValueRow = ({
     return (
         <div className={cn("flex flex-col", GAP_CLASS[gap])}>
             {row}
-            <span className="block" data-anat-part={showAnatomy ? "Divider.Base" : undefined}>
-                <Divider.Base variant="tertiary" />
+            <span className="block" data-anat-part={showAnatomy ? "Divider" : undefined}>
+                <Divider variant="tertiary" />
             </span>
         </div>
     )
@@ -127,7 +127,7 @@ const KeyValueRow = ({
 // .List — N pairs stacked vertically (repeated list ⇒ items)
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** ONE row in {@link KeyValue.List} — described as DATA, not JSX. */
+/** ONE row in {@link KeyValueList} — described as DATA, not JSX. */
 export interface KeyValueListItem {
     /** React key. */
     key: string
@@ -141,7 +141,7 @@ export interface KeyValueListItem {
     emphasis?: boolean
 }
 
-/** Props for {@link KeyValue.List}. */
+/** Props for {@link KeyValueList}. */
 export interface KeyValueListProps {
     /** The rows, in reading order. REQUIRED — a repeated list = data (§13b). */
     items: ReadonlyArray<KeyValueListItem>
@@ -162,7 +162,7 @@ export interface KeyValueListProps {
 }
 
 /**
- * A column of {@link KeyValue.Row} rows built from `items`. The separator line (if
+ * A column of {@link KeyValueRow} rows built from `items`. The separator line (if
  * enabled) is decided by the LIST — the LAST row has none, so the seam always sits
  * BETWEEN two rows instead of leaving a stray line dangling at the bottom. The gap
  * around each row-and-line shares the list's `gap` ⇒ the rhythm above/below the line
@@ -188,7 +188,4 @@ const KeyValueList = ({ items, gap = "grouped", divider = false, className, show
  * `KeyValue.*` — the label–value pair composite (COMPOSITE tier §13). `Row` (one pair) ·
  * `List` (N pairs, `items`). Visual variants = PROP (`emphasis`/`divider`), §6b.
  */
-export const KeyValue = {
-    Row: KeyValueRow,
-    List: KeyValueList,
-}
+export { KeyValueRow, KeyValueList }

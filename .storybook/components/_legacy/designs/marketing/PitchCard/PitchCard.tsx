@@ -43,9 +43,9 @@ export const PitchCard = ({ icon, tone = "accent", title, body, footer, classNam
             contentClassName="flex h-full flex-col gap-3"
             anatPart={showAnatomy ? "SectionCard" : undefined}
         >
-            <IconTile.Base icon={icon} tone={tone} size="md" anatPart={showAnatomy ? "IconTile" : undefined} />
-            <Typography.Base size="h5" text={title} showAnatomy={showAnatomy} />
-            <Typography.Base size="sm" text={body} color="muted" className="flex-1" showAnatomy={showAnatomy} />
+            <IconTile icon={icon} tone={tone} size="md" anatPart={showAnatomy ? "IconTile" : undefined} />
+            <Typography size="h5" text={title} showAnatomy={showAnatomy} />
+            <Typography size="sm" text={body} color="muted" className="flex-1" showAnatomy={showAnatomy} />
             {footer ? <div>{footer}</div> : null}
         </SectionCard>
     )

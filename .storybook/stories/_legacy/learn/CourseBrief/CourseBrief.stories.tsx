@@ -14,7 +14,7 @@ export default meta
 type Story = StoryObj<typeof CourseBrief>
 
 const PARTS: Array<AnatomyNode> = [
-    { name: "Page.Header", tier: "composite", role: "KHUNG bố cục (layout) — breadcrumb → title → description → meta. Block ĐẶT nội dung vào đây, KHÔNG tự vẽ." },
+    { name: "PageHeader", tier: "composite", role: "KHUNG bố cục (layout) — breadcrumb → title → description → meta. Block ĐẶT nội dung vào đây, KHÔNG tự vẽ." },
     { name: "Breadcrumbs", tier: "atom", role: "đường dẫn — block tự dựng từ `breadcrumbItems` (DỮ LIỆU), screen không cầm atom" },
     { name: "Title", tier: "atom", role: "tên khoá — prop `title`" },
     { name: "Meta", tier: "atom", role: "scalar catalog (chương · giờ · học viên) — §1 muted text, KHÔNG chip" },
@@ -37,7 +37,7 @@ export const Default: Story = {
                 tier="block"
                 leaf="Default"
                 parts={PARTS}
-                reason="Lên SCREEN tuyệt đối không xài atom — only block (thầy chốt 2026-07-25). Screen từng tự gọi khung Page.Header + atom Breadcrumbs.Base; block này gánh cả hai để screen chỉ còn ghép block."
+                reason="Lên SCREEN tuyệt đối không xài atom — only block (thầy chốt 2026-07-25). Screen từng tự gọi khung PageHeader + atom Breadcrumbs; block này gánh cả hai để screen chỉ còn ghép block."
                 note="Nhận `breadcrumbItems` là DỮ LIỆU, không phải node — nếu nhận ReactNode thì screen lại phải cầm atom, thủng đúng luật này. KHÔNG có chip trạng thái (thầy bỏ): tiến độ đã do ContinueCard nói."
                 code={"<CourseBrief breadcrumbItems={[…]} title=\"…\" description=\"…\" meta=\"…\" />"}
             >

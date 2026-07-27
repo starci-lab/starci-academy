@@ -4,7 +4,7 @@ import { PADDING_CLASS, type InsetScale } from "@sb-components/frames/_spacing"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * LAYOUT (khung) — `Container.*`: CONTENT MEASURE. One member, `Container.Base`
+ * LAYOUT (khung) — `Container.*`: CONTENT MEASURE. One member, `Container`
  * (one measure has one shape; width and padding are PROPS, §6b).
  *
  * KHUNG API LAW (§13b): a wrapping khung ⇒ ONE named slot `body`
@@ -77,7 +77,7 @@ const SIZE_CLASS: Record<ContainerSize, string> = {
     full: "max-w-none",
 }
 
-/** Props for {@link Container.Base}. */
+/** Props for {@link Container}. */
 export interface ContainerBaseProps {
     /**
      * Max width of the measure. Default `md` (48rem) — measured against the real app:
@@ -96,8 +96,8 @@ export interface ContainerBaseProps {
      * ⭐ 2026-07-27: `header`/`footer`/`gap` were REMOVED. A container that owns page
      * regions AND the rhythm between them is doing a second job, and it did that job
      * badly: `gap` only applied when a slot was used, so `CourseContents` wrote
-     * `gap="page"` and MEASURED 0px. The fix in the field was `Container > Stack.V` —
-     * i.e. the slots were a weaker copy of `Stack.V`, and reality already voted.
+     * `gap="page"` and MEASURED 0px. The fix in the field was `Container > StackV` —
+     * i.e. the slots were a weaker copy of `StackV`, and reality already voted.
      * A measure now owns exactly one thing: how wide the reading column is.
      */
     body?: ReactNode
@@ -110,9 +110,9 @@ export interface ContainerBaseProps {
      * it as one node (§11a.1) — exactly `SurfaceCard.*`'s own contract: no default guess, the
      * caller states the name explicitly and declares it (with a real `storyId`) wherever it
      * nests this measure. ⚠️ 2026-07-28: this used to fall back to a hardcoded default name
-     * `"Container.Base"` whenever `showAnatomy` was on, even with no caller in sight — nobody
+     * `"Container"` whenever `showAnatomy` was on, even with no caller in sight — nobody
      * ever nested this measure as a badged part, so every one of THIS file's own stories kept
-     * emitting an undeclared "Container.Base" node the panel could never show, exactly the
+     * emitting an undeclared "Container" node the panel could never show, exactly the
      * "badge that leads nowhere" the anatomy gate exists to catch.
      */
     anatPart?: string
@@ -142,7 +142,7 @@ const ContainerBase = ({
     showAnatomy = false,
 }: ContainerBaseProps) => {
     // ONE region, rendered RAW. No wrapper div, so the measure adds no node of its own
-    // and whatever the caller nests (usually a `Stack.V`) owns the rhythm — §10a, one
+    // and whatever the caller nests (usually a `StackV`) owns the rhythm — §10a, one
     // seam one owner.
     const content = body ?? children
 
@@ -171,6 +171,4 @@ const ContainerBase = ({
  * |---|---|
  * | `.Base` | slot `header`/`body`/`footer` (+ `children` = body) |
  */
-export const Container = {
-    Base: ContainerBase,
-}
+export { ContainerBase as Container }

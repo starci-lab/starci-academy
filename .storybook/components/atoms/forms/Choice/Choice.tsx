@@ -80,7 +80,7 @@ export interface ChoiceCheckboxProps extends InlineFrameProps {
     className?: string
 }
 
-/** `Choice.Checkbox` — single boolean checkbox with an inline label (HeroUI Checkbox compound). */
+/** `ChoiceCheckbox` — single boolean checkbox with an inline label (HeroUI Checkbox compound). */
 const ChoiceCheckbox = ({ isSelected, onValueChange, label, isDisabled, isInvalid, isSkeleton, showAnatomy, className, hint, errorMessage, isRequired }: ChoiceCheckboxProps) => {
     const invalid = isInvalid || errorMessage != null
     // Control = size-4 rounded-md · label = body-sm glyph bar (14/24), row gap-3 (matches Checkbox.Content gap).
@@ -91,7 +91,7 @@ const ChoiceCheckbox = ({ isSelected, onValueChange, label, isDisabled, isInvali
         </div>
     )
     return (
-        <FieldFrame.Base hint={hint} errorMessage={errorMessage} isDisabled={isDisabled} isSkeleton={isSkeleton} showAnatomy={showAnatomy} skeletonControl={skeletonControl}>
+        <FieldFrame hint={hint} errorMessage={errorMessage} isDisabled={isDisabled} isSkeleton={isSkeleton} showAnatomy={showAnatomy} skeletonControl={skeletonControl}>
             <HeroCheckbox isSelected={isSelected} onChange={onValueChange} isInvalid={invalid} isDisabled={isDisabled} className={className}>
                 {/* Node name = the REAL heroui component rendered here (`Checkbox.Control`/
                     `Checkbox.Content`) — NOT the slot word "Control"/"Label" it used to carry. */}
@@ -100,7 +100,7 @@ const ChoiceCheckbox = ({ isSelected, onValueChange, label, isDisabled, isInvali
                 </HeroCheckbox.Control>
                 <HeroCheckbox.Content data-anat-part={showAnatomy ? "Checkbox.Content" : undefined}>{withRequired(label, isRequired)}</HeroCheckbox.Content>
             </HeroCheckbox>
-        </FieldFrame.Base>
+        </FieldFrame>
     )
 }
 
@@ -128,7 +128,7 @@ export interface ChoiceRadioProps {
     className?: string
 }
 
-/** `Choice.Radio` — one radio option row (HeroUI Radio compound). Renders inside `Choice.RadioGroup`. */
+/** `ChoiceRadio` — one radio option row (HeroUI Radio compound). Renders inside `ChoiceRadioGroup`. */
 const ChoiceRadio = ({ value, label, isDisabled, isSkeleton, showAnatomy, className }: ChoiceRadioProps) => {
     if (isSkeleton) {
         // One row: size-4 rounded-full dot + body-sm label bar, gap-3 (co-located, hybrid C).
@@ -190,7 +190,7 @@ export interface ChoiceRadioGroupProps extends InlineFrameProps {
     className?: string
 }
 
-/** `Choice.RadioGroup` — mutually-exclusive single-select group (HeroUI RadioGroup + `Choice.Radio` rows). */
+/** `ChoiceRadioGroup` — mutually-exclusive single-select group (HeroUI RadioGroup + `ChoiceRadio` rows). */
 const ChoiceRadioGroup = ({
     value,
     onValueChange,
@@ -221,7 +221,7 @@ const ChoiceRadioGroup = ({
         </div>
     )
     return (
-        <FieldFrame.Base
+        <FieldFrame
             label={groupLabel}
             hint={hint}
             errorMessage={errorMessage}
@@ -243,7 +243,7 @@ const ChoiceRadioGroup = ({
                     <ChoiceRadio key={option.value} value={option.value} label={option.label} isDisabled={option.isDisabled} showAnatomy={showAnatomy} />
                 ))}
             </HeroRadioGroup>
-        </FieldFrame.Base>
+        </FieldFrame>
     )
 }
 
@@ -273,7 +273,7 @@ export interface ChoiceSwitchProps extends InlineFrameProps {
     className?: string
 }
 
-/** `Choice.Switch` — boolean toggle with the label BESIDE the track (HeroUI Switch compound). */
+/** `ChoiceSwitch` — boolean toggle with the label BESIDE the track (HeroUI Switch compound). */
 const ChoiceSwitch = ({ isSelected, onValueChange, label, isDisabled, isInvalid, size, isSkeleton, showAnatomy, anatPart, className, hint, errorMessage, isRequired }: ChoiceSwitchProps) => {
     const invalid = isInvalid || errorMessage != null
     // Track = h-9 w-16 pill (app override) · optional label bar (body-sm).
@@ -284,7 +284,7 @@ const ChoiceSwitch = ({ isSelected, onValueChange, label, isDisabled, isInvalid,
         </div>
     )
     return (
-        <FieldFrame.Base hint={hint} errorMessage={errorMessage} isDisabled={isDisabled} isSkeleton={isSkeleton} showAnatomy={showAnatomy} skeletonControl={skeletonControl}>
+        <FieldFrame hint={hint} errorMessage={errorMessage} isDisabled={isDisabled} isSkeleton={isSkeleton} showAnatomy={showAnatomy} skeletonControl={skeletonControl}>
             <div data-anat-part={anatPart} className={cn("flex items-center gap-3", className)}>
                 <HeroSwitch
                     // Node name = the REAL heroui component rendered here (`Switch`) — NOT
@@ -309,7 +309,7 @@ const ChoiceSwitch = ({ isSelected, onValueChange, label, isDisabled, isInvalid,
                     </HeroLabel>
                 ) : null}
             </div>
-        </FieldFrame.Base>
+        </FieldFrame>
     )
 }
 
@@ -320,13 +320,8 @@ const ChoiceSwitch = ({ isSelected, onValueChange, label, isDisabled, isInvalid,
  *
  * §12a: declared via `Object.assign` like the other 42 atoms (NOT a bare object
  * literal) — the root must be a callable namespace. Calling the root directly =
- * `Choice.Checkbox`, the most basic shape of the family (same approach as
- * `Select` taking `Select.Single` as its root). Every member's API STAYS THE
+ * `ChoiceCheckbox`, the most basic shape of the family (same approach as
+ * `Select` taking `SelectSingle` as its root). Every member's API STAYS THE
  * SAME, only the export SHAPE changes.
  */
-export const Choice = Object.assign(ChoiceCheckbox, {
-    Checkbox: ChoiceCheckbox,
-    Radio: ChoiceRadio,
-    RadioGroup: ChoiceRadioGroup,
-    Switch: ChoiceSwitch,
-})
+export { ChoiceCheckbox, ChoiceRadio, ChoiceRadioGroup, ChoiceSwitch }

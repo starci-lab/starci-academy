@@ -3,13 +3,13 @@ import { Badge as HeroBadge, Skeleton as HeroSkeleton, cn } from "@heroui/react"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Badge.Base`: the ONE constrained badge atom over HeroUI Badge.
+ * ATOM — `Badge`: the ONE constrained badge atom over HeroUI Badge.
  *
  * Gom mọi biến thể badge vào MỘT atom, phân biệt bằng PROP (leaf = composition):
- *   • đếm số               → `<Badge.Base count={3}>{icon}</Badge.Base>`
- *   • chấm (dot)            → `<Badge.Base dot>{icon}</Badge.Base>`
- *   • cap ("99+")           → `<Badge.Base count={128} max={99}>{icon}</Badge.Base>`
- *   • đứng riêng (no anchor) → `<Badge.Base count={5} />`
+ *   • đếm số               → `<Badge count={3}>{icon}</Badge>`
+ *   • chấm (dot)            → `<Badge dot>{icon}</Badge>`
+ *   • cap ("99+")           → `<Badge count={128} max={99}>{icon}</Badge>`
+ *   • đứng riêng (no anchor) → `<Badge count={5} />`
  *
  * Khi có `children` → atom bọc trong HeroUI `Badge.Anchor` (badge treo góc phần tử);
  * không có → badge inline độc lập. Atom tự cap số theo `max` (§4), tự vẽ leaf
@@ -100,7 +100,7 @@ const BadgeBase = ({
     return (
         <HeroBadge.Anchor data-anat-part={showAnatomy ? "Badge.Anchor" : undefined}>
             {/* Caller slot (§ LOAI 3) — `children` belongs to whoever anchors on this badge,
-                not to Badge.Base's own anatomy, so this wrapper stays unbadged. */}
+                not to Badge's own anatomy, so this wrapper stays unbadged. */}
             <span className="inline-flex">
                 {children}
             </span>
@@ -110,9 +110,7 @@ const BadgeBase = ({
 }
 
 /**
- * `Badge.*` — the badge ATOM namespace. `Badge.Base` is the single constrained
+ * `Badge.*` — the badge ATOM namespace. `Badge` is the single constrained
  * badge; count / dot / cap / standalone are LEAVES of it (prop-driven).
  */
-export const Badge = Object.assign(BadgeBase, {
-    Base: BadgeBase,
-})
+export { BadgeBase as Badge }

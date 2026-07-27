@@ -2,12 +2,12 @@ import { Spinner as HeroSpinner, cn } from "@heroui/react"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Spinner.Base`: the ONE constrained spinner atom over HeroUI Spinner.
+ * ATOM — `Spinner`: the ONE constrained spinner atom over HeroUI Spinner.
  *
  * Chỉ-báo BUSY (một glyph xoay), phân biệt bằng PROP (leaf = composition):
- *   • mặc định             → `<Spinner.Base />`
- *   • size                  → `<Spinner.Base size="lg" />` (sm · md · lg · xl)
- *   • tone                  → `<Spinner.Base tone="current" />` (theo màu chữ container)
+ *   • mặc định             → `<Spinner />`
+ *   • size                  → `<Spinner size="lg" />` (sm · md · lg · xl)
+ *   • tone                  → `<Spinner tone="current" />` (theo màu chữ container)
  *
  * KHÔNG có `isSkeleton`: spinner CHÍNH LÀ chỉ-báo tải — skeleton vô nghĩa ở đây.
  * `label` = tên a11y (aria-label); atom tự ép size/tone (§4).
@@ -49,9 +49,7 @@ const SpinnerBase = ({ size = "md", tone = "accent", label = "Loading", showAnat
 )
 
 /**
- * `Spinner.*` — the spinner ATOM namespace. `Spinner.Base` is the single
+ * `Spinner.*` — the spinner ATOM namespace. `Spinner` is the single
  * constrained spinner; size / tone are LEAVES of it (prop-driven).
  */
-export const Spinner = Object.assign(SpinnerBase, {
-    Base: SpinnerBase,
-})
+export { SpinnerBase as Spinner }

@@ -54,7 +54,7 @@ export interface PersonaIdentityChipProps {
 
 /**
  * Persona identity cluster: avatar + name + role, in a row. Composes
- * `Avatar.Base` (resilient uploaded → generated → initials fallback
+ * `Avatar` (resilient uploaded → generated → initials fallback
  * chain) beside two stacked {@link Typography} lines — name (medium weight)
  * over role (muted). Purely presentational; no interaction, no TTS/speaking
  * affordance (that lives one level up, in `InterviewerPresence`).
@@ -74,7 +74,7 @@ export const PersonaIdentityChip = ({
     if (isSkeleton) {
         return (
             <div className={cn("flex items-center gap-3", className)}>
-                <Avatar.Base isSkeleton size={size} showAnatomy={showAnatomy} />
+                <Avatar isSkeleton size={size} showAnatomy={showAnatomy} />
                 <div className="flex min-w-0 flex-col gap-1">
                     <Typography
                         size={NAME_SIZE[size]}
@@ -92,7 +92,7 @@ export const PersonaIdentityChip = ({
 
     return (
         <div className={cn("flex items-center gap-3", className)}>
-            <Avatar.Base
+            <Avatar
                 name={name}
                 src={avatarUrl ?? undefined}
                 seed={avatarSeed ?? name}
@@ -100,13 +100,13 @@ export const PersonaIdentityChip = ({
                 showAnatomy={showAnatomy}
             />
             <div className="flex min-w-0 flex-col">
-                <Typography.Base size={nameSize}
+                <Typography size={nameSize}
                     weight="medium"
                     showAnatomy={showAnatomy}
                     className="truncate"
                     text={name}
                 />
-                <Typography.Base size="xs"
+                <Typography size="xs"
                     color="muted"
                     showAnatomy={showAnatomy}
                     className="truncate"

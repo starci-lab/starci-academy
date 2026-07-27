@@ -4,7 +4,7 @@ import { ImageIcon } from "@phosphor-icons/react"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Image.Base`: framed image bọc `<img>` (HeroUI v3 KHÔNG có Image nên tự
+ * ATOM — `Image`: framed image bọc `<img>` (HeroUI v3 KHÔNG có Image nên tự
  * thân), TỰ lo skeleton lúc fetch (như HeroUI v2 Image) + fallback khi lỗi/rỗng.
  *
  * 3 trạng thái tải (atom tự quản, hybrid C — không đẩy lên consumer):
@@ -123,9 +123,7 @@ const ImageBase = ({ src, alt, ratio, fit = "cover", radius = "lg", fallbackSrc,
  * `Image` — framed-image atom. Wraps `<img>` with a loading skeleton and a
  * fallback on error/empty — a low-level media atom; no composite currently composes it.
  *
- * §12a: root GỌI THẲNG được (`<Image …/>`); `Image.Base` chỉ là alias giữ cho
+ * §12a: root GỌI THẲNG được (`<Image …/>`); `Image` chỉ là alias giữ cho
  * call-site cũ — atom này một hình thái nên không mở thêm member.
  */
-export const Image = Object.assign(ImageBase, {
-    Base: ImageBase,
-})
+export { ImageBase as Image }

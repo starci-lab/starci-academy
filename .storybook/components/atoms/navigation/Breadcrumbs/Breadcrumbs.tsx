@@ -5,7 +5,7 @@ import { ArrowLeftIcon } from "@phosphor-icons/react"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Breadcrumbs.Base`: the ONE constrained breadcrumb-trail atom over
+ * ATOM — `Breadcrumbs`: the ONE constrained breadcrumb-trail atom over
  * HeroUI `Breadcrumbs`.
  *
  * Data-driven: the caller passes `items` (root → current), and the atom renders
@@ -108,7 +108,7 @@ const BreadcrumbsBase = ({
         // (caller config) + trail depth, both known BEFORE crumb text loads. The
         // shimmer must pick the same shape the real trail resolves to; a bar-row
         // shimmer in front of a back-link real render is a layout jump when data
-        // lands, the same bug class fixed on `Button.Base` (§12g: skeleton must
+        // lands, the same bug class fixed on `Button` (§12g: skeleton must
         // track every known-ahead axis, not one fixed shape for every config).
         // `items.length` stands in for "has a navigable ancestor" since skeleton
         // items rarely carry real `onPress` yet.
@@ -218,10 +218,8 @@ const BreadcrumbsBase = ({
 }
 
 /**
- * `Breadcrumbs.*` — the breadcrumb ATOM namespace. `Breadcrumbs.Base` is the
+ * `Breadcrumbs.*` — the breadcrumb ATOM namespace. `Breadcrumbs` is the
  * single constrained trail; truncation (`maxItems`) and the responsive back-link
  * collapse (`collapseOnMobile` / `collapseFrom`) are LEAVES of it, prop-driven.
  */
-export const Breadcrumbs = Object.assign(BreadcrumbsBase, {
-    Base: BreadcrumbsBase,
-})
+export { BreadcrumbsBase as Breadcrumbs }

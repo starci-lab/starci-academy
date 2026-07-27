@@ -144,6 +144,4 @@ const StepBadgeBase = ({
 }
 
 /** `StepBadge.*` — numbered step-badge namespace. */
-export const StepBadge = Object.assign(StepBadgeBase, {
-    Base: StepBadgeBase,
-})
+export { StepBadgeBase as StepBadge }

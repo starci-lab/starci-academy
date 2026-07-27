@@ -84,7 +84,7 @@ const COLUMN_PARTS: Array<AnatomyNode> = [
         role: "A full-width skill-menu row (variant ghost), repeated once per item. Its leading icon is the caller's own node, sized by ChipButtonList but not badged separately.",
         storyId: "legacy-primitives-buttons-button--variants",
         children: [
-            { name: "Typography", tier: "atom", role: "The skill label (weight medium, truncate).", storyId: "atoms-text-typography-typography-base--plain" },
+            { name: "Typography", tier: "atom", role: "The skill label (weight medium, truncate).", storyId: "atoms-text-typography-typography--plain" },
         ],
     },
 ]
@@ -100,11 +100,11 @@ const DISABLED_PARTS: Array<AnatomyNode> = [
     },
 ]
 
-// skeleton: mirror shape wrap (Button.Base isSkeleton pill ×N, container tự vẽ khi isSkeleton — không dựng Button thật).
-// The skeleton mirror (wrap direction) reaches straight for the atom `Button.Base`
+// skeleton: mirror shape wrap (Button isSkeleton pill ×N, container tự vẽ khi isSkeleton — không dựng Button thật).
+// The skeleton mirror (wrap direction) reaches straight for the atom `Button`
 // isSkeleton leaf instead — a different component from the real-row Button above.
 const SKELETON_PARTS: Array<AnatomyNode> = [
-    { name: "Skeleton", tier: "atom", role: "A shimmer pill repeated N times (atom Button.Base isSkeleton), mirroring the suggestion-chip shape.", state: "skeleton", storyId: "atoms-buttons-button-button-base--skeleton" },
+    { name: "Skeleton", tier: "atom", role: "A shimmer pill repeated N times (atom Button isSkeleton), mirroring the suggestion-chip shape.", state: "skeleton", storyId: "atoms-buttons-button-button--skeleton" },
 ]
 
 // single: cùng composition với wrap+icon, chỉ 1 item — container không ép tối thiểu N chip.

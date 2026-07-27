@@ -4,8 +4,8 @@ import { Tabs as HeroTabs, cn } from "@heroui/react"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Tabs.Extended`: full port of `@/components/blocks/navigation/ExtendedTabs`,
- * gộp vào namespace `Tabs.*` bên cạnh `Tabs.Base` (2026-07-26, thầy chốt: hai
+ * ATOM — `TabsExtended`: full port of `@/components/blocks/navigation/ExtendedTabs`,
+ * gộp vào namespace `Tabs.*` bên cạnh `Tabs` (2026-07-26, thầy chốt: hai
  * component cùng bọc HeroUI `Tabs` phải sống chung một namespace).
  *
  * The `.extended-tabs` hug-content override lives in the app globals.css (kept in
@@ -14,9 +14,9 @@ import { Tabs as HeroTabs, cn } from "@heroui/react"
  *
  * ✅ `children` Ở ĐÂY LÀ NGOẠI LỆ §12b CÓ TÊN — atom-WRAPPER (thẩm tra lại 2026-07-26).
  *
- *   Bản ghi trước gọi đây là "VI PHẠM §12b thật", lý lẽ: *`Tabs.Base` đã chứng minh
+ *   Bản ghi trước gọi đây là "VI PHẠM §12b thật", lý lẽ: *`Tabs` đã chứng minh
  *   cùng bài toán chọn-1-trong-N đi được bằng `items`*. Lý lẽ đó **SAI**, vì nó chỉ
- *   nhìn `Tabs.Base` mà không nhìn consumer. Đọc `Toolbar` (layout, consumer thật)
+ *   nhìn `Tabs` mà không nhìn consumer. Đọc `Toolbar` (layout, consumer thật)
  *   thì mỗi `Tabs.Tab` nó dựng mang ba thứ mà `TabItem` KHÔNG chở nổi:
  *     • class theo `accent` / `muted` — hình của Toolbar, không phải của atom;
  *     • ẩn nhãn trên mobile khi có icon (`sr-only @app-sm:not-sr-only`) — hành vi
@@ -26,9 +26,9 @@ import { Tabs as HeroTabs, cn } from "@heroui/react"
  *   Ép sang `items` nghĩa là nhồi ba trục ấy vào atom, tức atom gánh ngữ nghĩa của
  *   caller — vi phạm §12b theo CHIỀU NGƯỢC LẠI, nặng hơn. Nên hai member cùng bọc
  *   HeroUI `Tabs` mà khác đường vào là ĐÚNG, không phải nợ:
- *     • `Tabs.Base`     — DỮ LIỆU (`items`), atom tự dựng, dùng khi tab là nội dung thuần.
- *     • `Tabs.Extended` — WRAPPER, caller dựng cây `Tabs.*` khi cần chrome riêng.
- *   Cùng nhóm ngoại lệ với `Tooltip.Base` (bọc trigger bất kỳ) / `Badge.Base`.
+ *     • `Tabs`     — DỮ LIỆU (`items`), atom tự dựng, dùng khi tab là nội dung thuần.
+ *     • `TabsExtended` — WRAPPER, caller dựng cây `Tabs.*` khi cần chrome riêng.
+ *   Cùng nhóm ngoại lệ với `Tooltip` (bọc trigger bất kỳ) / `Badge`.
  *
  * ⚠️ Nợ THẬT còn lại (khác cái trên): hình của `variant="secondary"` dựa vào class
  * GLOBAL `.extended-tabs` nằm ở `src/app/globals.css`, KHÔNG ở bản vẽ — sửa hình
@@ -49,14 +49,14 @@ export interface TabsExtendedProps {
      * ✅ NGOẠI LỆ §12b có tên (atom-WRAPPER) — KHÔNG phải nợ. Caller dựng cây `Tabs.*`
      * vì mỗi tab có thể mang chrome riêng của nó (class theo accent/muted, ẩn nhãn
      * responsive) mà một `TabItem` dữ liệu không chở nổi. Cần tab thuần nội dung thì
-     * dùng `Tabs.Base` (`items`). Xem header file để đọc bằng chứng.
+     * dùng `Tabs` (`items`). Xem header file để đọc bằng chứng.
      */
     children: ReactNode
     /**
      * HeroUI `Tabs` variant. `"secondary"` (default) = in-page CONTENT tabs —
      * hugs its own label width (packs left, `.extended-tabs` override), no
      * outer baseline (the feature wrapper owns any full-width chrome; see
-     * `Toolbar.Base` §1). `"primary"` = page-FEATURE tabs that switch the ENTIRE
+     * `Toolbar` §1). `"primary"` = page-FEATURE tabs that switch the ENTIRE
      * panel content — HeroUI's own default rendering (segmented pill,
      * full-width, evenly-stretched tabs), untouched by the `.extended-tabs`
      * hug-content override. Use `"primary"` for top-level section switches

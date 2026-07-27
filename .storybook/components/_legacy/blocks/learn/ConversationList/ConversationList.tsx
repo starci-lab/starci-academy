@@ -1,5 +1,4 @@
 "use client"
-
 import React from "react"
 import {
     Dropdown,
@@ -14,19 +13,18 @@ import {
 } from "@heroui/react"
 import { ArchiveIcon, DotsThreeVerticalIcon, PencilSimpleIcon, TrashIcon } from "@phosphor-icons/react"
 import { AsyncContent } from "@sb-components/composites/async/AsyncContent/AsyncContent"
-import { SurfaceCard, type SurfaceCardListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCardList, type SurfaceCardListItem } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { TitledText } from "@sb-components/composites/text/TitledText/TitledText"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — faithful port of the conversation-picker REGION
  * rendered by `@/components/features/learn/ContentAiChat/index.tsx:1044-1197`
  * (the "chọn/quản lý phiên trò chuyện" list inside the AI-chat drawer). A BLOCK
- * = a real bounded region driven by `AsyncContent.Base` (error → loading → empty →
- * content), not a lone row. Composes `SurfaceCard.List` (rows = `items` data) +
+ * = a real bounded region driven by `AsyncContent` (error → loading → empty →
+ * content), not a lone row. Composes `SurfaceCardList` (rows = `items` data) +
  * `TitledText` + the `Button` primitive + raw HeroUI `Dropdown` — NOT a
  * hand-rolled one-off. Authored in Storybook (not `src`); synced back later.
  * NO `@/components` imports.
@@ -50,7 +48,6 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * limitation.
  * ─────────────────────────────────────────────────────────────────────────────
  */
-
 /** One conversation session the list renders. `subtitle` arrives PRE-RESOLVED
  * by the caller (source picks it from 4 branches: search snippet / lesson
  * title · turns / "Cả khoá" · turns / just turns — see index.tsx:1123-1129). */
@@ -64,7 +61,6 @@ export interface ConversationListItem {
     /** Whether this is the currently-open session (source :1078 accent tint). */
     isActive: boolean
 }
-
 /** Props for the {@link ConversationList} block. */
 export interface ConversationListProps {
     /** The sessions to render (already fetched/filtered by the caller). */
@@ -103,13 +99,11 @@ export interface ConversationListProps {
     /** Extra classes on the block wrapper. */
     className?: string
 }
-
 /** How many skeleton rows the loading state mirrors (matches source :1049 `[0, 1, 2]`). */
 const SKELETON_ROW_COUNT = 3
-
 /**
  * One skeleton row BODY: title bar (2/3) + subtitle bar (1/2) + a size-8 ⋯-button
- * mirror. Goes into a `SurfaceCard.List` row via `item.content` (the frame owns the
+ * mirror. Goes into a `SurfaceCardList` row via `item.content` (the frame owns the
  * row padding + separator).
  */
 const ConversationSkeletonRow = ({ showAnatomy }: { showAnatomy?: boolean }) => (
@@ -122,10 +116,9 @@ const ConversationSkeletonRow = ({ showAnatomy }: { showAnatomy?: boolean }) => 
         <HeroSkeleton className="size-8 shrink-0 rounded-xl" data-anat-part={showAnatomy ? "Skeleton" : undefined} />
     </div>
 )
-
 /**
  * ConversationList — the conversation-picker REGION: a bounded, self-scrolling
- * list of chat sessions driven by `AsyncContent.Base` (error → loading → empty →
+ * list of chat sessions driven by `AsyncContent` (error → loading → empty →
  * content), each row switchable to an inline rename `<input>`, with a ⋯ menu
  * for Đổi tên / Lưu trữ / Xoá.
  *
@@ -151,7 +144,7 @@ export const ConversationList = ({
 }: ConversationListProps) => {
     const skeleton = (
         // Codemod 2026-07-26: `bordered` → `variant="nested"` (API 3-trục SurfaceCard).
-        <SurfaceCard.List
+        <SurfaceCardList
             variant="nested"
             anatPart={showAnatomy ? "SurfaceListCard" : undefined}
             items={Array.from({ length: SKELETON_ROW_COUNT }).map((_, index) => ({
@@ -160,7 +153,6 @@ export const ConversationList = ({
             }))}
         />
     )
-
     // Rows = DATA (`items`), never children (khung API law). Each row body is
     // free-form (rename input ⇄ title button + ⋯ menu), so it rides `item.content`.
     const rowItems: Array<SurfaceCardListItem> = items.map((item) => {
@@ -279,7 +271,6 @@ export const ConversationList = ({
             ),
         }
     })
-
     // IMPROVEMENT over source (see file header): a skeleton row instead of a bare
     // "đang tải" line — same footprint, no layout jump.
     if (isPaginating) {
@@ -288,7 +279,6 @@ export const ConversationList = ({
             content: <ConversationSkeletonRow showAnatomy={showAnatomy} />,
         })
     }
-
     return (
         <div className={cn("relative", className)} data-anat={showAnatomy ? "" : undefined}>
             {showAnatomy ? (
@@ -300,7 +290,7 @@ export const ConversationList = ({
                 className="-mx-1 max-h-[55vh] min-h-0 min-w-0 flex-1 overflow-y-auto px-1"
                 data-anat-part={showAnatomy ? "ScrollShadow" : undefined}
             >
-                <AsyncContent.Base
+                <AsyncContent
                     isLoading={isLoading}
                     skeleton={skeleton}
                     isEmpty={isEmpty}
@@ -310,12 +300,12 @@ export const ConversationList = ({
                     showAnatomy={showAnatomy}
                 >
                     {/* Codemod 2026-07-26: `bordered` → `variant="nested"` (API 3-trục SurfaceCard). */}
-                    <SurfaceCard.List
+                    <SurfaceCardList
                         variant="nested"
                         anatPart={showAnatomy ? "SurfaceListCard" : undefined}
                         items={rowItems}
                     />
-                </AsyncContent.Base>
+                </AsyncContent>
             </ScrollShadow>
         </div>
     )

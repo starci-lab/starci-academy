@@ -4,7 +4,7 @@ import type { AvatarSize, IconComponent } from "./AvatarBase"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Avatar.Group`: cụm avatar chồng mép ("who follows"): hàng avatar viền
+ * ATOM — `AvatarGroup`: cụm avatar chồng mép ("who follows"): hàng avatar viền
  * `ring` + chip "+N" đếm phần dư. Khung `blocks/identity/AvatarGroup` xoá
  * 2026-07-25 (§13c — chỉ là atom mặc áo), năng lực chuyển XUỐNG đây thành MEMBER
  * của atom.
@@ -12,7 +12,7 @@ import type { AvatarSize, IconComponent } from "./AvatarBase"
  * ⭐ COMPONENT DUY NHẤT trong họ Avatar CÓ DEPS: nó `import { AvatarBase }` ở trên
  * (tách file 2026-07-26 để quan hệ này là `import` THẬT, cây deps đọc ra được).
  *
- *   • §12b — `items` DỮ LIỆU, cấm `children`; atom tự dựng từng `Avatar.Base`.
+ *   • §12b — `items` DỮ LIỆU, cấm `children`; atom tự dựng từng `Avatar`.
  *   • §12d — `size` đặt ở CẤP CỤM (hàng avatar luôn đồng cỡ), item không mang size.
  *   • §12c — `isSkeleton` truyền xuống, mỗi item tự mirror → giữ nguyên footprint.
  * ─────────────────────────────────────────────────────────────────────────── */
@@ -75,8 +75,8 @@ export const AvatarGroup = ({
         <div className={cn("flex -space-x-2", className)}>
             {visible.map((item) => (
                 // One badge per MEMBER (§11a): the row names each avatar as ONE opaque
-                // part instead of drilling into Avatar.Base's own Image/Fallback parts.
-                <span key={item.key} className="inline-flex" data-anat-part={showAnatomy ? "Avatar.Base" : undefined}>
+                // part instead of drilling into Avatar's own Image/Fallback parts.
+                <span key={item.key} className="inline-flex" data-anat-part={showAnatomy ? "Avatar" : undefined}>
                     <AvatarBase
                         src={item.src}
                         seed={item.seed}
@@ -98,8 +98,8 @@ export const AvatarGroup = ({
                     />
                 ) : (
                     // "+N" is a COUNT, not a person — rendered here rather than through
-                    // Avatar.Base, whose initials fallback would clip "+12" to "+1".
-                    <HeroAvatar size={size} className={GROUP_RING} data-anat-part={showAnatomy ? "Avatar" : undefined}>
+                    // Avatar, whose initials fallback would clip "+12" to "+1".
+                    <HeroAvatar size={size} className={GROUP_RING} data-anat-part={showAnatomy ? "HeroAvatar" : undefined}>
                         <HeroAvatarFallback>+{extra}</HeroAvatarFallback>
                     </HeroAvatar>
                 )

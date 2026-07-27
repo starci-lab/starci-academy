@@ -100,7 +100,7 @@ const ITEM_OAUTH_CONTENT: SearchCourseContentItem = {
 
 // DATA leaf — the composed list, mirroring the real DOM nesting:
 //   LabeledCard (frameless section — its `label` Label is text nội tại, no node)
-//     └─ AsyncContent.Base   (content branch)
+//     └─ AsyncContent   (content branch)
 //          └─ SurfaceListCard (bordered frame)
 //               └─ EntityResultRow × N
 // Shared by every "has results" leaf (single · mixed · locked · excluded · limited).
@@ -111,7 +111,7 @@ const DATA_PARTS: Array<AnatomyNode> = [
         role: "nhãn section ngoài khung (frameless — nội dung tự là card; nhãn Label là text nội tại, không tách node)",
         children: [
             {
-                name: "AsyncContent.Base",
+                name: "AsyncContent",
                 tier: "composite",
                 role: "switch error → loading → empty → content (empty/error tự-ẩn ở tầng trên)",
                 state: "content",
@@ -130,10 +130,10 @@ const DATA_PARTS: Array<AnatomyNode> = [
     },
 ]
 
-// LOADING leaf — chrome stays, AsyncContent.Base switches to its loading branch: the same
+// LOADING leaf — chrome stays, AsyncContent switches to its loading branch: the same
 // bordered frame, but each row is a SurfaceListCardItem wrapping a 3-line Skeleton mirror.
 //   LabeledCard
-//     └─ AsyncContent.Base   (loading branch)
+//     └─ AsyncContent   (loading branch)
 //          └─ SurfaceListCard
 //               └─ SurfaceListCardItem × N
 //                    └─ Skeleton (3 lines)
@@ -144,7 +144,7 @@ const LOADING_PARTS: Array<AnatomyNode> = [
         role: "nhãn section (vẫn hiện — text nội tại, không tách node)",
         children: [
             {
-                name: "AsyncContent.Base",
+                name: "AsyncContent",
                 tier: "composite",
                 role: "nhánh loading → skeleton",
                 state: "loading",

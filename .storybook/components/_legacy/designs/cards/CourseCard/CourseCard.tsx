@@ -14,11 +14,10 @@ import {
     cn,
     Skeleton as HeroSkeleton,
 } from "@heroui/react"
-import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCardCrossList } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
-import { PriceTag } from "@sb-components/blocks/commerce/PriceTag/PriceTag"
+import { PriceTagInline } from "@sb-components/blocks/commerce/PriceTag/PriceTag"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported faithfully from
  * `@/components/blocks/cards/CourseCard`. Composed from a HeroUI `Card` frame +
@@ -27,9 +26,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * router, env, path builder) are replaced by local stubs so the block renders in
  * isolation. Synced to `src` later.
  */
-
 // ── inlined `@/` runtime stubs (restored to the real deps on sync to `src`) ──
-
 /** Inlined VI copy (mirrors the used keys in `src/messages/vi.json`). */
 const T = {
     continueLearning: "Tiếp tục học",
@@ -37,24 +34,19 @@ const T = {
     learners: (count: number) => `${count} học viên`,
     priceUsdHint: (amount: string) => `≈ ${amount} khi thanh toán quốc tế`,
 }
-
 /** In storybook the catalog price transform is a no-op (`testDivisor === 1`). */
 const PRICING_DIVISOR = 1
-
 // ── local mirror of the `CourseEntity` fields this card reads ──
-
 /** A single value-proposition bullet. */
 export interface CourseCardValueProp {
     text: string
 }
-
 /** A pricing-phase row (active phase drives the current price). */
 export interface CourseCardPricingPhase {
     phase: string
     price: number | null
     priceUsd: number | null
 }
-
 /** The catalog-item slice of `CourseEntity` this card renders. */
 export interface CourseCardCourse {
     displayId: string
@@ -69,7 +61,6 @@ export interface CourseCardCourse {
     enrollmentCount: number
     isEnrolled?: boolean | null
 }
-
 /** Props for {@link CourseCard}. */
 export interface CourseCardProps {
     /** The course summarised by this card (list-item data). */
@@ -112,7 +103,6 @@ export interface CourseCardProps {
      */
     showAnatomy?: boolean
 }
-
 /**
  * Featured course card (catalog block): cover (with branded fallback), title,
  * outcome, social proof + top value propositions, and a price block (active-phase
@@ -133,12 +123,10 @@ export const CourseCard = ({
     showAnatomy = false,
 }: CourseCardProps) => {
     const [coverFailed, setCoverFailed] = useState(false)
-
     // display transform for ENTITY-derived (fallback) VND prices — no-op in
     // storybook (divisor === 1). The loyalty price is ALREADY transformed.
     const toVnd = (amount: number): number =>
         PRICING_DIVISOR === 1 ? amount : Math.max(1, Math.round(amount / PRICING_DIVISOR))
-
     /** Active-phase price (falls back to the list/regular price when no phase row). */
     const currentPrice = useMemo(
         () => course.pricingPhases?.find(
@@ -146,7 +134,6 @@ export const CourseCard = ({
         )?.price ?? course.originalPrice ?? null,
         [course.pricingPhases, course.currentPhase, course.originalPrice],
     )
-
     /** USD price of the active phase, falling back to the list USD price. */
     const actualPriceUsd = useMemo(
         () => course.pricingPhases?.find(
@@ -154,7 +141,6 @@ export const CourseCard = ({
         )?.priceUsd ?? course.originalPriceUsd ?? null,
         [course.pricingPhases, course.currentPhase, course.originalPriceUsd],
     )
-
     /** Formatted USD price for display, or `null` to hide the USD line. */
     const formattedPriceUsd = useMemo(
         () => actualPriceUsd != null
@@ -163,13 +149,11 @@ export const CourseCard = ({
             : null,
         [actualPriceUsd],
     )
-
     /** Top three value propositions shown as a quick "what you'll learn" list. */
     const topValueProps = useMemo(
         () => (course.valuePropositions ?? []).slice(0, 3),
         [course.valuePropositions],
     )
-
     // enrolled → route straight into the learning experience (the viewer already
     // owns this course). storybook navigation is a no-op.
     const isEnrolled = course.isEnrolled === true
@@ -193,9 +177,7 @@ export const CourseCard = ({
             {T.viewCourse}
         </Button>
     ) : action
-
     const showCover = Boolean(course.coverImageUrl) && !coverFailed
-
     // price block: prefer the viewer's loyalty price when supplied, else the active-phase price.
     const useLoyalty = loyaltyPriceVnd != null
     const displayPrice = useLoyalty
@@ -204,7 +186,6 @@ export const CourseCard = ({
     const displayOriginal = useLoyalty
         ? loyaltyOriginalVnd ?? null
         : (course.originalPrice != null ? toVnd(course.originalPrice) : null)
-
     // loading MIRROR — self-render the skeleton for the current layout (§6: skeleton is
     // a PROP, not a separate component). Each mirror KEEPS the real box/radius/padding
     // (same Card frame, same Card.Content/Footer, same CrossListCard bordered surface)
@@ -243,7 +224,6 @@ export const CourseCard = ({
                 </Card>
             )
         }
-
         // GRID mirror: cover 16:9 · title+meta · 2 description lines · the bordered
         // value-props list (CrossListCard self-skeletons its rows) · price · 2-button row.
         return (
@@ -263,9 +243,9 @@ export const CourseCard = ({
                         {/* description (line-clamp-2) */}
                         <Typography size="sm" isSkeleton className="w-full" anatPart={showAnatomy ? "Skeleton.Description" : undefined} />
                         <Typography size="sm" isSkeleton className="w-3/4" anatPart={showAnatomy ? "Skeleton.Description" : undefined} />
-                        {/* value-props — same nested-variant SurfaceCard.CrossList surface, self-skeletoned.
+                        {/* value-props — same nested-variant SurfaceCardCrossList surface, self-skeletoned.
                             Codemod 2026-07-26: `bordered` → `variant="nested"` (API 3-trục SurfaceCard). */}
-                        <SurfaceCard.CrossList items={[]} variant="nested" isSkeleton className="mt-1" anatPart={showAnatomy ? "CrossListCard" : undefined} />
+                        <SurfaceCardCrossList items={[]} variant="nested" isSkeleton className="mt-1" anatPart={showAnatomy ? "CrossListCard" : undefined} />
                     </div>
                 </Card.Content>
                 <Card.Footer className="mt-auto flex flex-col items-start gap-2" data-anat-part={showAnatomy ? "Card.Footer" : undefined}>
@@ -280,7 +260,6 @@ export const CourseCard = ({
             </Card>
         )
     }
-
     // compact LINE row (catalog list view): thumbnail + title/description, with the
     // price + view CTA on the right — one course per row for fast scanning.
     if (layout === "line") {
@@ -346,7 +325,7 @@ export const CourseCard = ({
                         {loyaltyPending ? (
                             <Typography size="sm" isSkeleton className="w-1/2" anatPart={showAnatomy ? "Skeleton" : undefined} />
                         ) : displayPrice != null ? (
-                            <PriceTag.Inline
+                            <PriceTagInline
                                 discounted={displayPrice}
                                 original={displayOriginal}
                                 anatPart={showAnatomy ? "PriceTag" : undefined}
@@ -370,7 +349,6 @@ export const CourseCard = ({
             </Card>
         )
     }
-
     return (
         <Card className={cn("flex flex-col overflow-hidden rounded-3xl", className)} data-anat-part={showAnatomy ? "Card" : undefined}>
             <Card.Content className="flex flex-col gap-3" data-anat-part={showAnatomy ? "Card.Content" : undefined}>
@@ -399,7 +377,6 @@ export const CourseCard = ({
                         </div>
                     )}
                 </div>
-
                 <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between gap-2">
                         <HeroTypography
@@ -432,12 +409,12 @@ export const CourseCard = ({
                         {course.description}
                     </HeroTypography>
                     {topValueProps.length > 0 ? (
-                        // value-props checklist = the SurfaceCard.CrossList frame (variant="nested",
+                        // value-props checklist = the SurfaceCardCrossList frame (variant="nested",
                         // mark="check", tone="muted"). NOT a hand-rolled list. Muted tick → the TEXT
                         // leads, card keeps only price-deal + CTA as the nổi points (principles.md §2).
                         // variant="nested" = surface-in-surface. Codemod 2026-07-26: `bordered` →
                         // `variant="nested"` (API 3-trục SurfaceCard).
-                        <SurfaceCard.CrossList
+                        <SurfaceCardCrossList
                             variant="nested"
                             className="mt-1"
                             anatPart={showAnatomy ? "CrossListCard" : undefined}
@@ -461,7 +438,7 @@ export const CourseCard = ({
                     {loyaltyPending ? (
                         <Typography size="sm" isSkeleton className="w-1/2" anatPart={showAnatomy ? "Skeleton.Price" : undefined} />
                     ) : displayPrice != null ? (
-                        <PriceTag.Inline
+                        <PriceTagInline
                             discounted={displayPrice}
                             original={displayOriginal}
                             anatPart={showAnatomy ? "PriceTag" : undefined}

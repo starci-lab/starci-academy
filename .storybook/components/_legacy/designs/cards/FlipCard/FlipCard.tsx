@@ -126,21 +126,21 @@ export const FlipCard = ({
         return (
             <div className={cn("flex flex-col gap-6", className)}>
                 <div className="flex flex-col gap-3">
-                    {/* Codemod 2026-07-26: `bordered` → `variant="nested"` (API 3-trục SurfaceCard.Base). */}
+                    {/* Codemod 2026-07-26: `bordered` → `variant="nested"` (API 3-trục SurfaceCard). */}
                     <div data-anat-part={showAnatomy ? "SurfaceCard.Question" : undefined}>
-                        <SurfaceCard.Base label={questionLabel} variant="nested" contentClassName="flex flex-col gap-3">
+                        <SurfaceCard label={questionLabel} variant="nested" contentClassName="flex flex-col gap-3">
                             <ProseSkeleton lines={2} />
-                        </SurfaceCard.Base>
+                        </SurfaceCard>
                     </div>
                     <div data-anat-part={showAnatomy ? "BelowFront" : undefined} className="flex flex-wrap items-center gap-2">
-                        <Chip.Base isSkeleton />
+                        <Chip isSkeleton />
                         <Typography size="xs" isSkeleton className="w-1/3" />
                     </div>
                 </div>
                 <div data-anat-part={showAnatomy ? "SurfaceCard.Answer" : undefined}>
-                    <SurfaceCard.Base label={answerLabel} variant="nested">
+                    <SurfaceCard label={answerLabel} variant="nested">
                         <ProseSkeleton lines={3} />
-                    </SurfaceCard.Base>
+                    </SurfaceCard>
                 </div>
             </div>
         )
@@ -151,8 +151,8 @@ export const FlipCard = ({
     const answerContent = locked ? (
         <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center">
             <LockIcon aria-hidden focusable="false" className={LOCK_ICON_CLS} />
-            <Typography.Base size="sm" weight="medium" text={lockedTitle ?? "Thẻ này thuộc gói Premium"} />
-            <Typography.Base size="xs" color="muted" text={lockedSubtitle ?? "Mở khoá khoá học để xem đáp án đầy đủ."} />
+            <Typography size="sm" weight="medium" text={lockedTitle ?? "Thẻ này thuộc gói Premium"} />
+            <Typography size="xs" color="muted" text={lockedSubtitle ?? "Mở khoá khoá học để xem đáp án đầy đủ."} />
         </div>
     ) : (
         back
@@ -163,11 +163,11 @@ export const FlipCard = ({
             {/* question card + its `belowFront` chips grouped `gap-3` — the chips
                 stay under the QUESTION when the answer reveals below. */}
             <div className="flex flex-col gap-3">
-                {/* Codemod 2026-07-26: `bordered` → `variant="nested"` (API 3-trục SurfaceCard.Base). */}
+                {/* Codemod 2026-07-26: `bordered` → `variant="nested"` (API 3-trục SurfaceCard). */}
                 <div data-anat-part={showAnatomy ? "SurfaceCard.Question" : undefined}>
-                    <SurfaceCard.Base label={questionLabel} variant="nested" contentClassName="flex flex-col gap-3">
+                    <SurfaceCard label={questionLabel} variant="nested" contentClassName="flex flex-col gap-3">
                         {front}
-                    </SurfaceCard.Base>
+                    </SurfaceCard>
                 </div>
                 {belowFront ? (
                     <div data-anat-part={showAnatomy ? "BelowFront" : undefined}>{belowFront}</div>
@@ -186,13 +186,13 @@ export const FlipCard = ({
                         onAnimationComplete={() => setAnimating(false)}
                         className={cn(animating && "overflow-hidden")}
                     >
-                        {/* Codemod 2026-07-26: `bordered` → `variant="nested"` (API 3-trục SurfaceCard.Base). */}
+                        {/* Codemod 2026-07-26: `bordered` → `variant="nested"` (API 3-trục SurfaceCard). */}
                         <div data-anat-part={showAnatomy ? "SurfaceCard.Answer" : undefined}>
-                            <SurfaceCard.Base label={answerLabel} variant="nested">
+                            <SurfaceCard label={answerLabel} variant="nested">
                                 <ScrollShadow hideScrollBar className="flex max-h-[28rem] flex-col gap-3 overflow-y-auto text-left">
                                     {answerContent}
                                 </ScrollShadow>
-                            </SurfaceCard.Base>
+                            </SurfaceCard>
                         </div>
                     </motion.div>
                 ) : null}

@@ -41,7 +41,7 @@ export const BrandLockup = ({ className, showAnatomy = false }: BrandLockupProps
     return (
         <span className={cn("inline-flex items-center gap-0", className)}>
             <span data-anat-part={showAnatomy ? "Logo" : undefined}>
-                <Logo.Base className="h-10 w-auto" />
+                <Logo className="h-10 w-auto" />
             </span>
             <span className="hidden flex-col gap-0 @app-md:flex" data-anat-part={showAnatomy ? "Wordmark" : undefined}>
                 <div className="text-sm font-semibold leading-none text-foreground">

@@ -1,5 +1,5 @@
 import { SlidersHorizontalIcon } from "@phosphor-icons/react"
-import { Input } from "@sb-components/atoms/forms/Input/Input"
+import { InputText } from "@sb-components/atoms/forms/Input/Input"
 import React, { useMemo } from "react"
 import {
     Autocomplete,
@@ -63,7 +63,7 @@ export const SearchBar = ({ className, isSkeleton = false, showAnatomy = false }
     if (isSkeleton) {
         return (
             <div className={cn("w-full", className)}>
-                <Input.Text isSkeleton className="h-10" showAnatomy={showAnatomy} />
+                <InputText isSkeleton className="h-10" showAnatomy={showAnatomy} />
             </div>
         )
     }

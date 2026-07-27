@@ -1,8 +1,7 @@
 import React from "react"
 import { CheckCircleIcon, CircleIcon, LockIcon, PlayIcon } from "@phosphor-icons/react"
-import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCardList } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { DifficultyChip, type Difficulty } from "@sb-components/_legacy/designs/chips/DifficultyChip/DifficultyChip"
-
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — `KeepGoingPath`, block ĐƯỜNG HỌC TIẾP.
@@ -13,8 +12,8 @@ import { DifficultyChip, type Difficulty } from "@sb-components/_legacy/designs/
  *
  * ⚠️ ĐỒNG NHẤT RENDER (thầy soi mắt 2026-07-25): **không chế thêm khái niệm render.**
  * Cụm này và `LearnNudges` ngay trên nó TRÔNG GIỐNG HỆT (danh sách hàng trong khung
- * viền) nên phải đi CÙNG một layout: `SurfaceCard.List`. Bản đầu tiên của
- * block này tự vẽ `div.rounded-2xl.border` rồi nhét `List.Row` vào — hai đường render
+ * viền) nên phải đi CÙNG một layout: `SurfaceCardList`. Bản đầu tiên của
+ * block này tự vẽ `div.rounded-2xl.border` rồi nhét `ListRow` vào — hai đường render
  * cho một hình, đúng thứ drift phải dẹp. Tiêu đề cũng đi `label` của SurfaceCard
  * (render NGOÀI/trên surface) chứ không phải một `Typography` rời.
  *
@@ -22,10 +21,8 @@ import { DifficultyChip, type Difficulty } from "@sb-components/_legacy/designs/
  * CALLER CHỈ ĐƯA DỮ LIỆU: `heading` + mảng `lessons`. Không node, không class.
  * ─────────────────────────────────────────────────────────────────────────────
  */
-
 /** Trạng thái học của một bài trong đường học. */
 export type KeepGoingLessonState = "done" | "active" | "todo"
-
 /** Một bài trong đường học — DỮ LIỆU thuần, block tự dựng hình. */
 export interface KeepGoingLesson {
     /** Stable React key. */
@@ -43,7 +40,6 @@ export interface KeepGoingLesson {
     /** Bấm vào hàng. */
     onPress?: () => void
 }
-
 /**
  * Icon dẫn đầu theo trạng thái — block sở hữu bảng này, caller không tự chọn.
  * Đi đường `leading` (node) chứ không `leadingIcon`, vì mỗi trạng thái mang MỘT
@@ -54,7 +50,6 @@ const LESSON_LEADING: Record<KeepGoingLessonState, { Icon: typeof PlayIcon, clas
     done: { Icon: CheckCircleIcon, className: "size-5 text-success-soft-foreground" },
     todo: { Icon: CircleIcon, className: "size-5 text-foreground" },
 }
-
 /** Props for {@link KeepGoingPath}. */
 export interface KeepGoingPathProps {
     /** Dòng dẫn trên khung (ví dụ "Tiếp tục · Chương 2 · Container hoá"). */
@@ -75,7 +70,6 @@ export interface KeepGoingPathProps {
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
 }
-
 /**
  * Đường học tiếp — tiêu đề chương + danh sách bài, cùng layout với `LearnNudges`.
  *
@@ -90,8 +84,8 @@ export const KeepGoingPath = ({
 }: KeepGoingPathProps) => (
     // Codemod 2026-07-26: `bordered={bordered}` → `variant={bordered ? "nested" : "surface"}`
     // (API 3-trục SurfaceCard). Prop `bordered` của CHÍNH KeepGoingPath vẫn giữ tên cũ — chỉ
-    // đổi cách nó rót vào SurfaceCard.List.
-    <SurfaceCard.List
+    // đổi cách nó rót vào SurfaceCardList.
+    <SurfaceCardList
         variant={bordered ? "nested" : "surface"}
         label={heading}
         anatPart={anatPart}

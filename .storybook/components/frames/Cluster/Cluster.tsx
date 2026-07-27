@@ -6,15 +6,15 @@ import { ALIGN_CLASS, GAP_CLASS, JUSTIFY_CLASS, type LayoutAlign, type LayoutJus
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * LAYOUT (khung) — `Cluster.*`: the WRAPPING row of same-kind small things
- * (chips, tags, filter pills, a bar of buttons). One member, `Cluster.Base`.
+ * (chips, tags, filter pills, a bar of buttons). One member, `Cluster`.
  *
  * KHUNG API LAW (§13b) — this is a REPEATING LIST, so the API is `items` DATA
  * and `children` is FORBIDDEN. The test from §13b: "is the content N elements of
  * the SAME kind repeating?" — a chip row answers yes, so it takes data, exactly
- * like `Button.Group items` (§12b). Children would let a caller smuggle a
+ * like `ButtonGroup items` (§12b). Children would let a caller smuggle a
  * one-off node into a row whose entire premise is uniformity.
  *
- * Cluster vs `Stack.H`: `Stack.H` wraps ARBITRARY children on a row (a heading
+ * Cluster vs `StackH`: `StackH` wraps ARBITRARY children on a row (a heading
  * next to a badge next to a button); `Cluster` repeats ONE kind and always wraps.
  * The two are not interchangeable — pick by the §13b test, not by looks.
  *
@@ -24,15 +24,15 @@ import { ALIGN_CLASS, GAP_CLASS, JUSTIFY_CLASS, type LayoutAlign, type LayoutJus
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** One repeated element of a {@link Cluster.Base}. */
+/** One repeated element of a {@link Cluster}. */
 export interface ClusterItem {
     /** Stable React key. */
     key: string
-    /** The element itself — a `Chip.Base`, a `Button.Base`, a tag. */
+    /** The element itself — a `Chip`, a `Button`, a tag. */
     content: ReactNode
 }
 
-/** Props for {@link Cluster.Base}. */
+/** Props for {@link Cluster}. */
 export interface ClusterBaseProps {
     /**
      * The repeated elements, in reading order. REQUIRED — repeat list = DATA,
@@ -69,7 +69,7 @@ export interface ClusterBaseProps {
      * ⭐ 2026-07-27: without this prop the parent can't name the khung, so the khung
      * doesn't make it into the Deps tree — use a `layouts`-tier khung and have the panel
      * still not see it, and it counts as unused. Same gap already patched on
-     * `Page.Header`/`Divider.Base`/`Choice.Switch`.
+     * `PageHeader`/`Divider`/`ChoiceSwitch`.
      */
     anatPart?: string
     className?: string
@@ -124,6 +124,4 @@ const ClusterBase = ({
  * `Cluster.*` — the wrapping same-kind row khung namespace. Namespace only — no
  * bare component export (§13a).
  */
-export const Cluster = {
-    Base: ClusterBase,
-}
+export { ClusterBase as Cluster }

@@ -100,7 +100,7 @@ export const MediaCard = ({
                     <Typography size="base" isSkeleton className="w-2/3" anatPart={showAnatomy ? "Skeleton" : undefined} />
                     {/* Meta row mirror — a signal chip + one muted segment */}
                     <div className="flex items-center gap-2">
-                        <Chip.Base isSkeleton showAnatomy={showAnatomy} />
+                        <Chip isSkeleton showAnatomy={showAnatomy} />
                         <Typography size="xs" isSkeleton className="w-1/3" anatPart={showAnatomy ? "Skeleton" : undefined} />
                     </div>
                     {/* Description (body-sm) — two lines */}
@@ -109,7 +109,7 @@ export const MediaCard = ({
                         <Typography size="sm" isSkeleton className="w-1/2" anatPart={showAnatomy ? "Skeleton" : undefined} />
                     </span>
                     {/* Footer CTA */}
-                    <Button.Base isSkeleton className="w-24" showAnatomy={showAnatomy} />
+                    <Button isSkeleton className="w-24" showAnatomy={showAnatomy} />
                 </CardContent>
             </Card>
         )
@@ -131,11 +131,11 @@ export const MediaCard = ({
                 {coverNode}
             </div>
             <CardContent className="flex flex-col gap-3 p-3">
-                <Typography.Base weight="medium" showAnatomy={showAnatomy} text={title} />
+                <Typography weight="medium" showAnatomy={showAnatomy} text={title} />
                 {meta ? <div data-anat-part={showAnatomy ? "Meta" : undefined}>{meta}</div> : null}
                 {description ? (
                     // line-clamp-2 is a layout/overflow constraint (minimal exception)
-                    <Typography.Base size="sm"
+                    <Typography size="sm"
                         color="muted"
                         lineClamp={2}
                         showAnatomy={showAnatomy}

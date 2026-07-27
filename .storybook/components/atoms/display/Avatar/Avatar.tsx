@@ -9,22 +9,19 @@ import { AvatarGroup } from "./AvatarGroup"
  * Each member has its OWN file (split 2026-07-26, folding in `UserAvatar` — see
  * the header of `AvatarBase.tsx`) so the relationship between them is a REAL,
  * readable `import`:
- *   • `Avatar.Base`  → ./AvatarBase   — the ONE avatar; fallback chain: image →
+ *   • `Avatar`  → ./AvatarBase   — the ONE avatar; fallback chain: image →
  *     generated image (DiceBear) → initials → icon, status-dot, leaf skeleton.
- *   • `Avatar.Group` → ./AvatarGroup  — a ROW of overlapping avatars; **imports
+ *   • `AvatarGroup` → ./AvatarGroup  — a ROW of overlapping avatars; **imports
  *     AvatarBase** ⇒ the only component in the family with deps.
  *
  * ⚠️ `UserAvatar` (block `identity/UserAvatar`) is DELETED (2026-07-26): its
- * DiceBear generation + broken-image handling moved entirely into `Avatar.Base`
+ * DiceBear generation + broken-image handling moved entirely into `Avatar`
  * (default `fallback="generated"`) — no more two atoms doing the same job.
  *
  * External call-sites keep the SAME import path: still `.../Avatar/Avatar`.
  * ─────────────────────────────────────────────────────────────────────────────
  */
-export const Avatar = Object.assign(AvatarBase, {
-    Base: AvatarBase,
-    Group: AvatarGroup,
-})
+export { AvatarBase as Avatar, AvatarGroup }
 
 export type { AvatarBaseProps, AvatarFallback, AvatarColor, AvatarSize, AvatarStatus, IconComponent, IconWeight } from "./AvatarBase"
 export type { AvatarGroupItem, AvatarGroupProps } from "./AvatarGroup"

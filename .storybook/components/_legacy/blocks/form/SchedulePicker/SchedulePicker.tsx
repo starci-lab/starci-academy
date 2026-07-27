@@ -2,7 +2,7 @@ import React from "react"
 import { cn, Label } from "@heroui/react"
 import type { DateValue } from "@internationalized/date"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
-import { Input } from "@sb-components/atoms/forms/Input/Input"
+import { InputDate, InputText } from "@sb-components/atoms/forms/Input/Input"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
@@ -96,14 +96,14 @@ export const SchedulePicker = ({
                 {/* DATE half mirror — label bar + date-field skeleton */}
                 <div className="flex flex-col gap-2" data-anat-part={showAnatomy ? "DatePicker" : undefined}>
                     <Typography size="sm" isSkeleton className="w-1/3" />
-                    <Input.Text isSkeleton />
+                    <InputText isSkeleton />
                 </div>
                 {/* TIME-SLOT half mirror — label bar + field-shaped grid, same 2/3-col layout */}
                 <div className="flex flex-col gap-2" data-anat-part={showAnatomy ? "SlotGrid" : undefined}>
                     <Typography size="sm" isSkeleton className="w-1/3" />
                     <div className="grid grid-cols-2 gap-2 @app-sm:grid-cols-3">
                         {Array.from({ length: 6 }).map((_, index) => (
-                            <Input.Text isSkeleton key={index} />
+                            <InputText isSkeleton key={index} />
                         ))}
                     </div>
                 </div>
@@ -115,7 +115,7 @@ export const SchedulePicker = ({
         <div className={cn("flex flex-col gap-6", className)}>
             {/* DATE half — DatePicker port owns the FieldShell label + DateField/Calendar compound */}
             <div data-anat-part={showAnatomy ? "DatePicker" : undefined}>
-                <Input.Date
+                <InputDate
                     label="Chọn ngày"
                     value={dateValue}
                     onValueChange={onDateChange}

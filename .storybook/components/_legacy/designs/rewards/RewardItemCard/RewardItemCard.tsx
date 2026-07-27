@@ -104,7 +104,7 @@ export const RewardItemCard = (props: RewardItemCardProps) => {
                     />
                 </div>
                 <div className="flex items-center justify-between gap-3">
-                    <Chip.Base isSkeleton showAnatomy={showAnatomy} />
+                    <Chip isSkeleton showAnatomy={showAnatomy} />
                     <Button isSkeleton className="w-20" anatPart={showAnatomy ? "Skeleton" : undefined} />
                 </div>
             </Card>
@@ -116,7 +116,7 @@ export const RewardItemCard = (props: RewardItemCardProps) => {
     return (
         <Card className={cn("flex flex-col gap-3", className)}>
             <div className="flex items-start gap-3">
-                <IconTile.Base size="sm" tone="accent" icon={icon} anatPart={showAnatomy ? "IconTile" : undefined} />
+                <IconTile size="sm" tone="accent" icon={icon} anatPart={showAnatomy ? "IconTile" : undefined} />
                 {/* title (body-sm semibold) + muted description = one TitledText (was 2 raw
                     spans — §9 fix: font now flows through Typography via the primitive) */}
                 <TitledText
@@ -130,7 +130,7 @@ export const RewardItemCard = (props: RewardItemCardProps) => {
             </div>
 
             <div className="flex items-center justify-between gap-3">
-                <Chip.Base tone="accent" anatPart={showAnatomy ? "StatusChip" : undefined} text={formatCost(cost)} />
+                <Chip tone="accent" anatPart={showAnatomy ? "StatusChip" : undefined} text={formatCost(cost)} />
                 <Button
                     variant="primary"
                     size="sm"

@@ -6,7 +6,7 @@ import { Cluster } from "@sb-components/frames/Cluster/Cluster"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * DESIGN — `PhaseScarcityNote.Base`: a phase's REAL scarcity line.
+ * DESIGN — `PhaseScarcityNote`: a phase's REAL scarcity line.
  *
  * Carries WHY (§14d): "N seats left at the {phase} price · price rises to {X}
  * after that" — pushes purchase with REAL facts from the backend, not a made-up
@@ -35,7 +35,7 @@ const PHASE_LABEL: Record<PricingPhase, string> = {
     [PricingPhase.Regular]: "Tiêu chuẩn",
 }
 
-/** Props for {@link PhaseScarcityNote.Base}. */
+/** Props for {@link PhaseScarcityNote}. */
 export interface PhaseScarcityNoteBaseProps {
     /** The course's current pricing phase (shows its label). */
     currentPhase: PricingPhase
@@ -99,7 +99,7 @@ const PhaseScarcityNoteBase = ({
         // What's gained isn't "fewer classes" but that `gap` is now PINNED to
         // the §10 scale BY TYPE: hand-written it's `gap-2` today, `gap-1.5`
         // tomorrow, nothing stops that.
-        <Cluster.Base
+        <Cluster
             gap="related"
             align="center"
             // The `·` between the two clauses is drawn by the FRAME, not written as a text item.
@@ -110,7 +110,7 @@ const PhaseScarcityNoteBase = ({
             // The PARENT's `anatPart` wins (the parent names this node); when
             // running in ITS OWN story it self-identifies as "Cluster" so the
             // Deps tree can see the frame it uses.
-            anatPart={anatPart ?? (showAnatomy ? "Cluster.Base" : undefined)}
+            anatPart={anatPart ?? (showAnatomy ? "Cluster" : undefined)}
             className={cn("text-warning-soft-foreground", className)}
             items={[
                 {
@@ -136,11 +136,11 @@ const PhaseScarcityNoteBase = ({
                 {
                     key: "seats",
                     content: (
-                        <Typography.Base
+                        <Typography
                             size="sm"
                             weight="medium"
                             text={`Còn ${seatsRemaining} suất giá ${PHASE_LABEL[currentPhase]}`}
-                            anatPart={showAnatomy ? "Typography.Base" : undefined}
+                            anatPart={showAnatomy ? "Typography" : undefined}
                         />
                     ),
                 },
@@ -153,10 +153,10 @@ const PhaseScarcityNoteBase = ({
                         {
                             key: "rise",
                             content: (
-                                <Typography.Base
+                                <Typography
                                     size="sm"
                                     text={`giá tăng lên ${nextPhasePriceVnd.toLocaleString("vi-VN")}₫ sau đó`}
-                                    anatPart={showAnatomy ? "Typography.Base" : undefined}
+                                    anatPart={showAnatomy ? "Typography" : undefined}
                                 />
                             ),
                         },
@@ -168,6 +168,4 @@ const PhaseScarcityNoteBase = ({
 }
 
 /** `PhaseScarcityNote.*` — single-component namespace ⇒ only `.Base`. */
-export const PhaseScarcityNote = Object.assign(PhaseScarcityNoteBase, {
-    Base: PhaseScarcityNoteBase,
-})
+export { PhaseScarcityNoteBase as PhaseScarcityNote }

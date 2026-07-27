@@ -30,9 +30,9 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "ComboBox.Popover": { tier: "heroui", role: "suggestion dropdown container" },
     "Skeleton": { tier: "heroui", role: "loading placeholder" },
 }
-const meta: Meta<typeof SearchAutocomplete.Base> = {
+const meta: Meta<typeof SearchAutocomplete> = {
     title: "Atoms/Forms/SearchAutocomplete",
-    component: SearchAutocomplete.Base,
+    component: SearchAutocomplete,
     tags: ["autodocs"],
     parameters: {
         layout: "fullscreen",
@@ -41,7 +41,7 @@ const meta: Meta<typeof SearchAutocomplete.Base> = {
 
 export default meta
 
-type Story = StoryObj<typeof SearchAutocomplete.Base>
+type Story = StoryObj<typeof SearchAutocomplete>
 
 const CATALOG: Array<SearchAutocompleteItem> = [
     { id: "fullstack", label: "Fullstack Mastery", description: "Comprehensive web development course" },
@@ -92,9 +92,9 @@ export const WithSuggestions: Story = {
                             {
                                 name: "items = matching CATALOG rows, isLoading unset",
                                 why: "The Popover's ListBox renders one row per item, each with a label and an optional muted description line beneath it. This is the everyday reading state, reached once the parent has filtered the catalog down to whatever the typed query matches.",
-                                code: "<SearchAutocomplete.Base items={items} inputValue={q} onInputChange={setQ} onSelect={fn} />",
+                                code: "<SearchAutocomplete items={items} inputValue={q} onInputChange={setQ} onSelect={fn} />",
                                 render: (
-                                    <SearchAutocomplete.Base
+                                    <SearchAutocomplete
                                         items={items}
                                         inputValue={inputValue}
                                         onInputChange={setInputValue}
@@ -131,9 +131,9 @@ export const Loading: Story = {
                             {
                                 name: "isLoading = true",
                                 why: "The ListBox's collection is emptied so its renderEmptyState branch fires, swapping in a spinner and a Searching caption in place of the suggestion rows. The InputGroup and Popover shell stay exactly the shape they have in WithSuggestions, since only the dropdown's own content is waiting.",
-                                code: "<SearchAutocomplete.Base isLoading items={[]} inputValue={q} onInputChange={setQ} onSelect={fn} />",
+                                code: "<SearchAutocomplete isLoading items={[]} inputValue={q} onInputChange={setQ} onSelect={fn} />",
                                 render: (
-                                    <SearchAutocomplete.Base
+                                    <SearchAutocomplete
                                         items={CATALOG}
                                         inputValue={inputValue}
                                         onInputChange={setInputValue}
@@ -168,9 +168,9 @@ export const Skeleton: Story = {
                     {
                         name: "isSkeleton = true",
                         why: "The whole ComboBox is replaced by one field-box skeleton bar, and the dropdown never mounts because a popover has no resting shape to mirror. This is what the field shows before the parent has any query result ready to control it with.",
-                        code: "<SearchAutocomplete.Base isSkeleton />",
+                        code: "<SearchAutocomplete isSkeleton />",
                         render: (
-                            <SearchAutocomplete.Base
+                            <SearchAutocomplete
                                 items={[]}
                                 inputValue=""
                                 onInputChange={() => undefined}
@@ -205,9 +205,9 @@ export const NoResults: Story = {
                             {
                                 name: "items = [], isLoading unset",
                                 why: "With an empty item list and no loading flag, the ListBox's empty-state branch falls through to the emptyLabel caption instead of the spinner. The parent lands here once a real fetch finishes and turns up nothing for the typed query.",
-                                code: "<SearchAutocomplete.Base items={[]} inputValue={q} onInputChange={setQ} onSelect={fn} />",
+                                code: "<SearchAutocomplete items={[]} inputValue={q} onInputChange={setQ} onSelect={fn} />",
                                 render: (
-                                    <SearchAutocomplete.Base
+                                    <SearchAutocomplete
                                         items={[]}
                                         inputValue={inputValue}
                                         onInputChange={setInputValue}

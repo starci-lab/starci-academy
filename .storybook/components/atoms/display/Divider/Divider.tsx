@@ -3,12 +3,12 @@ import { Separator as HeroSeparator, cn } from "@heroui/react"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Divider.Base`: the ONE constrained divider atom over HeroUI Separator.
+ * ATOM — `Divider`: the ONE constrained divider atom over HeroUI Separator.
  *
  * A dividing line, distinguished by PROP (leaf = composition):
- *   • horizontal            → `<Divider.Base />` (default)
- *   • vertical              → `<Divider.Base orientation="vertical" />` (needs a parent with height)
- *   • with a centered label → `<Divider.Base label="OR" />` (rule | label | rule)
+ *   • horizontal            → `<Divider />` (default)
+ *   • vertical              → `<Divider orientation="vertical" />` (needs a parent with height)
+ *   • with a centered label → `<Divider label="OR" />` (rule | label | rule)
  *
  * HeroUI has NO `Divider` — the atom wraps `Separator` (renamed for the app's
  * vocabulary). A label is only valid when `orientation="horizontal"` (ignored on
@@ -56,7 +56,7 @@ const DividerBase = ({ orientation = "horizontal", variant = "default", label, s
             <div data-anat-part={anatPart} className={cn("flex w-full items-center gap-3", className)}>
                 <HeroSeparator orientation="horizontal" variant={variant} className="flex-1" data-anat-part={showAnatomy ? "Separator" : undefined} />
                 {/* Caller slot (§ LOAI 3) — `label` is free-form content the caller passed in,
-                    not a part of Divider.Base's own anatomy, so this span stays unbadged. */}
+                    not a part of Divider's own anatomy, so this span stays unbadged. */}
                 <span className="text-muted shrink-0 text-xs">
                     {label}
                 </span>
@@ -68,9 +68,7 @@ const DividerBase = ({ orientation = "horizontal", variant = "default", label, s
 }
 
 /**
- * `Divider.*` — the divider ATOM namespace. `Divider.Base` is the single
+ * `Divider.*` — the divider ATOM namespace. `Divider` is the single
  * constrained divider; orientation / label are LEAVES of it (prop-driven).
  */
-export const Divider = Object.assign(DividerBase, {
-    Base: DividerBase,
-})
+export { DividerBase as Divider }

@@ -2,15 +2,15 @@ import React from "react"
 import { Popover, cn } from "@heroui/react"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Cluster } from "@sb-components/frames/Cluster/Cluster"
-import { Stack } from "@sb-components/frames/Stack/Stack"
-import { KeyValue } from "@sb-components/composites/data/KeyValue/KeyValue"
-import { Typography as TypographyAtom } from "@sb-components/atoms/text/Typography/Typography"
+import { StackV } from "@sb-components/frames/Stack/Stack"
+import { KeyValueList } from "@sb-components/composites/data/KeyValue/KeyValue"
+import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK ported faithfully from
  * `@/components/blocks/commerce/PriceTag`. The `next-intl` `useTranslations` strings are
  * INLINED locally (vi). The `−X%` saving chip — a raw `<Chip variant="soft"
- * color="success">` in `src` — is COMPOSED from the local `Chip.Base` atom
+ * color="success">` in `src` — is COMPOSED from the local `Chip` atom
  * (`tone="success"` yields the byte-identical soft-success chip), so the design genuinely
  * composes an atom instead of re-drawing one. Synced to `src` later.
  */
@@ -23,8 +23,8 @@ export type PriceCurrency = "VND" | "USD"
  * and deliberately NOT named `role`: that word is a DOM/ARIA attribute, so a prop by
  * that name reads as an accessibility role to both a reader and to eslint-jsx-a11y
  * (which flagged `role="prominent"` as an invalid ARIA role three times).
- * not exposed as a prop (§14d.1): the caller picks a MEMBER (`PriceTag.Inline` /
- * `PriceTag.Prominent`), not a size.
+ * not exposed as a prop (§14d.1): the caller picks a MEMBER (`PriceTagInline` /
+ * `PriceTagProminent`), not a size.
  */
 type PriceEmphasis = "inline" | "prominent"
 
@@ -53,8 +53,8 @@ export interface PriceTagProps {
      * original price, the `−X%` chip, and the saving line all turn to shimmer,
      * KEEPING the same line boxes so nothing jumps in layout (§8).
      *
-     * The flag FLOWS DOWN into the atoms that render each part (`Typography.Base`,
-     * `Chip.Base`), instead of building a second shimmer tree (§12c). The popover
+     * The flag FLOWS DOWN into the atoms that render each part (`Typography`,
+     * `Chip`), instead of building a second shimmer tree (§12c). The popover
      * is TURNED OFF while resting — there is no data to open yet, and a pressable
      * control while loading is a false promise.
      */
@@ -131,16 +131,16 @@ const PriceTagBase = ({
     const hasSaving = original != null && original > discounted
     const savePercent = hasSaving ? savingPercent(original, discounted) : 0
 
-    // the −X% saving chip — composed from the `Chip.Base` atom (tone success →
+    // the −X% saving chip — composed from the `Chip` atom (tone success →
     // soft-success chip, matching src's raw `<Chip variant="soft" color="success">`).
     // The pressable/focusable button role lives on the canonical `Popover.Trigger`
     // wrapper (react-aria: role=button, aria-expanded/controls, tabindex), so there is
     // exactly ONE interactive element. No caret; the whole chip is the affordance.
     const chip =
         savePercent > 0 ? (
-            <Chip.Base
+            <Chip
                 tone="success"
-                anatPart={showAnatomy ? "Chip.Base" : undefined}
+                anatPart={showAnatomy ? "Chip" : undefined}
                 text={`−${savePercent}%`}
             />
         ) : null
@@ -157,7 +157,7 @@ const PriceTagBase = ({
         // the total row.
         //
         // Those four rows are all ONE shape: label left ↔ value right, repeated ⇒
-        // exactly `KeyValue.List` (§13b: a repeated list ⇒ `items` is DATA). The "you
+        // exactly `KeyValueList` (§13b: a repeated list ⇒ `items` is DATA). The "you
         // pay" row is the TOTAL row ⇒ `emphasis`, not a hand-drawn rule: the frame
         // already knows how to emphasise a total row, and that emphasis looks the same
         // across every price table in the system.
@@ -165,21 +165,21 @@ const PriceTagBase = ({
         // ⚠️ The frame does NOT format for you (§13): every money string coming in here
         // has already gone through `formatPrice`.
         // ⚠️ This column is NOT badged: the panel groups nodes BY NAME (`firstEl` keeps
-        // only the first element of each name), so two `Stack.V`s with the same name
+        // only the first element of each name), so two `StackV`s with the same name
         // would MERGE into one node and the tree would read wrong. The node that
-        // matters inside the popover is `KeyValue.List` — that one is badged; the
+        // matters inside the popover is `KeyValueList` — that one is badged; the
         // wrapping column is just `p-3` padding.
         // Two vertical rows inside a design (the eyebrow and the breakdown list) =
         // `grouped` (§10b), not `tight`. `tight` (1) is reserved for what sits INSIDE a
         // composite, e.g. the icon+label pair of `InlineIconLabel`.
-        <Stack.V gap="grouped" className="p-3">
-            <TypographyAtom.Base size="xs" color="muted" text="Chi tiết giá" />
-            {/* No `gap` passed: `KeyValue.List` already owns its row rhythm (its own default
+        <StackV gap="grouped" className="p-3">
+            <Typography size="xs" color="muted" text="Chi tiết giá" />
+            {/* No `gap` passed: `KeyValueList` already owns its row rhythm (its own default
                 is the §10b `grouped` step). Passing one from here overrides the composite's
                 spacing from OUTSIDE, which §10 forbids — a composite owns its internal
                 spacing and must not receive it. */}
-            <KeyValue.List
-                anatPart={showAnatomy ? "KeyValue.List" : undefined}
+            <KeyValueList
+                anatPart={showAnatomy ? "KeyValueList" : undefined}
                 items={[
                     {
                         key: "list",
@@ -191,7 +191,7 @@ const PriceTagBase = ({
                             key: "phase",
                             label: breakdown.phaseLabel ? `Giai đoạn ${breakdown.phaseLabel}` : "Ưu đãi giai đoạn",
                             value: (
-                                <TypographyAtom.Base
+                                <Typography
                                     size="sm"
                                     className="text-success-soft-foreground"
                                     text={`−${formatPrice(original - breakdown.phase, currency)} (−${phaseSave}%)`}
@@ -204,7 +204,7 @@ const PriceTagBase = ({
                             key: "loyalty",
                             label: breakdown.loyaltyNote ? `Ưu đãi thành viên · ${breakdown.loyaltyNote}` : "Ưu đãi thành viên",
                             value: (
-                                <TypographyAtom.Base
+                                <Typography
                                     size="sm"
                                     className="shrink-0 text-success-soft-foreground"
                                     text={`−${formatPrice(breakdown.phase - discounted, currency)} (−${breakdown.loyaltyPercent}%)`}
@@ -221,41 +221,41 @@ const PriceTagBase = ({
                     },
                 ]}
             />
-        </Stack.V>
+        </StackV>
     ) : null
 
     return (
         // The outer column = two DIFFERENT lines (the price row · the "saving" line) ⇒
-        // `Stack.V`, NOT `Cluster`: a cluster is ONE track of N PEER elements (§13b).
-        <Stack.V
+        // `StackV`, NOT `Cluster`: a cluster is ONE track of N PEER elements (§13b).
+        <StackV
             // `grouped` (§10b): the price row and the saving line are two DIFFERENT vertical
             // rows of one design. It was `tight` (1), which §10b reserves for pairs sitting
             // inside a lower-tier component — the saving line read as if it were glued under the number.
             gap="grouped"
             className={className}
-            anatPart={anatPart ?? (showAnatomy ? "Stack.V" : undefined)}
+            anatPart={anatPart ?? (showAnatomy ? "StackV" : undefined)}
         >
             {/* The price row aligns on BASELINE (big number, struck number, chip share the
                 same text baseline) and wraps on its own when tight ⇒ exactly `Cluster`.
                 The three elements are THREE separate items, not merged into one
                 fragment — merging them leaves the frame's `gap` with nowhere to apply. */}
-            <Cluster.Base
+            <Cluster
                 gap="related"
                 align="baseline"
-                anatPart={showAnatomy ? "Cluster.Base" : undefined}
+                anatPart={showAnatomy ? "Cluster" : undefined}
                 items={[
                     {
                         key: "amount",
-                        // The amount goes through the ATOM `Typography.Base` (§9c), NOT raw
+                        // The amount goes through the ATOM `Typography` (§9c), NOT raw
                         // HeroUI — thanks to that, `isSkeleton` flows straight into it instead
                         // of branching off to build a separate shimmer bar.
                         content: (
-                            <TypographyAtom.Base
+                            <Typography
                                 size={AMOUNT_TYPE[emphasis]}
                                 weight="bold"
                                 isSkeleton={isSkeleton}
                                 className={isSkeleton ? "w-28" : undefined}
-                                anatPart={showAnatomy ? "Typography.Base" : undefined}
+                                anatPart={showAnatomy ? "Typography" : undefined}
                                 text={formatPrice(discounted, currency)}
                             />
                         ),
@@ -264,12 +264,12 @@ const PriceTagBase = ({
                         ? [{
                             key: "original",
                             content: (
-                                <TypographyAtom.Base
+                                <Typography
                                     size={ORIGINAL_TYPE[emphasis]}
                                     color="muted"
                                     isSkeleton={isSkeleton}
                                     className={cn("line-through", isSkeleton && "w-16")}
-                                    anatPart={showAnatomy ? "Typography.Base" : undefined}
+                                    anatPart={showAnatomy ? "Typography" : undefined}
                                     text={formatPrice(original, currency)}
                                 />
                             ),
@@ -281,7 +281,7 @@ const PriceTagBase = ({
                     ...(isSkeleton
                         ? [{
                             key: "chip",
-                            content: <Chip.Base isSkeleton anatPart={showAnatomy ? "Chip.Base" : undefined} />,
+                            content: <Chip isSkeleton anatPart={showAnatomy ? "Chip" : undefined} />,
                         }]
                         : savePercent > 0
                             ? [{
@@ -308,16 +308,16 @@ const PriceTagBase = ({
                 ]}
             />
             {showSavingLine && (isSkeleton || hasSaving) ? (
-                <TypographyAtom.Base
+                <Typography
                     size="xs"
                     color="muted"
                     isSkeleton={isSkeleton}
                     className={isSkeleton ? "w-24" : undefined}
-                    anatPart={showAnatomy ? "Typography.Base" : undefined}
+                    anatPart={showAnatomy ? "Typography" : undefined}
                     text={hasSaving ? `Tiết kiệm ${formatPrice(original - discounted, currency)}` : undefined}
                 />
             ) : null}
-        </Stack.V>
+        </StackV>
     )
 }
 
@@ -335,10 +335,8 @@ const PriceTagBase = ({
  * SPLIT them. Before this it was `size?: "sm" | "md" | "lg"` — the caller
  * chose the shape, and nobody ever used the `lg` step.
  */
-export const PriceTag = Object.assign(
-    (props: PriceTagProps) => <PriceTagBase {...props} emphasis="prominent" />,
-    {
-        Prominent: (props: PriceTagProps) => <PriceTagBase {...props} emphasis="prominent" />,
-        Inline: (props: PriceTagProps) => <PriceTagBase {...props} emphasis="inline" />,
-    },
-)
+export const PriceTagProminent = (props: PriceTagProps) => <PriceTagBase {...props} emphasis="prominent" />
+export const PriceTagInline = (props: PriceTagProps) => <PriceTagBase {...props} emphasis="inline" />
+
+/** The unqualified name keeps meaning the focal one, as it did before the split. */
+export const PriceTag = PriceTagProminent

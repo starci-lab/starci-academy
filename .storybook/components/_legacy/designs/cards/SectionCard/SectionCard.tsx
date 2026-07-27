@@ -111,7 +111,7 @@ export const SectionCard = ({
                         </div>
                         {action ? (
                             isSkeleton ? (
-                                <Button.Base isSkeleton className="w-24" showAnatomy={showAnatomy} />
+                                <Button isSkeleton className="w-24" showAnatomy={showAnatomy} />
                             ) : (
                                 <div className="shrink-0" data-anat-part={showAnatomy ? "Action" : undefined}>
                                     {action}

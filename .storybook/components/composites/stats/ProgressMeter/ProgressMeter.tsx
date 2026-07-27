@@ -1,11 +1,9 @@
 import React from "react"
 import { ProgressBar, cn } from "@heroui/react"
 import type { ReactNode } from "react"
-
 import { ProgressMeterTargetMark } from "./TargetMark"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/stats/ProgressMeter`. Authored in Storybook (not `src`);
@@ -42,7 +40,6 @@ export interface ProgressMeterProps {
     /** Anatomy tag: names this part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
 }
-
 /**
  * ProgressMeter renders a labelled, accessible progress bar: an optional top row
  * (label + rounded percentage) above a HeroUI {@link ProgressBar}, with an
@@ -69,32 +66,28 @@ export const ProgressMeter = ({
     const targetPercent = target === undefined
         ? null
         : Math.min(Math.max((target / safeMax) * 100, 0), 100)
-
     return (
         <div className={cn("flex flex-col gap-2", showAnatomy && "relative", className)} data-anat={showAnatomy ? "" : undefined} data-anat-part={anatPart}>
             {showAnatomy ? <AnatomyOverlay label="ProgressMeter" tier="composite" href="/?path=/docs/primitives-stats-progressmeter--docs" /> : null}
             {hasTopRow ? (
                 <div className="flex items-center justify-between gap-2">
-                    <Typography.Base size="xs" color="muted" className="min-w-0 truncate" text={label} />
+                    <Typography size="xs" color="muted" className="min-w-0 truncate" text={label} />
                     {showValue ? (
-                        <Typography.Base size="xs" color="muted" className="shrink-0" text={<>{percent}%</>} />
+                        <Typography size="xs" color="muted" className="shrink-0" text={<>{percent}%</>} />
                     ) : null}
                 </div>
             ) : null}
             {/* With a target marker, force the bar row to the pill's own height (`h-5`)
                 and center the bar in it, so the `h-5` pill sits EXACTLY on the track
                 midline.
-
                 Top room for the floating target label is `pt-6` (24px), NOT the old `mt-5`
                 (20px). Two rules were broken by that one class: a CHILD was pushing its own
                 margin, and 20px is not on the `0·1·2·3·6·8` scale at all.
-
                 20px looked justified because it equals the pill height (`h-5`), so it read as
                 a measurement rather than a choice. It is still a choice: the scale skips from
                 12 to 24 precisely so nobody picks a number off the ruler, and clearance takes
                 the FIRST step that clears the obstacle, which is 24. No exception (teacher,
                 2026-07-27: strict, no exceptions to the scale unless he grants one).
-
                 It is `pt` and not `mt` because the room belongs INSIDE this box: the label
                 floats over this box's own top edge, so the space is this surface's inset, not
                 a seam between two siblings. */}

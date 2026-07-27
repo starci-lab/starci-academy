@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { expect, screen, userEvent, waitFor, within } from "storybook/test"
-import { PriceTag } from "@sb-components/blocks/commerce/PriceTag/PriceTag"
+import { PriceTag, PriceTagInline, PriceTagProminent } from "@sb-components/blocks/commerce/PriceTag/PriceTag"
 import { BlockAnatomy, type AnatomyAnnotation, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -31,19 +31,19 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
 // No saving: only the bold amount — PriceTag directly renders this Typography
 // itself (own `type`/`weight`), so it's a badged node even with no other parts.
-const TYPOGRAPHY_STORY = "atoms-text-typography-typography-base--plain"
+const TYPOGRAPHY_STORY = "atoms-text-typography-typography--plain"
 
-const AMOUNT: AnatomyNode = { name: "Typography.Base", tier: "atom", role: "the amount to pay (bold), rendered alone when there is no discount to compare it against", storyId: TYPOGRAPHY_STORY }
+const AMOUNT: AnatomyNode = { name: "Typography", tier: "atom", role: "the amount to pay (bold), rendered alone when there is no discount to compare it against", storyId: TYPOGRAPHY_STORY }
 
 // ⭐ 2026-07-27 — the tree now reflects the real FRAME (teacher: "layout is built from
-// layouts components"): `Stack.V` (outer column) ⊃ `Cluster.Base` (price row, baseline
+// layouts components"): `StackV` (outer column) ⊃ `Cluster` (price row, baseline
 // aligned) ⊃ three elements, then the saving line is the column's second line.
-const STACK: AnatomyNode = { name: "Stack.V", tier: "frame", role: "the outer column that stacks the price row on top and the \"Save\" line beneath it", storyId: "frames-stack-stack-v--default" }
+const STACK: AnatomyNode = { name: "StackV", tier: "frame", role: "the outer column that stacks the price row on top and the \"Save\" line beneath it", storyId: "frames-stack-stackv--default" }
 const CLUSTER = (items: Array<AnatomyNode>): AnatomyNode => ({
-    name: "Cluster.Base",
+    name: "Cluster",
     tier: "frame",
     role: "the price row, baseline aligned so the big number, the struck number, and the chip share one baseline, wrapping onto a new line when space runs out",
-    storyId: "frames-cluster-cluster-base--default",
+    storyId: "frames-cluster-cluster--default",
     children: items,
 })
 
@@ -60,10 +60,10 @@ const NO_DISCOUNT_PARTS: Array<AnatomyNode> = [
  * `Popover.Trigger`/`Popover.Content` at `tier: "heroui"`, but that SHAPE (a node inside
  * an array) is invisible to `scripts/check-orphan-parts.mjs` — the gate only recognises a
  * flat `"Name": { … }` record literal (the shape `annotate` already uses everywhere else
- * in this codebase, e.g. `Button.Base`/`Avatar`/`Badge`). Flattened BY HAND here (not by
+ * in this codebase, e.g. `Button`/`Avatar`/`Badge`). Flattened BY HAND here (not by
  * calling the tree's own flatten helper, which isn't exported) so the checker's regex can
  * actually see it — same first-occurrence-wins collapse the old `parts` tree already had
- * for the duplicate `Typography.Base` name (original/saving-line drop to the amount's
+ * for the duplicate `Typography` name (original/saving-line drop to the amount's
  * role), so this is a rewrite of the SAME behaviour, not a new one.
  *
  * The "Popover" context wrapper itself is CUT from the tree — HeroUI's `PopoverRoot` is
@@ -72,34 +72,34 @@ const NO_DISCOUNT_PARTS: Array<AnatomyNode> = [
  * `data-anat-part="Popover"`. Only its two DOM-bearing children remain, both `tier:
  * "heroui"` (no `storyId` — they're the library's own components, not one of ours):
  * `Popover.Trigger` (the actual clickable div — role=button, aria-expanded/controls —
- * wrapping the `Chip.Base`; the chip is NOT the button, just its soft-success label) and
+ * wrapping the `Chip`; the chip is NOT the button, just its soft-success label) and
  * `Popover.Content` (the breakdown rows).
  */
 const DISCOUNT_ANNOTATE: Record<string, AnatomyAnnotation> = {
-    "Stack.V": { tier: "frame", role: "the outer column that stacks the price row on top and the \"Save\" line beneath it", storyId: "frames-stack-stack-v--default" },
-    "Cluster.Base": { tier: "frame", role: "the price row, baseline aligned so the big number, the struck number, and the chip share one baseline, wrapping onto a new line when space runs out", storyId: "frames-cluster-cluster-base--default" },
-    "Typography.Base": { tier: "atom", role: "the amount to pay (bold)", storyId: TYPOGRAPHY_STORY },
+    "StackV": { tier: "frame", role: "the outer column that stacks the price row on top and the \"Save\" line beneath it", storyId: "frames-stack-stackv--default" },
+    "Cluster": { tier: "frame", role: "the price row, baseline aligned so the big number, the struck number, and the chip share one baseline, wrapping onto a new line when space runs out", storyId: "frames-cluster-cluster--default" },
+    "Typography": { tier: "atom", role: "the amount to pay (bold)", storyId: TYPOGRAPHY_STORY },
     "Popover.Trigger": { tier: "heroui", role: "the button that opens the popover (react-aria: role=button, aria-expanded/controls), the one interactive element in this cluster, wrapping the −X% chip" },
-    "Chip.Base": {
-        // Node name = the REAL name of the component (`Chip.Base`), not a dead name:
+    "Chip": {
+        // Node name = the REAL name of the component (`Chip`), not a dead name:
         // `StatusChip` was REMOVED on 2026-07-26 because it was just this chip with
         // `tone` hardcoded. Tier is `atom` — the old badge showed "layout" because
         // `primitive` was mis-declared.
         tier: "atom",
         role: "the \"−X%\" saving label (soft-success), just a label rather than a button itself",
         state: "success",
-        storyId: "atoms-chips-chip-chip-base--default",
+        storyId: "atoms-chips-chip-chip--default",
     },
     "Popover.Content": { tier: "heroui", role: "the price-breakdown table" },
-    "KeyValue.List": {
+    "KeyValueList": {
         // ⭐ 2026-07-27: the four "label ↔ value" rows used to be four hand-rolled
         // `<div className="flex items-center justify-between gap-3">` plus a hand-drawn
-        // `border-t` for the total row. Now they go through the `KeyValue.List`
+        // `border-t` for the total row. Now they go through the `KeyValueList`
         // COMPOSITE — the "You pay" row uses `emphasis` so the EMPHASIS is decided by
         // the composite, the same across every price table.
         tier: "composite",
         role: "a column of label and value pairs built from `items`, with the TOTAL row turning on `emphasis`",
-        storyId: "composites-data-keyvalue-keyvalue-list--with-total",
+        storyId: "composites-data-keyvalue-keyvaluelist--with-total",
     },
 }
 
@@ -112,7 +112,7 @@ export const Default: Story = {
                 tier="block"
                 leaf="Default"
                 parts={NO_DISCOUNT_PARTS}
-                reason="A displayed price needs to pack multiple signals into one spot: the amount to pay in bold, the struck original price, and the saving amount. The saving amount uses a `Chip.Base` (tone success) as both the label and the button that opens the price-breakdown popover, which walks from the original price, through the phase price and membership discount, down to what the buyer actually pays. Bundling all of this into one block keeps the discount logic from drifting across every place a price gets shown."
+                reason="A displayed price needs to pack multiple signals into one spot: the amount to pay in bold, the struck original price, and the saving amount. The saving amount uses a `Chip` (tone success) as both the label and the button that opens the price-breakdown popover, which walks from the original price, through the phase price and membership discount, down to what the buyer actually pays. Bundling all of this into one block keeps the discount logic from drifting across every place a price gets shown."
                 states={[
                     {
                         name: "original = undefined",
@@ -162,7 +162,7 @@ export const WithDiscount: Story = {
  *
  * Uses the EXACT SAME annotate table as the discounted version (`DISCOUNT_ANNOTATE`): the flag
  * changes STATE, not STRUCTURE (§11f). The flag flows down into each rendering atom
- * (`Typography.Base`, `Chip.Base`) — there is no second shimmer tree (§12c).
+ * (`Typography`, `Chip`) — there is no second shimmer tree (§12c).
  */
 export const Skeleton: Story = {
     render: () =>
@@ -176,8 +176,8 @@ export const Skeleton: Story = {
                     {
                         name: "isSkeleton",
                         why: "Every bar keeps the real line's box, the amount, the struck original, the chip, and the saving line, so nothing shifts once the price lands (§8). The −X% chip keeps its slot in the row but drops the popover, since there is nothing to open yet and a pressable control while loading is a promise the card cannot keep.",
-                        code: "<PriceTag.Prominent isSkeleton discounted={0} original={0} />",
-                        render: <PriceTag.Prominent isSkeleton discounted={1290000} original={1990000} showAnatomy />,
+                        code: "<PriceTagProminent isSkeleton discounted={0} original={0} />",
+                        render: <PriceTagProminent isSkeleton discounted={1290000} original={1990000} showAnatomy />,
                     },
                 ]}
             />,
@@ -186,8 +186,8 @@ export const Skeleton: Story = {
 
 /** Pick size by context: `sm` dense lists, `md` default card, `lg` hero/checkout. */
 /*
- * ⭐ 2026-07-27: `Sizes` was ONE leaf holding two states named `PriceTag.Inline` and
- * `PriceTag.Prominent`. Those are not two values of a prop, they are two MEMBERS of the
+ * ⭐ 2026-07-27: `Sizes` was ONE leaf holding two states named `PriceTagInline` and
+ * `PriceTagProminent`. Those are not two values of a prop, they are two MEMBERS of the
  * namespace, so a caller types two different names to reach them. Two names is two doors, and
  * a door is a leaf (§11f: a leaf is a composition, a state is that composition under a
  * different DATA condition).
@@ -200,7 +200,7 @@ export const Inline: Story = {
     render: () =>
         shell(
             <BlockAnatomy
-                name="PriceTag.Inline"
+                name="PriceTagInline"
                 tier="block"
                 leaf="Inline"
                 annotate={DISCOUNT_ANNOTATE}
@@ -208,9 +208,9 @@ export const Inline: Story = {
                     {
                         name: "discounted = 1490000, original = 1990000",
                         why: "The amount renders at the smaller type scale meant to sit as one line inside a card, while the struck price, the chip, the popover and the saving line stay identical to the discounted composition. This size fits a dense list where the price is one signal among several rather than the page's sole focus.",
-                        code: "<PriceTag.Inline discounted={1490000} original={1990000} />",
+                        code: "<PriceTagInline discounted={1490000} original={1990000} />",
                         render: (
-                            <PriceTag.Inline
+                            <PriceTagInline
                                 discounted={1490000}
                                 original={1990000}
                                 breakdown={{ phase: 1690000, phaseLabel: "Early-bird", loyaltyPercent: 12 }}
@@ -227,7 +227,7 @@ export const Prominent: Story = {
     render: () =>
         shell(
             <BlockAnatomy
-                name="PriceTag.Prominent"
+                name="PriceTagProminent"
                 tier="block"
                 leaf="Prominent"
                 annotate={DISCOUNT_ANNOTATE}
@@ -235,9 +235,9 @@ export const Prominent: Story = {
                     {
                         name: "discounted = 1490000, original = 1990000",
                         why: "The amount renders at a larger type scale meant to be the focal point of a buy CTA, with the same composition underneath it as the Inline member. This size fits a hero section or a checkout, where the price itself is the thing the page wants the eye to land on first.",
-                        code: "<PriceTag.Prominent discounted={1490000} original={1990000} />",
+                        code: "<PriceTagProminent discounted={1490000} original={1990000} />",
                         render: (
-                            <PriceTag.Prominent
+                            <PriceTagProminent
                                 discounted={1490000}
                                 original={1990000}
                                 breakdown={{ phase: 1690000, phaseLabel: "Early-bird", loyaltyPercent: 12 }}

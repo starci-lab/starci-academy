@@ -2,7 +2,7 @@ import React from "react"
 import { ScrollShadow, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { AsyncContent } from "@sb-components/composites/async/AsyncContent/AsyncContent"
-import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCard, SurfaceCardList } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { EntityResultRow, type SearchCourseContentItem } from "@sb-components/_legacy/blocks/learn/EntityResultRow/EntityResultRow"
 
 /**
@@ -61,7 +61,7 @@ export interface ContentSearchListProps {
 /**
  * The chatbox's "search content in this course" view: a self-bounded scroll
  * region running the standard error → loading → empty → content switch
- * ({@link AsyncContent.Base}), with an Idle hint before anything is typed and shared
+ * ({@link AsyncContent}), with an Idle hint before anything is typed and shared
  * {@link EntityResultRow} hits once results land.
  *
  * @param props - {@link ContentSearchListProps}
@@ -88,12 +88,12 @@ export const ContentSearchList = ({
             data-anat-part={anatPart ?? (showAnatomy ? "ScrollShadow" : undefined)}
             className={cn("max-h-[55vh] min-h-0 flex-1 overflow-y-auto", className)}
         >
-            <AsyncContent.Base
+            <AsyncContent
                 isLoading={isLoading}
                 showAnatomy={showAnatomy}
                 skeleton={
                     // Codemod 2026-07-26: `bordered` → `variant="nested"` (API 3-trục SurfaceCard).
-                    <SurfaceCard.List
+                    <SurfaceCardList
                         variant="nested"
                         anatPart={showAnatomy ? "SurfaceListCard" : undefined}
                         items={SKELETON_ROWS.map((row) => ({
@@ -117,15 +117,15 @@ export const ContentSearchList = ({
                 errorContent={{ title: STRINGS.emptyOrError }}
             >
                 {isIdle ? (
-                    <Typography.Base size="sm" color="muted" showAnatomy={showAnatomy} text={STRINGS.hint} />
+                    <Typography size="sm" color="muted" showAnatomy={showAnatomy} text={STRINGS.hint} />
                 ) : (
                     // WRAPPER frame (`.Base padding="flush"` = same `overflow-hidden` + surface
                     // skin as the skeleton branch's `.List`), NOT `.List items`: each
                     // EntityResultRow already OWNS its row frame (px-4 py-3 + full-bleed
                     // separator), so a `.List` row would double the padding + hairline.
                     // Codemod 2026-07-26: `bordered` → `variant="nested"`, `flushContent` → `padding="flush"`
-                    // (API 3-trục SurfaceCard.Base).
-                    <SurfaceCard.Base
+                    // (API 3-trục SurfaceCard).
+                    <SurfaceCard
                         variant="nested"
                         padding="flush"
                         anatPart={showAnatomy ? "SurfaceListCard" : undefined}
@@ -141,9 +141,9 @@ export const ContentSearchList = ({
                                 showAnatomy={showAnatomy}
                             />
                         ))}
-                    </SurfaceCard.Base>
+                    </SurfaceCard>
                 )}
-            </AsyncContent.Base>
+            </AsyncContent>
         </ScrollShadow>
     )
 }

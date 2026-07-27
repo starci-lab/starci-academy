@@ -11,7 +11,6 @@ import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { PADDING_CLASS, type SeamScale, type InsetScale } from "@sb-components/frames/_spacing"
 import { Grid, type GridColumns } from "@sb-components/frames/Grid/Grid"
-
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — `SurfaceCard.*`, the ONE card KHUNG namespace
@@ -48,7 +47,7 @@ import { Grid, type GridColumns } from "@sb-components/frames/Grid/Grid"
  *
  * ⚠️ KNOWN DRIFT (do not fix in this pass): `.SelectableGroup` calls HeroUI
  * `Radio`/`RadioGroup` directly instead of going through the design system's
- * own `Choice.Radio`/`Choice.RadioGroup` atom
+ * own `ChoiceRadio`/`ChoiceRadioGroup` atom
  * (`.storybook/components/atoms/forms/Choice/Choice.tsx`, which has its own
  * story). Every other member of this namespace composes lower-tier atoms; this
  * one reaches past them straight to HeroUI. Left as-is per instruction —
@@ -69,11 +68,9 @@ import { Grid, type GridColumns } from "@sb-components/frames/Grid/Grid"
  * `compact` → `radius="xl"`.
  * ─────────────────────────────────────────────────────────────────────────────
  */
-
 // ─────────────────────────────────────────────────────────────────────────────
 // Shared slot plumbing
 // ─────────────────────────────────────────────────────────────────────────────
-
 /** The named content slots every WRAPPER frame of this namespace accepts. */
 interface SlotProps {
     /** Top slot INSIDE the frame (a title row, a toolbar). Optional. */
@@ -85,7 +82,6 @@ interface SlotProps {
     /** Shorthand for {@link SlotProps.body} — a wrapper frame wraps anything. */
     children?: ReactNode
 }
-
 /**
  * Resolves `header`/`body`/`footer`/`children` into ONE node. With neither
  * `header` nor `footer` the body is returned RAW, so a `children`-only call
@@ -104,7 +100,6 @@ const composeSlots = ({ header, body, footer, children }: SlotProps): ReactNode 
         </div>
     )
 }
-
 /**
  * Interactive anchor for a clickable row: an INTERNAL route (`/…`) → Next `<Link>`
  * (client-side push, keeps history); a protocol / external href → native `<a>`.
@@ -129,12 +124,10 @@ const RowAnchor = ({
     }
     return <a href={href} onClick={onClick} aria-current={ariaCurrent ? "true" : undefined} className={className} data-anat-part={anatPart}>{children}</a>
 }
-
 // ─────────────────────────────────────────────────────────────────────────────
 // .Base — the generic `bg-surface` content card (was `SurfaceCard`)
 // ─────────────────────────────────────────────────────────────────────────────
-
-/** Props for {@link SurfaceCard.Base}. */
+/** Props for {@link SurfaceCard}. */
 export interface SurfaceCardBaseProps extends SurfaceLabelProps, SlotProps {
     /**
      * Caption text placed OUTSIDE (below) the card, `gap-2` — a hint/note, not
@@ -179,9 +172,9 @@ export interface SurfaceCardBaseProps extends SurfaceLabelProps, SlotProps {
      * it on to its own children:
      *
      * ```tsx
-     * <SurfaceCard.Base isSkeleton={loading} label="My courses">
+     * <SurfaceCard isSkeleton={loading} label="My courses">
      *   <ProfileRow isSkeleton={loading} />
-     * </SurfaceCard.Base>
+     * </SurfaceCard>
      * ```
      *
      * Since the flag only changes the STATE of an already-existing tree (not the
@@ -223,7 +216,6 @@ export interface SurfaceCardBaseProps extends SurfaceLabelProps, SlotProps {
      */
     showAnatomy?: boolean
 }
-
 /**
  * The generic `bg-surface` content card of the namespace, with an OPTIONAL section
  * header baked in — pass `label` and it renders a `Label` OUTSIDE (above) the card,
@@ -279,11 +271,11 @@ const Base = ({
     // The frame owns this text so it wraps the atom (§4) — and so the flag simply
     // flows straight into that same atom, instead of branching off to build a
     // separate shimmer bar.
-    const caption = <Typography.Base size="xs" color="muted" isSkeleton={isSkeleton} text={description} />
+    const caption = <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={description} />
     const cardWithCaption = description != null ? (
         <div className="flex flex-col gap-2">
             {highlighted}
-            {showAnatomy ? <div data-anat-part="Typography.Base">{caption}</div> : caption}
+            {showAnatomy ? <div data-anat-part="Typography">{caption}</div> : caption}
         </div>
     ) : highlighted
     const labelRow = (
@@ -305,12 +297,10 @@ const Base = ({
         </section>
     )
 }
-
 // ─────────────────────────────────────────────────────────────────────────────
 // .Nested — card-inside-card with a quiet header (was `NestedCard`)
 // ─────────────────────────────────────────────────────────────────────────────
-
-/** One inner section of a {@link SurfaceCard.Nested} (`items` row). */
+/** One inner section of a {@link SurfaceCardNested} (`items` row). */
 export interface SurfaceCardNestedSection {
     /** Stable React key. */
     key: string
@@ -329,8 +319,7 @@ export interface SurfaceCardNestedSection {
     /** Anatomy tag: names this row so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
 }
-
-/** Props for {@link SurfaceCard.Nested}. */
+/** Props for {@link SurfaceCardNested}. */
 export interface SurfaceCardNestedProps extends SlotProps {
     /** Header title (quiet eyebrow label, e.g. "Related posts"). Omit when passing `header`. */
     title?: ReactNode
@@ -378,7 +367,6 @@ export interface SurfaceCardNestedProps extends SlotProps {
     /** When on, emit `data-anat-part` on each composed part so a BlockAnatomy panel can badge it on-render. */
     showAnatomy?: boolean
 }
-
 /**
  * One inner section row — a flush row (no own border/radius) with an optional
  * muted eyebrow, a title, and optional body below.
@@ -394,9 +382,9 @@ const NestedSection = ({ title, eyebrow, content, onPress, href, className, anat
     const body = (
         <div className="flex min-w-0 flex-col gap-1">
             {eyebrow ? (
-                <Typography.Base size="xs" color="muted" truncate isSkeleton={isSkeleton} text={eyebrow} />
+                <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={eyebrow} />
             ) : null}
-            <Typography.Base size="sm"
+            <Typography size="sm"
                 weight="medium"
                 truncate
                 isSkeleton={isSkeleton}
@@ -409,7 +397,6 @@ const NestedSection = ({ title, eyebrow, content, onPress, href, className, anat
             {content ? <div>{content}</div> : null}
         </div>
     )
-
     if (href) {
         return (
             <a
@@ -424,7 +411,6 @@ const NestedSection = ({ title, eyebrow, content, onPress, href, className, anat
             </a>
         )
     }
-
     if (onPress) {
         return (
             <button
@@ -440,14 +426,12 @@ const NestedSection = ({ title, eyebrow, content, onPress, href, className, anat
             </button>
         )
     }
-
     return (
         <div data-anat-part={anatPart} className={cn("p-3", className)}>
             {body}
         </div>
     )
 }
-
 /**
  * Card-inside-card WITH HEADERS: quiet header (optional eyebrow icon + title-only
  * label + optional trailing meta) + a flush stack of sections separated by dividers
@@ -500,8 +484,8 @@ const Nested = ({
                         >
                             {icon}
                             {isSkeleton
-                                ? <Typography.Base size="xs" isSkeleton className="w-28" />
-                                : <Typography.Base size="xs" color="muted" truncate text={title} />}
+                                ? <Typography size="xs" isSkeleton className="w-28" />
+                                : <Typography size="xs" color="muted" truncate text={title} />}
                         </span>
                     )}
                     {meta ? <span className="shrink-0">{meta}</span> : null}
@@ -516,20 +500,16 @@ const Nested = ({
         </div>
     )
 }
-
 // ─────────────────────────────────────────────────────────────────────────────
 // .Pressable — whole-card press target (was `PressableCard`)
 // ─────────────────────────────────────────────────────────────────────────────
-
 // Ripple — ported from HeroUI v2 `@heroui/ripple` (MIT). ADAPTED: HeroUI reads
 // press coords from react-aria's `PressEvent` (`event.x/y`); we use a real
 // `<button>`/`<a>`, so we compute the origin from the native `pointerdown`
 // position relative to the pressed element. Same animation: a circle grows from
 // scale 0 → 2 at the press point while fading out, then self-clears.
 type RippleItem = { key: number; x: number; y: number; size: number }
-
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max)
-
 /** Track ripples + expose `add` (on pointerdown) and `clear` (on anim end). */
 const useRipple = () => {
     const idRef = useRef(0)
@@ -562,7 +542,6 @@ const useRipple = () => {
     )
     return { ripples, add, clear }
 }
-
 /** Renders one fading, growing circle per active ripple. Sits BEHIND content (`z-0`). */
 /** Props for the local {@link Ripple} layer. */
 interface RippleProps {
@@ -571,7 +550,6 @@ interface RippleProps {
     /** Called when one ripple finishes so the caller can drop it. */
     onClear: (key: number) => void
 }
-
 const Ripple = ({ ripples, onClear }: RippleProps) => (
     <AnimatePresence mode="popLayout">
         {ripples.map((ripple) => {
@@ -593,8 +571,7 @@ const Ripple = ({ ripples, onClear }: RippleProps) => (
         })}
     </AnimatePresence>
 )
-
-/** Props shared by both press-target shapes of {@link SurfaceCard.Pressable}. */
+/** Props shared by both press-target shapes of {@link SurfaceCardPressable}. */
 interface PressableBaseProps extends SlotProps {
     /**
      * Press handler for an action card (select / toggle). Ignored when
@@ -623,7 +600,6 @@ interface PressableBaseProps extends SlotProps {
     /** When on, emit `data-anat-part` on this block's parts for a BlockAnatomy panel to badge on-render. */
     showAnatomy?: boolean
 }
-
 /**
  * Discriminates the two accessible-name contracts: without `actions` the
  * content IS the card's label (optional `label` only for icon-only tiles);
@@ -660,10 +636,8 @@ type PressableActionsProps =
          */
         label: string
     }
-
-/** Props for {@link SurfaceCard.Pressable}. */
+/** Props for {@link SurfaceCardPressable}. */
 export type SurfaceCardPressableProps = PressableBaseProps & PressableActionsProps
-
 /**
  * A whole-card press target with the default surface card look (surface fill,
  * concentric `rounded-3xl`, fixed `p-3` padding, `shadow-surface` elevation AT
@@ -696,7 +670,6 @@ const Pressable = ({
 }: SurfaceCardPressableProps) => {
     const { ripples, add: addRipple, clear: clearRipple } = useRipple()
     const content = composeSlots({ header, body, footer, children })
-
     // Skeleton mirror — generic tile shape (leading tile + 2 text bars), same
     // outer frame/padding as the real card, regardless of actions/content.
     if (isSkeleton) {
@@ -706,13 +679,12 @@ const Pressable = ({
             >
                 <HeroSkeleton className="size-10 shrink-0 rounded-xl" />
                 <div className="flex min-w-0 flex-1 flex-col gap-2">
-                    <Typography.Base size="sm" isSkeleton className="w-2/3" />
-                    <Typography.Base size="xs" isSkeleton className="w-1/3" />
+                    <Typography size="sm" isSkeleton className="w-2/3" />
+                    <Typography size="xs" isSkeleton className="w-1/3" />
                 </div>
             </div>
         )
     }
-
     // Shared card surface + disabled dim, identical across both render paths.
     // NO hover effect (like a HeroUI pressable card — hover is inert); the ONLY
     // feedback is the PRESS: a `active:scale-[0.97]` push-in + ripple. ⚠️ Tailwind
@@ -731,7 +703,6 @@ const Pressable = ({
         isDisabled && "cursor-not-allowed opacity-60",
         className,
     )
-
     // ── Simple whole-card target (no secondary actions) — the whole card is ONE
     // <button>/<a> and its content is its label. ───────────────────────────────
     if (!actions) {
@@ -770,7 +741,6 @@ const Pressable = ({
             </button>
         )
     }
-
     // ── Card WITH its own buttons — stretched-link pattern. The card is a plain
     // relative <div>; a transparent overlay <a>/<button> covers it, and the
     // actions sit ABOVE the overlay so they stay clickable. ────────────────────
@@ -816,22 +786,19 @@ const Pressable = ({
         </div>
     )
 }
-
 // ─────────────────────────────────────────────────────────────────────────────
 // .PressableGroup — a grid of press targets (was `GroupPressableCard`)
 // ─────────────────────────────────────────────────────────────────────────────
-
-// Columns by container step: use {@link GridColumns} from `Grid.Base` directly —
+// Columns by container step: use {@link GridColumns} from `Grid` directly —
 // the ONE grid system of the frame tier (§13).
 //
 // 2026-07-26 (instructor): removed the local `SurfaceCardPressableGroupColumns`
 // table (7 steps `base/sm/md/lg/xl/xl3/xl4`, built with `@sm:`/`@md:`…) — that
 // was Tailwind's HALF-SIZE container scale (`@sm` = 24rem), completely
-// different from the `@app-*` scale (`@app-sm` = 40rem) that `Container.Base`/
-// `Grid.Base` and the rest of the system use. Every breakpoint in the old table
+// different from the `@app-*` scale (`@app-sm` = 40rem) that `Container`/
+// `Grid` and the rest of the system use. Every breakpoint in the old table
 // was silently firing at the wrong point compared to the rest of the app.
-
-/** One pressable card inside a {@link SurfaceCard.PressableGroup}. */
+/** One pressable card inside a {@link SurfaceCardPressableGroup}. */
 export interface SurfaceCardPressableGroupItem {
     /** Stable React key. Also fixes the item's position for the 1–N shortcut. */
     key: string
@@ -863,7 +830,7 @@ export interface SurfaceCardPressableGroupItem {
     /**
      * Verdict variant: a LEFT band marking this tile with a signal that comes from
      * DATA (`card.md` §3i) — the canonical {@link VerdictBand}, SAME shape as
-     * `SectionCard`/`SurfaceCard.List`.
+     * `SectionCard`/`SurfaceCardList`.
      */
     withVerdict?: VerdictBand
     /**
@@ -873,8 +840,7 @@ export interface SurfaceCardPressableGroupItem {
      */
     selected?: boolean
 }
-
-/** Props for {@link SurfaceCard.PressableGroup}. */
+/** Props for {@link SurfaceCardPressableGroup}. */
 export interface SurfaceCardPressableGroupProps {
     /** The cards, in reading order (also the 1–N shortcut order). REQUIRED — repeat list = data. */
     items: Array<SurfaceCardPressableGroupItem>
@@ -884,7 +850,7 @@ export interface SurfaceCardPressableGroupProps {
      */
     ariaLabel: string
     /**
-     * Responsive column count — grid built with `Grid.Base` (§13). Defaults to a
+     * Responsive column count — grid built with `Grid` (§13). Defaults to a
      * single column.
      *
      * 2026-07-26 (instructor): changed from the local `SurfaceCardPressableGroupColumns`
@@ -913,21 +879,18 @@ export interface SurfaceCardPressableGroupProps {
     /** Extra classes on the container wrapper. */
     className?: string
     /**
-     * Dev/spec: tag each direct tile (`SurfaceCard.Pressable` / `SkeletonTile`) with an
+     * Dev/spec: tag each direct tile (`SurfaceCardPressable` / `SkeletonTile`) with an
      * {@link AnatomyOverlay} anchor so a BlockAnatomy panel can badge it on-render.
      */
     showAnatomy?: boolean
 }
-
 // Compact grid cell, not a standalone top-level card: one step down from
 // `.Pressable`'s own `rounded-3xl`/`shadow-surface` default (concentric
 // radius: card 24px − 1 step → 16px) and one step UP from the flat button.
 const TILE_CHROME = "rounded-2xl shadow-field"
-
 // §5a: tile body defaults to body-sm/text-sm → icon size-5, muted (list-icon convention).
 // Forced HERE (descendant selector) so no call-site ever hand-sets icon size/color again.
 const ITEM_ICON_CLS = "shrink-0 [&_svg]:size-5 [&_svg]:shrink-0 text-muted"
-
 /** Composes the named `icon` slot (if any) with `content`, owning layout + icon sizing. */
 const itemBody = (item: SurfaceCardPressableGroupItem) => {
     if (!item.icon) {
@@ -942,7 +905,6 @@ const itemBody = (item: SurfaceCardPressableGroupItem) => {
         </div>
     )
 }
-
 /**
  * One skeleton placeholder tile — mirrors {@link TILE_CHROME} + the standard
  * ProfileCard content shape (avatar + title + description), so the loading grid
@@ -953,28 +915,26 @@ const itemBody = (item: SurfaceCardPressableGroupItem) => {
 interface PressableGroupSkeletonTileProps {
     /** Placement class only. */
     className?: string
-    /** Storybook-only: names the Avatar.Base mirror so a BlockAnatomy panel can badge/link it. Avatar.Base has no anatPart of its own, so the frame wraps it instead. */
+    /** Storybook-only: names the Avatar mirror so a BlockAnatomy panel can badge/link it. Avatar has no anatPart of its own, so the frame wraps it instead. */
     showAnatomy?: boolean
 }
-
 const PressableGroupSkeletonTile = ({ className, showAnatomy }: PressableGroupSkeletonTileProps) => (
     <div className={cn(TILE_CHROME, "flex items-center gap-3 p-3", className)}>
-        <div className="shrink-0" data-anat-part={showAnatomy ? "Avatar.Base" : undefined}>
-            <Avatar.Base isSkeleton size="md" />
+        <div className="shrink-0" data-anat-part={showAnatomy ? "Avatar" : undefined}>
+            <Avatar isSkeleton size="md" />
         </div>
         <div className="flex min-w-0 flex-1 flex-col">
-            <Typography.Base size="sm" isSkeleton className="w-1/3" />
-            <Typography.Base size="xs" isSkeleton className="w-2/3" />
+            <Typography size="sm" isSkeleton className="w-1/3" />
+            <Typography size="xs" isSkeleton className="w-2/3" />
         </div>
     </div>
 )
-
 /**
  * A grid of `.Pressable` cards that act and then get out of the way — the whole
  * group is ONE labelled unit (`role="group"` + `aria-label`), each cell is a
  * canonical `.Pressable`, and the cards' bodies stay the caller's to compose.
  * Reflows on the CONTAINER's width, not the viewport's ({@link GridColumns}) — grid
- * built via `Grid.Base` (§13, the tier's ONE grid khung).
+ * built via `Grid` (§13, the tier's ONE grid khung).
  *
  * **Two modes.** Default = ACTIONS (press a card and the surface acts — grade, open
  * a page — nothing stays "chosen"). Opt into SELECTION by passing `item.selected`:
@@ -998,7 +958,6 @@ const PressableGroup = ({
     useEffect(() => {
         itemsRef.current = items
     }, [items])
-
     // Press 1–N to act without reaching for the mouse. Opt-in: the listener is on
     // `window`, so a group that isn't the screen's main action would steal digits.
     // Also off while `isSkeleton` — nothing underneath can act yet.
@@ -1026,16 +985,14 @@ const PressableGroup = ({
         window.addEventListener("keydown", onKeyDown)
         return () => window.removeEventListener("keydown", onKeyDown)
     }, [keyboardShortcut, isSkeleton])
-
     // an empty group would announce a label with nothing under it
     if (items.length === 0) {
         return null
     }
-
     if (isSkeleton) {
         return (
-            <div role="group" aria-label={ariaLabel} className={className} data-anat-part={showAnatomy ? "Grid.Base" : undefined}>
-                <Grid.Base
+            <div role="group" aria-label={ariaLabel} className={className} data-anat-part={showAnatomy ? "Grid" : undefined}>
+                <Grid
                     columns={columns}
                     gap={gap}
                     items={items.map((item) => ({
@@ -1053,14 +1010,13 @@ const PressableGroup = ({
             </div>
         )
     }
-
     // 2026-07-26 (instructor): removed the self-opened `<div className="@container">`
-    // — from now on `Container.Base` is where the frame tier OPENS a container
-    // (one frame, not every frame opening its own). Grid built with `Grid.Base`
+    // — from now on `Container` is where the frame tier OPENS a container
+    // (one frame, not every frame opening its own). Grid built with `Grid`
     // (§13, the tier's ONE grid system) instead of hand-declaring `grid`/`grid-cols-*`.
     return (
-        <div role="group" aria-label={ariaLabel} className={className} data-anat-part={showAnatomy ? "Grid.Base" : undefined}>
-            <Grid.Base
+        <div role="group" aria-label={ariaLabel} className={className} data-anat-part={showAnatomy ? "Grid" : undefined}>
+            <Grid
                 columns={columns}
                 gap={gap}
                 items={items.map((item) => {
@@ -1085,7 +1041,7 @@ const PressableGroup = ({
                         content: showAnatomy ? (
                             <div className="relative" data-anat>
                                 {tile}
-                                <AnatomyOverlay label="SurfaceCard.Pressable" tier="composite" />
+                                <AnatomyOverlay label="SurfaceCardPressable" tier="composite" />
                             </div>
                         ) : tile,
                     }
@@ -1094,12 +1050,10 @@ const PressableGroup = ({
         </div>
     )
 }
-
 // ─────────────────────────────────────────────────────────────────────────────
 // .SelectableGroup — single-select grid of surface cards (was `SelectableCardGroup`)
 // ─────────────────────────────────────────────────────────────────────────────
-
-/** One selectable card in a {@link SurfaceCard.SelectableGroup}. */
+/** One selectable card in a {@link SurfaceCardSelectableGroup}. */
 export interface SurfaceCardSelectableGroupItem<T extends string> {
     /** Value selected when this card is chosen. */
     value: T
@@ -1114,8 +1068,7 @@ export interface SurfaceCardSelectableGroupItem<T extends string> {
     /** Optional trailing node (e.g. a "coming soon" tag) shown on the right. */
     badge?: ReactNode
 }
-
-/** Props for {@link SurfaceCard.SelectableGroup}. */
+/** Props for {@link SurfaceCardSelectableGroup}. */
 export interface SurfaceCardSelectableGroupProps<T extends string> {
     /** The selectable cards (2+). */
     items: Array<SurfaceCardSelectableGroupItem<T>>
@@ -1135,14 +1088,12 @@ export interface SurfaceCardSelectableGroupProps<T extends string> {
      */
     showAnatomy?: boolean
 }
-
 /** Tailwind grid-template class per supported column count. */
 const SELECTABLE_GROUP_COLUMNS_CLASS: Record<1 | 2 | 3, string> = {
     1: "grid-cols-1",
     2: "grid-cols-2",
     3: "grid-cols-3",
 }
-
 /**
  * A single-select group of surface cards: each option is a canonical HeroUI `Card`;
  * choosing one draws an accent OUTLINE ring around it (never a fill / colour change,
@@ -1159,7 +1110,7 @@ const SELECTABLE_GROUP_COLUMNS_CLASS: Record<1 | 2 | 3, string> = {
  * dropped (`!shadow-none`) while the ring is up so the two don't stack.
  *
  * ⚠️ Calls HeroUI `Radio`/`RadioGroup` directly rather than the design system's
- * `Choice.Radio`/`Choice.RadioGroup` atom — known drift, carried over verbatim
+ * `ChoiceRadio`/`ChoiceRadioGroup` atom — known drift, carried over verbatim
  * from `atoms/navigation/SelectableCardGroup` (not refactored in this move).
  *
  * @param props - {@link SurfaceCardSelectableGroupProps}
@@ -1221,13 +1172,11 @@ const SelectableGroup = <T extends string>({
             ))}
         </RadioGroup>
     )
-
 // ─────────────────────────────────────────────────────────────────────────────
 // .List — bounded surface list of rows (was `SurfaceListCard` + its two rows)
 // ─────────────────────────────────────────────────────────────────────────────
-
 /**
- * One row of a {@link SurfaceCard.List}.
+ * One row of a {@link SurfaceCardList}.
  *
  * TWO SHAPES, one type: pass `title` for the FIXED row (leading · title+subtitle ·
  * meta+trailing), or `content` for a FREE-FORM row (the frame still owns padding +
@@ -1295,8 +1244,7 @@ export interface SurfaceCardListItem {
     /** Anatomy tag: names this row so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
 }
-
-/** Props for {@link SurfaceCard.List}. */
+/** Props for {@link SurfaceCardList}. */
 export interface SurfaceCardListProps extends SurfaceLabelProps {
     /** The rows. REQUIRED — repeat list = data, never children. Empty → renders `emptyState`. */
     items: ReadonlyArray<SurfaceCardListItem>
@@ -1330,7 +1278,6 @@ export interface SurfaceCardListProps extends SurfaceLabelProps {
     /** Storybook-only: badge this composite's OWN direct parts (Header/Surface/Description) for a BlockAnatomy panel. */
     showAnatomy?: boolean
 }
-
 /** Resolves an item's left DATA band — `withVerdict` (full shape) wins over the `tone` shorthand. */
 /**
  * The two fields {@link itemVerdict} reads. Kept as its OWN shape rather than the whole item:
@@ -1342,10 +1289,8 @@ interface VerdictBearingItem {
     /** Explicit verdict band, wins over `tone`. */
     withVerdict?: VerdictBand
 }
-
 const itemVerdict = (item: VerdictBearingItem): VerdictBand | undefined =>
     item.withVerdict ?? (item.tone != null ? { enable: true, variant: item.tone } : undefined)
-
 /**
  * One FIXED row: leading · title+subtitle · meta+trailing, with a full-bleed inset
  * separator auto-hidden on the last row. STATIC by default (a plain `<div>`);
@@ -1359,7 +1304,6 @@ interface ListRowProps {
     /** Resting state — the row keeps its box and divider, only the text shimmers. */
     isSkeleton?: boolean
 }
-
 const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
     const {
         leading,
@@ -1401,7 +1345,7 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
     // its own (otherwise it reads as dim/disabled).
     const leadingSlot = leading ?? (LeadingIcon ? <LeadingIcon aria-hidden focusable="false" className="size-5" /> : null)
     const metaSlot = meta ?? (metaText != null
-        ? <Typography.Base size="sm" weight="medium" className="text-accent-soft-foreground" text={metaText} />
+        ? <Typography size="sm" weight="medium" className="text-accent-soft-foreground" text={metaText} />
         : null)
     // §5.0a: `size-4` < `size-5` ⇒ the stroke gets thinner, so `weight="bold"` must be
     // forced to compensate — otherwise the trailing glyph reads noticeably fainter
@@ -1411,14 +1355,14 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
         <>
             {leadingSlot ? <div className="shrink-0">{leadingSlot}</div> : null}
             <div className="flex min-w-0 flex-col gap-0">
-                <Typography.Base size="sm"
+                <Typography size="sm"
                     truncate
                     isSkeleton={isSkeleton}
                     className={cn(underlineHover && "underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline", titleClassName)}
                     text={title}
                 />
                 {subtitle ? (
-                    <Typography.Base size="xs" color="muted" truncate isSkeleton={isSkeleton} text={subtitle} />
+                    <Typography size="xs" color="muted" truncate isSkeleton={isSkeleton} text={subtitle} />
                 ) : null}
             </div>
             {metaSlot || trailingSlot || selected ? (
@@ -1441,7 +1385,6 @@ const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
     }
     return <div aria-current={selected ? "true" : undefined} className={rowClassName} data-anat-part={anatPart}>{content}</div>
 }
-
 /**
  * One FREE-FORM row (`item.content`) — bespoke content instead of the fixed
  * leading/title/subtitle slots. The frame owns the padding + inset bottom
@@ -1452,7 +1395,6 @@ interface ListFreeRowProps {
     /** The row's data. */
     item: SurfaceCardListItem
 }
-
 const ListFreeRow = ({ item }: ListFreeRowProps) => {
     const { content, onPress, href, isDisabled = false, hover = "fill", className, anatPart } = item
     const withVerdict = itemVerdict(item)
@@ -1477,7 +1419,6 @@ const ListFreeRow = ({ item }: ListFreeRowProps) => {
     }
     return <div className={itemClassName} data-anat-part={anatPart}>{content}</div>
 }
-
 /**
  * Bounded SURFACE list card: one `bg-surface` container with a large radius holding
  * rows edge-to-edge, each with a full-bleed separator (the last row hides its own).
@@ -1525,11 +1466,11 @@ const List = ({
         </div>
     )
     if (bare) return surface
-    const caption = <Typography.Base size="xs" color="muted" isSkeleton={isSkeleton} text={description} />
+    const caption = <Typography size="xs" color="muted" isSkeleton={isSkeleton} text={description} />
     const withCaption = description != null ? (
         <div className="flex flex-col gap-2">
             {surface}
-            <div data-anat-part={showAnatomy ? "Typography.Base" : undefined}>{caption}</div>
+            <div data-anat-part={showAnatomy ? "Typography" : undefined}>{caption}</div>
         </div>
     ) : surface
     return (
@@ -1550,12 +1491,10 @@ const List = ({
         </section>
     )
 }
-
 // ─────────────────────────────────────────────────────────────────────────────
 // .Accordion — bounded surface of collapsible rows (was `SurfaceAccordionCard`)
 // ─────────────────────────────────────────────────────────────────────────────
-
-/** One collapsible section of a {@link SurfaceCard.Accordion}. */
+/** One collapsible section of a {@link SurfaceCardAccordion}. */
 export interface SurfaceCardAccordionItem {
     /** Stable id — also the expand key. */
     id: string
@@ -1568,8 +1507,7 @@ export interface SurfaceCardAccordionItem {
     /** Panel content, revealed when the item expands. */
     body: ReactNode
 }
-
-/** Props for {@link SurfaceCard.Accordion}. */
+/** Props for {@link SurfaceCardAccordion}. */
 export interface SurfaceCardAccordionProps extends SurfaceLabelProps {
     /** The collapsible sections, in order. REQUIRED — repeat list = data, never children. */
     items: ReadonlyArray<SurfaceCardAccordionItem>
@@ -1617,7 +1555,6 @@ export interface SurfaceCardAccordionProps extends SurfaceLabelProps {
     /** Storybook-only: badge this composite's OWN direct parts (Header/Surface/Row) for a BlockAnatomy panel. */
     showAnatomy?: boolean
 }
-
 /**
  * Divider colour between two accordion rows — SHARED SSOT for the REAL row and the
  * skeleton row, so the two never drift apart (§12c).
@@ -1625,7 +1562,6 @@ export interface SurfaceCardAccordionProps extends SurfaceLabelProps {
 const ACCORDION_SEPARATOR_STYLE = {
     "--separator": "color-mix(in oklab, var(--surface-foreground) 6%, transparent)",
 } as React.CSSProperties
-
 /** The bounded `bg-surface` frame of full-bleed collapsible rows. */
 const AccordionFrame = ({
     items,
@@ -1652,9 +1588,9 @@ const AccordionFrame = ({
                     <Accordion.Heading>
                         <Accordion.Trigger>
                             <div className="flex min-w-0 flex-1 flex-col gap-0 text-left">
-                                <Typography.Base size="sm" weight="medium" truncate text={item.title} />
+                                <Typography size="sm" weight="medium" truncate text={item.title} />
                                 {item.subtitle != null ? (
-                                    <Typography.Base size="xs" color="muted" truncate text={item.subtitle} />
+                                    <Typography size="xs" color="muted" truncate text={item.subtitle} />
                                 ) : null}
                             </div>
                             <div className="flex shrink-0 items-center gap-3">
@@ -1671,7 +1607,6 @@ const AccordionFrame = ({
         </Accordion>
     </div>
 )
-
 /**
  * Mirror skeleton of {@link AccordionFrame} ITSELF — the owner of the shape is
  * the owner of the skeleton (§12c), it doesn't borrow a shared skeleton component.
@@ -1708,11 +1643,11 @@ const AccordionFrameSkeleton = ({
                                 the shimmer bar is only glyph-height, so without this wrapper the
                                 loading row would sit shorter than the real row. */}
                             <span className="flex h-5 items-center">
-                                <Typography.Base size="sm" isSkeleton className="w-2/5" />
+                                <Typography size="sm" isSkeleton className="w-2/5" />
                             </span>
                             {item?.subtitle != null ? (
                                 <span className="flex h-4 items-center">
-                                    <Typography.Base size="xs" isSkeleton className="w-1/4" />
+                                    <Typography size="xs" isSkeleton className="w-1/4" />
                                 </span>
                             ) : null}
                         </div>
@@ -1727,11 +1662,10 @@ const AccordionFrameSkeleton = ({
         </div>
     )
 }
-
 /**
  * An "Accordion Card": one bounded `bg-surface` frame holding collapsible sections
  * whose separators run FULL-BLEED to the card edge — the same skin as
- * {@link SurfaceCard.List}, but each row expands. Pass `label` for a section header
+ * {@link SurfaceCardList}, but each row expands. Pass `label` for a section header
  * baked in above the card; omit it and the card renders bare (for a pane that
  * already has a tab/heading).
  *
@@ -1807,27 +1741,22 @@ const AccordionCard = ({
         </section>
     )
 }
-
 // ─────────────────────────────────────────────────────────────────────────────
 // .CrossList — static marked (✓/✗) list card (was `CrossListCard`)
 // ─────────────────────────────────────────────────────────────────────────────
-
 /** Per-row mark: success check · muted cross · none. */
 export type ListMark = "check" | "cross" | "none"
-
 /**
  * Tone of the mark — prominence climbs by TONE, the element stays (§2d):
  * `success` (green ✓ signal) · `muted` (recede, text leads) · `danger` (red — a hard
  * NEGATIVE signal: lost/blocked/warning row, not just "not included").
  */
 export type MarkTone = "success" | "muted" | "danger"
-
 const TONE_CLS: Record<MarkTone, string> = {
     success: "text-success-soft-foreground",
     muted: "text-muted",
     danger: "text-danger-soft-foreground",
 }
-
 const markIcon = (mark: ListMark, tone: MarkTone | undefined, anatPart: string | undefined): ReactNode => {
     if (mark === "check") {
         return (
@@ -1851,8 +1780,7 @@ const markIcon = (mark: ListMark, tone: MarkTone | undefined, anatPart: string |
     }
     return null
 }
-
-/** One row of a {@link SurfaceCard.CrossList}. */
+/** One row of a {@link SurfaceCardCrossList}. */
 export interface SurfaceCardCrossListItem {
     /** Stable React key. */
     key: string
@@ -1876,8 +1804,7 @@ export interface SurfaceCardCrossListItem {
     /** Anatomy tag for the leading mark ICON slot (per-slot — the icon is internal, not a prop). */
     markAnatPart?: string
 }
-
-/** Props for {@link SurfaceCard.CrossList}. */
+/** Props for {@link SurfaceCardCrossList}. */
 export interface SurfaceCardCrossListProps {
     /** The rows. REQUIRED — repeat list = data, never children. Ignored when `isSkeleton`. */
     items: ReadonlyArray<SurfaceCardCrossListItem>
@@ -1904,9 +1831,8 @@ export interface SurfaceCardCrossListProps {
      */
     showAnatomy?: boolean
 }
-
 /**
- * One row of a {@link SurfaceCard.CrossList}: an optional leading mark + a free body,
+ * One row of a {@link SurfaceCardCrossList}: an optional leading mark + a free body,
  * `p-3` with a full-bleed separator (the last row hides it).
  *
  * `isSkeleton` self-renders a mirror row (dot sized to the real mark icon + a `body-sm`
@@ -1928,7 +1854,7 @@ const CrossListRow = ({
             <>
                 <HeroSkeleton className="size-5 shrink-0 rounded-full" />
                 <div className="min-w-0 flex-1">
-                    <Typography.Base size="sm" isSkeleton className="w-3/4" />
+                    <Typography size="sm" isSkeleton className="w-3/4" />
                 </div>
             </>
         ) : (
@@ -1939,11 +1865,10 @@ const CrossListRow = ({
         )}
     </li>
 )
-
 /**
  * Static "brief list" of MARKED rows (✓ / ✗ / none) in a bounded `bg-surface` card with
  * full-bleed dividers — a single list can mix marks (e.g. a plan's included ✓ and excluded
- * ✗ features). Read-only; for CLICKABLE rows use {@link SurfaceCard.List}.
+ * ✗ features). Read-only; for CLICKABLE rows use {@link SurfaceCardList}.
  *
  * `isSkeleton` self-renders `skeletonRows` mirror rows (each row in its own skeleton
  * state) — consumer just flips the flag, no manual `<Skeleton>` assembly.
@@ -1976,12 +1901,10 @@ const CrossList = ({
             ))}
     </ul>
 )
-
 // ─────────────────────────────────────────────────────────────────────────────
 // .Placeholder — dashed "add new" tile (was `DashedPlaceholderCard`)
 // ─────────────────────────────────────────────────────────────────────────────
-
-/** Props for {@link SurfaceCard.Placeholder}. */
+/** Props for {@link SurfaceCardPlaceholder}. */
 export interface SurfaceCardPlaceholderProps {
     /**
      * Decorative leading icon (a Phosphor icon), rendered TRẦN — the frame
@@ -2010,7 +1933,6 @@ export interface SurfaceCardPlaceholderProps {
     /** Extra classes on the tile. */
     className?: string
 }
-
 /**
  * Generic "add new" tile — a pressable, dashed-border `rounded-3xl` card with
  * a centered icon + label, muted. Fills the available height of its grid cell
@@ -2041,11 +1963,10 @@ const Placeholder = ({
                 )}
             >
                 <HeroSkeleton className="size-8 rounded-xl" />
-                <Typography.Base size="sm" isSkeleton className="w-1/3" />
+                <Typography size="sm" isSkeleton className="w-1/3" />
             </div>
         )
     }
-
     return (
         <button
             type="button"
@@ -2067,11 +1988,10 @@ const Placeholder = ({
             <span aria-hidden className="[&>svg]:size-8">
                 {icon ?? <PlusIcon />}
             </span>
-            <Typography.Base size="sm" weight="medium" color="muted" text={label} />
+            <Typography size="sm" weight="medium" color="muted" text={label} />
         </button>
     )
 }
-
 /**
  * The card KHUNG namespace — every bounded card surface of the design system,
  * one import, nine members:
@@ -2088,14 +2008,4 @@ const Placeholder = ({
  * | `.CrossList` | `items` |
  * | `.Placeholder` | none (`icon`/`label`/`onPress`) |
  */
-export const SurfaceCard = {
-    Base,
-    Nested,
-    Pressable,
-    PressableGroup,
-    SelectableGroup,
-    List,
-    Accordion: AccordionCard,
-    CrossList,
-    Placeholder,
-}
+export { Base as SurfaceCard, Nested as SurfaceCardNested, Pressable as SurfaceCardPressable, PressableGroup as SurfaceCardPressableGroup, SelectableGroup as SurfaceCardSelectableGroup, List as SurfaceCardList, AccordionCard as SurfaceCardAccordion, CrossList as SurfaceCardCrossList, Placeholder as SurfaceCardPlaceholder }

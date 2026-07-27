@@ -57,7 +57,7 @@ export const PlaygroundCard = ({
     return (
         <Card className={cn("flex flex-col overflow-hidden rounded-3xl", className)}>
             <Card.Content className="flex flex-col gap-3">
-                <IconTile.Base
+                <IconTile
                     icon={TerminalWindowIcon}
                     tone="accent"
                     size="lg"
@@ -72,7 +72,7 @@ export const PlaygroundCard = ({
                     >
                         {title}
                     </Typography>
-                    <Chip.Base
+                    <Chip
                         tone="neutral"
                         icon={ListChecksIcon}
                         anatPart={showAnatomy ? "StatusChip" : undefined}

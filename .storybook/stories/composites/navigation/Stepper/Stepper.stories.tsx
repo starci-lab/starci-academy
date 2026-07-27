@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Stepper, type StepperStep } from "@sb-components/composites/navigation/Stepper/Stepper"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
-const meta: Meta<typeof Stepper.Base> = {
+const meta: Meta<typeof Stepper> = {
     title: "Composites/Navigation/Stepper",
-    component: Stepper.Base,
+    component: Stepper,
     tags: ["autodocs"],
     parameters: {
         layout: "fullscreen",
@@ -13,7 +13,7 @@ const meta: Meta<typeof Stepper.Base> = {
 
 export default meta
 
-type Story = StoryObj<typeof Stepper.Base>
+type Story = StoryObj<typeof Stepper>
 
 const CHECKOUT_STEPS: Array<StepperStep> = [
     { id: "info", label: "Details", description: "Fill in your info" },
@@ -22,12 +22,12 @@ const CHECKOUT_STEPS: Array<StepperStep> = [
 ]
 
 // Stepper's own circular indicator and connector line are internal geometry it draws itself
-// (§13z) with no dedicated sub-story to link to, so — unlike Typography.Base below — they carry
+// (§13z) with no dedicated sub-story to link to, so — unlike Typography below — they carry
 // no badge (a link-less node is worse than no node at all). Only the two repeated
-// Typography.Base nodes (label/description) get badged, once per step.
+// Typography nodes (label/description) get badged, once per step.
 const STEPPER_PARTS: Array<AnatomyNode> = [
-    { name: "Typography.Base", tier: "atom", role: "the step's short label text (repeats per step)", storyId: "atoms-text-typography-typography-base--plain" },
-    { name: "Typography.Base", tier: "atom", role: "the step's optional one-line description under the label (repeats per step)", storyId: "atoms-text-typography-typography-base--plain" },
+    { name: "Typography", tier: "atom", role: "the step's short label text (repeats per step)", storyId: "atoms-text-typography-typography--plain" },
+    { name: "Typography", tier: "atom", role: "the step's optional one-line description under the label (repeats per step)", storyId: "atoms-text-typography-typography--plain" },
 ]
 
 /** Horizontal, mid-flow: done = check, current = accent ring, upcoming = muted. */
@@ -44,8 +44,8 @@ export const HorizontalMidFlow: Story = {
                     {
                         name: "currentIndex = 1 (mid-flow)",
                         why: "The track lays three Indicator/Label/Description groups end to end with a Connector between each pair, and with `currentIndex=1` the first step shows its done check, the second carries the current accent ring, and the third stays muted as upcoming. Showing all three states together in one track lets a reader compare done, current, and upcoming without switching leaves.",
-                        code: "<Stepper.Base steps={CHECKOUT_STEPS} currentIndex={1} />",
-                        render: <Stepper.Base steps={CHECKOUT_STEPS} currentIndex={1} showAnatomy />,
+                        code: "<Stepper steps={CHECKOUT_STEPS} currentIndex={1} />",
+                        render: <Stepper steps={CHECKOUT_STEPS} currentIndex={1} showAnatomy />,
                     },
                 ]}
             />
@@ -66,9 +66,9 @@ export const Vertical: Story = {
                     {
                         name: "orientation = \"vertical\", onStepPress set",
                         why: "The same four parts stack along a vertical rail instead of a horizontal track, and passing `onStepPress` turns the done step into a `<button>` without adding a new part. A vertical stepper fits a narrow shell or a long step list where a horizontal track would run out of width.",
-                        code: "<Stepper.Base steps={CHECKOUT_STEPS} currentIndex={1} orientation=\"vertical\" onStepPress={handleStepPress} />",
+                        code: "<Stepper steps={CHECKOUT_STEPS} currentIndex={1} orientation=\"vertical\" onStepPress={handleStepPress} />",
                         render: (
-                            <Stepper.Base
+                            <Stepper
                                 steps={CHECKOUT_STEPS}
                                 currentIndex={1}
                                 orientation="vertical"
@@ -96,8 +96,8 @@ export const AllComplete: Story = {
                     {
                         name: "currentIndex = steps.length",
                         why: "Every Indicator switches to its done check and every Connector turns success-toned, because `currentIndex` has moved past the last step. This is the terminal state a checkout flow reaches right before it hands the learner off to a receipt or confirmation screen.",
-                        code: "<Stepper.Base steps={CHECKOUT_STEPS} currentIndex={CHECKOUT_STEPS.length} />",
-                        render: <Stepper.Base steps={CHECKOUT_STEPS} currentIndex={CHECKOUT_STEPS.length} showAnatomy />,
+                        code: "<Stepper steps={CHECKOUT_STEPS} currentIndex={CHECKOUT_STEPS.length} />",
+                        render: <Stepper steps={CHECKOUT_STEPS} currentIndex={CHECKOUT_STEPS.length} showAnatomy />,
                     },
                 ]}
             />

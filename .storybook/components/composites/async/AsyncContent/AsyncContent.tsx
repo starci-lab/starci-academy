@@ -4,8 +4,8 @@ import React from "react"
 import type { ReactNode, SVGProps } from "react"
 import { TrayIcon, WarningIcon, type Icon as PhosphorIcon } from "@phosphor-icons/react"
 
-import { Feedback, type FeedbackIcon } from "@sb-components/composites/feedback/Feedback/Feedback"
-// The ATOM `Button.Base`, NOT the `_legacy` version (§0 + teacher, 2026-07-26):
+import { FeedbackEmpty, type FeedbackIcon } from "@sb-components/composites/feedback/Feedback/Feedback"
+// The ATOM `Button`, NOT the `_legacy` version (§0 + teacher, 2026-07-26):
 // `AsyncContent` sits in the closure of the `CourseContents` screen, and that screen
 // is FORBIDDEN from touching `_legacy` — an import at the composite tier would drag the
 // whole dead branch back into the screen (caught by the 2026-07-27 deep-scan).
@@ -76,7 +76,7 @@ interface MessageProps {
     className?: string
     /**
      * Name THIS frame in the BlockAnatomy panel, overriding the internal default
-     * (`"Feedback.Empty"` / `"Feedback.Error"`).
+     * (`"FeedbackEmpty"` / `"Feedback.Error"`).
      *
      * Required by 11a.1: a caller badges its direct child by passing `anatPart` DOWN,
      * never by passing `showAnatomy` down. Without this prop, a screen that uses the
@@ -110,7 +110,7 @@ const composeAction = ({ action, onRetry, retryLabel, showAnatomy }: MessageProp
     }
     if (onRetry && retryLabel) {
         return (
-            <Button.Base
+            <Button
                 variant="secondary"
                 size="sm"
                 onPress={onRetry}
@@ -126,7 +126,7 @@ const composeAction = ({ action, onRetry, retryLabel, showAnatomy }: MessageProp
 // .Base — the 4-branch state switch (was `AsyncContent`)
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** Props for {@link AsyncContent.Base}. */
+/** Props for {@link AsyncContent}. */
 export interface AsyncContentBaseProps {
     /**
      * True while the FIRST load is running (no cache yet). While true,
@@ -143,7 +143,7 @@ export interface AsyncContentBaseProps {
     isEmpty?: boolean
     /**
      * The EMPTY branch slot, passed as PROPS (not a node) — forwarded straight
-     * to {@link AsyncContent.Empty}. Left empty → the empty branch renders null
+     * to {@link AsyncContentEmpty}. Left empty → the empty branch renders null
      * (the section hides itself).
      */
     emptyContent?: AsyncContentEmptyProps
@@ -154,7 +154,7 @@ export interface AsyncContentBaseProps {
     error?: unknown
     /**
      * The ERROR branch slot, passed as PROPS — forwarded straight to
-     * {@link AsyncContent.Error}. ⚠️ Left empty, the error branch does NOT
+     * {@link AsyncContentError}. ⚠️ Left empty, the error branch does NOT
      * activate (the frame falls through to loading/empty/content) — keeping the
      * old contract, no behaviour change in this consolidation.
      */
@@ -199,13 +199,13 @@ const Base = ({
     let branchName: string
     if (error && errorContent) {
         branch = <ErrorMessage {...errorContent} />
-        branchName = "AsyncContent.Error"
+        branchName = "AsyncContentError"
     } else if (isLoading) {
         branch = skeleton
         branchName = "Skeleton"
     } else if (isEmpty) {
         branch = emptyContent ? <Empty {...emptyContent} /> : null
-        branchName = "AsyncContent.Empty"
+        branchName = "AsyncContentEmpty"
     } else {
         branch = content ?? children
         branchName = "Content"
@@ -228,15 +228,15 @@ const Base = ({
 // .Empty — the empty-message frame (was `EmptyContent`)
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** Props for {@link AsyncContent.Empty} — the empty-message frame (props-only). */
+/** Props for {@link AsyncContentEmpty} — the empty-message frame (props-only). */
 export type AsyncContentEmptyProps = MessageProps
 
 /**
  * A standalone EMPTY-MESSAGE frame — tray icon, title + optional description,
  * and an action slot (or the "retry" shorthand), centred. This is the standard
- * `emptyContent` for {@link AsyncContent.Base}.
+ * `emptyContent` for {@link AsyncContent}.
  *
- * A THIN layer over the `Feedback.Empty` frame: it only adds the default
+ * A THIN layer over the `FeedbackEmpty` frame: it only adds the default
  * `TrayIcon` and wraps `onRetry`/`retryLabel` into a button for the `action`
  * slot — it does NOT redraw the icon + title + description + button itself.
  *
@@ -245,8 +245,8 @@ export type AsyncContentEmptyProps = MessageProps
 const Empty = (props: AsyncContentEmptyProps) => {
     const { title, description, icon, className, anatPart, showAnatomy } = props
     return (
-        <Feedback.Empty
-            anatPart={anatPart ?? (showAnatomy ? "Feedback.Empty" : undefined)}
+        <FeedbackEmpty
+            anatPart={anatPart ?? (showAnatomy ? "FeedbackEmpty" : undefined)}
             className={className}
             icon={withDuotone(icon ?? TrayIcon)}
             title={title}
@@ -260,23 +260,23 @@ const Empty = (props: AsyncContentEmptyProps) => {
 // .Error — the error-message frame (was `ErrorContent`)
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** Props for {@link AsyncContent.Error} — the error-message frame (props-only). */
+/** Props for {@link AsyncContentError} — the error-message frame (props-only). */
 export type AsyncContentErrorProps = MessageProps
 
 /**
  * A standalone ERROR-MESSAGE frame — warning icon, title + optional description,
  * and an action slot (usually "retry"), centred. This is the standard
- * `errorContent` for {@link AsyncContent.Base}.
+ * `errorContent` for {@link AsyncContent}.
  *
- * A THIN layer over the `Feedback.Empty` frame with `tone="danger"`.
+ * A THIN layer over the `FeedbackEmpty` frame with `tone="danger"`.
  *
  * @param props - {@link AsyncContentErrorProps}
  */
 const ErrorMessage = (props: AsyncContentErrorProps) => {
     const { title, description, icon, className, anatPart, showAnatomy } = props
     return (
-        <Feedback.Empty
-            anatPart={anatPart ?? (showAnatomy ? "Feedback.Empty" : undefined)}
+        <FeedbackEmpty
+            anatPart={anatPart ?? (showAnatomy ? "FeedbackEmpty" : undefined)}
             className={className}
             tone="danger"
             icon={withDuotone(icon ?? WarningIcon)}
@@ -296,8 +296,4 @@ const ErrorMessage = (props: AsyncContentErrorProps) => {
  * | `.Empty` | props-only (`title`/`description`/`icon`/`action`) |
  * | `.Error` | props-only (`title`/`description`/`icon`/`action`) |
  */
-export const AsyncContent = {
-    Base,
-    Empty,
-    Error: ErrorMessage,
-}
+export { Base as AsyncContent, Empty as AsyncContentEmpty, ErrorMessage as AsyncContentError }

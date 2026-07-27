@@ -1,12 +1,11 @@
 import React from "react"
 import { Skeleton as HeroSkeleton } from "@heroui/react"
 import { CheckCircleIcon, CircleIcon, LockIcon, PlayCircleIcon } from "@phosphor-icons/react"
-import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { VariantChip, type Difficulty } from "@sb-components/blocks/learn/VariantChip/VariantChip"
-
+import { SurfaceCardList } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { VariantChipDifficulty, type Difficulty } from "@sb-components/blocks/learn/VariantChip/VariantChip"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `KeepGoingPath.Base`: the CONTINUE-LEARNING PATH for the current module.
+ * BLOCK — `KeepGoingPath`: the CONTINUE-LEARNING PATH for the current module.
  *
  * WHY IT EXISTS (teacher's call 2026-07-25): **a SCREEN must never reach for an
  * atom — block only.** The `/learn/content` screen used to write its own heading
@@ -16,8 +15,8 @@ import { VariantChip, type Difficulty } from "@sb-components/blocks/learn/Varian
  * RENDER CONSISTENCY (teacher's eye-check 2026-07-25): **don't invent a new
  * render concept.** This cluster and `LearnNudges` right above it LOOK IDENTICAL
  * (a list of rows inside a bordered frame), so they must share ONE layout:
- * `SurfaceCard.List`. The first version of this block drew its own
- * `div.rounded-2xl.border` and stuffed `List.Row` into it — two render paths for
+ * `SurfaceCardList`. The first version of this block drew its own
+ * `div.rounded-2xl.border` and stuffed `ListRow` into it — two render paths for
  * one shape, exactly the drift that has to be swept away. The heading also goes
  * through SurfaceCard's `label` (rendered OUTSIDE/above the surface), not a
  * standalone `Typography`.
@@ -35,10 +34,8 @@ import { VariantChip, type Difficulty } from "@sb-components/blocks/learn/Varian
  * the wrong spot).
  * ─────────────────────────────────────────────────────────────────────────────
  */
-
 /** Learning state of a content item in the path. */
 export type KeepGoingContentState = "done" | "active" | "todo"
-
 /** A content item in the path — plain DATA, the block builds the shape itself. */
 export interface KeepGoingContent {
     /** Stable React key. */
@@ -49,14 +46,13 @@ export interface KeepGoingContent {
     minutes: number
     /** Done / in progress / not started — decides the leading icon. */
     state: KeepGoingContentState
-    /** Difficulty — the block builds `VariantChip.Difficulty` itself. */
+    /** Difficulty — the block builds `VariantChipDifficulty` itself. */
     difficulty: Difficulty
     /** Content belongs to a paid tier → shows the lock mark. */
     locked?: boolean
     /** Row press handler. */
     onPress?: () => void
 }
-
 /**
  * Leading icon per state — the block owns this table, the caller doesn't pick.
  * Goes through `leading` (a node) rather than `leadingIcon`, because each state
@@ -81,13 +77,11 @@ interface ContentLeadingStyle {
     /** Size + colour classes; every state stays on one round shape (see the note above). */
     className: string
 }
-
 const CONTENT_LEADING: Record<KeepGoingContentState, ContentLeadingStyle> = {
     active: { Icon: PlayCircleIcon, className: "size-5 text-accent-soft-foreground" },
     done: { Icon: CheckCircleIcon, className: "size-5 text-success-soft-foreground" },
     todo: { Icon: CircleIcon, className: "size-5 text-foreground" },
 }
-
 /**
  * A LOCKED content item → the lock icon **REPLACES** the state icon at the head of
  * the row instead of hanging a second one on the tail (teacher's call 2026-07-26).
@@ -103,7 +97,6 @@ const CONTENT_LEADING: Record<KeepGoingContentState, ContentLeadingStyle> = {
  * unread" is meaningless — **the lock IS its state**.
  */
 const LOCKED_LEADING = { Icon: LockIcon, className: "size-5 text-warning-soft-foreground" }
-
 /**
  * The MODULE this path belongs to.
  *
@@ -127,8 +120,7 @@ export interface ModuleLike {
     /** Module name WITHOUT any prefix — the block adds "Chương"/"Tiếp tục" itself. */
     name: string
 }
-
-/** Props for {@link KeepGoingPath.Base}. */
+/** Props for {@link KeepGoingPath}. */
 export interface KeepGoingPathBaseProps {
     /** The current module as an ENTITY — never a pre-baked string. See {@link ModuleLike}. */
     module: ModuleLike
@@ -136,8 +128,8 @@ export interface KeepGoingPathBaseProps {
     contents: Array<KeepGoingContent>
     /**
      * `true` → mirror shimmer INSTEAD OF waiting on `contents`. The flag FLOWS
-     * DOWN into `SurfaceCard.List` (keeps the box/row/divider, only the text turns
-     * to shimmer) and into `VariantChip.Difficulty` — both the atom and the frame
+     * DOWN into `SurfaceCardList` (keeps the box/row/divider, only the text turns
+     * to shimmer) and into `VariantChipDifficulty` — both the atom and the frame
      * already own their own `isSkeleton`.
      *
      * Empty while loading (`contents.length === 0`) → guesses **3** rows, matching
@@ -155,7 +147,6 @@ export interface KeepGoingPathBaseProps {
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
 }
-
 /** Placeholder DATA for the 3 guessed rows when `contents` is empty while loading (§12c). */
 const SKELETON_ROWS: Array<KeepGoingContent> = Array.from({ length: 3 }, (_unused, index) => ({
     id: `skeleton-${index}`,
@@ -164,7 +155,6 @@ const SKELETON_ROWS: Array<KeepGoingContent> = Array.from({ length: 3 }, (_unuse
     state: "todo",
     difficulty: "beginner",
 }))
-
 /**
  * Continue-learning path — module heading + content list, sharing its layout with
  * `LearnNudges`.
@@ -182,14 +172,13 @@ const KeepGoingPathBase = ({
     // shape for when real data arrives (§8). Once real `contents` exist, keep the
     // EXACT row count already there.
     const rows = isSkeleton && contents.length === 0 ? SKELETON_ROWS : contents
-
     return (
-        <SurfaceCard.List
+        <SurfaceCardList
             // The heading sentence is assembled by the BLOCK — the caller only hands over the module name.
             // EVERY word of the heading is decided HERE — "Tiếp tục", "Chương", the `·`.
             // The caller only supplies the number and the name.
             label={`Tiếp tục · Chương ${module.index} · ${module.name}`}
-            anatPart={anatPart ?? (showAnatomy ? "SurfaceCard.List" : undefined)}
+            anatPart={anatPart ?? (showAnatomy ? "SurfaceCardList" : undefined)}
             isSkeleton={isSkeleton}
             items={rows.map((content) => {
                 // A lock REPLACES the state icon, it isn't added on top at the row's tail.
@@ -215,12 +204,12 @@ const KeepGoingPathBase = ({
                     onPress: content.onPress,
                     // Meta now holds EXACTLY ONE thing: difficulty. The shape is owned by
                     // DESIGN — the block doesn't reshape the chip (§14d.1). The flag flows
-                    // straight down into the `VariantChip.Difficulty` atom.
+                    // straight down into the `VariantChipDifficulty` atom.
                     meta: (
-                        <VariantChip.Difficulty
+                        <VariantChipDifficulty
                             difficulty={content.difficulty}
                             isSkeleton={isSkeleton}
-                            anatPart={showAnatomy ? "VariantChip.Difficulty" : undefined}
+                            anatPart={showAnatomy ? "VariantChipDifficulty" : undefined}
                         />
                     ),
                 }
@@ -228,8 +217,5 @@ const KeepGoingPathBase = ({
         />
     )
 }
-
 /** `KeepGoingPath.*` — single-component namespace ⇒ only `.Base`. */
-export const KeepGoingPath = Object.assign(KeepGoingPathBase, {
-    Base: KeepGoingPathBase,
-})
+export { KeepGoingPathBase as KeepGoingPath }

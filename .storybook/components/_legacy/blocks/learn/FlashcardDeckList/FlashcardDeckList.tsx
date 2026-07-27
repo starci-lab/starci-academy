@@ -14,9 +14,9 @@ import { DeckCard, type DeckCardProps } from "@sb-components/_legacy/designs/lea
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK port of the flashcard-deck browse REGION
  * rendered by `@/components/features/learn/Flashcards/FlashcardDeckList`. A BLOCK
  * = a real layout region (not a lone item): search + result-count + grid/line
- * toggle + the deck grid, wrapped in `AsyncContent.Base` so loading / empty / error /
- * search-empty are all real states. Composes the `DeckCard` item + `AsyncContent.Base`
- * + `Toolbar.Base` primitives — NOT a hand-rolled one-off. Authored in Storybook (not
+ * toggle + the deck grid, wrapped in `AsyncContent` so loading / empty / error /
+ * search-empty are all real states. Composes the `DeckCard` item + `AsyncContent`
+ * + `Toolbar` primitives — NOT a hand-rolled one-off. Authored in Storybook (not
  * `src`); synced back later. NO `@/components` imports.
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -50,7 +50,7 @@ export interface FlashcardDeckListProps {
     /**
      * `true` → ANATOMY overlay: each composed part self-annotates with an ABSOLUTE
      * tier-tagged {@link AnatomyOverlay} (no layout change). `showAnatomy` cascades
-     * down to the composed DeckCard / Toolbar.Base / AsyncContent.Base. Dev/spec only.
+     * down to the composed DeckCard / Toolbar / AsyncContent. Dev/spec only.
      */
     showAnatomy?: boolean
     /** Extra classes on the block wrapper. */
@@ -62,7 +62,7 @@ const SKELETON_COUNT = 4
 
 /**
  * FlashcardDeckList — the deck-browse region. Owns the search filter, the
- * result-count, the grid/line view toggle, and the `AsyncContent.Base` state machine
+ * result-count, the grid/line view toggle, and the `AsyncContent` state machine
  * (loading → empty → error → content, plus its own search-empty branch). The
  * grid maps each deck onto a {@link DeckCard}; loading maps onto skeleton
  * DeckCards so the frame never shifts.
@@ -110,10 +110,10 @@ export const FlashcardDeckList = ({
     )
 
     // The list body: search-empty message OR the grid/line of decks. The muted
-    // line is a Typography FlashcardDeckList renders directly (inside AsyncContent.Base's
+    // line is a Typography FlashcardDeckList renders directly (inside AsyncContent's
     // content branch), so it still gets its own anatomy tag.
     const listBody = filteredDecks.length === 0 ? (
-        <Typography.Base size="sm"
+        <Typography size="sm"
             color="muted"
             showAnatomy={showAnatomy}
             text={`Không tìm thấy bộ thẻ nào khớp "${query.trim()}".`}
@@ -166,13 +166,13 @@ export const FlashcardDeckList = ({
                     ) : (
                         // Result-count Typography FlashcardDeckList renders directly —
                         // tagged like the loading Skeleton.Typography it mirrors above.
-                        <Typography.Base size="sm"
+                        <Typography size="sm"
                             color="muted"
                             showAnatomy={showAnatomy}
                             text={`Tìm thấy ${filteredDecks.length} bộ thẻ`}
                         />
                     )}
-                    <Toolbar.Base
+                    <Toolbar
                         variant="primary"
                         showAnatomy={showAnatomy}
                         leftTabs={{
@@ -189,7 +189,7 @@ export const FlashcardDeckList = ({
             </div>
 
             {/* LIST — the loading / empty / error / search-empty / data state machine. */}
-            <AsyncContent.Base
+            <AsyncContent
                 isLoading={isLoading && decks.length === 0}
                 skeleton={skeletonGrid}
                 isEmpty={decks.length === 0}
@@ -199,7 +199,7 @@ export const FlashcardDeckList = ({
                 showAnatomy={showAnatomy}
             >
                 {listBody}
-            </AsyncContent.Base>
+            </AsyncContent>
         </div>
     )
 }

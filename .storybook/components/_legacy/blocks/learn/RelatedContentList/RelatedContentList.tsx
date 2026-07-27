@@ -1,7 +1,7 @@
 import React from "react"
 import type { ReactNode } from "react"
 import { Label, cn } from "@heroui/react"
-import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCard, SurfaceCardList } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { AsyncContent } from "@sb-components/composites/async/AsyncContent/AsyncContent"
 import { EntityResultRow, type SearchCourseContentItem } from "@sb-components/_legacy/blocks/learn/EntityResultRow/EntityResultRow"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
@@ -10,7 +10,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported from
  * `@/components/blocks/learn/RelatedContentList`. Composes the local primitives
  * `SurfaceCard` khung (bordered frame) + `Skeleton` (loading rows) + the local
- * {@link EntityResultRow} sub-block; the `LabeledCard` (frameless) + `AsyncContent.Base`
+ * {@link EntityResultRow} sub-block; the `LabeledCard` (frameless) + `AsyncContent`
  * deps aren't ported yet so faithful local copies are inlined below.
  *
  * PORT DIVERGENCE (P4): the real block is DATA-FETCHING — it self-triggers a RAG
@@ -110,12 +110,12 @@ export const RelatedContentList = ({
 
     return (
         <LabeledCardFrameless label={label} className={cn(className)} showAnatomy={showAnatomy}>
-            <AsyncContent.Base
+            <AsyncContent
                 isLoading={isLoading}
                 showAnatomy={showAnatomy}
                 skeleton={
                     // Codemod 2026-07-26: `bordered` → `variant="nested"` (API 3-trục SurfaceCard).
-                    <SurfaceCard.List
+                    <SurfaceCardList
                         variant="nested"
                         anatPart={showAnatomy ? "SurfaceListCard" : undefined}
                         items={Array.from({ length: Math.min(limit, 2) }).map((_, index) => ({
@@ -136,8 +136,8 @@ export const RelatedContentList = ({
                     as the skeleton branch's `.List`), NOT `.List items`: EntityResultRow already
                     OWNS its row frame (px-4 py-3 + full-bleed separator), so a `.List` row would
                     double the padding + hairline. Codemod 2026-07-26: `bordered` → `variant="nested"`,
-                    `flushContent` → `padding="flush"` (API 3-trục SurfaceCard.Base). */}
-                <SurfaceCard.Base variant="nested" padding="flush" anatPart={showAnatomy ? "SurfaceListCard" : undefined}>
+                    `flushContent` → `padding="flush"` (API 3-trục SurfaceCard). */}
+                <SurfaceCard variant="nested" padding="flush" anatPart={showAnatomy ? "SurfaceListCard" : undefined}>
                     {filtered.map((item, index) => (
                         <EntityResultRow
                             key={`${item.kind}-${item.contentId ?? item.deckId ?? item.taskId ?? index}`}
@@ -146,8 +146,8 @@ export const RelatedContentList = ({
                             onSelect={(picked) => onSelect?.(picked)}
                         />
                     ))}
-                </SurfaceCard.Base>
-            </AsyncContent.Base>
+                </SurfaceCard>
+            </AsyncContent>
         </LabeledCardFrameless>
     )
 }

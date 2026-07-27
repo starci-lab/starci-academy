@@ -1,14 +1,14 @@
 import React from "react"
 import { GithubLogoIcon } from "@phosphor-icons/react"
-import { Feedback } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { FeedbackCallout } from "@sb-components/composites/feedback/Feedback/Feedback"
 import { Alert } from "@sb-components/atoms/feedback/Alert/Alert"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `CourseTeamGate.Base`: reminds the learner to join the course's GitHub team.
+ * BLOCK — `CourseTeamGate`: reminds the learner to join the course's GitHub team.
  *
  * REASON FOR EXISTING (§14a): a screen may only list BLOCKS. Before this, the
- * `/learn/content` screen called `Feedback.Callout` (composite tier) directly and wrote
+ * `/learn/content` screen called `FeedbackCallout` (composite tier) directly and wrote
  * the content itself — the screen was declaring a feature's details instead of just
  * naming it. This block is thin, but it exists for the TIER BOUNDARY + because it
  * owns the SHOW CONDITION (below).
@@ -24,12 +24,12 @@ import { Alert } from "@sb-components/atoms/feedback/Alert/Alert"
  * from the tree approved on 07/24 (the tree explicitly says "paid, not yet in team").
  * Keep this note so it doesn't flip back again.
  *
- * §14c — the block only ASSEMBLES: all of its visuals go through `Feedback.Callout`,
+ * §14c — the block only ASSEMBLES: all of its visuals go through `FeedbackCallout`,
  * it draws nothing itself.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** Props for {@link CourseTeamGate.Base}. */
+/** Props for {@link CourseTeamGate}. */
 export interface CourseTeamGateBaseProps {
     /**
      * Whether the learner has PAID for the course. Only paid learners have a team to
@@ -46,17 +46,17 @@ export interface CourseTeamGateBaseProps {
      * (not knowing yet means we can't decide whether to SELF-HIDE — the mirror must
      * show to hold the slot in the loading tree).
      *
-     * ⚠️ `Feedback.Callout` (the frame this block still uses on the live branch) does
+     * ⚠️ `FeedbackCallout` (the frame this block still uses on the live branch) does
      * NOT have `isSkeleton` yet and sits OUTSIDE the 4 files touched this pass, so the
-     * flag can't be forwarded through it. But `Feedback.Callout` is just a thin wrapper
-     * over the `Alert.Base` atom — and THAT atom already has `isSkeleton` (§12c). The
-     * skeleton branch below calls `Alert.Base` DIRECTLY (same `status`/`icon` that
-     * `Feedback.Callout` will use on the live branch) instead of hand-rolling a parallel
+     * flag can't be forwarded through it. But `FeedbackCallout` is just a thin wrapper
+     * over the `Alert` atom — and THAT atom already has `isSkeleton` (§12c). The
+     * skeleton branch below calls `Alert` DIRECTLY (same `status`/`icon` that
+     * `FeedbackCallout` will use on the live branch) instead of hand-rolling a parallel
      * warning box.
      */
     isSkeleton?: boolean
     /**
-     * Passed DOWN to `Feedback.Callout` so the anatomy panel can see what this block
+     * Passed DOWN to `FeedbackCallout` so the anatomy panel can see what this block
      * refs. Without forwarding it, the anatomy view can't tell what it's built from.
      */
     showAnatomy?: boolean
@@ -79,16 +79,16 @@ const CourseTeamGateBase = ({
     anatPart,
 }: CourseTeamGateBaseProps) => {
     // Loading: `isEnrolled`/`isInTeam` haven't come back yet, so we can't decide
-    // whether to self-hide — show the `Alert.Base` atom's mirror (see the
+    // whether to self-hide — show the `Alert` atom's mirror (see the
     // `isSkeleton` doc above for why it calls the atom directly instead of
-    // `Feedback.Callout`).
+    // `FeedbackCallout`).
     if (isSkeleton) {
         return (
-            <Alert.Base
+            <Alert
                 isSkeleton
                 status="warning"
                 icon={GithubLogoIcon}
-                anatPart={anatPart ?? (showAnatomy ? "Alert.Base" : undefined)}
+                anatPart={anatPart ?? (showAnatomy ? "Alert" : undefined)}
             />
         )
     }
@@ -99,8 +99,8 @@ const CourseTeamGateBase = ({
     }
 
     return (
-        <Feedback.Callout
-            anatPart={anatPart ?? (showAnatomy ? "Feedback.Callout" : undefined)}
+        <FeedbackCallout
+            anatPart={anatPart ?? (showAnatomy ? "FeedbackCallout" : undefined)}
             status="warning"
             icon={GithubLogoIcon}
             title="Bạn chưa vào GitHub team của khoá"
@@ -112,6 +112,4 @@ const CourseTeamGateBase = ({
 }
 
 /** `CourseTeamGate.*` — a single-component namespace ⇒ only has `.Base`. */
-export const CourseTeamGate = Object.assign(CourseTeamGateBase, {
-    Base: CourseTeamGateBase,
-})
+export { CourseTeamGateBase as CourseTeamGate }

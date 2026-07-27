@@ -42,9 +42,9 @@ interface FrameProps {
  * ─────────────────────────────────────────────────────────────────────────────
  * ATOM — `Input.*`: the field-control atom namespace (bọc HeroUI form controls).
  *
- * Members theo KIỂU input — `Input.Text` · `Input.Textarea` · `Input.Number` ·
- * `Input.Date` (mở rộng: Search/Password/Time…). Atom TỰ MANG nhãn/mô tả/lỗi/bắt
- * buộc qua {@link FrameProps} (compose thẳng `FieldFrame.Base`) — không còn
+ * Members theo KIỂU input — `InputText` · `InputTextarea` · `InputNumber` ·
+ * `InputDate` (mở rộng: Search/Password/Time…). Atom TỰ MANG nhãn/mô tả/lỗi/bắt
+ * buộc qua {@link FrameProps} (compose thẳng `FieldFrame`) — không còn
  * `Field` component riêng nào bọc bên ngoài atom này (tầng `Field.*` cũ đã bị
  * XOÁ theo §13c, note: câu cũ nói ngược — không phải "primitive bọc atom" mà
  * atom tự compose FieldFrame nội bộ).
@@ -93,12 +93,12 @@ type StringFieldProps = StringFieldOwnProps &
         | { isSkeleton?: false; value: string; onValueChange: (value: string) => void }
     )
 
-/** `Input.Text` — single-line text (HeroUI TextField+Input) + nhãn/mô tả/lỗi. */
+/** `InputText` — single-line text (HeroUI TextField+Input) + nhãn/mô tả/lỗi. */
 const InputText = ({ value, onValueChange, placeholder, isDisabled, isInvalid, ariaLabel, isSkeleton, showAnatomy, className, label, hint, errorMessage, isRequired }: StringFieldProps) => {
     const controlId = useId()
     const invalid = isInvalid || errorMessage != null
     return (
-        <FieldFrame.Base
+        <FieldFrame
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -121,11 +121,11 @@ const InputText = ({ value, onValueChange, placeholder, isDisabled, isInvalid, a
                     data-anat-part={showAnatomy ? "Input" : undefined}
                 />
             </HeroTextField>
-        </FieldFrame.Base>
+        </FieldFrame>
     )
 }
 
-/** `Input.Textarea` — multi-line (HeroUI TextArea), `rows` visible lines (default 3). */
+/** `InputTextarea` — multi-line (HeroUI TextArea), `rows` visible lines (default 3). */
 const InputTextarea = ({
     value,
     onValueChange,
@@ -145,7 +145,7 @@ const InputTextarea = ({
     const controlId = useId()
     const invalid = isInvalid || errorMessage != null
     return (
-        <FieldFrame.Base
+        <FieldFrame
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -169,11 +169,11 @@ const InputTextarea = ({
                     data-anat-part={showAnatomy ? "TextArea" : undefined}
                 />
             </HeroTextField>
-        </FieldFrame.Base>
+        </FieldFrame>
     )
 }
 
-/** `Input.Number` — numeric with stepper (HeroUI NumberField). */
+/** `InputNumber` — numeric with stepper (HeroUI NumberField). */
 const InputNumber = ({
     value,
     onValueChange,
@@ -205,7 +205,7 @@ const InputNumber = ({
 } & FrameProps) => {
     const invalid = isInvalid || errorMessage != null
     return (
-        <FieldFrame.Base
+        <FieldFrame
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -236,11 +236,11 @@ const InputNumber = ({
                     <HeroNumberField.IncrementButton />
                 </HeroNumberField.Group>
             </HeroNumberField>
-        </FieldFrame.Base>
+        </FieldFrame>
     )
 }
 
-/** `Input.Date` — date picker (HeroUI DatePicker + DateField segments + Calendar popover). */
+/** `InputDate` — date picker (HeroUI DatePicker + DateField segments + Calendar popover). */
 const InputDate = ({
     value,
     onValueChange,
@@ -270,7 +270,7 @@ const InputDate = ({
 } & FrameProps) => {
     const invalid = isInvalid || errorMessage != null
     return (
-        <FieldFrame.Base
+        <FieldFrame
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -304,11 +304,11 @@ const InputDate = ({
                     <Calendar aria-label={ariaLabel} />
                 </HeroDatePicker.Popover>
             </HeroDatePicker>
-        </FieldFrame.Base>
+        </FieldFrame>
     )
 }
 
-/** `Input.Search` — search field (HeroUI SearchField: leading icon + clear sẵn). */
+/** `InputSearch` — search field (HeroUI SearchField: leading icon + clear sẵn). */
 const InputSearch = ({
     value,
     onValueChange,
@@ -327,7 +327,7 @@ const InputSearch = ({
     const controlId = useId()
     const invalid = isInvalid || errorMessage != null
     return (
-        <FieldFrame.Base
+        <FieldFrame
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -353,11 +353,11 @@ const InputSearch = ({
                     <HeroSearchField.Input id={controlId} placeholder={placeholder} />
                 </HeroSearchField.Group>
             </HeroSearchField>
-        </FieldFrame.Base>
+        </FieldFrame>
     )
 }
 
-/** `Input.Password` — text ẩn + nút hiện/ẩn (Phosphor EyeIcon/EyeSlashIcon). */
+/** `InputPassword` — text ẩn + nút hiện/ẩn (Phosphor EyeIcon/EyeSlashIcon). */
 const InputPassword = ({
     value,
     onValueChange,
@@ -377,7 +377,7 @@ const InputPassword = ({
     const controlId = useId()
     const invalid = isInvalid || errorMessage != null
     return (
-        <FieldFrame.Base
+        <FieldFrame
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -413,11 +413,11 @@ const InputPassword = ({
                     </button>
                 </div>
             </HeroTextField>
-        </FieldFrame.Base>
+        </FieldFrame>
     )
 }
 
-/** `Input.Currency` — money amount (HeroUI NumberField + `formatOptions` currency). */
+/** `InputCurrency` — money amount (HeroUI NumberField + `formatOptions` currency). */
 const InputCurrency = ({
     value,
     onValueChange,
@@ -452,7 +452,7 @@ const InputCurrency = ({
 } & FrameProps) => {
     const invalid = isInvalid || errorMessage != null
     return (
-        <FieldFrame.Base
+        <FieldFrame
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -486,11 +486,11 @@ const InputCurrency = ({
                     <HeroNumberField.IncrementButton />
                 </HeroNumberField.Group>
             </HeroNumberField>
-        </FieldFrame.Base>
+        </FieldFrame>
     )
 }
 
-/** `Input.Time` — hh:mm segments (HeroUI TimeField). No calendar popover; `value` is a `TimeValue`. */
+/** `InputTime` — hh:mm segments (HeroUI TimeField). No calendar popover; `value` is a `TimeValue`. */
 const InputTime = ({
     value,
     onValueChange,
@@ -516,7 +516,7 @@ const InputTime = ({
 } & FrameProps) => {
     const invalid = isInvalid || errorMessage != null
     return (
-        <FieldFrame.Base
+        <FieldFrame
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -541,11 +541,11 @@ const InputTime = ({
                     <HeroTimeField.Input>{(segment) => <HeroTimeField.Segment segment={segment} />}</HeroTimeField.Input>
                 </HeroTimeField.Group>
             </HeroTimeField>
-        </FieldFrame.Base>
+        </FieldFrame>
     )
 }
 
-/** `Input.Otp` — bare one-time-code cells (HeroUI InputOTP), `length` slots, `value` a digit string. */
+/** `InputOtp` — bare one-time-code cells (HeroUI InputOTP), `length` slots, `value` a digit string. */
 const InputOtp = ({
     value,
     onValueChange,
@@ -576,7 +576,7 @@ const InputOtp = ({
 } & FrameProps) => {
     const invalid = isInvalid || errorMessage != null
     return (
-        <FieldFrame.Base
+        <FieldFrame
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -611,11 +611,11 @@ const InputOtp = ({
                     ))}
                 </HeroInputOTP.Group>
             </HeroInputOTP>
-        </FieldFrame.Base>
+        </FieldFrame>
     )
 }
 
-/** `Input.Tags` — token input: `value` a string[], add with Enter, remove with × (composes Chip.Base). */
+/** `InputTags` — token input: `value` a string[], add with Enter, remove with × (composes Chip). */
 const InputTags = ({
     value,
     onValueChange,
@@ -656,7 +656,7 @@ const InputTags = ({
     }
     const removeAt = (index: number) => onValueChange(value.filter((_, i) => i !== index))
     return (
-        <FieldFrame.Base
+        <FieldFrame
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -677,14 +677,14 @@ const InputTags = ({
             >
                 {value.map((tag, index) => (
                     <span key={`${tag}-${index}`} className="inline-flex">
-                        {/* Node name = the REAL component rendered here (`Chip.Base`, our own
+                        {/* Node name = the REAL component rendered here (`Chip`, our own
                             atom with its own story) — NOT the slot word "Chip" the wrapping
                             span used to carry. */}
-                        <Chip.Base
+                        <Chip
                             text={tag}
                             onRemove={isDisabled ? undefined : () => removeAt(index)}
                             removeLabel={removeLabel}
-                            anatPart={showAnatomy ? "Chip.Base" : undefined}
+                            anatPart={showAnatomy ? "Chip" : undefined}
                         />
                     </span>
                 ))}
@@ -706,7 +706,7 @@ const InputTags = ({
                     className="min-w-24 flex-1 bg-transparent px-1 py-0 text-sm outline-none"
                 />
             </div>
-        </FieldFrame.Base>
+        </FieldFrame>
     )
 }
 
@@ -714,15 +714,4 @@ const InputTags = ({
  * `Input.*` — field-control atom namespace. Tự mang nhãn/mô tả/lỗi qua
  * {@link FrameProps} — không có component tầng trên nào compose lại members.
  */
-export const Input = Object.assign(InputText, {
-    Text: InputText,
-    Textarea: InputTextarea,
-    Number: InputNumber,
-    Date: InputDate,
-    Search: InputSearch,
-    Password: InputPassword,
-    Currency: InputCurrency,
-    Time: InputTime,
-    Otp: InputOtp,
-    Tags: InputTags,
-})
+export { InputText, InputTextarea, InputNumber, InputDate, InputSearch, InputPassword, InputCurrency, InputTime, InputOtp, InputTags }

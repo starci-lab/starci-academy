@@ -10,7 +10,7 @@ import { CircleIcon, XIcon } from "@phosphor-icons/react"
  *
  * 1. **`Chip.Dot` XOÁ, gộp vào đây bằng `dotColor`/`dotClassName`.** Chấm trạng thái
  *    không phải một hình thái chip khác — nó là cùng viên chip, thay glyph dẫn đầu
- *    bằng một chấm. Y như `isIconOnly` của `Button.Base`. Nuôi hai component song
+ *    bằng một chấm. Y như `isIconOnly` của `Button`. Nuôi hai component song
  *    song nghĩa là mọi luật (tone · skeleton · nút ×) phải sửa hai chỗ, và khối nút
  *    × đã bị copy nguyên si sang bản thứ hai đúng như dự đoán.
  *
@@ -98,7 +98,7 @@ interface ChipBaseOwnProps {
     showAnatomy?: boolean
     /**
      * Tên `data-anat-part` gắn ở GỐC chip. Component BỌC nó (vd `ChipGroup`) truyền
-     * `"Chip.Base"` xuống để cây deps nhận ra "chỗ này là một Chip.Base" và cho bấm sang
+     * `"Chip"` xuống để cây deps nhận ra "chỗ này là một Chip" và cho bấm sang
      * story của nó — cây dựng từ DOM nên không có nhãn thì không thấy.
      */
     anatPart?: string

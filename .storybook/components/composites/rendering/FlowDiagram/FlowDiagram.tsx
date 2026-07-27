@@ -57,9 +57,9 @@ const FlowDiagramCardNode = ({ data, selected }: NodeProps) => {
                 )}
             >
                 {/* §10: container owns the gap (tight) — description no longer self-margins */}
-                <Typography.Base size="sm" weight="medium" text={label} />
+                <Typography size="sm" weight="medium" text={label} />
                 {description ? (
-                    <Typography.Base size="xs" color="muted" text={description} />
+                    <Typography size="xs" color="muted" text={description} />
                 ) : null}
             </div>
             <Handle type="source" position={Position.Bottom} className="!size-2 !border-none !bg-muted" />

@@ -7,7 +7,7 @@ import { Spinner } from "@sb-components/atoms/display/Spinner/Spinner"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK ported faithfully from
- * `@/components/blocks/feed/Composer`. Composed from the atom `Avatar.Base` +
+ * `@/components/blocks/feed/Composer`. Composed from the atom `Avatar` +
  * HeroUI TextField/TextArea/Button. Synced to `src` later.
  */
 
@@ -25,7 +25,7 @@ export interface ComposerProps {
     /** Placeholder shown while the field is empty. */
     placeholder?: string
     /**
-     * Optional leading avatar image url. When set, a small `Avatar.Base` sits
+     * Optional leading avatar image url. When set, a small `Avatar` sits
      * at the start of the row; omit to render the field flush to the edge.
      */
     avatarSrc?: string
@@ -100,7 +100,7 @@ export const Composer = ({
         <div className={cn("flex items-end gap-3", className)} data-anat-part={anatPart}>
             {/* optional leading avatar — omitted when no src is supplied */}
             {avatarSrc ? (
-                <Avatar.Base
+                <Avatar
                     size="sm"
                     src={avatarSrc}
                     className="mb-1 shrink-0"
@@ -144,7 +144,7 @@ export const Composer = ({
                     anatPart={showAnatomy ? "Button" : undefined}
                 >
                     {isSubmitting ? (
-                        <Spinner.Base size="sm" tone="current" />
+                        <Spinner size="sm" tone="current" />
                     ) : (
                         <PaperPlaneRightIcon
                             aria-hidden

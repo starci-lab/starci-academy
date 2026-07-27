@@ -17,18 +17,16 @@ import { ActivityAvatar } from "@sb-components/_legacy/designs/feed/ActivityAvat
 import { EntityLink } from "@sb-components/_legacy/designs/feed/EntityLink/EntityLink"
 import { FeedItem } from "@sb-components/_legacy/designs/feed/FeedItem/FeedItem"
 import { ReactionBar, ReactionType } from "@sb-components/_legacy/designs/feed/ReactionBar/ReactionBar"
-import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-
+import { SurfaceCardList } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK ported faithfully from
  * `@/components/blocks/feed/ActivityFeed`. Composed from the local feed blocks
  * `ActivityAvatar` + `EntityLink` + `FeedItem` + `ReactionBar` and the card
- * khung `SurfaceCard.List` (per-day surface). `LabeledCard` isn't ported yet, so
+ * khung `SurfaceCardList` (per-day surface). `LabeledCard` isn't ported yet, so
  * a faithful local copy of its `frameless subtleLabel` day-header is inlined here.
  * `@/modules` types, dayjs, and next-intl strings are inlined locally. Synced to
  * `src` later.
  */
-
 /** Local mirror of `ActivityType` from `@/modules/api/graphql/queries/types/my-feed`. */
 export enum ActivityType {
     LessonRead = "LESSON_READ",
@@ -41,7 +39,6 @@ export enum ActivityType {
     DiscussionCommented = "DISCUSSION_COMMENTED",
     UserFollowed = "USER_FOLLOWED",
 }
-
 /** Local mirror of `QueryMyFeedItemData`. */
 export interface QueryMyFeedItemData {
     id: string
@@ -56,7 +53,6 @@ export interface QueryMyFeedItemData {
     myReaction: ReactionType | null
     isMine: boolean
 }
-
 /** Activity-type → badge icon (phosphor `*Icon`) shown over the actor avatar. */
 const TYPE_ICON: Record<ActivityType, typeof BookOpenIcon> = {
     [ActivityType.LessonRead]: BookOpenIcon,
@@ -69,7 +65,6 @@ const TYPE_ICON: Record<ActivityType, typeof BookOpenIcon> = {
     [ActivityType.DiscussionCommented]: ChatCircleIcon,
     [ActivityType.UserFollowed]: UserPlusIcon,
 }
-
 /**
  * Inlined mirror of `dashboard.feed.*` — the Vietnamese sentence per activity type,
  * with the actor + target as {@link EntityLink}s. `noTarget` is the generic-noun
@@ -113,10 +108,8 @@ const PHRASE: Record<ActivityType, { withTarget: (actor: ReactNode, target: Reac
         noTarget: (a) => <>{a} đã theo dõi một người dùng</>,
     },
 }
-
 /** Grouped roll-up phrasing for consecutive milestone passes. */
 const milestoneGrouped = (actor: ReactNode, count: number): ReactNode => <>{actor} đã vượt qua {count} mốc</>
-
 /** Compact Vietnamese relative-time formatter (mirror of the shared time-ago helper). */
 const timeAgo = (iso: string): string => {
     const diffMs = Date.now() - new Date(iso).getTime()
@@ -134,24 +127,20 @@ const timeAgo = (iso: string): string => {
     }
     return `${Math.floor(diffMs / day)} ngày trước`
 }
-
 /** One rendered row: a single item, or a roll-up of consecutive milestone passes. */
 interface FeedRow {
     head: QueryMyFeedItemData
     count: number
 }
-
 /** A day bucket of feed rows under a relative day header. */
 interface DayGroup {
     key: string
     label: string
     rows: Array<FeedRow>
 }
-
 /** Start-of-day epoch ms for a date (local). */
 const startOfDayMs = (date: Date): number =>
     new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime()
-
 /**
  * Inlined mirror of `LabeledCard` (frameless + subtleLabel path only, the one
  * ActivityFeed uses): a subtle eyebrow header over frameless content. Not ported to
@@ -168,7 +157,6 @@ const DayHeaderSection = ({ label, children, anatPart }: { label: ReactNode, chi
         {children}
     </section>
 )
-
 /** Props for the {@link ActivityFeed} block. */
 export interface ActivityFeedProps {
     /** Activity items, newest first (already flattened across pages). */
@@ -185,7 +173,7 @@ export interface ActivityFeedProps {
      */
     onReact?: (activityId: string, type: ReactionType | null) => void
     /**
-     * Renders each day's `SurfaceCard.List` with a border instead of a shadow —
+     * Renders each day's `SurfaceCardList` with a border instead of a shadow —
      * pass `true` when the feed sits NESTED inside another surface.
      */
     bordered?: boolean
@@ -194,7 +182,6 @@ export interface ActivityFeedProps {
     /** When on, emit `data-anat-part` on each anatomy part for the BlockAnatomy panel. */
     showAnatomy?: boolean
 }
-
 /**
  * The shared Facebook-style activity feed renderer: each row is an
  * {@link ActivityAvatar} (avatar + activity-type icon badge) beside a sentence
@@ -231,7 +218,6 @@ export const ActivityFeed = ({
                 }
                 rows.push({ head: item, count: 1 })
             }
-
             const now = new Date()
             const todayMs = startOfDayMs(now)
             const dayMs = 86_400_000
@@ -263,7 +249,6 @@ export const ActivityFeed = ({
         },
         [items],
     )
-
     /** Render one feed row as a FeedItem (avatar+badge · sentence · relative time). */
     const renderRow = (row: FeedRow) => {
         const { head, count } = row
@@ -277,7 +262,6 @@ export const ActivityFeed = ({
         const avatarUrl = followedUser ? null : head.actorAvatar
         const grouped = head.type === ActivityType.MilestonePassed && count > 1
         const noTarget = head.targetLabel == null
-
         const actorEl = (
             <EntityLink
                 label={head.actorUsername}
@@ -298,7 +282,6 @@ export const ActivityFeed = ({
             : noTarget
                 ? PHRASE[head.type].noTarget(actorEl)
                 : PHRASE[head.type].withTarget(actorEl, targetEl)
-
         return (
             <FeedItem
                 anatPart={showAnatomy ? "FeedItem" : undefined}
@@ -328,15 +311,14 @@ export const ActivityFeed = ({
             </FeedItem>
         )
     }
-
     return (
         <div className={cn("flex flex-col gap-6", className)}>
             {dayGroups.map((group) => (
                 <DayHeaderSection key={group.key} label={group.label} anatPart={showAnatomy ? "DayHeaderSection" : undefined}>
                     {/* Codemod 2026-07-26: `bordered={bordered}` → `variant={bordered ? "nested" : "surface"}`
                         (API 3-trục SurfaceCard). Prop `bordered` của CHÍNH ActivityFeed vẫn giữ tên cũ — chỉ đổi
-                        cách nó rót vào SurfaceCard.List. */}
-                    <SurfaceCard.List
+                        cách nó rót vào SurfaceCardList. */}
+                    <SurfaceCardList
                         variant={bordered ? "nested" : "surface"}
                         anatPart={showAnatomy ? "SurfaceListCard" : undefined}
                         items={group.rows.map((row, index) => ({

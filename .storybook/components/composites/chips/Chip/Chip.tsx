@@ -8,7 +8,7 @@ import { RemovableToken } from "@sb-components/composites/chips/RemovableToken/R
  *
  * Gom các chip **COMPOSITE cùng tier** (Composites/Chips) vào MỘT root, giống
  * `Skeleton.*` — một import `Chip`, phát hiện dễ, đồng bộ. Consumer đổi
- * `<EnumChip/>` → `<Chip.Enum/>`, `<HighlightChip/>` → `<Chip.Highlight/>`, …
+ * `<EnumChip/>` → `<ChipEnum/>`, `<HighlightChip/>` → `<ChipHighlight/>`, …
  *
  * NAMING (thầy chốt 2026-07-24): base pill của HeroUI được **alias `HeroChip`**
  * ở nơi dùng — `Chip` là namespace CỦA MÌNH, KHÔNG mutate export HeroUI. Vì vậy
@@ -16,12 +16,12 @@ import { RemovableToken } from "@sb-components/composites/chips/RemovableToken/R
  *
  * ⚠️ `Dot` KHÔNG còn ở đây (thầy chốt 2026-07-25): chip chấm đã lên ATOM — và từ
  * 2026-07-26 nó cũng không còn là member riêng bên đó nữa, chấm là PROP của
- * `Chip.Base`. Block `DotChip` đã XOÁ; mọi chip domain gọi thẳng atom.
+ * `Chip`. Block `DotChip` đã XOÁ; mọi chip domain gọi thẳng atom.
  *
  * ⚠️ `Status` và `Tags` đã BỎ khỏi namespace này (2026-07-26) — cùng lý do TIER ở
  * dưới, chỉ là lần này atom bên kia đổi nên lộ ra: `StatusChip` bị xoá (nó chỉ là
- * `Chip.Base` khoá cứng `tone`) và `TagChips` thành `Chip.Group` của tầng ATOM.
- * Gọi thẳng `Chip.Base` / `Chip.Group` từ `atoms/chips/Chip/Chip`. Namespace này
+ * `Chip` khoá cứng `tone`) và `TagChips` thành `ChipGroup` của tầng ATOM.
+ * Gọi thẳng `Chip` / `ChipGroup` từ `atoms/chips/Chip/Chip`. Namespace này
  * chỉ còn chip đúng tier của nó.
  *
  * TIER (thầy chốt: chỉ gom cùng tier): CHỈ chip Composite ở đây. Chip DESIGN
@@ -34,12 +34,8 @@ import { RemovableToken } from "@sb-components/composites/chips/RemovableToken/R
  * `Design/Chips/HostPlatformChip`, KHÔNG còn xuất hiện trong `Chip.*` gallery.
  *
  * Composition = component import component: bình thường ở repo này (EnumChip
- * import `Chip.Base` của atom; ListRow import TitledText…). Compound chỉ
+ * import `Chip` của atom; ListRow import TitledText…). Compound chỉ
  * AGGREGATE, không thêm hành vi.
  * ─────────────────────────────────────────────────────────────────────────────
  */
-export const Chip = {
-    Enum: EnumChip,
-    Highlight: HighlightChip,
-    Removable: RemovableToken,
-} as const
+export { EnumChip as ChipEnum, HighlightChip as ChipHighlight, RemovableToken as ChipRemovable }

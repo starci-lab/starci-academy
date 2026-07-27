@@ -38,7 +38,7 @@ export interface HostPlatformChipProps {
  */
 export const HostPlatformChip = ({ hostPlatform, className, isSkeleton }: HostPlatformChipProps) => {
     if (isSkeleton) {
-        return <Chip.Base isSkeleton className={className} />
+        return <Chip isSkeleton className={className} />
     }
     // `Other` is intentionally unhandled — EnumChip throws on it, matching the
     // original switch `default` throw. Hence Partial rather than a full Record.

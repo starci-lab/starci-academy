@@ -60,6 +60,4 @@ const LogoBase = ({ className }: LogoProps) => {
 }
 
 /** `Logo.*` — StarCi brand-mark namespace. */
-export const Logo = Object.assign(LogoBase, {
-    Base: LogoBase,
-})
+export { LogoBase as Logo }

@@ -227,7 +227,7 @@ export const buildMarkdownRenderers = ({
         chipblock: ({ items }: { items?: string }) => (
             <span className="my-2 flex flex-wrap gap-2">
                 {String(items ?? "").split("|").filter(Boolean).map((keyword, index) => (
-                    <Chip.Base key={index} tone="neutral" text={keyword} />
+                    <Chip key={index} tone="neutral" text={keyword} />
                 ))}
             </span>
         ),

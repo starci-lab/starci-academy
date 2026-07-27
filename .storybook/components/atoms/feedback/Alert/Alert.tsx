@@ -7,7 +7,7 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
  * ─────────────────────────────────────────────────────────────────────────────
  * ATOM — `Alert.Base`: the ONE "a message with a valence and an exit" atom.
  *
- * Teacher finalized 2026-07-25: `Feedback.Callout` and `Toast.Base` turned out to
+ * Teacher finalized 2026-07-25: `FeedbackCallout` and `Toast` turned out to
  * be the SAME atom (a color-filled alert), differing only in PLACEMENT — callout
  * sits inside a surface, toast floats. Before this, each side had its own
  * `import { Alert } from "@heroui/react"` and kept its own color/close table →
@@ -21,7 +21,7 @@ import { Button } from "@sb-components/atoms/buttons/Button/Button"
  *
  * ICON (§5.0, teacher finalized 2026-07-26): ONE single set, `@phosphor-icons/react`.
  * Weight follows size (§5.0a): the indicator glyph at `size-5` ⇒ regular (no
- * `weight` passed); the × glyph inside `Button.Base size="sm"` gets forced to `size-3.5` ⇒ `weight="bold"`.
+ * `weight` passed); the × glyph inside `Button size="sm"` gets forced to `size-3.5` ⇒ `weight="bold"`.
  *
  * NAMESPACE (§13a): do NOT export a bare component — every member goes through `Alert.*`.
  *
@@ -71,7 +71,7 @@ const STATUS_TINT: Record<AlertStatus, string> = {
 }
 
 /**
- * Close (×) colour + hover tint per status. The `!` beats `Button.Base`'s own
+ * Close (×) colour + hover tint per status. The `!` beats `Button`'s own
  * `ghost` text/hover (a plain utility would lose to it). Hover = a tint of the
  * alert's OWN tone.
  */
@@ -92,7 +92,7 @@ const STATUS_CLOSE_TONE: Record<AlertStatus, string> = {
 const GLYPH_SCALE = "[&_svg]:size-5!"
 
 /**
- * The × glyph of the close button. `Button.Base size="sm"` forces the icon down
+ * The × glyph of the close button. `Button size="sm"` forces the icon down
  * to `size-3.5` — smaller than `size-5`, so §5.0a requires compensating with
  * `weight="bold"`; left at regular, the × stroke reads ~33% thinner than the
  * `size-5` indicator glyph sitting on the same row, showing two different weights.
@@ -203,15 +203,15 @@ const AlertBase = ({
                     <div className="mt-2 w-full">{body}</div>
                 ) : null}
             </HeroAlert.Content>
-            {/* §11a: `action` is a CALLER SLOT too (usually `Button.Base`, but the atom never
+            {/* §11a: `action` is a CALLER SLOT too (usually `Button`, but the atom never
                 forces that) — not badged for the same reason as `body` above. */}
             {action ? (
                 <div className="shrink-0">{action}</div>
             ) : null}
             {onClose ? (
-                // §11a: the badge stops at the "Close" node (atom `Button.Base`) — don't drill into the atom's guts.
-                <span className="shrink-0" data-anat-part={showAnatomy ? "Button.Base" : undefined}>
-                    <Button.Base isIconOnly
+                // §11a: the badge stops at the "Close" node (atom `Button`) — don't drill into the atom's guts.
+                <span className="shrink-0" data-anat-part={showAnatomy ? "Button" : undefined}>
+                    <Button isIconOnly
                         prefixIcon={CloseGlyph}
                         ariaLabel={closeAriaLabel ?? "Close"}
                         variant="ghost"
@@ -227,8 +227,6 @@ const AlertBase = ({
 
 /**
  * `Alert.*` — the alert ATOM namespace. `Alert.Base` is the ONE AND ONLY alert
- * surface of the system; `Feedback.Callout` (placed inside a surface) and `Toast.Base` (floating) both compose from it.
+ * surface of the system; `FeedbackCallout` (placed inside a surface) and `Toast` (floating) both compose from it.
  */
-export const Alert = Object.assign(AlertBase, {
-    Base: AlertBase,
-})
+export { AlertBase as Alert }

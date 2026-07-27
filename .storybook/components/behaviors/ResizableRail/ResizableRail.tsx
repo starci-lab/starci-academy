@@ -23,7 +23,7 @@ import { cn } from "@heroui/react"
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** Props for {@link ResizableRail.Base}. */
+/** Props for {@link ResizableRail}. */
 export interface ResizableRailBaseProps {
     /** Rail content (e.g. the content-map tree). */
     children: ReactNode
@@ -190,7 +190,7 @@ const Base = ({
             {/* splitter: a thin line at the chosen edge that thickens to accent on hover/drag.
                 ⚠️ 2026-07-28: `data-anat-part="Handle"` was dropped too — the splitter is this
                 frame's own internal geometry (no component/story of its own to link a reader
-                to, same as `Grid.Base`'s per-cell wrapper), so the badge only ever rendered
+                to, same as `Grid`'s per-cell wrapper), so the badge only ever rendered
                 invisibly as well. */}
             <div
                 role="separator"
@@ -219,6 +219,4 @@ const Base = ({
  * |---|---|
  * | `.Base` | `children` (one rail body) |
  */
-export const ResizableRail = {
-    Base,
-}
+export { Base as ResizableRail }

@@ -4,9 +4,9 @@ import { Tabs as HeroTabs, Badge as HeroBadge, Skeleton as HeroSkeleton, cn } fr
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Tabs.Base`: the ONE constrained tab-strip atom over HeroUI `Tabs`.
+ * ATOM — `Tabs`: the ONE constrained tab-strip atom over HeroUI `Tabs`.
  *
- * Data-driven (like `Chip.Base` is prop-driven): the caller passes `items`
+ * Data-driven (like `Chip` is prop-driven): the caller passes `items`
  * (id + label + optional `icon`/`badge`/`isDisabled`) and the atom renders the
  * FULL HeroUI compound internally — `Tabs.ListContainer > Tabs.List > Tabs.Tab`
  * (+ `Tabs.Indicator`) plus the `sr-only` `Tabs.Panel`s react-aria needs to keep
@@ -106,12 +106,12 @@ export const TabsBase = ({
 }: TabsBaseProps) => {
     if (isSkeleton) {
         // Leaf skeleton OWNED by the atom (hybrid C) — shape follows `variant`,
-        // known ahead of load same as `size` on Button.Base (§12g): `primary` is
+        // known ahead of load same as `size` on Button (§12g): `primary` is
         // a filled segmented pill, `secondary` an underline in-page tab, so its
         // shimmer is a label bar + underline bar, not a pill. Before this branch,
         // BOTH variants rendered the identical pill shimmer — a real layout jump
         // once secondary's actual underline tabs mounted (same bug class as the
-        // `Button.Base` skeleton once using one fixed width for every size).
+        // `Button` skeleton once using one fixed width for every size).
         // Real heroui render is each `HeroSkeleton` (`Skeleton`) bar itself, NOT the plain
         // wrapping `<div>` — tagging the div would be a made-up name (2026-07-27).
         if (variant === "secondary") {

@@ -16,8 +16,8 @@ import { FieldFrame, fieldName } from "@sb-components/atoms/forms/_field/FieldFr
  * ATOM — `Select.*`: the choose-from-a-list field-control atom namespace (bọc
  * HeroUI `Select` + `ComboBox`).
  *
- * Members theo CÁCH chọn — `Select.Single` (dropdown 1) · `Select.Multi` (nhiều) ·
- * `Select.Combobox` (autocomplete gõ-lọc). Atom TỰ mang nhãn/mô tả/lỗi/bắt buộc qua
+ * Members theo CÁCH chọn — `SelectSingle` (dropdown 1) · `SelectMulti` (nhiều) ·
+ * `SelectCombobox` (autocomplete gõ-lọc). Atom TỰ mang nhãn/mô tả/lỗi/bắt buộc qua
  * `FieldFrame` (thầy chốt 2026-07-25: label/errorMessage tính VÀO atom, KHÔNG tách
  * Field composite). Bỏ hết frame-prop → atom là ô control TRẦN (FieldFrame render
  * thẳng trigger).
@@ -93,7 +93,7 @@ interface BaseSelectProps extends FrameProps {
 }
 
 /**
- * `Select.Single` — dropdown chọn MỘT (HeroUI Select single). Trigger hiện nhãn
+ * `SelectSingle` — dropdown chọn MỘT (HeroUI Select single). Trigger hiện nhãn
  * option đang chọn (hoặc placeholder), popover là ListBox các dòng.
  */
 const SelectSingle = ({
@@ -120,7 +120,7 @@ const SelectSingle = ({
     const invalid = isInvalid || errorMessage != null
     const selected = options.find((option) => option.value === value)
     return (
-        <FieldFrame.Base
+        <FieldFrame
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -168,12 +168,12 @@ const SelectSingle = ({
                     </HeroListBox.Root>
                 </HeroSelect.Popover>
             </HeroSelect.Root>
-        </FieldFrame.Base>
+        </FieldFrame>
     )
 }
 
 /**
- * `Select.Multi` — dropdown chọn NHIỀU (HeroUI Select `selectionMode="multiple"`).
+ * `SelectMulti` — dropdown chọn NHIỀU (HeroUI Select `selectionMode="multiple"`).
  * Trigger tóm tắt số/nhãn đã chọn; mỗi dòng list toggle bật/tắt.
  */
 const SelectMulti = ({
@@ -205,7 +205,7 @@ const SelectMulti = ({
     const summary =
         chosen.length === 0 ? null : chosen.length === 1 ? chosen[0].label : `${chosen.length} selected`
     return (
-        <FieldFrame.Base
+        <FieldFrame
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -229,7 +229,7 @@ const SelectMulti = ({
                 {/* Node name = the REAL heroui component rendered here (`Select.Trigger`) —
                     NOT the slot word "Trigger" it used to carry. The summary `<span>` below
                     stays untagged: it's a plain hand-rolled text slot, not a real component
-                    (Select.Multi doesn't compose `Select.Value` — see the JSDoc above). */}
+                    (SelectMulti doesn't compose `Select.Value` — see the JSDoc above). */}
                 <HeroSelect.Trigger data-anat-part={showAnatomy ? "Select.Trigger" : undefined}>
                     <span className={cn("text-sm", summary == null && "text-field-placeholder")}>
                         {summary ?? placeholder}
@@ -252,12 +252,12 @@ const SelectMulti = ({
                     </HeroListBox.Root>
                 </HeroSelect.Popover>
             </HeroSelect.Root>
-        </FieldFrame.Base>
+        </FieldFrame>
     )
 }
 
 /**
- * `Select.Combobox` — autocomplete gõ-lọc chọn MỘT (HeroUI ComboBox). Input cho gõ,
+ * `SelectCombobox` — autocomplete gõ-lọc chọn MỘT (HeroUI ComboBox). Input cho gõ,
  * react-aria tự lọc `defaultItems` theo text; caret mở toàn bộ danh sách.
  */
 const SelectCombobox = ({
@@ -283,7 +283,7 @@ const SelectCombobox = ({
 }) => {
     const invalid = isInvalid || errorMessage != null
     return (
-        <FieldFrame.Base
+        <FieldFrame
             label={label}
             hint={hint}
             errorMessage={errorMessage}
@@ -331,7 +331,7 @@ const SelectCombobox = ({
                     </HeroListBox>
                 </HeroComboBox.Popover>
             </HeroComboBox>
-        </FieldFrame.Base>
+        </FieldFrame>
     )
 }
 
@@ -340,8 +340,4 @@ const SelectCombobox = ({
  * over HeroUI `Select`, Combobox over HeroUI `ComboBox`; atom fields compose
  * these members (xem block `Select`).
  */
-export const Select = Object.assign(SelectSingle, {
-    Single: SelectSingle,
-    Multi: SelectMulti,
-    Combobox: SelectCombobox,
-})
+export { SelectSingle, SelectMulti, SelectCombobox }

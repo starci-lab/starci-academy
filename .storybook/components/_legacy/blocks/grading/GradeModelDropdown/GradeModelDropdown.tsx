@@ -17,9 +17,8 @@ import {
 } from "@heroui/react"
 import { AiCategoryChip, AiModelCategory } from "@sb-components/_legacy/designs/chips/AiCategoryChip/AiCategoryChip"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
-import { Button as AtomButton } from "@sb-components/atoms/buttons/Button/Button"
+import { ButtonRadioGroup } from "@sb-components/atoms/buttons/Button/Button"
 import { SelfHostGpuMark } from "@sb-components/_legacy/designs/grading/SelfHostGpuMark/SelfHostGpuMark"
-
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — faithful port of
@@ -35,9 +34,7 @@ import { SelfHostGpuMark } from "@sb-components/_legacy/designs/grading/SelfHost
  * the block renders in isolation.
  * ─────────────────────────────────────────────────────────────────────────────
  */
-
 export { AiModelCategory }
-
 /** Task a model is suited for (mirrors backend `AiModelTask`). Drives picker visibility. */
 export enum AiModelTask {
     Chatting = "chatting",
@@ -46,7 +43,6 @@ export enum AiModelTask {
     TaskGrading = "task_grading",
     ChallengeGrading = "challenge_grading",
 }
-
 /** Provider serving a model (mirrors backend `ModelProvider`). */
 export enum ModelProvider {
     Gemini = "gemini",
@@ -55,7 +51,6 @@ export enum ModelProvider {
     OpenRouter = "openrouter",
     Anthropic = "anthropic",
 }
-
 /** One selectable model for the grading picker (mirrors backend `AiGradableModelData`). */
 export interface AiGradableModel {
     /** Concrete model name (e.g. "gpt-4o"). */
@@ -71,7 +66,6 @@ export interface AiGradableModel {
     /** Tasks this model is suited for — pickers filter by this. */
     supportedTasks: Array<AiModelTask>
 }
-
 /** Latest probe outcome for one model — drives the picker health chip. */
 export interface ModelHealth {
     /** Whether the latest 1-token probe succeeded. */
@@ -81,7 +75,6 @@ export interface ModelHealth {
     /** Short failure reason when the probe failed (shown on hover), else null. */
     errorMessage: string | null
 }
-
 /**
  * STORYBOOK STUB of the `useAiModelLatency` socket hook. In `src` this reads the
  * public `aiModelLatency` snapshot + `/system_health` socket; here it degrades to
@@ -89,7 +82,6 @@ export interface ModelHealth {
  * shows no health chip — its documented "empty until BE ships probes" state).
  */
 const useAiModelLatency = (): Map<string, ModelHealth> => new Map()
-
 /** Localized category labels (in `src`: `t(\`aiSettings.categories.${category}\`)`). */
 const AI_CATEGORY_LABEL: Record<AiModelCategory, string> = {
     [AiModelCategory.Free]: "Miễn phí",
@@ -98,7 +90,6 @@ const AI_CATEGORY_LABEL: Record<AiModelCategory, string> = {
     [AiModelCategory.Premium]: "Cao cấp",
     [AiModelCategory.Frontier]: "Đỉnh",
 }
-
 /**
  * Model selection emitted by the picker. `model`/`provider` null = the Auto
  * lane (the balancer picks); a pinned model runs on that model. Structurally
@@ -111,14 +102,12 @@ export interface GradeModelSelection {
     /** Provider of the pinned model, or null for the Auto lane. */
     provider: ModelProvider | null
 }
-
 /** Categories that need an unlock (paid OR enrolled) to pick. */
 const PLAN_CATEGORIES: ReadonlyArray<AiModelCategory> = [
     AiModelCategory.Balanced,
     AiModelCategory.Premium,
     AiModelCategory.Frontier,
 ]
-
 /** Category ladder cheapest → strongest — for "below the floor" comparison. */
 const CATEGORY_ORDER: ReadonlyArray<AiModelCategory> = [
     AiModelCategory.Free,
@@ -127,7 +116,6 @@ const CATEGORY_ORDER: ReadonlyArray<AiModelCategory> = [
     AiModelCategory.Premium,
     AiModelCategory.Frontier,
 ]
-
 /** Tier facet options (incl. the "all" reset). */
 const TIER_FILTERS: ReadonlyArray<AiModelCategory | "all"> = [
     "all",
@@ -137,7 +125,6 @@ const TIER_FILTERS: ReadonlyArray<AiModelCategory | "all"> = [
     AiModelCategory.Premium,
     AiModelCategory.Frontier,
 ]
-
 /**
  * Live health badge on each model row — a green dot + latency (up) or a red dot
  * + "down" (failing probe), styled like the category chip. Driven by the public
@@ -145,13 +132,12 @@ const TIER_FILTERS: ReadonlyArray<AiModelCategory | "all"> = [
  */
 const ModelHealthChip = ({ ok, latencyMs, errorMessage }: ModelHealth) => {
     const chip = (
-        <Chip.Base
+        <Chip
             tone={ok ? "success" : "danger"}
             dotClassName={ok ? "text-success" : "text-danger"}
             text={ok ? `${latencyMs}ms` : "Ngưng"}
         />
     )
-
     if (!ok && errorMessage) {
         return (
             <Tooltip>
@@ -162,20 +148,15 @@ const ModelHealthChip = ({ ok, latencyMs, errorMessage }: ModelHealth) => {
             </Tooltip>
         )
     }
-
     return <span className="shrink-0">{chip}</span>
 }
-
 /** Models self-hosted on StarCi GPU hardware (v1 hardcode; move to catalog later). */
 const SELF_HOST_GPU_MODELS = new Set(["qwen2.5-coder:7b"])
-
 const showSelfHostMark = (model: AiGradableModel) =>
     model.provider === ModelProvider.Local && SELF_HOST_GPU_MODELS.has(model.model)
-
 /** Dropdown row width — popover must be bounded or `truncate` never fires. */
 const DROPDOWN_POPOVER_CLASS = "w-80 max-w-[calc(100vw-2rem)]"
 const DROPDOWN_ITEM_ROW_CLASS = "w-full min-w-0 overflow-hidden"
-
 /**
  * HeroUI's `Select.Indicator` chevron, replicated 1:1 (same 16×16 viewBox + path)
  * so the `isDropdown` trigger's caret is IDENTICAL to the Select dropdowns beside
@@ -192,7 +173,6 @@ const FieldChevronDown = () => (
     </svg>
 )
 const MODEL_ROW_TRIGGER_CLASS = "block w-full min-w-0"
-
 /** Model row — name truncates on the left, chips stay pinned on the right. */
 const ModelRowLayout = ({
     leading,
@@ -232,7 +212,6 @@ const ModelRowLayout = ({
         <span className="flex shrink-0 items-center justify-end gap-2">{trailing}</span>
     </div>
 )
-
 export interface GradeModelDropdownProps {
     /** Enabled models the user can pick from (from the `aiModels` catalog). */
     models: Array<AiGradableModel>
@@ -291,7 +270,6 @@ export interface GradeModelDropdownProps {
     /** Extra classes on the trigger. */
     className?: string
 }
-
 /**
  * Shared lane + model picker (grading, AI lab, any model-select surface).
  *
@@ -366,7 +344,6 @@ export const GradeModelDropdown = ({
     // when the Auto lane is hidden and nothing is picked yet)
     const triggerLabel = selection.model
         ?? (showAutoLane ? "Tự động" : "Chọn model")
-
     return (
         <Dropdown
             isOpen={isOpen}
@@ -511,7 +488,7 @@ export const GradeModelDropdown = ({
                     {/* tier filter — Button.RadioGroup inside popover surface */}
                     {tierChips.length > 1 ? (
                         <div className="px-2 pt-2">
-                            <AtomButton.RadioGroup
+                            <ButtonRadioGroup
                                 ariaLabel="Lọc theo hạng"
                                 value={tierFilter}
                                 onChange={setTierFilter}

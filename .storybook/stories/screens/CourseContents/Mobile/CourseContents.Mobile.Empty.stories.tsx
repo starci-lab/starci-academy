@@ -4,7 +4,7 @@ import { deviceLeaf } from "@sb-components/screens/CourseContents/_shared"
 
 /**
  * SCREEN `/learn/content` at MOBILE (375px, below `@app-sm`) — EMPTY: the course has no
- * contents yet, so `AsyncContent.Empty` replaces the WHOLE dashboard spine.
+ * contents yet, so `AsyncContentEmpty` replaces the WHOLE dashboard spine.
  */
 const W = 375
 
@@ -19,5 +19,5 @@ export default meta
 type Story = StoryObj<typeof CourseContents>
 
 export const Default: Story = {
-    render: () => deviceLeaf({ width: W, isEmpty: true, leaf: "Default", reason: "Mobile 375px · no contents yet — AsyncContent.Empty replaces the whole spine." }),
+    render: () => deviceLeaf({ width: W, isEmpty: true, leaf: "Default", reason: "Mobile 375px · no contents yet — AsyncContentEmpty replaces the whole spine." }),
 }

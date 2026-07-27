@@ -2,7 +2,7 @@ import React from "react"
 import { Chip as HeroChip, cn } from "@heroui/react"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import type { IconComponent } from "@sb-components/atoms/chips/Chip/Chip"
-import { Typography as TypographyAtom } from "@sb-components/atoms/text/Typography/Typography"
+import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
@@ -24,7 +24,7 @@ export interface HeroBannerProps extends WithClassNames<undefined> {
     eyebrow: React.ReactNode
     /**
      * Optional leading icon for the eyebrow chip — COMPONENT, not element: the atom
-     * `Chip.Base` owns the glyph scale/weight (§4/§5.0a), so the caller only picks the shape.
+     * `Chip` owns the glyph scale/weight (§4/§5.0a), so the caller only picks the shape.
      */
     eyebrowIcon?: IconComponent
     /** Headline — pass a rich node so the caller controls emphasis/strikethrough. */
@@ -87,9 +87,9 @@ export const HeroBanner = ({
                 hasVisual ? "flex-1 items-start text-left" : "items-center text-center",
             )}
         >
-            <Chip.Base tone="accent" icon={eyebrowIcon} anatPart={showAnatomy ? "StatusChip" : undefined} text={eyebrow} />
+            <Chip tone="accent" icon={eyebrowIcon} anatPart={showAnatomy ? "StatusChip" : undefined} text={eyebrow} />
 
-            <TypographyAtom.Base
+            <Typography
                 size="h1"
                 weight="bold"
                 align={align}
@@ -98,7 +98,7 @@ export const HeroBanner = ({
                 text={headline}
             />
 
-            <TypographyAtom.Base
+            <Typography
                 color="muted"
                 align={align}
                 className="max-w-2xl whitespace-pre-line"
@@ -124,7 +124,7 @@ export const HeroBanner = ({
                     )}
                 >
                     {keywordsLabel ? (
-                        <TypographyAtom.Base size="xs" text={keywordsLabel} color="muted" showAnatomy={showAnatomy} />
+                        <Typography size="xs" text={keywordsLabel} color="muted" showAnatomy={showAnatomy} />
                     ) : null}
                     {keywords.map((lang) => (
                         // brand-coloured chip — the language's official colour as a bg/10 + text tint

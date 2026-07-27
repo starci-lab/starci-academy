@@ -3,7 +3,7 @@ import type { ReactNode } from "react"
 import { Label, Switch, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { TitledText } from "@sb-components/composites/text/TitledText/TitledText"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-import { Choice } from "@sb-components/atoms/forms/Choice/Choice"
+import { ChoiceSwitch } from "@sb-components/atoms/forms/Choice/Choice"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -36,7 +36,7 @@ import { Choice } from "@sb-components/atoms/forms/Choice/Choice"
 // .Row — the generic GitHub-style list row (was `lists/ListRow`)
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** Props for {@link List.Row}. */
+/** Props for {@link ListRow}. */
 export interface ListRowProps {
     /**
      * Optional leading node rendered before the text column, kept at its
@@ -101,7 +101,7 @@ const SKELETON_LINE = "—"
 /**
  * The row's skeleton mirror — SAME frame (`flex items-center gap-3 py-2`) and the
  * same two/three nodes as the live row, so a loading list holds the real shape.
- * Shared by {@link List.Row}'s own `isSkeleton` and by {@link List.Labeled}'s
+ * Shared by {@link ListRow}'s own `isSkeleton` and by {@link ListLabeled}'s
  * loading state (which has no items yet to mirror).
  */
 const RowSkeleton = ({
@@ -229,7 +229,7 @@ const Row = ({
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
- * One row of a {@link List.Labeled} — the SAME data shape as {@link List.Row}
+ * One row of a {@link ListLabeled} — the SAME data shape as {@link ListRow}
  * (which renders it), plus a stable React key. `isSkeleton`/`showAnatomy` are
  * owned by the frame, not by the item.
  */
@@ -238,7 +238,7 @@ export interface ListLabeledItem extends Omit<ListRowProps, "isSkeleton" | "show
     key: string
 }
 
-/** Props for {@link List.Labeled}. */
+/** Props for {@link ListLabeled}. */
 export interface ListLabeledProps {
     /** Section label (text) shown above the list. */
     label: ReactNode
@@ -275,7 +275,7 @@ export interface ListLabeledProps {
 
 /**
  * A labeled vertical list — NO card frame: an icon + `Label` header, a `gap-2`
- * stack of {@link List.Row}s built from `items`, and an optional footer action,
+ * stack of {@link ListRow}s built from `items`, and an optional footer action,
  * with the three groups spaced `gap-3` (label ↔ list ↔ action). For rail / panel
  * blocks that are a "label + short list (+ CTA)" where a full card would be too
  * heavy (e.g. the lesson rail's review / practice panels).
@@ -317,11 +317,11 @@ const Labeled = ({
 // .Meta — inline meta line: signal chip + dot-joined segments (was `MetaRow`)
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** Props for {@link List.Meta}. */
+/** Props for {@link ListMeta}. */
 export interface ListMetaProps {
     /**
      * Optional leading signal chip — the ONE prominent token in the row (e.g. a
-     * warning `Chip.Base` for a deadline). Omit for a plain muted meta line.
+     * warning `Chip` for a deadline). Omit for a plain muted meta line.
      */
     chip?: ReactNode
     /**
@@ -343,7 +343,7 @@ export interface ListMetaProps {
 
 /**
  * A single inline META ROW: an optional leading SIGNAL chip (the one prominent
- * token — e.g. a `Chip.Base`) followed by neutral secondary meta segments joined
+ * token — e.g. a `Chip`) followed by neutral secondary meta segments joined
  * by a middot `·`, all muted. Consolidates the dot-separated meta line hand-rolled
  * across many blocks. The chip carries the ONE signal; everything after stays
  * muted (principles §2 color-prominence).
@@ -354,7 +354,7 @@ const Meta = ({ chip, items, className, anatPart, showAnatomy = false }: ListMet
     <div className={cn("flex min-w-0 items-center gap-2", className)} data-anat-part={anatPart}>
         {chip ? <span className="shrink-0">{chip}</span> : null}
         {items.length > 0 ? (
-            <Typography.Base size="xs"
+            <Typography size="xs"
                 text={(
                     <>
                         {items.map((item, index) => (
@@ -381,7 +381,7 @@ const Meta = ({ chip, items, className, anatPart, showAnatomy = false }: ListMet
 // .ToggleRow — settings row with a trailing Switch (was `SettingToggleRow`)
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** Props for {@link List.ToggleRow}. */
+/** Props for {@link ListToggleRow}. */
 export interface ListToggleRowProps {
     /**
      * Row label — short, single line (e.g. "Khoá hồ sơ").
@@ -449,12 +449,12 @@ const ToggleRow = ({
                     className="flex-1"
                     anatPart={showAnatomy ? "TitledText" : undefined}
                 />
-                <Choice.Switch
+                <ChoiceSwitch
                     isSkeleton
                     isSelected={false}
                     onValueChange={() => undefined}
                     className="shrink-0"
-                    anatPart={showAnatomy ? "Choice.Switch" : undefined}
+                    anatPart={showAnatomy ? "ChoiceSwitch" : undefined}
                 />
             </div>
         )
@@ -497,9 +497,4 @@ const ToggleRow = ({
  * | `.Meta` | `chip` + `items` |
  * | `.ToggleRow` | data props (`label`/`description`/`checked`) |
  */
-export const List = {
-    Row,
-    Labeled,
-    Meta,
-    ToggleRow,
-}
+export { Row as ListRow, Labeled as ListLabeled, Meta as ListMeta, ToggleRow as ListToggleRow }

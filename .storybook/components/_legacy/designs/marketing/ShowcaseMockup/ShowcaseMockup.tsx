@@ -193,7 +193,7 @@ export const ShowcaseMockup = ({
                             className="ml-2 truncate text-xs text-muted"
                             data-anat-part={showAnatomy ? "Typography" : undefined}
                         >
-                            <Typography.Base size="code" text={url} />
+                            <Typography size="code" text={url} />
                         </span>
                     ) : null}
                 </div>

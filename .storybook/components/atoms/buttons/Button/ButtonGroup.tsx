@@ -63,7 +63,7 @@ export const ButtonGroup = ({
     <div className={cn("flex items-center gap-2", className)}>
         {items.map(({ key, label, prefixIcon, ariaLabel, variant, onPress, isDisabled, isPending }) => {
             // Nhãn deps: cây đọc từ DOM nên cụm phải GỌI TÊN cái nó dựng lại.
-            const anatPart = showAnatomy ? "Button.Base" : undefined
+            const anatPart = showAnatomy ? "Button" : undefined
             const shared = { variant, size, onPress, isDisabled, isPending, anatPart } as const
             if (label != null) {
                 return <ButtonBase key={key} label={label} prefixIcon={prefixIcon} isSkeleton={isSkeleton} {...shared} />

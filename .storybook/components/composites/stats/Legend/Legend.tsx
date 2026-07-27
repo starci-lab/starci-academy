@@ -13,7 +13,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * Resolve a swatch `color` into the right paint channel: a Tailwind `bg-*`
  * utility class is applied as a className; anything else (a raw hex, `var(--…)`,
  * `rgb(…)`, …) is applied as an inline `backgroundColor` — same dual-mode
- * handling as the dot of `Chip.Base` (`dotClassName` vs `dotColor`).
+ * handling as the dot of `Chip` (`dotClassName` vs `dotColor`).
  */
 const resolveDotColor = (color: string): { className?: string; style?: React.CSSProperties } =>
     color.startsWith("bg-")
@@ -76,7 +76,7 @@ export const Legend = ({ items, direction = "row", className }: LegendProps) => 
                             style={dot.style}
                             className={cn("size-2.5 shrink-0 rounded-full", dot.className)}
                         />
-                        <Typography.Base size="xs" color="muted" text={<>{item.label}{item.suffix}</>} />
+                        <Typography size="xs" color="muted" text={<>{item.label}{item.suffix}</>} />
                     </div>
                 )
             })}

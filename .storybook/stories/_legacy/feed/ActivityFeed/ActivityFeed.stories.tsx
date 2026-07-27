@@ -2,13 +2,12 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import React, { useState } from "react"
 import { ActivityFeed, ActivityType, type QueryMyFeedItemData } from "@sb-components/_legacy/blocks/feed/ActivityFeed/ActivityFeed"
 import { ReactionType } from "@sb-components/_legacy/designs/feed/ReactionBar/ReactionBar"
-import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { Feedback } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { SurfaceCardList } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedback"
 import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Skeleton as HeroSkeleton } from "@heroui/react"
-
 /**
  * BLOCK — the shared activity feed: rows grouped under relative day headers, each
  * row = an avatar-with-type-badge + a clickable actor/action/target sentence +
@@ -17,7 +16,7 @@ import { Skeleton as HeroSkeleton } from "@heroui/react"
  *
  * ANATOMY IS PER-LEAF: each story below is its OWN leaf and carries its OWN
  * BlockAnatomy axis (Sơ đồ + Cây) reflecting the parts THAT leaf composes — the
- * data leaves share one FEED_PARTS composition, while `Rỗng` (Feedback.Empty from the
+ * data leaves share one FEED_PARTS composition, while `Rỗng` (FeedbackEmpty from the
  * feature) and `Đang tải` (skeleton mirror) each swap composition. There is no
  * separate consolidated "Anatomy" story.
  */
@@ -29,18 +28,13 @@ const meta: Meta<typeof ActivityFeed> = {
         layout: "fullscreen",
     },
 }
-
 export default meta
-
 type Story = StoryObj<typeof ActivityFeed>
-
 /** Plain canvas wrapping each leaf's anatomy panel. */
 const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
-
 /** No-op route resolver: every entity routable except a null id. */
 const resolveDemo = (globalId: string | null | undefined): (() => void) | undefined =>
     globalId ? () => {} : undefined
-
 const richItems: Array<QueryMyFeedItemData> = [
     { id: "activity-1", actorGlobalId: "user-minhanh", actorUsername: "minhanh_dev", actorAvatar: "https://i.pravatar.cc/150?img=12", type: ActivityType.LessonRead, targetGlobalId: "lesson-server-components", targetLabel: "Bài 5: Server Components", at: "2026-07-21T09:15:00.000Z", reactionCount: 3, myReaction: null, isMine: false },
     { id: "activity-2", actorGlobalId: "user-duyanh", actorUsername: "duyanh_code", actorAvatar: "https://i.pravatar.cc/150?img=33", type: ActivityType.ChallengePassed, targetGlobalId: "challenge-two-sum", targetLabel: "Challenge: Two Sum", at: "2026-07-21T07:40:00.000Z", reactionCount: 12, myReaction: ReactionType.Love, isMine: false },
@@ -51,13 +45,10 @@ const richItems: Array<QueryMyFeedItemData> = [
     { id: "activity-7", actorGlobalId: "user-lan", actorUsername: "lan_nguyen", actorAvatar: "https://i.pravatar.cc/150?img=45", type: ActivityType.DiscussionCommented, targetGlobalId: null, targetLabel: null, at: "2026-07-20T09:00:00.000Z", reactionCount: 1, myReaction: null, isMine: false },
     { id: "activity-8", actorGlobalId: "user-minhanh", actorUsername: "minhanh_dev", actorAvatar: "https://i.pravatar.cc/150?img=12", type: ActivityType.CourseEnrolled, targetGlobalId: "course-fullstack", targetLabel: "Fullstack Mastery", at: "2026-07-10T08:00:00.000Z", reactionCount: 4, myReaction: ReactionType.Like, isMine: false },
 ]
-
 const singleItem: Array<QueryMyFeedItemData> = [richItems[0]]
-
 const ownActivityItems: Array<QueryMyFeedItemData> = [
     { id: "activity-own", actorGlobalId: "user-viewer", actorUsername: "ban", actorAvatar: "https://i.pravatar.cc/150?img=8", type: ActivityType.AiLabPassed, targetGlobalId: "ai-lab-rag", targetLabel: "AI Lab: RAG from scratch", at: "2026-07-21T11:00:00.000Z", reactionCount: 6, myReaction: null, isMine: true },
 ]
-
 /** Wrapper owning local state so reacting updates the count/myReaction, as in the real feed. */
 const Controlled = () => {
     const [items, setItems] = useState<Array<QueryMyFeedItemData>>(richItems)
@@ -72,7 +63,6 @@ const Controlled = () => {
     }
     return <ActivityFeed items={items} onResolve={resolveDemo} onReact={onReact} showAnatomy />
 }
-
 // The real feed composition, mirroring the DOM ActivityFeed renders per day:
 // DayHeaderSection (eyebrow + frame) → SurfaceListCard → SurfaceListCardItem →
 // FeedItem. FeedItem's own sentence/timestamp Typography are ELEMENT-RENDER-PROPS
@@ -122,21 +112,19 @@ const FEED_PARTS: Array<AnatomyNode> = [
         ],
     },
 ]
-
 // Empty leaf: the block itself has no empty slot (items=[] renders nothing) — the
-// owning FEATURE renders an Feedback.Empty in the feed's place. Its title/description
-// are element-render-props of Feedback.Empty itself (it displays whatever ReactNode the
+// owning FEATURE renders an FeedbackEmpty in the feed's place. Its title/description
+// are element-render-props of FeedbackEmpty itself (it displays whatever ReactNode the
 // caller hands its `title`/`description` props) — cut per canon granularity;
-// Feedback.Empty absorbs them as ONE node.
+// FeedbackEmpty absorbs them as ONE node.
 const EMPTY_PARTS: Array<AnatomyNode> = [
     {
-        name: "Feedback.Empty",
+        name: "FeedbackEmpty",
         tier: "composite",
         role: "trạng thái rỗng do FEATURE dựng (\"Chưa có hoạt động nào\")",
         state: "empty",
     },
 ]
-
 // Loading leaf: a skeleton MIRROR of the real layout — a day-header eyebrow over a
 // SurfaceListCard whose SurfaceListCardItem rows mirror each FeedItem (avatar circle
 // + sentence bar + timestamp bar + footer pill). All parts are Skeleton primitives.
@@ -163,7 +151,6 @@ const SKELETON_PARTS: Array<AnatomyNode> = [
         ],
     },
 ]
-
 /** ONE ITEM — a single-row feed; the full composition on the smallest input. */
 export const SingleItem: Story = {
     render: () =>
@@ -179,7 +166,6 @@ export const SingleItem: Story = {
             </BlockAnatomy>,
         ),
 }
-
 /** RICH — the full feed across multiple days, with milestone roll-up + null-target fallback. */
 export const RichMultiDay: Story = {
     render: () =>
@@ -195,7 +181,6 @@ export const RichMultiDay: Story = {
             </BlockAnatomy>,
         ),
 }
-
 /** OWN ACTIVITY — the viewer's own row: ReactionBar auto-suppresses (can't react to yourself). */
 export const OwnActivity: Story = {
     render: () =>
@@ -211,7 +196,6 @@ export const OwnActivity: Story = {
             </BlockAnatomy>,
         ),
 }
-
 /** READ-ONLY — no `onReact` → every ReactionBar is display-only. Same composition. */
 export const ReadOnly: Story = {
     render: () =>
@@ -227,7 +211,6 @@ export const ReadOnly: Story = {
             </BlockAnatomy>,
         ),
 }
-
 /** BORDERED — the per-day SurfaceListCard uses a border instead of a shadow (nested-surface). */
 export const Bordered: Story = {
     render: () =>
@@ -243,7 +226,6 @@ export const Bordered: Story = {
             </BlockAnatomy>,
         ),
 }
-
 /** INTERACTIVE — a stateful wrapper so reacting updates the count/myReaction live. */
 export const InteractiveReactions: Story = {
     render: () =>
@@ -259,10 +241,9 @@ export const InteractiveReactions: Story = {
             </BlockAnatomy>,
         ),
 }
-
 /**
  * Empty: `items=[]` renders nothing (no empty-state slot on the block). A local
- * {@link Feedback.Empty} shown alongside is what the owning FEATURE would render in the
+ * {@link FeedbackEmpty} shown alongside is what the owning FEATURE would render in the
  * feed's place when there's no activity.
  */
 export const Empty: Story = {
@@ -273,23 +254,22 @@ export const Empty: Story = {
                 tier="block"
                 leaf="Empty"
                 parts={EMPTY_PARTS}
-                note="Block không có slot rỗng — items=[] render trống; FEATURE dựng Feedback.Empty thay chỗ."
+                note="Block không có slot rỗng — items=[] render trống; FEATURE dựng FeedbackEmpty thay chỗ."
             >
                 <div className="w-full max-w-xl">
-                    <Feedback.Empty
+                    <FeedbackEmpty
                         title="Chưa có hoạt động nào"
                         description="Hoạt động của bạn và người bạn theo dõi sẽ xuất hiện ở đây."
-                        anatPart="Feedback.Empty"
+                        anatPart="FeedbackEmpty"
                     />
                     <ActivityFeed items={[]} onResolve={resolveDemo} onReact={() => {}} showAnatomy />
                 </div>
             </BlockAnatomy>,
         ),
 }
-
 /**
  * SkeletonLoading MIRRORS the real layout: a subtle day-header eyebrow over a
- * `SurfaceCard.List` of rows, each row = an avatar circle + two text bars +
+ * `SurfaceCardList` of rows, each row = an avatar circle + two text bars +
  * a footer bar, matching {@link ActivityFeed}'s FeedItem structure.
  */
 export const SkeletonLoading: Story = {
@@ -305,14 +285,14 @@ export const SkeletonLoading: Story = {
                 <div className="flex w-full max-w-xl flex-col gap-6">
                     <section className="flex flex-col gap-2">
                         <Typography size="xs" isSkeleton className="w-1/4" anatPart="Skeleton" />
-                        <SurfaceCard.List
+                        <SurfaceCardList
                             anatPart="SurfaceListCard"
                             items={[0, 1, 2].map((row) => ({
                                 key: String(row),
                                 anatPart: "SurfaceListCardItem",
                                 content: (
                                     <div className="flex items-start gap-2">
-                                        <Avatar.Base isSkeleton size="sm" />
+                                        <Avatar isSkeleton size="sm" />
                                         <div className="flex min-w-0 flex-1 flex-col gap-1">
                                             <div className="flex flex-col gap-1">
                                                 <Typography size="sm" isSkeleton className="w-3/4" anatPart="Skeleton" />

@@ -11,7 +11,7 @@ import { Chip, type ChipTone } from "@sb-components/atoms/chips/Chip/Chip"
 /** HeroUI soft-chip colors usable by an {@link EnumChip}. */
 export type EnumChipColor = "default" | "success" | "warning" | "danger" | "accent"
 
-/** Maps a raw {@link EnumChipColor} to the `Chip.Base` tone it composes onto. */
+/** Maps a raw {@link EnumChipColor} to the `Chip` tone it composes onto. */
 const COLOR_TO_TONE: Record<EnumChipColor, ChipTone> = {
     default: "neutral",
     success: "success",
@@ -45,13 +45,13 @@ export interface EnumChipProps<E extends string> {
 }
 
 /**
- * The canonical "enum → soft chip" composite: a `Chip.Base` whose
+ * The canonical "enum → soft chip" composite: a `Chip` whose
  * tone / label / optional tooltip come from a per-value map. Text-only — no leading icon.
  * Domain badges (AI-model category, difficulty, video host …) shrink to just their map
  * table + this delegate. Deliberately does NOT force width.
  *
  * ⚠️ Đổi 2026-07-26: trước đây dựng trên `StatusChip` — component đó đã xoá vì nó chỉ là
- * `Chip.Base` khoá cứng `tone`, không thêm hành vi nào. Giờ gọi thẳng atom.
+ * `Chip` khoá cứng `tone`, không thêm hành vi nào. Giờ gọi thẳng atom.
  *
  * @param props - {@link EnumChipProps}
  */
@@ -60,14 +60,14 @@ export const EnumChip = <E extends string>({ value, map, className, isSkeleton, 
         // KHÔNG còn đắp `h-6` ở đây nữa: shimmer của atom trước kia cao `h-7`, lệch 4px
         // so với hộp chip thật, nên call-site phải vá hình hộ. Atom đã sửa (2026-07-26) —
         // call-site phải vá hình của atom chính là dấu hiệu atom sai, không phải chỗ này sai.
-        return <Chip.Base isSkeleton className={className} anatPart={anatPart} />
+        return <Chip isSkeleton className={className} anatPart={anatPart} />
     }
     const entry = map[value]
     if (!entry) {
         throw new Error(`EnumChip: no map entry for value "${value}"`)
     }
     const chip = (
-        <Chip.Base
+        <Chip
             tone={entry.color ? COLOR_TO_TONE[entry.color] : "neutral"}
             className={className}
             anatPart={anatPart}
@@ -78,6 +78,6 @@ export const EnumChip = <E extends string>({ value, map, className, isSkeleton, 
         return chip
     }
     return (
-        <Tooltip.Base label={entry.tooltip}>{chip}</Tooltip.Base>
+        <Tooltip label={entry.tooltip}>{chip}</Tooltip>
     )
 }

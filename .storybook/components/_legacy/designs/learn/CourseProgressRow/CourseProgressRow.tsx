@@ -1,5 +1,5 @@
 import React from "react"
-import { Progress } from "@sb-components/atoms/display/Progress/Progress"
+import { ProgressBar } from "@sb-components/atoms/display/Progress/Progress"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import type { ReactNode } from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
@@ -100,10 +100,10 @@ export const CourseProgressRow = ({
                 <div className="flex min-w-0 flex-1 flex-col gap-2">
                     <div className="flex items-center justify-between gap-2">
                         <Typography size="sm" isSkeleton className="w-1/2" anatPart={showAnatomy ? "Skeleton.Title" : undefined} />
-                        {withTrialChip ? <Chip.Base isSkeleton className="h-6 w-14 shrink-0" showAnatomy={showAnatomy} /> : null}
+                        {withTrialChip ? <Chip isSkeleton className="h-6 w-14 shrink-0" showAnatomy={showAnatomy} /> : null}
                         <HeroSkeleton className="h-3 w-8 shrink-0 rounded" data-anat-part={showAnatomy ? "Skeleton.Percent" : undefined} />
                     </div>
-                    <Progress.Bar isSkeleton className="h-1" showAnatomy={showAnatomy} />
+                    <ProgressBar isSkeleton className="h-1" showAnatomy={showAnatomy} />
                     {withMeta ? <Typography size="xs" isSkeleton className="w-1/3" anatPart={showAnatomy ? "Skeleton.Meta" : undefined} /> : null}
                 </div>
             </div>
@@ -115,10 +115,10 @@ export const CourseProgressRow = ({
 
     const content = (
         <>
-            <IconTile.Base size="sm" icon={icon} src={src} alt={alt} tone={tone} anatPart={showAnatomy ? "IconTile" : undefined} />
+            <IconTile size="sm" icon={icon} src={src} alt={alt} tone={tone} anatPart={showAnatomy ? "IconTile" : undefined} />
             <div className="flex min-w-0 flex-1 flex-col gap-2">
                 <div className="flex items-center justify-between gap-2">
-                    <Typography.Base size="sm"
+                    <Typography size="sm"
                         weight="medium"
                         truncate
                         className={cn(
@@ -128,8 +128,8 @@ export const CourseProgressRow = ({
                         showAnatomy={showAnatomy}
                         text={title}
                     />
-                    {trialLabel ? <Chip.Base tone="warning" anatPart={showAnatomy ? "StatusChip" : undefined} text={trialLabel} /> : null}
-                    <Typography.Base size="xs"
+                    {trialLabel ? <Chip tone="warning" anatPart={showAnatomy ? "StatusChip" : undefined} text={trialLabel} /> : null}
+                    <Typography size="xs"
                         color="muted"
                         className="shrink-0"
                         showAnatomy={showAnatomy}
@@ -146,7 +146,7 @@ export const CourseProgressRow = ({
                     ]}
                 />
                 {meta ? (
-                    <Typography.Base size="xs" color="muted" showAnatomy={showAnatomy} text={meta} />
+                    <Typography size="xs" color="muted" showAnatomy={showAnatomy} text={meta} />
                 ) : null}
             </div>
         </>

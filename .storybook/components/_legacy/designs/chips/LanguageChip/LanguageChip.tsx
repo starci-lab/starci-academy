@@ -64,14 +64,14 @@ export interface LanguageChipProps {
 /**
  * GitHub-style language indicator — a small brand-coloured dot followed by the
  * language's proper display name (`csharp`→C#, `cpp`→C++), like the language tag
- * on a GitHub repo card. A thin map wrapper over the ATOM `Chip.Base` (variant `bare`);
+ * on a GitHub repo card. A thin map wrapper over the ATOM `Chip` (variant `bare`);
  * colour + label come from the shared {@link getLanguageColor}/{@link getLanguageLabel}.
  *
  * @param props - {@link LanguageChipProps}
  */
 export const LanguageChip = ({ language, className, isSkeleton }: LanguageChipProps) => {
     return (
-        <Chip.Base
+        <Chip
             dotColor={getLanguageColor(language)}
             text={getLanguageLabel(language)}
             className={className}

@@ -105,7 +105,7 @@ export const ChipButtonList = ({
                         <div key={index} className="flex items-center gap-3 px-3 py-2">
                             <HeroSkeleton className="size-4 shrink-0 rounded" />
                             {/* §12c: chủ của hình là chủ của skeleton — Typography tự vẽ gạch của nó */}
-                            <Typography.Base
+                            <Typography
                                 size="sm"
                                 isSkeleton
                                 showAnatomy={showAnatomy}
@@ -114,7 +114,7 @@ export const ChipButtonList = ({
                         </div>
                     ))
                     : Array.from({ length: skeletonCount }).map((_, index) => (
-                        <ButtonAtom.Base
+                        <ButtonAtom
                             key={index}
                             isSkeleton
                             showAnatomy={showAnatomy}
@@ -144,7 +144,7 @@ export const ChipButtonList = ({
                         </span>
                     ) : null}
                     {direction === "column" ? (
-                        <Typography.Base size="sm"
+                        <Typography size="sm"
                             weight="medium"
                             truncate
                             className="min-w-0 flex-1"

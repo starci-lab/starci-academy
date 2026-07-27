@@ -17,7 +17,7 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * there is no separate consolidated "Anatomy" story.
  */
 const meta: Meta<typeof TrialConversionStrip> = {
-    title: "Blocks/Commerce/TrialConversionStrip/TrialConversionStrip.Base",
+    title: "Blocks/Commerce/TrialConversionStrip/TrialConversionStrip",
     component: TrialConversionStrip,
     tags: ["autodocs"],
     parameters: {
@@ -51,29 +51,29 @@ const SAMPLE_PRICE: TrialConversionStripPrice = {
 // (only the price section + CTA differ), so it is one constant reused across the parts trees.
 // ⭐ 2026-07-27 (teacher: "layout is built from layouts components"): this block used to
 // draw its own surface (`rounded-3xl bg-surface p-5 shadow-surface`) + three hand-rolled
-// flex `div`s. It now goes through `SurfaceCard.Base` ⊃ `Stack.V` ⊃ (`Stack.H` · `Split`) —
+// flex `div`s. It now goes through `SurfaceCard` ⊃ `StackV` ⊃ (`StackH` · `Split`) —
 // and the tree must SAY so, otherwise the reader still thinks this is a hand-rolled div.
 const SURFACE: AnatomyNode = {
-    name: "SurfaceCard.Base",
+    name: "SurfaceCard",
     tier: "composite",
     role: "card face — radius/shadow/`padding` (default 3, matching the card `p-3` rule) comes from the scaffold, not hand-rolled",
-    storyId: "composites-cards-surfacecard-surfacecard-base--default",
+    storyId: "composites-cards-surfacecard-surfacecard--default",
 }
 // ⚠️ TRIED `Split` and it was WRONG: its contract is "the `start` side is allowed to
 // SHRINK" ⇒ when tight it SQUEEZES the price column and the −33% chip drops to a new
 // line. Price is a number, squeezing it makes no sense — this row must WRAP (the button
-// drops below), i.e. `Stack.H` with `wrap`.
-// Name differs from the `Stack.H` node of the lead row: the panel groups nodes BY NAME,
+// drops below), i.e. `StackH` with `wrap`.
+// Name differs from the `StackH` node of the lead row: the panel groups nodes BY NAME,
 // matching names would merge into one.
 const PRICE_ROW: AnatomyNode = {
-    name: "Stack.H",
+    name: "StackH",
     tier: "frame",
     role: "price ↔ CTA row — `wrap` so the BUTTON drops to a new line when tight, the price column never gets squeezed",
-    storyId: "frames-stack-stack-h--default",
+    storyId: "frames-stack-stackh--default",
 }
 
 const HEADER_PARTS: Array<AnatomyNode> = [
-    { name: "IconTile.Base", tier: "atom", role: "the lock glyph in its tinted tile — accent tone, sm (40px)", storyId: "atoms-display-icontile-icontile-base--default" },
+    { name: "IconTile", tier: "atom", role: "the lock glyph in its tinted tile — accent tone, sm (40px)", storyId: "atoms-display-icontile-icontile--default" },
     {
         name: "TitledText",
         tier: "composite",
@@ -84,37 +84,37 @@ const HEADER_PARTS: Array<AnatomyNode> = [
 
 // LOADING shape — price section mirrors the eventual PriceTag + PhaseScarcityNote box with
 // two Skeleton.Typography bars (h4 + body-xs) so layout never shifts once the price lands.
-const BUTTON: AnatomyNode = { name: "Button.Base", tier: "atom", role: "unlock CTA — always renders, doesn't wait for the price", storyId: "atoms-buttons-button-button-base--default" }
+const BUTTON: AnatomyNode = { name: "Button", tier: "atom", role: "unlock CTA — always renders, doesn't wait for the price", storyId: "atoms-buttons-button-button--default" }
 
-/** Wraps content in the EXACT scaffold set the block builds: SurfaceCard ⊃ Stack.V ⊃ (Stack.H · Split). */
+/** Wraps content in the EXACT scaffold set the block builds: SurfaceCard ⊃ StackV ⊃ (StackH · Split). */
 const framed = (priceSide: Array<AnatomyNode>): Array<AnatomyNode> => [
     {
         ...SURFACE,
         children: [
             {
-                name: "Stack.V",
+                name: "StackV",
                 tier: "frame",
                 role: "column inside the card — `gap-6` seam between the lead cluster and the price block (replaces the removed `border-t`)",
-                storyId: "frames-stack-stack-v--default",
+                storyId: "frames-stack-stackv--default",
                 children: [
                     {
-                        name: "Stack.H",
+                        name: "StackH",
                         tier: "frame",
                         role: "lead row — icon ↔ text cluster, center-aligned",
-                        storyId: "frames-stack-stack-h--default",
+                        storyId: "frames-stack-stackh--default",
                         children: HEADER_PARTS,
                     },
                     {
                         ...PRICE_ROW,
                         children: [
                             {
-                                // Name MUST differ from the outer `Stack.V` node: the panel
-                                // groups nodes BY NAME, two `Stack.V`s with the same name
+                                // Name MUST differ from the outer `StackV` node: the panel
+                                // groups nodes BY NAME, two `StackV`s with the same name
                                 // would MERGE into one and misread the tree.
-                                name: "Stack.V",
+                                name: "StackV",
                                 tier: "frame",
                                 role: "LEFT side of the Split — price column + scarcity line",
-                                storyId: "frames-stack-stack-v--default",
+                                storyId: "frames-stack-stackv--default",
                                 children: priceSide,
                             },
                             BUTTON,
@@ -127,21 +127,21 @@ const framed = (priceSide: Array<AnatomyNode>): Array<AnatomyNode> => [
 ]
 
 const LOADING_PARTS: Array<AnatomyNode> = framed([
-    // These two bars ARE `Typography.Base isSkeleton` — a real component, so they need
+    // These two bars ARE `Typography isSkeleton` — a real component, so they need
     // a door. Without a `storyId` they emit DOM but never enter the tree (§11a whitelist).
-    { name: "Typography.Base", tier: "atom", role: "mirrors one of the two waiting lines — the price (h4, 1/3 width) or the seats line (body-xs, 1/2 width)", storyId: "atoms-text-typography-typography-base--plain" },
+    { name: "Typography", tier: "atom", role: "mirrors one of the two waiting lines — the price (h4, 1/3 width) or the seats line (body-xs, 1/2 width)", storyId: "atoms-text-typography-typography--plain" },
 ])
 
 // LOADED shape — price landed: PriceTag owns the discount, PhaseScarcityNote sits as a
 // sibling below owning scarcity (orthogonal urgency, per PhaseScarcityNote's own doc).
 const LOADED_PARTS: Array<AnatomyNode> = framed([
-    { name: "PriceTag.Prominent", tier: "block", role: "amount due + struck-through original price + savings chip", storyId: "blocks-commerce-pricetag--with-discount" },
+    { name: "PriceTagProminent", tier: "block", role: "amount due + struck-through original price + savings chip", storyId: "blocks-commerce-pricetag--with-discount" },
     // 2026-07-27: `PhaseScarcityNote` now HAS `anatPart` so it can merge into ONE node.
     // Before, it lacked that prop ⇒ the root emitted no `data-anat-part` ⇒ the amber
     // text line vanished from the tree even though it still rendered, while its four
     // internal spans leaked out as separate siblings.
-    { name: "PhaseScarcityNote", tier: "block", role: "seats left in the current phase + the price it rises to", storyId: "blocks-commerce-phasescarcitynote-phasescarcitynote-base--default" },
-    { name: "Button.Base", tier: "atom", role: "CTA to unlock the whole course", storyId: "atoms-buttons-button-button-base--default" },
+    { name: "PhaseScarcityNote", tier: "block", role: "seats left in the current phase + the price it rises to", storyId: "blocks-commerce-phasescarcitynote-phasescarcitynote--default" },
+    { name: "Button", tier: "atom", role: "CTA to unlock the whole course", storyId: "atoms-buttons-button-button--default" },
 ])
 
 /**

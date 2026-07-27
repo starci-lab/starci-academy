@@ -1,6 +1,6 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { Page } from "@sb-components/composites/layout/Page/Page"
+import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 import { Breadcrumbs } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcrumbs"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
@@ -9,8 +9,8 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * STORYBOOK-LOCAL DESIGN SPEC — `CourseBrief`, block ĐỊNH DANH KHOÁ.
  *
  * LÝ DO TỒN TẠI (thầy chốt 2026-07-25): **lên SCREEN tuyệt đối không xài atom —
- * only block.** Trước đó screen `/learn/content` tự gọi khung `Page.Header` (layout)
- * và tự nhét `Breadcrumbs.Base` (atom) vào — sai tầng. Block này là thứ screen gọi
+ * only block.** Trước đó screen `/learn/content` tự gọi khung `PageHeader` (layout)
+ * và tự nhét `Breadcrumbs` (atom) vào — sai tầng. Block này là thứ screen gọi
  * THAY cho cả hai. Nó tồn tại vì RANH GIỚI TẦNG, không phải vì nó có state riêng.
  *
  * ⚠️ KHÔNG có chip trạng thái (thầy soi mắt 2026-07-25 rồi bỏ). Trạng thái học của
@@ -21,10 +21,10 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * khoá / trang `/learn` đều dùng lại được.
  *
  * HỢP ĐỒNG: block nhận **DỮ LIỆU**, không nhận atom dựng sẵn — `breadcrumbItems` là
- * mảng crumb, block tự dựng `Breadcrumbs.Base`. Nếu để prop `breadcrumb?: ReactNode`
+ * mảng crumb, block tự dựng `Breadcrumbs`. Nếu để prop `breadcrumb?: ReactNode`
  * thì caller (screen) lại phải cầm atom → thủng đúng cái luật này.
  *
- * COMPOSE: khung `Page.Header` (layout) + `Breadcrumbs.Base` (atom) + `Typography`.
+ * COMPOSE: khung `PageHeader` (layout) + `Breadcrumbs` (atom) + `Typography`.
  * Block KHÔNG tự vẽ khung — nó ĐẶT business vào khung có sẵn.
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -41,7 +41,7 @@ export interface CourseBriefCrumb {
 
 /** Props for {@link CourseBrief}. */
 export interface CourseBriefProps {
-    /** Đường dẫn breadcrumb dạng DỮ LIỆU — block tự dựng `Breadcrumbs.Base`. */
+    /** Đường dẫn breadcrumb dạng DỮ LIỆU — block tự dựng `Breadcrumbs`. */
     breadcrumbItems?: Array<CourseBriefCrumb>
     /** Tên khoá. */
     title: ReactNode
@@ -72,13 +72,13 @@ export const CourseBrief = ({
     anatPart,
 }: CourseBriefProps) => (
     <div data-anat-part={anatPart}>
-        <Page.Header
+        <PageHeader
             breadcrumb={
                 breadcrumbItems?.length ? (
                     <div className="w-fit" data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}>
                         {/* collapse: dưới @app-sm hoặc trail ≥ 4 crumb → back-link (năng lực
-                        cũ của ResponsiveBreadcrumb, nay là prop của atom Breadcrumbs.Base). */}
-                        <Breadcrumbs.Base collapseOnMobile collapseFrom={4} items={breadcrumbItems} />
+                        cũ của ResponsiveBreadcrumb, nay là prop của atom Breadcrumbs). */}
+                        <Breadcrumbs collapseOnMobile collapseFrom={4} items={breadcrumbItems} />
                     </div>
                 ) : undefined
             }
@@ -87,7 +87,7 @@ export const CourseBrief = ({
             meta={
                 meta != null ? (
                     <span data-anat-part={showAnatomy ? "Meta" : undefined}>
-                        <Typography.Base size="xs" color="muted" text={meta} />
+                        <Typography size="xs" color="muted" text={meta} />
                     </span>
                 ) : undefined
             }

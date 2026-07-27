@@ -4,16 +4,12 @@ import { CourseBrief } from "@sb-components/blocks/learn/CourseBrief/CourseBrief
 import { KeepGoingPath, type KeepGoingContent } from "@sb-components/blocks/learn/KeepGoingPath/KeepGoingPath"
 import { LearnNudges, type LearnNudge } from "@sb-components/blocks/learn/LearnNudges/LearnNudges"
 import { CourseTeamGate } from "@sb-components/blocks/learn/CourseTeamGate/CourseTeamGate"
-import {
-    TrialConversionStrip,
-    type TrialConversionStripPrice,
-} from "@sb-components/blocks/commerce/TrialConversionStrip/TrialConversionStrip"
+import { TrialConversionStrip, type TrialConversionStripPrice } from "@sb-components/blocks/commerce/TrialConversionStrip/TrialConversionStrip"
 import { PricingPhase } from "@sb-components/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote"
 import { ContinueLearning } from "@sb-components/blocks/learn/ContinueLearning/ContinueLearning"
-import { AsyncContent } from "@sb-components/composites/async/AsyncContent/AsyncContent"
+import { AsyncContentEmpty } from "@sb-components/composites/async/AsyncContent/AsyncContent"
 import { Container } from "@sb-components/frames/Container/Container"
-import { Stack } from "@sb-components/frames/Stack/Stack"
-
+import { StackV } from "@sb-components/frames/Stack/Stack"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * LAYOUT (page) — the `/learn/content` dashboard, rendered as a STATIC
@@ -28,7 +24,7 @@ import { Stack } from "@sb-components/frames/Stack/Stack"
  * you left off) · `LearnNudges` (what to do today) · `KeepGoingPath` (keep going in the
  * chapter).
  *
- * The list above names BLOCKS. It used to say `Feedback.Callout` for the gate — that is
+ * The list above names BLOCKS. It used to say `FeedbackCallout` for the gate — that is
  * the FRAME the gate uses internally, not the block the screen calls. Naming the frame
  * here is the same mistake that keeps the node out of the anatomy tree (the DOM emits
  * `CourseTeamGate`), so the two must be kept in the same words.
@@ -50,7 +46,6 @@ import { Stack } from "@sb-components/frames/Stack/Stack"
  *      screen only hands over NUMBERS.
  * ─────────────────────────────────────────────────────────────────────────────
  */
-
 const SAMPLE_PRICE: TrialConversionStripPrice = {
     discountedPriceVnd: 1_990_000,
     originalPriceVnd: 2_990_000,
@@ -60,7 +55,6 @@ const SAMPLE_PRICE: TrialConversionStripPrice = {
     seatsRemainingInCurrentPhase: 14,
     nextPhasePriceVnd: 2_490_000,
 }
-
 // Plain DATA — the visuals (state icon, difficulty chip, lock mark) are owned by the
 // `KeepGoingPath` block. The screen doesn't know what an "in-progress" lesson looks like.
 const KEEP_GOING: Array<KeepGoingContent> = [
@@ -68,14 +62,12 @@ const KEEP_GOING: Array<KeepGoingContent> = [
     { id: "l2", title: "Viết Dockerfile tối ưu", minutes: 12, state: "active", difficulty: "intermediate", onPress: () => {} },
     { id: "l3", title: "Multi-stage build", minutes: 9, state: "todo", difficulty: "intermediate", locked: true, onPress: () => {} },
 ]
-
 // Plain DATA — `kind` is an ENUM; the `LearnNudges` block decides the icon itself (§14b).
 const NUDGES: Array<LearnNudge> = [
     { id: "flashcards", kind: "flashcards", title: "Ôn 12 thẻ đến hạn hôm nay", onPress: () => {} },
     { id: "mock-interview", kind: "interview", title: "Luyện phỏng vấn cho capstone", onPress: () => {} },
     { id: "league", kind: "league", title: "Bạn đang hạng #42 tuần này", onPress: () => {} },
 ]
-
 /** Props for {@link CourseContents}. */
 export interface CourseContentsLayoutProps {
     /** `"trial"` shows the gh-team gate + conversion strip; `"paid"` self-hides both. */
@@ -92,30 +84,28 @@ export interface CourseContentsLayoutProps {
      * it every time they cross the boundary.
      */
     isSkeleton?: boolean
-    /** `true` → the course has no lessons yet; `AsyncContent.Empty` replaces the ENTIRE spine. */
+    /** `true` → the course has no lessons yet; `AsyncContentEmpty` replaces the ENTIRE spine. */
     isEmpty?: boolean
 }
-
 /**
  * Empty state — the course has no contents yet.
  *
  * The frame and the content each carry THEIR OWN name. Until 2026-07-27 the wrapping
- * `Container` wore `anatPart="AsyncContent.Empty"` while the real frame emitted nothing,
+ * `Container` wore `anatPart="AsyncContentEmpty"` while the real frame emitted nothing,
  * so the single node in the Empty tree was the CONTAINER wearing the name (and the story
  * link) of the thing inside it, and `Container` — a dep like any other frame — vanished
  * from this state even though the content state declares it.
  */
 const CourseContentsEmpty = () => (
-    <Container.Base anatPart="Container.Base" size="md" padding="roomy">
-        <AsyncContent.Empty
-            anatPart="AsyncContent.Empty"
+    <Container anatPart="Container" size="md" padding="roomy">
+        <AsyncContentEmpty
+            anatPart="AsyncContentEmpty"
             icon={StackIcon}
             title="Khoá này chưa có bài học nào"
             description="Nội dung đang được biên soạn — quay lại sau nhé."
         />
-    </Container.Base>
+    </Container>
 )
-
 /**
  * The `/learn/content` dashboard leaf.
  *
@@ -133,32 +123,32 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
     // there's only ONE tree left — it can no longer drift.
     return (
         // The FRAME goes through the frame tier, the screen does NOT hand-roll a `div` (§13):
-        //   • `mx-auto max-w-3xl p-6` → `Container.Base size="md" padding="roomy"` — `md` reads
+        //   • `mx-auto max-w-3xl p-6` → `Container size="md" padding="roomy"` — `md` reads
         //     from the token `--container-app-md`, the same 768px but from the RIGHT SOURCE;
         //     `max-w-3xl` is a different scale, and if the token changes it drifts silently
         //     (see the `SIZE_CLASS` JSDoc).
         //   • `gap-10` → `gap="page"`. `10` is NOT on the §10c scale (0·1·2·3·6·8) — the frame's
         //     `InsetScale` type means an off-scale value is now a TYPE ERROR at the call site,
         //     it can no longer slip through. This is exactly where the §10 rule gets enforced.
-        // WARNING, 2026-07-27 — `gap` has been REMOVED from this call: `Container.Base` only applies
+        // WARNING, 2026-07-27 — `gap` has been REMOVED from this call: `Container` only applies
         // `gap` when using the `header`/`footer` slots; passing `children` directly means that
         // prop is DROPPED SILENTLY. Measured consequence: the seam between `CourseBrief` and
         // the block below it was EXACTLY 0 — the page read as if the title were stuck to the
         // card. Writing `gap="page"` with nothing to receive it is worse than not writing it at
         // all: reading the code makes it look like the rhythm was already set.
-        <Container.Base size="md" padding="roomy" anatPart="Container.Base">
+        <Container size="md" padding="roomy" anatPart="Container">
             {/* VERTICAL rhythm owned by ONE party (§10a). Two deliberately different steps:
             `8` separates the course IDENTITY cluster from the content below (seam between two
             REGIONS), `6` is the rhythm between blocks within the same region — §10
             "sections-wide vs related-tight", uniform spacing is forbidden. */}
-            <Stack.V gap="page" anatPart="Stack.V">
+            <StackV gap="page" anatPart="StackV">
                 {/* 2026-07-26: dropped the old note "blocks have no `anatPart` yet so they need
             a div wrapper" — all six blocks now take `anatPart` directly, no wrapper left. */}
                 {/* §11a — the badge stops at the HIGHEST node `CourseBrief` (BLOCK). The
-            `Page.Header` composite lives INSIDE that block → drill down in CourseBrief's own
+            `PageHeader` composite lives INSIDE that block → drill down in CourseBrief's own
             story, NOT here. Teacher's call 2026-07-25: this cluster carries business meaning
             (read/unread) so it's a BLOCK, the screen no longer calls the composite directly. */}
-                <CourseBrief.Base
+                <CourseBrief
                     anatPart="CourseBrief"
                     breadcrumbItems={[
                         { key: "courses", label: "Khoá học", onPress: () => {} },
@@ -171,21 +161,19 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
                     learnerCount={2481}
                     isSkeleton={isSkeleton}
                 />
-
-                <Stack.V gap="section" anatPart="Stack.V">
+                <StackV gap="section" anatPart="StackV">
                     {/* Gate is for people who ALREADY BOUGHT (backend scopes the team by
                 is_enrolled). The old version gated it backwards, on `viewer === "trial"`. The
                 block hides itself, so the screen just hands over the facts. */}
-                    <CourseTeamGate.Base
+                    <CourseTeamGate
                         anatPart="CourseTeamGate"
                         isEnrolled={viewer === "paid"}
                         isInTeam={false}
                         onJoin={() => {}}
                         isSkeleton={isSkeleton}
                     />
-
                     {viewer === "trial" ? (
-                        <TrialConversionStrip.Base
+                        <TrialConversionStrip
                             anatPart="TrialConversionStrip"
                             freeLessonsRemaining={9}
                             price={SAMPLE_PRICE}
@@ -193,18 +181,16 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
                             isSkeleton={isSkeleton}
                         />
                     ) : null}
-
                     {/* `hero`, NOT `plain` (teacher's call 2026-07-25): the frameless version
                 lets the progress bar drift outside, with nothing holding it in place so it
                 reads as belonging to the block below. The hero frame gathers title · meta ·
                 progress · CTA into ONE block — this is also the canonical case for
                 `HighlightCard`: a single "resume the in-progress session" highlight on the page.
-
                 NO `eyebrow` (teacher's eye check 2026-07-25): eyebrow exists to STAND IN for
                 the frame — a frameless block is what needs a light label line saying what this
                 cluster is. The hero already has a frame + arc ring + a "Continue" button, so
                 adding "Continue learning" would be saying it twice. */}
-                    <ContinueLearning.Base
+                    <ContinueLearning
                         anatPart="ContinueLearning"
                         lessonIndex={4}
                         lessonTitle="Viết Dockerfile tối ưu"
@@ -216,21 +202,19 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
                         onResume={() => {}}
                         isSkeleton={isSkeleton}
                     />
-
-                    <LearnNudges.Base
+                    <LearnNudges
                         anatPart="LearnNudges"
                         items={NUDGES}
                         isSkeleton={isSkeleton}
                     />
-
-                    <KeepGoingPath.Base
+                    <KeepGoingPath
                         anatPart="KeepGoingPath"
                         module={{ index: 2, name: "Container hoá" }}
                         contents={KEEP_GOING}
                         isSkeleton={isSkeleton}
                     />
-                </Stack.V>
-            </Stack.V>
-        </Container.Base>
+                </StackV>
+            </StackV>
+        </Container>
     )
 }

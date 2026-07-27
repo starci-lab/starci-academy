@@ -87,7 +87,7 @@ export const SelectionBanner = ({
             />
         </div>
         {note ? (
-            <Typography.Base size="xs" color="muted" showAnatomy={showAnatomy} text={note} />
+            <Typography size="xs" color="muted" showAnatomy={showAnatomy} text={note} />
         ) : null}
     </div>
 )

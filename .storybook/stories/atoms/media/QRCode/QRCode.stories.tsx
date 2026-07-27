@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { QRCode } from "@sb-components/atoms/media/QRCode/QRCode"
 
-const meta: Meta<typeof QRCode.Base> = {
+const meta: Meta<typeof QRCode> = {
     title: "Atoms/Media/QRCode",
-    component: QRCode.Base,
+    component: QRCode,
     tags: ["autodocs"],
     parameters: {
         layout: "fullscreen",
@@ -12,7 +12,7 @@ const meta: Meta<typeof QRCode.Base> = {
 
 export default meta
 
-type Story = StoryObj<typeof QRCode.Base>
+type Story = StoryObj<typeof QRCode>
 
 // Offline-safe inline avatar for the center-icon variant (no external host).
 const ICON_SRC =
@@ -21,7 +21,7 @@ const ICON_SRC =
 export const Default: Story = {
     render: () => (
         <div className="p-8">
-            <QRCode.Base size={160} data="https://starci.vn/join/lop-fullstack-k12" />
+            <QRCode size={160} data="https://starci.vn/join/lop-fullstack-k12" />
         </div>
     ),
 }
@@ -29,7 +29,7 @@ export const Default: Story = {
 export const WithIcon: Story = {
     render: () => (
         <div className="p-8">
-            <QRCode.Base
+            <QRCode
                 size={160}
                 data="https://starci.vn/certificate/cert-2026-0721"
                 icon={
@@ -49,7 +49,7 @@ export const WithIcon: Story = {
 export const Small: Story = {
     render: () => (
         <div className="p-8">
-            <QRCode.Base size={96} data="https://starci.vn/payment/inv-88213" />
+            <QRCode size={96} data="https://starci.vn/payment/inv-88213" />
         </div>
     ),
 }
@@ -57,7 +57,7 @@ export const Small: Story = {
 export const Large: Story = {
     render: () => (
         <div className="p-8">
-            <QRCode.Base size={240} data="https://starci.vn/event/offline-meetup-2026" />
+            <QRCode size={240} data="https://starci.vn/event/offline-meetup-2026" />
         </div>
     ),
 }

@@ -23,7 +23,7 @@ import { motion, type PanInfo } from "framer-motion"
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** Props for {@link DragScrollArea.Base}. */
+/** Props for {@link DragScrollArea}. */
 export interface DragScrollAreaBaseProps {
     /** Scrollable content. */
     children: React.ReactNode
@@ -90,6 +90,4 @@ const Base = ({
  * |---|---|
  * | `.Base` | `children` (one scrollable region) |
  */
-export const DragScrollArea = {
-    Base,
-}
+export { Base as DragScrollArea }

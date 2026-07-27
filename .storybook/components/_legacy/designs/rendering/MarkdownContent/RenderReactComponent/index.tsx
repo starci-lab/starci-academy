@@ -61,7 +61,7 @@ export const RenderReactComponent = ({ code, className }: RenderReactComponentPr
         )
     }
     if (!Content) {
-        return <Spinner.Base size="sm" label="Rendering" className={cn(className)} />
+        return <Spinner size="sm" label="Rendering" className={cn(className)} />
     }
     return <Content components={heroUiMdxComponents} className={className} />
 }

@@ -97,9 +97,9 @@ export const PricingCard = ({
             <div className="flex flex-col gap-2">
                 {/* Name (+ optional popular chip inline — chip is w-fit, never full-width) */}
                 <div className="flex flex-wrap items-center gap-2">
-                    <Typography.Base weight="medium" showAnatomy={showAnatomy} text={name} />
+                    <Typography weight="medium" showAnatomy={showAnatomy} text={name} />
                     {highlighted && badge ? (
-                        <Chip.Base
+                        <Chip
                             tone="accent"
                             className="shrink-0"
                             anatPart={showAnatomy ? "StatusChip" : undefined}
@@ -110,7 +110,7 @@ export const PricingCard = ({
 
                 {/* Price = ONE PricePoint primitive (amount + struck original + period) —
                     a price is a semantic unit, so it is one node, not 3 raw Typography. */}
-                <PricePoint.Base
+                <PricePoint
                     amount={price}
                     original={originalPrice}
                     period={period}

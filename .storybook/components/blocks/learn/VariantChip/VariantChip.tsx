@@ -12,7 +12,7 @@ import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
  * changing the MEANING "difficulty" / "language" / "platform" is this file's job.
  *
  * MEMBER = MEANINGFUL ROLE, not shape. This is where the design tier differs from
- * the atom tier: the atom has only ONE chip (`Chip.Base`) split by PROP, while
+ * the atom tier: the atom has only ONE chip (`Chip`) split by PROP, while
  * design splits by WHY.
  *
  * ⛔ **DESIGN MUST NEVER EXPOSE `custom` OR `bare`** (teacher's call, 2026-07-26):
@@ -24,7 +24,7 @@ import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
  * Consequence: `difficulty` is the ONE axis — it decides both the label and the
  * color.
  *
- * NO `Base` member: a "variant chip" carrying no role IS `Chip.Base` with a dot —
+ * NO `Base` member: a "variant chip" carrying no role IS `Chip` with a dot —
  * adding an empty `Base` here would be an empty namespace (§12a forbids it).
  *
  * This family will also grow `.Language` · `.HostPlatform` · `.AiCategory`
@@ -52,7 +52,7 @@ export const DIFFICULTY_COLOR: Record<Difficulty, string> = {
     insane: "text-rose-500",
 }
 
-/** Props for {@link VariantChip.Difficulty}. */
+/** Props for {@link VariantChipDifficulty}. */
 export interface VariantChipDifficultyProps {
     /** Difficulty tier — decides BOTH the label AND the dot color. The one axis. */
     difficulty: Difficulty
@@ -70,12 +70,12 @@ export interface VariantChipDifficultyProps {
 const capitalize = (value: Difficulty): string => value.charAt(0).toUpperCase() + value.slice(1)
 
 /**
- * `VariantChip.Difficulty` — a color dot by tier + a difficulty word (GitHub
- * language-dot style). A thin wrapper over the `Chip.Base` atom; color comes from
+ * `VariantChipDifficulty` — a color dot by tier + a difficulty word (GitHub
+ * language-dot style). A thin wrapper over the `Chip` atom; color comes from
  * {@link DIFFICULTY_COLOR}.
  *
  * ⚠️ Changed 2026-07-26: this used to call `Chip.Dot`. The atom folded the dot
- * into a PROP of the ONE chip, so the dot is now `dotClassName` on `Chip.Base` —
+ * into a PROP of the ONE chip, so the dot is now `dotClassName` on `Chip` —
  * no separate member anymore. The shape didn't change, only how you call it.
  *
  * The shape is ALWAYS a pill — the atom's default, and design doesn't expose a
@@ -93,23 +93,23 @@ const VariantChipDifficulty = ({
     // Part name so the anatomy tree can call out exactly what this design builds —
     // the tree reads off the DOM, so without a name the story reveals nothing
     // about what it's made of (teacher caught this 2026-07-25).
-    // The label must be the NAMESPACE name (`Chip.Base`) because readers look it
+    // The label must be the NAMESPACE name (`Chip`) because readers look it
     // up by story name.
-    const chipPart = showAnatomy ? "Chip.Base" : undefined
+    const chipPart = showAnatomy ? "Chip" : undefined
     // Two branches because the atom's `isSkeleton` is a disjoint union (when
     // skeleton, `text` isn't required): passing a single `boolean | undefined`
     // into one call site wouldn't type-check. The skeleton branch STILL keeps
     // `dotClassName` so the atom sizes the box correctly while leaving room for
     // the dot.
     const chip = isSkeleton ? (
-        <Chip.Base
+        <Chip
             isSkeleton
             dotClassName={DIFFICULTY_COLOR[difficulty]}
             className={className}
             anatPart={chipPart}
         />
     ) : (
-        <Chip.Base
+        <Chip
             dotClassName={DIFFICULTY_COLOR[difficulty]}
             text={capitalize(difficulty)}
             className={className}
@@ -121,12 +121,12 @@ const VariantChipDifficulty = ({
     //
     // The overlay emits an `inset-0` span sitting NEXT TO the chip rather than
     // wrapping it, so `Dot`/`Label` (inside the chip) walking up the ancestor
-    // chain never reach `VariantChip.Difficulty` → the anatomy tree flattens
+    // chain never reach `VariantChipDifficulty` → the anatomy tree flattens
     // wrong, with the two atoms jumping up to sit level with design (teacher
     // caught this 2026-07-26). The tree is inferred from the DOM, so the name
     // must sit on the node that ACTUALLY contains the children.
     return showAnatomy ? (
-        <span className="inline-flex" data-anat-part={anatPart ?? "VariantChip.Difficulty"}>
+        <span className="inline-flex" data-anat-part={anatPart ?? "VariantChipDifficulty"}>
             {chip}
         </span>
     ) : chip
@@ -137,6 +137,4 @@ const VariantChipDifficulty = ({
  * named by ROLE (§14d), not by shape. No `Base` (see the doc at the top of this
  * file).
  */
-export const VariantChip = {
-    Difficulty: VariantChipDifficulty,
-}
+export { VariantChipDifficulty }

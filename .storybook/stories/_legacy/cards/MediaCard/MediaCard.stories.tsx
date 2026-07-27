@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { Button, Chip } from "@heroui/react"
 import { MediaCard } from "@sb-components/_legacy/designs/cards/MediaCard/MediaCard"
-import { List } from "@sb-components/composites/lists/List/List"
+import { ListMeta } from "@sb-components/composites/lists/List/List"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof MediaCard> = {
@@ -17,9 +17,9 @@ export default meta
 
 type Story = StoryObj<typeof MediaCard>
 
-// Cụm meta = List.Meta (1 chip tín hiệu + đoạn muted nối `·`), KHÔNG fragment chip rời.
+// Cụm meta = ListMeta (1 chip tín hiệu + đoạn muted nối `·`), KHÔNG fragment chip rời.
 const courseMeta = (
-    <List.Meta
+    <ListMeta
         chip={
             <Chip size="sm" variant="soft">
                 Intermediate
@@ -36,7 +36,7 @@ const DESCRIPTION = "Build a solid foundation from frontend to backend through h
 const FULL_PARTS: Array<AnatomyNode> = [
     { name: "Cover", tier: "block", role: "media full-bleed 16:9 (ảnh thật hoặc placeholder khi omit `cover`)" },
     { name: "Typography.Title", tier: "composite", role: "tiêu đề (weight medium)" },
-    { name: "Meta", tier: "block", role: "slot meta — nhận node List.Meta do caller truyền vào" },
+    { name: "Meta", tier: "block", role: "slot meta — nhận node ListMeta do caller truyền vào" },
     { name: "Typography.Description", tier: "composite", role: "mô tả ngắn, line-clamp-2" },
     { name: "Footer", tier: "block", role: "slot footer — CTA/giá/tiến độ do caller truyền vào" },
 ]

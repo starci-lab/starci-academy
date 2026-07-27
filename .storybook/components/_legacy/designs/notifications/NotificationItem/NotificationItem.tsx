@@ -133,7 +133,7 @@ export const NotificationItem = ({
     const content = (
         <>
             {icon ? (
-                <IconTile.Base
+                <IconTile
                     icon={icon}
                     tone={TONE_TO_ICON_TILE[tone]}
                     size="sm"
@@ -152,16 +152,16 @@ export const NotificationItem = ({
                         />
                     ) : null}
                     <span data-anat-part={showAnatomy ? "Typography.Title" : undefined}>
-                        <Typography.Base size="sm" text={title} weight="medium" className="line-clamp-2" />
+                        <Typography size="sm" text={title} weight="medium" className="line-clamp-2" />
                     </span>
                 </div>
                 {body ? (
                     <span data-anat-part={showAnatomy ? "Typography.Body" : undefined}>
-                        <Typography.Base size="xs" text={body} color="muted" className="line-clamp-2" />
+                        <Typography size="xs" text={body} color="muted" className="line-clamp-2" />
                     </span>
                 ) : null}
                 <span data-anat-part={showAnatomy ? "Typography.Time" : undefined}>
-                    <Typography.Base size="xs" text={timeLabel} color="muted" />
+                    <Typography size="xs" text={timeLabel} color="muted" />
                 </span>
             </div>
 

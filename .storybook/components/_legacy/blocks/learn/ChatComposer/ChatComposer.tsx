@@ -173,7 +173,7 @@ export const ChatComposer = ({
                     className="flex flex-col overflow-hidden rounded-2xl border border-default bg-surface"
                 >
                     <div className="px-3 pb-1 pt-2">
-                        <Typography.Base size="xs"
+                        <Typography size="xs"
                             color="muted"
                             showAnatomy={showAnatomy}
                             text={skillMenuHint}

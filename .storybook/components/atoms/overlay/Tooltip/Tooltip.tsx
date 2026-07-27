@@ -3,7 +3,7 @@ import { Tooltip as HeroTooltip } from "@heroui/react"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Tooltip.Base`: the ONE constrained hover-hint atom over HeroUI Tooltip.
+ * ATOM — `Tooltip`: the ONE constrained hover-hint atom over HeroUI Tooltip.
  *
  * Bọc HeroUI `Tooltip` TỐI ĐA (alias `HeroTooltip`) và SỞ HỮU toàn bộ chrome của
  * tooltip: inset, max-width, arrow. Consumer chỉ truyền `label` (nội dung) + trigger
@@ -90,9 +90,7 @@ const TooltipBase = ({
 }
 
 /**
- * `Tooltip.*` — the hover-hint ATOM namespace. `Tooltip.Base` là atom tooltip DUY
+ * `Tooltip.*` — the hover-hint ATOM namespace. `Tooltip` là atom tooltip DUY
  * NHẤT và là một trong hai atom được GIỮ `children` (wrapper bắt buộc).
  */
-export const Tooltip = Object.assign(TooltipBase, {
-    Base: TooltipBase,
-})
+export { TooltipBase as Tooltip }

@@ -56,7 +56,7 @@ interface PricePointOwnProps {
     size?: PricePointSize
     /** Anatomy tag: names the ROOT part so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
-    /** `true` → tag `Amount`/`Original`/`Period` with `data-anat-part`, and forward down into the composed `Typography.Base` calls. */
+    /** `true` → tag `Amount`/`Original`/`Period` with `data-anat-part`, and forward down into the composed `Typography` calls. */
     showAnatomy?: boolean
     /** Extra classes on the root. */
     className?: string
@@ -115,34 +115,34 @@ const PricePointBase = ({
     return (
         <div className={cn("flex flex-wrap items-baseline gap-2", className)} data-anat-part={anatPart}>
             {/* Main amount — prominent, sized off {@link SIZE_TO_TOKENS}. Composed via
-                `Typography.Base` (which now covers h1–h5) instead of raw HeroUI
+                `Typography` (which now covers h1–h5) instead of raw HeroUI
                 `Typography`, so `showAnatomy` forwards down like `original`/`period`. */}
-            <Typography.Base
+            <Typography
                 size={tokens.amount}
                 weight="semibold"
                 text={amount}
                 showAnatomy={showAnatomy}
-                anatPart="Typography.Base"
+                anatPart="Typography"
             />
             {/* Struck-through original — line-through is text-decoration, allowed as className */}
             {original ? (
-                <Typography.Base
+                <Typography
                     size={tokens.original}
                     color="muted"
                     className="line-through"
                     text={original}
                     showAnatomy={showAnatomy}
-                    anatPart="Typography.Base"
+                    anatPart="Typography"
                 />
             ) : null}
             {/* Billing period — smallest muted text at this size */}
             {period ? (
-                <Typography.Base
+                <Typography
                     size={tokens.period}
                     color="muted"
                     text={period}
                     showAnatomy={showAnatomy}
-                    anatPart="Typography.Base"
+                    anatPart="Typography"
                 />
             ) : null}
         </div>
@@ -150,6 +150,4 @@ const PricePointBase = ({
 }
 
 /** `PricePoint.*` — tier price as one baseline unit (amount + optional original + period). */
-export const PricePoint = Object.assign(PricePointBase, {
-    Base: PricePointBase,
-})
+export { PricePointBase as PricePoint }

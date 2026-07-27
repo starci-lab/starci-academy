@@ -2,21 +2,19 @@ import React from "react"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { EntityResultRow, type SearchCourseContentItem } from "@sb-components/_legacy/blocks/learn/EntityResultRow/EntityResultRow"
-import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { Link } from "@sb-components/atoms/navigation/Link/Link"
-
+import { SurfaceCardNested } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { LinkSeeMore } from "@sb-components/atoms/navigation/Link/Link"
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported from
  * `@/components/blocks/learn/ChatToolResult`. Authored in Storybook (not `src`); synced later.
  *
- * SHAPE = a `SurfaceCard.Nested` (border-only nested container + quiet eyebrow header
+ * SHAPE = a `SurfaceCardNested` (border-only nested container + quiet eyebrow header
  * with a leading icon + trailing count + a footer slot) whose sections are shared
  * {@link EntityResultRow}s. The "Xem tất cả" footer is a {@link SeeMoreLink} (it OWNS
  * the arrow + hover-slide, §5b) — NOT a hand-rolled button+arrow. Loading mirrors the
  * row shape with skeletons; the caller renders a text fallback (not an empty card)
  * when nothing matched, so this block never renders an empty state itself.
  */
-
 /** Props for the {@link ChatToolResult} block. */
 export interface ChatToolResultProps {
     /** The matched sources to render as pickable rows. */
@@ -45,11 +43,10 @@ export interface ChatToolResultProps {
     /** When on, emit `data-anat-part` on each part so a {@link BlockAnatomy} panel can badge them on-render. */
     showAnatomy?: boolean
 }
-
 /**
  * In-chat tool-result widget — a labeled, pickable list of RAG hits rendered
  * INLINE inside an assistant ChatBubble (generative-UI message part). Composes a
- * `radius="xl" variant="nested"` `SurfaceCard.Nested` (surface-in-surface on the chat bubble; codemod
+ * `radius="xl" variant="nested"` `SurfaceCardNested` (surface-in-surface on the chat bubble; codemod
  * 2026-07-26, formerly `compact bordered`) with
  * a leading kind icon + count in the header, shared {@link EntityResultRow}s as its
  * sections, and a {@link SeeMoreLink} footer.
@@ -71,7 +68,7 @@ export const ChatToolResult = ({
 }: ChatToolResultProps) => {
     const rows = isLoading
         ? [0, 1].map((row) => (
-            // Skeleton MIRROR of one result row. `SurfaceCard.List` can't frame it (a
+            // Skeleton MIRROR of one result row. `SurfaceCardList` can't frame it (a
             // repeating list is now DATA-only and would add its own surface INSIDE the
             // nested card), so the mirror keeps the row box it always had: same `p-3`
             // + full-bleed inset separator as the old free-form list row.
@@ -82,7 +79,7 @@ export const ChatToolResult = ({
             >
                 <div className="flex flex-col gap-2">
                     {showKindChip ? (
-                        <Chip.Base isSkeleton />
+                        <Chip isSkeleton />
                     ) : (
                         <Typography size="xs" isSkeleton className="w-1/3" />
                     )}
@@ -102,23 +99,22 @@ export const ChatToolResult = ({
                 showAnatomy={showAnatomy}
             />
         ))
-
     // Codemod 2026-07-26: `compact` → `radius="xl"`, `bordered` → `variant="nested"`
-    // (API 3-trục SurfaceCard.Nested).
+    // (API 3-trục SurfaceCardNested).
     return (
-        <SurfaceCard.Nested
+        <SurfaceCardNested
             radius="xl"
             variant="nested"
             title={label}
             icon={icon}
             meta={
                 !isLoading && items.length > 0 ? (
-                    <Typography.Base size="xs" color="muted" text={items.length} />
+                    <Typography size="xs" color="muted" text={items.length} />
                 ) : undefined
             }
             footer={
                 !isLoading && onViewAll ? (
-                    <Link.SeeMore
+                    <LinkSeeMore
                         size="xs"
                         onPress={onViewAll}
                         anatPart={showAnatomy ? "SeeMoreLink" : undefined}
@@ -130,6 +126,6 @@ export const ChatToolResult = ({
             anatPart={anatPart ?? (showAnatomy ? "NestedCard" : undefined)}
         >
             {rows}
-        </SurfaceCard.Nested>
+        </SurfaceCardNested>
     )
 }

@@ -155,8 +155,8 @@ export const LanguageDonut = ({
                 </ResponsiveContainer>
                 {/* centre total */}
                 <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-0">
-                    <Typography.Base size="h3" text={total} />
-                    <Typography.Base size="xs" color="muted" text={unitLabel} />
+                    <Typography size="h3" text={total} />
+                    <Typography size="xs" color="muted" text={unitLabel} />
                 </div>
             </div>
 
@@ -169,9 +169,9 @@ export const LanguageDonut = ({
                             className="size-3 shrink-0 rounded-full"
                             style={{ backgroundColor: getLanguageColor(item.key) }}
                         />
-                        <Typography.Base size="xs" color="muted" className="flex-1" text={getLanguageLabel(item.key)} />
-                        <Typography.Base size="xs" color="muted" text={item.value} />
-                        <Typography.Base size="xs"
+                        <Typography size="xs" color="muted" className="flex-1" text={getLanguageLabel(item.key)} />
+                        <Typography size="xs" color="muted" text={item.value} />
+                        <Typography size="xs"
                             color="muted"
                             className="w-10 shrink-0 text-right"
                             text={<>{Math.round((item.value / total) * 100)}%</>}

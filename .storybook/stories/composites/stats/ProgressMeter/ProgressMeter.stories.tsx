@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/ProgressMeter"
-
 const meta: Meta<typeof ProgressMeter> = {
     title: "Composites/Stats/ProgressMeter",
     component: ProgressMeter,
@@ -9,11 +8,8 @@ const meta: Meta<typeof ProgressMeter> = {
         layout: "fullscreen",
     },
 }
-
 export default meta
-
 type Story = StoryObj<typeof ProgressMeter>
-
 export const BareBar: Story = {
     render: () => (
         <div className="p-8">
@@ -23,7 +19,6 @@ export const BareBar: Story = {
         </div>
     ),
 }
-
 export const Empty: Story = {
     render: () => (
         <div className="p-8">
@@ -33,7 +28,6 @@ export const Empty: Story = {
         </div>
     ),
 }
-
 export const Half: Story = {
     render: () => (
         <div className="p-8">
@@ -43,7 +37,6 @@ export const Half: Story = {
         </div>
     ),
 }
-
 export const Complete: Story = {
     render: () => (
         <div className="p-8">
@@ -53,7 +46,6 @@ export const Complete: Story = {
         </div>
     ),
 }
-
 export const LabelOnly: Story = {
     render: () => (
         <div className="p-8">
@@ -63,7 +55,6 @@ export const LabelOnly: Story = {
         </div>
     ),
 }
-
 export const LabelAndValue: Story = {
     render: () => (
         <div className="p-8">
@@ -73,7 +64,6 @@ export const LabelAndValue: Story = {
         </div>
     ),
 }
-
 export const ValueOnly: Story = {
     render: () => (
         <div className="p-8">
@@ -83,7 +73,6 @@ export const ValueOnly: Story = {
         </div>
     ),
 }
-
 export const ToneAccent: Story = {
     render: () => (
         <div className="p-8">
@@ -93,7 +82,6 @@ export const ToneAccent: Story = {
         </div>
     ),
 }
-
 export const ToneSuccess: Story = {
     render: () => (
         <div className="p-8">
@@ -103,7 +91,6 @@ export const ToneSuccess: Story = {
         </div>
     ),
 }
-
 export const ToneWarning: Story = {
     render: () => (
         <div className="p-8">
@@ -113,7 +100,6 @@ export const ToneWarning: Story = {
         </div>
     ),
 }
-
 export const ToneDanger: Story = {
     render: () => (
         <div className="p-8">
@@ -123,7 +109,6 @@ export const ToneDanger: Story = {
         </div>
     ),
 }
-
 /** Fill still far from the 85% target — the accent notch pill overshoots the thin bar; `mt-5` reserves room for the floating "85%" label. */
 export const TargetBelow: Story = {
     render: () => (
@@ -134,7 +119,6 @@ export const TargetBelow: Story = {
         </div>
     ),
 }
-
 /** Fill has passed the target marker — the value reads as success. */
 export const TargetReached: Story = {
     render: () => (
@@ -145,7 +129,6 @@ export const TargetReached: Story = {
         </div>
     ),
 }
-
 /** `target` without `targetLabel` → just the notch pill, no floating caption (no reserved top room). */
 export const TargetNoLabel: Story = {
     render: () => (
@@ -156,7 +139,6 @@ export const TargetNoLabel: Story = {
         </div>
     ),
 }
-
 /** Count unit other than % — `max` is an integer total (7/10 lessons) instead of a percentage. */
 export const CountUnit: Story = {
     render: () => (

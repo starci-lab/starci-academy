@@ -1,5 +1,5 @@
 import React from "react"
-import { ContinueCard } from "@sb-components/blocks/learn/ContinueCard/ContinueCard"
+import { ContinueCardHero } from "@sb-components/blocks/learn/ContinueCard/ContinueCard"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -53,7 +53,7 @@ export const ContinueLearning = ({
 }: ContinueLearningProps) => (
     // `.Hero` = MỘT điểm nhấn trên trang. 2026-07-26: `variant="hero"` → member riêng
     // (§14d.1 cấm trục hình ở tầng design), `ctaLabel` bỏ vì nhãn CTA do design sở hữu.
-    <ContinueCard.Hero
+    <ContinueCardHero
         title={title}
         value={value}
         max={max}

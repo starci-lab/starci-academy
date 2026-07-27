@@ -9,7 +9,7 @@ import {
 } from "@phosphor-icons/react"
 import { NotificationList } from "@sb-components/_legacy/blocks/notifications/NotificationList/NotificationList"
 import type { NotificationGroup } from "@sb-components/_legacy/blocks/notifications/NotificationList/NotificationList"
-import { Feedback } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedback"
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
@@ -18,7 +18,7 @@ import { Skeleton as HeroSkeleton } from "@heroui/react"
 /**
  * BLOCK — the notification list REGION in the bell popover: an optional header
  * (title + mark-all-read) over day-grouped `NotificationItem` rows, falling to an
- * `Feedback.Empty` when nothing is present.
+ * `FeedbackEmpty` when nothing is present.
  *
  * ANATOMY IS PER-LEAF: each state below is its OWN leaf and carries its OWN
  * BlockAnatomy axis (Sơ đồ + Cây) reflecting the parts THAT leaf composes — there
@@ -137,10 +137,10 @@ const POPULATED_PARTS: Array<AnatomyNode> = [
 ]
 
 // Empty leaf: header STILL renders (title="Notifications" is passed) but with no
-// mark-all-read Button (onMarkAllRead omitted); the body falls to a single Feedback.Empty.
+// mark-all-read Button (onMarkAllRead omitted); the body falls to a single FeedbackEmpty.
 const EMPTY_PARTS: Array<AnatomyNode> = [
     { name: "Typography.Header", tier: "composite", role: "tiêu đề panel (\"Notifications\") — hiện prop title, không có Button (onMarkAllRead bỏ trống)" },
-    { name: "Feedback.Empty", tier: "composite", role: "fallback \"Chưa có thông báo nào\" (tiêu đề + mô tả)", state: "empty" },
+    { name: "FeedbackEmpty", tier: "composite", role: "fallback \"Chưa có thông báo nào\" (tiêu đề + mô tả)", state: "empty" },
 ]
 
 // Loading leaf: story-authored skeleton scaffold mirroring the populated chrome —
@@ -173,7 +173,7 @@ export const Populated: Story = {
                 tier="block"
                 leaf="Populated"
                 parts={POPULATED_PARTS}
-                reason="Gom nhiều NotificationItem thành một danh sách cuộn có header (tiêu đề + đánh dấu đã đọc hết) và nhãn gom theo ngày; khi rỗng thì tự rơi về Feedback.Empty thay vì một khối trống. Feature chỉ gom dữ liệu theo ngày và truyền các dòng đã format — không phải tự dựng lại header, nhóm, và trạng thái rỗng ở mỗi nơi. Khi tải: Skeleton mirror đúng khung này."
+                reason="Gom nhiều NotificationItem thành một danh sách cuộn có header (tiêu đề + đánh dấu đã đọc hết) và nhãn gom theo ngày; khi rỗng thì tự rơi về FeedbackEmpty thay vì một khối trống. Feature chỉ gom dữ liệu theo ngày và truyền các dòng đã format — không phải tự dựng lại header, nhóm, và trạng thái rỗng ở mỗi nơi. Khi tải: Skeleton mirror đúng khung này."
             >
                 {listFrame(
                     <NotificationList
@@ -195,7 +195,7 @@ export const Empty: Story = {
                 tier="block"
                 leaf="Empty"
                 parts={EMPTY_PARTS}
-                note="Header vẫn render (title được truyền) nhưng KHÔNG có nút mark-all-read (onMarkAllRead bỏ trống); mọi nhóm rỗng → body rơi về Feedback.Empty duy nhất (khác leaf data)."
+                note="Header vẫn render (title được truyền) nhưng KHÔNG có nút mark-all-read (onMarkAllRead bỏ trống); mọi nhóm rỗng → body rơi về FeedbackEmpty duy nhất (khác leaf data)."
             >
                 {listFrame(
                     <NotificationList
@@ -203,10 +203,10 @@ export const Empty: Story = {
                         groups={[{ items: [] }]}
                         showAnatomy
                         emptyState={
-                            <Feedback.Empty
+                            <FeedbackEmpty
                                 title="Chưa có thông báo nào"
                                 description="Khi có hoạt động mới trên khoá học của bạn, thông báo sẽ xuất hiện ở đây."
-                                anatPart="Feedback.Empty"
+                                anatPart="FeedbackEmpty"
                             />
                         }
                     />,
@@ -245,7 +245,7 @@ export const SkeletonLoading: Story = {
                         {/* header: title + mark-all-read button */}
                         <div className="flex items-center justify-between gap-3 px-3 py-2">
                             <Typography size="sm" isSkeleton className="w-1/3" anatPart="Skeleton.Header" />
-                            <Button.Base isSkeleton label="" className="w-28" />
+                            <Button isSkeleton label="" className="w-28" />
                         </div>
                         {/* one day group: label + rows */}
                         <div className="flex max-h-[420px] flex-col gap-3 p-1">

@@ -1,15 +1,14 @@
 import React from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { CaretRightIcon } from "@phosphor-icons/react"
-import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCardPressable } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { TitledText } from "@sb-components/composites/text/TitledText/TitledText"
-
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/cards/SummaryCard`. Authored in Storybook (not `src`);
  * synced back to `src` later.
  *
- * - **surface §1a**: leans on {@link SurfaceCard.Pressable} for the top-level surface look
+ * - **surface §1a**: leans on {@link SurfaceCardPressable} for the top-level surface look
  *   (`shadow-surface` + `rounded-3xl`, NO border — top-level cards carry elevation
  *   via shadow, not a viền). SummaryCard adds only layout + the metric slots.
  * - **icon-own §4/§5a**: the primitive owns the leading-icon size (`[&_svg]:size-6`,
@@ -17,7 +16,6 @@ import { TitledText } from "@sb-components/composites/text/TitledText/TitledText
  * - **trailing caret §5a/§5b**: navigation caret = phosphor `CaretRightIcon` `size-3` muted, does NOT slide (only ARROW slides — caret stays put).
  * - **isSkeleton**: self-renders a skeleton mirror of the same layout — consumer just flips the flag.
  */
-
 /** Props for {@link SummaryCard}. */
 export interface SummaryCardProps {
     /** Leading icon for the metric (passed TRẦN — the card owns its size, §4). */
@@ -37,13 +35,12 @@ export interface SummaryCardProps {
     /** When on, emit `data-anat-part` on this card's own direct sub-parts (icon · caret · stat) so its own `BlockAnatomy` panel can badge them. */
     showAnatomy?: boolean
 }
-
 /**
  * A compact pressable metric card (icon + big value + label, with a trailing
  * chevron) used in the profile overview to surface a deeper tab. Built on
- * {@link SurfaceCard.Pressable} for the whole-card press + top-level surface look
+ * {@link SurfaceCardPressable} for the whole-card press + top-level surface look
  * (`shadow-surface`, `rounded-3xl`). Presentational — the caller wires `onPress`.
- * For a cluster of ≥2 metric cards use {@link SummaryCardGroup} (`SummaryCard.Group`).
+ * For a cluster of ≥2 metric cards use {@link SummaryCardGroup} (`SummaryCardGroup`).
  *
  * @param props - {@link SummaryCardProps}
  */
@@ -83,9 +80,8 @@ const SummaryCardBase = ({
             </div>
         )
     }
-
     return (
-        <SurfaceCard.Pressable
+        <SurfaceCardPressable
             onPress={onPress}
             className={cn("group flex h-full w-full flex-col gap-3", className)}
         >
@@ -112,10 +108,9 @@ const SummaryCardBase = ({
                 hint={hint}
                 anatPart={showAnatomy ? "TitledText" : undefined}
             />
-        </SurfaceCard.Pressable>
+        </SurfaceCardPressable>
     )
 }
-
 /** Props for {@link SummaryCardGroup}. */
 export interface SummaryCardGroupProps {
     /** The metric cards in the cluster — each an item config the group renders as a {@link SummaryCard}. */
@@ -127,7 +122,6 @@ export interface SummaryCardGroupProps {
     /** When on, PASS `showAnatomy` down to every card. */
     showAnatomy?: boolean
 }
-
 /**
  * A cluster of ≥2 same-role {@link SummaryCard}s laid out as an equal-width wrap
  * row — the real profile-overview usage. The group OWNS layout (`gap-3`,
@@ -146,6 +140,5 @@ const SummaryCardGroup = ({ items, isSkeleton = false, showAnatomy = false, clas
         ))}
     </div>
 )
-
-/** Metric card + its cluster group (`SummaryCard.Group`). */
-export const SummaryCard = Object.assign(SummaryCardBase, { Group: SummaryCardGroup })
+/** Metric card + its cluster group (`SummaryCardGroup`). */
+export { SummaryCardBase as SummaryCard, SummaryCardGroup }

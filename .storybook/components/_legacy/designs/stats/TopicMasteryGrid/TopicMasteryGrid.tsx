@@ -54,8 +54,8 @@ export const TopicMasteryGrid = ({ topics, ariaLabel, className }: TopicMasteryG
                         style={{ backgroundColor: `color-mix(in srgb, var(--default) ${intensity}%, transparent)` }}
                         className="inline-flex items-center gap-2 rounded-full px-3 py-1"
                     >
-                        <Typography.Base size="xs" weight="medium" text={topic.label} />
-                        <Typography.Base size="xs" color="muted" text={topic.solved} />
+                        <Typography size="xs" weight="medium" text={topic.label} />
+                        <Typography size="xs" color="muted" text={topic.solved} />
                     </span>
                 )
             })}

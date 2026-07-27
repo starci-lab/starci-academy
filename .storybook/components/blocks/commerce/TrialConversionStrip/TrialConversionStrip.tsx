@@ -1,16 +1,16 @@
 import React from "react"
 import { ArrowRightIcon, LockIcon } from "@phosphor-icons/react"
 import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
-import { PriceTag, type PriceBreakdown } from "@sb-components/blocks/commerce/PriceTag/PriceTag"
+import { PriceBreakdown, PriceTagProminent } from "@sb-components/blocks/commerce/PriceTag/PriceTag"
 // The NON-legacy version (`designs/commerce/…`) — the `_legacy` version of the same
 // name still exists but is a dead end; screens are forbidden from touching `_legacy`
 // so every link in the chain has to move off it (instructor, 2026-07-26).
 import { PhaseScarcityNote, PricingPhase } from "@sb-components/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote"
-import { Button as AtomButton } from "@sb-components/atoms/buttons/Button/Button"
+import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { TitledText } from "@sb-components/composites/text/TitledText/TitledText"
 import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-import { Stack } from "@sb-components/frames/Stack/Stack"
+import { StackH, StackV } from "@sb-components/frames/Stack/Stack"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK ported faithfully from
@@ -97,25 +97,25 @@ const TrialConversionStripBase = ({
     return (
         // ⭐ 2026-07-27 (instructor: "layout built with layout components"): this block
         // used to DRAW ITS OWN surface — `rounded-3xl bg-surface p-5 shadow-surface`
-        // hand-typed — exactly what `SurfaceCard.Base` exists to do. Precisely because
+        // hand-typed — exactly what `SurfaceCard` exists to do. Precisely because
         // it drew its own frame, it also decided `p-5` on its own (OFF the §10c scale:
         // 0·1·2·3·6·8) and hand-drew a `border-t` between the two regions.
         // Going through the frame now, radius/shadow/padding come from ONE source:
         // `padding` defaults to `3` — the system's actual `p-3` card rule.
-        <SurfaceCard.Base
+        <SurfaceCard
             // `anatPart` from the PARENT wins; running in ITS OWN story it names itself
             // so the Deps tree can see the surface FRAME (otherwise the root node is
             // missing and the tree reads as if the block still drew its own surface).
-            anatPart={anatPart ?? (showAnatomy ? "SurfaceCard.Base" : undefined)}
+            anatPart={anatPart ?? (showAnatomy ? "SurfaceCard" : undefined)}
             className={className}
         >
-            <Stack.V gap="section" anatPart={showAnatomy ? "Stack.V" : undefined}>
-                <Stack.H gap="grouped" align="center" anatPart={showAnatomy ? "Stack.H" : undefined}>
-                    <IconTile.Base
+            <StackV gap="section" anatPart={showAnatomy ? "StackV" : undefined}>
+                <StackH gap="grouped" align="center" anatPart={showAnatomy ? "StackH" : undefined}>
+                    <IconTile
                         icon={LockIcon}
                         tone="accent"
                         size="sm"
-                        anatPart={showAnatomy ? "IconTile.Base" : undefined}
+                        anatPart={showAnatomy ? "IconTile" : undefined}
                     />
                     {/* The "title + description" cluster is ONE SEMANTIC UNIT ⇒ goes through
                     ONE frame, not two separate `Typography` (decided 2026-07-27).
@@ -136,7 +136,7 @@ const TrialConversionStripBase = ({
                                 : "Bạn đã đọc hết bài học miễn phí — mở khoá toàn bộ khoá học để tiếp tục."
                         }
                     />
-                </Stack.H>
+                </StackH>
                 {/* ⚠️ TRIED `Split` (2026-07-27) and it was WRONG — caught immediately: the
                     −33% chip dropped to its own line. `Split`'s contract is "the `start`
                     side is ALLOWED TO SHRINK (`min-w-0`), the `end` side never shrinks" ⇒
@@ -146,17 +146,17 @@ const TrialConversionStripBase = ({
                     Price is a NUMBER — shrinking it means nothing, unlike a long title that
                     can truncate. The correct behaviour for this row is to WRAP when tight
                     (the original: `flex-wrap`), i.e. the button drops to the next line
-                    instead of the price getting squeezed. That's `Stack.H` with `wrap` —
+                    instead of the price getting squeezed. That's `StackH` with `wrap` —
                     children are ARBITRARY so it fits §13b.
                     The seam between the lead cluster and the price block is a SEAM, not a
                     BOUNDARY: `gap-6` on the parent stack already separates the two regions;
                     adding a `border-t` on top says the same thing twice in two languages. */}
-                <Stack.H
+                <StackH
                     gap="section"
                     align="end"
                     justify="between"
                     wrap
-                    anatPart={showAnatomy ? "Stack.H" : undefined}
+                    anatPart={showAnatomy ? "StackH" : undefined}
                 >
                     {/* `grouped` (§10b). Read the seam by RELATIONSHIP, not by tier: the
                     scarcity line is a CAPTION OF THE PRICE, so price + scarcity are one
@@ -169,22 +169,22 @@ const TrialConversionStripBase = ({
                     uniform rhythm precisely because it stops reading as groups. With 3 the
                     card reads 24/12/12/24 — two groups, which is what it is. It was `tight`
                     (1) before either fix, a step §10b reserves for pairs inside an atom. */}
-                    <Stack.V gap="grouped" anatPart={showAnatomy ? "Stack.V" : undefined}>
+                    <StackV gap="grouped" anatPart={showAnatomy ? "StackV" : undefined}>
                         {isSkeleton && !price ? (
                         // 2026-07-12: the CTA card renders instantly once the outline
                         // resolves, but the price is a second fetch — mirror the price
                         // line instead of showing an empty gap until it lands.
                             <>
-                                <Typography size="h4" isSkeleton className="w-1/3" anatPart={showAnatomy ? "Typography.Base" : undefined} />
-                                <Typography size="xs" isSkeleton className="w-1/2" anatPart={showAnatomy ? "Typography.Base" : undefined} />
+                                <Typography size="h4" isSkeleton className="w-1/3" anatPart={showAnatomy ? "Typography" : undefined} />
+                                <Typography size="xs" isSkeleton className="w-1/2" anatPart={showAnatomy ? "Typography" : undefined} />
                             </>
                         ) : price?.discountedPriceVnd != null ? (
                             <>
-                                <PriceTag.Prominent
+                                <PriceTagProminent
                                     discounted={price.discountedPriceVnd}
                                     original={price.originalPriceVnd}
                                     breakdown={breakdown}
-                                    anatPart={showAnatomy ? "PriceTag.Prominent" : undefined}
+                                    anatPart={showAnatomy ? "PriceTagProminent" : undefined}
                                 />
                                 <PhaseScarcityNote
                                     anatPart={showAnatomy ? "PhaseScarcityNote" : undefined}
@@ -194,13 +194,13 @@ const TrialConversionStripBase = ({
                                 />
                             </>
                         ) : null}
-                    </Stack.V>
-                    {/* ATOM `Button.Base`, NOT the `_legacy` version (instructor, 2026-07-26):
+                    </StackV>
+                    {/* ATOM `Button`, NOT the `_legacy` version (instructor, 2026-07-26):
                         going around the port is drift — fixing the atom in one place
                         won't propagate here.
                         `suffixIcon` takes a COMPONENT REF (§12b), the atom forces scale + weight
                         (§4/§5.0a). */}
-                    <AtomButton.Base
+                    <Button
                         variant="primary"
                         size="lg"
                         className="shrink-0"
@@ -208,11 +208,11 @@ const TrialConversionStripBase = ({
                         suffixIcon={ArrowRightIcon}
                         iconSlide
                         onPress={onEnroll}
-                        anatPart={showAnatomy ? "Button.Base" : undefined}
+                        anatPart={showAnatomy ? "Button" : undefined}
                     />
-                </Stack.H>
-            </Stack.V>
-        </SurfaceCard.Base>
+                </StackH>
+            </StackV>
+        </SurfaceCard>
     )
 }
 
@@ -221,9 +221,7 @@ const TrialConversionStripBase = ({
  *
  * 2026-07-26 (instructor: "everything has a base and anatomy"): previously a BARE
  * export, so `CourseContents` had to write `<TrialConversionStrip>` next to
- * `<CourseTeamGate.Base>`. The root stays CALLABLE so old call-sites don't break;
+ * `<CourseTeamGate>`. The root stays CALLABLE so old call-sites don't break;
  * `.Base` is the standard path from now on.
  */
-export const TrialConversionStrip = Object.assign(TrialConversionStripBase, {
-    Base: TrialConversionStripBase,
-})
+export { TrialConversionStripBase as TrialConversionStrip }

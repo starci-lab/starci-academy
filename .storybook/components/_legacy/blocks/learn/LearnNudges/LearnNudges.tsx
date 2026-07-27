@@ -1,35 +1,31 @@
 import React from "react"
 import { ArrowRightIcon, CardsIcon, MicrophoneStageIcon, TrophyIcon } from "@phosphor-icons/react"
-import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
-
+import { SurfaceCardList } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — `LearnNudges`, block VIỆC NÊN LÀM HÔM NAY.
  *
  * LÝ DO TỒN TẠI (§14a): mỗi CHỨC NĂNG của screen là MỘT block. "Hôm nay nên làm
  * gì" là một chức năng, nên nó phải có tên. Trước 2026-07-25 screen `/learn/content`
- * gọi thẳng `SurfaceCard.List` (tầng LAYOUT) rồi tự nhét items + tự chọn icon —
+ * gọi thẳng `SurfaceCardList` (tầng LAYOUT) rồi tự nhét items + tự chọn icon —
  * screen lắp chi tiết thay cho block, đọc code screen không ra được trang làm gì.
  *
  * §14b — CALLER CHỈ ĐƯA DỮ LIỆU: `kind` là ENUM, không phải icon. Block sở hữu bảng
  * `kind → icon`; screen KHÔNG được biết "ôn thẻ" trông ra sao. Nếu prop là
  * `leadingIcon` thì screen lại phải cầm atom/icon ⇒ thủng luật.
  *
- * §14c — block chỉ LẮP: vỏ và nhịp đi qua `SurfaceCard.List`, CÙNG layout với
+ * §14c — block chỉ LẮP: vỏ và nhịp đi qua `SurfaceCardList`, CÙNG layout với
  * `KeepGoingPath` ngay dưới nó. Không tự vẽ khung, không tự chọn border.
  * ─────────────────────────────────────────────────────────────────────────────
  */
-
 /** Loại việc — ENUM dữ liệu; block tự quyết nó trông thế nào. */
 export type LearnNudgeKind = "flashcards" | "interview" | "league"
-
 /** Icon theo loại việc — block SỞ HỮU bảng này, caller không chọn được. */
 const NUDGE_ICON: Record<LearnNudgeKind, typeof CardsIcon> = {
     flashcards: CardsIcon,
     interview: MicrophoneStageIcon,
     league: TrophyIcon,
 }
-
 /** Một việc nên làm — DỮ LIỆU thuần. */
 export interface LearnNudge {
     /** Stable React key. */
@@ -43,7 +39,6 @@ export interface LearnNudge {
     /** Bấm vào hàng. */
     onPress?: () => void
 }
-
 /** Props for {@link LearnNudges}. */
 export interface LearnNudgesProps {
     /** Dòng dẫn trên khung (vd "Việc nên làm hôm nay"). */
@@ -60,7 +55,6 @@ export interface LearnNudgesProps {
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
 }
-
 /**
  * Việc nên làm hôm nay — danh sách lối tắt sang việc học kế tiếp.
  *
@@ -75,8 +69,8 @@ export const LearnNudges = ({
 }: LearnNudgesProps) => (
     // Codemod 2026-07-26: `bordered={bordered}` → `variant={bordered ? "nested" : "surface"}`
     // (API 3-trục SurfaceCard). Prop `bordered` của CHÍNH LearnNudges vẫn giữ tên cũ — chỉ
-    // đổi cách nó rót vào SurfaceCard.List.
-    <SurfaceCard.List
+    // đổi cách nó rót vào SurfaceCardList.
+    <SurfaceCardList
         variant={bordered ? "nested" : "surface"}
         label={heading}
         anatPart={anatPart}

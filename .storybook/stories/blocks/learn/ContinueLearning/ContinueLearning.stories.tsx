@@ -3,7 +3,7 @@ import { ContinueLearning } from "@sb-components/blocks/learn/ContinueLearning/C
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * BLOCK — `ContinueLearning.Base`: the "jump back to where you left off" feature.
+ * BLOCK — `ContinueLearning`: the "jump back to where you left off" feature.
  *
  * ⭐ This block was born 2026-07-27 (teacher: "design is only the UI/UX layer"):
  * the `CourseContents` screen used to import `ContinueCard` (the design tier)
@@ -14,16 +14,16 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * is a STATE of that same leaf, not a second leaf. `shell` helper đã xoá, mỗi
  * leaf giờ tự khai `states[]` (thầy chốt bố cục C, 2026-07-27).
  */
-const meta: Meta<typeof ContinueLearning.Base> = {
-    title: "Blocks/Learn/ContinueLearning/ContinueLearning.Base",
-    component: ContinueLearning.Base,
+const meta: Meta<typeof ContinueLearning> = {
+    title: "Blocks/Learn/ContinueLearning/ContinueLearning",
+    component: ContinueLearning,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },
 }
 
 export default meta
 
-type Story = StoryObj<typeof ContinueLearning.Base>
+type Story = StoryObj<typeof ContinueLearning>
 
 /** Sample data — all NUMBERS, exactly what the screen is allowed to hand down (§14d.1). */
 const SAMPLE = {
@@ -38,7 +38,7 @@ const SAMPLE = {
 
 const PARTS: Array<AnatomyNode> = [
     {
-        name: "ContinueCard.Hero",
+        name: "ContinueCardHero",
         tier: "block",
         role: "the design this block composes directly, given `title`/`meta` already turned into copy by the block so the design tier only has to draw them",
         storyId: "blocks-learn-continuecard-hero-progress--not-urgent",
@@ -50,7 +50,7 @@ export const Default: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
-                name="ContinueLearning.Base"
+                name="ContinueLearning"
                 tier="block"
                 leaf="Currently studying"
                 parts={PARTS}
@@ -59,7 +59,7 @@ export const Default: Story = {
                     {
                         name: "lessonIndex/lessonsRead/lessonsTotal/challengesDone/challengesTotal set",
                         why: "The block assembles the two lines of copy from numbers alone: `Bài 4 · …` and `Đã đọc 8/23 bài`. Design never sees what \"bài\" or \"thử thách\" even mean, it only draws the strings this block already wrote.",
-                        code: `<ContinueLearning.Base
+                        code: `<ContinueLearning
     lessonIndex={4}
     lessonTitle="Viết Dockerfile tối ưu"
     lessonsRead={8}
@@ -69,7 +69,7 @@ export const Default: Story = {
     progressPercent={34}
     onResume={handleResume}
 />`,
-                        render: <ContinueLearning.Base {...SAMPLE} anatPart="ContinueCard.Hero" onResume={() => {}} />,
+                        render: <ContinueLearning {...SAMPLE} anatPart="ContinueCardHero" onResume={() => {}} />,
                     },
                 ]}
             />
@@ -82,7 +82,7 @@ export const Skeleton: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
-                name="ContinueLearning.Base"
+                name="ContinueLearning"
                 tier="block"
                 leaf="Prop `isSkeleton`"
                 parts={PARTS}
@@ -91,8 +91,8 @@ export const Skeleton: Story = {
                     {
                         name: "isSkeleton",
                         why: "The tree stays exactly the same as the leaf above, since `isSkeleton` is a state rather than a separate leaf. The block does not draw shimmer bars itself, the flag flows straight down to `ContinueCard`, whose own owner decides its resting shape (§12c).",
-                        code: "<ContinueLearning.Base {...data} isSkeleton />",
-                        render: <ContinueLearning.Base {...SAMPLE} anatPart="ContinueCard.Hero" isSkeleton />,
+                        code: "<ContinueLearning {...data} isSkeleton />",
+                        render: <ContinueLearning {...SAMPLE} anatPart="ContinueCardHero" isSkeleton />,
                     },
                 ]}
             />

@@ -4,7 +4,7 @@ import { ALIGN_CLASS, GAP_CLASS, JUSTIFY_CLASS, PADDING_CLASS, type LayoutAlign,
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * FRAME. `Flex.Base` is THE flex box of the system, and the ONLY place in the drawing
+ * FRAME. `Flex` is THE flex box of the system, and the ONLY place in the drawing
  * allowed to write `flex`, `flex-col`, `flex-wrap`, `items-*`, `justify-*` or `gap-*`.
  *
  * WHY IT EXISTS (teacher, 2026-07-27). The spacing scale was already typed, yet 227 places in
@@ -18,7 +18,7 @@ import { ALIGN_CLASS, GAP_CLASS, JUSTIFY_CLASS, PADDING_CLASS, type LayoutAlign,
  * something a reviewer has to notice. That is the whole point of the frame tier: the 10 scale
  * stops being a convention people remember and becomes something the compiler holds.
  *
- * Named frames stay, they simply stop owning classes. `Stack.V` still means vertical rhythm and
+ * Named frames stay, they simply stop owning classes. `StackV` still means vertical rhythm and
  * `Split` still means two named sides; they now delegate here, so the vocabulary survives while
  * the implementation lives in one file.
  * ─────────────────────────────────────────────────────────────────────────────
@@ -27,7 +27,7 @@ import { ALIGN_CLASS, GAP_CLASS, JUSTIFY_CLASS, PADDING_CLASS, type LayoutAlign,
 /** Main axis. `col` grows without bound, which is why only `row` can wrap. */
 export type FlexDirection = "row" | "col"
 
-/** Props for {@link Flex.Base}. */
+/** Props for {@link Flex}. */
 export interface FlexBaseProps {
     /** Main axis. Defaults to `row`, the browser default, so the prop reads as an override. */
     direction?: FlexDirection
@@ -89,10 +89,10 @@ const FlexBase = ({
     anatPart,
     showAnatomy = false,
 }: FlexBaseProps) => (
-    // No self-name fallback: `Flex.Base` is internal-only (see the export note below) and has
+    // No self-name fallback: `Flex` is internal-only (see the export note below) and has
     // no story of its own, so a default badge here would only ever point nowhere (§11a.1 rule
     // on undeclared parts). A caller that needs THIS box badged as a node passes `anatPart`
-    // explicitly, same contract as `Split.Base`/`Cluster.Base`/`SurfaceCard.*`.
+    // explicitly, same contract as `Split`/`Cluster`/`SurfaceCard.*`.
     <div
         data-anat-part={anatPart}
         className={cn(
@@ -114,7 +114,7 @@ const FlexBase = ({
 
 /** `Flex.*` namespace. One shape, so only `.Base`. */
 /**
- * ⛔ INTERNAL to the frame tier (2026-07-27). `Stack.V`/`.H` are the public road; this box
+ * ⛔ INTERNAL to the frame tier (2026-07-27). `StackV`/`.H` are the public road; this box
  * is what they are built on. It stays exported ONLY because `Stack.tsx` imports it — no
  * story, and nothing outside `components/frames/` may call it.
  *
@@ -123,6 +123,4 @@ const FlexBase = ({
  * minus the axis stated in the name. A public frame that can do everything the constrained
  * one can is not a second option, it is the way the constraint gets bypassed.
  */
-export const Flex = Object.assign(FlexBase, {
-    Base: FlexBase,
-})
+export { FlexBase as Flex }

@@ -21,7 +21,7 @@ import { Label, Skeleton as HeroSkeleton, cn } from "@heroui/react"
  * label-bar `Skeleton` carry `data-anat-part` — both are heroui's OWN components
  * (`Label`/`Skeleton` imported straight from `@heroui/react`), declared `tier:
  * "heroui"` by whichever atom composes this frame with a visible `label`
- * (`Choice.RadioGroup`, `Input.*`, `Select.*`). `Description`/`Error` stay
+ * (`ChoiceRadioGroup`, `Input.*`, `Select.*`). `Description`/`Error` stay
  * unbadged (2026-07-28 orphan-part pass) — they're plain hand-rolled `<p>`s, not
  * a real component, and `FieldFrame` itself has no story of its own to declare
  * them against. The control cell badges its own part (`Field`/`Skeleton`) —
@@ -149,6 +149,4 @@ const FieldFrameBase = ({
 }
 
 /** `FieldFrame.*` — label/hint/control/error scaffold namespace. */
-export const FieldFrame = Object.assign(FieldFrameBase, {
-    Base: FieldFrameBase,
-})
+export { FieldFrameBase as FieldFrame }

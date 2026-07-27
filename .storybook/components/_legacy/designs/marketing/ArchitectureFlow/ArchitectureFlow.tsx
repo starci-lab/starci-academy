@@ -45,7 +45,7 @@ export const ArchitectureFlow = ({ nodes, className, showAnatomy }: Architecture
                         <CaretRightIcon aria-hidden focusable="false" className="size-3 shrink-0 text-muted" />
                     ) : null}
                     <span className="rounded-md border border-default bg-default px-2 py-1">
-                        <Typography.Base size="code" text={node} className="text-xs" showAnatomy={showAnatomy} />
+                        <Typography size="code" text={node} className="text-xs" showAnatomy={showAnatomy} />
                     </span>
                 </React.Fragment>
             ))}

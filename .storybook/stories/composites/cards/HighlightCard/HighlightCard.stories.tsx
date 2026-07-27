@@ -38,7 +38,7 @@ const ProfileCard = () => (
 const ProfileCardSkeleton = () => (
     <Card>
         <CardContent className="flex-row items-center gap-3">
-            <AtomAvatar.Base isSkeleton size="md" className="shrink-0" />
+            <AtomAvatar isSkeleton size="md" className="shrink-0" />
             <div className="flex min-w-0 grow flex-col">
                 <Typography size="sm" isSkeleton className="w-1/3" />
                 <Typography size="xs" isSkeleton className="w-2/3" />

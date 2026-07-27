@@ -8,7 +8,7 @@ import { ChatComposer } from "@sb-components/_legacy/blocks/learn/ChatComposer/C
 import { SelectionBanner } from "@sb-components/_legacy/blocks/learn/SelectionBanner/SelectionBanner"
 import { ConversationList, type ConversationListItem } from "@sb-components/_legacy/blocks/learn/ConversationList/ConversationList"
 import { ContentSearchList } from "@sb-components/_legacy/blocks/learn/ContentSearchList/ContentSearchList"
-import { Link } from "@sb-components/atoms/navigation/Link/Link"
+import { LinkBack } from "@sb-components/atoms/navigation/Link/Link"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 import type { SearchCourseContentItem } from "@sb-components/_legacy/blocks/learn/EntityResultRow/EntityResultRow"
 
@@ -203,7 +203,7 @@ export const LichSuPhien: Story = {
                     title={LESSON_TITLE}
                     headerSecondary={
                         <div data-anat-part="BackLink" className="w-fit">
-                            <Link.Back label="Cuộc trò chuyện" onPress={noop} />
+                            <LinkBack label="Cuộc trò chuyện" onPress={noop} />
                         </div>
                     }
                     showAnatomy
@@ -245,7 +245,7 @@ export const TimNoiDung: Story = {
                     title={LESSON_TITLE}
                     headerSecondary={
                         <div data-anat-part="BackLink" className="w-fit">
-                            <Link.Back label="Tìm nội dung khoá" onPress={noop} />
+                            <LinkBack label="Tìm nội dung khoá" onPress={noop} />
                         </div>
                     }
                     showAnatomy

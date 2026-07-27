@@ -125,6 +125,4 @@ const DropzoneBase = ({
  * `Dropzone.*` — namespace ô kéo-thả file. Root GỌI THẲNG được (`<Dropzone …/>`)
  * và chính nó là `Base` (§12a: callable-namespace, không export trần).
  */
-export const Dropzone = Object.assign(DropzoneBase, {
-    Base: DropzoneBase,
-})
+export { DropzoneBase as Dropzone }

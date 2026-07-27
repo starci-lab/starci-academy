@@ -119,7 +119,7 @@ export const ContentAiChatDrawer = ({
     >
         <div className="flex items-center gap-2 border-b border-default p-3">
             <span className="min-w-0 flex-1" data-anat-part={showAnatomy ? "Title" : undefined}>
-                <Typography.Base text={title} weight="bold" truncate />
+                <Typography text={title} weight="bold" truncate />
             </span>
             <ModeSwitch mode={mode} anatPart={showAnatomy ? "ModeSwitch" : undefined} />
         </div>

@@ -138,7 +138,7 @@ export const ReactionBar = ({
                         {EMOJI[myReaction]}
                     </span>
                 ) : null}
-                <Typography.Base size="xs" color="muted" showAnatomy={showAnatomy} text={count} />
+                <Typography size="xs" color="muted" showAnatomy={showAnatomy} text={count} />
             </div>
         )
     }
@@ -188,7 +188,7 @@ export const ReactionBar = ({
                     )}
                 </AnimatePresence>
                 {count > 0 ? (
-                    <Typography.Base size="xs" className={cn(myReaction ? "text-accent-soft-foreground" : "text-muted")} text={count} />
+                    <Typography size="xs" className={cn(myReaction ? "text-accent-soft-foreground" : "text-muted")} text={count} />
                 ) : null}
             </button>
 

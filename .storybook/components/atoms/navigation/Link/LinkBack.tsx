@@ -27,7 +27,7 @@ export interface LinkBackProps {
     onPress: () => void
     /** `true` → tag the root with `data-anat-part="Link"` (heroui tier, 2026-07-27) so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
-    /** Anatomy tag override — a composite forwards its OWN atom name here (e.g. `"Link.Back"`) so the deps tree can jump to this atom's own story instead of the underlying HeroUI element. */
+    /** Anatomy tag override — a composite forwards its OWN atom name here (e.g. `"LinkBack"`) so the deps tree can jump to this atom's own story instead of the underlying HeroUI element. */
     anatPart?: string
     /** Extra classes on the link. */
     className?: string

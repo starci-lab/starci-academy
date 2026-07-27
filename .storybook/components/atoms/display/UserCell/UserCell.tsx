@@ -6,10 +6,10 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/identity/UserCell`. Authored in Storybook (not `src`);
- * synced to `src` later. Composes the shared {@link Avatar} atom (`Avatar.Base`)
+ * synced to `src` later. Composes the shared {@link Avatar} atom (`Avatar`)
  * instead of the retired `UserAvatar` port — that port's DiceBear + broken-image
- * fallback chain merged into `Avatar.Base` on 2026-07-26 (xem header của
- * `AvatarBase.tsx`), nên compose thẳng `Avatar.Base` chứ không quay lại `UserAvatar`.
+ * fallback chain merged into `Avatar` on 2026-07-26 (xem header của
+ * `AvatarBase.tsx`), nên compose thẳng `Avatar` chứ không quay lại `UserAvatar`.
  */
 
 /** Props for {@link UserCell}. */
@@ -18,7 +18,7 @@ export interface UserCellProps {
     username: string
     /** Human-friendly name shown as the primary label; falls back to {@link UserCellProps.username}. */
     displayName?: string
-    /** Uploaded avatar URL; resilient fallbacks are handled by {@link Avatar.Base}. */
+    /** Uploaded avatar URL; resilient fallbacks are handled by {@link Avatar}. */
     avatar?: string | null
     /** Secondary handle line (e.g. `@username`); hidden when omitted. */
     handle?: string
@@ -38,7 +38,7 @@ export interface UserCellProps {
     /**
      * Render the leaf skeleton (shimmer) instead of the cell. Atom này là **BẢN GỐC
      * DUY NHẤT** của hình đó (§12c — chủ của HÌNH là chủ của SKELETON): avatar
-     * shimmer uỷ quyền thẳng cho `Avatar.Base isSkeleton size={size}` nên luôn khớp
+     * shimmer uỷ quyền thẳng cho `Avatar isSkeleton size={size}` nên luôn khớp
      * cỡ hàng thật, không khoá cứng một size cho mọi row.
      */
     isSkeleton?: boolean
@@ -49,7 +49,7 @@ export interface UserCellProps {
  * right-aligned trailing slot. Pure and props-only — no store or data access; the
  * caller supplies all text and any interactive controls via {@link UserCellProps.trailing}.
  *
- * Composes the shared {@link Avatar} atom (`Avatar.Base`) so the avatar fallback chain
+ * Composes the shared {@link Avatar} atom (`Avatar`) so the avatar fallback chain
  * (uploaded → generated → initials → icon) stays consistent everywhere a user is
  * rendered. The text column truncates so the cell survives narrow containers (`min-w-0`).
  *
@@ -71,12 +71,12 @@ const UserCellBase = ({
 
     if (isSkeleton) {
         // Skeleton lá do CHÍNH atom này sở hữu (§12c) — avatar uỷ quyền cho
-        // `Avatar.Base isSkeleton size={size}` (chủ hình = chủ skeleton, cỡ luôn
+        // `Avatar isSkeleton size={size}` (chủ hình = chủ skeleton, cỡ luôn
         // khớp hàng thật) + name bar (h-3 w-24 my-1) + handle bar tuỳ chọn
         // (h-3 w-16 my-0), gate theo `handle` y như nhánh sống gate dòng đó.
         return (
             <div className={cn("flex min-w-0 items-center gap-2", className)}>
-                <Avatar.Base isSkeleton size={size} showAnatomy={showAnatomy} />
+                <Avatar isSkeleton size={size} showAnatomy={showAnatomy} />
                 <div className="flex min-w-0 flex-col gap-0">
                     <HeroSkeleton
                         className="my-1 h-3 w-24 rounded"
@@ -95,7 +95,7 @@ const UserCellBase = ({
 
     return (
         <div className={cn("flex min-w-0 items-center gap-2", className)}>
-            <Avatar.Base
+            <Avatar
                 name={username}
                 src={avatar ?? undefined}
                 seed={username}
@@ -103,21 +103,21 @@ const UserCellBase = ({
                 showAnatomy={showAnatomy}
             />
             <div className="flex min-w-0 flex-col gap-0">
-                <Typography.Base size="sm"
+                <Typography size="sm"
                     weight="medium"
                     color={isOwnRow ? "accent" : undefined}
                     truncate
                     showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "Typography.Base" : undefined}
+                    anatPart={showAnatomy ? "Typography" : undefined}
                     className="leading-5"
                     text={name}
                 />
                 {handle ? (
-                    <Typography.Base size="xs"
+                    <Typography size="xs"
                         color="muted"
                         truncate
                         showAnatomy={showAnatomy}
-                        anatPart={showAnatomy ? "Typography.Base" : undefined}
+                        anatPart={showAnatomy ? "Typography" : undefined}
                         className="leading-4"
                         text={handle}
                     />
@@ -125,7 +125,7 @@ const UserCellBase = ({
             </div>
             {trailing ? (
                 // Caller slot (§ LOAI 3) — `trailing` is free content the caller passed in,
-                // not a fixed part of UserCell.Base's own anatomy, so it stays unbadged.
+                // not a fixed part of UserCell's own anatomy, so it stays unbadged.
                 <div className="ml-auto shrink-0">
                     {trailing}
                 </div>
@@ -135,6 +135,4 @@ const UserCellBase = ({
 }
 
 /** `UserCell.*` — presentational person cell (avatar + name + optional handle/trailing). */
-export const UserCell = Object.assign(UserCellBase, {
-    Base: UserCellBase,
-})
+export { UserCellBase as UserCell }

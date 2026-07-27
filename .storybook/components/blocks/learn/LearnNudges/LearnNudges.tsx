@@ -1,15 +1,14 @@
 import React from "react"
 import { ArrowRightIcon, CardsIcon, MicrophoneStageIcon, TrophyIcon } from "@phosphor-icons/react"
-import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCardList } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `LearnNudges.Base`: WHAT TO DO TODAY.
+ * BLOCK — `LearnNudges`: WHAT TO DO TODAY.
  *
  * WHY IT EXISTS (§14a): every FUNCTION of a screen is ONE block. "What should I
  * do today" is a function, so it needs a name. Before 2026-07-25 the
- * `/learn/content` screen called `SurfaceCard.List` (composite tier) directly and
+ * `/learn/content` screen called `SurfaceCardList` (composite tier) directly and
  * plugged in items + picked icons itself — the screen was wiring up details on
  * the block's behalf, so reading the screen's code couldn't tell you what the
  * page does.
@@ -20,21 +19,18 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * to hold an atom/icon again ⇒ breaking the rule.
  *
  * §14c — the block only ASSEMBLES: shell and rhythm flow through
- * `SurfaceCard.List`, the SAME layout as `KeepGoingPath` right below it. It
+ * `SurfaceCardList`, the SAME layout as `KeepGoingPath` right below it. It
  * doesn't draw its own frame or pick its own border.
  * ─────────────────────────────────────────────────────────────────────────────
  */
-
 /** Task type — a data ENUM; the block alone decides how it looks. */
 export type LearnNudgeKind = "flashcards" | "interview" | "league"
-
 /** Icon by task type — the block OWNS this table, the caller can't pick one. */
 const NUDGE_ICON: Record<LearnNudgeKind, typeof CardsIcon> = {
     flashcards: CardsIcon,
     interview: MicrophoneStageIcon,
     league: TrophyIcon,
 }
-
 /** One task to do — plain DATA. */
 export interface LearnNudge {
     /** Stable React key. */
@@ -53,8 +49,7 @@ export interface LearnNudge {
     /** Press the row. */
     onPress?: () => void
 }
-
-/** Props for {@link LearnNudges.Base}. */
+/** Props for {@link LearnNudges}. */
 export interface LearnNudgesBaseProps {
     /** The tasks to do. */
     items: Array<LearnNudge>
@@ -76,7 +71,6 @@ export interface LearnNudgesBaseProps {
     /** Anatomy tag: names this block so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
 }
-
 /**
  * What to do today — a shortcut list into the next learning task.
  *
@@ -89,15 +83,15 @@ const LearnNudgesBase = ({
     showAnatomy = false,
     anatPart,
 }: LearnNudgesBaseProps) => (
-    <SurfaceCard.List
+    <SurfaceCardList
         // The heading is OWNED by the BLOCK — the caller does NOT pass `heading`
         // (§14d.1, teacher's call 2026-07-26). This cluster always answers the
         // same one question, so the lead-in is a constant.
         label="Việc nên làm hôm nay"
-        anatPart={anatPart ?? (showAnatomy ? "SurfaceCard.List" : undefined)}
+        anatPart={anatPart ?? (showAnatomy ? "SurfaceCardList" : undefined)}
         items={
             isSkeleton
-                // GO THROUGH THE EXACT SAME RENDER PATH: still `SurfaceCard.List`,
+                // GO THROUGH THE EXACT SAME RENDER PATH: still `SurfaceCardList`,
                 // only the row content is swapped for bars. No second frame-drawing
                 // branch — the same lesson as "two render paths for one shape" from
                 // `KeepGoingPath`.
@@ -108,7 +102,7 @@ const LearnNudgesBase = ({
                             size="sm"
                             isSkeleton
                             className="w-2/3"
-                            anatPart={showAnatomy ? "Typography.Base" : undefined}
+                            anatPart={showAnatomy ? "Typography" : undefined}
                         />
                     ),
                 }))
@@ -122,8 +116,5 @@ const LearnNudgesBase = ({
         }
     />
 )
-
 /** `LearnNudges.*` — single-component namespace ⇒ only `.Base`. */
-export const LearnNudges = Object.assign(LearnNudgesBase, {
-    Base: LearnNudgesBase,
-})
+export { LearnNudgesBase as LearnNudges }

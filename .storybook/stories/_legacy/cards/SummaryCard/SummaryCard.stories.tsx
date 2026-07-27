@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { BookOpenIcon, FireIcon, TrophyIcon } from "@phosphor-icons/react"
-import { SummaryCard } from "@sb-components/_legacy/designs/cards/SummaryCard/SummaryCard"
+import { SummaryCard, SummaryCardGroup } from "@sb-components/_legacy/designs/cards/SummaryCard/SummaryCard"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 const meta: Meta<typeof SummaryCard> = {
@@ -96,17 +96,17 @@ export const LongContent: Story = {
     ),
 }
 
-/** Group — the real usage: a cluster of metric cards via `SummaryCard.Group`, each linking to a tab. */
+/** Group — the real usage: a cluster of metric cards via `SummaryCardGroup`, each linking to a tab. */
 export const Group: Story = {
     parameters: {
         usage:
-            "Dùng `SummaryCard.Group` khi có ≥2 card cùng vai (overview) — group tự lo `gap-3` + width đều + wrap, " +
+            "Dùng `SummaryCardGroup` khi có ≥2 card cùng vai (overview) — group tự lo `gap-3` + width đều + wrap, " +
             "caller KHÔNG hand-roll `<div className=\"w-56\">` quanh từng card (§6 fold cluster → 1 primitive).",
     },
     render: () => (
         <div className="p-8">
-            <BlockAnatomy name="SummaryCard" tier="block" leaf="Group" parts={CARD_PARTS} note="SummaryCard.Group lặp lại CÙNG composition (icon·caret·TitledText) ×N — group chỉ thêm layout, không đổi vai từng card.">
-                <SummaryCard.Group
+            <BlockAnatomy name="SummaryCard" tier="block" leaf="Group" parts={CARD_PARTS} note="SummaryCardGroup lặp lại CÙNG composition (icon·caret·TitledText) ×N — group chỉ thêm layout, không đổi vai từng card.">
+                <SummaryCardGroup
                     showAnatomy
                     items={[
                         {
@@ -138,12 +138,12 @@ export const Group: Story = {
 /** Loading — `isSkeleton` self-renders the skeleton mirror (icon · value · label · hint), no loose Skeleton. */
 export const Loading: Story = {
     parameters: {
-        usage: "Truyền `isSkeleton` khi số liệu đang tải — card (và `SummaryCard.Group`) tự vẽ skeleton mirror đúng layout. Không dựng Skeleton rời ngoài.",
+        usage: "Truyền `isSkeleton` khi số liệu đang tải — card (và `SummaryCardGroup`) tự vẽ skeleton mirror đúng layout. Không dựng Skeleton rời ngoài.",
     },
     render: () => (
         <div className="p-8">
             <BlockAnatomy name="SummaryCard" tier="block" leaf="Loading" parts={SKELETON_PARTS} note="isSkeleton đổi hẳn composition: 2 khối Skeleton thay icon/caret + TitledText tự vẽ mirror.">
-                <SummaryCard.Group
+                <SummaryCardGroup
                     isSkeleton
                     showAnatomy
                     items={[

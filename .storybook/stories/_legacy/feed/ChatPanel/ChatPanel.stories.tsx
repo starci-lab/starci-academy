@@ -4,9 +4,8 @@ import type { ReactNode } from "react"
 import { Typography } from "@heroui/react"
 import { ChatCircleDotsIcon } from "@phosphor-icons/react"
 import { ChatPanel, type ChatPanelMessage } from "@sb-components/_legacy/blocks/feed/ChatPanel/ChatPanel"
-import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCardNested } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
-
 /**
  * BLOCK — a complete chat surface: a scrollable list of turns (with tool-result
  * rows under assistant turns), an optional typing indicator, an empty-state slot,
@@ -24,14 +23,10 @@ const meta: Meta<typeof ChatPanel> = {
         layout: "fullscreen",
     },
 }
-
 export default meta
-
 type Story = StoryObj<typeof ChatPanel>
-
 /** Plain canvas that frames each leaf's anatomy panel. */
 const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
-
 // Sticky-bottom composer (own Block story → tier "block"). It OWNS its row: an
 // optional leading avatar, the auto-growing HeroUI field, and the Send button.
 const COMPOSER_PART: AnatomyNode = {
@@ -44,8 +39,7 @@ const COMPOSER_PART: AnatomyNode = {
         { name: "Button", tier: "composite", role: "nút Send + spinner khi đang gửi" },
     ],
 }
-
-// Tool-result row under an assistant turn: the caller-built SurfaceCard.Nested, which
+// Tool-result row under an assistant turn: the caller-built SurfaceCardNested, which
 // CONTAINS its section rows (`items`). A section's eyebrow/title are its own data
 // (rendered internally, untaggable) and its body is an element-render-prop of
 // `content` — cut per canon granularity; the section absorbs them as ONE node.
@@ -57,7 +51,6 @@ const TOOL_RESULT_PART: AnatomyNode = {
         { name: "NestedCardSection", tier: "block", role: "mỗi nguồn một hàng (eyebrow + tiêu đề + mô tả)" },
     ],
 }
-
 // Conversation leaf: the real turns — bubbles, a tool-result card nested under the
 // assistant turn, and the composer with its own field/avatar/Send inside.
 const CONVERSATION_PARTS: Array<AnatomyNode> = [
@@ -65,7 +58,6 @@ const CONVERSATION_PARTS: Array<AnatomyNode> = [
     TOOL_RESULT_PART,
     COMPOSER_PART,
 ]
-
 // Typing leaf: same turns + the three-dot indicator standing in for the pending reply.
 const TYPING_PARTS: Array<AnatomyNode> = [
     { name: "ChatBubble", tier: "block", role: "mỗi lượt tin theo role (user/assistant)" },
@@ -73,7 +65,6 @@ const TYPING_PARTS: Array<AnatomyNode> = [
     { name: "TypingIndicator", tier: "composite", role: "ba chấm nảy phía trợ lý đang gõ", state: "typing" },
     COMPOSER_PART,
 ]
-
 // Empty leaf: no turns — the centered empty-state slot is a caller-filled SLOT
 // (its icon + dòng nhắc are element-render-props of whatever ReactNode the FEATURE
 // hands `emptyState`) — cut per canon granularity; the slot absorbs them as ONE
@@ -82,7 +73,6 @@ const EMPTY_PARTS: Array<AnatomyNode> = [
     { name: "EmptyState", tier: "composite", role: "slot canh giữa khi danh sách rỗng (icon + dòng nhắc do feature cấp)" },
     COMPOSER_PART,
 ]
-
 const baseMessages: Array<ChatPanelMessage> = [
     {
         id: "m1",
@@ -94,7 +84,7 @@ const baseMessages: Array<ChatPanelMessage> = [
         role: "assistant",
         content: "Usually when you notice data repeating across many rows, or a column that depends on a non-primary-key column. I found a few sources in the course related to this question.",
         toolResult: (
-            <SurfaceCard.Nested
+            <SurfaceCardNested
                 title="Related lessons"
                 // 2026-07-26: bordered (boolean) → variant="nested" (ba trục độc lập, thầy chốt).
                 variant="nested"
@@ -132,7 +122,6 @@ const baseMessages: Array<ChatPanelMessage> = [
         content: "Exactly. Denormalization deliberately merges data back together to read faster, at the cost of duplicated data and having to update it in several places.",
     },
 ]
-
 /** Wrapper owning the composer draft + the message list — the controlled flow. */
 const Controlled = ({
     initialMessages,
@@ -175,7 +164,6 @@ const Controlled = ({
         </div>
     )
 }
-
 export const Conversation: Story = {
     render: () =>
         shell(
@@ -190,7 +178,6 @@ export const Conversation: Story = {
             </BlockAnatomy>,
         ),
 }
-
 export const Empty: Story = {
     render: () =>
         shell(
@@ -216,7 +203,6 @@ export const Empty: Story = {
             </BlockAnatomy>,
         ),
 }
-
 export const Typing: Story = {
     render: () =>
         shell(

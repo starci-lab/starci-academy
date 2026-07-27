@@ -20,8 +20,8 @@ import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
  * Rule of thumb: needs a bounded surface ⇒ `SectionCard`/`SurfaceCard.*`; only
  * needs "title + content in one vertical rhythm" ⇒ `Section.*`.
  *
- * ⚠️ NOT `Page.Header` either: that is the chrome of a whole ROUTE (breadcrumb +
- * H3 title + meta strip), ONE per page. `Section.Header` is the header of a
+ * ⚠️ NOT `PageHeader` either: that is the chrome of a whole ROUTE (breadcrumb +
+ * H3 title + meta strip), ONE per page. `SectionHeader` is the header of a
  * region INSIDE that page, many per page, and scales down via `level`.
  *
  * KHUNG API LAW (§13b):
@@ -69,7 +69,7 @@ const TITLE_WEIGHT: Record<SectionLevel, "bold" | "medium"> = {
     3: "medium",
 }
 
-/** Props for {@link Section.Header}. */
+/** Props for {@link SectionHeader}. */
 export interface SectionHeaderProps {
     /** The region's title. Plain text, or any inline node (e.g. a title + chip row). */
     title: ReactNode
@@ -122,16 +122,16 @@ const Header = ({
                 "inside a lower-tier component"), not the grouped gap-3 used BETWEEN regions. */}
             <div className="flex min-w-0 flex-col gap-1">
                 {eyebrow != null ? (
-                    <span className="min-w-0" data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
-                        <Typography.Base size={eyebrowSize} text={eyebrow} color="muted" truncate />
+                    <span className="min-w-0" data-anat-part={showAnatomy ? "Typography" : undefined}>
+                        <Typography size={eyebrowSize} text={eyebrow} color="muted" truncate />
                     </span>
                 ) : null}
-                <span className="min-w-0" data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
-                    <Typography.Base size={titleSize} text={title} weight={TITLE_WEIGHT[level]} />
+                <span className="min-w-0" data-anat-part={showAnatomy ? "Typography" : undefined}>
+                    <Typography size={titleSize} text={title} weight={TITLE_WEIGHT[level]} />
                 </span>
                 {description != null ? (
-                    <span className="min-w-0" data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
-                        <Typography.Base size={descriptionSize} text={description} color="muted" />
+                    <span className="min-w-0" data-anat-part={showAnatomy ? "Typography" : undefined}>
+                        <Typography size={descriptionSize} text={description} color="muted" />
                     </span>
                 ) : null}
             </div>
@@ -147,17 +147,17 @@ const Header = ({
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
- * The `header` channel of {@link Section.Base}: either the PROPS of
- * {@link Section.Header} (the frame builds it — the main road) or a ready node
+ * The `header` channel of {@link Section}: either the PROPS of
+ * {@link SectionHeader} (the frame builds it — the main road) or a ready node
  * (an escape hatch for a header the section did not author, e.g. a toolbar row).
  */
 export type SectionHeaderSlot = SectionHeaderProps | ReactNode
 
-/** Props for {@link Section.Base}. */
+/** Props for {@link Section}. */
 export interface SectionBaseProps {
     /**
      * Top region. Pass {@link SectionHeaderProps} (`{ title, description… }`) and
-     * the frame renders a {@link Section.Header} itself; pass a node and it is
+     * the frame renders a {@link SectionHeader} itself; pass a node and it is
      * rendered as-is.
      */
     header?: SectionHeaderSlot
@@ -209,10 +209,10 @@ const Base = ({
     const headerNode = header == null
         ? null
         : isHeaderProps(header)
-            // props form → the frame builds ITS OWN Section.Header (a fixed internal
+            // props form → the frame builds ITS OWN SectionHeader (a fixed internal
             // choice, not arbitrary caller content) — badge that real component
             // directly rather than the generic wrapping div below.
-            ? <Header {...header} showAnatomy={showAnatomy} anatPart={showAnatomy ? "Section.Header" : undefined} />
+            ? <Header {...header} showAnatomy={showAnatomy} anatPart={showAnatomy ? "SectionHeader" : undefined} />
             : header
     return (
         <section className={cn("flex flex-col", GAP_CLASS[gap], className)} data-anat-part={anatPart}>
@@ -237,7 +237,4 @@ const Base = ({
  * | `.Base` | `header`/`body`/`footer` slots (+ `children` = body), `gap` on the §10 scale |
  * | `.Header` | `eyebrow`/`title`/`description`/`action` + `level` (no children) |
  */
-export const Section = {
-    Base,
-    Header,
-}
+export { Base as Section, Header as SectionHeader }

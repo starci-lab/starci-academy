@@ -4,7 +4,7 @@ import { Disclosure as HeroDisclosure, DisclosureGroup as HeroDisclosureGroup, S
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Accordion.Base`: the ONE constrained accordion atom over HeroUI
+ * ATOM — `Accordion`: the ONE constrained accordion atom over HeroUI
  * `DisclosureGroup` + `Disclosure`.
  *
  * Data-driven: the caller passes `items` (id + title + content), and the atom
@@ -110,10 +110,8 @@ const AccordionBase = ({
 }
 
 /**
- * `Accordion.*` — the accordion ATOM namespace. `Accordion.Base` is the single
+ * `Accordion.*` — the accordion ATOM namespace. `Accordion` is the single
  * constrained accordion (single/multi-open, default-open are LEAVES of it,
  * prop-driven).
  */
-export const Accordion = Object.assign(AccordionBase, {
-    Base: AccordionBase,
-})
+export { AccordionBase as Accordion }

@@ -6,7 +6,7 @@ import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  * LAYOUT (frame) — `Grid.*`: the responsive grid of equal cells. One member,
- * `Grid.Base` (a grid has one shape; density is a PROP, §6b).
+ * `Grid` (a grid has one shape; density is a PROP, §6b).
  *
  * FRAME API LAW (§13b) — REPEATING LIST ⇒ `items` DATA, `children` FORBIDDEN.
  * A grid's premise is that every cell is the same kind of thing; children would
@@ -28,7 +28,7 @@ import { GAP_CLASS, type SeamScale } from "@sb-components/frames/_spacing"
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** One cell of a {@link Grid.Base}. */
+/** One cell of a {@link Grid}. */
 export interface GridItem {
     /** Stable React key. */
     key: string
@@ -97,7 +97,7 @@ const SPAN_CLASS: Record<2, string> = {
     2: "col-span-2",
 }
 
-/** Props for {@link Grid.Base}. */
+/** Props for {@link Grid}. */
 export interface GridBaseProps {
     /**
      * The cells, in reading order. REQUIRED — repeat list = DATA, never children
@@ -168,6 +168,4 @@ const GridBase = ({ items, columns, gap, className, showAnatomy = false }: GridB
  * `Grid.*` — the responsive grid frame namespace. Namespace only — no bare
  * component export (§13a).
  */
-export const Grid = {
-    Base: GridBase,
-}
+export { GridBase as Grid }

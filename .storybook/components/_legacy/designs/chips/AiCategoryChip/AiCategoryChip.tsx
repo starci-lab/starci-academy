@@ -57,21 +57,21 @@ export interface AiCategoryChipProps {
  * GitHub-style badge for an AI model's cost/quality category — the single source for
  * the model-category badge across the grade picker and the AI lab. A small
  * tier-coloured dot followed by the localized category name. A thin map wrapper over
- * the ATOM `Chip.Base` (variant `bare`); colour comes from the shared
+ * the ATOM `Chip` (variant `bare`); colour comes from the shared
  * {@link AI_CATEGORY_COLOR} scale.
  *
  * @param props - {@link AiCategoryChipProps}
  */
 export const AiCategoryChip = ({ category, className, isSkeleton, anatPart }: AiCategoryChipProps) => {
     const chip = (
-        <Chip.Base
+        <Chip
             dotClassName={AI_CATEGORY_COLOR[category]}
             text={AI_CATEGORY_LABEL[category]}
             className={className}
             isSkeleton={isSkeleton}
         />
     )
-    // Atom `Chip.Base` không mở `anatPart` (nó là HẠT, không phải node có tên trong cây
+    // Atom `Chip` không mở `anatPart` (nó là HẠT, không phải node có tên trong cây
     // của caller) → wrapper mỏng coincident giữ được badge mà không đổi layout.
     return anatPart ? <span className="inline-flex" data-anat-part={anatPart}>{chip}</span> : chip
 }

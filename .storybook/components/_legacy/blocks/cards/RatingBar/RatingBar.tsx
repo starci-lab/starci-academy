@@ -1,21 +1,18 @@
 "use client"
-
 import React from "react"
 import { cn } from "@heroui/react"
 import type { ReactNode } from "react"
-import { SurfaceCard } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
+import { SurfaceCardPressableGroup } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
-
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — the target `RatingBar`. Authored in Storybook
  * (not `src`); synced to `src` later. NO `@/components` imports.
  *
- * Composes the local `SurfaceCard.PressableGroup` frame (itself over `SurfaceCard.Pressable` +
+ * Composes the local `SurfaceCardPressableGroup` frame (itself over `SurfaceCardPressable` +
  * the shared `verdict-band`) for the tile grid, and `StatusChip` for the
  * keyboard-shortcut number pill — no more inlined copies of either primitive.
  */
-
 // ── RatingBar ────────────────────────────────────────────────────────────────
 /** One selectable recall grade in a {@link RatingBar}. */
 export interface RatingOption {
@@ -26,7 +23,6 @@ export interface RatingOption {
     /** Optional secondary line under the label (e.g. the next-interval preview). */
     hint?: ReactNode
 }
-
 /** Props for the {@link RatingBar} block. */
 export interface RatingBarProps {
     /** Ordered grades to offer, weakest recall first (Again → Easy). */
@@ -52,7 +48,6 @@ export interface RatingBarProps {
     /** Dev/spec: emit `data-anat-part` on this leaf's composed parts (Label/StatusChip/Typography) for a BlockAnatomy panel. */
     showAnatomy?: boolean
 }
-
 /**
  * Grade → RAW palette colour for the shared verdict band's `color` escape hatch.
  * A grade is a TIER (like a difficulty level), not a status/alert, so it uses the
@@ -65,7 +60,6 @@ const GRADE_COLOR: Record<number, string> = {
     2: "amber-500",
     3: "emerald-500",
 }
-
 /**
  * The SM-2 recall-rating bar: a row of FOUR equal-width grade TILES (Again / Hard
  * / Good / Easy) the learner taps — or presses `1`–`4` — after revealing a
@@ -73,7 +67,7 @@ const GRADE_COLOR: Record<number, string> = {
  * `withVerdict` band, colours from {@link GRADE_COLOR}), a keyboard-key hint (a
  * neutral `StatusChip`), and an optional next-interval preview.
  *
- * The tiles + their grid + the 1–4 shortcut are a `SurfaceCard.PressableGroup`, so this
+ * The tiles + their grid + the 1–4 shortcut are a `SurfaceCardPressableGroup`, so this
  * block only owns the tile ANATOMY. Grading is an ACTION — nothing stays selected,
  * no ring, no outline. Labels/hints arrive localized from the caller.
  *
@@ -89,7 +83,7 @@ export const RatingBar = ({
     showAnatomy = false,
 }: RatingBarProps) => {
     if (isSkeleton) {
-        // Mirrors SurfaceCard.PressableGroup's own grid + tile chrome (`grid-cols-2
+        // Mirrors SurfaceCardPressableGroup's own grid + tile chrome (`grid-cols-2
         // @sm:grid-cols-4 gap-3` / `rounded-2xl shadow-field`) literally — this
         // fixed 2/4-column skeleton isn't the responsive `columns` prop the real
         // port takes, so there's nothing to compose here, just the same classes —
@@ -102,7 +96,7 @@ export const RatingBar = ({
                         <div key={option.grade} className="flex flex-col gap-2 rounded-2xl py-2 pr-3 pl-3 shadow-field">
                             <span className="flex items-center justify-between gap-2">
                                 <Typography size="sm" isSkeleton className="w-1/2" anatPart={showAnatomy ? "Skeleton" : undefined} />
-                                <Chip.Base isSkeleton className="size-6" showAnatomy={showAnatomy} />
+                                <Chip isSkeleton className="size-6" showAnatomy={showAnatomy} />
                             </span>
                             {option.hint !== undefined ? (
                                 <Typography size="xs" isSkeleton className="w-1/3" anatPart={showAnatomy ? "Skeleton" : undefined} />
@@ -114,7 +108,7 @@ export const RatingBar = ({
         )
     }
     return (
-        <SurfaceCard.PressableGroup
+        <SurfaceCardPressableGroup
             ariaLabel={ariaLabel}
             columns={{ base: 2, md: 4 }}
             gap="grouped"
@@ -135,14 +129,14 @@ export const RatingBar = ({
                             >
                                 {option.label}
                             </span>
-                            <Chip.Base
+                            <Chip
                                 tone="neutral"
                                 anatPart={showAnatomy ? "StatusChip" : undefined}
                                 text={position + 1}
                             />
                         </span>
                         {option.hint !== undefined ? (
-                            <Typography.Base size="xs"
+                            <Typography size="xs"
                                 color="muted"
                                 showAnatomy={showAnatomy}
                                 text={option.hint}

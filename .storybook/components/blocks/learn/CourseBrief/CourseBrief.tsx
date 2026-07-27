@@ -1,15 +1,15 @@
 import React from "react"
-import { Page } from "@sb-components/composites/layout/Page/Page"
+import { PageHeader } from "@sb-components/composites/layout/Page/Page"
 import { Breadcrumbs } from "@sb-components/atoms/navigation/Breadcrumbs/Breadcrumbs"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `CourseBrief.Base`: the COURSE IDENTITY block.
+ * BLOCK — `CourseBrief`: the COURSE IDENTITY block.
  *
  * WHY IT EXISTS (teacher's call 2026-07-25): **on a SCREEN, never reach for an
  * atom directly — only blocks.** Before this, the `/learn/content` screen called
- * the `Page.Header` frame (layout) itself and stuffed `Breadcrumbs.Base` (atom)
+ * the `PageHeader` frame (layout) itself and stuffed `Breadcrumbs` (atom)
  * straight in — wrong tier. This block is what the screen calls INSTEAD of both.
  * It exists for the TIER BOUNDARY, not because it has its own state.
  *
@@ -22,11 +22,11 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * so the course-sales page / `/learn` page can both reuse it.
  *
  * CONTRACT: the block takes **DATA**, not a pre-built atom — `breadcrumbItems` is
- * an array of crumbs, the block builds `Breadcrumbs.Base` itself. If the prop
+ * an array of crumbs, the block builds `Breadcrumbs` itself. If the prop
  * were `breadcrumb?: ReactNode` the caller (screen) would have to hold an atom
  * again → breaking exactly this rule.
  *
- * COMPOSE: `Page.Header` frame (layout) + `Breadcrumbs.Base` (atom) + `Typography`.
+ * COMPOSE: `PageHeader` frame (layout) + `Breadcrumbs` (atom) + `Typography`.
  * The block does NOT draw its own frame — it PLACES business content into an
  * existing frame.
  * ─────────────────────────────────────────────────────────────────────────────
@@ -42,9 +42,9 @@ export interface CourseBriefCrumb {
     onPress?: () => void
 }
 
-/** Props for {@link CourseBrief.Base}. */
+/** Props for {@link CourseBrief}. */
 export interface CourseBriefBaseProps {
-    /** Breadcrumb trail as DATA — the block builds `Breadcrumbs.Base` itself. */
+    /** Breadcrumb trail as DATA — the block builds `Breadcrumbs` itself. */
     breadcrumbItems?: Array<CourseBriefCrumb>
     /** Course name. */
     title: string
@@ -65,14 +65,14 @@ export interface CourseBriefBaseProps {
     /**
      * `true` → the cluster switches to a mirror shimmer INSTEAD OF waiting for
      * data — the flag FLOWS DOWN to the actual text-rendering atoms
-     * (`Breadcrumbs.Base`/`Typography.Base`), not a parallel skeleton tree
+     * (`Breadcrumbs`/`Typography`), not a parallel skeleton tree
      * (§12c).
      *
-     * ⚠️ `Page.Header` (the frame wrapping `title`/`description`) does NOT have
+     * ⚠️ `PageHeader` (the frame wrapping `title`/`description`) does NOT have
      * `isSkeleton` yet and sits OUTSIDE the 4 files edited this round — the
      * block can't pass the flag through it. For those two slots, the block
-     * calls the `Typography.Base isSkeleton` atom DIRECTLY (matching the
-     * size/weight `Page.Header` itself uses for `title`/`description`) and
+     * calls the `Typography isSkeleton` atom DIRECTLY (matching the
+     * size/weight `PageHeader` itself uses for `title`/`description`) and
      * feeds the RESULT into the slot instead of a raw string — still "flag
      * flows down to the atom", just a different PLACE that calls the atom.
      */
@@ -110,14 +110,14 @@ const CourseBriefBase = ({
 
     return (
         <div data-anat-part={anatPart}>
-            <Page.Header
-                anatPart={showAnatomy ? "Page.Header" : undefined}
+            <PageHeader
+                anatPart={showAnatomy ? "PageHeader" : undefined}
                 breadcrumb={
                     isSkeleton || breadcrumbItems?.length ? (
-                        <div className="w-fit" data-anat-part={showAnatomy ? "Breadcrumbs.Base" : undefined}>
+                        <div className="w-fit" data-anat-part={showAnatomy ? "Breadcrumbs" : undefined}>
                             {/* collapse: below @app-sm or trail ≥ 4 crumbs → back-link (the old
-                        capability of ResponsiveBreadcrumb, now a prop of the Breadcrumbs.Base atom). */}
-                            <Breadcrumbs.Base
+                        capability of ResponsiveBreadcrumb, now a prop of the Breadcrumbs atom). */}
+                            <Breadcrumbs
                                 collapseOnMobile
                                 collapseFrom={4}
                                 items={breadcrumbItems ?? []}
@@ -128,34 +128,34 @@ const CourseBriefBase = ({
                 }
                 title={
                     isSkeleton ? (
-                        // `Page.Header` has no `isSkeleton` yet (outside this round's edit
-                        // boundary) — call the `Typography.Base` atom directly with the EXACT
-                        // size/weight `Page.Header` itself uses for `title` (size="h3"
+                        // `PageHeader` has no `isSkeleton` yet (outside this round's edit
+                        // boundary) — call the `Typography` atom directly with the EXACT
+                        // size/weight `PageHeader` itself uses for `title` (size="h3"
                         // weight="bold"), then feed the result into the slot.
-                        <Typography.Base size="h3" weight="bold" isSkeleton anatPart={showAnatomy ? "Typography.Base" : undefined} />
+                        <Typography size="h3" weight="bold" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
                     ) : (
-                        <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>{title}</span>
+                        <span data-anat-part={showAnatomy ? "Typography" : undefined}>{title}</span>
                     )
                 }
                 description={
                     isSkeleton ? (
-                        // Same reasoning — `Page.Header` uses size="sm" color="muted" for
+                        // Same reasoning — `PageHeader` uses size="sm" color="muted" for
                         // description; call that atom directly instead of a raw string. ALWAYS
                         // show this line while loading (even when the final call site leaves
                         // description empty) — it's the most common line in the cluster; keeping
                         // the layout stable (§8) matters more than saving one shimmer line for
                         // the rare case with no description.
-                        <Typography.Base size="sm" color="muted" isSkeleton anatPart={showAnatomy ? "Typography.Base" : undefined} />
+                        <Typography size="sm" color="muted" isSkeleton anatPart={showAnatomy ? "Typography" : undefined} />
                     ) : (
                         description
                     )
                 }
                 meta={
                     isSkeleton ? (
-                        <Typography.Base size="xs" color="muted" isSkeleton className="w-40" anatPart={showAnatomy ? "Typography.Base" : undefined} />
+                        <Typography size="xs" color="muted" isSkeleton className="w-40" anatPart={showAnatomy ? "Typography" : undefined} />
                     ) : metaParts.length > 0 ? (
                         <span>
-                            <Typography.Base size="xs" color="muted" text={metaParts.join(" · ")} anatPart={showAnatomy ? "Typography.Base" : undefined} />
+                            <Typography size="xs" color="muted" text={metaParts.join(" · ")} anatPart={showAnatomy ? "Typography" : undefined} />
                         </span>
                     ) : undefined
                 }
@@ -165,6 +165,4 @@ const CourseBriefBase = ({
 }
 
 /** `CourseBrief.*` — single-component namespace ⇒ only `.Base`. */
-export const CourseBrief = Object.assign(CourseBriefBase, {
-    Base: CourseBriefBase,
-})
+export { CourseBriefBase as CourseBrief }

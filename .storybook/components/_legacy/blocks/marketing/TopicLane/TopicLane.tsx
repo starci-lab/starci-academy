@@ -52,7 +52,7 @@ export const TopicLane = ({ icon, title, items, className, showAnatomy }: TopicL
             <div className="flex items-center gap-2">
                 <span className="text-accent-soft-foreground [&>svg]:size-4" data-anat-part={showAnatomy ? "Icon" : undefined}>{icon}</span>
                 <span data-anat-part={showAnatomy ? "Typography" : undefined}>
-                    <Typography.Base size="sm" text={title} weight="medium" />
+                    <Typography size="sm" text={title} weight="medium" />
                 </span>
             </div>
             <div className="flex flex-col gap-2">
@@ -65,10 +65,10 @@ export const TopicLane = ({ icon, title, items, className, showAnatomy }: TopicL
                         className="group flex w-full cursor-pointer items-center justify-between gap-3 rounded-xl border border-default bg-surface px-3 py-2 text-left outline-none transition-colors focus-visible:ring-2 focus-visible:ring-accent"
                     >
                         <span data-anat-part={showAnatomy ? "Typography.Label" : undefined} className="min-w-0 truncate underline-offset-4 decoration-[var(--separator-tertiary)] group-hover:underline">
-                            <Typography.Base size="sm" text={item.label} />
+                            <Typography size="sm" text={item.label} />
                         </span>
                         <span data-anat-part={showAnatomy ? "Typography.Tag" : undefined} className="shrink-0 text-[10px] text-muted">
-                            <Typography.Base size="code" text={item.tag} />
+                            <Typography size="code" text={item.tag} />
                         </span>
                     </button>
                 ))}

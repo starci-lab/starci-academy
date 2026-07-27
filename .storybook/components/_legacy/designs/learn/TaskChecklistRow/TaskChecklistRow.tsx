@@ -67,7 +67,7 @@ export const TaskChecklistRow = ({
             ) : (
                 <CircleIcon aria-hidden focusable="false" className="size-5 shrink-0 text-muted-foreground" data-anat-part={showAnatomy ? "Icon" : undefined} />
             )}
-            <Typography.Base size="sm"
+            <Typography size="sm"
                 text={label}
                 className={cn("min-w-0 flex-1 truncate text-left", done && "text-success-soft-foreground")}
                 showAnatomy={showAnatomy}

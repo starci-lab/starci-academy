@@ -21,7 +21,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  *   • F — `isDragActive` vốn chỉ sống trong state nội bộ của `useDropzone`, nên viền
  *     đặc + nền tint khi kéo file qua là một HÌNH THẬT không story nào ép được. Mở
  *     `isDragActive?: boolean` để GHIM: không truyền ⇒ atom tự quản như cũ (hành vi
- *     không đổi); truyền ⇒ đè state nội bộ, cùng lối `isPending` của `Button.Base`.
+ *     không đổi); truyền ⇒ đè state nội bộ, cùng lối `isPending` của `Button`.
  */
 
 /**
@@ -57,7 +57,7 @@ export interface ImageDropzoneProps {
     /**
      * Ghim state kéo-thả từ NGOÀI (Storybook không ép được `useDropzone`
      * kéo file thật). Không truyền ⇒ atom tự lấy từ `useDropzone` như cũ; truyền ⇒
-     * đè state nội bộ. Cùng lối `isPending` của `Button.Base`.
+     * đè state nội bộ. Cùng lối `isPending` của `Button`.
      */
     isDragActive?: boolean
     /**
@@ -117,25 +117,25 @@ const ImageDropzoneBase = ({
                 {/* `size-8` >= `size-5` ⇒ KHÔNG truyền `weight` (§5.0a), glyph giữ nét `regular`. */}
                 {Icon ? <Icon /> : <ImageIcon focusable="false" />}
             </span>
-            {/* `anatPart` pinned explicitly — the REAL component rendered here is `Typography.Base`
-                itself; left unset it would fall back to Typography.Base's own generic default
+            {/* `anatPart` pinned explicitly — the REAL component rendered here is `Typography`
+                itself; left unset it would fall back to Typography's own generic default
                 name ("Text"), which describes a slot, not the component's real identity. */}
-            <Typography.Base size="sm"
+            <Typography size="sm"
                 text={label}
                 weight="medium"
                 align="center"
                 className={cn(isDragActive && "text-accent-soft-foreground")}
                 showAnatomy={showAnatomy}
-                anatPart={showAnatomy ? "Typography.Base" : undefined}
+                anatPart={showAnatomy ? "Typography" : undefined}
             />
             {hint ? (
-                <Typography.Base
+                <Typography
                     size="xs"
                     text={hint}
                     color="muted"
                     align="center"
                     showAnatomy={showAnatomy}
-                    anatPart={showAnatomy ? "Typography.Base" : undefined}
+                    anatPart={showAnatomy ? "Typography" : undefined}
                 />
             ) : null}
         </div>
@@ -143,6 +143,4 @@ const ImageDropzoneBase = ({
 }
 
 /** `ImageDropzone.*` — single-image dropzone namespace. */
-export const ImageDropzone = Object.assign(ImageDropzoneBase, {
-    Base: ImageDropzoneBase,
-})
+export { ImageDropzoneBase as ImageDropzone }

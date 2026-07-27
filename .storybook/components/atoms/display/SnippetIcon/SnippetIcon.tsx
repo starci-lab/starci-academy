@@ -106,6 +106,4 @@ const SnippetIconBase = ({
 }
 
 /** `SnippetIcon.*` — one-tap copy affordance namespace. */
-export const SnippetIcon = Object.assign(SnippetIconBase, {
-    Base: SnippetIconBase,
-})
+export { SnippetIconBase as SnippetIcon }

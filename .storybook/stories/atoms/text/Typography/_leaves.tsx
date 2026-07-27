@@ -3,7 +3,6 @@ import type { StoryObj } from "@storybook/nextjs"
 import { CheckCircleIcon, ArrowRightIcon } from "@phosphor-icons/react"
 import type { TypographyProps } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
-
 /**
  * Shared story-leaf builder for the per-SIZE Typography components. NOT a `.stories`
  * file (leading `_`, no `.stories` suffix → not loaded by the glob).
@@ -17,13 +16,10 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * { "Skeleton": { tier: "heroui" } }` — panel chỉ nhận node có `storyId` hoặc
  * `tier: "heroui"`, badge mà không khai là badge vô hình (`check-orphan-parts.mjs`).
  */
-
 /** Rules (mirrors README) — shown at the top of each size's Overview. Chữ TIẾNG ANH vì hiện ra docs page. */
 export const TYPOGRAPHY_RULES = `
 ## \`Typography.*\` — the text atom (custom, not the HeroUI \`Typography\`)
-
-One member: \`Typography.Base\`. Content goes through the \`text={...}\` prop, never children.
-
+One member: \`Typography\`. Content goes through the \`text={...}\` prop, never children.
 **Color:** \`color="default|muted|accent|success|warning|danger"\` — default is the page foreground, the rest borrow the shared status colors.
 **Weight:** \`weight="medium"|"bold"\` — medium reads as working emphasis, bold reads as a heading. \`isItalic\` for italics.
 **\`isLink\`:** renders as a HeroUI \`Link\` — accent color with a hover underline. Don't pair it with weight or an icon.
@@ -31,9 +27,7 @@ One member: \`Typography.Base\`. Content goes through the \`text={...}\` prop, n
 **Clipping:** \`truncate\` for one line, \`lineClamp={1|2|3}\` for a few, **\`tabularNums\`** to keep digits lined up in a column.
 **\`isSkeleton\`:** the atom draws its own shimmer bar — it owns its resting state.
 `
-
 type SizeComponent = ComponentType<TypographyProps>
-
 export const makeTypographyLeaves = (Comp: SizeComponent, label: string) => {
     const leaf = (
         leafName: string,
@@ -50,7 +44,6 @@ export const makeTypographyLeaves = (Comp: SizeComponent, label: string) => {
             </div>
         ),
     })
-
     return {
         /** Plain — chỉ chữ. */
         Plain: leaf("Plain", `<${label} text="Grade assignments with the premium model" />`, (

@@ -1,13 +1,11 @@
 import React from "react"
 import { ProgressCircle, Typography as HeroTypography, cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
-
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/stats/ProgressRing`. Authored in Storybook (not `src`);
  * synced to `src` later.
  */
-
 /** Ring diameter + label type scale that one size step resolves to. */
 interface ProgressRingSizeStyle {
     /** Diameter class of the ring. */
@@ -15,14 +13,12 @@ interface ProgressRingSizeStyle {
     /** Typography step of the centered label. */
     label: "body-sm" | "body" | "h5"
 }
-
 /** Ring diameter + centered-label typography, keyed by the {@link ProgressRingProps.size} step. */
 const SIZE_MAP = {
     sm: { ring: "size-16", label: "body-sm" },
     md: { ring: "size-24", label: "body" },
     lg: { ring: "size-32", label: "h5" },
 } as const satisfies Record<"sm" | "md" | "lg", ProgressRingSizeStyle>
-
 /**
  * A circular progress ring built on the HeroUI `ProgressCircle` primitive, with a
  * value label centered inside the ring and an optional caption below. Tier-3
@@ -42,7 +38,6 @@ export interface ProgressRingProps {
     /** Extra classes on the root element. */
     className?: string
 }
-
 /**
  * ProgressRing renders a circular completion indicator: a HeroUI `ProgressCircle`
  * with a value label centered inside the ring and an optional caption underneath.
@@ -63,7 +58,6 @@ export const ProgressRing = ({
     const resolvedLabel = label ?? `${Math.round(safeValue)}%`
     const { ring, label: labelType } = SIZE_MAP[size]
     const ariaLabel = typeof caption === "string" ? caption : `${Math.round(safeValue)}%`
-
     return (
         <div className={cn("inline-flex flex-col items-center gap-2", className)}>
             {/* Relative container: the ring fills it, the label overlays its center */}
@@ -81,10 +75,9 @@ export const ProgressRing = ({
                     </HeroTypography>
                 </div>
             </div>
-
             {/* Optional caption — small + muted, distinct from the centered value */}
             {caption ? (
-                <Typography.Base size="xs" color="muted" className="text-center" text={caption} />
+                <Typography size="xs" color="muted" className="text-center" text={caption} />
             ) : null}
         </div>
     )

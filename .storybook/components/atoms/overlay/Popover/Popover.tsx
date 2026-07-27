@@ -3,7 +3,7 @@ import { Popover as HeroPopover, Button as HeroButton } from "@heroui/react"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Popover.Base`: the ONE constrained click-panel atom over HeroUI Popover.
+ * ATOM — `Popover`: the ONE constrained click-panel atom over HeroUI Popover.
  *
  * Bọc HeroUI `Popover` TỐI ĐA (alias `HeroPopover`) + một `Button` (alias
  * `HeroButton`) làm trigger pressable (react-aria `DialogTrigger` bắt buộc trigger là
@@ -118,9 +118,7 @@ const PopoverBase = ({
 }
 
 /**
- * `Popover.*` — the click-panel ATOM namespace. `Popover.Base` là atom popover DUY
+ * `Popover.*` — the click-panel ATOM namespace. `Popover` là atom popover DUY
  * NHẤT (heading/arrow/placement đều là LEAF prop-driven của nó).
  */
-export const Popover = Object.assign(PopoverBase, {
-    Base: PopoverBase,
-})
+export { PopoverBase as Popover }

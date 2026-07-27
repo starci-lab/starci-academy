@@ -63,13 +63,13 @@ export const SectionHeading = ({
             )}
         >
             {eyebrow ? (
-                <Chip.Base tone="accent" anatPart={showAnatomy ? "StatusChip" : undefined} text={eyebrow} />
+                <Chip tone="accent" anatPart={showAnatomy ? "StatusChip" : undefined} text={eyebrow} />
             ) : null}
             <div
                 className={cn("flex items-center gap-2", centered && "justify-center")}
                 data-anat-part={showAnatomy ? "TitleRow" : undefined}
             >
-                <Typography.Base
+                <Typography
                     // `level` (2|3) là prop CÔNG KHAI của SectionHeading — map sang trục `size`
                     // duy nhất của atom sau khi gộp namespace (thầy chốt 2026-07-25).
                     size={level === 2 ? "h2" : "h3"}
@@ -91,7 +91,7 @@ export const SectionHeading = ({
                 ) : null}
             </div>
             {intro ? (
-                <Typography.Base size="sm"
+                <Typography size="sm"
                     color="muted"
                     align={centered ? "center" : "start"}
                     className="max-w-2xl"

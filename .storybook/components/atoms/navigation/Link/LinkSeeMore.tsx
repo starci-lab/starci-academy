@@ -128,7 +128,7 @@ export const LinkSeeMore = ({
     const rootPart = anatPart ?? (showAnatomy && isHeroUILinkBranch ? "Link" : undefined)
 
     // `Arrow` KHÔNG được tag: span nội bộ bọc glyph Phosphor, không phải component
-    // thật của ta lẫn heroui (cùng lý do `Icon` span của `Tabs.Base` không được tag).
+    // thật của ta lẫn heroui (cùng lý do `Icon` span của `Tabs` không được tag).
     const arrow = (
         <span aria-hidden className="inline-flex shrink-0">
             {/*

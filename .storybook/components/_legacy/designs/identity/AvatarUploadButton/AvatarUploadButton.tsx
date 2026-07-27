@@ -9,8 +9,8 @@ import { Avatar } from "@sb-components/atoms/display/Avatar/Avatar"
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/identity/AvatarUploadButton`. Authored in Storybook (not
- * `src`); synced to `src` later. Composes the atom `Avatar.Base` (2026-07-26 —
- * `UserAvatar` xoá, gộp về `Avatar.Base`) instead of `@/components`.
+ * `src`); synced to `src` later. Composes the atom `Avatar` (2026-07-26 —
+ * `UserAvatar` xoá, gộp về `Avatar`) instead of `@/components`.
  */
 
 /** Local mirror of the shared `WithClassNames` base (avoids a `@/` import). */
@@ -63,7 +63,7 @@ export const AvatarUploadButton = ({
         ariaLabel={label}
         icon={
             <>
-                <Avatar.Base
+                <Avatar
                     name={displayName ?? undefined}
                     src={avatar ?? undefined}
                     seed={seed ?? undefined}

@@ -15,7 +15,7 @@ type Story = StoryObj<typeof LearnNudges>
 
 const PARTS: Array<AnatomyNode> = [
     { name: "SurfaceCardHeader", tier: "block", role: "dòng dẫn — đi `label` của SurfaceCard (render NGOÀI/trên surface)" },
-    { name: "Surface", tier: "block", role: "vỏ surface + danh sách hàng — `SurfaceCard.List`, CÙNG layout với KeepGoingPath", storyId: "composites-cards-surfacecard-surfacecard-list--leading-meta" },
+    { name: "Surface", tier: "block", role: "vỏ surface + danh sách hàng — `SurfaceCardList`, CÙNG layout với KeepGoingPath", storyId: "composites-cards-surfacecard-surfacecardlist--leading-meta" },
 ]
 
 const ITEMS: Array<LearnNudge> = [
@@ -36,7 +36,7 @@ export const Default: Story = {
                 tier="block"
                 leaf="Default"
                 parts={PARTS}
-                reason="§14a — 'hôm nay nên làm gì' là một CHỨC NĂNG của screen nên phải có tên. Trước đó screen gọi thẳng SurfaceCard.List (tầng layout) rồi tự nhét items + tự chọn icon: screen lắp chi tiết thay block, đọc code screen không ra được trang làm gì."
+                reason="§14a — 'hôm nay nên làm gì' là một CHỨC NĂNG của screen nên phải có tên. Trước đó screen gọi thẳng SurfaceCardList (tầng layout) rồi tự nhét items + tự chọn icon: screen lắp chi tiết thay block, đọc code screen không ra được trang làm gì."
                 note="§14b — caller đưa `kind` (ENUM), KHÔNG đưa icon. Bảng `kind → icon` nằm trong block; screen không được biết 'ôn thẻ' trông ra sao. Nếu prop là `leadingIcon` thì screen lại phải cầm icon ⇒ thủng luật."
                 code={"<LearnNudges heading=\"Việc nên làm hôm nay\" items={[{ id, kind: \"flashcards\", title, count }]} />"}
             >

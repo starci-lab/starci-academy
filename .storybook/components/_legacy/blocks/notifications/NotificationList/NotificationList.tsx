@@ -3,7 +3,7 @@ import type { ReactNode } from "react"
 import { cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { ChecksIcon } from "@phosphor-icons/react"
-import { Feedback } from "@sb-components/composites/feedback/Feedback/Feedback"
+import { FeedbackEmpty } from "@sb-components/composites/feedback/Feedback/Feedback"
 import { NotificationItem } from "@sb-components/_legacy/designs/notifications/NotificationItem/NotificationItem"
 import type { NotificationItemProps } from "@sb-components/_legacy/designs/notifications/NotificationItem/NotificationItem"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
@@ -12,7 +12,7 @@ import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported faithfully from
  * `@/components/blocks/notifications/NotificationList`. Authored in Storybook
  * (not `src`); synced to `src` later. Composes the local primitives
- * `NotificationItem` (rows) + `Feedback.Empty` (empty fallback). The shared
+ * `NotificationItem` (rows) + `FeedbackEmpty` (empty fallback). The shared
  * `WithClassNames` base is inlined locally to keep the port free of `@/` imports.
  */
 
@@ -64,7 +64,7 @@ export interface NotificationListProps extends WithClassNames<undefined> {
     markAllReadLabel?: ReactNode
     /**
      * Optional custom empty state shown when there are no items. Falls back to a
-     * built-in {@link Feedback.Empty} ("Chưa có thông báo nào") when omitted.
+     * built-in {@link FeedbackEmpty} ("Chưa có thông báo nào") when omitted.
      */
     emptyState?: ReactNode
     /**
@@ -81,7 +81,7 @@ export interface NotificationListProps extends WithClassNames<undefined> {
 
 /** Built-in fallback empty state shown when no groups carry any items. */
 const DefaultEmptyState = (anatPart?: string) => (
-    <Feedback.Empty
+    <FeedbackEmpty
         title="Chưa có thông báo nào"
         description="Khi có hoạt động mới trên khoá học của bạn, thông báo sẽ xuất hiện ở đây."
         anatPart={anatPart}
@@ -92,7 +92,7 @@ const DefaultEmptyState = (anatPart?: string) => (
  * NotificationList — a scrollable, optionally day-grouped list of
  * {@link NotificationItem} rows. Renders an optional header ("Thông báo" + a
  * mark-all-read text button), section labels per group ("Hôm nay" / "Trước
- * đó"), and a {@link Feedback.Empty} when no items are present. The body scrolls
+ * đó"), and a {@link FeedbackEmpty} when no items are present. The body scrolls
  * inside a capped max height so a long history never grows the container.
  *
  * Tier-3 presentational block: props-only, no store, no SWR, no side-effects.
@@ -117,7 +117,7 @@ export const NotificationList = ({
             {title ? (
                 <div className="flex items-center justify-between gap-3 px-3 py-2">
                     <span data-anat-part={showAnatomy ? "Typography.Header" : undefined}>
-                        <Typography.Base size="sm" text={title} weight="medium" />
+                        <Typography size="sm" text={title} weight="medium" />
                     </span>
                     {onMarkAllRead ? (
                         // NOTE: port Button's `icon` prop is TRAILING-only (§5b) — this row needs a
@@ -134,14 +134,14 @@ export const NotificationList = ({
                                 className="size-4"
                                 data-anat-part={showAnatomy ? "ChecksIcon" : undefined}
                             />
-                            <Typography.Base size="xs" text={markAllReadLabel} />
+                            <Typography size="xs" text={markAllReadLabel} />
                         </Button>
                     ) : null}
                 </div>
             ) : null}
 
             {isEmpty ? (
-                emptyState ?? DefaultEmptyState(showAnatomy ? "Feedback.Empty" : undefined)
+                emptyState ?? DefaultEmptyState(showAnatomy ? "FeedbackEmpty" : undefined)
             ) : (
                 <div className="flex max-h-[420px] flex-col gap-3 overflow-y-auto p-1">
                     {groups.map((group, groupIndex) =>
@@ -149,7 +149,7 @@ export const NotificationList = ({
                             <div key={groupIndex} className="flex flex-col gap-1">
                                 {group.label ? (
                                     <span data-anat-part={showAnatomy ? "Typography.GroupLabel" : undefined}>
-                                        <Typography.Base size="xs" text={group.label} color="muted" weight="medium" className="px-3 pt-1" />
+                                        <Typography size="xs" text={group.label} color="muted" weight="medium" className="px-3 pt-1" />
                                     </span>
                                 ) : null}
                                 {group.items.map((item, itemIndex) => (

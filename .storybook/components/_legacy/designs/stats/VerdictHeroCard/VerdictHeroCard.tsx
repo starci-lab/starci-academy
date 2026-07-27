@@ -3,13 +3,11 @@ import type { ReactNode } from "react"
 import { Card, CardContent, Typography as HeroTypography, cn } from "@heroui/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { ProgressMeter } from "@sb-components/composites/stats/ProgressMeter/ProgressMeter"
-
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — ported faithfully from
  * `@/components/blocks/stats/VerdictHeroCard`. Authored in Storybook (not
  * `src`); synced to `src` later.
  */
-
 /**
  * Inlined faithful local copy of `@/components/blocks/cards/SectionCard` (the
  * header-less path VerdictHeroCard uses): HeroUI `Card`/`CardContent` — globals
@@ -21,10 +19,8 @@ const SectionCard = ({ children, className }: { children: React.ReactNode; class
         <CardContent className="flex flex-col gap-3">{children}</CardContent>
     </Card>
 )
-
 /** Semantic verdict tone — drives the big value's color, and the meter fill. */
 export type VerdictHeroBand = "danger" | "warning" | "success"
-
 /** The meter row inside a {@link VerdictHeroCard} — current progress toward an optional target mark. */
 export interface VerdictHeroMeter {
     /** Current value, same unit as {@link VerdictHeroCardProps.value}. */
@@ -34,7 +30,6 @@ export interface VerdictHeroMeter {
     /** Optional healthy-mark position on the bar — omit when there is no known target yet. */
     target?: number
 }
-
 /** One mini stat in a {@link VerdictHeroCard}'s optional split row. */
 export interface VerdictHeroSplit {
     /** Muted caption above the value. */
@@ -44,7 +39,6 @@ export interface VerdictHeroSplit {
     /** Colors this split's value by band; omit to keep it neutral foreground. */
     band?: VerdictHeroBand
 }
-
 /** Props for the {@link VerdictHeroCard} block. */
 export interface VerdictHeroCardProps {
     /** The headline number, rendered large and colored by {@link VerdictHeroCardProps.band}. */
@@ -71,14 +65,12 @@ export interface VerdictHeroCardProps {
      */
     showAnatomy?: boolean
 }
-
 /** Same tone pairing the `Score` block uses for a band-colored number on a plain surface. */
 const BAND_TEXT: Record<VerdictHeroBand, string> = {
     danger: "text-danger-soft-foreground",
     warning: "text-warning-soft-foreground",
     success: "text-success-soft-foreground",
 }
-
 /**
  * The "phán xử" (judgment) hero shared by the Thống kê surfaces: a band-colored
  * headline value, a one-line verdict sentence, an optional muted evidence sub-line,
@@ -103,7 +95,6 @@ export const VerdictHeroCard = ({
     showAnatomy = false,
 }: VerdictHeroCardProps) => {
     const meterMax = meter?.max ?? 100
-
     return (
         <SectionCard className={className}>
             <div className="flex items-baseline gap-1" data-anat-part={showAnatomy ? "Value" : undefined}>
@@ -111,15 +102,13 @@ export const VerdictHeroCard = ({
                     {value}
                 </span>
                 {unit ? (
-                    <Typography.Base size="sm" color="muted" text={unit} />
+                    <Typography size="sm" color="muted" text={unit} />
                 ) : null}
             </div>
-
             <HeroTypography type="body-sm" weight="semibold" data-anat-part={showAnatomy ? "Verdict" : undefined}>{verdict}</HeroTypography>
             {sub ? (
                 <HeroTypography type="body-xs" color="muted" data-anat-part={showAnatomy ? "Sub" : undefined}>{sub}</HeroTypography>
             ) : null}
-
             {meter ? (
                 <div data-anat-part={showAnatomy ? "ProgressMeter" : undefined}>
                     <ProgressMeter
@@ -131,7 +120,6 @@ export const VerdictHeroCard = ({
                     />
                 </div>
             ) : null}
-
             {splits && splits.length > 0 ? (
                 // StatPair: ONE surface-in-surface card — a border delineates it (not a bg-default fill). The
                 // halves are split by a FULL-HEIGHT divider that touches the top+bottom border: `flex` + stretch
@@ -140,8 +128,8 @@ export const VerdictHeroCard = ({
                     {splits.map((split, index) => (
                         // position-keyed: a fixed N-up breakdown of the SAME headline number.
                         <div key={index} className={cn("flex flex-1 flex-col gap-1 p-3", index > 0 && "border-l border-default")}>
-                            <Typography.Base size="xs" color="muted" text={split.label} />
-                            <Typography.Base size="h4"
+                            <Typography size="xs" color="muted" text={split.label} />
+                            <Typography size="h4"
                                 className={split.band ? BAND_TEXT[split.band] : undefined}
                                 text={split.value}
                             />
@@ -149,7 +137,6 @@ export const VerdictHeroCard = ({
                     ))}
                 </div>
             ) : null}
-
             {action ? <div data-anat-part={showAnatomy ? "Action" : undefined}>{action}</div> : null}
         </SectionCard>
     )

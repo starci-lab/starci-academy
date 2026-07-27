@@ -6,7 +6,7 @@ import { Avatar as HeroAvatar, AvatarImage as HeroAvatarImage, AvatarFallback as
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Avatar.Base`: the ONE constrained avatar atom over HeroUI Avatar.
+ * ATOM — `Avatar`: the ONE constrained avatar atom over HeroUI Avatar.
  *
  * Gộp 2026-07-26: atom này trước có bộ khung (size/status/color/isSkeleton) nhưng
  * THIẾU DiceBear; atom anh em `UserAvatar` có DiceBear + xử lý ảnh lỗi nhưng trần

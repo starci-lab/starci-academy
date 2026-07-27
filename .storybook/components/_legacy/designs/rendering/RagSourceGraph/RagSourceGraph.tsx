@@ -69,7 +69,7 @@ const RagSourceGraphQuestionNode = ({ data }: NodeProps) => {
                 data-anat-part={showAnatomy ? "QuestionCard" : undefined}
                 className="max-w-[220px] rounded-large bg-accent px-4 py-3 shadow-sm"
             >
-                <Typography.Base size="sm" weight="medium" className="line-clamp-2 text-accent-foreground" text={question} />
+                <Typography size="sm" weight="medium" className="line-clamp-2 text-accent-foreground" text={question} />
             </div>
             <Handle type="source" position={Position.Right} className="!size-2 !border-none !bg-muted" />
         </>
@@ -93,12 +93,12 @@ const RagSourceGraphSourceNode = ({ data }: NodeProps) => {
                 className="flex w-[220px] flex-col gap-1 rounded-large border border-default bg-surface px-3 py-2 shadow-sm"
             >
                 <div className="flex items-center justify-between gap-2">
-                    <Typography.Base size="xs" weight="medium" truncate className="font-mono text-accent-soft-foreground" text={filePath} />
+                    <Typography size="xs" weight="medium" truncate className="font-mono text-accent-soft-foreground" text={filePath} />
                     {score != null ? (
-                        <Chip.Base tone="accent" className="shrink-0" text={score.toFixed(2)} />
+                        <Chip tone="accent" className="shrink-0" text={score.toFixed(2)} />
                     ) : null}
                 </div>
-                <Typography.Base size="xs" color="muted" truncate text={snippetPreview} />
+                <Typography size="xs" color="muted" truncate text={snippetPreview} />
             </div>
             <Handle type="source" position={Position.Right} className="!size-2 !border-none !bg-muted" />
         </>

@@ -131,16 +131,16 @@ const StepperBase = ({
                                 isVertical ? "pt-1" : "items-center text-center",
                             )}
                         >
-                            <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
-                                <Typography.Base size="sm"
+                            <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                                <Typography size="sm"
                                     text={step.label}
                                     weight={state === "current" ? "medium" : undefined}
                                     color={state === "upcoming" ? "muted" : undefined}
                                 />
                             </span>
                             {step.description ? (
-                                <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
-                                    <Typography.Base size="xs" text={step.description} color="muted" />
+                                <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                                    <Typography size="xs" text={step.description} color="muted" />
                                 </span>
                             ) : null}
                         </div>
@@ -204,27 +204,27 @@ const StepperBase = ({
                                 onClick={() => onStepPress(index)}
                                 className="mb-3 flex flex-col gap-0 pt-1 text-left rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                             >
-                                <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
-                                    <Typography.Base size="sm" text={step.label} />
+                                <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                                    <Typography size="sm" text={step.label} />
                                 </span>
                                 {step.description ? (
-                                    <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
-                                        <Typography.Base size="xs" text={step.description} color="muted" />
+                                    <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                                        <Typography size="xs" text={step.description} color="muted" />
                                     </span>
                                 ) : null}
                             </button>
                         ) : (
                             <div className="mb-3 flex flex-col gap-0 pt-1">
-                                <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
-                                    <Typography.Base size="sm"
+                                <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                                    <Typography size="sm"
                                         text={step.label}
                                         weight={state === "current" ? "medium" : undefined}
                                         color={state === "upcoming" ? "muted" : undefined}
                                     />
                                 </span>
                                 {step.description ? (
-                                    <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
-                                        <Typography.Base size="xs" text={step.description} color="muted" />
+                                    <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                                        <Typography size="xs" text={step.description} color="muted" />
                                     </span>
                                 ) : null}
                             </div>
@@ -241,6 +241,4 @@ const StepperBase = ({
  * thái hiện có nên namespace có đúng một member, `Base`, giống cách
  * `Skeleton.*`/`Chip.*` đã làm khi họ chỉ có 1 khung.
  */
-export const Stepper = {
-    Base: StepperBase,
-} as const
+export { StepperBase as Stepper }

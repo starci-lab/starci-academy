@@ -1,7 +1,7 @@
 import type { ComponentType, ReactNode, SVGProps } from "react"
 import { AlertDialog, Typography as HeroTypography, cn } from "@heroui/react"
 import { Alert, type AlertStatus } from "@sb-components/atoms/feedback/Alert/Alert"
-import { Button } from "@sb-components/atoms/buttons/Button/Button"
+import { Button, ButtonGroup } from "@sb-components/atoms/buttons/Button/Button"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
@@ -38,7 +38,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * because HeroUI itself carries the COLOR-BY-STATUS contract (`.alert--warning
  * .alert__title` → `text-warning-soft-foreground`). Swapping in `Typography` would
  * mean hand-feeding a color table — that's the real "hand-rolled". Switch to the
- * atom once an `Alert.Base` atom exists.
+ * atom once an `Alert` atom exists.
  *
  * Behavior/skin of each member is KEPT AS-IS from the old folders; this is an API
  * + atom-infra refactor, not a visual change. Sync to `src` later.
@@ -70,7 +70,7 @@ const CALLOUT_ACTION_CLASS: Record<FeedbackCalloutStatus, string> = {
     danger: "bg-danger text-danger-foreground",
 }
 
-/** Props for {@link Feedback.Callout}. */
+/** Props for {@link FeedbackCallout}. */
 export interface FeedbackCalloutProps {
     /** Semantic tone (drives tint + icon/title colour). Default `"default"`. */
     status?: FeedbackCalloutStatus
@@ -104,7 +104,7 @@ export interface FeedbackCalloutProps {
     /** Anatomy tag: names this frame so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
     /**
-     * Story-only: when on, the frame names ITSELF `"Feedback.Callout"` so a panel can badge it
+     * Story-only: when on, the frame names ITSELF `"FeedbackCallout"` so a panel can badge it
      * without the story wrapping an extra div.
      *
      * Until 2026-07-27 this prop was declared and destructured but NEVER USED — six story
@@ -121,7 +121,7 @@ export interface FeedbackCalloutProps {
  * `bg-<status>-soft` + `shadow-none` highlight strip, so it doesn't read as a
  * card-in-card.
  *
- * A thin FRAME around the `Alert.Base` atom (teacher confirmed 2026-07-25): callout =
+ * A thin FRAME around the `Alert` atom (teacher confirmed 2026-07-25): callout =
  * an alert PLACED INSIDE a surface, so the frame only picks `tone="soft"` + glyph
  * `md` and hands the whole skin (tint · icon per valence · × button) to the atom.
  * The frame used to hand-feed three color tables in parallel with `Toast` — that
@@ -144,7 +144,7 @@ const Callout = ({
     anatPart,
     showAnatomy = false,
 }: FeedbackCalloutProps) => (
-    <Alert.Base
+    <Alert
         status={status}
         tone="soft"
         title={title}
@@ -154,7 +154,7 @@ const Callout = ({
         action={
             actionLabel ? (
                 // The frame owns the CTA: builds the button + applies skin per status itself. Caller only supplies text.
-                <Button.Base label={actionLabel} size="sm" onPress={onAction} className={CALLOUT_ACTION_CLASS[status]} />
+                <Button label={actionLabel} size="sm" onPress={onAction} className={CALLOUT_ACTION_CLASS[status]} />
             ) : undefined
         }
         onClose={onClose}
@@ -162,10 +162,10 @@ const Callout = ({
         className={className}
         // Self-names as the thing it COMPOSES, not as itself. The parent already gives it a
         // name through `anatPart`; running inside its own story the useful answer is "this is
-        // an Alert.Base wearing a callout skin", which is what a Deps tab is for. Naming it
-        // `Feedback.Callout` here made the subject label itself and left the tree empty,
+        // an Alert wearing a callout skin", which is what a Deps tab is for. Naming it
+        // `FeedbackCallout` here made the subject label itself and left the tree empty,
         // because the only frame this composite is built on never appeared (caught 2026-07-27).
-        anatPart={anatPart ?? (showAnatomy ? "Alert.Base" : undefined)}
+        anatPart={anatPart ?? (showAnatomy ? "Alert" : undefined)}
     />
 )
 
@@ -173,7 +173,7 @@ const Callout = ({
 // .Empty — centered placeholder stack (was `EmptyState`)
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** Props for {@link Feedback.Empty}. */
+/** Props for {@link FeedbackEmpty}. */
 export interface FeedbackEmptyProps {
     /**
      * Optional decorative icon as a COMPONENT (Phosphor) above the title — the frame
@@ -221,7 +221,7 @@ export interface FeedbackEmptyProps {
     anatPart?: string
     /**
      * When on, each composed part with a FIXED identity emits `data-anat-part`
-     * (`Code`/`Title`/`Description`, all as `Typography`/`Typography.Base`) for a
+     * (`Code`/`Title`/`Description`, all as `Typography`/`Typography`) for a
      * BlockAnatomy panel.
      *
      * ⚠️ `Icon`/`Body`/`Action` do NOT badge (2026-07-28, §11a.1 LOẠI 3): each is an
@@ -240,7 +240,7 @@ export interface FeedbackEmptyProps {
  * and for the "failed to load" variant of the same hole (`tone="danger"` + a retry `action`).
  * A vertical, centered stack: optional `code` → optional icon → title → optional
  * description → optional body → optional action. Omits a card wrapper — the caller
- * wraps it in a surface (e.g. `SurfaceCard.List emptyState={…}`) when a frame is wanted.
+ * wraps it in a surface (e.g. `SurfaceCardList emptyState={…}`) when a frame is wanted.
  *
  * @param props - {@link FeedbackEmptyProps}
  */
@@ -262,8 +262,8 @@ const Empty = ({
         // ⚠️ The `Typography.*` atom does NOT accept unknown props (no rest spread) → every
         // anatomy tag must sit on a WRAPPING element, not be stuffed into the atom.
         return (
-            <span className={cn("block", className)} data-anat-part={showAnatomy ? "Typography.Base" : anatPart}>
-                <Typography.Base size="sm" text={title} color="muted" />
+            <span className={cn("block", className)} data-anat-part={showAnatomy ? "Typography" : anatPart}>
+                <Typography size="sm" text={title} color="muted" />
             </span>
         )
     }
@@ -286,7 +286,7 @@ const Empty = ({
                 // `size="page"`: the `Typography.*` atom tops out at `Lg` (text-lg) so
                 // forcing a size via a raw className would break the `no-hero-heading-class`
                 // lint rule. See the GAP note at the end of the file.
-                <div data-anat-part={showAnatomy ? "Typography" : undefined}>
+                <div data-anat-part={showAnatomy ? "HeroTypography" : undefined}>
                     <HeroTypography type="h1" weight="bold" color="muted">{code}</HeroTypography>
                 </div>
             ) : null}
@@ -300,23 +300,23 @@ const Empty = ({
             ) : null}
             {isPage ? (
                 <div className="flex flex-col gap-2">
-                    <div data-anat-part={showAnatomy ? "Typography" : undefined}>
+                    <div data-anat-part={showAnatomy ? "HeroTypography" : undefined}>
                         <HeroTypography type="h4" weight="semibold" align="center">{title}</HeroTypography>
                     </div>
                     {description ? (
-                        <div data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
-                            <Typography.Base size="sm" text={description} color="muted" />
+                        <div data-anat-part={showAnatomy ? "Typography" : undefined}>
+                            <Typography size="sm" text={description} color="muted" />
                         </div>
                     ) : null}
                 </div>
             ) : (
                 <>
-                    <div data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
-                        <Typography.Base text={title} weight="medium" />
+                    <div data-anat-part={showAnatomy ? "Typography" : undefined}>
+                        <Typography text={title} weight="medium" />
                     </div>
                     {description ? (
-                        <div data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
-                            <Typography.Base size="xs" text={description} color="muted" />
+                        <div data-anat-part={showAnatomy ? "Typography" : undefined}>
+                            <Typography size="xs" text={description} color="muted" />
                         </div>
                     ) : null}
                 </>
@@ -338,7 +338,7 @@ const Empty = ({
 // .Confirm — blocking confirmation shell (was `ConfirmDialog`)
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** Props for {@link Feedback.Confirm}. */
+/** Props for {@link FeedbackConfirm}. */
 export interface FeedbackConfirmProps {
     /** Whether the dialog is currently open (controlled). Forwarded to HeroUI `AlertDialog`. */
     isOpen: boolean
@@ -382,7 +382,7 @@ export interface FeedbackConfirmProps {
  * delete a submission) built on HeroUI `AlertDialog`. A purely presentational frame —
  * open state and every callback come in via props; the frame holds no state, does no fetching.
  *
- * The shell already builds a FULL header/body/footer (footer = `Button.Group` cancel +
+ * The shell already builds a FULL header/body/footer (footer = `ButtonGroup` cancel +
  * confirm) so it does NOT open up `children`: content goes through `title`/`description`.
  *
  * @param props - {@link FeedbackConfirmProps}
@@ -414,16 +414,16 @@ const Confirm = ({
                         </AlertDialog.Header>
                         {description != null ? (
                             <AlertDialog.Body data-anat-part={showAnatomy ? "AlertDialog.Body" : undefined}>
-                                {/* Typography.Base atom doesn't accept unknown props — tag the wrapper (§11a.1). */}
-                                <span data-anat-part={showAnatomy ? "Typography.Base" : undefined}>
-                                    <Typography.Base size="sm" text={description} color="muted" />
+                                {/* Typography atom doesn't accept unknown props — tag the wrapper (§11a.1). */}
+                                <span data-anat-part={showAnatomy ? "Typography" : undefined}>
+                                    <Typography size="sm" text={description} color="muted" />
                                 </span>
                             </AlertDialog.Body>
                         ) : null}
                         <AlertDialog.Footer className="w-full" data-anat-part={showAnatomy ? "AlertDialog.Footer" : undefined}>
-                            {/* Footer forwards showAnatomy so the REAL nodes (Button.Base × 2) show up, instead of
-                                mislabeling this heroui Footer wrapper as if it were Button.Group itself. */}
-                            <Button.Group
+                            {/* Footer forwards showAnatomy so the REAL nodes (Button × 2) show up, instead of
+                                mislabeling this heroui Footer wrapper as if it were ButtonGroup itself. */}
+                            <ButtonGroup
                                 className="w-full justify-end"
                                 showAnatomy={showAnatomy}
                                 items={[
@@ -461,9 +461,9 @@ const Confirm = ({
  * | `.Empty`   | `code` · `icon` · `title` · `description` · `body`/`children` · `action` |
  * | `.Confirm` | `title` · `description` · `confirmLabel`/`cancelLabel` (no children) |
  *
- * ⛔ REMOVED from this family — `InfoTooltip` (§13c): it's just `Tooltip.Base` (the
+ * ⛔ REMOVED from this family — `InfoTooltip` (§13c): it's just `Tooltip` (the
  * atom) dressed with a dotted-underline trigger + a two-line text stack, adding NO
- * frame concept at all. Consumers use `Tooltip.Base` directly with `label` as the
+ * frame concept at all. Consumers use `Tooltip` directly with `label` as the
  * content (one or two lines of `Typography.*`). If the "dotted underline for hard
  * terms" convention needs to be kept, that's a component at the DESIGN TIER (e.g.
  * `GlossaryTerm`) — it carries content meaning, not a frame — and sits outside this tier.
@@ -475,8 +475,4 @@ const Confirm = ({
  * `starci-fe/no-hero-heading-class` lint rule. Switch these 2 spots once the atom opens a
  * heading-size member.
  */
-export const Feedback = {
-    Callout,
-    Empty,
-    Confirm,
-}
+export { Callout as FeedbackCallout, Empty as FeedbackEmpty, Confirm as FeedbackConfirm }

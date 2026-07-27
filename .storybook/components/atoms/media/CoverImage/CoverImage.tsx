@@ -45,6 +45,4 @@ const CoverImageBase = ({
 }
 
 /** `CoverImage.*` — framed cover/thumbnail image. */
-export const CoverImage = Object.assign(CoverImageBase, {
-    Base: CoverImageBase,
-})
+export { CoverImageBase as CoverImage }

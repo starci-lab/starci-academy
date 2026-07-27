@@ -9,7 +9,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK ported faithfully from
  * `@/components/blocks/feed/CommunityPostCard`. Composed from the atom
- * `Avatar.Base` + `MarkdownContent` + the local `ReactionBar` block, framed by HeroUI
+ * `Avatar` + `MarkdownContent` + the local `ReactionBar` block, framed by HeroUI
  * `Card`. Synced to `src` later. `@/modules` types, the channel label, and the
  * time-ago label are inlined locally.
  */
@@ -113,14 +113,14 @@ export const CommunityPostCard = ({
             <CardContent data-anat-part={showAnatomy ? "CardContent" : undefined}>
                 <div className="flex flex-col gap-3">
                     <div className="flex items-center gap-3">
-                        <Avatar.Base
+                        <Avatar
                             name={post.author.username}
                             src={post.author.avatar ?? undefined}
                             showAnatomy={showAnatomy}
                         />
                         <div className="flex min-w-0 flex-1 flex-col">
                             <div className="flex items-center gap-1">
-                                <Typography.Base size="sm"
+                                <Typography size="sm"
                                     weight="medium"
                                     truncate
                                     showAnatomy={showAnatomy}
@@ -135,15 +135,15 @@ export const CommunityPostCard = ({
                                 ) : null}
                             </div>
                             <div className="flex items-center gap-2">
-                                <Typography.Base size="xs"
+                                <Typography size="xs"
                                     color="muted"
                                     truncate
                                     showAnatomy={showAnatomy}
                                     text={`@${post.author.username}`}
                                 />
-                                <Typography.Base size="xs" color="muted" showAnatomy={showAnatomy} text="·" />
-                                <Typography.Base size="xs" color="muted" showAnatomy={showAnatomy} text={timeAgo(post.createdAt)} />
-                                <Typography.Base size="xs"
+                                <Typography size="xs" color="muted" showAnatomy={showAnatomy} text="·" />
+                                <Typography size="xs" color="muted" showAnatomy={showAnatomy} text={timeAgo(post.createdAt)} />
+                                <Typography size="xs"
                                     className="text-accent-soft-foreground"
                                     showAnatomy={showAnatomy}
                                     text={CHANNEL_LABEL[post.channel]}
@@ -182,7 +182,7 @@ export const CommunityPostCard = ({
                             data-anat-part={showAnatomy ? "CommentButton" : undefined}
                         >
                             <ChatCircleIcon className="size-4 shrink-0" />
-                            <Typography.Base size="xs" color="muted" text={post.commentCount} />
+                            <Typography size="xs" color="muted" text={post.commentCount} />
                         </button>
                     </div>
 

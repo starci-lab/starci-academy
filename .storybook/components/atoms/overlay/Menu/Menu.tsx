@@ -17,7 +17,7 @@ import { Header as HeroMenuHeader } from "react-aria-components"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * ATOM — `Menu.Base`: the ONE constrained action-menu atom over HeroUI Dropdown.
+ * ATOM — `Menu`: the ONE constrained action-menu atom over HeroUI Dropdown.
  *
  * Bọc HeroUI `Dropdown` TỐI ĐA (Trigger · Popover · Menu · Section · Item) + một
  * `Button` (alias `HeroButton`) làm trigger. Atom SỞ HỮU chrome: popover surface,
@@ -216,9 +216,7 @@ const MenuBase = ({
 }
 
 /**
- * `Menu.*` — the action-menu ATOM namespace. `Menu.Base` là atom menu DUY NHẤT
+ * `Menu.*` — the action-menu ATOM namespace. `Menu` là atom menu DUY NHẤT
  * (flat `items` hay `sections` gộp đều là LEAF prop-driven của nó).
  */
-export const Menu = Object.assign(MenuBase, {
-    Base: MenuBase,
-})
+export { MenuBase as Menu }

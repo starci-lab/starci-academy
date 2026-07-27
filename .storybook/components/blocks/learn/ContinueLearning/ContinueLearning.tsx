@@ -1,5 +1,5 @@
 import React from "react"
-import { ContinueCard } from "@sb-components/blocks/learn/ContinueCard/ContinueCard"
+import { ContinueCardHero } from "@sb-components/blocks/learn/ContinueCard/ContinueCard"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -27,7 +27,7 @@ import { ContinueCard } from "@sb-components/blocks/learn/ContinueCard/ContinueC
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** Props for {@link ContinueLearning.Base}. */
+/** Props for {@link ContinueLearning}. */
 export interface ContinueLearningBaseProps {
     /** Title of the lesson in progress — raw data, the block prefixes it with "Lesson N ·" itself. */
     lessonTitle: string
@@ -72,7 +72,7 @@ const ContinueLearningBase = ({
     // EVERY sentence is produced RIGHT HERE. Design doesn't know what a "lesson"/"challenge"
     // is — it only receives an already-worded `title` + `meta` (§14d.1: design receives a
     // node, never a domain concept).
-    <ContinueCard.Hero
+    <ContinueCardHero
         anatPart={anatPart}
         title={`Bài ${lessonIndex} · ${lessonTitle}`}
         meta={[
@@ -87,6 +87,4 @@ const ContinueLearningBase = ({
 )
 
 /** `ContinueLearning.*` — a single-shape namespace ⇒ only `.Base` (§12a). */
-export const ContinueLearning = Object.assign(ContinueLearningBase, {
-    Base: ContinueLearningBase,
-})
+export { ContinueLearningBase as ContinueLearning }

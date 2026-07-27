@@ -12,10 +12,10 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * the content and pinned under it), one import.
  *
  * FRAME API LAW (§13b):
- * - `Page.BottomBar` is a WRAPPER frame → named slots `body`/`actions` (a bar
+ * - `PageBottomBar` is a WRAPPER frame → named slots `body`/`actions` (a bar
  *   is a horizontal row, so `header`/`footer` would be a lie); `children`
  *   stays as shorthand for `body`.
- * - `Page.Header` is NOT a generic wrapper — it already owns semantic slots
+ * - `PageHeader` is NOT a generic wrapper — it already owns semantic slots
  *   (`breadcrumb`/`title`/`description`/`actions`/`meta`) and deliberately
  *   takes no `children`.
  * - No repeating list here, so no `items` member (§13b list clause N/A).
@@ -25,9 +25,9 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * this is an API refactor, not a visual one. Synced to `src` later. No
  * `@/components` imports (design-spec ports stay self-contained).
  *
- * HISTORY — `.Container` was moved to `Container.Base` (`@sb-components/frames/Container/Container`)
+ * HISTORY — `.Container` was moved to `Container` (`@sb-components/frames/Container/Container`)
  * on 2026-07-26: the old frame had no `mx-auto`, no `max-w`, only right padding —
- * a half-baked version of the "content width" concept that `Container.Base` already
+ * a half-baked version of the "content width" concept that `Container` already
  * does correctly (§13c: a duplicate frame gets deleted).
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -36,7 +36,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 // .Header — the breadcrumb/title/description/actions/meta block (was `PageHeader`)
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** Props for {@link Page.Header}. */
+/** Props for {@link PageHeader}. */
 export interface PageHeaderProps {
     /**
      * Anatomy tag for THIS component itself — so the PARENT can badge it as ONE node (§11a.1).
@@ -98,7 +98,7 @@ export interface PageHeaderProps {
  * controls on the right.
  *
  * This frame carries no card wrapper — the caller places it directly inside
- * a `Container.Base` or wraps it in a `SectionCard` when a framed surface
+ * a `Container` or wraps it in a `SectionCard` when a framed surface
  * is required.
  *
  * @param props - See {@link PageHeaderProps}.
@@ -128,16 +128,16 @@ const Header = ({
                 {/* Left column: stacked title and optional description */}
                 <div className="flex min-w-0 flex-col gap-2">
                     {size === "compact" ? (
-                        <Typography.Base weight="bold" anatPart={showAnatomy ? "Typography.Base" : undefined} text={title} />
+                        <Typography weight="bold" anatPart={showAnatomy ? "Typography" : undefined} text={title} />
                     ) : (
-                        <Typography.Base size="h3" weight="bold" anatPart={showAnatomy ? "Typography.Base" : undefined} text={title} />
+                        <Typography size="h3" weight="bold" anatPart={showAnatomy ? "Typography" : undefined} text={title} />
                     )}
                     {description ? (
                         // clamp to 2 lines on mobile (keep the header short on a phone); full on sm+
-                        <Typography.Base size="sm"
+                        <Typography size="sm"
                             color="muted"
                             className="line-clamp-2 @app-sm:line-clamp-none"
-                            anatPart={showAnatomy ? "Typography.Base" : undefined}
+                            anatPart={showAnatomy ? "Typography" : undefined}
                             text={description}
                         />
                     ) : null}
@@ -161,7 +161,7 @@ const Header = ({
 // .BottomBar — the viewport-pinned action bar (was `StickyBottomBar`)
 // ─────────────────────────────────────────────────────────────────────────────
 
-/** Props for {@link Page.BottomBar}. */
+/** Props for {@link PageBottomBar}. */
 export interface PageBottomBarProps {
     /**
      * Leading content of the bar — typically a price. Equivalent to `children`;
@@ -238,10 +238,7 @@ const BottomBar = ({
  * | `.Header` | `breadcrumb`/`title`/`description`/`actions`/`meta` (no children) |
  * | `.BottomBar` | `body`/`actions` slots (+ `children` = body) |
  *
- * `.Container` moved to `Container.Base` (`@sb-components/frames/Container/Container`)
+ * `.Container` moved to `Container` (`@sb-components/frames/Container/Container`)
  * on 2026-07-26 — see the history note at the top of this file.
  */
-export const Page = {
-    Header,
-    BottomBar,
-}
+export { Header as PageHeader, BottomBar as PageBottomBar }

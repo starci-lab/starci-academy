@@ -24,7 +24,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** Props for {@link ModalShell.Base}. */
+/** Props for {@link ModalShell}. */
 export interface ModalShellBaseProps {
     /** Whether the modal is currently open. Forwarded to HeroUI `<Modal>`. */
     isOpen: boolean
@@ -138,17 +138,17 @@ const Base = ({
                         ) : title != null ? (
                             <Modal.Header>
                                 <div className={cn("flex flex-col gap-1 pr-8", titleClassName)}>
-                                    <Typography.Base
+                                    <Typography
                                         weight="bold"
                                         showAnatomy={showAnatomy}
-                                        anatPart={showAnatomy ? "Typography.Base" : undefined}
+                                        anatPart={showAnatomy ? "Typography" : undefined}
                                         text={title}
                                     />
                                     {description != null ? (
-                                        <Typography.Base size="sm"
+                                        <Typography size="sm"
                                             color="muted"
                                             showAnatomy={showAnatomy}
-                                            anatPart={showAnatomy ? "Typography.Base" : undefined}
+                                            anatPart={showAnatomy ? "Typography" : undefined}
                                             text={description}
                                         />
                                     ) : null}
@@ -197,6 +197,4 @@ const Base = ({
  * |---|---|
  * | `.Base` | `title`+`description` (or `header`) / `body` / `footer` (+ `children` = body) |
  */
-export const ModalShell = {
-    Base,
-}
+export { Base as ModalShell }

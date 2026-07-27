@@ -3,7 +3,7 @@ import { Spinner } from "@sb-components/atoms/display/Spinner/Spinner"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * ATOM — `Spinner.Base`: bọc thẳng HeroUI Spinner, chỉ ép `size`/`tone` (§4).
+ * ATOM — `Spinner`: bọc thẳng HeroUI Spinner, chỉ ép `size`/`tone` (§4).
  *
  * ⭐ Atom LÁ — không compose atom NÀO CỦA TA có story riêng, nên không có dep
  * tầng atom. Nhưng `data-anat-part="Spinner"` đang gắn trên chính `HeroSpinner` —
@@ -18,23 +18,23 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
         role: "the spinning glyph itself — the only thing this atom renders",
     },
 }
-const meta: Meta<typeof Spinner.Base> = {
-    title: "Atoms/Display/Spinner/Spinner.Base",
-    component: Spinner.Base,
+const meta: Meta<typeof Spinner> = {
+    title: "Atoms/Display/Spinner/Spinner",
+    component: Spinner,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },
 }
 
 export default meta
 
-type Story = StoryObj<typeof Spinner.Base>
+type Story = StoryObj<typeof Spinner>
 
 /** Leaf trần — spinner md, tone accent; `label` là tên a11y (không hiện chữ). */
 export const Default: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
-                name="Spinner.Base"
+                name="Spinner"
                 tier="atom"
                 leaf="Default"
                 annotate={ANNOTATE}
@@ -43,8 +43,8 @@ export const Default: Story = {
                     {
                         name: "size = \"md\", tone = \"accent\"",
                         why: "A single spinning ring renders at the medium diameter in the accent colour, with no visible label text on screen. The `label` prop only feeds the accessible name, so a screen reader announces it while sighted users see just the glyph.",
-                        code: "<Spinner.Base label=\"Loading\" />",
-                        render: <Spinner.Base showAnatomy />,
+                        code: "<Spinner label=\"Loading\" />",
+                        render: <Spinner showAnatomy />,
                     },
                 ]}
             />
@@ -57,35 +57,35 @@ export const Sizes: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
-                name="Spinner.Base"
+                name="Spinner"
                 tier="atom"
                 leaf="Prop `size`"
                 annotate={ANNOTATE}
-                reason="The atom owns the size scale so callers never hand-set a diameter, matching the same rule Button.Base and IconTile.Base follow for their own scales."
+                reason="The atom owns the size scale so callers never hand-set a diameter, matching the same rule Button and IconTile follow for their own scales."
                 states={[
                     {
                         name: "size = \"sm\"",
                         why: "The ring renders at its smallest diameter, the step reached for inline next to a short line of text or inside a small button. Only the diameter changes across the four size states, the ring shape and stroke stay the same.",
-                        code: "<Spinner.Base size=\"sm\" />",
-                        render: <Spinner.Base size="sm" showAnatomy />,
+                        code: "<Spinner size=\"sm\" />",
+                        render: <Spinner size="sm" showAnatomy />,
                     },
                     {
                         name: "size = \"md\"",
                         why: "The ring steps up to the default diameter, the size used when a spinner stands on its own rather than inline with text. Nothing else about the ring changes from the sm step.",
-                        code: "<Spinner.Base size=\"md\" />",
-                        render: <Spinner.Base size="md" showAnatomy />,
+                        code: "<Spinner size=\"md\" />",
+                        render: <Spinner size="md" showAnatomy />,
                     },
                     {
                         name: "size = \"lg\"",
                         why: "The ring grows again for a spot that needs more visual weight, such as the centre of an otherwise empty panel. The stroke thickens along with the diameter so the ring never looks thin and stretched.",
-                        code: "<Spinner.Base size=\"lg\" />",
-                        render: <Spinner.Base size="lg" showAnatomy />,
+                        code: "<Spinner size=\"lg\" />",
+                        render: <Spinner size="lg" showAnatomy />,
                     },
                     {
                         name: "size = \"xl\"",
                         why: "The ring reaches its largest diameter, reserved for a full-page loading moment where the spinner is the only thing on screen. It is the last step of the same four-step scale as the other three sizes.",
-                        code: "<Spinner.Base size=\"xl\" />",
-                        render: <Spinner.Base size="xl" showAnatomy />,
+                        code: "<Spinner size=\"xl\" />",
+                        render: <Spinner size="xl" showAnatomy />,
                     },
                 ]}
             />
@@ -98,7 +98,7 @@ export const Tones: Story = {
     render: () => (
         <div className="p-8">
             <BlockAnatomy
-                name="Spinner.Base"
+                name="Spinner"
                 tier="atom"
                 leaf="Prop `tone`"
                 annotate={ANNOTATE}
@@ -107,34 +107,34 @@ export const Tones: Story = {
                     {
                         name: "tone = \"accent\"",
                         why: "The ring spins in the accent colour, the default identity tone used for a generic loading moment. Every other tone below keeps the same ring shape and only swaps this colour.",
-                        code: "<Spinner.Base tone=\"accent\" />",
-                        render: <Spinner.Base tone="accent" showAnatomy />,
+                        code: "<Spinner tone=\"accent\" />",
+                        render: <Spinner tone="accent" showAnatomy />,
                     },
                     {
                         name: "tone = \"success\"",
                         why: "The ring spins in the success colour, for a moment that is confirming something already agreed to succeed rather than a neutral wait. Only the colour differs from the accent state.",
-                        code: "<Spinner.Base tone=\"success\" />",
-                        render: <Spinner.Base tone="success" showAnatomy />,
+                        code: "<Spinner tone=\"success\" />",
+                        render: <Spinner tone="success" showAnatomy />,
                     },
                     {
                         name: "tone = \"warning\"",
                         why: "The ring spins in the warning colour, for a wait that carries some risk or cost if it fails. Only the colour differs from the accent state.",
-                        code: "<Spinner.Base tone=\"warning\" />",
-                        render: <Spinner.Base tone="warning" showAnatomy />,
+                        code: "<Spinner tone=\"warning\" />",
+                        render: <Spinner tone="warning" showAnatomy />,
                     },
                     {
                         name: "tone = \"danger\"",
                         why: "The ring spins in the danger colour, matching a destructive action that is currently in flight (such as an unenroll request). Only the colour differs from the accent state.",
-                        code: "<Spinner.Base tone=\"danger\" />",
-                        render: <Spinner.Base tone="danger" showAnatomy />,
+                        code: "<Spinner tone=\"danger\" />",
+                        render: <Spinner tone="danger" showAnatomy />,
                     },
                     {
                         name: "tone = \"current\"",
                         why: "The ring inherits whatever text colour surrounds it instead of picking one of its own, shown here against a foreground-coloured wrapper. This is the step reached for when the spinner sits inside a coloured button and must match the button's own label colour.",
-                        code: "<Spinner.Base tone=\"current\" />",
+                        code: "<Spinner tone=\"current\" />",
                         render: (
                             <span className="text-foreground inline-flex">
-                                <Spinner.Base tone="current" showAnatomy />
+                                <Spinner tone="current" showAnatomy />
                             </span>
                         ),
                     },

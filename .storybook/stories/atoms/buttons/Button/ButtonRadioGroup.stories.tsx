@@ -47,7 +47,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * are written in ENGLISH; JSDoc/comments stay in Vietnamese.
  */
 const meta: Meta<typeof ButtonRadioGroup> = {
-    title: "Atoms/Buttons/Button/Button.RadioGroup",
+    title: "Atoms/Buttons/Button/ButtonRadioGroup",
     component: ButtonRadioGroup,
     tags: ["autodocs"],
     parameters: {

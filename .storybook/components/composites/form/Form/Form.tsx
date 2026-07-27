@@ -6,8 +6,10 @@ import { GAP_CLASS, type SpaceScale } from "@sb-components/frames/_spacing"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * STORYBOOK-LOCAL DESIGN SPEC — `Form.*`, the ONE form KHUNG namespace
- * (tầng LAYOUT §13, thầy chốt 2026-07-25).
+ * STORYBOOK-LOCAL DESIGN SPEC — `Form.*`, the ONE form composite namespace
+ * (§13, thầy chốt 2026-07-25 — tên tầng đổi từ `layout` sang `composite` khi
+ * tách tầng 2026-07-27: `Form` sở hữu vai nội dung qua `Section`/`Actions`,
+ * không slot-trơ như 7 frame).
  *
  * Sau khi atom form TỰ MANG `label`/`hint`/`errorMessage`/`isRequired` (§12e —
  * tầng `Field.*` đã bị XOÁ theo §13c), khung form không còn gì để "mặc áo" cho
@@ -87,7 +89,7 @@ export interface FormBaseProps {
 }
 
 /**
- * Vỏ `<form>` của tầng khung: một thẻ `<form>` thật (submit bằng ENTER, a11y),
+ * Vỏ `<form>` của tầng composite: một thẻ `<form>` thật (submit bằng ENTER, a11y),
  * một cột nội dung theo nhịp `gap`, và một slot `actions` ở đáy.
  *
  * KHÔNG biết gì về field bên trong — không validation, không giá trị, không lỗi.
@@ -271,7 +273,7 @@ const Actions = ({
 )
 
 /**
- * `Form.*` — form KHUNG namespace (tầng layout §13). `Base` (vỏ `<form>` +
+ * `Form.*` — form composite namespace (§13). `Base` (vỏ `<form>` +
  * cột nội dung + slot nút) · `Section` (nhóm field có tiêu đề) · `Actions`
  * (hàng nút, `items` dữ liệu → atom `Button.Group`).
  *

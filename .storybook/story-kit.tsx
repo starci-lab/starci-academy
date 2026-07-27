@@ -2,8 +2,12 @@ import React from "react"
 import { Label, Typography } from "@heroui/react"
 
 /**
- * Shared layout primitives for GALLERY stories — render every variant/state of a
- * block in ONE story, laid out identically everywhere.
+ * Shared SCAFFOLD helpers for GALLERY stories — render every variant/state of a component in
+ * ONE story, laid out identically everywhere.
+ *
+ * Deliberately NOT called "layout primitives": these are the story's own scaffold, not a tier
+ * of the tree. Reaching for the real frame tier here would make an ATOM's story import a
+ * FRAME just to line up five demo chips, which inverts the tiers inside the drawing.
  *
  * Before this, each gallery story hand-rolled its own `flex flex-col gap-6/gap-3`
  * nest, so no two galleries lined up the same way (the "tạp nham" the team saw).

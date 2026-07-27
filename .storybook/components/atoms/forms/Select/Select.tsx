@@ -19,7 +19,7 @@ import { FieldFrame, fieldName } from "@sb-components/atoms/forms/_field/FieldFr
  * Members theo CÁCH chọn — `Select.Single` (dropdown 1) · `Select.Multi` (nhiều) ·
  * `Select.Combobox` (autocomplete gõ-lọc). Atom TỰ mang nhãn/mô tả/lỗi/bắt buộc qua
  * `FieldFrame` (thầy chốt 2026-07-25: label/errorMessage tính VÀO atom, KHÔNG tách
- * Field primitive). Bỏ hết frame-prop → atom là ô control TRẦN (FieldFrame render
+ * Field composite). Bỏ hết frame-prop → atom là ô control TRẦN (FieldFrame render
  * thẳng trigger).
  *
  * Rules chung (Input/Chip):
@@ -328,7 +328,7 @@ const SelectCombobox = ({
 
 /**
  * `Select.*` — the choose-from-a-list field-control atom namespace. Single/Multi
- * over HeroUI `Select`, Combobox over HeroUI `ComboBox`; primitive fields compose
+ * over HeroUI `Select`, Combobox over HeroUI `ComboBox`; atom fields compose
  * these members (xem block `Select`).
  */
 export const Select = Object.assign(SelectSingle, {

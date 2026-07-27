@@ -5,14 +5,14 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — TitledText: a primary line + optional muted
- * secondary (and optional hint) stacked vertically as ONE primitive. A
+ * secondary (and optional hint) stacked vertically as ONE composite. A
  * "title↔subtitle" pair is a semantic UNIT, so it is a single component (one
  * anatomy node), NOT two/three raw `<Typography>` hand-rolled at every row.
  *
  * This is the single most-recurring composite in the app (≥16 call-sites, ≥6
  * lanes: SettingToggleRow, ListRow, Stepper, PageHeader, EmptyState,
  * RewardItemCard, PersonaIdentityChip name/role, SummaryCard stat…). The
- * primitive OWNS the type scale per `size`; the caller passes nodes only.
+ * composite OWNS the type scale per `size`; the caller passes nodes only.
  * NO `@/components` imports.
  */
 
@@ -79,7 +79,7 @@ const SIZE_CONFIG: Record<TitledTextSize, SizeConfig> = {
     },
 }
 
-/** Props for the {@link TitledText} primitive. */
+/** Props for the {@link TitledText} composite. */
 export interface TitledTextProps {
     /** Primary line (title / name / label / stat value). */
     title: ReactNode
@@ -113,7 +113,7 @@ export interface TitledTextProps {
 
 /**
  * TitledText renders a primary line over an optional muted secondary (and hint)
- * as one vertical unit. The primitive OWNS the type scale + tone per `size`; the
+ * as one vertical unit. The composite OWNS the type scale + tone per `size`; the
  * caller passes nodes only. Root is `flex min-w-0 flex-col` so truncation works
  * and callers can add `flex-1`.
  *

@@ -8,7 +8,7 @@ import { Alert } from "@sb-components/atoms/feedback/Alert/Alert"
  * BLOCK — `CourseTeamGate.Base`: reminds the learner to join the course's GitHub team.
  *
  * REASON FOR EXISTING (§14a): a screen may only list BLOCKS. Before this, the
- * `/learn/content` screen called `Feedback.Callout` (LAYOUT tier) directly and wrote
+ * `/learn/content` screen called `Feedback.Callout` (composite tier) directly and wrote
  * the content itself — the screen was declaring a feature's details instead of just
  * naming it. This block is thin, but it exists for the TIER BOUNDARY + because it
  * owns the SHOW CONDITION (below).

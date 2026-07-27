@@ -5,7 +5,7 @@ import { Form } from "@sb-components/composites/form/Form/Form"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * KHUNG (layout tier §13) — `Form.Section`: nhóm field CÓ TIÊU ĐỀ. Một khối
+ * KHUNG (composite tier §13) — `Form.Section`: nhóm field CÓ TIÊU ĐỀ. Một khối
  * header (tiêu đề + mô tả tuỳ chọn, `gap-1` tight vì là một CẶP) rồi tới cột
  * field theo nhịp `gap` (§10c).
  *

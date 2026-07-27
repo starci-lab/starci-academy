@@ -9,7 +9,7 @@ type Story = StoryObj
 
 /**
  * ATOM LÁ — `Input.Text` bọc thẳng HeroUI `TextField`/`Input` + `FieldFrame` nội bộ
- * (§11a: nhãn/mô tả/lỗi tính vào atom, không tách Field primitive). Mọi part nó phát
+ * (§11a: nhãn/mô tả/lỗi tính vào atom, không tách Field atom). Mọi part nó phát
  * ra (`Label`/`Description`/`Field`/`Error`/`Skeleton`) là KHE nội bộ, không phải
  * component có story riêng ⇒ KHÔNG có deps ⇒ bỏ hẳn prop `annotate` (thầy chốt
  * 2026-07-26 lần 2).

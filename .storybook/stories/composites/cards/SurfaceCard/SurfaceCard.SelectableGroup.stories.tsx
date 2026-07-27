@@ -4,13 +4,13 @@ import { SurfaceCard, type SurfaceCardSelectableGroupItem } from "@sb-components
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * LAYOUT — `SurfaceCard.SelectableGroup`: a select-one card group on top of HeroUI's
+ * COMPOSITE — `SurfaceCard.SelectableGroup`: a select-one card group on top of HeroUI's
  * `RadioGroup`/`Radio`, each choice a neutral `Card`, an accent outline ring lights up
  * once selected.
  *
  * 2026-07-26 (teacher): moved from the ATOM tier (`atoms/navigation/SelectableCardGroup`)
  * into the `SurfaceCard` namespace — it composes multiple cards into ONE LAID-OUT CLUSTER
- * (a grid), which is layout-tier work, not a single atom leaf (§12a/§6b). It's the BLOOD
+ * (a grid), which is composite-tier work, not a single atom leaf (§12a/§6b). It's the BLOOD
  * SIBLING of `SurfaceCard.PressableGroup` — same "card grid" shape — differing on exactly
  * one axis: PressableGroup is an ACTION grid (each cell presses on its own, `selected` is
  * just a decorative ring, not enforcing mutual exclusion); SelectableGroup is a REAL
@@ -39,8 +39,8 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * - `className`/`showAnatomy` — escape hatch / dev flag, not part of the atom's visual
  *   form ⇒ no leaf.
  *
- * ⚠️ `tier` changed from `"atom"` (old version) to `"primitive"` — the layout tier of the
- * blueprint tree uses the `"primitive"` label for `BlockAnatomy` (unlike an atom, which
+ * ⚠️ `tier` changed from `"atom"` (old version) to `"composite"` — the composite tier of the
+ * blueprint tree uses the `"composite"` label for `BlockAnatomy` (unlike an atom, which
  * uses `"atom"` directly).
  *
  * ⚠️ UNFIXED DRIFT (recorded, not refactored in this pass): the component calls HeroUI's

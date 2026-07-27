@@ -10,9 +10,9 @@ import { Typography as TypographyAtom } from "@sb-components/atoms/text/Typograp
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK ported faithfully from
  * `@/components/blocks/commerce/PriceTag`. The `next-intl` `useTranslations` strings are
  * INLINED locally (vi). The `−X%` saving chip — a raw `<Chip variant="soft"
- * color="success">` in `src` — is COMPOSED from the local `StatusChip` primitive
- * (`tone="success"` yields the byte-identical soft-success chip), so the block genuinely
- * composes a primitive instead of re-drawing one. Synced to `src` later.
+ * color="success">` in `src` — is COMPOSED from the local `Chip.Base` atom
+ * (`tone="success"` yields the byte-identical soft-success chip), so the design genuinely
+ * composes an atom instead of re-drawing one. Synced to `src` later.
  */
 
 /** Currency a price is shown in. */
@@ -131,7 +131,7 @@ const PriceTagBase = ({
     const hasSaving = original != null && original > discounted
     const savePercent = hasSaving ? savingPercent(original, discounted) : 0
 
-    // the −X% saving chip — composed from the StatusChip primitive (tone success →
+    // the −X% saving chip — composed from the `Chip.Base` atom (tone success →
     // soft-success chip, matching src's raw `<Chip variant="soft" color="success">`).
     // The pressable/focusable button role lives on the canonical `Popover.Trigger`
     // wrapper (react-aria: role=button, aria-expanded/controls, tabindex), so there is
@@ -171,12 +171,12 @@ const PriceTagBase = ({
         // wrapping column is just `p-3` padding.
         // Two vertical rows inside a design (the eyebrow and the breakdown list) =
         // `grouped` (§10b), not `tight`. `tight` (1) is reserved for what sits INSIDE a
-        // primitive, e.g. the icon+label pair of `InlineIconLabel`.
+        // composite, e.g. the icon+label pair of `InlineIconLabel`.
         <Stack.V gap={3} className="p-3">
             <TypographyAtom.Base size="xs" color="muted" text="Chi tiết giá" />
             {/* No `gap` passed: `KeyValue.List` already owns its row rhythm (its own default
-                is the §10b `grouped` step). Passing one from here overrides the primitive's
-                spacing from OUTSIDE, which §10 forbids — a primitive owns its internal
+                is the §10b `grouped` step). Passing one from here overrides the composite's
+                spacing from OUTSIDE, which §10 forbids — a composite owns its internal
                 spacing and must not receive it. */}
             <KeyValue.List
                 anatPart={showAnatomy ? "KeyValue.List" : undefined}
@@ -230,7 +230,7 @@ const PriceTagBase = ({
         <Stack.V
             // `grouped` (§10b): the price row and the saving line are two DIFFERENT vertical
             // rows of one design. It was `tight` (1), which §10b reserves for pairs sitting
-            // inside a primitive — the saving line read as if it were glued under the number.
+            // inside a lower-tier component — the saving line read as if it were glued under the number.
             gap={3}
             className={className}
             anatPart={anatPart ?? (showAnatomy ? "Stack.V" : undefined)}

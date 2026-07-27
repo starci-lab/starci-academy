@@ -71,8 +71,8 @@ const PRICE_POPOVER_PARTS: Array<AnatomyNode> = [
                 // ⭐ 2026-07-27: the four "label ↔ value" rows used to be four hand-rolled
                 // `<div className="flex items-center justify-between gap-3">` plus a
                 // hand-drawn `border-t` for the total row. Now they go through the
-                // `KeyValue.List` FRAME — the "You pay" row uses `emphasis` so the EMPHASIS
-                // is decided by the frame, the same across every price table.
+                // `KeyValue.List` COMPOSITE — the "You pay" row uses `emphasis` so the EMPHASIS
+                // is decided by the composite, the same across every price table.
                 name: "KeyValue.List",
                 tier: "composite",
                 role: "a column of label↔value pairs built from `items`; the TOTAL row turns on `emphasis`",

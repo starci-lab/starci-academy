@@ -29,7 +29,7 @@ const STATS = [
  * axis. `StatPair` renders its `value`/`label` `Typography` DIRECTLY itself
  * (canon granularity rule — a component that renders `Typography` inline gets
  * its OWN tagged node), so both are direct parts. Frameless — the surrounding
- * `Card`/divider/grid belongs to the CALLER, not this primitive.
+ * `Card`/divider/grid belongs to the CALLER, not this composite.
  */
 const STAT_PARTS: Array<AnatomyNode> = [
     { name: "Typography.Value", tier: "composite", role: "số liệu chính, semibold" },

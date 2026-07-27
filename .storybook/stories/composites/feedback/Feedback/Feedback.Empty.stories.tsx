@@ -7,7 +7,7 @@ import { Feedback } from "@sb-components/composites/feedback/Feedback/Feedback"
 import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * KHUNG (layout tier) — `Feedback.Empty`: chồng dọc CANH GIỮA lấp một chỗ trống
+ * KHUNG (composite tier) — `Feedback.Empty`: chồng dọc CANH GIỮA lấp một chỗ trống
  * (danh sách rỗng, tìm không ra) HOẶC một chỗ hỏng (`tone="danger"` + nút thử
  * lại). Gộp luôn 3 khung cũ đã xoá: `ErrorState` (tone danger) · `ErrorPageState`
  * (`size="page"` + `code`) · `SimpleEmptyState` (`size="compact"`).

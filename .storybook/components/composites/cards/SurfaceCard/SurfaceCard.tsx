@@ -825,7 +825,7 @@ const Pressable = ({
 // ─────────────────────────────────────────────────────────────────────────────
 
 // Columns by container step: use {@link GridColumns} from `Grid.Base` directly —
-// the ONE grid system of the layout tier (§13).
+// the ONE grid system of the frame tier (§13).
 //
 // 2026-07-26 (instructor): removed the local `SurfaceCardPressableGroupColumns`
 // table (7 steps `base/sm/md/lg/xl/xl3/xl4`, built with `@sm:`/`@md:`…) — that
@@ -1055,7 +1055,7 @@ const PressableGroup = ({
     }
 
     // 2026-07-26 (instructor): removed the self-opened `<div className="@container">`
-    // — from now on `Container.Base` is where the layout tier OPENS a container
+    // — from now on `Container.Base` is where the frame tier OPENS a container
     // (one frame, not every frame opening its own). Grid built with `Grid.Base`
     // (§13, the tier's ONE grid system) instead of hand-declaring `grid`/`grid-cols-*`.
     return (

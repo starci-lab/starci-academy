@@ -5,7 +5,7 @@ import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * LAYOUT TIER (§13) — `Toolbar.*`, the KHUNG of a nav/control ROW above a panel.
+ * COMPOSITE TIER (§13) — `Toolbar.*`, the KHUNG of a nav/control ROW above a panel.
  *
  * ⚠️ RENAMED (2026-07-25): this was `TabsCard`. The name was a lie — there is no
  * card anywhere in it: the root is `flex items-center justify-between gap-3`,

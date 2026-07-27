@@ -53,7 +53,7 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  * `Tabs`) nên trùng lặp một phần bề mặt với `Tabs.Base`; so với `Tabs.Base` (nhận
  * `items`, tự dựng DOM, chọn-1-trong-N — đúng hình atom khép kín), `Tabs.Extended`
  * nhận `children` thô và không tự giới hạn N tab hay cấu trúc mỗi tab — gần hình một
- * PRIMITIVE/layout khung hơn là atom nội dung. Cũng KHÔNG có `showAnatomy`/
+ * khung slot-trơ (`frame`) hơn là atom nội dung. Cũng KHÔNG có `showAnatomy`/
  * `data-anat-part` như `Chip.Base`/`Tabs.Base`/`Tooltip.Base` — bỏ ngỏ, không thêm ở
  * đợt soát leaf này vì không ảnh hưởng tính đúng của bộ leaf.
  */

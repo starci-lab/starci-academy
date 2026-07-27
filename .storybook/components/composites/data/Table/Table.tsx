@@ -4,7 +4,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * LAYOUT TIER (§13) — `Table.*`: KHUNG bảng dữ liệu, bọc HeroUI `Table`.
+ * COMPOSITE TIER (§13) — `Table.*`: KHUNG bảng dữ liệu, bọc HeroUI `Table`.
  *
  * | Member | Hình thái | Kênh nội dung |
  * |---|---|---|
@@ -193,7 +193,7 @@ const TableBase = ({
 }
 
 /**
- * `Table.*` — khung bảng dữ liệu (tầng LAYOUT §13). `Base` là hình thái duy nhất;
+ * `Table.*` — khung bảng dữ liệu (tầng COMPOSITE §13). `Base` là hình thái duy nhất;
  * biến thể (canh lề, bề rộng, rỗng, tải, hàng bấm được) là PROP của nó (§6b).
  */
 export const Table = {

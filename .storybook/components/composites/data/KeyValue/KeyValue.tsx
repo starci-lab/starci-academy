@@ -6,7 +6,7 @@ import { GAP_CLASS, type SpaceScale } from "@sb-components/frames/_spacing"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * LAYOUT TIER (§13) — `KeyValue.*`: the LABEL–VALUE pair FRAME.
+ * COMPOSITE TIER (§13) — `KeyValue.*`: the LABEL–VALUE pair COMPOSITE.
  *
  * | Member | Shape | Content channel |
  * |---|---|---|
@@ -16,26 +16,26 @@ import { GAP_CLASS, type SpaceScale } from "@sb-components/frames/_spacing"
  * Use for spec tables, order summaries, invoices — anywhere "one name, one number"
  * repeats into a block.
  *
- * FRAME API LAW:
- *   • The frame carries NO domain content and **does NOT format** money/dates/units —
+ * COMPOSITE API LAW:
+ *   • The composite carries NO domain content and **does NOT format** money/dates/units —
  *     the consumer passes an ALREADY-formatted node into `value` (`"1,200,000 ₫"`,
  *     `<Chip.Base/>`…).
- *   • The frame does NOT grow functionality (no self-computed totals): `emphasis` is
+ *   • The composite does NOT grow functionality (no self-computed totals): `emphasis` is
  *     only a visual STRESS for a total row, the number is still supplied by the consumer.
  *   • `.List` is a repeated list ⇒ `items` is REQUIRED, children are forbidden.
  *
  * COMPOSE (§13c): text goes ENTIRELY through the `Typography.*` atom (§9 — no scattered
- * `text-*`/`font-*`), rules go through the `Divider.Base` atom. The frame only handles
+ * `text-*`/`font-*`), rules go through the `Divider.Base` atom. The composite only handles
  * LAYOUT + the spacing scale.
  *
  * §10 — the gap scale is ENFORCED BY TYPE ({@link KeyValueGap}): only `0·1·2·3·6·8`, the
- * frame doesn't accept arbitrary numbers so it can't drift off the scale.
+ * composite doesn't accept arbitrary numbers so it can't drift off the scale.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 /**
  * The §10c scale is SHARED across the whole frame tier — imported from the SSOT
- * `blocks/_spacing.ts`. Do NOT redeclare it locally (every copy is a potential drift source).
+ * `frames/_spacing.ts`. Do NOT redeclare it locally (every copy is a potential drift source).
  */
 export type KeyValueGap = SpaceScale
 const GAP_CLS = GAP_CLASS
@@ -48,7 +48,7 @@ const GAP_CLS = GAP_CLASS
 export interface KeyValueRowProps {
     /** Label (left side) — §9a SECONDARY text ⇒ muted; `emphasis` pulls it up to foreground medium. */
     label: ReactNode
-    /** Value (right side) — an ALREADY-formatted node; the frame does not format it. */
+    /** Value (right side) — an ALREADY-formatted node; the composite does not format it. */
     value: ReactNode
     /** Sub-line below the label (explanation/unit/condition) — muted, smaller size. */
     hint?: ReactNode
@@ -59,9 +59,9 @@ export interface KeyValueRowProps {
     /** Gap between the row's content and the `divider` line (§10). Default `3`. */
     gap?: KeyValueGap
     /**
-     * Anatomy tag for THIS frame itself — lets the PARENT badge it as ONE node (§11a.1).
-     * Without this prop the frame doesn't make it into the Deps tree: using a `layouts`
-     * tier frame that the panel can't see counts as not using it.
+     * Anatomy tag for THIS composite itself — lets the PARENT badge it as ONE node (§11a.1).
+     * Without this prop the composite doesn't make it into the Deps tree: using a
+     * `frame`/`composite` tier node that the panel can't see counts as not using it.
      */
     anatPart?: string
     /** Extra classes on the row. */
@@ -157,9 +157,9 @@ export interface KeyValueListProps {
     /** `true` → draws a separator line BETWEEN rows (the last row has none). */
     divider?: boolean
     /**
-     * Anatomy tag for THIS frame itself — lets the PARENT badge it as ONE node (§11a.1).
-     * Without this prop the frame doesn't make it into the Deps tree: using a `layouts`
-     * tier frame that the panel can't see counts as not using it.
+     * Anatomy tag for THIS composite itself — lets the PARENT badge it as ONE node (§11a.1).
+     * Without this prop the composite doesn't make it into the Deps tree: using a
+     * `frame`/`composite` tier node that the panel can't see counts as not using it.
      */
     anatPart?: string
     /** Extra classes on the column. */
@@ -192,7 +192,7 @@ const KeyValueList = ({ items, gap = 3, divider = false, className, showAnatomy 
 )
 
 /**
- * `KeyValue.*` — the label–value pair frame (LAYOUT tier §13). `Row` (one pair) ·
+ * `KeyValue.*` — the label–value pair composite (COMPOSITE tier §13). `Row` (one pair) ·
  * `List` (N pairs, `items`). Visual variants = PROP (`emphasis`/`divider`), §6b.
  */
 export const KeyValue = {

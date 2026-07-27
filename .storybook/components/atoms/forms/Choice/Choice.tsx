@@ -18,7 +18,7 @@ import { FieldFrame } from "@sb-components/atoms/forms/_field/FieldFrame"
  *
  * These are INLINE controls — the label sits BESIDE the control (Checkbox.Content /
  * Radio.Content owns the native label; Switch's label = sibling `<Label>` per house note).
- * It's a BARE field (no group heading / hint / error) — the primitive field (FieldShell)
+ * It's a BARE field (no group heading / hint / error) — the atom field (FieldShell)
  * COMPOSES this atom to add a group label / description / error.
  *
  * Shared rules (Chip/Input):
@@ -307,7 +307,7 @@ const ChoiceSwitch = ({ isSelected, onValueChange, label, isDisabled, isInvalid,
 
 /**
  * `Choice.*` — boolean / single-select control atom namespace. Each member is the
- * bare inline control; primitive fields (FieldShell) compose them for the group
+ * bare inline control; atom fields (FieldShell) compose them for the group
  * heading / hint / error column.
  *
  * §12a: declared via `Object.assign` like the other 42 atoms (NOT a bare object

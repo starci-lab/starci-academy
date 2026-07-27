@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/nextjs"
 import { TitledText } from "@sb-components/composites/text/TitledText/TitledText"
 
 /**
- * PRIMITIVE — a primary line + optional muted secondary (and hint) stacked as ONE
+ * COMPOSITE — a primary line + optional muted secondary (and hint) stacked as ONE
  * unit. Use this instead of hand-rolling two/three raw Typography every time a row,
  * header, or metric needs a title↔subtitle. `size` picks the scale:
  * `row` (dense) · `header` (section) · `stat` (metric value + label + hint).

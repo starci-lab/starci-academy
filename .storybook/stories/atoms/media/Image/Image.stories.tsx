@@ -47,7 +47,7 @@ export const WithImage: Story = {
                 name="Image"
                 tier="atom"
                 leaf="With image"
-                reason="A media atom that wraps <img>, owning its own loading skeleton and error fallback — media primitives (like CoverImage) only ever pass src/alt down to it."
+                reason="A media atom that wraps <img>, owning its own loading skeleton and error fallback — media atoms (like CoverImage) only ever pass src/alt down to it."
                 note="Loading / fallbackSrc / ratio never change the tree (still Frame > Img), so they're states inside one leaf, per §14d.2."
                 code={`<Image src={url} alt="Course cover" ratio="video" />
 <Image isSkeleton src={url} alt="Loading" ratio="video" />

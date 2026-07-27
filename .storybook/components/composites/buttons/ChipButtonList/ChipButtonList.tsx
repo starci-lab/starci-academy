@@ -6,19 +6,19 @@ import { Button as ButtonAtom } from "@sb-components/atoms/buttons/Button/Button
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
- * STORYBOOK-LOCAL DESIGN SPEC — a NEW primitive (no `src` yet; synced later).
+ * STORYBOOK-LOCAL DESIGN SPEC — a NEW composite (no `src` yet; synced later).
  *
  * Ported from 4 near-identical call-sites in `ContentAiChat`
  * (`src/components/features/learn/ContentAiChat/index.tsx:1329-1449`) that each
  * hand-roll a list of `secondary`/`ghost` Buttons with the SAME shape — leading bare
  * icon (optional) + label, `justify-start text-start` — for: empty-state suggestion
  * chips, retrieval-skill chips, selected-passage quick-asks, and the skill menu.
- * Gom thành MỘT primitive dùng chung (§4 ownership): mọi nơi cần "dãy nút chip gợi
- * ý" hay "hàng menu kỹ năng" compose primitive NÀY — KHÔNG hand-roll lại danh sách
+ * Gom thành MỘT composite dùng chung (§4 ownership): mọi nơi cần "dãy nút chip gợi
+ * ý" hay "hàng menu kỹ năng" compose composite NÀY — KHÔNG hand-roll lại danh sách
  * Button.
  *
  * COMPOSE base {@link Button} cho MỌI item (KHÔNG import HeroUI trực tiếp) — press/
- * pending/disabled sống ở base Button (§4); primitive NÀY chỉ sở hữu LAYOUT (cụm vs
+ * pending/disabled sống ở base Button (§4); composite NÀY chỉ sở hữu LAYOUT (cụm vs
  * cột) + icon-size (§5: leading icon luôn ép `size-4 shrink-0 text-muted`, KHÔNG
  * dùng slot `icon` trailing-trượt của Button — chip icon đứng yên, dẫn trước nhãn).
  *
@@ -37,7 +37,7 @@ export interface ChipButtonItem {
     /** Stable key; falls back to array index. */
     id?: string
     label: ReactNode
-    /** Leading icon — TRẦN (bare Phosphor `*Icon`), primitive ép size §5. */
+    /** Leading icon — TRẦN (bare Phosphor `*Icon`), composite ép size §5. */
     icon?: ReactNode
     onPress?: () => void
     isDisabled?: boolean
@@ -46,7 +46,7 @@ export interface ChipButtonItem {
 export type ChipButtonListVariant = "secondary" | "ghost"
 export type ChipButtonListDirection = "wrap" | "column"
 
-/** Props for the {@link ChipButtonList} primitive. */
+/** Props for the {@link ChipButtonList} composite. */
 export interface ChipButtonListProps {
     items: Array<ChipButtonItem>
     /** Button variant applied to every item. Defaults follow `direction` (wrap→secondary · column→ghost) when omitted. */

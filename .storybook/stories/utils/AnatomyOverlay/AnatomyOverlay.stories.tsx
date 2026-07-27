@@ -4,9 +4,9 @@ import { type AnatomyTier } from "@sb-utils/AnatomyOverlay/anatomy-context"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"
 
 /**
- * PRIMITIVE — AnatomyOverlay: an ABSOLUTE annotation (dashed outline + corner tag)
+ * UTIL — AnatomyOverlay: an ABSOLUTE annotation (dashed outline + corner tag)
  * drawn on top of a component, so it never changes layout. Drop it inside a
- * `relative` + `data-anat` root. Colour = TIER (accent=primitive · green=design ·
+ * `relative` + `data-anat` root. Colour = TIER (accent=frame/composite · green=design ·
  * amber=block). Components expose it through a `showAnatomy` prop that cascades
  * down their composition tree (see `Block/Learn/FlashcardDeckList` → Anatomy).
  */

@@ -114,7 +114,7 @@ export const WrapWithIcon: Story = {
                 tier="block"
                 leaf="WrapWithIcon"
                 parts={WRAP_ICON_PARTS}
-                reason="4 nơi trong ContentAiChat (gợi ý rỗng-state, kỹ năng truy hồi, quick-ask khi bôi đen, menu kỹ năng) đều hand-roll MỘT danh sách secondary/ghost Button giống hệt nhau (leading icon trần + nhãn, justify-start text-start). Gom vào một primitive dùng chung để icon-size + layout sống ở một nơi, không lặp lại 4 lần."
+                reason="4 nơi trong ContentAiChat (gợi ý rỗng-state, kỹ năng truy hồi, quick-ask khi bôi đen, menu kỹ năng) đều hand-roll MỘT danh sách secondary/ghost Button giống hệt nhau (leading icon trần + nhãn, justify-start text-start). Gom vào một composite dùng chung để icon-size + layout sống ở một nơi, không lặp lại 4 lần."
                 code={"<ChipButtonList items={[{ label: \"Summarize this lesson\", icon: <SparkleIcon /> }]} direction=\"wrap\" />"}
             >
                 <ChipButtonList items={WRAP_ICON_ITEMS} direction="wrap" showAnatomy />

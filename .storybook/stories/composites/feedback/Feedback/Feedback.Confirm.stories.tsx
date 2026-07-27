@@ -6,20 +6,20 @@ import { Feedback } from "@sb-components/composites/feedback/Feedback/Feedback"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * KHUNG (layout tier) — `Feedback.Confirm`: vỏ dialog CHẶN ĐƯỜNG cho hành động
- * không lùi được (huỷ ghi danh, xoá bài nộp). Khung dựng sẵn Header/Body/Footer;
+ * COMPOSITE (composite tier) — `Feedback.Confirm`: vỏ dialog CHẶN ĐƯỜNG cho hành động
+ * không lùi được (huỷ ghi danh, xoá bài nộp). Composite dựng sẵn Header/Body/Footer;
  * nội dung đi bằng `title`/`description` + nhãn hai nút — KHÔNG mở `children`
  * (vỏ đã cố định hình, §13b).
  *
- * Khung THUẦN trình bày: `isOpen` + mọi callback vào bằng prop. Nút Xác nhận KHÔNG
+ * Composite THUẦN trình bày: `isOpen` + mọi callback vào bằng prop. Nút Xác nhận KHÔNG
  * tự đóng dialog — caller đóng qua `onOpenChange` sau khi hành động xong (nên
  * `isConfirming` mới giữ được dialog mở trong lúc chờ).
  *
- * ⚠️ PHẠM VI STATE (§12f): chỉ render state do CHÍNH khung đẻ — có/không
+ * ⚠️ PHẠM VI STATE (§12f): chỉ render state do CHÍNH composite đẻ — có/không
  * `description`, `tone`, `isConfirming`. Spinner/disabled của từng nút là state
- * của `Button.*` (story atom), ở đây chỉ xem hệ quả ở tầng khung.
+ * của `Button.*` (story atom), ở đây chỉ xem hệ quả ở tầng composite.
  *
- * DEPS thật: `Footer` — khung tự dựng `Button.Group` (data-driven `items`, không
+ * DEPS thật: `Footer` — composite tự dựng `Button.Group` (data-driven `items`, không
  * phải node caller đưa vào) nên bấm nhảy được sang story của nó. `Header`/`Body`
  * chỉ bọc chữ (`AlertDialog.Heading`/`Typography.Base`) — ruột, không phải deps.
  */

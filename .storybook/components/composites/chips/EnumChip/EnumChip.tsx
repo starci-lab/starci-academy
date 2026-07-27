@@ -45,7 +45,7 @@ export interface EnumChipProps<E extends string> {
 }
 
 /**
- * The canonical "enum → soft chip" primitive: a `Chip.Base` whose
+ * The canonical "enum → soft chip" composite: a `Chip.Base` whose
  * tone / label / optional tooltip come from a per-value map. Text-only — no leading icon.
  * Domain badges (AI-model category, difficulty, video host …) shrink to just their map
  * table + this delegate. Deliberately does NOT force width.

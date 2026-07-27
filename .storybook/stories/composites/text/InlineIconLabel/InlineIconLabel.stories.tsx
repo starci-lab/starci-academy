@@ -3,9 +3,9 @@ import { UsersIcon, SparkleIcon, WarningCircleIcon, ChatCircleIcon } from "@phos
 import { InlineIconLabel } from "@sb-components/composites/text/InlineIconLabel/InlineIconLabel"
 
 /**
- * PRIMITIVE — a leading icon + inline text label as ONE unit. Use this instead of
+ * COMPOSITE — a leading icon + inline text label as ONE unit. Use this instead of
  * hand-rolling `flex items-center gap-1` + a bare icon + a Typography every time a
- * count, eyebrow, tab label, or toned caption needs an icon. The primitive OWNS the
+ * count, eyebrow, tab label, or toned caption needs an icon. The composite OWNS the
  * icon size (per the text scale, §5) and the tone colour.
  */
 const meta: Meta<typeof InlineIconLabel> = {

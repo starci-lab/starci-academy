@@ -35,8 +35,8 @@ const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
 // scenario base = the has-progress, not-urgent shape. States below interpolate by delta.
 // NOTE: the title Typography IS a composed node in the trees below — ContinueCard
-// writes `<Typography>{title}</Typography>` itself (not a value folded into another
-// primitive's slot), so it badges like any other directly-composed part.
+// writes `<Typography>{title}</Typography>` itself (not a value folded into a
+// lower-tier component's slot), so it badges like any other directly-composed part.
 const progressBase = {
     title: "Mock interview: Design a rate limiter",
     meta: ["Question 2 / 8", "Middle"],

@@ -6,7 +6,7 @@ import { GAP_CLASS, type SpaceScale } from "@sb-components/frames/_spacing"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * LAYOUT TIER (§13) — `Section.*`, the KHUNG of a VÙNG inside a page.
+ * COMPOSITE TIER (§13) — `Section.*`, the KHUNG of a VÙNG inside a page.
  *
  * A section is the region between a page and a card: a titled band of a route
  * (`Khoá của tôi`, `Hoạt động gần đây`) that owns NO chrome of its own — no
@@ -125,7 +125,7 @@ const Header = ({
         // items-start: a 2-line title block keeps the action anchored at the top.
         <div className={cn("flex items-start justify-between gap-3", className)} data-anat-part={anatPart}>
             {/* eyebrow ↔ title ↔ description are ONE text unit → tight gap-1 (§10b
-                "trong primitive"), not the grouped gap-3 used BETWEEN regions. */}
+                "inside a lower-tier component"), not the grouped gap-3 used BETWEEN regions. */}
             <div className="flex min-w-0 flex-col gap-1">
                 {eyebrow != null ? (
                     <span className="min-w-0" data-anat-part={showAnatomy ? "Eyebrow" : undefined}>

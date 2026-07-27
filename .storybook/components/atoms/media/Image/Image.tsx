@@ -116,8 +116,8 @@ const ImageBase = ({ src, alt, ratio, fit = "cover", radius = "lg", fallbackSrc,
 }
 
 /**
- * `Image` — framed-image atom. Bọc `<img>` với skeleton lúc fetch + fallback khi
- * lỗi/rỗng (media primitive như CoverImage compose nó).
+ * `Image` — framed-image atom. Wraps `<img>` with a loading skeleton and a
+ * fallback on error/empty — a low-level media atom; no composite currently composes it.
  *
  * §12a: root GỌI THẲNG được (`<Image …/>`); `Image.Base` chỉ là alias giữ cho
  * call-site cũ — atom này một hình thái nên không mở thêm member.

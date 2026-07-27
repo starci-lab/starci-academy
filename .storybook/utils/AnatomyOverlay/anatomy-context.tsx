@@ -14,13 +14,6 @@ import React from "react"
 
 /** Which tier the annotated part is — drives dot/badge colour across the anatomy tools. */
 /**
- * The five tiers of the tree. `primitive` is the OLD name of the `layout` tier (§13).
- *
- * ⭐ `screen` added 2026-07-27 (teacher: "the 5 layers are identical in form"): the union
- * only had four, so a screen had to masquerade as `block` — the panel then printed the
- * wrong badge on the very node that anchors the whole tree.
- */
-/**
  * The six tiers of the drawing, lowest first.
  *
  * `frame` + `composite` replaced the single `primitive` tier on 2026-07-27: what used to be
@@ -28,6 +21,13 @@ import React from "react"
  * `Cluster`, `Split`, `Stack`, `DragScrollArea`, `ResizableRail`) versus 37 components that
  * own content roles. `Section`/`Page`/`ModalShell` moved to `composite` because they own a
  * TITLE; the discriminator is "slot-agnostic vs owns content", not the import count.
+ *
+ * `screen` was added that same day (teacher's call: "the 5 layers are identical in form"):
+ * before that the union only had four non-atom tiers, so a screen had to masquerade as
+ * `block` — the panel then printed the wrong badge on the very node that anchors the whole
+ * tree. Note: this merges what used to be two stale, unmerged JSDoc blocks here — an older
+ * one still claimed "five tiers" and "`primitive` is the OLD name of the `layout` tier",
+ * both superseded by the six-tier split above.
  */
 export type AnatomyTier = "atom" | "frame" | "composite" | "design" | "block" | "screen"
 

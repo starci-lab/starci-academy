@@ -5,7 +5,7 @@ import { Feedback, type FeedbackCalloutStatus } from "@sb-components/composites/
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * KHUNG (layout tier) — `Feedback.Callout`: dải tint PHẲNG đặt BÊN TRONG một
+ * COMPOSITE (§13) — `Feedback.Callout`: dải tint PHẲNG đặt BÊN TRONG một
  * surface (surface-in-surface), không phải card nổi. Khung sở hữu tint + icon
  * theo `status`; nội dung đi bằng slot có tên `title`/`description`/`body`
  * (+`children`)/`action` + nút đóng tuỳ chọn.

@@ -4,7 +4,7 @@ import { Form, type FormActionsAlign } from "@sb-components/composites/form/Form
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * KHUNG (layout tier §13) — `Form.Actions`: hàng nút cuối form. Là khung DANH
+ * COMPOSITE (composite tier §13) — `Form.Actions`: hàng nút cuối form. Là khung DANH
  * SÁCH LẶP nên BẮT BUỘC nhận `items` dữ liệu, CẤM children (§13b) — và nó
  * COMPOSE atom `Button.Group` chứ KHÔNG tự vẽ nút (§13c).
  *

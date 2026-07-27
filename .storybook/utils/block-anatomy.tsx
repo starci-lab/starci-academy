@@ -6,22 +6,23 @@ import { Tooltip } from "@heroui/react"
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL — the anatomy surfacing for a Block story.
  *
- * A Block (tier `Block/*`) is a COMPOSITE built from **sub-blocks + primitives**
- * (thầy 2026-07-22 — block cấu tạo từ block + primitive khác, không chỉ primitive). The
- * canvas stays CLEAN (just the block); its COMPOSITION is revealed on HOVER via a tooltip —
- * a COMPLETE inventory of every part (tier + role) and WHY that composite exists. A dashed
- * ring on hover signals the block is inspectable.
+ * A Block (tier `Block/*`) is composed from **sub-blocks + lower-tier parts**
+ * (teacher's call 2026-07-22 — a block can be built from other blocks plus lower-tier
+ * parts, not only lower-tier parts). The canvas stays CLEAN (just the block); its
+ * COMPOSITION is revealed on HOVER via a tooltip — a COMPLETE inventory of every part
+ * (tier + role) and WHY it exists. A dashed ring on hover signals the block is inspectable.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
 /**
- * One composed PART of a block. A block = **sub-blocks + primitives** (thầy 2026-07-22),
- * so `tier` distinguishes the two. `name` matches a `Block/*` or `Primitives/*` leaf.
+ * One composed PART of a block. A block = **sub-blocks + lower-tier parts** (teacher's
+ * call 2026-07-22), so `tier` distinguishes the two. `name` matches a `Block/*` leaf, or
+ * a leaf from `Atoms/*`, `Frames/*`, `Composites/*`, or `Designs/*`.
  */
 export interface BlockPrimitive {
     name: string
     role?: string
-    /** `"block"` (sub-composite, tier `Block/*`) or `"primitive"` (atom, `Primitives/*`). */
+    /** `"block"` (sub-composite, tier `Block/*`) or `"primitive"` (a lower-tier leaf — atom, frame, composite, or design). */
     tier?: "block" | "primitive"
     /** Only present in ONE state (e.g. `"Đang tải"`) — not a general part. */
     state?: string
@@ -29,8 +30,8 @@ export interface BlockPrimitive {
 
 export interface BlockAnatomyProps {
     /**
-     * EVERY part this block composes (blocks + primitives, in visual order) — a COMPLETE
-     * inventory, not a sample. Tag each `tier`; flag state-only parts with `state`.
+     * EVERY part this block composes (blocks + lower-tier parts, in visual order) — a
+     * COMPLETE inventory, not a sample. Tag each `tier`; flag state-only parts with `state`.
      */
     primitives: Array<BlockPrimitive | string>
     /** Why this composite exists — the rationale for combining these parts. */
@@ -64,7 +65,7 @@ const AnatomyContent = ({ primitives, reason }: BlockAnatomyProps) => {
 }
 
 /**
- * Wraps a Block so HOVER reveals its {@link AnatomyContent} (composed primitives +
+ * Wraps a Block so HOVER reveals its {@link AnatomyContent} (composed parts +
  * rationale) in a tooltip, keeping the canvas clean. A dashed ring on hover/focus
  * marks it inspectable.
  */

@@ -5,7 +5,7 @@ import { StatGridCard } from "@sb-components/composites/stats/StatGridCard/StatG
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * PRIMITIVE — a bounded surface whose cells sit in a 2-col grid, divided by thin
+ * COMPOSITE — a bounded surface whose cells sit in a 2-col grid, divided by thin
  * seams (the grid sibling of `SurfaceListCard`'s vertical list). The block owns
  * only the grid/border/span structure — cell content is free-form (`ReactNode`).
  *

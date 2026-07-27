@@ -14,8 +14,8 @@ import { Cluster } from "@sb-components/frames/Cluster/Cluster"
  *
  * Single-component namespace ⇒ `.Base` (teacher's call 2026-07-25).
  *
- * ⚠️ The `_legacy` version's own note says it "does NOT compose any primitive"
- * — it hand-rolled `<span className="text-sm">` for both text parts. This port
+ * The `_legacy` version's own note said it composed no lower-tier component at
+ * all — it hand-rolled `<span className="text-sm">` for both text parts. This port
  * FIXES that: text goes through the `Typography` atom (§9 — size/weight is the
  * atom's job, not classes scattered here).
  * ─────────────────────────────────────────────────────────────────────────────
@@ -90,7 +90,7 @@ const PhaseScarcityNoteBase = ({
         // inherits `currentColor` — keeping the original's exact
         // `warning-soft-foreground` tone.
         //
-        // ⭐ 2026-07-27 (teacher: "build layout out of layouts components"):
+        // 2026-07-27 (teacher's call: "build layout out of frame components"):
         // this used to be a hand-written `<div className="flex flex-wrap
         // items-center gap-2">`. This row is ONE TRACK of N elements that wrap
         // ⇒ exactly the definition of `Cluster`, and §13b requires repeated

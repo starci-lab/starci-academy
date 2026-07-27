@@ -4,7 +4,7 @@ import { cn } from "@heroui/react"
 import { Button, type ButtonSize, type ButtonVariant } from "@sb-components/_legacy/designs/buttons/Button/Button"
 
 /**
- * STORYBOOK-LOCAL DESIGN SPEC — a NEW primitive (no `src` yet; synced later).
+ * STORYBOOK-LOCAL DESIGN SPEC — a NEW composite (no `src` yet; synced later).
  *
  * Container GENERIC/structural cho nhiều nút hành động (§6c) — KHÔNG áp vai nghĩa
  * (không tự gán "cái đầu = primary"). Caller truyền `actions[]`, mỗi phần tử tự
@@ -38,7 +38,7 @@ export interface ButtonGroupAction {
     isDisabled?: boolean
 }
 
-/** Props for the {@link ButtonGroup} primitive. */
+/** Props for the {@link ButtonGroup} composite. */
 export interface ButtonGroupProps {
     /** Danh sách action — render theo ĐÚNG thứ tự, mỗi cái = base Button. */
     actions: ButtonGroupAction[]

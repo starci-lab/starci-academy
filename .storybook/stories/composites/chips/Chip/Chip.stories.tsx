@@ -4,10 +4,10 @@ import { Chip } from "@sb-components/composites/chips/Chip/Chip"
 import type { EnumChipEntry } from "@sb-components/composites/chips/EnumChip/EnumChip"
 
 /**
- * `Chip.*` — compound namespace gom các chip PRIMITIVE cùng tier vào một root
+ * `Chip.*` — compound namespace gom các chip COMPOSITE cùng tier vào một root
  * (kiểu `Skeleton.*`). Base pill HeroUI dùng alias `HeroChip`; chip DESIGN
  * (Difficulty/AiCategory/Language) KHÔNG nằm ở đây. Mỗi member vẫn có story
- * RIÊNG (Primitives/Chips/<Name>) — story này là INDEX của cả họ.
+ * RIÊNG (Composites/Chips/<Name>) — story này là INDEX của cả họ.
  *
  * ⚠️ 2026-07-26: hai hàng `Chip.Status` và `Chip.Tags` đã rời index này. Chip trạng
  * thái giờ là `Chip.Base tone=…` và hàng tag là `Chip.Group`, cả hai thuộc tầng

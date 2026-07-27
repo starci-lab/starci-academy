@@ -14,18 +14,18 @@ import { SKELETON_TEXT_BAR } from "@sb-components/atoms/_skeleton-bar"
  * `CompanySection` (`src/components/features/careers/Jobs/JobPostForm/CompanySection/index.tsx`):
  * a bordered `rounded-2xl` flex row — a label on the left, a tertiary
  * `Button` (× icon + "Change" text) on the right that clears the pick. This
- * primitive generalises that ONE hand-rolled row into a reusable
+ * composite generalises that ONE hand-rolled row into a reusable
  * selected-item token: any label/icon in, an optional remove (×) and/or
  * edit ("Change"-style) affordance out.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-/** Props for the {@link RemovableToken} primitive. */
+/** Props for the {@link RemovableToken} composite. */
 export interface RemovableTokenProps {
     /** Token label content. */
     label: ReactNode
     /**
-     * Optional LEADING glyph before the label. The PRIMITIVE owns the size
+     * Optional LEADING glyph before the label. The COMPOSITE owns the size
      * (§4) — pass the icon TRẦN (no `size-*`); it's forced to `size-4` here.
      */
     icon?: ReactNode
@@ -103,7 +103,7 @@ export const RemovableToken = ({
         >
             <div className="flex min-w-0 items-center gap-2">
                 {icon ? (
-                    // PRIMITIVE owns the size (§4) — force the caller's bare icon
+                    // COMPOSITE owns the size (§4) — force the caller's bare icon
                     // down to the row's glyph scale (matches the body-sm label).
                     <span aria-hidden className="inline-flex shrink-0 [&_svg]:size-4">
                         {icon}

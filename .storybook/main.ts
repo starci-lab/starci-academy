@@ -7,8 +7,11 @@ import type { StorybookConfig } from "@storybook/nextjs"
  * Chromatic/Playwright snapshots catch UI regressions lint can't see (contrast, fill-on-fill, dark mode).
  */
 const config: StorybookConfig = {
-    // The rewrite: 4 tiers `Primitives / Block / Layout / Overlay`, render-only
-    // stories + autodocs "Overview" per component. The pre-2026-07-21 stories were
+    // SIX tiers, lowest first: `Atoms / Frames / Composites / Designs / Blocks / Screens`,
+    // render-only stories + autodocs "Overview" per component. (This line read "4 tiers
+    // Primitives / Block / Layout / Overlay" until 2026-07-27 — it described the FIRST plan,
+    // not the tree that shipped, and nothing errors when a comment falls behind.)
+    // The pre-2026-07-21 stories were
     // archived OUT of Storybook to `../.storybook-legacy/` (not loaded — kept only
     // for reference while the rewrite lands).
     stories: ["./stories/**/*.stories.@(ts|tsx)"],

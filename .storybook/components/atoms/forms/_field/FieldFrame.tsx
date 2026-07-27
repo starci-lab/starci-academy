@@ -6,7 +6,7 @@ import { Label, Skeleton as HeroSkeleton, cn } from "@heroui/react"
  * ATOM-INTERNAL — `FieldFrame`: the label · hint · control · error SCAFFOLD that
  * every form atom composes so the atom itself IS the full field (teacher decided
  * 2026-07-25: "label/errorMessage count toward the atom", NO separate Field
- * primitive).
+ * atom).
  *
  * Self-contained in the atom layer (HeroUI only — NO importing blocks/, since the
  * atom is the lowest layer). Owns the vertical rhythm (`flex flex-col gap-1.5`):

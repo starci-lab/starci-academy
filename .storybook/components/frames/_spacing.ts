@@ -1,6 +1,6 @@
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * LAYOUT TIER — the SHARED spacing/alignment vocabulary of the khung namespaces
+ * FRAME TIER — the SHARED spacing/alignment vocabulary of the khung namespaces
  * (`Stack` · `Split` · `Cluster` · `Grid`). Internal module (`_`-prefixed): it is
  * a type + class table, NOT a component, and never leaves this folder.
  *
@@ -9,7 +9,7 @@
  * values, nothing else. A khung that took `gap: number` would let `gap-4`/`gap-5`
  * back in through the front door, so every khung types its `gap` as
  * {@link SpaceScale} — a UNION LITERAL. Off-scale is then a TYPE ERROR at the
- * call site, not a lint finding after the fact. This is the reason the layout
+ * call site, not a lint finding after the fact. This is the reason the frame
  * tier owns gap at all: it is the enforcement point of §10.
  *
  * §10a also decides WHO owns the seam: `gap` belongs to the PARENT (the khung),
@@ -18,7 +18,7 @@
  */
 
 /**
- * The ONLY spacing steps a layout khung accepts (§10c):
+ * The ONLY spacing steps a frame khung accepts (§10c):
  * `0` flush · `1` tight · `2` related · `3` grouped · `6` section · `8` page.
  */
 export type SpaceScale = 0 | 1 | 2 | 3 | 6 | 8

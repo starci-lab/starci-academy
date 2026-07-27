@@ -19,7 +19,7 @@ import { Stack } from "@sb-components/frames/Stack/Stack"
  * `usePaymentOverlayState` (zustand) itself; this port takes the same data as
  * PLAIN PROPS (`price`, `isSkeleton`, `onEnroll`) so it renders standalone
  * with no store/SWR wiring. The `next-intl` strings are INLINED locally (vi).
- * Composed from local primitives — {@link IconTile} (lock icon, accent tone,
+ * Composed from lower-tier locals — {@link IconTile} (lock icon, accent tone,
  * sm) + {@link PriceTag} + {@link PhaseScarcityNote} + {@link Skeleton.Typography}
  * (price-loading mirror) + {@link Button} (enroll CTA). Synced to `src` later.
  */
@@ -168,7 +168,7 @@ const TrialConversionStripBase = ({
                     up as far from its own price as the CTA is from everything, and §10 bans a
                     uniform rhythm precisely because it stops reading as groups. With 3 the
                     card reads 24/12/12/24 — two groups, which is what it is. It was `tight`
-                    (1) before either fix, a step §10b reserves for pairs inside a primitive. */}
+                    (1) before either fix, a step §10b reserves for pairs inside an atom. */}
                     <Stack.V gap={3} anatPart={showAnatomy ? "Stack.V.Price" : undefined}>
                         {isSkeleton && !price ? (
                         // 2026-07-12: the CTA card renders instantly once the outline

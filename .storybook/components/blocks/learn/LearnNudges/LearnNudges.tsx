@@ -9,7 +9,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  *
  * WHY IT EXISTS (§14a): every FUNCTION of a screen is ONE block. "What should I
  * do today" is a function, so it needs a name. Before 2026-07-25 the
- * `/learn/content` screen called `SurfaceCard.List` (LAYOUT tier) directly and
+ * `/learn/content` screen called `SurfaceCard.List` (composite tier) directly and
  * plugged in items + picked icons itself — the screen was wiring up details on
  * the block's behalf, so reading the screen's code couldn't tell you what the
  * page does.

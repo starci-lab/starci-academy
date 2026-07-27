@@ -29,7 +29,7 @@ type Story = StoryObj<typeof AsyncContent.Error>
 /** Frame each leaf's anatomy panel with breathing room. */
 const frame = (node: React.ReactNode) => <div className="mx-auto max-w-4xl p-8">{node}</div>
 
-// A THIN layer over the `Feedback.Empty` primitive (tone danger). The warning
+// A THIN layer over the `Feedback.Empty` composite (tone danger). The warning
 // icon/title/description are VALUES passed into props so they're NOT split into
 // nodes; only `action` is a node that gets composed in.
 const MESSAGE_PARTS: Array<AnatomyNode> = [

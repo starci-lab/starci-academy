@@ -24,7 +24,7 @@ import { FieldFrame, fieldName } from "@sb-components/atoms/forms/_field/FieldFr
 
 /**
  * Field-frame props mọi atom form nhận để TỰ mang nhãn/mô tả/lỗi/bắt buộc (thầy
- * chốt 2026-07-25: label/errorMessage tính VÀO atom, không tách Field primitive).
+ * chốt 2026-07-25: label/errorMessage tính VÀO atom, không tách Field composite riêng).
  * Bỏ hết → atom là ô TRẦN (FieldFrame render thẳng control).
  */
 interface FrameProps {
@@ -43,8 +43,11 @@ interface FrameProps {
  * ATOM — `Input.*`: the field-control atom namespace (bọc HeroUI form controls).
  *
  * Members theo KIỂU input — `Input.Text` · `Input.Textarea` · `Input.Number` ·
- * `Input.Date` (mở rộng: Search/Password/Time…). Đây là ô TRẦN (không label/hint/
- * error) — primitive `TextField`/`NumberField` (FieldShell) COMPOSE atom này.
+ * `Input.Date` (mở rộng: Search/Password/Time…). Atom TỰ MANG nhãn/mô tả/lỗi/bắt
+ * buộc qua {@link FrameProps} (compose thẳng `FieldFrame.Base`) — không còn
+ * `Field` component riêng nào bọc bên ngoài atom này (tầng `Field.*` cũ đã bị
+ * XOÁ theo §13c, note: câu cũ nói ngược — không phải "primitive bọc atom" mà
+ * atom tự compose FieldFrame nội bộ).
  *
  * Rules chung (Chip/Typography):
  *   • Bọc HeroUI TỐI ĐA (TextField/TextArea/NumberField/DatePicker), alias `Hero*`.
@@ -684,7 +687,8 @@ const InputTags = ({
 }
 
 /**
- * `Input.*` — field-control atom namespace. Ô trần; primitive fields compose members.
+ * `Input.*` — field-control atom namespace. Tự mang nhãn/mô tả/lỗi qua
+ * {@link FrameProps} — không có component tầng trên nào compose lại members.
  */
 export const Input = Object.assign(InputText, {
     Text: InputText,

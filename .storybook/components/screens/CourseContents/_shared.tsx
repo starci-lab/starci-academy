@@ -4,7 +4,7 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
 
 /**
  * Shared anatomy parts + a per-device·per-state leaf renderer for the
- * `Layouts/CourseContents/<Device>/<State>` stories. NOT a story file (leading
+ * `Screens/CourseContents/<Device>/<State>` stories. NOT a story file (leading
  * `_` keeps it out of the `*.stories` glob) — device story files import from here
  * so the parts + framing live in ONE place.
  */
@@ -59,7 +59,7 @@ export const PARTS: Array<AnatomyNode> = [
     // WARNING: the node name must match EXACTLY the `data-anat-part` the component emits:
     // the DOM emits `CourseTeamGate`, not `Feedback.Callout` (that's the FRAME the block
     // uses internally). Declaring the wrong name ⇒ the node never makes it into the
-    // tree. The tier would be wrong too: `primitive` while `storyId` points to a BLOCK.
+    // tree. The tier would be wrong too: `composite` while `storyId` points to a BLOCK.
     //
     // The gate hides itself on ITS OWN data (`!isEnrolled || isInTeam`), which for a PAID
     // viewer who is not yet in the team means it STAYS. Do not describe it as "hidden once

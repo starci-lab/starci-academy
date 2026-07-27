@@ -14,6 +14,25 @@ import "../src/app/globals.css"
  * A story's JSDoc still becomes its description in the Docs/Overview tab (autodocs), but is
  * NOT painted as a "Usage" alert on the canvas (thầy: bỏ usage khỏi canvas).
  */
+/**
+ * CSS that hides the anatomy tooling when the `Anatomy` toolbar is off.
+ *
+ * Only ONE thing is visible and therefore only one thing is hidden: the BlockAnatomy PANEL,
+ * the bordered card holding the Deps/Code tabs. `AnatomyOverlay` is NOT hidden here because
+ * it has nothing to hide — since 2026-07-26 it paints no badge at all, it only emits an
+ * invisible `data-anat-marker` span that the panel reads to derive the tree. (Its own JSDoc
+ * still claims a "dashed outline + corner tag"; that is stale and tracked separately.)
+ *
+ * The panel is matched through the layout classes of its wrapper rather than a data attribute,
+ * because the panel does not expose one yet. That is a KNOWN WEAK SELECTOR: it breaks the day
+ * someone edits those Tailwind classes, silently and with no error. Replace it with a
+ * `data-sb-anatomy-panel` hook on `BlockAnatomy`'s root as soon as that file is free to edit
+ * (a prose pass was rewriting it when this was added).
+ */
+const ANATOMY_OFF_CSS = `
+.flex.flex-col.gap-6 > .overflow-hidden.rounded-xl.border.border-default.bg-surface { display: none; }
+`
+
 const preview: Preview = {
     // autodocs: render each story's JSDoc as its description in the Docs/Overview tab.
     tags: ["autodocs"],
@@ -44,13 +63,31 @@ const preview: Preview = {
                 dynamicTitle: true,
             },
         },
+        anatomy: {
+            description: "Anatomy panel + on-render badges",
+            // OFF by default (teacher, 2026-07-27): the canvas should show the COMPONENT
+            // first. The panel is a reading tool for a design pass, not the subject — with
+            // it always on, half of every canvas is the tool talking about the drawing.
+            defaultValue: "off",
+            toolbar: {
+                title: "Anatomy",
+                icon: "outline",
+                items: [
+                    { value: "off", title: "Anatomy off" },
+                    { value: "on", title: "Anatomy on" },
+                ],
+                dynamicTitle: true,
+            },
+        },
     },
     decorators: [
         (Story, context) => {
             const theme = context.globals.theme || "light"
+            const anatomy = context.globals.anatomy || "off"
             return (
                 <NextIntlClientProvider locale="vi" messages={messages}>
                     <HeroUIProvider>
+                        {anatomy === "off" ? <style>{ANATOMY_OFF_CSS}</style> : null}
                         {/* `@container` MIRRORS the app shell: the real app renders inside a
                             container-marked column (`InnerLayout`) so it can re-lay-out when the
                             chat rail narrows it, and every component's breakpoints are `@app-*`

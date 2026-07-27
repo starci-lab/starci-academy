@@ -29,7 +29,7 @@ export interface FloatingActionButtonProps {
 
 /**
  * A bottom-right floating action button — a round, shadowed accent circle. COMPOSES
- * the base `<Button iconOnly>` primitive (§6): the primitive owns the icon-only look,
+ * the base `<Button iconOnly>` atom (§6): the atom owns the icon-only look,
  * native icon sizing (§5a) and interaction; this block only layers the fixed
  * placement, round shape, shadow and z-index. Pure + props-only.
  *

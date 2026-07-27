@@ -12,8 +12,9 @@ import { BlockAnatomy } from "@sb-utils/BlockAnatomy/BlockAnatomy"
  *
  * Atom lá (§12g cuối bài): `InputGroup`/`Popover`/`Skeleton` là span nội bộ,
  * không component nào có story riêng để nhảy tới ⇒ KHÔNG dùng `annotate`, bỏ
- * hẳn prop. Tier sửa lại `atom` (trước là `primitive` — tên cũ của tầng KHUNG
- * §13, sai vì đây là atom thật, title đã là `Atoms/Forms/SearchAutocomplete`).
+ * hẳn prop. Tier sửa lại `atom` (trước là `primitive` — tên cũ của tầng khung
+ * §13, nay tách frame/composite theo 2026-07-27 — sai vì đây là atom thật,
+ * title đã là `Atoms/Forms/SearchAutocomplete`).
  *
  * ANATOMY IS PER-LEAF: each story below is its OWN leaf and wraps its render in
  * its OWN BlockAnatomy reflecting the parts THAT leaf composes — the field +

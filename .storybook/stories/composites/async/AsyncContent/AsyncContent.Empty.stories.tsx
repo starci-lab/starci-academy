@@ -30,7 +30,7 @@ type Story = StoryObj<typeof AsyncContent.Empty>
 /** Plain canvas for each leaf's anatomy panel. */
 const shell = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
-// This frame is a THIN layer over the `Feedback.Empty` primitive. Icon/title/description
+// This frame is a THIN layer over the `Feedback.Empty` composite. Icon/title/description
 // are VALUES passed into Feedback.Empty's props, so they don't split into separate
 // nodes — only `action` is a node that gets COMPOSED in, so it only shows up in the
 // tree of the leaf that has a button.

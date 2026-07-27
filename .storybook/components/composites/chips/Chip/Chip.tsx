@@ -6,7 +6,7 @@ import { RemovableToken } from "@sb-components/composites/chips/RemovableToken/R
  * ─────────────────────────────────────────────────────────────────────────────
  * STORYBOOK-LOCAL DESIGN SPEC — `Chip.*` compound namespace.
  *
- * Gom các chip **PRIMITIVE cùng tier** (Primitives/Chips) vào MỘT root, giống
+ * Gom các chip **COMPOSITE cùng tier** (Composites/Chips) vào MỘT root, giống
  * `Skeleton.*` — một import `Chip`, phát hiện dễ, đồng bộ. Consumer đổi
  * `<EnumChip/>` → `<Chip.Enum/>`, `<HighlightChip/>` → `<Chip.Highlight/>`, …
  *
@@ -24,7 +24,7 @@ import { RemovableToken } from "@sb-components/composites/chips/RemovableToken/R
  * Gọi thẳng `Chip.Base` / `Chip.Group` từ `atoms/chips/Chip/Chip`. Namespace này
  * chỉ còn chip đúng tier của nó.
  *
- * TIER (thầy chốt: chỉ gom cùng tier): CHỈ chip Primitives ở đây. Chip DESIGN
+ * TIER (thầy chốt: chỉ gom cùng tier): CHỈ chip Composite ở đây. Chip DESIGN
  * (`DifficultyChip` · `AiCategoryChip` · `LanguageChip` — enum mang ngữ nghĩa
  * nội dung) GIỮ RIÊNG, KHÔNG fold vào `Chip.*` (giữ kỷ luật tier §6c).
  *

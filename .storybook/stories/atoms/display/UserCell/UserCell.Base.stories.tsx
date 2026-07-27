@@ -251,7 +251,7 @@ export const Skeleton: Story = {
                 name="UserCell.Base"
                 tier="atom"
                 leaf="Prop `isSkeleton`"
-                reason="Whoever owns the row shape owns its resting state, so the cell draws its own shimmer instead of the caller assembling one from separate skeleton primitives."
+                reason="Whoever owns the row shape owns its resting state, so the cell draws its own shimmer instead of the caller assembling one from separate skeleton atoms."
                 note="The avatar circle is delegated to Avatar.Base's own isSkeleton, so it mirrors size instead of locking to one width — the sm row below has a visibly smaller circle than the md row. The name and (when handle is set) handle bars mirror the live row's two-line shape the same way for both sizes."
                 annotate={ANNOTATE}
                 code={`<UserCell.Base username="placeholder" handle="@placeholder" size="sm" isSkeleton />

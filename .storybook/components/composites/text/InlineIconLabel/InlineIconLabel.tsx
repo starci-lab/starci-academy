@@ -5,7 +5,7 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — InlineIconLabel: a leading icon + an inline text
- * label as ONE primitive. An "icon + text" row (a count, an eyebrow, a tab label,
+ * label as ONE composite. An "icon + text" row (a count, an eyebrow, a tab label,
  * a toned caption) is a semantic UNIT — so it is a single component that OWNS the
  * icon size (§5 icon-ownership: it sits with the text scale) instead of every
  * call-site hand-rolling `flex items-center gap-1` + a bare icon + a Typography.
@@ -54,9 +54,9 @@ const TONE_CLASS: Record<InlineIconLabelTone, string> = {
     accent: "text-accent-soft-foreground",
 }
 
-/** Props for the {@link InlineIconLabel} primitive. */
+/** Props for the {@link InlineIconLabel} composite. */
 export interface InlineIconLabelProps {
-    /** Leading icon (a Phosphor `*Icon`, passed BARE — the primitive owns its size). */
+    /** Leading icon (a Phosphor `*Icon`, passed BARE — the composite owns its size). */
     icon: ReactNode
     /** The inline label text. */
     children: ReactNode
@@ -78,7 +78,7 @@ export interface InlineIconLabelProps {
 
 /**
  * InlineIconLabel renders a leading icon beside an inline text label as one unit.
- * The primitive OWNS the icon size (per the text scale) and the tone colour; the
+ * The composite OWNS the icon size (per the text scale) and the tone colour; the
  * caller passes the icon bare and the label as children.
  *
  * @param props - {@link InlineIconLabelProps}
@@ -111,7 +111,7 @@ export const InlineIconLabel = ({
 
     return (
         <span className={cn("inline-flex items-center", cfg.gap, className)} data-anat-part={anatPart}>
-            {/* icon-ownership: the primitive forces the svg box; tone via currentColor on this span */}
+            {/* icon-ownership: the composite forces the svg box; tone via currentColor on this span */}
             <span className={cn("shrink-0", ICON_BOX, toneClass)}>{icon}</span>
             <HeroTypography
                 type={cfg.text}

@@ -35,8 +35,8 @@ import { Stack } from "@sb-components/frames/Stack/Stack"
  *
  * Screen IMPORT BOUNDARY (tightened 2026-07-27 — the old note said "no importing the
  * layout tier" but this very file already imports `Container`/`Stack`, so the rule
- * contradicted itself):
- *   ALLOWED: use the layout tier's FRAME (`Container`, `Stack`, `Grid`) to arrange —
+ * contradicted itself; the layout tier has since split into `frame` and `composite`, §0):
+ *   ALLOWED: use the FRAME tier (`Container`, `Stack`, `Grid`) to arrange —
  *      that's exactly where §10c's scale gets enforced by TYPE (`gap: SpaceScale`).
  *   FORBIDDEN: hand-rolling a `div` + layout class. No `mx-auto max-w-*`, no `flex gap-*`.
  *   FORBIDDEN: importing an ATOM. Text/buttons/chips are the block's job — a screen
@@ -87,7 +87,7 @@ export interface CourseContentsLayoutProps {
      *
      * 2026-07-27 (teacher: "the top tier needs isSkeleton too, for consistency"):
      * before this the screen used `state="loading"` — A SEPARATE VOCABULARY just for
-     * this tier, while atom · layout · design · block all already say `isSkeleton`.
+     * this tier, while atom · composite · design · block all already say `isSkeleton`.
      * Same concept, different name at the top tier, and the reader has to translate
      * it every time they cross the boundary.
      */
@@ -132,7 +132,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
     // Now every block takes `isSkeleton` and draws its OWN resting shape (§12c), so
     // there's only ONE tree left — it can no longer drift.
     return (
-        // The FRAME goes through the layout tier, the screen does NOT hand-roll a `div` (§13):
+        // The FRAME goes through the frame tier, the screen does NOT hand-roll a `div` (§13):
         //   • `mx-auto max-w-3xl p-6` → `Container.Base size="md" padding={6}` — `md` reads
         //     from the token `--container-app-md`, the same 768px but from the RIGHT SOURCE;
         //     `max-w-3xl` is a different scale, and if the token changes it drifts silently
@@ -155,9 +155,9 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
                 {/* 2026-07-26: dropped the old note "blocks have no `anatPart` yet so they need
             a div wrapper" — all six blocks now take `anatPart` directly, no wrapper left. */}
                 {/* §11a — the badge stops at the HIGHEST node `CourseBrief` (BLOCK). The
-            `Page.Header` frame lives INSIDE that block → drill down in CourseBrief's own
+            `Page.Header` composite lives INSIDE that block → drill down in CourseBrief's own
             story, NOT here. Teacher's call 2026-07-25: this cluster carries business meaning
-            (read/unread) so it's a BLOCK, the screen no longer calls the layout frame directly. */}
+            (read/unread) so it's a BLOCK, the screen no longer calls the composite directly. */}
                 <CourseBrief.Base
                     anatPart="CourseBrief"
                     breadcrumbItems={[

@@ -5,7 +5,7 @@ import { Form } from "@sb-components/composites/form/Form/Form"
 import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
- * KHUNG (layout tier §13) — `Form.Base`: vỏ `<form>` THẬT (submit bằng ENTER) +
+ * KHUNG (composite tier §13) — `Form.Base`: vỏ `<form>` THẬT (submit bằng ENTER) +
  * cột nội dung theo nhịp `gap` (§10c) + slot `actions` ở đáy.
  *
  * ⚠️ PHẠM VI STATE (§12f): story ở đây chỉ render state do CHÍNH khung đẻ ra —
@@ -55,7 +55,7 @@ export const Default: Story = {
                 tier="composite"
                 leaf="Default"
                 parts={PARTS}
-                reason="The form frame of the layout tier: it builds a real `<form>` (ENTER inside a field submits, a11y), stacks content into a column on the `gap` rhythm (§10c), and keeps one `actions` slot at the bottom. The frame knows nothing about the fields inside — no validation, no values, no errors (that is the block tier); labels and errors come from the form atoms themselves (§12e)."
+                reason="The form frame of the composite tier: it builds a real `<form>` (ENTER inside a field submits, a11y), stacks content into a column on the `gap` rhythm (§10c), and keeps one `actions` slot at the bottom. The frame knows nothing about the fields inside — no validation, no values, no errors (that is the block tier); labels and errors come from the form atoms themselves (§12e)."
                 code={`<Form.Base
   gap={6}
   onSubmit={() => save()}

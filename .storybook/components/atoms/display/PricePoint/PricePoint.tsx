@@ -5,14 +5,14 @@ import type { TypographySize } from "@sb-components/atoms/text/Typography/Typogr
 
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — PricePoint: the tier / subscription price display
- * as ONE primitive — a prominent amount + optional struck original + optional
+ * as ONE atom — a prominent amount + optional struck original + optional
  * billing period, on one baseline. A "price" is a semantic UNIT, so it is a single
  * component (one anatomy node), NOT three raw `<Typography>` hand-rolled at the
  * call-site.
  *
  * NOTE — distinct from `commerce/PriceTag`: PriceTag is a PRODUCT-discount price
  * (VND/USD numbers + a −X% chip + a breakdown popover). PricePoint is a TIER price
- * (a pre-formatted amount + a billing `/period`) — different concept, own primitive.
+ * (a pre-formatted amount + a billing `/period`) — different concept, own atom.
  * NO `@/components` imports.
  */
 
@@ -75,7 +75,7 @@ export type PricePointProps = PricePointOwnProps &
 
 /**
  * PricePoint renders a price as one baseline-aligned unit: the amount (prominent),
- * an optional struck original, and an optional muted period. The primitive OWNS the
+ * an optional struck original, and an optional muted period. The atom OWNS the
  * type scale + spacing; the caller passes pre-formatted strings.
  *
  * @param props - {@link PricePointProps}

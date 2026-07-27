@@ -7,7 +7,7 @@ import { TrayIcon, WarningIcon, type Icon as PhosphorIcon } from "@phosphor-icon
 import { Feedback, type FeedbackIcon } from "@sb-components/composites/feedback/Feedback/Feedback"
 // The ATOM `Button.Base`, NOT the `_legacy` version (§0 + teacher, 2026-07-26):
 // `AsyncContent` sits in the closure of the `CourseContents` screen, and that screen
-// is FORBIDDEN from touching `_legacy` — an import at the layout tier would drag the
+// is FORBIDDEN from touching `_legacy` — an import at the composite tier would drag the
 // whole dead branch back into the screen (caught by the 2026-07-27 deep-scan).
 import { Button } from "@sb-components/atoms/buttons/Button/Button"
 import { AnatomyOverlay } from "@sb-utils/AnatomyOverlay/AnatomyOverlay"

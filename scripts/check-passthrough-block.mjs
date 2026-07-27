@@ -8,15 +8,24 @@
  * a block, so depth was capped by the type system rather than by discipline.
  *
  * Without a replacement, nothing prevents `A` wrapping `B` wrapping `C`, each layer adding a
- * rename and nothing else. That shape already appeared twice in one session: `ContinueLearning`
- * existed only to assemble two sentences before handing them to `ContinueCard`, and
- * `AsyncContent.Empty` existed only to set a default icon before handing off to `Feedback.Empty`.
- * Both read as architecture and were bookkeeping.
+ * rename and nothing else. `AsyncContentEmpty` is the shape to watch: it sets a default icon
+ * and hands everything else to `FeedbackEmpty` — architecture on the surface, bookkeeping
+ * underneath.
  *
  * WHAT COUNTS AS EARNING IT. A block that renders exactly ONE child component must add
- * domain knowledge of its own: a business condition, a decision, or a rule. Formatting a
- * string is not enough on its own, because a formatter is presentation work that belongs to
- * whoever draws the thing.
+ * domain knowledge of its own: a business condition, a decision, a rule — OR the wording
+ * itself, turning typed domain data into the sentence the user reads.
+ *
+ * ⚠️ CORRECTED 2026-07-28. The first cut said the opposite — "formatting a string is not
+ * enough, a formatter is presentation work" — and on that basis flagged `ContinueLearning`,
+ * which takes `lessonIndex`/`lessonsRead`/`challengesDone` and builds `Bài 4 · …` from them.
+ * That is precisely what canon §14d.1 REQUIRES of a block: "câu dẫn là phần trình bày ⇒
+ * BLOCK sở hữu. Caller chỉ đưa dữ liệu miền; block tự ghép câu." The gate was penalising the
+ * rule it was meant to protect. A gate that argues with the canon loses.
+ *
+ * So the test is not "does it format?" but "does it KNOW the domain?": a wrapper that passes
+ * strings straight through earns nothing; one that receives typed domain values and words
+ * them is the only place that translation is allowed to live.
  *
  * ⚠️ Heuristic, and deliberately loud rather than blocking: "adds domain knowledge" is a
  * judgement no regex settles. It exits 0 and reports, so a real passthrough gets argued about
@@ -53,18 +62,39 @@ for (const file of walk(path.join(ROOT, "components", "blocks"))) {
 
     const lines = code.split("\n").filter((l) => l.trim()).length
     const decides = DECIDES.test(code)
-    // Template strings are FORMATTING, which is presentation. On their own they do not make a
-    // layer worth existing, so a block whose only contribution is `${}` is still a passthrough.
-    const onlyFormats = /`[^`]*\$\{/.test(code) && !decides
+    /**
+     * Building a sentence out of the block's OWN typed props is domain knowledge, not
+     * formatting: it is the one place §14d.1 allows domain values to become words. Read as
+     * "a template string that interpolates something this component received".
+     */
+    const words = [...code.matchAll(/`[^`]*\$\{([^}]*)\}/g)].some((m) => /[a-z]/.test(m[1]))
 
-    if (!decides || onlyFormats) {
-        rows.push({ f: rel(file), child: kids[0], lines, onlyFormats })
+    if (!decides && !words) rows.push({ f: rel(file), child: kids[0], lines })
+}
+
+if (process.argv.includes("--control")) {
+    // A zero from a gate that was just LOOSENED is exactly the zero worth distrusting. Prove
+    // it still catches a real passthrough, and still lets a real block through.
+    const passthrough = ["export const Wrap = (props: P) => (", '    <Inner {...props} tone="danger" />', ")"]
+    const wording = ["export const Real = ({ n }: P) => (", "    <Inner title={`Bài ${n}`} />", ")"]
+    const flags = (lines) => {
+        const code = lines.join("\n")
+        const decides = DECIDES.test(code)
+        const words = [...code.matchAll(/`[^`]*\$\{([^}]*)\}/g)].some((m) => /[a-z]/.test(m[1]))
+        return !decides && !words
     }
+    const ok = flags(passthrough) && !flags(wording)
+    console.log(
+        ok
+            ? "✓ negative control: bắt được lớp bọc trần, và KHÔNG bắt block tự ghép câu"
+            : `✗ negative control HỎNG — bọc-trần:${flags(passthrough)} ghép-câu:${flags(wording)}`,
+    )
+    process.exit(ok ? 0 : 2)
 }
 
 console.log(`blocks that only forward to ONE child: ${rows.length}\n`)
 for (const r of rows) {
     console.log(`  ${r.f}`)
-    console.log(`     wraps <${r.child}>, ${r.lines} lines${r.onlyFormats ? ", contributes only string formatting" : ", contributes no decision"}`)
+    console.log(`     wraps <${r.child}>, ${r.lines} lines, contributes no decision and no wording`)
 }
 if (rows.length) console.log(`\nEither give it a decision of its own, or fold it into the child it wraps.`)

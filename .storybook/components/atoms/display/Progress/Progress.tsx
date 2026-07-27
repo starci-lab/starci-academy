@@ -168,6 +168,7 @@ const Meter = ({
 
 /**
  * `Progress.*` — progress-indicator atom namespace. `Bar`/`Circle` = tiến trình
- * (determinate/indeterminate), `Meter` = đo lường tĩnh (chỉ determinate).
+ * (determinate/indeterminate), `Gauge` = đo lường tĩnh (chỉ determinate).
+ * Tên `ProgressMeter` thuộc về BLOCK composite (khớp `src`), nên atom là `ProgressGauge`.
  */
-export { ProgressBar, ProgressCircle, Meter as ProgressMeter }
+export { ProgressBar, ProgressCircle, Meter as ProgressGauge }

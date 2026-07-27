@@ -1,5 +1,5 @@
 import React from "react"
-import { ProgressMeter as AtomProgressMeter } from "@sb-components/atoms/display/Progress/Progress"
+import { ProgressGauge } from "@sb-components/atoms/display/Progress/Progress"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import type { ReactNode } from "react"
 import { Card, cn } from "@heroui/react"
@@ -97,7 +97,7 @@ export const DeckCard = ({
                                 <Typography size="xs" isSkeleton className="w-1/3" anatPart={showAnatomy ? "Skeleton" : undefined} />
                                 <Typography size="xs" isSkeleton className="w-8" anatPart={showAnatomy ? "Skeleton" : undefined} />
                             </div>
-                            <AtomProgressMeter isSkeleton showAnatomy={showAnatomy} />
+                            <ProgressGauge isSkeleton showAnatomy={showAnatomy} />
                         </div>
                     ) : null}
                     {/* card count + CTA */}

@@ -69,11 +69,11 @@ export const Default: Story = {
                 tier="design"
                 leaf="Default"
                 annotate={ANNOTATE}
-                reason="An honest scarcity line: every number comes from the backend's price preview, so a phase with no seat cap has nothing truthful to claim and stays silent instead of inventing a countdown."
+                reason="Every number on this line comes from the backend price preview, so nothing here may be invented. A countdown or a seat count made up in the frontend is fake scarcity, which is why a phase that caps nothing stays silent instead of filling the space."
                 states={[
                     {
-                        name: "seats 14 · price rises",
-                        why: "Both clauses present — four items in the cluster. This is the baseline the other three are read against.",
+                        name: "seatsRemaining = 14, nextPhasePriceVnd set",
+                        why: "Both clauses render, so the cluster carries four items. This is the shape when the phase caps its seats and a later price already exists, so the line can state both facts at once.",
                         code: `<PhaseScarcityNote.Base
     currentPhase={PricingPhase.EarlyBird}
     seatsRemaining={14}
@@ -89,8 +89,8 @@ export const Default: Story = {
                         ),
                     },
                     {
-                        name: "seats 3 · other phase",
-                        why: "Same node set, only the number and the phase label change — which is exactly why this is a STATE and not a leaf of its own.",
+                        name: "seatsRemaining = 3, another phase",
+                        why: "The node tree is identical to the first state and only the number and the phase label change. A different phase is therefore a state of this one line rather than a leaf of its own.",
                         code: `<PhaseScarcityNote.Base
     currentPhase={PricingPhase.Pioneer}
     seatsRemaining={3}
@@ -107,7 +107,7 @@ export const Default: Story = {
                     },
                     {
                         name: "nextPhasePriceVnd = null",
-                        why: "`Separator` and `PriceRiseClause` DROP OUT — two nodes fewer than the first state. Nothing was toggled by the caller; the backend simply has no next-phase price to state.",
+                        why: "`Separator` and `PriceRiseClause` drop out, leaving two nodes fewer than the first state. The caller toggled nothing, the backend simply has no later price to name.",
                         code: `<PhaseScarcityNote.Base
     currentPhase={PricingPhase.Regular}
     seatsRemaining={5}
@@ -124,7 +124,7 @@ export const Default: Story = {
                     },
                     {
                         name: "seatsRemaining = null",
-                        why: "Renders NOTHING, and the blank is the contract: an uncapped phase has no honest \"when does the price rise\" milestone, so inventing one would be fake scarcity. Note the deps list is empty here too — that is the tree of THIS state, not a leftover from the others.",
+                        why: "The line renders nothing at all and the blank space is the contract. An uncapped phase has no honest moment at which the price rises, so there is no true sentence to write and silence is the only accurate answer.",
                         code: `<PhaseScarcityNote.Base
     currentPhase={PricingPhase.Regular}
     seatsRemaining={null}

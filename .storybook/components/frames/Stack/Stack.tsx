@@ -1,15 +1,12 @@
 import React from "react"
 import type { ReactNode } from "react"
-import { cn } from "@heroui/react"
 import { Divider } from "@sb-components/atoms/display/Divider/Divider"
 import {
-    ALIGN_CLASS,
-    GAP_CLASS,
-    JUSTIFY_CLASS,
     type LayoutAlign,
     type LayoutJustify,
     type SpaceScale,
 } from "@sb-components/frames/_spacing"
+import { Flex } from "@sb-components/frames/Flex/Flex"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -118,25 +115,18 @@ const StackV = ({
     showAnatomy = false,
     anatPart,
 }: StackVProps) => (
-    <div
-        data-anat-part={anatPart ?? (showAnatomy ? "Track" : undefined)}
-        className={cn(
-            "flex flex-col",
-            GAP_CLASS[gap],
-            ALIGN_CLASS[align],
-            justify != null && JUSTIFY_CLASS[justify],
-            className,
-        )}
+    <Flex.Base
+        direction="col"
+        gap={gap}
+        align={align}
+        justify={justify}
+        className={className}
+        anatPart={anatPart ?? (showAnatomy ? "Track" : undefined)}
     >
         {divider ? interleaveDividers(children, "vertical", showAnatomy) : children}
-    </div>
+    </Flex.Base>
 )
 
-/**
- * Horizontal track — a row of siblings, optionally wrapping.
- *
- * @param props - {@link StackHProps}
- */
 const StackH = ({
     gap,
     align = "center",
@@ -148,25 +138,19 @@ const StackH = ({
     showAnatomy = false,
     anatPart,
 }: StackHProps) => (
-    <div
-        data-anat-part={anatPart ?? (showAnatomy ? "Track" : undefined)}
-        className={cn(
-            "flex flex-row",
-            wrap && "flex-wrap",
-            GAP_CLASS[gap],
-            ALIGN_CLASS[align],
-            justify != null && JUSTIFY_CLASS[justify],
-            className,
-        )}
+    <Flex.Base
+        direction="row"
+        gap={gap}
+        align={align}
+        justify={justify}
+        wrap={wrap}
+        className={className}
+        anatPart={anatPart ?? (showAnatomy ? "Track" : undefined)}
     >
         {divider ? interleaveDividers(children, "horizontal", showAnatomy) : children}
-    </div>
+    </Flex.Base>
 )
 
-/**
- * `Stack.*` — the one-axis track frame namespace. `V` (vertical) · `H` (horizontal).
- * Namespace only — no bare component export (§13a).
- */
 export const Stack = {
     V: StackV,
     H: StackH,

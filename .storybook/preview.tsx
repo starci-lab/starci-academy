@@ -64,10 +64,11 @@ const preview: Preview = {
         },
         anatomy: {
             description: "Anatomy panel + on-render badges",
-            // OFF by default (teacher, 2026-07-27): the canvas should show the COMPONENT
-            // first. The panel is a reading tool for a design pass, not the subject — with
-            // it always on, half of every canvas is the tool talking about the drawing.
-            defaultValue: "off",
+            // ON by default (teacher, 2026-07-27, second call): once the panel carries the
+            // STATE TABS it stopped being a side note and became how a leaf is read, so having
+            // to flip it on for every story was friction with no upside. The toggle stays for
+            // the moments when only the pixels matter.
+            defaultValue: "on",
             toolbar: {
                 title: "Anatomy",
                 icon: "outline",

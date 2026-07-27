@@ -147,6 +147,15 @@ export interface BlockAnatomyProps {
     reason?: ReactNode
     /** Usage snippet for THIS leaf — shown in the Code tab with a Copy button. */
     code?: string
+    /**
+     * Class cho RIÊNG khung render (thường là `mx-auto max-w-xl`) — bề ngang của CHỦ THỂ.
+     *
+     * Trước 2026-07-27 story tự bọc cả `BlockAnatomy` trong một `div.max-w-xl`, nên panel thừa
+     * hưởng luôn 576px: ba cột chữ nhồi vào đó thành `Copy` bị cắt, `why` gãy sáu dòng, cây deps
+     * gãy năm dòng (thầy bắt qua ảnh). Bề ngang là thuộc tính của thứ ĐANG ĐƯỢC VẼ, không phải
+     * của cái panel nói về nó, nên nó vào đây và panel giữ nguyên bề ngang vùng chứa.
+     */
+    renderClassName?: string
 }
 
 /**
@@ -326,6 +335,7 @@ export const BlockAnatomy = ({
     reason,
     code,
     annotate,
+    renderClassName,
 }: BlockAnatomyProps) => {
     // MỘT ĐƯỜNG DUY NHẤT (thầy chốt 2026-07-26): cấu trúc luôn suy từ DOM. Không có
     // bản panel nào chạy song song — hai bản cho cùng một việc thì bản cũ sống mãi.
@@ -333,7 +343,7 @@ export const BlockAnatomy = ({
     // `parts` cũ KHÔNG bị vứt: rút lấy phần WHY làm chú giải, cấu trúc lấy từ DOM.
     return (
         <BlockAnatomyDerived
-            {...{ name, tier, states, children, leaf, note, reason, code }}
+            {...{ name, tier, states, children, leaf, note, reason, code, renderClassName }}
             annotate={annotate ?? flattenParts(parts ?? [])}
         />
     )
@@ -355,6 +365,7 @@ const BlockAnatomyDerived = ({
     reason,
     code,
     annotate,
+    renderClassName,
 }: Omit<BlockAnatomyProps, "parts"> & { annotate: Record<string, AnatomyAnnotation> }) => {
     const hostRef = useRef<HTMLDivElement>(null)
 
@@ -366,6 +377,14 @@ const BlockAnatomyDerived = ({
         states && states.length > 0
             ? states
             : [{ name: leaf ?? "Default", render: children, why: note, code }]
+
+    /**
+     * Leaf CHƯA di trú sang `states[]`. Nhãn của panel phải nói khác đi, vì tác giả có thể đã
+     * xếp NHIỀU state bằng tay trong `children`: dán "why this state" lên đó là nói dối, một
+     * câu chú thích cho hai ba state. Neo: `TrialConversionStrip.Default` xếp 2 hàng dữ liệu
+     * trong `children` và panel dán ngay "WHY THIS STATE" lên cả hai (thầy bắt 2026-07-27).
+     */
+    const isLegacyLeaf = !states || states.length === 0
 
     const [pickedState, setPickedState] = useState(0)
     // Kẹp chỉ số tại chỗ thay vì dùng effect: story đổi leaf làm mảng ngắn lại thì rơi về 0,
@@ -542,11 +561,15 @@ const BlockAnatomyDerived = ({
             {/* HÌNH của state đang chọn — CHỈ state này được mount, nên cây deps panel suy ra
                 thuộc đúng nó. Trước 2026-07-27 mọi state xếp chung trong `children` nên cây
                 trộn lẫn và không đúng với state nào cả. */}
-            <div>{active.render}</div>
+            <div className={renderClassName}>{active.render}</div>
 
+            {/* `@container` NGAY TRÊN panel (thầy chốt A, 2026-07-27): biến `@app-md:` bên dưới
+                đo BỀ NGANG CỦA PANEL. Thiếu dòng này thì nó đo `@container` gần nhất là CANVAS,
+                nên luật hai cột bung ra ngay cả khi panel chỉ rộng 576px — đúng cái đã làm `Copy`
+                bị cắt và `why` gãy sáu dòng. */}
             <div
                 data-sb-anatomy-panel=""
-                className="overflow-hidden rounded-xl border border-default bg-surface"
+                className="@container overflow-hidden rounded-xl border border-default bg-surface"
             >
                 <div className="flex flex-wrap items-baseline gap-2 border-b border-default px-4 py-3">
                     <span className="font-mono text-sm text-foreground">{name}</span>
@@ -593,13 +616,13 @@ const BlockAnatomyDerived = ({
                     <div className="flex flex-col gap-3">
                         {active.why ? (
                             <div>
-                                <SideHeading>why this state</SideHeading>
+                                <SideHeading>{isLegacyLeaf ? "note (whole leaf)" : "why this state"}</SideHeading>
                                 <Prose className="text-xs text-foreground">{active.why}</Prose>
                             </div>
                         ) : null}
                         {derived.length > 0 ? (
                             <div>
-                                <SideHeading>deps of this state</SideHeading>
+                                <SideHeading>{isLegacyLeaf ? "deps" : "deps of this state"}</SideHeading>
                                 {derived.map((node) => <Branch key={node.name} node={node} depth={1} />)}
                             </div>
                         ) : null}

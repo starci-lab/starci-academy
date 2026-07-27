@@ -30,7 +30,11 @@ export default meta
 type Story = StoryObj<typeof TrialConversionStrip>
 
 /** Frame each leaf's anatomy panel with breathing room, capped to the strip's real width. */
-const frame = (node: React.ReactNode) => <div className="mx-auto max-w-xl p-8">{node}</div>
+/**
+ * Đệm canvas của story. Bề ngang của CHỦ THỂ đi qua `renderClassName` của `BlockAnatomy`, không
+ * bọc ở đây: bọc ở đây thì panel thừa hưởng `max-w-xl` và ba cột chữ bị nhồi vào 576px.
+ */
+const frame = (node: React.ReactNode) => <div className="p-8">{node}</div>
 
 /** Sample landed price preview — early-bird phase, 22% off, 12 seats left before it rises. */
 const SAMPLE_PRICE: TrialConversionStripPrice = {
@@ -156,35 +160,32 @@ export const Skeleton: Story = {
                 name="TrialConversionStrip"
                 tier="block"
                 leaf="Prop `isSkeleton`"
+                renderClassName="mx-auto max-w-xl"
                 parts={LOADING_PARTS}
-                reason="The conversion strip bundles 3 honest levers right on the surface the learner is standing on: loss (N free lessons left), scarcity (PhaseScarcityNote — real seats + the price it rises to), and the unlock CTA. The header (IconTile + title/description) renders IMMEDIATELY since it doesn't depend on price; only the price block mirrors via Skeleton.Typography (h4 + body-xs, matching the exact box PriceTag/PhaseScarcityNote will occupy) so layout never jumps once the price lands. The button always renders — the CTA doesn't wait for price."
-                code={`<TrialConversionStrip
+                reason="Only the PRICE region rests. The header and the CTA do not depend on the price, so they render at once and the two shimmer bars stand exactly where PriceTag and PhaseScarcityNote will land, which is what stops the layout jumping when the price arrives."
+                states={[
+                    {
+                        name: "isSkeleton, price not yet arrived",
+                        why: "`PriceTag` and `PhaseScarcityNote` are replaced by two shimmer bars sized to the box they will occupy. The block draws its own resting shape rather than waiting on a shared skeleton component, so whoever owns the shape owns how it rests.",
+                        code: `<TrialConversionStrip
     freeLessonsRemaining={3}
     isSkeleton
     onEnroll={handleEnroll}
-/>`}
-            >
-                <TrialConversionStrip
-                    freeLessonsRemaining={3}
-                    isSkeleton
-                    onEnroll={() => {}}
-                    showAnatomy
-                />
-            </BlockAnatomy>,
+/>`,
+                        render: (
+                            <TrialConversionStrip
+                                freeLessonsRemaining={3}
+                                isSkeleton
+                                onEnroll={() => {}}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />,
         ),
 }
 
-/**
- * The loaded leaf. The two rows below differ ONLY in `freeLessonsRemaining`, which is
- * BACKEND DATA — so they are two STATES of one leaf, not two leaves (teacher, 2026-07-27:
- * "coi như state đi, render nhiều state trong 1 leaf").
- *
- * This replaces `PriceLoadedWithFreeLeft` + `PriceLoadedNoFreeLeft`. The old split had
- * already written its own verdict in its note — "SAME composition as the leaf above" — and
- * a leaf whose own note says its composition is unchanged is a state wearing a leaf's coat.
- * Measured before merging: `hasFreeLeft` only swaps the `subtitle` STRING; the node tree is
- * identical.
- */
 export const Default: Story = {
     render: () =>
         frame(
@@ -192,27 +193,45 @@ export const Default: Story = {
                 name="TrialConversionStrip"
                 tier="block"
                 leaf="Default"
+                renderClassName="mx-auto max-w-xl"
                 parts={LOADED_PARTS}
-                note="Price has landed, so PriceTag + PhaseScarcityNote stand where the two shimmer bars were. The first row still has free lessons left and leans on loss-aversion; the second has none left and switches to the closing line. Same nodes, different sentence."
-                code={`<TrialConversionStrip
+                reason="The strip carries three honest levers on the surface the learner is already standing on, namely what they lose by stopping, how scarce the current price is, and the single button that ends the decision. Every number arrives as a prop from the caller, so this block never fabricates a price, a seat count or a deadline."
+                states={[
+                    {
+                        name: "freeLessonsRemaining = 3",
+                        why: "The description names how many free lessons are still unread. Loss aversion works harder than a discount here, because the learner already owns something they are about to leave behind.",
+                        code: `<TrialConversionStrip
     freeLessonsRemaining={3}
     price={price}
     onEnroll={handleEnroll}
-/>`}
-            >
-                <div className="flex flex-col gap-6">
-                    <TrialConversionStrip
-                        freeLessonsRemaining={3}
-                        price={SAMPLE_PRICE}
-                        onEnroll={() => {}}
-                        showAnatomy
-                    />
-                    <TrialConversionStrip
-                        freeLessonsRemaining={0}
-                        price={SAMPLE_PRICE}
-                        onEnroll={() => {}}
-                    />
-                </div>
-            </BlockAnatomy>,
+/>`,
+                        render: (
+                            <TrialConversionStrip
+                                freeLessonsRemaining={3}
+                                price={SAMPLE_PRICE}
+                                onEnroll={() => {}}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                    {
+                        name: "freeLessonsRemaining = 0",
+                        why: "Only the `subtitle` string changes and the node tree stays identical to the first state. With nothing free left the loss argument is spent, so the sentence switches to the closing line that asks for the purchase.",
+                        code: `<TrialConversionStrip
+    freeLessonsRemaining={0}
+    price={price}
+    onEnroll={handleEnroll}
+/>`,
+                        render: (
+                            <TrialConversionStrip
+                                freeLessonsRemaining={0}
+                                price={SAMPLE_PRICE}
+                                onEnroll={() => {}}
+                                showAnatomy
+                            />
+                        ),
+                    },
+                ]}
+            />,
         ),
 }

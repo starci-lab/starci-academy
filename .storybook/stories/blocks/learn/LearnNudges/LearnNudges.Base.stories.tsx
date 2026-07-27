@@ -18,7 +18,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * tree is identical — the rule for this prop is an exception that overrides §14d.2.
  */
 const meta: Meta<typeof LearnNudges.Base> = {
-    title: "Blocks/Learn/LearnNudges.Base",
+    title: "Blocks/Learn/LearnNudges/LearnNudges.Base",
     component: LearnNudges.Base,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },
@@ -84,7 +84,7 @@ export const Skeleton: Story = {
                 parts={[]}
                 annotate={ANNOTATE}
                 note="`pending`/empty while waiting on `dueSwr`/`leaderboardSwr` — holds the space so nothing flashes (source notes 2026-07-12)."
-                code={`<LearnNudges.Base isSkeleton items={[]} />`}
+                code={"<LearnNudges.Base isSkeleton items={[]} />"}
             >
                 <LearnNudges.Base
                     anatPart="SurfaceCard.List"

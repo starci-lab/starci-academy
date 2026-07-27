@@ -78,7 +78,19 @@ export const STATUS_TONE: Record<AvatarStatus, string> = {
  * `glyphWeight` theo §5.0a: `size-4` (< `size-5`) phải `bold`, từ `size-5` trở lên
  * để `regular` — `undefined` nghĩa là KHÔNG truyền prop `weight` (dùng mặc định).
  */
-export const SIZE_MAP: Record<AvatarSize, { box: string; dot: string; glyph: string; glyphWeight?: IconWeight }> = {
+/** Class set one avatar size resolves to. Named so a caller can type a row of the map. */
+export interface AvatarSizeStyle {
+    /** Box size of the avatar itself. */
+    box: string
+    /** Size of the status dot. */
+    dot: string
+    /** Size of the fallback glyph. */
+    glyph: string
+    /** Stroke weight for the glyph; `undefined` means do not pass `weight` at all (5.0a). */
+    glyphWeight?: IconWeight
+}
+
+export const SIZE_MAP: Record<AvatarSize, AvatarSizeStyle> = {
     sm: { box: "size-8", dot: "size-2", glyph: "size-4", glyphWeight: "bold" },
     md: { box: "size-10", dot: "size-2.5", glyph: "size-5" },
     lg: { box: "size-12", dot: "size-3", glyph: "size-6" },

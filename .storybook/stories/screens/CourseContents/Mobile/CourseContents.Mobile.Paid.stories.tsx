@@ -4,7 +4,8 @@ import { deviceLeaf } from "@sb-components/screens/CourseContents/_shared"
 
 /**
  * SCREEN `/learn/content` at MOBILE (375px, below `@app-sm`) — PAID viewer:
- * `Feedback.Callout` + `TrialConversionStrip` drop OUT of the tree.
+ * only `TrialConversionStrip` drops out. `CourseTeamGate` STAYS — a paid viewer who is
+ * not in the GitHub team yet still needs it.
  */
 const W = 375
 
@@ -19,5 +20,5 @@ export default meta
 type Story = StoryObj<typeof CourseContents>
 
 export const Default: Story = {
-    render: () => deviceLeaf({ width: W, viewer: "paid", leaf: "Default", reason: "Mobile 375px · purchased — the tree drops the gate + TrialConversionStrip; 4 blocks stack into one column." }),
+    render: () => deviceLeaf({ width: W, viewer: "paid", leaf: "Default", reason: "Mobile 375px · purchased — only TrialConversionStrip drops out; the remaining 5 blocks stack into one column." }),
 }

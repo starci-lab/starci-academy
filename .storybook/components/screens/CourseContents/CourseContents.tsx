@@ -22,23 +22,27 @@ import { Stack } from "@sb-components/layouts/layout/Stack/Stack"
  * every layout/overlay story — this port composes the ALREADY-PORTED blocks with
  * demo data instead of mounting the store-coupled original.
  *
- * ONE leaf ("Content home") — the page does NOT switch view. `viewer` toggles the
- * self-hiding strips (trial → conversion + gh-gate) which are STATE, not leaves.
  * §14a — a screen is a LIST OF FEATURES. Six blocks, nothing else:
- * `CourseBrief` (what this course is) · `Feedback.Callout` (GitHub team gate) ·
+ * `CourseBrief` (what this course is) · `CourseTeamGate` (GitHub team gate) ·
  * `TrialConversionStrip` (trial→purchase conversion) · `ContinueLearning` (resume where
  * you left off) · `LearnNudges` (what to do today) · `KeepGoingPath` (keep going in the
  * chapter).
- * ⭐ Screen IMPORT BOUNDARY (tightened 2026-07-27 — the old note said "no importing the
+ *
+ * The list above names BLOCKS. It used to say `Feedback.Callout` for the gate — that is
+ * the FRAME the gate uses internally, not the block the screen calls. Naming the frame
+ * here is the same mistake that keeps the node out of the anatomy tree (the DOM emits
+ * `CourseTeamGate`), so the two must be kept in the same words.
+ *
+ * Screen IMPORT BOUNDARY (tightened 2026-07-27 — the old note said "no importing the
  * layout tier" but this very file already imports `Container`/`Stack`, so the rule
  * contradicted itself):
- *   ✅ ALLOWED to use the layout tier's FRAME (`Container`, `Stack`, `Grid`) to arrange —
+ *   ALLOWED: use the layout tier's FRAME (`Container`, `Stack`, `Grid`) to arrange —
  *      that's exactly where §10c's scale gets enforced by TYPE (`gap: SpaceScale`).
- *   ⛔ NOT allowed to hand-roll a `div` + layout class. No `mx-auto max-w-*`, no `flex gap-*`.
- *   ⛔ NOT allowed to import an ATOM. Text/buttons/chips are the block's job — a screen
+ *   FORBIDDEN: hand-rolling a `div` + layout class. No `mx-auto max-w-*`, no `flex gap-*`.
+ *   FORBIDDEN: importing an ATOM. Text/buttons/chips are the block's job — a screen
  *      touching an atom means it's presenting itself, encroaching on the tier below.
- *   ⛔ NOT allowed to pass JSX down to a block. Only TYPED DATA (§14d.1).
- *   ⛔ NOT allowed to import the DESIGN tier. Design is UI/UX ONLY (teacher's call
+ *   FORBIDDEN: passing JSX down to a block. Only TYPED DATA (§14d.1).
+ *   FORBIDDEN: importing the DESIGN tier. Design is UI/UX ONLY (teacher's call
  *      2026-07-27) — it must not know what a "lesson"/"challenge" is. A screen touching
  *      design means the screen is writing domain copy itself. Anchor: `ContinueCard`
  *      (design) used to sit directly here with the screen assembling `"Read 8/23
@@ -81,7 +85,7 @@ export interface CourseContentsLayoutProps {
      * block, and each block draws its OWN resting shape (§12c) — the screen builds
      * no shimmer tree of its own.
      *
-     * ⭐ 2026-07-27 (teacher: "the top tier needs isSkeleton too, for consistency"):
+     * 2026-07-27 (teacher: "the top tier needs isSkeleton too, for consistency"):
      * before this the screen used `state="loading"` — A SEPARATE VOCABULARY just for
      * this tier, while atom · layout · design · block all already say `isSkeleton`.
      * Same concept, different name at the top tier, and the reader has to translate
@@ -92,10 +96,19 @@ export interface CourseContentsLayoutProps {
     isEmpty?: boolean
 }
 
-/** Empty state — course has no lessons yet (data-anat-part "AsyncContent.Empty"). */
+/**
+ * Empty state — the course has no contents yet.
+ *
+ * The frame and the content each carry THEIR OWN name. Until 2026-07-27 the wrapping
+ * `Container` wore `anatPart="AsyncContent.Empty"` while the real frame emitted nothing,
+ * so the single node in the Empty tree was the CONTAINER wearing the name (and the story
+ * link) of the thing inside it, and `Container` — a dep like any other frame — vanished
+ * from this state even though the content state declares it.
+ */
 const CourseContentsEmpty = () => (
-    <Container.Base anatPart="AsyncContent.Empty" size="md" padding={6}>
+    <Container.Base anatPart="Container" size="md" padding={6}>
         <AsyncContent.Empty
+            anatPart="AsyncContent.Empty"
             icon={StackIcon}
             title="Khoá này chưa có bài học nào"
             description="Nội dung đang được biên soạn — quay lại sau nhé."
@@ -112,7 +125,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
     if (isEmpty) {
         return <CourseContentsEmpty />
     }
-    // ⭐ 2026-07-27: the resting state is NO LONGER a separate tree. Before this there
+    // 2026-07-27: the resting state is NO LONGER a separate tree. Before this there
     // was a whole `CourseContentsLoading` hand-building a set of gray bars with HeroUI's
     // `Skeleton` — meaning a SECOND TREE had to be kept in sync with the real tree by
     // hand, and it HAD DRIFTED: the mirror drew 2 blocks while the real tree has 5.
@@ -127,7 +140,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
         //   • `gap-10` → `gap={8}`. `10` is NOT on the §10c scale (0·1·2·3·6·8) — the frame's
         //     `SpaceScale` type means an off-scale value is now a TYPE ERROR at the call site,
         //     it can no longer slip through. This is exactly where the §10 rule gets enforced.
-        // ⚠️ 2026-07-27 — `gap` has been REMOVED from this call: `Container.Base` only applies
+        // WARNING, 2026-07-27 — `gap` has been REMOVED from this call: `Container.Base` only applies
         // `gap` when using the `header`/`footer` slots; passing `children` directly means that
         // prop is DROPPED SILENTLY. Measured consequence: the seam between `CourseBrief` and
         // the block below it was EXACTLY 0 — the page read as if the title were stuck to the
@@ -160,7 +173,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
                 />
 
                 <Stack.V gap={6} anatPart="Stack.V">
-                    {/* 🔴 Gate is for people who ALREADY BOUGHT (backend scopes the team by
+                    {/* Gate is for people who ALREADY BOUGHT (backend scopes the team by
                 is_enrolled). The old version gated it backwards, on `viewer === "trial"`. The
                 block hides itself, so the screen just hands over the facts. */}
                     <CourseTeamGate.Base
@@ -177,7 +190,7 @@ export const CourseContents = ({ viewer = "trial", isSkeleton = false, isEmpty =
                             freeLessonsRemaining={9}
                             price={SAMPLE_PRICE}
                             onEnroll={() => {}}
-                            isPriceLoading={isSkeleton}
+                            isSkeleton={isSkeleton}
                         />
                     ) : null}
 

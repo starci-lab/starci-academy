@@ -1,6 +1,4 @@
 "use client"
-/* eslint-disable starci-fe/no-fractional-spacing -- DEV/SPEC: rail/pill của cây dùng
-   nấc phụ (ml-[3px] · pb-2.5) có chủ ý; đây là đồ nghề, không phải app UI trên §10. */
 
 import { useEffect, useRef, useState } from "react"
 import type { ReactNode } from "react"
@@ -174,21 +172,37 @@ const PILL = "rounded-full px-2 text-[11px] font-medium leading-5"
  * trong `<p>`/`<span>` (dòng `role` trong cây), mà `<p>` lồng `<p>` thì trình duyệt
  * tự cắt thẻ và cây DOM vỡ ngay.
  */
+/**
+ * What every markdown override receives. ONE named shape for all of them: eight slots with the
+ * identical body would otherwise carry eight copies of the same inline type, and eight copies
+ * are eight chances to drift.
+ */
+interface ProseSlotProps {
+    /** Rendered children of the markdown node. */
+    children?: ReactNode
+}
+
+/** The `a` slot additionally receives the href. */
+interface ProseLinkProps extends ProseSlotProps {
+    /** Link target as written in the markdown source. */
+    href?: string
+}
+
 const PROSE_MARKS = {
-    code: ({ children }: { children?: ReactNode }) => (
-        <code className="rounded bg-default px-1 py-0.5 font-mono text-[0.9em] text-foreground">{children}</code>
+    code: ({ children }: ProseSlotProps) => (
+        <code className="rounded bg-default px-1 font-mono text-[0.9em] text-foreground">{children}</code>
     ),
-    strong: ({ children }: { children?: ReactNode }) => (
+    strong: ({ children }: ProseSlotProps) => (
         <strong className="font-semibold text-foreground">{children}</strong>
     ),
-    em: ({ children }: { children?: ReactNode }) => <em className="italic">{children}</em>,
-    a: ({ href, children }: { href?: string; children?: ReactNode }) => (
+    em: ({ children }: ProseSlotProps) => <em className="italic">{children}</em>,
+    a: ({ href, children }: ProseLinkProps) => (
         <a href={href} target="_top" className="text-accent underline-offset-2 hover:underline">
             {children}
         </a>
     ),
-    ul: ({ children }: { children?: ReactNode }) => <ul className="list-disc pl-4">{children}</ul>,
-    ol: ({ children }: { children?: ReactNode }) => <ol className="list-decimal pl-4">{children}</ol>,
+    ul: ({ children }: ProseSlotProps) => <ul className="list-disc pl-4">{children}</ul>,
+    ol: ({ children }: ProseSlotProps) => <ol className="list-decimal pl-4">{children}</ol>,
 }
 
 /**
@@ -198,7 +212,7 @@ const PROSE_MARKS = {
  */
 const PROSE_COMPONENTS = {
     ...PROSE_MARKS,
-    p: ({ children }: { children?: ReactNode }) => <span className="block">{children}</span>,
+    p: ({ children }: ProseSlotProps) => <span className="block">{children}</span>,
 }
 
 /**
@@ -207,7 +221,7 @@ const PROSE_COMPONENTS = {
  */
 const PROSE_COMPONENTS_INLINE = {
     ...PROSE_MARKS,
-    p: ({ children }: { children?: ReactNode }) => <>{children}</>,
+    p: ({ children }: ProseSlotProps) => <>{children}</>,
 }
 
 /**
@@ -216,7 +230,17 @@ const PROSE_COMPONENTS_INLINE = {
  * Chỉ string mới đi qua markdown; `reason`/`note` khai kiểu `ReactNode` nên story
  * nào đưa JSX vẫn render y nguyên — không ép chuỗi hoá thứ vốn đã là node.
  */
-const Prose = ({ children, className, inline = false }: { children?: ReactNode; className?: string; inline?: boolean }) => {
+/** Props for {@link Prose}. */
+interface ProseProps {
+    /** Only a `string` goes through markdown; a node is rendered as-is. */
+    children?: ReactNode
+    /** Placement class only. */
+    className?: string
+    /** `true` → `p` renders as a fragment so the text stays on the caller's line. */
+    inline?: boolean
+}
+
+const Prose = ({ children, className, inline = false }: ProseProps) => {
     if (typeof children !== "string") {
         return <span className={className}>{children}</span>
     }
@@ -382,10 +406,18 @@ const BlockAnatomyDerived = ({
      * Thanh dẫn dọc mang MÀU CỦA CHA: liếc màu là biết nhánh này đẻ từ tầng nào,
      * khỏi phải dò ngược lên.
      */
-    const Branch = ({ node, depth }: { node: AnatomyNode; depth: number }) => (
+    /** Props for one {@link Branch} of the derived tree. */
+    interface BranchProps {
+        /** The node being drawn. */
+        node: AnatomyNode
+        /** Nesting depth — drives the rail colour and indent. */
+        depth: number
+    }
+
+    const Branch = ({ node, depth }: BranchProps) => (
         <div
             className={cn(
-                depth > 0 && "ml-[3px] border-l-2 pl-3",
+                depth > 0 && "border-l-2 pl-3",
                 depth > 0 && TIER_RAIL[node.tier],
             )}
         >
@@ -457,7 +489,7 @@ const BlockAnatomyDerived = ({
     }
 
     return (
-        <div ref={hostRef} className="flex flex-col gap-4">
+        <div ref={hostRef} className="flex flex-col gap-6">
             {/* Khung render THẬT của leaf. Bảng phủ bên dưới KHÔNG vẽ lại hình. */}
             <div>{children}</div>
 
@@ -487,7 +519,7 @@ const BlockAnatomyDerived = ({
                                     aria-selected={isActive}
                                     onClick={() => setPicked(tabId)}
                                     className={cn(
-                                        "-mb-px flex items-center gap-1.5 border-b-2 px-3 py-2.5 text-xs font-semibold",
+                                        "-mb-px flex items-center gap-2 border-b-2 px-3 py-2 text-xs font-semibold",
                                         isActive
                                             ? "border-accent text-foreground"
                                             : "border-transparent text-muted hover:text-foreground",
@@ -495,7 +527,7 @@ const BlockAnatomyDerived = ({
                                 >
                                     {TAB_LABEL[tabId]}
                                     {count === null ? null : (
-                                        <span className="rounded-full bg-default px-1.5 text-[11px] font-bold leading-4 text-muted">
+                                        <span className="rounded-full bg-default px-2 text-[11px] font-bold leading-4 text-muted">
                                             {count}
                                         </span>
                                     )}
@@ -528,7 +560,7 @@ const BlockAnatomyDerived = ({
 
                 {/* WHY của cả leaf — nằm NGOÀI tab để đổi tab không mất mạch đọc. */}
                 {reason || note ? (
-                    <div className="flex flex-col gap-1.5 border-t border-default px-4 py-3">
+                    <div className="flex flex-col gap-1 border-t border-default px-4 py-3">
                         {reason ? <Prose className="text-xs text-foreground">{reason}</Prose> : null}
                         {note ? <Prose className="text-xs text-muted">{note}</Prose> : null}
                     </div>

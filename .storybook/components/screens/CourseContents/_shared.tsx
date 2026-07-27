@@ -9,9 +9,21 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * so the parts + framing live in ONE place.
  */
 
-/** Content state — the 8-part dashboard (Feedback.Callout + TrialConversionStrip self-hide for paid). */
-export const CONTENT_PARTS: Array<AnatomyNode> = [
-    // ⭐ 2026-07-27 (mentor: "a screen has layout components too, and they update the
+/**
+ * EVERY node this screen can show, in ONE list — 10 entries: 3 frames, 6 blocks, and the
+ * empty-state frame.
+ *
+ * There is deliberately NO per-state variant of this list. The panel derives the tree from
+ * the DOM and uses this table only as a whitelist, so a node that is not rendered cannot
+ * reach the tree even when it is declared here. The previous `partsFor(isEmpty, viewer)`
+ * was therefore a THIRD place deciding presence — after the screen's own `? null` and each
+ * block's self-hide — and it is what produced a tree that disagreed with the render: it
+ * filtered `CourseTeamGate` out for paid viewers while the block's own condition
+ * (`!isEnrolled || isInTeam`) keeps it VISIBLE for a paid viewer who is not in the team.
+ * One list cannot drift from the render; a filtered copy always can.
+ */
+export const PARTS: Array<AnatomyNode> = [
+    // 2026-07-27 (mentor: "a screen has layout components too, and they update the
     // deps tree, then RECURSE into its children"): a FRAME is a DEP too. Before, the
     // screen tree only listed blocks, so reading the tree gave no idea what laid this
     // page out — `Container` (reading width + page padding) and `Stack.V` (rhythm
@@ -42,50 +54,35 @@ export const CONTENT_PARTS: Array<AnatomyNode> = [
         name: "CourseBrief",
         tier: "block",
         role: "course identity — breadcrumb + title + description + meta. The screen calls THIS BLOCK, never the Page.Header frame or the Breadcrumbs atom",
-        storyId: "blocks-learn-coursebrief-base--full",
+        storyId: "blocks-learn-coursebrief-coursebrief-base--full",
     },
-    // ⚠️ The node name must match EXACTLY the `data-anat-part` the component emits: the
-    // DOM emits `CourseTeamGate`, not `Feedback.Callout` (that's the FRAME the block
+    // WARNING: the node name must match EXACTLY the `data-anat-part` the component emits:
+    // the DOM emits `CourseTeamGate`, not `Feedback.Callout` (that's the FRAME the block
     // uses internally). Declaring the wrong name ⇒ the node never makes it into the
     // tree. The tier would be wrong too: `primitive` while `storyId` points to a BLOCK.
-    { name: "CourseTeamGate", tier: "block", role: "GitHub-team warning — self-hides once the viewer is in the team", state: "warning", storyId: "blocks-learn-courseteamgate-base--warning" },
-    { name: "TrialConversionStrip", tier: "block", role: "trial→enroll conversion strip (STATE trial; hidden once purchased)", storyId: "blocks-commerce-trialconversionstrip--price-loading" },
-    // ⭐ 2026-07-27 (mentor: "design is only the place for UI/UX"): this node USED TO BE
+    //
+    // The gate hides itself on ITS OWN data (`!isEnrolled || isInTeam`), which for a PAID
+    // viewer who is not yet in the team means it STAYS. Do not describe it as "hidden once
+    // purchased" — measured on the paid render, it is in the DOM.
+    { name: "CourseTeamGate", tier: "block", role: "GitHub-team warning — shows for an enrolled viewer who is not in the team yet", state: "warning", storyId: "blocks-learn-courseteamgate-courseteamgate-base--warning" },
+    // The link must point at the leaf this screen ACTUALLY renders. It used to point at
+    // `--price-loading`, so clicking a dep on a fully loaded screen landed on the shimmer
+    // leaf. A story-id gate can only prove an id EXISTS; that it points at the right leaf
+    // is a reader's job (`scripts/check-story-ids.mjs` deliberately says so).
+    { name: "TrialConversionStrip", tier: "block", role: "trial→enroll conversion strip; the screen drops it entirely once purchased", storyId: "blocks-commerce-trialconversionstrip-trialconversionstrip-base--default" },
+    // 2026-07-27 (mentor: "design is only the place for UI/UX"): this node USED TO BE
     // `ContinueCard` at tier `design` — the screen skipped straight over the block tier,
     // and looking at the tree you could see the mismatch right away: the other five
     // nodes were `block`, this one alone was `design`. Now the screen calls the
     // `ContinueLearning` block, and that block is the one that composes the copy before
     // handing it down to design.
-    { name: "ContinueLearning", tier: "block", role: "resume where you left off — the block writes the copy from NUMBERS (lessons read · challenges); the design only draws", storyId: "blocks-learn-continuelearning--default" },
-    { name: "LearnNudges", tier: "block", role: "what to do today — cards due · mock interview · rank. The screen passes `kind` (ENUM); the block picks the icon (§14b)", storyId: "blocks-learn-learnnudges-base--nudges" },
-    { name: "KeepGoingPath", tier: "block", role: "lessons of the current module — bordered SurfaceCard.List; each row: state icon · title · reading time · difficulty chip · lock icon", storyId: "blocks-learn-keepgoingpath-base--path" },
+    { name: "ContinueLearning", tier: "block", role: "resume where you left off — the block writes the copy from NUMBERS (lessons read · challenges); the design only draws", storyId: "blocks-learn-continuelearning-continuelearning-base--default" },
+    { name: "LearnNudges", tier: "block", role: "what to do today — cards due · mock interview · rank. The screen passes `kind` (ENUM); the block picks the icon (§14b)", storyId: "blocks-learn-learnnudges-learnnudges-base--nudges" },
+    { name: "KeepGoingPath", tier: "block", role: "lessons of the current module — bordered SurfaceCard.List; each row: state icon · title · reading time · difficulty chip · lock icon", storyId: "blocks-learn-keepgoingpath-keepgoingpath-base--path" },
+    // The empty state replaces the whole spine with this frame. It lives in the SAME list:
+    // on a content render it simply is not in the DOM, so it cannot reach the tree.
+    { name: "AsyncContent.Empty", tier: "primitive", role: "the course has no contents yet — icon + title + description", storyId: "layouts-async-asynccontent-asynccontent-empty--basic" },
 ]
-
-/** Empty state — one AsyncContent.Empty node. */
-export const EMPTY_PARTS: Array<AnatomyNode> = [
-    { name: "AsyncContent.Empty", tier: "primitive", role: "course has no lessons yet — icon + title + description", storyId: "layouts-async-asynccontent-asynccontent-empty--basic" },
-]
-
-/**
- * The parts tree per scenario. The RESTING state uses the SAME content tree (§11f:
- * change STATE, not STRUCTURE) — 2026-07-27 dropped the skeleton one-node array,
- * since it declared a completely different tree from the real one — exactly the bug
- * that removing it just fixed.
- */
-const partsFor = (isEmpty: boolean, viewer: "trial" | "paid"): Array<AnatomyNode> => {
-    if (isEmpty) {
-        return EMPTY_PARTS
-    }
-    // ⚠️ 2026-07-27: the old version filtered `CourseTeamGate` OUT ENTIRELY for paid —
-    // assuming "paid means no more warnings" was WRONG. That block's own self-hide
-    // condition is `!isEnrolled || isInTeam`; paid = ALREADY enrolled and NOT YET in the
-    // team ⇒ it STILL SHOWS. Measured: the paid render has `CourseTeamGate` in the DOM
-    // while the tree doesn't — meaning the tree was lying. Only `TrialConversionStrip`
-    // truly self-hides once purchased.
-    return viewer === "paid"
-        ? CONTENT_PARTS.filter((p) => p.name !== "TrialConversionStrip")
-        : CONTENT_PARTS
-}
 
 /** Args for {@link deviceLeaf}. */
 export interface DeviceLeafArgs {
@@ -140,7 +137,7 @@ export const deviceLeaf = ({ width, isSkeleton = false, isEmpty = false, viewer 
             // no `screen` member (fixed 2026-07-27 together with this).
             tier="screen"
             leaf={leaf}
-            parts={partsFor(isEmpty, viewer)}
+            parts={PARTS}
             reason={reason}
             code={leafCode({ width, isSkeleton, isEmpty, viewer })}
         >

@@ -14,7 +14,8 @@
         "flowbook": "vite --config .flowbook/vite.config.ts",
         "flowbook:build": "vite build --config .flowbook/vite.config.ts",
         "chromatic": "npx chromatic --exit-zero-on-changes",
-        "check:stories": "node scripts/check-story-coverage.mjs"
+        "check:stories": "node scripts/check-story-coverage.mjs",
+    "check:story-ids": "node scripts/check-story-ids.mjs"
     },
     "lint-staged": {
         "src/**/*.{ts,tsx}": "eslint"

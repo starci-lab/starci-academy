@@ -4,8 +4,10 @@ import { deviceLeaf } from "@sb-components/screens/CourseContents/_shared"
 
 /**
  * SCREEN `/learn/content` at DESKTOP (full width, ≥ `@app-lg`) — PAID viewer:
- * `Feedback.Callout` + `TrialConversionStrip` drop OUT of the tree, leaving the
- * 4-block spine (Header · ContinueCard · LearnNudges · KeepGoingPath).
+ * only `TrialConversionStrip` drops out, leaving a FIVE-block spine (CourseBrief ·
+ * CourseTeamGate · ContinueLearning · LearnNudges · KeepGoingPath). The gate stays: its
+ * own condition is `!isEnrolled || isInTeam`, and a paid viewer who is not in the team yet
+ * satisfies neither.
  */
 const meta: Meta<typeof CourseContents> = {
     title: "Screens/CourseContents/Desktop/Paid",
@@ -18,5 +20,5 @@ export default meta
 type Story = StoryObj<typeof CourseContents>
 
 export const Default: Story = {
-    render: () => deviceLeaf({ viewer: "paid", leaf: "Default", reason: "Purchased — the tree drops CourseTeamGate + TrialConversionStrip, leaving 4 blocks: CourseBrief · ContinueLearning · LearnNudges · KeepGoingPath." }),
+    render: () => deviceLeaf({ viewer: "paid", leaf: "Default", reason: "Purchased — only TrialConversionStrip drops out, leaving 5 blocks: CourseBrief · CourseTeamGate · ContinueLearning · LearnNudges · KeepGoingPath. The gate stays because the viewer is enrolled but not in the GitHub team yet." }),
 }

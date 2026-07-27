@@ -42,8 +42,14 @@ const CATALOG: Array<SearchAutocompleteItem> = [
     { id: "tag-kafka", label: "Kafka", description: "Topic" },
 ]
 
+/** Props for the `openPopover` interaction helper. */
+interface OpenPopoverProps {
+    /** root DOM element the story rendered into */
+    canvasElement: HTMLElement
+}
+
 /** Focus the field so its ComboBox popover opens on the canvas. */
-const openPopover = async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+const openPopover = async ({ canvasElement }: OpenPopoverProps) => {
     const canvas = within(canvasElement)
     await userEvent.click(canvas.getByRole("combobox"))
 }

@@ -76,8 +76,16 @@ export default meta
 
 type Story = StoryObj<typeof IconTile.Base>
 
+/** One row of the tone demo grid. */
+interface ToneRow {
+    /** The `IconTileTone` value this row demonstrates. */
+    tone: IconTileTone
+    /** One-line explanation of when this tone applies. */
+    hint: string
+}
+
 /** FULL `IconTileTone` union — the SAME icon throughout so tone is the only variable changing the visual. */
-const TONES: Array<{ tone: IconTileTone; hint: string }> = [
+const TONES: Array<ToneRow> = [
     { tone: "accent", hint: "the default identity colour" },
     { tone: "success", hint: "a completed or passed item" },
     { tone: "warning", hint: "needs attention before it's done" },
@@ -85,8 +93,16 @@ const TONES: Array<{ tone: IconTileTone; hint: string }> = [
     { tone: "neutral", hint: "archived — low emphasis" },
 ]
 
+/** One row of the size demo grid. */
+interface SizeRow {
+    /** The `IconTileSize` value this row demonstrates. */
+    size: IconTileSize
+    /** One-line explanation of when this size applies. */
+    hint: string
+}
+
 /** FULL `IconTileSize` union. */
-const SIZES: Array<{ size: IconTileSize; hint: string }> = [
+const SIZES: Array<SizeRow> = [
     { size: "sm", hint: "40px — pairs with a TitledText row" },
     { size: "md", hint: "64px — a list row or card header" },
     { size: "lg", hint: "80px — the top of a detail page" },

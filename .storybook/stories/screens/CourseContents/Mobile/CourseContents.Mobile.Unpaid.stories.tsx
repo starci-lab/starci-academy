@@ -4,7 +4,8 @@ import { deviceLeaf } from "@sb-components/screens/CourseContents/_shared"
 
 /**
  * SCREEN `/learn/content` at MOBILE (375px, below `@app-sm`) — UNPAID viewer: tree
- * carries the GitHub-team `Feedback.Callout` + `TrialConversionStrip`. Container-query
+ * carries `TrialConversionStrip` on top of the five blocks a paid viewer also sees
+ * (`CourseTeamGate` is NOT exclusive to trial). Container-query
  * driven, so the fixed-width `@container` IS the mobile signal (viewport addon does nothing).
  */
 const W = 375
@@ -20,5 +21,5 @@ export default meta
 type Story = StoryObj<typeof CourseContents>
 
 export const Default: Story = {
-    render: () => deviceLeaf({ width: W, viewer: "trial", leaf: "Default", reason: "Mobile 375px · not purchased — the tree adds the gate + TrialConversionStrip; layout collapses to one column and meta chips wrap." }),
+    render: () => deviceLeaf({ width: W, viewer: "trial", leaf: "Default", reason: "Mobile 375px · not purchased — the tree adds TrialConversionStrip; layout collapses to one column and meta chips wrap." }),
 }

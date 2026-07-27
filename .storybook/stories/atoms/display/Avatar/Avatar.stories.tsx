@@ -53,23 +53,47 @@ const BROKEN_IMG = "https://example.com/nope.png"
 const SEED = "mai.chi@starci.vn"
 const NAME = "Mai Chi"
 
+/** One row of the `status` demo table. */
+interface StatusRow {
+    /** The status value this row demonstrates. */
+    status: AvatarStatus
+    /** Human-readable meaning of the status, shown next to the demo cell. */
+    hint: string
+}
+
 /** FULL `AvatarStatus` union — missing a value means it sprouts as a stray leaf elsewhere. */
-const STATUSES: Array<{ status: AvatarStatus; hint: string }> = [
+const STATUSES: Array<StatusRow> = [
     { status: "online", hint: "active right now" },
     { status: "offline", hint: "not signed in" },
     { status: "busy", hint: "in a call, do not disturb" },
     { status: "away", hint: "stepped away" },
 ]
 
+/** One row of the `size` demo table. */
+interface SizeRow {
+    /** The size value this row demonstrates. */
+    size: AvatarSize
+    /** Human-readable use case for this size, shown next to the demo cell. */
+    hint: string
+}
+
 /** FULL `AvatarSize` union. */
-const SIZES: Array<{ size: AvatarSize; hint: string }> = [
+const SIZES: Array<SizeRow> = [
     { size: "sm", hint: "dense rows — tables, comment threads" },
     { size: "md", hint: "default — cards, lists" },
     { size: "lg", hint: "profile header, hero" },
 ]
 
+/** One row of the `color` demo table. */
+interface ColorRow {
+    /** The color value this row demonstrates. */
+    color: AvatarColor
+    /** Human-readable meaning of the color, shown next to the demo cell. */
+    hint: string
+}
+
 /** FULL `AvatarColor` union. */
-const COLORS: Array<{ color: AvatarColor; hint: string }> = [
+const COLORS: Array<ColorRow> = [
     { color: "accent", hint: "brand tint" },
     { color: "danger", hint: "something needs attention" },
     { color: "default", hint: "no meaning, plain" },

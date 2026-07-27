@@ -25,6 +25,14 @@ export default defineConfig([
         extends: ["js/recommended"], 
         languageOptions: { globals: globals.browser }
     },
+    {
+        // `scripts/**` là dao gate chạy trên Node, không phải code chạy trong browser —
+        // `process`/`console` ở đó là hợp lệ. Không có block này thì mọi script gate đều
+        // đỏ `no-undef` (cả `check-story-coverage.mjs` có từ trước), nên ai cũng học cách
+        // ngó lơ eslint ở thư mục này — đúng cách một gate chết dần.
+        files: ["scripts/**/*.{js,mjs,cjs}"],
+        languageOptions: { globals: globals.node },
+    },
     tseslint.configs.recommended,
     pluginReact.configs.flat.recommended,
     {

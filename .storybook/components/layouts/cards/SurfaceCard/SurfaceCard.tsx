@@ -566,7 +566,15 @@ const useRipple = () => {
 }
 
 /** Renders one fading, growing circle per active ripple. Sits BEHIND content (`z-0`). */
-const Ripple = ({ ripples, onClear }: { ripples: Array<RippleItem>; onClear: (key: number) => void }) => (
+/** Props for the local {@link Ripple} layer. */
+interface RippleProps {
+    /** Ripples currently animating. */
+    ripples: Array<RippleItem>
+    /** Called when one ripple finishes so the caller can drop it. */
+    onClear: (key: number) => void
+}
+
+const Ripple = ({ ripples, onClear }: RippleProps) => (
     <AnimatePresence mode="popLayout">
         {ripples.map((ripple) => {
             // Bigger ripple → longer travel (HeroUI's clamp curve).
@@ -944,7 +952,13 @@ const itemBody = (item: SurfaceCardPressableGroupItem) => {
  * holds the real shape these card-grids carry (decided 2026-07-22: skeleton
  * follows the ProfileCard pattern).
  */
-const PressableGroupSkeletonTile = ({ className }: { className?: string }) => (
+/** Props for the local {@link PressableGroupSkeletonTile}. */
+interface PressableGroupSkeletonTileProps {
+    /** Placement class only. */
+    className?: string
+}
+
+const PressableGroupSkeletonTile = ({ className }: PressableGroupSkeletonTileProps) => (
     <div className={cn(TILE_CHROME, "flex items-center gap-3 p-3", className)}>
         <Avatar.Base isSkeleton size="md" className="shrink-0" />
         <div className="flex min-w-0 flex-1 flex-col">
@@ -1318,7 +1332,18 @@ export interface SurfaceCardListProps extends SurfaceLabelProps {
 }
 
 /** Resolves an item's left DATA band — `withVerdict` (full shape) wins over the `tone` shorthand. */
-const itemVerdict = (item: { tone?: VerdictBandVariant; withVerdict?: VerdictBand }): VerdictBand | undefined =>
+/**
+ * The two fields {@link itemVerdict} reads. Kept as its OWN shape rather than the whole item:
+ * the helper works for any row carrying a verdict, and naming only what it touches says so.
+ */
+interface VerdictBearingItem {
+    /** Tone shorthand a row may carry. */
+    tone?: VerdictBandVariant
+    /** Explicit verdict band, wins over `tone`. */
+    withVerdict?: VerdictBand
+}
+
+const itemVerdict = (item: VerdictBearingItem): VerdictBand | undefined =>
     item.withVerdict ?? (item.tone != null ? { enable: true, variant: item.tone } : undefined)
 
 /**
@@ -1327,7 +1352,15 @@ const itemVerdict = (item: { tone?: VerdictBandVariant; withVerdict?: VerdictBan
  * `onPress`/`href` make the whole row a tappable `<button>`/`<a>` with
  * `hover:bg-default` + focus ring.
  */
-const ListRow = ({ item, isSkeleton = false }: { item: SurfaceCardListItem; isSkeleton?: boolean }) => {
+/** Props for the local {@link ListRow}. */
+interface ListRowProps {
+    /** The row's data. */
+    item: SurfaceCardListItem
+    /** Resting state — the row keeps its box and divider, only the text shimmers. */
+    isSkeleton?: boolean
+}
+
+const ListRow = ({ item, isSkeleton = false }: ListRowProps) => {
     const {
         leading,
         leadingIcon: LeadingIcon,
@@ -1414,7 +1447,13 @@ const ListRow = ({ item, isSkeleton = false }: { item: SurfaceCardListItem; isSk
  * leading/title/subtitle slots. The frame owns the padding + inset bottom
  * separator; the caller lays out whatever it needs inside.
  */
-const ListFreeRow = ({ item }: { item: SurfaceCardListItem }) => {
+/** Props for the local {@link ListFreeRow} — a row with no surrounding card face. */
+interface ListFreeRowProps {
+    /** The row's data. */
+    item: SurfaceCardListItem
+}
+
+const ListFreeRow = ({ item }: ListFreeRowProps) => {
     const { content, onPress, href, isDisabled = false, hover = "fill", className, anatPart } = item
     const withVerdict = itemVerdict(item)
     const interactive = Boolean(onPress || href)

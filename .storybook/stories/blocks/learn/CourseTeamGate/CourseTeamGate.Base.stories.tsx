@@ -19,7 +19,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * empty tree ⇒ they're STATES of the same leaf, not split into two stories.
  */
 const meta: Meta<typeof CourseTeamGate.Base> = {
-    title: "Blocks/Learn/CourseTeamGate.Base",
+    title: "Blocks/Learn/CourseTeamGate/CourseTeamGate.Base",
     component: CourseTeamGate.Base,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },
@@ -90,7 +90,7 @@ export const Skeleton: Story = {
                 isInTeam={false}
             />,
             "While waiting on SWR, the flag keeps the exact callout frame so nothing flashes when the result arrives.",
-            `<CourseTeamGate.Base isSkeleton isEnrolled={false} isInTeam={false} />`,
+            "<CourseTeamGate.Base isSkeleton isEnrolled={false} isInTeam={false} />",
         ),
 }
 

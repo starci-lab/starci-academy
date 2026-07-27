@@ -92,19 +92,40 @@ const ControlledModal = ({
     )
 }
 
+/** Props for the `BorderedList` demo wrapper below. */
+interface BorderedListProps {
+    /** rows nested inside the bordered surface-in-surface list */
+    children: React.ReactNode
+}
+
 // TODO: swap for SurfaceCard.List local when ported — bordered surface-in-surface list.
-const BorderedList = ({ children }: { children: React.ReactNode }) => (
+const BorderedList = ({ children }: BorderedListProps) => (
     <div className="overflow-hidden rounded-3xl border border-default bg-surface">{children}</div>
 )
-const BorderedRow = ({ title, meta }: { title: React.ReactNode; meta?: React.ReactNode }) => (
+
+/** Props for the `BorderedRow` demo row below. */
+interface BorderedRowProps {
+    /** row title, left-aligned */
+    title: React.ReactNode
+    /** optional trailing content, right-aligned */
+    meta?: React.ReactNode
+}
+
+const BorderedRow = ({ title, meta }: BorderedRowProps) => (
     <div className="flex items-center justify-between gap-3 border-b border-separator px-4 py-3 last:border-b-0">
         <Typography type="body-sm">{title}</Typography>
         {meta ? <span className="shrink-0">{meta}</span> : null}
     </div>
 )
 
+/** Props for the `CheckList` demo wrapper below. */
+interface CheckListProps {
+    /** row labels rendered with a leading check mark */
+    items: Array<string>
+}
+
 // TODO: swap for SurfaceCard.CrossList local (bordered, mark="check") when ported.
-const CheckList = ({ items }: { items: Array<string> }) => (
+const CheckList = ({ items }: CheckListProps) => (
     <div className="overflow-hidden rounded-3xl border border-default bg-surface">
         {items.map((item) => (
             <div key={item} className="flex items-center gap-2 border-b border-separator px-4 py-3 last:border-b-0">

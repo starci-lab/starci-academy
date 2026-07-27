@@ -81,8 +81,18 @@ export const Default: Story = {
     ),
 }
 
+/** One row of the `state` demo table. */
+interface StateRow {
+    /** The state value this row demonstrates. */
+    state: StepBadgeState
+    /** The step number rendered on the badge for this row. */
+    number: number
+    /** Human-readable meaning of the state, shown next to the demo cell. */
+    hint: string
+}
+
 /** ĐỦ union `StepBadgeState` — thiếu một giá trị là giá trị đó sẽ mọc thành leaf lạc chỗ. */
-const STATES: Array<{ state: StepBadgeState; number: number; hint: string }> = [
+const STATES: Array<StateRow> = [
     { state: "done", number: 1, hint: "completed — the number is replaced by a check" },
     { state: "active", number: 2, hint: "the step the reader is on right now" },
     { state: "muted", number: 3, hint: "not reached yet" },
@@ -112,8 +122,16 @@ export const States: Story = {
     ),
 }
 
+/** One row of the `size` demo table. */
+interface SizeRow {
+    /** The size value this row demonstrates. */
+    size: StepBadgeSize
+    /** Human-readable meaning of the size, shown next to the demo cell. */
+    hint: string
+}
+
 /** ĐỦ union `StepBadgeSize`. */
-const SIZES: Array<{ size: StepBadgeSize; hint: string }> = [
+const SIZES: Array<SizeRow> = [
     { size: "sm", hint: "20px — default, matches inline usage" },
     { size: "md", hint: "24px — reads at a glance in a bigger callout" },
 ]

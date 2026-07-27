@@ -42,8 +42,18 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
     },
 }
 
+/** One row of the status demo grid. */
+interface StatusRow {
+    /** The `AlertStatus` value this row demonstrates. */
+    status: AlertStatus
+    /** The alert's title text for this status. */
+    title: string
+    /** The alert's description text for this status. */
+    description: string
+}
+
 /** The FULL `AlertStatus` union — miss one value and it grows into a stray leaf somewhere else. */
-const STATUSES: Array<{ status: AlertStatus; title: string; description: string }> = [
+const STATUSES: Array<StatusRow> = [
     { status: "default", title: "Neutral note", description: "Carries no valence — for supporting information." },
     { status: "accent", title: "Study tip", description: "Review the cards due today before starting a new lesson." },
     { status: "success", title: "Submission saved", description: "Grading results will be ready in a few minutes." },

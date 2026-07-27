@@ -36,8 +36,16 @@ const members = [
     { key: "khoa.dinh", name: "Lucas Dean" },
 ]
 
+/** One row of the `Sizes` demo table — a single `AvatarSize` tier plus its explanatory hint. */
+interface SizeRow {
+    /** The `AvatarSize` tier this row demonstrates. */
+    size: AvatarSize
+    /** Short explanation of when to use this size. */
+    hint: string
+}
+
 /** FULL `AvatarSize` union (§12d — size sits at the CLUSTER LEVEL, items don't carry their own size). */
-const SIZES: Array<{ size: AvatarSize; hint: string }> = [
+const SIZES: Array<SizeRow> = [
     { size: "sm", hint: "compact — table rows, comment threads" },
     { size: "md", hint: "default — cards, panels" },
     { size: "lg", hint: "hero — profile headers" },

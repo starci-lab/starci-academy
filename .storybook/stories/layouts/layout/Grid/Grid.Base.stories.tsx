@@ -44,7 +44,17 @@ const MODULES = ["Nhập môn", "Container", "Orchestration", "CI/CD", "Quan tr�
  * you have to open your own `@container` at the right width (exactly what the app
  * shell does). `--container-app-sm = 40rem`, `-md = 48rem`, `-lg = 64rem`.
  */
-const Frame = ({ width, label, children }: { width: string; label: string; children: ReactNode }) => (
+/** Props for the `Frame` fixture helper. */
+interface FrameProps {
+    /** CSS width of the demo container */
+    width: string
+    /** caption printed above the container */
+    label: string
+    /** grid content rendered inside the container */
+    children: ReactNode
+}
+
+const Frame = ({ width, label, children }: FrameProps) => (
     <div className="flex flex-col gap-2">
         <Typography.Base size="xs" text={label} color="muted" />
         <div className="@container rounded-3xl border border-dashed border-default p-3" style={{ width, maxWidth: "100%" }}>

@@ -114,9 +114,9 @@ export const TabsBase = ({
         // `Button.Base` skeleton once using one fixed width for every size).
         if (variant === "secondary") {
             return (
-                <div className={cn("flex items-center gap-4", className)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
+                <div className={cn("flex items-center gap-2", className)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
                     {items.map((item) => (
-                        <div key={item.key} className="flex flex-col items-center gap-1.5 px-1 py-2">
+                        <div key={item.key} className="flex flex-col items-center gap-2 px-1 py-2">
                             <HeroSkeleton className="h-4 w-14 rounded-md" />
                             <HeroSkeleton className="h-0.5 w-14 rounded-full" />
                         </div>

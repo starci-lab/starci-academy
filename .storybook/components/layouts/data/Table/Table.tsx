@@ -86,7 +86,15 @@ const ALIGN_CLS: Record<TableAlign, string> = {
 }
 
 /** Bọc nội dung một ô/header để khung SỞ HỮU canh lề (§4), không rơi vào call-site. */
-const CellBox = ({ align, children }: { align?: TableAlign; children: ReactNode }) => (
+/** Props for the local {@link CellBox} — one table cell's alignment wrapper. */
+interface CellBoxProps {
+    /** Horizontal alignment of the cell content. */
+    align?: TableAlign
+    /** Cell content. */
+    children: ReactNode
+}
+
+const CellBox = ({ align, children }: CellBoxProps) => (
     <span className={cn("block", ALIGN_CLS[align ?? "start"])}>{children}</span>
 )
 

@@ -37,12 +37,28 @@ type Story = StoryObj<typeof List.Labeled>
  * colour maps to a challenge difficulty.
  */
 type Difficulty = "beginner" | "intermediate" | "advanced"
-const DIFFICULTY: Record<Difficulty, { label: string; color: "success" | "warning" | "danger" }> = {
+
+/** One row of the difficulty lookup table below. */
+interface DifficultyRow {
+    /** Vietnamese label shown on the chip */
+    label: string
+    /** soft chip color mapped to this difficulty */
+    color: "success" | "warning" | "danger"
+}
+
+const DIFFICULTY: Record<Difficulty, DifficultyRow> = {
     beginner: { label: "Cơ bản", color: "success" },
     intermediate: { label: "Trung cấp", color: "warning" },
     advanced: { label: "Nâng cao", color: "danger" },
 }
-const DifficultyChip = ({ difficulty }: { difficulty: Difficulty }) => (
+
+/** Props for the `DifficultyChip` demo wrapper below. */
+interface DifficultyChipProps {
+    /** difficulty key looked up in `DIFFICULTY` */
+    difficulty: Difficulty
+}
+
+const DifficultyChip = ({ difficulty }: DifficultyChipProps) => (
     <Chip size="sm" variant="soft" color={DIFFICULTY[difficulty].color}>
         <Chip.Label>{DIFFICULTY[difficulty].label}</Chip.Label>
     </Chip>

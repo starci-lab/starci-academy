@@ -26,7 +26,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * bars. (The `isSkeleton` prop still exists, §12c — two different things.)
  */
 const meta: Meta<typeof VariantChip.Difficulty> = {
-    title: "Designs/Chips/VariantChip.Difficulty",
+    title: "Designs/Chips/VariantChip/VariantChip.Difficulty",
     component: VariantChip.Difficulty,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },

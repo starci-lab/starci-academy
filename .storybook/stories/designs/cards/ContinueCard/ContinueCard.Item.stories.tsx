@@ -22,7 +22,7 @@ const WarningDuotone = (props: SVGProps<SVGSVGElement>) => <WarningIcon {...prop
  * is no separate consolidated "Anatomy" story.
  */
 const meta: Meta<typeof ContinueCard> = {
-    title: "Designs/Cards/ContinueCard/Item",
+    title: "Designs/Cards/ContinueCard/ContinueCard.Item",
     component: ContinueCard,
     tags: ["autodocs"],
     parameters: {

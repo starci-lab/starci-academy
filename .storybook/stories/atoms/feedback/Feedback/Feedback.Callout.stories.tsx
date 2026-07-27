@@ -56,7 +56,19 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
 
 /** Trục `status` — cùng cây DOM, chỉ đổi tint + glyph mặc định + màu Title. Vì thế
  * cả bộ nằm TRONG một leaf (§14d.2), không tách mỗi tone một story. */
-const TONES: Array<{ status: FeedbackCalloutStatus, title: string, description: string }> = [
+/**
+ * One row of the status/tone demo table.
+ */
+interface ToneRow {
+    /** the status token this row demonstrates */
+    status: FeedbackCalloutStatus
+    /** callout title rendered for this status */
+    title: string
+    /** callout description rendered for this status */
+    description: string
+}
+
+const TONES: Array<ToneRow> = [
     { status: "default", title: "Draft saved", description: "Your changes are kept automatically." },
     { status: "accent", title: "Chapter 3 just got a new practice section", description: "Reopen the chapter to try what's new." },
     { status: "success", title: "Submission successful", description: "Results will be ready in a few minutes." },

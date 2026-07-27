@@ -32,8 +32,18 @@ export default meta
 
 type Story = StoryObj<typeof Toast.Base>
 
+/** One row of the `status` demo table. */
+interface StatusRow {
+    /** The status value this row demonstrates. */
+    status: ToastStatus
+    /** Toast title shown for this row. */
+    title: string
+    /** Toast description shown for this row. */
+    description: string
+}
+
 /** ĐỦ union `ToastStatus` — thiếu một giá trị là giá trị đó mọc thành leaf lạc chỗ. */
-const STATUSES: Array<{ status: ToastStatus; title: string; description: string }> = [
+const STATUSES: Array<StatusRow> = [
     { status: "success", title: "Submission saved", description: "Grading results will be ready in a few minutes." },
     { status: "warning", title: "Running out of time", description: "The quiz submits itself in 10 minutes." },
     { status: "danger", title: "Submission failed", description: "Could not reach the server — try again." },

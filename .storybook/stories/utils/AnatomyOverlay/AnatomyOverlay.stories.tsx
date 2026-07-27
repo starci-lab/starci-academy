@@ -19,7 +19,17 @@ export default meta
 
 type Story = StoryObj<typeof AnatomyOverlay>
 
-const Box = ({ label, tier, children }: { label: string; tier: "primitive" | "design" | "block"; children: React.ReactNode }) => (
+/** Props for the `Box` helper — a demo surface annotated with `AnatomyOverlay`. */
+interface BoxProps {
+    /** Corner tag text drawn by the overlay. */
+    label: string
+    /** Tier colour of the overlay tag. */
+    tier: "primitive" | "design" | "block"
+    /** Content rendered inside the annotated box. */
+    children: React.ReactNode
+}
+
+const Box = ({ label, tier, children }: BoxProps) => (
     <div className="relative rounded-large bg-surface p-6 shadow-surface" data-anat>
         {children}
         <AnatomyOverlay label={label} tier={tier} />

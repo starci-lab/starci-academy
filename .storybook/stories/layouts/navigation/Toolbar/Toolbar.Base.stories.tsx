@@ -48,7 +48,15 @@ const LANGUAGE_TABS: Array<ToolbarTabItem> = [
     { key: "en", label: "English", icon: <GlobeIcon className="size-4" weight="bold" /> },
 ]
 
-const PANEL_CONTENT: Record<string, { title: string; body: string }> = {
+/** One row of the `PANEL_CONTENT` lookup — the title/body shown for a single tab key. */
+interface PanelRow {
+    /** Panel heading shown for this tab. */
+    title: string
+    /** Panel body copy shown for this tab. */
+    body: string
+}
+
+const PANEL_CONTENT: Record<string, PanelRow> = {
     overview: { title: "Tổng quan", body: "Giới thiệu khoá học, kết quả đạt được và lộ trình theo từng tuần." },
     content: { title: "Nội dung", body: "Danh sách bài học và bài tập của từng module, kèm thời lượng." },
     reviews: { title: "Đánh giá", body: "Phản hồi và điểm số từ học viên đã hoàn thành khoá." },
@@ -58,8 +66,14 @@ const PANEL_CONTENT: Record<string, { title: string; body: string }> = {
     pro: { title: "Nâng cao", body: "Nội dung dành cho gói trả phí — caller chặn lượt chọn để mở paywall." },
 }
 
+/** Props for the `TabPanel` helper. */
+interface TabPanelProps {
+    /** Key of the currently selected tab, used to look up `PANEL_CONTENT`. */
+    selectedKey: string
+}
+
 /** Panel đổi theo tab đang chọn — bấm tab là khối dưới render lại (chứng minh tab sống). */
-const TabPanel = ({ selectedKey }: { selectedKey: string }) => {
+const TabPanel = ({ selectedKey }: TabPanelProps) => {
     const panel = PANEL_CONTENT[selectedKey]
     return (
         <SurfaceCard.Base>

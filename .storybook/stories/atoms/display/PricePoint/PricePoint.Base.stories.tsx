@@ -159,7 +159,21 @@ export const Period: Story = {
  * Kèm `original` + `period` ở CẢ BA cỡ để leaf thấy rõ cả hai giãn theo `size`, không
  * chỉ amount (trước đây chúng khoá cứng sm/xs bất kể size).
  */
-const SIZES: Array<{ size: PricePointSize; amount: string; original: string; hint: string }> = [
+/**
+ * One row of the size demo table.
+ */
+interface SizeRow {
+    /** the size token this row demonstrates */
+    size: PricePointSize
+    /** current price amount rendered at this size */
+    amount: string
+    /** original (struck-through) price rendered at this size */
+    original: string
+    /** short note explaining when this size applies */
+    hint: string
+}
+
+const SIZES: Array<SizeRow> = [
     { size: "sm", amount: "$9", original: "$14", hint: "a price inside a denser row" },
     { size: "md", amount: "$19", original: "$29", hint: "the default amount scale" },
     { size: "lg", amount: "$49", original: "$69", hint: "the price anchoring a pricing page" },

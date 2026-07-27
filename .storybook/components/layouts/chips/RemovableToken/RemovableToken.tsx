@@ -3,6 +3,7 @@ import type { ReactNode } from "react"
 import { Button, cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { XIcon } from "@phosphor-icons/react"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
+import { SKELETON_TEXT_BAR } from "@sb-components/atoms/_skeleton-bar"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -84,7 +85,7 @@ export const RemovableToken = ({
             >
                 <div className="flex min-w-0 items-center gap-2">
                     <HeroSkeleton className="size-4 shrink-0 rounded" />
-                    <HeroSkeleton className="my-[5px] h-[14px] w-32 rounded" />
+                    <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-32")} />
                 </div>
                 <HeroSkeleton className="h-9 w-20 shrink-0 rounded-full" />
             </div>

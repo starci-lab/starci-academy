@@ -20,5 +20,5 @@ export default meta
 type Story = StoryObj<typeof CourseContents>
 
 export const Default: Story = {
-    render: () => deviceLeaf({ width: W, isSkeleton: true, leaf: "Default", reason: "Tablet 768px · loading — the isSkeleton flag flows into each block, SAME STRUCTURE as the content leaf (§11f)." }),
+    render: () => deviceLeaf({ width: W, isSkeleton: true, leaf: "Prop `isSkeleton`", reason: "Tablet 768px · the resting shape, drawn by each block itself." }),
 }

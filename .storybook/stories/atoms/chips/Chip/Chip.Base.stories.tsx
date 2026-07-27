@@ -65,8 +65,18 @@ export default meta
 
 type Story = StoryObj<typeof Chip.Base>
 
+/** One row of the `tone` demo table. */
+interface ToneRow {
+    /** which tone value this row demonstrates */
+    tone: ChipTone
+    /** label text shown on the chip */
+    text: string
+    /** short explanation of when to reach for this tone */
+    hint: string
+}
+
 /** The FULL `ChipTone` union — missing one value means that value will sprout as a stray leaf elsewhere. */
-const TONES: Array<{ tone: ChipTone; text: string; hint: string }> = [
+const TONES: Array<ToneRow> = [
     { tone: "neutral", text: "Draft", hint: "no signal — plain token" },
     { tone: "success", text: "Passed", hint: "the good outcome" },
     { tone: "warning", text: "Needs review", hint: "not broken yet" },

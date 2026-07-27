@@ -103,7 +103,16 @@ export interface FeedbackCalloutProps {
     className?: string
     /** Anatomy tag: names this frame so a BlockAnatomy panel can badge it on-render. */
     anatPart?: string
-    /** When on, each composed part emits `data-anat-part` for a BlockAnatomy panel. */
+    /**
+     * Story-only: when on, the frame names ITSELF `"Feedback.Callout"` so a panel can badge it
+     * without the story wrapping an extra div.
+     *
+     * Until 2026-07-27 this prop was declared and destructured but NEVER USED — six story
+     * leaves passed it and got NO badge at all, while the JSDoc claimed "each composed part
+     * emits data-anat-part". A frame that promises anatomy and emits nothing is invisible in
+     * the panel with no error anywhere, which is exactly why 11a.1 pins the idiom
+     * `anatPart ?? (showAnatomy ? "<name>" : undefined)`.
+     */
     showAnatomy?: boolean
 }
 
@@ -151,7 +160,7 @@ const Callout = ({
         onClose={onClose}
         closeAriaLabel={closeAriaLabel}
         className={className}
-        anatPart={anatPart}
+        anatPart={anatPart ?? (showAnatomy ? "Feedback.Callout" : undefined)}
     />
 )
 

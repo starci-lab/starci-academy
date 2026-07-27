@@ -36,8 +36,16 @@ const SAVE_ITEMS = [
     { key: "save", label: "Lưu thay đổi", icon: FloppyDiskIcon },
 ]
 
+/** Props for the `AlignSample` helper — one labelled `align` demo cell. */
+interface AlignSampleProps {
+    /** The `align` value this cell demonstrates. */
+    align: FormActionsAlign
+    /** Human-readable note shown above the cell, explaining what this align does. */
+    note: string
+}
+
 /** Nhãn cho từng mẫu `align` trong leaf gộp — chữ trần, không phải part của khung. */
-const AlignSample = ({ align, note }: { align: FormActionsAlign; note: string }) => (
+const AlignSample = ({ align, note }: AlignSampleProps) => (
     <div className="flex w-96 flex-col gap-1">
         <p className="text-xs text-muted">{`align="${align}" — ${note}`}</p>
         <Form.Actions align={align} items={SAVE_ITEMS} />

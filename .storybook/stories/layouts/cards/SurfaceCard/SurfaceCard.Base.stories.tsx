@@ -72,7 +72,13 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
  * + shadow/border, §1a), so there's NO extra `Card` wrapper here — avoiding
  * card-in-card.
  */
-const ProfileRow = ({ isSkeleton = false }: { isSkeleton?: boolean }) => (
+/** Props for the `ProfileRow` fixture helper. */
+interface ProfileRowProps {
+    /** whether to render the shimmer state instead of the real content */
+    isSkeleton?: boolean
+}
+
+const ProfileRow = ({ isSkeleton = false }: ProfileRowProps) => (
     <div className="flex items-center gap-3">
         <AtomAvatar.Base name="StarCi Academy" size="md" isSkeleton={isSkeleton} className="shrink-0" />
         <div className="flex min-w-0 grow flex-col">

@@ -1,5 +1,4 @@
 import React from "react"
-import { cn } from "@heroui/react"
 import { ArrowRightIcon, LockIcon } from "@phosphor-icons/react"
 import { IconTile } from "@sb-components/atoms/display/IconTile/IconTile"
 import { PriceTag, type PriceBreakdown } from "@sb-components/designs/commerce/PriceTag/PriceTag"
@@ -18,7 +17,7 @@ import { Stack } from "@sb-components/layouts/layout/Stack/Stack"
  * `@/components/features/learn/CourseContents/TrialConversionStrip`, made
  * TIER-3 PRESENTATIONAL: `src` reads `useQueryCoursePricePreviewSwr` (SWR) +
  * `usePaymentOverlayState` (zustand) itself; this port takes the same data as
- * PLAIN PROPS (`price`, `isPriceLoading`, `onEnroll`) so it renders standalone
+ * PLAIN PROPS (`price`, `isSkeleton`, `onEnroll`) so it renders standalone
  * with no store/SWR wiring. The `next-intl` strings are INLINED locally (vi).
  * Composed from local primitives — {@link IconTile} (lock icon, accent tone,
  * sm) + {@link PriceTag} + {@link PhaseScarcityNote} + {@link Skeleton.Typography}
@@ -40,10 +39,20 @@ export interface TrialConversionStripPrice {
 export interface TrialConversionStripProps {
     /** FREE lessons the trial viewer hasn't read yet — powers the goal-gradient line. */
     freeLessonsRemaining: number
-    /** Price preview for the course; `undefined`/`null` while absent (see `isPriceLoading`). */
+    /** Price preview for the course; `undefined`/`null` while absent (see `isSkeleton`). */
     price?: TrialConversionStripPrice | null
-    /** `true` while the price fetch is in flight AND no price has landed yet → shows the skeleton mirror. */
-    isPriceLoading?: boolean
+    /**
+     * `true` → this block is at REST. Only the PRICE region rests: the header (icon,
+     * title, description) and the CTA do not depend on the price, so they render
+     * immediately and the shimmer stands exactly where PriceTag + PhaseScarcityNote will
+     * land, which is what stops the layout jumping when the price arrives.
+     *
+     * Named `isSkeleton`, not `isPriceLoading` (§12g.0a: ONE vocabulary across all five
+     * tiers). The old name was a second word for the same idea at this tier only, so a
+     * reader crossing the block boundary had to translate it every time — and the screen
+     * had to write `isPriceLoading={isSkeleton}` to bridge the two.
+     */
+    isSkeleton?: boolean
     /** Fired when the enroll CTA is pressed (caller owns opening the payment flow). */
     onEnroll?: () => void
     /** Extra classes on the root. */
@@ -70,7 +79,7 @@ export interface TrialConversionStripProps {
 const TrialConversionStripBase = ({
     freeLessonsRemaining,
     price,
-    isPriceLoading = false,
+    isSkeleton = false,
     onEnroll,
     className,
     showAnatomy = false,
@@ -114,12 +123,12 @@ const TrialConversionStripBase = ({
                     title `sm` medium · subtitle `xs` muted. Hand-building two atoms means
                     the block decides its own font sizes — one style per spot, with
                     nothing keeping them in sync.
-                    ⚠️ The old version had the title at `base` (16px) + description `sm` —
+                    NOTE: the old version had the title at `base` (16px) + description `sm` —
                     one step larger than the row's standard scale. */}
                     <TitledText
                         className="flex-1"
                         anatPart={showAnatomy ? "TitledText" : undefined}
-                        isSkeleton={isPriceLoading && !price}
+                        isSkeleton={isSkeleton && !price}
                         title="Học thử — mở khoá toàn bộ khoá học"
                         subtitle={
                             hasFreeLeft
@@ -149,8 +158,19 @@ const TrialConversionStripBase = ({
                     wrap
                     anatPart={showAnatomy ? "Stack.H.PriceRow" : undefined}
                 >
-                    <Stack.V gap={1} anatPart={showAnatomy ? "Stack.V.Price" : undefined}>
-                        {isPriceLoading && !price ? (
+                    {/* `grouped` (§10b). Read the seam by RELATIONSHIP, not by tier: the
+                    scarcity line is a CAPTION OF THE PRICE, so price + scarcity are one
+                    cluster and this is an INTRA-cluster seam. `section` (6) belongs to the
+                    seams AROUND this cluster — to the lead cluster above and to the CTA
+                    beside it.
+                    Measured (2026-07-27) why this matters: applying "design ↔ design = 6"
+                    mechanically here produced the rhythm 24/12/24/24, i.e. the caption ended
+                    up as far from its own price as the CTA is from everything, and §10 bans a
+                    uniform rhythm precisely because it stops reading as groups. With 3 the
+                    card reads 24/12/12/24 — two groups, which is what it is. It was `tight`
+                    (1) before either fix, a step §10b reserves for pairs inside a primitive. */}
+                    <Stack.V gap={3} anatPart={showAnatomy ? "Stack.V.Price" : undefined}>
+                        {isSkeleton && !price ? (
                         // 2026-07-12: the CTA card renders instantly once the outline
                         // resolves, but the price is a second fetch — mirror the price
                         // line instead of showing an empty gap until it lands.

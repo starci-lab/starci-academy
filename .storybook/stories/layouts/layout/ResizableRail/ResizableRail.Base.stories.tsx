@@ -46,8 +46,14 @@ const TOPICS = [
     "Cửa sổ trượt",
 ]
 
+/** Props for the `PracticeTopicsBody` helper. */
+interface PracticeTopicsBodyProps {
+    /** Extra classes merged onto the body wrapper. */
+    className?: string
+}
+
 /** Topic search + ListBox — the rail body, mirroring `PracticeRail` (problems mode) without the mode tabs. */
-const PracticeTopicsBody = ({ className }: { className?: string }) => {
+const PracticeTopicsBody = ({ className }: PracticeTopicsBodyProps) => {
     const [query, setQuery] = useState("")
     const [topic, setTopic] = useState("Tất cả")
 

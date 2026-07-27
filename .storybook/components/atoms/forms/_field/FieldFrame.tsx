@@ -99,7 +99,7 @@ const FieldFrameBase = ({
             return <>{skeletonControl}</>
         }
         return (
-            <div className={cn("flex flex-col gap-1.5", className)}>
+            <div className={cn("flex flex-col gap-1", className)}>
                 {label != null ? (
                     <HeroSkeleton className="h-4 w-1/3 rounded-md" data-anat-part={showAnatomy ? "Label" : undefined} />
                 ) : null}
@@ -115,7 +115,7 @@ const FieldFrameBase = ({
 
     // ── Full field ─────────────────────────────────────────────────────────────
     return (
-        <div className={cn("flex flex-col gap-1.5", className)}>
+        <div className={cn("flex flex-col gap-1", className)}>
             {label != null ? (
                 <Label htmlFor={id} isDisabled={isDisabled} className="text-sm font-medium" data-anat-part={showAnatomy ? "Label" : undefined}>
                     {withRequired(label, isRequired)}

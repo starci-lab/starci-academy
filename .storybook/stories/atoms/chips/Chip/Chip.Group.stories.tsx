@@ -59,7 +59,15 @@ const ITEMS: Array<ChipGroupItem> = [
 /** Short row — fits entirely under `maxVisible` so there's no `+N` chip. */
 const SHORT_ITEMS: Array<ChipGroupItem> = ITEMS.slice(0, 3)
 
-const TONES: Array<{ tone: ChipTone; hint: string }> = [
+/** One row of the tone demo table below. */
+interface ToneRow {
+    /** color token applied to the whole chip row */
+    tone: ChipTone
+    /** short caption explaining when to reach for this tone */
+    hint: string
+}
+
+const TONES: Array<ToneRow> = [
     { tone: "neutral", hint: "plain tags" },
     { tone: "success", hint: "everything checked out" },
     { tone: "warning", hint: "needs a look" },

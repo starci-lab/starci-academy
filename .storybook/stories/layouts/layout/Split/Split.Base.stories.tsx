@@ -34,7 +34,19 @@ const SIDE_PARTS: Array<AnatomyNode> = [
  * `@app-sm` đo CONTAINER gần nhất, không đo cửa sổ — nên muốn demo mốc thì phải tự mở
  * một `@container` đúng bề ngang (đúng như app shell làm). `--container-app-sm = 40rem`.
  */
-const Frame = ({ width, label, children }: { width: string; label: string; children: ReactNode }) => (
+/**
+ * Props for the `Frame` demo helper.
+ */
+interface FrameProps {
+    /** width of the simulated `@container`, e.g. `"40rem"` */
+    width: string
+    /** label rendered above the frame to name the breakpoint being demoed */
+    label: string
+    /** content rendered inside the simulated container */
+    children: ReactNode
+}
+
+const Frame = ({ width, label, children }: FrameProps) => (
     <div className="flex flex-col gap-2">
         <Typography.Base size="xs" text={label} color="muted" />
         <div className="@container rounded-3xl border border-dashed border-default p-3" style={{ width, maxWidth: "100%" }}>

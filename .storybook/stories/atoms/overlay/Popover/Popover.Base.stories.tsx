@@ -123,8 +123,16 @@ export const WithTriggerIcon: Story = {
     ),
 }
 
+/** One row of the `TriggerVariant` demo table — a single trigger variant plus its display label. */
+interface TriggerVariantRow {
+    /** The `triggerVariant` value this row demonstrates. */
+    variant: TriggerVariantValue
+    /** Display label shown on the trigger button. */
+    label: string
+}
+
 /** ĐỦ union `triggerVariant` (4 giá trị) — thiếu một giá trị là giá trị đó sẽ mọc thành leaf lạc chỗ. */
-const TRIGGER_VARIANTS: Array<{ variant: TriggerVariantValue; label: string }> = [
+const TRIGGER_VARIANTS: Array<TriggerVariantRow> = [
     { variant: "primary", label: "Primary" },
     { variant: "secondary", label: "Secondary" },
     { variant: "tertiary", label: "Tertiary" },
@@ -165,8 +173,16 @@ export const TriggerVariant: Story = {
     ),
 }
 
+/** One row of the `Placement` demo table — a single placement direction plus its display label. */
+interface PlacementRow {
+    /** The `placement` value this row demonstrates. */
+    placement: PlacementValue
+    /** Display label shown on the trigger button. */
+    label: string
+}
+
 /** ĐỦ union `placement` (8 giá trị) — thiếu một giá trị là giá trị đó sẽ mọc thành leaf lạc chỗ. */
-const PLACEMENTS: Array<{ placement: PlacementValue; label: string }> = [
+const PLACEMENTS: Array<PlacementRow> = [
     { placement: "top", label: "Top" },
     { placement: "top start", label: "Top start" },
     { placement: "top end", label: "Top end" },

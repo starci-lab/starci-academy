@@ -29,8 +29,14 @@ export default meta
 
 type Story = StoryObj<typeof Tooltip.Base>
 
+/** Props for the demo trigger element. */
+interface TriggerBoxProps {
+    /** Text shown inside the trigger. */
+    label?: string
+}
+
 /** A bordered term used as the tooltip trigger. */
-const TriggerBox = ({ label = "Hover to see it" }: { label?: string }) => (
+const TriggerBox = ({ label = "Hover to see it" }: TriggerBoxProps) => (
     <span className="inline-flex cursor-help rounded-xl border border-default-200 bg-default-100 px-3 py-2 text-sm font-medium text-foreground">
         {label}
     </span>

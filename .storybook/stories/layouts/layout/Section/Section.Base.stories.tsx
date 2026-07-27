@@ -156,8 +156,16 @@ export const Slots: Story = {
     ),
 }
 
+/** Props for the demo gap sample. */
+interface GapSampleProps {
+    /** The `SectionGap` value this sample demonstrates. */
+    gap: SectionGap
+    /** Description text shown under the sample's header. */
+    note: ReactNode
+}
+
 /** Một cột `gap` (§10c) để đối chiếu nhịp — mỗi mẫu là cùng composition, chỉ đổi token. */
-const GapSample = ({ gap, note }: { gap: SectionGap; note: ReactNode }) => (
+const GapSample = ({ gap, note }: GapSampleProps) => (
     <Section.Base
         gap={gap}
         header={{ level: 3, title: `gap=${gap}`, description: note }}

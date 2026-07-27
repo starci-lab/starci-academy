@@ -37,7 +37,13 @@ type Story = StoryObj<typeof SurfaceCard.Placeholder>
  * A cell that fills the height of a grid slot — every story pins the tile inside a fixed box
  * (matching the ~19rem cell of the CV gallery it was ported for) so `h-full w-full` has room to fill.
  */
-const Cell = ({ children }: { children: ReactNode }) => (
+/** Props for the `Cell` demo wrapper below. */
+interface CellProps {
+    /** placeholder tile rendered inside the fixed-size grid slot */
+    children: ReactNode
+}
+
+const Cell = ({ children }: CellProps) => (
     <div className="p-8">
         <div className="h-80 w-64">{children}</div>
     </div>

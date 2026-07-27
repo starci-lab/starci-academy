@@ -16,13 +16,25 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * the atom tier's 1-prop-1-leaf rule (§12g).
  */
 
+/** Props for the demo tile. */
+interface TileProps {
+    /** Text shown inside the tile. */
+    label: string
+}
+
 /** A sample tile — just to see the column edge and count, carries no domain content (§13). */
-const Tile = ({ label }: { label: string }) => (
+const Tile = ({ label }: TileProps) => (
     <div className="rounded-xl border border-default bg-surface p-3 text-sm text-foreground">{label}</div>
 )
 
+/** Props for the demo bleed band. */
+interface BleedProps {
+    /** Content centered inside the bleed band. */
+    children: React.ReactNode
+}
+
 /** A ruled background band, to see the column centered inside a wider parent area. */
-const Bleed = ({ children }: { children: React.ReactNode }) => (
+const Bleed = ({ children }: BleedProps) => (
     <div className="w-full bg-default/40 py-4">{children}</div>
 )
 
@@ -37,8 +49,16 @@ export default meta
 
 type Story = StoryObj<typeof Container.Base>
 
+/** One row of the size demo grid. */
+interface SizeRow {
+    /** The `ContainerSize` value this row demonstrates. */
+    size: ContainerSize
+    /** The token width this size resolves to. */
+    width: string
+}
+
 /** FULL `ContainerSize` union, with the token width alongside for comparing against the `@app-*` steps. */
-const SIZES: Array<{ size: ContainerSize; width: string }> = [
+const SIZES: Array<SizeRow> = [
     { size: "sm", width: "40rem" },
     { size: "md", width: "48rem — default" },
     { size: "lg", width: "64rem" },
@@ -56,7 +76,7 @@ export const Default: Story = {
                 leaf="Default"
                 reason="A content column is a real concept, so it gets a frame with a name. Before this, every page hand-wrote the same `mx-auto w-full max-w-3xl` string — 72 of them across the app."
                 note="Defaults to the 48rem column with p-6 padding, centred in whatever it sits in. The grey band is the parent, not part of the frame."
-                code={'<Container.Base body={<Tile label="Body" />} />'}
+                code={"<Container.Base body={<Tile label=\"Body\" />} />"}
             >
                 <Bleed>
                     <Container.Base showAnatomy body={<Tile label="Body — max-w-app-md, centred" />} />

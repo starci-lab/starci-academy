@@ -19,7 +19,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * rendered together inside the full-set leaf.
  */
 const meta: Meta<typeof CourseBrief.Base> = {
-    title: "Blocks/Learn/CourseBrief.Base",
+    title: "Blocks/Learn/CourseBrief/CourseBrief.Base",
     component: CourseBrief.Base,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },
@@ -163,6 +163,6 @@ export const Skeleton: Story = {
                 title=""
             />,
             "Every line keeps the exact real text shape (name/description/meta strip) so nothing shifts when data arrives (§8).",
-            `<CourseBrief.Base isSkeleton title="" />`,
+            "<CourseBrief.Base isSkeleton title=\"\" />",
         ),
 }

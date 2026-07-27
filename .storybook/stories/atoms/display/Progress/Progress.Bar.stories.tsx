@@ -76,8 +76,18 @@ export const Loading: Story = {
     ),
 }
 
+/** One row of the `color` demo table. */
+interface BarColorRow {
+    /** which color value this row demonstrates */
+    color: ProgressColor
+    /** aria label describing what the bar tracks */
+    label: string
+    /** progress value shown on the bar */
+    value: number
+}
+
 /** ĐỦ union `ProgressColor` — thiếu một giá trị là giá trị đó sẽ mọc thành leaf lạc chỗ. */
-const BAR_COLORS: Array<{ color: ProgressColor; label: string; value: number }> = [
+const BAR_COLORS: Array<BarColorRow> = [
     { color: "accent", label: "Course progress", value: 55 },
     { color: "success", label: "Upload complete", value: 100 },
     { color: "warning", label: "Sync needs attention", value: 40 },
@@ -117,8 +127,16 @@ export const Colors: Story = {
     ),
 }
 
+/** One row of the `size` demo table. */
+interface BarSizeRow {
+    /** which size value this row demonstrates */
+    size: ProgressSize
+    /** aria label describing what the bar tracks */
+    label: string
+}
+
 /** ĐỦ union `ProgressSize` — thiếu một giá trị là giá trị đó sẽ mọc thành leaf lạc chỗ. */
-const BAR_SIZES: Array<{ size: ProgressSize; label: string }> = [
+const BAR_SIZES: Array<BarSizeRow> = [
     { size: "sm", label: "Compact row" },
     { size: "md", label: "Default row" },
     { size: "lg", label: "Prominent row" },

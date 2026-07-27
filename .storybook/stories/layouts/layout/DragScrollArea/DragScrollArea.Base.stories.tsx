@@ -41,8 +41,16 @@ const longLessons = [
     "Buổi 12: Triển khai lên VPS",
 ]
 
+/**
+ * Props for the `LessonList` demo helper.
+ */
+interface LessonListProps {
+    /** lesson titles rendered as rows */
+    lessons: Array<string>
+}
+
 // TODO: swap for SurfaceCard.List local when ported — a faithful joined list.
-const LessonList = ({ lessons }: { lessons: Array<string> }) => (
+const LessonList = ({ lessons }: LessonListProps) => (
     <div className="rounded-3xl bg-surface shadow-surface">
         {lessons.map((lesson, index) => (
             <div

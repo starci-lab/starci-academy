@@ -3,9 +3,10 @@ import { CourseContents } from "@sb-components/screens/CourseContents/CourseCont
 import { deviceLeaf } from "@sb-components/screens/CourseContents/_shared"
 
 /**
- * SCREEN `/learn/content` at DESKTOP (full width, ≥ `@app-lg`) — SKELETON: `isSkeleton`
- * flows down into every block, mirroring the SAME spine as the loaded leaf (§11f:
- * state, not structure) while data is still in flight.
+ * SCREEN `/learn/content` at DESKTOP (full width, ≥ `@app-lg`) — SKELETON: `isSkeleton` flows down
+ * into every block and each one draws its OWN resting shape. This is a LEAF, not merely a
+ * state (teacher, 2026-07-27): the flag makes the components draw different pixels, and
+ * whoever owns the shape owns its resting shape.
  */
 const meta: Meta<typeof CourseContents> = {
     title: "Screens/CourseContents/Desktop/Skeleton",
@@ -18,5 +19,5 @@ export default meta
 type Story = StoryObj<typeof CourseContents>
 
 export const Default: Story = {
-    render: () => deviceLeaf({ isSkeleton: true, leaf: "Default", reason: "Loading — the isSkeleton flag flows down into each block. SAME STRUCTURE as the content leaf (§11f); only the state turns to shimmer." }),
+    render: () => deviceLeaf({ isSkeleton: true, leaf: "Prop `isSkeleton`", reason: "The resting shape of the whole screen. Every tier owns a leaf for this prop (teacher, 2026-07-27): the flag flows down and each block DRAWS its own resting shape, so the pixels here are drawn by the components themselves, not by different data." }),
 }

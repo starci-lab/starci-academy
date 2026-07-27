@@ -31,8 +31,16 @@ const ORDER_STATUS_MAP: Record<OrderStatus, EnumChipEntry> = {
     paid: { color: "success", label: "Đã thanh toán" },
 }
 
+/** Props for the `Row` helper — one labelled row of the `Chip.*` family index. */
+interface RowProps {
+    /** Compound-member name shown as the row's label, e.g. `Chip.Enum`. */
+    member: string
+    /** The chip sample(s) rendered for this member. */
+    children: ReactNode
+}
+
 /** One labelled row = one `Chip.<Member>` so the namespace reads as a family index. */
-const Row = ({ member, children }: { member: string; children: ReactNode }) => (
+const Row = ({ member, children }: RowProps) => (
     <div className="flex items-center gap-3">
         <code className="w-40 shrink-0 font-mono text-xs text-muted">{member}</code>
         <div className="flex flex-wrap items-center gap-2">{children}</div>

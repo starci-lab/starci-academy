@@ -13,7 +13,7 @@ import { VariantChip, type Difficulty } from "@sb-components/designs/chips/Varia
  * with `Typography`, `.map()` the list itself, and pick the icon per content state
  * itself.
  *
- * ⚠️ RENDER CONSISTENCY (teacher's eye-check 2026-07-25): **don't invent a new
+ * RENDER CONSISTENCY (teacher's eye-check 2026-07-25): **don't invent a new
  * render concept.** This cluster and `LearnNudges` right above it LOOK IDENTICAL
  * (a list of rows inside a bordered frame), so they must share ONE layout:
  * `SurfaceCard.List`. The first version of this block drew its own
@@ -25,12 +25,12 @@ import { VariantChip, type Difficulty } from "@sb-components/designs/chips/Varia
  * THE BLOCK OWNS: state → leading icon map · difficulty chip · premium lock mark ·
  * **AND THE HEADING SENTENCE ITSELF**. The caller only hands over DOMAIN DATA.
  *
- * ⛔ **DOES NOT accept `heading`** (teacher's call 2026-07-26): the heading text is
+ * DOES NOT accept `heading` (teacher's call 2026-07-26): the heading text is
  * presentation, the block owns it. The caller only states the **module name**
  * (`module`) — an entity; the block assembles the whole heading itself.
  * Accepting `heading` would open a custom escape hatch (§14d.1).
  *
- * 📛 **TERMINOLOGY: `contents`, NOT `lessons`** (teacher's call 2026-07-26 — strict
+ * TERMINOLOGY, STRICT: `contents`, NOT `lessons` (teacher's call 2026-07-26 — strict
  * everywhere, DON'T trust the old code: `src/` still calls it `lessons`, that's
  * the wrong spot).
  * ─────────────────────────────────────────────────────────────────────────────
@@ -62,14 +62,27 @@ export interface KeepGoingContent {
  * Goes through `leading` (a node) rather than `leadingIcon`, because each state
  * carries its OWN COLOR while `leadingIcon` forces a shared `text-muted`.
  *
- * ALL THREE STATES SHARE ONE ROUND SHAPE (teacher's call 2026-07-26):  rather
- * than  a bare triangle — the two siblings /
- * are both circles, so one shape breaking the mold breaks the row's reading rhythm.
+ * ALL THREE STATES SHARE ONE ROUND SHAPE (teacher's call 2026-07-26): the in-progress
+ * state uses `PlayCircleIcon` (a play mark INSIDE a circle) rather than a bare triangle
+ * (`PlayIcon`) — its two siblings `CheckCircleIcon`/`CircleIcon` are both circles, so one
+ * shape breaking the mould breaks the row's reading rhythm.
  *
- *  — the row's leading icon size (teacher's call 2026-07-26: heading icon = 5;
+ * `size-5` — the row's leading icon size (teacher's call 2026-07-26: heading icon = 5;
  * the icon inside the chip now follows the font instead).
+ *
+ * The three sentences above were left with HOLES by an earlier emoji sweep (the glyphs
+ * were carrying the nouns), and the holes shipped in a commit. That is why removing a
+ * marker means REWRITING the sentence, never just deleting the character.
  */
-const CONTENT_LEADING: Record<KeepGoingContentState, { Icon: typeof CircleIcon, className: string }> = {
+/** The leading mark one content state resolves to: which glyph, and how it is coloured. */
+interface ContentLeadingStyle {
+    /** Phosphor glyph component for this state. */
+    Icon: typeof CircleIcon
+    /** Size + colour classes; every state stays on one round shape (see the note above). */
+    className: string
+}
+
+const CONTENT_LEADING: Record<KeepGoingContentState, ContentLeadingStyle> = {
     active: { Icon: PlayCircleIcon, className: "size-5 text-accent-soft-foreground" },
     done: { Icon: CheckCircleIcon, className: "size-5 text-success-soft-foreground" },
     todo: { Icon: CircleIcon, className: "size-5 text-foreground" },
@@ -91,21 +104,34 @@ const CONTENT_LEADING: Record<KeepGoingContentState, { Icon: typeof CircleIcon, 
  */
 const LOCKED_LEADING = { Icon: LockIcon, className: "size-5 text-warning-soft-foreground" }
 
+/**
+ * The MODULE this path belongs to.
+ *
+ * 2026-07-27 (teacher: "pass the module, not the module title — at block tier you stop
+ * passing generic strings"): the prop used to be `moduleTitle: string` and every caller
+ * shipped `"Chương 2 · Container hoá"`. That string carried TWO decisions the caller had
+ * no business making — the word "Chương" and the `·` separator — while the block only
+ * bolted "Tiếp tục ·" on the front, so one heading was assembled in two places.
+ *
+ * A `string` prop cannot be checked: nothing stops a caller sending `"chương 2-"` or a
+ * completely different sentence. Two named fields make the wrong shape UNTYPEABLE.
+ *
+ * Declared as a NAMED, EXPORTED interface rather than inline `{ index: number; name:
+ * string }` (teacher, 2026-07-27: "typesafe đàng hoàng"): an inline shape has no name to
+ * import, so a caller building this object has nothing to type it against and every
+ * call-site re-describes it by hand.
+ */
+export interface ModuleLike {
+    /** 1-based position of the module inside the course. */
+    index: number
+    /** Module name WITHOUT any prefix — the block adds "Chương"/"Tiếp tục" itself. */
+    name: string
+}
+
 /** Props for {@link KeepGoingPath.Base}. */
 export interface KeepGoingPathBaseProps {
-    /**
-     * The current MODULE as an ENTITY — never a pre-baked string.
-     *
-     * ⭐ 2026-07-27 (teacher: "pass the module, not the module title — at block tier you
-     * stop passing generic strings"): this used to be `moduleTitle: string`, and every
-     * caller shipped `"Chương 2 · Container hoá"`. That string is TWO decisions the
-     * caller had no business making — the word "Chương" and the `·` separator. The block
-     * only bolted "Tiếp tục ·" on the front, so the heading was assembled in two places.
-     *
-     * A `string` prop cannot be checked: nothing stops a caller sending `"chương 2-"` or
-     * a fully different sentence. `{ index, name }` makes the wrong shape UNTYPEABLE.
-     */
-    module: { index: number; name: string }
+    /** The current module as an ENTITY — never a pre-baked string. See {@link ModuleLike}. */
+    module: ModuleLike
     /** The content items in the continue-learning path. */
     contents: Array<KeepGoingContent>
     /**
@@ -117,7 +143,7 @@ export interface KeepGoingPathBaseProps {
      * Empty while loading (`contents.length === 0`) → guesses **3** rows, matching
      * this pass's convention for repeating lists.
      *
-     * ⚠️ The leading icon (play/check/circle/lock) is chosen DIRECTLY by the block
+     * NOTE: the leading icon (play/check/circle/lock) is chosen DIRECTLY by the block
      * itself from the `CONTENT_LEADING`/`LOCKED_LEADING` table — it doesn't go
      * through any atom — so this is exactly the §12c case that allows hand-rolling
      * ONE shimmer dot in place of the icon, instead of branching off to build a

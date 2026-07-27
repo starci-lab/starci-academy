@@ -34,8 +34,18 @@ export default meta
 
 type Story = StoryObj<typeof Progress.Meter>
 
+/** One row of the `Colors` demo table — a single `ProgressColor` tone plus its sample reading. */
+interface ColorRow {
+    /** The `ProgressColor` tone this row demonstrates. */
+    color: ProgressColor
+    /** Aria label describing what the reading means. */
+    label: string
+    /** Meter value (0-100) shown for this tone. */
+    value: number
+}
+
 /** ĐỦ union `ProgressColor` — 5 tone. Với Meter, màu tải nghĩa NGƯỠNG chứ không trang trí. */
-const METER_COLORS: Array<{ color: ProgressColor; label: string; value: number }> = [
+const METER_COLORS: Array<ColorRow> = [
     { color: "accent", label: "Storage used", value: 55 },
     { color: "success", label: "Well within limit", value: 30 },
     { color: "warning", label: "Approaching the cap", value: 65 },
@@ -43,8 +53,16 @@ const METER_COLORS: Array<{ color: ProgressColor; label: string; value: number }
     { color: "default", label: "Unrated measurement", value: 48 },
 ]
 
+/** One row of the `Sizes` demo table — a single `ProgressSize` tier plus its aria label. */
+interface SizeRow {
+    /** The `ProgressSize` tier this row demonstrates. */
+    size: ProgressSize
+    /** Aria label describing this row's meter. */
+    label: string
+}
+
 /** ĐỦ union `ProgressSize` — 3 mốc chiều cao. */
-const METER_SIZES: Array<{ size: ProgressSize; label: string }> = [
+const METER_SIZES: Array<SizeRow> = [
     { size: "sm", label: "Compact row" },
     { size: "md", label: "Default row" },
     { size: "lg", label: "Prominent row" },

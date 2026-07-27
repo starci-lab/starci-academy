@@ -18,7 +18,13 @@ import { Label, Typography } from "@heroui/react"
  */
 
 /** The outer stack for a gallery story — evenly-spaced variant sections. */
-export const Gallery = ({ children }: { children: React.ReactNode }) => (
+/** Props for {@link Gallery}. */
+export interface GalleryProps {
+    /** The rows being shown side by side. */
+    children: React.ReactNode
+}
+
+export const Gallery = ({ children }: GalleryProps) => (
     <div className="flex w-full flex-col gap-6">{children}</div>
 )
 

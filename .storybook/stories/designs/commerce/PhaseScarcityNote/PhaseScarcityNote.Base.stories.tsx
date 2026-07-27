@@ -4,6 +4,7 @@ import {
     PhaseScarcityNote,
     PricingPhase,
 } from "@sb-components/designs/commerce/PhaseScarcityNote/PhaseScarcityNote"
+import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -13,12 +14,13 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * ABSOLUTELY does not fabricate a countdown or a seat count — fake scarcity is a
  * forbidden dark pattern. Consequence: a phase with no seat cap stays **silent**.
  *
- * 📐 **LEAF by STRUCTURE** (§14d.2): the three leaves below are REAL leaves because
- * each one **loses a node**. Switching phase (Pioneer/Early Bird/Regular) only
- * changes text ⇒ a STATE, rendered together within the both-clauses leaf.
+ * ONE LEAF (teacher, 2026-07-27). Every difference this line can show comes from BACKEND
+ * DATA — the seat count, whether a next-phase price exists, whether the phase is capped —
+ * so they are STATES stacked inside a single leaf. A leaf is earned by a trục the CALLER
+ * toggles, and the caller here always passes the same three props.
  */
 const meta: Meta<typeof PhaseScarcityNote.Base> = {
-    title: "Designs/Commerce/PhaseScarcityNote.Base",
+    title: "Designs/Commerce/PhaseScarcityNote/PhaseScarcityNote.Base",
     component: PhaseScarcityNote.Base,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },
@@ -65,72 +67,87 @@ const leafShell = (leaf: string, node: ReactNode, note?: ReactNode, code?: strin
     </div>
 )
 
-/** LEAF — both clauses present. All three phases render together: switching phase only changes TEXT, not the node. */
-export const FullClause: Story = {
+/** One labelled row of the scarcity ladder, so the reader can tell the states apart. */
+const Rung = ({ label, node }: RungProps) => (
+    <div className="flex flex-col gap-1">
+        <Typography.Base size="xs" color="muted" text={label} />
+        {node}
+    </div>
+)
+
+/** Props for {@link Rung}. */
+interface RungProps {
+    /** What data produced this row (not product copy — a label for the reader). */
+    label: string
+    /** The component rendered in that state. */
+    node: ReactNode
+}
+
+/**
+ * The ONLY leaf. Every difference below comes from BACKEND DATA — seat count, whether a
+ * next-phase price exists, whether the phase is capped at all — so they are STATES of one
+ * line, not separate leaves (teacher, 2026-07-27: "coi như state đi, render nhiều state
+ * trong 1 leaf").
+ *
+ * A leaf would be earned by a trục the CALLER toggles. Nothing here is caller-toggled: the
+ * caller always passes the same three props and the backend decides which rung shows.
+ *
+ * This replaces three leaves (`FullClause` · `NoPriceRise` · `Silent`). Split apart, the
+ * reader had to open three stories and hold them in memory to see that the last two rungs
+ * drop nodes; stacked, the drop is visible in one glance.
+ */
+export const Default: Story = {
     render: () =>
         leafShell(
-            "Both clauses",
-            <div className="flex flex-col gap-3">
-                <PhaseScarcityNote.Base
-                    showAnatomy
-                    currentPhase={PricingPhase.EarlyBird}
-                    seatsRemaining={14}
-                    nextPhasePriceVnd={2_490_000}
+            "Default",
+            <div className="flex flex-col gap-4">
+                <Rung
+                    label="seats 14 · next price 2,490,000 — both clauses"
+                    node={
+                        <PhaseScarcityNote.Base
+                            showAnatomy
+                            currentPhase={PricingPhase.EarlyBird}
+                            seatsRemaining={14}
+                            nextPhasePriceVnd={2_490_000}
+                        />
+                    }
                 />
-                <PhaseScarcityNote.Base
-                    currentPhase={PricingPhase.Pioneer}
-                    seatsRemaining={3}
-                    nextPhasePriceVnd={1_990_000}
+                <Rung
+                    label="seats 3 · another phase — same nodes, only the number and the label change"
+                    node={
+                        <PhaseScarcityNote.Base
+                            currentPhase={PricingPhase.Pioneer}
+                            seatsRemaining={3}
+                            nextPhasePriceVnd={1_990_000}
+                        />
+                    }
+                />
+                <Rung
+                    label="next price null — Separator + PriceRiseClause DROP OUT"
+                    node={
+                        <PhaseScarcityNote.Base
+                            currentPhase={PricingPhase.Regular}
+                            seatsRemaining={5}
+                            nextPhasePriceVnd={null}
+                        />
+                    }
+                />
+                <Rung
+                    label="seats null (uncapped phase) — renders NOTHING, and the blank below is the contract"
+                    node={
+                        <PhaseScarcityNote.Base
+                            currentPhase={PricingPhase.Regular}
+                            seatsRemaining={null}
+                            nextPhasePriceVnd={2_990_000}
+                        />
+                    }
                 />
             </div>,
-            "Three phases with different labels but the same DOM tree ⇒ state, not a leaf.",
+            "All four rungs are driven by data: the seat count, whether a next-phase price exists, and whether the phase is capped. The third rung is two nodes shorter than the first, and the fourth renders nothing at all — with no seat cap there is no honest 'when does the price rise' claim to make, so silence is the contract rather than a render bug.",
             `<PhaseScarcityNote.Base
     currentPhase={PricingPhase.EarlyBird}
     seatsRemaining={14}
     nextPhasePriceVnd={2490000}
-/>`,
-        ),
-}
-
-/** LEAF — the last phase, no next price ⇒ **loses** `Separator` + `PriceRiseClause`. */
-export const NoPriceRise: Story = {
-    render: () =>
-        leafShell(
-            "No price rise",
-            <PhaseScarcityNote.Base
-                showAnatomy
-                currentPhase={PricingPhase.Regular}
-                seatsRemaining={5}
-                nextPhasePriceVnd={null}
-            />,
-            "Two fewer nodes than the leaf above — that's the actual reason to split leaves.",
-            `<PhaseScarcityNote.Base
-    currentPhase={PricingPhase.Regular}
-    seatsRemaining={5}
-    nextPhasePriceVnd={null}
-/>`,
-        ),
-}
-
-/**
- * LEAF — no seat cap ⇒ **renders NULL**. With no seat cap there's no honest "when does
- * the price rise" story to tell, so it stays silent instead of making one up.
- */
-export const Silent: Story = {
-    render: () =>
-        leafShell(
-            "No seat cap",
-            <PhaseScarcityNote.Base
-                showAnatomy
-                currentPhase={PricingPhase.Regular}
-                seatsRemaining={null}
-                nextPhasePriceVnd={2_990_000}
-            />,
-            "No parts at all — silence is the contract here, not a render bug.",
-            `<PhaseScarcityNote.Base
-    currentPhase={PricingPhase.Regular}
-    seatsRemaining={null}
-    nextPhasePriceVnd={2990000}
 />`,
         ),
 }

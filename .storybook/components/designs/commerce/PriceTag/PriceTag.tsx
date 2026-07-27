@@ -1,5 +1,5 @@
 import React from "react"
-import { Popover, Typography, cn } from "@heroui/react"
+import { Popover, cn } from "@heroui/react"
 import { Chip } from "@sb-components/atoms/chips/Chip/Chip"
 import { Cluster } from "@sb-components/layouts/layout/Cluster/Cluster"
 import { Stack } from "@sb-components/layouts/layout/Stack/Stack"
@@ -19,11 +19,14 @@ import { Typography as TypographyAtom } from "@sb-components/atoms/text/Typograp
 export type PriceCurrency = "VND" | "USD"
 
 /**
- * The role a price plays on a surface — decides the amount's font size. INTERNAL,
+ * How loud the price is on its surface — decides the amount's font size. INTERNAL,
+ * and deliberately NOT named `role`: that word is a DOM/ARIA attribute, so a prop by
+ * that name reads as an accessibility role to both a reader and to eslint-jsx-a11y
+ * (which flagged `role="prominent"` as an invalid ARIA role three times).
  * not exposed as a prop (§14d.1): the caller picks a MEMBER (`PriceTag.Inline` /
  * `PriceTag.Prominent`), not a size.
  */
-type PriceRole = "inline" | "prominent"
+type PriceEmphasis = "inline" | "prominent"
 
 /** Breakdown rows for the breakdown popover (amounts in the SAME currency as the price). */
 export interface PriceBreakdown {
@@ -82,13 +85,13 @@ export interface PriceTagProps {
  * ⚠️ DROPPED the `lg` step (2026-07-26): neither `src` nor the design uses it —
  * it only lived in its own story — §14d.3 (*which screen in the app needs it?*).
  */
-const AMOUNT_TYPE: Record<PriceRole, "base" | "h4"> = {
+const AMOUNT_TYPE: Record<PriceEmphasis, "base" | "h4"> = {
     inline: "base",
     prominent: "h4",
 }
 
 /** Role → struck-through original-price line size, placed next to {@link AMOUNT_TYPE} so the two scales don't drift apart. */
-const ORIGINAL_TYPE: Record<PriceRole, "xs" | "sm"> = {
+const ORIGINAL_TYPE: Record<PriceEmphasis, "xs" | "sm"> = {
     inline: "xs",
     prominent: "sm",
 }
@@ -117,14 +120,14 @@ const PriceTagBase = ({
     discounted,
     original,
     currency = "VND",
-    role,
+    emphasis,
     isSkeleton = false,
     breakdown,
     showSavingLine = true,
     className,
     anatPart,
     showAnatomy,
-}: PriceTagProps & { role: PriceRole }) => {
+}: PriceTagProps & { emphasis: PriceEmphasis }) => {
     const hasSaving = original != null && original > discounted
     const savePercent = hasSaving ? savingPercent(original, discounted) : 0
 
@@ -166,10 +169,16 @@ const PriceTagBase = ({
         // would MERGE into one node and the tree would read wrong. The node that
         // matters inside the popover is `KeyValue.List` — that one is badged; the
         // wrapping column is just `p-3` padding.
-        <Stack.V gap={1} className="p-3">
+        // Two vertical rows inside a design (the eyebrow and the breakdown list) =
+        // `grouped` (§10b), not `tight`. `tight` (1) is reserved for what sits INSIDE a
+        // primitive, e.g. the icon+label pair of `InlineIconLabel`.
+        <Stack.V gap={3} className="p-3">
             <TypographyAtom.Base size="xs" color="muted" text="Chi tiết giá" />
+            {/* No `gap` passed: `KeyValue.List` already owns its row rhythm (its own default
+                is the §10b `grouped` step). Passing one from here overrides the primitive's
+                spacing from OUTSIDE, which §10 forbids — a primitive owns its internal
+                spacing and must not receive it. */}
             <KeyValue.List
-                gap={1}
                 anatPart={showAnatomy ? "KeyValue.List" : undefined}
                 items={[
                     {
@@ -219,7 +228,10 @@ const PriceTagBase = ({
         // The outer column = two DIFFERENT lines (the price row · the "saving" line) ⇒
         // `Stack.V`, NOT `Cluster`: a cluster is ONE track of N PEER elements (§13b).
         <Stack.V
-            gap={1}
+            // `grouped` (§10b): the price row and the saving line are two DIFFERENT vertical
+            // rows of one design. It was `tight` (1), which §10b reserves for pairs sitting
+            // inside a primitive — the saving line read as if it were glued under the number.
+            gap={3}
             className={className}
             anatPart={anatPart ?? (showAnatomy ? "Stack.V" : undefined)}
         >
@@ -239,7 +251,7 @@ const PriceTagBase = ({
                         // of branching off to build a separate shimmer bar.
                         content: (
                             <TypographyAtom.Base
-                                size={AMOUNT_TYPE[role]}
+                                size={AMOUNT_TYPE[emphasis]}
                                 weight="bold"
                                 isSkeleton={isSkeleton}
                                 className={isSkeleton ? "w-28" : undefined}
@@ -253,7 +265,7 @@ const PriceTagBase = ({
                             key: "original",
                             content: (
                                 <TypographyAtom.Base
-                                    size={ORIGINAL_TYPE[role]}
+                                    size={ORIGINAL_TYPE[emphasis]}
                                     color="muted"
                                     isSkeleton={isSkeleton}
                                     className={cn("line-through", isSkeleton && "w-16")}
@@ -324,9 +336,9 @@ const PriceTagBase = ({
  * chose the shape, and nobody ever used the `lg` step.
  */
 export const PriceTag = Object.assign(
-    (props: PriceTagProps) => <PriceTagBase {...props} role="prominent" />,
+    (props: PriceTagProps) => <PriceTagBase {...props} emphasis="prominent" />,
     {
-        Prominent: (props: PriceTagProps) => <PriceTagBase {...props} role="prominent" />,
-        Inline: (props: PriceTagProps) => <PriceTagBase {...props} role="inline" />,
+        Prominent: (props: PriceTagProps) => <PriceTagBase {...props} emphasis="prominent" />,
+        Inline: (props: PriceTagProps) => <PriceTagBase {...props} emphasis="inline" />,
     },
 )

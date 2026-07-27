@@ -3,8 +3,8 @@ import { CourseContents } from "@sb-components/screens/CourseContents/CourseCont
 import { deviceLeaf } from "@sb-components/screens/CourseContents/_shared"
 
 /**
- * SCREEN `/learn/content` at TABLET (768px, `@app-sm` … below `@app-lg`) — EMPTY:
- * `AsyncContent.Empty` replaces the WHOLE dashboard spine.
+ * SCREEN `/learn/content` at TABLET (768px, `@app-sm` … below `@app-lg`) — EMPTY: the course has no
+ * contents yet, so `AsyncContent.Empty` replaces the WHOLE dashboard spine.
  */
 const W = 768
 

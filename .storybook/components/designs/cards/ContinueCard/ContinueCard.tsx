@@ -1,5 +1,4 @@
 import React from "react"
-import type { ComponentType, SVGProps } from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { ArrowRightIcon } from "@phosphor-icons/react"
 import { SurfaceCard } from "@sb-components/layouts/cards/SurfaceCard/SurfaceCard"

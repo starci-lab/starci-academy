@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import type { ReactNode } from "react"
 import { cn, Skeleton as HeroSkeleton } from "@heroui/react"
 import { CaretDownIcon } from "@phosphor-icons/react"
+import { SKELETON_TEXT_BAR_SM } from "@sb-components/atoms/_skeleton-bar"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -112,7 +113,7 @@ const Base = ({
                     data-anat-part={showAnatomy ? "Skeleton" : undefined}
                 >
                     <CaretDownIcon className="size-4 shrink-0" weight="bold" aria-hidden focusable="false" />
-                    <HeroSkeleton className="my-[3px] h-[14px] w-24 rounded" />
+                    <HeroSkeleton className={cn(SKELETON_TEXT_BAR_SM, "w-24")} />
                 </div>
             </div>
         )

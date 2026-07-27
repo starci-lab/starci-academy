@@ -46,16 +46,30 @@ const ACTIONS_ONLY_PARTS: Array<AnatomyNode> = [
     { name: "Actions", tier: "primitive", role: "button cluster fills the whole bar, keeps the caller's own w-full/flex-1" },
 ]
 
+/** Props for the local `PriceTag` helper — a faithful mini price display. */
+interface PriceTagProps {
+    /** Discounted price shown in bold. */
+    discounted: number
+    /** Original price shown struck through. */
+    original: number
+}
+
 // TODO: swap for PriceTag local when ported — a faithful mini price display.
-const PriceTag = ({ discounted, original }: { discounted: number; original: number }) => (
+const PriceTag = ({ discounted, original }: PriceTagProps) => (
     <div className="flex items-baseline gap-2">
         <Typography type="body" weight="bold">{discounted.toLocaleString("vi-VN")}đ</Typography>
         <Typography type="body-xs" color="muted" className="line-through">{original.toLocaleString("vi-VN")}đ</Typography>
     </div>
 )
 
+/** Props for the local `Screen` helper — a phone-screen shell wrapping the bar under test. */
+interface ScreenProps {
+    /** The `Page.BottomBar` under test, pinned to the bottom of the frame. */
+    bar: ReactNode
+}
+
 /** Phone-screen shell: fixed-height outer frame, inner pane scrolls, the bar sits `absolute` on the OUTER frame. */
-const Screen = ({ bar }: { bar: ReactNode }) => (
+const Screen = ({ bar }: ScreenProps) => (
     <div className="relative h-[28rem] w-96 overflow-hidden bg-background">
         <div className="h-full overflow-y-auto px-4 pb-24 pt-4">
             <div className="flex flex-col gap-3">

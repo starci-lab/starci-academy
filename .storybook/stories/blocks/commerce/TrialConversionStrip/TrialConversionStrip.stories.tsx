@@ -8,7 +8,7 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * loss-aversion line (free lessons remaining), the real price (+ phase-scarcity
  * note), and an enroll CTA. `src` is STORE-COUPLED (SWR price fetch + zustand
  * payment overlay) — this port takes the SAME data as PLAIN PROPS (`price`,
- * `isPriceLoading`, `onEnroll`) so it renders standalone. Leaves differ by
+ * `isSkeleton`, `onEnroll`) so it renders standalone. Leaves differ by
  * SHAPE: price loading (skeleton mirror) vs price landed (PriceTag +
  * PhaseScarcityNote), and by content (free lessons remaining vs none left).
  *
@@ -17,7 +17,7 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * there is no separate consolidated "Anatomy" story.
  */
 const meta: Meta<typeof TrialConversionStrip> = {
-    title: "Blocks/Commerce/TrialConversionStrip",
+    title: "Blocks/Commerce/TrialConversionStrip/TrialConversionStrip.Base",
     component: TrialConversionStrip,
     tags: ["autodocs"],
     parameters: {
@@ -137,29 +137,36 @@ const LOADED_PARTS: Array<AnatomyNode> = framed([
     // Before, it lacked that prop ⇒ the root emitted no `data-anat-part` ⇒ the amber
     // text line vanished from the tree even though it still rendered, while its four
     // internal spans leaked out as separate siblings.
-    { name: "PhaseScarcityNote", tier: "design", role: "seats left in the current phase + the price it rises to", storyId: "designs-commerce-phasescarcitynote-base--full-clause" },
+    { name: "PhaseScarcityNote", tier: "design", role: "seats left in the current phase + the price it rises to", storyId: "designs-commerce-phasescarcitynote-phasescarcitynote-base--default" },
     { name: "Button", tier: "primitive", role: "CTA to unlock the whole course", storyId: "atoms-buttons-button-button-base--default" },
 ])
 
-/** Price fetch in flight, no price landed yet — the price section mirrors via Skeleton.Typography. */
-export const PriceLoading: Story = {
+/**
+ * Leaf for `isSkeleton`. Only the PRICE region rests — the header and the CTA do not
+ * depend on the price, so they render at once and the two shimmer bars stand exactly where
+ * PriceTag + PhaseScarcityNote will land, which is what keeps the layout from jumping.
+ *
+ * Export renamed from `PriceLoading` (2026-07-27): a leaf is named after the TRUC it draws,
+ * and the prop is `isSkeleton` at every tier.
+ */
+export const Skeleton: Story = {
     render: () =>
         frame(
             <BlockAnatomy
                 name="TrialConversionStrip"
                 tier="block"
-                leaf="Loading"
+                leaf="Prop `isSkeleton`"
                 parts={LOADING_PARTS}
                 reason="The conversion strip bundles 3 honest levers right on the surface the learner is standing on: loss (N free lessons left), scarcity (PhaseScarcityNote — real seats + the price it rises to), and the unlock CTA. The header (IconTile + title/description) renders IMMEDIATELY since it doesn't depend on price; only the price block mirrors via Skeleton.Typography (h4 + body-xs, matching the exact box PriceTag/PhaseScarcityNote will occupy) so layout never jumps once the price lands. The button always renders — the CTA doesn't wait for price."
                 code={`<TrialConversionStrip
     freeLessonsRemaining={3}
-    isPriceLoading
+    isSkeleton
     onEnroll={handleEnroll}
 />`}
             >
                 <TrialConversionStrip
                     freeLessonsRemaining={3}
-                    isPriceLoading
+                    isSkeleton
                     onEnroll={() => {}}
                     showAnatomy
                 />
@@ -167,54 +174,45 @@ export const PriceLoading: Story = {
         ),
 }
 
-/** Price landed, free lessons still remaining — the main "keep going" leaf. */
-export const PriceLoadedWithFreeLeft: Story = {
+/**
+ * The loaded leaf. The two rows below differ ONLY in `freeLessonsRemaining`, which is
+ * BACKEND DATA — so they are two STATES of one leaf, not two leaves (teacher, 2026-07-27:
+ * "coi như state đi, render nhiều state trong 1 leaf").
+ *
+ * This replaces `PriceLoadedWithFreeLeft` + `PriceLoadedNoFreeLeft`. The old split had
+ * already written its own verdict in its note — "SAME composition as the leaf above" — and
+ * a leaf whose own note says its composition is unchanged is a state wearing a leaf's coat.
+ * Measured before merging: `hasFreeLeft` only swaps the `subtitle` STRING; the node tree is
+ * identical.
+ */
+export const Default: Story = {
     render: () =>
         frame(
             <BlockAnatomy
                 name="TrialConversionStrip"
                 tier="block"
-                leaf="PriceLoadedWithFreeLeft"
+                leaf="Default"
                 parts={LOADED_PARTS}
-                note="Price has landed (PriceTag + PhaseScarcityNote replace the 2 Skeleton.Typography bars) — the description uses the line 'N free lessons left unread' (loss-aversion)."
+                note="Price has landed, so PriceTag + PhaseScarcityNote stand where the two shimmer bars were. The first row still has free lessons left and leans on loss-aversion; the second has none left and switches to the closing line. Same nodes, different sentence."
                 code={`<TrialConversionStrip
     freeLessonsRemaining={3}
     price={price}
     onEnroll={handleEnroll}
 />`}
             >
-                <TrialConversionStrip
-                    freeLessonsRemaining={3}
-                    price={SAMPLE_PRICE}
-                    onEnroll={() => {}}
-                    showAnatomy
-                />
-            </BlockAnatomy>,
-        ),
-}
-
-/** Price landed, no free lessons left — description switches to the generic pitch. */
-export const PriceLoadedNoFreeLeft: Story = {
-    render: () =>
-        frame(
-            <BlockAnatomy
-                name="TrialConversionStrip"
-                tier="block"
-                leaf="PriceLoadedNoFreeLeft"
-                parts={LOADED_PARTS}
-                note="freeLessonsRemaining = 0 → Typography · description switches to the generic closing line (all free lessons read), SAME composition as the leaf above."
-                code={`<TrialConversionStrip
-    freeLessonsRemaining={0}
-    price={price}
-    onEnroll={handleEnroll}
-/>`}
-            >
-                <TrialConversionStrip
-                    freeLessonsRemaining={0}
-                    price={SAMPLE_PRICE}
-                    onEnroll={() => {}}
-                    showAnatomy
-                />
+                <div className="flex flex-col gap-6">
+                    <TrialConversionStrip
+                        freeLessonsRemaining={3}
+                        price={SAMPLE_PRICE}
+                        onEnroll={() => {}}
+                        showAnatomy
+                    />
+                    <TrialConversionStrip
+                        freeLessonsRemaining={0}
+                        price={SAMPLE_PRICE}
+                        onEnroll={() => {}}
+                    />
+                </div>
             </BlockAnatomy>,
         ),
 }

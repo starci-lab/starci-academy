@@ -23,7 +23,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * add or remove a node.
  */
 const meta: Meta<typeof KeepGoingPath.Base> = {
-    title: "Blocks/Learn/KeepGoingPath.Base",
+    title: "Blocks/Learn/KeepGoingPath/KeepGoingPath.Base",
     component: KeepGoingPath.Base,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },
@@ -48,7 +48,7 @@ const ANNOTATE: Record<string, AnatomyAnnotation> = {
         role: "frame + row rhythm — SHARED with LearnNudges so no second render path is born",
     },
     "VariantChip.Difficulty": {
-        storyId: "designs-chips-variantchip-difficulty--levels",
+        storyId: "designs-chips-variantchip-variantchip-difficulty--levels",
         tier: "design",
         role: "difficulty role — a 4-step ramp, not a status token",
     },
@@ -106,7 +106,7 @@ export const Skeleton: Story = {
                 parts={[]}
                 annotate={ANNOTATE}
                 note="isSkeleton with empty contents → assume 3 rows so the frame keeps its height."
-                code={`<KeepGoingPath.Base isSkeleton module={{ index: 2, name: "Container hoá" }} contents={[]} />`}
+                code={"<KeepGoingPath.Base isSkeleton module={{ index: 2, name: \"Container hoá\" }} contents={[]} />"}
             >
                 <KeepGoingPath.Base
                     anatPart="SurfaceCard.List"

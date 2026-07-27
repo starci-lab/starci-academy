@@ -25,6 +25,20 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 export type TitledTextSize = "row" | "header" | "stat"
 
 /** Typography `size` + tone config resolved per {@link TitledTextSize}. */
+/**
+ * Skeleton bar width per line. Named so the widths can be typed where they are WRITTEN, not
+ * only where they are read: the classes must be literal (`w-1/2`) because Tailwind only emits
+ * a class it can see as a literal string in the source.
+ */
+interface TitledTextSkeletonWidths {
+    /** Width class of the title bar. */
+    title: string
+    /** Width class of the subtitle bar. */
+    sub: string
+    /** Width class of the hint bar. */
+    hint: string
+}
+
 interface SizeConfig {
     titleSize: "sm" | "h3"
     titleWeight: "medium" | "semibold" | "bold"
@@ -37,7 +51,7 @@ interface SizeConfig {
      * build it dynamically (`w-${…}`), since Tailwind only generates a class from a
      * literal string it scans in the source.
      */
-    skeleton: { title: string; sub: string; hint: string }
+    skeleton: TitledTextSkeletonWidths
 }
 
 const SIZE_CONFIG: Record<TitledTextSize, SizeConfig> = {

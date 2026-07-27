@@ -1,1 +1,5 @@
 npx lint-staged
+
+# Deps link trong panel anatomy: `storyId` trỏ sai thì KHÔNG có gì đỏ — không tsc,
+# không eslint, không build. Chỉ lúc bấm mới biết. Nên chặn ở đây (continue.md #4).
+node scripts/check-story-ids.mjs

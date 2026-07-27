@@ -70,8 +70,18 @@ export const Loading: Story = {
     ),
 }
 
+/** One row of the color demo table below. */
+interface CircleColorRow {
+    /** color token applied to the ring's fill arc */
+    color: ProgressColor
+    /** aria-label describing what the ring measures */
+    label: string
+    /** progress value (0-100) shown by this row */
+    value: number
+}
+
 /** ĐỦ union `ProgressColor` — thiếu một giá trị là giá trị đó sẽ mọc thành leaf lạc chỗ. */
-const CIRCLE_COLORS: Array<{ color: ProgressColor; label: string; value: number }> = [
+const CIRCLE_COLORS: Array<CircleColorRow> = [
     { color: "accent", label: "Course progress", value: 55 },
     { color: "success", label: "Upload complete", value: 100 },
     { color: "warning", label: "Sync needs attention", value: 40 },
@@ -111,8 +121,16 @@ export const Colors: Story = {
     ),
 }
 
+/** One row of the size demo table below. */
+interface CircleSizeRow {
+    /** diameter step applied to the ring */
+    size: ProgressSize
+    /** aria-label describing what the ring measures */
+    label: string
+}
+
 /** ĐỦ union `ProgressSize` — thiếu một giá trị là giá trị đó sẽ mọc thành leaf lạc chỗ. */
-const CIRCLE_SIZES: Array<{ size: ProgressSize; label: string }> = [
+const CIRCLE_SIZES: Array<CircleSizeRow> = [
     { size: "sm", label: "Compact ring" },
     { size: "md", label: "Default ring" },
     { size: "lg", label: "Prominent ring" },

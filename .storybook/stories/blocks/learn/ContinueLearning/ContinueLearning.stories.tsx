@@ -14,7 +14,7 @@ import { BlockAnatomy, type AnatomyNode } from "@sb-utils/BlockAnatomy/BlockAnat
  * is a STATE of that same leaf, not a second leaf.
  */
 const meta: Meta<typeof ContinueLearning.Base> = {
-    title: "Blocks/Learn/ContinueLearning",
+    title: "Blocks/Learn/ContinueLearning/ContinueLearning.Base",
     component: ContinueLearning.Base,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },

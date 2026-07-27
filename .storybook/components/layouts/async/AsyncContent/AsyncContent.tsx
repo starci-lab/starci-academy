@@ -74,6 +74,16 @@ interface MessageProps {
     retryLabel?: ReactNode
     /** Extra class on the wrapper. */
     className?: string
+    /**
+     * Name THIS frame in the BlockAnatomy panel, overriding the internal default
+     * (`"Feedback.Empty"` / `"Feedback.Error"`).
+     *
+     * Required by 11a.1: a caller badges its direct child by passing `anatPart` DOWN,
+     * never by passing `showAnatomy` down. Without this prop, a screen that uses the
+     * frame directly had to name its wrapping Container after the frame — which put the
+     * frame's name and its story link on an element that is not the frame at all.
+     */
+    anatPart?: string
     /** On → emit `data-anat-part` on each part so a BlockAnatomy panel can badge it. */
     showAnatomy?: boolean
 }
@@ -233,10 +243,10 @@ export type AsyncContentEmptyProps = MessageProps
  * @param props - {@link AsyncContentEmptyProps}
  */
 const Empty = (props: AsyncContentEmptyProps) => {
-    const { title, description, icon, className, showAnatomy } = props
+    const { title, description, icon, className, anatPart, showAnatomy } = props
     return (
         <Feedback.Empty
-            anatPart={showAnatomy ? "Feedback.Empty" : undefined}
+            anatPart={anatPart ?? (showAnatomy ? "Feedback.Empty" : undefined)}
             className={className}
             icon={withDuotone(icon ?? TrayIcon)}
             title={title}
@@ -263,10 +273,10 @@ export type AsyncContentErrorProps = MessageProps
  * @param props - {@link AsyncContentErrorProps}
  */
 const ErrorMessage = (props: AsyncContentErrorProps) => {
-    const { title, description, icon, className, showAnatomy } = props
+    const { title, description, icon, className, anatPart, showAnatomy } = props
     return (
         <Feedback.Empty
-            anatPart={showAnatomy ? "Feedback.Empty" : undefined}
+            anatPart={anatPart ?? (showAnatomy ? "Feedback.Empty" : undefined)}
             className={className}
             tone="danger"
             icon={withDuotone(icon ?? WarningIcon)}

@@ -45,8 +45,18 @@ export default meta
 
 type Story = StoryObj<typeof Link.SeeMore>
 
+/** One row of the size demo table below. */
+interface SizeRow {
+    /** step from the `LinkSeeMoreSize` union applied to this row */
+    size: LinkSeeMoreSize
+    /** link text shown for this row */
+    label: string
+    /** short caption explaining when to reach for this size */
+    hint: string
+}
+
 /** The FULL `LinkSeeMoreSize` union. */
-const SIZES: Array<{ size: LinkSeeMoreSize; label: string; hint: string }> = [
+const SIZES: Array<SizeRow> = [
     { size: "sm", label: "See more (sm)", hint: "sits beside a full section label" },
     { size: "xs", label: "See more (xs)", hint: "sits beside a small eyebrow / subtle label" },
 ]

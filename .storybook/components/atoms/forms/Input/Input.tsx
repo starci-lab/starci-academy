@@ -55,7 +55,17 @@ interface FrameProps {
  */
 
 /** A field-box skeleton owned by the atom (hybrid C). */
-const FieldSkeleton = ({ heightCls = "h-9", className, showAnatomy }: { heightCls?: string; className?: string; showAnatomy?: boolean }) => (
+/** Props for the local {@link FieldSkeleton} mirror. */
+interface FieldSkeletonProps {
+    /** Height class of the bar — matches the real control it stands in for. */
+    heightCls?: string
+    /** Placement class only. */
+    className?: string
+    /** Emit `data-anat-part` so a BlockAnatomy panel can badge the mirror. */
+    showAnatomy?: boolean
+}
+
+const FieldSkeleton = ({ heightCls = "h-9", className, showAnatomy }: FieldSkeletonProps) => (
     <HeroSkeleton className={cn("w-full rounded-xl", heightCls, className)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
 )
 
@@ -640,7 +650,7 @@ const InputTags = ({
             <div
                 data-anat-part={showAnatomy ? "Field" : undefined}
                 className={cn(
-                    "bg-default-100 flex w-full flex-wrap items-center gap-1.5 rounded-xl border px-2 py-1.5",
+                    "bg-default-100 flex w-full flex-wrap items-center gap-2 rounded-xl border px-2 py-1.5",
                     invalid ? "border-danger" : "border-default-200",
                     isDisabled && "pointer-events-none opacity-50",
                     className,

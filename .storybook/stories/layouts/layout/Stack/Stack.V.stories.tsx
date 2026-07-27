@@ -27,7 +27,13 @@ export default meta
 type Story = StoryObj<typeof Stack.V>
 
 /** The frame carries no content — the fixture is a real card so the seam between two children is visible. */
-const Panel = ({ text }: { text: string }) => (
+/** Props for the `Panel` fixture helper. */
+interface PanelProps {
+    /** label text shown inside the panel */
+    text: string
+}
+
+const Panel = ({ text }: PanelProps) => (
     <SurfaceCard.Base>
         <Typography.Base size="sm" text={text} />
     </SurfaceCard.Base>

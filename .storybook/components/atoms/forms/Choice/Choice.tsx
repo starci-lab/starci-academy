@@ -8,6 +8,7 @@ import {
     Skeleton as HeroSkeleton,
     cn,
 } from "@heroui/react"
+import { SKELETON_TEXT_BAR } from "@sb-components/atoms/_skeleton-bar"
 import { FieldFrame } from "@sb-components/atoms/forms/_field/FieldFrame"
 
 /**
@@ -84,7 +85,7 @@ const ChoiceCheckbox = ({ isSelected, onValueChange, label, isDisabled, isInvali
     const skeletonControl = (
         <div className={cn("flex items-center gap-3", className)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
             <HeroSkeleton className="size-4 shrink-0 rounded-md" />
-            <HeroSkeleton className="my-[5px] h-[14px] w-32 rounded" />
+            <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-32")} />
         </div>
     )
     return (
@@ -130,7 +131,7 @@ const ChoiceRadio = ({ value, label, isDisabled, isSkeleton, showAnatomy, classN
         return (
             <div className={cn("flex items-center gap-3", className)} data-anat-part={showAnatomy ? "Skeleton" : undefined}>
                 <HeroSkeleton className="size-4 shrink-0 rounded-full" />
-                <HeroSkeleton className="my-[5px] h-[14px] w-32 rounded" />
+                <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-32")} />
             </div>
         )
     }
@@ -208,7 +209,7 @@ const ChoiceRadioGroup = ({
             {Array.from({ length: rows }).map((_, index) => (
                 <div key={index} className="flex items-center gap-3">
                     <HeroSkeleton className="size-4 shrink-0 rounded-full" />
-                    <HeroSkeleton className="my-[5px] h-[14px] w-32 rounded" />
+                    <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-32")} />
                 </div>
             ))}
         </div>
@@ -273,7 +274,7 @@ const ChoiceSwitch = ({ isSelected, onValueChange, label, isDisabled, isInvalid,
     const skeletonControl = (
         <div className={cn("flex items-center gap-3", className)} data-anat-part={anatPart ?? (showAnatomy ? "Skeleton" : undefined)}>
             <HeroSkeleton className="h-9 w-16 shrink-0 rounded-full" />
-            {label != null ? <HeroSkeleton className="my-[5px] h-[14px] w-32 rounded" /> : null}
+            {label != null ? <HeroSkeleton className={cn(SKELETON_TEXT_BAR, "w-32")} /> : null}
         </div>
     )
     return (

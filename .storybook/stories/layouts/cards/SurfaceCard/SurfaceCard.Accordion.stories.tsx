@@ -136,7 +136,17 @@ export const WithLabel: Story = {
  * 2026-07-26 (teacher): merged from the `Bordered` leaf (changed from
  * `bordered?: boolean` to `variant?: SurfaceCardVariant`).
  */
-const VARIANTS: ReadonlyArray<{ variant: SurfaceCardVariant; hint: string }> = [
+/**
+ * One row of the variant demo table.
+ */
+interface VariantRow {
+    /** the variant token this row demonstrates */
+    variant: SurfaceCardVariant
+    /** short note explaining when this variant applies */
+    hint: string
+}
+
+const VARIANTS: ReadonlyArray<VariantRow> = [
     { variant: "surface", hint: "on bare bg-background — the default shadow-surface frame" },
     { variant: "nested", hint: "inside a parent surface — a border replaces the shadow (surface-in-surface, §1a)" },
 ]

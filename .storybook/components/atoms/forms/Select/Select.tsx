@@ -61,7 +61,15 @@ export interface SelectOption {
 }
 
 /** A trigger-box skeleton owned by the atom (hybrid C). */
-const TriggerSkeleton = ({ className, showAnatomy }: { className?: string; showAnatomy?: boolean }) => (
+/** Props for the local {@link TriggerSkeleton} mirror. */
+interface TriggerSkeletonProps {
+    /** Placement class only. */
+    className?: string
+    /** Emit `data-anat-part` so a BlockAnatomy panel can badge the mirror. */
+    showAnatomy?: boolean
+}
+
+const TriggerSkeleton = ({ className, showAnatomy }: TriggerSkeletonProps) => (
     <HeroSkeleton className={cn("h-9 w-full rounded-xl", className)} data-anat-part={showAnatomy ? "Skeleton" : undefined} />
 )
 

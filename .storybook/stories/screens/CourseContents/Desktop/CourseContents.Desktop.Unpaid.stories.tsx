@@ -4,8 +4,8 @@ import { deviceLeaf } from "@sb-components/screens/CourseContents/_shared"
 
 /**
  * SCREEN `/learn/content` at DESKTOP (full width, ≥ `@app-lg`) — UNPAID viewer
- * (`viewer="trial"`): the tree carries TWO extra blocks vs paid (GitHub-team
- * `Feedback.Callout` + `TrialConversionStrip`) → different block tree, own story.
+ * (`viewer="trial"`): the tree carries ONE extra block vs paid
+ * (`TrialConversionStrip`) → a different block tree, so it earns its own story.
  */
 const meta: Meta<typeof CourseContents> = {
     title: "Screens/CourseContents/Desktop/Unpaid",
@@ -18,5 +18,5 @@ export default meta
 type Story = StoryObj<typeof CourseContents>
 
 export const Default: Story = {
-    render: () => deviceLeaf({ viewer: "trial", leaf: "Default", reason: "Not purchased — the tree ADDS CourseTeamGate (GitHub-team gate) + TrialConversionStrip. A different tree from Paid, so it earns its own story." }),
+    render: () => deviceLeaf({ viewer: "trial", leaf: "Default", reason: "Not purchased — the tree ADDS TrialConversionStrip. A different tree from Paid, so it earns its own story." }),
 }

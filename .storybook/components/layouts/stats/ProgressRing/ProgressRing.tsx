@@ -8,12 +8,20 @@ import { Typography } from "@sb-components/atoms/text/Typography/Typography"
  * synced to `src` later.
  */
 
+/** Ring diameter + label type scale that one size step resolves to. */
+interface ProgressRingSizeStyle {
+    /** Diameter class of the ring. */
+    ring: string
+    /** Typography step of the centered label. */
+    label: "body-sm" | "body" | "h5"
+}
+
 /** Ring diameter + centered-label typography, keyed by the {@link ProgressRingProps.size} step. */
 const SIZE_MAP = {
     sm: { ring: "size-16", label: "body-sm" },
     md: { ring: "size-24", label: "body" },
     lg: { ring: "size-32", label: "h5" },
-} as const satisfies Record<"sm" | "md" | "lg", { ring: string; label: "body-sm" | "body" | "h5" }>
+} as const satisfies Record<"sm" | "md" | "lg", ProgressRingSizeStyle>
 
 /**
  * A circular progress ring built on the HeroUI `ProgressCircle` primitive, with a

@@ -1,5 +1,5 @@
 import React from "react"
-import { ContinueCardHero } from "@sb-components/blocks/learn/ContinueCard/ContinueCard"
+import { ContinueCardHero } from "@sb-components/starci/blocks/learn/ContinueCard/ContinueCard"
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────

@@ -16,7 +16,7 @@ import {
 } from "@heroui/react"
 import { SurfaceCardCrossList } from "@sb-components/composites/cards/SurfaceCard/SurfaceCard"
 import { Button } from "@sb-components/_legacy/designs/buttons/Button/Button"
-import { PriceTagInline } from "@sb-components/blocks/commerce/PriceTag/PriceTag"
+import { PriceTagInline } from "@sb-components/starci/blocks/commerce/PriceTag/PriceTag"
 import { Typography } from "@sb-components/atoms/text/Typography/Typography"
 /**
  * STORYBOOK-LOCAL DESIGN SPEC — BLOCK (composite) ported faithfully from

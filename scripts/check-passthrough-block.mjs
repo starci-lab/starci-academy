@@ -34,7 +34,9 @@
 import fs from "node:fs"
 import path from "node:path"
 
-const ROOT = path.resolve(process.argv[2] ?? ".storybook")
+// Skip FLAGS when reading the root. `--control` used to land here as a path and go unnoticed
+// because `walk` tolerates a missing directory; listing app folders does not.
+const ROOT = path.resolve(process.argv.slice(2).find((a) => !a.startsWith("--")) ?? ".storybook")
 
 const walk = (d, out = []) => {
     if (!fs.existsSync(d)) return out
@@ -51,7 +53,15 @@ const rel = (f) => path.relative(process.cwd(), f).split(path.sep).join("/")
 const DECIDES = /return null|\bif\s*\(|\?\s*[A-Za-z"'`{]/
 
 const rows = []
-for (const file of walk(path.join(ROOT, "components", "blocks"))) {
+// Blocks live under an APP folder now (`components/<app>/blocks`), so walking one fixed
+// path would silently check nothing the day a second app lands. Walk every app.
+const blockDirs = fs
+    .readdirSync(path.join(ROOT, "components"), { withFileTypes: true })
+    .filter((e) => e.isDirectory() && !e.name.startsWith("_"))
+    .map((e) => path.join(ROOT, "components", e.name, "blocks"))
+    .filter((p) => fs.existsSync(p))
+
+for (const file of blockDirs.flatMap((d) => walk(d))) {
     const raw = fs.readFileSync(file, "utf8")
     const code = raw.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "")
     if (/Object\.assign/.test(code) && !/<[A-Z]/.test(code)) continue // namespace index only

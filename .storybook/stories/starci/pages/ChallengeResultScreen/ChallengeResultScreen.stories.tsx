@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ChallengeResultScreen } from "@sb-components/starci/screens/ChallengeResultScreen/ChallengeResultScreen"
+import { ChallengeResultScreen } from "@sb-components/starci/pages/ChallengeResultScreen/ChallengeResultScreen"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -27,7 +27,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * not exist yet in this app folder, so nothing here fakes it.
  */
 const meta: Meta<typeof ChallengeResultScreen> = {
-    title: "StarCi/Screens/ChallengeResultScreen/ChallengeResultScreen",
+    title: "StarCi/Pages/ChallengeResultScreen/ChallengeResultScreen",
     component: ChallengeResultScreen,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },

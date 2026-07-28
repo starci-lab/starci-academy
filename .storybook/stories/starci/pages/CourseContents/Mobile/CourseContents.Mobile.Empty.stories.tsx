@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { CourseContents } from "@sb-components/starci/screens/CourseContents/CourseContents"
-import { deviceLeaf } from "@sb-components/starci/screens/CourseContents/_shared"
+import { CourseContents } from "@sb-components/starci/pages/CourseContents/CourseContents"
+import { deviceLeaf } from "@sb-components/starci/pages/CourseContents/_shared"
 
 /**
  * SCREEN `/learn/content` at MOBILE (375px, below `@app-sm`) — EMPTY: the course has no
@@ -9,7 +9,7 @@ import { deviceLeaf } from "@sb-components/starci/screens/CourseContents/_shared
 const W = 375
 
 const meta: Meta<typeof CourseContents> = {
-    title: "StarCi/Screens/CourseContents/Mobile/Empty",
+    title: "StarCi/Pages/CourseContents/Mobile/Empty",
     component: CourseContents,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },

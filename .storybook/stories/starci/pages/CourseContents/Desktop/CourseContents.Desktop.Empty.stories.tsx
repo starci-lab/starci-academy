@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { CourseContents } from "@sb-components/starci/screens/CourseContents/CourseContents"
-import { deviceLeaf } from "@sb-components/starci/screens/CourseContents/_shared"
+import { CourseContents } from "@sb-components/starci/pages/CourseContents/CourseContents"
+import { deviceLeaf } from "@sb-components/starci/pages/CourseContents/_shared"
 
 /**
  * SCREEN `/learn/content` at DESKTOP (full width, ≥ `@app-lg`) — EMPTY: the course has
  * no contents yet, so `AsyncContentEmpty` replaces the WHOLE dashboard spine.
  */
 const meta: Meta<typeof CourseContents> = {
-    title: "StarCi/Screens/CourseContents/Desktop/Empty",
+    title: "StarCi/Pages/CourseContents/Desktop/Empty",
     component: CourseContents,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },

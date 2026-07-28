@@ -6,11 +6,10 @@ starci · miamia · nivo                 ← MỖI APP một miền, không dùn
   └─ blocks · pages · layouts · overlays/{modals,drawers}
 ```
 
-⚠️ **THƯ MỤC TRONG REPO VẪN TÊN `screens/`, CHƯA đổi thành `pages/`.** Thầy chốt 2026-07-28
-đổi tên, nhưng lúc chốt có workflow đang GHI TRỰC TIẾP vào `screens/` — đổi tên thư mục giữa
-lúc agent đang mở file để ghi là mất việc, cùng loại rủi ro đã ghi ở `feedback-parallel-agents-
-shared-worktree-race`. **Việc đầu tiên khi workflow xong: `git mv screens pages`** + remap
-storyId + sửa import/`title:` — xem `steps/11-overlays-layouts-brainstorm.md` §7.
+✅ **`screens/` → `pages/` đã đổi** (2026-07-28). Dừng workflow đang ghi trước (`TaskStop`), đợi
+kho sạch + 9/9 cổng xanh, rồi mới `git mv` + remap storyId qua chính `toId` của Storybook — không
+đoán chuỗi tay. `starci/pages/` đã đổi xong; `miamia/`, `nivo/` chưa có nội dung nên chỉ có khung
+`pages/` rỗng, không cần đổi gì.
 
 `pages` = khớp `page.tsx` của Next.js (nội dung MỘT route, unmount khi rời route).
 `layouts` = khớp `layout.tsx` (khung BỌC QUANH N route con, sống qua nhiều route, có khe

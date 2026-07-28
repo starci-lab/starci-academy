@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { CourseContents } from "@sb-components/starci/screens/CourseContents/CourseContents"
-import { deviceLeaf } from "@sb-components/starci/screens/CourseContents/_shared"
+import { CourseContents } from "@sb-components/starci/pages/CourseContents/CourseContents"
+import { deviceLeaf } from "@sb-components/starci/pages/CourseContents/_shared"
 
 /**
  * SCREEN `/learn/content` at DESKTOP (full width, ≥ `@app-lg`) — PAID viewer:
@@ -10,7 +10,7 @@ import { deviceLeaf } from "@sb-components/starci/screens/CourseContents/_shared
  * satisfies neither.
  */
 const meta: Meta<typeof CourseContents> = {
-    title: "StarCi/Screens/CourseContents/Desktop/Paid",
+    title: "StarCi/Pages/CourseContents/Desktop/Paid",
     component: CourseContents,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },

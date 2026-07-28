@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ChallengeScreen } from "@sb-components/starci/screens/ChallengeScreen/ChallengeScreen"
+import { ChallengeScreen } from "@sb-components/starci/pages/ChallengeScreen/ChallengeScreen"
 import type { ChallengeDeliverableItem } from "@sb-components/starci/blocks/learn/ChallengeDeliverableList/ChallengeDeliverableList"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
@@ -30,7 +30,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * trigger only, same scope cut `ChallengeDeliverableList` already documents.
  */
 const meta: Meta<typeof ChallengeScreen> = {
-    title: "StarCi/Screens/ChallengeScreen/ChallengeScreen",
+    title: "StarCi/Pages/ChallengeScreen/ChallengeScreen",
     component: ChallengeScreen,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },

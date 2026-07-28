@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ModulePageScreen } from "@sb-components/starci/screens/ModulePageScreen/ModulePageScreen"
+import { ModulePageScreen } from "@sb-components/starci/pages/ModulePageScreen/ModulePageScreen"
 import { CourseContentTier } from "@sb-components/starci/blocks/learn/ModuleHeader/ModuleHeader"
 import { PricingPhase } from "@sb-components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
@@ -27,7 +27,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * is a branch the SCREEN itself makes in its own tree.
  */
 const meta: Meta<typeof ModulePageScreen> = {
-    title: "StarCi/Screens/ModulePageScreen/ModulePageScreen",
+    title: "StarCi/Pages/ModulePageScreen/ModulePageScreen",
     component: ModulePageScreen,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
-import { ContentScreen } from "@sb-components/starci/screens/ContentScreen/ContentScreen"
+import { ContentScreen } from "@sb-components/starci/pages/ContentScreen/ContentScreen"
 import { PricingPhase } from "@sb-components/starci/blocks/commerce/PhaseScarcityNote/PhaseScarcityNote"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
@@ -27,7 +27,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  * (§B3), because the stub passes every gate.
  */
 const meta: Meta<typeof ContentScreen> = {
-    title: "StarCi/Screens/ContentScreen/ContentScreen",
+    title: "StarCi/Pages/ContentScreen/ContentScreen",
     component: ContentScreen,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },

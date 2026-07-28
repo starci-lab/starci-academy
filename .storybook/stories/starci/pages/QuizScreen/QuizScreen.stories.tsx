@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs"
 import { CardsIcon, FlameIcon, TargetIcon, TrophyIcon } from "@phosphor-icons/react"
-import { QuizScreen } from "@sb-components/starci/screens/QuizScreen/QuizScreen"
+import { QuizScreen } from "@sb-components/starci/pages/QuizScreen/QuizScreen"
 import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/BlockAnatomy"
 
 /**
@@ -29,7 +29,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
  *   `SetupLoading` (prop flip) · `Active` · `Recap`.
  */
 const meta: Meta<typeof QuizScreen> = {
-    title: "StarCi/Screens/QuizScreen/QuizScreen",
+    title: "StarCi/Pages/QuizScreen/QuizScreen",
     component: QuizScreen,
     tags: ["autodocs"],
     parameters: { layout: "fullscreen" },

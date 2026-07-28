@@ -4,40 +4,34 @@ import { Toolbar, type ToolbarTabItem } from "@sb-components/composites/navigati
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- * BLOCK — `ContentTabBar`: HOW to look at this lesson. Reading, sandbox,
- * challenges, AI lab on the left; the code language on the right.
+ * BLOCK — `ContentModeNav`: HOW to look at this lesson. Modes on the left, the
+ * code language on the right.
  *
- * ⚠️ CORRECTED 2026-07-28. The first cut composed the `Tabs` ATOM directly and
- * rebuilt a worse row on top of it. Wrong twice over. It reached PAST an existing
- * composite — `Toolbar` is already the ported two-group tab row, the thing the app
- * calls `TabsCard` — and in doing so it silently dropped three behaviours the real
- * screen depends on:
+ * ⚠️ NAMED FOR WHAT IT DOES, not what it looks like (renamed from `ContentTabBar`
+ * 2026-07-28). Switching mode changes the ROUTE — the real screen does
+ * `router.replace(?tab=…)` — so this is NAVIGATION, not a tab/panel pair. Calling
+ * it a "tab bar" promised `role="tab"` + `aria-controls` semantics it never had.
+ * The body it switches to is a SEPARATE block (`ContentArticle` and its siblings),
+ * because it is the content of a different route, not a panel this row owns.
  *
- *   • the RIGHT group entirely (the code-language switcher),
- *   • `rightTabsNeutral` — only the LEFT group carries accent, so the row has ONE
- *     accent signal instead of two competing for the eye,
- *   • `collapseRightOnMobile` — the right group becomes a dropdown below `@app-sm`
- *     rather than crowding a narrow reading column with a second tab strip.
- *
- * None of that shows in a screenshot of the happy path, which is exactly why it
- * survived: with one group at desktop width the row LOOKED right.
+ * ⭐ A LOCKED MODE IS CLICKABLE, and clicking it is the WHOLE POINT. The first cut
+ * set `isDisabled` on locked modes, so tapping them did nothing — which quietly
+ * killed the offer this block exists to surface. A locked mode is rendered MUTED
+ * (dimmed) but still fires `onModeChange`; the CALLER decides what a locked tap
+ * means (open the paywall). "What locked does" is a business decision that lives
+ * on the screen, not a behaviour this block gets to hardcode.
  *
  * WHY A BLOCK ON TOP OF `Toolbar`: the composite knows it has two tab groups; it
  * does not know what a reading MODE is. The block owns their order, their words,
- * their icons, and which of them a lesson even offers.
+ * their icons, and which of them a lesson offers.
  *
  * MODE IS AN ENUM, NOT A LIST OF TABS. The caller says `mode="challenges"` and
  * which modes exist; it never hands over labels. Labels from the caller would be
- * §14d.1's pre-formatted-string trap one level up — the caller would end up owning
- * the vocabulary of the whole reading experience.
+ * §14d.1's pre-formatted-string trap one level up.
  *
- * NEVER SKELETONISED, on purpose. The row is static chrome: known before any
- * lesson data lands, so it paints immediately and gives the reader something to
- * act on while the body loads. There is no `isSkeleton` prop at all rather than
- * one that is quietly unused.
- *
- * A LOCKED MODE STAYS VISIBLE, rendered disabled. The learner should see the mode
- * exists; removing it would make the paywall a surprise instead of an offer.
+ * NEVER SKELETONISED, on purpose. Static chrome, known before any lesson data
+ * lands, so it paints immediately. There is no `isSkeleton` prop at all rather
+ * than one quietly unused.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -62,11 +56,11 @@ const MODE_ICON: Record<ContentMode, React.ReactNode> = {
     aiLab: <SparkleIcon aria-hidden focusable="false" className="size-4" />,
 }
 
-/** One offered mode — whether it is open, and whether it carries a count. */
-export interface ContentTabBarMode {
+/** One offered mode — whether it is locked, and whether it carries a count. */
+export interface ContentModeOption {
     /** Which mode this entry is. */
     mode: ContentMode
-    /** `true` → premium and not yet bought: shown, but not selectable. */
+    /** `true` → premium and not yet bought: rendered muted, still clickable. */
     isLocked?: boolean
     /** Count shown after the label, e.g. how many challenges this lesson has. */
     count?: number
@@ -80,13 +74,17 @@ export interface ContentLanguage {
     label: string
 }
 
-/** Props for {@link ContentTabBar}. */
-export interface ContentTabBarProps {
+/** Props for {@link ContentModeNav}. */
+export interface ContentModeNavProps {
     /** Modes this lesson offers, in display order. */
-    modes: Array<ContentTabBarMode>
+    modes: Array<ContentModeOption>
     /** Which mode is being looked at now. */
     mode: ContentMode
-    /** Fired with the mode the reader picked. A locked mode never fires. */
+    /**
+     * Fired with the mode the reader picked — INCLUDING a locked one. The screen
+     * decides what a locked pick means (typically: open the paywall instead of
+     * navigating). The block never swallows the event.
+     */
     onModeChange: (mode: ContentMode) => void
     /**
      * Code languages this lesson is written in. Fewer than two → the right group
@@ -100,7 +98,7 @@ export interface ContentTabBarProps {
     onLanguageChange?: (language: string) => void
     /**
      * Accessible name for the mode row, localized by the caller (blocks carry no
-     * i18n). Without it a screen reader hears four loose tabs.
+     * i18n). Without it a screen reader hears loose tabs.
      */
     ariaLabel: string
     /** Accessible name for the language group. Required whenever `languages` is set. */
@@ -112,12 +110,12 @@ export interface ContentTabBarProps {
 }
 
 /**
- * The lesson's mode row. See the file header for the full contract and for what
- * the first version of this block got wrong.
+ * The lesson's mode row. See the file header for why locked modes stay clickable
+ * and why this is navigation rather than a tab/panel pair.
  *
- * @param props - {@link ContentTabBarProps}
+ * @param props - {@link ContentModeNavProps}
  */
-const ContentTabBar = ({
+const ContentModeNav = ({
     modes,
     mode,
     onModeChange,
@@ -128,14 +126,16 @@ const ContentTabBar = ({
     languageAriaLabel,
     showAnatomy = false,
     anatPart,
-}: ContentTabBarProps) => {
+}: ContentModeNavProps) => {
     const items: Array<ToolbarTabItem> = modes.map((entry) => ({
         key: entry.mode,
         // A count of zero is not news, so it is not shown — a "0" claims the tab has
         // something waiting when it does not.
         label: entry.count ? `${MODE_LABEL[entry.mode]} · ${entry.count}` : MODE_LABEL[entry.mode],
         icon: MODE_ICON[entry.mode],
-        isDisabled: entry.isLocked,
+        // MUTED, not disabled: a locked mode must still receive the click so the
+        // screen can open the offer. Disabling it kills the very thing this row is for.
+        muted: entry.isLocked,
     }))
 
     // A switcher with one option is a control that cannot do anything, so the right
@@ -176,4 +176,4 @@ const ContentTabBar = ({
     )
 }
 
-export { ContentTabBar }
+export { ContentModeNav }

@@ -118,7 +118,7 @@ const OFFER = {
 const ANNOTATE: Record<string, AnatomyAnnotation> = {
     "StackV": { tier: "frame", role: "the vertical frame that owns every seam on this screen — between the identity, the mode row, the lesson, and the footer cluster", storyId: "frames-stack-stackv--default" },
     "ContentHeader": { tier: "block", role: "what this lesson is: trail, title, description, read state and reading time, and what the reader will learn", storyId: "starci-blocks-learn-contentheader-contentheader--full" },
-    "ContentTabBar": { tier: "block", role: "how to look at the lesson — reading, sandbox, challenges or AI lab; static chrome that never waits for data", storyId: "starci-blocks-learn-contenttabbar-contenttabbar--full" },
+    "ContentModeNav": { tier: "block", role: "how to look at the lesson — reading, sandbox, challenges or AI lab; navigation, not a tab/panel pair, and static chrome that never waits for data", storyId: "starci-blocks-learn-contentmodenav-contentmodenav--full" },
     "ContentArticle": { tier: "block", role: "the lesson itself, and when it is locked the faded tail with the offer under it inside the same card", storyId: "starci-blocks-learn-contentarticle-contentarticle--open" },
     "ContentReaction": { tier: "block", role: "say how the lesson landed, beside the quiet view count", storyId: "starci-blocks-learn-contentreaction-contentreaction--full" },
     "ContentRelatedList": { tier: "block", role: "what else in the course is worth reading; draws nothing at all when there is nothing related", storyId: "starci-blocks-learn-contentrelatedlist-contentrelatedlist--full" },

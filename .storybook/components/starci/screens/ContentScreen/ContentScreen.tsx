@@ -5,7 +5,7 @@ import { ContentHeader, type ContentHeaderCrumb, type ContentHeaderOutcome } fro
 import { ContentPager, type ContentPagerNeighbour } from "@sb-components/starci/blocks/learn/ContentPager/ContentPager"
 import { ContentReaction } from "@sb-components/starci/blocks/learn/ContentReaction/ContentReaction"
 import { ContentRelatedList, type ContentRelatedItem } from "@sb-components/starci/blocks/learn/ContentRelatedList/ContentRelatedList"
-import { ContentTabBar, type ContentLanguage, type ContentMode, type ContentTabBarMode } from "@sb-components/starci/blocks/learn/ContentTabBar/ContentTabBar"
+import { ContentModeNav, type ContentLanguage, type ContentMode, type ContentModeOption } from "@sb-components/starci/blocks/learn/ContentModeNav/ContentModeNav"
 import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
@@ -56,7 +56,7 @@ export interface ContentScreenProps {
     outcomes?: Array<ContentHeaderOutcome>
 
     /** Modes this lesson offers, in display order. */
-    modes: Array<ContentTabBarMode>
+    modes: Array<ContentModeOption>
     /** Which mode is being looked at. */
     mode: ContentMode
     /** Fired with the mode the reader picked. */
@@ -183,8 +183,8 @@ const ContentScreen = ({
                 isSkeleton={isSkeleton}
                 showAnatomy={showAnatomy}
             />
-            <ContentTabBar
-                anatPart="ContentTabBar"
+            <ContentModeNav
+                anatPart="ContentModeNav"
                 modes={modes}
                 mode={mode}
                 onModeChange={onModeChange}

@@ -5,7 +5,7 @@ import { BlockAnatomy, type AnatomyAnnotation } from "@sb-utils/BlockAnatomy/Blo
 /**
  * BLOCK — `FlashcardModeSwitch`: study the deck, or drill yourself.
  *
- * ⚠️ NOT A DUPLICATE OF `ContentTabBar`, though the shape is identical — same
+ * ⚠️ NOT A DUPLICATE OF `ContentModeNav`, though the shape is identical — same
  * row, same `Tabs` atom, same deliberate absence of a skeleton. What differs is
  * the one thing a block at this tier OWNS: the VOCABULARY. One knows reading
  * modes, the other knows practice modes, and §14d.1 puts that ownership in the

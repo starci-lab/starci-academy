@@ -93,6 +93,14 @@ const BASE = {
     next: { title: "Multi-stage build: bỏ toolchain khỏi image chạy thật", href: "#next" },
     pagerAriaLabel: "Điều hướng bài học",
     tabsAriaLabel: "Cách xem bài học",
+    languages: [
+        { key: "typescript", label: "TypeScript" },
+        { key: "java", label: "Java" },
+        { key: "go", label: "Go" },
+    ],
+    language: "typescript",
+    languageAriaLabel: "Ngôn ngữ code",
+    onLanguageChange: () => {},
 }
 
 const OFFER = {

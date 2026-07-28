@@ -5,7 +5,7 @@ import { ContentHeader, type ContentHeaderCrumb, type ContentHeaderOutcome } fro
 import { ContentPager, type ContentPagerNeighbour } from "@sb-components/starci/blocks/learn/ContentPager/ContentPager"
 import { ContentReaction } from "@sb-components/starci/blocks/learn/ContentReaction/ContentReaction"
 import { ContentRelatedList, type ContentRelatedItem } from "@sb-components/starci/blocks/learn/ContentRelatedList/ContentRelatedList"
-import { ContentTabBar, type ContentMode, type ContentTabBarMode } from "@sb-components/starci/blocks/learn/ContentTabBar/ContentTabBar"
+import { ContentTabBar, type ContentLanguage, type ContentMode, type ContentTabBarMode } from "@sb-components/starci/blocks/learn/ContentTabBar/ContentTabBar"
 import { Container } from "@sb-components/frames/Container/Container"
 import { StackV } from "@sb-components/frames/Stack/Stack"
 
@@ -61,6 +61,17 @@ export interface ContentScreenProps {
     mode: ContentMode
     /** Fired with the mode the reader picked. */
     onModeChange: (mode: ContentMode) => void
+    /**
+     * Code languages this lesson is written in. Fewer than two → the tab row's
+     * right-hand group is not drawn at all.
+     */
+    languages?: Array<ContentLanguage>
+    /** Which language is being read. */
+    language?: string
+    /** Fired with the language the reader picked. */
+    onLanguageChange?: (language: string) => void
+    /** Accessible name for the language group. */
+    languageAriaLabel?: string
 
     /** The lesson, as authored markdown. */
     body: string
@@ -132,6 +143,10 @@ const ContentScreen = ({
     modes,
     mode,
     onModeChange,
+    languages,
+    language,
+    onLanguageChange,
+    languageAriaLabel,
     body,
     isLocked = false,
     offer,
@@ -173,6 +188,10 @@ const ContentScreen = ({
                 modes={modes}
                 mode={mode}
                 onModeChange={onModeChange}
+                languages={languages}
+                language={language}
+                onLanguageChange={onLanguageChange}
+                languageAriaLabel={languageAriaLabel}
                 ariaLabel={tabsAriaLabel}
                 showAnatomy={showAnatomy}
             />
